@@ -31,14 +31,16 @@ import pyatspi
 import pyatspi.utils as utils
 
 import orca.scripts.default as default
+import orca.cmdnames as cmdnames
+import orca.guilabels as guilabels
 import orca.input_event as input_event
+import orca.messages as messages
 import orca.orca as orca
 import orca.settings as settings
 import orca.settings_manager as settings_manager
 import orca.speechserver as speechserver
 import orca.orca_state as orca_state
 import orca.speech as speech
-from orca.orca_i18n import _
 
 from . import script_settings
 from .structural_navigation import StructuralNavigation
@@ -98,44 +100,18 @@ class Script(default.Script):
         self.inputEventHandlers["sayAllHandler"] = \
             input_event.InputEventHandler(
                 Script.sayAll,
-                # Translators: the Orca "SayAll" command allows the
-                # user to press a key and have the entire document in
-                # a window be automatically spoken to the user.  If
-                # the user presses any key during a SayAll operation,
-                # the speech will be interrupted and the cursor will
-                # be positioned at the point where the speech was
-                # interrupted.
-                #
-                _("Speaks entire document."))
+                cmdnames.SAY_ALL)
 
         self.inputEventHandlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleLeft,
-                # Translators: a refreshable braille display is an
-                # external hardware device that presents braille
-                # character to the user.  There are a limited number
-                # of cells on the display (typically 40 cells).  Orca
-                # provides the feature to build up a longer logical
-                # line and allow the user to press buttons on the
-                # braille display so they can pan left and right over
-                # this line.
-                #
-                _("Pans the braille display to the left."),
+                cmdnames.PAN_BRAILLE_LEFT,
                 False) # Do not enable learn mode for this action
 
         self.inputEventHandlers["panBrailleRightHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleRight,
-                # Translators: a refreshable braille display is an
-                # external hardware device that presents braille
-                # character to the user.  There are a limited number
-                # of cells on the display (typically 40 cells).  Orca
-                # provides the feature to build up a longer logical
-                # line and allow the user to press buttons on the
-                # braille display so they can pan left and right over
-                # this line.
-                #
-                _("Pans the braille display to the right."),
+                cmdnames.PAN_BRAILLE_RIGHT,
                 False) # Do not enable learn mode for this action
 
     def getToolkitKeyBindings(self):
@@ -152,12 +128,7 @@ class Script(default.Script):
         grid = Gtk.Grid()
         grid.set_border_width(12)
 
-        # Translators: when the user loads a new page in WebKit, they
-        # can optionally tell Orca to automatically start reading a
-        # page from beginning to end.
-        #
-        label = \
-            _("Automatically start speaking a page when it is first _loaded")
+        label = guilabels.READ_PAGE_UPON_LOAD
         self.sayAllOnLoadCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.sayAllOnLoadCheckButton.set_active(script_settings.sayAllOnLoad)
@@ -339,20 +310,12 @@ class Script(default.Script):
             return
 
         if event.detail1:
-            # Translators: this is in reference to loading a web page
-            # or some other content.
-            #
-            self.presentMessage(_("Loading.  Please wait."))
+            self.presentMessage(messages.PAGE_LOADING_START)
         elif event.source.name:
-            # Translators: this is in reference to loading a web page
-            # or some other content.
-            #
-            self.presentMessage(_("Finished loading %s.") % event.source.name)
+            self.presentMessage(
+                messages.PAGE_LOADING_END_NAMED % event.source.name)
         else:
-            # Translators: this is in reference to loading a web page
-            # or some other content.
-            #
-            self.presentMessage(_("Finished loading."))
+            self.presentMessage(messages.PAGE_LOADING_END)
 
     def onTextSelectionChanged(self, event):
         """Called when an object's text selection changes.

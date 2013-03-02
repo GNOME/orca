@@ -27,13 +27,15 @@ __license__   = "LGPL"
 
 import pyatspi
 
+from . import cmdnames
+from . import guilabels
 from . import input_event
 from . import keybindings
+from . import messages
 from . import orca_state
 from . import settings
 from . import settings_manager
 from . import speech
-from .orca_i18n import _
 
 _settingsManager = settings_manager.getManager()
 
@@ -330,53 +332,25 @@ class Chat:
         """Defines InputEventHandler fields for chat functions which
         will be used by the script associated with this chat instance."""
 
-        # Translators: In chat applcations, Orca automatically presents incoming
-        # messages in speech and braille. If a user is in multiple conversations
-        # or channels at the same time, it can be confusing to know what room or
-        # channel a given message came from just from hearing/reading it. For
-        # For this reason, Orca has an option to present the name of the room
-        # first ( "#a11y <joanie> hello!" instead of "<joanie> hello world!".
-        # This string to be translated is associated with the command to toggle
-        # room name presentation on or off.
-        # 
         self.inputEventHandlers["togglePrefixHandler"] = \
             input_event.InputEventHandler(
                 self.togglePrefix,
-                _("Toggle whether we prefix chat room messages with " \
-                  "the name of the chat room."))
+                cmdnames.CHAT_TOGGLE_ROOM_NAME_PREFIX)
 
-        # Translators: In chat applications, it is often possible to see that
-        # a "buddy" is typing currently (e.g. via a keyboard icon or status
-        # text). Some users like to have this typing status announced by Orca;
-        # others find that announcment unpleasant. Therefore, it is a setting
-        # in Orca. This string to be translated is associated with the command
-        # to toggle typing status presentation on or off.
         self.inputEventHandlers["toggleBuddyTypingHandler"] = \
             input_event.InputEventHandler(
                 self.toggleBuddyTyping,
-                _("Toggle whether we announce when our buddies are typing."))
+                cmdnames.CHAT_TOGGLE_BUDDY_TYPING)
 
-        # Translators: Orca has a command to review previous chat room messages
-        # in speech and braille. Some users prefer to have this message history
-        # combined (e.g. the last ten messages which came in, no matter what
-        # room they came from). Other users prefer to have specific room history
-        # (e.g. the last ten messages from #a11y). Therefore, this is a setting
-        # in Orca. This string to be translated is associated with the command
-        # to toggle specific room history on or off.
         self.inputEventHandlers["toggleMessageHistoriesHandler"] = \
             input_event.InputEventHandler(
                 self.toggleMessageHistories,
-                _("Toggle whether we provide chat room specific message " \
-                  "histories."))
+                cmdnames.CHAT_TOGGLE_MESSAGE_HISTORIES)
 
-        # Translators: Orca has a command to review previous chat room messages
-        # in speech and braille. This string to be translated is associated
-        # with the keyboard commands used to review those previous messages.
-        #
         self.inputEventHandlers["reviewMessage"] = \
             input_event.InputEventHandler(
                 self.readPreviousMessage,
-                _("Speak and braille a previous chat room message."))
+                cmdnames.CHAT_PREVIOUS_MESSAGE)
 
         return
 
@@ -429,30 +403,19 @@ class Chat:
         grid = Gtk.Grid()
         grid.set_border_width(12)
 
-        # Translators: If this checkbox is checked, then Orca will speak
-        # the name of the chat room prior to presenting an incoming message.
-        #
-        label = _("_Speak Chat Room name")
+        label = guilabels.CHAT_SPEAK_ROOM_NAME
         value = _settingsManager.getSetting('chatSpeakRoomName')
         self.speakNameCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self.speakNameCheckButton.set_active(value)
         grid.attach(self.speakNameCheckButton, 0, 0, 1, 1)
 
-        # Translators: If this checkbox is checked, then Orca will tell
-        # you when one of your buddies is typing a message.
-        #
-        label = _("Announce when your _buddies are typing")
+        label = guilabels.CHAT_ANNOUNCE_BUDDY_TYPING
         value = _settingsManager.getSetting('chatAnnounceBuddyTyping')
         self.buddyTypingCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self.buddyTypingCheckButton.set_active(value)
         grid.attach(self.buddyTypingCheckButton, 0, 1, 1, 1)
 
-        # Translators: If this checkbox is checked, then Orca will provide
-        # the user with chat room specific message histories rather than just
-        # a single history which contains the latest messages from all the
-        # chat rooms that they are currently in.
-        #
-        label = _("Provide chat room specific _message histories")
+        label = guilabels.CHAT_SEPARATE_MESSAGE_HISTORIES
         value = _settingsManager.getSetting('chatRoomHistories')
         self.chatRoomHistoriesCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
@@ -461,11 +424,7 @@ class Chat:
 
         messagesFrame = Gtk.Frame()
         grid.attach(messagesFrame, 0, 3, 1, 1)
-
-        # Translators: this is the title of a panel holding options for
-        # how messages in this application's chat rooms should be spoken.
-        #
-        label = Gtk.Label("<b>%s</b>" % _("Speak messages from"))
+        label = Gtk.Label("<b>%s</b>" % guilabels.CHAT_SPEAK_MESSAGES_FROM)
         label.set_use_markup(True)
         messagesFrame.set_label_widget(label)
 
@@ -477,31 +436,20 @@ class Chat:
 
         value = _settingsManager.getSetting('chatMessageVerbosity')
 
-        # Translators: Orca will speak all new chat messages as they appear
-        # irrespective of whether the chat application currently has focus.
-        # This is the default behaviour.
-        #
-        label = _("All cha_nnels")
+        label = guilabels.CHAT_SPEAK_MESSAGES_ALL
         rb1 = Gtk.RadioButton.new_with_mnemonic(None, label)
         rb1.set_active(value == settings.CHAT_SPEAK_ALL)
         self.allMessagesRadioButton = rb1
         messagesGrid.attach(self.allMessagesRadioButton, 0, 0, 1, 1)
 
-        # Translators: Orca will speak only new chat messages for the channel
-        # that currently has focus, irrespective of whether the chat
-        # application has focus.
-        #
-        label = _("A channel only if its _window is active")
+        label = guilabels.CHAT_SPEAK_MESSAGES_ACTIVE
         rb2 = Gtk.RadioButton.new_with_mnemonic(None, label)
         rb2.join_group(rb1)
         rb2.set_active(value == settings.CHAT_SPEAK_FOCUSED_CHANNEL)
         self.focusedChannelRadioButton = rb2
         messagesGrid.attach(self.focusedChannelRadioButton, 0, 1, 1, 1)
 
-        # Translators: Orca will speak new chat messages for all channels
-        # only when the chat application has focus.
-        #
-        label = _("All channels when an_y %s window is active") % \
+        label = guilabels.CHAT_SPEAK_MESSAGES_ALL_IF_FOCUSED % \
             self._script.app.name
         rb3 = Gtk.RadioButton.new_with_mnemonic(None, label)
         rb3.join_group(rb1)
@@ -569,11 +517,11 @@ class Chat:
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        line = _("speak chat room name.")
+        line = messages.CHAT_ROOM_NAME_PREFIX_ON
         speakRoomName = _settingsManager.getSetting('chatSpeakRoomName')
         _settingsManager.setSetting('chatSpeakRoomName', not speakRoomName)
         if speakRoomName:
-            line = _("Do not speak chat room name.")
+            line = messages.CHAT_ROOM_NAME_PREFIX_OFF
         self._script.presentMessage(line)
 
         return True
@@ -586,12 +534,12 @@ class Chat:
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        line = _("announce when your buddies are typing.")
+        line = messages.CHAT_BUDDY_TYPING_ON
         announceTyping = _settingsManager.getSetting('chatAnnounceBuddyTyping')
         _settingsManager.setSetting(
             'chatAnnounceBuddyTyping', not announceTyping)
         if announceTyping:
-            line = _("Do not announce when your buddies are typing.")
+            line = messages.CHAT_BUDDY_TYPING_OFF
         self._script.presentMessage(line)
 
         return True
@@ -604,11 +552,11 @@ class Chat:
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        line = _("Provide chat room specific message histories.")
+        line = messages.CHAT_SEPARATE_HISTORIES_ON
         roomHistories = _settingsManager.getSetting('chatRoomHistories')
         _settingsManager.setSetting('chatRoomHistories', not roomHistories)
         if roomHistories:
-            line = _("Do not provide chat room specific message histories.")
+            line = messages.CHAT_SEPARATE_HISTORIES_OFF
         self._script.presentMessage(line)
 
         return True
@@ -668,7 +616,7 @@ class Chat:
 
         text = ""
         if _settingsManager.getSetting('chatSpeakRoomName') and chatRoomName:
-            text = _("Message from chat room %s") % chatRoomName
+            text = message.CHAT_MESSAGE_FROM_ROOM % chatRoomName
         text = self._script.utilities.appendString(text, message)
 
         if len(text.strip()):

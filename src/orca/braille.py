@@ -68,6 +68,8 @@ try:
 except:
     settings.enableBrailleMonitor = False
 
+from . import brltablenames
+from . import cmdnames
 from . import debug
 from . import eventsynthesizer
 from . import orca_state
@@ -93,8 +95,6 @@ if louis and not tablesdir:
                   "not be available.")
     louis = None
     
-from .orca_i18n import _                          # for gettext support
-
 # The braille monitor
 #
 _monitor = None
@@ -112,89 +112,18 @@ if _brlAPIAvailable:
 command_name = {}
 
 if _brlAPIAvailable:
-    # Translators: this is a command for a button on a refreshable braille
-    # display (an external hardware device used by people who are blind).
-    # When pressing the button, the display scrolls to the left.
-    #
-    command_name[brlapi.KEY_CMD_FWINLT]   = _("Line Left")
-
-    # Translators: this is a command for a button on a refreshable braille
-    # display (an external hardware device used by people who are blind).
-    # When pressing the button, the display scrolls to the right.
-    #
-    command_name[brlapi.KEY_CMD_FWINRT]   = _("Line Right")
-
-    # Translators: this is a command for a button on a refreshable braille
-    # display (an external hardware device used by people who are blind).
-    # When pressing the button, the display scrolls up.
-    #
-    command_name[brlapi.KEY_CMD_LNUP]     = _("Line Up")
-
-    # Translators: this is a command for a button on a refreshable braille
-    # display (an external hardware device used by people who are blind).
-    # When pressing the button, the display scrolls down.
-    #
-    command_name[brlapi.KEY_CMD_LNDN]     = _("Line Down")
-
-    # Translators: this is a command for a button on a refreshable braille
-    # display (an external hardware device used by people who are blind).
-    # When pressing the button, it instructs the braille display to freeze.
-    #
-    command_name[brlapi.KEY_CMD_FREEZE]     = _("Freeze")
-
-    # Translators: this is a command for a button on a refreshable braille
-    # display (an external hardware device used by people who are blind).
-    # When pressing the button, the display scrolls to the top left of the
-    # window.
-    #
-    command_name[brlapi.KEY_CMD_TOP_LEFT] = _("Top Left")
-
-    # Translators: this is a command for a button on a refreshable braille
-    # display (an external hardware device used by people who are blind).
-    # When pressing the button, the display scrolls to the bottom right of
-    # the window.
-    #
-    command_name[brlapi.KEY_CMD_BOT_LEFT] = _("Bottom Right")
-
-    # Translators: this is a command for a button on a refreshable braille
-    # display (an external hardware device used by people who are blind).
-    # When pressing the button, the display scrolls to position containing
-    # the cursor.
-    #
-    command_name[brlapi.KEY_CMD_HOME]     = _("Cursor Position")
-
-    # Translators: this is a command for a button on a refreshable braille
-    # display (an external hardware device used by people who are blind).
-    # When pressing the button, the display toggles between contracted and
-    # contracted braille.
-    #
-    command_name[brlapi.KEY_CMD_SIXDOTS]  = _("Six Dots")
-
-    # Translators: this is a command for a button on a refreshable braille
-    # display (an external hardware device used by people who are blind).
-    # This command represents a whole set of buttons known as cursor
-    # routings keys and are a way for a user to tell the machine they are
-    # interested in a particular character on the display.
-    #
-    command_name[brlapi.KEY_CMD_ROUTE]    = _("Cursor Routing")
-
-    # Translators: this is a command for a button on a refreshable braille
-    # display (an external hardware device used by people who are blind).
-    # This command represents the start of a selection operation.  It is
-    # called "Cut Begin" to map to what BrlTTY users are used to:  in
-    # character cell mode operation on virtual consoles, the act of copying
-    # text is erroneously called a "cut" operation.
-    #
-    command_name[brlapi.KEY_CMD_CUTBEGIN] = _("Cut Begin")
-
-    # Translators: this is a command for a button on a refreshable braille
-    # display (an external hardware device used by people who are blind).
-    # This command represents marking the endpoint of a selection.  It is
-    # called "Cut Line" to map to what BrlTTY users are used to:  in
-    # character cell mode operation on virtual consoles, the act of copying
-    # text is erroneously called a "cut" operation.
-    #
-    command_name[brlapi.KEY_CMD_CUTLINE] = _("Cut Line")
+    command_name[brlapi.KEY_CMD_FWINLT]   = cmdnames.BRAILLE_LINE_LEFT
+    command_name[brlapi.KEY_CMD_FWINRT]   = cmdnames.BRAILLE_LINE_RIGHT
+    command_name[brlapi.KEY_CMD_LNUP]     = cmdnames.BRAILLE_LINE_UP
+    command_name[brlapi.KEY_CMD_LNDN]     = cmdnames.BRAILLE_LINE_DOWN
+    command_name[brlapi.KEY_CMD_FREEZE]   = cmdnames.BRAILLE_FREEZE
+    command_name[brlapi.KEY_CMD_TOP_LEFT] = cmdnames.BRAILLE_TOP_LEFT
+    command_name[brlapi.KEY_CMD_BOT_LEFT] = cmdnames.BRAILLE_BOTTOM_LEFT
+    command_name[brlapi.KEY_CMD_HOME]     = cmdnames.BRAILLE_HOME
+    command_name[brlapi.KEY_CMD_SIXDOTS]  = cmdnames.BRAILLE_SIX_DOTS
+    command_name[brlapi.KEY_CMD_ROUTE]    = cmdnames.BRAILLE_ROUTE_CURSOR
+    command_name[brlapi.KEY_CMD_CUTBEGIN] = cmdnames.BRAILLE_CUT_BEGIN
+    command_name[brlapi.KEY_CMD_CUTLINE]  = cmdnames.BRAILLE_CUT_LINE
 
 # The size of the physical display (width, height).  The coordinate system of
 # the display is set such that the upper left is (0,0), x values increase from
@@ -260,37 +189,37 @@ _saved = None
 # languages. You could read about braille tables at:
 # http://en.wikipedia.org/wiki/Braille
 #
-TABLE_NAMES = {"Cz-Cz-g1": _("Czech Grade 1"),
-               "Es-Es-g1": _("Spanish Grade 1"),
-               "Fr-Ca-g2": _("Canada French Grade 2"),
-               "Fr-Fr-g2": _("France French Grade 2"),
-               "Lv-Lv-g1": _("Latvian Grade 1"),
-               "Nl-Nl-g1": _("Netherlands Dutch Grade 1"),
-               "No-No-g0": _("Norwegian Grade 0"),
-               "No-No-g1": _("Norwegian Grade 1"),
-               "No-No-g2": _("Norwegian Grade 2"),
-               "No-No-g3": _("Norwegian Grade 3"),
-               "Pl-Pl-g1": _("Polish Grade 1"),
-               "Pt-Pt-g1": _("Portuguese Grade 1"),
-               "Se-Se-g1": _("Swedish Grade 1"),
-               "ar-ar-g1": _("Arabic Grade 1"),
-               "cy-cy-g1": _("Welsh Grade 1"),
-               "cy-cy-g2": _("Welsh Grade 2"),
-               "de-de-g0": _("German Grade 0"),
-               "de-de-g1": _("German Grade 1"),
-               "de-de-g2": _("German Grade 2"),
-               "en-GB-g2": _("U.K. English Grade 2"),
-               "en-gb-g1": _("U.K. English Grade 1"),
-               "en-us-g1": _("U.S. English Grade 1"),
-               "en-us-g2": _("U.S. English Grade 2"),
-               "fr-ca-g1": _("Canada French Grade 1"),
-               "fr-fr-g1": _("France French Grade 1"),
-               "gr-gr-g1": _("Greek Grade 1"),
-               "hi-in-g1": _("Hindi Grade 1"),
-               "hu-hu-comp8": _("Hungarian 8 dot computer"),
-               "hu-hu-g1": _("Hungarian Grade 1"),
-               "it-it-g1": _("Italian Grade 1"),
-               "nl-be-g1": _("Belgium Dutch Grade 1")}
+TABLE_NAMES = {"Cz-Cz-g1": brltablenames.CZ_CZ_G1,
+               "Es-Es-g1": brltablenames.ES_ES_G1,
+               "Fr-Ca-g2": brltablenames.FR_CA_G2,
+               "Fr-Fr-g2": brltablenames.FR_FR_G2,
+               "Lv-Lv-g1": brltablenames.LV_LV_G1,
+               "Nl-Nl-g1": brltablenames.NL_NL_G1,
+               "No-No-g0": brltablenames.NO_NO_G0,
+               "No-No-g1": brltablenames.NO_NO_G1,
+               "No-No-g2": brltablenames.NO_NO_G2,
+               "No-No-g3": brltablenames.NO_NO_G3,
+               "Pl-Pl-g1": brltablenames.PL_PL_G1,
+               "Pt-Pt-g1": brltablenames.PT_PT_G1,
+               "Se-Se-g1": brltablenames.SE_SE_G1,
+               "ar-ar-g1": brltablenames.AR_AR_G1,
+               "cy-cy-g1": brltablenames.CY_CY_G1,
+               "cy-cy-g2": brltablenames.CY_CY_G2,
+               "de-de-g0": brltablenames.DE_DE_G0,
+               "de-de-g1": brltablenames.DE_DE_G1,
+               "de-de-g2": brltablenames.DE_DE_G2,
+               "en-GB-g2": brltablenames.EN_GB_G2,
+               "en-gb-g1": brltablenames.EN_GB_G1,
+               "en-us-g1": brltablenames.EN_US_G1,
+               "en-us-g2": brltablenames.EN_US_G2,
+               "fr-ca-g1": brltablenames.FR_CA_G1,
+               "fr-fr-g1": brltablenames.FR_FR_G1,
+               "gr-gr-g1": brltablenames.GR_GR_G1,
+               "hi-in-g1": brltablenames.HI_IN_G1,
+               "hu-hu-comp8": brltablenames.HU_HU_8DOT,
+               "hu-hu-g1": brltablenames.HU_HU_G1,
+               "it-it-g1": brltablenames.IT_IT_G1,
+               "nl-be-g1": brltablenames.NL_BE_G1}
 
 def listTables():
     tables = {}

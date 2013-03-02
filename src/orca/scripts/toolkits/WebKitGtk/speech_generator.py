@@ -30,10 +30,10 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.keynames as keynames
+import orca.object_properties as object_properties
 import orca.settings as settings
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
-from orca.orca_i18n import _
 
 _settingsManager = settings_manager.getManager()
 
@@ -84,12 +84,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         role = pyatspi.ROLE_HEADING
         level = self._script.utilities.headingLevel(obj)
         if level:
-            # Translators: the %(level)d is in reference to a heading
-            # level in HTML (e.g., For <h3>, the level is 3)
-            # and the %(role)s is in reference to a previously
-            # translated rolename for the heading.
-            #
-            result.append(_("%(role)s level %(level)d") % {
+            result.append(object_properties.ROLE_HEADING_LEVEL_SPEECH % {
                     'role': self.getLocalizedRoleName(obj, role),
                     'level': level})
         else:

@@ -78,12 +78,13 @@ def setLocaleForMessages(newLocale=None):
 
 def setLocaleForNames(newLocale=None):
     modules = ['orca.chnames', 'orca.keynames', 'orca.phonnames',
-               'orca.text_attribute_names']
+               'orca.text_attribute_names', 'orca.object_properties']
     for module in modules:
         setModuleLocale(module, newLocale)
 
 def setLocaleForGUI(newLocale=None):
     modules = ['orca.orca_gtkbuilder', 'orca.orca_gui_prefs',
-               'orca.app_gui_prefs']
+               'orca.app_gui_prefs', 'orca.guilabels',
+               'orca.brltablenames']
     for module in modules:
         setModuleLocale(module, newLocale)

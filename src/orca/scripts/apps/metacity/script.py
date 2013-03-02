@@ -25,6 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import orca.messages as messages
 import orca.scripts.default as default
 import orca.speech as speech
 import pyatspi
@@ -113,11 +114,7 @@ class Script(default.Script):
         if text.startswith(_("Workspace ")) or text.startswith(_("Desk ")):
             pass
         elif not found:
-            # Translators: inaccessible means that the application cannot
-            # be read by Orca.  This usually means the application is not
-            # friendly to the assistive technology infrastructure.
-            #
-            text += ". " + _("inaccessible")
+            text += ". " + messages.INACCESSIBLE
 
         self.displayBrailleMessage(text)
         speech.speak(text)

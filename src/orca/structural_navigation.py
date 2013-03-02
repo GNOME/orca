@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2005-2009 Sun Microsystems Inc.
+# Copyright 2010-2013 The Orca Team
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -17,30 +18,29 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Implements structural navigation.  Right now this is only
-being implemented by Gecko; however it can be used in any
-script providing access to document content."""
+"""Implements structural navigation."""
 
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
+                "Copyright (c) 2010-2013 The Orca Team"
 __license__   = "LGPL"
 
 import pyatspi
 
+from . import cmdnames
 from . import debug
+from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
+from . import object_properties
 from . import orca
 from . import orca_gui_navlist
 from . import orca_state
 from . import settings
 from . import speech
-from .orca_i18n import _
-from .orca_i18n import ngettext
-from .orca_i18n import C_
 
 #############################################################################
 #                                                                           #
@@ -359,13 +359,7 @@ class StructuralNavigationObject:
 
         title, columnHeaders, rowData = self._dialogData()
         count = len(objects)
-        # Translators: Orca has a command that presents a list of
-        # structural navigation objects in a dialog box so that users
-        # can navigate more quickly than they could with native keyboard
-        # navigation. This is a message that will be presented to the
-        # user to indicate how many items were found.
-        result = ngettext("%d item found", "%d items found", count) % count
-        title = "%s: %s" % (title, result)
+        title = "%s: %s" % (title, messages.itemsFound(count))
         if not count:
             script.presentMessage(title)
             return
@@ -427,13 +421,7 @@ class StructuralNavigationObject:
 
             title, columnHeaders, rowData = self._dialogData(arg=level)
             count = len(objects)
-            # Translators: Orca has a command that presents a list of
-            # structural navigation objects in a dialog box so that users
-            # can navigate more quickly than they could with native keyboard
-            # navigation. This is a message that will be presented to the
-            # user to indicate how many items were found.
-            result = ngettext("%d item found", "%d items found", count) % count
-            title = "%s: %s" % (title, result)
+            title = "%s: %s" % (title, messages.itemsFound(count))
             if not count:
                 script.presentMessage(title)
                 return
@@ -675,14 +663,7 @@ class StructuralNavigation:
         self.inputEventHandlers["toggleStructuralNavigationHandler"] = \
             input_event.InputEventHandler(
                 self.toggleStructuralNavigation,
-                # Translators: the structural navigation keys are designed
-                # to move the caret around the document content by object
-                # type. Thus H moves you to the next heading, Shift H to
-                # the previous heading, T to the next table, and so on.
-                # This feature needs to be toggle-able so that it does not
-                # interfere with normal writing functions.
-                #
-                _("Toggles structural navigation keys."))
+                cmdnames.STRUCTURAL_NAVIGATION_TOGGLE)
 
         for structuralNavigationObject in list(self.enabledObjects.values()):
             self.inputEventHandlers.update(\
@@ -1244,28 +1225,11 @@ class StructuralNavigation:
         nonUniformString = ""
         nonUniform = self._isNonUniformTable(obj)
         if nonUniform:
-            # Translators: a uniform table is one in which each table
-            # cell occupies one row and one column (i.e. a perfect grid)
-            # In contrast, a non-uniform table is one in which at least
-            # one table cell occupies more than one row and/or column.
-            #
-            nonUniformString = _("Non-uniform") + " "
+            nonUniformString = messages.TABLE_NON_UNIFORM + " "
 
         table = obj.queryTable()
-        nRows = table.nRows
-        nColumns = table.nColumns
-        # Translators: this represents the number of rows in a table.
-        #
-        rowString = ngettext("table with %d row",
-                             "table with %d rows",
-                             nRows) % nRows
-        # Translators: this represents the number of columns in a table.
-        #
-        colString = ngettext("%d column",
-                             "%d columns",
-                             nColumns) % nColumns
-
-        return (nonUniformString + rowString + " " + colString)
+        sizeString = messages.tableSize(table.nRows, table.nColumns)
+        return (nonUniformString + sizeString)
 
     def _isNonUniformTable(self, obj):
         """Returns True if the obj is a non-uniform table (i.e. a table
@@ -1410,39 +1374,7 @@ class StructuralNavigation:
         [row, col] = self.getCellCoordinates(obj)
         rowspan = table.getRowExtentAt(row, col)
         colspan = table.getColumnExtentAt(row, col)
-        spanString = ""
-        if (colspan > 1) and (rowspan > 1):
-            # Translators: The cell here refers to a cell within a table
-            # within a document.  We need to announce when the cell occupies
-            # or "spans" more than a single row and/or column.
-            #
-            spanString = ngettext("Cell spans %d row",
-                                  "Cell spans %d rows",
-                                  rowspan) % rowspan
-
-            # Translators: this represents the number of columns in a table.
-            #
-            spanString += ngettext(" %d column",
-                                   " %d columns",
-                                   colspan) % colspan
-        elif (colspan > 1):
-            # Translators: The cell here refers to a cell within a table
-            # within a document.  We need to announce when the cell occupies
-            # or "spans" more than a single row and/or column.
-            #
-            spanString = ngettext("Cell spans %d column",
-                                  "Cell spans %d columns",
-                                  colspan) % colspan
-        elif (rowspan > 1):
-            # Translators: The cell here refers to a cell within a table
-            # within a document.  We need to announce when the cell occupies
-            # or "spans" more than a single row and/or column.
-            #
-            spanString = ngettext("Cell spans %d row",
-                                  "Cell spans %d rows",
-                                  rowspan) % rowspan
-
-        return spanString
+        return messages.cellSpan(rowspan, colspan)
 
     def getCellCoordinates(self, obj):
         """Returns the [row, col] of a ROLE_TABLE_CELL or [-1, -1]
@@ -1799,11 +1731,9 @@ class StructuralNavigation:
 
         if role == pyatspi.ROLE_LINK:
             if state.contains(pyatspi.STATE_VISITED):
-                # Translators: this is a state which applies to a link.
-                return C_("link state", "visited")
+                return object_properties.STATE_VISITED
             else:
-                # Translators: this is a state which applies to a link.
-                return C_("link state", "unvisited")            
+                return object_properties.STATE_UNVISITED
 
         return ''
 
@@ -1864,15 +1794,10 @@ class StructuralNavigation:
         # page).
 
         bindings = {}
-        # Translators: this is for navigating among anchors in a document.
-        # An anchor is a named spot that one can jump to.
-        #
-        prevDesc = _("Goes to previous anchor.")
+        prevDesc = cmdnames.ANCHOR_PREV
         bindings["previous"] = ["a", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating among anchors in a document.
-        # An anchor is a named spot that one can jump to.
-        #
-        nextDesc = _("Goes to next anchor.")
+
+        nextDesc = cmdnames.ANCHOR_NEXT
         bindings["next"] = ["a", settings.NO_MODIFIER_MASK, nextDesc]
         return bindings
 
@@ -1925,7 +1850,7 @@ class StructuralNavigation:
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_ANCHORS
-            brief = C_("structural navigation", "Not found")
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     ########################
@@ -1940,20 +1865,13 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among blockquotes in a
-        # document.
-        #
-        prevDesc = _("Goes to previous blockquote.")
+        prevDesc = cmdnames.BLOCKQUOTE_PREV
         bindings["previous"] = ["q", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating among blockquotes in a
-        # document.
-        #
-        nextDesc = _("Goes to next blockquote.")
+
+        nextDesc = cmdnames.BLOCKQUOTE_NEXT
         bindings["next"] = ["q", settings.NO_MODIFIER_MASK, nextDesc]
-        # Translators: this is for navigating among blockquotes in a
-        # document.
-        #
-        listDesc = _("Displays a list of blockquotes.")
+
+        listDesc = cmdnames.BLOCKQUOTE_LIST
         bindings["list"] = ["q", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
@@ -2014,22 +1932,12 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _blockquoteDialogData(self):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title of one such dialog box.
-        title = C_("structural navigation", "Blockquotes")
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the text of a blockquote element.
-        columnHeaders = [C_("structural navigation", "Blockquote")]
+        columnHeaders = [guilabels.SN_HEADER_BLOCKQUOTE]
 
         def rowData(obj):
             return [self._getText(obj)]
 
-        return title, columnHeaders, rowData
+        return guilabels.SN_TITLE_BLOCKQUOTE, columnHeaders, rowData
 
     ########################
     #                      #
@@ -2043,20 +1951,13 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among buttons in a form
-        # within a document.
-        #
-        prevDesc = _("Goes to previous button.")
+        prevDesc = cmdnames.BUTTON_PREV
         bindings["previous"] = ["b", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating among buttons in a form
-        # within a document.
-        #
-        nextDesc = _("Goes to next button.")
+
+        nextDesc = cmdnames.BUTTON_NEXT
         bindings["next"] = ["b", settings.NO_MODIFIER_MASK, nextDesc]
-        # Translators: this is for navigating among buttons in a form
-        # within a document.
-        #
-        listDesc = _("Displays a list of buttons.")
+
+        listDesc = cmdnames.BUTTON_LIST
         bindings["list"] = ["b", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
@@ -2113,22 +2014,12 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _buttonDialogData(self):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title of one such dialog box.
-        title = C_("structural navigation", "Buttons")
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the text of a button.
-        columnHeaders = [C_("structural navigation", "Button")]
+        columnHeaders = [guilabels.SN_HEADER_BUTTON]
 
         def rowData(obj):
             return [self._getText(obj)]
 
-        return title, columnHeaders, rowData
+        return guilabels.SN_TITLE_BUTTON, columnHeaders, rowData
 
     ########################
     #                      #
@@ -2142,20 +2033,13 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among check boxes in a form
-        # within a document.
-        #
-        prevDesc = _("Goes to previous check box.")
+        prevDesc = cmdnames.CHECK_BOX_PREV
         bindings["previous"] = ["x", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating among check boxes in a form
-        # within a document.
-        #
-        nextDesc = _("Goes to next check box.")
+
+        nextDesc = cmdnames.CHECK_BOX_NEXT
         bindings["next"] = ["x", settings.NO_MODIFIER_MASK, nextDesc]
-        # Translators: this is for navigating among check boxes in a form
-        # within a document.
-        #
-        listDesc = _("Displays a list of check boxes.")
+
+        listDesc = cmdnames.CHECK_BOX_LIST
         bindings["list"] = ["x", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
@@ -2212,29 +2096,13 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _checkBoxDialogData(self):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title of one such dialog box.
-        title = C_("structural navigation", "Check Boxes")
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the label of a check box.
-        columnHeaders = [C_("structural navigation", "Check Box")]
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the state of a widget. Examples
-        # of state include "checked"/"not checked", "selected"/"not selected"
-        columnHeaders.append(C_("structural navigation", "State"))
+        columnHeaders = [guilabels.SN_HEADER_CHECK_BOX]
+        columnHeaders.append(guilabels.SN_HEADER_STATE)
 
         def rowData(obj):
             return [self._getLabel(obj), self._getState(obj)]
 
-        return title, columnHeaders, rowData
+        return guilabels.SN_TITLE_CHECK_BOX, columnHeaders, rowData
 
     ########################
     #                      #
@@ -2248,23 +2116,13 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating a document in a
-        # structural manner, where a 'large object' is a logical
-        # chunk of text, such as a paragraph, a list, a table, etc.
-        #
-        prevDesc = _("Goes to previous large object.")
+        prevDesc = cmdnames.LARGE_OBJECT_PREV
         bindings["previous"] = ["o", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating a document in a
-        # structural manner, where a 'large object' is a logical
-        # chunk of text, such as a paragraph, a list, a table, etc.
-        #
-        nextDesc = _("Goes to next large object.")
+
+        nextDesc = cmdnames.LARGE_OBJECT_NEXT
         bindings["next"] = ["o", settings.NO_MODIFIER_MASK, nextDesc]
-        # Translators: this is for navigating a document in a
-        # structural manner, where a 'large object' is a logical
-        # chunk of text, such as a paragraph, a list, a table, etc.
-        #
-        listDesc = _("Displays a list of large objects.")
+
+        listDesc = cmdnames.LARGE_OBJECT_LIST
         bindings["list"] = ["o", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
@@ -2329,29 +2187,13 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _chunkDialogData(self):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title of one such dialog box.
-        title = C_("structural navigation", "Large Objects")
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the text of an object.
-        columnHeaders = [C_("structural navigation", "Object")]
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the state of a widget. Examples
-        # of roles include "heading", "paragraph", "table", "combo box", etc.
-        columnHeaders.append(C_("structural navigation", "Role"))
+        columnHeaders = [guilabels.SN_HEADER_OBJECT]
+        columnHeaders.append(guilabels.SN_HEADER_ROLE)
 
         def rowData(obj):
             return [self._getText(obj), self._getRoleName(obj)]
 
-        return title, columnHeaders, rowData
+        return guilabels.SN_TITLE_LARGE_OBJECT, columnHeaders, rowData
 
     ########################
     #                      #
@@ -2365,20 +2207,13 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among combo boxes in a form
-        # within a document.
-        #
-        prevDesc = _("Goes to previous combo box.")
+        prevDesc = cmdnames.COMBO_BOX_PREV
         bindings["previous"] = ["c", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating among combo boxes in a form
-        # within a document.
-        #
-        nextDesc = _("Goes to next combo box.")
+
+        nextDesc = cmdnames.COMBO_BOX_NEXT
         bindings["next"] = ["c", settings.NO_MODIFIER_MASK, nextDesc]
-        # Translators: this is for navigating among combo boxes in a form
-        # within a document.
-        #
-        listDesc = _("Displays a list of combo boxes.")
+
+        listDesc = cmdnames.COMBO_BOX_LIST
         bindings["list"] = ["c", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
@@ -2435,28 +2270,13 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _comboBoxDialogData(self):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title of one such dialog box.
-        title = C_("structural navigation", "Combo Boxes")
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the label of a combo box.
-        columnHeaders = [C_("structural navigation", "Combo Box")]
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the selected item of a combo box.
-        columnHeaders.append(C_("structural navigation", "Selected Item"))
+        columnHeaders = [guilabels.SN_HEADER_COMBO_BOX]
+        columnHeaders.append(guilabels.SN_HEADER_SELECTED_ITEM)
 
         def rowData(obj):
             return [self._getLabel(obj), self._getText(obj)]
 
-        return title, columnHeaders, rowData
+        return guilabels.SN_TITLE_COMBO_BOX, columnHeaders, rowData
 
     ########################
     #                      #
@@ -2470,20 +2290,13 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among text entries in a form
-        # within a document.
-        #
-        prevDesc = _("Goes to previous entry.")
+        prevDesc = cmdnames.ENTRY_PREV
         bindings["previous"] = ["e", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating among text entries in a form
-        # within a document.
-        #
-        nextDesc = _("Goes to next entry.")
+
+        nextDesc = cmdnames.ENTRY_NEXT
         bindings["next"] = ["e", settings.NO_MODIFIER_MASK, nextDesc]
-        # Translators: this is for navigating among text entries in a form
-        # within a document.
-        #
-        listDesc = _("Displays a list of entries.")
+
+        listDesc = cmdnames.ENTRY_LIST
         bindings["list"] = ["e", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
@@ -2552,28 +2365,13 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _entryDialogData(self):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title of one such dialog box.
-        title = C_("structural navigation", "Entries")
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the label of an entry.
-        columnHeaders = [C_("structural navigation", "Label")]
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the text of an entry.
-        columnHeaders.append(C_("structural navigation", "Text"))
+        columnHeaders = [guilabels.SN_HEADER_LABEL]
+        columnHeaders.append(guilabels.SN_HEADER_TEXT)
 
         def rowData(obj):
             return [self._getLabel(obj), self._getText(obj)]
 
-        return title, columnHeaders, rowData
+        return guilabels.SN_TITLE_ENTRY, columnHeaders, rowData
 
     ########################
     #                      #
@@ -2587,20 +2385,15 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among fields in a form within
-        # a document.
-        #
-        prevDesc = _("Goes to previous form field.")
+        prevDesc = cmdnames.FORM_FIELD_PREV
         bindings["previous"] = ["Tab",
                                 settings.ORCA_SHIFT_MODIFIER_MASK,
                                 prevDesc]
-        # Translators: this is for navigating among fields in a form within
-        # a document.
-        #
-        nextDesc = _("Goes to next form field.")
+
+        nextDesc = cmdnames.FORM_FIELD_NEXT
         bindings["next"] = ["Tab", settings.ORCA_MODIFIER_MASK, nextDesc]
 
-        listDesc = _("Displays a list of form fields.")
+        listDesc = cmdnames.FORM_FIELD_LIST
         bindings["list"] = ["f", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
@@ -2662,37 +2455,16 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _formFieldDialogData(self):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title of one such dialog box.
-        title = C_("structural navigation", "Form Fields")
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the label of a form field.
-        columnHeaders = [C_("structural navigation", "Label")]
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the state of a widget. Examples
-        # of roles include "heading", "paragraph", "table", "combo box", etc.
-        columnHeaders.append(C_("structural navigation", "Role"))
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the value of a form field.
-        columnHeaders.append(C_("structural navigation", "Value"))
+        columnHeaders = [guilabels.SN_HEADER_LABEL]
+        columnHeaders.append(guilabels.SN_HEADER_ROLE)
+        columnHeaders.append(guilabels.SN_HEADER_VALUE)
 
         def rowData(obj):
             return [self._getLabel(obj),
                     self._getRoleName(obj),
                     self._getValue(obj)]
 
-        return title, columnHeaders, rowData
+        return guilabels.SN_TITLE_FORM_FIELD, columnHeaders, rowData
 
     ########################
     #                      #
@@ -2706,20 +2478,13 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating in a document by heading.
-        # (e.g. <h1>)
-        #
-        prevDesc = _("Goes to previous heading.")
+        prevDesc = cmdnames.HEADING_PREV
         bindings["previous"] = ["h", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating in a document by heading.
-        # (e.g., <h1>)
-        #
-        nextDesc = _("Goes to next heading.")
+
+        nextDesc = cmdnames.HEADING_NEXT
         bindings["next"] = ["h", settings.NO_MODIFIER_MASK, nextDesc]
-        # Translators: this is for creating a list of all of the headings
-        # (e.g., <h1>) in a document as an alternative means of navigation.
-        #
-        listDesc = _("Displays a list of headings.")
+
+        listDesc = cmdnames.HEADING_LIST
         bindings["list"] = ["h", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
 
         prevAtLevelBindings = []
@@ -2727,25 +2492,17 @@ class StructuralNavigation:
         listAtLevelBindings = []
         minLevel, maxLevel = self._headingLevels()
         for i in range(minLevel, maxLevel + 1):
-            # Translators: this is for navigating in a document by heading.
-            # (e.g. <h1> is a heading at level 1).
-            #
-            prevDesc = _("Goes to previous heading at level %d.") % i
+            prevDesc = cmdnames.HEADING_AT_LEVEL_PREV % i
             prevAtLevelBindings.append([str(i),
                                         settings.SHIFT_MODIFIER_MASK,
                                         prevDesc])
-            # Translators: this is for navigating in a document by heading.
-            # (e.g. <h1> is a heading at level 1).
-            #
-            nextDesc = _("Goes to next heading at level %d.") % i
+
+            nextDesc = cmdnames.HEADING_AT_LEVEL_NEXT % i
             nextAtLevelBindings.append([str(i),
                                         settings.NO_MODIFIER_MASK,
                                         nextDesc])
-            # Translators: this is for creating a list of all of the headings
-            # at a particular level (e.g. <h1> is a heading at level 1) in a
-            #document as an alternative means of navigation.
-            #
-            listDesc = _("Displays a list of headings at level %d.") %i
+
+            listDesc = cmdnames.HEADING_AT_LEVEL_LIST %i
             listAtLevelBindings.append([str(i),
                                         settings.SHIFT_ALT_MODIFIER_MASK,
                                         listDesc])
@@ -2824,36 +2581,17 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _headingDialogData(self, arg=None):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the text of document headings.
-        columnHeaders = [C_("structural navigation", "Heading")]
+        columnHeaders = [guilabels.SN_HEADER_HEADING]
 
         if not arg:
-            # Translators: Orca has a command that presents a list of structural
-            # navigation objects in a dialog box so that users can navigate more
-            # quickly than they could with native keyboard navigation. This is
-            # the title of one such dialog box.
-            title = C_("structural navigation", "Headings")
-
-            # Translators: Orca has a command that presents a list of structural
-            # navigation objects in a dialog box so that users can navigate more
-            # quickly than they could with native keyboard navigation. This is
-            # the title for a column containing the level of document headings,
-            # e.g. "1" for an <h1>, "2" for an <h2>, and so on.
-            columnHeaders.append(C_("structural navigation", "Level"))
+            title = guilabels.SN_TITLE_HEADING
+            columnHeaders.append(guilabels.SN_HEADER_LEVEL)
 
             def rowData(obj):
                 return [self._getText(obj), str(self._getHeadingLevel(obj))]
 
         else:
-            # Translators: Orca has a command that presents a list of structural
-            # navigation objects in a dialog box so that users can navigate more
-            # quickly than they could with native keyboard navigation. This is
-            # the title of one such dialog box. Level will be a "1" for <h1>,
-            # a "2" for <h2>, and so on.
-            title = C_("structural navigation", "Headings at Level %d") % arg
+            title = guilabels.SN_TITLE_HEADING_AT_LEVEL % arg
 
             def rowData(obj):
                 return [self._getText(obj)]
@@ -2872,19 +2610,10 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating to the previous ARIA
-        # role landmark.  ARIA role landmarks are the W3C defined
-        # HTML tag attribute 'role' used to identify important part
-        # of webpage like banners, main context, search etc.
-        #
-        prevDesc = _("Goes to previous landmark.")
+        prevDesc = cmdnames.LANDMARK_PREV
         bindings["previous"] = ["m", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating to the next ARIA
-        # role landmark.  ARIA role landmarks are the W3C defined
-        # HTML tag attribute 'role' used to identify important part
-        # of webpage like banners, main context, search etc.
-        #
-        nextDesc = _("Goes to next landmark.")
+
+        nextDesc = cmdnames.LANDMARK_NEXT
         bindings["next"] = ["m", settings.NO_MODIFIER_MASK, nextDesc]
         return bindings
 
@@ -2967,20 +2696,13 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among bulleted/numbered
-        # lists in a document.
-        #
-        prevDesc = _("Goes to previous list.")
+        prevDesc = cmdnames.LIST_PREV
         bindings["previous"] = ["l", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating among bulleted/numbered
-        # lists in a document.
-        #
-        nextDesc = _("Goes to next list.")
+
+        nextDesc = cmdnames.LIST_NEXT
         bindings["next"] = ["l", settings.NO_MODIFIER_MASK, nextDesc]
-        # Translators: this is for navigating among bulleted/numbered
-        # lists in a document.
-        #
-        listDesc = _("Displays a list of lists.")
+
+        listDesc = cmdnames.LIST_LIST
         bindings["list"] = ["l", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
@@ -3037,25 +2759,15 @@ class StructuralNavigation:
             for child in obj:
                 if child.getRole() == pyatspi.ROLE_LIST_ITEM:
                     nItems += 1
-            # Translators: this represents a list in HTML.
-            #
-            itemString = ngettext("List with %d item",
-                                  "List with %d items",
-                                  nItems) % nItems
-            self._script.presentMessage(itemString)
+            self._script.presentMessage(messages.listItemCount(nItems))
             nestingLevel = 0
             parent = obj.parent
             while parent.getRole() == pyatspi.ROLE_LIST:
                 nestingLevel += 1
                 parent = parent.parent
             if nestingLevel:
-                # Translators: this represents a list item in a document.
-                # The nesting level is how 'deep' the item is (e.g., a
-                # level of 2 represents a list item inside a list that's
-                # inside another list).
-                #
-                self._script.presentMessage(_("Nesting level %d") % \
-                                            nestingLevel)
+                self._script.presentMessage(
+                    messages.NESTING_LEVEL % nestingLevel)
             [obj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(obj, characterOffset)
             self._presentLine(obj, characterOffset)
@@ -3065,22 +2777,12 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _listDialogData(self):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title of one such dialog box.
-        title = C_("structural navigation", "Lists")
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the text of a list element.
-        columnHeaders = [C_("structural navigation", "List")]
+        columnHeaders = [guilabels.SN_HEADER_LIST]
 
         def rowData(obj):
             return [self._getText(obj)]
 
-        return title, columnHeaders, rowData
+        return guilabels.SN_TITLE_LIST, columnHeaders, rowData
 
     ########################
     #                      #
@@ -3094,21 +2796,13 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among bulleted/numbered list
-        # items in a document.
-        #
-        prevDesc = _("Goes to previous list item.")
+        prevDesc = cmdnames.LIST_ITEM_PREV
         bindings["previous"] = ["i", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating among bulleted/numbered list
-        # items in a document.
-        #
-        nextDesc = _("Goes to next list item.")
+
+        nextDesc = cmdnames.LIST_ITEM_NEXT
         bindings["next"] = ["i", settings.NO_MODIFIER_MASK, nextDesc]
 
-        # Translators: this is for navigating among bulleted/numbered
-        # lists in a document.
-        #
-        listDesc = _("Displays a list of list items.")
+        listDesc = cmdnames.LIST_ITEM_LIST
         bindings["list"] = ["i", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
@@ -3171,22 +2865,12 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _listItemDialogData(self):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title of one such dialog box.
-        title = C_("structural navigation", "List Items")
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the text of a list item.
-        columnHeaders = [C_("structural navigation", "List Item")]
+        columnHeaders = [guilabels.SN_HEADER_LIST_ITEM]
 
         def rowData(obj):
             return [self._getText(obj)]
 
-        return title, columnHeaders, rowData
+        return guilabels.SN_TITLE_LIST_ITEM, columnHeaders, rowData
 
     ########################
     #                      #
@@ -3200,18 +2884,13 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating between live regions
-        #
-        prevDesc = _("Goes to previous live region.")
+        prevDesc = cmdnames.LIVE_REGION_PREV
         bindings["previous"] = ["d", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating between live regions
-        #
-        nextDesc = _("Goes to next live region.")
+
+        nextDesc = cmdnames.LIVE_REGION_NEXT
         bindings["next"] = ["d", settings.NO_MODIFIER_MASK, nextDesc]
-        # Translators: this is for navigating to the last live region
-        # which made an announcement.
-        #
-        desc = _("Goes to the last live region which made an announcement.")
+
+        desc = cmdnames.LIVE_REGION_LAST
         bindings["last"] = ["y", settings.NO_MODIFIER_MASK, desc]
         return bindings
 
@@ -3288,17 +2967,13 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among paragraphs in a document.
-        #
-        prevDesc = _("Goes to previous paragraph.")
+        prevDesc = cmdnames.PARAGRAPH_PREV
         bindings["previous"] = ["p", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating among paragraphs in a document.
-        #
-        nextDesc = _("Goes to next paragraph.")
+
+        nextDesc = cmdnames.PARAGRAPH_NEXT
         bindings["next"] = ["p", settings.NO_MODIFIER_MASK, nextDesc]
-        # Translators: this is for navigating among paragraphs in a document.
-        #
-        listDesc = _("Displays a list of paragraphs.")
+
+        listDesc = cmdnames.PARAGRAPH_LIST
         bindings["list"] = ["p", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
@@ -3359,22 +3034,12 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _paragraphDialogData(self):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title of one such dialog box.
-        title = C_("structural navigation", "Paragraphs")
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the text of a paragraph element.
-        columnHeaders = [C_("structural navigation", "Paragraph")]
+        columnHeaders = [guilabels.SN_HEADER_PARAGRAPH]
 
         def rowData(obj):
             return [self._getText(obj)]
 
-        return title, columnHeaders, rowData
+        return guilabels.SN_TITLE_PARAGRAPH, columnHeaders, rowData
 
     ########################
     #                      #
@@ -3388,20 +3053,13 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among radio buttons in a
-        # form within a document.
-        #
-        prevDesc = _("Goes to previous radio button.")
+        prevDesc = cmdnames.RADIO_BUTTON_PREV
         bindings["previous"] = ["r", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating among radio buttons in a
-        # form within a document.
-        #
-        nextDesc = _("Goes to next radio button.")
+
+        nextDesc = cmdnames.RADIO_BUTTON_NEXT
         bindings["next"] = ["r", settings.NO_MODIFIER_MASK, nextDesc]
-        # Translators: this is for navigating among radio buttons in a
-        # form within a document.
-        #
-        listDesc = _("Displays a list of radio buttons.")
+
+        listDesc = cmdnames.RADIO_BUTTON_LIST
         bindings["list"] = ["r", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
@@ -3458,29 +3116,13 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _radioButtonDialogData(self):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title of one such dialog box.
-        title = C_("structural navigation", "Radio Buttons")
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the label of a check box.
-        columnHeaders = [C_("structural navigation", "Radio Button")]
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the state of a widget. Examples
-        # of state include "checked"/"not checked", "selected"/"not selected"
-        columnHeaders.append(C_("structural navigation", "State"))
+        columnHeaders = [guilabels.SN_HEADER_RADIO_BUTTON]
+        columnHeaders.append(guilabels.SN_HEADER_STATE)
 
         def rowData(obj):
             return [self._getLabel(obj), self._getState(obj)]
 
-        return title, columnHeaders, rowData
+        return guilabels.SN_TITLE_RADIO_BUTTON, columnHeaders, rowData
 
     ########################
     #                      #
@@ -3494,15 +3136,10 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among separators, such as the
-        # <hr> tag, in a document.
-        #
-        prevDesc = _("Goes to previous separator.")
+        prevDesc = cmdnames.SEPARATOR_PREV
         bindings["previous"] = ["s", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating among separators, such as the
-        # <hr> tag, in a document.
-        #
-        nextDesc = _("Goes to next separator.")
+
+        nextDesc = cmdnames.SEPARATOR_NEXT
         bindings["next"] = ["s", settings.NO_MODIFIER_MASK, nextDesc]
         return bindings
 
@@ -3561,17 +3198,13 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among tables in a document.
-        #
-        prevDesc = _("Goes to previous table.")
+        prevDesc = cmdnames.TABLE_PREV
         bindings["previous"] = ["t", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating among tables in a document.
-        #
-        nextDesc = _("Goes to next table.")
+
+        nextDesc = cmdnames.TABLE_NEXT
         bindings["next"] = ["t", settings.NO_MODIFIER_MASK, nextDesc]
-        # Translators: this is for navigating among tables in a document.
-        #
-        listDesc = _("Displays a list of tables.")
+
+        listDesc = cmdnames.TABLE_LIST
         bindings["list"] = ["t", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
@@ -3631,30 +3264,14 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _tableDialogData(self):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title of one such dialog box.
-        title = C_("structural navigation", "Tables")
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the caption of a table.
-        columnHeaders = [C_("structural navigation", "Caption")]
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the type of a table element. The
-        # type can be "layout" or "data".
-        columnHeaders.append(C_("structural navigation", "Description"))
+        columnHeaders = [guilabels.SN_HEADER_CAPTION]
+        columnHeaders.append(guilabels.SN_HEADER_DESCRIPTION)
 
         def rowData(obj):
             return [self._getTableCaption(obj) or '',
                     self._getTableDescription(obj)]
 
-        return title, columnHeaders, rowData
+        return guilabels.SN_TITLE_TABLE, columnHeaders, rowData
 
     ########################
     #                      #
@@ -3668,29 +3285,22 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among table cells in a document.
-        #
-        desc = _("Goes left one cell.")
+        desc = cmdnames.TABLE_CELL_LEFT
         bindings["left"] = ["Left", settings.SHIFT_ALT_MODIFIER_MASK, desc]
-        # Translators: this is for navigating among table cells in a document.
-        #
-        desc = _("Goes right one cell.")
+
+        desc = cmdnames.TABLE_CELL_RIGHT
         bindings["right"] = ["Right", settings.SHIFT_ALT_MODIFIER_MASK, desc]
-        # Translators: this is for navigating among table cells in a document.
-        #
-        desc = _("Goes up one cell.")
+
+        desc = cmdnames.TABLE_CELL_UP
         bindings["up"] = ["Up", settings.SHIFT_ALT_MODIFIER_MASK, desc]
-        # Translators: this is for navigating among table cells in a document.
-        #
-        desc = _("Goes down one cell.")
+
+        desc = cmdnames.TABLE_CELL_DOWN
         bindings["down"] = ["Down", settings.SHIFT_ALT_MODIFIER_MASK, desc]
-        # Translators: this is for navigating among table cells in a document.
-        #
-        desc = _("Goes to the first cell in a table.")
+
+        desc = cmdnames.TABLE_CELL_FIRST
         bindings["first"] = ["Home", settings.SHIFT_ALT_MODIFIER_MASK, desc]
-        # Translators: this is for navigating among table cells in a document.
-        #
-        desc = _("Goes to the last cell in a table.")
+
+        desc = cmdnames.TABLE_CELL_LAST
         bindings["last"] = ["End", settings.SHIFT_ALT_MODIFIER_MASK, desc]
         return bindings
 
@@ -3747,10 +3357,7 @@ class StructuralNavigation:
 
         if settings.speakCellCoordinates:
             [row, col] = self.getCellCoordinates(cell)
-            # Translators: this represents the (row, col) position of
-            # a cell in a table.
-            #
-            self._script.presentMessage(_("Row %(row)d, column %(column)d.") \
+            self._script.presentMessage(messages.TABLE_CELL_COORDINATES \
                                         % {"row" : row + 1, "column" : col + 1})
 
         spanString = self._getCellSpanInfo(cell)
@@ -3769,20 +3376,13 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among unvisited links in a
-        # document.
-        #
-        prevDesc = _("Goes to previous unvisited link.")
+        prevDesc = cmdnames.UNVISITED_LINK_PREV
         bindings["previous"] = ["u", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating among unvisited links in a
-        # document.
-        #
-        nextDesc = _("Goes to next unvisited link.")
+
+        nextDesc = cmdnames.UNVISITED_LINK_NEXT
         bindings["next"] = ["u", settings.NO_MODIFIER_MASK, nextDesc]
-        # Translators: this is for navigating among visited links in a
-        # document.
-        #
-        listDesc = _("Displays a list of unvisited links.")
+
+        listDesc = cmdnames.UNVISITED_LINK_LIST
         bindings["list"] = ["u", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
 
         return bindings
@@ -3849,28 +3449,13 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _unvisitedLinkDialogData(self):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title of one such dialog box.
-        title = C_("structural navigation", "Unvisited Links")
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the text of a link.
-        columnHeaders = [C_("structural navigation", "Link")]
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the URI of a link.
-        columnHeaders.append(C_("structural navigation", "URI"))
+        columnHeaders = [guilabels.SN_HEADER_LINK]
+        columnHeaders.append(guilabels.SN_HEADER_URI)
 
         def rowData(obj):
             return [self._getText(obj), self._script.utilities.uri(obj)]
 
-        return title, columnHeaders, rowData
+        return guilabels.SN_TITLE_UNVISITED_LINK, columnHeaders, rowData
 
     ########################
     #                      #
@@ -3884,20 +3469,13 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among visited links in a
-        # document.
-        #
-        prevDesc = _("Goes to previous visited link.")
+        prevDesc = cmdnames.VISITED_LINK_PREV
         bindings["previous"] = ["v", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating among visited links in a
-        # document.
-        #
-        nextDesc = _("Goes to next visited link.")
+
+        nextDesc = cmdnames.VISITED_LINK_NEXT
         bindings["next"] = ["v", settings.NO_MODIFIER_MASK, nextDesc]
-        # Translators: this is for navigating among visited links in a
-        # document.
-        #
-        listDesc = _("Displays a list of visited links.")
+
+        listDesc = cmdnames.VISITED_LINK_LIST
         bindings["list"] = ["v", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
 
         return bindings
@@ -3956,28 +3534,13 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _visitedLinkDialogData(self):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title of one such dialog box.
-        title = C_("structural navigation", "Visited Links")
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the text of a link.
-        columnHeaders = [C_("structural navigation", "Link")]
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the URI of a link.
-        columnHeaders.append(C_("structural navigation", "URI"))
+        columnHeaders = [guilabels.SN_HEADER_LINK]
+        columnHeaders.append(guilabels.SN_HEADER_URI)
 
         def rowData(obj):
             return [self._getText(obj), self._script.utilities.uri(obj)]
 
-        return title, columnHeaders, rowData
+        return guilabels.SN_TITLE_VISITED_LINK, columnHeaders, rowData
 
     ########################
     #                      #
@@ -3991,8 +3554,7 @@ class StructuralNavigation:
         """
 
         bindings = {}
-        # Translators: this is for navigating among links in a document.
-        listDesc = _("Displays a list of links.")
+        listDesc = cmdnames.LINK_LIST
         bindings["list"] = ["k", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
@@ -4053,34 +3615,13 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
 
     def _linkDialogData(self):
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title of one such dialog box.
-        title = C_("structural navigation", "Links")
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the text of a link.
-        columnHeaders = [C_("structural navigation", "Link")]
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the URI of a link.
-        columnHeaders.append(C_("structural navigation", "URI"))
-
-        # Translators: Orca has a command that presents a list of structural
-        # navigation objects in a dialog box so that users can navigate more
-        # quickly than they could with native keyboard navigation. This is
-        # the title for a column containing the state of a widget. Examples
-        # of state include "checked"/"not checked", "selected"/"not selected"
-        columnHeaders.append(C_("structural navigation", "State"))
+        columnHeaders = [guilabels.SN_HEADER_LINK]
+        columnHeaders.append(guilabels.SN_HEADER_URI)
+        columnHeaders.append(guilabels.SN_HEADER_STATE)
 
         def rowData(obj):
             return [self._getText(obj),
                     self._script.utilities.uri(obj),
                     self._getState(obj)]
 
-        return title, columnHeaders, rowData
+        return guilabels.SN_TITLE_LINK, columnHeaders, rowData

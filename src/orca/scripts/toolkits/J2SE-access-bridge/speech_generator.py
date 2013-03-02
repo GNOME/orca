@@ -27,9 +27,9 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.messages as messages
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
-from orca.orca_i18n import ngettext
 
 _settingsManager = settings_manager.getManager()
 
@@ -92,12 +92,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         acss = self.voice(speech_generator.SYSTEM)
         if obj and obj.getState().contains(pyatspi.STATE_EXPANDED) \
            and obj.getRole() == pyatspi.ROLE_LABEL and obj.childCount:
-            children = obj.childCount
-            # Translators: this is the number of items in a layered
-            # pane or table.
-            #
-            items = ngettext("%d item", "%d items", children) % children
-            result.append(items)
+            result.append(messages.itemCount(obj.childCount))
             result.extend(acss)
         else:
             result.extend(speech_generator.SpeechGenerator.\

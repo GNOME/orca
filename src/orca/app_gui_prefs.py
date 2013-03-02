@@ -277,7 +277,7 @@ def showPreferencesUI():
     #
     if not orca_state.locusOfFocus or \
        not orca_state.locusOfFocus.getApplication():
-        message = _("No application has focus.")
+        message = messages.NO_FOCUSED_APPLICATION
         braille.displayMessage(message)
         speech.speak(message)
         return

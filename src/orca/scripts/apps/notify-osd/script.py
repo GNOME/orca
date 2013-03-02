@@ -25,12 +25,11 @@ __date__      = ""
 __copyright__ = "Copyright (c) 2009 Eitan Isaacson"
 __license__   = "LGPL"
 
+import orca.messages as messages
 import orca.scripts.default as default
 import orca.settings as settings
 import orca.speech as speech
 import orca.notification_messages as notification_messages
-
-from orca.orca_i18n import _
 
 ########################################################################
 #                                                                      #
@@ -80,9 +79,7 @@ class Script(default.Script):
         utterances = []
         message = ""
         if value < 0:
-            # Translators: This denotes a notification to the user of some sort.
-            #
-            utterances.append(_('Notification'))
+            utterances.append(messages.NOTIFICATION)
             utterances.append(self.voices.get(settings.SYSTEM_VOICE))
             message = '%s %s' % (event.source.name, event.source.description)
             utterances.append(message)

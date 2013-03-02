@@ -31,9 +31,8 @@ import re
 
 from . import debug
 from . import flat_review
+from . import messages
 from . import orca_state
-
-from .orca_i18n import _
 
 class SearchQuery:
     """Represents a search that the user wants to perform."""
@@ -254,31 +253,13 @@ class SearchQuery:
                         doneWithLine = False
                         wrappedYet = True
                         if self.searchBackwards:
-                            # Translators: the Orca "Find" dialog
-                            # allows a user to search for text in a
-                            # window and then move focus to that text.
-                            # For example, they may want to find the
-                            # "OK" button.  This message indicates
-                            # that a find operation in the reverse
-                            # direction is wrapping from the top of
-                            # the window down to the bottom.
-                            #
-                            script.presentMessage(_("Wrapping to Bottom"))
+                            script.presentMessage(messages.WRAPPING_TO_BOTTOM)
                             moved = context.goPrevious( \
                                     flat_review.Context.LINE, \
                                     flat_review.Context.WRAP_ALL)
                             self.debugContext(context, "[3] go previous")
                         else:
-                            # Translators: the Orca "Find" dialog
-                            # allows a user to search for text in a
-                            # window and then move focus to that text.
-                            # For example, they may want to find the
-                            # "OK" button.  This message indicates
-                            # that a find operation in the forward
-                            # direction is wrapping from the bottom of
-                            # the window up to the top.
-                            #
-                            script.presentMessage(_("Wrapping to Top"))
+                            script.presentMessage(messages.WRAPPING_TO_TOP)
                             moved = context.goNext( \
                                     flat_review.Context.LINE, \
                                     flat_review.Context.WRAP_ALL)

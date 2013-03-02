@@ -32,10 +32,10 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.messages as messages
+import orca.object_properties as object_properties
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
-from orca.orca_i18n import _
-from orca.orca_i18n import ngettext
 
 _settingsManager = settings_manager.getManager()
 
@@ -126,14 +126,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if args.get('role', obj.getRole()) == pyatspi.ROLE_LINK \
            and obj.parent.getRole() == pyatspi.ROLE_IMAGE:
             result = self._generateName(obj, **args)
-            # Translators: The following string is spoken to let the user
-            # know that he/she is on a link within an image map. An image
-            # map is an image/graphic which has been divided into regions.
-            # Each region can be clicked on and has an associated link.
-            # Please see http://en.wikipedia.org/wiki/Imagemap for more
-            # information and examples.
-            #
-            result.append(_("image map link"))
+            result.append(messages.IMAGE_MAP_LINK)
         else:
             result = speech_generator.SpeechGenerator.\
                            _generateDescription(self, obj, **args)
@@ -253,12 +246,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if role == pyatspi.ROLE_HEADING:
                 level = self._script.getHeadingLevel(obj)
                 if level:
-                    # Translators: the %(level)d is in reference to a heading
-                    # level in HTML (e.g., For <h3>, the level is 3)
-                    # and the %(role)s is in reference to a previously
-                    # translated rolename for the heading.
-                    #
-                    result.append(_("%(role)s level %(level)d") % {
+                    result.append(object_properties.ROLE_HEADING_LEVEL_SPEECH % {
                         'role': self.getLocalizedRoleName(obj, role),
                         'level': level})
                 else:
@@ -296,11 +284,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         acss = self.voice(speech_generator.SYSTEM)
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_LIST:
-            # Translators: this represents a list in HTML.
-            #
-            result.append(ngettext("List with %d item",
-                                   "List with %d items",
-                                   obj.childCount) % obj.childCount)
+            result.append(messages.listItemCount(obj.childCount))
             result.extend(acss)
         else:
             result.extend(
@@ -467,43 +451,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         headings, forms, tables, vlinks, uvlinks, percent = \
             self._script.getPageSummary(obj)
         if headings:
-            # Translators: Announces the number of headings in the
-            # web page that is currently being displayed.
-            #
-            result.append(ngettext \
-                ('%d heading', '%d headings', headings) % headings)
+            result.append(messages.headingCount(headings))
         if forms:
-            # Translators: Announces the number of forms in the
-            # web page that is currently being displayed.
-            #
-            result.append(ngettext('%d form', '%d forms', forms) % forms)
+            result.append(messages.formCount(forms))
         if tables:
-            # Translators: Announces the number of non-layout tables in the
-            # web page that is currently being displayed.
-            #
-            result.append(ngettext('%d table', '%d tables', tables) % tables)
+            result.append(messages.tableCount(tables))
         if vlinks:
-            # Translators: Announces the number of visited links in the
-            # web page that is currently being displayed.
-            #
-            result.append(ngettext \
-                ('%d visited link', '%d visited links', vlinks) % vlinks)
+            result.append(messages.visitedLinkCount(vlinks))
         if uvlinks:
-            # Translators: Announces the number of unvisited links in the
-            # web page that is currently being displayed.
-            #
-            result.append(ngettext \
-                ('%d unvisited link', '%d unvisited links', uvlinks) % uvlinks)
+            result.append(messages.unvisitedLinkCount(uvlinks))
         if percent is not None:
-            # Translators: Announces the percentage of the document that has
-            # been read.  This is calculated by knowing the index of the
-            # current position divided by the total number of objects on the
-            # page.
-            #
-            result.append(ngettext \
-                ('%d percent of document read',
-                 '%d percent of document read',
-                 percent) % percent)
+            result.append(messages.percentRead(percent))
 
         if result:
             result.extend(acss)

@@ -32,11 +32,10 @@ import time
 
 from . import debug
 from . import input_event
+from . import messages
 from . import orca_state
 from . import script_manager
 from . import settings
-
-from .orca_i18n import _
 
 _scriptManager = script_manager.getManager()
 
@@ -233,11 +232,7 @@ class EventManager:
                 if noFocus:
                     if settings.gilSleepTime:
                         time.sleep(settings.gilSleepTime)
-                    # Translators: this is intended to be a short phrase to
-                    # speak and braille to tell the user that no component
-                    # has keyboard focus.
-                    #
-                    fullMessage = _("No focus")
+                    fullMessage = messages.NO_FOCUS
                     defaultScript = _scriptManager.getDefaultScript()
                     defaultScript.presentMessage(fullMessage, '')
                     self.noFocusTimestamp = orca_state.noFocusTimestamp

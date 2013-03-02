@@ -29,6 +29,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.cmdnames as cmdnames
 import orca.debug as debug
 import orca.scripts.default as default
 import orca.keybindings as keybindings
@@ -41,7 +42,6 @@ import orca.speech as speech
 import orca.speechserver as speechserver
 import orca.settings as settings
 import orca.settings_manager as settings_manager
-from orca.orca_i18n import _
 
 from .formatting import Formatting
 from .speech_generator import SpeechGenerator
@@ -121,7 +121,7 @@ class Script(default.Script):
         self.inputEventHandlers["sayAllHandler"] = \
             input_event.InputEventHandler(
                 Script.sayAll,
-                _("Speaks entire document."))
+                cmdnames.SAY_ALL)
 
     def isActivatableEvent(self, event):
         """Returns True if the given event is one that should cause this

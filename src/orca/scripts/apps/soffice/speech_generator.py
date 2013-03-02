@@ -30,8 +30,6 @@ import pyatspi
 import orca.messages as messages
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
-from orca.orca_i18n import ngettext
-from orca.orca_i18n import _
 
 from . import script_settings
 
@@ -210,13 +208,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if role == pyatspi.ROLE_TOGGLE_BUTTON \
            and obj.parent.getRole() == pyatspi.ROLE_TOOL_BAR:
             if obj.getState().contains(pyatspi.STATE_CHECKED):
-                # Translators: this represents the state of a check box
-                #
-                result.append(_("on"))
+                result.append(messages.ON)
             else:
-                # Translators: this represents the state of a check box
-                #
-                result.append(_("off"))
+                result.append(messages.OFF)
             result.extend(acss)
         elif role == pyatspi.ROLE_TOGGLE_BUTTON:
             result.extend(speech_generator.SpeechGenerator._generateToggleState(
@@ -399,13 +393,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     tooLongCount += len(objectText) - i
                     break
             if tooLongCount > 0:
-                # Translators: people can enter a string of text that is
-                # too wide for a spreadsheet cell.  This string will be
-                # spoken if such a cell is encountered.
-                #
-                result = [ngettext("%d character too long",
-                                   "%d characters too long",
-                                   tooLongCount) % tooLongCount]
+                result = [messages.charactersTooLong(tooLongCount)]
         if result:
             result.extend(acss)
         return result

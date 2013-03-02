@@ -25,15 +25,15 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.scripts.default as default
-import orca.input_event as input_event
-import orca.orca_state as orca_state
-import orca.speech as speech
 import pyatspi
 
-from .speech_generator import SpeechGenerator
+import orca.scripts.default as default
+import orca.input_event as input_event
+import orca.messages as messages
+import orca.orca_state as orca_state
+import orca.speech as speech
 
-from orca.orca_i18n import _ # for gettext support
+from .speech_generator import SpeechGenerator
 
 ########################################################################
 #                                                                      #
@@ -79,11 +79,7 @@ class Script(default.Script):
             objs = self.utilities.descendantsWithRole(
                 event.source, pyatspi.ROLE_EDITBAR)
             if len(objs) == 0:
-                # Translators: this is an indication that Orca is unable to
-                # obtain the display of the gcalctool calculator, which is
-                # the area where calculation results are presented.
-                #
-                contents = _("Unable to get calculator display")
+                contents = messages.CALCULATOR_DISPLAY_NOT_FOUND
                 speech.speak(contents)
                 self.displayBrailleMessage(contents)
             else:

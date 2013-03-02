@@ -31,6 +31,7 @@ from gi.repository import Gtk
 import pyatspi
 
 import orca.scripts.default as default
+import orca.messages as messages
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings as settings
@@ -218,19 +219,13 @@ class Script(default.Script):
                 return
 
             if event.detail1 == 1 and not self._isBusy:
-                # Translators: this is in reference to loading a web page
-                # or some other content.
-                #
-                msg = _("Loading.  Please wait.")
+                msg = messages.PAGE_LOADING_START
                 speech.speak(msg)
                 self.displayBrailleMessage(
                     msg, flashTime=settings.brailleFlashTime)
                 self._isBusy = True
             elif event.detail1 == 0 and self._isBusy:
-                # Translators: this is in reference to loading a web page
-                # or some other content.
-                #
-                msg = _("Finished loading.")
+                msg = messages.PAGE_LOADING_END
                 speech.speak(msg)
                 self.displayBrailleMessage(
                     msg, flashTime=settings.brailleFlashTime)

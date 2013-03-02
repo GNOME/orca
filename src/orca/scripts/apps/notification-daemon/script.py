@@ -25,11 +25,12 @@ __date__      = ""
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.scripts.default as default
-import orca.speech as speech
 import pyatspi
 
-from orca.orca_i18n import _
+import orca.messages as messages
+import orca.scripts.default as default
+import orca.speech as speech
+
 
 ########################################################################
 #                                                                      #
@@ -58,8 +59,6 @@ class Script(default.Script):
         a = self.utilities.descendantsWithRole(event.source, pyatspi.ROLE_LABEL)
         print(a)
         texts = [self.utilities.displayedText(acc) for acc in a]
-        # Translators: This denotes a notification to the user of some sort.
-        #
-        text = _('Notification %s') % ' '.join(texts)
+        text = '%s %s' % (messages.NOTIFICATION, ' '.join(texts))
         speech.speak(text, None, True)
 

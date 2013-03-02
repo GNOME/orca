@@ -774,11 +774,6 @@ sounds = {}
 #                                                                      #
 ########################################################################
 
-# Translators: "blank" is a short word to mean the
-# user has navigated to an empty line.
-#
-speechBlankString = _("blank")
-
 # Translators: Certain objects (such as form controls on web pages)
 # can have STATE_REQUIRED set on them to inform the user that this
 # field must be filled out. This string is the default string which

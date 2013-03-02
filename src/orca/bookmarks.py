@@ -22,10 +22,10 @@
 import pickle
 import os
 
+from . import messages
 from . import speech
 from . import orca_state
 from . import settings_manager
-from .orca_i18n import _
 
 _settingsManager = settings_manager.getManager()
 
@@ -70,13 +70,8 @@ class Bookmarks:
         """ Add an in-page accessible object bookmark for this key. """
         context = self._script.getFlatReviewContext()
         self._bookmarks[inputEvent.hw_code] = self._contextToBookmark(context)
-        
-        # Translators: this announces that a bookmark has been entered.  
-        # Orca allows users to tell it to remember a particular spot in an 
-        # application window and provides keystrokes for the user to jump to 
-        # those spots.  These spots are known as 'bookmarks'. 
-        #
-        utterances = [_('bookmark entered')]
+
+        utterances = [messages.BOOKMARK_ENTERED]
         utterances.extend(
             self._script.speechGenerator.generateSpeech(
                 context.getCurrentAccessible()))
@@ -97,18 +92,11 @@ class Bookmarks:
 
         # Are they the same object?
         if self._script.utilities.isSameObject(cur_obj, obj):
-            # Translators: this announces that the current object is the same
-            # object pointed to by the bookmark.
-            #
-            self._script.presentMessage(_('bookmark is current object'))
+            self._script.presentMessage(messages.BOOKMARK_IS_CURRENT_OBJECT)
             return
         # Are their parents the same?
         elif self._script.utilities.isSameObject(cur_obj.parent, obj.parent):
-            # Translators: this announces that the current object's parent and 
-            # the parent of the object pointed to by the bookmark are the same.
-            #
-            self._script.presentMessage(
-                _('bookmark and current object have same parent'))
+            self._script.presentMessage(messages.BOOKMARK_PARENT_IS_SAME)
             return
 
         # Do they share a common ancestor?
@@ -122,32 +110,20 @@ class Bookmarks:
         p = cur_obj.parent
         while p:
             if bookmark_ancestors.count(p) > 0:
-                rolename = p.getLocalizedRoleName()
-                # Translators: this announces that the bookmark and the current
-                # object share a common ancestor
-                #
-                self._script.presentMessage(_('shared ancestor %s') % rolename)
+                msg = messages.BOOKMARK_SHARED_ANCESTOR % p.getLocalizedRoleName()
+                self._script.presentMessage(msg)
                 return
             p = p.parent
 
-        # Translators: This announces that a comparison between the bookmark
-        # and the current object can not be determined.
-        #
-        self._script.presentMessage(_('comparison unknown'))
+        self._script.presentMessage(messages.BOOKMARK_COMPARISON_UNKNOWN)
 
     def saveBookmarks(self, inputEvent):
         """ Save the bookmarks for this script. """        
         try:
             self.saveBookmarksToDisk(self._bookmarks)
-            # Translators: this announces that a bookmark has been saved to 
-            # disk
-            #
-            self._script.presentMessage(_('bookmarks saved'))
+            self._script.presentMessage(messages.BOOKMARKS_SAVED)
         except IOError:
-            # Translators: this announces that a bookmark could not be saved to 
-            # disk
-            #
-            self._script.presentMessage(_('bookmarks could not be saved'))
+            self._script.presentMessage(messages.BOOKMARKS_SAVED_FAILURE)
 
         # Notify the observers
         for o in self._saveObservers:
@@ -218,7 +194,7 @@ class Bookmarks:
         try:
             inputFile = open( os.path.join( orcaBookmarksDir, \
                         '%s.pkl' %filename), "r")
-            bookmarks = pickle.load(inputFile)
+            bookmarks = pickle.load(inputFile.buffer)
             inputFile.close()
             return bookmarks
         except (IOError, EOFError, OSError):
@@ -237,7 +213,7 @@ class Bookmarks:
             os.mkdir(orcaBookmarksDir)
         output = open( os.path.join( orcaBookmarksDir, \
                     '%s.pkl' %filename), "w", os.O_CREAT)
-        pickle.dump(bookmarksObj, output)
+        pickle.dump(bookmarksObj, output.buffer)
         output.close()
 
     def _contextToBookmark(self, context):

@@ -32,10 +32,9 @@ __license__   = "LGPL"
 import pyatspi
 import urllib.parse
 
-import orca.speech as speech
 import orca.bookmarks as bookmarks
-
-from orca.orca_i18n import _
+import orca.messages as messages
+import orca.speech as speech
 
 ####################################################################
 #                                                                  #
@@ -57,9 +56,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         obj, characterOffset = self._script.getCaretContext()
         path = self._objToPath()
         self._bookmarks[index] = path, characterOffset
-        # Translators: this announces that a bookmark has been entered
-        #
-        utterances = [(_('entered bookmark'))]
+        utterances = [(messages.BOOKMARK_ENTERED)]
         utterances.extend(self._script.speechGenerator.generateSpeech(obj))
         speech.speak(utterances)
         
@@ -101,18 +98,11 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         
         # Are they the same object?
         if self._script.utilities.isSameObject(cur_obj, obj):
-            # Translators: this announces that the current object is the same
-            # object pointed to by the bookmark.
-            #
-            self._script.presentMessage(_('bookmark is current object'))
+            self._script.presentMessage(messages.BOOKMARK_IS_CURRENT_OBJECT)
             return
         # Are their parents the same?
         elif self._script.utilities.isSameObject(cur_obj.parent, obj.parent):
-            # Translators: this announces that the current object's parent and 
-            # the parent of the object pointed to by the bookmark are the same.
-            #
-            self._script.presentMessage(
-                _('bookmark and current object have same parent'))
+            self._script.presentMessage(messages.BOOKMARK_PARENT_IS_SAME)
             return
         
         # Do they share a common ancestor?
@@ -127,17 +117,12 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         while p:
             if bookmark_ancestors.count(p) > 0:
                 rolename = p.getLocalizedRoleName()
-                # Translators: this announces that the bookmark and the current
-                # object share a common ancestor
-                #
-                self._script.presentMessage(_('shared ancestor %s') % rolename)
+                self._script.presentMessage(
+                    messages.BOOKMARK_SHARED_ANCESTOR % rolename)
                 return
             p = p.parent
-        
-        # Translators: This announces that a comparison between the bookmark
-        # and the current object can not be determined.
-        #
-        self._script.presentMessage(_('comparison unknown'))
+
+        self._script.presentMessage(messages.BOOKMARK_COMPARISON_UNKNOWN)
         
     def saveBookmarks(self, inputEvent):
         """ Save the bookmarks for this script. """
@@ -149,15 +134,9 @@ class GeckoBookmarks(bookmarks.Bookmarks):
             
         try:
             self.saveBookmarksToDisk(saved)
-            # Translators: this announces that a bookmark has been saved to 
-            # disk
-            #
-            self._script.presentMessage(_('bookmarks saved'))
+            self._script.presentMessage(messages.BOOKMARKS_SAVED)
         except IOError:
-            # Translators: this announces that a bookmark could not be saved to 
-            # disk
-            #
-            self._script.presentMessage(_('bookmarks could not be saved'))
+            self._script.presentMessage(messages.BOOKMARKS_SAVED_FAILURE)
 
         # Notify the observers
         for o in self._saveObservers:

@@ -29,9 +29,8 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.object_properties as object_properties
 import orca.braille_generator as braille_generator
-
-from orca.orca_i18n import _
 
 ########################################################################
 #                                                                      #
@@ -48,14 +47,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
     def __generateHeadingRole(self, obj):
         result = []
         level = self._script.utilities.headingLevel(obj)
-        # Translators: the 'h' below represents a heading level
-        # attribute for content that you might find in something
-        # such as HTML content (e.g., <h1>). The translated form
-        # is meant to be a single character followed by a numeric
-        # heading level, where the single character is to indicate
-        # 'heading'.
-        #
-        result.append(_("h%d" % level))
+        result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
 
         return result
 

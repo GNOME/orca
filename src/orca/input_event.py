@@ -33,9 +33,9 @@ import unicodedata
 
 from . import debug
 from . import keynames
+from . import messages
 from . import orca_state
 from . import settings
-from .orca_i18n import C_
 
 KEYBOARD_EVENT     = "keyboard"
 BRAILLE_EVENT      = "braille"
@@ -339,21 +339,9 @@ class KeyboardEvent(InputEvent):
             return ''
 
         if not locked:
-            # Translators: This string is used to present the state of a
-            # locking key, such as Caps Lock. If Caps Lock is "off", then
-            # letters typed will appear in lowercase; if Caps Lock is "on",
-            # they will instead appear in uppercase. This string is also
-            # applied to Num Lock and potentially will be applied to similar
-            # keys in the future.
-            return C_("locking key state", "off")
+            return messages.LOCKING_KEY_STATE_OFF
 
-        # Translators: This string is used to present the state of a
-        # locking key, such as Caps Lock. If Caps Lock is "off", then
-        # letters typed will appear in lowercase; if Caps Lock is "on",
-        # they will instead appear in uppercase. This string is also
-        # applied to Num Lock and potentially will be applied to similar
-        # keys in the future.
-        return C_("locking key state", "on")
+        return messages.LOCKING_KEY_STATE_ON
 
     def getKeyName(self):
         """Returns the string to be used for presenting the key to the user."""

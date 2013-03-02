@@ -40,8 +40,10 @@ __license__   = "LGPL"
 from gi.repository import Gtk
 import pyatspi
 
+import orca.cmdnames as cmdnames
 import orca.debug as debug
 import orca.scripts.default as default
+import orca.guilabels as guilabels
 import orca.keybindings as keybindings
 import orca.input_event as input_event
 import orca.messages as messages
@@ -50,8 +52,6 @@ import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.settings as settings
 import orca.settings_manager as settings_manager
-from orca.orca_i18n import _
-from orca.orca_i18n import ngettext
 
 from .speech_generator import SpeechGenerator
 from .braille_generator import BrailleGenerator
@@ -218,79 +218,44 @@ class Script(default.Script):
         """
 
         default.Script.setupInputEventHandlers(self)
-        self.inputEventHandlers.update(\
+        self.inputEventHandlers.update(
             self.structuralNavigation.inputEventHandlers)
 
         self.inputEventHandlers["presentInputLineHandler"] = \
             input_event.InputEventHandler(
                 Script.presentInputLine,
-                # Translators: this is the input line of a spreadsheet
-                # (i.e., the place where enter formulas)
-                #
-                _("Presents the contents of the input line."))
+                cmdnames.PRESENT_INPUT_LINE)
 
         self.inputEventHandlers["setDynamicColumnHeadersHandler"] = \
             input_event.InputEventHandler(
                 Script.setDynamicColumnHeaders,
-                # Translators: Orca allows you to dynamically define which
-                # row of a spreadsheet or table counts as column headers.
-                #
-                _("Set the row to use as dynamic column headers " \
-                  "when speaking calc cells."))
+                cmdnames.DYNAMIC_COLUMN_HEADER_SET)
 
         self.inputEventHandlers["clearDynamicColumnHeadersHandler"] = \
             input_event.InputEventHandler(
                 Script.clearDynamicColumnHeaders,
-                # Translators: Orca allows you to dynamically define which
-                # row of a spreadsheet or table counts as column headers.
-                #
-                _("Clears the dynamic column headers."))
+                cmdnames.DYNAMIC_COLUMN_HEADER_CLEAR)
 
         self.inputEventHandlers["setDynamicRowHeadersHandler"] = \
             input_event.InputEventHandler(
                 Script.setDynamicRowHeaders,
-                # Translators: Orca allows you to dynamically define which
-                # column of a spreadsheet or table counts as row headers.
-                #
-                _("Set the column to use as dynamic row headers " \
-                  "to use when speaking calc cells."))
+                cmdnames.DYNAMIC_ROW_HEADER_SET)
 
         self.inputEventHandlers["clearDynamicRowHeadersHandler"] = \
             input_event.InputEventHandler(
                 Script.clearDynamicRowHeaders,
-                # Translators: Orca allows you to dynamically define which
-                # column of a spreadsheet or table counts as row headers.
-                #
-                _("Clears the dynamic row headers"))
+                cmdnames.DYNAMIC_ROW_HEADER_CLEAR)
 
         self.inputEventHandlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleLeft,
-                # Translators: a refreshable braille display is an
-                # external hardware device that presents braille
-                # character to the user.  There are a limited number
-                # of cells on the display (typically 40 cells).  Orca
-                # provides the feature to build up a longer logical
-                # line and allow the user to press buttons on the
-                # braille display so they can pan left and right over
-                # this line.
-                #
-                _("Pans the braille display to the left."),
+                cmdnames.PAN_BRAILLE_LEFT,
                 False) # Do not enable learn mode for this action
 
         self.inputEventHandlers["panBrailleRightHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleRight,
-                # Translators: a refreshable braille display is an
-                # external hardware device that presents braille
-                # character to the user.  There are a limited number
-                # of cells on the display (typically 40 cells).  Orca
-                # provides the feature to build up a longer logical
-                # line and allow the user to press buttons on the
-                # braille display so they can pan left and right over
-                # this line.
-                #
-                _("Pans the braille display to the right."),
+                cmdnames.PAN_BRAILLE_RIGHT,
                 False) # Do not enable learn mode for this action
 
     def getAppKeyBindings(self):
@@ -350,11 +315,7 @@ class Script(default.Script):
         grid = Gtk.Grid()
         grid.set_border_width(12)
 
-        # Translators: If checked, then Orca will speak the coordinates
-        # of the current spread sheet cell. Coordinates are the row and
-        # column position within the spread sheet (i.e. A1, B1, C2 ...)
-        #
-        label = _("Speak spread sheet cell coordinates")
+        label = guilabels.SPREADSHEET_SPEAK_CELL_COORDINATES
         value = script_settings.speakSpreadsheetCoordinates
         self.speakSpreadsheetCoordinatesCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
@@ -364,10 +325,7 @@ class Script(default.Script):
         tableFrame = Gtk.Frame()
         grid.attach(tableFrame, 0, 1, 1, 1)
 
-        # Translators: this is the title of a panel containing options
-        # for specifying how to navigate tables in document content.
-        #
-        label = Gtk.Label(label="<b>%s</b>" % _("Table Navigation"))
+        label = Gtk.Label(label="<b>%s</b>" % guilabels.TABLE_NAVIGATION)
         label.set_use_markup(True)
         tableFrame.set_label_widget(label)
 
@@ -377,41 +335,28 @@ class Script(default.Script):
         tableGrid = Gtk.Grid()
         tableAlignment.add(tableGrid)
 
-        # Translators: this is an option to tell Orca whether or not it
-        # should speak table cell coordinates in document content.
-        #
-        label = _("Speak _cell coordinates")
+        label = guilabels.TABLE_SPEAK_CELL_COORDINATES
         value = _settingsManager.getSetting('speakCellCoordinates')
         self.speakCellCoordinatesCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.speakCellCoordinatesCheckButton.set_active(value)
         tableGrid.attach(self.speakCellCoordinatesCheckButton, 0, 0, 1, 1)
 
-        # Translators: this is an option to tell Orca whether or not it
-        # should speak the span size of a table cell (e.g., how many
-        # rows and columns a particular table cell spans in a table).
-        #
-        label = _("Speak _multiple cell spans")
+        label = guilabels.TABLE_SPEAK_CELL_SPANS
         value = _settingsManager.getSetting('speakCellSpan')
         self.speakCellSpanCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.speakCellSpanCheckButton.set_active(value)
         tableGrid.attach(self.speakCellSpanCheckButton, 0, 1, 1, 1)
 
-        # Translators: this is an option for whether or not to speak
-        # the header of a table cell in document content.
-        #
-        label = _("Announce cell _header")
+        label = guilabels.TABLE_ANNOUNCE_CELL_HEADER
         value = _settingsManager.getSetting('speakCellHeaders')
         self.speakCellHeadersCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.speakCellHeadersCheckButton.set_active(value)
         tableGrid.attach(self.speakCellHeadersCheckButton, 0, 2, 1, 1)
            
-        # Translators: this is an option to allow users to skip over
-        # empty/blank cells when navigating tables in document content.
-        #
-        label = _("Skip _blank cells")
+        label = guilabels.TABLE_SKIP_BLANK_CELLS
         value = _settingsManager.getSetting('skipBlankCells')
         self.skipBlankCellsCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
@@ -749,25 +694,10 @@ class Script(default.Script):
 
         if not self.utilities.isSameObject(oldAncestor, newAncestor):
             if oldTable:
-                # We've left a table.  Announce this fact.
-                #
-                self.presentMessage(_("leaving table."))
+                self.presentMessage(messages.TABLE_LEAVING)
             if newTable:
-                nRows = newTable.nRows
-                nColumns = newTable.nColumns
-                # Translators: this represents the number of rows in a table.
-                #
-                rowString = ngettext("table with %d row",
-                                     "table with %d rows",
-                                     nRows) % nRows
-                # Translators: this represents the number of columns in a table.
-                #
-                colString = ngettext("%d column",
-                                     "%d columns",
-                                     nColumns) % nColumns
-
-                line = rowString + " " + colString
-                self.presentMessage(line)
+                self.presentMessage(
+                    messages.tableSize(newTable.nRows, newTable.nColumns))
 
         if not newTable:
             self.lastCell = [None, -1]
@@ -1201,38 +1131,7 @@ class Script(default.Script):
 
         speech.speak(word, voice)
         if self.endOfLink(obj, word, startOffset, endOffset):
-            speech.speak(_("link"))
-
-    def isSetupDialog(self, obj):
-        """ Check to see if this object is in the Setup dialog by walking
-        back up the object hierarchy until we get to the dialog object and
-        checking to see if it has a name that starts with "Welcome to
-        StarOffice".
-
-        Arguments:
-        - obj: an Accessible object that implements the AccessibleText
-               interface
-
-        Returns an indication of whether this object is in the Setup dialog.
-        """
-
-        found = False
-        while obj and obj.getRole() != pyatspi.ROLE_APPLICATION:
-            # Translators: this is the title of the window that
-            # you get when starting StarOffice.  The translated
-            # form has to match what StarOffice/OpenOffice is
-            # using.  We hate keying off stuff like this, but
-            # we're forced to do so in this case.
-            #
-            if obj.getRole() == pyatspi.ROLE_DIALOG and \
-                (obj.name and obj.name.startswith(_("Welcome to StarOffice"))):
-                debug.println(self.debugLevel,
-                              "StarOffice.isSetupDialog: True.")
-                found = True
-
-            obj = obj.parent
-
-        return found
+            speech.speak(messages.LINK)
 
     def speakSetupLabel(self, label):
         """Speak this Setup dialog label.
@@ -1256,58 +1155,6 @@ class Script(default.Script):
             panel, pyatspi.ROLE_LABEL)
         for label in allLabels:
             self.speakSetupLabel(label)
-
-    def __isAvailableFieldsPanel(self, event):
-        """If we are in the sbase Table Wizard, try to reduce the numerous
-        utterances of "Available fields panel". See bug #465087 for more
-        details.
-
-        Arguments:
-        - event: the object state change event.
-        """
-
-        # Translators: this represents a match with the name of the
-        # "Available fields" list in the Tables wizard dialog in the
-        # the OOo oobase database application. We're looking for the
-        # accessible object name starting with "Available fields".
-        # We really try to avoid doing this kind of thing, but
-        # sometimes it is necessary and we apologize.
-        #
-        panelName = _("Available fields")
-
-        isPanel = False
-        if event.type == "object:state-changed:focused":
-            rolesList = [pyatspi.ROLE_PANEL,
-                         pyatspi.ROLE_SCROLL_PANE,
-                         pyatspi.ROLE_PANEL,
-                         pyatspi.ROLE_OPTION_PANE,
-                         pyatspi.ROLE_DIALOG,
-                         pyatspi.ROLE_APPLICATION]
-            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-                tmp = event.source.parent.parent
-                if tmp.name.startswith(panelName):
-                    isPanel = True
-
-            if not isPanel:
-                rolesList = [pyatspi.ROLE_SCROLL_PANE,
-                             pyatspi.ROLE_PANEL,
-                             pyatspi.ROLE_OPTION_PANE,
-                             pyatspi.ROLE_DIALOG,
-                             pyatspi.ROLE_APPLICATION]
-                if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-                    if event.source.parent.name.startswith(panelName):
-                        isPanel = True
-
-            if not isPanel:
-                rolesList = [pyatspi.ROLE_PANEL,
-                             pyatspi.ROLE_OPTION_PANE,
-                             pyatspi.ROLE_DIALOG,
-                             pyatspi.ROLE_APPLICATION]
-                if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-                    if event.source.name.startswith(panelName):
-                        isPanel = True
-
-        return isPanel
 
     def _speakWriterText(self, event, textToSpeak):
         """Called to speak the current line or paragraph of Writer text.
@@ -1411,102 +1258,6 @@ class Script(default.Script):
                 self.displayBrailleForObject(event.source)
                 return
 
-        # Check to see if the object that just got focus is in the Setup
-        # dialog. If it is, then check for a variety of scenerios.
-        #
-        if self.isSetupDialog(event.source):
-
-            # Check for 1. License Agreement: Scroll Down button.
-            #
-            rolesList = [pyatspi.ROLE_PUSH_BUTTON,
-                         pyatspi.ROLE_PANEL,
-                         pyatspi.ROLE_OPTION_PANE,
-                         pyatspi.ROLE_DIALOG,
-                         pyatspi.ROLE_APPLICATION]
-            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-                debug.println(self.debugLevel,
-                    "StarOffice.locusOfFocusChanged - Setup dialog: " \
-                    + "License Agreement screen: Scroll Down button.")
-                self.handleSetupPanel(event.source.parent)
-                self.presentMessage(_("Note that the Scroll Down button has " \
-                                      "to be pressed numerous times."))
-
-            # Check for 2. License Agreement: Accept button.
-            #
-            rolesList = [pyatspi.ROLE_UNKNOWN,
-                         pyatspi.ROLE_SCROLL_PANE,
-                         pyatspi.ROLE_PANEL,
-                         pyatspi.ROLE_OPTION_PANE,
-                         pyatspi.ROLE_DIALOG,
-                         pyatspi.ROLE_APPLICATION]
-            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-                debug.println(self.debugLevel,
-                    "StarOffice.locusOfFocusChanged - Setup dialog: " \
-                    + "License Agreement screen: accept button.")
-                self.presentMessage(
-                    _("License Agreement Accept button now has focus."))
-
-            # Check for 3. Personal Data: Transfer Personal Data check box.
-            #
-            rolesList = [pyatspi.ROLE_CHECK_BOX,
-                         pyatspi.ROLE_PANEL,
-                         pyatspi.ROLE_OPTION_PANE,
-                         pyatspi.ROLE_DIALOG,
-                         pyatspi.ROLE_APPLICATION]
-            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-                debug.println(self.debugLevel,
-                    "StarOffice.locusOfFocusChanged - Setup dialog: " \
-                    + "Personal Data: Transfer Personal Data check box.")
-                self.handleSetupPanel(event.source.parent)
-
-            # Check for 4. User name: First Name text field.
-            #
-            rolesList = [pyatspi.ROLE_TEXT,
-                         pyatspi.ROLE_PANEL,
-                         pyatspi.ROLE_OPTION_PANE,
-                         pyatspi.ROLE_DIALOG,
-                         pyatspi.ROLE_APPLICATION]
-            # Translators: this is the name of the field in the StarOffice
-            # setup dialog that is asking for the first name of the user.
-            # The translated form has to match what StarOffice/OpenOffice
-            # is using.  We hate keying off stuff like this, but we're
-            # forced to in this case.
-            #
-            if self.utilities.hasMatchingHierarchy(event.source, rolesList) \
-               and event.source.name == _("First name"):
-                debug.println(self.debugLevel,
-                    "StarOffice.locusOfFocusChanged - Setup dialog: " \
-                    + "User name: First Name text field.")
-
-                # Just speak the informative labels at the top of the panel
-                # (and not the ones that have LABEL_FOR relationships).
-                #
-                panel = event.source.parent
-                allLabels = self.utilities.descendantsWithRole(
-                    panel, pyatspi.ROLE_LABEL)
-                for label in allLabels:
-                    relations = label.getRelationSet()
-                    hasLabelFor = False
-                    for relation in relations:
-                        if relation.getRelationType() \
-                               == pyatspi.RELATION_LABEL_FOR:
-                            hasLabelFor = True
-                    if not hasLabelFor:
-                        self.speakSetupLabel(label)
-
-            # Check for 5. Registration: Register Now radio button.
-            #
-            rolesList = [pyatspi.ROLE_RADIO_BUTTON,
-                         pyatspi.ROLE_PANEL,
-                         pyatspi.ROLE_OPTION_PANE,
-                         pyatspi.ROLE_DIALOG,
-                         pyatspi.ROLE_APPLICATION]
-            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-                debug.println(self.debugLevel,
-                    "StarOffice.locusOfFocusChanged - Setup dialog: " \
-                    + "Registration: Register Now radio button.")
-                self.handleSetupPanel(event.source.parent)
-
         # Check to see if we are editing a spread sheet cell. If so, just
         # return to avoid uttering something like "Paragraph 0 paragraph".
         #
@@ -1521,34 +1272,6 @@ class Script(default.Script):
         if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             debug.println(self.debugLevel, "StarOffice.locusOfFocusChanged - " \
                           + "Calc: cell editor.")
-            return
-
-        # Check to see if the focus has just moved to the Name Box combo
-        # box in Calc. If so, then replace the non-existent name with a
-        # simple one before falling through and calling the default
-        # locusOfFocusChanged method, which in turn will result in our
-        # _generateSpeechForComboBox() method being called.
-        #
-        rolesList = [pyatspi.ROLE_LIST,
-                     pyatspi.ROLE_COMBO_BOX,
-                     pyatspi.ROLE_TOOL_BAR,
-                     pyatspi.ROLE_PANEL,
-                     pyatspi.ROLE_ROOT_PANE,
-                     pyatspi.ROLE_FRAME,
-                     pyatspi.ROLE_APPLICATION]
-
-        if self.utilities.hasMatchingHierarchy(event.source, rolesList) \
-            and (not event.source.name or len(event.source.name) == 0):
-            debug.println(self.debugLevel, "StarOffice.locusOfFocusChanged - " \
-                          + "Calc: name box.")
-
-            self.updateBraille(newLocusOfFocus)
-
-            # Translators: this is our made up name for the nameless field
-            # in StarOffice/OpenOffice calc that allows you to type in a
-            # cell coordinate (e.g., A4) and then move to it.
-            #
-            self.presentMessage(_("Move to cell"))
             return
 
         # Check to see if this is a Calc: spread sheet cell. If it is then
@@ -1662,43 +1385,22 @@ class Script(default.Script):
         details = debug.getAccessibleDetails(self.debugLevel, event.source)
         debug.printObjectEvent(self.debugLevel, event, details)
 
-        # Check to see if the Setup dialog window has just been activated.
-        # If it has, then find the panel within it that has no name and
-        # speak all the labels within that panel.
-        #
-        if self.isSetupDialog(event.source):
-            debug.println(self.debugLevel,
-                "StarOffice.onWindowActivated - Setup dialog: Welcome screen.")
+        # Clear our stored misspelled word history.
+        self.lastTextLength = -1
+        self.lastBadWord = ''
+        self.lastStartOff = -1
+        self.lastEndOff = -1
 
-            allPanels = self.utilities.descendantsWithRole(
-                event.source.parent, pyatspi.ROLE_PANEL)
-            for panel in allPanels:
-                if not panel.name:
-                    allLabels = self.utilities.descendantsWithRole(
-                        panel, pyatspi.ROLE_LABEL)
-                    for label in allLabels:
-                        self.speakSetupLabel(label)
-        else:
-            # Clear our stored misspelled word history.
-            #
-            self.lastTextLength = -1
-            self.lastBadWord = ''
-            self.lastStartOff = -1
-            self.lastEndOff = -1
+        default.Script.onWindowActivated(self, event)
 
-            # Let the default script do its thing.
-            #
-            default.Script.onWindowActivated(self, event)
-
-            # Maybe it's the spellcheck dialog. Might as well try and see.
-            # If it is, we want to speak the misspelled word and context
-            # after we've spoken the window name.
-            #
-            if event.source \
-               and event.source.getRole() == pyatspi.ROLE_DIALOG \
-               and event.source.childCount \
-               and event.source[0].getRole() == pyatspi.ROLE_OPTION_PANE:
-                self.readMisspeltWord(event, event.source)
+        # Maybe it's the spellcheck dialog. Might as well try and see.
+        # If it is, we want to speak the misspelled word and context
+        # after we've spoken the window name.
+        if event.source \
+           and event.source.getRole() == pyatspi.ROLE_DIALOG \
+           and event.source.childCount \
+           and event.source[0].getRole() == pyatspi.ROLE_OPTION_PANE:
+            self.readMisspeltWord(event, event.source)
 
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
@@ -1733,11 +1435,7 @@ class Script(default.Script):
             if title:
                 title += "."
 
-            # Translators: this is an indication of the position of the
-            # focused Impress slide and the total number of slides in the
-            # presentation.
-            #
-            msg = _("slide %(position)d of %(count)d") % \
+            msg = messages.PRESENTATION_SLIDE_POSITION % \
                     {"position" : position, "count" : count}
             msg = self.utilities.appendString(title, msg)
             self.presentMessage(msg)
@@ -1952,29 +1650,6 @@ class Script(default.Script):
                 or event.detail1 == 0):
             return
 
-        # Check to see if we are in the Presentation startup wizard. If so,
-        # then speak the object that currently has focus.
-        #
-        if event.type.startswith("object:state-changed:sensitive") and \
-           event.source.getRole() == pyatspi.ROLE_PANEL and \
-           event.source.getState().contains(pyatspi.STATE_SENSITIVE):
-            current = event.source.parent
-            while current.getRole() != pyatspi.ROLE_APPLICATION:
-                # Translators: this is the title of the window that
-                # you get when using StarOffice Presentation Wizard. The
-                # translated form has to match what
-                # StarOffice/OpenOffice is using.  We hate keying off
-                # stuff like this, but we're forced to do so in this
-                # case.
-                #
-                if current.getRole() == pyatspi.ROLE_DIALOG and \
-                   (current.name and \
-                    current.name.startswith(_("Presentation Wizard"))):
-                    self.locusOfFocusChanged(event, None,
-                                             orca_state.locusOfFocus)
-                    break
-                current = current.parent
-
         # Prevent  "object:state-changed:active" events from activating
         # the find operation. See comment #18 of bug #354463.
         #
@@ -2038,13 +1713,6 @@ class Script(default.Script):
                 orca.setLocusOfFocus(
                     None, event.source.parent, notifyScript=False)
                 return
-
-        # If we are in the sbase Table Wizard, try to reduce the numerous
-        # utterances of "Available fields panel". See bug #465087 for
-        # more details.
-        #
-        if self.__isAvailableFieldsPanel(event):
-            return
 
         default.Script.onStateChanged(self, event)
 

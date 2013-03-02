@@ -42,6 +42,7 @@ import orca.debug as debug
 import orca.eventsynthesizer as eventsynthesizer
 import orca.find as find
 import orca.flat_review as flat_review
+import orca.guilabels as guilabels
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.messages as messages
@@ -61,7 +62,6 @@ import orca.notification_messages as notification_messages
 
 from orca.orca_i18n import _
 from orca.orca_i18n import ngettext
-from orca.orca_i18n import C_
 
 _settingsManager = settings_manager.getManager()
 
@@ -339,7 +339,7 @@ class Script(script.Script):
         self.inputEventHandlers["panBrailleRightHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleRight,
-                cmdnames.PAN_BRAILLE_LEFT,
+                cmdnames.PAN_BRAILLE_RIGHT,
                 False) # Do not enable learn mode for this action
 
         self.inputEventHandlers["goBrailleHomeHandler"] = \
@@ -1039,13 +1039,7 @@ class Script(script.Script):
 
         if not inputEvent or inputEvent.event_string == "1":
             bound = self.getDefaultKeyBindings().getBoundBindings()
-            # Translators: This message is presented when the user is in a list
-            # of shortcuts associated with Orca commands which are not specific
-            # to the current application. It appears as the title of the dialog
-            # which contains the list.
-            title = ngettext("%d Orca default shortcut found.",
-                             "%d Orca default shortcuts found.",
-                             len(bound)) % len(bound)
+            title = messages.shortcutsFoundOrca(len(bound))
         else:
             try:
                 appName = self.app.name
@@ -1054,14 +1048,7 @@ class Script(script.Script):
 
             bound = self.getAppKeyBindings().getBoundBindings()
             bound.extend(self.getToolkitKeyBindings().getBoundBindings())
-            # Translators: This message is presented when the user is in a list
-            # of shortcuts associated with Orca commands specific to the current
-            # application. It appears at the title of the dialog which contains
-            # the list.
-            title = ngettext("%(count)d Orca shortcut for %(application)s found.",
-                             "%(count)d Orca shortcuts for %(application)s found.",
-                             len(bound)) % \
-                             {"count" : len(bound), "application" : appName}
+            title = messages.shortcutsFoundApp(len(bound), appName)
 
         if not bound:
             self.presentMessage(title)
@@ -1075,15 +1062,8 @@ class Script(script.Script):
                  kb.asString(True)) for kb in bound]
         sorted(rows, key=lambda cmd: cmd[2])
 
-        # Translators: Function is a table column header where the cells in the
-        # column are a sentence that briefly describes what action Orca will 
-        # take if and when the user invokes that keyboard command.
-        header1 = _("Function")
-
-        # Translators: Key Binding is a table column header where the cells in the
-        # column represent keyboard combinations the user can press to invoke Orca
-        # commands.
-        header2 = _("Key Binding")
+        header1 = guilabels.KB_HEADER_FUNCTION
+        header2 = guilabels.KB_HEADER_KEY_BINDING
         commandlist.showUI(title, ("", header1, header2), rows, False)
         return True
 

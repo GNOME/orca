@@ -69,7 +69,6 @@ from . import settings_manager
 from . import speech
 from .input_event import BrailleEvent
 from .input_event import KeyboardEvent
-from .orca_i18n import ngettext
 
 _eventManager = event_manager.getManager()
 _scriptManager = script_manager.getManager()

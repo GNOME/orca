@@ -1,12 +1,12 @@
 import bisect
-from gi.repository import GLib
-from . import orca_state
-import pyatspi
-from . import speech
 import copy
+import pyatspi
 import time
+from gi.repository import GLib
 
-from .orca_i18n import _
+from . import messages
+from . import orca_state
+from . import speech
 
 # define 'live' property types
 LIVE_OFF       = -1
@@ -261,24 +261,16 @@ class LiveRegionManager:
 
         if cur_priority == LIVE_OFF or cur_priority == LIVE_NONE:
             self._politenessOverrides[(uri, objectid)] = LIVE_POLITE
-            # Translators:  sets the live region politeness level to polite
-            #
-            utterances.append(_('setting live region to polite'))
+            utterances.append(messages.LIVE_REGIONS_LEVEL_POLITE)
         elif cur_priority == LIVE_POLITE:
             self._politenessOverrides[(uri, objectid)] = LIVE_ASSERTIVE
-            # Translators:  sets the live region politeness level to assertive
-            #
-            utterances.append(_('setting live region to assertive'))
+            utterances.append(messages.LIVE_REGIONS_LEVEL_ASSERTIVE)
         elif cur_priority == LIVE_ASSERTIVE:
             self._politenessOverrides[(uri, objectid)] = LIVE_RUDE
-            # Translators:  sets the live region politeness level to rude
-            #
-            utterances.append(_('setting live region to rude'))
+            utterances.append(messages.LIVE_REGIONS_LEVEL_RUDE)
         elif cur_priority == LIVE_RUDE:
             self._politenessOverrides[(uri, objectid)] = LIVE_OFF
-            # Translators:  sets the live region politeness level to off
-            #
-            utterances.append(_('setting live region to off'))
+            utterances.append(messages.LIVE_REGIONS_LEVEL_OFF)
 
         speech.speak(utterances)
 
@@ -294,10 +286,7 @@ class LiveRegionManager:
     def reviewLiveAnnouncement(self, msgnum):
         """Speak the given number cached message"""
         if msgnum > len(self.msg_cache):
-            # Tranlators: this tells the user that a cached message
-            # is not available.
-            #
-            self._script.presentMessage(_('no live message saved'))
+            self._script.presentMessage(messages.LIVE_REGIONS_NO_MESSAGE)
         else:
             self._script.presentMessage(self.msg_cache[-msgnum])
 
@@ -312,9 +301,7 @@ class LiveRegionManager:
         # The user is currently monitoring live regions but now wants to 
         # change all live region politeness on page to LIVE_OFF
         if self.monitoring:
-            # Translators: This lets the user know that all live regions
-            # have been turned off.
-            self._script.presentMessage(_("All live regions set to off"))
+            self._script.presentMessage(messages.LIVE_REGIONS_ALL_OFF)
             self.msg_queue.clear()
             
             # First we'll save off a copy for quick restoration
@@ -339,11 +326,7 @@ class LiveRegionManager:
         else:
             for key, value in list(self._restoreOverrides.items()):
                 self._politenessOverrides[key] = value
-            # Translators: This lets the user know that all live regions
-            # have been restored to their original politeness level.
-            self._script.presentMessage(
-                _("live regions politeness levels restored"))
-
+            self._script.presentMessage(messages.LIVE_REGIONS_ALL_RESTORED)
             # Toggle our flag
             self.monitoring = True  
 
@@ -382,9 +365,7 @@ class LiveRegionManager:
         # We will only output useful information
         # 
         if results or liveprioritystr != 'none':
-            # Translators: output the politeness level
-            #
-            results.append(_('politeness level %s') %liveprioritystr)
+            results.append(messages.LIVE_REGIONS_LEVEL % liveprioritystr)
 
         return results
 

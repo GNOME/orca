@@ -28,10 +28,9 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.messages as messages
 import orca.scripts.default as default
 import orca.speech as speech
-
-from orca.orca_i18n import _
 
 from .chat import Chat
 from .script_utilities import Utilities
@@ -141,7 +140,7 @@ class Script(default.Script):
                 if nameFound:
                     child = event.source[-1]
                     if child.name:
-                        line = _("New chat tab %s") % child.name
+                        line = messages.CHAT_NEW_TAB % child.name
                         speech.speak(line)
 
     def onNameChanged(self, event):

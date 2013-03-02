@@ -31,13 +31,13 @@ import re
 from . import braille
 from . import debug
 from . import eventsynthesizer
+from . import messages
+from . import object_properties
 from . import orca_state
 from . import settings
 
 from .braille_generator import BrailleGenerator
 from .orca_i18n import _
-from .orca_i18n import C_
-from .orca_i18n import ngettext
 
 # [[[WDW - HACK Regular expression to split strings on whitespace
 # boundaries, which is what we'll use for word dividers instead of
@@ -350,41 +350,25 @@ class StateZone(Zone):
                              pyatspi.ROLE_CHECK_MENU_ITEM,
                              pyatspi.ROLE_TABLE_CELL]:
                 if stateCount == 2:
-                    # Translators: this represents the state of a checkbox.
-                    #
-                    speechState = _("partially checked")
+                    speechState = object_properties.STATE_PARTIALLY_CHECKED
                 elif stateCount == 1:
-                    # Translators: this represents the state of a checkbox.
-                    #
-                    speechState = _("checked")
+                    speechState = object_properties.STATE_CHECKED
                 else:
-                    # Translators: this represents the state of a checkbox.
-                    #
-                    speechState = _("not checked")
+                    speechState = object_properties.STATE_NOT_CHECKED
                 brailleState = \
                     settings.brailleCheckBoxIndicators[stateCount]
             elif self.role == pyatspi.ROLE_TOGGLE_BUTTON:
                 if stateCount:
-                    # Translators: the state of a toggle button.
-                    #
-                    speechState = _("pressed")
+                    speechState = object_properties.STATE_PRESSED
                 else:
-                    # Translators: the state of a toggle button.
-                    #
-                    speechState = _("not pressed")
+                    speechState = object_properties.STATE_NOT_PRESSED
                 brailleState = \
                     settings.brailleRadioButtonIndicators[stateCount]
             else:
                 if stateCount:
-                    # Translators: this is in reference to a radio button being
-                    # selected or not.
-                    #
-                    speechState = C_("radiobutton", "selected")
+                    speechState = object_properties.STATE_SELECTED_RADIO_BUTTON
                 else:
-                    # Translators: this is in reference to a radio button being
-                    # selected or not.
-                    #
-                    speechState = C_("radiobutton", "not selected")
+                    speechState = object_properties.STATE_UNSELECTED_RADIO_BUTTON
                 brailleState = \
                     settings.brailleRadioButtonIndicators[stateCount]
 
@@ -420,13 +404,9 @@ class ValueZone(Zone):
                              pyatspi.ROLE_SCROLL_BAR]:
                 stateset = self.accessible.getState()
                 if stateset.contains(pyatspi.STATE_HORIZONTAL):
-                    # Translators: The component orientation is horizontal.
-                    #
-                    orientation = _("horizontal")
+                    orientation = object_properties.STATE_HORIZONTAL
                 elif stateset.contains(pyatspi.STATE_VERTICAL):
-                    # Translators: The component orientation is vertical.
-                    #
-                    orientation = _("vertical")
+                    orientation = object_properties.STATE_VERTICAL
                         
             try:
                 value = self.accessible.queryValue()
@@ -445,15 +425,8 @@ class ValueZone(Zone):
                 speechValue = orientation + " " + rolename
             else:
                 speechValue = rolename
-                
-            # Translators: this is the percentage value of a slider, 
-            # progress bar or other component that displays a value as 
-            # a percentage.
-            #
-            percentString = ngettext("%d percent.",
-                                     "%d percent.",
-                                     percentValue) % percentValue
-            speechValue = speechValue + " " + percentString
+
+            speechValue = speechValue + " " + messages.percentage(percentValue)
 
             rolename = BrailleGenerator.getLocalizedRoleName(self.accessible)
             if orientation:

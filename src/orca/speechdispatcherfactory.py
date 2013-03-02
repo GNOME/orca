@@ -40,13 +40,13 @@ import re
 
 from . import chnames
 from . import debug
+from . import guilabels
 from . import messages
 from . import speechserver
 from . import settings
 from . import orca_state
 from . import punctuation_settings
 from .acss import ACSS
-from .orca_i18n import _
 
 try:
     import speechd
@@ -70,14 +70,7 @@ class SpeechServer(speechserver.SpeechServer):
     _active_servers = {}
     
     DEFAULT_SERVER_ID = 'default'
-    
-    # Translators: "Default Synthesizer" will appear in the list of available
-    # speech engines as a special item.  It refers to the default engine
-    # configured within the speech subsystem.  Apart from this item, the user
-    # will have a chance to select a particular speech engine by its real
-    # name, such as Festival, IBMTTS, etc.
-    #
-    _SERVER_NAMES = {DEFAULT_SERVER_ID: _("Default Synthesizer")}
+    _SERVER_NAMES = {DEFAULT_SERVER_ID: guilabels.DEFAULT_SYNTHESIZER}
     
     KEY_NAMES = {
         '_':     'underscore',
@@ -86,12 +79,8 @@ class SpeechServer(speechserver.SpeechServer):
         '"':     'double-quote',
         }
 
-
     def getFactoryName():
-        # Translators: this is the name of a speech synthesis system
-        # called "Speech Dispatcher".
-        #
-        return _("Speech Dispatcher")
+        return guilabels.SPEECH_DISPATCHER
     getFactoryName = staticmethod(getFactoryName)
 
     def getSpeechServers():
@@ -166,16 +155,8 @@ class SpeechServer(speechserver.SpeechServer):
             speechd.CallbackType.END: speechserver.SayAllContext.COMPLETED,
            #speechd.CallbackType.INDEX_MARK:speechserver.SayAllContext.PROGRESS,
             }
-        # Translators: This string will appear in the list of
-        # available voices for the current speech engine.  %s will be
-        # replaced by the name of the current speech engine, such as
-        # "Festival default voice" or "IBMTTS default voice".  It
-        # refers to the default voice configured for given speech
-        # engine within the speech subsystem.  Apart from this item,
-        # the list will contain the names of all available "real"
-        # voices provided by the speech engine.
-        #
-        self._default_voice_name = _("%s default voice") % serverId
+
+        self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % serverId
         
         try:
             self._init()
@@ -283,13 +264,7 @@ class SpeechServer(speechserver.SpeechServer):
         Returns a text string with the punctuation symbols adjusted accordingly.
         """
 
-        # Translators: we replace the ellipses (both manual and UTF-8)
-        # with a spoken string.  The extra space you see at the beginning
-        # is because we need the speech synthesis engine to speak the
-        # new string well.  For example, "Open..." turns into
-        # "Open dot dot dot".
-        #
-        spokenEllipsis = _(" dot dot dot") + " "
+        spokenEllipsis = messages.SPOKEN_ELLIPSIS + " "
         newText = re.sub(ELLIPSIS, spokenEllipsis, oldText)
         symbols = set(re.findall(PUNCTUATION, newText))
         for symbol in symbols:

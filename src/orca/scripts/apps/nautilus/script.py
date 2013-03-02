@@ -27,11 +27,9 @@ __license__   = "LGPL"
 
 import pyatspi
 import orca.debug as debug
+import orca.messages as messages
 import orca.scripts.default as default
 import orca.speech as speech
-
-from orca.orca_i18n import ngettext
-from orca.orca_i18n import C_
 
 ########################################################################
 #                                                                      #
@@ -136,9 +134,7 @@ class Script(default.Script):
                         except NotImplementedError:
                             itemCount = -1
                     if itemCount != -1:
-                        itemCountString = " " + ngettext("%d item",
-                                                         "%d items",
-                                                         itemCount) % itemCount
+                        itemCountString = " " + messages.itemCount(itemCount)
                     break
 
         return itemCountString

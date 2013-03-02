@@ -33,15 +33,14 @@ import math
 import pyatspi
 import re
 
+from . import chnames
 from . import debug
 from . import keynames
 from . import input_event
+from . import messages
 from . import mouse_review
 from . import orca_state
 from . import settings
-
-from .orca_i18n import _
-from .orca_i18n import ngettext
 
 #############################################################################
 #                                                                           #
@@ -2379,15 +2378,7 @@ class Utilities:
             if (not respectPunctuation) \
                or (isPunctChar and (style <= level)):
                 repeatChar = chnames.getCharacterName(segment[0])
-                # Translators: Orca will tell you how many characters
-                # are repeated on a line of text.  For example: "22
-                # space characters".  The %d is the number and the %s
-                # is the spoken word for the character.
-                #
-                repeatSegment = ngettext("%(count)d %(repeatChar)s character",
-                                "%(count)d %(repeatChar)s characters",
-                                 count) \
-                                 % {"count" : count, "repeatChar": repeatChar}
+                repeatSegment = messages.repeatedCharCount(repeatChar, count)
                 line = "%s %s" % (line, repeatSegment)
             else:
                 line += segment
@@ -2456,10 +2447,7 @@ class Utilities:
             else:
                 continue
 
-            # Translators: this indicates that this piece of
-            # text is a hypertext link.
-            #
-            linkString = " " + _("link")
+            linkString = " " + messages.LINK
 
             # If the link was not followed by a whitespace or punctuation
             # character, then add in a space to make it more presentable.
@@ -2544,22 +2532,12 @@ class Utilities:
 
         for number in superscripted:
             new = [str(self.SUPERSCRIPT_DIGITS.index(d)) for d in number]
-            # Translators: This string is part of the presentation of an
-            # item that includes one or several consequtive superscripted
-            # characters, e.g. 'X' followed by 'superscript 2' followed by
-            # 'superscript 3' should be presented as 'X superscript 23'.
-            #
-            newString = _(" superscript %s") % "".join(new)
+            newString = messages.DIGITS_SUPERSCRIPT % "".join(new)
             string = re.sub(number, newString, string)
 
         for number in subscripted:
             new = [str(self.SUBSCRIPT_DIGITS.index(d)) for d in number]
-            # Translators: This string is part of the presentation of an
-            # item that includes one or several consequtive subscripted
-            # characters, e.g. 'X' followed by 'subscript 2' followed by
-            # 'subscript 3', should be presented as 'X subscript 23.'
-            #
-            newString = _(" subscript %s") % "".join(new)
+            newString = messages.DIGITS_SUBSCRIPT % "".join(new)
             string = re.sub(number, newString, string)
 
         return string
@@ -2695,9 +2673,7 @@ class Utilities:
                 sequence = newSequence
         except:
             if sequence.endswith(" "):
-                # Translators: this is the spoken word for the space character
-                #
-                sequence += _("space")
+                sequence += chnames.getCharacterName(" ")
             sequence = sequence.replace("<", "")
             sequence = sequence.replace(">", " ").strip()
 

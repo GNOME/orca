@@ -32,8 +32,6 @@ import orca.structural_navigation as structural_navigation
 import orca.settings as settings
 import orca.speech as speech
 
-from orca.orca_i18n import _
-
 ########################################################################
 #                                                                      #
 # Custom Structural Navigation                                         #
@@ -115,10 +113,7 @@ class StructuralNavigation(structural_navigation.StructuralNavigation):
 
         if settings.speakCellCoordinates:
             [row, col] = self.getCellCoordinates(cell)
-            # Translators: this represents the (row, col) position of
-            # a cell in a table.
-            #
-            self._script.presentMessage(_("Row %(row)d, column %(column)d.") \
+            self._script.presentMessage(messages.TABLE_CELL_COORDINATES \
                                        % {"row" : row + 1, "column" : col + 1})
 
         spanString = self._getCellSpanInfo(cell)

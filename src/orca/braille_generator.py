@@ -30,11 +30,11 @@ from gi.repository import Atspi, Atk
 
 from . import braille
 from . import generator
+from . import messages
 from . import orca_state
 from . import settings
 from . import settings_manager
 from .braille_rolenames import shortRoleNames
-from .orca_i18n import ngettext
 
 _settingsManager = settings_manager.getManager()
 
@@ -211,13 +211,8 @@ class BrailleGenerator(generator.Generator):
         except:
             alertAndDialogCount = 0
         if alertAndDialogCount > 0:
-            # Translators: this tells the user how many unfocused
-            # alert and dialog windows plus the total number of
-            # windows that this application has.
-            #
-            result.append(ngettext("(%d dialog)",
-                                   "(%d dialogs)",
-                                   alertAndDialogCount) % alertAndDialogCount)
+             result.append(messages.dialogCountBraille(alertAndDialogCount))
+
         return result
 
     def _generateAncestors(self, obj, **args):

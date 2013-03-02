@@ -47,13 +47,16 @@ import time
 import urllib.parse
 
 import orca.braille as braille
+import orca.cmdnames as cmdnames
 import orca.debug as debug
 import orca.scripts.default as default
 import orca.eventsynthesizer as eventsynthesizer
+import orca.guilabels as guilabels
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.liveregions as liveregions
 import orca.messages as messages
+import orca.object_properties as object_properties
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings as settings
@@ -379,238 +382,114 @@ class Script(default.Script):
         self.inputEventHandlers["goNextCharacterHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextCharacter,
-                # Translators: this is for navigating HTML content one
-                # character at a time.
-                #
-                _("Goes to next character."))
+                cmdnames.CARET_NAVIGATION_NEXT_CHAR)
 
         self.inputEventHandlers["goPreviousCharacterHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousCharacter,
-                # Translators: this is for navigating HTML content one
-                # character at a time.
-                #
-               _( "Goes to previous character."))
+                cmdnames.CARET_NAVIGATION_PREV_CHAR)
 
         self.inputEventHandlers["goNextWordHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextWord,
-                # Translators: this is for navigating HTML content one
-                # word at a time.
-                #
-                _("Goes to next word."))
+                cmdnames.CARET_NAVIGATION_NEXT_WORD)
 
         self.inputEventHandlers["goPreviousWordHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousWord,
-                # Translators: this is for navigating HTML content one
-                # word at a time.
-                #
-                _("Goes to previous word."))
+                cmdnames.CARET_NAVIGATION_PREV_WORD)
 
         self.inputEventHandlers["goNextLineHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextLine,
-                # Translators: this is for navigating HTML content one
-                # line at a time.
-                #
-                _("Goes to next line."))
+                cmdnames.CARET_NAVIGATION_NEXT_LINE)
 
         self.inputEventHandlers["goPreviousLineHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousLine,
-                # Translators: this is for navigating HTML content one
-                # line at a time.
-                #
-                _("Goes to previous line."))
+                cmdnames.CARET_NAVIGATION_PREV_LINE)
 
         self.inputEventHandlers["goTopOfFileHandler"] = \
             input_event.InputEventHandler(
                 Script.goTopOfFile,
-                # Translators: this command will move the user to the
-                # beginning of an HTML document.
-                #
-                _("Goes to the top of the file."))
+                cmdnames.CARET_NAVIGATION_FILE_START)
 
         self.inputEventHandlers["goBottomOfFileHandler"] = \
             input_event.InputEventHandler(
                 Script.goBottomOfFile,
-                # Translators: this command will move the user to the
-                # end of an HTML document.
-                #
-                _("Goes to the bottom of the file."))
+                cmdnames.CARET_NAVIGATION_FILE_END)
 
         self.inputEventHandlers["goBeginningOfLineHandler"] = \
             input_event.InputEventHandler(
                 Script.goBeginningOfLine,
-                # Translators: this command will move the user to the
-                # beginning of the line in an HTML document.
-                #
-                _("Goes to the beginning of the line."))
+                cmdnames.CARET_NAVIGATION_LINE_START)
 
         self.inputEventHandlers["goEndOfLineHandler"] = \
             input_event.InputEventHandler(
                 Script.goEndOfLine,
-                # Translators: this command will move the user to the
-                # end of the line in an HTML document.
-                #
-                _("Goes to the end of the line."))
+                cmdnames.CARET_NAVIGATION_LINE_END)
 
         self.inputEventHandlers["expandComboBoxHandler"] = \
             input_event.InputEventHandler(
                 Script.expandComboBox,
-                # Translators: this is for causing a collapsed combo box
-                # which was reached by Orca's caret navigation to be expanded.
-                #
-                _("Causes the current combo box to be expanded."))
+                cmdnames.CARET_NAVIGATION_EXPAND_COMBO_BOX)
 
         self.inputEventHandlers["advanceLivePoliteness"] = \
             input_event.InputEventHandler(
                 Script.advanceLivePoliteness,
-                # Translators: this string refers to an Orca command which
-                # advances the live region "politeness" setting from one
-                # level to the next.
-                #
-                # The term "live region" refers to dynamically updated
-                # content, typically on a web page, about which a user
-                # likely wants to be notified. For instance, a stock
-                # ticker on a financial site or a table of updated scores
-                # on a sports site. In contast, a countdown timer or clock
-                # on a web site is NOT a live region.
-                #
-                # The "politeness" level is an indication of when the user
-                # wishes to be notified about a change to live region content,
-                # e.g. never ("off"), when idle ("polite"), or when there is
-                # a change ("assertive").
-                #
-                _("Advance live region politeness setting."))
+                cmdnames.LIVE_REGIONS_ADVANCE_POLITENESS)
 
         self.inputEventHandlers["setLivePolitenessOff"] = \
             input_event.InputEventHandler(
                 Script.setLivePolitenessOff,
-                # Translators: this string refers to an Orca command which
-                # turns changes the live region "politness" level to "off."
-                #
-                # The term "live region" refers to dynamically updated
-                # content, typically on a web page, about which a user
-                # likely wants to be notified. For instance, a stock
-                # ticker on a financial site or a table of updated scores
-                # on a sports site. In contast, a countdown timer or clock
-                # on a web site is NOT a live region.
-                #
-                # The "politeness" level is an indication of when the user
-                # wishes to be notified about a change to live region content,
-                # e.g. never ("off"), when idle ("polite"), or when there is
-                # a change ("assertive").
-                #
-                _("Set default live region politeness level to off."))
+                cmdnames.LIVE_REGIONS_SET_POLITENESS_OFF)
 
         self.inputEventHandlers["monitorLiveRegions"] = \
             input_event.InputEventHandler(
                 Script.monitorLiveRegions,
-                # Translators: this string refers to an Orca command which
-                # allows the user to toggle whether or not Orca pays attention
-                # to changes in live regions. Note that turning off monitoring
-                # of live events is NOT the same as turning the politeness level
-                # to "off". The user can opt to have no notifications presented
-                # (politeness level of "off") and still manually review recent
-                # updates to live regions via Orca commands for doing so -- as
-                # long as the monitoring of live regions is enabled.
-                #
-                _("Monitor live regions."))
+                cmdnames.LIVE_REGIONS_MONITOR)
 
         self.inputEventHandlers["reviewLiveAnnouncement"] = \
             input_event.InputEventHandler(
                 Script.reviewLiveAnnouncement,
-                # Translators: this is for reviewing up to nine stored
-                # previous live messages. Please see previous translator
-                # notes for more information on live regions.
-                #
-                _("Review live region announcement."))
+                cmdnames.LIVE_REGIONS_REVIEW)
 
         self.inputEventHandlers["goPreviousObjectInOrderHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousObjectInOrder,
-                # Translators: this is for navigating between objects
-                # (regardless of type) in HTML
-                #
-                _("Goes to the previous object."))
+                cmdnames.CARET_NAVIGATION_PREV_OBJECT)
 
         self.inputEventHandlers["goNextObjectInOrderHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextObjectInOrder,
-                # Translators: this is for navigating between objects
-                # (regardless of type) in HTML
-                #
-                _("Goes to the next object."))
+                cmdnames.CARET_NAVIGATION_NEXT_OBJECT)
 
         self.inputEventHandlers["toggleCaretNavigationHandler"] = \
             input_event.InputEventHandler(
                 Script.toggleCaretNavigation,
-                # Translators: Gecko native caret navigation is where
-                # Firefox itself controls how the arrow keys move the caret
-                # around HTML content.  It's often broken, so Orca needs
-                # to provide its own support.  As such, Orca offers the user
-                # the ability to switch between the Firefox mode and the
-                # Orca mode.
-                #
-                _("Switches between Gecko native and Orca caret navigation."))
+                cmdnames.CARET_NAVIGATION_TOGGLE)
 
         self.inputEventHandlers["sayAllHandler"] = \
             input_event.InputEventHandler(
                 Script.sayAll,
-                # Translators: the Orca "SayAll" command allows the
-                # user to press a key and have the entire document in
-                # a window be automatically spoken to the user.  If
-                # the user presses any key during a SayAll operation,
-                # the speech will be interrupted and the cursor will
-                # be positioned at the point where the speech was
-                # interrupted.
-                #
-                _("Speaks entire document."))
+                cmdnames.SAY_ALL)
 
         self.inputEventHandlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleLeft,
-                # Translators: a refreshable braille display is an
-                # external hardware device that presents braille
-                # character to the user.  There are a limited number
-                # of cells on the display (typically 40 cells).  Orca
-                # provides the feature to build up a longer logical
-                # line and allow the user to press buttons on the
-                # braille display so they can pan left and right over
-                # this line.
-                #
-                _("Pans the braille display to the left."),
+                cmdnames.PAN_BRAILLE_LEFT,
                 False) # Do not enable learn mode for this action
 
         self.inputEventHandlers["panBrailleRightHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleRight,
-                # Translators: a refreshable braille display is an
-                # external hardware device that presents braille
-                # character to the user.  There are a limited number
-                # of cells on the display (typically 40 cells).  Orca
-                # provides the feature to build up a longer logical
-                # line and allow the user to press buttons on the
-                # braille display so they can pan left and right over
-                # this line.
-                #
-                _("Pans the braille display to the right."),
+                cmdnames.PAN_BRAILLE_RIGHT,
                 False) # Do not enable learn mode for this action
 
         self.inputEventHandlers["moveToMouseOverHandler"] = \
             input_event.InputEventHandler(
                 Script.moveToMouseOver,
-                # Translators: hovering the mouse over certain objects
-                # on a web page causes a new object to appear such as
-                # a pop-up menu. This command will move the user to the
-                # object which just appeared as a result of the user
-                # hovering the mouse. If the user is already in the
-                # mouse over object, this command will hide the mouse
-                # over and return the user to the object he/she was in.
-                #
-                _("Moves focus into and away from the current mouse over."))
+                cmdnames.MOUSE_OVER_MOVE)
 
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.
@@ -682,11 +561,7 @@ class Script(default.Script):
         generalFrame = Gtk.Frame()
         grid.attach(generalFrame, 0, 0, 1, 1)
 
-        # Translators: this is the title of a panel holding options for
-        # how to navigate HTML content (e.g., Orca caret navigation,
-        # positioning of caret, etc.).
-        #
-        label = Gtk.Label(label="<b>%s</b>" % _("Page Navigation"))
+        label = Gtk.Label(label="<b>%s</b>" % guilabels.PAGE_NAVIGATION)
         label.set_use_markup(True)
         generalFrame.set_label_widget(label)
 
@@ -696,67 +571,35 @@ class Script(default.Script):
         generalGrid = Gtk.Grid()
         generalAlignment.add(generalGrid)
 
-        # Translators: Gecko native caret navigation is where
-        # Firefox itself controls how the arrow keys move the caret
-        # around HTML content.  It's often broken, so Orca needs
-        # to provide its own support.  As such, Orca offers the user
-        # the ability to switch between the Firefox mode and the
-        # Orca mode.
-        #
-        label = _("Use _Orca Caret Navigation")
+        label = guilabels.USE_CARET_NAVIGATION
         value = script_settings.controlCaretNavigation
         self.controlCaretNavigationCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.controlCaretNavigationCheckButton.set_active(value) 
         generalGrid.attach(self.controlCaretNavigationCheckButton, 0, 0, 1, 1)
 
-        # Translators: Orca provides keystrokes to navigate HTML content
-        # in a structural manner: go to previous/next header, list item,
-        # table, etc.
-        #
-        label = _("Use Orca _Structural Navigation")
+        label = guilabels.USE_STRUCTURAL_NAVIGATION
         value = self.structuralNavigation.enabled
         self.structuralNavigationCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.structuralNavigationCheckButton.set_active(value)
         generalGrid.attach(self.structuralNavigationCheckButton, 0, 1, 1, 1)
 
-        # Translators: Orca has had to implement its own caret navigation
-        # model to work around issues in Gecko/Firefox. In certain versions
-        # of Firefox, we must perform a focus grab on each object being
-        # navigated in order for things to work as expected; in other
-        # versions of Firefox, we must avoid doing so in order for things
-        # to work as expected. We cannot identify with certainty which
-        # situation the user is in, so we must provide this as an option
-        # within Orca.
-        #
-        label = _("_Grab focus on objects when navigating")
+        label = guilabels.CARET_NAVIGATION_GRAB_FOCUS
         value = script_settings.grabFocusOnAncestor
         self.grabFocusOnAncestorCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.grabFocusOnAncestorCheckButton.set_active(value)
         generalGrid.attach(self.grabFocusOnAncestorCheckButton, 0, 2, 1, 1)
 
-        # Translators: when the user arrows up and down in HTML content,
-        # it is some times beneficial to always position the cursor at the
-        # beginning of the line rather than guessing the position directly
-        # above the current cursor position.  This option allows the user
-        # to decide the behavior they want.
-        #
-        label = \
-            _("_Position cursor at start of line when navigating vertically")
+        label = guilabels.CARET_NAVIGATION_START_OF_LINE
         value = script_settings.arrowToLineBeginning
         self.arrowToLineBeginningCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.arrowToLineBeginningCheckButton.set_active(value)
         generalGrid.attach(self.arrowToLineBeginningCheckButton, 0, 3, 1, 1)
 
-        # Translators: when the user loads a new page in Firefox, they
-        # can optionally tell Orca to automatically start reading a
-        # page from beginning to end.
-        #
-        label = \
-            _("Automatically start speaking a page when it is first _loaded")
+        label = guilabels.READ_PAGE_UPON_LOAD
         value = script_settings.sayAllOnLoad
         self.sayAllOnLoadCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self.sayAllOnLoadCheckButton.set_active(value)
@@ -765,10 +608,7 @@ class Script(default.Script):
         tableFrame = Gtk.Frame()
         grid.attach(tableFrame, 0, 1, 1, 1)
 
-        # Translators: this is the title of a panel containing options
-        # for specifying how to navigate tables in document content.
-        #
-        label = Gtk.Label(label="<b>%s</b>" % _("Table Navigation"))
+        label = Gtk.Label(label="<b>%s</b>" % guilabels.TABLE_NAVIGATION)
         label.set_use_markup(True)
         tableFrame.set_label_widget(label)
 
@@ -778,41 +618,28 @@ class Script(default.Script):
         tableGrid = Gtk.Grid()
         tableAlignment.add(tableGrid)
 
-        # Translators: this is an option to tell Orca whether or not it
-        # should speak table cell coordinates in document content.
-        #
-        label = _("Speak _cell coordinates")
+        label = guilabels.TABLE_SPEAK_CELL_COORDINATES
         value = _settingsManager.getSetting('speakCellCoordinates')
         self.speakCellCoordinatesCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.speakCellCoordinatesCheckButton.set_active(value)
         tableGrid.attach(self.speakCellCoordinatesCheckButton, 0, 0, 1, 1)
 
-        # Translators: this is an option to tell Orca whether or not it
-        # should speak the span size of a table cell (e.g., how many
-        # rows and columns a particular table cell spans in a table).
-        #
-        label = _("Speak _multiple cell spans")
+        label = guilabels.TABLE_SPEAK_CELL_SPANS
         value = _settingsManager.getSetting('speakCellSpan')
         self.speakCellSpanCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.speakCellSpanCheckButton.set_active(value)
         tableGrid.attach(self.speakCellSpanCheckButton, 0, 1, 1, 1)
 
-        # Translators: this is an option for whether or not to speak
-        # the header of a table cell in document content.
-        #
-        label = _("Announce cell _header")
+        label = guilabels.TABLE_ANNOUNCE_CELL_HEADER
         value = _settingsManager.getSetting('speakCellHeaders')
         self.speakCellHeadersCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.speakCellHeadersCheckButton.set_active(value)
         tableGrid.attach(self.speakCellHeadersCheckButton, 0, 2, 1, 1)
            
-        # Translators: this is an option to allow users to skip over
-        # empty/blank cells when navigating tables in document content.
-        #
-        label = _("Skip _blank cells")
+        label = guilabels.TABLE_SKIP_BLANK_CELLS
         value = _settingsManager.getSetting('skipBlankCells')
         self.skipBlankCellsCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
@@ -822,10 +649,7 @@ class Script(default.Script):
         findFrame = Gtk.Frame()
         grid.attach(findFrame, 0, 2, 1, 1)
 
-        # Translators: this is the title of a panel containing options
-        # for using Firefox's Find toolbar.
-        #
-        label = Gtk.Label(label="<b>%s</b>" % _("Find Options"))
+        label = Gtk.Label(label="<b>%s</b>" % guilabels.FIND_OPTIONS)
         label.set_use_markup(True)
         findFrame.set_label_widget(label)
 
@@ -835,23 +659,14 @@ class Script(default.Script):
         findGrid = Gtk.Grid()
         findAlignment.add(findGrid)
 
-        # Translators: this is an option to allow users to have Orca
-        # automatically speak the line that contains the match while
-        # the user is still in Firefox's Find toolbar.
-        #
-        label = _("Speak results during _find")
+        label = guilabels.FIND_SPEAK_RESULTS
         value = script_settings.speakResultsDuringFind
         self.speakResultsDuringFindCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.speakResultsDuringFindCheckButton.set_active(value)
         findGrid.attach(self.speakResultsDuringFindCheckButton, 0, 0, 1, 1)
 
-        # Translators: this is an option which dictates whether the line
-        # that contains the match from the Find toolbar should always
-        # be spoken, or only spoken if it is a different line than the
-        # line which contained the last match.
-        #
-        label = _("Onl_y speak changed lines during find")
+        label = guilabels.FIND_ONLY_SPEAK_CHANGED_LINES
         value = script_settings.onlySpeakChangedLinesDuringFind
         self.changedLinesOnlyCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
@@ -861,12 +676,8 @@ class Script(default.Script):
         hgrid = Gtk.Grid()
         findGrid.attach(hgrid, 0, 2, 1, 1)
 
-        # Translators: this option allows the user to specify the number
-        # of matched characters that must be present before Orca speaks
-        # the line that contains the results from the Find toolbar.
-        #
         self.minimumFindLengthLabel = \
-              Gtk.Label(label=_("Minimum length of matched text:"))
+              Gtk.Label(label=guilabels.FIND_MINIMUM_MATCH_LENGTH)
         self.minimumFindLengthLabel.set_alignment(0, 0.5)
         hgrid.attach(self.minimumFindLengthLabel, 0, 0, 1, 1)
 
@@ -1377,16 +1188,10 @@ class Script(default.Script):
         default.Script.onTextInserted(self, event)
 
     def _getCtrlShiftSelectionsStrings(self):
-        return [
-            # Translators: when the user selects (highlights) text in
-            # a document, Orca will speak information about what they
-            # have selected.
-            #
-            _("line selected down from cursor position"),
-            _("line unselected down from cursor position"),
-            _("line selected up from cursor position"),
-            _("line unselected up from cursor position"),
-        ]
+        return [messages.LINE_SELECTED_DOWN,
+                messages.LINE_UNSELECTED_DOWN,
+                messages.LINE_SELECTED_UP,
+                messages.LINE_UNSELECTED_UP]
 
     def onTextSelectionChanged(self, event):
         """Called when an object's text selection changes.
@@ -1443,12 +1248,7 @@ class Script(default.Script):
            and 0 < time.time() - self.lastMouseRoutingTime < 1 \
            and event.type.startswith("object:children-changed:add"):
             utterances = []
-            # Translators: Orca has a command that moves the mouse
-            # pointer to the current location on a web page. If
-            # moving the mouse pointer caused an item to appear
-            # such as a pop-up menu, we want to present that fact.
-            #
-            utterances.append(_("New item has been added"))
+            utterances.append(messages.NEW_ITEM_ADDED)
             utterances.extend(
                 self.speechGenerator.generateSpeech(event.any_data,
                                                     force = True))
@@ -1731,27 +1531,15 @@ class Script(default.Script):
                     return
 
                 elif event.detail1:
-                    # A detail1=1 means the page has started loading.
-                    #
                     self._loadingDocumentContent = True
-
-                    # Translators: this is in reference to loading a web page
-                    # or some other content.
-                    #
-                    message = _("Loading.  Please wait.")
+                    message = messages.PAGE_LOADING_START
 
                 elif event.source.name:
-                    # Translators: this is in reference to loading a web page
-                    # or some other content.
-                    #
-                    message = _("Finished loading %s.") % event.source.name
+                    message = messages.PAGE_LOADING_END_NAMED % event.source.name
                     finishedLoading = True
 
                 else:
-                    # Translators: this is in reference to loading a web page
-                    # or some other content.
-                    #
-                    message = _("Finished loading.")
+                    message = messages.PAGE_LOADING_END
                     finishedLoading = True
 
                 if not _settingsManager.getSetting('onlySpeakDisplayedText'):
@@ -2195,14 +1983,8 @@ class Script(default.Script):
 
             if heading:
                 level = self.getHeadingLevel(heading)
-                # Translators: the 'h' below represents a heading level
-                # attribute for content that you might find in something
-                # such as HTML content (e.g., <h1>). The translated form
-                # is meant to be a single character followed by a numeric
-                # heading level, where the single character is to indicate
-                # 'heading'.
-                #
-                headingString = _("h%d" % level)
+                headingString = \
+                    object_properties.ROLE_HEADING_LEVEL_BRAILLE % level
                 if not string.endswith(" "):
                     headingString = " " + headingString
                 if not isLastObject:
@@ -4552,13 +4334,7 @@ class Script(default.Script):
         """
 
         if not self.lastMouseOverObject:
-            # Translators: hovering the mouse over certain objects on a
-            # web page causes a new object to appear such as a pop-up
-            # menu. Orca has a command will move the user to the object
-            # which just appeared as a result of the user hovering the
-            # mouse. If this command fails, Orca will present this message.
-            #
-            self.presentMessage(_("Mouse over object not found."))
+            self.presentMessage(messages.MOUSE_OVER_NOT_FOUND)
             return
 
         if not self.inMouseOverObject:
@@ -5098,13 +4874,7 @@ class Script(default.Script):
                     break
 
         if not found:
-            # Translators: when the user is attempting to locate a
-            # particular object and the top of the page or list is
-            # reached without that object being found, we "wrap" to
-            # the bottom and continue looking upwards. We need to
-            # inform the user when this is taking place.
-            #
-            self.presentMessage(_("Wrapping to bottom."))
+            self.presentMessage(messages.WRAPPING_TO_BOTTOM)
             [prevObj, prevOffset] = self.getBottomOfFile()
             line = self.getLineContentsAtOffset(prevObj, prevOffset)
             useful = self.getMeaningfulObjectsFromLine(line)
@@ -5166,13 +4936,7 @@ class Script(default.Script):
                     break
 
         if not found:
-            # Translators: when the user is attempting to locate a
-            # particular object and the bottom of the page or list is
-            # reached without that object being found, we "wrap" to the
-            # top and continue looking downwards. We need to inform the
-            # user when this is taking place.
-            #
-            self.presentMessage(_("Wrapping to top."))
+            self.presentMessage(messages.WRAPPING_TO_TOP)
             [nextObj, nextOffset] = self.getTopOfFile()
             line = self.getLineContentsAtOffset(nextObj, nextOffset)
             useful = self.getMeaningfulObjectsFromLine(line)
@@ -5195,44 +4959,29 @@ class Script(default.Script):
         if _settingsManager.getSetting('inferLiveRegions'):
             self.liveMngr.advancePoliteness(orca_state.locusOfFocus)
         else:
-            # Translators: this announces to the user that live region
-            # support has been turned off.
-            #
-            self.presentMessage(_("Live region support is off"))
+            self.presentMessage(messages.LIVE_REGIONS_OFF)
 
     def monitorLiveRegions(self, inputEvent):
         if not _settingsManager.getSetting('inferLiveRegions'):
             _settingsManager.setSetting('inferLiveRegions', True)
-            # Translators: this announces to the user that live region
-            # are being monitored.
-            #
-            self.presentMessage(_("Live regions monitoring on"))
+            self.presentMessage(messages.LIVE_REGIONS_MONITORING_ON)
         else:
             _settingsManager.setSetting('inferLiveRegions', False)
-            # Translators: this announces to the user that live region
-            # are not being monitored.
-            #
             self.liveMngr.flushMessages()
-            self.presentMessage(_("Live regions monitoring off"))
+            self.presentMessage(messages.LIVE_REGIONS_MONITORING_OFF)
 
     def setLivePolitenessOff(self, inputEvent):
         if _settingsManager.getSetting('inferLiveRegions'):
             self.liveMngr.setLivePolitenessOff()
         else:
-            # Translators: this announces to the user that live region
-            # support has been turned off.
-            #
-            self.presentMessage(_("Live region support is off"))
+            self.presentMessage(messages.LIVE_REGIONS_OFF)
 
     def reviewLiveAnnouncement(self, inputEvent):
         if _settingsManager.getSetting('inferLiveRegions'):
             self.liveMngr.reviewLiveAnnouncement( \
                                     int(inputEvent.event_string[1:]))
         else:
-            # Translators: this announces to the user that live region
-            # support has been turned off.
-            #
-            self.presentMessage(_("Live region support is off"))
+            self.presentMessage(messages.LIVE_REGIONS_OFF)
 
     def toggleCaretNavigation(self, inputEvent):
         """Toggles between Firefox native and Orca caret navigation."""
@@ -5241,26 +4990,12 @@ class Script(default.Script):
             for keyBinding in self.__getArrowBindings().keyBindings:
                 self.keyBindings.removeByHandler(keyBinding.handler)
             script_settings.controlCaretNavigation = False
-            # Translators: Gecko native caret navigation is where
-            # Firefox itself controls how the arrow keys move the caret
-            # around HTML content.  It's often broken, so Orca needs
-            # to provide its own support.  As such, Orca offers the user
-            # the ability to switch between the Firefox mode and the
-            # Orca mode.
-            #
-            string = _("Gecko is controlling the caret.")
+            string = messages.CARET_CONTROL_GECKO
         else:
             script_settings.controlCaretNavigation = True
             for keyBinding in self.__getArrowBindings().keyBindings:
                 self.keyBindings.add(keyBinding)
-            # Translators: Gecko native caret navigation is where
-            # Firefox itself controls how the arrow keys move the caret
-            # around HTML content.  It's often broken, so Orca needs
-            # to provide its own support.  As such, Orca offers the user
-            # the ability to switch between the Firefox mode and the
-            # Orca mode.
-            #
-            string = _("Orca is controlling the caret.")
+            string = messages.CARET_CONTROL_ORCA
 
         debug.println(debug.LEVEL_CONFIGURATION, string)
         self.presentMessage(string)

@@ -17,6 +17,7 @@ orca_python_PYTHON = \
 	braille_generator.py \
 	braille_rolenames.py \
 	brlmon.py \
+	brltablenames.py \
 	chat.py \
 	chnames.py \
 	cmdnames.py \
@@ -29,6 +30,7 @@ orca_python_PYTHON = \
 	flat_review.py \
 	formatting.py \
 	generator.py \
+	guilabels.py \
 	input_event.py \
 	keybindings.py \
 	keynames.py \
@@ -39,6 +41,7 @@ orca_python_PYTHON = \
 	messages.py \
 	mouse_review.py \
 	notification_messages.py \
+	object_properties.py \
 	orca.py \
 	orca_console_prefs.py \
 	orca_gtkbuilder.py \

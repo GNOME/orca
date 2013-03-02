@@ -32,14 +32,11 @@ from gi.repository import Atspi, Atk
 from . import debug
 from . import generator
 from . import messages
+from . import object_properties
 from . import settings
 from . import settings_manager
 from . import sound
 from . import text_attribute_names
-
-from .orca_i18n import _
-from .orca_i18n import ngettext
-from .orca_i18n import C_
 
 class Pause:
     """A dummy class to indicate we want to insert a pause into an
@@ -477,18 +474,11 @@ class SpeechGenerator(generator.Generator):
             link_uri_info = urllib.parse.urlparse(link_uri)
             if link_uri_info[0] in ["ftp", "ftps", "file"]:
                 fileName = link_uri_info[2].split('/')
-                # Translators: this refers to a link to a file, where
-                # the first item is the protocol (ftp, ftps, or file)
-                # and the second item the name of the file being linked
-                # to.
-                #
-                result.append(_("%(uri)s link to %(file)s") \
+                result.append(messages.LINK_TO_FILE \
                               % {"uri" : link_uri_info[0],
                                  "file" : fileName[-1]})
             else:
-                # Translators: this is the protocol of a link eg. http, mailto.
-                #
-                linkOutput = _("%s link") % link_uri_info[0]
+                linkOutput = messages.LINK_WITH_PROTOCOL % link_uri_info[0]
                 text = self._script.utilities.displayedText(obj)
                 if not text:
                     # If there's no text for the link, expose part of the
@@ -521,35 +511,21 @@ class SpeechGenerator(generator.Generator):
             doc_uri_info = urllib.parse.urlparse(doc_uri)
             if link_uri_info[1] == doc_uri_info[1]:
                 if link_uri_info[2] == doc_uri_info[2]:
-                    # Translators: this is an indication that a given
-                    # link points to an object that is on the same page.
-                    #
-                    result.append(_("same page"))
+                    result.append(messages.LINK_SAME_PAGE)
                 else:
-                    # Translators: this is an indication that a given
-                    # link points to an object that is at the same site
-                    # (but not on the same page as the link).
-                    #
-                    result.append(_("same site"))
+                    result.append(messages.LINK_SAME_SITE)
             else:
                 # check for different machine name on same site
                 #
                 linkdomain = link_uri_info[1].split('.')
                 docdomain = doc_uri_info[1].split('.')
-                if len(linkdomain) > 1 and docdomain > 1  \
+                if len(linkdomain) > 1 and len(docdomain) > 1  \
                     and linkdomain[-1] == docdomain[-1]  \
                     and linkdomain[-2] == docdomain[-2]:
-                    # Translators: this is an indication that a given
-                    # link points to an object that is at the same site
-                    # (but not on the same page) as the link.
-                    #
-                    result.append(_("same site"))
+                    result.append(messages.LINK_SAME_SITE)
                 else:
-                    # Translators: this is an indication that a given
-                    # link points to an object that is at a different
-                    # site than that of the link.
-                    #
-                    result.append(_("different site"))
+                    result.append(messages.LINK_DIFFERENT_SITE)
+
         if result:
             result.extend(acss)
         return result
@@ -577,17 +553,11 @@ class SpeechGenerator(generator.Generator):
         if sizeString:
             size = int(sizeString)
             if size < 10000:
-                # Translators: This is the size of a file in bytes
-                #
-                result.append(ngettext("%d byte", "%d bytes", size) % size)
+                result.append(messages.fileSizeBytes(size))
             elif size < 1000000:
-                # Translators: This is the size of a file in kilobytes
-                #
-                result.append(_("%.2f kilobytes") % (float(size) * .001))
+                result.append(messages.FILE_SIZE_KB % (float(size) * .001))
             elif size >= 1000000:
-                # Translators: This is the size of a file in megabytes
-                #
-                result.append(_("%.2f megabytes") % (float(size) * .000001))
+                result.append(messages.FILE_SIZE_MB % (float(size) * .000001))
         if result:
             result.extend(acss)
         return result
@@ -783,10 +753,7 @@ class SpeechGenerator(generator.Generator):
 
         if checkIfSelected \
            and state and not state.contains(pyatspi.STATE_SELECTED):
-            # Translators: this is in reference to a table cell being
-            # selected or not.
-            #
-            result.append(C_("tablecell", "not selected"))
+            result.append(object_properties.STATE_UNSELECTED_TABLE_CELL)
             result.extend(acss)
 
         return result
@@ -813,9 +780,7 @@ class SpeechGenerator(generator.Generator):
             index = self._script.utilities.cellIndex(obj)
             col = table.getColumnAtIndex(index)
         if col >= 0:
-            # Translators: this is in references to a column in a
-            # table.
-            result.append(_("column %d") % (col + 1))
+            result.append(messages.TABLE_COLUMN % (col + 1))
         if result:
             result.extend(acss)
         return result
@@ -842,9 +807,7 @@ class SpeechGenerator(generator.Generator):
             index = self._script.utilities.cellIndex(obj)
             row = table.getRowAtIndex(index)
         if row >= 0:
-            # Translators: this is in references to a row in a table.
-            #
-            result.append(_("row %d") % (row + 1))
+            result.append(messages.TABLE_ROW % (row + 1))
         if result:
             result.extend(acss)
         return result
@@ -871,14 +834,10 @@ class SpeechGenerator(generator.Generator):
             index = self._script.utilities.cellIndex(obj)
             col = table.getColumnAtIndex(index)
             row = table.getRowAtIndex(index)
-            # Translators: this is in references to a column in a
-            # table.
-            result.append(_("column %(index)d of %(total)d") \
+            result.append(messages.TABLE_COLUMN_DETAILED \
                           % {"index" : (col + 1),
                              "total" : table.nColumns})
-            # Translators: this is in reference to a row in a table.
-            #
-            result.append(_("row %(index)d of %(total)d") \
+            result.append(messages.TABLE_ROW_DETAILED \
                           % {"index" : (row + 1),
                              "total" : table.nRows})
         if result:
@@ -911,10 +870,7 @@ class SpeechGenerator(generator.Generator):
                 row = table.getRowAtIndex(index)
                 col = table.getColumnAtIndex(index)
                 if row + 1 == table.nRows and col + 1 == table.nColumns:
-                    # Translators: This is to indicate to the user that
-                    # he/she is in the last cell of a table in a document.
-                    #
-                    result.append(_("End of table"))
+                    result.append(messages.TABLE_END)
         if result:
             result.extend(acss)
         return result
@@ -999,18 +955,13 @@ class SpeechGenerator(generator.Generator):
                         #
                         if key == "weight":
                             if int(attribute) > 400:
-                                attribStr += " "
-                                # Translators: bold as in the font sense.
-                                #
-                                attribStr += _("bold")
+                                attribStr += " %s" % messages.BOLD
                         elif key == "underline":
                             if attribute != "none":
-                                attribStr += " "
-                                attribStr += localizedKey
+                                attribStr += " %s" % localizedKey
                         elif key == "style":
                             if attribute != "normal":
-                                attribStr += " "
-                                attribStr += localizedValue
+                                attribStr += " %s" % localizedValue
                         else:
                             attribStr += " "
                             attribStr += (localizedKey + " " + localizedValue)
@@ -1018,11 +969,7 @@ class SpeechGenerator(generator.Generator):
             # Also check to see if this is a hypertext link.
             #
             if self._script.utilities.linkIndex(obj, textOffset) >= 0:
-                attribStr += " "
-                # Translators: this indicates that this piece of
-                # text is a hypertext link.
-                #
-                attribStr += _("link")
+                attribStr += " %s" % messages.LINK
 
         return attribStr
 
@@ -1175,11 +1122,7 @@ class SpeechGenerator(generator.Generator):
             self._getTextInformation(obj)
 
         if selected:
-            # Translators: when the user selects (highlights) text in
-            # a document, Orca lets them know this.
-            #
-            text = C_("text", "selected")
-            result.append(text)
+            result.append(messages.TEXT_SELECTED)
             result.extend(acss)
         return result
 
@@ -1204,10 +1147,7 @@ class SpeechGenerator(generator.Generator):
                 [string, startOffset, endOffset] = \
                    textObj.getTextAtOffset(0, pyatspi.TEXT_BOUNDARY_LINE_START)
                 if startOffset == 0 and endOffset == len(string):
-                    # Translators: when the user selects (highlights) text in
-                    # a document, Orca lets them know this.
-                    #
-                    result = [C_("text", "selected")]
+                    result = [messages.TEXT_SELECTED]
                     result.extend(acss)
         return result
 
@@ -1245,24 +1185,12 @@ class SpeechGenerator(generator.Generator):
                 spaceCount += 1
                 offset += 1
             if spaceCount:
-                # Translators: this is the number of space characters on a line
-                # of text.
-                #
-                utterance += ngettext("%d space",
-                                      "%d spaces",
-                                      spaceCount) % spaceCount + " "
-
+                utterance += "%s " % messages.spacesCount(spaceCount)
             while (offset < len(line)) and line[offset] == '\t':
                 tabCount += 1
                 offset += 1
             if tabCount:
-                # Translators: this is the number of tab characters on a line
-                # of text.
-                #
-                utterance += ngettext("%d tab",
-                                      "%d tabs",
-                                      tabCount) % tabCount + " "
-
+                utterance += "%s " % messages.tabsCount(tabCount)
             if not (spaceCount  or tabCount):
                 break
             spaceCount  = tabCount = 0
@@ -1325,12 +1253,7 @@ class SpeechGenerator(generator.Generator):
                 (value.currentValue
                  / (value.maximumValue - value.minimumValue)) \
                 * 100.0
-            # Translators: this is the percentage value of a progress bar.
-            #
-            percentage = ngettext("%d percent",
-                                  "%d percent",
-                                  percentValue) % percentValue
-            result.append(percentage)
+            result.append(messages.percentage(percentValue))
         if result:
             result.extend(acss)
         return result
@@ -1395,11 +1318,7 @@ class SpeechGenerator(generator.Generator):
         childNodes = self._script.utilities.childNodes(obj)
         children = len(childNodes)
         if children:
-            # Translators: this is the number of items in a layered
-            # pane or table.
-            #
-            itemString = ngettext("%d item", "%d items", children) % children
-            result.append(itemString)
+            result.append(messages.itemCount(children))
             result.extend(acss)
         return result
 
@@ -1423,10 +1342,7 @@ class SpeechGenerator(generator.Generator):
                 hasItems = True
                 break
         if not hasItems:
-            # Translators: this is the number of items in a layered pane
-            # or table.
-            #
-            result.append(_("0 items"))
+            result.append(messages.ZERO_ITEMS)
             result.extend(acss)
         return result
 
@@ -1444,10 +1360,7 @@ class SpeechGenerator(generator.Generator):
         result = []
         acss = self.voice(SYSTEM)
         if not obj.childCount:
-            # Translators: this is the number of items in a layered pane
-            # or table.
-            #
-            result.append(_("0 items"))
+            result.append(messages.ZERO_ITEMS)
             result.extend(acss)
         return result
 
@@ -1502,15 +1415,7 @@ class SpeechGenerator(generator.Generator):
                 selectedItems.append(child)
             if state.contains(pyatspi.STATE_FOCUSED):
                 currentItem = child.getIndexInParent() + 1
-        # Translators: this is a count of the number of selected icons
-        # and the count of the total number of icons within an icon panel.
-        # An example of an icon panel is the Nautilus folder view.
-        #
-        countString = ngettext("%(index)d of %(total)d item selected",
-                               "%(index)d of %(total)d items selected",
-                               childCount) \
-                      % {"index" : totalSelectedItems,
-                         "total" : childCount}
+        countString = messages.selectedItemsCount(totalSelectedItems, childCount)
         result.append(countString)
         result.extend(acss)
         result.append(self._script.formatting.getString(
@@ -1559,12 +1464,7 @@ class SpeechGenerator(generator.Generator):
         except:
             alertAndDialogCount = 0
         if alertAndDialogCount > 0:
-            # Translators: this tells the user how many unfocused
-            # alert and dialog windows that this application has.
-            #
-            result.append(ngettext("%d unfocused dialog",
-                            "%d unfocused dialogs",
-                            alertAndDialogCount) % alertAndDialogCount)
+            result.append(messages.dialogCountSpeech(alertAndDialogCount))
             result.extend(acss)
         return result
 
@@ -1648,10 +1548,7 @@ class SpeechGenerator(generator.Generator):
         if args.get('role', obj.getRole()) == pyatspi.ROLE_ICON \
            and args.get('formatType', None) \
                in ['basicWhereAmI', 'detailedWhereAmI']:
-            # Translators: this is an alternative name for the
-            # parent object of a series of icons.
-            #
-            return [_("Icon panel")]
+            return [object_properties.ROLE_ICON_PANEL]
         elif obj.parent.getRole() == pyatspi.ROLE_TABLE_CELL:
             obj = obj.parent
         return self._generateRoleName(obj.parent)
@@ -1806,11 +1703,7 @@ class SpeechGenerator(generator.Generator):
         if button and button.getState().contains(pyatspi.STATE_SENSITIVE):
             name = self._generateName(button)
             if name:
-                # Translators: The "default" button in a dialog box is the
-                # button that gets activated when Enter is pressed anywhere
-                # within that dialog box.
-                #
-                result.append(_("Default button is %s") % name[0])
+                result.append(messages.DEFAULT_BUTTON_IS % name[0])
         return result
 
     def generateDefaultButton(self, obj, **args):
@@ -1859,13 +1752,7 @@ class SpeechGenerator(generator.Generator):
         alertAndDialogCount = \
                     self._script.utilities.unfocusedAlertAndDialogCount(obj)
         if alertAndDialogCount > 0:
-            # Translators: this tells the user how many unfocused
-            # alert and dialog windows that this application has.
-            #
-            dialogs = []
-            dialogs.append(ngettext("%d unfocused dialog",
-                                    "%d unfocused dialogs",
-                                    alertAndDialogCount) % alertAndDialogCount)
+            dialogs = [messages.dialogCountSpeech(alertAndDialogCount)]
             dialogs.extend(acss)
             result.append(dialogs)
         return result
