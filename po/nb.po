@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca 3.7.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-25 17:45+0100\n"
-"PO-Revision-Date: 2013-02-25 17:56+0100\n"
+"POT-Creation-Date: 2013-03-04 14:42+0100\n"
+"PO-Revision-Date: 2013-03-04 14:44+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: \n"
@@ -2648,7 +2648,7 @@ msgstr "Bytter til neste nivå for tasteekko."
 #. information that Orca generates at run time.
 #: ../src/orca/cmdnames.py:449
 msgid "Cycles the debug level at run time."
-msgstr ""
+msgstr "Endrer feilsøkingsnivå ved kjøring."
 
 #. Translators: this command announces information regarding the relationship of
 #. the given bookmark to the current position. Note that in this context, the
@@ -3743,15 +3743,12 @@ msgstr "Læringsmodus.  Trykk escape for å gå ut av det."
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
 #: ../src/orca/messages.py:407
-#, fuzzy
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To get a list of "
 "Orca's default shortcuts, press 1. To get a list of Orca's shortcuts for the "
 "current application, press 2. To view Orca's documentation, press F1. To "
 "exit learn mode, press the escape key."
-msgstr ""
-"Går inn i læringsmodus.  Trykk en knapp for å høre hva det brukes til. Trykk "
-"esc for å avslutte læremodus."
+msgstr "Går inn i læringsmodus.  Trykk en knapp for å høre hva den brukes til. Trykk 1 for å få en liste over Orca's forvalgte snarveier. Trykk 2 for å få en liste med Orca's snarveier for aktivt program. Trykk F1 for å vise dokumentasjonen for Orca. Trykk esc for å avslutte læremodus."
 
 #. Translators: Orca has a "Learn Mode" that will allow the user to type any key
 #. on the keyboard and hear what the effects of that key would be.  The effects
