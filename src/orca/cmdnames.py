@@ -715,7 +715,7 @@ DYNAMIC_COLUMN_HEADER_SET = _("Set the row to use as dynamic column headers.")
 DYNAMIC_COLUMN_HEADER_CLEAR = _("Clears the dynamic column headers.")
 
 # Translators: Orca allows you to dynamically define which column of a
-# spreadsheet or table should be treated as containing column headers. This
+# spreadsheet or table should be treated as containing row headers. This
 # string refers to the command to set the column.
 DYNAMIC_ROW_HEADER_SET = _("Set the column to use as dynamic row headers.")
 
