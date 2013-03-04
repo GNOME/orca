@@ -757,144 +757,20 @@ defaultModifierMask = NON_LOCKING_MODIFIER_MASK
 #
 presentRequiredState = False
 
-########################################################################
-#                                                                      #
-# Sounds                                                               #
-#                                                                      #
-########################################################################
+
 
 # A dictionary where the keys are rolenames and the values are
 # filenames containing audio snippets.
 #
 sounds = {}
 
-########################################################################
-#                                                                      #
-# Strings for speech and braille                                       #
-#                                                                      #
-########################################################################
 
-# Translators: Certain objects (such as form controls on web pages)
-# can have STATE_REQUIRED set on them to inform the user that this
-# field must be filled out. This string is the default string which
-# will be spoken and displayed in braille to indicate this state is
-# present.
-#
-speechRequiredStateString = _("required")
-
-# Translators: this is used to indicate the user is in a text
-# area that is not editable.  It is meant to be spoken to the user.
-#
-speechReadOnlyString = C_("text", "read only")
-
-# Translators: this represents an item on the screen that has
-# been set insensitive (or grayed out).
-#
-speechInsensitiveString = _("grayed")
-
-# Translators: this represents the state of a checkbox.  It is meant
-# to be spoken to the user.
-#
-speechCheckboxIndicators = [_("not checked"),
-                            _("checked"),
-                            _("partially checked")]
-
-# Translators: this represents the state of a radio button.  It is
-# meant to be spoken to the user.
-#
-speechRadioButtonIndicators = [C_("radiobutton", "not selected"),
-                               C_("radiobutton", "selected")]
-
-# Translators: this represents the state of a toggle button.  It is
-# meant to be spoken to the user.
-#
-speechToggleButtonIndicators = [_("not pressed"), _("pressed")]
-
-# Translators: this represents the state of a node in a tree.
-# 'expanded' means the children are showing.  'collapsed' means the
-# children are not showing.
-#
-speechExpansionIndicators = [_("collapsed"), _("expanded")]
-
-# Translators: "multi-select" refers to a web form list
-# in which more than one item can be selected at a time.
-#
-speechMultiSelectString = _("multi-select")
-
-# Translators: this represents the depth of a node in a tree
-# view (i.e., how many ancestors a node has).  It is meant to be
-# spoken.
-#
-speechNodeLevelString = _("tree level %d")
-
-# Translators: this represents a list item in a document.
-# The nesting level is how 'deep' the item is (e.g., a
-# level of 2 represents a list item inside a list that's
-# inside another list). This is meant to be spoken.
-#
-speechNestingLevelString = _("Nesting level %d")
-
-# Translators: this is a indication of the focused icon and the
-# count of the total number of icons within an icon panel. An
-# example of an icon panel is the Nautilus folder view.
-#
-speechIconIndexString = _("on %(index)d of %(total)d")
-
-# Translators: this refers to the position of an item in a list
-# or group of objects, such as menu items in a menu, radio buttons
-# in a radio button group, combobox item in a combobox, etc.
-#
-speechGroupIndexString = _("%(index)d of %(total)d")
 
 # string to indicate end of printed line for braille displays:
 #
 disableBrailleEOL = False
 brailleEOLIndicator = " $l"
 
-# Translators: Certain objects (such as form controls on web pages)
-# can have STATE_REQUIRED set on them to inform the user that this
-# field must be filled out. This string is the default string which
-# will be spoken and displayed in braille to indicate this state is
-# present.
-#
-brailleRequiredStateString = _("required")
-
-# Translators: this is used to indicate the user is in a text
-# area that is not editable.  It is meant to be a short abbreviation
-# to be presented on the braille display.
-#
-brailleReadOnlyString = C_("text", "rdonly")
-
-# Translators: this represents an item on the screen that has
-# been set insensitive (or grayed out).
-#
-brailleInsensitiveString = _("grayed")
-
-# Strings used to indicate checkbox/radio button states in braille:
-#
-brailleCheckBoxIndicators = ["< >", "<x>", "<->"]
-brailleRadioButtonIndicators = ["& y", "&=y"]
-brailleToggleButtonIndicators = ["& y", "&=y"]
-
-# Translators: this represents the state of a node in a tree.
-# 'expanded' means the children are showing.  'collapsed' means the
-# children are not showing.
-#
-brailleExpansionIndicators = [_("collapsed"), _("expanded")]
-
-# Translators: this represents the depth of a node in a tree
-# view (i.e., how many ancestors a node has).  It is meant to
-# be presented on a braille display.
-#
-brailleNodeLevelString = _("TREE LEVEL %d")
-
-# Translators: this represents a list item in a document.
-# The nesting level is how 'deep' the item is (e.g., a
-# level of 2 represents a list item inside a list that's
-# inside another list).  It is meant to be presented on
-# the braille display.
-#
-brailleNestingLevelString = _("LEVEL %d")
 
 # String for delimiters between table cells
 #

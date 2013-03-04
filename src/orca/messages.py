@@ -1431,6 +1431,8 @@ def repeatedCharCount(repeatChar, count):
                     count) % {"count" : count, "repeatChar": repeatChar}
 
 def selectedItemsCount(selected, total):
+    # Translators: This message is presented to indicate the number of selected
+    # objects (e.g. icons) and the total number of those objects.
     return ngettext("%(index)d of %(total)d item selected",
                     "%(index)d of %(total)d items selected",
                     total) % {"index" : selected, "total" : total}

@@ -30,6 +30,7 @@ import copy
 import pyatspi
 
 from . import settings
+from . import object_properties
 
 # pylint: disable-msg=C0301
 
@@ -51,30 +52,30 @@ formatting = {
 
     'strings' : {
         'speech': {
-            'required': settings.speechRequiredStateString,
-            'readonly': settings.speechReadOnlyString,
-            'insensitive': settings.speechInsensitiveString,
-            'checkbox': settings.speechCheckboxIndicators,
-            'radiobutton': settings.speechRadioButtonIndicators,
-            'togglebutton': settings.speechToggleButtonIndicators,
-            'expansion': settings.speechExpansionIndicators,
-            'nodelevel': settings.speechNodeLevelString,
-            'nestinglevel': settings.speechNestingLevelString,
-            'multiselect': settings.speechMultiSelectString,
-            'iconindex': settings.speechIconIndexString,
-            'groupindex': settings.speechGroupIndexString,
+            'required': object_properties.STATE_REQUIRED_SPEECH,
+            'readonly': object_properties.STATE_READ_ONLY_SPEECH,
+            'insensitive': object_properties.STATE_INSENSITIVE_SPEECH,
+            'checkbox': object_properties.CHECK_BOX_INDICATORS_SPEECH,
+            'radiobutton': object_properties.RADIO_BUTTON_INDICATORS_SPEECH,
+            'togglebutton': object_properties.TOGGLE_BUTTON_INDICATORS_SPEECH,
+            'expansion': object_properties.EXPANSION_INDICATORS_SPEECH,
+            'nodelevel': object_properties.NODE_LEVEL_SPEECH,
+            'nestinglevel': object_properties.NESTING_LEVEL_SPEECH,
+            'multiselect': object_properties.STATE_MULTISELECT_SPEECH,
+            'iconindex': object_properties.ICON_INDEX_SPEECH,
+            'groupindex': object_properties.GROUP_INDEX_SPEECH,
         },
         'braille': {
             'eol': settings.brailleEOLIndicator,
-            'required': settings.brailleRequiredStateString,
-            'readonly': settings.brailleReadOnlyString,
-            'insensitive': settings.brailleInsensitiveString,
-            'checkbox': settings.brailleCheckBoxIndicators,
-            'radiobutton': settings.brailleRadioButtonIndicators,
-            'togglebutton': settings.brailleToggleButtonIndicators,
-            'expansion': settings.brailleExpansionIndicators,
-            'nodelevel': settings.brailleNodeLevelString,
-            'nestinglevel': settings.brailleNestingLevelString,
+            'required': object_properties.STATE_REQUIRED_BRAILLE,
+            'readonly': object_properties.STATE_READ_ONLY_BRAILLE,
+            'insensitive': object_properties.STATE_INSENSITIVE_BRAILLE,
+            'checkbox': object_properties.CHECK_BOX_INDICATORS_BRAILLE,
+            'radiobutton': object_properties.RADIO_BUTTON_INDICATORS_BRAILLE,
+            'togglebutton': object_properties.TOGGLE_BUTTON_INDICATORS_BRAILLE,
+            'expansion': object_properties.EXPANSION_INDICATORS_BRAILLE,
+            'nodelevel': object_properties.NODE_LEVEL_BRAILLE,
+            'nestinglevel': object_properties.NESTING_LEVEL_BRAILLE,
         },
     },
 
