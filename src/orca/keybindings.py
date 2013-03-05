@@ -217,14 +217,12 @@ class KeyBinding:
         except:
             return ''
 
-    def asString(self, convertKeysym=False):
+    def asString(self):
         """Returns a more human-consumable string representing this binding."""
 
         mods = getModifierNames(self.modifiers)
         clickCount = getClickCountString(self.click_count)
         keysym = self.keysymstring
-        if convertKeysym:
-            keysym = keysym.replace('KP_', _('keypad ')).title()
         string = '%s%s %s' % (mods, keysym, clickCount)
 
         return string.strip()

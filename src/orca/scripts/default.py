@@ -1053,7 +1053,7 @@ class Script(script.Script):
 
         rows = [(kb.handler.function,
                  kb.handler.description,
-                 kb.asString(True)) for kb in bound]
+                 kb.asString()) for kb in bound]
         sorted(rows, key=lambda cmd: cmd[2])
 
         header1 = guilabels.KB_HEADER_FUNCTION
