@@ -1,3 +1,27 @@
+3.7.91 - 4 March 2013
+
+New Features
+
+  * Signifcant work and progress on profile-based, on-the-fly language
+    switching. It's nearly here! :)
+
+New and updated translations (THANKS EVERYONE!!!):
+    de            German                      Mario Blättermann
+    el            Greek                       Tom Tryfonidis
+    es            Spanish                     Daniel Mustieles
+    lt            Lithuanian                  Aurimas Černius
+    nb            Norwegian bokmål            Kjartan Maraas
+    ne            Nepali                      Him Prasad Gautam
+    pl            Polish                      Piotr Drąg
+    pt            Portuguese                  Rui Batista
+    ru            Russian                     Yuri Myasoedov
+    sl            Slovenian                   Matej Urbančič
+    sr            Serbian                     Мирослав Николић
+    sr@latin      Serbian                     Miroslav Nikolić
+    ug            Uyghur                      Gheyret Kenji 
+
+=========
+
 3.7.90 - 19 February 2013
 
 New Features
