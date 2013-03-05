@@ -133,14 +133,6 @@ __keynames["Tab"] = _("tab")
 #
 __keynames["ISO_Left_Tab"] = _("left tab")
 
-# Translators: this is how someone would speak the name of the F11 key
-#
-__keynames["SunF36"]       = _("F 11")
-
-# Translators: this is how someone would speak the name of the F12 key
-#
-__keynames["SunF37"]       = _("F 12")
-
 # Translators: this is the spoken word for the space character
 #
 __keynames["space"] = _("space")

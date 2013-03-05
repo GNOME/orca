@@ -45,9 +45,6 @@ keymap = (
     ("F11", defaultModifierMask, ORCA_MODIFIER_MASK,
     "toggleTableCellReadModeHandler"),
 
-    ("SunF36", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "toggleTableCellReadModeHandler"),
-
     ("f", defaultModifierMask, ORCA_MODIFIER_MASK,
     "readCharAttributesHandler"),
 

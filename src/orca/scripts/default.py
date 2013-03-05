@@ -372,12 +372,6 @@ class Script(script.Script):
                 Script.enterLearnMode,
                 cmdnames.ENTER_LEARN_MODE)
 
-        self.inputEventHandlers["listShortcutsHandler"] = \
-            input_event.InputEventHandler(
-                Script.listOrcaShortcuts,
-                cmdnames.ENTER_LEARN_MODE,
-                False) # Do not enable learn mode for this action
-
         self.inputEventHandlers["decreaseSpeechRateHandler"] = \
             input_event.InputEventHandler(
                 speech.decreaseSpeechRate,
