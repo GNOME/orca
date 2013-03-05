@@ -3621,7 +3621,7 @@ class StructuralNavigation:
 
         def rowData(obj):
             return [self._getText(obj),
-                    self._script.utilities.uri(obj),
-                    self._getState(obj)]
+                    self._getState(obj),
+                    self._script.utilities.uri(obj)]
 
         return guilabels.SN_TITLE_LINK, columnHeaders, rowData
