@@ -1716,7 +1716,7 @@ class StructuralNavigation:
         # For now, we'll just grab the spoken indicator from settings.
         # When object presentation is refactored, we can clean this up.
         if role == pyatspi.ROLE_CHECK_BOX:
-            unchecked, checked, partially = settings.speechCheckboxIndicators
+            unchecked, checked, partially = object_properties.CHECK_BOX_INDICATORS_SPEECH
             if state.contains(pyatspi.STATE_INDETERMINATE):
                 return partially
             if state.contains(pyatspi.STATE_CHECKED):
@@ -1724,7 +1724,7 @@ class StructuralNavigation:
             return unchecked
 
         if role == pyatspi.ROLE_RADIO_BUTTON:
-            unselected, selected = settings.speechRadioButtonIndicators
+            unselected, selected = object_properties.RADIO_BUTTON_INDICATORS_SPEECH
             if state.contains(pyatspi.STATE_CHECKED):
                 return selected
             return unselected
