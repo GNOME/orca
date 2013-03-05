@@ -2080,6 +2080,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         #
         if not self.kbindings:
             self.kbindings = keybindings.KeyBindings()
+            defScript.setupInputEventHandlers()
             self.defKeyBindings = defScript.getKeyBindings()
             for kb in self.defKeyBindings.keyBindings:
                 if not self.kbindings.hasKeyBinding(kb, "strict"):

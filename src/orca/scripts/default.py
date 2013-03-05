@@ -2067,6 +2067,10 @@ class Script(script.Script):
         # for now we'll hack.
         self.voices = _settingsManager.getSetting('voices')
 
+        # TODO: This is another "too close to code freeze" hack to cause the
+        # command names to be presented in the correct language.
+        self.setupInputEventHandlers()
+
         self.presentMessage(messages.PROFILE_CHANGED % name, name)
         return True
 
