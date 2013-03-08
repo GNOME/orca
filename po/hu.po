@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the orca package.
 #
 # Kálmán Kéménczy <kkemenczy at novell dot com>, 2006, 2007.
-# Gabor Kelemen <kelemeng at gnome dot hu>, 2006, 2007, 2008, 2009, 2010, 2011, 2012.
+# Gabor Kelemen <kelemeng at gnome dot hu>, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 # Attila Hammer <hammera at pickup dot hu>, 2008, 2009, 2010, 2011, 2012.
 msgid ""
 msgstr ""
@@ -11,15 +11,15 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2013-03-06 17:41+0000\n"
-"PO-Revision-Date: 2013-03-05 06:12+0200\n"
-"Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
-"Language-Team: Magyar <gnome-hu-list at gnome dot org>\n"
-"Language: \n"
+"PO-Revision-Date: 2013-03-08 14:31+0100\n"
+"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.0\n"
+"X-Generator: Lokalize 1.4\n"
 
 #: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:216
 #: ../src/orca/keybindings.py:106 ../src/orca/orca_gui_prefs.py:1960
@@ -2391,7 +2391,7 @@ msgstr "Váltás a következő beállítási profilra."
 #. to get into a GUI.
 #: ../src/orca/cmdnames.py:432
 msgid "Cycles to the next capitalization style."
-msgstr "Váltás a következő nagybetű stílusra"
+msgstr "Váltás a következő nagybetű stílusra."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -2946,7 +2946,7 @@ msgstr "Ugrás a következő %d. szintű címsorra."
 #: ../src/orca/cmdnames.py:820
 #, python-format
 msgid "Displays a list of headings at level %d."
-msgstr "%d szintű címsorok listájának megjelenítése."
+msgstr "%d. szintű címsorok listájának megjelenítése."
 
 # fixme: szebb szó nincs erre?
 # Nem tudtam előcsalogatni, egyelőre maradjon.
@@ -2985,7 +2985,7 @@ msgstr "Ugrás a következő nagy objektumra."
 #. a table, etc.
 #: ../src/orca/cmdnames.py:845
 msgid "Displays a list of large objects."
-msgstr "Megjeleníti a nagy objektumok listáját."
+msgstr "Nagy objektumok listájának megjelenítése."
 
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:848
@@ -3312,7 +3312,7 @@ msgstr "Billentyűtársítás"
 #: ../src/orca/guilabels.py:127
 msgctxt "structural navigation"
 msgid "Blockquote"
-msgstr "idézetblokk"
+msgstr "Idézetblokk"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3377,7 +3377,7 @@ msgctxt "structural navigation"
 msgid "Label"
 msgstr "Címke"
 
-# Megjegyzés: Ez az üzenet akkor jelenik meg, ha a felhasználó a címsorokat listáztatja. Szándékosan írtam hosszabb oszlopnevet 
+# Megjegyzés: Ez az üzenet akkor jelenik meg, ha a felhasználó a címsorokat listáztatja. Szándékosan írtam hosszabb oszlopnevet
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of a column which
@@ -3459,7 +3459,7 @@ msgstr "Vezérlőelem"
 #: ../src/orca/guilabels.py:225
 msgctxt "structural navigation"
 msgid "Selected Item"
-msgstr "kiválasztott elem"
+msgstr "Kiválasztott elem"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3487,7 +3487,7 @@ msgstr "Szöveg"
 #: ../src/orca/guilabels.py:244
 msgctxt "structural navigation"
 msgid "URI"
-msgstr "URL"
+msgstr "URI"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -4776,9 +4776,9 @@ msgid ""
 msgstr ""
 "Belépés a tanulómódba. Nyomjon meg egy billentyűt a funkciójának "
 "meghallgatásához. Az általános Orka billentyűparancsok listájának "
-"megjelenítéséhez nyomja le az 1-es számot, a használt alkalmazásOrka "
-"parancsainak listájának megjelenítéséhez a 2-es számot.A dokumentáció "
-"megjelenítéséhez nyomja meg az F1 billentyűt.Ha ki szeretne lépni a "
+"megjelenítéséhez nyomja le az 1-es számot, a használt alkalmazás Orka "
+"parancsainak listájának megjelenítéséhez a 2-es számot. A dokumentáció "
+"megjelenítéséhez nyomja meg az F1 billentyűt. Ha ki szeretne lépni a "
 "tanulómódból, nyomja meg az ESC billentyűt."
 
 #. Translators: when the user selects (highlights) or unselects text in a
