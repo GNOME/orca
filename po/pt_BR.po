@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-03-08 13:44+0000\n"
+"POT-Creation-Date: 2013-03-08 17:18+0000\n"
 "PO-Revision-Date: 2013-03-08 13:56-0300\n"
 "Last-Translator: José Vilmar Estácio de Souza <vilmar@informal.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
@@ -4561,7 +4561,7 @@ msgstr "tecla"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:401
 msgid "Key echo set to key."
-msgstr "Chave eco definida para tecla."
+msgstr "Eco de teclas definido para tecla."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -4592,7 +4592,7 @@ msgstr "Nenhum"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:427
 msgid "Key echo set to None."
-msgstr "Chave eco definida para nenhum."
+msgstr "Eco de teclas definido para nenhum."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -4623,7 +4623,7 @@ msgstr "tecla e palavra"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:453
 msgid "Key echo set to key and word."
-msgstr "Chave eco definida para tecla e palavra."
+msgstr "Eco de teclas definido para tecla e palavra."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -4654,7 +4654,7 @@ msgstr "sentença"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:479
 msgid "Key echo set to sentence."
-msgstr "Chave eco definida para sentença."
+msgstr "Eco de teclas definido para sentença."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -4685,7 +4685,7 @@ msgstr "palavra"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:505
 msgid "Key echo set to word."
-msgstr "Chave eco definida para palavra."
+msgstr "Eco de teclas definido para palavra."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -4716,7 +4716,7 @@ msgstr "palavra e sentença"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:531
 msgid "Key echo set to word and sentence."
-msgstr "Chave eco definida para palavra e sentença."
+msgstr "Eco de teclas definido para palavra e sentença."
 
 #. Translators: Inaccessible means that the application cannot be read by Orca.
 #. This usually means the application is not friendly to the assistive technology
@@ -8782,7 +8782,7 @@ msgstr "Para recolher, pressione shift mais esquerda."
 #. this string informs the user how to expand the node.
 #: ../src/orca/tutorialgenerator.py:359 ../src/orca/tutorialgenerator.py:535
 msgid "To expand, press shift plus right."
-msgstr "Para expandir, pressione shit mais direita."
+msgstr "Para expandir, pressione shift mais direita."
 
 #. Translators: this is the tutorial string for activating a menu item
 #: ../src/orca/tutorialgenerator.py:391
