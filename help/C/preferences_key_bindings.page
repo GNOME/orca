@@ -61,14 +61,6 @@
       </item>
       <item>
         <p>
-          The <gui>Alternate</gui> column allows you to specify an additional
-          keybinding for this function. You can modify the value of this
-          column by pressing <key>Return</key>, pressing the keys for the new
-          binding, and pressing <key>Return</key> again.
-        </p>
-      </item>
-      <item>
-        <p>
           The <gui>Modified</gui> column serves both as an indicator to what
           has been changed and as a way to restore the default bindings
           associated with that function.

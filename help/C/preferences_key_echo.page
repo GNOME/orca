@@ -51,16 +51,6 @@
       </p>
     </section>
     <section>
-      <title>Enable locking keys</title>
-      <p>
-        This option controls whether or not <key>Caps Lock</key>, <key>Scroll
-        Lock</key>, and <key>Num Lock</key> should be spoken when pressed.
-      </p>
-      <p>
-        Default value: checked
-      </p>
-    </section>
-    <section>
       <title>Enable function keys</title>
       <p>
         This option controls whether or not <key>F1</key> through <key>F12</key>
