@@ -2,20 +2,20 @@
 # Copyright (C) 2011 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
 # Simos Xenitellis <simos@gnome.org>, 2011.
-# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2012.
+# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2012, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2012-08-15 07:53+0000\n"
-"PO-Revision-Date: 2012-08-19 11:00+0200\n"
-"Last-Translator: Tom Tryfonidis <tomtryf@gmail.com>\n"
+"POT-Creation-Date: 2012-12-28 20:15+0000\n"
+"PO-Revision-Date: 2013-03-11 11:21+0300\n"
+"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@gnome.gr\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.0\n"
+"X-Generator: Virtaal 0.7.1\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -158,24 +158,26 @@ msgstr "Πριν την έναρξη"
 
 #: C/index.page:21(note/p)
 msgid ""
-"Read the <link href=\"help:gnome-help#a11y\">Universal Access Help</link>"
+"If you are not yet familiar with the navigation commands provided by your "
+"desktop environment, you are encouraged to read that documentation first."
 msgstr ""
-"Διαβάστε τη <link href=\"help:gnome-help#a11y\">βοήθεια γενικής πρόσβασης</"
-"link>"
+"Εάν δεν είσαστε ακόμα εξοικειωμένος με της εντολές περιήγησης που δίνονται "
+"από το περιβάλλον της επιφάνειας εργασίας σας, σας προτρέπουμε να διαβάσετε "
+"την τεκμηρίωση πρώτα."
 
-#: C/index.page:26(section/title) C/commands.page:17(section/title)
+#: C/index.page:28(section/title) C/commands.page:17(section/title)
 msgid "Getting Started"
 msgstr "Ξεκίνημα"
 
-#: C/index.page:29(section/title)
+#: C/index.page:31(section/title)
 msgid "Reading Documents and Web Pages"
 msgstr "Ανάγνωση εγγράφων και ιστοσελίδων"
 
-#: C/index.page:32(section/title) C/commands.page:26(section/title)
+#: C/index.page:34(section/title) C/commands.page:26(section/title)
 msgid "Reviewing and Interacting with Screen Contents"
 msgstr "Επισκόπηση και αλληλεπίδραση με τα περιεχόμενα οθόνης"
 
-#: C/index.page:35(section/title)
+#: C/index.page:37(section/title)
 msgid "Quick Reference"
 msgstr "Γρήγορη αναφορά"
 
@@ -2113,13 +2115,15 @@ msgstr ""
 
 #: C/howto_documents.page:48(page/p)
 msgid ""
-"For a complete listing of GNOME's caret navigation commands, see the <link "
-"href=\"ghelp:gnome-help#a11y\">Universal Access Help</link>."
+"If you are not yet familiar with the caret navigation commands provided by "
+"the applications you wish to use, you are encouraged to read that "
+"documentation first."
 msgstr ""
-"Για μια πλήρη λίστα των εντολών περιήγησης δρομέα του GNOME, δείτε τη <link "
-"href=\"ghelp:gnome-help#a11y\">γενική πρόσβαση βοήθειας</link>."
+"Εάν δεν είσαστε ακόμα εξοικειωμένος με της εντολές περιήγησης του δρομέα που "
+"δίνονται από τις εφαρμογές που επιθυμείτε να χρησιμοποιήσετε, σας "
+"προτρέπουμε να διαβάσετε πρώτα την τεκμηρίωση."
 
-#: C/howto_documents.page:52(page/p)
+#: C/howto_documents.page:53(page/p)
 msgid ""
 "In addition to reading a document by caret navigation, you may find it "
 "helpful to read, spell, and obtain the Unicode value for the current text. "
@@ -2131,7 +2135,7 @@ msgstr ""
 "κείμενο. Μπορείτε να κάνετε αυτά τα πράγματα μέσα από το <app>Orca</app> στο "
 "<link xref=\"howto_flat_review\">γνώρισμα γενικής επισκόπησης</link>."
 
-#: C/howto_documents.page:58(page/p)
+#: C/howto_documents.page:59(page/p)
 msgid ""
 "Finally, in order to have <app>Orca</app> speak the entire document from "
 "your present location, use the SayAll command. It, along with a more "
@@ -3075,7 +3079,7 @@ msgstr ""
 #. the file changes, the md5 hash will change to let you know you need to
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
-#: C/howto_profiles.page:28(media) C/preferences_general.page:169(media)
+#: C/howto_profiles.page:28(media) C/preferences_general.page:102(media)
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_profiles.png' "
@@ -3133,7 +3137,7 @@ msgid "Maintaining multiple configurations"
 msgstr "Διατήρηση πολλαπλών διαμορφώσεων"
 
 #: C/howto_profiles.page:15(page/title)
-#: C/preferences_general.page:168(section/title)
+#: C/preferences_general.page:101(section/title)
 msgid "Profiles"
 msgstr "Κατατομές"
 
@@ -4532,11 +4536,6 @@ msgid "To quit <app>Orca</app>:"
 msgstr "Για έξοδο του <app>Orca</app>:"
 
 #: C/introduction.page:59(item/p)
-msgid "Press the <gui>Quit</gui> button in the <app>Orca</app> main window."
-msgstr ""
-"Πατήστε το κουμπί <gui>έξοδος</gui> στο κύριο παράθυρο του <app>Orca</app>."
-
-#: C/introduction.page:65(item/p)
 msgid ""
 "Press <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>. This command "
 "works whether the <app>Orca</app> main window is enabled or not."
@@ -4545,36 +4544,27 @@ msgstr ""
 "Αυτή η εντολή δουλεύει είτε το κύριο παράθυρο του <app>Orca</app> είναι "
 "ενεργό είτε όχι."
 
-#: C/introduction.page:72(item/p)
-msgid ""
-"Type <cmd>orca -q</cmd> or <cmd>orca --quit</cmd> in a terminal window or "
-"within the <gui>Run</gui> dialog and then press <key>Return</key>."
-msgstr ""
-"Πληκτρολογήστε <cmd>orca -q</cmd> ή <cmd>orca --quit</cmd> σε ένα παράθυρο "
-"τερματικού ή μέσα στον διάλογο <gui>εκτέλεσης</gui> και έπειτα πατήστε "
-"<key>επιστροφή</key>."
-
-#: C/introduction.page:81(section/title)
+#: C/introduction.page:68(section/title)
 msgid "Load-Time Options"
 msgstr "Επιλογές χρόνου φόρτωσης"
 
-#: C/introduction.page:82(section/p)
+#: C/introduction.page:69(section/p)
 msgid "The following options can be specified when launching <app>Orca</app>:"
 msgstr ""
 "Οι επόμενες επιλογές μπορούν να εξειδικευτούν στην έναρξη του <app>Orca</"
 "app>:"
 
-#: C/introduction.page:87(item/p)
+#: C/introduction.page:74(item/p)
 msgid "<cmd>-h</cmd>, <cmd>--help</cmd>: Show the help message"
 msgstr "<cmd>-h</cmd>, <cmd>--help</cmd>: Προβολή του μηνύματος βοήθειας"
 
-#: C/introduction.page:90(item/p)
+#: C/introduction.page:77(item/p)
 msgid ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Show the version of <app>Orca</app>"
 msgstr ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Προβολή της έκδοσης του <app>Orca</app>"
 
-#: C/introduction.page:96(item/p)
+#: C/introduction.page:83(item/p)
 msgid ""
 "<cmd>-t</cmd>, <cmd>--text-setup</cmd>: Set up user preferences (text "
 "version)"
@@ -4582,7 +4572,7 @@ msgstr ""
 "<cmd>-t</cmd>, <cmd>--text-setup</cmd>: Εγκατάσταση των προτιμήσεων χρήστη "
 "(έκδοση κειμένου)"
 
-#: C/introduction.page:102(item/p)
+#: C/introduction.page:89(item/p)
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs-dir=<em>dirname</em></cmd>: Use "
 "<em>dirname</em> as the alternate directory for user preferences"
@@ -4591,7 +4581,7 @@ msgstr ""
 "Χρησιμοποιείστε το <em>όνομακαταλόγου</em> ως τον εναλλακτικό κατάλογο για "
 "προτιμήσεις χρήστη"
 
-#: C/introduction.page:109(item/p)
+#: C/introduction.page:96(item/p)
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
@@ -4599,27 +4589,19 @@ msgstr ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>επιλογή</em></cmd>: Εξαναγκασμός χρήσης της "
 "επιλογής, όπου η <em>επιλογή</em> μπορεί να είναι μία από τις παρακάτω:"
 
-#: C/introduction.page:114(item/p) C/introduction.page:128(item/p)
+#: C/introduction.page:101(item/p) C/introduction.page:113(item/p)
 msgid "<cmd>speech</cmd>"
 msgstr "<cmd>ομιλία</cmd>"
 
-#: C/introduction.page:115(item/p) C/introduction.page:129(item/p)
+#: C/introduction.page:102(item/p) C/introduction.page:114(item/p)
 msgid "<cmd>braille</cmd>"
 msgstr "<cmd>μπράιγ</cmd>"
 
-#: C/introduction.page:116(item/p) C/introduction.page:130(item/p)
+#: C/introduction.page:103(item/p) C/introduction.page:115(item/p)
 msgid "<cmd>braille-monitor</cmd>"
 msgstr "<cmd>έλεγχος Μπράιγ</cmd>"
 
-#: C/introduction.page:117(item/p) C/introduction.page:131(item/p)
-msgid "<cmd>main-window</cmd>"
-msgstr "<cmd>κύριο παράθυρο</cmd>"
-
-#: C/introduction.page:118(item/p) C/introduction.page:132(item/p)
-msgid "<cmd>splash-window</cmd>"
-msgstr "<cmd>αρχικό παράθυρο</cmd>"
-
-#: C/introduction.page:122(item/p)
+#: C/introduction.page:107(item/p)
 msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
@@ -4627,7 +4609,7 @@ msgstr ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>επιλογή</em></cmd>: Αποφυγή της χρήσης "
 "μιας επιλογής, όπου η <em>επιλογή</em> μπορεί να είναι μία από τις παρακάτω:"
 
-#: C/introduction.page:136(item/p)
+#: C/introduction.page:119(item/p)
 msgid ""
 "<cmd>-i</cmd>, <cmd>--import-file=<em>filename</em></cmd>: Import a profile "
 "from a given <app>Orca</app> profile file"
@@ -4635,25 +4617,25 @@ msgstr ""
 "<cmd>-i</cmd>, <cmd>--import-file=<em>όνομααρχείου</em></cmd>: Εισαγωγή μιας "
 "κατατομής από δοσμένο αρχείο κατατομής του <app>Orca</app>"
 
-#: C/introduction.page:142(item/p)
+#: C/introduction.page:125(item/p)
 msgid "<cmd>--replace</cmd>: Replace a currently-running <app>Orca</app>"
 msgstr ""
 "<cmd>--replace</cmd>: αντικατάσταση τρέχοντος εκτελούμενου <app>Orca</app>"
 
-#: C/introduction.page:147(item/p)
+#: C/introduction.page:130(item/p)
 msgid ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
 msgstr ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Εκτύπωση των γνωστών εκτελούμενων "
 "εφαρμογών"
 
-#: C/introduction.page:153(item/p)
+#: C/introduction.page:136(item/p)
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "<cmd>--debug</cmd>: Αποστολή εξόδου αποσφαλμάτωσης για αποσφαλμάτωση-YYYY-MM-"
 "DD-HH:MM:SS.out"
 
-#: C/introduction.page:158(item/p)
+#: C/introduction.page:141(item/p)
 msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
@@ -4789,10 +4771,8 @@ msgstr ""
 #: C/preferences_gecko.page:74(section/p)
 #: C/preferences_gecko.page:87(section/p)
 #: C/preferences_gecko.page:118(section/p)
-#: C/preferences_general.page:53(section/p)
+#: C/preferences_general.page:54(section/p)
 #: C/preferences_general.page:73(section/p)
-#: C/preferences_general.page:121(section/p)
-#: C/preferences_general.page:140(section/p)
 #: C/preferences_key_echo.page:94(section/p)
 #: C/preferences_key_echo.page:104(section/p)
 #: C/preferences_key_echo.page:140(section/p)
@@ -5131,7 +5111,6 @@ msgstr ""
 #: C/preferences_gecko.page:36(section/p)
 #: C/preferences_gecko.page:55(section/p)
 #: C/preferences_gecko.page:106(section/p)
-#: C/preferences_general.page:104(section/p)
 #: C/preferences_key_echo.page:29(section/p)
 #: C/preferences_key_echo.page:39(section/p)
 #: C/preferences_key_echo.page:49(section/p)
@@ -5301,80 +5280,30 @@ msgstr ""
 #: C/preferences_general.page:46(media)
 msgctxt "_"
 msgid ""
-"external ref='figures/preferences_quit_Orca_without_confirmation.png' "
-"md5='b79e1083ad179abaa45fafaf5d80cdd7'"
+"external ref='figures/preferences_present_tooltips.png' "
+"md5='a6e33e8bb91b375f1432bcd41d271f5f'"
 msgstr ""
-"external ref='figures/preferences_quit_Orca_without_confirmation.png' "
-"md5='b79e1083ad179abaa45fafaf5d80cdd7'"
+"external ref='figures/preferences_present_tooltips.png' "
+"md5='a6e33e8bb91b375f1432bcd41d271f5f'"
 
 #. This is a reference to an external file such as an image or video. When
 #. the file changes, the md5 hash will change to let you know you need to
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
-#: C/preferences_general.page:65(media)
+#: C/preferences_general.page:66(media)
 msgctxt "_"
 msgid ""
-"external ref='figures/preferences_present_tooltips.png' "
-"md5='a6e33e8bb91b375f1432bcd41d271f5f'"
+"external ref='figures/preferences_speak_object_under_mouse.png' "
+"md5='e1a7682e7ee6427a47a7900f45b37387'"
 msgstr ""
-"external ref='figures/preferences_present_tooltips.png' "
-"md5='a6e33e8bb91b375f1432bcd41d271f5f'"
+"external ref='figures/preferences_speak_object_under_mouse.png' "
+"md5='e1a7682e7ee6427a47a7900f45b37387'"
 
 #. This is a reference to an external file such as an image or video. When
 #. the file changes, the md5 hash will change to let you know you need to
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_general.page:85(media)
-msgctxt "_"
-msgid ""
-"external ref='figures/preferences_show_Orca_main_window.png' "
-"md5='f9dcacd77f6dbe80f5c70575212a8717'"
-msgstr ""
-"external ref='figures/preferences_show_Orca_main_window.png' "
-"md5='f9dcacd77f6dbe80f5c70575212a8717'"
-
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/preferences_general.page:90(media)
-msgctxt "_"
-msgid ""
-"external ref='figures/main_window.png' md5='dc40a43400b81aa8611d4111a65be6e5'"
-msgstr ""
-"external ref='figures/main_window.png' md5='dc40a43400b81aa8611d4111a65be6e5'"
-
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/preferences_general.page:116(media)
-msgctxt "_"
-msgid ""
-"external ref='figures/preferences_start_Orca_when_you_login.png' "
-"md5='__failed__'"
-msgstr ""
-"external ref='figures/preferences_start_Orca_when_you_login.png' "
-"md5='__failed__'"
-
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/preferences_general.page:133(media)
-msgctxt "_"
-msgid ""
-"external ref='figures/preferences_speak_object_under_mouse.png' "
-"md5='e1a7682e7ee6427a47a7900f45b37387'"
-msgstr ""
-"external ref='figures/preferences_speak_object_under_mouse.png' "
-"md5='e1a7682e7ee6427a47a7900f45b37387'"
-
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/preferences_general.page:152(media)
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_date_and_time.png' "
@@ -5429,41 +5358,17 @@ msgstr "Προεπιλεγμένη τιμή: <gui>επιτραπέζιος</gui>
 
 #: C/preferences_general.page:40(info/desc)
 msgid ""
-"Preferences dialog box option to quit <app>Orca</app> without presenting a "
-"confirmation dialog."
-msgstr ""
-"Η επιλογή πλαισίου διαλόγου προτιμήσεων για έξοδο από το <app>Orca</app> "
-"χωρίς την παρουσία διαλόγου επιβεβαίωσης."
-
-#: C/preferences_general.page:45(section/title)
-msgid "Quit Orca Without Confirmation"
-msgstr "Έξοδος από το Orca χωρίς επιβεβαίωση"
-
-#: C/preferences_general.page:47(section/p)
-msgid ""
-"Normally, when you quit <app>Orca</app>, a confirmation dialog will appear "
-"asking you if you do indeed wish to quit <app>Orca</app>. Checking the "
-"<gui>Quit Orca without confirmation</gui> checkbox prevents this "
-"confirmation window from appearing."
-msgstr ""
-"Κανονικά, όταν εγκαταλείπετε το <app>Orca</app>, ένας διάλογος θα εμφανιστεί "
-"ρωτώντας σας εάν πραγματικά θέλετε να εγκαταλείψετε το <app>Orca</app>. "
-"Σημειώνοντας το πλαίσιο ελέγχου <gui>έξοδος από το Orca χωρίς επιβεβαίωση</"
-"gui> αποτρέπει το παράθυρο επιβεβαίωσης να εμφανιστεί."
-
-#: C/preferences_general.page:59(info/desc)
-msgid ""
 "Preferences dialog box option to enable presentation of tooltips which "
 "appear as the result of mouse hovering."
 msgstr ""
 "Η επιλογή του πλαισίου διαλόγου για ενεργοποίηση της παρουσίασης των "
 "συμβουλών οθόνης θα εμφανιστεί ως αποτέλεσμα της υπέρπτησης του ποντικιού."
 
-#: C/preferences_general.page:64(section/title)
+#: C/preferences_general.page:45(section/title)
 msgid "Present Tooltips"
 msgstr "Εμφάνιση συμβουλών οθόνης"
 
-#: C/preferences_general.page:66(section/p)
+#: C/preferences_general.page:47(section/p)
 msgid ""
 "When checked, this option will tell <app>Orca</app> to present information "
 "about tooltips when they appear as the result of mouse hovering. Specific "
@@ -5478,69 +5383,7 @@ msgstr ""
 "keyseq> όταν είναι εστιασμένο ένα αντικείμενο, καταλήγουν πάντοτε στην "
 "παρουσίαση συμβουλών οθόνης, ανεξάρτητα από τη ρύθμιση αυτή."
 
-#: C/preferences_general.page:79(info/desc)
-msgid ""
-"Preferences dialog box option for showing or hiding the <app>Orca</app> main "
-"window."
-msgstr ""
-"Η επιλογή του πλαισίου διαλόγου προτιμήσεων για προβολή ή απόκρυψη του "
-"κύριου παραθύρου του <app>Orca</app>."
-
-#: C/preferences_general.page:84(section/title)
-msgid "Show Orca Main Window"
-msgstr "Προβολή κύριου παραθύρου του Orca"
-
-#: C/preferences_general.page:87(figure/title)
-msgid "The Orca Main Window"
-msgstr "Το κύριο παράθυρο του Orca"
-
-#: C/preferences_general.page:91(figure/desc)
-msgid ""
-"<app>Orca</app>'s main window provides you with a graphical way to display "
-"the <link xref=\"preferences\">Orca Preferences</link> dialog, access help "
-"content, bring up the About dialog, and quit <app>Orca</app>."
-msgstr ""
-"Το κύριο παράθυρο του <app>Orca</app> παρέχει με γραφικό τρόπο την εμφάνιση "
-"του διαλόγου <link xref=\"preferences\">προτιμήσεων του orca</link>, "
-"πρόσβαση στο περιεχόμενο βοήθειας, προβολή του διαλόγου περί και έξοδο από "
-"το <app>Orca</app>."
-
-#: C/preferences_general.page:97(section/p)
-msgid ""
-"Many users do not like the <app>Orca</app> main window because it shows up "
-"in the window manager's Tab order when you press <keyseq> <key>Alt</"
-"key><key>Tab</key></keyseq> to switch windows. By unchecking the <gui>Show "
-"<app>Orca</app> main window</gui> checkbox, you can tell <app>Orca</app> to "
-"not show <app>Orca</app>'s main window."
-msgstr ""
-"Σε πολλούς χρήστες δεν αρέσει το κύριο παράθυρο του <app>Orca</app> επειδή "
-"εμφανίζει τη σειρά καρτελών του διαχειριστή παραθύρου όταν πατάτε το "
-"<keyseq> <key>Alt</key><key>Tab</key></keyseq> για εναλλαγή παραθύρων. "
-"Αποεπιλέγοντας το πλαίσιο ελέγχου <gui>εμφάνιση του κυρίου παραθύρου του "
-"<app>Orca</app></gui>, μπορείτε να πείτε στο <app>Orca</app> να μην "
-"εμφανιστεί στο κύριο παράθυρο του <app>Orca</app>."
-
-#: C/preferences_general.page:110(info/desc)
-msgid ""
-"Preferences dialog box option to cause <app>Orca</app> to automatically "
-"start when you log in."
-msgstr ""
-"Η επιλογή του πλαισίου διαλόγου προτιμήσεις προκαλεί στο <app>Orca</app> την "
-"αυτόματη έναρξη όταν συνδέεστε."
-
-#: C/preferences_general.page:115(section/title)
-msgid "Start Orca When You Login"
-msgstr "Έναρξη του Orca όταν συνδέεστε"
-
-#: C/preferences_general.page:117(section/p)
-msgid ""
-"When checked, this option will tell the system to automatically launch "
-"<app>Orca</app> when you log in."
-msgstr ""
-"Εάν σημειωθεί, αυτή η επιλογή θα πει στο σύστημα να ξεκινήσει αυτόματα το "
-"<app>Orca</app> όταν συνδέεστε."
-
-#: C/preferences_general.page:127(info/desc)
+#: C/preferences_general.page:60(info/desc)
 msgid ""
 "Preferences dialog box option to enable presentation of the object under the "
 "mouse pointer."
@@ -5548,11 +5391,11 @@ msgstr ""
 "Η επιλογή του πλαισίου διαλόγου προτιμήσεων για ενεργοποίηση της παρουσίασης "
 "του αντικειμένου κάτω από τον δείκτη του ποντικιού."
 
-#: C/preferences_general.page:132(section/title)
+#: C/preferences_general.page:65(section/title)
 msgid "Speak Object Under Mouse"
 msgstr "Εκφώνηση του αντικειμένου κάτω από το ποντίκι"
 
-#: C/preferences_general.page:134(section/p)
+#: C/preferences_general.page:67(section/p)
 msgid ""
 "When checked, this option will tell <app>Orca</app> to present information "
 "about the object under the mouse pointer as you move it around the screen "
@@ -5564,7 +5407,7 @@ msgstr ""
 "μετακινείτε γύρω από την οθόνη χρησιμοποιώντας στο <app>Orca</app> το "
 "γνώρισμα <link xref=\"howto_mouse_review\">επισκόπηση ποντικιού</link>."
 
-#: C/preferences_general.page:146(info/desc)
+#: C/preferences_general.page:79(info/desc)
 msgid ""
 "Preferences dialog box options for customizing the time and date formats "
 "used by <app>Orca</app>."
@@ -5572,11 +5415,11 @@ msgstr ""
 "Επιλογές του πλαισίου διαλόγου προτιμήσεων για προσαρμογή των μορφών του "
 "χρόνου και ημερομηνίας που χρησιμοποιούνται από το <app>Orca</app>."
 
-#: C/preferences_general.page:151(section/title)
+#: C/preferences_general.page:84(section/title)
 msgid "Time Format and Date Format"
 msgstr "Μορφές χρόνου και ημερομηνίας"
 
-#: C/preferences_general.page:153(section/p)
+#: C/preferences_general.page:86(section/p)
 msgid ""
 "The <gui>Time Format</gui> and <gui>Date Format</gui> combo boxes allow you "
 "to specify how <app>Orca</app> will speak and braille the time and the date."
@@ -5585,17 +5428,17 @@ msgstr ""
 "gui> επιτρέπουν τον καθορισμό της εκφώνησης του <app>Orca</app> του χρόνου "
 "και της ημερομηνίας σε Μπράιγ."
 
-#: C/preferences_general.page:158(section/p)
+#: C/preferences_general.page:91(section/p)
 msgid "Default value: use the system locale's format for each"
 msgstr "Προεπιλεγμένη τιμή: χρήση της μορφής του τοπικού συστήματος για κάθε"
 
-#: C/preferences_general.page:164(info/desc)
+#: C/preferences_general.page:97(info/desc)
 msgid "Preferences dialog box options for managing settings profiles."
 msgstr ""
 "Επιλογή του πλαισίου διαλόγου προτιμήσεων διαχείρισης των κατατομών "
 "ρυθμίσεων."
 
-#: C/preferences_general.page:170(section/p)
+#: C/preferences_general.page:103(section/p)
 msgid ""
 "The <gui>Profiles</gui> group of controls, which appear at the bottom of the "
 "<gui>General</gui> page, make it possible for you to maintain and use "
@@ -5605,7 +5448,7 @@ msgstr ""
 "σελίδας <gui>γενικά</gui>, κάνει δυνατή τη διατήρηση και χρήση πολλαπλών "
 "διαμορφώσεων."
 
-#: C/preferences_general.page:177(item/p)
+#: C/preferences_general.page:110(item/p)
 msgid ""
 "The <gui>Active Profile</gui> combo box displays the current profile and "
 "allows you to select a different profile to load."
@@ -5613,7 +5456,7 @@ msgstr ""
 "Το σύνθετο πλαίσιο <gui>ενεργή κατατομή</gui> εμφανίζει την τρέχουσα "
 "κατατομή και επιτρέπει τη φόρτωση της επιλογή διαφορετικής κατατομής."
 
-#: C/preferences_general.page:183(item/p)
+#: C/preferences_general.page:116(item/p)
 msgid ""
 "The <gui>Load</gui> button will cause <app>Orca</app> to load the profile "
 "indicated in the <gui>Active Profile</gui> combo box."
@@ -5622,7 +5465,7 @@ msgstr ""
 "της κατατομής που εμφανίζεται στο σύνθετο πλαίσιο <gui>ενεργής κατατομής</"
 "gui>."
 
-#: C/preferences_general.page:189(item/p)
+#: C/preferences_general.page:122(item/p)
 msgid ""
 "The <gui>Save As</gui> button allows you to save the current set of options "
 "from the preferences dialog box to a named profile."
@@ -5630,7 +5473,7 @@ msgstr ""
 "Το κουμπί <gui>αποθήκευση ως</gui> επιτρέπει την αποθήκευση του τρέχοντος "
 "συνόλου επιλογών από το πλαίσιο διαλόγου προτιμήσεων σε μία επώνυμη κατατομή."
 
-#: C/preferences_general.page:195(item/p)
+#: C/preferences_general.page:128(item/p)
 msgid ""
 "The <gui>Start-up Profile</gui> combo box allows you to select the profile "
 "which should be automatically loaded each time you launch <app>Orca</app>."
@@ -6137,8 +5980,8 @@ msgid ""
 "or a technical term which the synthesizer mispronounces."
 msgstr ""
 "Μερικές φορές ο συνθέτης ομιλίας σας δεν λέει απλά το σωστό για μια δοσμένη "
-"συμβολοσειρά. Ίσως προτιμάτε να ακούσετε \"και τα λοιπά\" αντί για \"κλπ\". "
-"Ή εκεί μπορεί ένα όνομα ή ένας τεχνικός όρος μπορεί να προφέρεται λάθος από "
+"συμβολοσειρά. Ίσως προτιμάτε να ακούσετε \"και τα λοιπά\" αντί για \"κλπ\". Ή "
+"εκεί μπορεί ένα όνομα ή ένας τεχνικός όρος μπορεί να προφέρεται λάθος από "
 "τον συνθέτη."
 
 #: C/preferences_pronunciation.page:26(page/p)
@@ -7212,6 +7055,145 @@ msgid ""
 msgstr ""
 "<gui>κουκκίδες 7 και 8</gui>: υπογράμμιση γνωρισμάτων κειμένου και με "
 "κουκκίδες 7 και με κουκκίδες 8"
+
+#~ msgid ""
+#~ "Read the <link href=\"help:gnome-help#a11y\">Universal Access Help</link>"
+#~ msgstr ""
+#~ "Διαβάστε τη <link href=\"help:gnome-help#a11y\">βοήθεια γενικής "
+#~ "πρόσβασης</link>"
+
+#~ msgid ""
+#~ "For a complete listing of GNOME's caret navigation commands, see the "
+#~ "<link href=\"ghelp:gnome-help#a11y\">Universal Access Help</link>."
+#~ msgstr ""
+#~ "Για μια πλήρη λίστα των εντολών περιήγησης δρομέα του GNOME, δείτε τη "
+#~ "<link href=\"ghelp:gnome-help#a11y\">γενική πρόσβαση βοήθειας</link>."
+
+#~ msgid "Press the <gui>Quit</gui> button in the <app>Orca</app> main window."
+#~ msgstr ""
+#~ "Πατήστε το κουμπί <gui>έξοδος</gui> στο κύριο παράθυρο του <app>Orca</"
+#~ "app>."
+
+#~ msgid ""
+#~ "Type <cmd>orca -q</cmd> or <cmd>orca --quit</cmd> in a terminal window or "
+#~ "within the <gui>Run</gui> dialog and then press <key>Return</key>."
+#~ msgstr ""
+#~ "Πληκτρολογήστε <cmd>orca -q</cmd> ή <cmd>orca --quit</cmd> σε ένα "
+#~ "παράθυρο τερματικού ή μέσα στον διάλογο <gui>εκτέλεσης</gui> και έπειτα "
+#~ "πατήστε <key>επιστροφή</key>."
+
+#~ msgid "<cmd>main-window</cmd>"
+#~ msgstr "<cmd>κύριο παράθυρο</cmd>"
+
+#~ msgid "<cmd>splash-window</cmd>"
+#~ msgstr "<cmd>αρχικό παράθυρο</cmd>"
+
+#~ msgctxt "_"
+#~ msgid ""
+#~ "external ref='figures/preferences_quit_Orca_without_confirmation.png' "
+#~ "md5='b79e1083ad179abaa45fafaf5d80cdd7'"
+#~ msgstr ""
+#~ "external ref='figures/preferences_quit_Orca_without_confirmation.png' "
+#~ "md5='b79e1083ad179abaa45fafaf5d80cdd7'"
+
+#~ msgctxt "_"
+#~ msgid ""
+#~ "external ref='figures/preferences_show_Orca_main_window.png' "
+#~ "md5='f9dcacd77f6dbe80f5c70575212a8717'"
+#~ msgstr ""
+#~ "external ref='figures/preferences_show_Orca_main_window.png' "
+#~ "md5='f9dcacd77f6dbe80f5c70575212a8717'"
+
+#~ msgctxt "_"
+#~ msgid ""
+#~ "external ref='figures/main_window.png' "
+#~ "md5='dc40a43400b81aa8611d4111a65be6e5'"
+#~ msgstr ""
+#~ "external ref='figures/main_window.png' "
+#~ "md5='dc40a43400b81aa8611d4111a65be6e5'"
+
+#~ msgctxt "_"
+#~ msgid ""
+#~ "external ref='figures/preferences_start_Orca_when_you_login.png' "
+#~ "md5='__failed__'"
+#~ msgstr ""
+#~ "external ref='figures/preferences_start_Orca_when_you_login.png' "
+#~ "md5='__failed__'"
+
+#~ msgid ""
+#~ "Preferences dialog box option to quit <app>Orca</app> without presenting "
+#~ "a confirmation dialog."
+#~ msgstr ""
+#~ "Η επιλογή πλαισίου διαλόγου προτιμήσεων για έξοδο από το <app>Orca</app> "
+#~ "χωρίς την παρουσία διαλόγου επιβεβαίωσης."
+
+#~ msgid "Quit Orca Without Confirmation"
+#~ msgstr "Έξοδος από το Orca χωρίς επιβεβαίωση"
+
+#~ msgid ""
+#~ "Normally, when you quit <app>Orca</app>, a confirmation dialog will "
+#~ "appear asking you if you do indeed wish to quit <app>Orca</app>. Checking "
+#~ "the <gui>Quit Orca without confirmation</gui> checkbox prevents this "
+#~ "confirmation window from appearing."
+#~ msgstr ""
+#~ "Κανονικά, όταν εγκαταλείπετε το <app>Orca</app>, ένας διάλογος θα "
+#~ "εμφανιστεί ρωτώντας σας εάν πραγματικά θέλετε να εγκαταλείψετε το "
+#~ "<app>Orca</app>. Σημειώνοντας το πλαίσιο ελέγχου <gui>έξοδος από το Orca "
+#~ "χωρίς επιβεβαίωση</gui> αποτρέπει το παράθυρο επιβεβαίωσης να εμφανιστεί."
+
+#~ msgid ""
+#~ "Preferences dialog box option for showing or hiding the <app>Orca</app> "
+#~ "main window."
+#~ msgstr ""
+#~ "Η επιλογή του πλαισίου διαλόγου προτιμήσεων για προβολή ή απόκρυψη του "
+#~ "κύριου παραθύρου του <app>Orca</app>."
+
+#~ msgid "Show Orca Main Window"
+#~ msgstr "Προβολή κύριου παραθύρου του Orca"
+
+#~ msgid "The Orca Main Window"
+#~ msgstr "Το κύριο παράθυρο του Orca"
+
+#~ msgid ""
+#~ "<app>Orca</app>'s main window provides you with a graphical way to "
+#~ "display the <link xref=\"preferences\">Orca Preferences</link> dialog, "
+#~ "access help content, bring up the About dialog, and quit <app>Orca</app>."
+#~ msgstr ""
+#~ "Το κύριο παράθυρο του <app>Orca</app> παρέχει με γραφικό τρόπο την "
+#~ "εμφάνιση του διαλόγου <link xref=\"preferences\">προτιμήσεων του orca</"
+#~ "link>, πρόσβαση στο περιεχόμενο βοήθειας, προβολή του διαλόγου περί και "
+#~ "έξοδο από το <app>Orca</app>."
+
+#~ msgid ""
+#~ "Many users do not like the <app>Orca</app> main window because it shows "
+#~ "up in the window manager's Tab order when you press <keyseq> <key>Alt</"
+#~ "key><key>Tab</key></keyseq> to switch windows. By unchecking the "
+#~ "<gui>Show <app>Orca</app> main window</gui> checkbox, you can tell "
+#~ "<app>Orca</app> to not show <app>Orca</app>'s main window."
+#~ msgstr ""
+#~ "Σε πολλούς χρήστες δεν αρέσει το κύριο παράθυρο του <app>Orca</app> "
+#~ "επειδή εμφανίζει τη σειρά καρτελών του διαχειριστή παραθύρου όταν πατάτε "
+#~ "το <keyseq> <key>Alt</key><key>Tab</key></keyseq> για εναλλαγή παραθύρων. "
+#~ "Αποεπιλέγοντας το πλαίσιο ελέγχου <gui>εμφάνιση του κυρίου παραθύρου του "
+#~ "<app>Orca</app></gui>, μπορείτε να πείτε στο <app>Orca</app> να μην "
+#~ "εμφανιστεί στο κύριο παράθυρο του <app>Orca</app>."
+
+#~ msgid ""
+#~ "Preferences dialog box option to cause <app>Orca</app> to automatically "
+#~ "start when you log in."
+#~ msgstr ""
+#~ "Η επιλογή του πλαισίου διαλόγου προτιμήσεις προκαλεί στο <app>Orca</app> "
+#~ "την αυτόματη έναρξη όταν συνδέεστε."
+
+#~ msgid "Start Orca When You Login"
+#~ msgstr "Έναρξη του Orca όταν συνδέεστε"
+
+#~ msgid ""
+#~ "When checked, this option will tell the system to automatically launch "
+#~ "<app>Orca</app> when you log in."
+#~ msgstr ""
+#~ "Εάν σημειωθεί, αυτή η επιλογή θα πει στο σύστημα να ξεκινήσει αυτόματα το "
+#~ "<app>Orca</app> όταν συνδέεστε."
 
 #~ msgid "joanied@gnome.org"
 #~ msgstr "joanied@gnome.org"
