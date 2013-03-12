@@ -16,16 +16,16 @@
 # Hugo Vaz Sampaio <hvazsampaio@gmail.com>, 2010.
 # Rodrigo Padula de Oliveira <contato@rodrigopadula.com>, 2011.
 # Antonio Fernandes C. Neto <fernandesn@gnome.org>, 2011, 2012.
-# José Vilmar Estácio de Souza <vilmar@informal.com.br>, 2013.
 # Enrico Nicoletto <liverig@gmail.com>, 2013.
+# José Vilmar Estácio de Souza <vilmar@informal.com.br>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-03-08 17:18+0000\n"
-"PO-Revision-Date: 2013-03-08 13:56-0300\n"
+"POT-Creation-Date: 2013-03-11 10:50+0000\n"
+"PO-Revision-Date: 2013-03-12 06:08-0300\n"
 "Last-Translator: José Vilmar Estácio de Souza <vilmar@informal.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -2417,7 +2417,7 @@ msgstr "Circular para o próximo estilo de letras maiúsculas."
 #. choose which type of echo is being used.
 #: ../src/orca/cmdnames.py:444
 msgid "Cycles to the next key echo level."
-msgstr "Circular para a próximo nível de tecla eco."
+msgstr "Circular para o próximo nível de tecla eco."
 
 #. Translators: this is a debug message that Orca users will not normally see. It
 #. describes a debug routine that allows the user to adjust the level of debug
@@ -2665,7 +2665,7 @@ msgstr "Vai para a próxima palavra."
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:625
 msgid "Goes to previous word."
-msgstr "Vai para a próxima palavra."
+msgstr "Vai para a palavra anterior."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:628
