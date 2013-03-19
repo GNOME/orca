@@ -1,3 +1,30 @@
+3.7.92 - 19 March 2013
+
+General
+
+  * Swap the column ordering in the Links List dialog
+
+  * Fix a couple of missed moved strings related to profile-based
+    language switching
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                     Marek Černocký
+    da            Danish                    Kenneth Nielsen
+    el            Greek                     Dimitris Spingos
+    es            Spanish                   Daniel Mustieles
+    gl            Galician                  Fran Diéguez
+    hu            Hungarian                 Attila Hammer
+    lt            Lithuanian                Aurimas Černius
+    pt_BR         Brazilian Portuguese      José Vilmar Estácio de Souza
+                                            Enrico Nicoletto
+    sk            Slovak                    Peter Mráz
+    sr            Serbian                   Мирослав Николић
+    sr@latin      Serbian                   Miroslav Nikolić
+    ug            Uyghur                    Gheyret Kenji
+
+=========
+
 3.7.91 - 4 March 2013
 
 New Features
