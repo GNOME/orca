@@ -356,21 +356,21 @@ class StateZone(Zone):
                 else:
                     speechState = object_properties.STATE_NOT_CHECKED
                 brailleState = \
-                    settings.brailleCheckBoxIndicators[stateCount]
+                    object_properties.CHECK_BOX_INDICATORS_BRAILLE[stateCount]
             elif self.role == pyatspi.ROLE_TOGGLE_BUTTON:
                 if stateCount:
                     speechState = object_properties.STATE_PRESSED
                 else:
                     speechState = object_properties.STATE_NOT_PRESSED
                 brailleState = \
-                    settings.brailleRadioButtonIndicators[stateCount]
+                    object_properties.RADIO_BUTTON_INDICATORS_BRAILLE[stateCount]
             else:
                 if stateCount:
                     speechState = object_properties.STATE_SELECTED_RADIO_BUTTON
                 else:
                     speechState = object_properties.STATE_UNSELECTED_RADIO_BUTTON
                 brailleState = \
-                    settings.brailleRadioButtonIndicators[stateCount]
+                    object_properties.RADIO_BUTTON_INDICATORS_BRAILLE[stateCount]
 
             if attr == "string":
                 return speechState
