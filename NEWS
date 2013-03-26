@@ -1,3 +1,27 @@
+3.8.0 - 25 March 2013
+
+General
+
+  * Fix for bug 696334 - traceback when analyzing a checkbox for the
+    flat review context
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    an            Aragonese                   Jorge Pérez Pérez
+    ca            Catalan                     Gil Forcada
+    ca            Catalan (Valencian)         Carles Ferrando
+    de            German                      Mario Blättermann
+    fi            Finnish                     Jiri Grönroos
+    fr            French                      Bruno Brouard
+                                              Alexandre Franke
+    hi            Hindi                       Chandan Kumar
+    it            Italian                     Luca Ferretti
+    pt            Portuguese                  Duarte Loreto
+    ta            Tamil                       Dr.T.Vasudevan
+    tg            Tadjik                      Victor Ibragimov
+
+=========
+
 3.7.92 - 19 March 2013
 
 General
