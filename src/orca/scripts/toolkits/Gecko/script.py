@@ -3805,20 +3805,16 @@ class Script(default.Script):
         if not text:
             offset = 0
         else:            
-            [line, start, end] = text.getTextAtOffset(offset, boundary)
+            if offset == -1:
+                offset = 0
 
-            # Unfortunately, we sometimes get bogus results from Gecko when
-            # we ask for this line. If the offset is not within the range of
-            # characters on this line, try the character reported as the end.
-            #
-            if not (start <= offset < end):
-                [line, start, end] = text.getTextAfterOffset(end, boundary)
+            [line, start, end] = text.getTextAtOffset(offset, boundary)
 
             # If we're still seeing bogusity, which we only seem to see when
             # moving up, locate the previous character and use it instead.
             #
             if not (start <= offset < end):
-                pObj, pOffset = self.findPreviousCaretInOrder(obj, offset)
+                pObj, pOffset = self.findPreviousCaretInOrder(obj, end)
                 if pObj:
                     obj, offset = pObj, pOffset
                     text = self.utilities.queryNonEmptyText(obj)
