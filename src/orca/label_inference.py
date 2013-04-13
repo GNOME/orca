@@ -416,7 +416,7 @@ class LabelInference:
             return None
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
-        line = text.getTextBeforeOffset(start, boundary)
+        line = text.getTextAtOffset(start - 1, boundary)
         string = line[0].strip()
         if string:
             x, y, width, height = self._getExtents(prevObj, start, end)
