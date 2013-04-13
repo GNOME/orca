@@ -3956,7 +3956,7 @@ class Script(default.Script):
 
             text = self.utilities.queryNonEmptyText(nextObj)
             if text:
-                line = text.getTextAfterOffset(nOffset, boundary)
+                line = text.getTextAtOffset(nOffset + 1, boundary)
                 nOffset = line[1]
 
             nextExtents = self.getExtents(nextObj, nOffset, nOffset + 1)
