@@ -532,7 +532,7 @@ class Utilities(script_utilities.Utilities):
 
             if boundary:
                 [string, start, end] = \
-                    text.getTextAtOffset(offset + 1, boundary)
+                    text.getTextAtOffset(offset, boundary)
                 if end == -1:
                     end = text.characterCount
             else:
