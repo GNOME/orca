@@ -98,4 +98,4 @@ HELP_FILES = \
 	preferences_table_navigation.page \
 	preferences_text_attributes.page
 
-HELP_LINGUAS = de el es fr gl hu sl
+HELP_LINGUAS = de el es fr gl hu pt_BR sl
