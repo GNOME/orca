@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-03-11 10:50+0000\n"
+"POT-Creation-Date: 2013-04-13 20:51+0000\n"
 "PO-Revision-Date: 2013-03-12 06:08-0300\n"
 "Last-Translator: José Vilmar Estácio de Souza <vilmar@informal.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
@@ -2579,7 +2579,7 @@ msgstr "Congelar"
 #. button, the display scrolls to the top left of the window.
 #: ../src/orca/cmdnames.py:565
 msgid "Top Left"
-msgstr "Encima à esquerda"
+msgstr "Superior à esquerda"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
@@ -7736,7 +7736,7 @@ msgstr[1] "%(key)s %(value)s pixels"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4810
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4806
 msgid "open"
 msgstr "abrir"
 
