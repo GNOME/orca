@@ -1,6 +1,6 @@
 # Italian translation for Orca
 # Copyright (C) 2005 Sun Microsystems Inc.
-# Copyright (C) 2009-2012 Free Softwaer Foundation, Inc.
+# Copyright (C) 2009-2013 Free Softwaer Foundation, Inc.
 # This file is distributed under the same license as the Orca package.
 # Aldo "Xoen" Giambelluca <xoen@email.it>, 2005.
 #
@@ -13,17 +13,16 @@
 #   come contrassegno
 # speak
 #   leggere
-# Milo Casagrande <milo@ubuntu.com>, 2012.
 # Luca Ferretti <lferrett@gnome.org>, 2006, 2007. 2008, 2009, 2010, 2011, 2012, 2013.
+# Milo Casagrande <milo@ubuntu.com>, 2012, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-03-24 15:38+0000\n"
-"PO-Revision-Date: 2013-03-25 21:39+0100\n"
-"Last-Translator: Luca Ferretti <lferrett@gnome.org>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-21 13:42+0200\n"
+"PO-Revision-Date: 2013-04-21 13:57+0200\n"
+"Last-Translator: Milo Casagrande <milo@ubuntu.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -645,15 +644,13 @@ msgstr "Indi grado 1"
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:144
 msgid "Hungarian 8 dot computer"
-msgstr ""
+msgstr "Ungherese computer a 8 punti"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:148
-#, fuzzy
-#| msgid "Latvian Grade 1"
 msgid "Hungarian Grade 1"
-msgstr "Lettone grado 1"
+msgstr "Ungherese grado 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
@@ -2436,7 +2433,6 @@ msgstr "Passa ciclicamente al successivo profilo di impostazioni."
 #. possible for users to quickly cycle amongst these alternatives without having
 #. to get into a GUI.
 #: ../src/orca/cmdnames.py:432
-#, fuzzy
 msgid "Cycles to the next capitalization style."
 msgstr "Passa ciclicamente al successivo stile di capitalizzazione."
 
@@ -2894,7 +2890,7 @@ msgstr "Va al successivo blocco di citazione."
 #. Translators: this is for navigating among blockquotes in a document.
 #: ../src/orca/cmdnames.py:754
 msgid "Displays a list of blockquotes."
-msgstr ""
+msgstr "Visualizza un elenco di blocchi di citazione."
 
 #. Translators: this is for navigating among buttons in a document.
 #: ../src/orca/cmdnames.py:757
@@ -3370,11 +3366,9 @@ msgstr "Associazione tasti"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a blockquote.
 #: ../src/orca/guilabels.py:127
-#, fuzzy
-#| msgid "quote"
 msgctxt "structural navigation"
 msgid "Blockquote"
-msgstr "virgolette"
+msgstr "Blocco di citazione"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3392,7 +3386,7 @@ msgstr "Pulsante"
 #: ../src/orca/guilabels.py:139
 msgctxt "structural navigation"
 msgid "Caption"
-msgstr ""
+msgstr "Didascalia"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3565,11 +3559,9 @@ msgstr "Valore"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:255
-#, fuzzy
-#| msgid "No more blockquotes."
 msgctxt "structural navigation"
 msgid "Blockquotes"
-msgstr "Nessun altro blocco di citazione."
+msgstr "Blocchi di citazione"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3601,7 +3593,7 @@ msgstr "Caselle combinate"
 #: ../src/orca/guilabels.py:275
 msgctxt "structural navigation"
 msgid "Entries"
-msgstr ""
+msgstr "Voci"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -4250,10 +4242,8 @@ msgstr "icona"
 #. possible for users to quickly cycle amongst these alternatives without having
 #. to get into a GUI.
 #: ../src/orca/messages.py:125
-#, fuzzy
-#| msgid "Punctuation level set to none."
 msgid "Capitalization style set to icon."
-msgstr "Livello di punteggiatura impostato a \"nessuno\"."
+msgstr "Stile di capitalizzazione impostato a \"icona\"."
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -4277,10 +4267,8 @@ msgstr "nessuno"
 #. possible for users to quickly cycle amongst these alternatives without having
 #. to get into a GUI.
 #: ../src/orca/messages.py:145
-#, fuzzy
-#| msgid "Punctuation level set to none."
 msgid "Capitalization style set to none."
-msgstr "Livello di punteggiatura impostato a \"nessuno\"."
+msgstr "Stile di capitalizzazione impostato a \"nessuno\"."
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -4291,9 +4279,6 @@ msgstr "Livello di punteggiatura impostato a \"nessuno\"."
 #. makes it possible for users to quickly cycle amongst these alternatives
 #. without having to get into a GUI.
 #: ../src/orca/messages.py:155
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "spelling"
 msgctxt "capitalization style"
 msgid "spell"
 msgstr "ortografia"
@@ -4307,10 +4292,8 @@ msgstr "ortografia"
 #. possible for users to quickly cycle amongst these alternatives without having
 #. to get into a GUI.
 #: ../src/orca/messages.py:165
-#, fuzzy
-#| msgid "Punctuation level set to all."
 msgid "Capitalization style set to spell."
-msgstr "Livello di punteggiatura impostato a \"tutti\"."
+msgstr "Stile di capitalizzazione impostato a \"ortografia\"."
 
 #. Translators: Gecko native caret navigation is where Firefox (or Thunderbird)
 #. itself controls how the arrow keys move the caret around HTML content. It's
@@ -4564,10 +4547,8 @@ msgstr "Contenuto copiato negli appunti."
 #. let the user know that he/she attempted to use a flat review command when
 #. not using flat review.
 #: ../src/orca/messages.py:350
-#, fuzzy
-#| msgid "Entering flat review."
 msgid "Not using flat review."
-msgstr "Ingresso nella revisione piatta."
+msgstr "Revisione piatta non utilizzata."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -4854,6 +4835,11 @@ msgid ""
 "current application, press 2. To view Orca's documentation, press F1. To "
 "exit learn mode, press the escape key."
 msgstr ""
+"Ingresso nella modalità apprendimento. Premere un tasto qualsiasi per "
+"ascoltare la sua funzione. Per l'elenco delle scorciatoie predefinite, "
+"premere 1. Per l'elenco delle scorciatoie associate all'applicazione "
+"corrente, premere 2. Per la documentazione di Orca, premere F1. Per uscire "
+"dalla modalità apprendimento, premere ESC."
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
