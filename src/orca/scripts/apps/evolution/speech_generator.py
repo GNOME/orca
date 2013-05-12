@@ -27,13 +27,14 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
 from orca.orca_i18n import _
 
 _settingsManager = settings_manager.getManager()
 
-class SpeechGenerator(speech_generator.SpeechGenerator):
+class SpeechGenerator(WebKitGtk.SpeechGenerator):
     """Overrides _generateSpeechForTableCell so that, if this is an
        expanded table cell, we can strip off the "0 items".
     """
@@ -41,7 +42,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     # pylint: disable-msg=W0142
 
     def __init__(self, script):
-        speech_generator.SpeechGenerator.__init__(self, script)
+        WebKitGtk.SpeechGenerator.__init__(self, script)
 
     def _generateRealTableCell(self, obj, **args):
         # Check that we are in a table cell in the mail message header list.

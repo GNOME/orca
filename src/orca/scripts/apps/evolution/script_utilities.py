@@ -32,6 +32,7 @@ import pyatspi
 
 import orca.debug as debug
 import orca.script_utilities as script_utilities
+import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.settings as settings
 
 #############################################################################
@@ -40,7 +41,7 @@ import orca.settings as settings
 #                                                                           #
 #############################################################################
 
-class Utilities(script_utilities.Utilities):
+class Utilities(WebKitGtk.Utilities):
 
     def __init__(self, script):
         """Creates an instance of the Utilities class.
@@ -49,7 +50,7 @@ class Utilities(script_utilities.Utilities):
         - script: the script with which this instance is associated.
         """
 
-        script_utilities.Utilities.__init__(self, script)
+        WebKitGtk.Utilities.__init__(self, script)
 
     #########################################################################
     #                                                                       #

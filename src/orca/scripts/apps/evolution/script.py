@@ -32,12 +32,11 @@ import pyatspi
 import orca.cmdnames as cmdnames
 import orca.debug as debug
 import orca.scripts.default as default
-import orca.keybindings as keybindings
-import orca.input_event as input_event
 import orca.braille as braille
 import orca.messages as messages
 import orca.orca as orca
 import orca.orca_state as orca_state
+import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.speech as speech
 import orca.speechserver as speechserver
 import orca.settings as settings
@@ -55,7 +54,7 @@ _settingsManager = settings_manager.getManager()
 #                                                                      #
 ########################################################################
 
-class Script(default.Script):
+class Script(WebKitGtk.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.
@@ -68,7 +67,7 @@ class Script(default.Script):
         #
         self.debugLevel = debug.LEVEL_FINEST
 
-        default.Script.__init__(self, app)
+        WebKitGtk.Script.__init__(self, app)
 
         # This will be used to cache a handle to the message area in the
         # Mail compose window.
@@ -109,19 +108,6 @@ class Script(default.Script):
         """Returns the utilites for this script."""
 
         return Utilities(self)
-
-    def setupInputEventHandlers(self):
-        """Defines InputEventHandler fields for this script that can be
-        called by the key and braille bindings. In this particular case,
-        we just want to be able to define our own sayAll() method.
-        """
-
-        default.Script.setupInputEventHandlers(self)
-
-        self.inputEventHandlers["sayAllHandler"] = \
-            input_event.InputEventHandler(
-                Script.sayAll,
-                cmdnames.SAY_ALL)
 
     def isActivatableEvent(self, event):
         """Returns True if the given event is one that should cause this
@@ -351,173 +337,3 @@ class Script(default.Script):
             'speechVerbosityLevel', savedSpeechVerbosityLevel)
 
         self.displayBrailleRegions(brailleGen.generateBraille(tab))
-
-    def textLines(self, obj):
-        """Creates a generator that can be used to iterate over each line
-        of a text object, starting at the caret offset.
-
-        We have to subclass this because Evolution lays out its messages
-        such that each paragraph is in its own panel, each of which is
-        in a higher level panel.  So, we just traverse through the
-        children.
-
-        Arguments:
-        - obj: an Accessible that has a text specialization
-
-        Returns an iterator that produces elements of the form:
-        [SayAllContext, acss], where SayAllContext has the text to be
-        spoken and acss is an ACSS instance for speaking the text.
-        """
-
-        if not obj:
-            return
-
-        try:
-            text = obj.queryText()
-        except NotImplementedError:
-            return
-
-        panel = obj.parent
-        htmlPanel = panel.parent
-        startIndex = panel.getIndexInParent()
-        i = startIndex
-        total = htmlPanel.childCount
-        textObjs = []
-        startOffset = text.caretOffset
-        offset = text.caretOffset
-        string = ""
-        done = False
-
-        # Determine the correct "say all by" mode to use.
-        #
-        sayAllStyle = _settingsManager.getSetting('sayAllStyle')
-        if sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
-            mode = pyatspi.TEXT_BOUNDARY_SENTENCE_END
-        elif sayAllStyle == settings.SAYALL_STYLE_LINE:
-            mode = pyatspi.TEXT_BOUNDARY_LINE_START
-        else:
-            mode = pyatspi.TEXT_BOUNDARY_LINE_START
-        voices = _settingsManager.getSetting('voices')
-
-        while not done:
-            panel = htmlPanel.getChildAtIndex(i)
-            if panel != None:
-                textObj = panel.getChildAtIndex(0)
-                try:
-                    text = textObj.queryText()
-                except NotImplementedError:
-                    return
-                textObjs.append(textObj)
-                length = text.characterCount
-
-                while offset <= length:
-                    [mystr, start, end] = text.getTextAtOffset(offset, mode)
-                    endOffset = end
-
-                    if len(mystr) != 0:
-                        string += " " + mystr
-
-                    if mode == pyatspi.TEXT_BOUNDARY_LINE_START or \
-                       len(mystr) == 0 or mystr[len(mystr)-1] in '.?!':
-                        string = self.utilities.adjustForRepeats(string)
-                        if string.isupper():
-                            voice = voices[settings.UPPERCASE_VOICE]
-                        else:
-                            voice = voices[settings.DEFAULT_VOICE]
-
-                        if not textObjs:
-                            textObjs.append(textObj)
-                        if len(string) != 0:
-                            yield [speechserver.SayAllContext(textObjs, string,
-                                                      startOffset, endOffset),
-                               voice]
-                        textObjs = []
-                        string = ""
-                        startOffset = endOffset
-
-                    if len(mystr) == 0 or end == length:
-                        break
-                    else:
-                        offset = end
-
-            offset = 0
-            i += 1
-            if i == total:
-                done = True
-
-        # If there is anything left unspoken, speak it now.
-        #
-        if len(string) != 0:
-            string = self.utilities.adjustForRepeats(string)
-            if string.isupper():
-                voice = voices[settings.UPPERCASE_VOICE]
-            else:
-                voice = voices[settings.DEFAULT_VOICE]
-
-            yield [speechserver.SayAllContext(textObjs, string,
-                                              startOffset, endOffset),
-                   voice]
-
-    def __sayAllProgressCallback(self, context, callbackType):
-        """Provide feedback during the sayAll operation.
-        """
-
-        if callbackType == speechserver.SayAllContext.PROGRESS:
-            #print "PROGRESS", context.utterance, context.currentOffset
-            return
-        elif callbackType == speechserver.SayAllContext.INTERRUPTED:
-            #print "INTERRUPTED", context.utterance, context.currentOffset
-            offset = context.currentOffset
-            for i in range(0, len(context.obj)):
-                obj = context.obj[i]
-                charCount = obj.queryText().characterCount
-                if offset > charCount:
-                    offset -= charCount
-                else:
-                    obj.queryText().setCaretOffset(offset)
-                    break
-        elif callbackType == speechserver.SayAllContext.COMPLETED:
-            #print "COMPLETED", context.utterance, context.currentOffset
-            obj = context.obj[len(context.obj)-1]
-            obj.queryText().setCaretOffset(context.currentOffset)
-            orca.setLocusOfFocus(None, obj, notifyScript=False)
-
-        # If there is a selection, clear it. See bug #489504 for more details.
-        # This is not straight forward with Evolution. all the text is in
-        # an HTML panel which contains multiple panels, each containing a
-        # single text object.
-        #
-        panel = obj.parent
-        htmlPanel = panel.parent
-        for i in range(0, htmlPanel.childCount):
-            panel = htmlPanel.getChildAtIndex(i)
-            if panel != None:
-                textObj = panel.getChildAtIndex(0)
-                try:
-                    text = textObj.queryText()
-                except:
-                    pass
-                else:
-                    if text.getNSelections():
-                        text.removeSelection(0)
-
-    def sayAll(self, inputEvent):
-        """Speak all the text associated with the text object that has
-           focus. We have to define our own method here because Evolution
-           does not implement the FLOWS_TO relationship and all the text
-           are in an HTML panel which contains multiple panels, each
-           containing a single text object.
-
-        Arguments:
-        - inputEvent: if not None, the input event that caused this action.
-        """
-
-        debug.println(self.debugLevel, "evolution.sayAll.")
-        try:
-            if orca_state.locusOfFocus and orca_state.locusOfFocus.queryText():
-                speech.sayAll(self.textLines(orca_state.locusOfFocus),
-                              self.__sayAllProgressCallback)
-        except:
-            default.Script.sayAll(self, inputEvent)
-
-        return True
