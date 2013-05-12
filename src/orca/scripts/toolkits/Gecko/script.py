@@ -4465,26 +4465,24 @@ class Script(default.Script):
 
         # Make sure we have a word.
         #
-        characterOffset = max(0, characterOffset - 1)
+        characterOffset = max(0, characterOffset)
         [obj, characterOffset] = \
             self.findNextCaretInOrder(obj, characterOffset)
 
         # To be consistent with Gecko's native navigation, we want to
         # move to the next word end boundary.
         #
-        boundary = pyatspi.TEXT_BOUNDARY_WORD_END
+        boundary = pyatspi.TEXT_BOUNDARY_WORD_START
         contents = self.getWordContentsAtOffset(obj, characterOffset, boundary)
         if not (len(contents) and contents[-1][2]):
             return
 
         [obj, startOffset, endOffset, string] = contents[-1]
+        if string and string[-1].isspace():
+            endOffset -= 1
         self.setCaretPosition(obj, endOffset)
         self.updateBraille(obj)
-        # Because we're getting the word based on the WORD_END boundary
-        # rather than the WORD_START boundary, we need to increment our
-        # offset.
-        #
-        self.speakMisspelledIndicator(obj, startOffset + 1)
+        self.speakMisspelledIndicator(obj, startOffset)
         self.speakContents(contents)
 
     def findPreviousLine(self, obj, characterOffset, updateCache=True):
