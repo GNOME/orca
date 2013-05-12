@@ -4139,7 +4139,7 @@ class Script(script.Script):
         #
         sayAllStyle = _settingsManager.getSetting('sayAllStyle')
         if sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
-            mode = pyatspi.TEXT_BOUNDARY_SENTENCE_END
+            mode = pyatspi.TEXT_BOUNDARY_SENTENCE_START
         elif sayAllStyle == settings.SAYALL_STYLE_LINE:
             mode = pyatspi.TEXT_BOUNDARY_LINE_START
         else:
