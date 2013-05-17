@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: ORCA in Nepali\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2013-05-12 14:37+0000\n"
-"PO-Revision-Date: 2013-02-21 15:22+0545\n"
+"PO-Revision-Date: 2013-05-13 06:05+0545\n"
 "Last-Translator: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language-Team: Nepali\n"
 "Language: ne\n"
@@ -2539,11 +2539,8 @@ msgstr "माथि देब्रे "
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the bottom left of the window.
 #: ../src/orca/cmdnames.py:570
-#, fuzzy
-#| msgctxt "notification"
-#| msgid "Bottom"
 msgid "Bottom Left"
-msgstr "पुछार"
+msgstr "वायाँ फेद"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
@@ -2734,10 +2731,8 @@ msgstr "केन्द्रीयता वर्तमान सुलसु�
 #. or table should be treated as containing column headers. This string refers to
 #. the command to set the row.
 #: ../src/orca/cmdnames.py:709
-#, fuzzy
-#| msgid "Set the row to use as dynamic column headers when speaking calc cells."
 msgid "Set the row to use as dynamic column headers."
-msgstr "calc कोशिका बताउँदा हरफलाई  गतिसिल महल शिर्षकको रुपमा प्रयोग गर्ने गरि कायम गर ।"
+msgstr "हरफलाई  गतिसिल महल शिर्षकको रुपमा कायम गर ।"
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This string refers to
@@ -2751,10 +2746,8 @@ msgstr "सक्रिय महलको शीर्षक मेटाउँ
 #. spreadsheet or table should be treated as containing row headers. This
 #. string refers to the command to set the column.
 #: ../src/orca/cmdnames.py:720
-#, fuzzy
-#| msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgid "Set the column to use as dynamic row headers."
-msgstr "calc कोशिका बताउँदा महललाई  गतिसिल हरफ शिर्षकको रुपमा प्रयोग गर्ने गरि कायम गर ।"
+msgstr "महललाई  गतिसिल हरफ शिर्षकको रुपमा कायम गर ।"
 
 #. Translators: Orca allows you to dynamically define which column of a
 #. spreadsheet or table should be treated as containing column headers. This
