@@ -1149,7 +1149,7 @@ SPEECH_LOWER  = _("lower.")
 SPOKEN_ELLIPSIS = _(" dot dot dot")
 
 # Translators: This message is presented to the user when Orca is launched.
-START_ORCA = _("Welcome to Orca.")
+START_ORCA = _("Screen reader on.")
 
 # Translators: Orca Preferences is the configuration GUI for Orca. This message
 # is presented immediately before the GUI is shown.
@@ -1161,7 +1161,7 @@ STARTING_ORCA_PREFS = _("Starting Orca Preferences.")
 STARTING_ORCA_APP_PREFS = _("Starting Orca Preferences for %s.")
 
 # Translators: This message is presented to the user when Orca is quit.
-STOP_ORCA = _("Goodbye.")
+STOP_ORCA = _("Screen reader off.")
 
 # Translators: the Orca "Find" dialog allows a user to search for text in a
 # window and then move focus to that text.  For example, they may want to find
