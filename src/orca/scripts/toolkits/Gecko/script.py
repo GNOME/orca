@@ -3940,13 +3940,7 @@ class Script(default.Script):
         done = False
         while not done:
             [lastObj, start, end, string] = objects[-1]
-
-            # The offset reported as the end offset can vary with Gecko.
-            # If the offset is one bigger than we expect, we are in danger
-            # of skipping over an object. Therefore, start by decrementing
-            # the end offset by 1. If we find the same object, try again.
-            #
-            [nextObj, nOffset] = self.findNextCaretInOrder(lastObj, end - 1)
+            [nextObj, nOffset] = self.findNextCaretInOrder(lastObj, end)
             if self.utilities.isSameObject(lastObj, nextObj):
                 [nextObj, nOffset] = \
                     self.findNextCaretInOrder(nextObj, nOffset)
