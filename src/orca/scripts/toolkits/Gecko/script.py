@@ -3972,6 +3972,8 @@ class Script(default.Script):
                     if self.onSameLine(extents, itemExtents):
                         objects.append(item)
                         done = False
+                    else:
+                        done = True
                 if done:
                     break
             else:
