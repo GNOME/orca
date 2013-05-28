@@ -1,3 +1,49 @@
+3.9.2 - 27 May 2013
+
+General:
+
+  * Fix for bug 700831 - Enabling "Screen reader" tells me "Welcome to
+    Orca"
+
+  * Begin migration of Orca's Evolution script to use Orca's WebKitGtk
+    support
+
+  * Use the default script's SayAll functionality in Gedit
+
+Text Interface Simplification Work and Fixes:
+
+  * Fix the hang on espeak.sourceforge.net
+
+  * Remove an old hack from the Gecko script which now causes us to get
+    stuck on some pages.
+
+  * Fix the repeated line presentation in Thunderbird
+
+  * Use TEXT_BOUNDARY_WORD_START instead of TEXT_BOUNDARY_WORD_END for
+    the Gecko script's goNextWord()
+
+  * Use TEXT_BOUNDARY_SENTENCE_START instead of TEXT_BOUNDARY_SENTENCE_END
+    for SayAll
+
+  * Use getTextAtOffset() instead of getTextAfterOffset()
+
+  * Use getTextAtOffset() instead of getTextBeforeOffset()
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    be            Belarusian                  Ihar Hrachyshka
+    en_GB         British English             Bruce Cowan
+    es            Spanish                     Daniel Mustieles
+    eu            Basque                      Inaki Larranaga Murgoitio
+    it            Italian                     Milo Casagrande
+    ne            Nepali                      Him Prasad Gautam
+    pt_BR         Brazilian Portuguese        José Vilmar Estácio de Souza
+                                              Alexandre Conte
+                                              Enrico Nicoletto
+    ru            Russian                     Yuri Myasoedov
+
+=========
+
 3.8.0 - 25 March 2013
 
 General
