@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-03-05 01:02+0000\n"
-"PO-Revision-Date: 2013-03-18 15:43+0100\n"
+"POT-Creation-Date: 2013-05-23 11:07+0000\n"
+"PO-Revision-Date: 2013-05-29 12:40+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -3141,7 +3141,7 @@ msgstr "Zobrazí seznam navštívených odkazů."
 #: ../src/orca/flat_review.py:1050 ../src/orca/generator.py:474
 #: ../src/orca/generator.py:723 ../src/orca/generator.py:765
 #: ../src/orca/generator.py:811
-#: ../src/orca/scripts/apps/evolution/speech_generator.py:121
+#: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:635
 #: ../src/orca/tutorialgenerator.py:558 ../src/orca/tutorialgenerator.py:598
 msgid "toggle"
@@ -5544,8 +5544,8 @@ msgstr " tři tečky"
 
 #. Translators: This message is presented to the user when Orca is launched.
 #: ../src/orca/messages.py:1152
-msgid "Welcome to Orca."
-msgstr "Vítá vás Orca."
+msgid "Screen reader on."
+msgstr "Čtečka obrazovky zapnuta."
 
 #. Translators: Orca Preferences is the configuration GUI for Orca. This message
 #. is presented immediately before the GUI is shown.
@@ -5563,8 +5563,8 @@ msgstr "Spouští se předvolby Orca pro %s."
 
 #. Translators: This message is presented to the user when Orca is quit.
 #: ../src/orca/messages.py:1164
-msgid "Goodbye."
-msgstr "Neshledanou"
+msgid "Screen reader off."
+msgstr "Čtečka obrazovky vypnuta."
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text.  For example, they may want to find
@@ -6614,8 +6614,8 @@ msgstr "Nastavení dokončeno, pokračujte stiskem klávesy Enter."
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
 #.
-#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:319
-#: ../src/orca/scripts/apps/gedit/script.py:321
+#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:200
+#: ../src/orca/scripts/apps/gedit/script.py:202
 #: ../src/orca/scripts/apps/gnome-search-tool/script.py:163
 msgid "Find"
 msgstr "Najít"
@@ -7560,7 +7560,7 @@ msgstr ""
 #. Translators: this in reference to an e-mail message
 #. status of having been read or unread.
 #.
-#: ../src/orca/scripts/apps/evolution/speech_generator.py:135
+#: ../src/orca/scripts/apps/evolution/speech_generator.py:136
 msgid "Read"
 msgstr "Čtení"
 
@@ -7569,11 +7569,11 @@ msgstr "Čtení"
 #. keying off stuff like this, but we're forced to do so in
 #. in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:228
+#: ../src/orca/scripts/apps/gedit/script.py:109
 msgid "Change to:"
 msgstr "Změnit na:"
 
-#: ../src/orca/scripts/apps/gedit/script.py:229
+#: ../src/orca/scripts/apps/gedit/script.py:110
 msgid "Misspelled word:"
 msgstr "Chybné slovo:"
 
@@ -7585,15 +7585,15 @@ msgstr "Chybné slovo:"
 #. gedit.  We hate keying off stuff like this, but we're
 #. forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:263
+#: ../src/orca/scripts/apps/gedit/script.py:144
 msgid "Completed spell checking"
 msgstr "Kontrola pravopisu dokončena"
 
-#: ../src/orca/scripts/apps/gedit/script.py:264
+#: ../src/orca/scripts/apps/gedit/script.py:145
 msgid "Spell checking is complete."
 msgstr "Kontrola pravopisu je dokončena."
 
-#: ../src/orca/scripts/apps/gedit/script.py:266
+#: ../src/orca/scripts/apps/gedit/script.py:147
 msgid "Press Tab and Return to terminate."
 msgstr "Pro přerušení stiskněte tabulátor a Enter."
 
@@ -7607,8 +7607,8 @@ msgstr "Pro přerušení stiskněte tabulátor a Enter."
 #. has to match what Thunderbird is using.  We hate keying
 #. off stuff like this, but we're forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:390
-#: ../src/orca/scripts/apps/gedit/script.py:465
+#: ../src/orca/scripts/apps/gedit/script.py:271
+#: ../src/orca/scripts/apps/gedit/script.py:346
 #: ../src/orca/scripts/apps/Thunderbird/script.py:176
 #: ../src/orca/scripts/apps/Thunderbird/script.py:325
 #: ../src/orca/scripts/apps/Thunderbird/script.py:569
@@ -7621,14 +7621,14 @@ msgstr "Kontrola pravopisu"
 #. keying off stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:494
+#: ../src/orca/scripts/apps/gedit/script.py:375
 msgid "Phrase not found"
 msgstr "Fráze nenalezena"
 
 #. Translators: this indicates a find command succeeded in
 #. finding something.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:556
+#: ../src/orca/scripts/apps/gedit/script.py:437
 msgid "Phrase found."
 msgstr "Fráze nalezena"
 
@@ -7728,7 +7728,7 @@ msgstr[2] "%(key)s %(value)s pixelů"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4810
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4804
 msgid "open"
 msgstr "otevřít"
 
