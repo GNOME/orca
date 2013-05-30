@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca-master-po-gl-70969.merged\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-07 15:57+0100\n"
-"PO-Revision-Date: 2013-03-07 15:57+0200\n"
+"POT-Creation-Date: 2013-05-31 00:52+0200\n"
+"PO-Revision-Date: 2013-05-31 00:53+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: gnome-l10n-gl@gnome.org\n"
 "Language: gl\n"
@@ -3152,7 +3152,7 @@ msgstr "Mostra unha lista de ligazóns visitadas."
 #: ../src/orca/flat_review.py:1050 ../src/orca/generator.py:474
 #: ../src/orca/generator.py:723 ../src/orca/generator.py:765
 #: ../src/orca/generator.py:811
-#: ../src/orca/scripts/apps/evolution/speech_generator.py:121
+#: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:635
 #: ../src/orca/tutorialgenerator.py:558 ../src/orca/tutorialgenerator.py:598
 msgid "toggle"
@@ -5558,8 +5558,8 @@ msgstr " punto punto punto"
 
 #. Translators: This message is presented to the user when Orca is launched.
 #: ../src/orca/messages.py:1152
-msgid "Welcome to Orca."
-msgstr "Benvido/a ao Orca."
+msgid "Screen reader on."
+msgstr "Lector de pantalla activado."
 
 #. Translators: Orca Preferences is the configuration GUI for Orca. This message
 #. is presented immediately before the GUI is shown.
@@ -5577,8 +5577,8 @@ msgstr "Iniciando as preferencias do Orca para %s."
 
 #. Translators: This message is presented to the user when Orca is quit.
 #: ../src/orca/messages.py:1164
-msgid "Goodbye."
-msgstr "Adeus."
+msgid "Screen reader off."
+msgstr "Lector de pantalla desactivado."
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text.  For example, they may want to find
@@ -6596,8 +6596,8 @@ msgstr "Completouse a configuración. Prema a tecla Intro para continuar."
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
 #.
-#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:319
-#: ../src/orca/scripts/apps/gedit/script.py:321
+#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:200
+#: ../src/orca/scripts/apps/gedit/script.py:202
 #: ../src/orca/scripts/apps/gnome-search-tool/script.py:163
 msgid "Find"
 msgstr "Buscar"
@@ -7540,7 +7540,7 @@ msgstr ""
 #. Translators: this in reference to an e-mail message
 #. status of having been read or unread.
 #.
-#: ../src/orca/scripts/apps/evolution/speech_generator.py:135
+#: ../src/orca/scripts/apps/evolution/speech_generator.py:136
 msgid "Read"
 msgstr "Ler"
 
@@ -7549,11 +7549,11 @@ msgstr "Ler"
 #. keying off stuff like this, but we're forced to do so in
 #. in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:228
+#: ../src/orca/scripts/apps/gedit/script.py:109
 msgid "Change to:"
 msgstr "Cambiar a:"
 
-#: ../src/orca/scripts/apps/gedit/script.py:229
+#: ../src/orca/scripts/apps/gedit/script.py:110
 msgid "Misspelled word:"
 msgstr "Palabra mal escrita:"
 
@@ -7565,15 +7565,15 @@ msgstr "Palabra mal escrita:"
 #. gedit.  We hate keying off stuff like this, but we're
 #. forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:263
+#: ../src/orca/scripts/apps/gedit/script.py:144
 msgid "Completed spell checking"
 msgstr "Verificación ortográfica concluída"
 
-#: ../src/orca/scripts/apps/gedit/script.py:264
+#: ../src/orca/scripts/apps/gedit/script.py:145
 msgid "Spell checking is complete."
 msgstr "Concluíuse a verificación ortográfica."
 
-#: ../src/orca/scripts/apps/gedit/script.py:266
+#: ../src/orca/scripts/apps/gedit/script.py:147
 msgid "Press Tab and Return to terminate."
 msgstr "Prema en Tab e Intro para terminar."
 
@@ -7587,8 +7587,8 @@ msgstr "Prema en Tab e Intro para terminar."
 #. has to match what Thunderbird is using.  We hate keying
 #. off stuff like this, but we're forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:390
-#: ../src/orca/scripts/apps/gedit/script.py:465
+#: ../src/orca/scripts/apps/gedit/script.py:271
+#: ../src/orca/scripts/apps/gedit/script.py:346
 #: ../src/orca/scripts/apps/Thunderbird/script.py:176
 #: ../src/orca/scripts/apps/Thunderbird/script.py:325
 #: ../src/orca/scripts/apps/Thunderbird/script.py:569
@@ -7601,14 +7601,14 @@ msgstr "Verificación ortográfica"
 #. keying off stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:494
+#: ../src/orca/scripts/apps/gedit/script.py:375
 msgid "Phrase not found"
 msgstr "Non se atopou a frase"
 
 #. Translators: this indicates a find command succeeded in
 #. finding something.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:556
+#: ../src/orca/scripts/apps/gedit/script.py:437
 msgid "Phrase found."
 msgstr "Atopouse a frase."
 
@@ -7707,7 +7707,7 @@ msgstr[1] "%(key)s %(value)s píxels"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4810
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4800
 msgid "open"
 msgstr "abrir"
 
@@ -8813,6 +8813,12 @@ msgid ""
 msgstr ""
 "Para decrementar prema frecha esquerda, para incrementar prema frecha "
 "dereita, para mínimo prema inicio e para o máximo prema fin."
+
+#~ msgid "Welcome to Orca."
+#~ msgstr "Benvido/a ao Orca."
+
+#~ msgid "Goodbye."
+#~ msgstr "Adeus."
 
 #~ msgid "Bottom Right"
 #~ msgstr "Abaixo á dereita"
