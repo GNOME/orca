@@ -276,7 +276,7 @@ enableSpeechIndentation = False
 
 # If True, enable braille.
 #
-enableBraille           = False
+enableBraille           = True
 
 # If True, add the hierarchical context of an object to the braille
 # line.  People with very large braille displays may want to set this
