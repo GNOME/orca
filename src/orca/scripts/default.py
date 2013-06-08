@@ -2836,7 +2836,7 @@ class Script(script.Script):
         except NotImplementedError:
             return
 
-        offset = min(event.detail1, text.caretOffset - 1)
+        offset = text.caretOffset - 1
         previousOffset = offset - 1
         if (offset < 0 or previousOffset < 0):
             return
