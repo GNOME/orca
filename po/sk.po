@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-03-05 01:02+0000\n"
-"PO-Revision-Date: 2013-03-06 17:29+0000\n"
+"POT-Creation-Date: 2013-06-08 21:09+0000\n"
+"PO-Revision-Date: 2013-06-11 14:55+0200\n"
 "Last-Translator: Peter Mráz <etkinator@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.5\n"
 
 # PM: Rozmýšlam či to nepreložím ako Kosatka alebo aspoň foneticky Orka.
 # PK: neprekladal by som nzov programu
@@ -38,16 +38,13 @@ msgstr "Čítačka obrazovky"
 msgid "Orca Screen Reader"
 msgstr "Orca - čítačka obrazovky"
 
-# PK: dal by som Pomocou syntezi reci ... poskytuje pristup
-# comment
 #: ../orca.desktop.in.h:4
-#, fuzzy
 msgid ""
 "Provide access to graphical desktop environments via synthesized speech and/"
 "or refreshable braille"
 msgstr ""
-"Poskytuje prístup k grafickému pracovnému prostrediu pomocou syntézy reči a/"
-"alebo obnoviteľného braillového písma"
+"Pomocou syntézy reči a/alebo braillového písma poskytuje prístup ku "
+"grafickému pracovnému prostrediu"
 
 # keywords
 #: ../orca.desktop.in.h:5
@@ -71,7 +68,7 @@ msgstr "Bez klávesovej skratky"
 #. We strive to keep it under three characters to preserve real estate.
 #: ../src/orca/braille_rolenames.py:36
 msgid "???"
-msgstr ""
+msgstr "???"
 
 #. Translators: short braille for the rolename of an alert dialog.
 #. NOTE for all the short braille words: they we strive to keep them
@@ -85,7 +82,7 @@ msgstr ""
 #. Translators: short braille for the rolename of an animation widget.
 #: ../src/orca/braille_rolenames.py:46
 msgid "anim"
-msgstr ""
+msgstr "anim"
 
 #. Translators: short braille for the rolename of an arrow widget.
 #: ../src/orca/braille_rolenames.py:49
@@ -249,7 +246,7 @@ msgstr ""
 #. Translators: short braille for the rolename of a menu.
 #: ../src/orca/braille_rolenames.py:155
 msgid "mnu"
-msgstr ""
+msgstr "mnu"
 
 #. Translators: short braille for the rolename of a menu bar.
 #: ../src/orca/braille_rolenames.py:158
@@ -279,7 +276,7 @@ msgstr ""
 #. Translators: short braille for the rolename of a panel.
 #: ../src/orca/braille_rolenames.py:173
 msgid "pnl"
-msgstr ""
+msgstr "pnl"
 
 #. Translators: short braille for the rolename of a password field.
 #: ../src/orca/braille_rolenames.py:176
@@ -380,12 +377,12 @@ msgstr ""
 #. Translators: short braille for the rolename of a terminal.
 #: ../src/orca/braille_rolenames.py:239
 msgid "term"
-msgstr ""
+msgstr "term"
 
 #. Translators: short braille for the rolename of a text entry field.
 #: ../src/orca/braille_rolenames.py:242
 msgid "txt"
-msgstr ""
+msgstr "txt"
 
 #. Translators: short braille for the rolename of a toggle button.
 #: ../src/orca/braille_rolenames.py:245
@@ -445,12 +442,12 @@ msgstr ""
 #. Translators: short braille for the rolename of a application.
 #: ../src/orca/braille_rolenames.py:278
 msgid "app"
-msgstr ""
+msgstr "app"
 
 #. Translators: short braille for the rolename of a autocomplete.
 #: ../src/orca/braille_rolenames.py:281
 msgid "auto"
-msgstr ""
+msgstr "auto"
 
 #. Translators: short braille for the rolename of an editbar.
 #: ../src/orca/braille_rolenames.py:284
@@ -462,195 +459,193 @@ msgstr ""
 msgid "emb"
 msgstr ""
 
-# PK: kde sa to zobrazi? lebo nazov jazyku je malym, viackrat
+#  PK: kde sa to zobrazi? lebo nazov jazyku je malym, viackrat
+# PM: zobrazuje sa to pri výbere druhu braillovho písma asi to má byť malým zmenil som
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:36
-#, fuzzy
 msgid "Czech Grade 1"
-msgstr "Čeština 1. stupňa"
+msgstr "čeština plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:40
 msgid "Spanish Grade 1"
-msgstr "Španielčina 1. stupňa"
+msgstr "španielčina plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:44
 msgid "Canada French Grade 2"
-msgstr "Kanadská francúzština 2. stupňa"
+msgstr "kanadská francúzština skratkopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:48
 msgid "France French Grade 2"
-msgstr "Francúzština 2. stupňa"
+msgstr "francúzština skratkopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:52
 msgid "Latvian Grade 1"
-msgstr "Lotyština 1. stupňa"
+msgstr "lotyština plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:56
 msgid "Netherlands Dutch Grade 1"
-msgstr "Holandčina 1. stupňa"
+msgstr "holandčina plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:60
 msgid "Norwegian Grade 0"
-msgstr "Nórčina stupeň 0"
+msgstr "nórčina"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:64
 msgid "Norwegian Grade 1"
-msgstr "Nórčina 1. stupňa"
+msgstr "nórčina plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:68
 msgid "Norwegian Grade 2"
-msgstr "Nórčina 2. stupňa"
+msgstr "nórčina skratkopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:72
 msgid "Norwegian Grade 3"
-msgstr "Nórčina 3. stupňa"
+msgstr "nórčina stupeň 3"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:76
 msgid "Polish Grade 1"
-msgstr "Poľština 1. stupňa"
+msgstr "poľština plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:80
 msgid "Portuguese Grade 1"
-msgstr "Portugalčina 1. stupňa"
+msgstr "portugalčina plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:84
 msgid "Swedish Grade 1"
-msgstr "Švédčina 1. stupňa"
+msgstr "švédčina plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:88
 msgid "Arabic Grade 1"
-msgstr "Arabčina 1. stupňa"
+msgstr "arabčina plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:92
 msgid "Welsh Grade 1"
-msgstr "Waleština 1. stupňa"
+msgstr "waleština plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:96
 msgid "Welsh Grade 2"
-msgstr "Waleština 2. stupňa"
+msgstr "waleština skratkopis"
 
-# PK: preco nie 0. stupna
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:100
-#, fuzzy
 msgid "German Grade 0"
-msgstr "Nemčina stupeň 0"
+msgstr "nemčina"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:104
 msgid "German Grade 1"
-msgstr "Nemčina 1. stupňa"
+msgstr "nemčina plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:108
 msgid "German Grade 2"
-msgstr "Nemčina 2. stupňa"
+msgstr "nemčina skratkopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:112
 msgid "U.K. English Grade 2"
-msgstr "Angličtina 2. stupňa"
+msgstr "angličtina skratkopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:116
 msgid "U.K. English Grade 1"
-msgstr "Angličtina 1. stupňa"
+msgstr "angličtina plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:120
 msgid "U.S. English Grade 1"
-msgstr "Americká angličtina 1. stupňa"
+msgstr "americká angličtina plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:124
 msgid "U.S. English Grade 2"
-msgstr "Americká angličtina 2. stupňa"
+msgstr "americká angličtina skratkopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:128
 msgid "Canada French Grade 1"
-msgstr "Kanadská francúzština 1. stupňa"
+msgstr "kanadská francúzština plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:132
 msgid "France French Grade 1"
-msgstr "Francúzština 1. stupňa"
+msgstr "francúzština plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:136
 msgid "Greek Grade 1"
-msgstr "Gréčtina 1. stupňa"
+msgstr "gréčtina plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:140
 msgid "Hindi Grade 1"
-msgstr "Hindčina 1. stupňa"
+msgstr "hindčina plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:144
 msgid "Hungarian 8 dot computer"
-msgstr ""
+msgstr "maďarský počítačový 8 bodový brail"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:148
 msgid "Hungarian Grade 1"
-msgstr "Maďarčina 1. stupňa"
+msgstr "maďarčina plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:152
 msgid "Italian Grade 1"
-msgstr "Taliančina 1. stupňa"
+msgstr "taliančina plnopis"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:156
 msgid "Belgium Dutch Grade 1"
-msgstr "Belgická holandčina 1. stupňa"
+msgstr "belgická holandčina plnopis"
 
 #. Translators: this is the spoken word for the space character
 #.
@@ -682,13 +677,15 @@ msgstr "výkričník"
 #.
 #: ../src/orca/chnames.py:55
 msgid "quote"
-msgstr "úvodzovka"
+msgstr "úvodzovky"
 
+# MČ: čo so znamkmi: ✝✞✟, mrižka sa mi zdá zrozumiteľnejšia, ale netuším čo je vhodnejšie.
 #. Translators: this is the spoken word for the character '#' (U+0023)
 #.
 #: ../src/orca/chnames.py:59
+#, fuzzy
 msgid "number"
-msgstr "mriežka"
+msgstr "krížik"
 
 #. Translators: this is the spoken word for the character '$' (U+0024)
 #.
@@ -718,19 +715,19 @@ msgstr "apostrof"
 #.
 #: ../src/orca/chnames.py:79
 msgid "left paren"
-msgstr "ľavá zátvorka"
+msgstr "zátvorka"
 
 #. Translators: this is the spoken word for the character ')' (U+0029)
 #.
 #: ../src/orca/chnames.py:83
 msgid "right paren"
-msgstr "pravá zátvorka"
+msgstr "zatvoriť"
 
 #. Translators: this is the spoken word for the character '*' (U+002a)
 #.
 #: ../src/orca/chnames.py:87
 msgid "star"
-msgstr "hviezdička"
+msgstr "hviezda"
 
 #. Translators: this is the spoken word for the character '+' (U+002b)
 #.
@@ -777,12 +774,14 @@ msgstr "dvojbodka"
 msgid "semicolon"
 msgstr "bodkočiarka"
 
+# MČ: Nezdá sa mi to zrozumiteľné, ale nedokážem to úplne posúdiť.
 #. Translators: this is the spoken word for the character '< ' (U+003c)
 #.
 #: ../src/orca/chnames.py:119
 msgid "less"
-msgstr "menšie než"
+msgstr "menší"
 
+# MČ: nemal by byť podľa rovnakej logiky ako znak vyššie a nižšie „rovný“?
 #. Translators: this is the spoken word for the character '=' (U+003d)
 #.
 #: ../src/orca/chnames.py:123
@@ -793,7 +792,7 @@ msgstr "rovná sa"
 #.
 #: ../src/orca/chnames.py:127
 msgid "greater"
-msgstr "väčšie než"
+msgstr "väčší"
 
 #. Translators: this is the spoken word for the character '?' (U+003f)
 #.
@@ -811,19 +810,19 @@ msgstr "zavináč"
 #.
 #: ../src/orca/chnames.py:139
 msgid "left bracket"
-msgstr "ľavá hranatá zátvorka"
+msgstr "hranatá zátvorka"
 
 #. Translators: this is the spoken word for the character '\' (U+005c)
 #.
 #: ../src/orca/chnames.py:143
 msgid "backslash"
-msgstr "spätná lomka"
+msgstr "opačná lomka"
 
 #. Translators: this is the spoken word for the character ']' (U+005d)
 #.
 #: ../src/orca/chnames.py:147
 msgid "right bracket"
-msgstr "pravá hranatá zátvorka"
+msgstr "hranatá zatvoriť"
 
 #. Translators: this is the spoken word for the character '^' (U+005e)
 #.
@@ -845,13 +844,13 @@ msgstr "podčiarkovník"
 #.
 #: ../src/orca/chnames.py:159 ../src/orca/keynames.py:255
 msgid "grave"
-msgstr "tupý prízvuk"
+msgstr "akcent"
 
 #. Translators: this is the spoken word for the character '{' (U+007b)
 #.
 #: ../src/orca/chnames.py:163
 msgid "left brace"
-msgstr "ľavá zložená zátvorka"
+msgstr "zložená zátvorka"
 
 #. Translators: this is the spoken word for the character '|' (U+007c)
 #.
@@ -863,7 +862,7 @@ msgstr "zvislá čiara"
 #.
 #: ../src/orca/chnames.py:171
 msgid "right brace"
-msgstr "pravá zložená zátvorka"
+msgstr "zložená zatvoriť"
 
 #. Translators: this is the spoken word for the character '~' (U+007e)
 #.
@@ -879,13 +878,13 @@ msgstr "vlnovka"
 #.
 #: ../src/orca/chnames.py:180
 msgid "no break space"
-msgstr "nezalomiteľná medzera"
+msgstr "tvrdá medzera"
 
 #. Translators: this is the spoken word for the character '¡' (U+00a1)
 #.
 #: ../src/orca/chnames.py:184
 msgid "inverted exclamation point"
-msgstr "opačný výkričník"
+msgstr "obrátený výkričník"
 
 #. Translators: this is the spoken word for the character '¢' (U+00a2)
 #.
@@ -946,7 +945,7 @@ msgstr "horný index a"
 #.
 #: ../src/orca/chnames.py:224
 msgid "left double angle bracket"
-msgstr "dvojitá ľavá lomená zátvorka"
+msgstr "dvojitá lomená zátvorka"
 
 #. Translators: this is the spoken word for the character '¬' (U+00ac)
 #.
@@ -955,29 +954,33 @@ msgid "logical not"
 msgstr "logický zápor"
 
 # PM: zalomiteľný spojovník= rozdeľovník slov
+# MČ: asi skôr rozdeľovník, ale netuším, čo je zrozumiteľnejšie.
 #. Translators: this is the spoken word for the character '­' (U+00ad)
 #.
 #: ../src/orca/chnames.py:232
+#, fuzzy
 msgid "soft hyphen"
-msgstr "rozdeľovník"
+msgstr "mäkká pomlčka"
 
 #. Translators: this is the spoken word for the character '®' (U+00ae)
 #.
 #: ../src/orca/chnames.py:236
 msgid "registered"
-msgstr ""
+msgstr "registrované"
 
 #. Translators: this is the spoken word for the character '¯' (U+00af)
 #.
 #: ../src/orca/chnames.py:240
 msgid "macron"
-msgstr ""
+msgstr "pruh nad"
 
+# MČ: čo to urobí s textom 2°? Nie som si istý, či je vhodné to skloňovať, keď nevieme súvislosti. (Je to proste názov znaku)
 #. Translators: this is the spoken word for the character '°' (U+00b0)
 #.
 #: ../src/orca/chnames.py:244
+#, fuzzy
 msgid "degrees"
-msgstr "stupeň"
+msgstr "stupňov"
 
 #. Translators: this is the spoken word for the character '±' (U+00b1)
 #.
@@ -1019,7 +1022,7 @@ msgstr "označenie odseku"
 #.
 #: ../src/orca/chnames.py:272
 msgid "middle dot"
-msgstr ""
+msgstr "bodka v prostriedku"
 
 #. Translators: this is the spoken word for the character '¸' (U+00b8)
 #.
@@ -1034,7 +1037,7 @@ msgstr "sédij"
 #.
 #: ../src/orca/chnames.py:280
 msgid "superscript 1"
-msgstr "hodný index 1"
+msgstr "horný index 1"
 
 # PM: je to príznak poradovej číslovky u nás používame bodku, ako to preložiť neviem
 # MČ: navrhujem niečo ako: „vporadí“, „pozíciz v rade“, alebo niečo podobné, ale veľmi záleži na tom ako sa to naozaj číta.
@@ -1048,7 +1051,7 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:288
 msgid "right double angle bracket"
-msgstr "dvojitá pravá lomená zátvorka"
+msgstr "dvojitá lomená zatvoriť"
 
 #. Translators: this is the spoken word for the character '¼' (U+00bc)
 #.
@@ -1072,7 +1075,7 @@ msgstr "tri štvrtiny"
 #.
 #: ../src/orca/chnames.py:304
 msgid "inverted question mark"
-msgstr "opačný otáznik"
+msgstr "obrátený otáznik"
 
 #. Translators: this is the spoken word for the character 'á' (U+00e1)
 #.
@@ -1208,7 +1211,7 @@ msgstr "DLHÉ O"
 #.
 #: ../src/orca/chnames.py:392
 msgid "O CIRCUMFLEX"
-msgstr "UO"
+msgstr "O S VOKÁŇOM"
 
 #. Translators: this is the spoken word for the character 'Õ' (U+00d5)
 #.
@@ -1396,7 +1399,7 @@ msgstr "dlhé o"
 #.
 #: ../src/orca/chnames.py:516
 msgid "o circumflex"
-msgstr "uo"
+msgstr "o s vokáňom"
 
 #. Translators: this is the spoken word for the character 'õ' (U+00f5)
 #.
@@ -1476,7 +1479,7 @@ msgstr "PREHLASOVANÉ Y"
 msgid "florin"
 msgstr "florén"
 
-# PM: Pomlčka je dash, hyphen je spojovník, soft hyphen je rozdelovník, en dash je klasická pomlčka (v dĺžke písmena n), em dash je dlhá pomlčka (v dĺžke písmena m) 
+# PM: Pomlčka je dash, hyphen je spojovník, soft hyphen je rozdelovník, en dash je klasická pomlčka (v dĺžke písmena n), em dash je dlhá pomlčka (v dĺžke písmena m)
 #. Translators: this is the spoken word for the character '–' (U+2013)
 #.
 #: ../src/orca/chnames.py:572
@@ -1484,45 +1487,40 @@ msgid "en dash"
 msgstr "pomlčka"
 
 # MČ: V slovenčine sa táto používa ako pravá, ak sa nemýlim.
+# PM: rozhodol som sa zmeniť preklad lebo toto sa číta pri stlačení klávesu a pri zápíse nejakého iného ako slovenského textu by z toho nevidiaci mohli byť zmätený
 #. Translators: this is the spoken word for the left single quote: ‘
 #. (U+2018)
 #.
 #: ../src/orca/chnames.py:577
-#, fuzzy
 msgid "left single quote"
-msgstr "jednoduchá zatváracia úvodzovka"
+msgstr "horné jednoduché úvodzovky"
 
-# MČ: Táto sa v slovenčine nevyužíva, neviem ako by sa mala nazývať, aby sa neplietla
-# MČ: nezvýraznil si, ako pri ostatných, že ide o jednoduchú úvodzovku. Tak si to chcel?
+# MČ: Je to zrozumiteľné?
 #. Translators: this is the spoken word for the right single quote: ’
 #. (U+2019)
 #.
 #: ../src/orca/chnames.py:582
-#, fuzzy
 msgid "right single quote"
-msgstr "horná opačná úvodzovka"
+msgstr "odsuvník"
 
 # MČ: Táto sa používa v slovenčine ako ľavá, otváracia.
 #. Translators: this is the spoken word for the character '‚' (U+201a)
 #.
 #: ../src/orca/chnames.py:586
-#, fuzzy
 msgid "single low quote"
-msgstr "jednoduchá otváracia úvodzovka"
+msgstr "dolné jednoduché úvodzovky"
 
 # MČ: V slovenčine sa táto používa ako pravá, zatváracia.
 #. Translators: this is the spoken word for the character '“' (U+201c)
 #.
 #: ../src/orca/chnames.py:590
-#, fuzzy
 msgid "left double quote"
-msgstr "dvojitá zatváracia úvodzovka"
+msgstr "horné úvodzovky"
 
 # MČ: Táto sa v slovenčine nevyužíva, neviem ako by sa mala nazývať, aby sa neplietla
 #. Translators: this is the spoken word for the character '”' (U+201d)
 #.
 #: ../src/orca/chnames.py:594
-#, fuzzy
 msgid "right double quote"
 msgstr "dvojitá horná opačná úvodzovka"
 
@@ -1530,9 +1528,8 @@ msgstr "dvojitá horná opačná úvodzovka"
 #. Translators: this is the spoken word for the character '„' (U+201e)
 #.
 #: ../src/orca/chnames.py:598
-#, fuzzy
 msgid "double low quote"
-msgstr "dvojitá otváracia úvodzovka"
+msgstr "dolné úvodzovky"
 
 #. Translators: this is the spoken word for the character '†' (U+2020)
 #.
@@ -1550,7 +1547,6 @@ msgstr "dvojkríž"
 #. Translators: this is the spoken word for the character '•' (U+2022)
 #.
 #: ../src/orca/chnames.py:610
-#, fuzzy
 msgid "bullet"
 msgstr "odrážka"
 
@@ -1566,7 +1562,7 @@ msgstr "trojuhoľníková odrážka"
 msgid "per mille"
 msgstr "promile"
 
-# PM: toto je čiarka ktorá sa používa napríklad na označenie napríklad derivácie 
+# PM: toto je čiarka ktorá sa používa napríklad na označenie napríklad derivácie
 #. Translators: this is the spoken word for the character '′' (U+2032)
 #.
 #: ../src/orca/chnames.py:622
@@ -1584,7 +1580,7 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:630
 msgid "hyphen bullet"
-msgstr ""
+msgstr "odrážka v tvare pomlčky"
 
 #. Translators: this is the spoken word for the character '€' (U+20ac)
 #.
@@ -1614,7 +1610,7 @@ msgstr "šípka doprava"
 #.
 #: ../src/orca/chnames.py:650
 msgid "almost equal to"
-msgstr "približne rovné"
+msgstr "približne sa rovná"
 
 #. Translators: this is the spoken word for the character '≠' (U+2260)
 #.
@@ -1622,21 +1618,17 @@ msgstr "približne rovné"
 msgid "not equal to"
 msgstr "nerovná sa"
 
-# PM: áno ide o to ako ten znak čítať
-# PK: dal by som mensie nez alebo rovne
 #. Translators: this is the spoken word for the character '≤' (U+2264)
 #.
 #: ../src/orca/chnames.py:658
-#, fuzzy
 msgid "less than or equal to"
-msgstr "menšie alebo rovné než"
+msgstr "menší alebo sa rovná"
 
 #. Translators: this is the spoken word for the character '≥' (U+2265)
 #.
 #: ../src/orca/chnames.py:662
-#, fuzzy
 msgid "greater than or equal to"
-msgstr "väčšie alebo rovné než"
+msgstr "väčší alebo sa rovná"
 
 #. Translators: this is the spoken word for the character '√' (U+221a)
 #.
@@ -1665,14 +1657,14 @@ msgstr "nekonečno"
 #.
 #: ../src/orca/chnames.py:679 ../src/orca/chnames.py:854
 msgid "black square"
-msgstr ""
+msgstr "čierny štvorec"
 
 #. Translators: this is the spoken word for the character '□' (U+25a1)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:684
 msgid "white square"
-msgstr ""
+msgstr "biely štvorec"
 
 #. Translators: this is the spoken word for the character '◆' (U+25c6)
 #. It can be used as a bullet in a list.
@@ -1683,47 +1675,46 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:689 ../src/orca/chnames.py:860
 msgid "black diamond"
-msgstr ""
+msgstr "čierny diamant"
 
 #. Translators: this is the spoken word for the character '○' (U+25cb)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:694
 msgid "white circle"
-msgstr ""
+msgstr "biely kruh"
 
 #. Translators: this is the spoken word for the character '●' (U+25cf)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:699
 msgid "black circle"
-msgstr ""
+msgstr "čierny kruh"
 
 #. Translators: this is the spoken word for the character '◦' (U+25e6)
 #.
 #: ../src/orca/chnames.py:703
 msgid "white bullet"
-msgstr ""
+msgstr "odrážka v tvare bielej bodky"
 
 # DK: nebude vhodnejsie "zaškrtnutie" ?
 # PM: ide o to ako sa má ten znak prečítať a myslím že fajka je lepšia
 # MČ: pozor, ale tuším existuje aj znak „fajka“, navrhujem „znak zašktnutia“
+# PM: to že ide o znak je jasné lebo sa to vysloví pri stlačení klávesu
 #. Translators: this is the spoken word for the character '✓' (U+2713)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:708
-#, fuzzy
 msgid "check mark"
-msgstr "fajka"
+msgstr "zaškrtnutie"
 
 # DK: detto
 #. Translators: this is the spoken word for the character '✔' (U+2714)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:713
-#, fuzzy
 msgid "heavy check mark"
-msgstr "tučná fajka"
+msgstr "tučné zaškrtnutie"
 
 #. Translators: this is the spoken word for the character 'x' (U+2717)
 #. This symbol is included here because it can be used as a bullet in
@@ -1734,7 +1725,7 @@ msgstr "tučná fajka"
 #.
 #: ../src/orca/chnames.py:722
 msgid "x-shaped bullet"
-msgstr ""
+msgstr "odrážka v tvare x"
 
 #. Translators: this is the spoken word for the character '➔' (U+2794)
 #. This symbol is included here because it can be used as a bullet in
@@ -1809,13 +1800,13 @@ msgstr "horný index rovná sa"
 #.
 #: ../src/orca/chnames.py:773
 msgid "superscript left paren"
-msgstr "horný index ľavá zátvorka"
+msgstr "horný index zátvorka"
 
 #. Translators: this is the spoken word for the character '⁾' (U+207e)
 #.
 #: ../src/orca/chnames.py:777
 msgid "superscript right paren"
-msgstr "horný index pravá zátvorka"
+msgstr "horný index zátvorka zatvoriť"
 
 #. Translators: this is the spoken word for the character 'ⁿ' (U+207f)
 #.
@@ -1905,14 +1896,15 @@ msgstr "dolný index rovná sa"
 #.
 #: ../src/orca/chnames.py:837
 msgid "subscript left paren"
-msgstr "dolný index ľavá zátvorka"
+msgstr "dolný index zátvorka"
 
 #. Translators: this is the spoken word for the character '₎' (U+208e)
 #.
 #: ../src/orca/chnames.py:841
 msgid "subscript right paren"
-msgstr "dolný index pravá zátvorka"
+msgstr "dolný index zátvorka zatvoriť"
 
+# PM: aby sa to nemýlilo s inými šípkami
 #. Translators: this is the spoken word for the character '➢' (U+27a2)
 #. This symbol is included here because it can be used as a bullet in an
 #. OOo list. The goal is to inform the user of the appearance of the bullet
@@ -1920,7 +1912,7 @@ msgstr "dolný index pravá zátvorka"
 #.
 #: ../src/orca/chnames.py:848
 msgid "right-pointing arrowhead"
-msgstr ""
+msgstr "odrážka v tvare šípky"
 
 #. Translators: this command will move the mouse pointer to the current item
 #. without clicking on it.
@@ -3192,7 +3184,7 @@ msgstr ""
 #: ../src/orca/flat_review.py:1050 ../src/orca/generator.py:474
 #: ../src/orca/generator.py:723 ../src/orca/generator.py:765
 #: ../src/orca/generator.py:811
-#: ../src/orca/scripts/apps/evolution/speech_generator.py:121
+#: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:635
 #: ../src/orca/tutorialgenerator.py:558 ../src/orca/tutorialgenerator.py:598
 msgid "toggle"
@@ -3269,12 +3261,13 @@ msgid "_Speak Chat Room name"
 msgstr "_Hovoriť názov diskusnej miestnosti"
 
 # MČ: Neviem, či píšem správne, ale ide o syntézu reči, tak by som skôr povedal „syntezátor“, ale možno sa mýlim. I keď podľa slovníka by mali byť tie pojmy zameniteľné, ale „syntetizáror“ je podľa mňa nástroj na hranie hudby.
+# PM: syntetizátor je podľa mňa nástroj na syntézu niečoho
+# http://sk.wikipedia.org/wiki/Syntetiz%C3%A1tor
 #. Translators: This is a label which will appear in the list of available speech
 #. engines as a special item. It refers to the default engine configured within
 #. the speech subsystem. Apart from this item, the user will have a chance to
 #. select a particular speech engine by its real name (Festival, IBMTTS, etc.)
 #: ../src/orca/guilabels.py:90
-#, fuzzy
 msgid "Default Synthesizer"
 msgstr "Predvolený syntetizátor"
 
@@ -3337,11 +3330,9 @@ msgstr "Klávesová skratka"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a blockquote.
 #: ../src/orca/guilabels.py:127
-#, fuzzy
-#| msgid "quote"
 msgctxt "structural navigation"
 msgid "Blockquote"
-msgstr "úvodzovka"
+msgstr "Citovaný úryvok"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3350,7 +3341,7 @@ msgstr "úvodzovka"
 #: ../src/orca/guilabels.py:133
 msgctxt "structural navigation"
 msgid "Button"
-msgstr ""
+msgstr "Tlačidlo"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3368,7 +3359,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:145
 msgctxt "structural navigation"
 msgid "Check Box"
-msgstr ""
+msgstr "Zaškrtávacie pole"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3384,11 +3375,9 @@ msgstr ""
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the description of an element.
 #: ../src/orca/guilabels.py:157
-#, fuzzy
-#| msgid "section"
 msgctxt "structural navigation"
 msgid "Description"
-msgstr "paragraf"
+msgstr "Popis"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3397,7 +3386,7 @@ msgstr "paragraf"
 #: ../src/orca/guilabels.py:163
 msgctxt "structural navigation"
 msgid "Heading"
-msgstr ""
+msgstr "Nadpis"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3425,7 +3414,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:182
 msgctxt "structural navigation"
 msgid "Link"
-msgstr ""
+msgstr "Odkaz"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3434,7 +3423,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:188
 msgctxt "structural navigation"
 msgid "List"
-msgstr ""
+msgstr "Zoznam"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3443,7 +3432,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:194
 msgctxt "structural navigation"
 msgid "List Item"
-msgstr ""
+msgstr "Položka zoznamu"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3452,18 +3441,16 @@ msgstr ""
 #: ../src/orca/guilabels.py:200
 msgctxt "structural navigation"
 msgid "Object"
-msgstr ""
+msgstr "Objekt"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a paragraph.
 #: ../src/orca/guilabels.py:206
-#, fuzzy
-#| msgid "paragraph marker"
 msgctxt "structural navigation"
 msgid "Paragraph"
-msgstr "označenie odseku"
+msgstr "Odsek"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3484,6 +3471,7 @@ msgctxt "structural navigation"
 msgid "Role"
 msgstr ""
 
+# PM: akebo vybraná - neviem čo bude lepšie
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
@@ -3491,7 +3479,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:225
 msgctxt "structural navigation"
 msgid "Selected Item"
-msgstr ""
+msgstr "Označená položka"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3510,7 +3498,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:238
 msgctxt "structural navigation"
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3519,7 +3507,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:244
 msgctxt "structural navigation"
 msgid "URI"
-msgstr ""
+msgstr "URI"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3528,17 +3516,15 @@ msgstr ""
 #: ../src/orca/guilabels.py:250
 msgctxt "structural navigation"
 msgid "Value"
-msgstr ""
+msgstr "Hodnota"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:255
-#, fuzzy
-#| msgid "quote"
 msgctxt "structural navigation"
 msgid "Blockquotes"
-msgstr "úvodzovka"
+msgstr "Citované úryvky"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3546,7 +3532,7 @@ msgstr "úvodzovka"
 #: ../src/orca/guilabels.py:260
 msgctxt "structural navigation"
 msgid "Buttons"
-msgstr ""
+msgstr "Tlačidlá"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3554,7 +3540,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:265
 msgctxt "structural navigation"
 msgid "Check Boxes"
-msgstr ""
+msgstr "Zaškrtávacie polia"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3578,7 +3564,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:280
 msgctxt "structural navigation"
 msgid "Form Fields"
-msgstr ""
+msgstr "Polia formulára"
 
 # tab label
 #. Translators: Orca has a command that presents a list of structural navigation
@@ -3599,7 +3585,7 @@ msgstr "Klávesové skratky"
 #, python-format
 msgctxt "structural navigation"
 msgid "Headings at Level %d"
-msgstr ""
+msgstr "Nadpisy %d. úrovne"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3617,7 +3603,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:303
 msgctxt "structural navigation"
 msgid "Links"
-msgstr ""
+msgstr "Odkazy"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3625,7 +3611,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:308
 msgctxt "structural navigation"
 msgid "Lists"
-msgstr ""
+msgstr "Zoznamy"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3633,17 +3619,15 @@ msgstr ""
 #: ../src/orca/guilabels.py:313
 msgctxt "structural navigation"
 msgid "List Items"
-msgstr ""
+msgstr "Položky zoznamu"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:318
-#, fuzzy
-#| msgid "paragraph marker"
 msgctxt "structural navigation"
 msgid "Paragraphs"
-msgstr "označenie odseku"
+msgstr "Odseky"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3658,11 +3642,9 @@ msgstr ""
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:328
-#, fuzzy
-#| msgid "Table Rows"
 msgctxt "structural navigation"
 msgid "Tables"
-msgstr "Riadky tabuľky"
+msgstr "Tabuľky"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3670,7 +3652,7 @@ msgstr "Riadky tabuľky"
 #: ../src/orca/guilabels.py:333
 msgctxt "structural navigation"
 msgid "Unvisited Links"
-msgstr ""
+msgstr "Nenavštívené odkazy"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3678,7 +3660,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:338
 msgctxt "structural navigation"
 msgid "Visited Links"
-msgstr ""
+msgstr "Navštívené odkazy"
 
 #. Translators: This is the title of a panel holding options for how to navigate
 #. HTML content (e.g., Orca caret navigation, positioning of caret, structural
@@ -3821,7 +3803,7 @@ msgstr ""
 #.
 #: ../src/orca/keybindings.py:157
 msgid "double click"
-msgstr ""
+msgstr "dvojkliknutie"
 
 #. Translators: Orca keybindings support double
 #. and triple "clicks" or key presses, similar to
@@ -3829,7 +3811,7 @@ msgstr ""
 #.
 #: ../src/orca/keybindings.py:163
 msgid "triple click"
-msgstr ""
+msgstr "trojkliknutie"
 
 #. Translators: this is how someone would speak the name of the shift key
 #.
@@ -3947,7 +3929,7 @@ msgstr "tab"
 msgid "backspace"
 msgstr "bekspejs"
 
-# PM: tuším to v naších končinách nerozlišujeme 
+# PM: tuším to v naších končinách nerozlišujeme
 #. Translators: this is how someone would speak the name of the return key
 #.
 #: ../src/orca/keynames.py:146
@@ -4118,7 +4100,7 @@ msgstr "Aplikáciu"
 #. Translators: This is presented when the user has navigated to an empty line.
 #: ../src/orca/messages.py:43
 msgid "blank"
-msgstr ""
+msgstr "prázdny riadok"
 
 #. Translators: This refers to font weight.
 #: ../src/orca/messages.py:46
@@ -5143,43 +5125,42 @@ msgstr ""
 #. no accessible component has keyboard focus.
 #: ../src/orca/messages.py:822
 msgid "No focus"
-msgstr ""
+msgstr "Bez zamerania"
 
 # PK: dal by som neni zamerana
 #. Translators: This message presents the fact that no accessible application has
 #. has keyboard focus.
 #: ../src/orca/messages.py:826
-#, fuzzy
 msgid "No application has focus."
-msgstr "Žiadna aplikácia nemá zameriavač."
+msgstr "Žiadna aplikácia nie je zameraná."
 
 #. Translators: This is for navigating document content by moving from anchor to
 #. anchor. (An anchor is a named spot that one can jump to.) This is a detailed
 #. message which will be presented to the user if no more anchors can be found.
 #: ../src/orca/messages.py:831
 msgid "No more anchors."
-msgstr ""
+msgstr "Žiadne ďalšie kotvy."
 
 #. Translators: This is for navigating document content by moving from blockquote
 #. to blockquote. This is a detailed message which will be presented to the user
 #. if no more blockquotes can be found.
 #: ../src/orca/messages.py:836
 msgid "No more blockquotes."
-msgstr ""
+msgstr "Žiadne ďalšie citované úryvky."
 
 #. Translators: This is for navigating document content by moving from button
 #. to button. This is a detailed message which will be presented to the user
 #. if no more buttons can be found.
 #: ../src/orca/messages.py:841
 msgid "No more buttons."
-msgstr ""
+msgstr "Žiadne ďalšie tlačidlá."
 
 #. Translators: This is for navigating document content by moving from check
 #. box to check box. This is a detailed message which will be presented to the
 #. user if no more check boxes can be found.
 #: ../src/orca/messages.py:846
 msgid "No more check boxes."
-msgstr ""
+msgstr "Žiadne ďalšie zaškrtávacie polia."
 
 #. Translators: This is for navigating document content by moving from 'large
 #. object' to 'large object'. A 'large object' is a logical chunk of text,
@@ -5208,14 +5189,14 @@ msgstr ""
 #. the user if no more form fields can be found.
 #: ../src/orca/messages.py:867
 msgid "No more form fields."
-msgstr ""
+msgstr "Žiadne ďalšie polia formulára."
 
 #. Translators: This is for navigating document content by moving from heading
 #. to heading. This is a detailed message which will be presented to the user
 #. if no more headings can be found.
 #: ../src/orca/messages.py:872
 msgid "No more headings."
-msgstr ""
+msgstr "Žiadne ďalšie nadpisy."
 
 #. Translators: This is for navigating document content by moving from heading
 #. to heading at a particular level (i.e. only <h1> or only <h2>, etc.). This
@@ -5224,7 +5205,7 @@ msgstr ""
 #: ../src/orca/messages.py:878
 #, python-format
 msgid "No more headings at level %d."
-msgstr ""
+msgstr "Žiadne ďalšie nadpisy %d. úrovne."
 
 #. Translators: this is for navigating to the previous ARIA role landmark.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
@@ -5239,21 +5220,21 @@ msgstr ""
 #. presented to the user if no more links can be found.
 #: ../src/orca/messages.py:889
 msgid "No more links."
-msgstr ""
+msgstr "Žiadne ďalšie odkazy."
 
 #. Translators: This is for navigating document content by moving from bulleted/
 #. numbered list to bulleted/numbered list. This is a detailed message which will
 #. be presented to the user if no more lists can be found.
 #: ../src/orca/messages.py:894
 msgid "No more lists."
-msgstr ""
+msgstr "Žiadne ďalšie zoznamy."
 
 #. Translators: This is for navigating document content by moving from bulleted/
 #. numbered list item to bulleted/numbered list item. This is a detailed message
 #. which will be presented to the user if no more list items can be found.
 #: ../src/orca/messages.py:899
 msgid "No more list items."
-msgstr ""
+msgstr "Žiadne ďalšie položky zoznamu."
 
 #. Translators: This is for navigating document content by moving from live
 #. region to live region. A live region is an area of a web page that is
@@ -5269,7 +5250,7 @@ msgstr ""
 #. if no more paragraphs can be found.
 #: ../src/orca/messages.py:911
 msgid "No more paragraphs."
-msgstr ""
+msgstr "Žiadne ďalšie nenavštívené odseky."
 
 #. Translators: This is for navigating document content by moving from radio
 #. button to radio button. This is a detailed message which will be presented to
@@ -5283,28 +5264,28 @@ msgstr ""
 #. presented to the user if no more separators can be found.
 #: ../src/orca/messages.py:921
 msgid "No more separators."
-msgstr ""
+msgstr "Žiadne ďalšie nenavštívené oddeľovače."
 
 #. Translators: This is for navigating document content by moving from table to
 #. to table. This is a detailed message which will be presented to the user if
 #. no more tables can be found.
 #: ../src/orca/messages.py:926
 msgid "No more tables."
-msgstr ""
+msgstr "Žiadne ďalšie tabuľky."
 
 #. Translators: This is for navigating document content by moving from unvisited
 #. link to unvisited link. This is a detailed message which will be presented to
 #. the user if no more unvisited links can be found.
 #: ../src/orca/messages.py:931
 msgid "No more unvisited links."
-msgstr ""
+msgstr "Žiadne ďalšie nenavštívené odkazy."
 
 #. Translators: This is for navigating document content by moving from visited
 #. link to visited link. This is a detailed message which will be presented to
 #. the user if no more visited links can be found.
 #: ../src/orca/messages.py:936
 msgid "No more visited links."
-msgstr ""
+msgstr "Žiadne ďalšie navštívené odkazy."
 
 #. Translators: This message alerts the user to the fact that what will be
 #. presented next came from a notification.
@@ -5467,10 +5448,9 @@ msgstr ""
 #. Spanish text-to-speech and Spanish braille and selected when reading Spanish
 #. content. The string representing the profile name is created by the user.
 #: ../src/orca/messages.py:1051
-#, fuzzy, python-format
-#| msgid "Profiles"
+#, python-format
 msgid "Profile set to %s."
-msgstr "Profily"
+msgstr "Profil nastavený na %s."
 
 #. Translators: This is an error message presented when the user attempts to
 #. cycle among his/her saved profiles, but no profiles can be found. A profile
@@ -5615,10 +5595,13 @@ msgstr ""
 msgid " dot dot dot"
 msgstr ""
 
+# generic name
 #. Translators: This message is presented to the user when Orca is launched.
 #: ../src/orca/messages.py:1152
-msgid "Welcome to Orca."
-msgstr "Vitajte v programe Orca."
+#, fuzzy
+#| msgid "Screen Reader"
+msgid "Screen reader on."
+msgstr "Čítačka obrazovky"
 
 #. Translators: Orca Preferences is the configuration GUI for Orca. This message
 #. is presented immediately before the GUI is shown.
@@ -5634,10 +5617,13 @@ msgstr ""
 msgid "Starting Orca Preferences for %s."
 msgstr "Spúšťajú sa nastavenia programu Orca pre %s."
 
+# generic name
 #. Translators: This message is presented to the user when Orca is quit.
 #: ../src/orca/messages.py:1164
-msgid "Goodbye."
-msgstr "Dovidenia."
+#, fuzzy
+#| msgid "Screen Reader"
+msgid "Screen reader off."
+msgstr "Čítačka obrazovky"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text.  For example, they may want to find
@@ -5841,10 +5827,9 @@ msgstr ""
 # dialog title
 #. Translators: This message presents the Orca version number.
 #: ../src/orca/messages.py:1301
-#, fuzzy, python-format
-#| msgid "Orca Preferences for %s"
+#, python-format
 msgid "Orca version %s."
-msgstr "Nastavenia programu Orca pre %s"
+msgstr "Orca verzia %s."
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
@@ -6334,10 +6319,8 @@ msgstr ""
 #. Translators: this text is the description displayed when Orca is
 #. launched from the command line and the help text is displayed.
 #: ../src/orca/orca_bin.py.in:90
-#, fuzzy
-#| msgid "Orca Screen Reader"
 msgid "orca - scriptable screen reader"
-msgstr "Orca - čítačka obrazovky"
+msgstr "Orca - skriptovateľná čítačka obrazovky"
 
 #. Translators: this text is the description displayed when Orca is
 #. launched from the command line and the help text is displayed.
@@ -6374,21 +6357,21 @@ msgstr ""
 #. enable as Orca is started.
 #: ../src/orca/orca_bin.py.in:131
 msgid "Force use of option"
-msgstr ""
+msgstr "Vynúti použite voľby"
 
 #. Translators: this string indicates to the user what should be
 #. provided when using the '-e, --enable' or '-d, --disable' command
 #. line option.
 #: ../src/orca/orca_bin.py.in:135 ../src/orca/orca_bin.py.in:146
 msgid "OPTION"
-msgstr ""
+msgstr "VOĽBA"
 
 #. Translators: this is the description of the command line option
 #. '-d, --disable' which allows the user to specify an option to
 #. enable as Orca is started.
 #: ../src/orca/orca_bin.py.in:142
 msgid "Prevent use of option"
-msgstr ""
+msgstr "Zabráni použitiu voľby"
 
 #. Translators: this is the description of the command line option
 #. '-p, --profile' which allows you to specify a profile to be
@@ -6398,39 +6381,39 @@ msgstr ""
 #. An Orca settings file contains one or more profiles.
 #: ../src/orca/orca_bin.py.in:156
 msgid "Load profile"
-msgstr ""
+msgstr "Načíta profil"
 
 #. Translators: this string indicates to the user what should be
 #. provided when using the '-p, --profile' command line option.
 #: ../src/orca/orca_bin.py.in:159
 msgid "NAME"
-msgstr ""
+msgstr "NÁZOV"
 
 #. Translators: this is the description of the command line option
 #. '-u, --user-prefs' that allows you to specify an alternate
 #. location from which to loadr the user preferences.
 #: ../src/orca/orca_bin.py.in:166
 msgid "Use alternate directory for user preferences"
-msgstr ""
+msgstr "Použije iný adresár pre používateľské nastavenia"
 
 #. Translators: this string indicates to the user what should be
 #. provided when using the '-u, --user-prefs' command line option.
 #: ../src/orca/orca_bin.py.in:169
 msgid "DIR"
-msgstr ""
+msgstr "ADRESÁR"
 
 #. Translators: this is the description of the command line option
 #. '--debug-file' which allows the user to override the default,
 #. date-based name of the debugging output file.
 #: ../src/orca/orca_bin.py.in:176
 msgid "Send debug output to the specified file"
-msgstr ""
+msgstr "Odošle výstup pre ladenie do zadaného súboru"
 
 #. Translators: this string indicates to the user what should be
 #. provided when using the '--debug-file' command line option.
 #: ../src/orca/orca_bin.py.in:179
 msgid "FILE"
-msgstr ""
+msgstr "SÚBOR"
 
 #. Translators: this is the description of the command line option
 #. '--debug' which enables debugging output for Orca to be sent to
@@ -6465,10 +6448,9 @@ msgstr ""
 #. such as a Spanish profile which would include Spanish braille
 #. and Spanish text-to-speech.
 #: ../src/orca/orca_bin.py.in:330
-#, fuzzy, python-format
-#| msgid "bookmarks could not be saved"
+#, python-format
 msgid "Profile could not be loaded: %s"
-msgstr "záložky sa nepodarilo uložiť"
+msgstr "Profil sa nepodarilo načítať: %s"
 
 #. Translators: This message is presented to the user when
 #. he/she tries to launch Orca, but Orca is already running.
@@ -6686,8 +6668,8 @@ msgstr ""
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
 #.
-#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:319
-#: ../src/orca/scripts/apps/gedit/script.py:321
+#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:200
+#: ../src/orca/scripts/apps/gedit/script.py:202
 #: ../src/orca/scripts/apps/gnome-search-tool/script.py:163
 msgid "Find"
 msgstr ""
@@ -6979,7 +6961,7 @@ msgstr "Povoliť zopakovanie po pí_smenách"
 #.
 #: ../src/orca/orca_gui_prefs.py:1935
 msgid "(double click)"
-msgstr ""
+msgstr "(dvojkliknutie)"
 
 #. Translators: Orca keybindings support double
 #. and triple "clicks" or key presses, similar to
@@ -6987,7 +6969,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1941
 msgid "(triple click)"
-msgstr ""
+msgstr "(trojkliknutie)"
 
 #. Translators: an external braille device has buttons on it that
 #. permit the user to create input gestures from the braille device.
@@ -7223,6 +7205,7 @@ msgid "_Profile Name:"
 msgstr ""
 
 # PK: ako je to mozne, ved to ukazuje len na jeden riadok v kode
+# PM: je to dynamicky generovaný súbor podla súboru ui
 # na viacerých miestach
 # *https://bugzilla.gnome.org/show_bug.cgi?id=686690
 #: ../src/orca/orca-setup.ui.h:1
@@ -7238,6 +7221,7 @@ msgstr "Veľké písmená"
 
 # MČ: nie som si istý, ale hypertext je text, ktorý obasuje odkazy. Hyperlink by mal byť ten odkaz. Či nie? (viakrat)
 # PK: ako moze byt typ hlasu hypertext, co to znamena?
+# PM: číta to osobitne hypertexové odkazy
 # Voice type
 #: ../src/orca/orca-setup.ui.h:3
 #, fuzzy
@@ -7265,11 +7249,11 @@ msgid "Orca Preferences"
 msgstr "Nastavenia programu Orca"
 
 # MČ: nebolo by vhodnejšie „prenosný počítač“? Keď je ten druhý „stolný počítač“?
+# PM: u nás je zaužívané notebook
 # GtkRadioButton
 #: ../src/orca/orca-setup.ui.h:13
-#, fuzzy
 msgid "_Laptop"
-msgstr "_Notebook"
+msgstr "Note_book"
 
 # GtkLabel
 #: ../src/orca/orca-setup.ui.h:14
@@ -7287,11 +7271,9 @@ msgstr "_Aktívny profil:"
 msgid "Start-up Profile:"
 msgstr "Profil pre štart:"
 
-# MČ: rovnaký akcelerátor „n“ ako pri „Notebook“
 # GtkButton
 #. This button will load the selected settings profile in the application.
 #: ../src/orca/orca-setup.ui.h:18
-#, fuzzy
 msgid "_Load"
 msgstr "_Načítať"
 
@@ -7363,12 +7345,10 @@ msgstr "O_soba:"
 msgid "Speech synthesi_zer:"
 msgstr "S_yntetizátor reči:"
 
-# MČ: koliduje akcelerátor „s“ s „Osoba“.
 # GtkLabel
 #: ../src/orca/orca-setup.ui.h:32
-#, fuzzy
 msgid "Speech _system:"
-msgstr "_Systém reči:"
+msgstr "Systé_m reči:"
 
 # GtkLabel
 #. Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.
@@ -7407,7 +7387,7 @@ msgstr "Hlas"
 # GtkCheckButton
 #: ../src/orca/orca-setup.ui.h:45
 msgid "_Enable speech"
-msgstr "Povoliť _rozprávanie"
+msgstr "Povoliť ro_zprávanie"
 
 # PM: výrečnosť
 # GtkRadioButton
@@ -7424,7 +7404,6 @@ msgstr "Výrečnosť"
 # GtkRadioButton
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak the entire row when the user arrows Up or Down in a table.
 #: ../src/orca/orca-setup.ui.h:52
-#, fuzzy
 msgid "Speak ro_w"
 msgstr "Hovoriť _riadok"
 
@@ -7455,12 +7434,10 @@ msgstr "Hovoriť iba zobrazený text"
 msgid "Speak blank lines"
 msgstr "Hovoriť prázdne riadky"
 
-# MČ: akcelerátor „d“ je aj pri „Podrobná“
 # GtkCheckButton
 #: ../src/orca/orca-setup.ui.h:64
-#, fuzzy
 msgid "Speak _indentation and justification"
-msgstr "Hovoriť o_dsadenie a zarovnanie"
+msgstr "Hovoriť od_sadenie a zarovnanie"
 
 # GtkCheckButton
 #: ../src/orca/orca-setup.ui.h:65
@@ -7483,14 +7460,12 @@ msgstr "Hovoriť správy návodu"
 msgid "Spoken Context"
 msgstr "Hovorený kontext"
 
-# MČ: akcelerátor „n“ je aj pri „Nič“
 # GtkCheckButton
 #. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
 #: ../src/orca/orca-setup.ui.h:71
-#, fuzzy
 msgctxt "ProgressBarUpdates"
 msgid "Enable_d"
-msgstr "Povole_né"
+msgstr "Povo_lené"
 
 # GtkLabel
 #. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
@@ -7499,13 +7474,11 @@ msgctxt "ProgressBar"
 msgid "Frequency (secs):"
 msgstr "Frekvencia (sekundy):"
 
-# PK: to sa by som asi vynechal
 # GtkLabel
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.
 #: ../src/orca/orca-setup.ui.h:75
-#, fuzzy
 msgid "Restrict to:"
-msgstr "Obmedziť sa na:"
+msgstr "Obmedziť na:"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
 #: ../src/orca/orca-setup.ui.h:77
@@ -7623,8 +7596,8 @@ msgstr "Povoliť zopakovanie po _vetách"
 # PM: na karte sa nastavuje, či sa majú zopakovať stlačené klávesy
 # MČ: Možno by som použil „Ozývanie kláves“. Echo je ozvena a kláves sa nezopakuje, ale vysloví, ktorý bol zatlačený.
 # tab label
+# PM: jeden z významov je aj zopakovať viď http://translate.google.sk/#en/sk/echo
 #: ../src/orca/orca-setup.ui.h:107
-#, fuzzy
 msgid "Key Echo"
 msgstr "Zopakovanie kláves"
 
@@ -7744,7 +7717,7 @@ msgstr ""
 #. Translators: this in reference to an e-mail message
 #. status of having been read or unread.
 #.
-#: ../src/orca/scripts/apps/evolution/speech_generator.py:135
+#: ../src/orca/scripts/apps/evolution/speech_generator.py:136
 msgid "Read"
 msgstr ""
 
@@ -7753,11 +7726,11 @@ msgstr ""
 #. keying off stuff like this, but we're forced to do so in
 #. in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:228
+#: ../src/orca/scripts/apps/gedit/script.py:109
 msgid "Change to:"
 msgstr ""
 
-#: ../src/orca/scripts/apps/gedit/script.py:229
+#: ../src/orca/scripts/apps/gedit/script.py:110
 msgid "Misspelled word:"
 msgstr ""
 
@@ -7769,15 +7742,15 @@ msgstr ""
 #. gedit.  We hate keying off stuff like this, but we're
 #. forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:263
+#: ../src/orca/scripts/apps/gedit/script.py:144
 msgid "Completed spell checking"
 msgstr ""
 
-#: ../src/orca/scripts/apps/gedit/script.py:264
+#: ../src/orca/scripts/apps/gedit/script.py:145
 msgid "Spell checking is complete."
 msgstr ""
 
-#: ../src/orca/scripts/apps/gedit/script.py:266
+#: ../src/orca/scripts/apps/gedit/script.py:147
 msgid "Press Tab and Return to terminate."
 msgstr ""
 
@@ -7791,8 +7764,8 @@ msgstr ""
 #. has to match what Thunderbird is using.  We hate keying
 #. off stuff like this, but we're forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:390
-#: ../src/orca/scripts/apps/gedit/script.py:465
+#: ../src/orca/scripts/apps/gedit/script.py:271
+#: ../src/orca/scripts/apps/gedit/script.py:346
 #: ../src/orca/scripts/apps/Thunderbird/script.py:176
 #: ../src/orca/scripts/apps/Thunderbird/script.py:325
 #: ../src/orca/scripts/apps/Thunderbird/script.py:569
@@ -7805,14 +7778,14 @@ msgstr ""
 #. keying off stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:494
+#: ../src/orca/scripts/apps/gedit/script.py:375
 msgid "Phrase not found"
 msgstr ""
 
 #. Translators: this indicates a find command succeeded in
 #. finding something.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:556
+#: ../src/orca/scripts/apps/gedit/script.py:437
 msgid "Phrase found."
 msgstr ""
 
@@ -7912,7 +7885,7 @@ msgstr[2] ""
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4810
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4800
 msgid "open"
 msgstr ""
 
@@ -9008,3 +8981,9 @@ msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
 msgstr ""
+
+#~ msgid "Welcome to Orca."
+#~ msgstr "Vitajte v programe Orca."
+
+#~ msgid "Goodbye."
+#~ msgstr "Dovidenia."
