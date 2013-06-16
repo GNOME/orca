@@ -29,6 +29,7 @@ __license__   = "LGPL"
 
 import argparse
 import os
+import pyatspi
 import signal
 import subprocess
 import sys
