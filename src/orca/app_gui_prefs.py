@@ -33,6 +33,7 @@ import sys
 from . import app_prefs
 from . import braille
 from . import debug
+from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
@@ -43,7 +44,6 @@ from . import script_manager
 from . import settings_manager
 from . import settings
 from . import speech
-from .orca_i18n import _
 
 _scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
@@ -128,12 +128,9 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
         assumes that the GUI has already been created.
         """
 
-        # Adjust the title of the app-specific Orca Preferences dialog to
-        # include the name of the application.
-        #
         self.app = orca_state.activeScript.app
         self.applicationName = self.app.name 
-        title = _("Orca Preferences for %s") % self.applicationName
+        title = guilabels.PREFERENCES_APPLICATION_TITLE % self.applicationName
         self.get_widget("orcaSetupWindow").set_title(title)
 
         orca_gui_prefs.OrcaSetupGUI.showGUI(self)
@@ -213,12 +210,8 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
         self.defKeyBindings = defScript.getKeyBindings()
 
         iterApp = self._createNode(applicationName)
-        iterOrca = self._createNode(_("Orca"))
-
-        # Translators: this refers to commands that do not currently have
-        # an associated key binding.
-        #
-        iterUnbound = self._createNode(_("Unbound"))
+        iterOrca = self._createNode(guilabels.KB_GROUP_DEFAULT)
+        iterUnbound = self._createNode(guilabels.KB_GROUP_UNBOUND)
 
         # Find the key bindings that are in the application script but 
         # not in the default script.
@@ -284,13 +277,8 @@ def showPreferencesUI():
 
     appScript = orca_state.activeScript
 
-    # The name of the application that currently has focus.
-    #
     applicationName = orca_state.activeScript.app.name
     if not orca_state.appOS and not orca_state.orcaOS:
-        line = messages.STARTING_ORCA_APP_PREFS % applicationName
-        appScript.presentMessage(line)
-
         prefsDict = {}
         for key in settings.userCustomizableSettings:
             prefsDict[key] = _settingsManager.getSetting(key)

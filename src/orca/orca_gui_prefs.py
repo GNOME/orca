@@ -38,6 +38,7 @@ import time
 
 from . import acss
 from . import debug
+from . import guilabels
 from . import messages
 from . import orca
 from . import orca_gtkbuilder
@@ -65,9 +66,6 @@ except ImportError:
 from .orca_platform import tablesdir
 if louis and not tablesdir:
     louis = None
-
-from .orca_i18n import _
-from .orca_i18n import C_
 
 (HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, CLICK_COUNT1, OLDTEXT1, \
  TEXT1, MODIF, EDITABLE) = list(range(10))
@@ -226,13 +224,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # DESCRIP
         #
-
-        # Translators: Function is a table column header where the
-        # cells in the column are a sentence that briefly describes
-        # what action Orca will take when the user invokes an Orca-specific
-        # keyboard command.
-        #
-        column = Gtk.TreeViewColumn(_("Function"),
+        column = Gtk.TreeViewColumn(guilabels.KB_HEADER_FUNCTION,
                                     self.cellRendererText,
                                     text=DESCRIP)
         column.set_resizable(True)
@@ -306,11 +298,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                              self.keyBindingsModel,
                              MOD_MASK1, MOD_USED1, KEY1, CLICK_COUNT1, TEXT1)
 
-        # Translators: Key Binding is a table column header where
-        # the cells in the column represent keyboard combinations
-        # the user can press to invoke Orca commands.
-        #
-        column = Gtk.TreeViewColumn(_("Key Binding"),
+        column = Gtk.TreeViewColumn(guilabels.KB_HEADER_KEY_BINDING,
                                     rendererText,
                                     text=TEXT1,
                                     editable=EDITABLE)
@@ -326,12 +314,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                                self.keyModifiedToggle,
                                self.keyBindingsModel,
                                MODIF)
-
-        # Translators: Modified is a table column header where the
-        # cells represent whether a key binding has been modified
-        # from the default key binding.
-        #
-        column = Gtk.TreeViewColumn(_("Modified"),
+        column = Gtk.TreeViewColumn(guilabels.KB_MODIFIED,
                                     rendererToggle,
                                     active=MODIF,
                                     activatable=EDITABLE)
@@ -401,14 +384,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
         pronunciationDict = self.getModelDict(self.pronunciationModel)
         keyBindingsDict = self.getKeyBindingsModelDict(self.keyBindingsModel)
-        if _settingsManager.saveSettings(self.prefsDict,
-                                         pronunciationDict,
-                                         keyBindingsDict):
-            self._presentMessage(
-                _("Accessibility support for GNOME has just been enabled."))
-            self._presentMessage(
-                _("You need to log out and log back in for the change to " \
-                  "take effect."))
+        _settingsManager.saveSettings(self.prefsDict,
+                                      pronunciationDict,
+                                      keyBindingsDict)
 
     def _getKeyValueForVoiceType(self, voiceType, key, useDefault=True):
         """Look for the value of the given key in the voice dictionary
@@ -672,31 +650,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # voice type selection to the first one ("Default").
         #
         comboBox = self.get_widget("voiceTypesCombo")
-        types = []
-        # Translators: This refers to the default/typical voice used
-        # by Orca when presenting the content of the screen and other
-        # messages.
-        #
-        types.append(C_("VoiceType", "Default"))
-        # Translators: This refers to the voice used by Orca when
-        # presenting one or more characters which is in uppercase.
-        #
-        types.append(C_("VoiceType", "Uppercase"))
-        # Translators: This refers to the voice used by Orca when
-        # presenting one or more characters which is part of a
-        # hyperlink.
-        #
-        types.append(C_("VoiceType", "Hyperlink"))
-        # Translators: This refers to the voice used by Orca when
-        # presenting information which is not displayed on the screen
-        # as text, but is still being communicated by the system in
-        # some visual fashion. For instance, Orca says "misspelled"
-        # to indicate the presence of the red squiggly line found
-        # under a spelling error; Orca might say "3 of 6" when a
-        # user Tabs into a list of six items and the third item is
-        # selected. And so on.
-        #
-        types.append(C_("VoiceType", "System"))
+        types = [guilabels.SPEECH_VOICE_TYPE_DEFAULT,
+                 guilabels.SPEECH_VOICE_TYPE_UPPERCASE,
+                 guilabels.SPEECH_VOICE_TYPE_HYPERLINK,
+                 guilabels.SPEECH_VOICE_TYPE_SYSTEM]
         self.populateComboBox(comboBox, types)
         comboBox.set_active(DEFAULT)
         voiceType = comboBox.get_active()
@@ -1130,11 +1087,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.getTextAttributesView.set_model(model)
 
         # Attribute Name column (NAME).
-        #
-        # Translators: Attribute here refers to text attributes such
-        # as bold, underline, family-name, etc.
-        #
-        column = Gtk.TreeViewColumn(_("Attribute Name"))
+        column = Gtk.TreeViewColumn(guilabels.TEXT_ATTRIBUTE_NAME)
         column.set_min_width(250)
         column.set_resizable(True)
         renderer = Gtk.CellRendererText()
@@ -1143,13 +1096,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.getTextAttributesView.insert_column(column, 0)
 
         # Attribute Speak column (IS_SPOKEN).
-        #
-        # Translators: the "Speak" column consists of a single checkbox
-        # for each text attribute.  If the checkbox is checked, Orca
-        # will speak that attribute, if it is present, when the user
-        # presses Orca_Modifier+F.
-        #
-        speakAttrColumnLabel = _("Speak")
+        speakAttrColumnLabel = guilabels.PRESENTATION_SPEAK
         column = Gtk.TreeViewColumn(speakAttrColumnLabel)
         renderer = Gtk.CellRendererToggle()
         column.pack_start(renderer, False)
@@ -1161,13 +1108,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         column.clicked()
 
         # Attribute Mark in Braille column (IS_BRAILLED).
-        #
-        # Translators: The "Mark in braille" column consists of a single
-        # checkbox for each text attribute.  If the checkbox is checked,
-        # Orca will "underline" that attribute, if it is present, on
-        # the refreshable braille display.
-        #
-        markAttrColumnLabel = _("Mark in braille")
+        markAttrColumnLabel = guilabels.PRESENTATION_MARK_IN_BRAILLE
         column = Gtk.TreeViewColumn(markAttrColumnLabel)
         renderer = Gtk.CellRendererToggle()
         column.pack_start(renderer, False)
@@ -1179,21 +1120,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         column.clicked()
 
         # Attribute Value column (VALUE)
-        #
-        # Translators: "Present Unless" is a column header of the text
-        # attributes pane of the Orca preferences dialog.  On this pane,
-        # the user can select a set of text attributes that they would like
-        # spoken and/or indicated in braille.  Because the list of attributes
-        # could get quite lengthy, we provide the option to always speak/
-        # braille a text attribute *unless* its value is equal to the value
-        # given by the user in this column of the list.  For example, given
-        # the text attribute "underline" and a present unless value of "none",
-        # the user is stating that he/she would like to have underlined text
-        # announced for all cases (single, double, low, etc.) except when the
-        # value of underline is none (i.e. when it's not underlined).
-        # "Present" here is being used as a verb.
-        #
-        column = Gtk.TreeViewColumn(_("Present Unless"))
+        column = Gtk.TreeViewColumn(guilabels.PRESENTATION_PRESENT_UNLESS)
         renderer = Gtk.CellRendererText()
         renderer.set_property('editable', True)
         column.pack_end(renderer, True)
@@ -1310,13 +1237,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.pronunciationView.set_model(model)
 
         # Pronunciation Dictionary actual string (word) column (ACTUAL).
-        # 
-        # Translators: "Actual String" here refers to a text string as it
-        # actually appears in a text document. This might be an abbreviation
-        # or a particular word that is pronounced differently then the way
-        # that it looks.
-        #
-        column = Gtk.TreeViewColumn(_("Actual String"))
+        column = Gtk.TreeViewColumn(guilabels.DICTIONARY_ACTUAL_STRING)
         column.set_min_width(250)
         column.set_resizable(True)
         renderer = Gtk.CellRendererText()
@@ -1327,13 +1248,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.pronunciationView.insert_column(column, 0)
 
         # Pronunciation Dictionary replacement string column (REPLACEMENT)
-        #
-        # Translators: "Replacement String" here refers to the text string
-        # that will actually be used to speak it's matching "actual string".
-        # For example: if the actual string was "MHz", then the replacement
-        # (spoken) string would be "megahertz".
-        #
-        column = Gtk.TreeViewColumn(_("Replacement String"))
+        column = Gtk.TreeViewColumn(guilabels.DICTIONARY_REPLACEMENT_STRING)
         renderer = Gtk.CellRendererText()
         renderer.set_property('editable', True)
         column.pack_end(renderer, True)
@@ -1400,31 +1315,16 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             prefs["speakMultiCaseStringsAsWords"])
         self.get_widget("enableTutorialMessagesCheckButton").set_active(\
             prefs["enableTutorialMessages"])
-
         self.get_widget("enablePauseBreaksCheckButton").set_active(\
             prefs["enablePauseBreaks"])
-
-        # Translators: different speech systems and speech engines work
-        # differently when it comes to handling pauses (e.g., sentence
-        # boundaries). This property allows the user to specify whether
-        # speech should be sent to the speech synthesis system immediately
-        # when a pause directive is enountered or if it should be queued
-        # up and sent to the speech synthesis system once the entire set
-        # of utterances has been calculated.
-        #
-        label = _("Break speech into ch_unks between pauses")
-        # TODO - JD: I did the above because GtkBuilder translator notes
-        # (which we have for the above string) are not getting sucked in
-        # to orca.pot. :-(
-
         self.get_widget("enablePositionSpeakingCheckButton").set_active(\
             prefs["enablePositionSpeaking"])
-
         self.get_widget("enableMnemonicSpeakingCheckButton").set_active(\
             prefs["enableMnemonicSpeaking"])
 
         combobox = self.get_widget("sayAllStyle")
-        self.populateComboBox(combobox, [_("Line"), _("Sentence")])
+        self.populateComboBox(combobox, [guilabels.SAY_ALL_STYLE_LINE,
+                                         guilabels.SAY_ALL_STYLE_SENTENCE])
         combobox.set_active(prefs["sayAllStyle"])
 
         combobox2 = self.get_widget("dateFormatCombo")
@@ -1517,26 +1417,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.get_widget("speakProgressBarSpinButton").set_value(interval)
 
         comboBox = self.get_widget("progressBarVerbosity")
-        levels = []
-        # Translators: Orca has a setting which determines which progress
-        # bar updates should be announced. Choosing "All" means that Orca
-        # will present progress bar updates regardless of what application
-        # and window they happen to be in.
-        #
-        levels.append(C_("ProgressBar", "All"))
-        # Translators: Orca has a setting which determines which progress
-        # bar updates should be announced. Choosing "Application" means
-        # that Orca will present progress bar updates as long as the
-        # progress bar is in the active application (but not necessarily
-        # in the current window).
-        #
-        levels.append(C_("ProgressBar", "Application"))
-        # Translators: Orca has a setting which determines which progress
-        # bar updates should be announced. Choosing "Window" means that
-        # Orca will present progress bar updates as long as the progress
-        # bar is in the active window.
-        #
-        levels.append(C_("ProgressBar", "Window"))
+        levels = [guilabels.PROGRESS_BAR_ALL,
+                  guilabels.PROGRESS_BAR_APPLICATION,
+                  guilabels.PROGRESS_BAR_WINDOW]
         self.populateComboBox(comboBox, levels)
         comboBox.set_active(prefs["progressBarVerbosity"])
 
@@ -1637,19 +1520,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         prefs["enableEchoByWord"])
         self.get_widget("enableEchoBySentenceCheckButton").set_active( \
                         prefs["enableEchoBySentence"])
-
-        # Translators: When this option is enabled, dead keys will be
-        # announced when pressed.
-        #
-        label = _("Enable non-spacing _diacritical keys")
-        # TODO - JD: I did the above because GtkBuilder translator notes
-        # (which we have for the above string) are not getting sucked in
-        # to orca.pot. :-(
-
-        # Translators: When this option is enabled, inserted text of length
-        # 1 is spoken.
-        #
-        label = _("Enable echo by cha_racter")
         
         # Text attributes pane.
         #
@@ -1928,17 +1798,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         clickCountString = ""
         if clickCount == 2:
-            # Translators: Orca keybindings support double
-            # and triple "clicks" or key presses, similar to
-            # using a mouse. 
-            #
-            clickCountString = " " + _("(double click)")
+            clickCountString = " (%s)" % guilabels.CLICK_COUNT_DOUBLE
         elif clickCount == 3:
-            # Translators: Orca keybindings support double
-            # and triple "clicks" or key presses, similar to
-            # using a mouse. 
-            #
-            clickCountString = " " + _("(triple click)")
+            clickCountString = " (%s)" % guilabels.CLICK_COUNT_TRIPLE
 
         return clickCountString
 
@@ -1957,7 +1819,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         model = self.keyBindingsModel
 
         if parent == None:
-            parent = self._getIterOf(_("Orca"))
+            parent = self._getIterOf(guilabels.KB_GROUP_DEFAULT)
 
         if parent != None:
             myiter = model.append(parent)
@@ -2004,12 +1866,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         model = self.keyBindingsModel
 
         if parent == None:
-            # Translators: an external braille device has buttons on it that
-            # permit the user to create input gestures from the braille device.
-            # The braille bindings are what determine the actions Orca will
-            # take when the user presses these buttons.
-            #
-            parent = self._getIterOf(_("Braille Bindings"))
+            parent = self._getIterOf(guilabels.KB_GROUP_BRAILLE)
 
         if parent != None:
             myiter = model.append(parent)
@@ -2064,13 +1921,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.keyBindingsModel.clear()
             self.kbindings = None
 
-        iterOrca = self._getIterOf("Orca") or self._createNode(_("Orca"))
-
-        # Translators: this refers to commands that do not currently have
-        # an associated key binding.
-        #
-        iterUnbound = self._getIterOf("Unbound") \
-                      or self._createNode(_("Unbound"))
+        iterOrca = self._getIterOf(guilabels.KB_GROUP_DEFAULT) \
+            or self._createNode(guilabels.KB_GROUP_DEFAULT)
+        iterUnbound = self._getIterOf(guilabels.KB_GROUP_UNBOUND) \
+                      or self._createNode(guilabels.KB_GROUP_UNBOUND)
 
         defScript = _scriptManager.getDefaultScript()
 
@@ -2096,13 +1950,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self._updateOrcaModifier()
         self._markModified()
-
-        # Translators: an external braille device has buttons on it that
-        # permit the user to create input gestures from the braille device.
-        # The braille bindings are what determine the actions Orca will
-        # take when the user presses these buttons.
-        #
-        iterBB = self._createNode(_("Braille Bindings"))
+        iterBB = self._createNode(guilabels.KB_GROUP_BRAILLE)
         self.bbindings = defScript.getBrailleBindings()
         for com, inputEvHand in list(self.bbindings.items()):
             handl = defScript.getInputEventHandlerKey(inputEvHand)
@@ -2353,26 +2201,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            # Translators: A single braille cell on a refreshable
-            # braille display consists of 8 dots.  If the user
-            # chooses this setting, the dot in the bottom left
-            # corner will be used to 'underline' text of interest.
-            #
-            if widget.get_label() == _("Dot _7"):
+            if widget.get_label() == guilabels.BRAILLE_DOT_7:
                 self.prefsDict["brailleSelectorIndicator"] = \
                     settings.BRAILLE_SEL_7
-            # Translators: If the user chooses this setting, the
-            # dot in the bottom right corner of the braille cell
-            # will be used to 'underline' text of interest.
-            #
-            elif widget.get_label() == _("Dot _8"):
+            elif widget.get_label() == guilabels.BRAILLE_DOT_8:
                 self.prefsDict["brailleSelectorIndicator"] = \
                     settings.BRAILLE_SEL_8
-            # Translators: If the user chooses this setting, the
-            # two dots at the bottom of the braille cell will be
-            # used to 'underline' text of interest.
-            #
-            elif widget.get_label() == _("Dots 7 an_d 8"):
+            elif widget.get_label() == guilabels.BRAILLE_DOT_7_8:
                 self.prefsDict["brailleSelectorIndicator"] = \
                     settings.BRAILLE_SEL_BOTH
             else:
@@ -2394,26 +2229,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            # Translators: A single braille cell on a refreshable
-            # braille display consists of 8 dots.  If the user
-            # chooses this setting, the dot in the bottom left
-            # corner will be used to 'underline' text of interest.
-            #
-            if widget.get_label() == _("Dot _7"):
+            if widget.get_label() == guilabels.BRAILLE_DOT_7:
                 self.prefsDict["brailleLinkIndicator"] = \
                     settings.BRAILLE_LINK_7
-            # Translators: If the user chooses this setting, the
-            # dot in the bottom right corner of the braille cell
-            # will be used to 'underline' text of interest.
-            #
-            elif widget.get_label() == _("Dot _8"):
+            elif widget.get_label() == guilabels.BRAILLE_DOT_8:
                 self.prefsDict["brailleLinkIndicator"] = \
                     settings.BRAILLE_LINK_8
-            # Translators: If the user chooses this setting, the
-            # two dots at the bottom of the braille cell will be
-            # used to 'underline' text of interest.
-            #
-            elif widget.get_label() == _("Dots 7 an_d 8"):
+            elif widget.get_label() == guilabels.BRAILLE_DOT_7_8:
                 self.prefsDict["brailleLinkIndicator"] = \
                     settings.BRAILLE_LINK_BOTH
             else:
@@ -2434,26 +2256,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            # Translators: A single braille cell on a refreshable
-            # braille display consists of 8 dots.  If the user
-            # chooses this setting, the dot in the bottom left
-            # corner will be used to 'underline' text of interest.
-            #
-            if widget.get_label() == _("Dot _7"):
+            if widget.get_label() == guilabels.BRAILLE_DOT_7:
                 self.prefsDict["textAttributesBrailleIndicator"] = \
                     settings.TEXT_ATTR_BRAILLE_7
-            # Translators: If the user chooses this setting, the
-            # dot in the bottom right corner of the braille cell
-            # will be used to 'underline' text of interest.
-            #
-            elif widget.get_label() == _("Dot _8"):
+            elif widget.get_label() == guilabels.BRAILLE_DOT_8:
                 self.prefsDict["textAttributesBrailleIndicator"] = \
                     settings.TEXT_ATTR_BRAILLE_8
-            # Translators: If the user chooses this setting, the
-            # two dots at the bottom of the braille cell will be
-            # used to 'underline' text of interest.
-            #
-            elif widget.get_label() == _("Dots 7 an_d 8"):
+            elif widget.get_label() == guilabels.BRAILLE_DOT_7_8:
                 self.prefsDict["textAttributesBrailleIndicator"] = \
                     settings.TEXT_ATTR_BRAILLE_BOTH
             else:
@@ -2473,25 +2282,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            # Translators: If this setting is chosen, no punctuation
-            # symbols will be spoken as a user reads a document.
-            #
-            if widget.get_label() == C_("punctuation level", "_None"):
+            if widget.get_label() == guilabels.PUNCTUATION_STYLE_NONE:
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_NONE
-            # Translators: If this setting is chosen, common punctuation
-            # symbols (like comma, period, question mark) will not be
-            # spoken as a user reads a document, but less common symbols
-            # (such as #, @, $) will.
-            #
-            elif widget.get_label() == _("So_me"):
+            elif widget.get_label() == guilabels.PUNCTUATION_STYLE_SOME:
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_SOME
-            # Translators: If this setting is chosen, the majority of
-            # punctuation symbols will be spoken as a user reads a
-            # document.
-            #
-            elif widget.get_label() == _("M_ost"):
+            elif widget.get_label() == guilabels.PUNCTUATION_STYLE_MOST:
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_MOST
             else:
@@ -2523,29 +2320,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         model = widget.get_model()
         myIter = widget.get_active_iter()
         progressBarVerbosity = model[myIter][0]
-
-        # Translators: Orca has a setting which determines which progress
-        # bar updates should be announced. Choosing "All" means that Orca
-        # will present progress bar updates regardless of what application
-        # and window they happen to be in.
-        #
-        if progressBarVerbosity == C_("ProgressBar", "All"):
+        if progressBarVerbosity == guilabels.PROGRESS_BAR_ALL:
             self.prefsDict["progressBarVerbosity"] = \
                 settings.PROGRESS_BAR_ALL
-        # Translators: Orca has a setting which determines which progress
-        # bar updates should be announced. Choosing "Window" means that
-        # Orca will present progress bar updates as long as the progress
-        # bar is in the active window.
-        #
-        elif progressBarVerbosity == C_("ProgressBar", "Window"):
+        elif progressBarVerbosity == guilabels.PROGRESS_BAR_WINDOW:
             self.prefsDict["progressBarVerbosity"] = \
                 settings.PROGRESS_BAR_WINDOW
-        # Translators: Orca has a setting which determines which progress
-        # bar updates should be announced. Choosing "Application" means
-        # that Orca will present progress bar updates as long as the
-        # progress bar is in the active application (but not necessarily
-        # in the current window).
-        #
         else:
             self.prefsDict["progressBarVerbosity"] = \
                 settings.PROGRESS_BAR_APPLICATION
@@ -2562,18 +2342,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         model = widget.get_model()
         myIter = widget.get_active_iter()
         sayAllStyle = model[myIter][0]
-
-        # Translators: If this setting is chosen and the user is reading
-        # over an entire document, Orca will pause at the end of each
-        # line.
-        #
-        if sayAllStyle == _("Line"):
+        if sayAllStyle == guilabels.SAY_ALL_STYLE_LINE:
             self.prefsDict["sayAllStyle"] = settings.SAYALL_STYLE_LINE
-        # Translators: If this setting is chosen and the user is reading
-        # over an entire document, Orca will pause at the end of each
-        # sentence.
-        #
-        elif sayAllStyle == _("Sentence"):
+        elif sayAllStyle == guilabels.SAY_ALL_STYLE_SENTENCE:
             self.prefsDict["sayAllStyle"] = settings.SAYALL_STYLE_SENTENCE
 
     def dateFormatChanged(self, widget):
@@ -2655,11 +2426,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            # Translators: This refers to the amount of information
-            # Orca provides about a particular object that receives
-            # focus.
-            #
-            if widget.get_label() == _("Brie_f"):
+            if widget.get_label() == guilabels.VERBOSITY_LEVEL_BRIEF:
                 self.prefsDict["speechVerbosityLevel"] = \
                     settings.VERBOSITY_LEVEL_BRIEF
             else:
@@ -2679,11 +2446,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            # Translators: when users are navigating a table, they
-            # sometimes want the entire row of a table read, or
-            # they just want the current cell to be presented to them.
-            #
-            if widget.get_label() == _("Speak _cell"):
+            if widget.get_label() == guilabels.TABLE_SPEAK_CELL:
                 self.prefsDict["readTableCellRow"] = False
             else:
                 self.prefsDict["readTableCellRow"] = True
@@ -2747,7 +2510,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            if widget.get_label() == _("Brie_f"):
+            if widget.get_label() == guilabels.VERBOSITY_LEVEL_BRIEF:
                 self.prefsDict["brailleVerbosityLevel"] = \
                     settings.VERBOSITY_LEVEL_BRIEF
             else:
@@ -2763,11 +2526,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
     def editingKey(self, cell, editable, path, treeModel):
         """Starts user input of a Key for a selected key binding"""
 
-        # Translators: this is a spoken prompt asking the user to press
-        # a new key combination (e.g., Alt+Ctrl+g) to create a new
-        # key bindings.
-        #
-        self._presentMessage(_("enter new key"))
+        self._presentMessage(messages.KB_ENTER_NEW_KEY)
         orca_state.capturingKeys = True
         editable.connect('key-press-event', self.kbKeyPressed)
         return
@@ -2839,12 +2598,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         isOrcaModifier = modifiers & settings.ORCA_MODIFIER_MASK
         if keyName in ["Delete", "BackSpace"] and not isOrcaModifier:
             editable.set_text("")
-            # Translators: this is a spoken prompt letting the user know
-            # Orca has deleted an existing key combination based upon
-            # their input.
-            #
-            self._presentMessage(
-                _("Key binding deleted. Press enter to confirm."))
+            self._presentMessage(messages.KB_DELETED)
             self._capturedKey = []
             self.newBinding = None
             return True
@@ -2869,19 +2623,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 description = matches[0].handler.description
 
         if description:
-            # Translators: this is a spoken prompt letting the user know
-            # that the key combination (e.g., Ctrl+Alt+f) they just
-            # entered has already been bound to another command.
-            #
-            msg = _("The key entered is already bound to %s") % description
+            msg = messages.KB_ALREADY_BOUND % description
             delay = int(1000 * settings.doubleClickTimeout)
             GLib.timeout_add(delay, self._presentMessage, msg)
         else:
-            # Translators: this is a spoken prompt letting the user know Orca
-            # know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
-            # based upon their input.
-            #
-            msg = _("Key captured: %s. Press enter to confirm.") % newString
+            msg = messages.KB_CAPTURED % newString
             editable.set_text(newString)
             self._presentMessage(msg)
 
@@ -2925,19 +2671,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                       MODIF, modified)
         speech.stop()
         if new_text:
-            # Translators: this is a spoken prompt confirming the key
-            # combination (e.g., Ctrl+Alt+f) the user just typed when
-            # creating a new key binding.
-            #
-            message = _("The new key is: %s") % new_text
+            message = messages.KB_CAPTURED_CONFIRMATION % new_text
             description = treeModel.get_value(myiter, DESCRIP)
             self.pendingKeyBindings[new_text] = description
         else:
-            # Translators: this is a spoken prompt confirming that an
-            # existing key combination (e.g., Ctrl+Alt+f) that was
-            # associated with a command has been deleted.
-            #
-            message = _("The keybinding has been removed.")
+            message = messages.KB_DELETED_CONFIRMATION
 
         if modified:
             self._presentMessage(message)
@@ -2972,10 +2710,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            # Translators: this refers to the keyboard layout (desktop
-            # or laptop).
-            #
-            if widget.get_label() == _("_Desktop"):
+            if widget.get_label() == guilabels.KEYBOARD_LAYOUT_DESKTOP:
                 self.prefsDict["keyboardLayout"] = \
                     settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
                 self.prefsDict["orcaModifierKeys"] = \
@@ -3337,39 +3072,16 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             saveActiveProfile()
         else:
             if profileToSave != None:
-                # Translators: This text is shown in a message dialog informing
-                # the user that he/she attempted to save a new user profile
-                # under a name which already exists. A "user profile" is a
-                # collection of settings which apply to a given task, such as
-                # a "Spanish" profile which would use Spanish text-to-speech
-                # and Spanish braille and selected when reading Spanish content.
-                message = _("Profile %s already exists.\n" \
-                            "Continue updating the existing profile with " \
-                            "these new changes?") % \
-                            ("<b>%s</b>" % profileToSaveLabel)
-
+                message = guilabels.PROFILE_CONFLICT_MESSAGE % \
+                    ("<b>%s</b>" % profileToSaveLabel)
                 dialog = Gtk.MessageDialog(None,
                         Gtk.DialogFlags.MODAL,
                         type=Gtk.MessageType.INFO,
                         buttons=Gtk.ButtonsType.YES_NO)
-
-                # Translators: This is a label in a message dialog informing
-                # the user that he/she attempted to save a new user profile
-                # under a name which already exists. A "user profile" is a
-                # collection of settings which apply to a given task, such as
-                # a "Spanish" profile which would use Spanish text-to-speech
-                # and Spanish braille and selected when reading Spanish content.
-                dialog.set_markup("<b>%s</b>" % _("User Profile Conflict!"))
+                dialog.set_markup("<b>%s</b>" % guilabels.PROFILE_CONFLICT_LABEL)
                 dialog.format_secondary_markup(message)
-                # Translators: This is the title of a message dialog informing
-                # the user that he/she attempted to save a new user profile
-                # under a name which already exists. A "user profile" is a
-                # collection of settings which apply to a given task, such as
-                # a "Spanish" profile which would use Spanish text-to-speech
-                # and Spanish braille and selected when reading Spanish content.
-                dialog.set_title(_("Save Profile As Conflict"))
+                dialog.set_title(guilabels.PROFILE_CONFLICT_TITLE)
                 response = dialog.run()
-
                 if response == Gtk.ResponseType.YES:
                     dialog.destroy()
                     saveActiveProfile(False)
@@ -3383,32 +3095,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if self._isInitialSetup:
             return
 
-        # Translators: This text is displayed in a message dialog when a user
-        # indicates he/she wants to switch to a new user profile and, in the
-        # process, lose settings which have been altered but not yet saved. A
-        # "user profile" is a collection of settings which apply to a given task
-        # such as a "Spanish" profile which would use Spanish text-to-speech and
-        # Spanish braille and selected when reading Spanish content.
-        message = _("You are about to change the active profile. If you\n" \
-                    "have just made changes in your preferences, they will\n" \
-                    "be dropped at profile load.\n\n" \
-                    "Continue loading profile discarding previous changes?")
-
         dialog = Gtk.MessageDialog(None,
                 Gtk.DialogFlags.MODAL,
                 type=Gtk.MessageType.INFO,
                 buttons=Gtk.ButtonsType.YES_NO)
 
-        # Translators: This text is displayed in a message dialog when a user
-        # indicates he/she wants to switch to a new user profile and, in the
-        # process, lose settings which have been altered but not yet saved. A
-        # "user profile" is a collection of settings which apply to a given task
-        # such as a "Spanish" profile which would use Spanish text-to-speech and
-        # Spanish braille and selected when reading Spanish content.
-        dialog.set_markup("<b>%s</b>" % _("Load user profile"))
-        dialog.format_secondary_markup(message)
+        dialog.set_markup("<b>%s</b>" % guilabels.PROFILE_LOAD_LABEL)
+        dialog.format_secondary_markup(guilabels.PROFILE_LOAD_MESSAGE)
         response = dialog.run()
-
         if response == Gtk.ResponseType.YES:
             dialog.destroy()
             self.loadSelectedProfile()
@@ -3472,14 +3166,6 @@ class WarningDialogGUI(Gtk.MessageDialog):
 
 def showPreferencesUI():
     if not orca_state.appOS and not orca_state.orcaOS:
-        line = messages.STARTING_ORCA_PREFS
-        defScript = _scriptManager.getDefaultScript()
-        defScript.speakMessage(line)
-        try:
-            defScript.displayBrailleMessage(line, flashTime=-1)
-        except:
-            pass
-
         startingProfile = _settingsManager.profile
         prefsDict = _settingsManager.getGeneralSettings(startingProfile)
 

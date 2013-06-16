@@ -190,7 +190,7 @@
   </object>
   <object class="GtkDialog" id="orcaSetupWindow">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Orca Preferences</property>
+    <property name="title" translatable="yes">Screen Reader Preferences</property>
     <property name="type_hint">normal</property>
     <signal name="destroy" handler="windowDestroyed" swapped="no"/>
     <signal name="close" handler="windowClosed" swapped="no"/>
@@ -2657,7 +2657,7 @@
                       <object class="GtkLabel" id="orcaModifierKeyLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Orca _Modifier Key(s):</property>
+                        <property name="label" translatable="yes">Screen Reader _Modifier Key(s):</property>
                         <property name="use_underline">True</property>
                         <property name="mnemonic_widget">orcaModifierComboBox</property>
                         <accessibility>

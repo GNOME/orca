@@ -259,7 +259,8 @@ class KeyboardEvent(InputEvent):
 
         return self.event_string in \
             ['Alt_L', 'Alt_R', 'Control_L', 'Control_R',
-             'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R']
+             'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R',
+             'ISO_Level3_Shift']
 
     def isOrcaModifier(self):
         """Return True if this is the Orca modifier key."""

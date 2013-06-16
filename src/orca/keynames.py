@@ -195,7 +195,7 @@ __keynames["Menu"] = _("menu")
 
 # Translators: this is how someone would speak the name of the ISO shift key
 #
-__keynames["ISO_Level3_Shift"] = _("ISO level 3 shift")
+__keynames["ISO_Level3_Shift"] = _("Alt Gr")
 
 # Translators: this is how someone would speak the name of the help key
 #

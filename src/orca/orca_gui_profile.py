@@ -31,8 +31,8 @@ import locale
 import sys
 from gi.repository import Gtk
 
+from . import guilabels
 from . import orca_state
-from .orca_i18n import _
 
 OS = None
 newProfile = None
@@ -43,16 +43,7 @@ class OrcaProfileGUI(Gtk.Dialog):
         """Initialize the Orca profile configuration GUI."""
 
         Gtk.Dialog.__init__(self)
-
-        # Translators: Profiles in Orca make it possible for users to
-        # quickly switch amongst a group of pre-defined settings (e.g.
-        # an 'English' profile for reading text written in English using
-        # an English-language speech synthesizer and braille rules, and
-        # a similar 'Spanish' profile for reading Spanish text. The
-        # following string is the title of a dialog in which users can
-        # save a newly-defined profile.
-        #
-        self.set_title(_('Save Profile As'))
+        self.set_title(guilabels.PROFILE_SAVE_AS_TITLE)
         self.set_has_resize_grip(False)
 
         self.add_button('gtk-cancel', Gtk.ResponseType.CANCEL)
@@ -73,16 +64,7 @@ class OrcaProfileGUI(Gtk.Dialog):
         self.profileEntry.set_activates_default(True)
         grid.attach(self.profileEntry, 1, 0, 1, 1)
 
-        # Translators: Profiles in Orca make it possible for users to
-        # quickly switch amongst a group of pre-defined settings (e.g.
-        # an 'English' profile for reading text written in English using
-        # an English-language speech synthesizer and braille rules, and
-        # a similar 'Spanish' profile for reading Spanish text. The
-        # following string is the label for a text entry in which the user
-        # enters the name of a new settings profile being saved via the
-        # 'Save Profile As' dialog.
-        #
-        label = Gtk.Label(_('_Profile Name:'))
+        label = Gtk.Label(guilabels.PROFILE_NAME_LABEL)
         label.set_use_underline(True)
         label.set_mnemonic_widget(self.profileEntry)
         grid.attach(label, 0, 0, 1, 1)

@@ -31,11 +31,10 @@ from gi.repository import Gtk
 import locale
 
 from . import find
+from . import guilabels
 from . import orca_gtkbuilder
 from . import orca_state
 from . import orca_platform
-
-from .orca_i18n import _
 
 OS = None
 
@@ -131,7 +130,7 @@ class OrcaFindGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            if widget.get_label() == _("C_urrent location"):
+            if widget.get_label() == guilabels.FIND_START_AT_CURRENT_LOCATION:
                 self.startAtTop = False
             else:
                 self.startAtTop = True

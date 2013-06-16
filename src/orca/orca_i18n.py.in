@@ -84,8 +84,8 @@ def setLocaleForNames(newLocale=None):
         setModuleLocale(module, newLocale)
 
 def setLocaleForGUI(newLocale=None):
-    modules = ['orca.orca_gtkbuilder', 'orca.orca_gui_prefs',
-               'orca.app_gui_prefs', 'orca.guilabels',
+    modules = ['orca.orca_gtkbuilder',
+               'orca.guilabels',
                'orca.brltablenames']
     for module in modules:
         setModuleLocale(module, newLocale)

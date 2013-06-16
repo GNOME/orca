@@ -80,7 +80,7 @@ PRESENT_TITLE = _("Speaks the title bar.")
 # Translators: the Orca "Find" dialog allows a user to search for text in a
 # window and then move focus to that text. For example, they may want to find
 # the "OK" button.
-SHOW_FIND_GUI = _("Opens the Orca Find dialog.")
+SHOW_FIND_GUI = _("Opens the Find dialog.")
 
 # Translators: the Orca "Find" dialog allows a user to search for text in a
 # window and then move focus to that text. For example, they may want to find
@@ -394,7 +394,7 @@ TOGGLE_SPEECH = _("Toggles the silencing of speech.")
 
 # Translators: this string is associated with the keyboard shortcut to quit
 # Orca.
-QUIT_ORCA = _("Quits Orca")
+QUIT_ORCA = _("Quits the screen reader")
 
 # Translators: the preferences configuration dialog is the dialog that allows
 # users to set their preferences for Orca.
@@ -658,7 +658,7 @@ CARET_NAVIGATION_EXPAND_COMBO_BOX = \
 # often broken, so Orca needs to provide its own support. As such, Orca offers
 # the user the ability to toggle which application is controlling the caret.
 CARET_NAVIGATION_TOGGLE = \
-    _("Switches between Gecko native and Orca caret navigation.")
+    _("Switches between native and screen-reader caret navigation.")
 
 # Translators: A live region is an area of a web page that is periodically
 # updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion

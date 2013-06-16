@@ -103,7 +103,14 @@ def getModifierNames(mods):
 
     text = ""
     if mods & settings.ORCA_MODIFIER_MASK:
-        text += _("Orca") + "+"
+        if settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
+            # Translators: this is presented in a GUI to represent the
+            # "insert" key when used as the Orca modifier.
+            text += _("Insert") + "+"
+        else:
+            # Translators: this is presented in a GUI to represent the
+            # "caps lock" modifier.
+            text += _("Caps_Lock") + "+"
     elif mods & (1 << pyatspi.MODIFIER_SHIFTLOCK):
         # Translators: this is presented in a GUI to represent the
         # "caps lock" modifier.

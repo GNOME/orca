@@ -10,7 +10,7 @@
     <property name="type_hint">dialog</property>
     <child internal-child="accessible">
       <object class="AtkObject" id="findDialog-atkobject">
-        <property name="AtkObject::accessible-name" translatable="yes">Orca Find Dialog</property>
+        <property name="AtkObject::accessible-name" translatable="yes">Screen Reader Find Dialog</property>
       </object>
     </child>
     <signal name="destroy" handler="findDialogDestroyed" swapped="no"/>

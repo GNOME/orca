@@ -174,10 +174,107 @@ CARET_CONTROL_GECKO = _("Gecko is controlling the caret.")
 # itself controls how the arrow keys move the caret around HTML content. It's
 # often broken, so Orca needs to provide its own support. As such, Orca offers
 # the user the ability to toggle which application is controlling the caret.
-CARET_CONTROL_ORCA = _("Orca is controlling the caret.")
+CARET_CONTROL_ORCA = _("The screen reader is controlling the caret.")
 
 # Translators: this is the name of a cell in a spreadsheet.
 CELL = _("Cell %s")
+
+# Translators: This is the description of command line option '-d, --disable'
+# which allows the user to specify an option to disable as Orca is started.
+CLI_DISABLE_OPTION = _("Prevent use of option")
+
+# Translators: this is the description of command line option '-e, --enable'
+# which allows the user to specify an option to enable as Orca is started.
+CLI_ENABLE_OPTION = _("Force use of option")
+
+# Translators: This string indicates to the user what should be provided when
+# using the '-e, --enable' or '-d, --disable' command line options.
+CLI_OPTION = _("OPTION")
+
+# Translators: This message is displayed when the user starts Orca from the
+# command line and includes an invalid option or argument. After the message,
+# the list of invalid items, as typed by the user, is displayed.
+CLI_INVALID_OPTIONS = _("The following are not valid: ")
+
+# Translators: This is the description of command line option '-l, --list-apps'
+# which prints the names of running applications which can be seen by assistive
+# technologies such as Orca and Accerciser.
+CLI_LIST_APPS = _("Print the known running applications")
+
+# Translators: This is the description of command line option '-p, --profile'
+# which allows you to specify a profile to be loaded. A profile stores a group
+# of Orca settings configured by the user for a particular purpose, such as a
+# 'Spanish' profile which would include Spanish braille and text-to-speech.
+# An Orca settings file contains one or more profiles.
+CLI_LOAD_PROFILE = _("Load profile")
+
+# Translators: This message is presented to the user when the specified profile
+# could not be loaded. A profile stores a group of Orca settings configured for
+# a particular purpose, such as a Spanish profile which would include Spanish
+# braille and Spanish text-to-speech. The string substituted in is the user-
+# provided profile name.
+CLI_LOAD_PROFILE_ERROR = _("Profile could not be loaded: %s")
+
+# Translators: This message is presented to the user who attempts to launch Orca
+# from some other environment than the graphical desktop.
+CLI_NO_DESKTOP_ERROR = \
+    _("Cannot start the screen reader because it cannot connect to the Desktop.")
+
+# Translators: This message is presented to the user who attempts to launch Orca
+# but the launch fails due to an error related to the settings manager.
+CLI_SETTINGS_MANAGER_ERROR = \
+    _("Could not activate the settings manager. Exiting.")
+
+# Translators: This message is presented to the user when he/she tries to launch
+# Orca, but Orca is already running.
+CLI_OTHER_ORCAS_ERROR = \
+    _('Another screen reader process is already running for this ' \
+      'session.\nRun "orca --replace" to replace that ' \
+      'process with a new one.')
+
+# Translators: This string indicates to the user what should be provided when
+# using the '-p, --profile' command line option.
+CLI_PROFILE_NAME = _("NAME")
+
+# Translators: This is the description of command line option '-u, --user-prefs'
+# that allows you to specify an alternate location from which to load the user
+# preferences.
+CLI_LOAD_PREFS = _("Use alternate directory for user preferences")
+
+# Translators: This string indicates to the user what should be provided when
+# using the '-u, --user-prefs' command line option.
+CLI_PREFS_DIR = _("DIR")
+
+# Translators: This is the description of command line option '-r, --replace'
+# which tells Orca to replace any existing Orca process that might be running.
+CLI_REPLACE = _("Replace a currently running instance of this screen reader")
+
+# Translators: This is the description of command line option '--debug' which
+# causes debugging output for Orca to be sent to a file. The YYYY-MM-DD-HH:MM:SS
+# portion of the string indicates the file name will be formed from the current
+# date and time with 'debug' in front and '.out' at the end. The 'debug' and
+# '.out' portions of this string should not be translated (i.e. it should always
+# start with 'debug' and end with '.out', regardless of the locale.).
+CLI_ENABLE_DEBUG = _("Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out")
+
+# Translators: This is the description of command line option '--debug-file'
+# which allows the user to override the default date-based name of the debugging
+# output file.
+CLI_DEBUG_FILE = _("Send debug output to the specified file")
+
+# Translators: This string indicates to the user what should be provided when
+# using the '--debug-file' command line option.
+CLI_DEBUG_FILE_NAME = _("FILE")
+
+# Translators: This is the description of command line option '-t, --text-setup'
+# that will initially display a list of questions in text form, that the user
+# will need to answer, before Orca will startup. For this to happen properly,
+# Orca will need to be run from a terminal window.
+CLI_SETUP = _("Set up user preferences (text version)")
+
+# Translators: This text is the description displayed when Orca is launched
+# from the command line and the help text is displayed.
+CLI_EPILOG = _("Report bugs to orca-list@gnome.org.")
 
 # Translators: In chat applications, it is often possible to see that a "buddy"
 # is typing currently (e.g. via a keyboard icon or status text). Some users like
@@ -241,6 +338,141 @@ CHAT_SEPARATE_HISTORIES_OFF = \
 # messages from #a11y). Therefore, this is a setting in Orca. This string to be
 # translated is presented when the value of the setting is toggled.
 CHAT_SEPARATE_HISTORIES_ON = _("Provide chat room specific message histories.")
+
+# Translators: this is a regular expression that is intended to match
+# a positive 'yes' response from a user at the command line.  The expression
+# as given means - does it begin with (that's the '^' character) any of
+# the characters in the '[' ']'?  In this case, we've chosen 'Y', 'y', and
+# '1' to mean positive answers, so any string beginning with 'Y', 'y', or
+# '1' will match.  For an example of translation, assume your language has
+# the words 'posolutely' and 'absitively' as common words that mean the
+# equivalent of 'yes'.  You might make the expression match the upper and
+# lower case forms: "^[aApP1]".  If the 'yes' and 'no' words for your
+# locale begin with the same character, the regular expression should be
+# modified to use words.  For example: "^(yes|Yes)" (note the change from
+# using '[' and ']' to '(' and ')').
+#
+# Finally, this expression should match what you've chosen for the
+# translation of the "Enter y or n:" strings for this file.
+CONSOLE_SETUP_YESEXPR = _("^[Yy1]")
+
+# Translators: this is a regular expression that is intended to match
+# a positive 'yes' response from a user at the command line.  The expression
+# as given means - does it begin with (that's the '^' character) any of
+# the characters in the '[' ']'?  In this case, we've chosen 'Y', 'y', and
+# '1' to mean positive answers, so any string beginning with 'Y', 'y', or
+# '1' will match.  For an example of translation, assume your language has
+# the words 'posolutely' and 'absitively' as common words that mean the
+# equivalent of 'yes'.  You might make the expression match the upper and
+# lower case forms: "^[aApP1]".  If the 'yes' and 'no' words for your
+# locale begin with the same character, the regular expression should be
+# modified to use words.  For example: "^(yes|Yes)" (note the change from
+# using '[' and ']' to '(' and ')').
+#
+# Finally, this expression should match what you've chosen for the
+# translation of the "Enter y or n:" strings for this file.
+CONSOLE_SETUP_NOEXPR = _("^[Nn0]")
+
+# Translators: This is prompting for whether the user wants to use a refreshable
+# braille display (an external hardware device) or not. It is part of Orca's
+# console-based setup.
+CONSOLE_SETUP_ENABLE_BRAILLE = _("Enable Braille?  Enter y or n: ")
+
+# Translators: If key echo is enabled, Orca will speak the name of a key as the
+# user types on the keyboard. This message is presented during Orca's console-
+# based setup. If the user wants key echo, they will then be prompted for which
+# classes of keys they want echoed.
+CONSOLE_SETUP_ENABLE_ECHO_KEY = _("Enable key echo?  Enter y or n: ")
+
+# Translators: This is in reference to key echo for normal text entry keys and
+# is part of Orca's console-based setup.
+CONSOLE_SETUP_ENABLE_ECHO_PRINTABLE_KEYS = \
+    _("Enable alphanumeric and punctuation keys?  Enter y or n: ")
+
+# Translators: This is in reference to key echo for keys such as CTRL, ALT,
+# Shift, Insert, etc. It is part of Orca's console-based setup.
+CONSOLE_SETUP_ENABLE_ECHO_MODIFIER_KEYS = \
+    _("Enable modifier keys?  Enter y or n: ")
+
+# Translators: This is in reference to key echo for function keys (F1-F12).
+# It is part of Orca's console-based setup.
+CONSOLE_SETUP_ENABLE_ECHO_FUNCTION_KEYS =  \
+    _("Enable function keys?  Enter y or n: ")
+
+# Translators: This is in reference to key echo for keys that perform actions
+# such as enter, escape, tab, backspace, delete, arrow keys, page up/down, etc.
+# It is part of Orca's console-based setup.
+CONSOLE_SETUP_ENABLE_ECHO_ACTION_KEYS = _("Enable action keys?  Enter y or n: ")
+
+# Translators: The word echo feature of Orca will speak the word prior to the
+# caret when the user types a word delimiter. This message is presented during
+# Orca's console-based setup.
+CONSOLE_SETUP_ENABLE_ECHO_WORD = _("Enable echo by word?  Enter y or n: ")
+
+# Translators: This is prompting for a numerical choice to be typed at Orca's
+# console-based setup.
+CONSOLE_SETUP_ENTER_CHOICE = _("Enter choice: ")
+
+# Translators: This is letting the user they input an invalid integer value on
+# the command line and is also requesting they enter a valid integer value.
+# This message is part of Orca's console-based setup.
+CONSOLE_SETUP_ENTER_VALID_NUMBER = _("Please enter a valid number.")
+
+# Translators: This is letting the user they input an invalid yes/no value on
+# the command line and is also requesting they enter a valid one. This message
+# is part of Orca's console-based setup.
+CONSOLE_SETUP_ENTER_Y_OR_N = _("Please enter y or n.")
+
+# Translators: Orca has two keyboard layouts which impact what keybindings are
+# used to perform Orca commands. The two layouts are "Laptop" and "Desktop".
+# This message is part of Orca's console-based setup.
+CONSOLE_SETUP_SELECT_KEYBOARD_LAYOUT = _("Select desired keyboard layout.")
+
+# Translators: Orca has two keyboard layouts which impact what keybindings are
+# used to perform Orca commands. The two layouts are "Laptop" and "Desktop".
+# This message is part of Orca's console-based setup.
+CONSOLE_SETUP_KEYBOARD_LAYOUT_DESKTOP = _("1. Desktop")
+
+# Translators: Orca has two keyboard layouts which impact what keybindings are
+# used to perform Orca commands. The two layouts are "Laptop" and "Desktop".
+# This message is part of Orca's console-based setup.
+CONSOLE_SETUP_KEYBOARD_LAYOUT_LAPTOP = _("2. Laptop")
+
+# Translators: This is prompting the user for a numerical choice from a list of
+# available speech synthesis engines. It is part of Orca's console-based setup.
+CONSOLE_SETUP_SELECT_SPEECH_SERVER = _("Select desired speech server.")
+
+# Translators: The speech system represents what general speech wrapper is going
+# to be used. Speech-dispatcher is an example of a speech system. It provides
+# wrappers around specific speech servers (engines). This message is part of
+# Orca's console-based setup.
+CONSOLE_SETUP_SELECT_SPEECH_SYSTEM = _("Select desired speech system:")
+
+# Translators: This is prompting for a numerical value from a list of choices of
+# speech synthesis voices (e.g., male, female, child). This message is part of
+# Orca's console-based setup.
+CONSOLE_SETUP_SELECT_VOICE = _("Select desired voice:")
+
+# Translators: This message indicates that no working speech servers (speech
+# synthesis engines) can be found. It is part of Orca's console-based setup.
+CONSOLE_SETUP_SERVERS_NOT_AVAILABLE = _("No servers available.\n")
+
+# Translators: This message indicates that the speech server (speech synthesis
+# engine) is not working properly and no voices (e.g., male, female, child) are
+# available. This message is part of Orca's console-based setup.
+CONSOLE_SETUP_VOICES_NOT_AVAILABLE = _("No voices available.\n")
+
+# Translators: This message indicates that speech synthesis will not be used.
+# It is part of Orca's console-based setup.
+CONSOLE_SETUP_SPEECH_NOT_USED = _("Speech will not be used.\n")
+
+# Translators: This message is presented at the beginning of Orca's console-
+# based setup.
+CONSOLE_SETUP_START = _("Screen reader setup.")
+
+# Translators: This message is presented at the completion of Orca's console-
+# based setup.
+CONSOLE_SETUP_COMPLETE = _("Setup complete.  Press Return to continue.")
 
 # Translators: The "default" button in a dialog box is the button that gets
 # activated when Enter is pressed anywhere within that dialog box.
@@ -373,6 +605,37 @@ HAS_FORMULA = _("has formula")
 # link. Please see http://en.wikipedia.org/wiki/Imagemap for more information
 # and examples.
 IMAGE_MAP_LINK = _("image map link")
+
+# Translators: This is a spoken and/or brailled message letting the user know
+# that the key combination (e.g., Ctrl+Alt+f) they just entered has already been
+# bound to another command and is thus unavailable. The string substituted in is
+# the name of the command which already has the binding.
+KB_ALREADY_BOUND = _("The key entered is already bound to %s")
+
+# Translators: This is a spoken and/or brailled message letting the user know
+# that Orca has recorded a new key combination (e.g. Alt+Ctrl+g) as a result of
+# their input. The string substituted in is the new key combination.
+KB_CAPTURED = _("Key captured: %s. Press enter to confirm.")
+
+# Translators: This is a spoken and/or brailled message letting the user know
+# that Orca has assigned a new key combination (e.g. Alt+Ctrl+g) as a result of
+# their input. The string substituted in is the new key combination.
+KB_CAPTURED_CONFIRMATION = _("The new key is: %s")
+
+# Translators: This is a spoken and/or brailled message letting the user know
+# Orca is about to delete an existing key combination (e.g. Alt+Ctrl+g) as a
+# result of their input.
+KB_DELETED = _("Key binding deleted. Press enter to confirm.")
+
+# Translators: This is a spoken and/or brailled message letting the user know
+# Orca has deleted an existing key combination (e.g. Alt+Ctrl+g) as a result of
+# their input.
+KB_DELETED_CONFIRMATION = _("The keybinding has been removed.")
+
+# Translators: This is a spoken and/or brailled message asking the user to press
+# a new key combination (e.g., Alt+Ctrl+g) to create a new key binding for an
+# Orca command.
+KB_ENTER_NEW_KEY = _("enter new key")
 
 # Translators: Orca has an "echo" setting which allows the user to configure
 # what is spoken in response to a key press. Given a user who typed "Hello
@@ -571,9 +834,9 @@ LEARN_MODE_START_BRAILLE = _("Learn mode.  Press escape to exit.")
 # Mode.
 LEARN_MODE_START_SPEECH = \
     _("Entering learn mode.  Press any key to hear its function.  " \
-      "To get a list of Orca's default shortcuts, press 1. " \
-      "To get a list of Orca's shortcuts for the current application, " \
-      "press 2. To view Orca's documentation, press F1. " \
+      "To get a list of the screen reader's default shortcuts, press 1. " \
+      "To get a list of the screen reader's shortcuts for the current application, " \
+      "press 2. To view the screen reader's documentation, press F1. " \
       "To exit learn mode, press the escape key.")
 
 # Translators: when the user selects (highlights) or unselects text in a
@@ -1120,7 +1383,7 @@ SEARCH_COMPLETE = _("Search complete.")
 
 # Translators: This message is presented to the user when Orca's preferences
 # have been reloaded.
-SETTINGS_RELOADED = _("Orca user settings reloaded.")
+SETTINGS_RELOADED = _("Screen reader settings reloaded.")
 
 # Translators: This message is presented to the user when speech synthesis
 # has been temporarily turned off.
@@ -1151,17 +1414,11 @@ SPOKEN_ELLIPSIS = _(" dot dot dot")
 # Translators: This message is presented to the user when Orca is launched.
 START_ORCA = _("Screen reader on.")
 
-# Translators: Orca Preferences is the configuration GUI for Orca. This message
-# is presented immediately before the GUI is shown.
-STARTING_ORCA_PREFS = _("Starting Orca Preferences.")
-
-# Translators: Orca Preferences in this case, is a configuration GUI for
-# allowing users to set application specific settings from within Orca for
-# the application that currently has focus.
-STARTING_ORCA_APP_PREFS = _("Starting Orca Preferences for %s.")
-
 # Translators: This message is presented to the user when Orca is quit.
 STOP_ORCA = _("Screen reader off.")
+
+# Translators: This message means speech synthesis is not installed or working.
+SPEECH_UNAVAILABLE = _("Speech is unavailable.")
 
 # Translators: the Orca "Find" dialog allows a user to search for text in a
 # window and then move focus to that text.  For example, they may want to find
@@ -1298,7 +1555,7 @@ TEXT_UNSELECTED = C_("text", "unselected")
 UNICODE = _("Unicode %s")
 
 # Translators: This message presents the Orca version number.
-VERSION = _("Orca version %s.") % version
+VERSION = _("Screen reader version %s.") % version
 
 # Translators: This is presented when the user has navigated to a line with only
 # whitespace characters (space, tab, etc.) on it.
@@ -1442,16 +1699,16 @@ def shortcutsFoundOrca(count):
     # shortcuts associated with Orca commands which are not specific to the
     # current application. It appears as the title of the dialog containing
     # the list.
-    return ngettext("%d Orca default shortcut found.",
-                    "%d Orca default shortcuts found.",
+    return ngettext("%d Screen reader default shortcut found.",
+                    "%d Screen reader default shortcuts found.",
                     count) % count
 
 def shortcutsFoundApp(count, appName):
     # Translators: This message is presented when the user is in a list of
     # shortcuts associated with Orca commands specific to the current
     # application. It appears as the title of the dialog containing the list.
-    return ngettext("%(count)d Orca shortcut for %(application)s found.",
-                    "%(count)d Orca shortcuts for %(application)s found.",
+    return ngettext("%(count)d Screen reader shortcut for %(application)s found.",
+                    "%(count)d Screen reader shortcuts for %(application)s found.",
                     count) % {"count" : count, "application" : appName}
 
 def spacesCount(count):

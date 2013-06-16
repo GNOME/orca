@@ -30,34 +30,16 @@ import re
 import sys
 
 from . import acss
+from . import messages
 from . import settings
 from . import speech
 from . import speechserver
 
-from .orca_i18n import _
-
 workingFactories   = []
 speechServerChoice = None
 speechVoiceChoice  = None
-
-# Translators: this is a regular expression that is intended to match
-# a positive 'yes' response from a user at the command line.  The expression
-# as given means - does it begin with (that's the '^' character) any of
-# the characters in the '[' ']'?  In this case, we've chosen 'Y', 'y', and
-# '1' to mean positive answers, so any string beginning with 'Y', 'y', or
-# '1' will match.  For an example of translation, assume your language has
-# the words 'posolutely' and 'absitively' as common words that mean the
-# equivalent of 'yes'.  You might make the expression match the upper and
-# lower case forms: "^[aApP1]".  If the 'yes' and 'no' words for your
-# locale begin with the same character, the regular expression should be
-# modified to use words.  For example: "^(yes|Yes)" (note the change from
-# using '[' and ']' to '(' and ')').
-#
-# Finally, this expression should match what you've chosen for the
-# translation of the "Enter y or n:" strings for this file.
-#
-YESEXPR = re.compile(_("^[Yy1]"))
-NOEXPR = re.compile(_("^[Nn0]"))
+YESEXPR = re.compile(messages.CONSOLE_SETUP_YESEXPR)
+NOEXPR = re.compile(messages.CONSOLE_SETUP_NOEXPR)
 
 def checkYes(value) :
     """Checks if a string represents a yes, no.
@@ -125,22 +107,16 @@ def setupSpeech(prefsDict):
 
     factories = speech.getSpeechServerFactories()
     if len(factories) == 0:
-        # Translators: this means speech synthesis (i.e., the machine
-        # speaks to you from its speakers) is not installed or working.
-        #
-        print(_("Speech is unavailable."))
+        print(messages.SPEECH_UNAVAILABLE)
         return False
 
     try:
         speech.init()
     except:
-        # Translators: this means speech synthesis (i.e., the machine
-        # speaks to you from its speakers) is not installed or working.
-        #
-        print(_("Speech is unavailable."))
+        print(messages.SPEECH_UNAVAILABLE)
         return False
 
-    sayAndPrint(_("Welcome to Orca setup."))
+    sayAndPrint(messages.CONSOLE_SETUP_START)
 
     workingFactories = []
     for factory in factories:
@@ -152,18 +128,10 @@ def setupSpeech(prefsDict):
             pass
 
     if len(workingFactories) == 0:
-        # Translators: this means speech synthesis (i.e., the machine
-        # speaks to you from its speakers) is not installed or working.
-        #
-        print(_("Speech is unavailable."))
+        print(messages.SPEECH_UNAVAILABLE)
         return False
     elif len(workingFactories) > 1:
-        # Translators: the speech system represents what general
-        # speech wrapper is going to be used.  Speech-dispatcher
-        # is an example of a speech system. It provides wrappers
-        # around specific speech servers (engines).
-        #
-        sayAndPrint(_("Select desired speech system:"))
+        sayAndPrint(messages.CONSOLE_SETUP_SELECT_SPEECH_SYSTEM)
         choices = {}
         i = 1
         for workingFactory in workingFactories:
@@ -171,40 +139,26 @@ def setupSpeech(prefsDict):
             sayAndPrint("%d. %s" \
                         % (i, workingFactory[0].SpeechServer.getFactoryName()))
             i += 1
-
-        # Translators: this is prompting for a numerical choice.
-        #
         while True:
             try:
-                choice = int(sayAndPrint(_("Enter choice: "), False, True))
+                choice = int(sayAndPrint(messages.CONSOLE_SETUP_ENTER_CHOICE,
+                                         False, True))
                 break
             except:
-                # Translators: this is letting the user they input an
-                # invalid integer value on the command line and is
-                # also requesting they enter a valid integer value.
-                #
-                sayAndPrint(_("Please enter a valid number."))
+                sayAndPrint(messages.CONSOLE_SETUP_ENTER_VALID_NUMBER)
         if (choice <= 0) or (choice >= i):
-            # Translators: this means speech synthesis will not be used.
-            #
-            sayAndPrint(_("Speech will not be used.\n"))
+            sayAndPrint(messages.CONSOLE_SETUP_SPEECH_NOT_USED)
             return False
         [factory, servers] = choices[choice]
     else:
         [factory, servers] = workingFactories[0]
 
     if len(servers) == 0:
-        # Translators: this means no working speech servers (speech
-        # synthesis engines) can be found.
-        #
-        sayAndPrint(_("No servers available.\n"))
-        sayAndPrint(_("Speech will not be used.\n"))
+        sayAndPrint(messages.CONSOLE_SETUP_SERVERS_NOT_AVAILABLE)
+        sayAndPrint(messages.CONSOLE_SETUP_SPEECH_NOT_USED)
         return False
     if len(servers) > 1:
-        # Translators: this is prompting for a numerical choice from a list
-        # of available speech synthesis engines.
-        #
-        sayAndPrint(_("Select desired speech server."),
+        sayAndPrint(messages.CONSOLE_SETUP_SELECT_SPEECH_SERVER,
                     len(workingFactories) > 1)
         i = 1
         choices = {}
@@ -212,19 +166,15 @@ def setupSpeech(prefsDict):
             sayAndPrint("%d. %s" % (i, server.getInfo()[0]))
             choices[i] = server
             i += 1
-
-        # Translators: this is prompting for a numerical choice.
-        #
         while True:
             try:
-                choice = int(sayAndPrint(_("Enter choice: "), False, True))
+                choice = int(sayAndPrint(messages.CONSOLE_SETUP_ENTER_CHOICE,
+                                         False, True))
                 break
             except:
-                sayAndPrint(_("Please enter a valid number."))
+                sayAndPrint(messages.CONSOLE_SETUP_ENTER_VALID_NUMBER)
         if (choice <= 0) or (choice >= i):
-            # Translators: this means speech synthesis will not be used.
-            #
-            sayAndPrint(_("Speech will not be used.\n"))
+            sayAndPrint(messages.CONSOLE_SETUP_SPEECH_NOT_USED)
             return False
         speechServerChoice = choices[choice]
     else:
@@ -232,22 +182,12 @@ def setupSpeech(prefsDict):
 
     families = speechServerChoice.getVoiceFamilies()
     if len(families) == 0:
-        # Translators: this means the speech server (speech synthesis
-        # engine) is not working properly and no voices (e.g., male,
-        # female, child) are available.
-        #
-        sayAndPrint(_("No voices available.\n"))
-
-        # Translators: this means speech synthesis will not be used.
-        #
-        sayAndPrint(_("Speech will not be used.\n"))
+        sayAndPrint(messages.CONSOLE_SETUP_VOICES_NOT_AVAILABLE)
+        sayAndPrint(messages.CONSOLE_SETUP_SPEECH_NOT_USED)
         return False
     if len(families) > 1:
-        # Translators: this is prompting for a numerical value from a
-        # list of choices of speech synthesis voices (e.g., male,
-        # female, child).
-        #
-        sayAndPrint(_("Select desired voice:"),
+
+        sayAndPrint(messages.CONSOLE_SETUP_SELECT_VOICE,
                     True,               # stop
                     False,              # getInput
                     speechServerChoice) # server
@@ -267,19 +207,15 @@ def setupSpeech(prefsDict):
 
         while True:
             try:
-                # Translators: this is prompting for a numerical choice.
-                #
-                choice = int(sayAndPrint(_("Enter choice: "),
+                choice = int(sayAndPrint(messages.CONSOLE_SETUP_ENTER_CHOICE,
                                          False,               # stop
                                          True,                # getInput
                                          speechServerChoice)) # speech server
                 break
             except:
-                sayAndPrint(_("Please enter a valid number."))
+                sayAndPrint(messages.CONSOLE_SETUP_ENTER_VALID_NUMBER)
         if (choice <= 0) or (choice >= i):
-            # Translators: this means speech synthesis will not be used.
-            #
-            sayAndPrint(_("Speech will not be used.\n"))
+            sayAndPrint(messages.CONSOLE_SETUP_SPEECH_NOT_USED)
             return False
         defaultACSS = choices[choice]
     else:
@@ -314,11 +250,7 @@ def setupSpeech(prefsDict):
 
     stop = True
     while True:
-        # Translators: the word echo feature of Orca will speak the
-        # word prior to the caret when the user types a word
-        # delimiter.
-        #
-        answer = sayAndPrint(_("Enable echo by word?  Enter y or n: "),
+        answer = sayAndPrint(messages.CONSOLE_SETUP_ENABLE_ECHO_WORD,
                              stop,
                              True,
                              speechServerChoice,
@@ -328,16 +260,11 @@ def setupSpeech(prefsDict):
             break
         except:
             stop = False
-            sayAndPrint(_("Please enter y or n."))
+            sayAndPrint(messages.CONSOLE_SETUP_ENTER_Y_OR_N)
 
     stop = True
     while True:
-        # Translators: if key echo is enabled, Orca will speak the
-        # name of a key as the user types on the keyboard.  If the
-        # user wants key echo, they will then be prompted for which
-        # classes of keys they want echoed.
-        #
-        answer = sayAndPrint(_("Enable key echo?  Enter y or n: "),
+        answer = sayAndPrint(messages.CONSOLE_SETUP_ENABLE_ECHO_KEY,
                              stop,
                              True,
                              speechServerChoice,
@@ -347,7 +274,7 @@ def setupSpeech(prefsDict):
             break
         except:
             stop = False
-            sayAndPrint(_("Please enter y or n."))
+            sayAndPrint(messages.CONSOLE_SETUP_ENTER_Y_OR_N)
 
     keyEcho = prefsDict["enableKeyEcho"]
     if not keyEcho:
@@ -359,11 +286,8 @@ def setupSpeech(prefsDict):
 
     stop = True
     while keyEcho and True:
-        # Translators: this is in reference to key echo for
-        # normal text entry keys.
-        #
-        answer = sayAndPrint( \
-            _("Enable alphanumeric and punctuation keys?  Enter y or n: "),
+        answer = sayAndPrint(
+            messages.CONSOLE_SETUP_ENABLE_ECHO_PRINTABLE_KEYS,
             stop,
             True,
             speechServerChoice,
@@ -373,14 +297,11 @@ def setupSpeech(prefsDict):
             break
         except:
             stop = False
-            sayAndPrint(_("Please enter y or n."))
+            sayAndPrint(messages.CONSOLE_SETUP_ENTER_Y_OR_N)
 
     stop = True
     while keyEcho and True:
-        # Translators: this is in reference to key echo for
-        # CTRL, ALT, Shift, Insert, and "Fn" on laptops.
-        #
-        answer = sayAndPrint(_("Enable modifier keys?  Enter y or n: "),
+        answer = sayAndPrint(messages.CONSOLE_SETUP_ENABLE_ECHO_MODIFIER_KEYS,
                              stop,
                              True,
                              speechServerChoice,
@@ -390,14 +311,11 @@ def setupSpeech(prefsDict):
             break
         except:
             stop = False
-            sayAndPrint(_("Please enter y or n."))
+            sayAndPrint(messages.CONSOLE_SETUP_ENTER_Y_OR_N)
 
     stop = True
     while keyEcho and True:
-        # Translators: this is in reference to key echo for
-        # the keys at the top of the keyboard.
-        #
-        answer = sayAndPrint(_("Enable function keys?  Enter y or n: "),
+        answer = sayAndPrint(messages.CONSOLE_SETUP_ENABLE_ECHO_FUNCTION_KEYS,
                              stop,
                              True,
                              speechServerChoice,
@@ -407,15 +325,11 @@ def setupSpeech(prefsDict):
             break
         except:
             stop = False
-            sayAndPrint(_("Please enter y or n."))
+            sayAndPrint(messages.CONSOLE_SETUP_ENTER_Y_OR_N)
 
     stop = True
     while keyEcho and True:
-        # Translators: this is in reference to key echo for
-        # space, enter, escape, tab, backspace, delete, arrow
-        # keys, page up, page down, etc.
-        #
-        answer = sayAndPrint(_("Enable action keys?  Enter y or n: "),
+        answer = sayAndPrint(messages.CONSOLE_SETUP_ENABLE_ECHO_ACTION_KEYS,
                              stop,
                              True,
                              speechServerChoice,
@@ -425,39 +339,23 @@ def setupSpeech(prefsDict):
             break
         except:
             stop = False
-            sayAndPrint(_("Please enter y or n."))
+            sayAndPrint(messages.CONSOLE_SETUP_ENTER_Y_OR_N)
 
-    # Translators: we allow the user to choose between the desktop (i.e.,
-    # has a numeric keypad) and laptop (i.e., small and compact) keyboard
-    # layouts for how they might control Orca.
-    #
-    sayAndPrint(_("Select desired keyboard layout."),
+    sayAndPrint(messages.CONSOLE_SETUP_SELECT_KEYBOARD_LAYOUT,
                 True,
                 False,
                 speechServerChoice,
                 speechVoiceChoice)
     i = 1
     choices = {}
-
-    # Translators: we allow the user to choose between the desktop (i.e.,
-    # has a numeric keypad) and laptop (i.e., small and compact) keyboard
-    # layouts for how they might control Orca.
-    #
-    sayAndPrint(_("1. Desktop"),
+    sayAndPrint(messages.CONSOLE_SETUP_KEYBOARD_LAYOUT_DESKTOP,
                 False, False, speechServerChoice, speechVoiceChoice)
-
-    # Translators: we allow the user to choose between the desktop (i.e.,
-    # has a numeric keypad) and laptop (i.e., small and compact) keyboard
-    # layouts for how they might control Orca.
-    #
-    sayAndPrint(_("2. Laptop"),
+    sayAndPrint(messages.CONSOLE_SETUP_KEYBOARD_LAYOUT_LAPTOP,
                 False, False, speechServerChoice, speechVoiceChoice)
 
     while True:
         try:
-            # Translators: this is prompting for a numerical choice.
-            #
-            choice = int(sayAndPrint(_("Enter choice: "),
+            choice = int(sayAndPrint(messages.CONSOLE_SETUP_ENTER_CHOICE,
                          False, True, speechServerChoice, speechVoiceChoice))
             if choice == 2:
                 prefsDict["keyboardLayout"] = \
@@ -472,9 +370,9 @@ def setupSpeech(prefsDict):
                     settings.DESKTOP_MODIFIER_KEYS
                 break
             else:
-                sayAndPrint(_("Please enter a valid number."))
+                sayAndPrint(messages.CONSOLE_SETUP_ENTER_VALID_NUMBER)
         except:
-            sayAndPrint(_("Please enter a valid number."))
+            sayAndPrint(messages.CONSOLE_SETUP_ENTER_VALID_NUMBER)
 
     return True
 
@@ -492,11 +390,7 @@ def showPreferencesUI(commandLineSettings):
 
     stop = True
     while True:
-        # Translators: this is prompting for whether the user wants to
-        # use a refreshable braille display (an external hardware
-        # device) or not.
-        #
-        answer = sayAndPrint(_("Enable Braille?  Enter y or n: "),
+        answer = sayAndPrint(messages.CONSOLE_SETUP_ENABLE_BRAILLE,
                              stop,
                              True,
                              speechServerChoice,
@@ -506,26 +400,7 @@ def showPreferencesUI(commandLineSettings):
             break
         except:
             stop = False
-            sayAndPrint(_("Please enter y or n."))
-
-    stop = True
-    while True:
-        # Translators: the braille monitor is a graphical display on
-        # the screen that is used for debugging and demoing purposes.
-        # It presents what would be (or is being) shown on the
-        # external refreshable braille display.
-        #
-        answer = sayAndPrint(_("Enable Braille Monitor?  Enter y or n: "),
-                             stop,
-                             True,
-                             speechServerChoice,
-                             speechVoiceChoice)
-        try:
-            prefsDict["enableBrailleMonitor"] = checkYes(answer)
-            break
-        except:
-            stop = False
-            sayAndPrint(_("Please enter y or n."))
+            sayAndPrint(messages.CONSOLE_SETUP_ENTER_Y_OR_N)
 
     stop = True
 
@@ -533,8 +408,7 @@ def showPreferencesUI(commandLineSettings):
     #
     if 'profile' not in prefsDict:
         prefsDict['profile'] = settings.profile
-
-    answer = sayAndPrint(_("Setup complete.  Press Return to continue."),
+    answer = sayAndPrint(messages.CONSOLE_SETUP_COMPLETE,
                          True,
                          True,
                          speechServerChoice,

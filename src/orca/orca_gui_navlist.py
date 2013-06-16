@@ -30,8 +30,8 @@ __license__   = "LGPL"
 from gi.repository import GObject, Gdk, Gtk
 
 from . import debug
+from . import guilabels
 from . import orca_state
-from .orca_i18n import _
 
 class OrcaNavListGUI:
 
@@ -90,13 +90,9 @@ class OrcaNavListGUI:
         btn.grab_default()
         btn.connect('clicked', self._onJumpToClicked)
 
-        # Translators: This string appears on a button in a dialog. "Activating"
-        # the selected item will perform the action that one would expect to
-        # occur if the object were clicked on with the mouse. Thus if the object
-        # is a link, activating it will bring you to a new page. If the object
-        # is a button, activating it will press the button. If the object is a
-        # combobox, activating it will expand it to show all of its contents.
-        self._activateButton = dialog.add_button(_('_Activate'), Gtk.ResponseType.OK)
+
+        self._activateButton = dialog.add_button(
+            guilabels.ACTIVATE, Gtk.ResponseType.OK)
         self._activateButton.connect('clicked', self._onActivateClicked)
 
         self._tree.connect('key-release-event', self._onKeyRelease)
