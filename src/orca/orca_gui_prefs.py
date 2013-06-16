@@ -1430,8 +1430,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         #
         self.get_widget("enableBrailleCheckButton").set_active( \
                         prefs["enableBraille"])
-        self.get_widget("enableBrailleMonitorCheckButton").set_active( \
-                        prefs["enableBrailleMonitor"])
         state = prefs["brailleRolenameStyle"] == \
                             settings.BRAILLE_ROLENAME_STYLE_SHORT
         self.get_widget("abbrevRolenames").set_active(state)
