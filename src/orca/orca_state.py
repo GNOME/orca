@@ -120,7 +120,3 @@ appOS = None
 # user has attempted to start a second instance of a preferences dialog.
 #
 orcaWD = None
-
-# Handle to the Orca Preferences Glade file.
-#
-prefsGladeFile = None
