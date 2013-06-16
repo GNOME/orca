@@ -61,7 +61,8 @@ class ScriptManager:
              'empathy-chat':     'empathy',
              'gnome-calculator': 'gcalctool',
              'Nereid':           'Banshee',
-             'vte':              'gnome-terminal'}
+             'vte':              'gnome-terminal',
+             'gnome-terminal-server': 'gnome-terminal'}
         self._toolkitNames = \
             {'gtk':              'GAIL',
              'clutter':          'CALLY'}
