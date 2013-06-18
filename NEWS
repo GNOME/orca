@@ -1,3 +1,48 @@
+3.9.3 - 18 June 2013
+
+General
+
+  * Fix for bug 701787 - Add structural navigation support for Evince
+    documents
+
+  * Fix for traceback when switching back to English profile
+
+  * Fix the accessible apps commandline option
+
+  * Fix for bug 701743 - Orca's word echo does not echo first word typed
+    in an empty libreoffice writer document
+
+  * Fix for bug 701549 - orca-autostart.desktop unconditionally enables
+    speech and braille
+
+  * Add mapping from gnome-terminal-server to gnome-terminal
+
+  * Remove the braille-monitor checkbox from the GUI
+
+  * Fix for bug 671755 - Orca doesn't announce the AltGr key
+
+  * Fix for bug 701166 - "Screen reader preferences"; not "Orca preferences"
+
+  * Fix for bug 701187 - "Screen reader settings"; not "Orca settings"
+
+  * And a number of similar changes (e.g. the name of the Orca modifier,
+    along with various other places where "Orca" was being used instead
+    of "screen reader")
+
+  * Misc refactoring and cleanup
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                             Marek Černocký
+    es            Spanish                           Daniel Mustieles
+    gl            Galician                          Fran Diéguez
+    sk            Slovak                            Peter Vágner
+    sl            Slovenian                         Matej Urbančič
+    zh_HK         Traditional Chinese (Hong Kong)   Cheng-Chia Tseng 
+    zh_TW         Traditional Chinese (Taiwan)      Cheng-Chia Tseng
+
+=========
+
 3.9.2 - 27 May 2013
 
 General:
