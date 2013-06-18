@@ -3132,10 +3132,7 @@ class WarningDialogGUI(Gtk.MessageDialog):
     def __init__(self):
         Gtk.MessageDialog.__init__(self)
         self.set_property('message-type', Gtk.MessageType.INFO)
-        msg = _('You already have an instance of an Orca preferences dialog ' \
-                'open.\nPlease close it before opening a new one.')
-        self.set_property('text', msg)
-
+        self.set_property('text', messages.PREFERENCES_WARNING_DIALOG)
         self.add_button('gtk-ok', Gtk.ResponseType.OK)
         self.connect('response', self.onResponse)
         self.connect('destroy', self.onDestroy)

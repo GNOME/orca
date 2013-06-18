@@ -1302,6 +1302,13 @@ PARAGRAPH_UNSELECTED_DOWN = _("paragraph unselected down from cursor position")
 # pressing Ctrl+Shift+UP.
 PARAGRAPH_UNSELECTED_UP = _("paragraph unselected up from cursor position")
 
+# Translators: This message appears in a warning dialog when the user performs
+# the command to get into Orca's preferences dialog when the preferences dialog
+# is already open.
+PREFERENCES_WARNING_DIALOG = \
+    _('You already have an instance of an Orca preferences dialog ' \
+      'open.\nPlease close it before opening a new one.')
+
 # Translators: This message is an indication of the position of the focused
 # slide and the total number of slides in the presentation.
 PRESENTATION_SLIDE_POSITION = _("slide %(position)d of %(count)d")
