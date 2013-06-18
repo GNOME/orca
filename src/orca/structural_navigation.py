@@ -840,6 +840,9 @@ class StructuralNavigation:
 
         wrap = settings.wrappedStructuralNavigation
         document = self._getDocument()
+        if not document:
+            return
+
         collection = document.queryCollection()
         criteria = structuralNavigationObject.criteria(collection, arg)
 
@@ -976,6 +979,10 @@ class StructuralNavigation:
                     break
                 elif wrap:
                     lastObj = self._findLastObject(document)
+                    if self._script.utilities.isSameObject(lastObj, document):
+                        wrapped = True
+                        continue
+
                     # Collection does not do an inclusive search, meaning
                     # that the start object is not part of the search.  So
                     # we need to test the lastobj separately using the given
@@ -1166,6 +1173,10 @@ class StructuralNavigation:
         stopRoles = [pyatspi.ROLE_FRAME, pyatspi.ROLE_SCROLL_PANE]
         document = self._script.utilities.ancestorWithRole(
             orca_state.locusOfFocus, docRoles, stopRoles)
+
+        if not document and orca_state.locusOfFocus:
+            if orca_state.locusOfFocus.getRole() in docRoles:
+                return orca_state.locusOfFocus
 
         return document
 

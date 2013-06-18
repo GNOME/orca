@@ -4,6 +4,7 @@ SUBDIRS = \
 	Eclipse \
 	ekiga \
 	empathy \
+	evince \
 	evolution \
 	gajim \
 	gcalctool \
