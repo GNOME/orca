@@ -1,3 +1,26 @@
+3.8.2 - 18 June 2013
+
+General
+
+  * Fix for traceback when switching back to English profile
+
+  * Fix the accessible apps commandline option
+
+  * Add mapping from gnome-terminal-server to gnome-terminal
+
+New and updated translations (THANKS EVERYONE!!!):
+
+
+    it       Italian                           Milo Casagrande
+    nb       Norwegian bokmål                  Kjartan Maraas
+    pt_BR    Brazilian Portuguese              José Vilmar Estácio de Souza
+                                               Alexandre Conte
+                                               Enrico Nicoletto
+    zh_HK    Traditional Chinese (Hong Kong)   Cheng-Chia Tseng 
+    zh_TW    Traditional Chinese (Taiwan)      Cheng-Chia Tseng
+
+=========
+
 3.8.1 - 16 April 2013
 
 New and updated translations (THANKS EVERYONE!!!):
