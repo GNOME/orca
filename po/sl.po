@@ -47,7 +47,7 @@ msgstr ""
 
 #: ../orca.desktop.in.h:5
 msgid "screen reader;speech;braille;"
-msgstr "govor;zaslonski bralnik;Braillova pisava;brajica;povečevalnik"
+msgstr "govor;zaslonski bralnik;Braillova pisava;brajica;povečevalnik;"
 
 #: ../src/orca/app_gui_prefs.py:136
 #, python-format
