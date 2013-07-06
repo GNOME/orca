@@ -367,7 +367,8 @@ class KeyBindings:
                 if keyBinding.keysymstring:
                     candidates.append(keyBinding)
 
-        if keyboardEvent.modifiers & (1 << pyatspi.MODIFIER_NUMLOCK):
+        if keyboardEvent.modifiers & (1 << pyatspi.MODIFIER_NUMLOCK) \
+            and keyboardEvent.keyval_name.startswith("KP"):
             return None
 
         # If we're still here, we don't have an exact match. Prefer
