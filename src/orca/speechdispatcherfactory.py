@@ -243,7 +243,7 @@ class SpeechServer(speechserver.SpeechServer):
             elif acss_property == ACSS.AVERAGE_PITCH:
                 method(5.0)
                 current[acss_property] = 5.0
-            elif acss_property == ACSS.FAMILY and current.get(acss_property) \
+            elif acss_property == ACSS.FAMILY \
                     and acss == settings.voices[settings.DEFAULT_VOICE]:
                 # We need to explicitly reset (at least) the family.
                 # See bgo#626072.
