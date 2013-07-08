@@ -83,10 +83,10 @@ class OrcaNavListGUI:
         selection = self._tree.get_selection()
         selection.select_path(selectedRow)
 
-        btn = dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        btn = dialog.add_button(guilabels.BTN_CANCEL, Gtk.ResponseType.CANCEL)
         btn.connect('clicked', self._onCancelClicked)
 
-        btn = dialog.add_button(Gtk.STOCK_JUMP_TO, Gtk.ResponseType.APPLY)
+        btn = dialog.add_button(guilabels.BTN_JUMP_TO, Gtk.ResponseType.APPLY)
         btn.grab_default()
         btn.connect('clicked', self._onJumpToClicked)
 

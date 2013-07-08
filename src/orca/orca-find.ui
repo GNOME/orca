@@ -26,20 +26,14 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="closeButton">
-                <property name="label">gtk-close</property>
+                <property name="label" translatable="yes" comments="Translators: This is the label for a button in a dialog.">_Close</property>
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_action_appearance">False</property>
-                <property name="use_stock">True</property>
-                <accelerator key="c" signal="activate" modifiers="GDK_MOD1_MASK"/>
-                <child internal-child="accessible">
-                  <object class="AtkObject" id="closeButton-atkobject">
-                    <property name="AtkObject::accessible-name" translatable="yes">Close</property>
-                  </object>
-                </child>
+                <property name="use_underline">True</property>
                 <signal name="clicked" handler="closeButtonClicked" swapped="no"/>
               </object>
               <packing>
@@ -50,7 +44,7 @@
             </child>
             <child>
               <object class="GtkButton" id="findButton">
-                <property name="label">gtk-find</property>
+                <property name="label" translatable="yes" comments="Translators: This is the label for a button in a dialog.">_Find</property>
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
@@ -59,8 +53,7 @@
                 <property name="has_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_action_appearance">False</property>
-                <property name="use_stock">True</property>
-                <accelerator key="f" signal="activate" modifiers="GDK_MOD1_MASK"/>
+                <property name="use_underline">True</property>
                 <signal name="clicked" handler="findButtonClicked" swapped="no"/>
               </object>
               <packing>

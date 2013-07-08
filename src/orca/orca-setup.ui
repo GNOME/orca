@@ -207,14 +207,14 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="helpButton">
-                <property name="label">gtk-help</property>
+                <property name="label" translatable="yes" comments="Translators: This is the label for a button in a dialog.">_Help</property>
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_action_appearance">False</property>
-                <property name="use_stock">True</property>
+                <property name="use_underline">True</property>
                 <signal name="clicked" handler="helpButtonClicked" swapped="no"/>
               </object>
               <packing>
@@ -225,14 +225,14 @@
             </child>
             <child>
               <object class="GtkButton" id="applyButton">
-                <property name="label">gtk-apply</property>
+                <property name="label" translatable="yes" comments="Translators: This is the label for a button in a dialog.">_Apply</property>
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_action_appearance">False</property>
-                <property name="use_stock">True</property>
+                <property name="use_underline">True</property>
                 <signal name="clicked" handler="applyButtonClicked" swapped="no"/>
               </object>
               <packing>
@@ -243,14 +243,14 @@
             </child>
             <child>
               <object class="GtkButton" id="cancelButton">
-                <property name="label">gtk-cancel</property>
+                <property name="label" translatable="yes" comments="Translators: This is the label for a button in a dialog.">_Cancel</property>
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_action_appearance">False</property>
-                <property name="use_stock">True</property>
+                <property name="use_underline">True</property>
                 <signal name="clicked" handler="cancelButtonClicked" swapped="no"/>
               </object>
               <packing>
@@ -261,14 +261,14 @@
             </child>
             <child>
               <object class="GtkButton" id="okButton">
-                <property name="label">gtk-ok</property>
+                <property name="label" translatable="yes" comments="Translators: This is the label for a button in a dialog.">_OK</property>
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_action_appearance">False</property>
-                <property name="use_stock">True</property>
+                <property name="use_underline">True</property>
                 <signal name="clicked" handler="okButtonClicked" swapped="no"/>
               </object>
               <packing>
@@ -487,13 +487,13 @@
                             </child>
                             <child>
                               <object class="GtkButton" id="saveProfileButton">
-                                <property name="label">gtk-save-as</property>
+                                <property name="label" translatable="yes" comments="Translators: This is the label for a button in a dialog.">Save _As</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="use_action_appearance">False</property>
-                                <property name="use_stock">True</property>
+                                <property name="use_underline">True</property>
                                 <signal name="clicked" handler="showProfileGUI" swapped="no"/>
                               </object>
                               <packing>

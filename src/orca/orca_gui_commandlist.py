@@ -28,6 +28,7 @@ __copyright__ = "Copyright (c) 2013 Igalia, S.L."
 __license__   = "LGPL"
 
 from gi.repository import GObject, Gdk, Gtk
+from . import guilabels
 from . import orca_state
 
 class OrcaCommandListGUI:
@@ -77,10 +78,10 @@ class OrcaCommandListGUI:
         column = self._tree.get_column(0)
         column.set_visible(False)
 
-        btn = dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        btn = dialog.add_button(guilabels.BTN_CANCEL, Gtk.ResponseType.CANCEL)
         btn.connect('clicked', self._onCancelClicked)
 
-        self._okButton = dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        self._okButton = dialog.add_button(guilabels.BTN_OK, Gtk.ResponseType.OK)
         self._okButton.grab_default()
         self._okButton.connect('clicked', self._onOKClicked)
 

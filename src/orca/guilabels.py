@@ -57,6 +57,15 @@ BRAILLE_DOT_8 = _("Dot _8")
 # "marking"/indicating that a given word is bold.
 BRAILLE_DOT_7_8 = _("Dots 7 an_d 8")
 
+# Translators: This is the label for a button in a dialog.
+BTN_CANCEL = _("_Cancel")
+
+# Translators: This is the label for a button in a dialog.
+BTN_JUMP_TO = _("_Jump to")
+
+# Translators: This is the label for a button in a dialog.
+BTN_OK = _("_OK")
+
 # Translators: Orca has had to implement its own caret navigation model to work
 # around issues in Gecko/Firefox. In some versions of Firefox, we must perform
 # a focus grab on each object being navigated in order for things to work as
