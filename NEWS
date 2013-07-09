@@ -1,3 +1,26 @@
+3.9.4 - 9 July 2013
+
+General
+
+  * Fix for bug 703645 - Use the default locale if no family is specified
+    for the default voice
+
+  * Remove deprecated stock items
+
+  * Fix for bug 672195 - Key bindings are disabled if num lock on even in
+    laptop mode
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                       Marek Černocký
+    gl            Galician                    Fran Diéguez
+    id            Indonesian                  Andika Triwidada
+    lt            Lithuanian                  Aurimas Černius
+    pt_BR         Brazilian Portuguese        Enrico Nicoletto
+    sl            Slovenian                   Piotr Drąg
+
+=========
+
 3.9.3 - 18 June 2013
 
 General
