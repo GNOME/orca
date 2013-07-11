@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: ORCA in Nepali\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2013-07-09 19:18+0000\n"
-"PO-Revision-Date: 2013-05-13 06:05+0545\n"
+"PO-Revision-Date: 2013-07-11 14:47+0545\n"
 "Last-Translator: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language-Team: Nepali\n"
 "Language: ne\n"
@@ -1907,10 +1907,8 @@ msgstr "शीर्षक पट्टी बताउँछ ।"
 #. window and then move focus to that text. For example, they may want to find
 #. the "OK" button.
 #: ../src/orca/cmdnames.py:83
-#, fuzzy
-#| msgid "Opens the Orca Find dialog."
 msgid "Opens the Find dialog."
-msgstr "ओर्का खोजी पातो देखाउँछ ।"
+msgstr "फेला पार्ने पातो देखाउने छ ।."
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text. For example, they may want to find
@@ -2301,10 +2299,8 @@ msgstr "मौन वा वाचन अवस्था उल्टिन्�
 #. Translators: this string is associated with the keyboard shortcut to quit
 #. Orca.
 #: ../src/orca/cmdnames.py:397
-#, fuzzy
-#| msgid "orca - scriptable screen reader"
 msgid "Quits the screen reader"
-msgstr "ओर्का - scriptable दृष्टि वाचक"
+msgstr "दृष्टि वाचक बन्द हुनेछ ।"
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for Orca.
@@ -2658,10 +2654,8 @@ msgstr "चालू कम्बो बाकसलाई फैलिएको
 #. often broken, so Orca needs to provide its own support. As such, Orca offers
 #. the user the ability to toggle which application is controlling the caret.
 #: ../src/orca/cmdnames.py:661
-#, fuzzy
-#| msgid "Switches between Gecko native and Orca caret navigation."
 msgid "Switches between native and screen-reader caret navigation."
-msgstr "Gecko स्थानीय र ओर्का caret विचरणमा हेरफेर हुन्छ ।"
+msgstr "स्थानीय र दृष्टिवाचकcaret विचरणमा हेरफेर हुन्छ ।"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -3156,17 +3150,17 @@ msgstr "थोप्लो 7 र 8"
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/guilabels.py:61 ../src/orca/orca-setup.ui.h:17
 msgid "_Cancel"
-msgstr ""
+msgstr "_रद्द"
 
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/guilabels.py:64
 msgid "_Jump to"
-msgstr ""
+msgstr "_जाउ "
 
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/guilabels.py:67 ../src/orca/orca-setup.ui.h:19
 msgid "_OK"
-msgstr ""
+msgstr "_हो"
 
 #. Translators: Orca has had to implement its own caret navigation model to work
 #. around issues in Gecko/Firefox. In some versions of Firefox, we must perform
@@ -3361,11 +3355,9 @@ msgstr "कुञ्जी बन्धन"
 #. can be used in any setting, task, or application. They are not specific
 #. to, for instance, web browsing.
 #: ../src/orca/guilabels.py:205
-#, fuzzy
-#| msgid "Default"
 msgctxt "keybindings"
 msgid "Default"
-msgstr "निर्धारित"
+msgstr "निर्धारित कुञ्जीवद्धता"
 
 #. Translators: An external braille device has buttons on it that permit the
 #. user to create input gestures from the braille device. The braille bindings
@@ -3386,11 +3378,9 @@ msgstr "अनुबद्ध"
 #. for an Orca command has been changed by the user to something other than its
 #. default value.
 #: ../src/orca/guilabels.py:221
-#, fuzzy
-#| msgid "Modified"
 msgctxt "keybindings"
 msgid "Modified"
-msgstr "परिवर्तित"
+msgstr "परिवर्तित कुञ्जीवद्धता"
 
 #. Translators: This label refers to the keyboard layout (desktop or laptop).
 #: ../src/orca/guilabels.py:224 ../src/orca/orca-setup.ui.h:20
@@ -3404,10 +3394,9 @@ msgstr "डेस्कटप"
 #. The string substituted in is the accessible name of the application (e.g.
 #. "Gedit", "Firefox", etc.
 #: ../src/orca/guilabels.py:232
-#, fuzzy, python-format
-#| msgid "Orca Preferences for %s"
+#, python-format
 msgid "Screen Reader Preferences for %s"
-msgstr " %s का लागि ओर्का प्राथमिकता "
+msgstr " %s का लागि दृष्टि वाचकप्राथमिकता "
 
 #. Translators: This is a table column header. This column consists of a single
 #. checkbox. If the checkbox is checked, Orca will indicate the associated item
@@ -4046,19 +4035,15 @@ msgstr "विशेषताहरूको नाम"
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
 #: ../src/orca/guilabels.py:664
-#, fuzzy
-#| msgid "Use _Orca Caret Navigation"
 msgid "Control caret navigation"
-msgstr "ओर्का Caret विचरणको प्रयोग गर ।"
+msgstr "दृष्टिवाचकCaret विचरणको प्रयोग गर ।"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
 #: ../src/orca/guilabels.py:669
-#, fuzzy
-#| msgid "Toggles structural navigation keys."
 msgid "Enable _structural navigation"
-msgstr "बनोट विचरण कुञ्जीको साटो फेरो ।"
+msgstr "बनोट विचरण सक्षम बनाउ ।"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
@@ -4237,7 +4222,7 @@ msgstr "मेनु"
 #.
 #: ../src/orca/keynames.py:198
 msgid "Alt Gr"
-msgstr ""
+msgstr "Alt Gr"
 
 #. Translators: this is how someone would speak the name of the help key
 #.
@@ -4337,10 +4322,8 @@ msgstr "घटाउ"
 #. Translators: this is presented in a GUI to represent the
 #. "insert" key when used as the Orca modifier.
 #: ../src/orca/keybindings.py:109
-#, fuzzy
-#| msgid "insert"
 msgid "Insert"
-msgstr "insert"
+msgstr "Insert"
 
 #. Translators: this is presented in a GUI to represent the
 #. "caps lock" modifier.
@@ -4578,10 +4561,8 @@ msgstr "Gecko ले caret लाई नियन्त्रण गरेको
 #. often broken, so Orca needs to provide its own support. As such, Orca offers
 #. the user the ability to toggle which application is controlling the caret.
 #: ../src/orca/messages.py:177
-#, fuzzy
-#| msgid "Orca is controlling the caret."
 msgid "The screen reader is controlling the caret."
-msgstr "caret लाई ओर्काले नियन्त्रण गरेको छ ।"
+msgstr "caret लाई दृष्टिवाचकले नियन्त्रण गरेको छ ।"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #: ../src/orca/messages.py:180
@@ -4643,29 +4624,23 @@ msgstr "पार्श्वचित्र बहन गर्न सकिए
 #. Translators: This message is presented to the user who attempts to launch Orca
 #. from some other environment than the graphical desktop.
 #: ../src/orca/messages.py:221
-#, fuzzy
-#| msgid "Cannot start Orca because it cannot connect to the Desktop."
 msgid "Cannot start the screen reader because it cannot connect to the Desktop."
-msgstr "डेस्कटपमा जोड्न न सकिएकोले ओर्कालाई सुरु गर्न सकिएन ।"
+msgstr "डेस्कटपमा जोड्न न सकिएकोले दृष्टिवाचकलाई सुरु गर्न सकिएन ।"
 
 #. Translators: This message is presented to the user who attempts to launch Orca
 #. but the launch fails due to an error related to the settings manager.
 #: ../src/orca/messages.py:226
 msgid "Could not activate the settings manager. Exiting."
-msgstr ""
+msgstr "अनुकूलता व्यबस्थापकलाई सक्रिय बनाउन सकिएन ।Exiting."
 
 #. Translators: This message is presented to the user when he/she tries to launch
 #. Orca, but Orca is already running.
 #: ../src/orca/messages.py:231
-#, fuzzy
-#| msgid ""
-#| "Another Orca process is already running for this session.\n"
-#| "Run \"orca --replace\" to replace that process with a new one."
 msgid ""
 "Another screen reader process is already running for this session.\n"
 "Run \"orca --replace\" to replace that process with a new one."
 msgstr ""
-"अर्को ओर्का यो खण्डमा सक्रिय छ ।\n"
+"अर्को दृष्टिवाचक यो खण्डमा सक्रिय छ ।\n"
 "Run \"orca --replace\" to replace that process with a new one."
 
 #. Translators: This string indicates to the user what should be provided when
@@ -4690,10 +4665,8 @@ msgstr "DIR"
 #. Translators: This is the description of command line option '-r, --replace'
 #. which tells Orca to replace any existing Orca process that might be running.
 #: ../src/orca/messages.py:250
-#, fuzzy
-#| msgid "Replace a currently running Orca"
 msgid "Replace a currently running instance of this screen reader"
-msgstr "हाल चालू ओर्कालाई प्रतिस्थापन गर्नु होस् ।"
+msgstr "हाल चालू दृष्टिवाचकलाई प्रतिस्थापन गर्नु होस् ।"
 
 #. Translators: This is the description of command line option '--debug' which
 #. causes debugging output for Orca to be sent to a file. The YYYY-MM-DD-HH:MM:SS
@@ -4981,10 +4954,8 @@ msgstr "वाचनको प्रयोग गरिँदैन ।\n"
 #. Translators: This message is presented at the beginning of Orca's console-
 #. based setup.
 #: ../src/orca/messages.py:471
-#, fuzzy
-#| msgid "Screen Reader"
 msgid "Screen reader setup."
-msgstr "दृष्टि वाचक"
+msgstr "दृष्टि वाचकको स्थापना ।"
 
 #. Translators: This message is presented at the completion of Orca's console-
 #. based setup.
@@ -5467,10 +5438,8 @@ msgstr "सिकाई मुद्रा ।  बाहिरिन escape द
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
 #: ../src/orca/messages.py:836
-#, fuzzy
-#| msgid "Entering learn mode.  Press any key to hear its function.  To get a list of Orca's default shortcuts, press 1. To get a list of Orca's shortcuts for the current application, press 2. To view Orca's documentation, press F1. To exit learn mode, press the escape key."
 msgid "Entering learn mode.  Press any key to hear its function.  To get a list of the screen reader's default shortcuts, press 1. To get a list of the screen reader's shortcuts for the current application, press 2. To view the screen reader's documentation, press F1. To exit learn mode, press the escape key."
-msgstr "सिकाई मुद्रामा प्रवेश ।  यसको काम जान्नका लागि कुनै कुञ्जीलाई दबाउनु होस् । ओर्का निर्धारित द्रुतमार्गहरूको सुची  हेर्नका लागि, १ लाई दबाउनु होस् ।चालू अनुप्रयोगमा ओर्काका द्रुतमार्गहरूको सुची  हेर्नका लागि, २ लाई दबाउनु होस् ।ओर्काका कागजातहरू हेर्नका लागि, F1 लाई दबाउनु होस् ।. सिकाई मुद्रा बन्द गर्न Escape कुञ्जीलाई दबाउनु होला ।"
+msgstr "सिकाई मुद्रामा प्रवेश ।  यसको काम जान्नका लागि कुनै कुञ्जीलाई दबाउनु होस् । दृष्टिवाचकनिर्धारित द्रुतमार्गहरूको सुची  हेर्नका लागि, १ लाई दबाउनु होस् ।चालू अनुप्रयोगमा दृष्टिवाचकका द्रुतमार्गहरूको सुची  हेर्नका लागि, २ लाई दबाउनु होस् ।दृष्टिवाचकका कागजातहरू हेर्नका लागि, F1 लाई दबाउनु होस् ।. सिकाई मुद्रा बन्द गर्न Escape कुञ्जीलाई दबाउनु होला ।"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -6237,10 +6206,8 @@ msgstr "खोजी कार्य सकियो ।"
 #. Translators: This message is presented to the user when Orca's preferences
 #. have been reloaded.
 #: ../src/orca/messages.py:1393
-#, fuzzy
-#| msgid "Orca user settings reloaded."
 msgid "Screen reader settings reloaded."
-msgstr "ओर्का अनुकूलता फेरी बहन गरियो ।"
+msgstr "दृष्टिवाचकअनुकूलता फेरी बहन गरियो ।"
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
@@ -6284,17 +6251,13 @@ msgstr "थोप्लो थोप्लो थोप्लो"
 
 #. Translators: This message is presented to the user when Orca is launched.
 #: ../src/orca/messages.py:1422
-#, fuzzy
-#| msgid "Screen Reader"
 msgid "Screen reader on."
-msgstr "दृष्टि वाचक"
+msgstr "दृष्टि वाचक चालू ।"
 
 #. Translators: This message is presented to the user when Orca is quit.
 #: ../src/orca/messages.py:1425
-#, fuzzy
-#| msgid "Screen Reader"
 msgid "Screen reader off."
-msgstr "दृष्टि वाचक"
+msgstr "दृष्टि वाचकबन्द"
 
 #. Translators: This message means speech synthesis is not installed or working.
 #: ../src/orca/messages.py:1428
@@ -6502,10 +6465,9 @@ msgstr "युनिकोड %s"
 
 #. Translators: This message presents the Orca version number.
 #: ../src/orca/messages.py:1565
-#, fuzzy, python-format
-#| msgid "Orca version %s."
+#, python-format
 msgid "Screen reader version %s."
-msgstr "ओर्का संस्करण%s ।"
+msgstr "दृष्टिवाचकसंस्करण%s ।"
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
@@ -6706,24 +6668,20 @@ msgstr[1] "%(total)d मध्ये %(index)d सामाग्रीहरू
 #. current application. It appears as the title of the dialog containing
 #. the list.
 #: ../src/orca/messages.py:1709
-#, fuzzy, python-format
-#| msgid "%d Orca default shortcut found."
-#| msgid_plural "%d Orca default shortcuts found."
+#, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
-msgstr[0] "ओर्काको निर्धारित द्रुत मार्ग %d पाइयो ।"
+msgstr[0] "दृष्टिवाचकको निर्धारित द्रुत मार्ग %d पाइयो ।"
 msgstr[1] "%d Orca default shortcuts found."
 
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
 #. application. It appears as the title of the dialog containing the list.
 #: ../src/orca/messages.py:1717
-#, fuzzy, python-format
-#| msgid "%(count)d Orca shortcut for %(application)s found."
-#| msgid_plural "%(count)d Orca shortcuts for %(application)s found."
+#, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
-msgstr[0] "%(count)d %(application)s का लागि ओर्का द्रुत मार्ग पाइयो ।"
+msgstr[0] "%(count)d %(application)s का लागि दृष्टिवाचक द्रुत मार्ग पाइयो ।"
 msgstr[1] "%(count)d %(application)s हरुका लागि ओर्का द्रुत मार्ग पाइयो ।"
 
 #. Translators: This message is presented to inform the user of the number of
@@ -6985,24 +6943,18 @@ msgid "Find"
 msgstr "फेला पार"
 
 #: ../src/orca/orca-find.ui.h:2
-#, fuzzy
-#| msgid "Screen Reader"
 msgid "Screen Reader Find Dialog"
-msgstr "दृष्टि वाचक"
+msgstr "दृष्टि वाचकको खोजी पातो ।"
 
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/orca-find.ui.h:4
-#, fuzzy
-#| msgid "Close"
 msgid "_Close"
-msgstr "बन्द"
+msgstr "_Close"
 
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/orca-find.ui.h:6
-#, fuzzy
-#| msgid "Find"
 msgid "_Find"
-msgstr "फेला पार"
+msgstr "_Find"
 
 #: ../src/orca/orca-find.ui.h:7
 msgid "_Search for:"
@@ -7073,20 +7025,18 @@ msgid "Window"
 msgstr "सन्झ्याल"
 
 #: ../src/orca/orca-setup.ui.h:11
-#, fuzzy
-#| msgid "Screen Reader"
 msgid "Screen Reader Preferences"
-msgstr "दृष्टि वाचक"
+msgstr "दृष्टि वाचकका प्राथमिकताहरू"
 
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/orca-setup.ui.h:13
 msgid "_Help"
-msgstr ""
+msgstr "_सहयोग"
 
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/orca-setup.ui.h:15
 msgid "_Apply"
-msgstr ""
+msgstr "_लागू"
 
 #: ../src/orca/orca-setup.ui.h:21
 msgid "_Laptop"
@@ -7111,10 +7061,8 @@ msgstr "बहन"
 
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/orca-setup.ui.h:28
-#, fuzzy
-#| msgid "Save Profile As"
 msgid "Save _As"
-msgstr "पार्श्वचित्रलाई यस रूपमा बचत गर ।"
+msgstr "यस रूपमा बचत गर ।"
 
 #: ../src/orca/orca-setup.ui.h:29
 msgid "Profiles"
@@ -7366,10 +7314,8 @@ msgid "Key Echo"
 msgstr "कुञ्जी वाचन "
 
 #: ../src/orca/orca-setup.ui.h:117
-#, fuzzy
-#| msgid "Orca _Modifier Key(s):"
 msgid "Screen Reader _Modifier Key(s):"
-msgstr "ओर्का परिवर्तित कुञ्जी:"
+msgstr "दृष्टिवाचकपरिवर्तित कुञ्जी:"
 
 #: ../src/orca/orca-setup.ui.h:118
 msgid "Key Bindings"
