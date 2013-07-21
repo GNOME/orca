@@ -32,6 +32,7 @@ import orca.orca_state as orca_state
 import orca.scripts.default as default
 import orca.settings as settings
 from orca.structural_navigation import StructuralNavigation
+from .script_utilities import Utilities
 
 ########################################################################
 #                                                                      #
@@ -67,6 +68,11 @@ class Script(default.Script):
             keyBindings.add(keyBinding)
 
         return keyBindings
+
+    def getUtilities(self):
+        """Returns the utilites for this script."""
+
+        return Utilities(self)
 
     def getStructuralNavigation(self):
         """Returns the 'structural navigation' class for this script."""
