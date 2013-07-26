@@ -11,8 +11,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2013-05-28 00:29+0000\n"
-"PO-Revision-Date: 2013-05-28 22:16+0100\n"
-"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
+"PO-Revision-Date: 2013-06-26 18:31+0100\n"
+"Last-Translator: Andrej Žnidaršič <andrej.znidarsic@gmail.com>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr ""
 
 #: ../orca.desktop.in.h:5
 msgid "screen reader;speech;braille;"
-msgstr "govor;zaslonski bralnik;Braillova pisava;brajica;povečevalnik;"
+msgstr "govor;zaslonski bralnik;Braillova pisava;brajica;povečevalnik"
 
 #: ../src/orca/app_gui_prefs.py:136
 #, python-format
@@ -3931,7 +3931,7 @@ msgstr "meni"
 #.
 #: ../src/orca/keynames.py:198
 msgid "ISO level 3 shift"
-msgstr "ISO preklopna tipka"
+msgstr "shift ISO stopnje 3"
 
 #. Translators: this is how someone would speak the name of the help key
 #.
@@ -4728,7 +4728,7 @@ msgstr "Izgovarjanje zamikov in poravnav je omogočeno."
 #. entering Learn Mode.
 #: ../src/orca/messages.py:564
 msgid "Learn mode.  Press escape to exit."
-msgstr "Učni način. Pritisnite tipko Esc za izhod."
+msgstr "Učni način. Za izhod pritisnite tipko Esc."
 
 #. Translators: Orca has a "Learn Mode" that will allow the user to type any key
 #. on the keyboard and hear what the effects of that key would be.  The effects
@@ -4744,9 +4744,9 @@ msgid ""
 "exit learn mode, press the escape key."
 msgstr ""
 "Vstop v način učenja. Za poslušanje funkcije pritisnite poljubno tipko. Za "
-"prikaz privzetih tipkovnih bližnic pritisnite 1. Za prikaz bližnjic programa "
-"pritisnite 2, za ogled dokumentacije, pritisnite F1. Za izhod iz načina "
-"učenja pritisnite ubežnico (Esc)."
+"prikaz privzetih tipkovnih bližnjic pritisnite 1. Za prikaz bližnjic "
+"programa pritisnite 2, za ogled dokumentacije Orca pritisnite F1. Za izhod "
+"iz načina učenja pritisnite Esc."
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -5276,11 +5276,10 @@ msgid ""
 "Press Space to repeat the last message read.\n"
 "Press one digit to read a specific message.\n"
 msgstr ""
-"Uporabiti je treba tipke Gor, Dol, Konec in Začetek za krmarjenje po "
-"seznamu.\n"
-"Pritisnite tipko Esc za konec.\n"
-"Pritisnite presledek za ponovitev zadnjega prebranega sporočila.\n"
-"Pritisnite številko za branje določenega sporočila.\n"
+"Za krmarjenje po seznamu uporabite smerni tipki Gor, Dol ter Home in End.\n"
+"Za končanje pritisnite tipko Esc.\n"
+"Za ponovitev zadnjega prebranega sporočila pritisnite preslednico.\n"
+"Za branje določenega sporočila pritisnite številko.\n"
 
 #. Translators: This message is presented to the user when the notifications list
 #. is empty.
@@ -7037,7 +7036,7 @@ msgstr "vnos novega ključa"
 
 #: ../src/orca/orca_gui_prefs.py:2847
 msgid "Key binding deleted. Press enter to confirm."
-msgstr "Tipkovna bližnjica je izbrisana. Za potrditev pritisnite tipko vnosa."
+msgstr "Tipkovna bližnjica je izbrisana. Za potrditev pritisnite tipko enter."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that the key combination (e.g., Ctrl+Alt+f) they just
@@ -7626,7 +7625,7 @@ msgstr "Preverjanje črkovanja je končano."
 
 #: ../src/orca/scripts/apps/gedit/script.py:147
 msgid "Press Tab and Return to terminate."
-msgstr "Pritisnite tabulator in vnašalko za izhod."
+msgstr "Za uničenje pritisnite Tab in Return."
 
 #. Translators: this is the name of the "Check Spelling" window
 #. in gedit and must be the same as what gedit uses.  We hate
@@ -8762,16 +8761,14 @@ msgstr "Za preklop pritisnite preslednico."
 #: ../src/orca/tutorialgenerator.py:185
 msgid "Press space to expand, and use up and down to select an item."
 msgstr ""
-"Pritisnite poševnico za razširitev in uporabite tipki gor in dol za izbor "
-"predmeta."
+"Za razširitev pritisnite preslednico, za izbor predmeta pa uporabite smerni "
+"tipki gor in dol."
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
 #: ../src/orca/tutorialgenerator.py:216
 msgid "Press alt+f6 to give focus to child windows."
-msgstr ""
-"Za premikanje sočasno uporabite tipki izmenjalka+F6 izbor nedejavnega "
-"podrejenega okna."
+msgstr "Za izbor podrejenega okna v žarišče uporabite sočasno tipki alt+F6."
 
 #. Translators: this gives tips on how to navigate items in a
 #. layered pane.
@@ -8785,7 +8782,7 @@ msgstr ""
 #. on the desktop, describing how to access the system menus.
 #: ../src/orca/tutorialgenerator.py:286
 msgid "To get to the system menus press the alt+f1 key."
-msgstr "Za dostop do sistemskih menijev pritisnite tipki izmenjalka+F."
+msgstr "Za dostop do sistemskih menijev pritisnite tipki alt+F."
 
 #. Translators: this is the tutorial string when navigating lists.
 #: ../src/orca/tutorialgenerator.py:323
@@ -8798,7 +8795,7 @@ msgstr "Uporabite tipki gor in dol za izbiro predmeta."
 #. this string informs the user how to collapse the node.
 #: ../src/orca/tutorialgenerator.py:353 ../src/orca/tutorialgenerator.py:529
 msgid "To collapse, press shift plus left."
-msgstr "Za zlaganje sočasno pritisnite dvigalko in tipko levo."
+msgstr "Za zložitev sočasno pritisnite shift in levo smerno tipko."
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
@@ -8806,7 +8803,7 @@ msgstr "Za zlaganje sočasno pritisnite dvigalko in tipko levo."
 #. this string informs the user how to expand the node.
 #: ../src/orca/tutorialgenerator.py:359 ../src/orca/tutorialgenerator.py:535
 msgid "To expand, press shift plus right."
-msgstr "Za razširjanje sočasno pritisnite dvigalko in tipko desno."
+msgstr "Za razširitev sočasno pritisnite shift in desno smerno tipko."
 
 #. Translators: this is the tutorial string for activating a menu item
 #: ../src/orca/tutorialgenerator.py:391
@@ -8858,7 +8855,7 @@ msgstr ""
 #. navigate into sub menues.
 #: ../src/orca/tutorialgenerator.py:716
 msgid "To enter sub menu, press right arrow."
-msgstr "Za vstop v podrejeni meni pritisnite desno puščico."
+msgstr "Za vstop v podrejeni meni pritisnite desno smerno tipko."
 
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
