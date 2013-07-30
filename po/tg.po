@@ -9,57 +9,59 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2013-03-05 01:02+0000\n"
-"PO-Revision-Date: 2013-01-21 13:17+0500\n"
+"PO-Revision-Date: 2013-07-30 16:20-0000\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: \n"
 "Language: Tajik\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.5.4\n"
+"Plural-Forms: nplurals=2; plural=1;\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:216
 #: ../src/orca/keybindings.py:106 ../src/orca/orca_gui_prefs.py:1960
 #: ../src/orca/orca_gui_prefs.py:2067
 msgid "Orca"
-msgstr ""
+msgstr "Orca"
 
 #: ../orca.desktop.in.h:2
 msgid "Screen Reader"
-msgstr ""
+msgstr "Хонандаи экран"
 
 #: ../orca.desktop.in.h:3
 msgid "Orca Screen Reader"
-msgstr ""
+msgstr "Хонандаи экрани Orca"
 
 #: ../orca.desktop.in.h:4
 msgid ""
 "Provide access to graphical desktop environments via synthesized speech and/"
 "or refreshable braille"
 msgstr ""
+"Таъмини дастрасӣ ба муҳитҳои графикии мизи корӣ тавассути нутқи синтезшуда "
+"ва/ё шрифти брайли навсозишаванда"
 
 #: ../orca.desktop.in.h:5
 msgid "screen reader;speech;braille;"
-msgstr ""
+msgstr "хонандаи экран;нутқ;брайл;"
 
 #: ../src/orca/app_gui_prefs.py:136
 #, python-format
 msgid "Orca Preferences for %s"
-msgstr ""
+msgstr "Бартариҳои Orca барои %s"
 
 #. Translators: this refers to commands that do not currently have
 #. an associated key binding.
 #.
 #: ../src/orca/app_gui_prefs.py:221 ../src/orca/orca_gui_prefs.py:2073
 msgid "Unbound"
-msgstr ""
+msgstr "Начаспида"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
 #: ../src/orca/braille_rolenames.py:36
 msgid "???"
-msgstr ""
+msgstr "???"
 
 #. Translators: short braille for the rolename of an alert dialog.
 #. NOTE for all the short braille words: they we strive to keep them
@@ -68,72 +70,72 @@ msgstr ""
 #. other rolenames, and they typically act like an abbreviation.
 #: ../src/orca/braille_rolenames.py:43
 msgid "alrt"
-msgstr ""
+msgstr "огоҳ"
 
 #. Translators: short braille for the rolename of an animation widget.
 #: ../src/orca/braille_rolenames.py:46
 msgid "anim"
-msgstr ""
+msgstr "тасв"
 
 #. Translators: short braille for the rolename of an arrow widget.
 #: ../src/orca/braille_rolenames.py:49
 msgid "arw"
-msgstr ""
+msgstr "тир"
 
 #. Translators: short braille for the rolename of a calendar widget.
 #: ../src/orca/braille_rolenames.py:52
 msgid "cal"
-msgstr ""
+msgstr "тақ"
 
 #. Translators: short braille for the rolename of a canvas widget.
 #: ../src/orca/braille_rolenames.py:55
 msgid "cnv"
-msgstr ""
+msgstr "тас"
 
 #. Translators: short braille for the rolename of a caption (e.g.,
 #. table caption).
 #: ../src/orca/braille_rolenames.py:59
 msgid "cptn"
-msgstr ""
+msgstr "зерн"
 
 #. Translators: short braille for the rolename of a checkbox.
 #. Translators: short braille for the rolename of a check menu item.
 #: ../src/orca/braille_rolenames.py:62 ../src/orca/braille_rolenames.py:65
 msgid "chk"
-msgstr ""
+msgstr "брч"
 
 #. Translators: short braille for the rolename of a color chooser.
 #: ../src/orca/braille_rolenames.py:68
 msgid "clrchsr"
-msgstr ""
+msgstr "Интрг"
 
 #. Translators: short braille for the rolename of a column header.
 #. Translators: short braille for the rolename of a table column header.
 #: ../src/orca/braille_rolenames.py:71 ../src/orca/braille_rolenames.py:230
 msgid "colhdr"
-msgstr ""
+msgstr "colhdr"
 
 #. Translators: short braille for the rolename of a combo box.
 #: ../src/orca/braille_rolenames.py:74
 msgid "cbo"
-msgstr ""
+msgstr "cbo"
 
 #. Translators: short braille for the rolename of a date editor.
 #: ../src/orca/braille_rolenames.py:77
 msgid "dat"
-msgstr ""
+msgstr "dat"
 
 #. Translators: short braille for the rolename of a desktop icon.
 #. Translators: short braille for the rolename of a icon.
 #: ../src/orca/braille_rolenames.py:80 ../src/orca/braille_rolenames.py:131
 msgid "icn"
-msgstr ""
+msgstr "icn"
 
 #. Translators: short braille for the rolename of a desktop frame.
 #. Translators: short braille for the rolename of a frame.
 #: ../src/orca/braille_rolenames.py:83 ../src/orca/braille_rolenames.py:119
 msgid "frm"
-msgstr ""
+msgstr "frm"
 
 #. Translators: short braille for the rolename of a dial.
 #. You should attempt to treat it as an abbreviation of
@@ -142,23 +144,23 @@ msgstr ""
 #: ../src/orca/braille_rolenames.py:89
 msgctxt "shortbraille"
 msgid "dial"
-msgstr ""
+msgstr "Шуморагирӣ"
 
 #. Translators: short braille for the rolename of a dialog.
 #: ../src/orca/braille_rolenames.py:92
 msgid "dlg"
-msgstr ""
+msgstr "dlg"
 
 #. Translators: short braille for the rolename of a directory pane.
 #: ../src/orca/braille_rolenames.py:95
 msgid "dip"
-msgstr ""
+msgstr "dip"
 
 #. Translators: short braille for the rolename of an HTML document frame.
 #. Translators: short braille for the rolename of an html container.
 #: ../src/orca/braille_rolenames.py:98 ../src/orca/braille_rolenames.py:128
 msgid "html"
-msgstr ""
+msgstr "html"
 
 #. Translators: short braille for the rolename of a drawing area.
 #: ../src/orca/braille_rolenames.py:101
@@ -168,17 +170,17 @@ msgstr "кашидан"
 #. Translators: short braille for the rolename of a file chooser.
 #: ../src/orca/braille_rolenames.py:104
 msgid "fchsr"
-msgstr ""
+msgstr "fchsr"
 
 #. Translators: short braille for the rolename of a filler.
 #: ../src/orca/braille_rolenames.py:107
 msgid "flr"
-msgstr ""
+msgstr "flr"
 
 #. Translators: short braille for the rolename of a font chooser.
 #: ../src/orca/braille_rolenames.py:110
 msgid "fnt"
-msgstr ""
+msgstr "fnt"
 
 #. Translators: short braille for the rolename of a form.
 #. You should attempt to treat it as an abbreviation of
@@ -192,82 +194,82 @@ msgstr "шакл"
 #. Translators: short braille for the rolename of a glass pane.
 #: ../src/orca/braille_rolenames.py:122
 msgid "gpn"
-msgstr ""
+msgstr "gpn"
 
 #. Translators: short braille for the rolename of a heading.
 #: ../src/orca/braille_rolenames.py:125
 msgid "hdng"
-msgstr ""
+msgstr "hdng"
 
 #. Translators: short braille for the rolename of a image.
 #: ../src/orca/braille_rolenames.py:134
 msgid "img"
-msgstr ""
+msgstr "img"
 
 #. Translators: short braille for the rolename of an internal frame.
 #: ../src/orca/braille_rolenames.py:137
 msgid "ifrm"
-msgstr ""
+msgstr "ifrm"
 
 #. Translators: short braille for the rolename of a label.
 #: ../src/orca/braille_rolenames.py:140
 msgid "lbl"
-msgstr ""
+msgstr "lbl"
 
 #. Translators: short braille for the rolename of a layered pane.
 #: ../src/orca/braille_rolenames.py:143
 msgid "lyrdpn"
-msgstr ""
+msgstr "lyrdpn"
 
 #. Translators: short braille for the rolename of a link.
 #: ../src/orca/braille_rolenames.py:146
 msgid "lnk"
-msgstr ""
+msgstr "lnk"
 
 #. Translators: short braille for the rolename of a list.
 #: ../src/orca/braille_rolenames.py:149
 msgid "lst"
-msgstr ""
+msgstr "lst"
 
 #. Translators: short braille for the rolename of a list item.
 #: ../src/orca/braille_rolenames.py:152
 msgid "lstitm"
-msgstr ""
+msgstr "lstitm"
 
 #. Translators: short braille for the rolename of a menu.
 #: ../src/orca/braille_rolenames.py:155
 msgid "mnu"
-msgstr ""
+msgstr "mnu"
 
 #. Translators: short braille for the rolename of a menu bar.
 #: ../src/orca/braille_rolenames.py:158
 msgid "mnubr"
-msgstr ""
+msgstr "mnubr"
 
 #. Translators: short braille for the rolename of a menu item.
 #: ../src/orca/braille_rolenames.py:161
 msgid "mnuitm"
-msgstr ""
+msgstr "mnuitm"
 
 #. Translators: short braille for the rolename of an option pane.
 #: ../src/orca/braille_rolenames.py:164
 msgid "optnpn"
-msgstr ""
+msgstr "optnpn"
 
 #. Translators: short braille for the rolename of a page tab.
 #: ../src/orca/braille_rolenames.py:167
 msgid "pgt"
-msgstr ""
+msgstr "pgt"
 
 #. Translators: short braille for the rolename of a page tab list.
 #: ../src/orca/braille_rolenames.py:170
 msgid "tblst"
-msgstr ""
+msgstr "tblst"
 
 #. Translators: short braille for the rolename of a panel.
 #: ../src/orca/braille_rolenames.py:173
 msgid "pnl"
-msgstr ""
+msgstr "pnl"
 
 #. Translators: short braille for the rolename of a password field.
 #: ../src/orca/braille_rolenames.py:176
@@ -277,17 +279,17 @@ msgstr "парол"
 #. Translators: short braille for the rolename of a popup menu.
 #: ../src/orca/braille_rolenames.py:179
 msgid "popmnu"
-msgstr ""
+msgstr "popmnu"
 
 #. Translators: short braille for the rolename of a progress bar.
 #: ../src/orca/braille_rolenames.py:182
 msgid "pgbar"
-msgstr ""
+msgstr "pgbar"
 
 #. Translators: short braille for the rolename of a push button.
 #: ../src/orca/braille_rolenames.py:185
 msgid "btn"
-msgstr ""
+msgstr "btn"
 
 #. Translators: short braille for the rolename of a radio button.
 #: ../src/orca/braille_rolenames.py:188
@@ -297,73 +299,73 @@ msgstr "Радио"
 #. Translators: short braille for the rolename of a radio menu item.
 #: ../src/orca/braille_rolenames.py:191
 msgid "rdmnuitm"
-msgstr ""
+msgstr "rdmnuitm"
 
 #. Translators: short braille for the rolename of a root pane.
 #: ../src/orca/braille_rolenames.py:194
 msgid "rtpn"
-msgstr ""
+msgstr "rtpn"
 
 #. Translators: short braille for the rolename of a row header.
 #. Translators: short braille for the rolename of a table row header.
 #: ../src/orca/braille_rolenames.py:197 ../src/orca/braille_rolenames.py:233
 msgid "rwhdr"
-msgstr ""
+msgstr "rwhdr"
 
 #. Translators: short braille for the rolename of a scroll bar.
 #: ../src/orca/braille_rolenames.py:200
 msgid "scbr"
-msgstr ""
+msgstr "scbr"
 
 #. Translators: short braille for the rolename of a scroll pane.
 #: ../src/orca/braille_rolenames.py:203
 msgid "scpn"
-msgstr ""
+msgstr "scpn"
 
 #. Translators: short braille for the rolename of a section (e.g., in html).
 #: ../src/orca/braille_rolenames.py:206
 msgid "sctn"
-msgstr ""
+msgstr "sctn"
 
 #. Translators: short braille for the rolename of a separator.
 #: ../src/orca/braille_rolenames.py:209
 msgid "seprtr"
-msgstr ""
+msgstr "seprtr"
 
 #. Translators: short braille for the rolename of a slider.
 #: ../src/orca/braille_rolenames.py:212
 msgid "sldr"
-msgstr ""
+msgstr "sldr"
 
 #. Translators: short braille for the rolename of a split pane.
 #: ../src/orca/braille_rolenames.py:215
 msgid "spltpn"
-msgstr ""
+msgstr "spltpn"
 
 #. Translators: short braille for the rolename of a spin button.
 #: ../src/orca/braille_rolenames.py:218
 msgid "spin"
-msgstr ""
+msgstr "spin"
 
 #. Translators: short braille for the rolename of a statusbar.
 #: ../src/orca/braille_rolenames.py:221
 msgid "statbr"
-msgstr ""
+msgstr "statbr"
 
 #. Translators: short braille for the rolename of a table.
 #: ../src/orca/braille_rolenames.py:224
 msgid "tbl"
-msgstr ""
+msgstr "tbl"
 
 #. Translators: short braille for the rolename of a table cell.
 #: ../src/orca/braille_rolenames.py:227
 msgid "cll"
-msgstr ""
+msgstr "cll"
 
 #. Translators: short braille for the rolename of a tear off menu item.
 #: ../src/orca/braille_rolenames.py:236
 msgid "tomnuitm"
-msgstr ""
+msgstr "tomnuitm"
 
 #. Translators: short braille for the rolename of a terminal.
 #: ../src/orca/braille_rolenames.py:239
@@ -373,62 +375,62 @@ msgstr "шарт"
 #. Translators: short braille for the rolename of a text entry field.
 #: ../src/orca/braille_rolenames.py:242
 msgid "txt"
-msgstr ""
+msgstr "txt"
 
 #. Translators: short braille for the rolename of a toggle button.
 #: ../src/orca/braille_rolenames.py:245
 msgid "tglbtn"
-msgstr ""
+msgstr "tglbtn"
 
 #. Translators: short braille for the rolename of a toolbar.
 #: ../src/orca/braille_rolenames.py:248
 msgid "tbar"
-msgstr ""
+msgstr "tbar"
 
 #. Translators: short braille for the rolename of a tooltip.
 #: ../src/orca/braille_rolenames.py:251
 msgid "tip"
-msgstr ""
+msgstr "tip"
 
 #. Translators: short braille for the rolename of a tree.
 #: ../src/orca/braille_rolenames.py:254
 msgid "tre"
-msgstr ""
+msgstr "tre"
 
 #. Translators: short braille for the rolename of a tree table.
 #: ../src/orca/braille_rolenames.py:257
 msgid "trtbl"
-msgstr ""
+msgstr "trtbl"
 
 #. Translators: short braille for when the rolename of an object is unknown.
 #: ../src/orca/braille_rolenames.py:260
 msgid "unk"
-msgstr ""
+msgstr "unk"
 
 #. Translators: short braille for the rolename of a viewport.
 #: ../src/orca/braille_rolenames.py:263
 msgid "vwprt"
-msgstr ""
+msgstr "vwprt"
 
 #. Translators: short braille for the rolename of a window.
 #: ../src/orca/braille_rolenames.py:266
 msgid "wnd"
-msgstr ""
+msgstr "wnd"
 
 #. Translators: short braille for the rolename of a header.
 #: ../src/orca/braille_rolenames.py:269
 msgid "hdr"
-msgstr ""
+msgstr "hdr"
 
 #. Translators: short braille for the rolename of a footer.
 #: ../src/orca/braille_rolenames.py:272
 msgid "ftr"
-msgstr ""
+msgstr "ftr"
 
 #. Translators: short braille for the rolename of a paragraph.
 #: ../src/orca/braille_rolenames.py:275
 msgid "para"
-msgstr ""
+msgstr "para"
 
 #. Translators: short braille for the rolename of a application.
 #: ../src/orca/braille_rolenames.py:278
@@ -443,198 +445,198 @@ msgstr "худкор"
 #. Translators: short braille for the rolename of an editbar.
 #: ../src/orca/braille_rolenames.py:284
 msgid "edtbr"
-msgstr ""
+msgstr "edtbr"
 
 #. Translators: short braille for the rolename of an embedded component.
 #: ../src/orca/braille_rolenames.py:287
 msgid "emb"
-msgstr ""
+msgstr "emb"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:36
 msgid "Czech Grade 1"
-msgstr ""
+msgstr "Навъи чехии 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:40
 msgid "Spanish Grade 1"
-msgstr ""
+msgstr "Навъи испании 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:44
 msgid "Canada French Grade 2"
-msgstr ""
+msgstr "Навъи фаронсавии Канада 2"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:48
 msgid "France French Grade 2"
-msgstr ""
+msgstr "Навъи фаронсавии Фаронса 2"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:52
 msgid "Latvian Grade 1"
-msgstr ""
+msgstr "Навъи латвиягии 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:56
 msgid "Netherlands Dutch Grade 1"
-msgstr ""
+msgstr "Навъи голландии Нидерландия 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:60
 msgid "Norwegian Grade 0"
-msgstr ""
+msgstr "Навъи норвегиягии 0"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:64
 msgid "Norwegian Grade 1"
-msgstr ""
+msgstr "Навъи норвегиягии 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:68
 msgid "Norwegian Grade 2"
-msgstr ""
+msgstr "Навъи норвегиягии 2"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:72
 msgid "Norwegian Grade 3"
-msgstr ""
+msgstr "Навъи норвегиягии 3"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:76
 msgid "Polish Grade 1"
-msgstr ""
+msgstr "Навъи полякии 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:80
 msgid "Portuguese Grade 1"
-msgstr ""
+msgstr "Навъи португалии 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:84
 msgid "Swedish Grade 1"
-msgstr ""
+msgstr "Навъи шведии 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:88
 msgid "Arabic Grade 1"
-msgstr ""
+msgstr "Навъи арабии 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:92
 msgid "Welsh Grade 1"
-msgstr ""
+msgstr "навъи уэлсии 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:96
 msgid "Welsh Grade 2"
-msgstr ""
+msgstr "Навъи уэлсии 2"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:100
 msgid "German Grade 0"
-msgstr ""
+msgstr "Навъи олмонии 0"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:104
 msgid "German Grade 1"
-msgstr ""
+msgstr "Навъи олмонии 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:108
 msgid "German Grade 2"
-msgstr ""
+msgstr "Навъи олмонии 2"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:112
 msgid "U.K. English Grade 2"
-msgstr ""
+msgstr "Навъи англисии Британия 2"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:116
 msgid "U.K. English Grade 1"
-msgstr ""
+msgstr "Навъи англисии Британия 2"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:120
 msgid "U.S. English Grade 1"
-msgstr ""
+msgstr "Навъи англисии ИМА 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:124
 msgid "U.S. English Grade 2"
-msgstr ""
+msgstr "Навъи англисии ИМА 2"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:128
 msgid "Canada French Grade 1"
-msgstr ""
+msgstr "Навъи фаронсавии Канада 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:132
 msgid "France French Grade 1"
-msgstr ""
+msgstr "Навъи фаронсавии Фаронса 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:136
 msgid "Greek Grade 1"
-msgstr ""
+msgstr "Навъи юнонӣ 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:140
 msgid "Hindi Grade 1"
-msgstr ""
+msgstr "Навъи ҳиндӣ 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:144
 msgid "Hungarian 8 dot computer"
-msgstr ""
+msgstr "Компютери маҷористонии 8 нуқтагӣ"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:148
 msgid "Hungarian Grade 1"
-msgstr ""
+msgstr "Навъи маҷористонии 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:152
 msgid "Italian Grade 1"
-msgstr ""
+msgstr "Навъи италиягии 1"
 
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:156
 msgid "Belgium Dutch Grade 1"
-msgstr ""
+msgstr "Навъи голландии Белгия 1"
 
 #. Translators: this is the spoken word for the space character
 #.
@@ -646,7 +648,7 @@ msgstr "фосила"
 #.
 #: ../src/orca/chnames.py:43
 msgid "newline"
-msgstr ""
+msgstr "хати нав"
 
 #. Translators: this is the spoken word for the tab character
 #.
@@ -660,13 +662,13 @@ msgstr "варақа"
 #.
 #: ../src/orca/chnames.py:51
 msgid "exclaim"
-msgstr ""
+msgstr "хитоб"
 
 #. Translators: this is the spoken word for the character '"' (U+0022)
 #.
 #: ../src/orca/chnames.py:55
 msgid "quote"
-msgstr ""
+msgstr "иқтибос"
 
 #. Translators: this is the spoken word for the character '#' (U+0023)
 #.
@@ -696,25 +698,25 @@ msgstr "ва"
 #.
 #: ../src/orca/chnames.py:75
 msgid "apostrophe"
-msgstr ""
+msgstr "апостроф"
 
 #. Translators: this is the spoken word for the character '(' (U+0028)
 #.
 #: ../src/orca/chnames.py:79
 msgid "left paren"
-msgstr ""
+msgstr "қавси чап"
 
 #. Translators: this is the spoken word for the character ')' (U+0029)
 #.
 #: ../src/orca/chnames.py:83
 msgid "right paren"
-msgstr ""
+msgstr "қавси рост"
 
 #. Translators: this is the spoken word for the character '*' (U+002a)
 #.
 #: ../src/orca/chnames.py:87
 msgid "star"
-msgstr ""
+msgstr "ситорача"
 
 #. Translators: this is the spoken word for the character '+' (U+002b)
 #.
@@ -722,7 +724,7 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:91 ../src/orca/keynames.py:298
 msgid "plus"
-msgstr ""
+msgstr "ҷамъ"
 
 #. Translators: this is the spoken word for the character ',' (U+002c)
 #.
@@ -740,19 +742,19 @@ msgstr "рах"
 #.
 #: ../src/orca/chnames.py:103
 msgid "dot"
-msgstr ""
+msgstr "нуқта"
 
 #. Translators: this is the spoken word for the character '/' (U+002f)
 #.
 #: ../src/orca/chnames.py:107
 msgid "slash"
-msgstr ""
+msgstr "буриш"
 
 #. Translators: this is the spoken word for the character ':' (U+003a)
 #.
 #: ../src/orca/chnames.py:111
 msgid "colon"
-msgstr ""
+msgstr "аломати баён"
 
 #. Translators: this is the spoken word for the character ';' (U+003b)
 #.
@@ -794,25 +796,25 @@ msgstr "дар"
 #.
 #: ../src/orca/chnames.py:139
 msgid "left bracket"
-msgstr ""
+msgstr "камонаки чап"
 
 #. Translators: this is the spoken word for the character '\' (U+005c)
 #.
 #: ../src/orca/chnames.py:143
 msgid "backslash"
-msgstr ""
+msgstr "аломати хати каҷи баръакс"
 
 #. Translators: this is the spoken word for the character ']' (U+005d)
 #.
 #: ../src/orca/chnames.py:147
 msgid "right bracket"
-msgstr ""
+msgstr "камонаки рост"
 
 #. Translators: this is the spoken word for the character '^' (U+005e)
 #.
 #: ../src/orca/chnames.py:151
 msgid "caret"
-msgstr ""
+msgstr "аломати ^"
 
 #. Translators: this is the spoken word for the character '_' (U+005f)
 #.
@@ -827,25 +829,25 @@ msgstr "зерхаткашӣ"
 #.
 #: ../src/orca/chnames.py:159 ../src/orca/keynames.py:255
 msgid "grave"
-msgstr ""
+msgstr "паст"
 
 #. Translators: this is the spoken word for the character '{' (U+007b)
 #.
 #: ../src/orca/chnames.py:163
 msgid "left brace"
-msgstr ""
+msgstr "банди чап"
 
 #. Translators: this is the spoken word for the character '|' (U+007c)
 #.
 #: ../src/orca/chnames.py:167
 msgid "vertical bar"
-msgstr ""
+msgstr "навори амудӣ"
 
 #. Translators: this is the spoken word for the character '}' (U+007d)
 #.
 #: ../src/orca/chnames.py:171
 msgid "right brace"
-msgstr ""
+msgstr "банди рост"
 
 #. Translators: this is the spoken word for the character '~' (U+007e)
 #.
@@ -854,50 +856,50 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:175 ../src/orca/keynames.py:270
 msgid "tilde"
-msgstr ""
+msgstr "тилда"
 
 #. Translators: this is the spoken character for the no break space
 #. character (e.g., "&nbsp;" in HTML -- U+00a0)
 #.
 #: ../src/orca/chnames.py:180
 msgid "no break space"
-msgstr ""
+msgstr "бе фазои ҷудо"
 
 #. Translators: this is the spoken word for the character '¡' (U+00a1)
 #.
 #: ../src/orca/chnames.py:184
 msgid "inverted exclamation point"
-msgstr ""
+msgstr "нуқтаи хитоби баръакс"
 
 #. Translators: this is the spoken word for the character '¢' (U+00a2)
 #.
 #: ../src/orca/chnames.py:188
 msgid "cents"
-msgstr ""
+msgstr "сент"
 
 #. Translators: this is the spoken word for the character '£' (U+00a3)
 #.
 #: ../src/orca/chnames.py:192
 msgid "pounds"
-msgstr ""
+msgstr "фунт"
 
 #. Translators: this is the spoken word for the character '¤' (U+00a4)
 #.
 #: ../src/orca/chnames.py:196
 msgid "currency sign"
-msgstr ""
+msgstr "аломати асъор"
 
 #. Translators: this is the spoken word for the character '¥' (U+00a5)
 #.
 #: ../src/orca/chnames.py:200
 msgid "yen"
-msgstr ""
+msgstr "йен"
 
 #. Translators: this is the spoken word for the character '¦' (U+00a6)
 #.
 #: ../src/orca/chnames.py:204
 msgid "broken bar"
-msgstr ""
+msgstr "навори шикаста"
 
 #. Translators: this is the spoken word for the character '§' (U+00a7)
 #.
@@ -909,7 +911,7 @@ msgstr "қисмат"
 #.
 #: ../src/orca/chnames.py:212
 msgid "umlaut"
-msgstr ""
+msgstr "умляут"
 
 #. Translators: this is the spoken word for the character '©' (U+00a9)
 #.
@@ -927,31 +929,31 @@ msgstr "абарнигошт а"
 #.
 #: ../src/orca/chnames.py:224
 msgid "left double angle bracket"
-msgstr ""
+msgstr "қавси дукунҷаи чап"
 
 #. Translators: this is the spoken word for the character '¬' (U+00ac)
 #.
 #: ../src/orca/chnames.py:228
 msgid "logical not"
-msgstr ""
+msgstr "не-и мантиқӣ"
 
 #. Translators: this is the spoken word for the character '­' (U+00ad)
 #.
 #: ../src/orca/chnames.py:232
 msgid "soft hyphen"
-msgstr ""
+msgstr "тиреи нозук"
 
 #. Translators: this is the spoken word for the character '®' (U+00ae)
 #.
 #: ../src/orca/chnames.py:236
 msgid "registered"
-msgstr ""
+msgstr "сабтшуда"
 
 #. Translators: this is the spoken word for the character '¯' (U+00af)
 #.
 #: ../src/orca/chnames.py:240
 msgid "macron"
-msgstr ""
+msgstr "зада"
 
 #. Translators: this is the spoken word for the character '°' (U+00b0)
 #.
@@ -963,7 +965,7 @@ msgstr "дараҷа"
 #.
 #: ../src/orca/chnames.py:248
 msgid "plus or minus"
-msgstr ""
+msgstr "ҷамъ ё тарҳ"
 
 #. Translators: this is the spoken word for the character '²' (U+00b2)
 #.
@@ -981,25 +983,25 @@ msgstr "абарнигошт 3"
 #.
 #: ../src/orca/chnames.py:260
 msgid "acute accent"
-msgstr ""
+msgstr "лаҳҷаи дағал"
 
 #. Translators: this is the spoken word for the character 'µ' (U+00b5)
 #.
 #: ../src/orca/chnames.py:264
 msgid "mu"
-msgstr ""
+msgstr "mu"
 
 #. Translators: this is the spoken word for the character '¶' (U+00b6)
 #.
 #: ../src/orca/chnames.py:268
 msgid "paragraph marker"
-msgstr ""
+msgstr "нишонагузори банд"
 
 #. Translators: this is the spoken word for the character '·' (U+00b7)
 #.
 #: ../src/orca/chnames.py:272
 msgid "middle dot"
-msgstr ""
+msgstr "нуқтаи миёна"
 
 #. Translators: this is the spoken word for the character '¸' (U+00b8)
 #.
@@ -1008,7 +1010,7 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:276 ../src/orca/keynames.py:285
 msgid "cedilla"
-msgstr ""
+msgstr "думча"
 
 #. Translators: this is the spoken word for the character '¹' (U+00b9)
 #.
@@ -1020,489 +1022,489 @@ msgstr "абарнигошт 1"
 #.
 #: ../src/orca/chnames.py:284
 msgid "ordinal"
-msgstr ""
+msgstr "тартибӣ"
 
 #. Translators: this is the spoken word for the character '»' (U+00bb)
 #.
 #: ../src/orca/chnames.py:288
 msgid "right double angle bracket"
-msgstr ""
+msgstr "қавси дукунҷаи рост"
 
 #. Translators: this is the spoken word for the character '¼' (U+00bc)
 #.
 #: ../src/orca/chnames.py:292
 msgid "one fourth"
-msgstr ""
+msgstr "чоряк"
 
 #. Translators: this is the spoken word for the character '½' (U+00bd)
 #.
 #: ../src/orca/chnames.py:296
 msgid "one half"
-msgstr ""
+msgstr "нисф"
 
 #. Translators: this is the spoken word for the character '¾' (U+00be)
 #.
 #: ../src/orca/chnames.py:300
 msgid "three fourths"
-msgstr ""
+msgstr "аз чор се ҳисса"
 
 #. Translators: this is the spoken word for the character '¿' (U+00bf)
 #.
 #: ../src/orca/chnames.py:304
 msgid "inverted question mark"
-msgstr ""
+msgstr "аломати саволи баръакс"
 
 #. Translators: this is the spoken word for the character 'á' (U+00e1)
 #.
 #: ../src/orca/chnames.py:308
 msgid "a acute"
-msgstr ""
+msgstr "а-и зада"
 
 #. Translators: this is the spoken word for the character 'À' (U+00c0)
 #.
 #: ../src/orca/chnames.py:312
 msgid "A GRAVE"
-msgstr ""
+msgstr "А-и паст"
 
 #. Translators: this is the spoken word for the character 'Á' (U+00c1)
 #.
 #: ../src/orca/chnames.py:316
 msgid "A ACUTE"
-msgstr ""
+msgstr "А-и зада"
 
 #. Translators: this is the spoken word for the character 'Â' (U+00c2)
 #.
 #: ../src/orca/chnames.py:320
 msgid "A CIRCUMFLEX"
-msgstr ""
+msgstr "А-и дароз"
 
 #. Translators: this is the spoken word for the character 'Ã' (U+00c3)
 #.
 #: ../src/orca/chnames.py:324
 msgid "A TILDE"
-msgstr ""
+msgstr "А-и тилда"
 
 #. Translators: this is the spoken word for the character 'Ä' (U+00c4)
 #.
 #: ../src/orca/chnames.py:328
 msgid "A UMLAUT"
-msgstr ""
+msgstr "А-и умляут"
 
 #. Translators: this is the spoken word for the character 'Å' (U+00c5)
 #.
 #: ../src/orca/chnames.py:332
 msgid "A RING"
-msgstr ""
+msgstr "ҲАЛҚА"
 
 #. Translators: this is the spoken word for the character 'Æ' (U+00c6)
 #.
 #: ../src/orca/chnames.py:336
 msgid "A E"
-msgstr ""
+msgstr "A E"
 
 #. Translators: this is the spoken word for the character 'Ç' (U+00c7)
 #.
 #: ../src/orca/chnames.py:340
 msgid "C CEDILLA"
-msgstr ""
+msgstr "Ч (C CEDILLA)"
 
 #. Translators: this is the spoken word for the character 'È' (U+00c8)
 #.
 #: ../src/orca/chnames.py:344
 msgid "E GRAVE"
-msgstr ""
+msgstr "Е-и паст"
 
 #. Translators: this is the spoken word for the character 'É' (U+00c9)
 #.
 #: ../src/orca/chnames.py:348
 msgid "E ACUTE"
-msgstr ""
+msgstr "Е-и зада"
 
 #. Translators: this is the spoken word for the character 'Ê' (U+00ca)
 #.
 #: ../src/orca/chnames.py:352
 msgid "E CIRCUMFLEX"
-msgstr ""
+msgstr "Е-и дароз"
 
 #. Translators: this is the spoken word for the character 'Ë' (U+00cb)
 #.
 #: ../src/orca/chnames.py:356
 msgid "E UMLAUT"
-msgstr ""
+msgstr "Е-и умляут"
 
 #. Translators: this is the spoken word for the character 'Ì' (U+00cc)
 #.
 #: ../src/orca/chnames.py:360
 msgid "I GRAVE"
-msgstr ""
+msgstr "И-и паст"
 
 #. Translators: this is the spoken word for the character 'Í' (U+00cd)
 #.
 #: ../src/orca/chnames.py:364
 msgid "I ACUTE"
-msgstr ""
+msgstr "И-и зада"
 
 #. Translators: this is the spoken word for the character 'Î' (U+00ce)
 #.
 #: ../src/orca/chnames.py:368
 msgid "I CIRCUMFLEX"
-msgstr ""
+msgstr "И-и дароз"
 
 #. Translators: this is the spoken word for the character 'Ï' (U+00cf)
 #.
 #: ../src/orca/chnames.py:372
 msgid "I UMLAUT"
-msgstr ""
+msgstr "И-и умляут"
 
 #. Translators: this is the spoken word for the character 'Ð' (U+00d0)
 #.
 #: ../src/orca/chnames.py:376
 msgid "ETH"
-msgstr ""
+msgstr "-УМ"
 
 #. Translators: this is the spoken word for the character 'Ñ' (U+00d1)
 #.
 #: ../src/orca/chnames.py:380
 msgid "N TILDE"
-msgstr ""
+msgstr "Н-и тилда"
 
 #. Translators: this is the spoken word for the character 'Ò' (U+00d2)
 #.
 #: ../src/orca/chnames.py:384
 msgid "O GRAVE"
-msgstr ""
+msgstr "О-и паст"
 
 #. Translators: this is the spoken word for the character 'Ó' (U+00d3)
 #.
 #: ../src/orca/chnames.py:388
 msgid "O ACUTE"
-msgstr ""
+msgstr "О-и зада"
 
 #. Translators: this is the spoken word for the character 'Ô' (U+00d4)
 #.
 #: ../src/orca/chnames.py:392
 msgid "O CIRCUMFLEX"
-msgstr ""
+msgstr "О-и дароз"
 
 #. Translators: this is the spoken word for the character 'Õ' (U+00d5)
 #.
 #: ../src/orca/chnames.py:396
 msgid "O TILDE"
-msgstr ""
+msgstr "О-и тилда"
 
 #. Translators: this is the spoken word for the character 'Ö' (U+00d6)
 #.
 #: ../src/orca/chnames.py:400
 msgid "O UMLAUT"
-msgstr ""
+msgstr "О-и умляут"
 
 #. Translators: this is the spoken word for the character '×' (U+00d7)
 #.
 #: ../src/orca/chnames.py:404
 msgid "times"
-msgstr ""
+msgstr "зарб"
 
 #. Translators: this is the spoken word for the character 'Ø' (U+00d8)
 #.
 #: ../src/orca/chnames.py:408
 msgid "O STROKE"
-msgstr ""
+msgstr "О-и шикаста"
 
 #. Translators: this is the spoken word for the character 'Ù' (U+00d9)
 #.
 #: ../src/orca/chnames.py:412
 msgid "U GRAVE"
-msgstr ""
+msgstr "У-и паст"
 
 #. Translators: this is the spoken word for the character 'Ú' (U+00da)
 #.
 #: ../src/orca/chnames.py:416
 msgid "U ACUTE"
-msgstr ""
+msgstr "У-и зада"
 
 #. Translators: this is the spoken word for the character 'Û' (U+00db)
 #.
 #: ../src/orca/chnames.py:420
 msgid "U CIRCUMFLEX"
-msgstr ""
+msgstr "У-и дароз"
 
 #. Translators: this is the spoken word for the character 'Ü' (U+00dc)
 #.
 #: ../src/orca/chnames.py:424
 msgid "U UMLAUT"
-msgstr ""
+msgstr "У-и умляут"
 
 #. Translators: this is the spoken word for the character 'Ý' (U+00dd)
 #.
 #: ../src/orca/chnames.py:428
 msgid "Y ACUTE"
-msgstr ""
+msgstr "Й-и зада"
 
 #. Translators: this is the spoken word for the character 'Þ' (U+00de)
 #.
 #: ../src/orca/chnames.py:432
 msgid "THORN"
-msgstr ""
+msgstr "Торн"
 
 #. Translators: this is the spoken word for the character 'ß' (U+00df)
 #.
 #: ../src/orca/chnames.py:436
 msgid "s sharp"
-msgstr ""
+msgstr "с-и тез"
 
 #. Translators: this is the spoken word for the character 'à' (U+00e0)
 #.
 #: ../src/orca/chnames.py:440
 msgid "a grave"
-msgstr ""
+msgstr "а-и паст"
 
 #. Translators: this is the spoken word for the character 'â' (U+00e2)
 #.
 #: ../src/orca/chnames.py:444
 msgid "a circumflex"
-msgstr ""
+msgstr "а-и дароз"
 
 #. Translators: this is the spoken word for the character 'ã' (U+00e3)
 #.
 #: ../src/orca/chnames.py:448
 msgid "a tilde"
-msgstr ""
+msgstr "а-и тилда"
 
 #. Translators: this is the spoken word for the character 'ä' (U+00e4)
 #.
 #: ../src/orca/chnames.py:452
 msgid "a umlaut"
-msgstr ""
+msgstr "а-и умбляут"
 
 #. Translators: this is the spoken word for the character 'å' (U+00e5)
 #.
 #: ../src/orca/chnames.py:456
 msgid "a ring"
-msgstr ""
+msgstr "а-и ҳалқа"
 
 #. Translators: this is the spoken word for the character 'æ' (U+00e6)
 #.
 #: ../src/orca/chnames.py:460
 msgid "a e"
-msgstr ""
+msgstr "a e"
 
 #. Translators: this is the spoken word for the character 'ç' (U+00e7)
 #.
 #: ../src/orca/chnames.py:464
 msgid "c cedilla"
-msgstr ""
+msgstr "с-и седил"
 
 #. Translators: this is the spoken word for the character 'è' (U+00e8)
 #.
 #: ../src/orca/chnames.py:468
 msgid "e grave"
-msgstr ""
+msgstr "е-и паст"
 
 #. Translators: this is the spoken word for the character 'é' (U+00e9)
 #.
 #: ../src/orca/chnames.py:472
 msgid "e acute"
-msgstr ""
+msgstr "е-и зада"
 
 #. Translators: this is the spoken word for the character 'ê' (U+00ea)
 #.
 #: ../src/orca/chnames.py:476
 msgid "e circumflex"
-msgstr ""
+msgstr "е-и дароз"
 
 #. Translators: this is the spoken word for the character 'ë' (U+00eb)
 #.
 #: ../src/orca/chnames.py:480
 msgid "e umlaut"
-msgstr ""
+msgstr "е-и умляут"
 
 #. Translators: this is the spoken word for the character 'ì' (U+00ec)
 #.
 #: ../src/orca/chnames.py:484
 msgid "i grave"
-msgstr ""
+msgstr "и-и паст"
 
 #. Translators: this is the spoken word for the character 'í' (U+00ed)
 #.
 #: ../src/orca/chnames.py:488
 msgid "i acute"
-msgstr ""
+msgstr "и-и зада"
 
 #. Translators: this is the spoken word for the character 'î' (U+00ee)
 #.
 #: ../src/orca/chnames.py:492
 msgid "i circumflex"
-msgstr ""
+msgstr "и-и дароз"
 
 #. Translators: this is the spoken word for the character 'ï' (U+00ef)
 #.
 #: ../src/orca/chnames.py:496
 msgid "i umlaut"
-msgstr ""
+msgstr "и-и умляут"
 
 #. Translators: this is the spoken word for the character 'ð' (U+00f0)
 #.
 #: ../src/orca/chnames.py:500
 msgid "eth"
-msgstr ""
+msgstr "-ум"
 
 #. Translators: this is the spoken word for the character 'ñ' (U+00f1)
 #.
 #: ../src/orca/chnames.py:504
 msgid "n tilde"
-msgstr ""
+msgstr "н-и тилда"
 
 #. Translators: this is the spoken word for the character 'ò' (U+00f2)
 #.
 #: ../src/orca/chnames.py:508
 msgid "o grave"
-msgstr ""
+msgstr "о-и паст"
 
 #. Translators: this is the spoken word for the character 'ó' (U+00f3)
 #.
 #: ../src/orca/chnames.py:512
 msgid "o acute"
-msgstr ""
+msgstr "о-и зада"
 
 #. Translators: this is the spoken word for the character 'ô' (U+00f4)
 #.
 #: ../src/orca/chnames.py:516
 msgid "o circumflex"
-msgstr ""
+msgstr "о-и дароз"
 
 #. Translators: this is the spoken word for the character 'õ' (U+00f5)
 #.
 #: ../src/orca/chnames.py:520
 msgid "o tilde"
-msgstr ""
+msgstr "о-и тилда"
 
 #. Translators: this is the spoken word for the character 'ö' (U+00f6)
 #.
 #: ../src/orca/chnames.py:524
 msgid "o umlaut"
-msgstr ""
+msgstr "о-и умляут"
 
 #. Translators: this is the spoken word for the character '÷' (U+00f7)
 #.
 #: ../src/orca/chnames.py:528
 msgid "divided by"
-msgstr ""
+msgstr "тақсимшуда бо"
 
 #. Translators: this is the spoken word for the character 'ø' (U+00f8)
 #.
 #: ../src/orca/chnames.py:532
 msgid "o stroke"
-msgstr ""
+msgstr "о-и бурида"
 
 #. Translators: this is the spoken word for the character 'þ' (U+00fe)
 #.
 #: ../src/orca/chnames.py:536
 msgid "thorn"
-msgstr ""
+msgstr "торн"
 
 #. Translators: this is the spoken word for the character 'ú' (U+00fa)
 #.
 #: ../src/orca/chnames.py:540
 msgid "u acute"
-msgstr ""
+msgstr "у-и зада"
 
 #. Translators: this is the spoken word for the character 'ù' (U+00f9)
 #.
 #: ../src/orca/chnames.py:544
 msgid "u grave"
-msgstr ""
+msgstr "у-и паст"
 
 #. Translators: this is the spoken word for the character 'û' (U+00fb)
 #.
 #: ../src/orca/chnames.py:548
 msgid "u circumflex"
-msgstr ""
+msgstr "у-и дароз"
 
 #. Translators: this is the spoken word for the character 'ü' (U+00fc)
 #.
 #: ../src/orca/chnames.py:552
 msgid "u umlaut"
-msgstr ""
+msgstr "у-и умляут"
 
 #. Translators: this is the spoken word for the character 'ý' (U+00fd)
 #.
 #: ../src/orca/chnames.py:556
 msgid "y acute"
-msgstr ""
+msgstr "й-и зада"
 
 #. Translators: this is the spoken word for the character 'ÿ' (U+00ff)
 #.
 #: ../src/orca/chnames.py:560
 msgid "y umlaut"
-msgstr ""
+msgstr "й-и умляут"
 
 #. Translators: this is the spoken word for the character 'Ÿ' (U+0178)
 #.
 #: ../src/orca/chnames.py:564
 msgid "Y UMLAUT"
-msgstr ""
+msgstr "Й-и умляут"
 
 #. Translators: this is the spoken word for the character 'ƒ' (U+0192)
 #.
 #: ../src/orca/chnames.py:568
 msgid "florin"
-msgstr ""
+msgstr "флорин"
 
 #. Translators: this is the spoken word for the character '–' (U+2013)
 #.
 #: ../src/orca/chnames.py:572
 msgid "en dash"
-msgstr ""
+msgstr "тиреи поён"
 
 #. Translators: this is the spoken word for the left single quote: ‘
 #. (U+2018)
 #.
 #: ../src/orca/chnames.py:577
 msgid "left single quote"
-msgstr ""
+msgstr "нохунаки яктогии чап"
 
 #. Translators: this is the spoken word for the right single quote: ’
 #. (U+2019)
 #.
 #: ../src/orca/chnames.py:582
 msgid "right single quote"
-msgstr ""
+msgstr "нохунаки яктогии рост"
 
 #. Translators: this is the spoken word for the character '‚' (U+201a)
 #.
 #: ../src/orca/chnames.py:586
 msgid "single low quote"
-msgstr ""
+msgstr "нохунаки яктогии поён"
 
 #. Translators: this is the spoken word for the character '“' (U+201c)
 #.
 #: ../src/orca/chnames.py:590
 msgid "left double quote"
-msgstr ""
+msgstr "нохунаки дутогии чап"
 
 #. Translators: this is the spoken word for the character '”' (U+201d)
 #.
 #: ../src/orca/chnames.py:594
 msgid "right double quote"
-msgstr ""
+msgstr "нохунаки дутогии рост"
 
 #. Translators: this is the spoken word for the character '„' (U+201e)
 #.
 #: ../src/orca/chnames.py:598
 msgid "double low quote"
-msgstr ""
+msgstr "нохунаки дутогии поён"
 
 #. Translators: this is the spoken word for the character '†' (U+2020)
 #.
 #: ../src/orca/chnames.py:602
 msgid "dagger"
-msgstr ""
+msgstr "салибча"
 
 #. Translators: this is the spoken word for the character '‡' (U+2021)
 #.
 #: ../src/orca/chnames.py:606
 msgid "double dagger"
-msgstr ""
+msgstr "салибчаи дугона"
 
 #. Translators: this is the spoken word for the character '•' (U+2022)
 #.
@@ -1514,61 +1516,61 @@ msgstr "нишон"
 #.
 #: ../src/orca/chnames.py:614
 msgid "triangular bullet"
-msgstr ""
+msgstr "нишони секунҷа"
 
 #. Translators: this is the spoken word for the character '‰' (U+2030)
 #.
 #: ../src/orca/chnames.py:618
 msgid "per mille"
-msgstr ""
+msgstr "Промил"
 
 #. Translators: this is the spoken word for the character '′' (U+2032)
 #.
 #: ../src/orca/chnames.py:622
 msgid "prime"
-msgstr ""
+msgstr "нохунаки асосӣ"
 
 #. Translators: this is the spoken word for the character '″' (U+2033)
 #.
 #: ../src/orca/chnames.py:626
 msgid "double prime"
-msgstr ""
+msgstr "нохунаки асосии дутогӣ"
 
 #. Translators: this is the spoken word for the character '⁃' (U+2043)
 #.
 #: ../src/orca/chnames.py:630
 msgid "hyphen bullet"
-msgstr ""
+msgstr "нишонаи тире"
 
 #. Translators: this is the spoken word for the character '€' (U+20ac)
 #.
 #: ../src/orca/chnames.py:634
 msgid "euro"
-msgstr ""
+msgstr "евро"
 
 #. Translators: this is the spoken word for the character '™' (U+2122)
 #.
 #: ../src/orca/chnames.py:638
 msgid "trademark"
-msgstr ""
+msgstr "Тамғаи корхона"
 
 #. Translators: this is the spoken word for the character '←' (U+2190)
 #.
 #: ../src/orca/chnames.py:642
 msgid "left arrow"
-msgstr ""
+msgstr "тири чап"
 
 #. Translators: this is the spoken word for the character '→' (U+2192)
 #.
 #: ../src/orca/chnames.py:646
 msgid "right arrow"
-msgstr ""
+msgstr "тири рост"
 
 #. Translators: this is the spoken word for the character '≈' (U+2248)
 #.
 #: ../src/orca/chnames.py:650
 msgid "almost equal to"
-msgstr ""
+msgstr "тақрибан баробар ба"
 
 #. Translators: this is the spoken word for the character '≠' (U+2260)
 #.
@@ -1592,19 +1594,19 @@ msgstr "зиёдтар аз ё баробар ба"
 #.
 #: ../src/orca/chnames.py:666
 msgid "square root"
-msgstr ""
+msgstr "решаи квадрат"
 
 #. Translators: this is the spoken word for the character '∛' (U+221b)
 #.
 #: ../src/orca/chnames.py:670
 msgid "cube root"
-msgstr ""
+msgstr "решаи куб"
 
 #. Translators: this is the spoken word for the character '∞' (U+221e)
 #.
 #: ../src/orca/chnames.py:674
 msgid "infinity"
-msgstr ""
+msgstr "беохир"
 
 #. Translators: this is the spoken word for the character '■' (U+25a0)
 #. It can be used as a bullet in a list.
@@ -1615,14 +1617,14 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:679 ../src/orca/chnames.py:854
 msgid "black square"
-msgstr ""
+msgstr "чоркунҷаи сиёҳ"
 
 #. Translators: this is the spoken word for the character '□' (U+25a1)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:684
 msgid "white square"
-msgstr ""
+msgstr "чоркунҷаи сафед"
 
 #. Translators: this is the spoken word for the character '◆' (U+25c6)
 #. It can be used as a bullet in a list.
@@ -1633,41 +1635,41 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:689 ../src/orca/chnames.py:860
 msgid "black diamond"
-msgstr ""
+msgstr "алмоси сиёҳ"
 
 #. Translators: this is the spoken word for the character '○' (U+25cb)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:694
 msgid "white circle"
-msgstr ""
+msgstr "доираи сафед"
 
 #. Translators: this is the spoken word for the character '●' (U+25cf)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:699
 msgid "black circle"
-msgstr ""
+msgstr "доираи сиёҳ"
 
 #. Translators: this is the spoken word for the character '◦' (U+25e6)
 #.
 #: ../src/orca/chnames.py:703
 msgid "white bullet"
-msgstr ""
+msgstr "нишони сафед"
 
 #. Translators: this is the spoken word for the character '✓' (U+2713)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:708
 msgid "check mark"
-msgstr ""
+msgstr "аломати тасдиқ"
 
 #. Translators: this is the spoken word for the character '✔' (U+2714)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:713
 msgid "heavy check mark"
-msgstr ""
+msgstr "аломати тасдиқи пурранг"
 
 #. Translators: this is the spoken word for the character 'x' (U+2717)
 #. This symbol is included here because it can be used as a bullet in
@@ -1678,7 +1680,7 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:722
 msgid "x-shaped bullet"
-msgstr ""
+msgstr "нишрна дар шакли x"
 
 #. Translators: this is the spoken word for the character '➔' (U+2794)
 #. This symbol is included here because it can be used as a bullet in
@@ -1687,7 +1689,7 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:729
 msgid "right-pointing arrow"
-msgstr ""
+msgstr "тири ишоратии рост"
 
 #. Translators: this is the spoken word for the character '⁰' (U+2070)
 #.
@@ -1735,31 +1737,31 @@ msgstr "абарнигошт 9"
 #.
 #: ../src/orca/chnames.py:761
 msgid "superscript plus"
-msgstr ""
+msgstr "ҷамъи абарнигошт"
 
 #. Translators: this is the spoken word for the character '⁻' (U+207b)
 #.
 #: ../src/orca/chnames.py:765
 msgid "superscript minus"
-msgstr ""
+msgstr "тарҳи абарнигошт"
 
 #. Translators: this is the spoken word for the character '⁼' (U+207c)
 #.
 #: ../src/orca/chnames.py:769
 msgid "superscript equals"
-msgstr ""
+msgstr "баробари абарнигошт"
 
 #. Translators: this is the spoken word for the character '⁽' (U+207d)
 #.
 #: ../src/orca/chnames.py:773
 msgid "superscript left paren"
-msgstr ""
+msgstr "қавси чапи абарнигошт"
 
 #. Translators: this is the spoken word for the character '⁾' (U+207e)
 #.
 #: ../src/orca/chnames.py:777
 msgid "superscript right paren"
-msgstr ""
+msgstr "қавси рости абарнигошт"
 
 #. Translators: this is the spoken word for the character 'ⁿ' (U+207f)
 #.
@@ -1831,31 +1833,31 @@ msgstr "зернигошт 9"
 #.
 #: ../src/orca/chnames.py:825
 msgid "subscript plus"
-msgstr ""
+msgstr "ҷамъи зернигошт"
 
 #. Translators: this is the spoken word for the character '₋' (U+208b)
 #.
 #: ../src/orca/chnames.py:829
 msgid "subscript minus"
-msgstr ""
+msgstr "тарҳи зернигошт"
 
 #. Translators: this is the spoken word for the character '₌' (U+208c)
 #.
 #: ../src/orca/chnames.py:833
 msgid "subscript equals"
-msgstr ""
+msgstr "баробари зернигошт"
 
 #. Translators: this is the spoken word for the character '₍' (U+208d)
 #.
 #: ../src/orca/chnames.py:837
 msgid "subscript left paren"
-msgstr ""
+msgstr "қавси чапи зернигошт"
 
 #. Translators: this is the spoken word for the character '₎' (U+208e)
 #.
 #: ../src/orca/chnames.py:841
 msgid "subscript right paren"
-msgstr ""
+msgstr "қавси рости зернигошт"
 
 #. Translators: this is the spoken word for the character '➢' (U+27a2)
 #. This symbol is included here because it can be used as a bullet in an
@@ -1864,13 +1866,13 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:848
 msgid "right-pointing arrowhead"
-msgstr ""
+msgstr "нӯки тири нишонагузории рост"
 
 #. Translators: this command will move the mouse pointer to the current item
 #. without clicking on it.
 #: ../src/orca/cmdnames.py:37
 msgid "Routes the pointer to the current item."
-msgstr ""
+msgstr "Курсорро ба объекти ҷорӣ равона месозад."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2324,7 +2326,7 @@ msgstr ""
 #. Orca.
 #: ../src/orca/cmdnames.py:397
 msgid "Quits Orca"
-msgstr ""
+msgstr "Orca-ро хомӯш менамояд"
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for Orca.
@@ -2406,14 +2408,14 @@ msgstr ""
 #. a web page.
 #: ../src/orca/cmdnames.py:462
 msgid "Go to previous bookmark location."
-msgstr ""
+msgstr "Гузаштан ба ҷойгиршавии хатчӯби қаблӣ."
 
 #. Translators: this command moves the user to the location stored at the bookmark.
 #. Note that in this context, the "bookmark" is storing the location of an
 #. accessible object, typically on a web page.
 #: ../src/orca/cmdnames.py:467
 msgid "Go to bookmark."
-msgstr ""
+msgstr "Гузаштан ба хатчӯб."
 
 #. Translators: this event handler cycles through the registered bookmarks and
 #. takes the user to the next bookmark location. Note that in this context, the
@@ -2421,7 +2423,7 @@ msgstr ""
 #. page.
 #: ../src/orca/cmdnames.py:473
 msgid "Go to next bookmark location."
-msgstr ""
+msgstr "Гузаштан ба ҷойгиршавии хатчӯби навбатӣ."
 
 #. Translators: this event handler binds an in-page accessible object location to
 #. the given input key command.
@@ -2433,25 +2435,25 @@ msgstr "Илова кардани хатбарак."
 #. to disk.
 #: ../src/orca/cmdnames.py:481
 msgid "Save bookmarks."
-msgstr ""
+msgstr "Захираи хатчӯбҳо."
 
 #. Translators: Orca allows the item under the pointer to be spoken. This toggles
 #. the feature without the need to get into a GUI.
 #: ../src/orca/cmdnames.py:485
 msgid "Toggle mouse review mode."
-msgstr ""
+msgstr "Зомини ҳолати намоиши муш."
 
 #. Translators: Orca has a command to present the current time in speech and in
 #. braille.
 #: ../src/orca/cmdnames.py:489
 msgid "Present current time."
-msgstr ""
+msgstr "Вақти ҷории ҳозира."
 
 #. Translators: Orca has a command to present the current date in speech and in
 #. braille.
 #: ../src/orca/cmdnames.py:493
 msgid "Present current date."
-msgstr ""
+msgstr "Санаи ҷории ҳозира."
 
 #. Translators: Orca normally intercepts all keyboard commands and only passes
 #. them along to the current application when they are not Orca commands. This
@@ -2505,14 +2507,14 @@ msgstr ""
 #. button, the display scrolls to the left.
 #: ../src/orca/cmdnames.py:540
 msgid "Line Left"
-msgstr ""
+msgstr "Сафкашии чап"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the right.
 #: ../src/orca/cmdnames.py:545
 msgid "Line Right"
-msgstr ""
+msgstr "Сафкашии рост"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
@@ -2533,7 +2535,7 @@ msgstr "Хат ба поён"
 #. button, it instructs the braille display to freeze.
 #: ../src/orca/cmdnames.py:560
 msgid "Freeze"
-msgstr ""
+msgstr "Боздоштани тасвир"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
@@ -2546,25 +2548,24 @@ msgstr "Болои чап"
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the bottom left of the window.
 #: ../src/orca/cmdnames.py:570
-#, fuzzy
 #| msgctxt "notification"
 #| msgid "Bottom"
 msgid "Bottom Left"
-msgstr "Поён"
+msgstr "Поён чап"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to position containing the cursor.
 #: ../src/orca/cmdnames.py:575
 msgid "Cursor Position"
-msgstr ""
+msgstr "Вазъияти курсор"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display toggles between six-dot braille and eight-dot braille.
 #: ../src/orca/cmdnames.py:580
 msgid "Six Dots"
-msgstr ""
+msgstr "Шаш нуқтагӣ"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). This command
@@ -2573,7 +2574,7 @@ msgstr ""
 #. display.
 #: ../src/orca/cmdnames.py:587
 msgid "Cursor Routing"
-msgstr ""
+msgstr "Масиргузории курсор"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). This command
@@ -2582,7 +2583,7 @@ msgstr ""
 #. consoles, the act of copying text is erroneously called a "cut" operation.
 #: ../src/orca/cmdnames.py:594
 msgid "Cut Begin"
-msgstr ""
+msgstr "Буридани ибтидо"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). This command
@@ -2591,91 +2592,91 @@ msgstr ""
 #. consoles, the act of copying text is erroneously called a "cut" operation.
 #: ../src/orca/cmdnames.py:601
 msgid "Cut Line"
-msgstr ""
+msgstr "Буридани хат"
 
 #. Translators: this is a command which causes Orca to present the last received
 #. notification message.
 #: ../src/orca/cmdnames.py:605
 msgid "Present last notification message."
-msgstr ""
+msgstr "Паёми огоҳии охирини ҳозира."
 
 #. Translators: this is a command which causes Orca to present a list of all the
 #. notification messages received.
 #: ../src/orca/cmdnames.py:609
 msgid "Present notification messages list"
-msgstr ""
+msgstr "Рӯйхати паёмҳои огоҳии ҳозира."
 
 #. Translators: this is a command which causes Orca to present the previous
 #. notification message.
 #: ../src/orca/cmdnames.py:613
 msgid "Present previous notification message."
-msgstr ""
+msgstr "Паёми огоҳии қаблии ҳозира."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:616
 msgid "Goes to next character."
-msgstr ""
+msgstr "Ба аломати оянда мегузарад."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:619
 msgid "Goes to previous character."
-msgstr ""
+msgstr "Ба аломати қаблӣ мегузарад."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:622
 msgid "Goes to next word."
-msgstr ""
+msgstr "Ба калимаи оянда мегузарад."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:625
 msgid "Goes to previous word."
-msgstr ""
+msgstr "Ба калимаи қаблӣ мегузарад."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:628
 msgid "Goes to next line."
-msgstr ""
+msgstr "Ба хати оянда мегузарад."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:631
 msgid "Goes to previous line."
-msgstr ""
+msgstr "Ба хати қаблӣ мегузарад."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:634
 msgid "Goes to the top of the file."
-msgstr ""
+msgstr "Ба болои файл мегузарад."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:637
 msgid "Goes to the bottom of the file."
-msgstr ""
+msgstr "Ба поёни файл мегузарад."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:640
 msgid "Goes to the beginning of the line."
-msgstr ""
+msgstr "Ба аввали хат мегузарад."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:643
 msgid "Goes to the end of the line."
-msgstr ""
+msgstr "Ба охири хат мегузарад."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:646
 msgid "Goes to the next object."
-msgstr ""
+msgstr "Ба объекти навбатӣ мегузарад."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:649
 msgid "Goes to the previous object."
-msgstr ""
+msgstr "Ба объекти навбатӣ мегузарад."
 
 #. Translators: this is for causing a collapsed combo box which was reached
 #. by Orca's caret navigation to be expanded.
 #: ../src/orca/cmdnames.py:654
 msgid "Causes the current combo box to be expanded."
-msgstr ""
+msgstr "Боиси васеъ шудани менюи кушодашаванда мешавад."
 
 #. Translators: Gecko native caret navigation is where Firefox (or Thunderbird)
 #. itself controls how the arrow keys move the caret around HTML content. It's
@@ -2786,317 +2787,317 @@ msgstr ""
 #. a named spot that one can jump to.
 #: ../src/orca/cmdnames.py:741
 msgid "Goes to previous anchor."
-msgstr ""
+msgstr "Ба лангари қаблӣ мегузарад."
 
 #. Translators: this is for navigating among anchors in a document. An anchor is
 #. a named spot that one can jump to.
 #: ../src/orca/cmdnames.py:745
 msgid "Goes to next anchor."
-msgstr ""
+msgstr "Ба лангари навбатӣ мегузарад."
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: ../src/orca/cmdnames.py:748
 msgid "Goes to previous blockquote."
-msgstr ""
+msgstr "Ба нақли қавли қаблӣ мегузарад."
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: ../src/orca/cmdnames.py:751
 msgid "Goes to next blockquote."
-msgstr ""
+msgstr "Ба нақли қавли навбатӣ мегазарад."
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: ../src/orca/cmdnames.py:754
 msgid "Displays a list of blockquotes."
-msgstr ""
+msgstr "Рӯйхати нақли қавлҳоро намоиш медиҳад."
 
 #. Translators: this is for navigating among buttons in a document.
 #: ../src/orca/cmdnames.py:757
 msgid "Goes to previous button."
-msgstr ""
+msgstr "Ба тугмаи қаблӣ мегузарад."
 
 #. Translators: this is for navigating among buttons in a document.
 #: ../src/orca/cmdnames.py:760
 msgid "Goes to next button."
-msgstr ""
+msgstr "Ба тугмаи навбатӣ мегузарад."
 
 #. Translators: this is for navigating among buttons in a document.
 #: ../src/orca/cmdnames.py:763
 msgid "Displays a list of buttons."
-msgstr ""
+msgstr "Рӯйхати тугмаҳоро намоиш медиҳад."
 
 #. Translators: this is for navigating among check boxes in a document.
 #: ../src/orca/cmdnames.py:766
 msgid "Goes to previous check box."
-msgstr ""
+msgstr "Ба байрақчаи қаблӣ мегузарад."
 
 #. Translators: this is for navigating among check boxes in a document.
 #: ../src/orca/cmdnames.py:769
 msgid "Goes to next check box."
-msgstr ""
+msgstr "Ба байрақчаи навбатӣ мегузарад."
 
 #. Translators: this is for navigating among check boxes in a document.
 #: ../src/orca/cmdnames.py:772
 msgid "Displays a list of check boxes."
-msgstr ""
+msgstr "Рӯйхати байрақчаҳоро намоиш медиҳад."
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: ../src/orca/cmdnames.py:775
 msgid "Goes to previous combo box."
-msgstr ""
+msgstr "Ба ҷаъбаи мураккаби қаблӣ мегузарад."
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: ../src/orca/cmdnames.py:778
 msgid "Goes to next combo box."
-msgstr ""
+msgstr "Ба ҷаъбаи мураккаби навбатӣ мегузарад."
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: ../src/orca/cmdnames.py:781
 msgid "Displays a list of combo boxes."
-msgstr ""
+msgstr "Рӯйхати ҷаъбаҳои мураккабро намоиш медиҳад."
 
 #. Translators: this is for navigating among entries in a document.
 #: ../src/orca/cmdnames.py:784
 msgid "Goes to previous entry."
-msgstr ""
+msgstr "Ба вурудии қаблӣ мегузарад."
 
 #. Translators: this is for navigating among entries in a document.
 #: ../src/orca/cmdnames.py:787
 msgid "Goes to next entry."
-msgstr ""
+msgstr "Ба вурудии навбатӣ мегузарад."
 
 #. Translators: this is for navigating among entries in a document.
 #: ../src/orca/cmdnames.py:790
 msgid "Displays a list of entries."
-msgstr ""
+msgstr "Рӯйхати вурудиҳоро намоиш медиҳад."
 
 #. Translators: this is for navigating among form fields in a document.
 #: ../src/orca/cmdnames.py:793
 msgid "Goes to previous form field."
-msgstr ""
+msgstr "Ба майдони шакли қаблӣ мегузарад."
 
 #. Translators: this is for navigating among form fields in a document.
 #: ../src/orca/cmdnames.py:796
 msgid "Goes to next form field."
-msgstr ""
+msgstr "Ба майдони шакли навбатӣ мегузарад."
 
 #. Translators: this is for navigating among form fields in a document.
 #: ../src/orca/cmdnames.py:799
 msgid "Displays a list of form fields."
-msgstr ""
+msgstr "Рӯйхати шакли майдонҳоро намоиш медиҳад."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: ../src/orca/cmdnames.py:802
 msgid "Goes to previous heading."
-msgstr ""
+msgstr "Ба сарварақи қаблӣ мегузарад."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: ../src/orca/cmdnames.py:805
 msgid "Goes to next heading."
-msgstr ""
+msgstr "Ба сарварақи навбатӣ мегузарад."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: ../src/orca/cmdnames.py:808
 msgid "Displays a list of headings."
-msgstr ""
+msgstr "Рӯйхати сарварақҳоро намоиш медиҳад."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: ../src/orca/cmdnames.py:812
 #, python-format
 msgid "Goes to previous heading at level %d."
-msgstr ""
+msgstr "Ба сарварақи қаблӣ дар сатҳи %d мегузарад."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: ../src/orca/cmdnames.py:816
 #, python-format
 msgid "Goes to next heading at level %d."
-msgstr ""
+msgstr "Ба сарварақи навбатӣ дар сатҳи %d мегузарад."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: ../src/orca/cmdnames.py:820
 #, python-format
 msgid "Displays a list of headings at level %d."
-msgstr ""
+msgstr "Рӯйхати сарварақҳоро дар сатҳи %d намоиш медиҳад."
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: ../src/orca/cmdnames.py:825
 msgid "Goes to previous landmark."
-msgstr ""
+msgstr "Ба аломати марзии қаблӣ мегузарад."
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: ../src/orca/cmdnames.py:830
 msgid "Goes to next landmark."
-msgstr ""
+msgstr "Ба аломати марзии навбатӣ мегузарад."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
 #: ../src/orca/cmdnames.py:835
 msgid "Goes to previous large object."
-msgstr ""
+msgstr "Ба объекти калони қаблӣ мегузарад."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
 #: ../src/orca/cmdnames.py:840
 msgid "Goes to next large object."
-msgstr ""
+msgstr "Ба объекти калони навбатӣ мегузарад."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
 #: ../src/orca/cmdnames.py:845
 msgid "Displays a list of large objects."
-msgstr ""
+msgstr "Рӯйхати объектҳои калонро намоиш медиҳад."
 
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:848
 msgid "Displays a list of links."
-msgstr ""
+msgstr "Рӯйхати пайвандҳоро намоиш медиҳад."
 
 #. Translators: this is for navigating among lists in a document.
 #: ../src/orca/cmdnames.py:851
 msgid "Goes to previous list."
-msgstr ""
+msgstr "Ба рӯйхати қаблӣ мегузарад."
 
 #. Translators: this is for navigating among lists in a document.
 #: ../src/orca/cmdnames.py:854
 msgid "Goes to next list."
-msgstr ""
+msgstr "Ба рӯйхати навбатӣ мегузарад."
 
 #. Translators: this is for navigating among lists in a document.
 #: ../src/orca/cmdnames.py:857
 msgid "Displays a list of lists."
-msgstr ""
+msgstr "Рӯйхати рӯйхатҳоро намоиш медиҳад."
 
 #. Translators: this is for navigating among list items in a document.
 #: ../src/orca/cmdnames.py:860
 msgid "Goes to previous list item."
-msgstr ""
+msgstr "Ба объекти рӯйхати қаблӣ мегузарад."
 
 #. Translators: this is for navigating among list items in a document.
 #: ../src/orca/cmdnames.py:863
 msgid "Goes to next list item."
-msgstr ""
+msgstr "Ба объекти рӯйхати навбатӣ мегузарад."
 
 #. Translators: this is for navigating among list items in a document.
 #: ../src/orca/cmdnames.py:866
 msgid "Displays a list of list items."
-msgstr ""
+msgstr "Рӯйхати объектҳои рӯйхатро намоиш медиҳад."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: ../src/orca/cmdnames.py:871
 msgid "Goes to previous live region."
-msgstr ""
+msgstr "Ба минтақаи истиқоматии қаблӣ мегузарад."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: ../src/orca/cmdnames.py:876
 msgid "Goes to next live region."
-msgstr ""
+msgstr "Ба минтақаи истиқоматии навбатӣ мегузарад."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: ../src/orca/cmdnames.py:881
 msgid "Goes to the last live region which made an announcement."
-msgstr ""
+msgstr "Ба минтақаи истиқоматии охирине мегузарад, ки огоҳӣ додааст."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: ../src/orca/cmdnames.py:884
 msgid "Goes to previous paragraph."
-msgstr ""
+msgstr "Ба банди қаблӣ мегузарад."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: ../src/orca/cmdnames.py:887
 msgid "Goes to next paragraph."
-msgstr ""
+msgstr "Ба банди навбатӣ мегузарад."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: ../src/orca/cmdnames.py:890
 msgid "Displays a list of paragraphs."
-msgstr ""
+msgstr "Рӯйхатҳои бандҳоро намоиш медиҳад."
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: ../src/orca/cmdnames.py:893
 msgid "Goes to previous radio button."
-msgstr ""
+msgstr "Ба тугмаи радиои қаблӣ мегузарад."
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: ../src/orca/cmdnames.py:896
 msgid "Goes to next radio button."
-msgstr ""
+msgstr "Ба тугмаи радиои навбатӣ мегузарад."
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: ../src/orca/cmdnames.py:899
 msgid "Displays a list of radio buttons."
-msgstr ""
+msgstr "Рӯйхати тугмаҳои радиоро намоиш медиҳад."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
 #: ../src/orca/cmdnames.py:903
 msgid "Goes to previous separator."
-msgstr ""
+msgstr "Ба ҷудокунандаи қаблӣ мегузарад."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
 #: ../src/orca/cmdnames.py:907
 msgid "Goes to next separator."
-msgstr ""
+msgstr "Ба ҷудокунандаи навбатӣ мегузарад."
 
 #. Translators: this is for navigating among tables in a document.
 #: ../src/orca/cmdnames.py:910
 msgid "Goes to previous table."
-msgstr ""
+msgstr "Ба ҷадвали қаблӣ мегузарад."
 
 #. Translators: this is for navigating among tables in a document.
 #: ../src/orca/cmdnames.py:913
 msgid "Goes to next table."
-msgstr ""
+msgstr "Ба ҷадвали набатӣ мегузарад."
 
 #. Translators: this is for navigating among tables in a document.
 #: ../src/orca/cmdnames.py:916
 msgid "Displays a list of tables."
-msgstr ""
+msgstr "Рӯйхати ҷадвалҳоро намоиш медиҳад."
 
 #. Translators: this is for navigating among table cells in a document.
 #: ../src/orca/cmdnames.py:919
 msgid "Goes down one cell."
-msgstr ""
+msgstr "Як катак поён меравад"
 
 #. Translators: this is for navigating among table cells in a document.
 #: ../src/orca/cmdnames.py:922
 msgid "Goes to the first cell in a table."
-msgstr ""
+msgstr "Ба катаки аввалин дар ҷадвал мегузарад."
 
 #. Translators: this is for navigating among table cells in a document.
 #: ../src/orca/cmdnames.py:925
 msgid "Goes to the last cell in a table."
-msgstr ""
+msgstr "Ба катаки охирин дар ҷадвал мегузарад."
 
 #. Translators: this is for navigating among table cells in a document.
 #: ../src/orca/cmdnames.py:928
 msgid "Goes left one cell."
-msgstr ""
+msgstr "Як катак чап мегузарад."
 
 #. Translators: this is for navigating among table cells in a document.
 #: ../src/orca/cmdnames.py:931
 msgid "Goes right one cell."
-msgstr ""
+msgstr "Як катак рост мегузарад."
 
 #. Translators: this is for navigating among table cells in a document.
 #: ../src/orca/cmdnames.py:934
 msgid "Goes up one cell."
-msgstr ""
+msgstr "Як катак боло мегузарад."
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: ../src/orca/cmdnames.py:937
@@ -3188,7 +3189,7 @@ msgstr ""
 #. chat application currently has focus. This is the default behaviour.
 #: ../src/orca/guilabels.py:70
 msgid "All cha_nnels"
-msgstr ""
+msgstr "Ҳамаи ка_налҳо"
 
 #. Translators: This is the label of a radio button. If it is selected, Orca will
 #. speak all new chat messages as they appear if and only if the chat application
@@ -3196,7 +3197,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:75
 #, python-format
 msgid "All channels when an_y %s window is active"
-msgstr ""
+msgstr "Ҳамаи каналҳо ҳангоми фаъол будани равзанаи an_y %s"
 
 #. Translators: This is the label of a radio button. If it is selected, Orca will
 #. only speak new chat messages for the currently active channel, irrespective of
@@ -3217,7 +3218,7 @@ msgstr ""
 #. select a particular speech engine by its real name (Festival, IBMTTS, etc.)
 #: ../src/orca/guilabels.py:90
 msgid "Default Synthesizer"
-msgstr ""
+msgstr "Синтезатори пешфарз"
 
 #. Translators: This is the label for a spinbutton. This option allows the user
 #. to specify the number of matched characters that must be present before Orca
@@ -3230,7 +3231,7 @@ msgstr ""
 #. presents when the user is in the Find toolbar of an application, e.g. Firefox.
 #: ../src/orca/guilabels.py:99
 msgid "Find Options"
-msgstr ""
+msgstr "Ёфтани имконот"
 
 #. Translators: This is the label for a checkbox. This option controls whether
 #. the line that contains the match from an application's Find toolbar should
@@ -3280,7 +3281,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:127
 msgctxt "structural navigation"
 msgid "Blockquote"
-msgstr ""
+msgstr "Нақли қавл"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3289,7 +3290,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:133
 msgctxt "structural navigation"
 msgid "Button"
-msgstr ""
+msgstr "Тугма"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3298,7 +3299,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:139
 msgctxt "structural navigation"
 msgid "Caption"
-msgstr ""
+msgstr "Зернавис"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3307,7 +3308,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:145
 msgctxt "structural navigation"
 msgid "Check Box"
-msgstr ""
+msgstr "Байрақча"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3316,25 +3317,23 @@ msgstr ""
 #: ../src/orca/guilabels.py:151
 msgctxt "structural navigation"
 msgid "Combo Box"
-msgstr ""
+msgstr "Ҷаъбаи мураккаб"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the description of an element.
 #: ../src/orca/guilabels.py:157
-#, fuzzy
 #| msgid "superscript n"
 msgctxt "structural navigation"
 msgid "Description"
-msgstr "абарнигошт n"
+msgstr "Тавсиф"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a heading.
 #: ../src/orca/guilabels.py:163
-#, fuzzy
 #| msgctxt "textattr"
 #| msgid "Heading"
 msgctxt "structural navigation"
@@ -3348,7 +3347,7 @@ msgstr "Сарлавҳа"
 #: ../src/orca/guilabels.py:169
 msgctxt "structural navigation"
 msgid "Label"
-msgstr ""
+msgstr "Барчасп"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3358,7 +3357,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:176
 msgctxt "structural navigation"
 msgid "Level"
-msgstr ""
+msgstr "Сатҳ"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3367,7 +3366,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:182
 msgctxt "structural navigation"
 msgid "Link"
-msgstr ""
+msgstr "Пайванд"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3376,7 +3375,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:188
 msgctxt "structural navigation"
 msgid "List"
-msgstr ""
+msgstr "Рӯйхат"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3385,7 +3384,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:194
 msgctxt "structural navigation"
 msgid "List Item"
-msgstr ""
+msgstr "Объекти рӯйхат"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3394,7 +3393,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:200
 msgctxt "structural navigation"
 msgid "Object"
-msgstr ""
+msgstr "Объект"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3403,7 +3402,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:206
 msgctxt "structural navigation"
 msgid "Paragraph"
-msgstr ""
+msgstr "Банд"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3412,7 +3411,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:212
 msgctxt "structural navigation"
 msgid "Radio Button"
-msgstr ""
+msgstr "Тугмаи радио"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3422,19 +3421,18 @@ msgstr ""
 #: ../src/orca/guilabels.py:219
 msgctxt "structural navigation"
 msgid "Role"
-msgstr ""
+msgstr "Нақш"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the selected item of a form field.
 #: ../src/orca/guilabels.py:225
-#, fuzzy
 #| msgctxt "radiobutton"
 #| msgid "selected"
 msgctxt "structural navigation"
 msgid "Selected Item"
-msgstr "интихобшуда"
+msgstr "Интихоби объект"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3444,7 +3442,7 @@ msgstr "интихобшуда"
 #: ../src/orca/guilabels.py:232
 msgctxt "structural navigation"
 msgid "State"
-msgstr ""
+msgstr "Вазъият"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3453,7 +3451,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:238
 msgctxt "structural navigation"
 msgid "Text"
-msgstr ""
+msgstr "Матн"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3462,7 +3460,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:244
 msgctxt "structural navigation"
 msgid "URI"
-msgstr ""
+msgstr "URI"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3471,7 +3469,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:250
 msgctxt "structural navigation"
 msgid "Value"
-msgstr ""
+msgstr "Қимат"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3479,7 +3477,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:255
 msgctxt "structural navigation"
 msgid "Blockquotes"
-msgstr ""
+msgstr "Нақли қавлҳо"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3487,7 +3485,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:260
 msgctxt "structural navigation"
 msgid "Buttons"
-msgstr ""
+msgstr "Тугмаҳо"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3495,7 +3493,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:265
 msgctxt "structural navigation"
 msgid "Check Boxes"
-msgstr ""
+msgstr "Байрақчаҳо"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3503,7 +3501,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:270
 msgctxt "structural navigation"
 msgid "Combo Boxes"
-msgstr ""
+msgstr "Ҷаъбаҳои мураккаб"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3511,7 +3509,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:275
 msgctxt "structural navigation"
 msgid "Entries"
-msgstr ""
+msgstr "Вурудиҳо"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3519,18 +3517,17 @@ msgstr ""
 #: ../src/orca/guilabels.py:280
 msgctxt "structural navigation"
 msgid "Form Fields"
-msgstr ""
+msgstr "Майдонҳои шакл"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:285
-#, fuzzy
 #| msgctxt "textattr"
 #| msgid "Heading"
 msgctxt "structural navigation"
 msgid "Headings"
-msgstr "Сарлавҳа"
+msgstr "Сарлавҳаҳо"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3550,7 +3547,7 @@ msgstr ""
 #: ../src/orca/guilabels.py:298
 msgctxt "structural navigation"
 msgid "Large Objects"
-msgstr ""
+msgstr "Объектҳои калон"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3596,12 +3593,11 @@ msgstr ""
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:328
-#, fuzzy
 #| msgctxt "indentation and justification"
 #| msgid "Enabled"
 msgctxt "structural navigation"
 msgid "Tables"
-msgstr "Фаъол"
+msgstr "Ҷадвалҳо"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3709,7 +3705,7 @@ msgstr ""
 #.
 #: ../src/orca/keybindings.py:111
 msgid "Caps_Lock"
-msgstr ""
+msgstr "Caps_Lock"
 
 #. Translators: this is presented in a GUI to represent the
 #. "right alt" modifier.
@@ -3730,7 +3726,7 @@ msgstr "Super"
 #.
 #: ../src/orca/keybindings.py:128
 msgid "Meta2"
-msgstr ""
+msgstr "Meta2"
 
 #. Translators: this is presented in a GUI to represent the
 #. "left alt" modifier.
@@ -4042,7 +4038,6 @@ msgstr "аломати тарҳ"
 #. defunct. This is a generic name so that we can still refer to this element
 #. in messages.
 #: ../src/orca/messages.py:40
-#, fuzzy
 #| msgid "Application"
 msgctxt "generic name"
 msgid "application"
@@ -4318,7 +4313,7 @@ msgstr ""
 #: ../src/orca/messages.py:247
 #, python-format
 msgid "Default button is %s"
-msgstr ""
+msgstr "Тугмаи пешфарз %s аст"
 
 #. Translators: This string is part of the presentation of an item that includes
 #. one or several consequtive subscripted characters. For example, 'X' followed
@@ -4344,7 +4339,7 @@ msgstr " абарнигошт %s"
 #. document by pressing Ctrl+A.
 #: ../src/orca/messages.py:265
 msgid "entire document selected"
-msgstr ""
+msgstr "Ҳуҷҷат пурра интихоб шуд"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -4421,13 +4416,13 @@ msgstr "холӣ"
 #: ../src/orca/messages.py:319
 #, python-format
 msgid "%.2f kilobytes"
-msgstr ""
+msgstr "%.2f килобайт"
 
 #. Translators: This is the size of a file in megabytes
 #: ../src/orca/messages.py:322
 #, python-format
 msgid "%.2f megabytes"
-msgstr ""
+msgstr "%.2f мегабайт"
 
 #. Translators: This message is presented to the user after performing a file
 #. search to indicate there were no matches.
@@ -4487,7 +4482,7 @@ msgstr ""
 #. (e.g., "=sum(a1:d1)")
 #: ../src/orca/messages.py:368
 msgid "has formula"
-msgstr ""
+msgstr "формула дорад"
 
 #. Translators: The following string is spoken to let the user know that he/she
 #. is on a link within an image map. An image map is an image/graphic which has
@@ -4697,7 +4692,7 @@ msgstr ""
 #. infrastructure.
 #: ../src/orca/messages.py:536
 msgid "inaccessible"
-msgstr ""
+msgstr "дастнорас"
 
 #. Translators: This brief message indicates that indentation and
 #. justification will be spoken.
@@ -4818,19 +4813,19 @@ msgstr "пайванд"
 #. that is on the same page.
 #: ../src/orca/messages.py:630
 msgid "same page"
-msgstr ""
+msgstr "ҳамон саҳифа"
 
 #. Translators: this is an indication that a given link points to an object
 #. that is at the same site (but not on the same page as the link).
 #: ../src/orca/messages.py:634
 msgid "same site"
-msgstr ""
+msgstr "ҳамон сайт"
 
 #. Translators: this is an indication that a given link points to an object
 #. that is at a different site than that of the link.
 #: ../src/orca/messages.py:638
 msgid "different site"
-msgstr ""
+msgstr "сайтҳои гуногун"
 
 #. Translators: this refers to a link to a file, where the first item is the
 #. protocol (ftp, ftps, or file) and the second item the name of the file being
@@ -5036,7 +5031,7 @@ msgstr ""
 #: ../src/orca/messages.py:795
 #, python-format
 msgid "Context is %s"
-msgstr ""
+msgstr "Мӯҳтаво %s аст"
 
 #. Translators: Hovering the mouse over certain objects on a web page causes a
 #. new object to appear such as a pop-up menu. Orca has a command will move the
@@ -5074,7 +5069,7 @@ msgstr ""
 #. no accessible component has keyboard focus.
 #: ../src/orca/messages.py:822
 msgid "No focus"
-msgstr ""
+msgstr "Бе фокус"
 
 #. Translators: This message presents the fact that no accessible application has
 #. has keyboard focus.
@@ -5517,22 +5512,22 @@ msgstr ""
 #. Translators: This string announces speech rate change.
 #: ../src/orca/messages.py:1134
 msgid "faster."
-msgstr ""
+msgstr "зудтар."
 
 #. Translators: This string announces speech rate change.
 #: ../src/orca/messages.py:1137
 msgid "slower."
-msgstr ""
+msgstr "оҳистатар."
 
 #. Translators: This string announces speech pitch change.
 #: ../src/orca/messages.py:1140
 msgid "higher."
-msgstr ""
+msgstr "баландтар."
 
 #. Translators: This string announces speech pitch change.
 #: ../src/orca/messages.py:1143
 msgid "lower."
-msgstr ""
+msgstr "пасттар."
 
 #. Translators: We replace the ellipses (both manual and UTF-8) with a spoken
 #. string. The extra space you see at the beginning is because we need the
@@ -5615,7 +5610,7 @@ msgstr ""
 #. cell of a table in a document.
 #: ../src/orca/messages.py:1201
 msgid "End of table"
-msgstr ""
+msgstr "Охири ҷадвал"
 
 #. Translators: This message is presented when a user is navigating within a
 #. table and then navigates out of it.
@@ -5689,7 +5684,7 @@ msgstr ""
 #. the cell above the current cell and is already in the first row.
 #: ../src/orca/messages.py:1251
 msgid "Top of column."
-msgstr ""
+msgstr "Болои сутун."
 
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
@@ -5763,13 +5758,13 @@ msgstr ""
 #: ../src/orca/messages.py:1298
 #, python-format
 msgid "Unicode %s"
-msgstr ""
+msgstr "Юникод %s"
 
 #. Translators: This message presents the Orca version number.
 #: ../src/orca/messages.py:1301
 #, python-format
 msgid "Orca version %s."
-msgstr ""
+msgstr "Версияи Orca %s."
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
@@ -5816,6 +5811,7 @@ msgstr[1] ""
 msgid " %d column"
 msgid_plural " %d columns"
 msgstr[0] " %d сутун"
+msgstr[1] " %d сутун"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
@@ -5845,6 +5841,7 @@ msgstr[1] ""
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
 msgstr[0] "(%d гуфтугӯ)"
+msgstr[1] "(%d гуфтугӯ)"
 
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
@@ -5862,15 +5859,15 @@ msgstr[1] ""
 msgid "%d byte"
 msgid_plural "%d bytes"
 msgstr[0] "%d байт"
+msgstr[1] "%d байт"
 
 #. Translators: This message informs the user who many files were found as
 #. a result of a search.
 #: ../src/orca/messages.py:1382
-#, fuzzy, python-format
+#, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "Файл ёфта нашуд"
-msgstr[1] ""
+msgstr[0] ""
 
 #. Translators: This message presents the number of forms in a document.
 #: ../src/orca/messages.py:1386
@@ -5878,6 +5875,7 @@ msgstr[1] ""
 msgid "%d form"
 msgid_plural "%d forms"
 msgstr[0] "%d шакл"
+msgstr[1] "%d шакл"
 
 #. Translators: This message presents the number of headings in a document.
 #: ../src/orca/messages.py:1390
@@ -5885,25 +5883,26 @@ msgstr[0] "%d шакл"
 msgid "%d heading"
 msgid_plural "%d headings"
 msgstr[0] "%d сарварақ"
+msgstr[1] "%d сарварақ"
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
 #: ../src/orca/messages.py:1395
-#, fuzzy, python-format
+#, python-format
 msgid "%d item"
 msgid_plural "%d items"
-msgstr[0] "Объект"
-msgstr[1] ""
+msgstr[0] "%d объект"
+msgstr[1] "%d объект"
 
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
 #. presented to the user to indicate how many matching items were found.
 #: ../src/orca/messages.py:1401
-#, fuzzy, python-format
+#, python-format
 msgid "%d item found"
 msgid_plural "%d items found"
-msgstr[0] "Файл ёфта нашуд"
-msgstr[1] ""
+msgstr[0] "%d объект ёфт шуд"
+msgstr[1] "%d объект ёфт шуданд"
 
 #. Translators: This message describes a bulleted or numbered list.
 #: ../src/orca/messages.py:1405
@@ -5916,11 +5915,11 @@ msgstr[1] ""
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
 #: ../src/orca/messages.py:1410
-#, fuzzy, python-format
+#, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
-msgstr[0] "Паём"
-msgstr[1] ""
+msgstr[0] "%d паём.\n"
+msgstr[1] "%d паём.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
@@ -5929,6 +5928,7 @@ msgstr[1] ""
 msgid "%d percent."
 msgid_plural "%d percent."
 msgstr[0] "%d фоиз."
+msgstr[1] "%d фоиз."
 
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
@@ -5987,6 +5987,7 @@ msgstr[1] ""
 msgid "%d space"
 msgid_plural "%d spaces"
 msgstr[0] "%d фазо"
+msgstr[1] "%d фазо"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
@@ -5995,6 +5996,7 @@ msgstr[0] "%d фазо"
 msgid "%d tab"
 msgid_plural "%d tabs"
 msgstr[0] "%d варақа"
+msgstr[1] "%d варақа"
 
 #. Translators: This message presents the number of tables in a document.
 #: ../src/orca/messages.py:1469
@@ -6002,6 +6004,7 @@ msgstr[0] "%d варақа"
 msgid "%d table"
 msgid_plural "%d tables"
 msgstr[0] "%d ҷадвал"
+msgstr[1] "%d ҷадвал"
 
 #. Translators: this represents the number of rows in a table.
 #: ../src/orca/messages.py:1473
@@ -6017,6 +6020,7 @@ msgstr[1] ""
 msgid "%d column"
 msgid_plural "%d columns"
 msgstr[0] "%d сутун"
+msgstr[1] "%d сутун"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
@@ -6083,7 +6087,7 @@ msgstr ""
 #: ../src/orca/object_properties.py:68
 #, python-format
 msgid "h%d"
-msgstr ""
+msgstr "h%d"
 
 #. Translators: The %(level)d is in reference to a heading level in HTML (e.g.,
 #. For <h3>, the level is 3) and the %(role)s is in reference to a previously
@@ -6170,21 +6174,19 @@ msgstr "интихобнашуда"
 
 #. Translators: This is a state which applies to a link.
 #: ../src/orca/object_properties.py:122
-#, fuzzy
 #| msgctxt "textattr"
 #| msgid "invisible"
 msgctxt "link state"
 msgid "visited"
-msgstr "ноаён"
+msgstr "боздидшуда"
 
 #. Translators: This is a state which applies to a link.
 #: ../src/orca/object_properties.py:125
-#, fuzzy
 #| msgctxt "textattr"
 #| msgid "invisible"
 msgctxt "link state"
 msgid "unvisited"
-msgstr "ноаён"
+msgstr "боздиднашуда"
 
 #. Translators: This state represents an item on the screen that has been set
 #. insensitive (or grayed out).
@@ -6386,11 +6388,11 @@ msgstr ""
 #.
 #: ../src/orca/orca_console_prefs.py:59
 msgid "^[Yy1]"
-msgstr ""
+msgstr "^[Yy1]"
 
 #: ../src/orca/orca_console_prefs.py:60
 msgid "^[Nn0]"
-msgstr ""
+msgstr "^[Nn0]"
 
 #. Translators: this means speech synthesis (i.e., the machine
 #. speaks to you from its speakers) is not installed or working.
@@ -7920,7 +7922,7 @@ msgstr "ҳошияи рост"
 #: ../src/orca/text_attribute_names.py:216
 msgctxt "textattr"
 msgid "rise"
-msgstr ""
+msgstr "тулӯъ"
 
 #. Translators: this attribute specifies the scale of the characters. The
 #. value is a string representation of a double.
@@ -8024,7 +8026,7 @@ msgstr "зерхаткашӣ"
 #: ../src/orca/text_attribute_names.py:290
 msgctxt "textattr"
 msgid "variant"
-msgstr ""
+msgstr "вариант"
 
 #. Translators: this attributes specifies what vertical alignment property
 #. has been applied to the text.
@@ -8083,7 +8085,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:336
 msgctxt "textattr"
 msgid "true"
-msgstr ""
+msgstr "true"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "invisible", "editable", bg-full-height", "strikethrough",
@@ -8094,7 +8096,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:344
 msgctxt "textattr"
 msgid "false"
-msgstr ""
+msgstr "false"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect", "underline", "text-shadow", "wrap mode"
@@ -8249,7 +8251,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:454
 msgctxt "textattr"
 msgid "ltr"
-msgstr ""
+msgstr "ltr"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "direction".
@@ -8259,7 +8261,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:461
 msgctxt "textattr"
 msgid "rtl"
-msgstr ""
+msgstr "rtl"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification".
@@ -8479,7 +8481,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:615
 msgctxt "textattr"
 msgid "sub"
-msgstr ""
+msgstr "зер"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -8509,7 +8511,7 @@ msgstr "боло"
 #: ../src/orca/text_attribute_names.py:636
 msgctxt "textattr"
 msgid "text-top"
-msgstr ""
+msgstr "болои матн"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -8539,7 +8541,7 @@ msgstr "поён"
 #: ../src/orca/text_attribute_names.py:657
 msgctxt "textattr"
 msgid "text-bottom"
-msgstr ""
+msgstr "поёни матн"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align" and "writing-mode".
@@ -8550,7 +8552,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:665
 msgctxt "textattr"
 msgid "inherit"
-msgstr ""
+msgstr "меросӣ"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8560,7 +8562,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:672
 msgctxt "textattr"
 msgid "lr-tb"
-msgstr ""
+msgstr "lr-tb"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8570,7 +8572,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:679
 msgctxt "textattr"
 msgid "rl-tb"
-msgstr ""
+msgstr "rl-tb"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8580,7 +8582,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:686
 msgctxt "textattr"
 msgid "tb-rl"
-msgstr ""
+msgstr "tb-rl"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8590,7 +8592,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:693
 msgctxt "textattr"
 msgid "tb-lr"
-msgstr ""
+msgstr "tb-lr"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8600,7 +8602,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:700
 msgctxt "textattr"
 msgid "bt-rl"
-msgstr ""
+msgstr "bt-rl"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8610,7 +8612,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:707
 msgctxt "textattr"
 msgid "bt-lr"
-msgstr ""
+msgstr "bt-lr"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8620,7 +8622,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:714
 msgctxt "textattr"
 msgid "lr"
-msgstr ""
+msgstr "lr"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8630,7 +8632,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:721
 msgctxt "textattr"
 msgid "rl"
-msgstr ""
+msgstr "rl"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -8667,31 +8669,35 @@ msgstr "санҷиши имло"
 #. Translators: this is a tip for the user on how to toggle a checkbox.
 #: ../src/orca/tutorialgenerator.py:158
 msgid "Press space to toggle."
-msgstr ""
+msgstr "Барои зомин шудан фосиларо зер кунед."
 
 #. Translators: this is a tip for the user on how to interact
 #. with a combobox.
 #: ../src/orca/tutorialgenerator.py:185
 msgid "Press space to expand, and use up and down to select an item."
 msgstr ""
+"Барои густариш додан фосиларо зер кунед, ва барои интихоби ягон объект боло "
+"ва поёнро истифода баред."
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
 #: ../src/orca/tutorialgenerator.py:216
 msgid "Press alt+f6 to give focus to child windows."
-msgstr ""
+msgstr "Барои ҷалби диққат ба равзанаҳои иловагӣ alt+f6-ро зер кунед."
 
 #. Translators: this gives tips on how to navigate items in a
 #. layered pane.
 #: ../src/orca/tutorialgenerator.py:280
 msgid "To move to items, use either the arrow keys or type ahead searching."
 msgstr ""
+"Барои ҳаракат ба объектҳо, ё аз калидҳои тир истифода баред ё дар ҷустуҷӯи "
+"пешомада чоп кунед."
 
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, describing how to access the system menus.
 #: ../src/orca/tutorialgenerator.py:286
 msgid "To get to the system menus press the alt+f1 key."
-msgstr ""
+msgstr "Барои дастрасӣ ба менюҳои система тугмаи alt+f1-ро зер кунед."
 
 #. Translators: this is the tutorial string when navigating lists.
 #: ../src/orca/tutorialgenerator.py:323
@@ -8723,19 +8729,19 @@ msgstr ""
 #. on text fields.
 #: ../src/orca/tutorialgenerator.py:417
 msgid "Type in text."
-msgstr ""
+msgstr "Навъи матн."
 
 #. Translators: this is the tutorial string for landing
 #. on a page tab, we are informing the
 #. user how to navigate these.
 #: ../src/orca/tutorialgenerator.py:445
 msgid "Use left and right to view other tabs."
-msgstr ""
+msgstr "Барои намоиши варақаҳои дигар чап ва ростро истифода баред."
 
 #. Translators: this is the tutorial string for activating a push button.
 #: ../src/orca/tutorialgenerator.py:470
 msgid "To activate press space."
-msgstr ""
+msgstr "Барои фаъол кардан фосиларо зер намоед."
 
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
@@ -8743,11 +8749,13 @@ msgstr ""
 msgid ""
 "Use up or down arrow to select value. Or type in the desired numerical value."
 msgstr ""
+"Барои интихоби қимат тири боло ё поёнро истифода баред. Ё дар қимати рақамии "
+"дилхоҳ чоп кунед."
 
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
 #: ../src/orca/tutorialgenerator.py:686
 msgid "Use arrow keys to change."
-msgstr ""
+msgstr "Барои тағйир додан калидҳои тирро истифода баред."
 
 #. Translators: this is a tip for the user, how to navigate menues.
 #: ../src/orca/tutorialgenerator.py:711
@@ -8755,12 +8763,14 @@ msgid ""
 "To navigate, press left or right arrow. To move through items press up or "
 "down arrow."
 msgstr ""
+"Барои паймудан, тири чап ё ростро зер кунед. Барои ҳаракат аз байни объектҳо "
+"тири боло ё поёнро зер кунед."
 
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menues.
 #: ../src/orca/tutorialgenerator.py:716
 msgid "To enter sub menu, press right arrow."
-msgstr ""
+msgstr "Барои ворид шудан ба зер меню, тири ростро зер намоед."
 
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
@@ -8769,6 +8779,9 @@ msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
 msgstr ""
+"Барои кам кардан тугмаи чапро зер кунед, барои зиёд кардан тугмаи ростро зер "
+"кунед. Барои ба ҳадди ақал рафтан хонаро зер кунед, ва барои ҳадди аксар "
+"анҷомро зер кунед."
 
 #~ msgid "Bottom Right"
 #~ msgstr "Поёни рост"
