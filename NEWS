@@ -1,3 +1,26 @@
+3.9.5 - 31 July 2013
+
+Evince
+
+  * Handle text selection events that cross into a different page
+
+  * Present the Evince caret-navigation infobar
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                       Marek Černocký
+    el            Greek                       Dimitris Spingos
+    eo            Esperanto                   Kristjan SCHMIDT
+    es            Spanish                     Daniel Mustieles
+    nb            Norwegian bokmål            Kjartan Maraas
+    ne            Nepali                      Him Prasad Gautam,
+                                              Jiro Matsuzawa
+    pt_BR         Brazilian Portuguese        Júnior Pires
+    sl            Slovenian                   Andrej Žnidaršič
+    tj            Tajik                       Victor Ibragimov  
+
+=========
+
 3.9.4 - 9 July 2013
 
 General
