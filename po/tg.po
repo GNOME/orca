@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2013-07-30 11:21+0000\n"
-"PO-Revision-Date: 2013-08-01 14:07-0000\n"
+"PO-Revision-Date: 2013-08-01 23:25-0000\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: \n"
 "Language: Tajik\n"
@@ -89,7 +89,7 @@ msgstr "брч"
 #. Translators: short braille for the rolename of a color chooser.
 #: ../src/orca/braille_rolenames.py:68
 msgid "clrchsr"
-msgstr "Интрг"
+msgstr "интрг"
 
 #. Translators: short braille for the rolename of a column header.
 #. Translators: short braille for the rolename of a table column header.
@@ -126,7 +126,7 @@ msgstr "frm"
 #: ../src/orca/braille_rolenames.py:89
 msgctxt "shortbraille"
 msgid "dial"
-msgstr "Шуморагирӣ"
+msgstr "шуморагирӣ"
 
 #. Translators: short braille for the rolename of a dialog.
 #: ../src/orca/braille_rolenames.py:92
@@ -5187,7 +5187,7 @@ msgstr ""
 #: ../src/orca/messages.py:623
 #, python-format
 msgid "The new key is: %s"
-msgstr ""
+msgstr "Калиди нав: %s"
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. Orca is about to delete an existing key combination (e.g. Alt+Ctrl+g) as a
@@ -6004,13 +6004,13 @@ msgstr "фаъол"
 #. item has started loading.
 #: ../src/orca/messages.py:1244
 msgid "Loading.  Please wait."
-msgstr ""
+msgstr "Бор шуда истодааст. Интизор шавед."
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has finished loading.
 #: ../src/orca/messages.py:1248
 msgid "Finished loading."
-msgstr ""
+msgstr "Боркунӣ ба анҷом расид."
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has finished loading. The string substitution is for the name of the
@@ -6018,7 +6018,7 @@ msgstr ""
 #: ../src/orca/messages.py:1253
 #, python-format
 msgid "Finished loading %s."
-msgstr ""
+msgstr "Боркунии %s ба анҷом расид."
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -6119,7 +6119,7 @@ msgstr ""
 #. selected when reading Spanish content.
 #: ../src/orca/messages.py:1328
 msgid "No profiles found."
-msgstr ""
+msgstr "Ягон профил ёфт нашуд."
 
 #. Translators: this is an index value so that we can present value changes
 #. regarding a specific progress bar in environments where there are multiple
@@ -7339,7 +7339,7 @@ msgstr ""
 
 #: ../src/orca/orca-setup.ui.h:120
 msgid "_New entry"
-msgstr ""
+msgstr "_Вуруди нав"
 
 #: ../src/orca/orca-setup.ui.h:121
 msgid "_Delete"
@@ -7608,7 +7608,7 @@ msgstr "кушодан"
 #.
 #: ../src/orca/settings.py:806
 msgid "%H hours, %M minutes and %S seconds."
-msgstr ""
+msgstr "%H соат, %M дақиқа ва %S сония."
 
 #. Translators: Orca has a feature to speak the time
 #. when the user presses a shortcut key.
@@ -7617,7 +7617,7 @@ msgstr ""
 #.
 #: ../src/orca/settings.py:813
 msgid "%H hours and %M minutes."
-msgstr ""
+msgstr "%H соат ва %M дақиқа."
 
 #. Translators: this attribute specifies the background color of the text.
 #. The value is an RGB value of the format "u,u,u".
@@ -7678,7 +7678,7 @@ msgstr "таҳриршаванда"
 #: ../src/orca/text_attribute_names.py:98
 msgctxt "textattr"
 msgid "family name"
-msgstr ""
+msgstr "номи оила"
 
 #. Translators: this attribute specifies the foreground color of the text.
 #. The value is an RGB value of the format "u,u,u".
@@ -7709,7 +7709,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:120
 msgctxt "textattr"
 msgid "font effect"
-msgstr ""
+msgstr "таъсири шрифт"
 
 #. Translators: this attribute specifies the indentation of the text
 #. (in pixels).
@@ -7728,7 +7728,7 @@ msgstr "фосила"
 #: ../src/orca/text_attribute_names.py:133
 msgctxt "textattr"
 msgid "mistake"
-msgstr ""
+msgstr "хато"
 
 #. Translators: this attribute specifies there is something "wrong" with
 #. the text, such as it being a misspelled word. See:
