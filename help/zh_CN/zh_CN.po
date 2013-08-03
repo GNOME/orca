@@ -1,0 +1,5728 @@
+# Chinese (China) translation for orca.
+# Copyright (C) 2012 orca's COPYRIGHT HOLDER
+# This file is distributed under the same license as the orca package.
+#
+# tuhaihe <1132321739qq@gmail.com>, 2012.
+# Wylmer Wang <wantinghard@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: orca gnome-3-4\n"
+"POT-Creation-Date: 2012-04-13 17:22+0000\n"
+"PO-Revision-Date: 2013-08-03 22:51+0800\n"
+"Last-Translator: Wylmer Wang <wantinghard@gmail.com>\n"
+"Language-Team: Chinese Simplified <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 1.5\n"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_text_attributes.page:31(None)
+msgid ""
+"@@image: 'figures/preferences_text_attributes_table.png'; "
+"md5=067627aeb9adfd314523903f408bb977"
+msgstr ""
+"@@image: 'figures/preferences_text_attributes_table.png'; "
+"md5=067627aeb9adfd314523903f408bb977"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_text_attributes.page:93(None)
+msgid ""
+"@@image: 'figures/preferences_text_attributes_rearranging.png'; "
+"md5=0834c9af2a15c3d08be77f3a963ad245"
+msgstr ""
+"@@image: 'figures/preferences_text_attributes_rearranging.png'; "
+"md5=0834c9af2a15c3d08be77f3a963ad245"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_text_attributes.page:131(None)
+msgid ""
+"@@image: 'figures/preferences_text_attributes_braille.png'; "
+"md5=3482a961cc9d30db5537ccb998bb7c71"
+msgstr ""
+"@@image: 'figures/preferences_text_attributes_braille.png'; "
+"md5=3482a961cc9d30db5537ccb998bb7c71"
+
+#: C/preferences_text_attributes.page:7(title)
+msgid "8. Text Attributes"
+msgstr "8. 文本属性"
+
+#: C/preferences_text_attributes.page:8(title)
+#: C/howto_text_attributes.page:17(title)
+msgid "Text Attributes"
+msgstr "文本属性"
+
+#: C/preferences_text_attributes.page:9(desc)
+msgid "Configuring what formatting is presented"
+msgstr "配置显示格式"
+
+#: C/preferences_text_attributes.page:13(name)
+#: C/preferences_table_navigation.page:14(name)
+#: C/preferences_speech.page:11(name)
+#: C/preferences_pronunciation.page:12(name) C/preferences.page:7(name)
+#: C/preferences_key_echo.page:11(name)
+#: C/preferences_key_bindings.page:12(name)
+#: C/preferences_introduction.page:8(name) C/preferences_general.page:11(name)
+#: C/preferences_gecko.page:12(name) C/preferences_chat.page:10(name)
+#: C/preferences_braille.page:11(name) C/introduction.page:10(name)
+#: C/index.page:6(name) C/howto_whereami.page:10(name)
+#: C/howto_toggling_caps_lock.page:8(name)
+#: C/howto_the_orca_modifier.page:11(name) C/howto_text_setup.page:8(name)
+#: C/howto_text_attributes.page:10(name) C/howto_tables.page:10(name)
+#: C/howto_structural_navigation.page:12(name)
+#: C/howto_setting_up_orca.page:12(name) C/howto_profiles.page:8(name)
+#: C/howto_orca_find.page:8(name) C/howto_notifications.page:8(name)
+#: C/howto_mouse_review.page:8(name) C/howto_live_regions.page:10(name)
+#: C/howto_learn_modes.page:10(name) C/howto_keyboard_layout.page:8(name)
+#: C/howto_key_bindings.page:8(name) C/howto_forms.page:10(name)
+#: C/howto_flat_review.page:8(name) C/howto_documents.page:10(name)
+#: C/howto_bookmarks.page:7(name) C/commands_where_am_i.page:12(name)
+#: C/commands_time_date_notifications.page:12(name)
+#: C/commands_table.page:12(name)
+#: C/commands_structural_navigation.page:12(name)
+#: C/commands_speech_settings.page:12(name) C/commands_reading.page:14(name)
+#: C/commands.page:8(name) C/commands_mouse.page:13(name)
+#: C/commands_live_regions.page:12(name) C/commands_flat_review.page:12(name)
+#: C/commands_find.page:12(name) C/commands_debugging.page:10(name)
+#: C/commands_controlling_orca.page:11(name) C/commands_chat.page:12(name)
+#: C/commands_braille.page:12(name) C/commands_bookmarks.page:12(name)
+msgid "Joanmarie Diggs"
+msgstr "Joanmarie Diggs"
+
+#: C/preferences_text_attributes.page:14(email)
+#: C/preferences_table_navigation.page:15(email)
+#: C/preferences_speech.page:12(email)
+#: C/preferences_pronunciation.page:13(email) C/preferences.page:8(email)
+#: C/preferences_key_echo.page:12(email)
+#: C/preferences_key_bindings.page:13(email)
+#: C/preferences_introduction.page:9(email)
+#: C/preferences_general.page:12(email) C/preferences_gecko.page:13(email)
+#: C/preferences_chat.page:11(email) C/preferences_braille.page:12(email)
+#: C/introduction.page:11(email) C/index.page:7(email)
+#: C/howto_whereami.page:11(email) C/howto_toggling_caps_lock.page:9(email)
+#: C/howto_the_orca_modifier.page:12(email) C/howto_text_setup.page:9(email)
+#: C/howto_text_attributes.page:11(email) C/howto_tables.page:11(email)
+#: C/howto_structural_navigation.page:13(email)
+#: C/howto_setting_up_orca.page:13(email) C/howto_profiles.page:9(email)
+#: C/howto_orca_find.page:9(email) C/howto_notifications.page:9(email)
+#: C/howto_mouse_review.page:9(email) C/howto_live_regions.page:11(email)
+#: C/howto_learn_modes.page:11(email) C/howto_keyboard_layout.page:9(email)
+#: C/howto_key_bindings.page:9(email) C/howto_forms.page:11(email)
+#: C/howto_flat_review.page:9(email) C/howto_documents.page:11(email)
+#: C/howto_bookmarks.page:8(email) C/commands_where_am_i.page:13(email)
+#: C/commands_time_date_notifications.page:13(email)
+#: C/commands_table.page:13(email)
+#: C/commands_structural_navigation.page:13(email)
+#: C/commands_speech_settings.page:13(email) C/commands_reading.page:15(email)
+#: C/commands.page:9(email) C/commands_mouse.page:14(email)
+#: C/commands_live_regions.page:13(email)
+#: C/commands_flat_review.page:13(email) C/commands_find.page:13(email)
+#: C/commands_debugging.page:11(email)
+#: C/commands_controlling_orca.page:12(email) C/commands_chat.page:13(email)
+#: C/commands_braille.page:13(email) C/commands_bookmarks.page:13(email)
+msgid "joanied@gnome.org"
+msgstr "joanied@gnome.org"
+
+#: C/preferences_text_attributes.page:17(p)
+#: C/preferences_table_navigation.page:18(p) C/preferences_speech.page:15(p)
+#: C/preferences_pronunciation.page:16(p) C/preferences.page:11(p)
+#: C/preferences_key_echo.page:15(p) C/preferences_key_bindings.page:16(p)
+#: C/preferences_introduction.page:12(p) C/preferences_general.page:15(p)
+#: C/preferences_gecko.page:16(p) C/preferences_chat.page:14(p)
+#: C/preferences_braille.page:15(p) C/introduction.page:14(p)
+#: C/index.page:10(p) C/howto_whereami.page:14(p)
+#: C/howto_toggling_caps_lock.page:12(p) C/howto_the_orca_modifier.page:15(p)
+#: C/howto_text_setup.page:12(p) C/howto_text_attributes.page:14(p)
+#: C/howto_tables.page:14(p) C/howto_structural_navigation.page:16(p)
+#: C/howto_setting_up_orca.page:16(p) C/howto_profiles.page:12(p)
+#: C/howto_orca_find.page:12(p) C/howto_notifications.page:12(p)
+#: C/howto_mouse_review.page:12(p) C/howto_live_regions.page:14(p)
+#: C/howto_learn_modes.page:14(p) C/howto_keyboard_layout.page:12(p)
+#: C/howto_key_bindings.page:12(p) C/howto_forms.page:14(p)
+#: C/howto_flat_review.page:12(p) C/howto_documents.page:14(p)
+#: C/howto_bookmarks.page:11(p) C/commands_where_am_i.page:16(p)
+#: C/commands_time_date_notifications.page:16(p) C/commands_table.page:16(p)
+#: C/commands_structural_navigation.page:16(p)
+#: C/commands_speech_settings.page:16(p) C/commands_reading.page:18(p)
+#: C/commands.page:12(p) C/commands_mouse.page:17(p)
+#: C/commands_live_regions.page:16(p) C/commands_flat_review.page:16(p)
+#: C/commands_find.page:16(p) C/commands_debugging.page:14(p)
+#: C/commands_controlling_orca.page:15(p) C/commands_chat.page:16(p)
+#: C/commands_braille.page:16(p) C/commands_bookmarks.page:16(p)
+msgid "Creative Commons Share Alike 3.0"
+msgstr "创作共同署名，相同方式同享许可 3.0"
+
+#: C/preferences_text_attributes.page:20(title)
+msgid "Text Attributes Preferences"
+msgstr "文本属性首选项"
+
+#: C/preferences_text_attributes.page:21(p)
+msgid ""
+"The term \"text attributes\" refers to all of the font, style, alignment, "
+"and other formatting associated with a given character or series of "
+"characters. <app>Orca</app>'s <gui>Text Attributes</gui> page allows you to "
+"customize which text attributes <app>Orca</app> will present in speech, "
+"along with the order in which they should be presented, and which ones "
+"<app>Orca</app> will indicate in braille."
+msgstr ""
+"“文本属性”一词指与某个或某类字符相关的所有字体、风格、对齐和其他格式。您可在 "
+"<app>Orca</app> 的<gui>文本属性</gui>页面自定义 <app>Orca</app> 朗读中用到的"
+"文本属性，属性的显示顺序，以及 <app>Orca</app> 在布莱叶盲文中标记的属性。"
+
+#: C/preferences_text_attributes.page:30(title)
+msgid "The text attributes table"
+msgstr "文本属性表格"
+
+#: C/preferences_text_attributes.page:32(p)
+msgid ""
+"The text attributes table is where you specify what attributes will and will "
+"not be presented and under what conditions. Each row consists of four "
+"columns."
+msgstr ""
+"文本属性表格就是您指定属性是否显示以及在何种条件下显示的地方。每行内容包括四"
+"列。"
+
+#: C/preferences_text_attributes.page:39(p)
+msgid "<gui>Attribute Name</gui>: The name of the text attribute."
+msgstr "<gui>属性名称</gui>：文本属性的名称。"
+
+#: C/preferences_text_attributes.page:44(p)
+msgid ""
+"<gui>Speak</gui>: Check this checkbox if you would like <app>Orca</app> to "
+"speak this attribute when you press <keyseq><key>Orca</key><key>F</key></"
+"keyseq>."
+msgstr ""
+"<gui>朗读</gui>：如果您希望在按下<keyseq><key>Orca</key><key>F</key></keyseq>"
+"时 <app>Orca</app> 朗读出该属性，则勾选此复选框。"
+
+#: C/preferences_text_attributes.page:51(p)
+#, fuzzy
+msgid ""
+"<gui>Mark in braille</gui>: Check this checkbox if you would like <app>Orca</"
+"app> to \"underline\" this attribute on your braille display."
+msgstr ""
+"<gui>布莱叶盲文中的标记</gui>：如果您希望在布莱叶显示器上让 <app>Orca</app> "
+"朗读出“下划线”属性，则勾选此复选框。"
+
+#: C/preferences_text_attributes.page:58(p)
+msgid ""
+"<gui>Present Unless</gui>: This editable field allows you to specify when an "
+"enabled attribute is not of interest."
+msgstr "<gui>隐藏条件</gui>：该编辑区域允许您指定何时不开启属性。"
+
+#: C/preferences_text_attributes.page:62(p)
+msgid ""
+"For example, by default the \"underline\" text attribute has a value of "
+"\"none\". This causes <app>Orca</app> to inform you about underlined text as "
+"long as the text is actually underlined. If you always want this attribute "
+"to be spoken irrespective of whether or not the text is underlined, the "
+"<gui>Present unless</gui> column should be empty for underline. In addition, "
+"you should be sure that the <gui>Speak</gui> column for underline is checked."
+msgstr ""
+"例如，文本属性“下划线”的默认值为“无”。这样以来，只要当文本确实有下划线时，"
+"<app>Orca</app> 就通知您关于下划线文本的消息。要是您希望不管文本是否有下划线"
+"都要朗读时，下划线的<gui>隐藏条件</gui>一栏值应为空。同时，您也要确保已勾选下"
+"划线的<gui>朗读</gui>一栏。"
+
+#: C/preferences_text_attributes.page:75(title)
+msgid "Undoing changes"
+msgstr "撤销更改"
+
+#: C/preferences_text_attributes.page:76(p)
+msgid ""
+"Beneath the list of text attributes, there is a Reset button "
+"(<keyseq><key>Alt</key><key>R</key></keyseq>) which will restore the values "
+"of the table to what they were when the dialog was first displayed."
+msgstr ""
+"在文本属性列表下方，有个复位按钮(<keyseq><key>Alt</key><key>R</key></"
+"keyseq>)，它会将表格中的值恢复到对话框初始显示时的样子。"
+
+#: C/preferences_text_attributes.page:84(title)
+msgid "Rearranging the order of presentation"
+msgstr "调整显示顺序"
+
+#: C/preferences_text_attributes.page:86(title)
+msgid "Options for Controlling the Order in Which Attributes Are Presented"
+msgstr "控制属性显示顺序选项"
+
+#: C/preferences_text_attributes.page:87(desc)
+msgid ""
+"When you initially display the text attribute page, all of your enabled "
+"attributes are placed at the top of the table in the order in which they "
+"will be spoken. There are four buttons which can be used to rearrange the "
+"order of presentation."
+msgstr ""
+"当文本属性页面第一次显示时，所有已开启的属性都按朗读的顺序放在了表格顶部位"
+"置。共有四个按钮用来调整属性显示的位置。"
+
+#: C/preferences_text_attributes.page:97(p)
+msgid ""
+"<gui>Move to top</gui> (<keyseq><key>Alt</key><key>T</key></keyseq>): moves "
+"the selected attribute to the top of the list."
+msgstr ""
+"<gui>移动到顶部</gui> (<keyseq><key>Alt</key><key>T</key></keyseq>)：将所选属"
+"性移动到列表顶部。"
+
+#: C/preferences_text_attributes.page:103(p)
+msgid ""
+"<gui>Move up one</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): moves "
+"the selected attribute up one row."
+msgstr ""
+"<gui>上移一个</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>)：将所选属性"
+"移动到上一行。"
+
+#: C/preferences_text_attributes.page:109(p)
+msgid ""
+"<gui>Move down one</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): "
+"moves the selected attribute down one row."
+msgstr ""
+"<gui>下移一个</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>)：将所选属性"
+"移动到下一行。"
+
+#: C/preferences_text_attributes.page:115(p)
+msgid ""
+"<gui>Move to bottom</gui> (<keyseq><key>Alt</key><key>B</key></keyseq>): "
+"moves the selected attribute to the bottom of the list."
+msgstr ""
+"<gui>移动到底部</gui> (<keyseq><key>Alt</key><key>B</key></keyseq>)：将所选属"
+"性移动到列表底部。"
+
+#: C/preferences_text_attributes.page:123(title)
+msgid "Braille indicator"
+msgstr "布莱叶盲文指示器"
+
+#: C/preferences_text_attributes.page:125(title)
+msgid "Options for Configuring Braille \"Underlining\" for Formatting"
+msgstr "配置布莱叶盲文“下划线”格式化选项"
+
+#: C/preferences_text_attributes.page:126(desc)
+msgid ""
+"Beneath the push buttons is the <gui>Braille Indicator</gui> group of radio "
+"buttons. Here you can select the cell or cells to be used to indicate text "
+"which has at least one of the specified attributes."
+msgstr ""
+"在<gui>布莱叶盲文指示器</gui>下方是一组单选按钮。在这里您可以选择特定属性文本"
+"的提示点数。"
+
+#: C/preferences_text_attributes.page:135(p)
+msgid ""
+"<gui>None</gui>: Do not underline text attributes in braille (the default)"
+msgstr "<gui>无</gui>：在盲文中不突出文本属性(默认)"
+
+#: C/preferences_text_attributes.page:138(p)
+msgid "<gui>Dot 7</gui>: Underline text attributes with only Dot 7"
+msgstr "<gui>点 7</gui>：只用点 7 突出文本属性"
+
+#: C/preferences_text_attributes.page:141(p)
+msgid "<gui>Dot 8</gui>: Underline text attributes with only Dot 8"
+msgstr "<gui>点 8</gui>：只用点 8 突出文本属性"
+
+#: C/preferences_text_attributes.page:144(p)
+msgid ""
+"<gui>Dots 7 and 8</gui>: Underline text attributes with both Dots 7 and Dots "
+"8"
+msgstr "<gui>点 7 和 8</gui>：使用点 7 和点 8 突出文本属性"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_table_navigation.page:22(None)
+msgid ""
+"@@image: 'figures/preferences_table_navigation.png'; "
+"md5=a97b98bd9e3499e06844d56156419a7d"
+msgstr ""
+"@@image: 'figures/preferences_table_navigation.png'; "
+"md5=a97b98bd9e3499e06844d56156419a7d"
+
+#: C/preferences_table_navigation.page:8(title)
+msgid "2. Table Navigation"
+msgstr "2. 表格导航"
+
+#: C/preferences_table_navigation.page:9(title) C/commands_table.page:7(title)
+msgid "Table Navigation"
+msgstr "表格导航"
+
+#: C/preferences_table_navigation.page:10(desc)
+msgid "Configuring <app>Orca</app>'s navigation within tables"
+msgstr "配置表格内的 <app>Orca</app> 导航"
+
+#: C/preferences_table_navigation.page:21(title)
+msgid "Table Navigation Preferences"
+msgstr "表格导航首选项"
+
+#: C/preferences_table_navigation.page:23(p)
+msgid ""
+"The following option allows you to customize how <app>Orca</app> behaves "
+"when navigating within a table in <link xref=\"howto_structural_navigation"
+"\">Structural-Navigation</link>-enabled applications."
+msgstr ""
+
+#: C/preferences_table_navigation.page:30(title)
+msgid "Speak cell coordinates"
+msgstr ""
+
+#: C/preferences_table_navigation.page:31(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will announce the coordinates "
+"of each cell you navigate to."
+msgstr ""
+
+#: C/preferences_table_navigation.page:35(p)
+#: C/preferences_table_navigation.page:45(p)
+#: C/preferences_table_navigation.page:55(p) C/preferences_speech.page:173(p)
+#: C/preferences_key_echo.page:29(p) C/preferences_key_echo.page:39(p)
+#: C/preferences_key_echo.page:49(p) C/preferences_key_echo.page:59(p)
+#: C/preferences_key_echo.page:69(p) C/preferences_key_echo.page:81(p)
+#: C/preferences_general.page:104(p) C/preferences_gecko.page:36(p)
+#: C/preferences_gecko.page:55(p) C/preferences_gecko.page:106(p)
+msgid "Default value: checked"
+msgstr "默认值：已选"
+
+#: C/preferences_table_navigation.page:40(title)
+msgid "Speak multiple cell spans"
+msgstr ""
+
+#: C/preferences_table_navigation.page:41(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will announce how many rows and/"
+"or columns a cell spans when it spans more than one."
+msgstr ""
+
+#: C/preferences_table_navigation.page:50(title)
+msgid "Announce cell header"
+msgstr ""
+
+#: C/preferences_table_navigation.page:51(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will announce changes in the "
+"header if the headers for the current cell can be determined."
+msgstr ""
+
+#: C/preferences_table_navigation.page:60(title)
+msgid "Skip blank cells"
+msgstr ""
+
+#: C/preferences_table_navigation.page:61(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will skip blank cells when you "
+"are using <app>Orca</app>'s table structural navigation commands to access "
+"the table."
+msgstr ""
+
+#: C/preferences_table_navigation.page:66(p) C/preferences_key_echo.page:94(p)
+#: C/preferences_key_echo.page:104(p) C/preferences_key_echo.page:140(p)
+#: C/preferences_key_echo.page:163(p) C/preferences_general.page:53(p)
+#: C/preferences_general.page:73(p) C/preferences_general.page:121(p)
+#: C/preferences_general.page:140(p) C/preferences_gecko.page:74(p)
+#: C/preferences_gecko.page:87(p) C/preferences_gecko.page:118(p)
+#: C/preferences_chat.page:31(p) C/preferences_chat.page:42(p)
+#: C/preferences_chat.page:54(p) C/preferences_braille.page:28(p)
+#: C/preferences_braille.page:47(p) C/preferences_braille.page:65(p)
+#: C/preferences_braille.page:79(p) C/preferences_braille.page:90(p)
+msgid "Default value: not checked"
+msgstr "默认值：未选中"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:21(None)
+msgid ""
+"@@image: 'figures/preferences_enable_speech.png'; "
+"md5=66fff525659d9e3db4130f58f962f82e"
+msgstr ""
+"@@image: 'figures/preferences_enable_speech.png'; "
+"md5=66fff525659d9e3db4130f58f962f82e"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:30(None)
+msgid ""
+"@@image: 'figures/preferences_tts_options.png'; "
+"md5=ce951b70b7a1d6dc00f3b5b2cf4dcc2e"
+msgstr ""
+"@@image: 'figures/preferences_tts_options.png'; "
+"md5=ce951b70b7a1d6dc00f3b5b2cf4dcc2e"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:75(None)
+msgid ""
+"@@image: 'figures/preferences_rate_pitch_volume.png'; "
+"md5=98d310294cb4c7b945ecf81fda0df1f7"
+msgstr ""
+"@@image: 'figures/preferences_rate_pitch_volume.png'; "
+"md5=98d310294cb4c7b945ecf81fda0df1f7"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:84(None)
+msgid ""
+"@@image: 'figures/preferences_punctuation_level.png'; "
+"md5=2578236bb97ab0109675417fcdb8dd4b"
+msgstr ""
+"@@image: 'figures/preferences_punctuation_level.png'; "
+"md5=2578236bb97ab0109675417fcdb8dd4b"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:132(None)
+msgid ""
+"@@image: 'figures/preferences_speech_verbosity.png'; "
+"md5=d689e49513907f75e54b3635b7419247"
+msgstr ""
+"@@image: 'figures/preferences_speech_verbosity.png'; "
+"md5=d689e49513907f75e54b3635b7419247"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:146(None)
+msgid ""
+"@@image: 'figures/preferences_table_rows.png'; "
+"md5=736ba1cf57c3cdc79de019160f3636ab"
+msgstr ""
+"@@image: 'figures/preferences_table_rows.png'; "
+"md5=736ba1cf57c3cdc79de019160f3636ab"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:166(None)
+msgid ""
+"@@image: 'figures/preferences_progress_bar_updates.png'; "
+"md5=65ae433495a3efd95cd5259f10865c98"
+msgstr ""
+"@@image: 'figures/preferences_progress_bar_updates.png'; "
+"md5=65ae433495a3efd95cd5259f10865c98"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:215(None)
+msgid ""
+"@@image: 'figures/preferences_only_speak_displayed_text.png'; "
+"md5=4636b63366ca45dd7f2679821e8e0099"
+msgstr ""
+"@@image: 'figures/preferences_only_speak_displayed_text.png'; "
+"md5=4636b63366ca45dd7f2679821e8e0099"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:224(None)
+msgid ""
+"@@image: 'figures/preferences_speak_multicase_strings_as_words.png'; "
+"md5=ac2c1da480acd938209d7f29b5ce12f1"
+msgstr ""
+"@@image: 'figures/preferences_speak_multicase_strings_as_words.png'; "
+"md5=ac2c1da480acd938209d7f29b5ce12f1"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:236(None)
+msgid ""
+"@@image: 'figures/preferences_break_speech_into_chunks.png'; "
+"md5=c2193d97d780a2a9349dcff4a64a3135"
+msgstr ""
+"@@image: 'figures/preferences_break_speech_into_chunks.png'; "
+"md5=c2193d97d780a2a9349dcff4a64a3135"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:248(None)
+msgid ""
+"@@image: 'figures/preferences_say_all_by.png'; "
+"md5=f50f4ec56b3048c7cdc961a14ff1fb2f"
+msgstr ""
+"@@image: 'figures/preferences_say_all_by.png'; "
+"md5=f50f4ec56b3048c7cdc961a14ff1fb2f"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:258(None)
+msgid ""
+"@@image: 'figures/preferences_system_voice_options.png'; "
+"md5=15083bf706ad1b905332746300f206a9"
+msgstr ""
+"@@image: 'figures/preferences_system_voice_options.png'; "
+"md5=15083bf706ad1b905332746300f206a9"
+
+#: C/preferences_speech.page:5(title)
+msgid "2. Speech"
+msgstr "2. 语音"
+
+#: C/preferences_speech.page:6(title) C/commands_speech_settings.page:7(title)
+msgid "Speech"
+msgstr "语音"
+
+#: C/preferences_speech.page:7(desc)
+msgid "Configuring the voice and what gets spoken"
+msgstr "配置语音和朗读内容"
+
+#: C/preferences_speech.page:18(title)
+msgid "Speech Preferences"
+msgstr "语音首选项"
+
+#: C/preferences_speech.page:20(title)
+msgid "Enable speech"
+msgstr "启用朗读"
+
+#: C/preferences_speech.page:22(p)
+msgid ""
+"The <gui>Enable speech</gui> check box controls whether or not <app>Orca</"
+"app> will make use of a speech synthesizer. Braille-only users will likely "
+"want to uncheck this checkbox."
+msgstr ""
+"<gui>启用朗读</gui>复选框控制 <app>Orca</app> 是否利用朗读合成器。只盲文用户"
+"可能会不勾选该复选框。"
+
+#: C/preferences_speech.page:29(title)
+msgid "Text-To-Speech Options"
+msgstr "待朗读文本选项"
+
+#: C/preferences_speech.page:32(title)
+msgid "Speech system"
+msgstr "朗读系统"
+
+#: C/preferences_speech.page:33(p)
+msgid ""
+"This combo box allows you to select your preferred speech system from those "
+"you have installed. Examples include Speech Dispatcher and GNOME Speech."
+msgstr ""
+"该组合框允许您从已安装的朗读系统中选择您的偏好。例如，包括 Speech Dispatcher "
+"和 GNOME Speech 系统。"
+
+#: C/preferences_speech.page:40(title)
+msgid "Speech synthesizer"
+msgstr "朗读合成器"
+
+#: C/preferences_speech.page:41(p)
+msgid ""
+"This combo box allows you to select the speech synthesizer to be used with "
+"your chosen Speech system."
+msgstr "该组合框允许您选择将和您已选朗读系统一块使用的朗读合成器。"
+
+#: C/preferences_speech.page:47(title)
+msgid "Voice settings"
+msgstr "语音设置"
+
+#: C/preferences_speech.page:48(p)
+#, fuzzy
+msgid ""
+"This combo box makes it possible for you to use different voices so that you "
+"can better distinguish uppercase and linked text from other text, and on-"
+"screen text from text added by <app>Orca</app>."
+msgstr ""
+"该组合框对您来说可以选择使用不同的语音类型，这样您就可以更好的区分大写、链接"
+"文本和一般文本了，还有 <app>Orca</app> 添加的屏幕文本。"
+
+#: C/preferences_speech.page:54(title)
+msgid "Configuring Multiple Voices"
+msgstr "配置多种语音"
+
+#: C/preferences_speech.page:55(p)
+msgid ""
+"For each voice you wish to configure, first select the voice in the "
+"<gui>Voice settings</gui> combo box. Then configure the person, rate, pitch, "
+"and volume to be used for that voice."
+msgstr ""
+"对您想要配置的语音，首选在<gui>语音类型</gui>组合框内选中它。然后配置该语音的"
+"朗读者、速度、音调和音量。"
+
+#: C/preferences_speech.page:64(title)
+msgid "Person"
+msgstr "朗读者"
+
+#: C/preferences_speech.page:65(p)
+msgid ""
+"This combo box allows you to choose which \"person\" or \"speaker\" should "
+"be used with the selected voice. For instance, you might wish to have David "
+"speak by default, but have hyperlinks spoken by Alice. Note that what you "
+"find in the <gui>Person</gui> combo box will depend on which speech "
+"synthesizers you have installed."
+msgstr ""
+
+#: C/preferences_speech.page:74(title)
+msgid "Rate, Pitch, and Volume"
+msgstr "速度、音调和音量"
+
+#: C/preferences_speech.page:76(p)
+msgid ""
+"These three left-right sliders allow you to further customize the sound of "
+"the person you have just selected."
+msgstr "您可以使用这三个左右方向的滑动条进一步个性化设置已选朗读者的声音。"
+
+#: C/preferences_speech.page:83(title)
+#, fuzzy
+msgid "Punctuation Level"
+msgstr "停顿级别"
+
+#: C/preferences_speech.page:85(p)
+#, fuzzy
+msgid ""
+"The <gui>Punctuation Level</gui> radio button group is used to adjust the "
+"amount of punctuation spoken by the synthesizer. The available levels are "
+"<gui>None</gui>, <gui>Some</gui>, <gui>Most</gui>, and <gui>All</gui>."
+msgstr ""
+"<gui>停顿级别</gui>单选按钮组可用来调节合成器朗读标点符号的数量。可选的级"
+"别有：<gui>无</gui>、<gui>一些</gui>、<gui>大多</gui>和<gui>全部</gui>。"
+
+#: C/preferences_speech.page:92(title)
+msgid "None"
+msgstr "无"
+
+#: C/preferences_speech.page:93(p)
+msgid ""
+"Choosing a punctuation level of <gui>None</gui> would, as you expect, cause "
+"no punctuation to be spoken. Note, however, that special symbols such as "
+"subscripted and superscripted numbers, unicode fractions, and bullets are "
+"still spoken at this level, even though some might consider these types of "
+"symbols punctuation."
+msgstr ""
+"选择标点符号级别<gui>无</gui>，可想而知，将不会朗读标点。提示，在该级别仍会朗"
+"读一些特殊符号如上下标数字、分数和项目编号，甚至一些可能被归为此类型的符号标"
+"点。"
+
+#: C/preferences_speech.page:102(title)
+msgid "Some"
+msgstr "一些"
+
+#: C/preferences_speech.page:103(p)
+msgid ""
+"Choosing a punctuation level of <gui>Some</gui> causes all of the previously-"
+"mentioned symbols to be spoken. In addition, <app>Orca</app> will speak "
+"known mathematical symbols, currency symbols, and \"^\", \"@\", \"/\", "
+"\"&amp;\", \"#\"."
+msgstr ""
+"选择标点符号级别<gui>一些</gui>会朗读所有前面提到的符号。另外，<app>Orca</"
+"app> 也会朗读已知的数学符号、货币符号和“^”，“@”，“/”，“&amp;”，“#”。"
+
+#: C/preferences_speech.page:111(title)
+msgid "Most"
+msgstr "大多"
+
+#: C/preferences_speech.page:112(p)
+msgid ""
+"Choosing a punctuation level of <gui>Most</gui> causes all of the previous-"
+"mentioned symbols to be spoken. In addition, <app>Orca</app> will speak all "
+"other known punctuation symbols <em>other than</em> \"!\", \"'\", \",\", \"."
+"\", \"?\"."
+msgstr ""
+"选择标点符号级别<gui>大多</gui>会朗读所有前面提到的符号。另外，<app>Orca</"
+"app> 会朗读所有其他已知的标点符号，<em>除了</em>“!”，“'”，“,”，“.”，“?”"
+
+#: C/preferences_speech.page:120(title)
+msgid "All"
+msgstr "全部"
+
+#: C/preferences_speech.page:121(p)
+msgid ""
+"Choosing a punctuation level of <gui>All</gui>, as expected, causes "
+"<app>Orca</app> to speak all known punctuation symbols."
+msgstr ""
+"选择标点符号级别<gui>全部</gui>，如您所料，<app>Orca</app> 会朗读所有已知的标"
+"点符号。"
+
+#: C/preferences_speech.page:126(p)
+msgid "Default value: <gui>Most</gui>"
+msgstr "默认值：<gui>大多</gui>"
+
+#: C/preferences_speech.page:131(title) C/preferences_braille.page:95(title)
+msgid "Verbosity"
+msgstr "详细程度"
+
+#: C/preferences_speech.page:133(p)
+msgid ""
+"The <gui>Verbosity</gui> setting determines the amount of information that "
+"will be spoken in various situations. For example, if it is set to verbose, "
+"and you arrow into a word that is misspelled, <app>Orca</app> will announce "
+"that the word is misspelled. When the level is set to brief, this "
+"announcement will not be made."
+msgstr ""
+"<gui>详细程度</gui>设置决定了在多种环境下朗读的信息数量。例如，如果它设置"
+"为“详细”，当您指向一个拼错的单词时，<app>Orca</app> 会提示该单词拼写错误。当"
+"设置为“简单”，将不会有该提示。"
+
+#: C/preferences_speech.page:140(p) C/preferences_braille.page:103(p)
+msgid "Default value: <gui>Verbose</gui>"
+msgstr "默认值：<gui>详细</gui>"
+
+#: C/preferences_speech.page:145(title)
+msgid "Table Rows"
+msgstr "表格行"
+
+#: C/preferences_speech.page:147(p)
+#, fuzzy
+msgid ""
+"The <gui>Table Rows</gui> radio button group determines what gets spoken "
+"when navigating amongst rows in a table. The available options are "
+"<gui>speak row</gui> and <gui>speak cell</gui>."
+msgstr ""
+"<gui>表格行</gui>单选按钮组决定了在表格内行间导航时朗读的内容。可选项包括"
+"<gui>读出整行</gui>和<gui>读出单元格</gui>。"
+
+#: C/preferences_speech.page:152(p)
+msgid ""
+"Consider the process of examining the list of messages in your Inbox. In "
+"order to have <app>Orca</app> announce the sender, subject, date, and "
+"presence of attachments you would need <gui>speak row</gui>. On the other "
+"hand, when navigating amongst rows in a spreadsheet, hearing the full row "
+"may not be desired. In that case, <gui>speak cell</gui> should instead be "
+"chosen."
+msgstr ""
+
+#: C/preferences_speech.page:160(p)
+msgid "Default value: <gui>Speak row</gui>"
+msgstr "默认值：<gui>读出整行</gui>"
+
+#: C/preferences_speech.page:165(title)
+msgid "Progress Bar Updates"
+msgstr "进度条更新"
+
+#: C/preferences_speech.page:168(title)
+msgid "Enabled"
+msgstr "已启用"
+
+#: C/preferences_speech.page:169(p)
+msgid ""
+"If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
+"periodically present the status of progress bars."
+msgstr "如果勾选了<gui>已启用</gui>复选框，<app>Orca</app>将定期显示进度条状态。"
+
+#: C/preferences_speech.page:178(title)
+msgid "Frequency (secs)"
+msgstr "频率(秒)"
+
+#: C/preferences_speech.page:179(p)
+msgid "This spin button determines how often the announcement is made."
+msgstr "该微调按钮决定了多久显示一次通知。"
+
+#: C/preferences_speech.page:182(p)
+msgid "Default value: 10"
+msgstr "默认值：10"
+
+#: C/preferences_speech.page:187(title)
+msgid "Restrict to"
+msgstr "限于"
+
+#: C/preferences_speech.page:188(p)
+msgid ""
+"This combo box allows you to control which progress bars should be "
+"presented, assuming the presentation of progress bar updates has been "
+"enabled. The choices are <gui>All</gui>, <gui>Application</gui>, and "
+"<gui>Window</gui>."
+msgstr ""
+"该组合框允许您控制应显示哪个进度条，假设进度条更新已启用。选项包括：<gui>全部"
+"</gui>、<gui>应用程序</gui>和<gui>窗口</gui>。"
+
+#: C/preferences_speech.page:194(p)
+msgid ""
+"Choosing <gui>All</gui> will result in <app>Orca</app> presenting updates "
+"for all progress bars, regardless of where the progress bars are located."
+msgstr "选择<gui>全部</gui>：不管进度条在哪儿，<app>Orca</app> 将显示所有进度条更新。"
+
+#: C/preferences_speech.page:199(p)
+msgid ""
+"Choosing <gui>Application</gui> will result in <app>Orca</app> presenting "
+"updates from progress bars in the active application, even if they are not "
+"in the active window."
+msgstr ""
+"选择<gui>应用程序</gui>：<app>Orca</app> 将在活动的应用程序中显示所有进度条更"
+"新，即使它们不在活动窗口中。"
+
+#: C/preferences_speech.page:204(p)
+msgid ""
+"Choosing <gui>Window</gui> will result in <app>Orca</app> only presenting "
+"updates for progress bars in the active window."
+msgstr "选择<gui>窗口</gui>：<app>Orca</app> 将只在活动窗口中显示进度条更新。"
+
+#: C/preferences_speech.page:208(p)
+msgid "Default value: <gui>Application</gui>"
+msgstr "默认值：<gui>应用程序</gui>"
+
+#: C/preferences_speech.page:214(title)
+msgid "Only speak displayed text"
+msgstr "仅读出显示的文本"
+
+#: C/preferences_speech.page:216(p)
+msgid ""
+"Checking this checkbox causes <app>Orca</app> to only speak actual text "
+"displayed on screen. This option is intended primarily for low vision users "
+"and users with a visual learning disability."
+msgstr ""
+
+#: C/preferences_speech.page:223(title)
+msgid "Speak multicase strings as words"
+msgstr "把多组字符串当作单词读出"
+
+#: C/preferences_speech.page:225(p)
+msgid ""
+"In some texts, and especially when working with code, one often comes across "
+"a \"word\" consisting of several words with alternating case, such as "
+"\"MultiCaseString.\" Speech synthesizers do not always pronounce such "
+"multicase strings correctly. Checking the <gui>Speak multicase strings as "
+"words</gui> checkbox will cause <app>Orca</app> to break a word like "
+"\"MultiCaseString\" into separate words (\"Multi,\" \"Case,\" and \"String"
+"\") prior to passing it along to the speech synthesizer."
+msgstr ""
+
+#: C/preferences_speech.page:237(title)
+msgid "Break speech into chunks between pauses"
+msgstr "把两个停顿之间的语音打断成块"
+
+#: C/preferences_speech.page:238(p)
+msgid ""
+"Depending on the enabled speech settings, <app>Orca</app> may have quite a "
+"bit to say about a particular object such as its name, its role, its state, "
+"its mnemonic, its tutorial message, and so on. Checking the <gui>Break "
+"speech into chunks between pauses</gui> checkbox will cause <app>Orca</app> "
+"to insert brief pauses in between each of these pieces of information."
+msgstr ""
+
+#: C/preferences_speech.page:249(title)
+msgid "Say All By"
+msgstr ""
+
+#: C/preferences_speech.page:250(p)
+msgid ""
+"The <gui>Say All By</gui> combo box allows you to specify whether <app>Orca</"
+"app> speaks a sentence at a time or a line at a time when doing a \"Say All"
+"\" of a document."
+msgstr ""
+
+#: C/preferences_speech.page:257(title)
+msgid "System Information"
+msgstr "系统信息"
+
+#: C/preferences_speech.page:259(p)
+msgid ""
+"The following items control the presentation of a variety of supplemental, "
+"\"system\" information about the item with focus. Because the associated "
+"text does not appear on screen, this information is presented in <app>Orca</"
+"app>'s System voice."
+msgstr ""
+
+#: C/preferences_speech.page:266(title)
+msgid "Configuration of System Information"
+msgstr "系统信息配置"
+
+#: C/preferences_speech.page:267(p)
+msgid ""
+"The follow items will not be available for configuration if the <gui>Only "
+"speak displayed text</gui> checkbox is checked."
+msgstr ""
+
+#: C/preferences_speech.page:273(title)
+msgid "Speak blank lines"
+msgstr "读出空白的行"
+
+#: C/preferences_speech.page:274(p)
+msgid ""
+"If the <gui>Speak blank lines</gui> checkbox is checked, <app>Orca</app> "
+"will say \"blank\" each time you arrow to a blank line. If it is unchecked, "
+"<app>Orca</app> will say nothing when you move to a blank line."
+msgstr ""
+
+#: C/preferences_speech.page:282(title)
+msgid "Speak indentation and justification"
+msgstr "朗读缩排及对齐"
+
+#: C/preferences_speech.page:283(p)
+msgid ""
+"When working with code or editing other documents it is often desirable to "
+"be aware of justification and indentation. Checking the <gui>Speak "
+"indentation and justification</gui> checkbox will cause <app>Orca</app> to "
+"announce this information."
+msgstr ""
+
+#: C/preferences_speech.page:291(title)
+msgid "Speak object mnemonics"
+msgstr "朗读对象助记符"
+
+#: C/preferences_speech.page:292(p)
+msgid ""
+"If the <gui>Speak object mnemonics</gui> checkbox is checked, <app>Orca</"
+"app> will announce the mnemonic associated with the object with focus (such "
+"as <keyseq><key>Alt</key><key>O</key></keyseq> for an <gui>OK</gui> button)."
+msgstr ""
+
+#: C/preferences_speech.page:300(title)
+msgid "Speak child position"
+msgstr "读出子项位置"
+
+#: C/preferences_speech.page:301(p)
+msgid ""
+"Checking the <gui>Speak child position</gui> checkbox will cause <app>Orca</"
+"app> to announce the position of the focused item in menus, lists, and trees "
+"(e.g. \"9 of 16\")."
+msgstr ""
+
+#: C/preferences_speech.page:308(title)
+msgid "Speak tutorial messages"
+msgstr "读出指导信息"
+
+#: C/preferences_speech.page:309(p)
+msgid ""
+"If the <gui>Speak tutorial messages</gui> checkbox is checked, as you move "
+"amongst objects in an interface, <app>Orca</app> will provide additional "
+"information, such as how to interact with the currently-focused object."
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_pronunciation.page:31(None)
+msgid ""
+"@@image: 'figures/preferences_pronunciation.png'; "
+"md5=a4fa07be0148dfa9ddc12d7c40f4c864"
+msgstr ""
+"@@image: 'figures/preferences_pronunciation.png'; "
+"md5=a4fa07be0148dfa9ddc12d7c40f4c864"
+
+#: C/preferences_pronunciation.page:6(title)
+msgid "7. Pronunciation"
+msgstr "7. 读音"
+
+#: C/preferences_pronunciation.page:7(title)
+msgid "Pronunciation"
+msgstr "读音"
+
+#: C/preferences_pronunciation.page:8(desc)
+msgid "Defining how specific words get pronounced"
+msgstr "定义特定单词如何发音"
+
+#: C/preferences_pronunciation.page:19(title)
+msgid "Pronunciation Preferences"
+msgstr "读音首选项"
+
+#: C/preferences_pronunciation.page:20(p)
+msgid ""
+"Sometimes your speech synthesizer just doesn't say the right thing for a "
+"given string. You might prefer to hear \"laughing out loud\" rather than "
+"\"LOL,\" or \"accessibility\" rather than \"a11y\". Or there may be a name "
+"or a technical term which the synthesizer mispronounces."
+msgstr ""
+
+#: C/preferences_pronunciation.page:26(p)
+msgid ""
+"The <gui>Pronunciation</gui> page of the <app>Orca</app> preferences dialog "
+"allows you to add, edit, and delete entries in <app>Orca</app>'s "
+"pronunciation dictionary."
+msgstr ""
+
+#: C/preferences_pronunciation.page:32(p)
+msgid ""
+"Because the <gui>Pronunciation</gui> page is also part of the application-"
+"specific settings, you can customize your entries on an as-needed basis for "
+"each application you use."
+msgstr ""
+
+#: C/preferences_pronunciation.page:38(title)
+msgid "Adding a new dictionary entry"
+msgstr "添加新词典条目"
+
+#: C/preferences_pronunciation.page:40(p)
+msgid ""
+"Press the New Entry button (<keyseq><key>Alt</key><key>N</key></keyseq>)"
+msgstr "按下新项目按钮(<keyseq><key>Alt</key><key>N</key></keyseq>)"
+
+#: C/preferences_pronunciation.page:45(p)
+msgid ""
+"Type the text of the new entry and press <key>Return</key> to finish editing "
+"the actual string."
+msgstr "输入新项目文本内容，按下<key>回车键</key>完成对实际字符串的编辑。"
+
+#: C/preferences_pronunciation.page:51(p)
+msgid ""
+"Move to the <gui>Replacement String</gui> column and press <key>Return </"
+"key> to begin editing."
+msgstr "移到<gui>替换字符串</gui>一栏，按下<key>回车键</key>开始编辑。"
+
+#: C/preferences_pronunciation.page:57(p)
+msgid ""
+"Type the text that you would like to have spoken instead and press <key> "
+"Return</key> to finish editing the replacement string."
+msgstr "输入您希望的替代发音文本，按下<key>回车键</key>完成对替换字符串的编辑。"
+
+#: C/preferences_pronunciation.page:64(title)
+msgid "Editing an existing dictionary entry"
+msgstr "编辑已有的词典条目"
+
+#: C/preferences_pronunciation.page:66(p)
+msgid ""
+"Move to the cell you wish to edit and press <key>Return</key> to begin "
+"editing."
+msgstr "移动到您想要编辑的单元格，按下<key>回车键</key>开始编辑。"
+
+#: C/preferences_pronunciation.page:72(p)
+msgid "Make your changes and then press <key>Return</key> to finish editing."
+msgstr "作出修改后，按下<key>回车键</key>完成编辑。"
+
+#: C/preferences_pronunciation.page:78(title)
+msgid "Deleting an existing dictionary entry"
+msgstr "删除已有的词典条目"
+
+#: C/preferences_pronunciation.page:80(p)
+msgid "Move to the entry you wish to delete."
+msgstr "移动到您想要删除的条目。"
+
+#: C/preferences_pronunciation.page:83(p)
+msgid "Press the Delete button or <keyseq><key>Alt</key><key>D</key></keyseq>."
+msgstr "按下删除按钮或<keyseq><key>Alt</key><key>D</key></keyseq>。"
+
+#: C/preferences.page:5(title)
+msgid "Preferences"
+msgstr "首选项"
+
+#: C/preferences.page:14(title)
+msgid "<app>Orca</app>'s Preferences Dialogs"
+msgstr "<app>Orca</app> 首选项对话框"
+
+#: C/preferences.page:16(title) C/preferences_introduction.page:17(title)
+msgid "Orca Preferences"
+msgstr "Orca 首选项"
+
+#: C/preferences.page:19(title) C/preferences_introduction.page:49(title)
+msgid "Application-Unique Preferences"
+msgstr "独特应用首选项"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_key_echo.page:21(None)
+msgid ""
+"@@image: 'figures/preferences_key_echo.png'; "
+"md5=8a24d33dfd2f274ce4da3e756e866d65"
+msgstr ""
+"@@image: 'figures/preferences_key_echo.png'; "
+"md5=8a24d33dfd2f274ce4da3e756e866d65"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_key_echo.page:111(None)
+msgid ""
+"@@image: 'figures/preferences_character_echo.png'; "
+"md5=ae0f0f530ed8a742d08df4d388561847"
+msgstr ""
+"@@image: 'figures/preferences_character_echo.png'; "
+"md5=ae0f0f530ed8a742d08df4d388561847"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_key_echo.page:156(None)
+msgid ""
+"@@image: 'figures/preferences_word_and_sentence_echo.png'; "
+"md5=d31bd26801793b290e740fcabe7ba86d"
+msgstr ""
+"@@image: 'figures/preferences_word_and_sentence_echo.png'; "
+"md5=d31bd26801793b290e740fcabe7ba86d"
+
+#: C/preferences_key_echo.page:3(title)
+msgid "Key Echo"
+msgstr "按键回声"
+
+#: C/preferences_key_echo.page:4(title)
+msgid "4. Key Echo"
+msgstr "4. 按键回声"
+
+#: C/preferences_key_echo.page:5(desc)
+msgid "Configuring what is spoken as you type"
+msgstr "配置输入时的朗读内容"
+
+#: C/preferences_key_echo.page:18(title)
+msgid "Key Echo Preferences"
+msgstr "按键回声首选项"
+
+#: C/preferences_key_echo.page:20(title)
+msgid "Enable key echo"
+msgstr "启用按键回声"
+
+#: C/preferences_key_echo.page:22(p)
+msgid ""
+"Orca's key echo setting controls what happens each time you press a key. To "
+"enable key echo, check the \"Enable key echo\" checkbox. Doing so causes "
+"additional checkboxes to become available through which you can choose "
+"exactly which keys should and should not be echoed to best suit your needs."
+msgstr ""
+
+#: C/preferences_key_echo.page:33(title)
+msgid "Enable alphanumeric and punctuation keys"
+msgstr "启用文数字符及标点符号按键"
+
+#: C/preferences_key_echo.page:34(p) C/howto_text_setup.page:89(p)
+msgid ""
+"This option controls whether or not keys like <key>a</key>, <key>b</key>, "
+"<key>c</key>, <key>;</key>, <key>?</key>, and so on should be spoken when "
+"pressed."
+msgstr ""
+"该选项控制类似<key>a</key>，<key>b</key>，<key>c</key>，<key>;</key>，<key>?"
+"</key> 的键按下时是否读出。"
+
+#: C/preferences_key_echo.page:44(title)
+msgid "Enable modifier keys"
+msgstr "启用修饰键"
+
+#: C/preferences_key_echo.page:45(p) C/howto_text_setup.page:97(p)
+msgid ""
+"This option controls whether or not <key>Shift</key>, <key>Ctrl</key>, "
+"<key>Alt</key> and <key>Meta</key> should be spoken when pressed."
+msgstr ""
+"该选项控制<key>Shift</key>，<key>Ctrl</key>，<key>Alt</key>和<key>Meta</key>"
+"键按下时是否读出。"
+
+#: C/preferences_key_echo.page:54(title)
+msgid "Enable locking keys"
+msgstr "启动锁定键"
+
+#: C/preferences_key_echo.page:55(p) C/howto_text_setup.page:104(p)
+msgid ""
+"This option controls whether or not <key>Caps Lock</key>, <key>Scroll Lock</"
+"key>, and <key>Num Lock</key> should be spoken when pressed."
+msgstr ""
+
+#: C/preferences_key_echo.page:64(title)
+msgid "Enable function keys"
+msgstr "启用功能键"
+
+#: C/preferences_key_echo.page:65(p) C/howto_text_setup.page:111(p)
+msgid ""
+"This option controls whether or not <key>F1</key> through <key>F12</key> "
+"should be spoken when pressed."
+msgstr "该选项控制按下从<key>F1</key>到<key>F12</key>时是否读出。"
+
+#: C/preferences_key_echo.page:74(title)
+msgid "Enable action keys"
+msgstr "启用动作键"
+
+#: C/preferences_key_echo.page:75(p)
+msgid ""
+"This option controls whether or not <key>BackSpace</key>, <key>Delete </"
+"key>, <key>Return</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</"
+"key>, <key>Page Down</key>, <key>Home</key>, and <key>End</key> should be "
+"spoken when pressed."
+msgstr ""
+"该选项控制<key>BackSpace</key>，<key>Delete </key>，<key>Return</key>，"
+"<key>Escape</key>，<key>Tab</key>，<key>Page Up</key>，<key>Page Down</key>，"
+"<key>Home</key>和<key>End</key>按下时是否读出。"
+
+#: C/preferences_key_echo.page:86(title)
+msgid "Enable navigation keys"
+msgstr "启用导航键"
+
+#: C/preferences_key_echo.page:87(p)
+msgid ""
+"This option controls whether or not <key>Left</key>, <key>Right</key>, "
+"<key>Up</key>, and <key>Down</key> should be spoken when pressed. This "
+"option also applies to any key combination in which <key>Orca Modifier</key> "
+"is being held down, for instance when flat review is being used."
+msgstr ""
+"该选项控制<key>Left</key>，<key>Right</key>，<key>Up</key>和<key>Down</key>按"
+"下时是否读出。该选项也适用于任何正在使用<key>Orca 修饰键</key>的按键组合，例"
+"如当正在使用平铺浏览时。"
+
+#: C/preferences_key_echo.page:99(title)
+msgid "Enable non-spacing diacritical keys"
+msgstr "启用非空格辨别键"
+
+#: C/preferences_key_echo.page:100(p)
+msgid ""
+"This option controls whether or not \"dead keys\" used to generate accented "
+"letters should be spoken when pressed."
+msgstr ""
+
+#: C/preferences_key_echo.page:110(title)
+msgid "Enable echo by character"
+msgstr "启用字词回声"
+
+#: C/preferences_key_echo.page:112(p)
+msgid "Enabling this option causes Orca to echo the character you just typed."
+msgstr "启用该选项 Orca 会读出您刚输入的字词。"
+
+#: C/preferences_key_echo.page:116(p)
+msgid ""
+"While echo by character seems quite similar to the key echo of alphanumeric "
+"and punctuation keys, there are important differences, especially with "
+"respect to accented letters and other symbols for which there is no "
+"dedicated key:"
+msgstr ""
+
+#: C/preferences_key_echo.page:124(p)
+msgid ""
+"Key echo causes <app>Orca</app> to announce what you just <em> pressed</em>."
+msgstr ""
+
+#: C/preferences_key_echo.page:130(p)
+msgid ""
+"Character echo causes <app>Orca</app> to announce what was just "
+"<em>inserted</em>."
+msgstr ""
+
+#: C/preferences_key_echo.page:136(p)
+msgid ""
+"Thus to have accented characters spoken as you type them, you should enable "
+"character echo."
+msgstr ""
+
+#: C/preferences_key_echo.page:144(title)
+msgid "Enabling both key echo and character echo"
+msgstr "同时启用按键回声和字词回声"
+
+#: C/preferences_key_echo.page:145(p)
+msgid ""
+"If you like key echo and you frequently type accented characters, consider "
+"enabling both. <app>Orca</app>'s character echo logic attempts to filter out "
+"characters which were spoken as a result of key echo, thus minimizing the "
+"likelihood of \"double speaking\" as you type."
+msgstr ""
+
+#: C/preferences_key_echo.page:155(title)
+msgid "Enable echo by word and Enable echo by sentence"
+msgstr "启用字词回声和由语句启用回声"
+
+#: C/preferences_key_echo.page:157(p)
+msgid ""
+"Checking the <gui>Enable echo by word</gui> checkbox causes <app>Orca</app> "
+"to echo the word you just typed. Similarly, checking the <gui>Enable echo by "
+"sentence</gui> checkbox causes <app>Orca</app> to echo the sentence you just "
+"typed."
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_key_bindings.page:22(None)
+msgid ""
+"@@image: 'figures/preferences_Orca_modifier_keys.png'; "
+"md5=e7f8a86f1476d63486769af2fdf34a9a"
+msgstr ""
+"@@image: 'figures/preferences_Orca_modifier_keys.png'; "
+"md5=e7f8a86f1476d63486769af2fdf34a9a"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_key_bindings.page:40(None)
+msgid ""
+"@@image: 'figures/preferences_key_bindings_table.png'; "
+"md5=87f1b17b497b7c34c9d88cacb2c3046c"
+msgstr ""
+"@@image: 'figures/preferences_key_bindings_table.png'; "
+"md5=87f1b17b497b7c34c9d88cacb2c3046c"
+
+#: C/preferences_key_bindings.page:6(title)
+msgid "6. Key Bindings"
+msgstr "6. 键绑定"
+
+#: C/preferences_key_bindings.page:7(title)
+msgid "Key Bindings"
+msgstr "键绑定"
+
+#: C/preferences_key_bindings.page:8(desc)
+msgid "Configuring <app>Orca</app>'s keyboard shortcuts"
+msgstr "配置 <app>Orca</app> 的键盘快捷键"
+
+#: C/preferences_key_bindings.page:19(title)
+msgid "Key Bindings Preferences"
+msgstr "键绑定首选项"
+
+#: C/preferences_key_bindings.page:21(title)
+msgid "Orca Modifier Keys"
+msgstr "Orca 修饰键"
+
+#: C/preferences_key_bindings.page:23(p)
+msgid ""
+"The <gui>Orca Modifier Keys</gui> combo box allows you to select which key "
+"or keys will serve as the Orca Modifier. The available options are:"
+msgstr ""
+
+#: C/preferences_key_bindings.page:29(p)
+msgid ""
+"<gui>KP_Insert</gui> (the same key as the <key>0</key> on the numeric keypad)"
+msgstr "<gui>KP_Insert</gui>(和数字键盘上的<key>0</key>一样的键)"
+
+#: C/preferences_key_bindings.page:33(gui)
+#: C/howto_the_orca_modifier.page:69(p)
+msgid "Insert"
+msgstr "Insert"
+
+#: C/preferences_key_bindings.page:34(gui)
+#: C/howto_the_orca_modifier.page:67(p)
+msgid "Insert, KP_Insert"
+msgstr "Insert, KP_Insert"
+
+#: C/preferences_key_bindings.page:35(gui)
+#: C/howto_the_orca_modifier.page:70(p)
+msgid "Caps_Lock"
+msgstr "Caps_Lock"
+
+#: C/preferences_key_bindings.page:39(title)
+msgid "The Key Bindings Table"
+msgstr "键绑定表格"
+
+#: C/preferences_key_bindings.page:41(p)
+msgid ""
+"The key bindings table provides a list of <app>Orca</app> operations and the "
+"keys that are bound to them."
+msgstr "键绑定表格提供了 <app>Orca</app> 操作和与操作相对应的按键清单。"
+
+#: C/preferences_key_bindings.page:47(p)
+msgid ""
+"The <gui>Function</gui> column is a description of the <app>Orca</app> "
+"operation to be performed."
+msgstr "<gui>功能</gui>一栏是 <app>Orca</app> 操作执行描述。"
+
+#: C/preferences_key_bindings.page:53(p)
+msgid ""
+"The <gui>Key Binding</gui> is the primary way to invoke the function from "
+"the keyboard. Note that the key binding may include the word \"Orca\". This "
+"indicates that the <key>Orca Modifier</key> key should be held down along "
+"with the other keys. You can modify the value of this column by pressing "
+"<key>Return</key>, pressing the keys for the new binding, and pressing "
+"<key>Return</key> again."
+msgstr ""
+"<gui>按键绑定</gui>是调用键盘功能的主要方式。提示，按键绑定中可能包括单"
+"词“Orca”。这表明<key>Orca 修饰键</key>应与其他键一同按下。您可以用下面方式修"
+"改该栏的值：按下<key>回车键</key>，按下新的绑定键，再按下<key>回车键</key>。"
+
+#: C/preferences_key_bindings.page:63(p)
+msgid ""
+"The <gui>Alternate</gui> column allows you to specify an additional "
+"keybinding for this function. You can modify the value of this column by "
+"pressing <key>Return</key>, pressing the keys for the new binding, and "
+"pressing <key>Return</key> again."
+msgstr ""
+"<gui>修改</gui>栏允许您为该功能指定另外一组按键绑定。您可以通过下面方式修改该"
+"栏的值：按下<key>回车键</key>，按下新的绑定键，再按下<key>回车键</key>。"
+
+#: C/preferences_key_bindings.page:71(p)
+msgid ""
+"The <gui>Modified</gui> column serves both as an indicator to what has been "
+"changed and as a way to restore the default bindings associated with that "
+"function."
+msgstr ""
+
+#: C/preferences_key_bindings.page:78(p)
+msgid ""
+"Beneath the list of <app>Orca</app> keybindings, you will find a group of "
+"\"unbound\" commands. These are commands which we feel will be very useful "
+"for some users, but not needed by most users. Rather than \"use up\" a "
+"keystroke for such commands, we have left them unassigned by default. At the "
+"end of the list are the braille bindings, for use with a refreshable braille "
+"display."
+msgstr ""
+"在 <app>Orca</app> 键绑定列表的下方，您会找到一组“未绑定”命令。我们感觉这些命"
+"令对部分用户会很有用，但大多数用户不需要。不像一些命令已经“用尽”按键，我们对"
+"此默认置空。在列表的底部是点字按键组合，用在盲文显示上。"
+
+#: C/preferences_introduction.page:3(title)
+msgid "0. Introduction to <app>Orca</app>'s Preferences"
+msgstr "0. <app>Orca</app> 首选项简介"
+
+#: C/preferences_introduction.page:4(title)
+#: C/preferences_introduction.page:15(title)
+msgid "Introduction to <app>Orca</app>'s Preferences"
+msgstr "<app>Orca</app> 首选项简介"
+
+#: C/preferences_introduction.page:18(p)
+msgid ""
+"Orca preferences allow you to customize functionality in <app>Orca</app> "
+"which applies to all applications. An example of an Orca preference is key "
+"echo because key echo is something that applies to all applications."
+msgstr ""
+"Orca 首选项允许您在 <app>Orca</app> 中自定义适用于所有应用程序的功能。举例，"
+"Orca 首选项中的“按键回声”可适用于所有应用程序。"
+
+# application-by-application basis ?
+#: C/preferences_introduction.page:23(p)
+#, fuzzy
+msgid ""
+"Note that Orca preferences can be customized on an application-by-"
+"application basis. For instance you can set the default key echo to words "
+"and then set the key echo for Pidgin to be none. Having done so, <app>Orca</"
+"app> would always echo each word that you typed, unless you were in Pidgin."
+msgstr ""
+"提示，Orca 首选项可对单个应用程序进行自定义。例如，您可以设置默认“字词回声”，"
+"然而可设置 Pidgin 不采用该设置。若已如此设置，<app>Orca</app>将总是在您输入"
+"时“字词回声”，除非您在 Pidgin 下。"
+
+#: C/preferences_introduction.page:30(title)
+msgid "Keyboard Shortcuts for Getting Into the Preferences Dialogs"
+msgstr "访问首选项对话框的键盘快捷键"
+
+#: C/preferences_introduction.page:33(p)
+msgid ""
+"<keyseq><key>Orca Modifier</key><key>Space</key></keyseq>: <app>Orca</app>'s "
+"Preferences"
+msgstr ""
+"<keyseq><key>Orca 修饰键</key><key>Space</key></keyseq>：<app>Orca</app> 首选"
+"项"
+
+#: C/preferences_introduction.page:39(p)
+msgid ""
+"<keyseq><key>Ctrl</key><key>Orca Modifier</key><key>Space</key></keyseq>: "
+"<app>Orca</app>'s Preferences for the current application"
+msgstr ""
+"<keyseq><key>Ctrl</key><key>Orca 修饰键</key><key>Space</key></keyseq>：针对"
+"当前应用程序的 <app>Orca</app> 首选项"
+
+#: C/preferences_introduction.page:50(p)
+msgid ""
+"In contrast to Orca preferences, there are application-unique preferences. "
+"These preferences allow you to customize <app>Orca</app> functionality that "
+"only applies in certain environments, such as on web pages or in chat "
+"applications. As a result, you will only find these options available in the "
+"application-specific preferences dialogs and only for those applications to "
+"which these options apply."
+msgstr ""
+"与 Orca 首选项相比，有单独的应用程序首选项。这些首选项允许您自定义只适用于特"
+"定环境的 <app>Orca</app> 功能，例如在网页或聊天程序下。由此，您会发现这些选项"
+"只在特定的应用程序首选项对话框中才有，也只有这些应用程序才可以使用这些选项。"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:27(None)
+msgid ""
+"@@image: 'figures/preferences_keyboard_layout.png'; "
+"md5=87362e2a6c4530f1a7928a84eb2a4fb2"
+msgstr ""
+"@@image: 'figures/preferences_keyboard_layout.png'; "
+"md5=87362e2a6c4530f1a7928a84eb2a4fb2"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:46(None)
+msgid ""
+"@@image: 'figures/preferences_quit_Orca_without_confirmation.png'; "
+"md5=b79e1083ad179abaa45fafaf5d80cdd7"
+msgstr ""
+"@@image: 'figures/preferences_quit_Orca_without_confirmation.png'; "
+"md5=b79e1083ad179abaa45fafaf5d80cdd7"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:65(None)
+msgid ""
+"@@image: 'figures/preferences_present_tooltips.png'; "
+"md5=a6e33e8bb91b375f1432bcd41d271f5f"
+msgstr ""
+"@@image: 'figures/preferences_present_tooltips.png'; "
+"md5=a6e33e8bb91b375f1432bcd41d271f5f"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:85(None)
+msgid ""
+"@@image: 'figures/preferences_show_Orca_main_window.png'; "
+"md5=f9dcacd77f6dbe80f5c70575212a8717"
+msgstr ""
+"@@image: 'figures/preferences_show_Orca_main_window.png'; "
+"md5=f9dcacd77f6dbe80f5c70575212a8717"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:90(None)
+msgid ""
+"@@image: 'figures/main_window.png'; md5=dc40a43400b81aa8611d4111a65be6e5"
+msgstr ""
+"@@image: 'figures/main_window.png'; md5=dc40a43400b81aa8611d4111a65be6e5"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:116(None)
+msgid ""
+"@@image: 'figures/preferences_start_Orca_when_you_login.png'; md5=THIS FILE "
+"DOESN'T EXIST"
+msgstr ""
+"@@image: 'figures/preferences_start_Orca_when_you_login.png'; md5=THIS FILE "
+"DOESN'T EXIST"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:133(None)
+msgid ""
+"@@image: 'figures/preferences_speak_object_under_mouse.png'; "
+"md5=e1a7682e7ee6427a47a7900f45b37387"
+msgstr ""
+"@@image: 'figures/preferences_speak_object_under_mouse.png'; "
+"md5=e1a7682e7ee6427a47a7900f45b37387"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:152(None)
+msgid ""
+"@@image: 'figures/preferences_date_and_time.png'; "
+"md5=931f4814b0e41379a06eeae11cd88c1b"
+msgstr ""
+"@@image: 'figures/preferences_date_and_time.png'; "
+"md5=931f4814b0e41379a06eeae11cd88c1b"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:169(None) C/howto_profiles.page:28(None)
+msgid ""
+"@@image: 'figures/preferences_profiles.png'; "
+"md5=9c4666e94c98347f5f4efc24c74c9458"
+msgstr ""
+"@@image: 'figures/preferences_profiles.png'; "
+"md5=9c4666e94c98347f5f4efc24c74c9458"
+
+#: C/preferences_general.page:3(title)
+msgid "1. General"
+msgstr "1. 常规"
+
+#: C/preferences_general.page:4(title)
+msgid "General"
+msgstr "常规"
+
+#: C/preferences_general.page:5(desc)
+msgid "Configuring <app>Orca</app>'s fundamental behaviors"
+msgstr "配置 <app>Orca</app> 的基本行为"
+
+#: C/preferences_general.page:18(title)
+msgid "General Preferences"
+msgstr "常规首选项"
+
+#: C/preferences_general.page:21(desc)
+msgid ""
+"Preferences dialog box option to select which <app>Orca</app> keyboard "
+"layout to use, desktop or laptop."
+msgstr "首选项对话框可用来选择 <app>Orca</app> 使用的键盘布局：桌面或笔记本。"
+
+#: C/preferences_general.page:26(title) C/howto_keyboard_layout.page:15(title)
+msgid "Keyboard Layout"
+msgstr "键盘布局"
+
+#: C/preferences_general.page:28(p)
+msgid ""
+"The <gui>keyboard layout</gui> radio button group allows you to specify if "
+"you will be working on a desktop (i.e. with a numeric keypad) or laptop "
+"keyboard. Which layout you choose will determine both the <key>Orca "
+"Modifier</key> as well as a number of keyboard shortcuts for performing "
+"<app>Orca</app> commands."
+msgstr ""
+"<gui>键盘布局</gui>单选按钮组允许您指定您是在桌面键盘还是在笔记本键盘上工作。"
+"您选择的键盘布局将决定<key>Orca 修饰键</key>，同时还有一大堆执行 <app>Orca</"
+"app> 命令的键盘快捷键。"
+
+#: C/preferences_general.page:34(p)
+msgid "Default value: <gui>Desktop</gui>"
+msgstr "默认值：<gui>桌面</gui>"
+
+#: C/preferences_general.page:40(desc)
+msgid ""
+"Preferences dialog box option to quit <app>Orca</app> without presenting a "
+"confirmation dialog."
+msgstr "首选项对话框退出 <app>Orca</app> 选项，不需显示确认对话框。"
+
+#: C/preferences_general.page:45(title)
+msgid "Quit Orca Without Confirmation"
+msgstr "退出 Orca，不需确认"
+
+#: C/preferences_general.page:47(p)
+msgid ""
+"Normally, when you quit <app>Orca</app>, a confirmation dialog will appear "
+"asking you if you do indeed wish to quit <app>Orca</app>. Checking the "
+"<gui>Quit Orca without confirmation</gui> checkbox prevents this "
+"confirmation window from appearing."
+msgstr ""
+
+#: C/preferences_general.page:59(desc)
+msgid ""
+"Preferences dialog box option to enable presentation of tooltips which "
+"appear as the result of mouse hovering."
+msgstr ""
+
+#: C/preferences_general.page:64(title)
+msgid "Present Tooltips"
+msgstr "当前工具提示"
+
+#: C/preferences_general.page:66(p)
+msgid ""
+"When checked, this option will tell <app>Orca</app> to present information "
+"about tooltips when they appear as the result of mouse hovering. Specific "
+"actions to force tooltips to appear, such as pressing <keyseq><key>Ctrl</"
+"key><key>F1</key></keyseq> when an object has focus, will always result in "
+"tooltips being presented, regardless of this setting."
+msgstr ""
+
+#: C/preferences_general.page:79(desc)
+msgid ""
+"Preferences dialog box option for showing or hiding the <app>Orca</app> main "
+"window."
+msgstr ""
+
+#: C/preferences_general.page:84(title)
+msgid "Show Orca Main Window"
+msgstr "显示 Orca 主窗口"
+
+#: C/preferences_general.page:87(title)
+msgid "The Orca Main Window"
+msgstr "Orca 主窗口"
+
+#: C/preferences_general.page:91(desc)
+msgid ""
+"<app>Orca</app>'s main window provides you with a graphical way to display "
+"the <link xref=\"preferences\">Orca Preferences</link> dialog, access help "
+"content, bring up the About dialog, and quit <app>Orca</app>."
+msgstr ""
+
+#: C/preferences_general.page:97(p)
+msgid ""
+"Many users do not like the <app>Orca</app> main window because it shows up "
+"in the window manager's Tab order when you press <keyseq><key>Alt</"
+"key><key>Tab</key></keyseq> to switch windows. By unchecking the <gui>Show "
+"<app>Orca</app> main window</gui> checkbox, you can tell <app>Orca</app> to "
+"not show <app>Orca</app>'s main window."
+msgstr ""
+
+#: C/preferences_general.page:110(desc)
+msgid ""
+"Preferences dialog box option to cause <app>Orca</app> to automatically "
+"start when you log in."
+msgstr ""
+
+#: C/preferences_general.page:115(title)
+msgid "Start Orca When You Login"
+msgstr "登录时启动 Orca"
+
+#: C/preferences_general.page:117(p)
+msgid ""
+"When checked, this option will tell the system to automatically launch "
+"<app>Orca</app> when you log in."
+msgstr ""
+
+#: C/preferences_general.page:127(desc)
+msgid ""
+"Preferences dialog box option to enable presentation of the object under the "
+"mouse pointer."
+msgstr ""
+
+#: C/preferences_general.page:132(title)
+msgid "Speak Object Under Mouse"
+msgstr "读出鼠标下的对象"
+
+#: C/preferences_general.page:134(p)
+msgid ""
+"When checked, this option will tell <app>Orca</app> to present information "
+"about the object under the mouse pointer as you move it around the screen "
+"using <app>Orca</app>'s <link xref=\"howto_mouse_review\">Mouse Review</"
+"link> feature."
+msgstr ""
+
+#: C/preferences_general.page:146(desc)
+msgid ""
+"Preferences dialog box options for customizing the time and date formats "
+"used by <app>Orca</app>."
+msgstr ""
+
+#: C/preferences_general.page:151(title)
+msgid "Time Format and Date Format"
+msgstr "日期和时间格式"
+
+#: C/preferences_general.page:153(p)
+msgid ""
+"The <gui>Time Format</gui> and <gui>Date Format</gui> combo boxes allow you "
+"to specify how <app>Orca</app> will speak and braille the time and the date."
+msgstr ""
+
+#: C/preferences_general.page:158(p)
+msgid "Default value: use the system locale's format for each"
+msgstr "默认值：使用系统语言环境格式"
+
+#: C/preferences_general.page:164(desc)
+msgid "Preferences dialog box options for managing settings profiles."
+msgstr "管理配置文件的首选项对话框选项"
+
+#: C/preferences_general.page:168(title) C/howto_profiles.page:15(title)
+msgid "Profiles"
+msgstr "配置"
+
+#: C/preferences_general.page:170(p)
+msgid ""
+"The <gui>Profiles</gui> group of controls, which appear at the bottom of the "
+"<gui>General</gui> page, make it possible for you to maintain and use "
+"multiple configurations."
+msgstr ""
+
+#: C/preferences_general.page:177(p)
+msgid ""
+"The <gui>Active Profile</gui> combo box displays the current profile and "
+"allows you to select a different profile to load."
+msgstr ""
+
+#: C/preferences_general.page:183(p)
+msgid ""
+"The <gui>Load</gui> button will cause <app>Orca</app> to load the profile "
+"indicated in the <gui>Active Profile</gui> combo box."
+msgstr ""
+
+#: C/preferences_general.page:189(p)
+msgid ""
+"The <gui>Save As</gui> button allows you to save the current set of options "
+"from the preferences dialog box to a named profile."
+msgstr ""
+
+#: C/preferences_general.page:195(p)
+msgid ""
+"The <gui>Start-up Profile</gui> combo box allows you to select the profile "
+"which should be automatically loaded each time you launch <app>Orca</app>."
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_gecko.page:22(None)
+msgid ""
+"@@image: 'figures/preferences_gecko_page_navigation.png'; "
+"md5=882c3f79d6d26636c42b9e6351a3cbbe"
+msgstr ""
+"@@image: 'figures/preferences_gecko_page_navigation.png'; "
+"md5=882c3f79d6d26636c42b9e6351a3cbbe"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_gecko.page:94(None)
+msgid ""
+"@@image: 'figures/preferences_gecko_find_options.png'; "
+"md5=641af19881288848ba7f8fdc6d4db02e"
+msgstr ""
+"@@image: 'figures/preferences_gecko_find_options.png'; "
+"md5=641af19881288848ba7f8fdc6d4db02e"
+
+#: C/preferences_gecko.page:5(title)
+msgid "1. Gecko Navigation"
+msgstr ""
+
+#: C/preferences_gecko.page:6(title)
+msgid "Gecko Navigation"
+msgstr ""
+
+#: C/preferences_gecko.page:7(desc)
+msgid ""
+"Configuring <app>Orca</app>'s support for <app>Firefox</app> and "
+"<app>Thunderbird</app>"
+msgstr "配置 <app>Orca</app> 支持 <app>Firefox</app> 和 <app>Thunderbird</app>"
+
+#: C/preferences_gecko.page:19(title)
+msgid "Gecko Navigation Preferences"
+msgstr ""
+
+#: C/preferences_gecko.page:21(title)
+msgid "Page Navigation"
+msgstr "页面导航"
+
+#: C/preferences_gecko.page:23(p)
+msgid ""
+"The <gui>Page Navigation</gui> group of controls make it possible for you to "
+"customize how <app>Orca</app> presents, and allow you to interact with, text "
+"and other content."
+msgstr ""
+"<gui>页面导航</gui>控制组让您个性化设置 <app>Orca</app> 显示方式变得可能，并"
+"允许您与文本和其他内容进行交互。"
+
+#: C/preferences_gecko.page:29(title)
+msgid "Use Orca Caret Navigation"
+msgstr ""
+
+#: C/preferences_gecko.page:30(p)
+msgid ""
+"This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
+"is on, <app>Orca</app> takes control of the caret as you arrow around within "
+"a page; when it is off, Gecko's native caret navigation is active."
+msgstr ""
+
+#: C/preferences_gecko.page:40(title) C/preferences_gecko.page:59(title)
+msgid "This setting can be toggled on the fly"
+msgstr ""
+
+#: C/preferences_gecko.page:41(p)
+msgid ""
+"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
+"Modifier</key><key>F12</key></keyseq>."
+msgstr ""
+
+#: C/preferences_gecko.page:48(title)
+msgid "Use Orca Structural Navigation"
+msgstr ""
+
+#: C/preferences_gecko.page:49(p)
+msgid ""
+"This checkbox toggles <app>Orca</app>'s <link xref="
+"\"howto_structural_navigation\">Structural Navigation</link> on and off. "
+"Structural Navigation allows you to navigate by elements such as headings, "
+"links, and form fields."
+msgstr ""
+
+#: C/preferences_gecko.page:60(p)
+msgid ""
+"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
+"Modifier</key><key>Z</key></keyseq>."
+msgstr ""
+
+#: C/preferences_gecko.page:67(title)
+msgid "Grab focus on objects when navigating"
+msgstr ""
+
+#: C/preferences_gecko.page:68(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will perform an explicit focus "
+"grab as you navigate using the <app>Orca</app>-controlled caret. Doing this "
+"was necessary in older versions of <app>Firefox</app> and <app>Thunderbird</"
+"app>."
+msgstr ""
+
+#: C/preferences_gecko.page:79(title)
+msgid "Position cursor at start of line when navigating vertically"
+msgstr ""
+
+#: C/preferences_gecko.page:80(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will always move the caret to "
+"the beginning of the line when <app>Orca</app> is controlling the caret and "
+"you press Up or Down Arrow to read the previous or next line. If this "
+"checkbox is not checked, <app>Orca</app> will attempt to keep the caret in "
+"the same horizontal position as you navigate Up or Down."
+msgstr ""
+
+#: C/preferences_gecko.page:93(title)
+msgid "Find Options"
+msgstr "查找选项"
+
+#: C/preferences_gecko.page:95(p)
+msgid ""
+"The <gui>Find Options</gui> group of controls make it possible for you to "
+"customize how <app>Orca</app> presents the results of a search conducted "
+"using the application's built-in search functionality."
+msgstr ""
+
+#: C/preferences_gecko.page:101(title)
+msgid "Speak results during find"
+msgstr ""
+
+#: C/preferences_gecko.page:102(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will read the line which "
+"matches your current search query."
+msgstr ""
+
+#: C/preferences_gecko.page:111(title)
+msgid "Only speak changed lines during find"
+msgstr ""
+
+#: C/preferences_gecko.page:112(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will not present the matching "
+"line if it is the same line as the previous match. This option is designed "
+"to prevent \"chattiness\" on a line with multiple instances of the string "
+"for which you are searching."
+msgstr ""
+
+#: C/preferences_gecko.page:123(title)
+msgid "Minimum length of matched text"
+msgstr ""
+
+#: C/preferences_gecko.page:124(p)
+msgid ""
+"This editable spin button is where you can specify the number of characters "
+"which much match before <app>Orca</app> announces the matching line. This "
+"option is also designed to prevent \"chattiness\" as there are many matches "
+"when you first begin typing string for which you are searching."
+msgstr ""
+
+#: C/preferences_gecko.page:131(p)
+msgid "Default value: 4"
+msgstr "默认值：4"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_chat.page:18(None)
+msgid ""
+"@@image: 'figures/preferences_chat.png'; md5=f77f2387185d7498ae9842104a7ae5c0"
+msgstr ""
+"@@image: 'figures/preferences_chat.png'; md5=f77f2387185d7498ae9842104a7ae5c0"
+
+#: C/preferences_chat.page:4(title)
+msgid "3. Chat"
+msgstr "3. 聊天"
+
+#: C/preferences_chat.page:5(title) C/commands_chat.page:7(title)
+msgid "Chat"
+msgstr "聊天"
+
+#: C/preferences_chat.page:6(desc)
+msgid "Configuring <app>Orca's</app> support for IM and IRC"
+msgstr "配置 <app>Orca</app> 以支持即时通讯和 IRC"
+
+#: C/preferences_chat.page:17(title)
+msgid "Chat Preferences"
+msgstr "聊天首选项"
+
+#: C/preferences_chat.page:19(p)
+msgid ""
+"The following options allow you to customize how <app>Orca</app> behaves "
+"when providing access to instant messaging and internet relay chat clients."
+msgstr "下面选项允许您个性化设置 <app>Orca</app> 访问即时消息和 IRC 客户端的方式。"
+
+#: C/preferences_chat.page:25(title)
+msgid "Speak Chat Room name"
+msgstr "朗读聊天室名称"
+
+#: C/preferences_chat.page:26(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will prefix incoming messages "
+"with the name of the room or buddy they came from, unless they came from the "
+"currently-focused conversation."
+msgstr ""
+
+#: C/preferences_chat.page:36(title)
+msgid "Announce when your buddies are typing"
+msgstr "当您的好友正在输入时发出通知"
+
+#: C/preferences_chat.page:37(p)
+msgid ""
+"If this checkbox is checked, and if <app>Orca</app> has sufficient "
+"information identifying that your buddy is typing, <app>Orca</app> will "
+"announce changes in typing status."
+msgstr ""
+
+#: C/preferences_chat.page:47(title)
+msgid "Provide chat room specific message histories"
+msgstr "提供聊天室指定的消息历史记录"
+
+#: C/preferences_chat.page:48(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app>'s commands for reviewing recent "
+"messages will only apply to the currently-focused conversation. Otherwise, "
+"the history will contain the most recent messages regardless of which "
+"conversation they came from."
+msgstr ""
+
+#: C/preferences_chat.page:59(title)
+msgid "Speak messages from"
+msgstr ""
+
+#: C/preferences_chat.page:60(p)
+msgid ""
+"This group of radio buttons allows you to control under what circumstances "
+"<app>Orca</app> will present an incoming message to you. Your choices are:"
+msgstr ""
+
+#: C/preferences_chat.page:66(gui)
+msgid "All channels"
+msgstr "所有频道"
+
+#: C/preferences_chat.page:69(gui)
+msgid "A channel only if its window is active"
+msgstr ""
+
+#: C/preferences_chat.page:72(gui)
+msgid "All channels when any chat window is active"
+msgstr ""
+
+#: C/preferences_chat.page:75(p)
+msgid "Default value: all channels"
+msgstr "默认值：所有频道"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_braille.page:21(None)
+msgid ""
+"@@image: 'figures/preferences_enable_braille_support.png'; "
+"md5=f08627f0177c20df349ab87fde697f1f"
+msgstr ""
+"@@image: 'figures/preferences_enable_braille_support.png'; "
+"md5=f08627f0177c20df349ab87fde697f1f"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_braille.page:40(None)
+msgid ""
+"@@image: 'figures/preferences_enable_braille_monitor.png'; "
+"md5=2dead5fbf717ce30339e2248e4f61aed"
+msgstr ""
+"@@image: 'figures/preferences_enable_braille_monitor.png'; "
+"md5=2dead5fbf717ce30339e2248e4f61aed"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_braille.page:53(None)
+msgid ""
+"@@image: 'figures/preferences_braille_contracted.png'; "
+"md5=81d80b6854847656862fe4ea167d29f8"
+msgstr ""
+"@@image: 'figures/preferences_braille_contracted.png'; "
+"md5=81d80b6854847656862fe4ea167d29f8"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_braille.page:71(None)
+msgid ""
+"@@image: 'figures/preferences_abbreviated_role_names.png'; "
+"md5=f26a6ef63ff0d1b40514830de7788c8b"
+msgstr ""
+"@@image: 'figures/preferences_abbreviated_role_names.png'; "
+"md5=f26a6ef63ff0d1b40514830de7788c8b"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_braille.page:85(None)
+msgid ""
+"@@image: 'figures/preferences_disable_eol_symbol.png'; "
+"md5=c43c2b7dff5efd265a40a260c2bc0d73"
+msgstr ""
+"@@image: 'figures/preferences_disable_eol_symbol.png'; "
+"md5=c43c2b7dff5efd265a40a260c2bc0d73"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_braille.page:96(None)
+msgid ""
+"@@image: 'figures/preferences_braille_verbosity.png'; "
+"md5=18969c222b3e1ea91cc75d47bb0fe48d"
+msgstr ""
+"@@image: 'figures/preferences_braille_verbosity.png'; "
+"md5=18969c222b3e1ea91cc75d47bb0fe48d"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_braille.page:109(None)
+msgid ""
+"@@image: 'figures/preferences_braille_indicators.png'; "
+"md5=719cd227dee9df85de633c4e2417301b"
+msgstr ""
+"@@image: 'figures/preferences_braille_indicators.png'; "
+"md5=719cd227dee9df85de633c4e2417301b"
+
+#: C/preferences_braille.page:3(title)
+msgid "3. Braille"
+msgstr "3. 盲文"
+
+#: C/preferences_braille.page:4(title) C/commands_braille.page:7(title)
+msgid "Braille"
+msgstr "盲文"
+
+#: C/preferences_braille.page:5(desc)
+msgid "Configuring <app>Orca</app>'s braille display support"
+msgstr "配置 <app>Orca</app> 以支持盲文显示"
+
+#: C/preferences_braille.page:18(title)
+msgid "Braille Preferences"
+msgstr "盲文首选项"
+
+#: C/preferences_braille.page:20(title)
+msgid "Enable Braille Support"
+msgstr "启用点字支持"
+
+#: C/preferences_braille.page:22(p)
+msgid ""
+"This check box toggles whether or not <app>Orca</app> will make use of a "
+"braille display. If BrlTTY is not running, <app>Orca</app> will recover "
+"gracefully and will not communicate with the braille display."
+msgstr ""
+
+#: C/preferences_braille.page:32(p)
+msgid ""
+"If you configure BrlTTY later on, you need to restart <app>Orca</app> in "
+"order to use braille."
+msgstr ""
+
+#: C/preferences_braille.page:39(title) C/howto_text_setup.page:169(p)
+msgid "Enable Braille Monitor"
+msgstr "启用布莱叶监视器"
+
+#: C/preferences_braille.page:41(p)
+msgid ""
+"Orca's braille monitor provides an on-screen representation of what takes "
+"place on the braille display. This feature is mostly for demonstration "
+"purposes, but is also useful for <app>Orca</app> developers who do not have "
+"access to a braille display."
+msgstr ""
+
+#: C/preferences_braille.page:52(title)
+msgid "Enable Contracted Braille"
+msgstr "启用缩短的布莱叶盲文"
+
+#: C/preferences_braille.page:54(p)
+msgid ""
+"Orca supports contracted braille via the liblouis project. Because many "
+"distros include liblouis, you will likely automatically have access to "
+"contracted braille support in <app>Orca</app>."
+msgstr ""
+
+#: C/preferences_braille.page:59(p)
+msgid ""
+"To enable contracted braille on a system where liblouis has been installed, "
+"be sure that the <gui>Enable Contraced Braille</gui> checkbox is checked. "
+"Then choose your desired translation table from the <gui>Contraction Table</"
+"gui> combo box."
+msgstr ""
+
+#: C/preferences_braille.page:70(title)
+msgid "Abbreviated Role Names"
+msgstr ""
+
+#: C/preferences_braille.page:72(p)
+msgid ""
+"This check box determines the manner in which role names are displayed and "
+"can be used to help conserve real estate on the braille display. For "
+"instance, if a slider had focus, the word \"slider\" would be displayed if "
+"abbreviated role names is not checked; if it were checked, \"sldr\" would be "
+"displayed instead."
+msgstr ""
+
+#: C/preferences_braille.page:84(title)
+msgid "Disable end of line symbol"
+msgstr "禁用行尾符"
+
+#: C/preferences_braille.page:86(p)
+msgid ""
+"Checking this checkbox tells <app>Orca</app> to not present the \"$l\" "
+"string at the end of a line of text."
+msgstr ""
+
+#: C/preferences_braille.page:97(p)
+#, fuzzy
+#| msgid ""
+#| "The <gui>Verbosity</gui> setting determines the amount of information "
+#| "that will be spoken in various situations. For example, if it is set to "
+#| "verbose, and you arrow into a word that is misspelled, <app>Orca</app> "
+#| "will announce that the word is misspelled. When the level is set to "
+#| "brief, this announcement will not be made."
+msgid ""
+"This radio button group determines the amount of information that will be "
+"brailled in certain situations. For example, if it is set to verbose, "
+"keyboard shortcut and role name information is displayed. This information "
+"is not displayed in brief mode."
+msgstr ""
+"<gui>详细程度</gui>设置决定了在多种环境下朗读的信息数量。例如，如果它设置"
+"为“详细”，当您指向一个拼错的单词时，<app>Orca</app> 会提示该单词拼写错误。当"
+"设置为“简单”，将不会有该提示。"
+
+#: C/preferences_braille.page:108(title)
+msgid "Selection and Hyperlink Indicators"
+msgstr ""
+
+#: C/preferences_braille.page:110(p)
+msgid ""
+"The <gui>Selection Indicator</gui> and <gui>Hyperlink Indicator</gui> radio "
+"button groups allow you to configure <app>Orca</app>'s behavior when "
+"displaying selected text and hyperlinks. By default, when you encounter "
+"either, <app>Orca</app> will \"underline\" that text on your braille display "
+"with Dots 7 and 8. If you would prefer, you can change the indicator to only "
+"be Dot 7, only be Dot 8, or not be present at all."
+msgstr ""
+
+#: C/preferences_braille.page:119(p)
+#, fuzzy
+#| msgid "Default value: <gui>Most</gui>"
+msgid "Default value: <gui>Dots 7 and 8</gui>"
+msgstr "默认值：<gui>大多</gui>"
+
+#: C/preferences_braille.page:123(title)
+#| msgid "Text Attributes"
+msgid "Text Attribute Indicators"
+msgstr "文本属性指示器"
+
+#: C/preferences_braille.page:124(p)
+msgid ""
+"You can also optionally have text attributes indicated in braille. Enabling "
+"this feature and choosing which attributes are of interest is done on the "
+"<link xref=\"preferences_text_attributes\"><gui>Text Attributes</gui> page</"
+"link> of the preferences dialog."
+msgstr ""
+
+#: C/introduction.page:5(title)
+msgid "1. Welcome to Orca"
+msgstr ""
+
+#: C/introduction.page:6(desc)
+#| msgid "Introduction to <app>Orca</app>'s Preferences"
+msgid "Introducing the <app>Orca</app> screen reader"
+msgstr "<app>Orca</app> 屏幕阅读器简介"
+
+#: C/introduction.page:17(title)
+msgid "Welcome to Orca"
+msgstr ""
+
+#: C/introduction.page:18(p)
+msgid ""
+"<app>Orca</app> is a free, open source, flexible, and extensible screen "
+"reader that provides access to the graphical desktop via speech and "
+"refreshable braille."
+msgstr ""
+
+#: C/introduction.page:23(p)
+msgid ""
+"<app>Orca</app> works with applications and toolkits that support the "
+"Assistive Technology Service Provider Interface (AT-SPI), which is the "
+"primary assistive technology infrastructure for Linux and Solaris. "
+"Applications and toolkits supporting the AT-SPI include the GNOME Gtk+ "
+"toolkit, the Java platform's Swing toolkit, OpenOffice, Gecko, and "
+"WebKitGtk. AT-SPI support for the KDE Qt toolkit is being pursued."
+msgstr ""
+
+#: C/introduction.page:33(title)
+#, fuzzy
+#| msgid "Launching <app>Orca</app>'s Text-Only Guided Setup"
+msgid "Launching <app>Orca</app>"
+msgstr "启动 <app>Orca</app> 单文本模式设置向导"
+
+#: C/introduction.page:34(p)
+#, fuzzy
+#| msgid "Commands for Controlling <app>Orca</app>"
+msgid "To launch <app>Orca</app>:"
+msgstr "控制 <app>Orca</app> 的命令"
+
+#: C/introduction.page:37(p)
+msgid ""
+"Type <cmd>orca</cmd>, along with any optional parameters, in a terminal "
+"window or within the <gui>Run</gui> dialog and then press <key>Return</key>."
+msgstr ""
+
+#: C/introduction.page:44(p)
+msgid ""
+"The method for configuring <app>Orca</app> to be launched automatically as "
+"your preferred screen reader will depend upon which desktop environment you "
+"use. For instance, in GNOME 3.x this option can be found in the Universal "
+"Access Control Center panel on the <gui>Seeing</gui> page."
+msgstr ""
+
+#: C/introduction.page:55(title)
+#, fuzzy
+#| msgid "Commands for interacting with <app>Orca</app>"
+msgid "Quitting <app>Orca</app>"
+msgstr "与 <app>Orca</app> 交互命令"
+
+#: C/introduction.page:56(p)
+#, fuzzy
+#| msgid "Open the <app>Orca</app> Find dialog:"
+msgid "To quit <app>Orca</app>:"
+msgstr "打开 <app>Orca</app> 搜索对话框："
+
+#: C/introduction.page:59(p)
+msgid "Press the <gui>Quit</gui> button in the <app>Orca</app> main window."
+msgstr ""
+
+#: C/introduction.page:65(p)
+#, fuzzy
+#| msgid ""
+#| "<keyseq><key>Orca Modifier</key><key>Space</key></keyseq>: <app>Orca</"
+#| "app>'s Preferences"
+msgid ""
+"Press <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>. This command "
+"works whether the <app>Orca</app> main window is enabled or not."
+msgstr ""
+"<keyseq><key>Orca 修饰键</key><key>Space</key></keyseq>：<app>Orca</app> 首选"
+"项"
+
+#: C/introduction.page:72(p)
+#, fuzzy
+#| msgid ""
+#| "Type <cmd>orca --text-setup</cmd> or <cmd>orca -t</cmd> and press "
+#| "<key>Return</key>."
+msgid ""
+"Type <cmd>orca -q</cmd> or <cmd>orca --quit</cmd> in a terminal window or "
+"within the <gui>Run</gui> dialog and then press <key>Return</key>."
+msgstr "输入<cmd>orca --text-setup</cmd>或<cmd>orca -t</cmd>并按下<key>Return</key>。"
+
+#: C/introduction.page:81(title)
+#, fuzzy
+#| msgid "Find Options"
+msgid "Load-Time Options"
+msgstr "查找选项"
+
+#: C/introduction.page:82(p)
+msgid "The following options can be specified when launching <app>Orca</app>:"
+msgstr ""
+
+#: C/introduction.page:87(p)
+msgid "<cmd>-?</cmd>, <cmd>--help</cmd>: Show the help message"
+msgstr ""
+
+#: C/introduction.page:90(p)
+msgid ""
+"<cmd>-v</cmd>, <cmd>--version</cmd>: Show the version of <app>Orca</app>"
+msgstr ""
+
+#: C/introduction.page:96(p)
+msgid ""
+"<cmd>-s</cmd>, <cmd>--setup</cmd>, <cmd>--gui-setup</cmd>: Set up user "
+"preferences"
+msgstr ""
+
+#: C/introduction.page:102(p)
+msgid ""
+"<cmd>-t</cmd>, <cmd>--text-setup</cmd>: Set up user preferences (text "
+"version)"
+msgstr ""
+
+#: C/introduction.page:108(p)
+msgid "<cmd>-n</cmd>, <cmd>--no-setup</cmd>Skip set up of user preferences"
+msgstr ""
+
+#: C/introduction.page:113(p)
+msgid ""
+"<cmd>-u</cmd>, <cmd>--user-prefs-dir=<em>dirname</em></cmd>: Use "
+"<em>dirname</em> as the alternate directory for user preferences"
+msgstr ""
+
+#: C/introduction.page:120(p)
+msgid ""
+"<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
+"where the <em>option</em> can be one of the following:"
+msgstr ""
+
+#: C/introduction.page:125(cmd) C/introduction.page:139(cmd)
+#, fuzzy
+#| msgid "Speech"
+msgid "speech"
+msgstr "语音"
+
+#: C/introduction.page:126(cmd) C/introduction.page:140(cmd)
+#, fuzzy
+#| msgid "Braille"
+msgid "braille"
+msgstr "盲文"
+
+#: C/introduction.page:127(cmd) C/introduction.page:141(cmd)
+#, fuzzy
+#| msgid "Enable Braille Monitor"
+msgid "braille-monitor"
+msgstr "启用点字监视器"
+
+#: C/introduction.page:128(cmd) C/introduction.page:142(cmd)
+msgid "main-window"
+msgstr ""
+
+#: C/introduction.page:129(cmd) C/introduction.page:143(cmd)
+msgid "splash-window"
+msgstr ""
+
+#: C/introduction.page:133(p)
+msgid ""
+"<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
+"option, where the <em>option</em> can be one of the following:"
+msgstr ""
+
+#: C/introduction.page:147(p)
+msgid ""
+"<cmd>-i</cmd>, <cmd>--import-file=<em>filename</em></cmd>: Import a profile "
+"from a given <app>Orca</app> profile file"
+msgstr ""
+
+#: C/introduction.page:153(p)
+msgid "<cmd>-q</cmd>, <cmd>--quit</cmd>: Quits <app>Orca</app>"
+msgstr ""
+
+#: C/introduction.page:158(p)
+msgid ""
+"<cmd>-f</cmd>, <cmd>--forcequit</cmd>: Forces <app>Orca</app> to be "
+"terminated immediately."
+msgstr ""
+
+#: C/introduction.page:164(p)
+msgid "<cmd>--replace</cmd>: Replace a currently-running <app>Orca</app>"
+msgstr ""
+
+#: C/introduction.page:169(p)
+msgid ""
+"<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
+msgstr ""
+
+#: C/introduction.page:175(p)
+msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
+msgstr ""
+
+#: C/introduction.page:180(p)
+msgid ""
+"<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
+"specified file"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/index.page:14(None)
+msgid "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
+msgstr "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
+
+#: C/index.page:3(title)
+msgid "Orca Screen Reader"
+msgstr "Orca 屏幕阅读器"
+
+#: C/index.page:4(title)
+msgid "Introduction to the <app>Orca</app> Screen Reader"
+msgstr ""
+
+#: C/index.page:13(title)
+msgid ""
+"<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png"
+"\"><app>Orca</app>'s logo </media><app>Orca</app> Screen Reader"
+msgstr ""
+"<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png"
+"\"><app>Orca</app> 标志 </media><app>Orca</app> 屏幕阅读器"
+
+#: C/index.page:20(title)
+msgid "Before You Begin"
+msgstr ""
+
+#: C/index.page:21(p)
+msgid ""
+"Read the <link href=\"ghelp:gnome-help#a11y\">Universal Access Help</link>"
+msgstr ""
+
+#: C/index.page:26(title) C/commands.page:17(title)
+msgid "Getting Started"
+msgstr ""
+
+#: C/index.page:29(title)
+msgid "Reading Documents and Web Pages"
+msgstr ""
+
+#: C/index.page:32(title) C/commands.page:26(title)
+msgid "Reviewing and Interacting with Screen Contents"
+msgstr ""
+
+#: C/index.page:35(title)
+msgid "Quick Reference"
+msgstr ""
+
+#: C/howto_whereami.page:5(title)
+msgid "1. WhereAmI"
+msgstr ""
+
+#: C/howto_whereami.page:6(desc)
+msgid "Learning about your location"
+msgstr ""
+
+#: C/howto_whereami.page:17(title)
+msgid "WhereAmI"
+msgstr ""
+
+#: C/howto_whereami.page:18(p)
+msgid ""
+"In addition to dedicated commands for reading the title bar and the status "
+"bar, Orca provides two context-sensitive Where Am I commands: Basic Where Am "
+"I and Detailed Where Am I. Basic Where Am I is implemented for all objects. "
+"Detailed Where Am I is implemented just for those objects for which there is "
+"a significant amount of information you may wish to know, but likely will "
+"not wish to know all of the time."
+msgstr ""
+
+#: C/howto_whereami.page:26(p)
+msgid ""
+"The best way to become familiar with what Where Am I will present is to give "
+"the <link xref=\"commands_where_am_i\">Where Am I commands</link> a try. "
+"However, to give you a better idea of the context-sensitive nature of "
+"<app>Orca</app>'s Where Am I feature, consider the following:"
+msgstr ""
+
+#: C/howto_whereami.page:32(p)
+msgid ""
+"For most widgets, you will at least be told the label and/or name, the type "
+"or role of the widget, and the mnemonic and/or accelerator key if they "
+"happen to exist. In addition:"
+msgstr ""
+
+#: C/howto_whereami.page:39(p)
+msgid ""
+"If the widget is text, and you perform a basic Where Am I, you will be told "
+"the current line if no text is selected. If text is selected, however, a "
+"basic Where Am I will tell you what text is selected. A detailed Where Am I "
+"within the text will also include the text attributes."
+msgstr ""
+
+#: C/howto_whereami.page:48(p)
+msgid ""
+"If the widget can be checked, as is the case with checkboxes and radio "
+"buttons, the checked state will be included."
+msgstr ""
+
+#: C/howto_whereami.page:54(p)
+msgid ""
+"If the widget is a list or list-like object, such as a combo box, radio "
+"button group, or page tab list, the position of the current item will be "
+"included."
+msgstr ""
+
+#: C/howto_whereami.page:61(p)
+msgid ""
+"If the widget is hierarchical, such as a tree, and you are on an expandable "
+"node, you will be told if that node is expanded or not. And if it is "
+"expanded, you will also be told how many children it contains. In addition, "
+"the nesting level will also be provided."
+msgstr ""
+
+#: C/howto_whereami.page:69(p)
+msgid ""
+"If the widget is a progress bar or a slider, you will be told the current "
+"percent."
+msgstr ""
+
+#: C/howto_whereami.page:75(p)
+msgid ""
+"If the widget is an icon within an icon group, a basic Where Am I will "
+"include the object you are in, the item you are on, and the number of items "
+"which are selected. In a detailed Where Am I, you will also be told which "
+"items are selected."
+msgstr ""
+
+#: C/howto_whereami.page:83(p)
+msgid ""
+"If you are on a link, the type of link (same site, different site, FTP link, "
+"etc.) will be included."
+msgstr ""
+
+#: C/howto_whereami.page:89(p)
+msgid ""
+"If you are in a table cell, the coordinates of that cell and the cell "
+"headers will be included."
+msgstr ""
+
+#: C/howto_whereami.page:95(p)
+msgid ""
+"And so on. Again, the goal of <app>Orca</app>'s Where Am I is to provide you "
+"with the details you are most likely interested in knowing about the object "
+"you are currently in. To give Where Am I a try, see the list of <link xref="
+"\"commands_where_am_i\">Where Am I commands</link>."
+msgstr ""
+
+#: C/howto_toggling_caps_lock.page:5(title)
+msgid "7. CapsLock in Laptop Layout"
+msgstr ""
+
+#: C/howto_toggling_caps_lock.page:6(desc)
+msgid "Toggling it when it is the <key>Orca Modifier</key>"
+msgstr ""
+
+#: C/howto_toggling_caps_lock.page:15(title)
+msgid "CapsLock in Laptop Layout"
+msgstr ""
+
+#: C/howto_toggling_caps_lock.page:16(p)
+msgid ""
+"Orca has two keyboard layouts: Desktop and Laptop. The layout you choose "
+"impacts which key is used as the Orca Modifier. If you are using the Laptop "
+"layout, the default Orca Modifier will be <key>CapsLock</key>. If you are "
+"using <app>Orca</app>'s Laptop Layout and want to lock or unlock "
+"<key>CapsLock</key>, you can do so by performing the following steps:"
+msgstr ""
+
+#: C/howto_toggling_caps_lock.page:24(title)
+msgid "Toggling CapsLock in Laptop Layout"
+msgstr ""
+
+#: C/howto_toggling_caps_lock.page:26(p)
+msgid ""
+"Press the Bypass command, <keyseq><key>Orca Modifier</key><key>BackSpace</"
+"key></keyseq>, to tell <app>Orca</app> that the next command should be "
+"ignored."
+msgstr ""
+
+#: C/howto_toggling_caps_lock.page:32(p)
+msgid "Press <key>CapsLock</key> to toggle its locked state."
+msgstr "按下<key>CapsLock</key> 切换锁定状态。"
+
+#: C/howto_the_orca_modifier.page:5(title)
+msgid "4. The Orca Modifier"
+msgstr "4. Orca 修饰键"
+
+#: C/howto_the_orca_modifier.page:6(desc)
+msgid ""
+"A key that works like <key>Shift</key>, <key>Ctrl</key>, and <key>Alt</key>"
+msgstr "类似<key>Shift</key>，<key>Ctrl</key>和<key>Alt</key>的按键"
+
+#: C/howto_the_orca_modifier.page:18(title)
+msgid "The Orca Modifier"
+msgstr "Orca 修饰键"
+
+#: C/howto_the_orca_modifier.page:19(p)
+msgid ""
+"Orca has a special modifier key that works like <key>Shift</key>, <key>Ctrl</"
+"key>, and <key>Alt</key>. It is designed specifically for performing "
+"<app>Orca</app> commands and doing so without introducing conflicts with the "
+"commands of the applications you are accessing."
+msgstr ""
+
+#: C/howto_the_orca_modifier.page:26(p)
+msgid ""
+"Which key the \"Orca Modifier\" is bound to will, by default, depend on "
+"whether you are using <app>Orca</app>'s Laptop keyboard layout or its "
+"Desktop keyboard layout:"
+msgstr ""
+
+#: C/howto_the_orca_modifier.page:33(p) C/howto_text_setup.page:136(p)
+#: C/howto_keyboard_layout.page:22(p)
+msgid ""
+"If you are using the Laptop layout, the default Orca Modifier will be "
+"<key>CapsLock</key>"
+msgstr "如果您使用笔记本布局，默认的 Orca 修饰键将是<key>CapsLock</key>"
+
+#: C/howto_the_orca_modifier.page:39(p) C/howto_text_setup.page:142(p)
+#: C/howto_keyboard_layout.page:28(p)
+msgid ""
+"If you are using the Desktop layout, the Orca Modifier will be both "
+"<key>Insert</key> and <key>KeyPad Insert</key>, the latter being the same "
+"key as <key>KeyPad 0</key>."
+msgstr ""
+"如果您使用桌面布局，Orca 修饰键将是<key>Insert</key>和<key>KeyPad Insert</"
+"key>，后者与<key>KeyPad 0</key>按键一致。"
+
+#: C/howto_the_orca_modifier.page:46(p)
+msgid ""
+"If you want to maintain your current keyboard layout but select a different "
+"modifier key, you can do so by performing the following steps:"
+msgstr ""
+
+#: C/howto_the_orca_modifier.page:51(title)
+msgid "Changing the Orca Modifier"
+msgstr "更改 Orca 修饰键"
+
+#: C/howto_the_orca_modifier.page:53(p) C/howto_keyboard_layout.page:45(p)
+#: C/howto_key_bindings.page:23(p) C/howto_key_bindings.page:60(p)
+#: C/howto_key_bindings.page:92(p) C/howto_key_bindings.page:114(p)
+msgid ""
+"Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
+"pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>."
+msgstr ""
+"按下<keyseq><key>Orca Modifier</key><key>Space</key></keyseq>，进入<link "
+"xref=\"preferences\">Orca 首选项</link>对话框。"
+
+#: C/howto_the_orca_modifier.page:59(p) C/howto_key_bindings.page:29(p)
+#: C/howto_key_bindings.page:66(p) C/howto_key_bindings.page:99(p)
+#: C/howto_key_bindings.page:121(p)
+msgid "Move to the <gui>Key Bindings</gui> page."
+msgstr "移动到<gui>键绑定</gui>页面。"
+
+#: C/howto_the_orca_modifier.page:62(p)
+msgid "Move to the <gui>Orca Modifier Key(s)</gui> combobox."
+msgstr "移动到<gui>Orca 修饰键</gui>组合框。"
+
+#: C/howto_the_orca_modifier.page:65(p)
+msgid "Arrow to the desired modifier. The available options are:"
+msgstr "指向希望的修饰键。可选项包括："
+
+#: C/howto_the_orca_modifier.page:68(p)
+msgid "KP_Insert"
+msgstr "KP_Insert"
+
+#: C/howto_the_orca_modifier.page:73(p) C/howto_keyboard_layout.page:59(p)
+#: C/howto_key_bindings.page:54(p) C/howto_key_bindings.page:86(p)
+#: C/howto_key_bindings.page:108(p) C/howto_key_bindings.page:140(p)
+msgid "Press the <gui>Apply</gui> button."
+msgstr "按下<gui>应用</gui>按钮。"
+
+#: C/howto_text_setup.page:3(desc)
+msgid ""
+"A feature which allows you to perform basic configuration of <app>Orca</app> "
+"even if the graphical desktop is not running."
+msgstr "该特性允许您执行<app>Orca</app>基本配置，即使图形桌面不运行。"
+
+#: C/howto_text_setup.page:15(title)
+msgid "Using Text Setup"
+msgstr "使用文本设置"
+
+#: C/howto_text_setup.page:16(p)
+msgid ""
+"Orca has a text setup feature which allows you to perform basic "
+"configuration of <app>Orca</app> even if the graphical desktop is not "
+"running."
+msgstr ""
+"Orca 有一个文本设置功能，允许您即使在图形桌面不运行的情况下也可以进行 "
+"<app>Orca</app> 基本配置。"
+
+#: C/howto_text_setup.page:21(title)
+msgid "Launching <app>Orca</app>'s Text-Only Guided Setup"
+msgstr "启动 <app>Orca</app> 单文本模式设置向导"
+
+#: C/howto_text_setup.page:23(p)
+msgid ""
+"Open a <gui>Run</gui> dialog. For most distros, this can be accomplished by "
+"pressing <keyseq><key>Alt</key><key>F2</key></keyseq>. Alternatively, you "
+"can use a terminal window or the system text console."
+msgstr ""
+"打开<gui>运行命令</gui>对话框。对大多数发行版本来说，这可以通过按下"
+"<keyseq><key>Alt</key><key>F2</key></keyseq>完成，您可以使用一个终端窗口或系"
+"统文本终端。"
+
+#: C/howto_text_setup.page:30(p)
+msgid ""
+"Type <cmd>orca --text-setup</cmd> or <cmd>orca -t</cmd> and press "
+"<key>Return</key>."
+msgstr "输入<cmd>orca --text-setup</cmd>或<cmd>orca -t</cmd>并按下<key>Return</key>。"
+
+#: C/howto_text_setup.page:36(p)
+msgid "You will be asked a few questions:"
+msgstr "您会被问到一些问题："
+
+#: C/howto_text_setup.page:39(p)
+msgid "Select desired speech system"
+msgstr "选择希望的朗读系统"
+
+#: C/howto_text_setup.page:40(p)
+msgid ""
+"The choices that follow will depend on which speech systems you have "
+"installed on your system. Type the number associated with your desired "
+"speech system and press <key>Return</key>."
+msgstr ""
+"该选项会根据您系统上已经安装的朗读系统来决定。输入您希望的朗读系统编号并按下"
+"<key>Return</key。"
+
+#: C/howto_text_setup.page:47(p)
+msgid "Select desired speech server"
+msgstr "选择希望的朗读服务器"
+
+#: C/howto_text_setup.page:48(p)
+msgid ""
+"The choices that follow will depend on which speech synthesizers you have "
+"installed on your system. Type the number associated with your desired "
+"speech server and press <key>Return</key>."
+msgstr ""
+"该选项会根据您系统上已经安装的朗读合成器来决定。输入您希望的朗读服务器编号并"
+"按下<key>Return</key>。"
+
+#: C/howto_text_setup.page:55(p)
+msgid "Select desired voice"
+msgstr "选择希望的语音"
+
+#: C/howto_text_setup.page:56(p)
+msgid ""
+"The \"voices\" correspond with the languages available. In the case of "
+"speech-dispatcher, there are approximately 60 languages and dialects "
+"supported with more being added regularly. Type in the number of your "
+"language choice (e.g., <cmd>7</cmd> for American English) and press "
+"<key>Return</key>. You do not need to wait for the entire list to be spoken. "
+"In addition, <app>Orca</app> attempts to make your default language the "
+"first choice, so in many cases you can simply type <cmd>1</cmd> and press "
+"<key>Return</key> without having to listen to the full list of voices."
+msgstr ""
+
+#: C/howto_text_setup.page:68(p)
+msgid "Enable echo by word?"
+msgstr "启用字词回声？"
+
+#: C/howto_text_setup.page:69(p)
+msgid ""
+"This option causes <app>Orca</app> to speak words as you finish typing them. "
+"Type <cmd>y</cmd> or <cmd>n</cmd> and press <key>Return</key>."
+msgstr ""
+"该选项将使得<app>Orca</app>在您完成输入时就朗读字词。输入<cmd>y</cmd>或"
+"<cmd>n</cmd>并按下<key>Return</key>。"
+
+#: C/howto_text_setup.page:75(p)
+msgid "Enable key echo?"
+msgstr "启用按键回声？"
+
+#: C/howto_text_setup.page:76(p)
+msgid ""
+"This option causes <app>Orca</app> to speak all keys as they are pressed. "
+"Type <cmd>y</cmd> or <cmd>n</cmd> and press <key>Return</key>."
+msgstr ""
+"该选项将使得<app>Orca</app>在按键按下时朗读所有按键。输入<cmd>y</cmd>或"
+"<cmd>n</cmd>并按下<key>Return</key>。"
+
+#: C/howto_text_setup.page:80(p)
+msgid ""
+"If you indicate that you would like key echo enabled, setup will then ask "
+"you about the types of key echo you can enable or disable. For each one, "
+"type <cmd>y</cmd> to enable it or <cmd>n</cmd> to disable it and press "
+"<key>Return</key>. The types are:"
+msgstr ""
+
+#: C/howto_text_setup.page:88(p)
+msgid "alphanumeric and punctuation keys"
+msgstr ""
+
+#: C/howto_text_setup.page:96(p)
+msgid "modifier keys"
+msgstr "修饰键"
+
+#: C/howto_text_setup.page:103(p)
+msgid "locking keys"
+msgstr "锁定键"
+
+#: C/howto_text_setup.page:110(p)
+msgid "function keys"
+msgstr "功能键"
+
+#: C/howto_text_setup.page:117(p)
+msgid "action keys"
+msgstr "动作键"
+
+#: C/howto_text_setup.page:118(p)
+msgid ""
+"This option controls whether or not <key>BackSpace</key>, <key>Delete</key>, "
+"<key>Return</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</key>, "
+"<key>Page Down</key>, <key>Home</key>, and <key>End</key> should be spoken "
+"when pressed."
+msgstr ""
+"该选项控制<key>BackSpace</key>，<key>Delete</key>，<key>Return</key>，"
+"<key>Escape</key>，<key>Tab</key>，<key>Page Up</key>，<key>Page Down</key>，"
+"<key>Home</key>和<key>End</key>这些键按下时是否读出。"
+
+#: C/howto_text_setup.page:129(p)
+msgid "Select desired keyboard layout."
+msgstr "选择希望的键盘布局。"
+
+#: C/howto_text_setup.page:130(p)
+msgid ""
+"Orca has two keyboard layouts: Desktop and Laptop. The layout you choose "
+"impacts which key is used as the Orca Modifier."
+msgstr ""
+"Orca 有两种键盘布局：桌面和笔记本。您选择的布局会影响到 Orca 修饰键使用哪个按"
+"键。"
+
+#: C/howto_text_setup.page:149(p) C/howto_keyboard_layout.page:35(p)
+msgid ""
+"The layout also determines the keystrokes associated with a number of "
+"<app>Orca</app>'s commands, especially in the areas of Flat Review, Where Am "
+"I, and Say All."
+msgstr ""
+
+#: C/howto_text_setup.page:154(p)
+msgid ""
+"Type <cmd>1</cmd> for Desktop layout or <cmd>2</cmd> for Laptop layout and "
+"press <key>Return</key>."
+msgstr ""
+"输入<cmd>1</cmd>选择桌面布局或<cmd>2</cmd>选择笔记本布局，并按下<key>Return</"
+"key>。"
+
+#: C/howto_text_setup.page:160(p)
+msgid "Enable Braille"
+msgstr "启用盲文"
+
+#: C/howto_text_setup.page:161(p)
+msgid ""
+"This functionality assumes a BrlTTY-compatible device is available. Type "
+"<cmd>y</cmd> or <cmd>n</cmd> and press <key>Return</key>. Note that you can "
+"usually just enter <cmd>y</cmd> here; <app>Orca</app> will recover "
+"gracefully and function even if it cannot find BrlTTY."
+msgstr ""
+
+#: C/howto_text_setup.page:170(p)
+msgid ""
+"Orca's Braille Monitor is an on-screen braille representation. This is "
+"mostly for sighted developers who need to verify BrlTTY output, but may also "
+"be useful in other situations, such as visually diagnosing or verifying "
+"braille output. Type <cmd>y</cmd> or <cmd>n</cmd> and press <key>Return</"
+"key>."
+msgstr ""
+
+#: C/howto_text_setup.page:178(p)
+msgid "Automatically start <app>Orca</app> when you log in"
+msgstr "登录时自动开启 <app>Orca</app>"
+
+#: C/howto_text_setup.page:179(p)
+msgid ""
+"Type <cmd>y</cmd> if you want <app>Orca</app> automatically launched for you "
+"or <cmd>n</cmd> if you do not, and press <key>Return</key>."
+msgstr ""
+"如果您希望 <app>Orca</app> 自动启动，输入<cmd>y</cmd>；否则，输入<cmd>n</"
+"cmd>，并按下<key>Return</key>。"
+
+#: C/howto_text_setup.page:185(p)
+msgid ""
+"That's it. <app>Orca</app> is now ready for use. If accessibility was not "
+"yet enabled, <app>Orca</app> does so now and asks you to logout and back in "
+"for the services to start. Type <cmd>y</cmd> and press <key>Return</key> to "
+"restart your login session. If, on the other hand, accessibility was already "
+"enabled, you will simply be prompted to press <key>Return</key> after which "
+"<app>Orca</app> will be launched for you."
+msgstr ""
+
+#: C/howto_text_attributes.page:5(title)
+msgid "2. Text Attributes"
+msgstr "2. 文本属性"
+
+#: C/howto_text_attributes.page:6(desc)
+msgid "Examining text formatting"
+msgstr ""
+
+#: C/howto_text_attributes.page:18(p)
+msgid ""
+"The term \"text attributes\" refers to all of the font, style, alignment, "
+"and other formatting associated with a given character or series of "
+"characters."
+msgstr ""
+
+#: C/howto_text_attributes.page:24(title)
+msgid "Obtaining Formatting Information"
+msgstr ""
+
+#: C/howto_text_attributes.page:25(p)
+msgid ""
+"When you press <keyseq><key>Orca Modifier</key><key>F</key></keyseq>, "
+"<app>Orca</app> will speak known text attribute information about an object. "
+"In addition, <app>Orca</app> will optionally indicate text attributes in "
+"braille by \"underlining\" them as you navigate a document."
+msgstr ""
+
+#: C/howto_text_attributes.page:32(p)
+msgid ""
+"Because the number of text attributes is large, and not everyone cares about "
+"every attribute, the <link xref=\"preferences_text_attributes\"> Text "
+"Attributes page of the preferences dialog</link> allows you to customize "
+"which text attributes <app>Orca</app> will present in speech, along with the "
+"order in which they should be presented, and which ones <app>Orca</app> will "
+"indicate in braille."
+msgstr ""
+
+#: C/howto_text_attributes.page:40(p)
+msgid ""
+"Because the <link xref=\"preferences_text_attributes\">Text Attributes page</"
+"link> is also part of the application-specific settings, you can customize "
+"text attribute presentation on an as-needed basis for each application you "
+"use."
+msgstr ""
+
+#: C/howto_text_attributes.page:48(title)
+msgid "Identifying Misspelled Words"
+msgstr ""
+
+#: C/howto_text_attributes.page:49(p)
+msgid ""
+"Most applications and toolkits indicate that a word is misspelled by "
+"underlining that word with a red, squiggly line. The presence of this line "
+"is typically exposed to assistive technologies as a text attribute. As a "
+"result, you will find spelling errors amongst the text attributes you can "
+"choose. By default, the spelling error attribute is enabled for both speech "
+"and braille and will therefore be presented along with any other attributes "
+"whose indication you have enabled."
+msgstr ""
+
+#: C/howto_text_attributes.page:58(p)
+msgid ""
+"In addition to accessing the presence of spelling errors as a text "
+"attribute, if you have key echo and/or word echo enabled and type a word "
+"which is misspelled, when the spelling error indication appears, <app>Orca</"
+"app> will announce \"misspelled\" so that you can immediately go back and "
+"correct the error."
+msgstr ""
+
+#: C/howto_text_attributes.page:65(p)
+msgid ""
+"Finally, when you are navigating within a document and the caret moves into "
+"a word which is misspelled, <app>Orca</app> will announce the presence of "
+"the spelling error."
+msgstr ""
+
+#: C/howto_tables.page:5(title)
+msgid "4. Tables"
+msgstr "4.表格"
+
+#: C/howto_tables.page:6(desc)
+msgid "Navigating and setting dynamic headers"
+msgstr ""
+
+#: C/howto_tables.page:17(title)
+#: C/commands_structural_navigation.page:180(title)
+msgid "Tables"
+msgstr "表格"
+
+#: C/howto_tables.page:18(p)
+msgid ""
+"<app>Orca</app> provides several features specifically designed to improve "
+"access to tables found in web pages and other documents: configurable cell "
+"versus row reading, <link xref=\"howto_structural_navigation\">Structural "
+"Navigation</link> and Dynamic Headers."
+msgstr ""
+
+#: C/howto_tables.page:25(title)
+msgid "Cell Versus Row Reading"
+msgstr ""
+
+#: C/howto_tables.page:26(p)
+msgid ""
+"Consider the process of examining the list of messages in your Inbox. In "
+"order to have Orca announce the sender, subject, date, and presence of "
+"attachments you would need <app>Orca</app> to speak the row. On the other "
+"hand, when navigating amongst rows in a spreadsheet, hearing the full row "
+"may not be desired if for no other reason than the sheer number of cells in "
+"each row. Thus in that case, you would want <app>Orca</app> to only speak "
+"the cell with focus. Similar situations occur in document tables."
+msgstr ""
+
+#: C/howto_tables.page:36(p)
+msgid ""
+"<app>Orca</app> allows you to customize whether only the cell should be "
+"read, or if the full row should be. You can set this preference Orca wide as "
+"well as on an application-by-application basis. How to do each is described "
+"in the guide on <link xref=\"preferences\"><app>Orca</app>'s preferences "
+"dialogs</link>. The setting can be found in the <gui>Table Rows</gui> radio "
+"button group on the <link xref=\"preferences_speech\"><gui>Speech</gui> "
+"page</link>."
+msgstr ""
+
+#: C/howto_tables.page:45(p)
+msgid ""
+"In addition, there is an <app>Orca</app> command which allows you to toggle "
+"this setting on the fly: <keyseq><key>Orca Modifier</key><key>F11</key></"
+"keyseq>."
+msgstr ""
+
+#: C/howto_tables.page:52(title) C/howto_structural_navigation.page:19(title)
+#: C/commands_structural_navigation.page:7(title)
+msgid "Structural Navigation"
+msgstr ""
+
+#: C/howto_tables.page:53(p)
+msgid ""
+"<app>Orca</app>'s <link xref=\"commands_structural_navigation#tables\">table "
+"Structural Navigation commands</link> make it possible for you to quickly "
+"locate tables, jump immediately to a table's first or last cell, and move to "
+"the next cell in any direction."
+msgstr ""
+
+#: C/howto_tables.page:59(p)
+msgid ""
+"As you navigate amongst and within tables using Structural Navigation, "
+"<app>Orca</app> will announce additional details to help you understand your "
+"position, such as the dimensions of the table you just entered and the fact "
+"that you have reached the edge of the table in the direction you are moving."
+msgstr ""
+
+#: C/howto_tables.page:66(p)
+msgid ""
+"In addition, <app>Orca</app> provides configurable <link xref="
+"\"preferences_table_navigation\">presentation options</link> which work in "
+"conjunction with Structural Navigation and allow you to control whether or "
+"not cell coordinates are presented, multiple cell spans are indicated, and "
+"cell headers are announced."
+msgstr ""
+
+#: C/howto_tables.page:74(title) C/howto_structural_navigation.page:52(title)
+msgid "Don't Forget To Toggle Structural Navigation On!"
+msgstr ""
+
+#: C/howto_tables.page:75(p)
+msgid ""
+"Depending on where you are, it may be necessary for you to explicitly toggle "
+"Structural Navigation on before you can use it. To learn more, read <link "
+"type=\"seealso\" xref=\"howto_structural_navigation#toggling_required\"> "
+"when toggling Structural Navigation on is required.</link>"
+msgstr ""
+
+#: C/howto_tables.page:84(title)
+msgid "Dynamic Headers"
+msgstr ""
+
+#: C/howto_tables.page:85(p)
+msgid ""
+"Many of the tables you will encounter while reading have cells which serve "
+"as the header for a row or a column. Whether or not the creator of that "
+"table correctly marked those cells as headers is hard to say. In many cases, "
+"the text was simply formatted to be larger and/or bold. And even if the "
+"table is correctly marked up, that is no guarantee that the application or "
+"toolkit exposes that text as header information to assistive technologies. "
+"<app>Orca</app>'s Dynamic Header support makes it possible to overcome these "
+"challenges."
+msgstr ""
+
+#: C/howto_tables.page:96(title)
+msgid "Setting Column Headers"
+msgstr ""
+
+#: C/howto_tables.page:98(p)
+msgid "Move to the row which contains all of the column headers."
+msgstr ""
+
+#: C/howto_tables.page:103(p)
+msgid ""
+"Press <keyseq><key>Orca Modifier</key><key>R</key></keyseq> to tell "
+"<app>Orca</app> that the current row is the one with the headers."
+msgstr ""
+
+#: C/howto_tables.page:110(title)
+msgid "Set Row Headers"
+msgstr ""
+
+#: C/howto_tables.page:112(p)
+msgid "Move to the column which contains all of the row headers."
+msgstr ""
+
+#: C/howto_tables.page:117(p)
+msgid ""
+"Press <keyseq><key>Orca Modifier</key><key>C</key></keyseq> to tell "
+"<app>Orca</app> that the current column is the one with the headers."
+msgstr ""
+
+#: C/howto_tables.page:123(p)
+msgid ""
+"Having set either the column headers or the row headers, you should find "
+"that as you navigate amongst the cells, <app>Orca</app> will present each "
+"header that has changed. Or to put it another way, <app>Orca</app> will not "
+"present the column header over and over again as you move up or down within "
+"the current column. Likewise, it will not present the row header over and "
+"over again as you move left or right within the current row. However, if you "
+"change rows and there are row headers, the header associated with the new "
+"row will be presented. And if you change columns and there are column "
+"headers, the header associated with the new column will be presented."
+msgstr ""
+
+#: C/howto_tables.page:135(p)
+msgid ""
+"To clear headers, simply double-click the command you used to set them. Thus "
+"double-clicking <keyseq><key>Orca Modifier</key><key>R</key></keyseq> tells "
+"<app>Orca</app> there are no column headers. Double-clicking "
+"<keyseq><key>Orca Modifier</key><key>C</key></keyseq> tells <app>Orca</app> "
+"there are no row headers."
+msgstr ""
+
+#: C/howto_structural_navigation.page:7(title)
+msgid "3. Structural Navigation"
+msgstr ""
+
+#: C/howto_structural_navigation.page:8(desc)
+msgid "Moving by heading and other elements"
+msgstr ""
+
+#: C/howto_structural_navigation.page:20(p)
+msgid ""
+"<app>Orca</app>'s Structural Navigation feature allows you to navigate "
+"amongst elements in a document. The types of elements by which you can "
+"navigate include:"
+msgstr ""
+
+#: C/howto_structural_navigation.page:26(p)
+msgid "Headings and other text blocks"
+msgstr ""
+
+#: C/howto_structural_navigation.page:27(p)
+msgid "Form controls"
+msgstr ""
+
+#: C/howto_structural_navigation.page:28(p)
+#: C/commands_structural_navigation.page:142(title)
+msgid "Links"
+msgstr ""
+
+#: C/howto_structural_navigation.page:29(p)
+msgid "Lists and list items"
+msgstr ""
+
+#: C/howto_structural_navigation.page:30(p)
+msgid "Landmarks, separators, and anchors"
+msgstr ""
+
+#: C/howto_structural_navigation.page:31(p)
+msgid "Tables and table cells"
+msgstr ""
+
+#: C/howto_structural_navigation.page:33(p)
+msgid ""
+"A full list of individual elements and their associated keybindings can be "
+"found in <link xref=\"commands_structural_navigation\">Structural Navigation "
+"Commands</link>."
+msgstr ""
+
+#: C/howto_structural_navigation.page:39(title)
+msgid "Supported Applications"
+msgstr ""
+
+#: C/howto_structural_navigation.page:40(p)
+msgid ""
+"Currently, Structural Navigation is fully implemented for web content, "
+"including the help content you are reading now. <app>Orca</app>'s Structural "
+"Navigation support for table cells has also been implemented for "
+"<app>OpenOffice Writer</app> and <app>LibreOffice Writer</app>. Implementing "
+"the remainder of the Structural Navigation objects to these office suites "
+"requires changes to be made by their respective developers. Implementing any "
+"Structural Navigation features within <app>Evince</app> will require a "
+"similar effort on the part of its developers."
+msgstr ""
+
+#: C/howto_structural_navigation.page:53(p)
+msgid ""
+"Depending on where you are, it may be necessary for you to explicitly toggle "
+"Structural Navigation on before you can use it."
+msgstr ""
+
+#: C/howto_structural_navigation.page:59(title)
+msgid "When Toggling Structural Navigation On Is Required"
+msgstr ""
+
+#: C/howto_structural_navigation.page:60(p)
+msgid ""
+"In web pages, explicitly toggling Structural Navigation on is generally "
+"unnecessary because your interaction with the document largely consists of "
+"reading its content. Thus there is no question as to whether the 'H' you "
+"just pressed was meant to be a writing command or a navigation command."
+msgstr ""
+
+#: C/howto_structural_navigation.page:67(p)
+msgid ""
+"On the other hand, in editable documents such as those found in "
+"<app>OpenOffice</app> and <app>LibreOffice</app>, it is far more difficult "
+"for <app>Orca</app> to accurately predict what you expect to have happen as "
+"a result of pressing 'H'. Therefore, before you can use any Structural "
+"Navigation command in an editable document, you must first toggle Structural "
+"Navigation on by pressing <keyseq><key>Orca Modifier</key><key>Z</key></"
+"keyseq>. When you are finished navigating and ready to resume writing, press "
+"<keyseq><key>Orca Modifier</key><key>Z</key></keyseq> again to toggle "
+"Structural Navigation off."
+msgstr ""
+
+#: C/howto_structural_navigation.page:82(title)
+msgid "Available Settings"
+msgstr ""
+
+#: C/howto_structural_navigation.page:83(p)
+msgid ""
+"In addition to the aforementioned commands, <app>Orca</app> has a number of "
+"configurable options available specifically for applications in which there "
+"is structural navigation support."
+msgstr ""
+
+#: C/howto_structural_navigation.page:89(title)
+msgid "Configuring Structural Navigation"
+msgstr ""
+
+#: C/howto_structural_navigation.page:91(p)
+msgid ""
+"Give focus to an application for which <app>Orca</app> has Structural "
+"Navigation support."
+msgstr ""
+
+#: C/howto_structural_navigation.page:97(p)
+msgid ""
+"Get into the <link xref=\"preferences\">Orca Preferences</link> dialog box "
+"for the current application by pressing: <keyseq><key>Ctrl</key><key>Orca "
+"Modifier</key><key>Space</key></keyseq>"
+msgstr ""
+
+#: C/howto_structural_navigation.page:106(p)
+msgid ""
+"Navigate to the last page of the dialog box which should be named according "
+"to the name of your current application."
+msgstr ""
+
+#: C/howto_structural_navigation.page:112(p)
+msgid "Examine and change the settings as you see fit."
+msgstr ""
+
+#: C/howto_structural_navigation.page:117(p) C/howto_profiles.page:86(p)
+msgid "Press the <gui>OK</gui> button."
+msgstr ""
+
+#: C/howto_setting_up_orca.page:6(title)
+msgid "3. Orca Configuration"
+msgstr ""
+
+#: C/howto_setting_up_orca.page:7(title)
+msgid "Configuration"
+msgstr ""
+
+#: C/howto_setting_up_orca.page:8(desc)
+msgid "Setting up <app>Orca</app> initially and in the future"
+msgstr ""
+
+#: C/howto_setting_up_orca.page:19(title)
+msgid "Orca Configuration"
+msgstr ""
+
+#: C/howto_setting_up_orca.page:21(title)
+msgid "Initial Setup"
+msgstr ""
+
+#: C/howto_setting_up_orca.page:22(p)
+msgid ""
+"When you run <app>Orca</app> for the first time, it will automatically enter "
+"setup mode. Depending on your active session's configuration, one of two "
+"things will occur:"
+msgstr ""
+
+#: C/howto_setting_up_orca.page:29(p)
+msgid ""
+"If accessibility support has already been enabled for your session, you will "
+"be placed in the <app>Orca</app><link xref=\"preferences\">Preferences</"
+"link> dialog box where you can customize <app>Orca</app> completely and then "
+"use it immediately."
+msgstr ""
+
+#: C/howto_setting_up_orca.page:38(p)
+msgid ""
+"If accessibility support has not already been enabled for your session, "
+"<app>Orca</app>'s <link xref=\"howto_text_setup\">text-based setup</link> "
+"will be launched instead. The text-based setup allows you to configure the "
+"most fundamental settings and enable accessibility support for your session. "
+"You will need to log out and log back in for the new settings to take effect."
+msgstr ""
+
+#: C/howto_setting_up_orca.page:50(title)
+msgid "Configuring <app>Orca</app> in the Future"
+msgstr ""
+
+#: C/howto_setting_up_orca.page:51(p)
+msgid ""
+"If you want to configure <app>Orca</app> in the future, you can do one of "
+"the following:"
+msgstr ""
+
+#: C/howto_setting_up_orca.page:57(p)
+msgid ""
+"Pass the <cmd>--setup</cmd> option to <app>Orca</app> the next time you run "
+"it to automatically be placed in the <link xref=\"preferences\">Preferences</"
+"link> dialog box."
+msgstr ""
+
+#: C/howto_setting_up_orca.page:64(p)
+msgid ""
+"Pass the <cmd>--text-setup</cmd> option to <app>Orca</app> to re-run "
+"<app>Orca</app>'s <link xref=\"howto_text_setup\">text-based setup</link>."
+msgstr ""
+
+#: C/howto_setting_up_orca.page:71(p)
+msgid ""
+"Get into the <link xref=\"preferences\">Preferences</link> dialog box by "
+"pressing the <gui>Preferences</gui> button in the <app>Orca</app> main "
+"window or by pressing <keyseq><key>Orca Modifier</key><key>Space</key></"
+"keyseq> from within any accessible application."
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/howto_profiles.page:51(None)
+msgid ""
+"@@image: 'figures/profiles_save_as.png'; md5=e900250869a33ea0030fb42d4bf1da4e"
+msgstr ""
+"@@image: 'figures/profiles_save_as.png'; md5=e900250869a33ea0030fb42d4bf1da4e"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/howto_profiles.page:82(None)
+msgid ""
+"@@image: 'figures/profiles_load.png'; md5=4d8fc078d263c5cebc07ed8cb60e63a8"
+msgstr ""
+"@@image: 'figures/profiles_load.png'; md5=4d8fc078d263c5cebc07ed8cb60e63a8"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/howto_profiles.page:106(None)
+msgid ""
+"@@image: 'figures/profiles_conflict.png'; "
+"md5=0da0839b41fce88a4c177e5fb52b3e6b"
+msgstr ""
+"@@image: 'figures/profiles_conflict.png'; "
+"md5=0da0839b41fce88a4c177e5fb52b3e6b"
+
+#: C/howto_profiles.page:5(title)
+msgid "9. Profiles"
+msgstr "9. 配置"
+
+#: C/howto_profiles.page:6(desc)
+msgid "Maintaining multiple configurations"
+msgstr ""
+
+#: C/howto_profiles.page:16(p)
+msgid ""
+"Orca's profiles allow you to save and load multiple configurations so that "
+"you can quickly access the settings you need."
+msgstr ""
+
+#: C/howto_profiles.page:21(title)
+msgid "Maintaining Multiple Configurations"
+msgstr ""
+
+#: C/howto_profiles.page:24(desc)
+msgid ""
+"These options appear at the bottom of the <gui>General</gui> page of the "
+"<app>Orca</app> preferences dialog."
+msgstr ""
+
+#: C/howto_profiles.page:31(title)
+msgid "Saving a New Profile"
+msgstr "保存新配置"
+
+#: C/howto_profiles.page:33(p) C/howto_profiles.page:64(p)
+#: C/howto_profiles.page:119(p)
+msgid ""
+"Get into the <link xref=\"preferences\">Orca Preferences</link> dialog box."
+msgstr ""
+
+#: C/howto_profiles.page:38(p)
+msgid "Change whatever settings you wish."
+msgstr ""
+
+#: C/howto_profiles.page:41(p)
+msgid "On the <gui>General</gui> page, press the <gui>Save As</gui> button."
+msgstr ""
+
+#: C/howto_profiles.page:46(p)
+msgid ""
+"Type the new profile name in the resulting <gui>Save Profile As</gui> dialog "
+"box."
+msgstr ""
+
+#: C/howto_profiles.page:55(p)
+msgid ""
+"Press the <gui>OK</gui> button in the <gui>Save Profile As</gui> dialog box."
+msgstr ""
+
+#: C/howto_profiles.page:62(title)
+msgid "Loading an Existing Profile"
+msgstr ""
+
+#: C/howto_profiles.page:69(p)
+msgid ""
+"On the <gui>General</gui> page, select the profile to load from the "
+"<gui>Active Profile</gui> combo box."
+msgstr ""
+
+#: C/howto_profiles.page:75(p)
+msgid "Press the <gui>Load</gui> button."
+msgstr ""
+
+#: C/howto_profiles.page:78(p)
+msgid "You will be asked to confirm. Press the <gui>Yes</gui> button."
+msgstr ""
+
+#: C/howto_profiles.page:90(title)
+msgid "Changing an Existing Profile"
+msgstr ""
+
+#: C/howto_profiles.page:92(p)
+msgid ""
+"Follow the steps described above to load the profile you wish to change."
+msgstr ""
+
+#: C/howto_profiles.page:97(p)
+msgid "Follow the steps described above to save a new profile."
+msgstr ""
+
+#: C/howto_profiles.page:100(p)
+msgid ""
+"When prompted for the new profile name, type the same name as current "
+"profile. When you press the <gui>OK</gui> button, you will be told there is "
+"a name conflict."
+msgstr ""
+
+#: C/howto_profiles.page:110(p)
+msgid ""
+"Press the <gui>Yes</gui> button to confirm you wish to overwrite the "
+"existing profile with the new settings."
+msgstr ""
+
+#: C/howto_profiles.page:117(title)
+msgid "Changing the <gui>Start-up Profile</gui>"
+msgstr ""
+
+#: C/howto_profiles.page:124(p)
+msgid ""
+"On the <gui>General</gui> page, select the profile to load from the "
+"<gui>Start-up Profile</gui> combo box."
+msgstr ""
+
+#: C/howto_profiles.page:130(p)
+msgid ""
+"Press the <gui>OK</gui> button. The next time you launch <app>Orca</app>, "
+"the newly-selected profile will be used."
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/howto_orca_find.page:50(None)
+msgid "@@image: 'figures/orca_find.png'; md5=c57e798757d41146c96c263865c68610"
+msgstr "@@image: 'figures/orca_find.png'; md5=c57e798757d41146c96c263865c68610"
+
+#: C/howto_orca_find.page:5(title)
+msgid "3. Orca Find"
+msgstr ""
+
+#: C/howto_orca_find.page:6(desc)
+msgid "Searching a window for objects"
+msgstr ""
+
+#: C/howto_orca_find.page:15(title) C/commands_find.page:7(title)
+msgid "Orca Find"
+msgstr ""
+
+#: C/howto_orca_find.page:16(p)
+msgid ""
+"<app>Orca</app>'s Find feature is a <link xref=\"howto_flat_review\">Flat-"
+"Review</link>-based search designed to help you quickly locate objects that "
+"are visible on-screen within the current window."
+msgstr ""
+
+#: C/howto_orca_find.page:23(title)
+msgid "Activating Orca Find"
+msgstr ""
+
+#: C/howto_orca_find.page:24(p)
+msgid ""
+"To open the Orca <gui>Find</gui> dialog, use the following command based on "
+"your chosen <link xref=\"howto_keyboard_layout\">keyboard layout</link>:"
+msgstr ""
+
+#: C/howto_orca_find.page:30(p) C/commands_find.page:30(p)
+msgid "Desktop: <keyseq><key>KP Delete</key></keyseq>"
+msgstr ""
+
+#: C/howto_orca_find.page:33(p) C/commands_find.page:33(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>Left Bracket</key></keyseq>"
+msgstr ""
+
+#: C/howto_orca_find.page:38(p)
+msgid ""
+"For a list of additional tasks you can perform, see the <link xref="
+"\"commands_find\">Orca Find commands</link>"
+msgstr ""
+
+#: C/howto_orca_find.page:43(p)
+msgid "When you activate Orca Find, you will be placed in a dialog box."
+msgstr ""
+
+#: C/howto_orca_find.page:47(title)
+msgid "<app>Orca</app>'s Find Dialog"
+msgstr ""
+
+#: C/howto_orca_find.page:52(p)
+msgid "Here you can specify the following items:"
+msgstr ""
+
+#: C/howto_orca_find.page:57(p)
+msgid "The text to find"
+msgstr ""
+
+#: C/howto_orca_find.page:60(p)
+msgid ""
+"The location from which to begin the search, which can either be the current "
+"location or the top of the window"
+msgstr ""
+
+#: C/howto_orca_find.page:64(p)
+msgid "Default value of <gui>Start from</gui>: <gui>Current location</gui>"
+msgstr ""
+
+#: C/howto_orca_find.page:69(p)
+msgid ""
+"Whether or not capitalization should be taken into account when seeking a "
+"match"
+msgstr ""
+
+#: C/howto_orca_find.page:73(p)
+msgid "Default value of <gui>Match case</gui>: not checked"
+msgstr ""
+
+#: C/howto_orca_find.page:78(p)
+msgid ""
+"Whether or not to limit matches to those which match the entire word or "
+"phrase"
+msgstr ""
+
+#: C/howto_orca_find.page:82(p)
+msgid "Default value of <gui>Match entire word only</gui>: not checked"
+msgstr ""
+
+#: C/howto_orca_find.page:87(p)
+msgid ""
+"Whether Find should look down and/or to the right for the next match or up "
+"and/or to the left."
+msgstr ""
+
+#: C/howto_orca_find.page:91(p)
+msgid "Default value of <gui>Search backwards</gui>: not checked"
+msgstr ""
+
+#: C/howto_orca_find.page:96(p)
+msgid ""
+"Whether or not Find should wrap around to the top/bottom of the window if "
+"there is no match found from the starting location in the direction of the "
+"search."
+msgstr ""
+
+#: C/howto_orca_find.page:101(p)
+msgid "Default value of <gui>Wrap around</gui>: checked"
+msgstr ""
+
+#: C/howto_orca_find.page:106(p)
+msgid ""
+"Having performed a search, you can quickly search for the next or previous "
+"match without having to return to the Orca Find dialog box."
+msgstr ""
+
+#: C/howto_orca_find.page:110(p)
+msgid ""
+"Because it is a <link xref=\"howto_flat_review\">Flat Review</link> feature, "
+"when there is a match, Flat Review will automatically be activated and the "
+"matching item or text will become the current review item. Note that focus "
+"within the application will not be modified, nor will the caret be "
+"repositioned. If you need to accomplish either, please see <link xref="
+"\"commands_mouse\">Orca's Mouse/Pointer-Related Commands</link>."
+msgstr ""
+
+#: C/howto_notifications.page:5(title)
+msgid "5. Notifications"
+msgstr ""
+
+#: C/howto_notifications.page:6(desc)
+msgid "Reading previously-received messages"
+msgstr ""
+
+#: C/howto_notifications.page:15(title)
+msgid "Notifications"
+msgstr ""
+
+#: C/howto_notifications.page:16(p)
+msgid ""
+"The GNOME Desktop includes a \"notification area\" which can be used by "
+"applications to present information to the user. Examples of notifications "
+"include incoming chat messages, the details associated with the song your "
+"media player is starting to play, and warnings that your battery level is "
+"getting low."
+msgstr ""
+
+#: C/howto_notifications.page:23(p)
+msgid ""
+"Because notifications are intended to present information to users without "
+"interrupting what the user is doing, these messages tend to appear and "
+"disappear relatively quickly. They are also not focusable. While <app>Orca</"
+"app> will present these messages to you as they come in, it is far too easy "
+"to interrupt <app>Orca</app>'s announcement accidentally by continuing to "
+"type or to change focus. For this reason, <app>Orca</app> has three commands "
+"which you can use to access previously-displayed notification messages:"
+msgstr ""
+
+#: C/howto_notifications.page:35(p)
+msgid "Present the last (most recent) notification message"
+msgstr ""
+
+#: C/howto_notifications.page:38(p)
+msgid "Present the previous notification message"
+msgstr ""
+
+#: C/howto_notifications.page:41(p)
+msgid "Present list of all notification messages"
+msgstr ""
+
+#: C/howto_notifications.page:44(p)
+msgid ""
+"The first two commands are designed mainly for quick access to a message you "
+"just received. The last command is the most powerful as it stores your "
+"notification message history."
+msgstr ""
+
+#: C/howto_notifications.page:49(p)
+msgid ""
+"When you enter the list of notification messages, you will be told the size "
+"of the list and prompted with the following choices:"
+msgstr ""
+
+#: C/howto_notifications.page:54(p)
+msgid "Press H for help."
+msgstr ""
+
+#: C/howto_notifications.page:55(p)
+msgid "Use Up, Down, Home or End to navigate in the list."
+msgstr ""
+
+#: C/howto_notifications.page:56(p)
+msgid "Press Escape to exit."
+msgstr ""
+
+#: C/howto_notifications.page:57(p)
+msgid "Press Space to repeat the last message read."
+msgstr ""
+
+#: C/howto_notifications.page:58(p)
+msgid "Press one digit to read a specific message."
+msgstr ""
+
+#: C/howto_notifications.page:60(p)
+msgid "Note that the most recently-received message is at the top of the list."
+msgstr ""
+
+#: C/howto_notifications.page:63(p)
+msgid ""
+"Each of <app>Orca</app>'s notification review commands is unbound by "
+"default. You can bind any or all of them to the shortcut or shortcuts you "
+"choose. How to do so is described in the <link xref=\"howto_key_bindings"
+"\">Introduction to Key Bindings</link>."
+msgstr ""
+
+#: C/howto_mouse_review.page:5(title)
+msgid "4. Mouse Review"
+msgstr ""
+
+#: C/howto_mouse_review.page:6(desc)
+msgid "Using the pointer to examine the screen"
+msgstr ""
+
+#: C/howto_mouse_review.page:15(title)
+msgid "Mouse Review"
+msgstr ""
+
+#: C/howto_mouse_review.page:16(p)
+msgid ""
+"<app>Orca</app>'s Mouse Review feature causes <app>Orca</app> to present the "
+"object under the mouse pointer. Unlike <app>Orca</app>'s <link xref="
+"\"howto_flat_review\">Flat Review</link> feature, Mouse Review is not "
+"limited to the active window; instead, <app>Orca</app> will attempt to "
+"identify what accessible object, if any, is visually under the pointer as "
+"you move the mouse. If you have moved the pointer over an accessible object "
+"with information to present, <app>Orca</app> will present that object and "
+"its information to you."
+msgstr ""
+
+#: C/howto_mouse_review.page:26(p)
+msgid ""
+"Because enabling Mouse Review causes <app>Orca</app> to listen for, and then "
+"process, all changes in the position of the Mouse Pointer, this feature is "
+"disabled by default. To have it always enabled, check the <gui>Speak object "
+"under mouse</gui> checkbox found on the <link xref=\"preferences_general"
+"\">General page of <app>Orca</app>'s Preferences dialog</link>. In addition, "
+"you will find an unbound command named <gui>Toggle mouse review mode</gui> "
+"on the <link xref=\"preferences_key_bindings\">Key Bindings page</link> of "
+"that same dialog box. By binding this command, as described in the <link "
+"xref=\"howto_key_bindings\">Introduction to Key Bindings</link>, you can "
+"enable and disable Mouse Review on an as-needed basis."
+msgstr ""
+
+#: C/howto_mouse_review.page:40(title)
+msgid "Default Settings and Keybindings Are Independent of One Another"
+msgstr ""
+
+#: C/howto_mouse_review.page:43(p)
+msgid ""
+"Note that you can choose to have Mouse Review always enabled or not and "
+"still toggle it on and off by binding and using the <gui>Toggle mouse review "
+"mode</gui> command. It is not necessary to enable it in order to toggle it "
+"because settings and keybindings are independent of one another."
+msgstr ""
+
+#: C/howto_live_regions.page:5(title)
+msgid "6. Live Regions"
+msgstr ""
+
+#: C/howto_live_regions.page:6(desc)
+msgid "Interacting with dynamic web content"
+msgstr ""
+
+#: C/howto_live_regions.page:17(title) C/commands_live_regions.page:7(title)
+msgid "Live Regions"
+msgstr ""
+
+#: C/howto_live_regions.page:18(p)
+msgid ""
+"A live region is a dynamically-updated portion of a web page, such as a "
+"table of sports statistics, a list of current stock prices, a log from a "
+"chat, or an alert displayed by the page you are reading. While live regions "
+"appear quite frequently, fully accessible web pages with live regions are "
+"encountered less often. This problem is actively being addressed by a number "
+"of organizations."
+msgstr ""
+
+#: C/howto_live_regions.page:27(title)
+msgid "Live Region Politeness Levels"
+msgstr ""
+
+#: C/howto_live_regions.page:28(p)
+msgid ""
+"Live regions have an associated \"politeness\" level which is set by the "
+"author as a means to convey the importance of the information and to suggest "
+"when users should be informed by their assistive technology of updates made "
+"within that region. Live regions can be \"off\", \"polite\", or \"aggressive"
+"\" to the point of being \"rude.\""
+msgstr ""
+
+#: C/howto_live_regions.page:37(title)
+msgid "<app>Orca</app>'s Support for Live Regions"
+msgstr ""
+
+#: C/howto_live_regions.page:38(p)
+msgid ""
+"Because you might not agree with the politeness level specified by the "
+"author whose page you are viewing, <app>Orca</app> provides a number of "
+"<link xref=\"commands_live_regions\">live region commands</link> which allow "
+"you to modify the level of any or all of the regions on a page. In addition, "
+"you can:"
+msgstr ""
+
+#: C/howto_live_regions.page:47(p)
+msgid "Turn live region support on or off"
+msgstr ""
+
+#: C/howto_live_regions.page:50(p)
+msgid "Jump to the next and previous live region spatially"
+msgstr ""
+
+#: C/howto_live_regions.page:53(p)
+msgid "Jump to the last live region which presented information"
+msgstr ""
+
+#: C/howto_live_regions.page:56(p)
+msgid "Review the last nine live region messages which were presented"
+msgstr ""
+
+#: C/howto_learn_modes.page:5(title)
+msgid "5. The \"Learn\" Modes"
+msgstr ""
+
+#: C/howto_learn_modes.page:6(desc)
+msgid "Discovering <app>Orca</app>'s commands"
+msgstr ""
+
+#: C/howto_learn_modes.page:17(title)
+msgid "The \"Learn\" Modes"
+msgstr ""
+
+#: C/howto_learn_modes.page:18(p) C/commands_controlling_orca.page:55(p)
+msgid ""
+"Orca has two modes for learning more about <app>Orca</app>'s commands: Learn "
+"Mode and List Shortcuts Mode. In Learn Mode, <app>Orca</app> will announce "
+"each keystroke you pressed along with any associated <app>Orca</app> command "
+"that keystroke is bound to. List Shortcuts Mode provides you with a list of "
+"all the <app>Orca</app> commands you can use."
+msgstr ""
+
+#: C/howto_learn_modes.page:27(title)
+msgid "Using Learn Mode"
+msgstr ""
+
+#: C/howto_learn_modes.page:29(p)
+msgid ""
+"Get into Learn Mode by pressing <keyseq><key>Orca Modifier</key><key>H</"
+"key></keyseq>."
+msgstr ""
+
+#: C/howto_learn_modes.page:35(p)
+msgid ""
+"Press any key or keystroke. <app>Orca</app> will announce the keys and any "
+"associated command."
+msgstr ""
+
+#: C/howto_learn_modes.page:41(p)
+msgid "Press <key>Esc</key> to exit Learn Mode."
+msgstr ""
+
+#: C/howto_learn_modes.page:45(title)
+msgid "Using List Shortcuts Mode"
+msgstr ""
+
+#: C/howto_learn_modes.page:47(p)
+msgid ""
+"Get into List Shortcuts Mode by pressing <keyseq><key>Orca Modifier</"
+"key><key>H</key></keyseq> twice quickly."
+msgstr ""
+
+#: C/howto_learn_modes.page:53(p)
+msgid ""
+"Press <key>1</key> if you want a list of shortcuts that apply <app>Orca</"
+"app>-wide, or press <key>2</key> if you want a list of shortcuts that are "
+"specifically for the application with focus."
+msgstr ""
+
+#: C/howto_learn_modes.page:60(p)
+msgid ""
+"Press <key>Up</key> or <key>Down</key> to examine the contents of the list."
+msgstr ""
+
+#: C/howto_learn_modes.page:66(p)
+msgid "Press <key>Esc</key> to exit List Shortcuts Mode."
+msgstr ""
+
+#: C/howto_keyboard_layout.page:5(title)
+msgid "6. Keyboard Layout"
+msgstr ""
+
+#: C/howto_keyboard_layout.page:6(desc)
+msgid "Selecting the Desktop or Laptop layout"
+msgstr ""
+
+#: C/howto_keyboard_layout.page:16(p)
+msgid ""
+"Orca has two keyboard layouts: Desktop (i.e. with a numeric keypad) and "
+"Laptop. The layout you choose impacts which key is used as the Orca Modifier."
+msgstr ""
+
+#: C/howto_keyboard_layout.page:41(title)
+msgid "Changing Your Keyboard Layout"
+msgstr ""
+
+#: C/howto_keyboard_layout.page:51(p)
+msgid "Move to the <gui>Keyboard Layout</gui> group of radio buttons."
+msgstr ""
+
+#: C/howto_keyboard_layout.page:56(p)
+msgid "Arrow to the desired layout."
+msgstr ""
+
+#: C/howto_key_bindings.page:5(title)
+msgid "8. Keybindings"
+msgstr "8. 键绑定"
+
+#: C/howto_key_bindings.page:6(desc)
+msgid "Binding, rebinding, and unbinding commands"
+msgstr ""
+
+#: C/howto_key_bindings.page:15(title)
+msgid "Keybindings"
+msgstr ""
+
+#: C/howto_key_bindings.page:16(p)
+msgid ""
+"Orca has many commands, some of which are bound to a keystroke, others of "
+"which are unbound. You can bind, rebind, and unbind <app>Orca</app>'s "
+"commands by following the steps below."
+msgstr ""
+
+#: C/howto_key_bindings.page:21(title)
+msgid "Binding an Unbound Command"
+msgstr ""
+
+#: C/howto_key_bindings.page:32(p)
+msgid ""
+"Arrow to the cell which contains the command you want to assign a keystroke "
+"to."
+msgstr ""
+
+#: C/howto_key_bindings.page:38(p)
+msgid ""
+"Arrow once to the right. This will place focus in the <gui>Key Binding</gui> "
+"column. Press <key>Return</key>."
+msgstr ""
+
+#: C/howto_key_bindings.page:44(p) C/howto_key_bindings.page:75(p)
+msgid "Press the desired key combination."
+msgstr ""
+
+#: C/howto_key_bindings.page:46(p) C/howto_key_bindings.page:78(p)
+msgid ""
+"Press <key>Return</key> to confirm the new combination. The new keystroke "
+"will be saved and the check box in the last column (the <gui>Modified</gui> "
+"column) will indicate that the key binding has been modified."
+msgstr ""
+
+#: C/howto_key_bindings.page:58(title)
+msgid "Changing Existing Bindings"
+msgstr ""
+
+#: C/howto_key_bindings.page:69(p)
+msgid ""
+"Arrow to the cell which contains the binding you which to change and press "
+"<key>Return</key>."
+msgstr ""
+
+#: C/howto_key_bindings.page:90(title)
+msgid "Restoring Original Bindings"
+msgstr ""
+
+#: C/howto_key_bindings.page:102(p)
+msgid "Arrow to the modified column associated with the key binding."
+msgstr ""
+
+#: C/howto_key_bindings.page:105(p)
+msgid "Uncheck the checkbox by pressing <key>Space</key>."
+msgstr ""
+
+#: C/howto_key_bindings.page:112(title)
+msgid "Unbinding Bound Commands"
+msgstr ""
+
+#: C/howto_key_bindings.page:124(p)
+msgid ""
+"Arrow to the cell which contains the binding you which to delete and press "
+"<key>Return</key>."
+msgstr ""
+
+#: C/howto_key_bindings.page:130(p)
+msgid ""
+"When prompted for the new keybinding, press <key>Delete</key> or "
+"<key>BackSpace</key>. You will be told that the key binding has been removed."
+msgstr ""
+
+#: C/howto_key_bindings.page:137(p)
+msgid "Press <key>Return</key> to confirm."
+msgstr ""
+
+#: C/howto_forms.page:5(title)
+msgid "5. Filling out forms"
+msgstr ""
+
+#: C/howto_forms.page:6(desc)
+msgid "Accessing widgets embedded in documents"
+msgstr ""
+
+#: C/howto_forms.page:17(title)
+msgid "Filling out forms"
+msgstr ""
+
+#: C/howto_forms.page:18(p)
+msgid ""
+"When interacting with web pages and other documents using <app>Orca</app>, "
+"you are interacting with the document itself; not a buffered copy of that "
+"document. Thus there is no special mode to get into or out of when you wish "
+"to fill out a form. Instead, simply navigate to each field whose contents "
+"you wish to change, and interact with the widget as if it were in a dialog "
+"box."
+msgstr ""
+
+#: C/howto_forms.page:27(title)
+msgid "Navigating Amongst Form Fields"
+msgstr ""
+
+#: C/howto_forms.page:28(p)
+msgid "To navigate amongst form fields, you have several options:"
+msgstr ""
+
+#: C/howto_forms.page:33(p)
+msgid ""
+"Use <key>Tab</key> and <keyseq><key>Shift</key><key>Tab</key></keyseq>, to "
+"navigate amongst focusable objects, regardless of type."
+msgstr ""
+
+#: C/howto_forms.page:39(p)
+msgid ""
+"Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
+"structural navigation commands for forms</link>."
+msgstr ""
+
+#: C/howto_forms.page:45(p)
+msgid ""
+"Depending on the form, you may also be able to use <app>Orca</app>'s caret "
+"navigation commands, in other words, the arrow keys when <app>Orca</app> is "
+"controlling the caret."
+msgstr ""
+
+#: C/howto_forms.page:54(title)
+msgid "Exiting Form Fields"
+msgstr ""
+
+#: C/howto_forms.page:55(p)
+msgid ""
+"Because there is no special mode in <app>Orca</app> for interacting with "
+"forms, the most frequently-asked question is how to exit a focused form "
+"field. For this, too, you have several options:"
+msgstr ""
+
+#: C/howto_forms.page:62(p)
+msgid ""
+"Use <key>Tab</key>/<keyseq><key>Shift</key><key>Tab</key></keyseq> if you "
+"wish to leave the currenty-focused form field and move to the next/previous "
+"focusable object, regardless of what that object happens to be."
+msgstr ""
+
+#: C/howto_forms.page:70(p)
+msgid ""
+"Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
+"structural navigation</link> to move to the next/previous form field: "
+"<keyseq><key>Orca Modifier</key><key>Tab</key></keyseq>/<keyseq><key>Orca "
+"Modifier</key><key>Shift</key><key>Tab</key></keyseq>."
+msgstr ""
+
+#: C/howto_forms.page:78(p)
+msgid ""
+"Use <app>Orca</app>'s commands for moving to the next/previous object or "
+"chunk of text: <keyseq><key>Orca Modifier</key><key>Right</key></keyseq>/"
+"<keyseq><key>Orca Modifier</key><key>Left</key></keyseq>."
+msgstr ""
+
+#: C/howto_forms.page:85(p)
+msgid ""
+"If you are not in a list or combo box, you can use caret navigation commands "
+"to arrow out of the form field, as long as <app>Orca</app> is controlling "
+"the caret."
+msgstr ""
+
+#: C/howto_flat_review.page:5(title)
+msgid "2. Flat Review"
+msgstr ""
+
+#: C/howto_flat_review.page:6(desc)
+msgid "Examining a window spatially"
+msgstr ""
+
+#: C/howto_flat_review.page:15(title) C/commands_flat_review.page:7(title)
+msgid "Flat Review"
+msgstr ""
+
+#: C/howto_flat_review.page:16(p)
+msgid ""
+"<app>Orca</app>'s Flat Review feature allows you to spatially review the "
+"contents, both text and widgets, of the active window. In this mode, "
+"<app>Orca</app> treats the window as if it were a two-dimensional sheet of "
+"text, eliminating any notion of widget hierarchy or other logical grouping "
+"within the window."
+msgstr ""
+
+#: C/howto_flat_review.page:23(p)
+msgid ""
+"The \"flattened\" contents, also known as the Flat Review context, can be "
+"<link xref=\"commands_flat_review\">navigated</link> by line, by word, by "
+"character, and by object. In addition, you can perform a left-click or right-"
+"click on the object being reviewed. Finally, you can use <link xref="
+"\"howto_orca_find\">Orca Find</link>, a Flat-Review-based feature to search "
+"the active window's contents."
+msgstr ""
+
+#: C/howto_flat_review.page:31(p)
+msgid ""
+"Because the Flat Review context is a spatial representation of the active "
+"window's contents, it is created when you first enter Flat Review and only "
+"contains those objects which are visible. As a result, you will not be able "
+"to use Flat Review to access items which are in the window but currently off-"
+"screen. In addition, if the window's contents change of their own accord, "
+"the Flat Review context will not automatically be updated. You can cause a "
+"new context to be built by toggling Flat Review off and back on."
+msgstr ""
+
+#: C/howto_flat_review.page:40(p)
+msgid ""
+"Finally, Flat Review by its nature is a mode that cannot be used at the same "
+"time that <app>Orca</app> is tracking focus. Thus if you are in Flat Review "
+"and then use the application's navigation commands to move the caret or to "
+"give focus to another object, you will automatically leave Flat Review."
+msgstr ""
+
+#: C/howto_documents.page:5(title)
+msgid "1. Documents"
+msgstr ""
+
+#: C/howto_documents.page:6(desc)
+msgid "Reading content"
+msgstr ""
+
+#: C/howto_documents.page:17(title)
+msgid "Documents"
+msgstr ""
+
+#: C/howto_documents.page:18(p)
+msgid ""
+"To read the contents of any document, use the application's built-in caret "
+"navigation mode. As you navigate within the text of the document, <app>Orca</"
+"app> will present your new location. As a result, you are likely already "
+"familiar with how to read a document using <app>Orca</app>. For instance:"
+msgstr ""
+
+#: C/howto_documents.page:26(p)
+msgid "Use <key>Left</key> and <key>Right</key> to move and read by character."
+msgstr ""
+
+#: C/howto_documents.page:31(p)
+msgid ""
+"Use <keyseq><key>Ctrl</key><key>Left</key></keyseq> and <keyseq><key>Ctrl</"
+"key><key>Right</key></keyseq> to move and read by word."
+msgstr ""
+
+#: C/howto_documents.page:37(p)
+msgid "Use <key>Up</key> and <key>Down</key> to move and read by line."
+msgstr ""
+
+#: C/howto_documents.page:42(p)
+msgid ""
+"Use <key>Shift</key> in combination with the above commands to select and "
+"unselect text."
+msgstr ""
+
+#: C/howto_documents.page:48(p)
+msgid ""
+"For a complete listing of GNOME's caret navigation commands, see the <link "
+"href=\"ghelp:gnome-help#a11y\">Universal Access Help</link>."
+msgstr ""
+
+#: C/howto_documents.page:52(p)
+msgid ""
+"In addition to reading a document by caret navigation, you may find it "
+"helpful to read, spell, and obtain the Unicode value for the current text. "
+"You can do these things through <app>Orca</app>'s <link xref="
+"\"howto_flat_review\">Flat Review feature</link>."
+msgstr ""
+
+#: C/howto_documents.page:58(p)
+msgid ""
+"Finally, in order to have <app>Orca</app> speak the entire document from "
+"your present location, use the SayAll command. It, along with a more "
+"complete listing of <app>Orca</app>'s commands for accessing document text, "
+"can be found in the <link xref=\"commands_reading\">Reading Commands</link> "
+"guide."
+msgstr ""
+
+#: C/howto_bookmarks.page:4(title)
+msgid "6. Bookmarks"
+msgstr ""
+
+#: C/howto_bookmarks.page:5(desc)
+msgid "Storing and retrieving objects"
+msgstr ""
+
+#: C/howto_bookmarks.page:14(title) C/commands_bookmarks.page:7(title)
+msgid "Bookmarks"
+msgstr ""
+
+#: C/howto_bookmarks.page:15(p)
+msgid ""
+"<app>Orca</app>'s Bookmarks support allows you to indicate that an object is "
+"of interest. It includes the following features:"
+msgstr ""
+
+#: C/howto_bookmarks.page:21(p)
+msgid ""
+"You are not limited to a single object: You can set up to six bookmarks per "
+"environment. You can also save bookmarks so that they will persist from Orca "
+"session to Orca session."
+msgstr ""
+
+#: C/howto_bookmarks.page:28(p)
+msgid ""
+"Having set a bookmark you can navigate to it later, and do so regardless of "
+"whether or not you have chosen to permanently save the bookmarks associated "
+"with your current environment. Navigation can be based on the number of the "
+"bookmark should you wish to jump directly to a specific item. Alternatively, "
+"you can navigate to the next or previous bookmark just like you can a <link "
+"xref=\"howto_structural_navigation\">Structural Navigation</link> object."
+msgstr ""
+
+#: C/howto_bookmarks.page:39(p)
+msgid ""
+"Bookmarkable objects can be widgets within an application or objects on the "
+"web page you are reading. Which environment you are in determines what "
+"happens as you navigate amongst bookmarks: If you are in web content, the "
+"caret will be moved to the bookmark so that you can continue reading; "
+"otherwise, <link xref=\"howto_flat_review\">Flat Review</link> will be "
+"activated with the bookmark becoming the current review item."
+msgstr ""
+
+#: C/howto_bookmarks.page:50(p)
+msgid ""
+"Finally, there is Where Am I information for bookmarks which lets you know "
+"where the specified bookmark is relative to your current location."
+msgstr ""
+
+#: C/howto_bookmarks.page:56(p)
+msgid ""
+"The specific keybindings associated with each of the above tasks can be "
+"found in <link xref=\"commands_bookmarks\">Bookmark Commands</link>."
+msgstr ""
+
+#: C/commands_where_am_i.page:6(title)
+msgid "3. Where Am I"
+msgstr ""
+
+#: C/commands_where_am_i.page:7(title)
+msgid "Where Am I"
+msgstr ""
+
+#: C/commands_where_am_i.page:8(desc)
+msgid "Commands to learn about your location"
+msgstr ""
+
+#: C/commands_where_am_i.page:19(title)
+msgid "Where Am I Commands"
+msgstr ""
+
+#: C/commands_where_am_i.page:20(p)
+msgid ""
+"<app>Orca</app>'s Where Am I feature gives you context-sensitive details "
+"about your present location. For instance, in tables, Where Am I will give "
+"you details about the table cell you are in, but in text it will present the "
+"current line along with any text which happens to be selected. The full list "
+"of what you can expect <app>Orca</app> to present can be found in the <link "
+"xref=\"howto_whereami\">Introduction to Where Am I</link>."
+msgstr ""
+
+#: C/commands_where_am_i.page:28(p)
+msgid "<app>Orca</app> provides the following Where Am I commands:"
+msgstr ""
+
+#: C/commands_where_am_i.page:31(p) C/commands_reading.page:189(p)
+msgid "Perform basic where am I:"
+msgstr ""
+
+#: C/commands_where_am_i.page:34(p) C/commands_reading.page:192(p)
+msgid "Desktop: <key>KP Enter</key>"
+msgstr ""
+
+#: C/commands_where_am_i.page:37(p) C/commands_reading.page:197(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>"
+msgstr ""
+
+#: C/commands_where_am_i.page:42(p) C/commands_reading.page:204(p)
+msgid "Perform detailed where am I:"
+msgstr ""
+
+#: C/commands_where_am_i.page:45(p) C/commands_reading.page:207(p)
+msgid "Desktop: <key>KP Enter</key> (double-clicked)"
+msgstr ""
+
+#: C/commands_where_am_i.page:48(p) C/commands_reading.page:212(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq> (double-"
+"clicked)"
+msgstr ""
+
+#: C/commands_where_am_i.page:56(p)
+msgid ""
+"In addition to the dedicated Where Am I commands, <app>Orca</app> has two "
+"additional commands related to obtaining your present location:"
+msgstr ""
+
+#: C/commands_where_am_i.page:62(p)
+msgid "Present the title bar:"
+msgstr ""
+
+#: C/commands_where_am_i.page:65(p)
+msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>"
+msgstr ""
+
+#: C/commands_where_am_i.page:70(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq>"
+msgstr ""
+
+#: C/commands_where_am_i.page:77(p)
+msgid "Present the status bar:"
+msgstr ""
+
+#: C/commands_where_am_i.page:80(p)
+msgid ""
+"Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq> "
+"(double-clicked)"
+msgstr ""
+
+#: C/commands_where_am_i.page:86(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq> (double-"
+"clicked)"
+msgstr ""
+
+#: C/commands_time_date_notifications.page:6(title)
+msgid "4. Time, Date, and Notification"
+msgstr ""
+
+#: C/commands_time_date_notifications.page:7(title)
+msgid "Time, Date, and Notification"
+msgstr ""
+
+#: C/commands_time_date_notifications.page:8(desc)
+msgid "Commands for the getting the time, date, and notification messages"
+msgstr ""
+
+#: C/commands_time_date_notifications.page:19(title)
+msgid "Time, Date, and Notification Commands"
+msgstr ""
+
+#: C/commands_time_date_notifications.page:20(p)
+msgid ""
+"The following commands can be used to obtain the current time and date and "
+"to review previously-displayed notification messages:"
+msgstr ""
+
+#: C/commands_time_date_notifications.page:25(title)
+msgid "Obtaining the Time and Date"
+msgstr ""
+
+#: C/commands_time_date_notifications.page:28(p)
+msgid "Present the time: <keyseq><key>Orca Modifier</key><key>T</key></keyseq>"
+msgstr ""
+
+#: C/commands_time_date_notifications.page:33(p)
+msgid ""
+"Present the date: <keyseq><key>Orca Modifier</key><key>T</key></keyseq> "
+"(double-clicked)"
+msgstr ""
+
+#: C/commands_time_date_notifications.page:41(title)
+msgid "Reviewing Notification Messages"
+msgstr ""
+
+#: C/commands_time_date_notifications.page:42(p)
+msgid ""
+"Orca has three unbound commands for accessing previously-displayed <link "
+"xref=\"howto_notifications\">notification messages</link>. Please see <link "
+"xref=\"howto_key_bindings\">Modifying Keybindings</link> for information on "
+"how to bind these commands to keystrokes."
+msgstr ""
+
+#: C/commands_time_date_notifications.page:50(p)
+msgid "Present the last (most recent) notification message: (unbound)"
+msgstr ""
+
+#: C/commands_time_date_notifications.page:53(p)
+msgid "Present the previous notification message: (unbound)"
+msgstr ""
+
+#: C/commands_time_date_notifications.page:56(p)
+msgid "Present list of all notification messages: (unbound)"
+msgstr ""
+
+#: C/commands_table.page:6(title)
+msgid "3. Table Navigation"
+msgstr ""
+
+#: C/commands_table.page:8(desc)
+msgid "Commands for accessing tabular information"
+msgstr ""
+
+#: C/commands_table.page:19(title)
+msgid "Table Navigation Commands"
+msgstr ""
+
+#: C/commands_table.page:20(p)
+msgid ""
+"Orca's support for navigation by table cell is part of its <link xref="
+"\"commands_structural_navigation#tables\">Structural Navigation commands</"
+"link>. In addition you can:"
+msgstr ""
+
+#: C/commands_table.page:27(p)
+msgid ""
+"Set dynamic row headers to current column: <keyseq><key>Orca Modifier</"
+"key><key>C</key></keyseq>"
+msgstr ""
+
+#: C/commands_table.page:33(p)
+msgid ""
+"Set dynamic column headers to current row: <keyseq><key>Orca Modifier</"
+"key><key>R</key></keyseq>"
+msgstr ""
+
+#: C/commands_table.page:39(p)
+msgid ""
+"Clear dynamic row headers: <keyseq><key>Orca Modifier</key><key>C</key></"
+"keyseq> (double-clicked)"
+msgstr ""
+
+#: C/commands_table.page:45(p)
+msgid ""
+"Clear dynamic column headers: <keyseq><key>Orca Modifier</key><key>R</key></"
+"keyseq> (double-clicked)"
+msgstr ""
+
+#: C/commands_table.page:51(p) C/commands_speech_settings.page:34(p)
+msgid ""
+"Toggle between cell and row reading in a table: <keyseq><key>Orca Modifier</"
+"key><key>F11</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:6(title)
+msgid "2. Structural Navigation"
+msgstr ""
+
+#: C/commands_structural_navigation.page:8(desc)
+msgid "Commands for navigating by elements"
+msgstr ""
+
+#: C/commands_structural_navigation.page:19(title)
+msgid "Structural Navigation Commands"
+msgstr ""
+
+#: C/commands_structural_navigation.page:20(p)
+msgid ""
+"The following commands can be used to navigate by headings, links, and other "
+"elements found in applications for which <app>Orca</app> provides structural "
+"navigation support."
+msgstr ""
+
+#: C/commands_structural_navigation.page:27(p)
+msgid ""
+"Enable/disable Structural Navigation keys: <keyseq><key>Orca Modifier</"
+"key><key>Z</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:34(title)
+msgid "Headings"
+msgstr ""
+
+#: C/commands_structural_navigation.page:37(p)
+msgid ""
+"Next and previous heading: <keyseq><key>H</key></keyseq> and "
+"<keyseq><key>Shift</key><key>H</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:44(p)
+msgid ""
+"Next and previous heading at level 1: <keyseq><key>1</key></keyseq> and "
+"<keyseq><key>Shift</key><key>1</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:51(p)
+msgid ""
+"Next and previous heading at level 2: <keyseq><key>2</key></keyseq> and "
+"<keyseq><key>Shift</key><key>2</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:58(p)
+msgid ""
+"Next and previous heading at level 3: <keyseq><key>3</key></keyseq> and "
+"<keyseq><key>Shift</key><key>3</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:65(p)
+msgid ""
+"Next and previous heading at level 4: <keyseq><key>4</key></keyseq> and "
+"<keyseq><key>Shift</key><key>4</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:72(p)
+msgid ""
+"Next and previous heading at level 5: <keyseq><key>5</key></keyseq> and "
+"<keyseq><key>Shift</key><key>5</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:79(p)
+msgid ""
+"Next and previous heading at level 6: <keyseq><key>6</key></keyseq> and "
+"<keyseq><key>Shift</key><key>6</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:88(title)
+msgid "Forms"
+msgstr ""
+
+#: C/commands_structural_navigation.page:91(p)
+msgid ""
+"Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
+"key></keyseq> and <keyseq><key>Orca Modifier</key><key>Shift</key><key>Tab</"
+"key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:98(p)
+msgid ""
+"Next and previous button: <keyseq><key>B</key></keyseq> and "
+"<keyseq><key>Shift</key><key>B</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:105(p)
+msgid ""
+"Next and previous combo box: <keyseq><key>C</key></keyseq> and "
+"<keyseq><key>Shift</key><key>C</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:112(p)
+msgid ""
+"Next and previous entry: <keyseq><key>E</key></keyseq> and "
+"<keyseq><key>Shift</key><key>E</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:119(p)
+msgid ""
+"Next and previous radio button: <keyseq><key>R</key></keyseq> and "
+"<keyseq><key>Shift</key><key>R</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:126(p)
+msgid ""
+"Next and previous checkbox: <keyseq><key>X</key></keyseq> and "
+"<keyseq><key>Shift</key><key>X</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:133(p)
+msgid ""
+"Next and previous object (to exit field): <keyseq><key>Orca Modifier</"
+"key><key>Right</key></keyseq> and <keyseq><key>Orca Modifier</key><key>Left</"
+"key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:145(p)
+msgid ""
+"Next and previous unvisited link: <keyseq><key>U</key></keyseq> and "
+"<keyseq><key>Shift</key><key>U</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:152(p)
+msgid ""
+"Next and previous visited link: <keyseq><key>V</key></keyseq> and "
+"<keyseq><key>Shift</key><key>V</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:161(title)
+msgid "Lists"
+msgstr ""
+
+#: C/commands_structural_navigation.page:164(p)
+msgid ""
+"Next and previous list: <keyseq><key>L</key></keyseq> and "
+"<keyseq><key>Shift</key><key>L</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:171(p)
+msgid ""
+"Next and previous list item: <keyseq><key>I</key></keyseq> and "
+"<keyseq><key>Shift</key><key>I</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:183(p)
+msgid ""
+"Next and previous table: <keyseq><key>T</key></keyseq> and "
+"<keyseq><key>Shift</key><key>T</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:190(p)
+msgid ""
+"Cell on left: <keyseq><key>Alt</key><key>Shift</key><key>Left</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:196(p)
+msgid ""
+"Cell on right: <keyseq><key>Alt</key><key>Shift</key><key>Right</key></"
+"keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:202(p)
+msgid ""
+"Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:208(p)
+msgid ""
+"Cell below: <keyseq><key>Alt</key><key>Shift</key><key>Down</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:214(p)
+msgid ""
+"First cell in table: <keyseq><key>Alt</key><key>Shift</key><key>Home</key></"
+"keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:220(p)
+msgid ""
+"Last cell in table: <keyseq><key>Alt</key><key>Shift</key><key>End</key></"
+"keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:228(title)
+msgid "Text Blocks"
+msgstr ""
+
+#: C/commands_structural_navigation.page:231(p)
+msgid ""
+"Next and previous paragraph: <keyseq><key>P</key></keyseq> and "
+"<keyseq><key>Shift</key><key>P</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:238(p)
+msgid ""
+"Next and previous blockquote: <keyseq><key>Q</key></keyseq> and "
+"<keyseq><key>Shift</key><key>Q</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:245(p)
+msgid ""
+"Next and previous \"large object\": <keyseq><key>O</key></keyseq> and "
+"<keyseq><key>Shift</key><key>O</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:254(title)
+msgid "Other Elements"
+msgstr ""
+
+#: C/commands_structural_navigation.page:257(p)
+msgid ""
+"Next and previous landmark: <keyseq><key>M</key></keyseq> and "
+"<keyseq><key>Shift</key><key>M</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:264(p)
+msgid ""
+"Next and previous separator: <keyseq><key>S</key></keyseq> and "
+"<keyseq><key>Shift</key><key>S</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:271(p)
+msgid ""
+"Next and previous anchor: <keyseq><key>A</key></keyseq> and "
+"<keyseq><key>Shift</key><key>A</key></keyseq>"
+msgstr ""
+
+#: C/commands_speech_settings.page:6(title)
+msgid "2. Speech Settings"
+msgstr ""
+
+#: C/commands_speech_settings.page:8(desc)
+msgid "Commands for customizing <app>Orca</app>'s output"
+msgstr ""
+
+#: C/commands_speech_settings.page:19(title)
+msgid "Speech Settings Commands"
+msgstr ""
+
+#: C/commands_speech_settings.page:20(p)
+msgid ""
+"The following commands can be used to customize <app>Orca</app>'s speech "
+"output. You will notice that a number of these commands are \"unbound.\" "
+"Please see <link xref=\"howto_key_bindings\">Modifying Keybindings</link> "
+"for information on how to bind these commands to keystrokes."
+msgstr ""
+
+#: C/commands_speech_settings.page:29(p)
+msgid ""
+"Enable/disable speech: <keyseq><key>Orca Modifier</key><key>S</key></keyseq>"
+msgstr ""
+
+#: C/commands_speech_settings.page:40(p)
+msgid "Enable/disable speaking of indentation and justification: (Unbound)"
+msgstr ""
+
+#: C/commands_speech_settings.page:45(p)
+msgid "Cycle to the next spoken punctuation level: (Unbound)"
+msgstr ""
+
+#: C/commands_speech_settings.page:48(p)
+msgid "Cycle to the next key echo level: (Unbound)"
+msgstr ""
+
+#: C/commands_speech_settings.page:51(p)
+msgid "Decrease the rate: (Unbound)"
+msgstr ""
+
+#: C/commands_speech_settings.page:54(p)
+msgid "Increase the rate: (Unbound)"
+msgstr ""
+
+#: C/commands_speech_settings.page:57(p)
+msgid "Decrease the pitch: (Unbound)"
+msgstr ""
+
+#: C/commands_speech_settings.page:60(p)
+msgid "Increase the pitch: (Unbound)"
+msgstr ""
+
+#: C/commands_reading.page:8(title)
+msgid "1. Reading"
+msgstr ""
+
+#: C/commands_reading.page:9(title)
+msgid "Reading"
+msgstr ""
+
+#: C/commands_reading.page:10(desc)
+msgid "Commands for accessing document text"
+msgstr ""
+
+#: C/commands_reading.page:21(title)
+msgid "Reading Commands"
+msgstr ""
+
+#: C/commands_reading.page:22(p)
+msgid ""
+"In addition to the caret navigation commands which are part of GNOME, "
+"<app>Orca</app> provides a number of commands which you can use to read a "
+"document."
+msgstr ""
+
+#: C/commands_reading.page:28(p)
+msgid ""
+"In the lists that follow, you will see several references to \"KP\". All \"KP"
+"\" keys are located on the numeric keypad. You will also notice that there "
+"are different keystrokes depending upon whether you are using a desktop or a "
+"laptop -- or more accurately, whether you are using <app>Orca</app>'s "
+"Desktop keyboard layout or its Laptop keyboard layout. For additional "
+"information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
+"Layout</link> topic."
+msgstr ""
+
+#: C/commands_reading.page:39(title)
+msgid "Reading Your Current Location"
+msgstr ""
+
+#: C/commands_reading.page:40(p)
+msgid ""
+"The following <app>Orca</app><link xref=\"commands_flat_review\">Flat Review "
+"Commands</link> can be used to read your current location:"
+msgstr ""
+
+#: C/commands_reading.page:46(p)
+msgid "Read the current line:"
+msgstr ""
+
+#: C/commands_reading.page:49(p) C/commands_flat_review.page:46(p)
+msgid "Desktop: <keyseq><key>KP 8</key></keyseq>"
+msgstr ""
+
+#: C/commands_reading.page:54(p) C/commands_flat_review.page:47(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq>"
+msgstr ""
+
+#: C/commands_reading.page:61(p)
+msgid "Read the current word:"
+msgstr ""
+
+#: C/commands_reading.page:64(p) C/commands_flat_review.page:93(p)
+msgid "Desktop: <keyseq><key>KP 5</key></keyseq>"
+msgstr ""
+
+#: C/commands_reading.page:69(p) C/commands_flat_review.page:94(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq>"
+msgstr ""
+
+#: C/commands_reading.page:76(p)
+msgid "Spell the current word:"
+msgstr ""
+
+#: C/commands_reading.page:79(p) C/commands_flat_review.page:99(p)
+msgid "Desktop: <keyseq><key>KP 5</key></keyseq> (double-clicked)"
+msgstr ""
+
+#: C/commands_reading.page:84(p) C/commands_flat_review.page:100(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq> (double-"
+"clicked)"
+msgstr ""
+
+#: C/commands_reading.page:92(p)
+msgid "Phonetically spell the current word:"
+msgstr ""
+
+#: C/commands_reading.page:95(p) C/commands_flat_review.page:105(p)
+msgid "Desktop: <keyseq><key>KP 5</key></keyseq> (triple-clicked)"
+msgstr ""
+
+#: C/commands_reading.page:100(p) C/commands_flat_review.page:106(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq> (triple-"
+"clicked)"
+msgstr ""
+
+#: C/commands_reading.page:108(p)
+msgid "Read the current character:"
+msgstr ""
+
+#: C/commands_reading.page:111(p) C/commands_flat_review.page:134(p)
+msgid "Desktop: <keyseq><key>KP 2</key></keyseq>"
+msgstr ""
+
+#: C/commands_reading.page:116(p) C/commands_flat_review.page:135(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq>"
+msgstr ""
+
+#: C/commands_reading.page:123(p)
+msgid "Phonetically speak the current character:"
+msgstr ""
+
+#: C/commands_reading.page:126(p) C/commands_flat_review.page:140(p)
+msgid "Desktop: <keyseq><key>KP 2</key></keyseq> (double-clicked)"
+msgstr ""
+
+#: C/commands_reading.page:131(p) C/commands_flat_review.page:141(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (double-"
+"clicked)"
+msgstr ""
+
+#: C/commands_reading.page:139(p)
+msgid "Speak the unicode value of current character:"
+msgstr ""
+
+#: C/commands_reading.page:142(p) C/commands_flat_review.page:146(p)
+msgid "Desktop: <keyseq><key>KP 2</key></keyseq> (triple-clicked)"
+msgstr ""
+
+#: C/commands_reading.page:147(p) C/commands_flat_review.page:147(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (triple-"
+"clicked)"
+msgstr ""
+
+#: C/commands_reading.page:157(title)
+msgid "Say All"
+msgstr ""
+
+#: C/commands_reading.page:158(p)
+msgid ""
+"Orca's Say All command will cause <app>Orca</app> to speak the entire "
+"document beginning from your current location."
+msgstr ""
+
+#: C/commands_reading.page:164(p)
+msgid "Desktop: <key>KP Plus</key>"
+msgstr ""
+
+#: C/commands_reading.page:167(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Semicolon</key></keyseq>"
+msgstr ""
+
+#: C/commands_reading.page:174(title)
+msgid "Text Attributes and Selected Text"
+msgstr ""
+
+#: C/commands_reading.page:175(p)
+msgid ""
+"Orca has a dedicated command for obtaining the attributes of the text at the "
+"caret location. In addition, if you use <app>Orca</app>'s Where Am I "
+"commands from within a text object in which text has been selected, "
+"<app>Orca</app> will announce the selected text."
+msgstr ""
+
+#: C/commands_reading.page:183(p)
+msgid ""
+"Present the text attributes: <keyseq><key>Orca Modifier</key><key>F</key></"
+"keyseq>"
+msgstr ""
+
+#: C/commands.page:5(title)
+msgid "4. <app>Orca</app>'s Commands"
+msgstr "4. <app>Orca</app> 命令"
+
+#: C/commands.page:6(title)
+msgid "Commands"
+msgstr "命令"
+
+#: C/commands.page:15(title)
+msgid "<app>Orca</app>'s Commands"
+msgstr "<app>Orca</app> 的命令"
+
+#: C/commands.page:20(title)
+msgid "Speech and Braille"
+msgstr ""
+
+#: C/commands.page:23(title)
+msgid "Reading Web Pages and Other Documents"
+msgstr "阅读网页和其他文档"
+
+#: C/commands.page:29(title)
+msgid "Accessing Dynamic Information"
+msgstr "访问动态信息"
+
+#: C/commands.page:32(title)
+msgid "Troubleshooting"
+msgstr "故障排除"
+
+#: C/commands_mouse.page:5(title)
+msgid "3. Mouse/Pointer-Related"
+msgstr ""
+
+#: C/commands_mouse.page:6(title)
+msgid "Mouse/Pointer-Related"
+msgstr ""
+
+#: C/commands_mouse.page:9(desc)
+msgid "Commands for manipulating the pointer"
+msgstr ""
+
+#: C/commands_mouse.page:20(title)
+msgid "Mouse/Pointer-Related Commands"
+msgstr ""
+
+#: C/commands_mouse.page:21(p)
+msgid ""
+"<app>Orca</app> provides several commands which can be used to manipulate "
+"the mouse pointer and read the contents under it. All of the commands are "
+"\"bound\" to keystrokes with one exception: Toggling Mouse Review Mode. "
+"Please see <link xref=\"howto_key_bindings\">Modifying Keybindings</link> "
+"for information on how to bind this command to a keystroke."
+msgstr ""
+
+#: C/commands_mouse.page:29(p)
+msgid ""
+"In the list that follows, you will see several references to \"KP\". All \"KP"
+"\" keys are located on the numeric keypad. You will also notice that there "
+"are different keystrokes depending upon whether you are using a desktop or a "
+"laptop -- or more accurately, whether you are using <app>Orca</app>'s "
+"Desktop keyboard layout or its Laptop keyboard layout. For additional "
+"information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
+"Layout</link> topic."
+msgstr ""
+
+#: C/commands_mouse.page:41(p)
+msgid "Left-click on current item:"
+msgstr ""
+
+#: C/commands_mouse.page:43(p)
+msgid "Desktop: <keyseq><key>KP Divide</key></keyseq>"
+msgstr ""
+
+#: C/commands_mouse.page:44(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>7</key></keyseq>"
+msgstr ""
+
+#: C/commands_mouse.page:48(p)
+msgid "Right-click on current item:"
+msgstr ""
+
+#: C/commands_mouse.page:50(p)
+msgid "Desktop: <keyseq><key>KP Multiply</key></keyseq>"
+msgstr ""
+
+#: C/commands_mouse.page:51(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>8</key></keyseq>"
+msgstr ""
+
+#: C/commands_mouse.page:55(p)
+msgid "Route pointer to current item:"
+msgstr ""
+
+#: C/commands_mouse.page:57(p)
+msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Divide</key></keyseq>"
+msgstr ""
+
+#: C/commands_mouse.page:58(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>9</key></keyseq>"
+msgstr ""
+
+#: C/commands_mouse.page:62(p)
+msgid "Move focus into or away from the current mouse over (web only):"
+msgstr ""
+
+#: C/commands_mouse.page:64(p)
+msgid ""
+"Desktop: <keyseq><key>Orca Modifier</key><key>KP Multiply</key></keyseq>"
+msgstr ""
+
+#: C/commands_mouse.page:65(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>0</key></keyseq>"
+msgstr ""
+
+#: C/commands_mouse.page:69(p)
+msgid "Enable/disable mouse review mode: (Unbound)"
+msgstr ""
+
+#: C/commands_live_regions.page:6(title)
+msgid "1. Live Region"
+msgstr ""
+
+#: C/commands_live_regions.page:8(desc)
+msgid "Commands for accessing web live regions"
+msgstr ""
+
+#: C/commands_live_regions.page:20(title)
+msgid "Live Region Commands"
+msgstr ""
+
+#: C/commands_live_regions.page:23(p)
+msgid ""
+"Monitor live regions: <keyseq><key>Orca Modifier</key><key>Shift</"
+"key><key>Backslash</key></keyseq>"
+msgstr ""
+
+#: C/commands_live_regions.page:29(p)
+msgid "Advance live region politeness setting: <key>Backslash</key>"
+msgstr ""
+
+#: C/commands_live_regions.page:34(p)
+msgid ""
+"Set default politeness level to off: <keyseq><key>Shift</key><key>Backslash</"
+"key></keyseq>"
+msgstr ""
+
+#: C/commands_live_regions.page:40(p)
+msgid ""
+"Go to next/previous live region: <keyseq><key>D</key></keyseq>/"
+"<keyseq><key>Shift</key><key>D</key></keyseq>"
+msgstr ""
+
+#: C/commands_live_regions.page:46(p)
+msgid ""
+"Go to last live region which made an announcement: <keyseq><key>Y</key></"
+"keyseq>"
+msgstr ""
+
+#: C/commands_live_regions.page:52(p)
+msgid ""
+"Review live region announcements: <keyseq><key>Orca Modifier</key><key>F1</"
+"key></keyseq> through <key>F9</key>"
+msgstr ""
+
+#: C/commands_flat_review.page:6(title)
+msgid "1. Flat Review"
+msgstr "1. 平铺浏览"
+
+#: C/commands_flat_review.page:8(desc)
+msgid "Commands for spatially reviewing windows"
+msgstr ""
+
+#: C/commands_flat_review.page:19(title)
+msgid "Flat Review Commands"
+msgstr "平铺浏览命令"
+
+#: C/commands_flat_review.page:20(p)
+msgid ""
+"Orca's <link xref=\"howto_flat_review\">Flat Review</link> commands are "
+"designed for spatially reviewing elements displayed on the screen. They also "
+"provide a means for reading the current line, word, and character when "
+"navigating in the text of a document."
+msgstr ""
+
+#: C/commands_flat_review.page:27(title)
+msgid "Commands for Reviewing by Line"
+msgstr "逐行浏览命令"
+
+#: C/commands_flat_review.page:30(p)
+msgid "First line (The \"home\" position):"
+msgstr "第一行　(＂主目录＂位置)："
+
+#: C/commands_flat_review.page:32(p)
+msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 7</key></keyseq>"
+msgstr "桌面：<keyseq><key>Orca 修饰键</key><key>KP 7</key></keyseq>"
+
+#: C/commands_flat_review.page:33(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>U</key></keyseq>"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>Ctrl</key><key>U</key></keyseq>"
+
+#: C/commands_flat_review.page:37(p)
+msgid "Previous line:"
+msgstr "上一行："
+
+#: C/commands_flat_review.page:39(p)
+msgid "Desktop: <keyseq><key>KP 7</key></keyseq>"
+msgstr "桌面：<keyseq><key>KP 7</key></keyseq>"
+
+#: C/commands_flat_review.page:40(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>U</key></keyseq>"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>U</key></keyseq>"
+
+#: C/commands_flat_review.page:44(p)
+msgid "Current line:"
+msgstr "当前行："
+
+#: C/commands_flat_review.page:50(p)
+msgid "Spell current line:"
+msgstr ""
+
+#: C/commands_flat_review.page:52(p)
+msgid "Desktop: <keyseq><key>KP 8</key></keyseq> (double-clicked)"
+msgstr "桌面：<keyseq><key>KP 8</key></keyseq>(双击)"
+
+#: C/commands_flat_review.page:53(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq> (double-"
+"clicked)"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>I</key></keyseq>(双击)"
+
+#: C/commands_flat_review.page:56(p)
+msgid "Phonetically spell current line:"
+msgstr ""
+
+#: C/commands_flat_review.page:58(p)
+msgid "Desktop: <keyseq><key>KP 8</key></keyseq> (triple-clicked)"
+msgstr "桌面：<keyseq><key>KP 8</key></keyseq>(三击)"
+
+#: C/commands_flat_review.page:59(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq> (triple-"
+"clicked)"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>I</key></keyseq>(三击)"
+
+#: C/commands_flat_review.page:62(p)
+msgid "Next line:"
+msgstr ""
+
+#: C/commands_flat_review.page:64(p)
+msgid "Desktop: <keyseq><key>KP 9</key></keyseq>"
+msgstr "桌面：<keyseq><key>KP 9</key></keyseq>"
+
+#: C/commands_flat_review.page:65(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>O</key></keyseq>"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>O</key></keyseq>"
+
+#: C/commands_flat_review.page:68(p)
+msgid "Last line (The \"end\" position):"
+msgstr ""
+
+#: C/commands_flat_review.page:70(p)
+msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 9</key></keyseq>"
+msgstr "桌面：<keyseq><key>Orca 修饰键</key><key>KP 9</key></keyseq>"
+
+#: C/commands_flat_review.page:71(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>O</key></keyseq>"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>Ctrl</key><key>O</key></keyseq>"
+
+#: C/commands_flat_review.page:77(title)
+msgid "Commands for Reviewing by Word"
+msgstr ""
+
+#: C/commands_flat_review.page:79(p)
+msgid "Word above:"
+msgstr ""
+
+#: C/commands_flat_review.page:81(p)
+msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 4</key></keyseq>"
+msgstr "桌面：<keyseq><key>Orca 修饰键</key><key>KP 4</key></keyseq>"
+
+#: C/commands_flat_review.page:82(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>J</key></keyseq>"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>Ctrl</key><key>J</key></keyseq>"
+
+#: C/commands_flat_review.page:85(p)
+msgid "Previous word:"
+msgstr ""
+
+#: C/commands_flat_review.page:87(p)
+msgid "Desktop: <keyseq><key>KP 4</key></keyseq>"
+msgstr "桌面：<keyseq><key>KP 4</key></keyseq>"
+
+#: C/commands_flat_review.page:88(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>J</key></keyseq>"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>J</key></keyseq>"
+
+#: C/commands_flat_review.page:91(p)
+msgid "Current word:"
+msgstr ""
+
+#: C/commands_flat_review.page:97(p)
+msgid "Spell current word:"
+msgstr ""
+
+#: C/commands_flat_review.page:103(p)
+msgid "Phonetically spell current word:"
+msgstr ""
+
+#: C/commands_flat_review.page:109(p)
+msgid "Next word:"
+msgstr ""
+
+#: C/commands_flat_review.page:111(p)
+msgid "Desktop: <keyseq><key>KP 6</key></keyseq>"
+msgstr "桌面：<keyseq><key>KP 6</key></keyseq>"
+
+#: C/commands_flat_review.page:112(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>L</key></keyseq>"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>L</key></keyseq>"
+
+#: C/commands_flat_review.page:115(p)
+msgid "Word below:"
+msgstr ""
+
+#: C/commands_flat_review.page:117(p)
+msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 6</key></keyseq>"
+msgstr "桌面：<keyseq><key>Orca 修饰键</key><key>KP 6</key></keyseq>"
+
+#: C/commands_flat_review.page:118(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>L</key></keyseq>"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>Ctrl</key><key>L</key></keyseq>"
+
+#: C/commands_flat_review.page:124(title)
+msgid "Commands for Reviewing by Character"
+msgstr ""
+
+#: C/commands_flat_review.page:126(p)
+msgid "Previous character:"
+msgstr ""
+
+#: C/commands_flat_review.page:128(p)
+msgid "Desktop: <keyseq><key>KP 1</key></keyseq>"
+msgstr "桌面：<keyseq><key>KP 1</key></keyseq>"
+
+#: C/commands_flat_review.page:129(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>M</key></keyseq>"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>M</key></keyseq>"
+
+#: C/commands_flat_review.page:132(p)
+msgid "Current character:"
+msgstr ""
+
+#: C/commands_flat_review.page:138(p)
+msgid "Phonetically speak current character:"
+msgstr ""
+
+#: C/commands_flat_review.page:144(p)
+msgid "Speak Unicode value of current character:"
+msgstr ""
+
+#: C/commands_flat_review.page:150(p)
+msgid "Next character:"
+msgstr ""
+
+#: C/commands_flat_review.page:152(p)
+msgid "Desktop: <keyseq><key>KP 3</key></keyseq>"
+msgstr "桌面：<keyseq><key>KP 3</key></keyseq>"
+
+#: C/commands_flat_review.page:153(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Period</key></keyseq>"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>Period</key></keyseq>"
+
+#: C/commands_flat_review.page:156(p)
+msgid "Last character on current line:"
+msgstr ""
+
+#: C/commands_flat_review.page:158(p)
+msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 1</key></keyseq>"
+msgstr "桌面：<keyseq><key>Orca 修饰键</key><key>KP 1</key></keyseq>"
+
+#: C/commands_flat_review.page:159(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>M</key></keyseq>"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>Ctrl</key><key>M</key></keyseq>"
+
+#: C/commands_flat_review.page:165(title)
+msgid "Additional Commands"
+msgstr "附加命令"
+
+#: C/commands_flat_review.page:167(p)
+msgid "Toggle flat review (refreshes the flat review context):"
+msgstr ""
+
+#: C/commands_flat_review.page:169(p)
+msgid ""
+"Desktop: <keyseq><key>Orca Modifier</key><key>KP Subtract</key></keyseq>"
+msgstr "桌面：<keyseq><key>Orca 修饰键</key><key>KP Subtract</key></keyseq>"
+
+#: C/commands_flat_review.page:170(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>P</key></keyseq>"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>P</key></keyseq>"
+
+#: C/commands_flat_review.page:173(p)
+msgid "Review current item/widget:"
+msgstr ""
+
+#: C/commands_flat_review.page:175(p)
+msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 5</key></keyseq>"
+msgstr "桌面：<keyseq><key>Orca 修饰键</key><key>KP 5</key></keyseq>"
+
+#: C/commands_flat_review.page:176(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>K</key></keyseq>"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>Ctrl</key><key>K</key></keyseq>"
+
+#: C/commands_find.page:6(title)
+msgid "2. Orca Find"
+msgstr "2. Orca 搜索"
+
+#: C/commands_find.page:8(desc)
+msgid "Commands for searching window contents"
+msgstr ""
+
+#: C/commands_find.page:19(title)
+msgid "Orca Find Commands"
+msgstr "Orca 搜索命令"
+
+#: C/commands_find.page:20(p)
+msgid ""
+"<app>Orca</app>'s <link xref=\"howto_orca_find\">Find feature</link> allows "
+"you to search the <link xref=\"howto_flat_review\">Flat Review</link> "
+"context for elements located within the current window."
+msgstr ""
+"<app>Orca</app> 的<link xref=\"howto_orca_find\">搜索功能</link>允许您搜索"
+"<link xref=\"howto_flat_review\">平铺浏览</link>内容，在当前窗口内定位元素。"
+
+#: C/commands_find.page:27(p)
+msgid "Open the <app>Orca</app> Find dialog:"
+msgstr "打开 <app>Orca</app> 搜索对话框："
+
+#: C/commands_find.page:38(p)
+msgid "Move flat review to the next instance of a string:"
+msgstr "将平铺浏览移至下一个字符："
+
+#: C/commands_find.page:41(p)
+msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Delete</key></keyseq>"
+msgstr "桌面：<keyseq><key>Orca 修饰键</key><key>KP Delete</key></keyseq>"
+
+#: C/commands_find.page:47(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>Right Bracket</key></keyseq>"
+msgstr "笔记本：<keyseq><key>Orca 修饰键</key><key>Right Bracket</key></keyseq>"
+
+#: C/commands_find.page:55(p)
+msgid "Move flat review to the previous instance of a string:"
+msgstr "将平铺浏览移至上一个字符："
+
+#: C/commands_find.page:58(p)
+msgid ""
+"Desktop: <keyseq><key>Orca Modifier</key><key>Shift</key><key>KP Delete</"
+"key></keyseq>"
+msgstr ""
+"桌面：<keyseq><key>Orca 修饰键</key><key>Shift</key><key>KP Delete</key></"
+"keyseq>"
+
+#: C/commands_find.page:66(p)
+msgid ""
+"Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>Right Bracket</"
+"key></keyseq>"
+msgstr ""
+"笔记本：<keyseq><key>Orca 修饰键</key><key>Ctrl</key><key>Right Bracket</"
+"key></keyseq>"
+
+#: C/commands_debugging.page:4(title)
+msgid "1. Debugging"
+msgstr "1. 调试"
+
+#: C/commands_debugging.page:5(title)
+msgid "Debugging"
+msgstr "调试"
+
+#: C/commands_debugging.page:6(desc)
+msgid "Commands for troubleshooting"
+msgstr "故障排除命令"
+
+#: C/commands_debugging.page:17(title)
+msgid "Debugging Commands"
+msgstr "调试命令"
+
+#: C/commands_debugging.page:20(p)
+msgid ""
+"Report information on the currently active script: <keyseq><key>Ctrl</"
+"key><key>Alt</key><key>Orca Modifier</key><key>Home</key></keyseq>"
+msgstr ""
+"报告当前活动脚本信息：<keyseq><key>Ctrl</key><key>Alt</key><key>Orca 修饰键</"
+"key><key>Home</key></keyseq>"
+
+#: C/commands_debugging.page:28(p)
+msgid ""
+"In order for the next three commands to be of use, <app>Orca</app> needs to "
+"be started from a virtual console or via gnome-terminal. Output is sent to "
+"the console only (i.e., it is not sent to speech or braille)."
+msgstr ""
+"为了使用下面的三个命令，<app>Orca</app> 需要从虚拟终端或 GNOME 终端启动才"
+"行。输出只发送到终端(例如，它不会发送到语音或布莱叶盲文)。"
+
+#: C/commands_debugging.page:36(p)
+msgid ""
+"Print a debug listing of all known applications to the console where "
+"<app>Orca</app> is running: <keyseq><key>Ctrl</key><key>Alt</key><key>Orca "
+"Modifier</key><key>End</key></keyseq>"
+msgstr ""
+"打印所有已知应用程序的调试清单到 <app>Orca</app> 运行所在的终端："
+"<keyseq><key>Ctrl</key><key>Alt</key><key>Orca 修饰键</key><key>End</key></"
+"keyseq>"
+
+#: C/commands_debugging.page:45(p)
+msgid ""
+"Print debug information about the ancestry of the object with focus: "
+"<keyseq><key>Ctrl</key><key>Alt</key><key>Orca Modifier</key><key>Page Up</"
+"key></keyseq>"
+msgstr ""
+"打印具有焦点对象的祖先的调试信息：<keyseq><key>Ctrl</key><key>Alt</"
+"key><key>Orca 修饰键</key><key>Page Up</key></keyseq>"
+
+#: C/commands_debugging.page:53(p)
+msgid ""
+"Print debug information about the hierarchy of the application with focus: "
+"<keyseq><key>Ctrl</key><key>Alt</key><key>Orca Modifier</key><key>Page Down</"
+"key></keyseq>"
+msgstr ""
+"打印有焦点的程序的调试信息：<keyseq><key>Ctrl</key><key>Alt</key><key>Orca 修"
+"饰键</key><key>Page Down</key></keyseq>"
+
+#: C/commands_controlling_orca.page:5(title)
+msgid "1. Controlling and Learning to Use Orca"
+msgstr "1. 控制和学习使用 Orca"
+
+#: C/commands_controlling_orca.page:6(title)
+#: C/commands_controlling_orca.page:18(title)
+msgid "Controlling and Learning to Use Orca"
+msgstr "控制和学习使用 Orca"
+
+#: C/commands_controlling_orca.page:7(desc)
+msgid "Commands for interacting with <app>Orca</app>"
+msgstr "与 <app>Orca</app> 交互命令"
+
+#: C/commands_controlling_orca.page:20(title)
+msgid "Commands for Controlling <app>Orca</app>"
+msgstr "控制 <app>Orca</app> 的命令"
+
+#: C/commands_controlling_orca.page:21(p)
+msgid ""
+"The following commands can be used to get into <app>Orca</app>'s Preferences "
+"dialogs, quit <app>Orca</app>, and bypass <app>Orca</app> commands to avoid "
+"shortcut conflicts within the application being accessed."
+msgstr ""
+"下面命令可以用来进入 <app>Orca</app> 首选项对话框、退出 <app>Orca</app> 和绕"
+"开 <app>Orca</app> 命令以避免在所访问的应用程序内快捷键冲突。"
+
+#: C/commands_controlling_orca.page:28(p)
+msgid ""
+"<link xref=\"preferences\">Orca Preferences</link> dialog: <keyseq><key>Orca "
+"Modifier</key><key>Space</key></keyseq>."
+msgstr ""
+"<link xref=\"preferences\">Orca 首选项</link>对话框：<keyseq><key>Orca 修饰键"
+"</key><key>Space</key></keyseq>。"
+
+#: C/commands_controlling_orca.page:34(p)
+msgid ""
+"Orca's Preferences dialog for the focused application: <keyseq><key>Ctrl</"
+"key><key>Orca Modifier</key><key>Space</key></keyseq>."
+msgstr ""
+"焦点应用程序的 Orca 首选项对话框：<keyseq><key>Ctrl</key><key>Orca 修饰键</"
+"key><key>Space</key></keyseq>。"
+
+#: C/commands_controlling_orca.page:40(p)
+msgid ""
+"Quit <app>Orca</app>: <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>."
+msgstr "退出 <app>Orca</app>：<keyseq><key>Orca 修饰键</key><key>Q</key></keyseq>。"
+
+#: C/commands_controlling_orca.page:46(p)
+msgid ""
+"Pass the next command on to the current application: <keyseq><key>Orca "
+"Modifier</key><key>BackSpace</key></keyseq>"
+msgstr ""
+"传递下一个命令到当前应用程序：<keyseq><key>Orca 修饰键</key><key>BackSpace</"
+"key></keyseq>"
+
+#: C/commands_controlling_orca.page:54(title)
+msgid "Commands for Learning to Use <app>Orca</app>"
+msgstr "学习使用 <app>Orca</app> 命令"
+
+#: C/commands_controlling_orca.page:64(p)
+msgid "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
+msgstr "进入学习模式：<keyseq><key>Orca 修饰键</key><key>H</key></keyseq>"
+
+#: C/commands_controlling_orca.page:70(p)
+msgid ""
+"Enter list shortcuts mode: <keyseq><key>Orca Modifier</key><key>H</key></"
+"keyseq> (double-clicked)"
+msgstr ""
+"进入快捷键清单模式：<keyseq><key>Orca 修饰键</key><key>H</key></keyseq> (双"
+"击)"
+
+#: C/commands_controlling_orca.page:76(p)
+msgid "Exit either mode: <keyseq><key>Esc</key></keyseq>"
+msgstr "退出任一模式：<keyseq><key>Esc</key></keyseq>"
+
+#: C/commands_chat.page:6(title)
+msgid "2. Chat"
+msgstr "2. 聊天"
+
+#: C/commands_chat.page:8(desc)
+msgid "Commands for use with IM and IRC clients"
+msgstr "即时聊天和 IRC 客户端命令"
+
+#: C/commands_chat.page:19(title)
+msgid "Chat Commands"
+msgstr "聊天命令"
+
+#: C/commands_chat.page:20(p)
+msgid ""
+"The following commands can be used to access information in the instant "
+"messaging and internet relay chat clients supported by <app>Orca</app>. You "
+"will notice that several of these commands are \"unbound.\" Please see <link "
+"xref=\"howto_key_bindings\">Modifying Keybindings</link> for information on "
+"how to bind these commands to keystrokes."
+msgstr ""
+
+#: C/commands_chat.page:30(p)
+msgid ""
+"Present previous chat room messages: <keyseq><key>Orca Modifier</"
+"key><key>F1</key></keyseq> through <key>F9</key>"
+msgstr ""
+"显示上一条聊天室信息：<keyseq><key>Orca 修饰键</key><key>F1</key></keyseq> "
+"到 <key>F9</key>"
+
+#: C/commands_chat.page:36(p)
+msgid "Enable/disable announcement of room name with messages: (Unbound)"
+msgstr ""
+
+#: C/commands_chat.page:41(p)
+msgid "Enable/disable announcement of buddy typing status: (Unbound)"
+msgstr ""
+
+#: C/commands_chat.page:44(p)
+msgid "Enable/disable room-specific histories: (Unbound)"
+msgstr ""
+
+#: C/commands_braille.page:6(title)
+msgid "2. Braille"
+msgstr "2. 盲文"
+
+#: C/commands_braille.page:8(desc)
+msgid "Commands executable on braille displays"
+msgstr ""
+
+#: C/commands_braille.page:19(title)
+msgid "Braille Commands"
+msgstr "盲文命令"
+
+#: C/commands_braille.page:20(p)
+msgid ""
+"The following commands allow you to control <app>Orca</app> from your "
+"refreshable braille display rather than your keyboard:"
+msgstr ""
+
+#: C/commands_braille.page:25(p)
+msgid "Pan braille display to the left: Line Left"
+msgstr ""
+
+#: C/commands_braille.page:26(p)
+msgid "Pan braille display to the right: Line Right"
+msgstr ""
+
+#: C/commands_braille.page:27(p)
+msgid "Toggle flat review mode: Freeze"
+msgstr "进入及离开平铺浏览模式：冻结"
+
+#: C/commands_braille.page:28(p)
+msgid "Review the word above: Line Up"
+msgstr ""
+
+#: C/commands_braille.page:29(p)
+msgid "Review the word below: Line Down"
+msgstr ""
+
+#: C/commands_braille.page:30(p)
+msgid "Review bottom left: Bottom Right"
+msgstr ""
+
+#: C/commands_braille.page:31(p)
+msgid "Review the home position: Top Left"
+msgstr ""
+
+#: C/commands_braille.page:32(p)
+msgid "Contracted braille: Six Dots"
+msgstr ""
+
+#: C/commands_braille.page:33(p)
+msgid "Marks the beginning of a text selection: Cut Begin"
+msgstr ""
+
+#: C/commands_braille.page:34(p)
+msgid "Marks the end of a text selection: Cut Line"
+msgstr ""
+
+#: C/commands_braille.page:35(p)
+msgid "Processes a cursor routing key: Cursor Routing"
+msgstr ""
+
+#: C/commands_braille.page:36(p)
+msgid "Returns to object with keyboard focus: Cursor Position"
+msgstr ""
+
+#: C/commands_bookmarks.page:6(title)
+msgid "4. Bookmarks"
+msgstr "4. 书签"
+
+#: C/commands_bookmarks.page:8(desc)
+msgid "Commands to bookmark and retrieve objects"
+msgstr "书签和检索命令"
+
+#: C/commands_bookmarks.page:19(title)
+msgid "Bookmark Commands"
+msgstr "书签命令"
+
+#: C/commands_bookmarks.page:22(p)
+msgid ""
+"Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</"
+"key><key>Alt</key><key>1</key></keyseq>-<key>6</key>"
+msgstr ""
+"保存书签：<keyseq><key>Orca 修饰键</key><key>Alt</key><key>1</key></keyseq>-"
+"<key>6</key>"
+
+#: C/commands_bookmarks.page:28(p)
+msgid ""
+"Save the defined bookmarks for the application or page: <keyseq><key>Orca "
+"Modifier</key><key>Alt</key><key>B</key></keyseq>"
+msgstr ""
+"保存应用程序或页面的自定义书签：<keyseq><key>Orca 修饰键</key><key>Alt</"
+"key><key>B</key></keyseq>"
+
+#: C/commands_bookmarks.page:34(p)
+msgid ""
+"Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key><key>1</"
+"key></keyseq>-<key>6</key>"
+msgstr ""
+"转到一条特定标号的书签： <keyseq><key>Orca 修饰键</key><key>1</key></keyseq>-"
+"<key>6</key>"
+
+#: C/commands_bookmarks.page:40(p)
+msgid ""
+"Go to the previous bookmark for the application or page: <keyseq><key>Orca "
+"Modifier</key><key>Shift</key><key>B</key></keyseq>"
+msgstr ""
+"跳到上一条应用程序或页面标签：<keyseq><key>Orca 修饰键</key><key>Shift</"
+"key><key>B</key></keyseq>"
+
+#: C/commands_bookmarks.page:47(p)
+msgid ""
+"Go to the next/previous bookmark for the application or page: "
+"<keyseq><key>Orca Modifier</key><key>B</key></keyseq>"
+msgstr ""
+"跳到下一条／上一条应用程序或页面书签：<keyseq><key>Orca 修饰键</key><key>B</"
+"key></keyseq>"
+
+#: C/commands_bookmarks.page:53(p)
+msgid ""
+"\"Where am I\" information for this bookmark relative to the current pointer "
+"location: <keyseq><key>Alt</key><key>Shift</key><key>1</key></keyseq>-"
+"<key>6</key>"
+msgstr ""
+"与当前指针位置相近书签的＂我在哪＂信息：<keyseq><key>Alt</key><key>Shift</"
+"key><key>1</key></keyseq>-<key>6</key>"
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: C/index.page:0(None)
+msgid "translator-credits"
+msgstr "tuhaihe <1132321739qq@gmail.com>, 2012"
+
