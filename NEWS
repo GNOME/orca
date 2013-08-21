@@ -1,3 +1,26 @@
+3.9.90 - 21 August 2013
+
+General
+
+  * Unbind the "quit" command because gnome-settings-daemon now includes
+    Super+Alt+S
+
+  * Prevent Orca from constantly saying "not selected" in gnome-documents
+
+  * Present the table dimensions when a table claims focus
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    gl            Galician                          Fran Diéguez
+    hu            Hungarian                         Attila Hammer
+    lt            Lithuanian                        Aurimas Černius
+    sl            Slovenian                         Matej Urbančič
+    tj            Tajik                             Victor Ibragimov  
+    zh_HK         Traditional Chinese (Hong Kong)   Chao-Hsiung Liao
+    zh_TW         Traditional Chinese (Taiwan)      Chao-Hsiung Liao
+
+=========
+
 3.9.5 - 31 July 2013
 
 Evince
