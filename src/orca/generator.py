@@ -33,6 +33,7 @@ import pyatspi
 
 from . import braille
 from . import debug
+from . import messages
 from . import settings
 
 from .orca_i18n import _         # for gettext support
@@ -827,6 +828,16 @@ class Generator:
         result.extend(self.generate(obj, **args))
         self._restoreRole(oldRole, args)
         return result
+
+    def _generateTable(self, obj, **args):
+        """Returns an array of strings for use by speech and braille to present
+        the size of a table."""
+
+        try:
+            table = obj.queryTable()
+        except:
+            return []
+        return [messages.tableSize(table.nRows, table.nColumns)]       
 
     def _generateTableCellRow(self, obj, **args):
         """Orca has a feature to automatically read an entire row of a table

@@ -264,9 +264,9 @@ formatting = {
             'basicWhereAmI' : 'labelAndName + roleName + value'
             },
         pyatspi.ROLE_TABLE: {
-            'focused': 'labelAndName + allTextSelection + roleName + availability + noChildren',
-            'unfocused': 'labelAndName + allTextSelection + roleName + availability + noChildren',
-            'basicWhereAmI': 'labelAndName + allTextSelection + roleName + availability + noChildren'
+            'focused': 'labelAndName + table',
+            'unfocused': 'labelAndName + table',
+            'basicWhereAmI': 'labelAndName + table'
             },
         pyatspi.ROLE_TABLE_CELL: {
             'focused': '(tableCell2ChildLabel + tableCell2ChildToggle)\
@@ -599,11 +599,11 @@ if settings.useExperimentalSpeechProsody:
     formatting['speech'][pyatspi.ROLE_RADIO_BUTTON]['basicWhereAmI'] = \
         'radioButtonGroup + pause + labelAndName + roleName + pause + radioState + pause + positionInGroup + ' + MNEMONIC + ' + accelerator'
     formatting['speech'][pyatspi.ROLE_TABLE]['focused'] = \
-        'labelAndName + pause + allTextSelection + roleName + availability + noChildren'
+        'labelAndName + pause + table'
     formatting['speech'][pyatspi.ROLE_TABLE]['unfocused'] = \
-        'labelAndName + pause + allTextSelection + roleName + availability + noChildren'
+        'labelAndName + pause + table'
     formatting['speech'][pyatspi.ROLE_TABLE]['basicWhereAmI'] = \
-        'labelAndName + pause + allTextSelection + roleName + availability + noChildren'
+        'labelAndName + pause + table'
     formatting['speech'][pyatspi.ROLE_TABLE_CELL]['focused'] = \
         '((tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState) + pause + (expandableState and (expandableState + pause + numberOfChildren + pause))'
     formatting['speech'][pyatspi.ROLE_TABLE_CELL]['unfocused'] = \
