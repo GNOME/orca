@@ -51,9 +51,6 @@ keymap = (
     ("h", defaultModifierMask, ORCA_MODIFIER_MASK,
     "enterLearnModeHandler", 1),
 
-    ("q", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "shutdownHandler"),
-
     ("space", defaultModifierMask, ORCA_MODIFIER_MASK,
     "preferencesSettingsHandler"),
 
@@ -198,4 +195,6 @@ keymap = (
     ("", defaultModifierMask, NO_MODIFIER_MASK,
     "flatReviewAppendHandler"),
 
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
+    "shutdownHandler"),
 )
