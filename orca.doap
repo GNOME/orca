@@ -4,7 +4,7 @@
          xmlns:gnome="http://api.gnome.org/doap-extensions#"
          xmlns="http://usefulinc.com/ns/doap#">
 
-  <name xml:lang="en">Orca Screen Reader</name>
+  <name xml:lang="en">orca</name>
   <shortdesc xml:lang="en">Screen reader for individuals who are blind or visually impaired</shortdesc>
   <homepage rdf:resource="http://live.gnome.org/Orca" />
   <mailing-list rdf:resource="http://mail.gnome.org/mailman/listinfo/orca-list" />
