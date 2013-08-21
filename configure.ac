@@ -98,6 +98,7 @@ src/orca/scripts/apps/gcalctool/Makefile
 src/orca/scripts/apps/gdmlogin/Makefile
 src/orca/scripts/apps/gdm-simple-greeter/Makefile
 src/orca/scripts/apps/gedit/Makefile
+src/orca/scripts/apps/gnome-documents/Makefile
 src/orca/scripts/apps/gnome_segv2/Makefile
 src/orca/scripts/apps/gnome-keyring-ask/Makefile
 src/orca/scripts/apps/gnome-mud/Makefile

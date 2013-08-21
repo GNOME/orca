@@ -12,6 +12,7 @@ SUBDIRS = \
 	gdm-simple-greeter \
 	gedit \
 	gnome_segv2 \
+	gnome-documents \
 	gnome-keyring-ask \
 	gnome-mud \
 	gnome-panel \
