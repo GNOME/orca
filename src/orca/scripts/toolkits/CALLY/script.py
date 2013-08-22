@@ -294,6 +294,14 @@ class Script(default.Script):
             if role == pyatspi.ROLE_DIALOG:
                 return
 
+            if role == pyatspi.ROLE_MENU_ITEM and not event.source.name \
+               and not self.utilities.labelsForObject(event.source):
+                isRealFocus = lambda x: x and x.getRole() == pyatspi.ROLE_SLIDER
+                descendant = pyatspi.findDescendant(event.source, isRealFocus)
+                if descendant:
+                    orca.setLocusOfFocus(event, descendant)
+                    return
+
             # This is to present dialog boxes which are, to the user, newly
             # activated. And if something is claiming to be focused that is
             # not in a dialog, that's good to know as well, so update our
