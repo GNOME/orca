@@ -2825,6 +2825,8 @@ class Utilities:
                 debug.println(debug.LEVEL_FINEST, "VALUE WARNING: " \
                     "Error calculating decimal places for %s" % obj)
                 return ""
+        elif abs(currentValue) < 1:
+            decimalPlaces = 1
         else:
             decimalPlaces = 0
 
