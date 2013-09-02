@@ -32,6 +32,7 @@ import pyatspi.utils as utils
 
 import orca.scripts.default as default
 import orca.cmdnames as cmdnames
+import orca.debug as debug
 import orca.guilabels as guilabels
 import orca.input_event as input_event
 import orca.messages as messages
@@ -677,6 +678,11 @@ class Script(default.Script):
         - obj: the Accessible
         - extra: extra Region to add to the end
         """
+
+        if not _settingsManager.getSetting('enableBraille') \
+           and not _settingsManager.getSetting('enableBrailleMonitor'):
+            debug.println(debug.LEVEL_INFO, "BRAILLE: update disabled")
+            return
 
         if not obj:
             return

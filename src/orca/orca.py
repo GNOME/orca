@@ -751,7 +751,9 @@ def main():
         message = messages.START_ORCA
         if not _settingsManager.getSetting('onlySpeakDisplayedText'):
             speech.speak(message, settings.voices.get(settings.SYSTEM_VOICE))
-        braille.displayMessage(message)
+        if _settingsManager.getSetting('enableBraille') \
+           or _settingsManager.getSetting('enableBrailleMonitor'):
+            braille.displayMessage(message)
     except:
         debug.printException(debug.LEVEL_SEVERE)
 

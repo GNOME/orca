@@ -29,6 +29,7 @@ import pyatspi
 from gi.repository import Atspi, Atk
 
 from . import braille
+from . import debug
 from . import generator
 from . import messages
 from . import orca_state
@@ -72,6 +73,11 @@ class BrailleGenerator(generator.Generator):
         globalsDict['asString'] = self.asString
 
     def generateBraille(self, obj, **args):
+        if not _settingsManager.getSetting('enableBraille') \
+           and not _settingsManager.getSetting('enableBrailleMonitor'):
+            debug.println(debug.LEVEL_INFO, "BRAILLE: generation disabled")
+            return [[], None]
+
         if obj == orca_state.locusOfFocus \
            and not args.get('formatType', None):
             args['formatType'] = 'focused'

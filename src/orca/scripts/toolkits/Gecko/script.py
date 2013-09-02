@@ -1867,6 +1867,11 @@ class Script(default.Script):
         - extra: extra Region to add to the end
         """
 
+        if not _settingsManager.getSetting('enableBraille') \
+           and not _settingsManager.getSetting('enableBrailleMonitor'):
+            debug.println(debug.LEVEL_INFO, "BRAILLE: update disabled")
+            return
+
         if not self.inDocumentContent():
             default.Script.updateBraille(self, obj, extraRegion)
             return

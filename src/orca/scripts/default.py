@@ -949,6 +949,11 @@ class Script(script.Script):
         - extra: extra Region to add to the end
         """
 
+        if not _settingsManager.getSetting('enableBraille') \
+           and not _settingsManager.getSetting('enableBrailleMonitor'):
+            debug.println(debug.LEVEL_INFO, "BRAILLE: update disabled")
+            return
+
         if not obj:
             return
 
@@ -3083,21 +3088,7 @@ class Script(script.Script):
         obj = otherObj or event.source
         text = obj.queryText()
 
-        # Update the Braille display - if we can just reposition
-        # the cursor, then go for it.
-        #
-        brailleNeedsRepainting = True
-        line = braille.getShowingLine()
-        for region in line.regions:
-            if isinstance(region, braille.Text) \
-               and (region.accessible == obj):
-                if region.repositionCursor():
-                    self.refreshBraille(True)
-                    brailleNeedsRepainting = False
-                break
-
-        if brailleNeedsRepainting:
-            self.updateBraille(obj)
+        self.updateBrailleForNewCaretPosition(obj)
 
         if not orca_state.lastInputEvent:
             return
@@ -3975,6 +3966,11 @@ class Script(script.Script):
         at that cell.  Otherwise, we will pan in display-sized increments
         to show the review cursor."""
 
+        if not _settingsManager.getSetting('enableBraille') \
+           and not _settingsManager.getSetting('enableBrailleMonitor'):
+            debug.println(debug.LEVEL_INFO, "BRAILLE: update review disabled")
+            return
+
         context = self.getFlatReviewContext()
 
         [regions, regionWithFocus] = context.getCurrentBrailleRegions()
@@ -4665,11 +4661,6 @@ class Script(script.Script):
 
             braille.displayMessage(message, flashTime=duration)
 
-    # [[[TODO - JD: Soon I'll add a check to only do the braille
-    # presentation if the user has braille or the braille monitor
-    # enabled. For now, the easiest way to regression test these
-    # changes is to always present braille.]]]
-
     @staticmethod
     def addBrailleRegionToLine(region, line):
         """Adds the braille region to the line.
@@ -4746,6 +4737,11 @@ class Script(script.Script):
           a cursor routing key.
         """
 
+        if not _settingsManager.getSetting('enableBraille') \
+           and not _settingsManager.getSetting('enableBrailleMonitor'):
+            debug.println(debug.LEVEL_INFO, "BRAILLE: display message disabled")
+            return
+
         braille.displayMessage(message, cursor, flashTime)
 
     @staticmethod
@@ -4764,6 +4760,11 @@ class Script(script.Script):
           message until some other message comes along or the user presses
           a cursor routing key.
         """
+
+        if not _settingsManager.getSetting('enableBraille') \
+           and not _settingsManager.getSetting('enableBrailleMonitor'):
+            debug.println(debug.LEVEL_INFO, "BRAILLE: display regions disabled")
+            return
 
         braille.displayRegions(regionInfo, flashTime)
 
@@ -4919,6 +4920,26 @@ class Script(script.Script):
             line.addRegion(braille.Region(" " + item))
 
         braille.refresh()
+
+    def updateBrailleForNewCaretPosition(self, obj):
+        """Try to reposition the cursor without having to do a full update."""
+
+        if not _settingsManager.getSetting('enableBraille') \
+           and not _settingsManager.getSetting('enableBrailleMonitor'):
+            debug.println(debug.LEVEL_INFO, "BRAILLE: update caret disabled")
+            return
+
+        brailleNeedsRepainting = True
+        line = braille.getShowingLine()
+        for region in line.regions:
+            if isinstance(region, braille.Text) and region.accessible == obj:
+                if region.repositionCursor():
+                    self.refreshBraille(True)
+                    brailleNeedsRepainting = False
+                break
+
+        if brailleNeedsRepainting:
+            self.updateBraille(obj)
 
     @staticmethod
     def refreshBraille(panToCursor=True, targetCursorCell=0, getLinkMask=True,
