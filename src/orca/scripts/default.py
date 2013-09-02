@@ -1427,6 +1427,10 @@ class Script(script.Script):
             [userAttrList, userAttrDict] = self.utilities.stringToKeysAndDict(
                 _settingsManager.getSetting('enabledSpokenTextAttributes'))
 
+            # Because some implementors make up their own attribute names,
+            # we need to convert.
+            userAttrList = list(map(self.getAppNameForAttribute, userAttrList))
+
             # Create a dictionary of just the items we are interested in.
             # Always include size and family-name. For the others, if the
             # value is the default, then ignore it.
@@ -3655,6 +3659,8 @@ class Script(script.Script):
                         #
                         localizedValue = \
                             attribute.split(",")[0].strip().strip('"')
+                    elif key.endswith("color"):
+                        localizedValue = localizedValue.replace("rgb", "RGB")
 
                     line = line or (localizedKey + " " + localizedValue)
                     self.speakMessage(line)

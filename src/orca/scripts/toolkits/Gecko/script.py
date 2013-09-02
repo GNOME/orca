@@ -201,30 +201,6 @@ class Script(default.Script):
         #
         self._currentFrame = None
 
-        # All of the text attributes available for presentation to the
-        # user. This is necessary because the attributes used by Gecko
-        # are different from the default set.
-        #
-        self.allTextAttributes = \
-            "background-color:; color:; font-family:; font-size:; " \
-            "font-style:normal; font-weight:400; language:none; " \
-            "text-line-through-style:; text-align:start; text-indent:0px; " \
-            "text-underline-style:; text-position:baseline; " \
-            "invalid:none; writing-mode:lr;"
-
-        # The default set of text attributes to present to the user. This
-        # is necessary because the attributes used by Gecko are different
-        # from the default set.
-        #
-        self.enabledBrailledTextAttributes = \
-          "font-size:; font-family:; font-weight:400; text-indent:0px; " \
-          "text-underline-style:none; text-align:start; " \
-          "text-line-through-style:none; font-style:normal; invalid:none;"
-        self.enabledSpokenTextAttributes = \
-          "font-size:; font-family:; font-weight:400; text-indent:0px; " \
-          "text-underline-style:none; text-align:start; " \
-          "text-line-through-style:none; font-style:normal; invalid:none;"
-
         # A dictionary of Gecko-style attribute names and their equivalent/
         # expected names. This is necessary so that we can present the
         # attributes to the user in a consistent fashion across apps and
@@ -257,14 +233,6 @@ class Script(default.Script):
             "underlinesolid"          : "single",
             "line-throughsolid"       : "solid"}
 
-        # We need to save our special attributes so that we can revert to
-        # the default text attributes when giving up focus to another app
-        # and restore them upon return.
-        #
-        self.savedEnabledBrailledTextAttributes = None
-        self.savedEnabledSpokenTextAttributes = None
-        self.savedAllTextAttributes = None
-
         # Keep track of the last object which appeared as a result of
         # the user routing the mouse pointer over an object. Also keep
         # track of the object which is associated with the mouse over
@@ -276,35 +244,6 @@ class Script(default.Script):
 
         # See bug 665522 - comment 5
         app.setCacheMask(pyatspi.cache.ALL ^ pyatspi.cache.CHILDREN)
-
-    def activate(self):
-        """Called when this script is activated."""
-        self.savedEnabledBrailledTextAttributes = \
-            _settingsManager.getSetting('enabledBrailledTextAttributes')
-        _settingsManager.setSetting(
-            'enabledBrailledTextAttributes', self.enabledBrailledTextAttributes)
-
-        self.savedEnabledSpokenTextAttributes = \
-            _settingsManager.getSetting('enabledSpokenTextAttributes')
-        _settingsManager.setSetting(
-            'enabledSpokenTextAttributes', self.enabledSpokenTextAttributes)
-
-        self.savedAllTextAttributes = \
-            _settingsManager.getSetting('allTextAttributes')
-        _settingsManager.setSetting('allTextAttributes', self.allTextAttributes)
-
-        default.Script.activate(self)
-
-    def deactivate(self):
-        """Called when this script is deactivated."""
-        _settingsManager.setSetting('enabledBrailledTextAttributes',
-                                    self.savedEnabledBrailledTextAttributes)
-        _settingsManager.setSetting('enabledSpokenTextAttributes',
-                                    self.savedEnabledSpokenTextAttributes)
-        _settingsManager.setSetting('allTextAttributes',
-                                    self.savedAllTextAttributes)
-
-        default.Script.deactivate(self)
 
     def getBookmarks(self):
         """Returns the "bookmarks" class for this script.
