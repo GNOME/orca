@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-08-11 17:29+0000\n"
-"PO-Revision-Date: 2013-08-19 22:31+0100\n"
+"POT-Creation-Date: 2013-09-02 20:21+0000\n"
+"PO-Revision-Date: 2013-09-02 22:51+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -3119,9 +3119,9 @@ msgstr "Pokaže seznam obiskanih povezav."
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1050 ../src/orca/generator.py:474
-#: ../src/orca/generator.py:723 ../src/orca/generator.py:765
-#: ../src/orca/generator.py:811
+#: ../src/orca/flat_review.py:1050 ../src/orca/generator.py:475
+#: ../src/orca/generator.py:724 ../src/orca/generator.py:766
+#: ../src/orca/generator.py:812
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:635
 #: ../src/orca/tutorialgenerator.py:558 ../src/orca/tutorialgenerator.py:598
@@ -4050,9 +4050,8 @@ msgstr "Ime atributa"
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
 #: ../src/orca/guilabels.py:664
-#, fuzzy
 msgid "Control caret navigation"
-msgstr "Uporabi _Orkino krmarjenje kazalke"
+msgstr "Nadzor nad krmarjenjem kazalke"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
@@ -4583,9 +4582,8 @@ msgstr "Gecko nadzira kazalnik."
 #. often broken, so Orca needs to provide its own support. As such, Orca offers
 #. the user the ability to toggle which application is controlling the caret.
 #: ../src/orca/messages.py:177
-#, fuzzy
 msgid "The screen reader is controlling the caret."
-msgstr "Ali je zaslonski bralnik vklopljen"
+msgstr "Zaslonski bralnik nadzira kazalko."
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #: ../src/orca/messages.py:180
@@ -4647,10 +4645,10 @@ msgstr "Profila ni mogoče naložiti: %s."
 #. Translators: This message is presented to the user who attempts to launch Orca
 #. from some other environment than the graphical desktop.
 #: ../src/orca/messages.py:221
-#, fuzzy
 msgid ""
 "Cannot start the screen reader because it cannot connect to the Desktop."
-msgstr "Programa Orka ni mogoče začeti, ker se ni mogoče povezati z namizjem."
+msgstr ""
+"Zaslonskega bralnika ni mogoče začeti, ker ga ni mogoče povezati z namizjem."
 
 #. Translators: This message is presented to the user who attempts to launch Orca
 #. but the launch fails due to an error related to the settings manager.
@@ -4661,13 +4659,12 @@ msgstr "Ni mogoče omogočiti upravljalnika nastavitev. Program bo končan."
 #. Translators: This message is presented to the user when he/she tries to launch
 #. Orca, but Orca is already running.
 #: ../src/orca/messages.py:231
-#, fuzzy
 msgid ""
 "Another screen reader process is already running for this session.\n"
 "Run \"orca --replace\" to replace that process with a new one."
 msgstr ""
-"Primerek programa Orka je za to sejo že zagnan.\n"
-"Z ukazom \"orca --replace\" je mogoče zamenjeti opravilo z novim."
+"Primerek zaslonskega bralnika je za to sejo že zagnan.\n"
+"Z ukazom \"orca --replace\" je mogoče zamenjati opravilo z novim."
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '-p, --profile' command line option.
@@ -4691,9 +4688,8 @@ msgstr "MAPA"
 #. Translators: This is the description of command line option '-r, --replace'
 #. which tells Orca to replace any existing Orca process that might be running.
 #: ../src/orca/messages.py:250
-#, fuzzy
 msgid "Replace a currently running instance of this screen reader"
-msgstr "Zamenjaj trenutno zagnani program Orka"
+msgstr "Zamenjaj trenutno zagnani primerek zaslonskega bralnika"
 
 #. Translators: This is the description of command line option '--debug' which
 #. causes debugging output for Orca to be sent to a file. The YYYY-MM-DD-HH:MM:SS
@@ -5468,7 +5464,6 @@ msgstr "Učni način. Za izhod pritisnite tipko Esc."
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
 #: ../src/orca/messages.py:836
-#, fuzzy
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To get a list of "
 "the screen reader's default shortcuts, press 1. To get a list of the screen "
@@ -5477,8 +5472,9 @@ msgid ""
 msgstr ""
 "Vstop v način učenja. Za poslušanje funkcije pritisnite poljubno tipko. Za "
 "prikaz privzetih tipkovnih bližnjic pritisnite 1. Za prikaz bližnjic "
-"programa pritisnite 2, za ogled dokumentacije Orca pritisnite F1. Za izhod "
-"iz načina učenja pritisnite Esc."
+"trenutno zagnanega programa pritisnite 2, za ogled dokumentacije zaslonskega "
+"bralnika pritisnite F1. Za izhod iz načina učenja pritisnite ubežno tipko "
+"(Esc)."
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -6309,7 +6305,7 @@ msgstr "Govor ni na voljo."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1434 ../src/orca/scripts/default.py:4043
+#: ../src/orca/messages.py:1434 ../src/orca/scripts/default.py:4039
 msgid "string not found"
 msgstr "niza ni mogoče najti"
 
@@ -6745,27 +6741,33 @@ msgstr[3] "%(index)d od %(total)d izbranih predmetov"
 #. current application. It appears as the title of the dialog containing
 #. the list.
 #: ../src/orca/messages.py:1709
-#, fuzzy, python-format
+#, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
-msgstr[0] "Najdenih je %d tipkovnih bližnjic."
-msgstr[1] "Najdena je %d tipkovna bližnjica."
-msgstr[2] "Najdeni sta %d tipkovni bližnjici."
-msgstr[3] "Najdene so %d tipkovne bližnjice."
+msgstr[0] "Najdenih je %d privzetih tipkovnih bližnjic zaslonskega bralnika."
+msgstr[1] "Najdena je %d privzeta tipkovna bližnjica zaslonskega bralnika."
+msgstr[2] "Najdeni sta %d privzeti tipkovni bližnjici zaslonskega bralnika."
+msgstr[3] "Najdene so %d privzete tipkovne bližnjice zaslonskega bralnika."
 
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
 #. application. It appears as the title of the dialog containing the list.
 #: ../src/orca/messages.py:1717
-#, fuzzy, python-format
+#, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
 msgstr[0] ""
-"Najdenih je %(count)d tipkovnih bližnjic za program %(application)s."
-msgstr[1] "Najdena je %(count)d tipkovna bližnjica za program %(application)s."
+"Najdenih je %(count)d tipkovnih bližnjic zaslonskega bralnika za program "
+"%(application)s."
+msgstr[1] ""
+"Najdena je %(count)d tipkovna bližnjica zaslonskega bralnika za program "
+"%(application)s."
 msgstr[2] ""
-"Najdeni sta %(count)d tipkovni bližnjici za program %(application)s."
-msgstr[3] "Najdene so %(count)d tipkovne bližnjice za program %(application)s."
+"Najdeni sta %(count)d tipkovni bližnjici zaslonskega bralnika za program "
+"%(application)s."
+msgstr[3] ""
+"Najdene so %(count)d tipkovne bližnjice zaslonskega bralnika za program "
+"%(application)s."
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
@@ -7040,9 +7042,8 @@ msgid "Find"
 msgstr "Najdi"
 
 #: ../src/orca/orca-find.ui.h:2
-#, fuzzy
 msgid "Screen Reader Find Dialog"
-msgstr "Odpre pogovorno okno iskanja."
+msgstr "Pogovorno okno zaslonskega bralnika"
 
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/orca-find.ui.h:4
@@ -7412,9 +7413,8 @@ msgid "Key Echo"
 msgstr "Odmev tipk"
 
 #: ../src/orca/orca-setup.ui.h:117
-#, fuzzy
 msgid "Screen Reader _Modifier Key(s):"
-msgstr "orka - skriptni bralnik zaslona"
+msgstr "Spremenilne tipke zaslonskega bralnika:"
 
 #: ../src/orca/orca-setup.ui.h:118
 msgid "Key Bindings"
@@ -7681,7 +7681,7 @@ msgstr "pult %s"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3643 ../src/orca/scripts/default.py:3655
+#: ../src/orca/scripts/default.py:3634 ../src/orca/scripts/default.py:3646
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7692,7 +7692,7 @@ msgstr[3] "%(key)s %(value)s točke"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4800
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4805
 msgid "open"
 msgstr "odpri"
 
