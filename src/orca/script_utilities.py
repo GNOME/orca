@@ -2652,7 +2652,11 @@ class Utilities:
 
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
            and orca_state.lastNonModifierKeyEvent:
-            eventStr = orca_state.lastNonModifierKeyEvent.event_string
+            event = orca_state.lastNonModifierKeyEvent
+            if event.keyval_name in ["BackSpace", "Delete"]:
+                eventStr = event.keyval_name
+            else:
+                eventStr = event.event_string
             mods = orca_state.lastInputEvent.modifiers
         else:
             eventStr = ""
