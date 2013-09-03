@@ -1,3 +1,32 @@
+3.9.91 - 3 September 2013
+
+General:
+
+  * Fix for bug 644515 - Text attribute presentation is completely
+    broken for Gecko
+
+  * Workaround for BackSpace and Delete text changed events not being
+    presented
+
+  * Handle partially-implemented value interfaces with range of 0 to 1
+
+  * Fix to present the new sliders in gnome-shell
+
+Performance:
+
+  * Fix for bug 616847 - Only perform braille functions when braille
+    is enabled
+
+  * Add object:active-descendant-changed to events that may be part
+    of an "event flood"
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    pl            Polish                      Piotr Drąg
+    sl            Slovenian                   Matej Urbančič
+
+=========
+
 3.9.90 - 21 August 2013
 
 General
