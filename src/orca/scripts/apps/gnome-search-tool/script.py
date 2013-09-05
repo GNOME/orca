@@ -34,9 +34,6 @@ from orca.orca_i18n import _
 import pyatspi
 import time
 from gi.repository import GLib
-from gi.repository import GObject
-GObject.threads_init()
-
 
 ########################################################################
 #                                                                      #
