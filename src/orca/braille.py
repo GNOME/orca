@@ -37,6 +37,8 @@ log = logging.getLogger("braille")
 import signal
 import os
 
+from gi.repository import GLib
+
 try:
     import louis
 except ImportError:
