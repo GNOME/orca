@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Tajik Gnome\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-07-30 11:21+0000\n"
-"PO-Revision-Date: 2013-08-01 23:25-0000\n"
+"POT-Creation-Date: 2013-08-11 17:29+0000\n"
+"PO-Revision-Date: 2013-09-08 17:53+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: \n"
 "Language: Tajik\n"
@@ -2307,7 +2307,6 @@ msgstr ""
 #. Translators: this string is associated with the keyboard shortcut to quit
 #. Orca.
 #: ../src/orca/cmdnames.py:397
-#| msgid "Screen Reader"
 msgid "Quits the screen reader"
 msgstr "Хонандаи экранро хомӯш мекунад"
 
@@ -3170,7 +3169,7 @@ msgstr ""
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/guilabels.py:67 ../src/orca/orca-setup.ui.h:19
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #. Translators: Orca has had to implement its own caret navigation model to work
 #. around issues in Gecko/Firefox. In some versions of Firefox, we must perform
@@ -3212,7 +3211,7 @@ msgstr ""
 #. any channel, but only if the chat application has focus.
 #: ../src/orca/guilabels.py:100
 msgid "Speak messages from"
-msgstr ""
+msgstr "Талаффузи паём аз"
 
 #. Translators: This is the label of a radio button. If it is selected, Orca will
 #. speak all new chat messages as they appear irrespective of whether or not the
@@ -3365,7 +3364,6 @@ msgstr ""
 #. can be used in any setting, task, or application. They are not specific
 #. to, for instance, web browsing.
 #: ../src/orca/guilabels.py:205
-#| msgid "Default"
 msgctxt "keybindings"
 msgid "Default"
 msgstr "Пешфарз"
@@ -3389,7 +3387,6 @@ msgstr "Начаспида"
 #. for an Orca command has been changed by the user to something other than its
 #. default value.
 #: ../src/orca/guilabels.py:221
-#| msgid "Modified"
 msgctxt "keybindings"
 msgid "Modified"
 msgstr "Тағйирёфта"
@@ -3407,7 +3404,6 @@ msgstr "_Мизи корӣ"
 #. "Gedit", "Firefox", etc.
 #: ../src/orca/guilabels.py:232
 #, python-format
-#| msgid "Orca Preferences for %s"
 msgid "Screen Reader Preferences for %s"
 msgstr "Бартариҳои хонандаи экран барои %s"
 
@@ -3481,7 +3477,7 @@ msgstr ""
 #. reading Spanish content.
 #: ../src/orca/guilabels.py:289
 msgid "Load user profile"
-msgstr ""
+msgstr "Бор кардани профили корбар"
 
 #. Translators: This text is displayed in a message dialog when a user indicates
 #. he/she wants to switch to a new user profile which will cause him/her to lose
@@ -3506,7 +3502,7 @@ msgstr ""
 #. defined profile.
 #: ../src/orca/guilabels.py:309
 msgid "Save Profile As"
-msgstr ""
+msgstr "Захира кардани профил ҳамчун"
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -3516,7 +3512,7 @@ msgstr ""
 #. name of a new settings profile being saved via the 'Save Profile As' dialog.
 #: ../src/orca/guilabels.py:317
 msgid "_Profile Name:"
-msgstr ""
+msgstr "_Номи профил:"
 
 #. Translators: Orca has a setting which determines which progress bar updates
 #. should be announced. Choosing "All" means that Orca will present progress bar
@@ -4041,7 +4037,6 @@ msgstr ""
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
 #: ../src/orca/guilabels.py:664
-#| msgid "Page Navigation"
 msgid "Control caret navigation"
 msgstr "Идоракунии паймоиш бо тугмаҳо"
 
@@ -4329,7 +4324,6 @@ msgstr "аломати тарҳ"
 #. Translators: this is presented in a GUI to represent the
 #. "insert" key when used as the Orca modifier.
 #: ../src/orca/keybindings.py:109
-#| msgid "insert"
 msgid "Insert"
 msgstr "Дарҷ кардан"
 
@@ -4739,7 +4733,7 @@ msgstr ""
 #: ../src/orca/messages.py:299
 #, python-format
 msgid "Message from chat room %s"
-msgstr ""
+msgstr "Паём аз хонаи чати %s"
 
 #. Translators: This message is presented to inform the user that a new chat
 #. conversation has been added to the existing conversations. The "tab" here
@@ -4748,7 +4742,7 @@ msgstr ""
 #: ../src/orca/messages.py:305
 #, python-format
 msgid "New chat tab %s"
-msgstr ""
+msgstr "Варақаи нави чати %s"
 
 #. Translators: In chat applcations, Orca automatically presents incoming
 #. messages in speech and braille. If a user is in multiple conversations or
@@ -4881,28 +4875,28 @@ msgstr ""
 #. console-based setup.
 #: ../src/orca/messages.py:414
 msgid "Enter choice: "
-msgstr ""
+msgstr "Интихобро ворид кунед:"
 
 #. Translators: This is letting the user they input an invalid integer value on
 #. the command line and is also requesting they enter a valid integer value.
 #. This message is part of Orca's console-based setup.
 #: ../src/orca/messages.py:419
 msgid "Please enter a valid number."
-msgstr ""
+msgstr "Лутфан, рақами боэътиборро ворид кунед."
 
 #. Translators: This is letting the user they input an invalid yes/no value on
 #. the command line and is also requesting they enter a valid one. This message
 #. is part of Orca's console-based setup.
 #: ../src/orca/messages.py:424
 msgid "Please enter y or n."
-msgstr ""
+msgstr "Лутфан, ҳа ё не-ро ворид кунед."
 
 #. Translators: Orca has two keyboard layouts which impact what keybindings are
 #. used to perform Orca commands. The two layouts are "Laptop" and "Desktop".
 #. This message is part of Orca's console-based setup.
 #: ../src/orca/messages.py:429
 msgid "Select desired keyboard layout."
-msgstr ""
+msgstr "Интихоб кардани тарҳбандии клавиатураи дилхоҳ."
 
 #. Translators: Orca has two keyboard layouts which impact what keybindings are
 #. used to perform Orca commands. The two layouts are "Laptop" and "Desktop".
@@ -4922,7 +4916,7 @@ msgstr "2. Лэптоп"
 #. available speech synthesis engines. It is part of Orca's console-based setup.
 #: ../src/orca/messages.py:443
 msgid "Select desired speech server."
-msgstr ""
+msgstr "Интихоб кардани сервери талаффузи дилхоҳ."
 
 #. Translators: The speech system represents what general speech wrapper is going
 #. to be used. Speech-dispatcher is an example of a speech system. It provides
@@ -4930,38 +4924,37 @@ msgstr ""
 #. Orca's console-based setup.
 #: ../src/orca/messages.py:449
 msgid "Select desired speech system:"
-msgstr ""
+msgstr "Интихоб кардани системаи талаффузи дилхоҳ:"
 
 #. Translators: This is prompting for a numerical value from a list of choices of
 #. speech synthesis voices (e.g., male, female, child). This message is part of
 #. Orca's console-based setup.
 #: ../src/orca/messages.py:454
 msgid "Select desired voice:"
-msgstr ""
+msgstr "Интихоб кардани садои дилхоҳ:"
 
 #. Translators: This message indicates that no working speech servers (speech
 #. synthesis engines) can be found. It is part of Orca's console-based setup.
 #: ../src/orca/messages.py:458
 msgid "No servers available.\n"
-msgstr ""
+msgstr "Ягон хидмат дастрас нест.\n"
 
 #. Translators: This message indicates that the speech server (speech synthesis
 #. engine) is not working properly and no voices (e.g., male, female, child) are
 #. available. This message is part of Orca's console-based setup.
 #: ../src/orca/messages.py:463
 msgid "No voices available.\n"
-msgstr ""
+msgstr "Ягон садо дастрас нест.\n"
 
 #. Translators: This message indicates that speech synthesis will not be used.
 #. It is part of Orca's console-based setup.
 #: ../src/orca/messages.py:467
 msgid "Speech will not be used.\n"
-msgstr ""
+msgstr "Талаффуз истифода намешавад.\n"
 
 #. Translators: This message is presented at the beginning of Orca's console-
 #. based setup.
 #: ../src/orca/messages.py:471
-#| msgid "Screen Reader"
 msgid "Screen reader setup."
 msgstr "Танзими Хонандаи экран."
 
@@ -4969,7 +4962,7 @@ msgstr "Танзими Хонандаи экран."
 #. based setup.
 #: ../src/orca/messages.py:475
 msgid "Setup complete.  Press Return to continue."
-msgstr ""
+msgstr "Танзим ба анҷом расид. Барои идома додан тугмаи Enter-ро пахш кунед."
 
 #. Translators: The "default" button in a dialog box is the button that gets
 #. activated when Enter is pressed anywhere within that dialog box.
@@ -5091,7 +5084,7 @@ msgstr "%.2f мегабайт"
 #. search to indicate there were no matches.
 #: ../src/orca/messages.py:558
 msgid "No files found."
-msgstr ""
+msgstr "Ягон файл ёфт нашуд."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -5698,7 +5691,7 @@ msgstr "Вуҷуд надорад"
 #. for some reason Orca cannot identify/find the current location.
 #: ../src/orca/messages.py:1030
 msgid "Could not find current location."
-msgstr ""
+msgstr "Ҷойгиршавии ҷорӣ ёфт нашуд."
 
 #. Translators: This string is used to present the state of a locking key, such
 #. as Caps Lock. If Caps Lock is "off", then letters typed will appear in
@@ -5724,7 +5717,7 @@ msgstr "фаъол"
 #. line which indicates that a given word is not spelled correctly.
 #: ../src/orca/messages.py:1048
 msgid "misspelled"
-msgstr ""
+msgstr "хатогӣ"
 
 #. Translators: Orca tries to provide more compelling output of the spell check
 #. dialog in some applications. The first thing it does is let the user know
@@ -5732,7 +5725,7 @@ msgstr ""
 #: ../src/orca/messages.py:1053
 #, python-format
 msgid "Misspelled word: %s"
-msgstr ""
+msgstr "Калимаҳои хатогӣ: %s"
 
 #. Translators: Orca tries to provide more compelling output of the spell check
 #. dialog in some applications. The second thing it does is give the phrase
@@ -5772,7 +5765,7 @@ msgstr ""
 #. such as a pop-up menu, we want to present that fact.
 #: ../src/orca/messages.py:1081
 msgid "New item has been added"
-msgstr ""
+msgstr "Ягон объект илова нашудааст"
 
 #. Translators: This is intended to be a short phrase to present the fact that no
 #. no accessible component has keyboard focus.
@@ -6110,7 +6103,7 @@ msgstr ""
 #: ../src/orca/messages.py:1321
 #, python-format
 msgid "Profile set to %s."
-msgstr ""
+msgstr "Профил ба %s таъин шудааст."
 
 #. Translators: This is an error message presented when the user attempts to
 #. cycle among his/her saved profiles, but no profiles can be found. A profile
@@ -6207,7 +6200,7 @@ msgstr "Ҷустуҷӯ рафта истодааст."
 #. user has been completed.
 #: ../src/orca/messages.py:1389
 msgid "Search complete."
-msgstr ""
+msgstr "Ҷустуҷӯ ба анҷом расид."
 
 #. Translators: This message is presented to the user when Orca's preferences
 #. have been reloaded.
@@ -6219,13 +6212,13 @@ msgstr ""
 #. has been temporarily turned off.
 #: ../src/orca/messages.py:1397
 msgid "Speech disabled."
-msgstr ""
+msgstr "Талаффуз ғайрифаъл аст."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been turned back on.
 #: ../src/orca/messages.py:1401
 msgid "Speech enabled."
-msgstr ""
+msgstr "Талаффуз фаъл аст."
 
 #. Translators: This string announces speech rate change.
 #: ../src/orca/messages.py:1404
@@ -6257,20 +6250,18 @@ msgstr " нуқта нуқта нуқта"
 
 #. Translators: This message is presented to the user when Orca is launched.
 #: ../src/orca/messages.py:1422
-#| msgid "Screen Reader"
 msgid "Screen reader on."
 msgstr "Хонандаи экран фаъол аст."
 
 #. Translators: This message is presented to the user when Orca is quit.
 #: ../src/orca/messages.py:1425
-#| msgid "Screen Reader"
 msgid "Screen reader off."
 msgstr "Хонандаи экран хомӯш аст."
 
 #. Translators: This message means speech synthesis is not installed or working.
 #: ../src/orca/messages.py:1428
 msgid "Speech is unavailable."
-msgstr ""
+msgstr "Талаффуз дастрас нест."
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text.  For example, they may want to find
@@ -6278,7 +6269,7 @@ msgstr ""
 #. for was not found.
 #: ../src/orca/messages.py:1434 ../src/orca/scripts/default.py:4043
 msgid "string not found"
-msgstr ""
+msgstr "сатр ёфт нашудааст"
 
 #. Translators: The structural navigation keys are designed to move the caret
 #. around document content by object type. H moves you to the next heading,
@@ -6474,7 +6465,6 @@ msgstr "Юникод %s"
 #. Translators: This message presents the Orca version number.
 #: ../src/orca/messages.py:1565
 #, python-format
-#| msgid "Orca version %s."
 msgid "Screen reader version %s."
 msgstr "Версияи Хонандаи экран %s."
 
@@ -6951,19 +6941,16 @@ msgid "Find"
 msgstr "Ёфтан"
 
 #: ../src/orca/orca-find.ui.h:2
-#| msgid "Screen Reader"
 msgid "Screen Reader Find Dialog"
 msgstr "Равзанаи гуфтугӯи ҷустуҷӯ дар Хонандаи экран"
 
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/orca-find.ui.h:4
-#| msgid "Close"
 msgid "_Close"
 msgstr "_Пӯшидан"
 
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/orca-find.ui.h:6
-#| msgid "Find"
 msgid "_Find"
 msgstr "_Ёфтан"
 
@@ -7036,7 +7023,6 @@ msgid "Window"
 msgstr "Равзана"
 
 #: ../src/orca/orca-setup.ui.h:11
-#| msgid "Screen Reader"
 msgid "Screen Reader Preferences"
 msgstr "Хусусиятҳои Хонандаи экран"
 
@@ -7244,7 +7230,7 @@ msgstr ""
 
 #: ../src/orca/orca-setup.ui.h:88
 msgid "Speech"
-msgstr ""
+msgstr "Талаффуз"
 
 #: ../src/orca/orca-setup.ui.h:89
 msgid "Enable Braille _support"
@@ -7493,14 +7479,14 @@ msgstr "Санҷидани имло"
 #.
 #: ../src/orca/scripts/apps/gedit/script.py:375
 msgid "Phrase not found"
-msgstr ""
+msgstr "Ибора ёфт нашуд"
 
 #. Translators: this indicates a find command succeeded in
 #. finding something.
 #.
 #: ../src/orca/scripts/apps/gedit/script.py:437
 msgid "Phrase found."
-msgstr ""
+msgstr "Ибораи ёфтшуда."
 
 #: ../src/orca/scripts/apps/gnome-mud/script.py:119
 msgid "Read the latest n messages in the incoming messages text area."
@@ -7571,7 +7557,7 @@ msgstr ""
 #: ../src/orca/scripts/apps/planner/braille_generator.py:67
 #: ../src/orca/scripts/apps/planner/speech_generator.py:63
 msgid "Display more options"
-msgstr ""
+msgstr "Намоиш додани имконоти бештар"
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
