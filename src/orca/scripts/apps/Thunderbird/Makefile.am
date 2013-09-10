@@ -1,5 +1,3 @@
-orca_pathdir=$(pyexecdir)
-
 orca_python_PYTHON = \
 	__init__.py \
 	formatting.py \
@@ -8,5 +6,5 @@ orca_python_PYTHON = \
 	script_utilities.py \
 	speech_generator.py
 
-orca_pythondir=$(pyexecdir)/orca/scripts/apps/Thunderbird
+orca_pythondir=$(pkgpythondir)/scripts/apps/Thunderbird
 

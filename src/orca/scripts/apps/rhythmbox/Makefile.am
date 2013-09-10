@@ -1,5 +1,3 @@
-orca_pathdir=$(pyexecdir)
-
 orca_python_PYTHON = \
 	__init__.py \
 	braille_generator.py \
@@ -7,5 +5,5 @@ orca_python_PYTHON = \
 	script.py \
 	speech_generator.py
 
-orca_pythondir=$(pyexecdir)/orca/scripts/apps/rhythmbox
+orca_pythondir=$(pkgpythondir)/scripts/apps/rhythmbox
 

@@ -37,10 +37,8 @@ SUBDIRS = \
 	Thunderbird \
 	xfwm4
 
-orca_pathdir=$(pyexecdir)
-
 orca_python_PYTHON = \
 	__init__.py
 
-orca_pythondir=$(pyexecdir)/orca/scripts/apps
+orca_pythondir=$(pkgpythondir)/scripts/apps
 

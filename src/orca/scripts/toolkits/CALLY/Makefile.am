@@ -1,8 +1,6 @@
-orca_pathdir=$(pyexecdir)
-
 orca_python_PYTHON = \
 	__init__.py \
 	script.py
 
-orca_pythondir=$(pyexecdir)/orca/scripts/toolkits/CALLY
+orca_pythondir=$(pkgpythondir)/scripts/toolkits/CALLY
 

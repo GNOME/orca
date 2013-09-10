@@ -5,8 +5,6 @@ orcadir=$(bindir)
 uidir=$(datadir)/orca/ui
 gfxdir=$(datadir)/orca/gfx
 
-orca_pathdir=$(pyexecdir)
-
 orca_python_PYTHON = \
 	__init__.py \
 	acss.py \
@@ -72,7 +70,7 @@ orca_python_PYTHON = \
 	tutorialgenerator.py \
 	where_am_I.py
 
-orca_pythondir=$(pyexecdir)/orca
+orca_pythondir=$(pkgpythondir)
 
 SUBDIRS = \
         scripts \

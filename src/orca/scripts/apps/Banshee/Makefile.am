@@ -1,5 +1,3 @@
-orca_pathdir=$(pyexecdir)
-
 orca_python_PYTHON = \
 	__init__.py \
 	script.py \
@@ -7,4 +5,4 @@ orca_python_PYTHON = \
 	speech_generator.py \
 	formatting.py
 
-orca_pythondir=$(pyexecdir)/orca/scripts/apps/Banshee
+orca_pythondir=$(pkgpythondir)/scripts/apps/Banshee

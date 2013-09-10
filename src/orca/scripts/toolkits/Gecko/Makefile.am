@@ -1,5 +1,3 @@
-orca_pathdir=$(pyexecdir)
-
 orca_python_PYTHON = \
 	__init__.py \
 	bookmarks.py \
@@ -12,5 +10,5 @@ orca_python_PYTHON = \
 	speech_generator.py \
 	structural_navigation.py
 
-orca_pythondir=$(pyexecdir)/orca/scripts/toolkits/Gecko
+orca_pythondir=$(pkgpythondir)/scripts/toolkits/Gecko
 

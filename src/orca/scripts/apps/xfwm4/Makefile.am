@@ -1,7 +1,5 @@
-orca_pathdir=$(pyexecdir)
-
 orca_python_PYTHON = \
 	__init__.py \
 	script.py
 
-orca_pythondir=$(pyexecdir)/orca/scripts/apps/xfwm4
+orca_pythondir=$(pkgpythondir)/scripts/apps/xfwm4
