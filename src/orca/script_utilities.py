@@ -893,29 +893,6 @@ class Utilities:
         except:
             pass
 
-        # [[[TODO - JD: Why is this here? If it is truly limited to the
-        # Java toolkit, it should be dealt with in Orca's Java toolkit
-        # script. If it applies more broadly we should update the comment
-        # to reflect that.]]]
-        #
-        # In java applications, TRANSIENT state is missing for tree items
-        # (fix for bug #352250)
-        #
-        try:
-            parent1 = obj1
-            parent2 = obj2
-            while parent1 and parent2 and \
-                    parent1.getRole() == pyatspi.ROLE_LABEL and \
-                    parent2.getRole() == pyatspi.ROLE_LABEL:
-                if parent1.getIndexInParent() != parent2.getIndexInParent():
-                    return False
-                parent1 = parent1.parent
-                parent2 = parent2.parent
-            if parent1 and parent2 and parent1 == parent2:
-                return True
-        except:
-            pass
-
         return False
 
     def isTextArea(self, obj):

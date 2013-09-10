@@ -82,6 +82,24 @@ class Utilities(script_utilities.Utilities):
                    and ext1.width == ext2.width and ext1.height == ext2.height:
                     return True
 
+        # In java applications, TRANSIENT state is missing for tree items
+        # (fix for bug #352250)
+        #
+        try:
+            parent1 = obj1
+            parent2 = obj2
+            while parent1 and parent2 and \
+                    parent1.getRole() == pyatspi.ROLE_LABEL and \
+                    parent2.getRole() == pyatspi.ROLE_LABEL:
+                if parent1.getIndexInParent() != parent2.getIndexInParent():
+                    return False
+                parent1 = parent1.parent
+                parent2 = parent2.parent
+            if parent1 and parent2 and parent1 == parent2:
+                return True
+        except:
+            pass
+
         return script_utilities.Utilities.isSameObject(self, obj1, obj2)
 
     def nodeLevel(self, obj):
