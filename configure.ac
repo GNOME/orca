@@ -4,7 +4,6 @@ m4_define([orca_micro_version], [92pre])
 m4_define([orca_version],
           [orca_major_version.orca_minor_version.orca_micro_version])
 
-m4_define(gtk_required_version, 3.6.2)
 m4_define(pygobject_required_version, 3.4.2)
 m4_define(atspi_required_version, 2.6)
 m4_define(atkbridge_required_version, 2.6)
@@ -33,7 +32,6 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [gettext package])
 # User Documentation
 YELP_HELP_INIT
 
-PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= gtk_required_version])
 PKG_CHECK_MODULES([PYGOBJECT], [pygobject-3.0 >= pygobject_required_version])
 PKG_CHECK_MODULES([ATSPI2], [atspi-2 >= atspi_required_version])
 PKG_CHECK_MODULES([ATKBRIDGE], [atk-bridge-2.0 >= atkbridge_required_version])
