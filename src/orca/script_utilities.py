@@ -853,43 +853,25 @@ class Utilities:
             if (obj1.name != obj2.name) or (obj1.getRole() != obj2.getRole()):
                 return False
             else:
-                # Gecko sometimes creates multiple accessibles to represent
-                # the same object.  If the two objects have the same name
-                # and the same role, check the extents.  If those also match
-                # then the two objects are for all intents and purposes the
-                # same object.
-                #
+                # Comparing the extents of objects which claim to be different
+                # addresses both managed descendants and implementations which
+                # recreate accessibles for the same widget.
                 extents1 = \
                     obj1.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
                 extents2 = \
                     obj2.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
-                if (extents1.x == extents2.x) and \
-                   (extents1.y == extents2.y) and \
-                   (extents1.width == extents2.width) and \
-                   (extents1.height == extents2.height):
-                    return True
 
-            # When we're looking at children of objects that manage
-            # their descendants, we will often get different objects
-            # that point to the same logical child.  We want to be able
-            # to determine if two objects are in fact pointing to the
-            # same child.
-            # If we cannot do so easily (i.e., object equivalence), we examine
-            # the hierarchy and the object index at each level.
-            #
-            parent1 = obj1
-            parent2 = obj2
-            while (parent1 and parent2 and \
-                    parent1.getState().contains( \
-                        pyatspi.STATE_TRANSIENT) and \
-                    parent2.getState().contains(pyatspi.STATE_TRANSIENT)):
-                if parent1.getIndexInParent() != parent2.getIndexInParent():
+                # Objects which claim to be different and which are in different
+                # locations are almost certainly not recreated objects.
+                if extents1 != extents2:
                     return False
-                parent1 = parent1.parent
-                parent2 = parent2.parent
-            if parent1 and parent2 and parent1 == parent2:
-                return self.realActiveDescendant(obj1).name == \
-                       self.realActiveDescendant(obj2).name
+
+                # Objects which claim to have the same role, the same name, and
+                # the same size and position are highly likely to be the same
+                # functional object -- if they have valid, on-screen extents.
+                if extents1.x >= 0 and extents1.y >= 0 and extents1.width > 0 \
+                   and extents1.height > 0:
+                    return True
         except:
             pass
 
