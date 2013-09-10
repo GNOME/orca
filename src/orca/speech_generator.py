@@ -261,7 +261,7 @@ class SpeechGenerator(generator.Generator):
 
         # egg-list-box, e.g. privacy panel in gnome-control-center
         if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
-            doNotPresent.append(pyatspi.ROLE_FILLER)
+            doNotPresent.append(obj.getRole())
 
         if _settingsManager.getSetting('speechVerbosityLevel') \
                 == settings.VERBOSITY_LEVEL_BRIEF:
