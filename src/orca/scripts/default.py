@@ -905,7 +905,10 @@ class Script(script.Script):
             notification_messages.saveMessage(msg)
 
         if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
-            return
+            # Present state changes of child widgets of GtkListBox items
+            isListBox = lambda x: x and x.getRole() == pyatspi.ROLE_LIST_BOX
+            if not pyatspi.findAncestor(obj, isListBox):
+                return
 
         # Radio buttons normally change their state when you arrow to them,
         # so we handle the announcement of their state changes in the focus
