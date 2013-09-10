@@ -100,7 +100,7 @@ formatting = {
             },
         'default': {
             'focused': '[]',
-            'unfocused': 'labelAndName + allTextSelection + roleName + availability + ' + MNEMONIC + ' + accelerator',
+            'unfocused': 'labelAndName + allTextSelection + roleName + availability + ' + MNEMONIC + ' + accelerator + childWidget',
             'basicWhereAmI': 'labelAndName + roleName',
             'detailedWhereAmI' : '[]'
             },
@@ -464,7 +464,8 @@ formatting = {
         #pyatspi.ROLE_PAGE_TAB_LIST: 'default'
         pyatspi.ROLE_PANEL: {
             'unfocused': '[Component(obj,\
-                                     asString((label or displayedText) + roleName))]'
+                                     asString((label or displayedText) + roleName))]\
+                          + (childWidget and ([Region(" ")] + childWidget))'
             },
         pyatspi.ROLE_PARAGRAPH: {
             'unfocused': BRAILLE_TEXT

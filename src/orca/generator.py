@@ -517,6 +517,20 @@ class Generator:
             result.append(indicators[0])
         return result
 
+    def _generateChildWidget(self, obj, **args):
+        widgetRoles = [pyatspi.ROLE_CHECK_BOX,
+                       pyatspi.ROLE_RADIO_BUTTON,
+                       pyatspi.ROLE_TOGGLE_BUTTON]
+        isWidget = lambda x: x and x.getRole() in widgetRoles
+
+        # For GtkListBox, such as those found in the control center
+        if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
+            widget = pyatspi.findDescendant(obj, isWidget)
+            if widget:
+                return self.generate(widget, includeContext=False)
+
+        return []
+
     def _generateToggleState(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
         represent the checked state of the object.  This is typically
