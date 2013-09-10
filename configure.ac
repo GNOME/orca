@@ -5,9 +5,8 @@ m4_define([orca_version],
           [orca_major_version.orca_minor_version.orca_micro_version])
 
 m4_define(pygobject_required_version, 3.4.2)
-m4_define(atspi_required_version, 2.6)
-m4_define(atkbridge_required_version, 2.6)
-m4_define(atk_required_version, 2.6)
+m4_define(atspi_required_version, 2.8)
+m4_define(atkbridge_required_version, 2.8)
 
 AC_INIT([orca],
         [orca_version],
@@ -35,7 +34,6 @@ YELP_HELP_INIT
 PKG_CHECK_MODULES([PYGOBJECT], [pygobject-3.0 >= pygobject_required_version])
 PKG_CHECK_MODULES([ATSPI2], [atspi-2 >= atspi_required_version])
 PKG_CHECK_MODULES([ATKBRIDGE], [atk-bridge-2.0 >= atkbridge_required_version])
-PKG_CHECK_MODULES([ATK], [atk >= atk_required_version])
 
 dnl Needed programs
 AC_PROG_INSTALL
