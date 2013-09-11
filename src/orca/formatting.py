@@ -186,7 +186,7 @@ formatting = {
             },
         pyatspi.ROLE_LIST_ITEM: {
             'focused': 'expandableState + availability',
-            'unfocused': 'labelAndName + allTextSelection + expandableState + availability + positionInList',
+            'unfocused': 'labelAndName + allTextSelection + expandableState + availability + positionInList + childWidget',
             'basicWhereAmI': 'label + roleName + name + positionInList + expandableState + (nodeLevel or nestingLevel)'
             },
         pyatspi.ROLE_MENU: {
@@ -437,10 +437,12 @@ formatting = {
         pyatspi.ROLE_LIST_ITEM: {
             'focused':   '[Component(obj,\
                                      asString(label + displayedText + expandableState + roleName + availability) + asString(accelerator))]\
-                          + (nestingLevel and [Region(" " + asString(nestingLevel))])',
+                          + (nestingLevel and [Region(" " + asString(nestingLevel))])\
+                          + (childWidget and ([Region(" ")] + childWidget))',
             'unfocused': '[Component(obj,\
                                      asString(label + displayedText + expandableState))]\
-                          + (nestingLevel and [Region(" " + asString(nestingLevel))])',
+                          + (nestingLevel and [Region(" " + asString(nestingLevel))])\
+                          + (childWidget and ([Region(" ")] + childWidget))',
             },
         pyatspi.ROLE_MENU: {
             'focused':   '[Component(obj,\
@@ -582,7 +584,7 @@ if settings.useExperimentalSpeechProsody:
     formatting['speech'][pyatspi.ROLE_LIST]['unfocused'] = \
         'labelOrName + pause + focusedItem + pause + multiselectableState + numberOfChildren + pause'
     formatting['speech'][pyatspi.ROLE_LIST_ITEM]['unfocused'] = \
-        'labelAndName + allTextSelection + pause + expandableState + pause + availability + positionInList'
+        'labelAndName + allTextSelection + pause + expandableState + pause + availability + positionInList + pause + childWidget'
     formatting['speech'][pyatspi.ROLE_LIST_ITEM]['basicWhereAmI'] = \
         'label + roleName + pause + name + pause + positionInList + pause + expandableState + (nodeLevel or nestingLevel) + pause'
     formatting['speech'][pyatspi.ROLE_MENU]['unfocused'] = 'labelAndName + allTextSelection + roleName + availability + ' + MNEMONIC + ' + accelerator + pause + positionInList'
