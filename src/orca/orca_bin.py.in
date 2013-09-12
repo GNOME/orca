@@ -36,8 +36,8 @@ import sys
 import time
 
 sys.prefix = '@prefix@'
-pyexecdir = '@pyexecdir@'.replace('${exec_prefix}', '@prefix@')
-sys.path.insert(1, pyexecdir)
+pythondir = '@pythondir@'.replace('${prefix}', '@prefix@')
+sys.path.insert(1, pythondir)
 
 from orca import debug
 from orca import messages
