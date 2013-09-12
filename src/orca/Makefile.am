@@ -50,7 +50,6 @@ orca_python_PYTHON = \
 	orca_gui_profile.py \
 	orca_i18n.py \
 	orca_state.py \
-	outline.py \
 	phonnames.py \
 	orca_platform.py \
 	pronunciation_dict.py \

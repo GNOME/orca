@@ -389,29 +389,6 @@ GENERAL_KEYBOARD_LAYOUT_DESKTOP = 1
 GENERAL_KEYBOARD_LAYOUT_LAPTOP  = 2
 keyboardLayout                  = GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
-# The red, green, blue values to use to outline the current item in
-# flat review mode. They are values between 0 and 65535 (0xFFFF), with
-# 65535 (0xFFFF) indicating full intensitiy
-#
-outlineColor = [ 0xFFFF, 0x0000, 0x0000 ]
-
-# Thickness in pixels of the outline around the the current item in flat
-# review mode.
-#
-outlineThickness = 4
-
-# Margin between the object being outlined and the actual outline
-#
-outlineMargin = 1
-
-# The kind of outlining to do for flat review mode.
-#
-OUTLINE_NONE = 0
-OUTLINE_BOX = 1
-OUTLINE_LINE = 2
-OUTLINE_WEDGES = 3
-outlineStyle = OUTLINE_BOX
-
 # If True, speak blank lines.
 #
 speakBlankLines         = True

@@ -279,7 +279,6 @@ class LiveRegionManager:
         contents of that object"""
         if self.lastliveobj:
             self._script.setCaretPosition(self.lastliveobj, 0)
-            self._script.outlineAccessible(self.lastliveobj)
             self._script.speakContents(self._script.getObjectContentsAtOffset(\
                                        self.lastliveobj, 0))
 

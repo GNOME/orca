@@ -2958,9 +2958,6 @@ class StructuralNavigation:
                 [obj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
-            # For debugging
-            #
-            self._script.outlineAccessible(obj)
         else:
             full = messages.NO_MORE_LIVE_REGIONS
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND

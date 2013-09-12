@@ -46,7 +46,6 @@ import orca.guilabels as guilabels
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.messages as messages
-import orca.outline as outline
 import orca.orca as orca
 import orca.orca_gui_commandlist as commandlist
 import orca.orca_state as orca_state
@@ -1168,7 +1167,6 @@ class Script(script.Script):
 
             [charString, x, y, width, height] = \
                 self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
-            self.drawOutline(x, y, width, height)
 
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
@@ -1242,8 +1240,6 @@ class Script(script.Script):
 
             [charString, x, y, width, height] = \
                 self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
-
-            self.drawOutline(x, y, width, height)
 
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
@@ -1520,7 +1516,6 @@ class Script(script.Script):
         context = self.getFlatReviewContext()
         [wordString, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.WORD)
-        self.drawOutline(x, y, width, height)
 
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
@@ -1557,7 +1552,6 @@ class Script(script.Script):
         context = self.getFlatReviewContext()
         [zoneString, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.ZONE)
-        self.drawOutline(x, y, width, height)
 
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
@@ -1640,7 +1634,6 @@ class Script(script.Script):
 
         [charString, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.CHAR)
-        self.drawOutline(x, y, width, height)
 
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
@@ -1774,7 +1767,6 @@ class Script(script.Script):
 
         [lineString, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.LINE)
-        self.drawOutline(x, y, width, height)
 
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
@@ -1986,7 +1978,6 @@ class Script(script.Script):
         if self.flatReviewContext:
             if inputEvent and verbosity != settings.VERBOSITY_LEVEL_BRIEF:
                 self.presentMessage(messages.FLAT_REVIEW_STOP)
-            self.drawOutline(-1, 0, 0, 0)
             self.flatReviewContext = None
             self.updateBraille(orca_state.locusOfFocus)
         else:
@@ -1995,7 +1986,6 @@ class Script(script.Script):
             context = self.getFlatReviewContext()
             [wordString, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.WORD)
-            self.drawOutline(x, y, width, height)
             self._reviewCurrentItem(inputEvent, self.targetCursorCell)
 
         return True
@@ -3067,7 +3057,6 @@ class Script(script.Script):
             # recreated.
             #
             if self.flatReviewContext:
-                self.drawOutline(-1, 0, 0, 0)
                 self.flatReviewContext = None
                 self.updateBraille(orca_state.locusOfFocus)
 
@@ -3258,7 +3247,6 @@ class Script(script.Script):
             #[x, y, width, height] = obj.text.getCharacterExtents(
             #    context.currentOffset, 0)
             #print context.currentOffset, x, y, width, height
-            #self.drawOutline(x, y, width, height)
             return
         elif progressType == speechserver.SayAllContext.INTERRUPTED:
             #print "INTERRUPTED", context.utterance, context.currentOffset
@@ -3947,31 +3935,6 @@ class Script(script.Script):
             self.targetCursorCell = self.getBrailleCursorCell()
 
         return self.flatReviewContext
-
-    def drawOutline(self, x, y, width, height):
-        """Draws an outline around the accessible, erasing the last drawn
-        outline in the process."""
-
-        if (x == -1) and (y == 0) and (width == 0) and (height == 0):
-            outline.erase()
-        else:
-            outline.draw(x, y, width, height)
-
-    def outlineAccessible(self, accessible):
-        """Draws a rectangular outline around the accessible, erasing the
-        last drawn rectangle in the process."""
-
-        try:
-            component = accessible.queryComponent()
-        except AttributeError:
-            self.drawOutline(-1, 0, 0, 0)
-        except NotImplementedError:
-            pass
-        else:
-            visibleRectangle = \
-                component.getExtents(pyatspi.DESKTOP_COORDS)
-            self.drawOutline(visibleRectangle.x, visibleRectangle.y,
-                             visibleRectangle.width, visibleRectangle.height)
 
     def updateBrailleReview(self, targetCursorCell=0):
         """Obtains the braille regions for the current flat review line
