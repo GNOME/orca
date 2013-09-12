@@ -47,7 +47,6 @@ AM_PATH_PYTHON(3.3)
 # if DISPLAY is not set, and we don't like that.
 
 AM_CHECK_PYMOD(gi,,,[AC_MSG_ERROR(Could not find python module: gi)])
-AM_CHECK_PYMOD(cairo,,,[AC_MSG_ERROR(Could not find python module: cairo)])
 AM_CHECK_PYMOD(json,,,[AC_MSG_ERROR(Could not find python module: json)])
 AM_CHECK_PYMOD(brlapi,,[brlapi_available="yes"],[brlapi_available="no"])
 AM_CHECK_PYMOD(speechd,,[speechd_available="yes"],[speechd_available="no"])
