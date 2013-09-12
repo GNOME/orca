@@ -154,7 +154,7 @@ formatting = {
             'detailedWhereAmI': 'label + placeholderText + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
             },
         pyatspi.ROLE_FRAME: {
-            'focused': '[]',
+            'focused': 'labelAndName + roleName',
             'unfocused': 'labelAndName + allTextSelection + roleName + unfocusedDialogCount + availability'
             },
         pyatspi.ROLE_HEADING: {
@@ -402,6 +402,8 @@ formatting = {
             'unfocused': BRAILLE_TEXT
             },
         pyatspi.ROLE_FRAME: {
+            'focused':   '[Component(obj,\
+                                     asString(((label + displayedText) or name) + value + roleName + alertAndDialogCount))]',
             'unfocused': '[Component(obj,\
                                      asString(((label + displayedText) or name) + value + roleName + alertAndDialogCount))]'
             },

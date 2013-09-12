@@ -904,7 +904,12 @@ class Script(script.Script):
             self.displayBrailleMessage(msg, flashTime=settings.brailleFlashTime)
             notification_messages.saveMessage(msg)
 
-        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
+        # Normally, we only care about name changes in the current object.
+        # But with the new GtkHeaderBar, we are seeing instances where the
+        # real frame remains the same, but the functional frame changes
+        # e.g. g-c-c going from all settings to a specific panel.
+        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus) \
+           and obj.getRole() != pyatspi.ROLE_FRAME:
             # Present state changes of child widgets of GtkListBox items
             isListBox = lambda x: x and x.getRole() == pyatspi.ROLE_LIST_BOX
             if not pyatspi.findAncestor(obj, isListBox):
