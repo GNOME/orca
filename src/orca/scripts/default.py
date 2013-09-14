@@ -5062,3 +5062,4 @@ state_change_notifiers[pyatspi.ROLE_TABLE_CELL]      = ("checked",
                                                         "expanded",
                                                         None)
 state_change_notifiers[pyatspi.ROLE_LIST_ITEM]       = ("expanded", None)
+state_change_notifiers[pyatspi.ROLE_MENU_ITEM]       = ("expanded", None)

@@ -195,8 +195,8 @@ formatting = {
             'basicWhereAmI': '(ancestors or parentRoleName) + labelAndName + roleName +  positionInList + ' + MNEMONIC
             },
         pyatspi.ROLE_MENU_ITEM: {
-            'focused': '[]',
-            'unfocused': 'labelAndName + menuItemCheckedState + availability + ' + MNEMONIC + ' + accelerator + positionInList',
+            'focused': 'expandableState',
+            'unfocused': 'labelAndName + menuItemCheckedState + expandableState + availability + ' + MNEMONIC + ' + accelerator + positionInList',
             'basicWhereAmI': 'ancestors + labelAndName + accelerator + positionInList + ' + MNEMONIC
             },
         pyatspi.ROLE_NOTIFICATION: {
@@ -455,7 +455,7 @@ formatting = {
         #pyatspi.ROLE_MENU_BAR: 'default'
         pyatspi.ROLE_MENU_ITEM: {
             'unfocused': '[Component(obj,\
-                                     asString(label + displayedText + availability) + asString(accelerator),\
+                                     asString(label + displayedText + expandableState + availability) + asString(accelerator),\
                                      indicator=asString(menuItemCheckedState))]'
             },
         #pyatspi.ROLE_OPTION_PANE: 'default'
@@ -592,7 +592,7 @@ if settings.useExperimentalSpeechProsody:
     formatting['speech'][pyatspi.ROLE_MENU]['unfocused'] = 'labelAndName + allTextSelection + roleName + availability + ' + MNEMONIC + ' + accelerator + pause + positionInList'
     formatting['speech'][pyatspi.ROLE_MENU]['basicWhereAmI'] = \
         '(ancestors or parentRoleName) + pause + labelAndName + roleName + pause +  positionInList + ' + MNEMONIC
-    formatting['speech'][pyatspi.ROLE_MENU_ITEM]['unfocused'] = 'labelAndName + menuItemCheckedState + availability + ' + MNEMONIC + ' + accelerator + pause + positionInList'
+    formatting['speech'][pyatspi.ROLE_MENU_ITEM]['unfocused'] = 'labelAndName + menuItemCheckedState + expandableState + availability + ' + MNEMONIC + ' + accelerator + pause + positionInList'
     formatting['speech'][pyatspi.ROLE_MENU_ITEM]['basicWhereAmI'] = \
         'ancestors + pause + labelAndName + pause + accelerator + pause + positionInList + ' + MNEMONIC
     formatting['speech'][pyatspi.ROLE_PAGE_TAB]['focused'] = 'labelAndName + roleName + pause + positionInList + ' + MNEMONIC + ' + accelerator'
