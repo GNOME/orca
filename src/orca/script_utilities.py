@@ -1493,6 +1493,14 @@ class Utilities:
             x2, y2 = 0, 0
 
         rv = y1 - y2 or x1 - x2
+
+        # If the objects claim to have the same coordinates, there is either
+        # a horrible design crime or we've been given bogus extents. Fall back
+        # on the index in the parent. This is seen with GtkListBox items which
+        # had been scrolled off-screen.
+        if not rv and obj1.parent == obj2.parent:
+            rv = obj1.getIndexInParent() - obj2.getIndexInParent()
+
         rv = max(rv, -1)
         rv = min(rv, 1)
 
