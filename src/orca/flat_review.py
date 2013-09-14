@@ -1192,6 +1192,9 @@ class Context:
             elif accessible.description and len(accessible.description):
                 string = accessible.description
 
+            if not string and role == pyatspi.ROLE_ICON:
+                string = self.script.utilities.displayedText(accessible)
+
             if (string == "") \
                 and (role != pyatspi.ROLE_TABLE_CELL):
                 string = accessible.getRoleName()
