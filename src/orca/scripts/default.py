@@ -907,12 +907,15 @@ class Script(script.Script):
         # But with the new GtkHeaderBar, we are seeing instances where the
         # real frame remains the same, but the functional frame changes
         # e.g. g-c-c going from all settings to a specific panel.
-        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus) \
-           and obj.getRole() != pyatspi.ROLE_FRAME:
-            # Present state changes of child widgets of GtkListBox items
-            isListBox = lambda x: x and x.getRole() == pyatspi.ROLE_LIST_BOX
-            if not pyatspi.findAncestor(obj, isListBox):
-                return
+        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
+            if obj.getRole() == pyatspi.ROLE_FRAME:
+                if not obj.getState().contains(pyatspi.STATE_ACTIVE):
+                    return
+            else:
+                # Present state changes of child widgets of GtkListBox items
+                isListBox = lambda x: x and x.getRole() == pyatspi.ROLE_LIST_BOX
+                if not pyatspi.findAncestor(obj, isListBox):
+                    return
 
         # Radio buttons normally change their state when you arrow to them,
         # so we handle the announcement of their state changes in the focus
