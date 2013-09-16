@@ -1,3 +1,50 @@
+3.9.92 - 16 September 2013
+
+General:
+
+  * Improved support for presenting GtkListBox, GtkListBox items, and
+    their child widgets
+
+  * Present accessible name-changed events for the active frame
+
+  * Present expandable and expanded states, state changes for menu items
+
+  * Fix isSameObject() so that it is more performant and has less false
+    positives
+
+  * Fall back on child index when spatially comparing objects with bogus
+    extents
+
+  * Fall back on displayed text when flat-reviewing icons that lack name
+    and description
+
+  * Remove the "outline" debugging tool. It was always a hack; now it also
+    causes focus loss
+
+  * Fix for bug 703472 - Fix Makefiles so orca can be a noarch package
+
+  * Update orca executable for the recent python dir changes
+
+  * Remove deprecated calls to GLib and GObject threads_init
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    be            Belarusian                  Ihar Hrachyshka
+    da            Danish                      Kenneth Nielsen
+    de            German                      Benjamin Steinwender
+    fi            Finnish                     Jiri Grönroos
+    fr            French                      Claude Paroz
+    it            Italian                     Milo Casagrande
+    lv            Latvian                     Rūdolfs Mazurs
+    pt_BR         Brazilian Portuguese        Enrico Nicoletto,
+                                              Rafael Ferreira
+    ru            Russian                     Yuri Myasoedov
+    sr            Serbian                     Мирослав Николић
+    sr@latin      Serbian                     Miroslav Nikolić
+    tj            Tajik                       Victor Ibragimov
+
+=========
+
 3.9.91 - 3 September 2013
 
 General:
