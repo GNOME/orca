@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-08-11 17:29+0000\n"
-"PO-Revision-Date: 2013-09-07 19:57+0300\n"
+"POT-Creation-Date: 2013-09-10 22:58+0000\n"
+"PO-Revision-Date: 2013-09-16 22:21+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -1922,7 +1922,6 @@ msgstr "Puhu otsikkopalkki."
 #. window and then move focus to that text. For example, they may want to find
 #. the "OK" button.
 #: ../src/orca/cmdnames.py:83
-#| msgid "Opens the Orca Find dialog."
 msgid "Opens the Find dialog."
 msgstr "Avaa hakuikkunan."
 
@@ -2832,7 +2831,7 @@ msgstr "Siirtää seuraavaan nappiin."
 #. Translators: this is for navigating among buttons in a document.
 #: ../src/orca/cmdnames.py:763
 msgid "Displays a list of buttons."
-msgstr ""
+msgstr "Näyttää luettelon painikkeista."
 
 #. Translators: this is for navigating among check boxes in a document.
 #: ../src/orca/cmdnames.py:766
@@ -2892,7 +2891,7 @@ msgstr "Siirtyy seuraavaan lomakkeen kenttään."
 #. Translators: this is for navigating among form fields in a document.
 #: ../src/orca/cmdnames.py:799
 msgid "Displays a list of form fields."
-msgstr ""
+msgstr "Näyttää luettelon lomakekentistä."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: ../src/orca/cmdnames.py:802
@@ -2907,7 +2906,7 @@ msgstr "Siirtyy seuraavaan otsakkeeseen."
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: ../src/orca/cmdnames.py:808
 msgid "Displays a list of headings."
-msgstr ""
+msgstr "Näyttää luettelon otsikoista."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
@@ -2926,10 +2925,10 @@ msgstr "Siirtyy seuraavaan tason %d otsakkeeseen."
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: ../src/orca/cmdnames.py:820
-#, fuzzy, python-format
+#, python-format
 #| msgid "No more headings at level %d."
 msgid "Displays a list of headings at level %d."
-msgstr "Ei lisää tason %d otsakkeita."
+msgstr "Näyttää luettelon tason %d otsikoista."
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
@@ -2971,7 +2970,7 @@ msgstr "Ei lisää isoja kohteita."
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:848
 msgid "Displays a list of links."
-msgstr ""
+msgstr "Näyttää luettelon linkeistä."
 
 #. Translators: this is for navigating among lists in a document.
 #: ../src/orca/cmdnames.py:851
@@ -2986,7 +2985,7 @@ msgstr "Siirtyy seuraavaan luetteloon."
 #. Translators: this is for navigating among lists in a document.
 #: ../src/orca/cmdnames.py:857
 msgid "Displays a list of lists."
-msgstr ""
+msgstr "Näyttää luettelon luetteloista."
 
 #. Translators: this is for navigating among list items in a document.
 #: ../src/orca/cmdnames.py:860
@@ -3001,7 +3000,7 @@ msgstr "Siirtyy seuraavaan luettelon kohtaan."
 #. Translators: this is for navigating among list items in a document.
 #: ../src/orca/cmdnames.py:866
 msgid "Displays a list of list items."
-msgstr ""
+msgstr "Näyttää luettelon luettelokohteista."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
@@ -3037,7 +3036,7 @@ msgstr "Siirtää seuraavaan kappaleeseen."
 #. Translators: this is for navigating among paragraphs in a document.
 #: ../src/orca/cmdnames.py:890
 msgid "Displays a list of paragraphs."
-msgstr ""
+msgstr "Näyttää luettelon kappaleista."
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: ../src/orca/cmdnames.py:893
@@ -3081,7 +3080,7 @@ msgstr "Siirtyy edelliseen tauluun."
 #. Translators: this is for navigating among tables in a document.
 #: ../src/orca/cmdnames.py:916
 msgid "Displays a list of tables."
-msgstr ""
+msgstr "Näyttää luettelon taulukoista."
 
 #. Translators: this is for navigating among table cells in a document.
 #: ../src/orca/cmdnames.py:919
@@ -3125,10 +3124,9 @@ msgstr "Siirtyy seuraavaan tallentamattomaan linkkiin."
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: ../src/orca/cmdnames.py:943
-#, fuzzy
 #| msgid "No more unvisited links."
 msgid "Displays a list of unvisited links."
-msgstr "Ei lisää vierailemattomia linkkejä."
+msgstr "Näyttää luettelon linkeistä, joissa ei ole vierailtu."
 
 #. Translators: this is for navigating among visited links in a document.
 #: ../src/orca/cmdnames.py:946
@@ -3142,18 +3140,17 @@ msgstr "Siirtyy seuraavaan vierailtuun linkkiin."
 
 #. Translators: this is for navigating among visited links in a document.
 #: ../src/orca/cmdnames.py:952
-#, fuzzy
 #| msgid "No more visited links."
 msgid "Displays a list of visited links."
-msgstr "Ei lisää vierailtuja linkkejä."
+msgstr "Näyttää luettelon vierailluista linkeistä."
 
 #. Translators: this is the action name for
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1050 ../src/orca/generator.py:474
-#: ../src/orca/generator.py:723 ../src/orca/generator.py:765
-#: ../src/orca/generator.py:811
+#: ../src/orca/flat_review.py:1050 ../src/orca/generator.py:475
+#: ../src/orca/generator.py:738 ../src/orca/generator.py:780
+#: ../src/orca/generator.py:826
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:635
 #: ../src/orca/tutorialgenerator.py:558 ../src/orca/tutorialgenerator.py:598
@@ -3402,7 +3399,6 @@ msgstr "Pikanäppäin"
 #. can be used in any setting, task, or application. They are not specific
 #. to, for instance, web browsing.
 #: ../src/orca/guilabels.py:205
-#| msgid "Default"
 msgctxt "keybindings"
 msgid "Default"
 msgstr "Oletus"
@@ -3426,7 +3422,6 @@ msgstr "Sitomaton"
 #. for an Orca command has been changed by the user to something other than its
 #. default value.
 #: ../src/orca/guilabels.py:221
-#| msgid "Modified"
 msgctxt "keybindings"
 msgid "Modified"
 msgstr "Muokattu"
@@ -3444,7 +3439,6 @@ msgstr "_Työpöytä"
 #. "Gedit", "Firefox", etc.
 #: ../src/orca/guilabels.py:232
 #, python-format
-#| msgid "Orca Preferences for %s"
 msgid "Screen Reader Preferences for %s"
 msgstr "Näytönlukijat asetukset sovellukselle %s"
 
@@ -3772,8 +3766,6 @@ msgstr ""
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the selected item of a form field.
 #: ../src/orca/guilabels.py:458
-#| msgctxt "radiobutton"
-#| msgid "selected"
 msgctxt "structural navigation"
 msgid "Selected Item"
 msgstr "Valittu kohta"
@@ -4631,7 +4623,6 @@ msgstr "Gecko ohjaa kohdistinta."
 #. often broken, so Orca needs to provide its own support. As such, Orca offers
 #. the user the ability to toggle which application is controlling the caret.
 #: ../src/orca/messages.py:177
-#| msgid "Orca is controlling the caret."
 msgid "The screen reader is controlling the caret."
 msgstr "Näytönlukija ohjaa kohdistinta."
 
@@ -4695,7 +4686,6 @@ msgstr "Profiilin lataus epäonnistui: %s"
 #. Translators: This message is presented to the user who attempts to launch Orca
 #. from some other environment than the graphical desktop.
 #: ../src/orca/messages.py:221
-#| msgid "Cannot start Orca because it cannot connect to the Desktop."
 msgid ""
 "Cannot start the screen reader because it cannot connect to the Desktop."
 msgstr ""
@@ -4711,9 +4701,6 @@ msgstr ""
 #. Translators: This message is presented to the user when he/she tries to launch
 #. Orca, but Orca is already running.
 #: ../src/orca/messages.py:231
-#| msgid ""
-#| "Another Orca process is already running for this session.\n"
-#| "Run \"orca --replace\" to replace that process with a new one."
 msgid ""
 "Another screen reader process is already running for this session.\n"
 "Run \"orca --replace\" to replace that process with a new one."
@@ -4744,7 +4731,6 @@ msgstr ""
 #. Translators: This is the description of command line option '-r, --replace'
 #. which tells Orca to replace any existing Orca process that might be running.
 #: ../src/orca/messages.py:250
-#| msgid "Replace a currently running Orca"
 msgid "Replace a currently running instance of this screen reader"
 msgstr "Korvaa nyt suorituksessa oleva näytönlukija"
 
@@ -5835,7 +5821,7 @@ msgstr "Hiiren kohdalla olevaa kohdetta ei löydy."
 #. from getting these objects.
 #: ../src/orca/messages.py:1071
 msgid "Error: Could not create list of objects."
-msgstr ""
+msgstr "Virhe: Luetteloa objekteista ei voitu luoda."
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
@@ -6292,7 +6278,6 @@ msgstr "Haku valmistui."
 #. Translators: This message is presented to the user when Orca's preferences
 #. have been reloaded.
 #: ../src/orca/messages.py:1393
-#| msgid "Orca user settings reloaded."
 msgid "Screen reader settings reloaded."
 msgstr "Näytönlukijan asetukset ladattu uudestaan."
 
@@ -6338,13 +6323,11 @@ msgstr " piste piste piste"
 
 #. Translators: This message is presented to the user when Orca is launched.
 #: ../src/orca/messages.py:1422
-#| msgid "Screen Reader"
 msgid "Screen reader on."
 msgstr "Näytönlukija päällä."
 
 #. Translators: This message is presented to the user when Orca is quit.
 #: ../src/orca/messages.py:1425
-#| msgid "Screen Reader"
 msgid "Screen reader off."
 msgstr "Näytönlukija pois päältä."
 
@@ -6357,7 +6340,7 @@ msgstr "Puhe ei ole käytettävissä."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1434 ../src/orca/scripts/default.py:4043
+#: ../src/orca/messages.py:1434 ../src/orca/scripts/default.py:4048
 msgid "string not found"
 msgstr "merkkijonoa ei löydy"
 
@@ -6555,7 +6538,6 @@ msgstr "Unicode %s"
 #. Translators: This message presents the Orca version number.
 #: ../src/orca/messages.py:1565
 #, python-format
-#| msgid "Orca version %s."
 msgid "Screen reader version %s."
 msgstr "Näytönlukijan versio %s."
 
@@ -6759,8 +6741,6 @@ msgstr[1] "%(index)d %(total)d kohteesta valittu"
 #. the list.
 #: ../src/orca/messages.py:1709
 #, python-format
-#| msgid "%d Orca default shortcut found."
-#| msgid_plural "%d Orca default shortcuts found."
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
 msgstr[0] "Löytyi %d näytönlukijan oletuspikanäppäin."
@@ -6771,8 +6751,6 @@ msgstr[1] "Löytyi %d näytönlukijan oletuspikanäppäintä."
 #. application. It appears as the title of the dialog containing the list.
 #: ../src/orca/messages.py:1717
 #, python-format
-#| msgid "%(count)d Orca shortcut for %(application)s found."
-#| msgid_plural "%(count)d Orca shortcuts for %(application)s found."
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
 msgstr[0] ""
@@ -7034,24 +7012,21 @@ msgstr "monivalinta"
 #.
 #: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:200
 #: ../src/orca/scripts/apps/gedit/script.py:202
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:163
+#: ../src/orca/scripts/apps/gnome-search-tool/script.py:160
 msgid "Find"
 msgstr "Etsi"
 
 #: ../src/orca/orca-find.ui.h:2
-#| msgid "Screen Reader"
 msgid "Screen Reader Find Dialog"
 msgstr "Näytönlukijan hakuikkuna"
 
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/orca-find.ui.h:4
-#| msgid "Close"
 msgid "_Close"
 msgstr "_Sulje"
 
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/orca-find.ui.h:6
-#| msgid "Find"
 msgid "_Find"
 msgstr "_Etsi"
 
@@ -7124,7 +7099,6 @@ msgid "Window"
 msgstr "Ikkuna"
 
 #: ../src/orca/orca-setup.ui.h:11
-#| msgid "Screen Reader"
 msgid "Screen Reader Preferences"
 msgstr "Näytönlukijan asetukset"
 
@@ -7161,7 +7135,6 @@ msgstr "_Lataa"
 
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/orca-setup.ui.h:28
-#| msgid "Save Profile As"
 msgid "Save _As"
 msgstr "Tallenna _nimellä"
 
@@ -7415,7 +7388,6 @@ msgid "Key Echo"
 msgstr "Näppäinten kaiutus"
 
 #: ../src/orca/orca-setup.ui.h:117
-#| msgid "Orca _Modifier Key(s):"
 msgid "Screen Reader _Modifier Key(s):"
 msgstr "Näytönlukijan _muokkainnäppäimet:"
 
@@ -7611,7 +7583,7 @@ msgstr "Lue viimeisimmän n viestiä saapuvien viestien alueelta."
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
 #.
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:134
+#: ../src/orca/scripts/apps/gnome-search-tool/script.py:131
 msgid "Stop"
 msgstr "Pysäytä"
 
@@ -7683,7 +7655,7 @@ msgstr "%s-paneeli"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3643 ../src/orca/scripts/default.py:3655
+#: ../src/orca/scripts/default.py:3641 ../src/orca/scripts/default.py:3653
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7692,7 +7664,7 @@ msgstr[1] "%(key)s %(value)s pikseliä"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4800
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4744
 msgid "open"
 msgstr "avaa"
 
