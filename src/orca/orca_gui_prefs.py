@@ -3015,6 +3015,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
+        self._cleanupSpeechServers()
         self.restoreSettings()
 
     def windowDestroyed(self, widget):
