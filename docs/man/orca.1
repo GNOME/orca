@@ -14,9 +14,9 @@
 .\" along with this; if not write to the Free Software Foundation, Inc.
 .\" 51 Franklin Street, Fifth Floor, Boston MA 02110-1301 USA
 '\"
-.TH orca 1 "12 May 2012" "GNOME"
+.TH orca 1 "20 September 2013" "GNOME"
 .SH NAME
-orca \- is a scriptable screen reader
+orca \- a scriptable screen reader
 .SH SYNOPSIS
 .B orca
 .RI [ option... ]
@@ -25,19 +25,14 @@ orca \- is a scriptable screen reader
 is a screen reader for people with visual impairments,
 it provides alternative access to the desktop by using speech synthesis and braille.
 .P
-In addition,
 .B orca
-only provides access to
-applications/toolkits that support the assistive technology
-service provide interface (AT-SPI), which include GTK,
-Mozilla, Firefox, Evolution, OpenOffice, StarOffice,
-Java/Swing, etc.
-.P
-WARNING: suspending
-.B orca,
-e.g. by pressing Control-Z, from
-an AT-SPI enabled shell (such as gnome-terminal), can also
-suspend the desktop until Orca is killed.
+works with applications and toolkits that support
+the Assistive Technology Service Provider Interface (AT-SPI), which
+is the primary assistive technology infrastructure for Linux and
+Solaris. Applications and toolkits supporting the AT-SPI include the
+GNOME Gtk+ toolkit, the Java platform's Swing toolkit, LibreOffice,
+Gecko, and WebKitGtk. AT-SPI support for the KDE Qt toolkit is being
+pursued.
 .SH OPTIONS
 .TP
 .B \-t, --text-setup
@@ -52,12 +47,12 @@ use
 .I dirname
 as an alternate directory for the user preferences.
 .TP
-.BI "\-e, \-\-enable=" speech|braille|braille\-monitor|main\-window
+.BI "\-e, \-\-enable=" speech|braille|braille\-monitor
 When starting
 .BR orca ,
 force the enabling of the supplied options.
 .TP
-.BI "\-d, \-\-disable=" speech|braille|braille\-monitor|main\-window
+.BI "\-d, \-\-disable=" speech|braille|braille\-monitor
 When starting
 .BR orca ,
 force the disabling of the supplied options.
@@ -173,9 +168,6 @@ assign a bookmark to a numbered slot. If a bookmark already exists in the slot i
 .B "Insert+[1-6]"
 go to the position pointed to by the bookmark bound to this numbered slot.
 
-.B "Alt+Shift+[1-6]"
- 'Where am I' information for this bookmark relative to the current pointer location.
-
 .B "Insert+B and Insert+Shift+B"
 move between the given bookmarks for the given application or page.
 
@@ -211,23 +203,6 @@ toggle speech on and off.
 
 .B "Insert+F11"
 toggle the reading of tables, either by single cell or whole row.
-
-.B "Insert+Q"
-quit orca.
-
-.B Debugging
-
-.B "Ctrl+Alt+Insert+Home"
-report information on the currently active script.
-
-.B "Ctrl+Alt+Insert+End"
-print a debug listing of all known applications to the console where orca is running.
-
-.B "Ctrl+Alt+Insert+Page_Up"
-print debug information about the ancestry of the object with focus.
-
-.B "Ctrl+Alt+Insert+Page_Down"
-print debug information about the hierarchy of the application with focus.
 
 .SH Laptop Mode
 
@@ -266,9 +241,6 @@ perform a left mouse click at the location of the flat review cursor.
 .B "Caps_Lock+8"
 perform a right mouse click at the location of the flat review cursor.
 
-.B "Caps_Lock+8"
-perform a right mouse click at the location of the flat review cursor.
-
 .B Bookmark commands
 
 .B "Alt+Caps_Lock+[1-6]"
@@ -277,9 +249,6 @@ add a bookmark to the numbered slot. If a bookmark already exists for the slot i
 
 .B "Caps_Lock+[1-6]"
 go to the position pointed to by the bookmark bound to this numbered slot.
-
-.B "Alt+Shift+[1-6]"
- 'Where am I' information for this bookmark relative to the current pointer location.
 
 .B "Caps_Lock+Band Caps_Lock+Shift+B"
 move between the given bookmarks for the given application or page.
@@ -315,47 +284,30 @@ toggle speech on and off.
 .B "Caps_Lock+F11"
 toggle the reading of tables, either by single cell or whole row.
 
-.B "Caps_Lock+Q"
-quit orca.
-
-.B Debugging
-
-.B "Caps_Lock+Alt+Ctrl+Home"
-report information on the currently active script.
-
-.B "Caps_Lock+Alt+Ctrl+End"
-prints a debug listing of all known applications to the console where orca is running.
-
-.B "Caps_Lock+Alt+Ctrl+Page_Up"
-prints debug information about the ancestry of the object with focus.
-
-.B "Caps_Lock+Alt+Ctrl+Page_Down"
-prints debug information about the object hierarchy of the application with focus.
-
 .SH FILES
 .TP
-.BI ~/.orca
+.BI ~/.local/share/orca
 .B Orca
 user preferences directory
 .TP
-.BI ~/.orca/user-settings.py
+.BI ~/.local/share/orca/user-settings.conf
 .B Orca
 user preferences configuration file.
 .TP
-.BI ~/.orca/orca-customizations.py
+.BI ~/.local/share/orca/orca-customizations.py
 .B Orca
 user customizations configuration file
 
 .TP
-.BI ~/.orca/orca-scripts
+.BI ~/.local/share/orca/orca-scripts
 .B Orca
 user orca scripts directory
 .TP
-.BI ~/.orca/bookmarks
+.BI ~/.local/share/orca/bookmarks
 .B Orca
 user bookmarks directory
 .TP
-.BI ~/.orca/app-settings
+.BI ~/.local/share/orca/app-settings
 .B Orca
 user application specific settings directory
 

@@ -25,7 +25,7 @@
     the Assistive Technology Service Provider Interface (AT-SPI), which
     is the primary assistive technology infrastructure for Linux and
     Solaris. Applications and toolkits supporting the AT-SPI include the
-    GNOME Gtk+ toolkit, the Java platform's Swing toolkit, OpenOffice,
+    GNOME Gtk+ toolkit, the Java platform's Swing toolkit, LibreOffice,
     Gecko, and WebKitGtk. AT-SPI support for the KDE Qt toolkit is being
     pursued.
   </p>
