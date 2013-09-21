@@ -500,7 +500,6 @@ class EventManager:
            and orca_state.activeScript \
            and orca_state.activeScript.flatReviewContext \
            and orca_state.activeScript.app == event.host_application:
-            orca_state.activeScript.drawOutline(-1, 0, 0, 0)
             orca_state.activeScript.flatReviewContext = None
 
         try:
