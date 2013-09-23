@@ -2477,9 +2477,7 @@ class Script(default.Script):
 
             # This might be too restrictive but we need it to filter
             # out URLs that are displayed when the location list opens.
-            if 'tag' in attrs \
-                    and attrs['tag'] == 'xul:description' \
-                    or attrs['tag'] == 'xul:label':
+            if attrs.get('tag') in ['xul:description', 'xul:label']:
                 return False
 
             # This eliminates all ARIA widgets that are not considered live
