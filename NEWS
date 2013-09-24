@@ -1,3 +1,31 @@
+3.10.0 - 24 September 2013
+
+General:
+
+  * Fix for bug 708497 - Orca fails to present GtkButton children of a
+    GtkListBox row
+
+  * Fix for bug 707708 - Orca does not shut down unused synthesizers
+    which were initialized within the preferences dialog
+
+  * Remove a leftover call to drawOutline() that was missed
+
+  * Fix traceback in the Gecko script
+
+  * Update the man page so that it doesn't contain false information
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es            Spanish                     Daniel Mustieles
+    eu            Basque                      Inaki Larranaga Murgoitio
+    fi            Finnish                     Timo Jyrinki
+    hu            Hungarian                   Gabor Kelemen
+    id            Indonesian                  Andika Triwidada
+    pt            Portuguese                  Duarte Loreto
+    pt_BR         Brazilian Portuguese        Enrico Nicoletto
+
+=========
+
 3.9.92 - 16 September 2013
 
 General:
