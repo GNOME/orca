@@ -23,7 +23,7 @@ requests.
 Dependencies
 ========================================================================
 
-Orca v3.8.x is supported on GNOME 3.8.x only.  We highly suggest you
+Orca v3.10.x is supported on GNOME 3.10.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 
@@ -38,7 +38,7 @@ Orca also has the following dependencies:
 * BrlAPI           - BrlAPI support for braille (optional)
 * py-setproctitle  - Python library to set the process title (optional)
 
-YOU ALSO NEED THE LATEST AT-SPI2, PYATSPI2 AND ATK FOR THE GNOME 3.8.x
+YOU ALSO NEED THE LATEST AT-SPI2, PYATSPI2 AND ATK FOR THE GNOME 3.10.x
 RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
 NOTE: If you have multiple versions of the python interpreter installed
@@ -54,21 +54,14 @@ or
 NOTE FOR BRLTTY USERS:
 ========================================================================
 
-Orca depends upon the Python bindings for BrlAPI available in BrlTTY v3.8
+Orca depends upon the Python bindings for BrlAPI available in BrlTTY v4.5
 or better.  You can determine if the Python bindings for BrlAPI are
 installed by running the following command:
 
 python -c "import brlapi"
 
 If you get the following error, the Python bindings for BrlAPI are not
-installed.  This is most likely because whoever built BrlTTY did not
-have Pyrex installed before building BrlTTY:
-
-Traceback (most recent call last):
-  File "<string>", line 1, in <module>
-ImportError: No module named brlapi
-
-If you run into this, install python-pyrex and rebuild/reinstall BrlTTY.
+installed.
 
 See also http://live.gnome.org/Orca/Braille for more information on
 BrlTTY and also using liblouis for contracted braille.
@@ -76,25 +69,14 @@ BrlTTY and also using liblouis for contracted braille.
 Running Orca
 ========================================================================
 
-When you run Orca for the first time, you will be prompted for your
-initial user preferences.  The first time you run Orca, you also need
-to log out and log back in in order for accessibility to be enabled in
-your environment.  If you wish to modify your Orca preferences in the
-future, you can press "Insert+space" while Orca is running, or you can
-re-run orca with the "--setup" command line option.
+If you wish to modify your Orca preferences, you can press "Insert+space"
+while Orca is running.
 
-You can bypass the Orca setup utility by running orca with the
-"--no-setup" option.  This is useful for running from environments
-such as the login screen.
-
-To get help while running Orca, press "Insert+F1".  This will enable
+To get help while running Orca, press "Insert+H".  This will enable
 "learn mode", which provides a spoken and brailled description of what
 various keyboard and braille input device actions will do.  To exit
 learn mode, press "Escape."  Finally, the preferences dialog contains
 a "Key Bindings" tab that lists the keyboard binding for Orca.
-
-To quit Orca, you can press "Insert+q" or run "orca --quit" from the
-command line.
 
 For more information, see the Orca documentation which is available
 within Orca as well as at: http://library.gnome.org/users/orca/stable
