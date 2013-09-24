@@ -1,12 +1,12 @@
 m4_define([orca_major_version], [3])
 m4_define([orca_minor_version], [10])
-m4_define([orca_micro_version], [0pre])
+m4_define([orca_micro_version], [0])
 m4_define([orca_version],
           [orca_major_version.orca_minor_version.orca_micro_version])
 
-m4_define(pygobject_required_version, 3.4.2)
-m4_define(atspi_required_version, 2.8)
-m4_define(atkbridge_required_version, 2.8)
+m4_define(pygobject_required_version, 3.10)
+m4_define(atspi_required_version, 2.10)
+m4_define(atkbridge_required_version, 2.10)
 
 AC_INIT([orca],
         [orca_version],
