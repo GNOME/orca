@@ -4164,6 +4164,8 @@ class Script(script.Script):
                 lastEndOffset = endOffset
                 offset = endOffset
 
+                lineString = \
+                    self.utilities.adjustForLinks(obj, lineString, startOffset)
                 lineString = self.utilities.adjustForRepeats(lineString)
                 if lineString.isupper():
                     voice = settings.voices[settings.UPPERCASE_VOICE]
