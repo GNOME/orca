@@ -2,7 +2,7 @@
   <info>
     <link type="guide" xref="index#getting_started" />
     <link type="next" xref="howto_keyboard_layout" />
-    <title type="sort">5. The "Learn" Modes</title>
+    <title type="sort">5. "Learn" Mode</title>
     <desc>
       Discovering <app>Orca</app>'s commands
     </desc>
@@ -14,14 +14,12 @@
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
-  <title>The "Learn" Modes</title>
+  <title>"Learn" Mode</title>
   <p>
-    Orca has two modes for learning more about <app>Orca</app>'s commands:
-    Learn Mode and List Shortcuts Mode. In Learn Mode, <app>Orca</app>
-    will announce each keystroke you pressed along with any associated
-    <app>Orca</app> command that keystroke is bound to. List Shortcuts
-    Mode provides you with a list of all the <app>Orca</app> commands
-    you can use.
+    In Learn Mode, <app>Orca</app> will announce each keystroke you pressed
+    along with any associated <app>Orca</app> command that keystroke is bound
+    to. In this mode, you can also get a list of shortcuts containing all the
+    <app>Orca</app> commands you can use.
   </p>
   <steps>
     <title>Using Learn Mode</title>
@@ -42,11 +40,11 @@
     </item>
   </steps>
   <steps>
-    <title>Using List Shortcuts Mode</title>
+    <title>Getting a List of Shortcuts</title>
     <item>
       <p>
-        Get into List Shortcuts Mode by pressing <keyseq><key>Orca Modifier</key>
-        <key>H</key></keyseq> twice quickly.
+        Get into Learn Mode by pressing <keyseq><key>Orca Modifier</key>
+        <key>H</key></keyseq>.
       </p>
     </item>
     <item>
@@ -64,7 +62,7 @@
     </item>
     <item>
       <p>
-        Press <key>Esc</key> to exit List Shortcuts Mode.
+        Press <key>Esc</key> to exit the list.
       </p>
     </item>
   </steps>

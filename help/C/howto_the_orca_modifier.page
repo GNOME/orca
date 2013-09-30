@@ -2,7 +2,7 @@
   <info>
     <link type="guide" xref="index#getting_started"/>
     <link type="next" xref="howto_learn_modes" />
-    <title type="sort">4. The Orca Modifier</title>
+    <title type="sort">3. The Orca Modifier</title>
     <desc>
         A key that works like <key>Shift</key>, <key>Ctrl</key>,
         and <key>Alt</key>

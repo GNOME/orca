@@ -165,29 +165,9 @@
         recover gracefully and function even if it cannot find BrlTTY.
       </p>
     </item>
-    <item>
-      <p>Enable Braille Monitor</p>
-      <p>
-        Orca's Braille Monitor is an on-screen braille representation. This is
-        mostly for sighted developers who need to verify BrlTTY output, but may
-        also be useful in other situations, such as visually diagnosing or verifying
-        braille output. Type <cmd>y</cmd> or <cmd>n</cmd> and press <key>Return</key>.
-      </p>
-    </item>
-    <item>
-      <p>Automatically start <app>Orca</app> when you log in</p>
-      <p>
-        Type <cmd>y</cmd> if you want <app>Orca</app> automatically launched for you
-        or <cmd>n</cmd> if you do not, and press <key>Return</key>.
-      </p>
-    </item>
   </steps>
   <p>
-    That's it. <app>Orca</app> is now ready for use. If accessibility was not
-    yet enabled, <app>Orca</app> does so now and asks you to logout and back
-    in for the services to start. Type <cmd>y</cmd> and press <key>Return</key>
-    to restart your login session. If, on the other hand, accessibility was
-    already enabled, you will simply be prompted to press <key>Return</key>
-    after which <app>Orca</app> will be launched for you.
+    That's it. <app>Orca</app> is now ready for use and will be launched if
+    you are in a graphical desktop environment where accessibility is enabled.
   </p>
 </page>
