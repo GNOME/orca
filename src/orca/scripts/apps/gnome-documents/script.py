@@ -25,8 +25,12 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013 The Orca Team"
 __license__   = "LGPL"
 
+import pyatspi
+
 import orca.scripts.default as default
+import orca.orca_state as orca_state
 from .speech_generator import SpeechGenerator
+from .script_utilities import Utilities
 
 class Script(default.Script):
 
@@ -44,3 +48,33 @@ class Script(default.Script):
 
         return SpeechGenerator(self)
 
+    def getUtilities(self):
+        """Returns the utilites for this script."""
+
+        return Utilities(self)
+
+    def onNameChanged(self, event):
+        """Callback for accessible name change events."""
+
+        try:
+            eventRole = event.source.getRole()
+            focusRole = orca_state.locusOfFocus.getRole()
+        except:
+            return
+
+        # Present page changes in the previewer.
+        if eventRole == pyatspi.ROLE_LABEL \
+           and focusRole == pyatspi.ROLE_DOCUMENT_FRAME:
+            self.presentMessage(event.any_data)
+
+            # HACK: Reposition the caret offset from the last character to the
+            # first so that SayAll will say all.
+            try:
+                text = orca_state.locusOfFocus.queryText()
+            except NotImplementedError:
+                pass
+            else:
+                text.setCaretOffset(0)
+            return self.sayAll(None)
+
+        default.Script.onNameChanged(self, event)

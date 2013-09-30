@@ -20,4 +20,5 @@
 """Custom script for gnome-documents."""
 
 from .script import Script
+from .script_utilities import Utilities
 
