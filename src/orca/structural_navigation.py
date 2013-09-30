@@ -2626,6 +2626,9 @@ class StructuralNavigation:
 
         nextDesc = cmdnames.LANDMARK_NEXT
         bindings["next"] = ["m", settings.NO_MODIFIER_MASK, nextDesc]
+
+        listDesc = cmdnames.LANDMARK_LIST
+        bindings["list"] = ["m", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _landmarkCriteria(self, collection, arg=None):
@@ -2694,6 +2697,14 @@ class StructuralNavigation:
             full = messages.NO_LANDMARK_FOUND
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
+
+    def _landmarkDialogData(self):
+        columnHeaders = [guilabels.SN_HEADER_LANDMARK]
+
+        def rowData(obj):
+            return [self._getText(obj)]
+
+        return guilabels.SN_TITLE_LANDMARK, columnHeaders, rowData
 
     ########################
     #                      #

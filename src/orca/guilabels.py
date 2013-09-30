@@ -403,6 +403,14 @@ SN_HEADER_LABEL = C_("structural navigation", "Label")
 
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they
+# could with native keyboard navigation. This is the title for a column which
+# contains the text of a landmark. ARIA role landmarks are the W3C defined HTML
+# tag attribute 'role' used to identify important part of webpage like banners,
+# main context, search etc.
+SN_HEADER_LANDMARK = C_("structural navigation", "Landmark")
+
+# Translators: Orca has a command that presents a list of structural navigation
+# objects in a dialog box so that users can navigate more quickly than they
 # could with native keyboard navigation. This is the title of a column which
 # contains the level of a heading. Level will be a "1" for <h1>, a "2" for <h2>,
 # and so on.
@@ -522,6 +530,13 @@ SN_TITLE_HEADING = C_("structural navigation", "Headings")
 # could with native keyboard navigation. This is the title of such a dialog box.
 # Level will be a "1" for <h1>, a "2" for <h2>, and so on.
 SN_TITLE_HEADING_AT_LEVEL = C_("structural navigation", "Headings at Level %d")
+
+# Translators: Orca has a command that presents a list of structural navigation
+# objects in a dialog box so that users can navigate more quickly than they
+# could with native keyboard navigation. This is the title of such a dialog box.
+# ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
+# identify important part of webpage like banners, main context, search etc.
+SN_TITLE_LANDMARK = C_("structural navigation", "Landmarks")
 
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they

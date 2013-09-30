@@ -829,6 +829,11 @@ LANDMARK_PREV = _("Goes to previous landmark.")
 # important part of webpage like banners, main context, search etc.
 LANDMARK_NEXT = _("Goes to next landmark.")
 
+# Translators: this is for navigating among ARIA landmarks in a document. ARIA
+# role landmarks are the W3C defined HTML tag attribute 'role' used to identify
+# important part of webpage like banners, main context, search etc.
+LANDMARK_LIST = _("Displays a list of large objects.")
+
 # Translators: this is for navigating among large objects in a document.
 # A 'large object' is a logical chunk of text, such as a paragraph, a list,
 # a table, etc.
