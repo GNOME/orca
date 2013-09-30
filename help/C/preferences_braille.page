@@ -35,19 +35,6 @@
       </p>
     </note>
   </section>
-  <section id="braillemonitor">
-    <title>Enable Braille Monitor</title>
-    <media type="image" mime="image/png" src="figures/preferences_enable_braille_monitor.png"/>
-    <p>
-      Orca's braille monitor provides an on-screen representation of what
-      takes place on the braille display. This feature is mostly for
-      demonstration purposes, but is also useful for <app>Orca</app>
-      developers who do not have access to a braille display.
-    </p>
-    <p>
-      Default value: not checked
-    </p>
-  </section>
   <section id="contractedbraille">
     <title>Enable Contracted Braille</title>
     <media type="image" mime="image/png" src="figures/preferences_braille_contracted.png"/>

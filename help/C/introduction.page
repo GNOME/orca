@@ -35,13 +35,6 @@
     <list>
       <item>
         <p>
-          Type <cmd>orca</cmd>, along with any optional parameters, in a
-          terminal window or within the <gui>Run</gui> dialog and then press
-          <key>Return</key>.
-        </p>
-      </item>
-      <item>
-        <p>
           The method for configuring <app>Orca</app> to be launched
           automatically as your preferred screen reader will depend upon
           which desktop environment you use. For instance, in GNOME 3.x
@@ -49,25 +42,26 @@
           panel on the <gui>Seeing</gui> page.
         </p>
       </item>
+      <item>
+        <p>
+          To toggle <app>Orca</app> on and off in GNOME, press
+          <keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>.
+        </p>
+      </item>
+      <item>
+        <p>
+          Type <cmd>orca</cmd>, along with any optional parameters, in a
+          terminal window or within the <gui>Run</gui> dialog and then press
+          <key>Return</key>.
+        </p>
+      </item>
     </list>
   </section>
-  <section id="quitting">
-    <title>Quitting <app>Orca</app></title>
-      <p>To quit <app>Orca</app>:</p>
-      <list>
-        <item>
-          <p>
-            Press <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>.
-            This command works whether the <app>Orca</app> main window is
-            enabled or not.
-          </p>
-        </item>
-      </list>
-    </section>
     <section id="loadtime">
       <title>Load-Time Options</title>
       <p>
-        The following options can be specified when launching <app>Orca</app>:
+        The following options can be specified when launching <app>Orca</app>
+	in a terminal window or within the <gui>Run</gui> dialog:
       </p>
       <list>
         <item>

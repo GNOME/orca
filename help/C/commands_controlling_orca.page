@@ -20,10 +20,17 @@
     <title>Commands for Controlling <app>Orca</app></title>
     <p>
       The following commands can be used to get into <app>Orca</app>'s
-      Preferences dialogs, quit <app>Orca</app>, and bypass <app>Orca</app>
-      commands to avoid shortcut conflicts within the application being accessed.
+      Preferences dialogs, toggle <app>Orca</app> on and off, and bypass
+      <app>Orca</app> commands to avoid shortcut conflicts within the
+      application being accessed.
     </p>
     <list>
+      <item>
+        <p>
+          Toggle <app>Orca</app> on and off in GNOME:
+          <keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>.
+        </p>
+      </item>
       <item>
         <p>
           <link xref="preferences">Orca Preferences</link> dialog:
@@ -38,12 +45,6 @@
       </item>
       <item>
         <p>
-          Quit <app>Orca</app>:
-          <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>.
-        </p>
-      </item>
-      <item>
-        <p>
           Pass the next command on to the current application:
           <keyseq><key>Orca Modifier</key><key>BackSpace</key></keyseq>
         </p>
@@ -53,11 +54,10 @@
   <section id="learning">
     <title>Commands for Learning to Use <app>Orca</app></title>
     <p>
-      Orca has two modes for learning more about <app>Orca</app>'s commands:
-      Learn Mode and List Shortcuts Mode. In Learn Mode, <app>Orca</app> will
-      announce each keystroke you pressed along with any associated
-      <app>Orca</app> command that keystroke is bound to. List Shortcuts Mode
-      provides you with a list of all the <app>Orca</app> commands you can use.
+      In Learn Mode, <app>Orca</app> will announce each keystroke you pressed
+      along with any associated <app>Orca</app> command that keystroke is bound
+      to. In this mode, you can also get a list of shortcuts containing all the
+      <app>Orca</app> commands you can use.
     </p>
     <list>
       <item>
@@ -68,13 +68,7 @@
       </item>
       <item>
         <p>
-          Enter list shortcuts mode:
-         <keyseq><key>Orca Modifier</key><key>H</key></keyseq> (double-clicked)
-        </p>
-      </item>
-      <item>
-        <p>
-          Exit either mode:
+          Exit learn mode:
           <keyseq><key>Esc</key></keyseq>
         </p>
       </item>

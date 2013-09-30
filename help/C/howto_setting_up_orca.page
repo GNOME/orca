@@ -3,10 +3,10 @@
   <link type="seealso" xref="preferences" />
   <link type="guide" xref="index#getting_started" />
   <link type="next" xref="howto_the_orca_modifier" />
-  <title type="sort">3. Orca Configuration</title>
+  <title type="sort">4. Orca Configuration</title>
   <title type="link">Configuration</title>
     <desc>
-      Setting up <app>Orca</app> initially and in the future
+      Setting up <app>Orca</app>
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -17,47 +17,17 @@
     </license>
   </info>
   <title>Orca Configuration</title>
-    <section id="initial_setup">
-      <title>Initial Setup</title>
-      <p>
-        When you run <app>Orca</app> for the first time, it will automatically
-        enter setup mode. Depending on your active session's configuration,
-        one of two things will occur:
-      </p>
-      <list>
-        <item>
-          <p>
-            If accessibility support has already been enabled for your
-            session, you will be placed in the <app>Orca</app>
-            <link xref="preferences">Preferences</link> dialog box where
-            you can customize <app>Orca</app> completely and then use it
-            immediately.
-          </p>
-        </item>
-        <item>
-          <p>
-            If accessibility support has not already been enabled for your
-            session, <app>Orca</app>'s <link xref="howto_text_setup">text-based
-            setup</link> will be launched instead. The text-based setup allows
-            you to configure the most fundamental settings and enable
-            accessibility support for your session. You will need to log out
-            and log back in for the new settings to take effect.
-          </p>
-        </item>
-      </list>
-    </section>
     <section id="configuring_orca">
-      <title>Configuring <app>Orca</app> in the Future</title>
       <p>
-        If you want to configure <app>Orca</app> in the future, you can do one
+        If you want to configure <app>Orca</app>, you can do one
         of the following:
       </p>
       <list>
         <item>
           <p>
-            Pass the <cmd>--setup</cmd> option to <app>Orca</app> the next
-            time you run it to automatically be placed in the <link
-            xref="preferences">Preferences</link> dialog box.
+            Get into the <link xref="preferences">Preferences</link> dialog
+            by pressing <keyseq><key>Orca Modifier</key><key>Space</key>
+            </keyseq> from within any accessible application.
           </p>
         </item>
         <item>
@@ -67,14 +37,6 @@
             setup</link>.
           </p>
         </item> 
-        <item>
-          <p>
-            Get into the <link xref="preferences">Preferences</link> dialog
-            box by pressing the <gui>Preferences</gui> button in the <app>Orca</app>
-            main window or by pressing <keyseq><key>Orca Modifier</key><key>Space</key>
-            </keyseq> from within any accessible application.
-          </p>
-        </item>
       </list>
     </section>
 </page>
