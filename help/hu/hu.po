@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca_help master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-20 15:00+0000\n"
-"PO-Revision-Date: 2013-09-22 11:00+0200\n"
-"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"POT-Creation-Date: 2013-09-30 14:56+0000\n"
+"PO-Revision-Date: 2013-10-01 15:16+0100\n"
+"Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -421,8 +421,8 @@ msgstr "Parancsok az <app>Orka</app> irányításához"
 #: C/commands_controlling_orca.page:21
 msgid ""
 "The following commands can be used to get into <app>Orca</app>'s Preferences "
-"dialogs, quit <app>Orca</app>, and bypass <app>Orca</app> commands to avoid "
-"shortcut conflicts within the application being accessed."
+"dialogs, toggle <app>Orca</app> on and off, and bypass <app>Orca</app> "
+"commands to avoid shortcut conflicts within the application being accessed."
 msgstr ""
 "A következő billentyűparancsok segítségével megnyithatja az <app>Orka</app> "
 "beállító párbeszédablakait, kiléphet az <app>Orka</app> képernyőolvasóból, "
@@ -430,7 +430,17 @@ msgstr ""
 "amelyek ütköznének az éppen használt alkalmazás billentyűparancsaival."
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:28
+#: C/commands_controlling_orca.page:29
+msgid ""
+"Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
+"key><key>Alt</key><key>S</key></keyseq>."
+msgstr ""
+"Az <app>Orka</app> képernyőolvasó be- vagy kikapcsolása a GNOME asztali "
+"környezetben: <keyseq><key>STARTGOMB</key><key>ALT</key><key>S</key></"
+"keyseq>."
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:35
 msgid ""
 "<link xref=\"preferences\">Orca Preferences</link> dialog: <keyseq><key>Orca "
 "Modifier</key><key>Space</key></keyseq>."
@@ -439,7 +449,7 @@ msgstr ""
 "megnyitása: <keyseq><key>Orka módosító</key><key>Szóköz</key></keyseq>."
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:34
+#: C/commands_controlling_orca.page:41
 msgid ""
 "Orca's Preferences dialog for the focused application: <keyseq><key>Ctrl</"
 "key><key>Orca Modifier</key><key>Space</key></keyseq>."
@@ -449,15 +459,7 @@ msgstr ""
 "key></keyseq>."
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:40
-msgid ""
-"Quit <app>Orca</app>: <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>."
-msgstr ""
-"Kilépés az <app>Orka</app> képernyőolvasóból: <keyseq><key>Orka módosító</"
-"key><key>Q</key></keyseq>."
-
-#. (itstool) path: item/p
-#: C/commands_controlling_orca.page:46
+#: C/commands_controlling_orca.page:47
 msgid ""
 "Pass the next command on to the current application: <keyseq><key>Orca "
 "Modifier</key><key>BackSpace</key></keyseq>"
@@ -466,25 +468,24 @@ msgstr ""
 "<keyseq><key>Orka módosító</key><key>BackSpace</key></keyseq>"
 
 #. (itstool) path: section/title
-#: C/commands_controlling_orca.page:54
+#: C/commands_controlling_orca.page:55
 msgid "Commands for Learning to Use <app>Orca</app>"
 msgstr "Parancsok az <app>Orka</app> használatának megtanulásához"
 
 #. (itstool) path: section/p
 #. (itstool) path: page/p
-#: C/commands_controlling_orca.page:55 C/howto_learn_modes.page:18
+#: C/commands_controlling_orca.page:56 C/howto_learn_modes.page:18
 msgid ""
-"Orca has two modes for learning more about <app>Orca</app>'s commands: Learn "
-"Mode and List Shortcuts Mode. In Learn Mode, <app>Orca</app> will announce "
-"each keystroke you pressed along with any associated <app>Orca</app> command "
-"that keystroke is bound to. List Shortcuts Mode provides you with a list of "
-"all the <app>Orca</app> commands you can use."
+"In Learn Mode, <app>Orca</app> will announce each keystroke you pressed "
+"along with any associated <app>Orca</app> command that keystroke is bound "
+"to. In this mode, you can also get a list of shortcuts containing all the "
+"<app>Orca</app> commands you can use."
 msgstr ""
 "A tanuló és billentyűparancs-listázó módok segítségével elsajátíthatja az "
 "<app>Orka</app> parancsait. A tanuló módban az <app>Orka</app> kimondja az "
 "Ön által lenyomott billentyűkombinációkat és a hozzájuk társított <app>Orka</"
-"app> parancsokat. A billentyűparancs-listázó mód segítségével az összes "
-"használható <app>Orka</app> parancsot egy listában áttekintheti."
+"app> parancsokat. Ezen kívül, a billentyűparancs-listázó mód segítségével az "
+"összes használható <app>Orka</app> parancsot egy listában áttekintheti."
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:64
@@ -494,17 +495,8 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:70
-msgid ""
-"Enter list shortcuts mode: <keyseq><key>Orca Modifier</key><key>H</key></"
-"keyseq> (double-clicked)"
-msgstr ""
-"Belépés a billentyűparancs-listázó módba: <keyseq><key>Orka módosító</"
-"key><key>H</key></keyseq> (kétszer gyorsan megnyomva)"
-
-#. (itstool) path: item/p
-#: C/commands_controlling_orca.page:76
-msgid "Exit either mode: <keyseq><key>Esc</key></keyseq>"
-msgstr "Kilépés bármely tanuló üzemmódból: <keyseq><key>Esc</key></keyseq>"
+msgid "Exit learn mode: <keyseq><key>Esc</key></keyseq>"
+msgstr "Kilépés a tanuló módból: <keyseq><key>Esc</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_debugging.page:4
@@ -2974,8 +2966,8 @@ msgstr "Válassza ki a kívánt billentyűzetkiosztást."
 #. (itstool) path: info/title
 #: C/howto_learn_modes.page:5
 msgctxt "sort"
-msgid "5. The \"Learn\" Modes"
-msgstr "5. A „tanuló” módok"
+msgid "5. \"Learn\" Mode"
+msgstr "5. Az <app>Orka</app> tanuló mód"
 
 #. (itstool) path: info/desc
 #: C/howto_learn_modes.page:6
@@ -2984,16 +2976,16 @@ msgstr "Az <app>Orka</app> parancsainak felfedezése"
 
 #. (itstool) path: page/title
 #: C/howto_learn_modes.page:17
-msgid "The \"Learn\" Modes"
-msgstr "A „tanuló” módok"
+msgid "\"Learn\" Mode"
+msgstr "Az <app>Orka</app> tanuló mód használata"
 
 #. (itstool) path: steps/title
-#: C/howto_learn_modes.page:27
+#: C/howto_learn_modes.page:25
 msgid "Using Learn Mode"
 msgstr "A tanuló mód használata"
 
 #. (itstool) path: item/p
-#: C/howto_learn_modes.page:29
+#: C/howto_learn_modes.page:27 C/howto_learn_modes.page:45
 msgid ""
 "Get into Learn Mode by pressing <keyseq><key>Orca Modifier</key> <key>H</"
 "key></keyseq>."
@@ -3002,7 +2994,7 @@ msgstr ""
 "key><key>H</key></keyseq> billentyűkombinációt."
 
 #. (itstool) path: item/p
-#: C/howto_learn_modes.page:35
+#: C/howto_learn_modes.page:33
 msgid ""
 "Press any key or keystroke. <app>Orca</app> will announce the keys and any "
 "associated command."
@@ -3011,27 +3003,18 @@ msgstr ""
 "lenyomott billentyűkombinációt és a hozzá társított parancsot."
 
 #. (itstool) path: item/p
-#: C/howto_learn_modes.page:41
+#: C/howto_learn_modes.page:39
 msgid "Press <key>Esc</key> to exit Learn Mode."
 msgstr ""
 "A tanuló módból való kilépéshez nyomja meg az <key>Esc</key> billentyűt."
 
 #. (itstool) path: steps/title
-#: C/howto_learn_modes.page:45
-msgid "Using List Shortcuts Mode"
-msgstr "A billentyűparancs-listázó mód használata"
+#: C/howto_learn_modes.page:43
+msgid "Getting a List of Shortcuts"
+msgstr "A billentyűparancsok listájának megjelenítése"
 
 #. (itstool) path: item/p
-#: C/howto_learn_modes.page:47
-msgid ""
-"Get into List Shortcuts Mode by pressing <keyseq><key>Orca Modifier</key> "
-"<key>H</key></keyseq> twice quickly."
-msgstr ""
-"A billentyűparancs-listázó mód eléréséhez nyomja le kétszer egymás után az "
-"<keyseq><key>Orka módosító</key><key>H</key></keyseq> billentyűkombinációt."
-
-#. (itstool) path: item/p
-#: C/howto_learn_modes.page:53
+#: C/howto_learn_modes.page:51
 msgid ""
 "Press <key>1</key> if you want a list of shortcuts that apply <app>Orca</"
 "app>-wide, or press <key>2</key> if you want a list of shortcuts that are "
@@ -3043,7 +3026,7 @@ msgstr ""
 "billentyűt."
 
 #. (itstool) path: item/p
-#: C/howto_learn_modes.page:60
+#: C/howto_learn_modes.page:58
 msgid ""
 "Press <key>Up</key> or <key>Down</key> to examine the contents of the list."
 msgstr ""
@@ -3051,8 +3034,8 @@ msgstr ""
 "nyíl</key> billentyűket."
 
 #. (itstool) path: item/p
-#: C/howto_learn_modes.page:66
-msgid "Press <key>Esc</key> to exit List Shortcuts Mode."
+#: C/howto_learn_modes.page:64
+msgid "Press <key>Esc</key> to exit the list."
 msgstr ""
 "A billentyűparancs-listázó módból az <key>Esc</key> billentyű megnyomásával "
 "léphet ki."
@@ -3809,8 +3792,8 @@ msgstr ""
 #. (itstool) path: info/title
 #: C/howto_setting_up_orca.page:6
 msgctxt "sort"
-msgid "3. Orca Configuration"
-msgstr "3. Az Orka beállítása"
+msgid "4. Orca Configuration"
+msgstr "4. Az Orka beállítása"
 
 #. (itstool) path: info/title
 #: C/howto_setting_up_orca.page:7
@@ -3820,7 +3803,7 @@ msgstr "Beállítások"
 
 #. (itstool) path: info/desc
 #: C/howto_setting_up_orca.page:8
-msgid "Setting up <app>Orca</app> initially and in the future"
+msgid "Setting up <app>Orca</app>"
 msgstr "Az <app>Orka</app> kiinduló és későbbi beállítása"
 
 #. (itstool) path: page/title
@@ -3828,80 +3811,27 @@ msgstr "Az <app>Orka</app> kiinduló és későbbi beállítása"
 msgid "Orca Configuration"
 msgstr "Az Orka beállítása"
 
-#. (itstool) path: section/title
+#. (itstool) path: section/p
 #: C/howto_setting_up_orca.page:21
-msgid "Initial Setup"
-msgstr "Kiinduló beállítások"
-
-#. (itstool) path: section/p
-#: C/howto_setting_up_orca.page:22
 msgid ""
-"When you run <app>Orca</app> for the first time, it will automatically enter "
-"setup mode. Depending on your active session's configuration, one of two "
-"things will occur:"
+"If you want to configure <app>Orca</app>, you can do one of the following:"
 msgstr ""
-"Ha először indítja el az <app>Orka</app> képernyőolvasót, automatikusan a "
-"beállító módba kerül. Az aktív munkamenet konfigurációjától függően a "
-"következő két dolog egyike történhet:"
+"Ha szeretné konfigurálni az <app>Orka</app> képernyőolvasót, a következők "
+"egyikét teheti:"
 
 #. (itstool) path: item/p
-#: C/howto_setting_up_orca.page:29
+#: C/howto_setting_up_orca.page:27
 msgid ""
-"If accessibility support has already been enabled for your session, you will "
-"be placed in the <app>Orca</app> <link xref=\"preferences\">Preferences</"
-"link> dialog box where you can customize <app>Orca</app> completely and then "
-"use it immediately."
+"Get into the <link xref=\"preferences\">Preferences</link> dialog by "
+"pressing <keyseq><key>Orca Modifier</key><key>Space</key> </keyseq> from "
+"within any accessible application."
 msgstr ""
-"Ha az akadálymentesítési támogatás már engedélyezve lett az Ön által "
-"használt munkamenetben, az <app>Orka</app> <link xref=\"preferences"
-"\">grafikus beállító párbeszédpanelbe</link> fog kerülni. Itt teljesen "
-"személyre szabhatja az <app>Orka</app> képernyőolvasó funkcióit, és rögtön "
-"használatba is veheti azt."
+"Az <link xref=\"preferences\">Orka beállítások</link> párbeszédpanel "
+"megnyitásához nyomja meg az <keyseq><key>Orka módosító</key><key>Szóköz</"
+"key></keyseq> billentyűkombinációt bármely használt alkalmazásban."
 
 #. (itstool) path: item/p
-#: C/howto_setting_up_orca.page:38
-msgid ""
-"If accessibility support has not already been enabled for your session, "
-"<app>Orca</app>'s <link xref=\"howto_text_setup\">text-based setup</link> "
-"will be launched instead. The text-based setup allows you to configure the "
-"most fundamental settings and enable accessibility support for your session. "
-"You will need to log out and log back in for the new settings to take effect."
-msgstr ""
-"Ha az Ön által használt munkamenetben az akadálymentesítési szolgáltatás még "
-"nem lett engedélyezve, az <app>Orka</app> <link xref=\"howto_text_setup"
-"\">Szöveges beállítófelülete</link> kerül elindításra. A szöveges "
-"beállítófelület lehetővé teszi a legalapvetőbb beállítások megadását, és az "
-"akadálymentesítési szolgáltatás engedélyezését az Ön által használt "
-"munkamenetben. A beállítások megadása után ki kell jelentkeznie, majd újra "
-"be kell lépnie az új beállítások életbe lépéséhez."
-
-#. (itstool) path: section/title
-#: C/howto_setting_up_orca.page:50
-msgid "Configuring <app>Orca</app> in the Future"
-msgstr "Az <app>Orka</app> későbbi beállítása"
-
-#. (itstool) path: section/p
-#: C/howto_setting_up_orca.page:51
-msgid ""
-"If you want to configure <app>Orca</app> in the future, you can do one of "
-"the following:"
-msgstr ""
-"Ha később szeretné konfigurálni az <app>Orka</app> képernyőolvasót, a "
-"következők egyikét teheti:"
-
-#. (itstool) path: item/p
-#: C/howto_setting_up_orca.page:57
-msgid ""
-"Pass the <cmd>--setup</cmd> option to <app>Orca</app> the next time you run "
-"it to automatically be placed in the <link xref=\"preferences\">Preferences</"
-"link> dialog box."
-msgstr ""
-"Amikor legközelebb futtatja az <app>Orka</app> képernyőolvasót, a parancsot "
-"egészítse ki a <cmd>--setup</cmd> kapcsolóval. Ezzel automatikusan a <link "
-"xref=\"preferences\">Beállítások</link> ablakba fog kerülni."
-
-#. (itstool) path: item/p
-#: C/howto_setting_up_orca.page:64
+#: C/howto_setting_up_orca.page:34
 msgid ""
 "Pass the <cmd>--text-setup</cmd> option to <app>Orca</app> to re-run "
 "<app>Orca</app>'s <link xref=\"howto_text_setup\">text-based setup</link>."
@@ -3910,19 +3840,6 @@ msgstr ""
 "egészítse ki a <cmd>--text-setup</cmd> kapcsolóval, ezzel a kapcsolóval újra "
 "futtathatja az <link xref=\"howto_text_setup\"><app>Orka</app> szöveges "
 "beállítófelületét</link>."
-
-#. (itstool) path: item/p
-#: C/howto_setting_up_orca.page:71
-msgid ""
-"Get into the <link xref=\"preferences\">Preferences</link> dialog box by "
-"pressing the <gui>Preferences</gui> button in the <app>Orca</app> main "
-"window or by pressing <keyseq><key>Orca Modifier</key><key>Space</key> </"
-"keyseq> from within any accessible application."
-msgstr ""
-"Megnyithatja a <link xref=\"preferences\">Beállítások</link> ablakot, ha "
-"megnyomja a <gui>Beállítások</gui> gombot az <app>Orka</app> főablakában, "
-"vagy ha lenyomja az <keyseq><key>Orka módosító</key><key>Szóköz</key></"
-"keyseq> billentyűkombinációt egy akadálymentesen használható alkalmazásban."
 
 #. (itstool) path: info/title
 #: C/howto_structural_navigation.page:7
@@ -4806,66 +4723,21 @@ msgstr ""
 "key> billentyűt. Ha nincs BrlTTY eszköze, és igennel válaszol, az semmilyen "
 "problémát nem okoz."
 
-#. (itstool) path: item/p
-#. (itstool) path: section/title
-#: C/howto_text_setup.page:169 C/preferences_braille.page:39
-msgid "Enable Braille Monitor"
-msgstr "Braille monitor engedélyezése"
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:170
-msgid ""
-"Orca's Braille Monitor is an on-screen braille representation. This is "
-"mostly for sighted developers who need to verify BrlTTY output, but may also "
-"be useful in other situations, such as visually diagnosing or verifying "
-"braille output. Type <cmd>y</cmd> or <cmd>n</cmd> and press <key>Return</"
-"key>."
-msgstr ""
-"Az Orka Braille monitor a képernyőn jeleníti meg azokat az információkat, "
-"amik a Braille-kijelzőn látszanak. Ez a szolgáltatás elsősorban "
-"demonstrációs célból készült, de hasznos azoknak az Orka fejlesztőknek is, "
-"akiknek nincs Braille-kijelzőjük. Nyomja meg az <cmd>i</cmd> vagy az <cmd>n</"
-"cmd> billentyűk valamelyikét, majd nyomja meg az <key>Enter</key> billentyűt."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:178
-msgid "Automatically start <app>Orca</app> when you log in"
-msgstr "Automatikusan elinduljon az <app>Orka</app> a bejelentkezés után?"
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:179
-msgid ""
-"Type <cmd>y</cmd> if you want <app>Orca</app> automatically launched for you "
-"or <cmd>n</cmd> if you do not, and press <key>Return</key>."
-msgstr ""
-"Az <app>Orka</app> automatikus elindításának beállításához nyomja meg az "
-"<cmd>i</cmd>, vagy az <cmd>n</cmd> billentyűt, ha ezt nem szeretné, végül az "
-"<key>Enter</key> billentyűt."
-
 #. (itstool) path: page/p
-#: C/howto_text_setup.page:185
+#: C/howto_text_setup.page:169
 msgid ""
-"That's it. <app>Orca</app> is now ready for use. If accessibility was not "
-"yet enabled, <app>Orca</app> does so now and asks you to logout and back in "
-"for the services to start. Type <cmd>y</cmd> and press <key>Return</key> to "
-"restart your login session. If, on the other hand, accessibility was already "
-"enabled, you will simply be prompted to press <key>Return</key> after which "
-"<app>Orca</app> will be launched for you."
+"That's it. <app>Orca</app> is now ready for use and will be launched if you "
+"are in a graphical desktop environment where accessibility is enabled."
 msgstr ""
-"Ezután az <app>Orka</app> használható. Ha az akadálymentesítés még nem "
-"engedélyezett, az <app>Orka</app> megkéri Önt arra, hogy jelentkezzen ki és "
-"újra be a grafikus rendszerbe a szolgáltatás bekapcsolásához. Nyomja meg az "
-"<cmd>i</cmd> és az <key>Enter</key> billentyűt a kijelentkezéshez, ezután "
-"jelentkezzen be, és az <app>Orka</app> el fog indulni. Ha az "
-"akadálymentesítés már engedélyezve lett, az <app>Orka</app> arra fogja "
-"kérni, hogy nyomja meg az <key>Enter</key> billentyűt, ezután az <app>Orka</"
-"app> el fog indulni."
+"Ennyi az egész. Az <app>Orka</app> képernyőolvasó készenáll a használatra,  "
+"és el lesz indítva, amikor egy grafikus munkamenetben az akadálymentesítés "
+"engedélyezve van."
 
 #. (itstool) path: info/title
 #: C/howto_the_orca_modifier.page:5
 msgctxt "sort"
-msgid "4. The Orca Modifier"
-msgstr "4. Az Orka módosítóbillentyű"
+msgid "3. The Orca Modifier"
+msgstr "3. Az Orka módosítóbillentyű"
 
 #. (itstool) path: info/desc
 #: C/howto_the_orca_modifier.page:6
@@ -5209,13 +5081,6 @@ msgstr ""
 
 #. (itstool) path: page/p
 #: C/introduction.page:23
-#| msgid ""
-#| "<app>Orca</app> works with applications and toolkits that support the "
-#| "Assistive Technology Service Provider Interface (AT-SPI), which is the "
-#| "primary assistive technology infrastructure for Linux and Solaris. "
-#| "Applications and toolkits supporting the AT-SPI include the GNOME Gtk+ "
-#| "toolkit, the Java platform's Swing toolkit, OpenOffice, Gecko, and "
-#| "WebKitGtk. AT-SPI support for the KDE Qt toolkit is being pursued."
 msgid ""
 "<app>Orca</app> works with applications and toolkits that support the "
 "Assistive Technology Service Provider Interface (AT-SPI), which is the "
@@ -5246,16 +5111,6 @@ msgstr "Az <app>Orka</app> elindításához tegye a következőket:"
 #. (itstool) path: item/p
 #: C/introduction.page:37
 msgid ""
-"Type <cmd>orca</cmd>, along with any optional parameters, in a terminal "
-"window or within the <gui>Run</gui> dialog and then press <key>Return</key>."
-msgstr ""
-"Gépelje be az <cmd>orca</cmd> parancsot egy terminál ablakban vagy a "
-"<gui>Futtatás</gui> párbeszédablakban, ha szükséges adja meg a megfelelő "
-"paramétereket, majd nyomja meg az <key>Enter</key> billentyűt."
-
-#. (itstool) path: item/p
-#: C/introduction.page:44
-msgid ""
 "The method for configuring <app>Orca</app> to be launched automatically as "
 "your preferred screen reader will depend upon which desktop environment you "
 "use. For instance, in GNOME 3.x this option can be found in the Universal "
@@ -5266,43 +5121,47 @@ msgstr ""
 "környezet esetén például ezt a beállítást a <app>Rendszerbeállítások</app> "
 "Akadálymentesítés panelének <app>Látás</app> lapján találja meg."
 
-#. (itstool) path: section/title
-#: C/introduction.page:55
-msgid "Quitting <app>Orca</app>"
-msgstr "Kilépés az <app>Orka</app> képernyőolvasóból"
-
-#. (itstool) path: section/p
-#: C/introduction.page:56
-msgid "To quit <app>Orca</app>:"
-msgstr "A következő módokon léphet ki az <app>Orka</app> képernyőolvasóból:"
+#. (itstool) path: item/p
+#: C/introduction.page:46
+msgid ""
+"To toggle <app>Orca</app> on and off in GNOME, press <keyseq><key>Super</"
+"key><key>Alt</key><key>S</key></keyseq>."
+msgstr ""
+"Ha a GNOME asztali környezet használata közben szeretné be- vagy kikapcsolni "
+"az <app>Orka</app> képernyőolvasót, nyomja le a <keyseq><key>STARTGOMB</"
+"key><key>ALT</key><key>S</key></keyseq> billentyűkombinációt."
 
 #. (itstool) path: item/p
-#: C/introduction.page:59
+#: C/introduction.page:52
 msgid ""
-"Press <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>. This command "
-"works whether the <app>Orca</app> main window is enabled or not."
+"Type <cmd>orca</cmd>, along with any optional parameters, in a terminal "
+"window or within the <gui>Run</gui> dialog and then press <key>Return</key>."
 msgstr ""
-"Nyomja le az <keyseq><key>Orka módosító</key><key>Q</key></keyseq> "
-"billentyűkombinációt. Ez a billentyűkombináció mindig használható, "
-"függetlenül attól, hogy az <app>Orka</app> főablaka engedélyezve van-e."
+"Gépelje be az <cmd>orca</cmd> parancsot egy terminál ablakban vagy a "
+"<gui>Futtatás</gui> párbeszédablakban, ha szükséges adja meg a megfelelő "
+"paramétereket, majd nyomja meg az <key>Enter</key> billentyűt."
 
 #. (itstool) path: section/title
-#: C/introduction.page:68
+#: C/introduction.page:61
 msgid "Load-Time Options"
 msgstr "Betöltéssel kapcsolatos opciók"
 
 #. (itstool) path: section/p
-#: C/introduction.page:69
-msgid "The following options can be specified when launching <app>Orca</app>:"
-msgstr "Az <app>Orka</app> elindításakor a következő opciókat használhatja:"
+#: C/introduction.page:62
+msgid ""
+"The following options can be specified when launching <app>Orca</app> in a "
+"terminal window or within the <gui>Run</gui> dialog:"
+msgstr ""
+"Az <app>Orka</app> elindításakor a következő opciókat használhatja a "
+"terminál alkalmazásban és a Futtatás párbeszédablakban:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:74
+#: C/introduction.page:68
 msgid "<cmd>-h</cmd>, <cmd>--help</cmd>: Show the help message"
 msgstr "<cmd>-h</cmd>, <cmd>--help</cmd>: Megjelenít egy súgóüzenetet"
 
 #. (itstool) path: item/p
-#: C/introduction.page:77
+#: C/introduction.page:71
 msgid ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Show the version of <app>Orca</app>"
 msgstr ""
@@ -5310,7 +5169,7 @@ msgstr ""
 "verziószámát"
 
 #. (itstool) path: item/p
-#: C/introduction.page:83
+#: C/introduction.page:77
 msgid ""
 "<cmd>-t</cmd>, <cmd>--text-setup</cmd>: Set up user preferences (text "
 "version)"
@@ -5319,7 +5178,7 @@ msgstr ""
 "beállítófelületét"
 
 #. (itstool) path: item/p
-#: C/introduction.page:89
+#: C/introduction.page:83
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs-dir=<em>dirname</em></cmd>: Use "
 "<em>dirname</em> as the alternate directory for user preferences"
@@ -5328,7 +5187,7 @@ msgstr ""
 "<em>könyvtárnév</em> használata a felhasználói beállítások tárolásához"
 
 #. (itstool) path: item/p
-#: C/introduction.page:96
+#: C/introduction.page:90
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
@@ -5337,23 +5196,23 @@ msgstr ""
 "kikényszerítése, ahol az <em>opció</em> a következők egyike lehet:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:101 C/introduction.page:113
+#: C/introduction.page:95 C/introduction.page:107
 msgid "<cmd>speech</cmd>"
 msgstr "<cmd>speech</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:102 C/introduction.page:114
+#: C/introduction.page:96 C/introduction.page:108
 msgid "<cmd>braille</cmd>"
 msgstr "<cmd>braille</cmd>"
 
 # Megjegyzés: Ne kezdd nagy betűvel, a braille-monitor egy opciórészt jelöl, például --enable braille-monitor
 #. (itstool) path: item/p
-#: C/introduction.page:103 C/introduction.page:115
+#: C/introduction.page:97 C/introduction.page:109
 msgid "<cmd>braille-monitor</cmd>"
 msgstr "<cmd>braille-monitor</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:107
+#: C/introduction.page:101
 msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
@@ -5362,7 +5221,7 @@ msgstr ""
 "kizárása, ahol az <em>opció</em> a következők egyike lehet:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:119
+#: C/introduction.page:113
 msgid ""
 "<cmd>-i</cmd>, <cmd>--import-file=<em>filename</em></cmd>: Import a profile "
 "from a given <app>Orca</app> profile file"
@@ -5371,27 +5230,27 @@ msgstr ""
 "a megadott <app>Orka</app> profilfájlból"
 
 #. (itstool) path: item/p
-#: C/introduction.page:125
+#: C/introduction.page:119
 msgid "<cmd>--replace</cmd>: Replace a currently-running <app>Orca</app>"
 msgstr ""
 "<cmd>--replace</cmd>: Lecseréli a jelenleg futó <app>Orka</app> folyamatot"
 
 #. (itstool) path: item/p
-#: C/introduction.page:130
+#: C/introduction.page:124
 msgid ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
 msgstr ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Az ismert futó alkalmazások kiírása"
 
 #. (itstool) path: item/p
-#: C/introduction.page:136
+#: C/introduction.page:130
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "<cmd>--debug</cmd>: A hibakövetési információk mentése a debug-ÉÉÉÉ-HH-NN-ÓÓ:"
 "PP:MM.out fájlba"
 
 #. (itstool) path: item/p
-#: C/introduction.page:141
+#: C/introduction.page:135
 msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
@@ -5421,20 +5280,6 @@ msgstr ""
 #: C/preferences_braille.page:40
 msgctxt "_"
 msgid ""
-"external ref='figures/preferences_enable_braille_monitor.png' "
-"md5='2dead5fbf717ce30339e2248e4f61aed'"
-msgstr ""
-"external ref='figures/preferences_enable_braille_monitor.png' "
-"md5='2dead5fbf717ce30339e2248e4f61aed'"
-
-#. (itstool) path: media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/preferences_braille.page:53
-msgctxt "_"
-msgid ""
 "external ref='figures/preferences_braille_contracted.png' "
 "md5='81d80b6854847656862fe4ea167d29f8'"
 msgstr ""
@@ -5446,7 +5291,7 @@ msgstr ""
 #. the file changes, the md5 hash will change to let you know you need to
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
-#: C/preferences_braille.page:71
+#: C/preferences_braille.page:58
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_abbreviated_role_names.png' "
@@ -5460,7 +5305,7 @@ msgstr ""
 #. the file changes, the md5 hash will change to let you know you need to
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
-#: C/preferences_braille.page:85
+#: C/preferences_braille.page:72
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_disable_eol_symbol.png' "
@@ -5468,6 +5313,20 @@ msgid ""
 msgstr ""
 "external ref='figures/preferences_disable_eol_symbol.png' "
 "md5='c43c2b7dff5efd265a40a260c2bc0d73'"
+
+#. (itstool) path: media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/preferences_braille.page:83
+msgctxt "_"
+msgid ""
+"external ref='figures/preferences_braille_verbosity.png' "
+"md5='18969c222b3e1ea91cc75d47bb0fe48d'"
+msgstr ""
+"external ref='figures/preferences_braille_verbosity.png' "
+"md5='18969c222b3e1ea91cc75d47bb0fe48d'"
 
 #. (itstool) path: media
 #. This is a reference to an external file such as an image or video. When
@@ -5475,20 +5334,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_braille.page:96
-msgctxt "_"
-msgid ""
-"external ref='figures/preferences_braille_verbosity.png' "
-"md5='18969c222b3e1ea91cc75d47bb0fe48d'"
-msgstr ""
-"external ref='figures/preferences_braille_verbosity.png' "
-"md5='18969c222b3e1ea91cc75d47bb0fe48d'"
-
-#. (itstool) path: media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/preferences_braille.page:109
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_braille_indicators.png' "
@@ -5530,15 +5375,15 @@ msgstr ""
 "nem fog kommunikálni a Braille-kijelzővel."
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:28 C/preferences_braille.page:47
-#: C/preferences_braille.page:65 C/preferences_braille.page:79
-#: C/preferences_braille.page:90 C/preferences_chat.page:31
-#: C/preferences_chat.page:42 C/preferences_chat.page:54
-#: C/preferences_gecko.page:74 C/preferences_gecko.page:87
-#: C/preferences_gecko.page:118 C/preferences_general.page:54
-#: C/preferences_general.page:73 C/preferences_key_echo.page:94
-#: C/preferences_key_echo.page:104 C/preferences_key_echo.page:140
-#: C/preferences_key_echo.page:163 C/preferences_table_navigation.page:66
+#: C/preferences_braille.page:28 C/preferences_braille.page:52
+#: C/preferences_braille.page:66 C/preferences_braille.page:77
+#: C/preferences_chat.page:31 C/preferences_chat.page:42
+#: C/preferences_chat.page:54 C/preferences_gecko.page:74
+#: C/preferences_gecko.page:87 C/preferences_gecko.page:118
+#: C/preferences_general.page:54 C/preferences_general.page:73
+#: C/preferences_key_echo.page:94 C/preferences_key_echo.page:104
+#: C/preferences_key_echo.page:140 C/preferences_key_echo.page:163
+#: C/preferences_table_navigation.page:66
 msgid "Default value: not checked"
 msgstr "Alapbeállítás: nincs bejelölve"
 
@@ -5551,26 +5396,13 @@ msgstr ""
 "Ha a BrlTTY programot később konfigurálja, akkor újra kell indítania az "
 "<app>Orka</app> képernyőolvasót a Braille-támogatás használatához."
 
-#. (itstool) path: section/p
-#: C/preferences_braille.page:41
-msgid ""
-"Orca's braille monitor provides an on-screen representation of what takes "
-"place on the braille display. This feature is mostly for demonstration "
-"purposes, but is also useful for <app>Orca</app> developers who do not have "
-"access to a braille display."
-msgstr ""
-"Az Orka Braille monitor a képernyőn jeleníti meg a Braille-kijelzőn "
-"megjelenő információkat. Ez a szolgáltatás elsősorban demonstrációs célból "
-"készült, de hasznos azoknak az <app>Orka</app> fejlesztőknek is, akiknek "
-"nincs Braille-kijelzőjük."
-
 #. (itstool) path: section/title
-#: C/preferences_braille.page:52
+#: C/preferences_braille.page:39
 msgid "Enable Contracted Braille"
 msgstr "Irodalmi Braille támogatás engedélyezése"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:54
+#: C/preferences_braille.page:41
 msgid ""
 "Orca supports contracted braille via the liblouis project. Because many "
 "distros include liblouis, you will likely automatically have access to "
@@ -5582,7 +5414,7 @@ msgstr ""
 "lesz az Ön számára az <app>Orka</app> képernyőolvasóban."
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:59
+#: C/preferences_braille.page:46
 msgid ""
 "To enable contracted braille on a system where liblouis has been installed, "
 "be sure that the <gui>Enable Contraced Braille</gui> checkbox is checked. "
@@ -5596,12 +5428,12 @@ msgstr ""
 "ki a használni kívánt fordítási táblát."
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:70
+#: C/preferences_braille.page:57
 msgid "Abbreviated Role Names"
 msgstr "Rövidített szerepnevek"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:72
+#: C/preferences_braille.page:59
 msgid ""
 "This check box determines the manner in which role names are displayed and "
 "can be used to help conserve real estate on the braille display. For "
@@ -5618,12 +5450,12 @@ msgstr ""
 "helyett rövidítve a „cszk” szó jelenik meg."
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:84
+#: C/preferences_braille.page:71
 msgid "Disable end of line symbol"
 msgstr "A sor vége szimbólum letiltása"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:86
+#: C/preferences_braille.page:73
 msgid ""
 "Checking this checkbox tells <app>Orca</app> to not present the \"$l\" "
 "string at the end of a line of text."
@@ -5632,12 +5464,12 @@ msgstr ""
 "jeleníti meg a Braille-kijelzőn a „$l” szimbólumot."
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:95 C/preferences_speech.page:131
+#: C/preferences_braille.page:82 C/preferences_speech.page:131
 msgid "Verbosity"
 msgstr "Részletesség"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:97
+#: C/preferences_braille.page:84
 msgid ""
 "This radio button group determines the amount of information that will be "
 "brailled in certain situations. For example, if it is set to verbose, "
@@ -5650,17 +5482,17 @@ msgstr ""
 "Ezek az információk nem jelennek meg „Tömör” módban."
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:103 C/preferences_speech.page:140
+#: C/preferences_braille.page:90 C/preferences_speech.page:140
 msgid "Default value: <gui>Verbose</gui>"
 msgstr "Alapbeállítás: <gui>Részletes</gui>"
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:108
+#: C/preferences_braille.page:95
 msgid "Selection and Hyperlink Indicators"
 msgstr "Kiválasztás és hivatkozásjelzők"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:110
+#: C/preferences_braille.page:97
 msgid ""
 "The <gui>Selection Indicator</gui> and <gui>Hyperlink Indicator</gui> radio "
 "button groups allow you to configure <app>Orca</app>'s behavior when "
@@ -5679,17 +5511,17 @@ msgstr ""
 "megjelenítését a <gui>Nincs</gui> beállítás használatával."
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:119
+#: C/preferences_braille.page:106
 msgid "Default value: <gui>Dots 7 and 8</gui>"
 msgstr "Alapbeállítás: <gui>7. és 8. pont</gui>"
 
 #. (itstool) path: note/title
-#: C/preferences_braille.page:123
+#: C/preferences_braille.page:110
 msgid "Text Attribute Indicators"
 msgstr "Szövegattribútumok jelzése"
 
 #. (itstool) path: note/p
-#: C/preferences_braille.page:124
+#: C/preferences_braille.page:111
 msgid ""
 "You can also optionally have text attributes indicated in braille. Enabling "
 "this feature and choosing which attributes are of interest is done on the "
@@ -8148,6 +7980,169 @@ msgid ""
 msgstr ""
 "<gui>7. és 8. pont</gui>: A szöveges attribútumok a 7. és a 8. ponttal "
 "lesznek aláhúzva a Braille-kijelzőn."
+
+#~ msgid ""
+#~ "Enter list shortcuts mode: <keyseq><key>Orca Modifier</key><key>H</key></"
+#~ "keyseq> (double-clicked)"
+#~ msgstr ""
+#~ "Belépés a billentyűparancs-listázó módba: <keyseq><key>Orka módosító</"
+#~ "key><key>H</key></keyseq> (kétszer gyorsan megnyomva)"
+
+#~ msgid ""
+#~ "Get into List Shortcuts Mode by pressing <keyseq><key>Orca Modifier</key> "
+#~ "<key>H</key></keyseq> twice quickly."
+#~ msgstr ""
+#~ "A billentyűparancs-listázó mód eléréséhez nyomja le kétszer egymás után "
+#~ "az <keyseq><key>Orka módosító</key><key>H</key></keyseq> "
+#~ "billentyűkombinációt."
+
+#~ msgid "Press <key>Esc</key> to exit List Shortcuts Mode."
+#~ msgstr ""
+#~ "A billentyűparancs-listázó módból az <key>Esc</key> billentyű "
+#~ "megnyomásával léphet ki."
+
+#~ msgid "Setting up <app>Orca</app> initially and in the future"
+#~ msgstr "Az <app>Orka</app> kiinduló és későbbi beállítása"
+
+#~ msgid "Initial Setup"
+#~ msgstr "Kiinduló beállítások"
+
+#~ msgid ""
+#~ "When you run <app>Orca</app> for the first time, it will automatically "
+#~ "enter setup mode. Depending on your active session's configuration, one "
+#~ "of two things will occur:"
+#~ msgstr ""
+#~ "Ha először indítja el az <app>Orka</app> képernyőolvasót, automatikusan a "
+#~ "beállító módba kerül. Az aktív munkamenet konfigurációjától függően a "
+#~ "következő két dolog egyike történhet:"
+
+#~ msgid ""
+#~ "If accessibility support has already been enabled for your session, you "
+#~ "will be placed in the <app>Orca</app> <link xref=\"preferences"
+#~ "\">Preferences</link> dialog box where you can customize <app>Orca</app> "
+#~ "completely and then use it immediately."
+#~ msgstr ""
+#~ "Ha az akadálymentesítési támogatás már engedélyezve lett az Ön által "
+#~ "használt munkamenetben, az <app>Orka</app> <link xref=\"preferences"
+#~ "\">grafikus beállító párbeszédpanelbe</link> fog kerülni. Itt teljesen "
+#~ "személyre szabhatja az <app>Orka</app> képernyőolvasó funkcióit, és "
+#~ "rögtön használatba is veheti azt."
+
+#~ msgid ""
+#~ "If accessibility support has not already been enabled for your session, "
+#~ "<app>Orca</app>'s <link xref=\"howto_text_setup\">text-based setup</link> "
+#~ "will be launched instead. The text-based setup allows you to configure "
+#~ "the most fundamental settings and enable accessibility support for your "
+#~ "session. You will need to log out and log back in for the new settings to "
+#~ "take effect."
+#~ msgstr ""
+#~ "Ha az Ön által használt munkamenetben az akadálymentesítési szolgáltatás "
+#~ "még nem lett engedélyezve, az <app>Orka</app> <link xref="
+#~ "\"howto_text_setup\">Szöveges beállítófelülete</link> kerül elindításra. "
+#~ "A szöveges beállítófelület lehetővé teszi a legalapvetőbb beállítások "
+#~ "megadását, és az akadálymentesítési szolgáltatás engedélyezését az Ön "
+#~ "által használt munkamenetben. A beállítások megadása után ki kell "
+#~ "jelentkeznie, majd újra be kell lépnie az új beállítások életbe lépéséhez."
+
+#~ msgid "Configuring <app>Orca</app> in the Future"
+#~ msgstr "Az <app>Orka</app> későbbi beállítása"
+
+#~ msgid ""
+#~ "Pass the <cmd>--setup</cmd> option to <app>Orca</app> the next time you "
+#~ "run it to automatically be placed in the <link xref=\"preferences"
+#~ "\">Preferences</link> dialog box."
+#~ msgstr ""
+#~ "Amikor legközelebb futtatja az <app>Orka</app> képernyőolvasót, a "
+#~ "parancsot egészítse ki a <cmd>--setup</cmd> kapcsolóval. Ezzel "
+#~ "automatikusan a <link xref=\"preferences\">Beállítások</link> ablakba fog "
+#~ "kerülni."
+
+#~ msgid ""
+#~ "Get into the <link xref=\"preferences\">Preferences</link> dialog box by "
+#~ "pressing the <gui>Preferences</gui> button in the <app>Orca</app> main "
+#~ "window or by pressing <keyseq><key>Orca Modifier</key><key>Space</key> </"
+#~ "keyseq> from within any accessible application."
+#~ msgstr ""
+#~ "Megnyithatja a <link xref=\"preferences\">Beállítások</link> ablakot, ha "
+#~ "megnyomja a <gui>Beállítások</gui> gombot az <app>Orka</app> főablakában, "
+#~ "vagy ha lenyomja az <keyseq><key>Orka módosító</key><key>Szóköz</key></"
+#~ "keyseq> billentyűkombinációt egy akadálymentesen használható "
+#~ "alkalmazásban."
+
+#~ msgid "Enable Braille Monitor"
+#~ msgstr "Braille monitor engedélyezése"
+
+#~ msgid ""
+#~ "Orca's Braille Monitor is an on-screen braille representation. This is "
+#~ "mostly for sighted developers who need to verify BrlTTY output, but may "
+#~ "also be useful in other situations, such as visually diagnosing or "
+#~ "verifying braille output. Type <cmd>y</cmd> or <cmd>n</cmd> and press "
+#~ "<key>Return</key>."
+#~ msgstr ""
+#~ "Az Orka Braille monitor a képernyőn jeleníti meg azokat az információkat, "
+#~ "amik a Braille-kijelzőn látszanak. Ez a szolgáltatás elsősorban "
+#~ "demonstrációs célból készült, de hasznos azoknak az Orka fejlesztőknek "
+#~ "is, akiknek nincs Braille-kijelzőjük. Nyomja meg az <cmd>i</cmd> vagy az "
+#~ "<cmd>n</cmd> billentyűk valamelyikét, majd nyomja meg az <key>Enter</key> "
+#~ "billentyűt."
+
+#~ msgid "Automatically start <app>Orca</app> when you log in"
+#~ msgstr "Automatikusan elinduljon az <app>Orka</app> a bejelentkezés után?"
+
+#~ msgid ""
+#~ "Type <cmd>y</cmd> if you want <app>Orca</app> automatically launched for "
+#~ "you or <cmd>n</cmd> if you do not, and press <key>Return</key>."
+#~ msgstr ""
+#~ "Az <app>Orka</app> automatikus elindításának beállításához nyomja meg az "
+#~ "<cmd>i</cmd>, vagy az <cmd>n</cmd> billentyűt, ha ezt nem szeretné, végül "
+#~ "az <key>Enter</key> billentyűt."
+
+#~ msgid ""
+#~ "That's it. <app>Orca</app> is now ready for use. If accessibility was not "
+#~ "yet enabled, <app>Orca</app> does so now and asks you to logout and back "
+#~ "in for the services to start. Type <cmd>y</cmd> and press <key>Return</"
+#~ "key> to restart your login session. If, on the other hand, accessibility "
+#~ "was already enabled, you will simply be prompted to press <key>Return</"
+#~ "key> after which <app>Orca</app> will be launched for you."
+#~ msgstr ""
+#~ "Ezután az <app>Orka</app> használható. Ha az akadálymentesítés még nem "
+#~ "engedélyezett, az <app>Orka</app> megkéri Önt arra, hogy jelentkezzen ki "
+#~ "és újra be a grafikus rendszerbe a szolgáltatás bekapcsolásához. Nyomja "
+#~ "meg az <cmd>i</cmd> és az <key>Enter</key> billentyűt a kijelentkezéshez, "
+#~ "ezután jelentkezzen be, és az <app>Orka</app> el fog indulni. Ha az "
+#~ "akadálymentesítés már engedélyezve lett, az <app>Orka</app> arra fogja "
+#~ "kérni, hogy nyomja meg az <key>Enter</key> billentyűt, ezután az "
+#~ "<app>Orka</app> el fog indulni."
+
+#~ msgid "To quit <app>Orca</app>:"
+#~ msgstr "A következő módokon léphet ki az <app>Orka</app> képernyőolvasóból:"
+
+#~ msgid ""
+#~ "Press <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>. This command "
+#~ "works whether the <app>Orca</app> main window is enabled or not."
+#~ msgstr ""
+#~ "Nyomja le az <keyseq><key>Orka módosító</key><key>Q</key></keyseq> "
+#~ "billentyűkombinációt. Ez a billentyűkombináció mindig használható, "
+#~ "függetlenül attól, hogy az <app>Orka</app> főablaka engedélyezve van-e."
+
+#~ msgctxt "_"
+#~ msgid ""
+#~ "external ref='figures/preferences_enable_braille_monitor.png' "
+#~ "md5='2dead5fbf717ce30339e2248e4f61aed'"
+#~ msgstr ""
+#~ "external ref='figures/preferences_enable_braille_monitor.png' "
+#~ "md5='2dead5fbf717ce30339e2248e4f61aed'"
+
+#~ msgid ""
+#~ "Orca's braille monitor provides an on-screen representation of what takes "
+#~ "place on the braille display. This feature is mostly for demonstration "
+#~ "purposes, but is also useful for <app>Orca</app> developers who do not "
+#~ "have access to a braille display."
+#~ msgstr ""
+#~ "Az Orka Braille monitor a képernyőn jeleníti meg a Braille-kijelzőn "
+#~ "megjelenő információkat. Ez a szolgáltatás elsősorban demonstrációs "
+#~ "célból készült, de hasznos azoknak az <app>Orka</app> fejlesztőknek is, "
+#~ "akiknek nincs Braille-kijelzőjük."
 
 #~ msgid ""
 #~ "Read the <link href=\"help:gnome-help#a11y\">Universal Access Help</link>"
