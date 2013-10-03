@@ -10,9 +10,9 @@
 # Hendrik Brandt <heb@gnome-de.org>, 2004-2005, 2006.
 # Hendrik Richter <hendrikr@gnome.org>, 2006, 2007.
 # Jochen Skulj <jochen@jochenskulj.de>, 2007, 2008.
-# Simon Bienlein <simon@linux-fuer-blinde.de>, 2008, 2009, 2010, 2011, 2012.
+# Simon Bienlein <simon@linux-fuer-blinde.de>, 2008, 2009, 2010, 2011, 2012, 2013.
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2010, 2011, 2013.
-# Christian Kirbach <christian.kirbach@gmail.com>, 2009-2012.
+# Christian Kirbach <christian.kirbach@gmail.com>, 2009-2013.
 # Wolfgang Stöggl <c72578@yahoo.de>, 2011-2013.
 # Hendrik Knackstedt <kn.hendrik@gmail.com>, 2012.
 #
@@ -21,9 +21,9 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-09-12 20:58+0000\n"
+"POT-Creation-Date: 2013-09-30 14:56+0000\n"
 "PO-Revision-Date: 2013-09-13 19:02+0100\n"
-"Last-Translator: Benjamin Steinwender <b@stbe.at>\n"
+"Last-Translator: Simon Bienlein <simon@linux-fuer-blinde.de>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -652,7 +652,7 @@ msgstr "neue Zeile"
 #.
 #: ../src/orca/chnames.py:47 ../src/orca/keynames.py:130
 msgid "tab"
-msgstr "Tabulator"
+msgstr "Tab"
 
 #. Translators: this is the spoken word for the character '!' (U+0021)
 #.
@@ -676,7 +676,7 @@ msgstr "Nummer"
 #.
 #: ../src/orca/chnames.py:63
 msgid "dollar"
-msgstr "Dollar-Zeichen"
+msgstr "Dollar"
 
 #. Translators: this is the spoken word for the character '%' (U+0025)
 #.
@@ -2944,197 +2944,204 @@ msgstr "Zum vorherigen Orientierungspunkt bewegen."
 msgid "Goes to next landmark."
 msgstr "Zum nächsten Orientierungspunkt bewegen."
 
+#. Translators: this is for navigating among ARIA landmarks in a document. ARIA
+#. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
+#. important part of webpage like banners, main context, search etc.
+#: ../src/orca/cmdnames.py:835
+msgid "Displays a list of landmarks."
+msgstr "Zeigt eine Liste von Orientierungspunkten an."
+
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/cmdnames.py:835
+#: ../src/orca/cmdnames.py:840
 msgid "Goes to previous large object."
 msgstr "Zum vorherigen größeren Objekt bewegen."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/cmdnames.py:840
+#: ../src/orca/cmdnames.py:845
 msgid "Goes to next large object."
 msgstr "Zum nächsten größeren Objekt bewegen."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/cmdnames.py:845
+#: ../src/orca/cmdnames.py:850
 msgid "Displays a list of large objects."
 msgstr "Zeigt eine Liste von größeren Objekten an."
 
 #. Translators: this is for navigating among links in a document.
-#: ../src/orca/cmdnames.py:848
+#: ../src/orca/cmdnames.py:853
 msgid "Displays a list of links."
 msgstr "Zeigt eine Liste von Links an."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:851
+#: ../src/orca/cmdnames.py:856
 msgid "Goes to previous list."
 msgstr "Zur vorherigen Liste bewegen."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:854
+#: ../src/orca/cmdnames.py:859
 msgid "Goes to next list."
 msgstr "Zur nächsten Liste bewegen."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:857
+#: ../src/orca/cmdnames.py:862
 msgid "Displays a list of lists."
 msgstr "Zeigt eine Liste von Listen an."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:860
+#: ../src/orca/cmdnames.py:865
 msgid "Goes to previous list item."
 msgstr "Zum vorherigen Listeneintrag bewegen."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:863
+#: ../src/orca/cmdnames.py:868
 msgid "Goes to next list item."
 msgstr "Zum nächsten Listeneintrag bewegen."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:866
+#: ../src/orca/cmdnames.py:871
 msgid "Displays a list of list items."
 msgstr "Zeigt eine Liste von Listenobjekten an."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:871
+#: ../src/orca/cmdnames.py:876
 msgid "Goes to previous live region."
 msgstr "Zum vorherigen dynamischen Bereich bewegen."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:876
+#: ../src/orca/cmdnames.py:881
 msgid "Goes to next live region."
 msgstr "Zum nächsten dynamischen Bereich bewegen."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:881
+#: ../src/orca/cmdnames.py:886
 msgid "Goes to the last live region which made an announcement."
 msgstr "Springt zum letzten dynamischen Bereich, der eine Ankündigung ausgab."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:884
+#: ../src/orca/cmdnames.py:889
 msgid "Goes to previous paragraph."
 msgstr "Zum vorherigen Absatz bewegen."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:887
+#: ../src/orca/cmdnames.py:892
 msgid "Goes to next paragraph."
 msgstr "Zum nächsten Absatz bewegen."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:890
+#: ../src/orca/cmdnames.py:895
 msgid "Displays a list of paragraphs."
 msgstr "Zeigt eine Liste von Absätzen an."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:893
+#: ../src/orca/cmdnames.py:898
 msgid "Goes to previous radio button."
 msgstr "Zum vorherigen Auswahlknopf bewegen."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:896
+#: ../src/orca/cmdnames.py:901
 msgid "Goes to next radio button."
 msgstr "Zum nächsten Auswahlknopf bewegen."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:899
+#: ../src/orca/cmdnames.py:904
 msgid "Displays a list of radio buttons."
 msgstr "Zeigt eine Liste von Auswahlknöpfen an."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:903
+#: ../src/orca/cmdnames.py:908
 msgid "Goes to previous separator."
 msgstr "Zum vorherigen Trenner bewegen."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:907
+#: ../src/orca/cmdnames.py:912
 msgid "Goes to next separator."
 msgstr "Zum nächsten Trenner bewegen."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:910
+#: ../src/orca/cmdnames.py:915
 msgid "Goes to previous table."
 msgstr "Zur vorherigen Tabelle bewegen."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:913
+#: ../src/orca/cmdnames.py:918
 msgid "Goes to next table."
 msgstr "Zur nächsten Tabelle bewegen."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:916
+#: ../src/orca/cmdnames.py:921
 msgid "Displays a list of tables."
 msgstr "Zeigt eine Liste von Tabellen an."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:919
+#: ../src/orca/cmdnames.py:924
 msgid "Goes down one cell."
 msgstr "Eine Zelle nach unten bewegen."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:922
+#: ../src/orca/cmdnames.py:927
 msgid "Goes to the first cell in a table."
 msgstr "Zur ersten Zelle in einer Tabelle bewegen."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:925
+#: ../src/orca/cmdnames.py:930
 msgid "Goes to the last cell in a table."
 msgstr "Zur letzten Zelle in einer Tabelle bewegen."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:928
+#: ../src/orca/cmdnames.py:933
 msgid "Goes left one cell."
 msgstr "Eine Zelle nach links bewegen."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:931
+#: ../src/orca/cmdnames.py:936
 msgid "Goes right one cell."
 msgstr "Eine Zelle nach rechts bewegen."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:934
+#: ../src/orca/cmdnames.py:939
 msgid "Goes up one cell."
 msgstr "Eine Zelle nach oben bewegen."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:937
+#: ../src/orca/cmdnames.py:942
 msgid "Goes to previous unvisited link."
 msgstr "Zum vorherigen nicht besuchten Link bewegen."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:940
+#: ../src/orca/cmdnames.py:945
 msgid "Goes to next unvisited link."
 msgstr "Zum nächsten nicht besuchten Link bewegen."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:943
+#: ../src/orca/cmdnames.py:948
 msgid "Displays a list of unvisited links."
 msgstr "Zeigt eine Liste nicht besuchter Links an."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:946
+#: ../src/orca/cmdnames.py:951
 msgid "Goes to previous visited link."
 msgstr "Zum vorherigen besuchten Link bewegen."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:949
+#: ../src/orca/cmdnames.py:954
 msgid "Goes to next visited link."
 msgstr "Zum nächsten besuchten Link bewegen."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:952
+#: ../src/orca/cmdnames.py:957
 msgid "Displays a list of visited links."
 msgstr "Zeigt eine Liste besuchter Links an."
 
@@ -3143,8 +3150,8 @@ msgstr "Zeigt eine Liste besuchter Links an."
 #. string used in the *.po file for gail.
 #.
 #: ../src/orca/flat_review.py:1050 ../src/orca/generator.py:475
-#: ../src/orca/generator.py:738 ../src/orca/generator.py:780
-#: ../src/orca/generator.py:826
+#: ../src/orca/generator.py:741 ../src/orca/generator.py:783
+#: ../src/orca/generator.py:829
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:635
 #: ../src/orca/tutorialgenerator.py:558 ../src/orca/tutorialgenerator.py:598
@@ -3683,10 +3690,21 @@ msgstr "Bezeichnung"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
+#. could with native keyboard navigation. This is the title for a column which
+#. contains the text of a landmark. ARIA role landmarks are the W3C defined HTML
+#. tag attribute 'role' used to identify important part of webpage like banners,
+#. main context, search etc.
+#: ../src/orca/guilabels.py:410
+msgctxt "structural navigation"
+msgid "Landmark"
+msgstr "Orientierungspunkt"
+
+#. Translators: Orca has a command that presents a list of structural navigation
+#. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of a column which
 #. contains the level of a heading. Level will be a "1" for <h1>, a "2" for <h2>,
 #. and so on.
-#: ../src/orca/guilabels.py:409
+#: ../src/orca/guilabels.py:417
 msgctxt "structural navigation"
 msgid "Level"
 msgstr "Ebene"
@@ -3695,7 +3713,7 @@ msgstr "Ebene"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a link.
-#: ../src/orca/guilabels.py:415
+#: ../src/orca/guilabels.py:423
 msgctxt "structural navigation"
 msgid "Link"
 msgstr "Link"
@@ -3704,7 +3722,7 @@ msgstr "Link"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list.
-#: ../src/orca/guilabels.py:421
+#: ../src/orca/guilabels.py:429
 msgctxt "structural navigation"
 msgid "List"
 msgstr "Liste"
@@ -3713,7 +3731,7 @@ msgstr "Liste"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list item.
-#: ../src/orca/guilabels.py:427
+#: ../src/orca/guilabels.py:435
 msgctxt "structural navigation"
 msgid "List Item"
 msgstr "Listeneintrag"
@@ -3722,7 +3740,7 @@ msgstr "Listeneintrag"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an object.
-#: ../src/orca/guilabels.py:433
+#: ../src/orca/guilabels.py:441
 msgctxt "structural navigation"
 msgid "Object"
 msgstr "Objekt"
@@ -3731,7 +3749,7 @@ msgstr "Objekt"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a paragraph.
-#: ../src/orca/guilabels.py:439
+#: ../src/orca/guilabels.py:447
 msgctxt "structural navigation"
 msgid "Paragraph"
 msgstr "Absatz"
@@ -3740,7 +3758,7 @@ msgstr "Absatz"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a radio button.
-#: ../src/orca/guilabels.py:445
+#: ../src/orca/guilabels.py:453
 msgctxt "structural navigation"
 msgid "Radio Button"
 msgstr "Auswahlknopf"
@@ -3750,7 +3768,7 @@ msgstr "Auswahlknopf"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the role of a widget. Examples include "heading", "paragraph",
 #. "table", "combo box", etc.
-#: ../src/orca/guilabels.py:452
+#: ../src/orca/guilabels.py:460
 msgctxt "structural navigation"
 msgid "Role"
 msgstr "Rolle"
@@ -3759,7 +3777,7 @@ msgstr "Rolle"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the selected item of a form field.
-#: ../src/orca/guilabels.py:458
+#: ../src/orca/guilabels.py:466
 msgctxt "structural navigation"
 msgid "Selected Item"
 msgstr "Ausgewähltes Objekt"
@@ -3769,7 +3787,7 @@ msgstr "Ausgewähltes Objekt"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the state of a widget. Examples include "checked"/"not checked",
 #. "selected"/"not selected", "visited/not visited", etc.
-#: ../src/orca/guilabels.py:465
+#: ../src/orca/guilabels.py:473
 msgctxt "structural navigation"
 msgid "State"
 msgstr "Status"
@@ -3778,7 +3796,7 @@ msgstr "Status"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an entry.
-#: ../src/orca/guilabels.py:471
+#: ../src/orca/guilabels.py:479
 msgctxt "structural navigation"
 msgid "Text"
 msgstr "Text"
@@ -3787,7 +3805,7 @@ msgstr "Text"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the URI of a link.
-#: ../src/orca/guilabels.py:477
+#: ../src/orca/guilabels.py:485
 msgctxt "structural navigation"
 msgid "URI"
 msgstr "Adresse"
@@ -3796,7 +3814,7 @@ msgstr "Adresse"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the value of a form field.
-#: ../src/orca/guilabels.py:483
+#: ../src/orca/guilabels.py:491
 msgctxt "structural navigation"
 msgid "Value"
 msgstr "Wert"
@@ -3804,7 +3822,7 @@ msgstr "Wert"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:488
+#: ../src/orca/guilabels.py:496
 msgctxt "structural navigation"
 msgid "Blockquotes"
 msgstr "Anführungszeichen"
@@ -3812,7 +3830,7 @@ msgstr "Anführungszeichen"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:493
+#: ../src/orca/guilabels.py:501
 msgctxt "structural navigation"
 msgid "Buttons"
 msgstr "Knöpfe"
@@ -3820,7 +3838,7 @@ msgstr "Knöpfe"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:498
+#: ../src/orca/guilabels.py:506
 msgctxt "structural navigation"
 msgid "Check Boxes"
 msgstr "Ankreuzfelder"
@@ -3828,7 +3846,7 @@ msgstr "Ankreuzfelder"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:503
+#: ../src/orca/guilabels.py:511
 msgctxt "structural navigation"
 msgid "Combo Boxes"
 msgstr "Kombinierte Auswahlfelder"
@@ -3836,7 +3854,7 @@ msgstr "Kombinierte Auswahlfelder"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:508
+#: ../src/orca/guilabels.py:516
 msgctxt "structural navigation"
 msgid "Entries"
 msgstr "Einträge"
@@ -3844,7 +3862,7 @@ msgstr "Einträge"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:513
+#: ../src/orca/guilabels.py:521
 msgctxt "structural navigation"
 msgid "Form Fields"
 msgstr "Formularfelder"
@@ -3852,7 +3870,7 @@ msgstr "Formularfelder"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:518
+#: ../src/orca/guilabels.py:526
 msgctxt "structural navigation"
 msgid "Headings"
 msgstr "Überschriften"
@@ -3861,7 +3879,7 @@ msgstr "Überschriften"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. Level will be a "1" for <h1>, a "2" for <h2>, and so on.
-#: ../src/orca/guilabels.py:524
+#: ../src/orca/guilabels.py:532
 #, python-format
 msgctxt "structural navigation"
 msgid "Headings at Level %d"
@@ -3870,9 +3888,19 @@ msgstr "Überschriften der Ebene %d"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
+#. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
+#. identify important part of webpage like banners, main context, search etc.
+#: ../src/orca/guilabels.py:539
+msgctxt "structural navigation"
+msgid "Landmarks"
+msgstr "Orientierungspunkte"
+
+#. Translators: Orca has a command that presents a list of structural navigation
+#. objects in a dialog box so that users can navigate more quickly than they
+#. could with native keyboard navigation. This is the title of such a dialog box.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/guilabels.py:531
+#: ../src/orca/guilabels.py:546
 msgctxt "structural navigation"
 msgid "Large Objects"
 msgstr "Größere Objekte"
@@ -3880,7 +3908,7 @@ msgstr "Größere Objekte"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:536
+#: ../src/orca/guilabels.py:551
 msgctxt "structural navigation"
 msgid "Links"
 msgstr "Links"
@@ -3888,7 +3916,7 @@ msgstr "Links"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:541
+#: ../src/orca/guilabels.py:556
 msgctxt "structural navigation"
 msgid "Lists"
 msgstr "Listen"
@@ -3896,7 +3924,7 @@ msgstr "Listen"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:546
+#: ../src/orca/guilabels.py:561
 msgctxt "structural navigation"
 msgid "List Items"
 msgstr "Listeneinträge"
@@ -3904,7 +3932,7 @@ msgstr "Listeneinträge"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:551
+#: ../src/orca/guilabels.py:566
 msgctxt "structural navigation"
 msgid "Paragraphs"
 msgstr "Absätze"
@@ -3912,7 +3940,7 @@ msgstr "Absätze"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:556
+#: ../src/orca/guilabels.py:571
 msgctxt "structural navigation"
 msgid "Radio Buttons"
 msgstr "Auswahlknöpfe"
@@ -3920,7 +3948,7 @@ msgstr "Auswahlknöpfe"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:561
+#: ../src/orca/guilabels.py:576
 msgctxt "structural navigation"
 msgid "Tables"
 msgstr "Tabellen"
@@ -3928,7 +3956,7 @@ msgstr "Tabellen"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:566
+#: ../src/orca/guilabels.py:581
 msgctxt "structural navigation"
 msgid "Unvisited Links"
 msgstr "Nicht besuchte Links"
@@ -3936,7 +3964,7 @@ msgstr "Nicht besuchte Links"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:571
+#: ../src/orca/guilabels.py:586
 msgctxt "structural navigation"
 msgid "Visited Links"
 msgstr "Besuchte Links"
@@ -3944,14 +3972,14 @@ msgstr "Besuchte Links"
 #. Translators: This is the title of a panel holding options for how to navigate
 #. HTML content (e.g., Orca caret navigation, positioning of caret, structural
 #. navigation, etc.).
-#: ../src/orca/guilabels.py:576
+#: ../src/orca/guilabels.py:591
 msgid "Page Navigation"
 msgstr "Seitennavigation"
 
 #. Translators: When the user loads a new web page, they can optionally have Orca
 #. automatically start reading the page from beginning to end. This is the label
 #. of a checkbox in which users can indicate their preference.
-#: ../src/orca/guilabels.py:582
+#: ../src/orca/guilabels.py:597
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "Vorlesen der Seite automatisch beim ersten _Laden starten"
 
@@ -3962,7 +3990,7 @@ msgstr "Vorlesen der Seite automatisch beim ersten _Laden starten"
 #. queued up and sent to the speech synthesis system once the entire set of
 #. utterances has been calculated.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: ../src/orca/guilabels.py:590 ../src/orca/orca-setup.ui.h:48
+#: ../src/orca/guilabels.py:605 ../src/orca/orca-setup.ui.h:48
 msgid "Break speech into ch_unks between pauses"
 msgstr "Sprache zwischen Pausen in einzelne Blöcke aufteilen"
 
@@ -3972,21 +4000,21 @@ msgstr "Sprache zwischen Pausen in einzelne Blöcke aufteilen"
 #. to the default voice configured for given speech engine within the speech
 #. subsystem. Apart from this item, the list will contain the names of all
 #. available "real" voices provided by the speech engine.
-#: ../src/orca/guilabels.py:598
+#: ../src/orca/guilabels.py:613
 #, python-format
 msgid "%s default voice"
 msgstr "%s Standardstimme"
 
 #. Translators: This refers to the voice used by Orca when presenting the content
 #. of the screen and other messages.
-#: ../src/orca/guilabels.py:602
+#: ../src/orca/guilabels.py:617
 msgctxt "VoiceType"
 msgid "Default"
 msgstr "Standard"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is part of a hyperlink.
-#: ../src/orca/guilabels.py:606
+#: ../src/orca/guilabels.py:621
 msgctxt "VoiceType"
 msgid "Hyperlink"
 msgstr "Links"
@@ -3997,46 +4025,46 @@ msgstr "Links"
 #. indicate the presence of the red squiggly line found under a spelling error;
 #. Orca might say "3 of 6" when a user Tabs into a list of six items and the
 #. third item is selected. And so on.
-#: ../src/orca/guilabels.py:614
+#: ../src/orca/guilabels.py:629
 msgctxt "VoiceType"
 msgid "System"
 msgstr "System"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is written in uppercase.
-#: ../src/orca/guilabels.py:618
+#: ../src/orca/guilabels.py:633
 msgctxt "VoiceType"
 msgid "Uppercase"
 msgstr "Großbuchstaben"
 
 #. Translators this label refers to the name of particular speech synthesis
 #. system. (http://devel.freebsoft.org/speechd)
-#: ../src/orca/guilabels.py:622
+#: ../src/orca/guilabels.py:637
 msgid "Speech Dispatcher"
 msgstr "Speech Dispatcher"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spread sheet cell. Coordinates are
 #. the row and column position within the spread sheet (i.e. A1, B1, C2 ...)
-#: ../src/orca/guilabels.py:627
+#: ../src/orca/guilabels.py:642
 msgid "Speak spread sheet cell coordinates"
 msgstr "Zellenkoordinaten in Tabellenkalkulation vorlesen"
 
 #. Translators: This is a label for an option for whether or not to speak the
 #. header of a table cell in document content.
-#: ../src/orca/guilabels.py:631
+#: ../src/orca/guilabels.py:646
 msgid "Announce cell _header"
 msgstr "Zellenü_berschrift vorlesen"
 
 #. Translators: This is the title of a panel containing options for specifying
 #. how to navigate tables in document content.
-#: ../src/orca/guilabels.py:635
+#: ../src/orca/guilabels.py:650
 msgid "Table Navigation"
 msgstr "Tabellennavigation"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
-#: ../src/orca/guilabels.py:639
+#: ../src/orca/guilabels.py:654
 msgid "Skip _blank cells"
 msgstr "_Leere Zellen überspringen"
 
@@ -4044,26 +4072,26 @@ msgstr "_Leere Zellen überspringen"
 #. row of a table read; other times they want just the current cell presented to
 #. them. This label is associated with the default presentation to be used.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/guilabels.py:644 ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/guilabels.py:659 ../src/orca/orca-setup.ui.h:60
 msgid "Speak _cell"
 msgstr "_Zelle vorlesen"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
-#: ../src/orca/guilabels.py:648
+#: ../src/orca/guilabels.py:663
 msgid "Speak _cell coordinates"
 msgstr "_Zellenkoordinaten vorlesen"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many rows and columns
 #. a particular table cell spans in a table).
-#: ../src/orca/guilabels.py:653
+#: ../src/orca/guilabels.py:668
 msgid "Speak _multiple cell spans"
 msgstr "_Zellenausdehnung vorlesen"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
-#: ../src/orca/guilabels.py:657
+#: ../src/orca/guilabels.py:672
 msgid "Attribute Name"
 msgstr "Attributname"
 
@@ -4072,20 +4100,20 @@ msgstr "Attributname"
 #. Orca needs to provide its own support. As such, Orca offers the user the
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:664
+#: ../src/orca/guilabels.py:679
 msgid "Control caret navigation"
 msgstr "Caret Navigation verwenden"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:669
+#: ../src/orca/guilabels.py:684
 msgid "Enable _structural navigation"
 msgstr "_Strukturierte Navigation verwenden"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: ../src/orca/guilabels.py:673 ../src/orca/orca-setup.ui.h:56
+#: ../src/orca/guilabels.py:688 ../src/orca/orca-setup.ui.h:56
 msgid "Brie_f"
 msgstr "_Kurz"
 
@@ -4194,19 +4222,19 @@ msgstr "Bild ab"
 #.
 #: ../src/orca/keynames.py:134
 msgid "left tab"
-msgstr "Tabulator links"
+msgstr "Tab links"
 
 #. Translators: this is how someone would speak the name of the backspace key
 #.
 #: ../src/orca/keynames.py:142
 msgid "backspace"
-msgstr "Löschen-Taste"
+msgstr "Löschen"
 
 #. Translators: this is how someone would speak the name of the return key
 #.
 #: ../src/orca/keynames.py:146
 msgid "return"
-msgstr "Eingabe-Taste"
+msgstr "Enter"
 
 #. Translators: this is how someone would speak the name of the enter key
 #.
@@ -4218,13 +4246,13 @@ msgstr "Eingabe-Taste"
 #.
 #: ../src/orca/keynames.py:154 ../src/orca/keynames.py:158
 msgid "up"
-msgstr "oben"
+msgstr "hoch"
 
 #. Translators: this is how someone would speak the name of the down arrow key
 #.
 #: ../src/orca/keynames.py:162 ../src/orca/keynames.py:166
 msgid "down"
-msgstr "unten"
+msgstr "runter"
 
 #. Translators: this is how someone would speak the name of the left arrow key
 #.
@@ -6336,7 +6364,7 @@ msgstr "Sprachausgabe steht nicht zur Verfügung."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1434 ../src/orca/scripts/default.py:4016
+#: ../src/orca/messages.py:1434 ../src/orca/scripts/default.py:4019
 msgid "string not found"
 msgstr "Zeichenkette nicht gefunden"
 
@@ -7652,7 +7680,7 @@ msgstr "%s Leiste"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3634 ../src/orca/scripts/default.py:3646
+#: ../src/orca/scripts/default.py:3637 ../src/orca/scripts/default.py:3649
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7661,7 +7689,7 @@ msgstr[1] "%(key)s %(value)s Pixel"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4744
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4742
 msgid "open"
 msgstr "öffnen"
 
