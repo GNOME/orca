@@ -150,7 +150,8 @@ class MouseReviewer:
             return
 
         # Need to do this and allow the main loop to cycle once to get any info
-        wnck_screen = Wnck.Screen.get_default()
+        # IMPORTANT: This causes orca to segfault upon launch in Wayland.
+        # wnck_screen = Wnck.Screen.get_default()
         self.active = False
         self._currentMouseOver = _ItemContext()
         self._oldMouseOver = _ItemContext()
