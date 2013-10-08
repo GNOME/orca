@@ -460,6 +460,27 @@ class Script(Gecko.Script):
 
         Gecko.Script.onStateChanged(self, event)
 
+    def onTextDeleted(self, event):
+        """Called whenever text is from an an object.
+
+        Arguments:
+        - event: the Event
+        """
+
+        obj = event.source
+        parent = obj.parent
+
+        try:
+            role = event.source.getRole()
+            parentRole = parent.getRole()
+        except:
+            return
+
+        if role == pyatspi.ROLE_LABEL and parentRole == pyatspi.ROLE_STATUS_BAR:
+            return
+
+        Gecko.Script.onTextDeleted(self, event)
+
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
 
@@ -469,10 +490,19 @@ class Script(Gecko.Script):
         obj = event.source
         parent = obj.parent
 
+        try:
+            role = event.source.getRole()
+            parentRole = parent.getRole()
+        except:
+            return
+
+        if role == pyatspi.ROLE_LABEL and parentRole == pyatspi.ROLE_STATUS_BAR:
+            return
+
         # Try to stop unwanted chatter when a new message is being
         # replied to. See bgo#618484.
         #
-        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
+        if role == pyatspi.ROLE_DOCUMENT_FRAME \
            and event.source.getState().contains(pyatspi.STATE_EDITABLE) \
            and event.type.endswith("system"):
             return
@@ -480,7 +510,7 @@ class Script(Gecko.Script):
         # Speak the autocompleted text, but only if it is different
         # address so that we're not too "chatty." See bug #533042.
         #
-        if parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
+        if parentRole == pyatspi.ROLE_AUTOCOMPLETE:
             if len(event.any_data) == 1:
                 default.Script.onTextInserted(self, event)
                 return
