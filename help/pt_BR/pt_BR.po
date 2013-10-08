@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2013-09-20 15:00+0000\n"
-"PO-Revision-Date: 2013-09-20 13:44-0300\n"
+"POT-Creation-Date: 2013-10-08 12:58+0000\n"
+"PO-Revision-Date: 2013-10-08 17:16-0300\n"
 "Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -417,8 +417,8 @@ msgstr "Comandos para controlar o <app>Orca</app>"
 #: C/commands_controlling_orca.page:21
 msgid ""
 "The following commands can be used to get into <app>Orca</app>'s Preferences "
-"dialogs, quit <app>Orca</app>, and bypass <app>Orca</app> commands to avoid "
-"shortcut conflicts within the application being accessed."
+"dialogs, toggle <app>Orca</app> on and off, and bypass <app>Orca</app> "
+"commands to avoid shortcut conflicts within the application being accessed."
 msgstr ""
 "Os comandos a seguir podem ser usados para entrar nas preferências do "
 "<app>Orca</app>, sair do <app>Orca</app> e ignorar comandos do <app>Orca</"
@@ -426,7 +426,16 @@ msgstr ""
 "acessado."
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:28
+#: C/commands_controlling_orca.page:29
+msgid ""
+"Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
+"key><key>Alt</key><key>S</key></keyseq>."
+msgstr ""
+"Alterne o <app>Orca</app> em ligado e desligado no GNOME: "
+"<keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:35
 msgid ""
 "<link xref=\"preferences\">Orca Preferences</link> dialog: <keyseq><key>Orca "
 "Modifier</key><key>Space</key></keyseq>."
@@ -436,7 +445,7 @@ msgstr ""
 "keyseq>."
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:34
+#: C/commands_controlling_orca.page:41
 msgid ""
 "Orca's Preferences dialog for the focused application: <keyseq><key>Ctrl</"
 "key><key>Orca Modifier</key><key>Space</key></keyseq>."
@@ -445,15 +454,7 @@ msgstr ""
 "key><key>Tecla modificadora do Orca</key><key>barra de espaço</key></keyseq>."
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:40
-msgid ""
-"Quit <app>Orca</app>: <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>."
-msgstr ""
-"Sair do <app>Orca</app>: <keyseq><key>Tecla modificadora do Orca</"
-"key><key>Q</key></keyseq>."
-
-#. (itstool) path: item/p
-#: C/commands_controlling_orca.page:46
+#: C/commands_controlling_orca.page:47
 msgid ""
 "Pass the next command on to the current application: <keyseq><key>Orca "
 "Modifier</key><key>BackSpace</key></keyseq>"
@@ -462,26 +463,23 @@ msgstr ""
 "modificadora do Orca</key><key>BackSpace</key></keyseq>"
 
 #. (itstool) path: section/title
-#: C/commands_controlling_orca.page:54
+#: C/commands_controlling_orca.page:55
 msgid "Commands for Learning to Use <app>Orca</app>"
 msgstr "Comandos para aprender a usar o <app>Orca</app>"
 
 #. (itstool) path: section/p
 #. (itstool) path: page/p
-#: C/commands_controlling_orca.page:55 C/howto_learn_modes.page:18
+#: C/commands_controlling_orca.page:56 C/howto_learn_modes.page:18
 msgid ""
-"Orca has two modes for learning more about <app>Orca</app>'s commands: Learn "
-"Mode and List Shortcuts Mode. In Learn Mode, <app>Orca</app> will announce "
-"each keystroke you pressed along with any associated <app>Orca</app> command "
-"that keystroke is bound to. List Shortcuts Mode provides you with a list of "
-"all the <app>Orca</app> commands you can use."
+"In Learn Mode, <app>Orca</app> will announce each keystroke you pressed "
+"along with any associated <app>Orca</app> command that keystroke is bound "
+"to. In this mode, you can also get a list of shortcuts containing all the "
+"<app>Orca</app> commands you can use."
 msgstr ""
-"Há duas maneiras para aprender mais sobre os comandos do Orca. Comandos do "
-"<app>Orca</app>: Modo de aprendizado e Modo de lista de teclas de atalho. No "
-"modo de aprendizado, <app>Orca</app> anunciará cada tecla pressionada "
-"juntamente com o comando do <app>Orca</app> associado àquela tecla. A lista "
-"de teclas de atalho fornece uma lista de todos os comandos do <app>Orca</"
-"app> que você pode usar."
+"No modo de aprendizado, o <app>Orca</app> anunciará cada tecla pressionada "
+"juntamente com o comando do <app>Orca</app> associado àquela tecla. Neste "
+"modo, você também pode obter uma lista de teclas de atalho contendo todos os "
+"comandos do <app>Orca</app> que você pode usar."
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:64
@@ -492,17 +490,8 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:70
-msgid ""
-"Enter list shortcuts mode: <keyseq><key>Orca Modifier</key><key>H</key></"
-"keyseq> (double-clicked)"
-msgstr ""
-"Entra na lista de teclas de atalho: <keyseq><key>Tecla modificadora do Orca</"
-"key><key>H</key></keyseq> (pressionada duas vezes)"
-
-#. (itstool) path: item/p
-#: C/commands_controlling_orca.page:76
-msgid "Exit either mode: <keyseq><key>Esc</key></keyseq>"
-msgstr "Sai do modo: <keyseq><key>Esc</key></keyseq>"
+msgid "Exit learn mode: <keyseq><key>Esc</key></keyseq>"
+msgstr "Sai do modo de aprendizado: <keyseq><key>Esc</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_debugging.page:4
@@ -2927,8 +2916,8 @@ msgstr "Mova para a disposiçãode teclado desejada."
 #. (itstool) path: info/title
 #: C/howto_learn_modes.page:5
 msgctxt "sort"
-msgid "5. The \"Learn\" Modes"
-msgstr "5. Os modos de \"Aprendizado\""
+msgid "5. \"Learn\" Mode"
+msgstr "5. Modo de \"Aprendizagem\""
 
 #. (itstool) path: info/desc
 #: C/howto_learn_modes.page:6
@@ -2937,16 +2926,16 @@ msgstr "Descobrindo os comandos do <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/howto_learn_modes.page:17
-msgid "The \"Learn\" Modes"
-msgstr "Os modos de \"Aprendizagem\""
+msgid "\"Learn\" Mode"
+msgstr "Modo de \"Aprendizagem\""
 
 #. (itstool) path: steps/title
-#: C/howto_learn_modes.page:27
+#: C/howto_learn_modes.page:25
 msgid "Using Learn Mode"
 msgstr "Usando o modo de aprendizado"
 
 #. (itstool) path: item/p
-#: C/howto_learn_modes.page:29
+#: C/howto_learn_modes.page:27 C/howto_learn_modes.page:45
 msgid ""
 "Get into Learn Mode by pressing <keyseq><key>Orca Modifier</key> <key>H</"
 "key></keyseq>."
@@ -2955,7 +2944,7 @@ msgstr ""
 "Orca</key> <key>H</key></keyseq>."
 
 #. (itstool) path: item/p
-#: C/howto_learn_modes.page:35
+#: C/howto_learn_modes.page:33
 msgid ""
 "Press any key or keystroke. <app>Orca</app> will announce the keys and any "
 "associated command."
@@ -2964,27 +2953,17 @@ msgstr ""
 "o comando a elas associado."
 
 #. (itstool) path: item/p
-#: C/howto_learn_modes.page:41
+#: C/howto_learn_modes.page:39
 msgid "Press <key>Esc</key> to exit Learn Mode."
 msgstr "Pressione <key>Esc</key> para sair do modo de aprendizado."
 
 #. (itstool) path: steps/title
-#: C/howto_learn_modes.page:45
-msgid "Using List Shortcuts Mode"
-msgstr "Usando o modo de lista de atalhos"
+#: C/howto_learn_modes.page:43
+msgid "Getting a List of Shortcuts"
+msgstr "Obtendo uma lista de atalhos"
 
 #. (itstool) path: item/p
-#: C/howto_learn_modes.page:47
-msgid ""
-"Get into List Shortcuts Mode by pressing <keyseq><key>Orca Modifier</key> "
-"<key>H</key></keyseq> twice quickly."
-msgstr ""
-"Entre no modo de lista de atalhos pressionando rapidamente "
-"<keyseq><key>Tecla modificadora do Orca</key> <key>H</key></keyseq> duas "
-"vezes."
-
-#. (itstool) path: item/p
-#: C/howto_learn_modes.page:53
+#: C/howto_learn_modes.page:51
 msgid ""
 "Press <key>1</key> if you want a list of shortcuts that apply <app>Orca</"
 "app>-wide, or press <key>2</key> if you want a list of shortcuts that are "
@@ -2995,7 +2974,7 @@ msgstr ""
 "que são específicos para o aplicativo com foco."
 
 #. (itstool) path: item/p
-#: C/howto_learn_modes.page:60
+#: C/howto_learn_modes.page:58
 msgid ""
 "Press <key>Up</key> or <key>Down</key> to examine the contents of the list."
 msgstr ""
@@ -3003,9 +2982,9 @@ msgstr ""
 "conteúdo da lista."
 
 #. (itstool) path: item/p
-#: C/howto_learn_modes.page:66
-msgid "Press <key>Esc</key> to exit List Shortcuts Mode."
-msgstr "Pressione <key>Esc</key> para sair do modo de lista de atalhos."
+#: C/howto_learn_modes.page:64
+msgid "Press <key>Esc</key> to exit the list."
+msgstr "Pressione <key>Esc</key> para sair da lista."
 
 #. (itstool) path: info/title
 #: C/howto_live_regions.page:5
@@ -3730,8 +3709,8 @@ msgstr ""
 #. (itstool) path: info/title
 #: C/howto_setting_up_orca.page:6
 msgctxt "sort"
-msgid "3. Orca Configuration"
-msgstr "3. Configuração do Orca"
+msgid "4. Orca Configuration"
+msgstr "4. Configuração do Orca"
 
 #. (itstool) path: info/title
 #: C/howto_setting_up_orca.page:7
@@ -3741,86 +3720,34 @@ msgstr "Configuração"
 
 #. (itstool) path: info/desc
 #: C/howto_setting_up_orca.page:8
-msgid "Setting up <app>Orca</app> initially and in the future"
-msgstr "Configurando o <app>Orca</app> inicialmente e no futuro"
+msgid "Setting up <app>Orca</app>"
+msgstr "Configurando o <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/howto_setting_up_orca.page:19
 msgid "Orca Configuration"
 msgstr "Configuração do Orca"
 
-#. (itstool) path: section/title
+#. (itstool) path: section/p
 #: C/howto_setting_up_orca.page:21
-msgid "Initial Setup"
-msgstr "Configuração inicial"
-
-#. (itstool) path: section/p
-#: C/howto_setting_up_orca.page:22
 msgid ""
-"When you run <app>Orca</app> for the first time, it will automatically enter "
-"setup mode. Depending on your active session's configuration, one of two "
-"things will occur:"
+"If you want to configure <app>Orca</app>, you can do one of the following:"
 msgstr ""
-"Quando você executar pela primeira vez o <app>Orca</app>, ele entrará "
-"automaticamente no modo de configuração. Dependendo de suas configurações na "
-"sessão ativa, uma de duas coisas acontecerá:"
+"Se você deseja configurar o <app>Orca</app>, você pode fazer o seguinte:"
 
 #. (itstool) path: item/p
-#: C/howto_setting_up_orca.page:29
+#: C/howto_setting_up_orca.page:27
 msgid ""
-"If accessibility support has already been enabled for your session, you will "
-"be placed in the <app>Orca</app> <link xref=\"preferences\">Preferences</"
-"link> dialog box where you can customize <app>Orca</app> completely and then "
-"use it immediately."
+"Get into the <link xref=\"preferences\">Preferences</link> dialog by "
+"pressing <keyseq><key>Orca Modifier</key><key>Space</key> </keyseq> from "
+"within any accessible application."
 msgstr ""
-"Se o suporte à acessibilidade já estiver habilitada para a sua sessão, você "
-"será posicionado na caixa de diálogo <link xref=\"preferences"
-"\">Preferências</link> do <app>Orca</app> onde será possível personalizar "
-"completamente o <app>Orca</app> e então usá-lo imediatamente."
+"Acesse o diálogo <link xref=\"preferences\">Preferências</link> pressionando "
+"a <keyseq><key>Tecla modificadora do Orca</key><key>Barra de espaço</key> </"
+"keyseq> a partir de qualquer aplicativo acessível."
 
 #. (itstool) path: item/p
-#: C/howto_setting_up_orca.page:38
-msgid ""
-"If accessibility support has not already been enabled for your session, "
-"<app>Orca</app>'s <link xref=\"howto_text_setup\">text-based setup</link> "
-"will be launched instead. The text-based setup allows you to configure the "
-"most fundamental settings and enable accessibility support for your session. "
-"You will need to log out and log back in for the new settings to take effect."
-msgstr ""
-"Se o suporte à acessibilidade não tiver sido habilitada para a sua sessão, a "
-"<link xref=\"howto_text_setup\">Configuração do modo texto</link> do "
-"<app>Orca</app> será carregada. A configuração do modo texto permite a você "
-"configurar os ajustes mais fundamentais e habilitar a acessibilidade para a "
-"sua sessão. Será necessário encerrar a sessão e abri-la novamente para que "
-"as alterações surtam efeito."
-
-#. (itstool) path: section/title
-#: C/howto_setting_up_orca.page:50
-msgid "Configuring <app>Orca</app> in the Future"
-msgstr "Configurando o <app>Orca</app> no futuro"
-
-#. (itstool) path: section/p
-#: C/howto_setting_up_orca.page:51
-msgid ""
-"If you want to configure <app>Orca</app> in the future, you can do one of "
-"the following:"
-msgstr ""
-"Se você quiser configurar o <app>Orca</app> no futuro, você pode fazer o "
-"seguinte:"
-
-#. (itstool) path: item/p
-#: C/howto_setting_up_orca.page:57
-msgid ""
-"Pass the <cmd>--setup</cmd> option to <app>Orca</app> the next time you run "
-"it to automatically be placed in the <link xref=\"preferences\">Preferences</"
-"link> dialog box."
-msgstr ""
-"Passe a opção de <cmd>--setup</cmd> ao <app>Orca</app> na próxima vez que "
-"você executá-lo a fim de que você seja automaticamente direcionado para a "
-"caixa de diálogo de <link xref=\"preferences\">Preferências</link>."
-
-#. (itstool) path: item/p
-#: C/howto_setting_up_orca.page:64
+#: C/howto_setting_up_orca.page:34
 msgid ""
 "Pass the <cmd>--text-setup</cmd> option to <app>Orca</app> to re-run "
 "<app>Orca</app>'s <link xref=\"howto_text_setup\">text-based setup</link>."
@@ -3828,19 +3755,6 @@ msgstr ""
 "Passe a opção <cmd>--text-setup</cmd> ao <app>Orca</app> para executar "
 "novamente a <link xref=\"howto_text_setup\">configuração baseada em texto</"
 "link> do <app>Orca</app>."
-
-#. (itstool) path: item/p
-#: C/howto_setting_up_orca.page:71
-msgid ""
-"Get into the <link xref=\"preferences\">Preferences</link> dialog box by "
-"pressing the <gui>Preferences</gui> button in the <app>Orca</app> main "
-"window or by pressing <keyseq><key>Orca Modifier</key><key>Space</key> </"
-"keyseq> from within any accessible application."
-msgstr ""
-"Acesse a caixa de diálogo <link xref=\"preferences\">Preferências</link> "
-"pressionando o botão <gui>Preferências</gui> na janela principal do "
-"<app>Orca</app> ou pressionando <keyseq><key>Tecla modificadora do Orca</"
-"key><key>Barra de espaço</key> </keyseq> de qualquer aplicativo."
 
 #. (itstool) path: info/title
 #: C/howto_structural_navigation.page:7
@@ -4691,65 +4605,21 @@ msgstr ""
 "key>. Observe que normalmente você entra com <cmd>s</cmd> aqui; o <app>Orca</"
 "app> se recuperará e funcionará mesmo que ele nao consiga localizar o BrlTTY."
 
-#. (itstool) path: item/p
-#. (itstool) path: section/title
-#: C/howto_text_setup.page:169 C/preferences_braille.page:39
-msgid "Enable Braille Monitor"
-msgstr "Habilitar o Monitor de Braille"
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:170
-msgid ""
-"Orca's Braille Monitor is an on-screen braille representation. This is "
-"mostly for sighted developers who need to verify BrlTTY output, but may also "
-"be useful in other situations, such as visually diagnosing or verifying "
-"braille output. Type <cmd>y</cmd> or <cmd>n</cmd> and press <key>Return</"
-"key>."
-msgstr ""
-"O monitor de Braille do Orca é uma representação braille na tela. Isto é "
-"principalmente útil para desenvolvedores com visão que precisam verificar a "
-"saida do BrlTTY, mas também pode ser útil em outras situações, como "
-"diagnosticar ou verificar visualmente saída em braille. Digite <cmd>s</cmd> "
-"ou <cmd>n</cmd> e pressione <key>Enter</key>."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:178
-msgid "Automatically start <app>Orca</app> when you log in"
-msgstr "Iniciar automaticamente o <app>Orca></app> quando você iniciar sessão"
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:179
-msgid ""
-"Type <cmd>y</cmd> if you want <app>Orca</app> automatically launched for you "
-"or <cmd>n</cmd> if you do not, and press <key>Return</key>."
-msgstr ""
-"Digite <cmd>s</cmd> se você quer que o <app>Orca</app> seja iniciado "
-"automaticamente o <cmd>n</cmd> se você não quer, e pressione <key>Enter</"
-"key>."
-
 #. (itstool) path: page/p
-#: C/howto_text_setup.page:185
+#: C/howto_text_setup.page:169
 msgid ""
-"That's it. <app>Orca</app> is now ready for use. If accessibility was not "
-"yet enabled, <app>Orca</app> does so now and asks you to logout and back in "
-"for the services to start. Type <cmd>y</cmd> and press <key>Return</key> to "
-"restart your login session. If, on the other hand, accessibility was already "
-"enabled, you will simply be prompted to press <key>Return</key> after which "
-"<app>Orca</app> will be launched for you."
+"That's it. <app>Orca</app> is now ready for use and will be launched if you "
+"are in a graphical desktop environment where accessibility is enabled."
 msgstr ""
-"É isso aí. O <app>Orca</app> agora está pronto para ser utilizado. Se a "
-"acessibilidade ainda não estiver habilitada, <app>Orca</app> o fará agora e "
-"lhe pedirá que encerre sua sessão e volte novamente para que os serviços "
-"sejam iniciados. Digite <cmd>s</cmd> e pressione <key>Enter</key> para "
-"reiniciar sua sessão. Se, por outro lado, a acessibilidade está habilitada, "
-"você simplesmente será solicitado a pressionar <key>Enter</key>, após o "
-"<app>Orca</app> ser iniciado."
+"É isto. Agora o <app>Orca</app> está pronto para ser usado e será executado "
+"se você está em um ambiente de área de trabalho onde a acessibilidade está "
+"habilitada."
 
 #. (itstool) path: info/title
 #: C/howto_the_orca_modifier.page:5
 msgctxt "sort"
-msgid "4. The Orca Modifier"
-msgstr "4. A Tecla Modificadora do Orca"
+msgid "3. The Orca Modifier"
+msgstr "3. A tecla modificadora do Orca"
 
 #. (itstool) path: info/desc
 #: C/howto_the_orca_modifier.page:6
@@ -5107,16 +4977,6 @@ msgstr "Para executar o <app>Orca</app>:"
 #. (itstool) path: item/p
 #: C/introduction.page:37
 msgid ""
-"Type <cmd>orca</cmd>, along with any optional parameters, in a terminal "
-"window or within the <gui>Run</gui> dialog and then press <key>Return</key>."
-msgstr ""
-"Digite <cmd>orca</cmd>, juntamente com os parametros opcionais, em uma "
-"janela do terminal ou dentro do diálogo <gui>Run</gui> e então pressione "
-"<key>Enter</key>."
-
-#. (itstool) path: item/p
-#: C/introduction.page:44
-msgid ""
 "The method for configuring <app>Orca</app> to be launched automatically as "
 "your preferred screen reader will depend upon which desktop environment you "
 "use. For instance, in GNOME 3.x this option can be found in the Universal "
@@ -5128,51 +4988,53 @@ msgstr ""
 "no painel de Acesso universal do centro de controle, na página <gui>Visão</"
 "gui>."
 
-#. (itstool) path: section/title
-#: C/introduction.page:55
-msgid "Quitting <app>Orca</app>"
-msgstr "Finalizando o <app>Orca</app>"
-
-#. (itstool) path: section/p
-#: C/introduction.page:56
-msgid "To quit <app>Orca</app>:"
-msgstr "Para finalizar o <app>Orca</app>:"
+#. (itstool) path: item/p
+#: C/introduction.page:46
+msgid ""
+"To toggle <app>Orca</app> on and off in GNOME, press <keyseq><key>Super</"
+"key><key>Alt</key><key>S</key></keyseq>."
+msgstr ""
+"Para alternar o <app>Orca</app> em ligado e desligado no GNOME, pressione as "
+"teclas <keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: item/p
-#: C/introduction.page:59
+#: C/introduction.page:52
 msgid ""
-"Press <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>. This command "
-"works whether the <app>Orca</app> main window is enabled or not."
+"Type <cmd>orca</cmd>, along with any optional parameters, in a terminal "
+"window or within the <gui>Run</gui> dialog and then press <key>Return</key>."
 msgstr ""
-"Pressione a <keyseq><key>Tecla modificadora do Orca</key><key>Q</key></"
-"keyseq>. Este comando funciona se a janela principal do <app>Orca</app> "
-"estiver habilitada ou não."
+"Digite <cmd>orca</cmd>, juntamente com os parametros opcionais, em uma "
+"janela do terminal ou dentro do diálogo <gui>Run</gui> e então pressione "
+"<key>Enter</key>."
 
 #. (itstool) path: section/title
-#: C/introduction.page:68
+#: C/introduction.page:61
 msgid "Load-Time Options"
 msgstr "Opções de carregamento"
 
 #. (itstool) path: section/p
-#: C/introduction.page:69
-msgid "The following options can be specified when launching <app>Orca</app>:"
+#: C/introduction.page:62
+msgid ""
+"The following options can be specified when launching <app>Orca</app> in a "
+"terminal window or within the <gui>Run</gui> dialog:"
 msgstr ""
-"As seguintes opções podem ser especificadas ao executarmos o <app>Orca</app>:"
+"As seguintes opções podem ser especificadas ao executar o <app>Orca</app> em "
+"uma janela de terminal ou através do diálogo <gui>Executar</gui>:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:74
+#: C/introduction.page:68
 msgid "<cmd>-h</cmd>, <cmd>--help</cmd>: Show the help message"
 msgstr "<cmd>-h</cmd>, <cmd>--help</cmd>: Mostra mensagem de ajuda"
 
 #. (itstool) path: item/p
-#: C/introduction.page:77
+#: C/introduction.page:71
 msgid ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Show the version of <app>Orca</app>"
 msgstr ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Mostra a versão do <app>Orca</app>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:83
+#: C/introduction.page:77
 msgid ""
 "<cmd>-t</cmd>, <cmd>--text-setup</cmd>: Set up user preferences (text "
 "version)"
@@ -5181,7 +5043,7 @@ msgstr ""
 "usuário (versão em texto)"
 
 #. (itstool) path: item/p
-#: C/introduction.page:89
+#: C/introduction.page:83
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs-dir=<em>dirname</em></cmd>: Use "
 "<em>dirname</em> as the alternate directory for user preferences"
@@ -5190,7 +5052,7 @@ msgstr ""
 "<em>NomeDir</em> como diretório alternativo para as preferências do usuário"
 
 #. (itstool) path: item/p
-#: C/introduction.page:96
+#: C/introduction.page:90
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
@@ -5199,22 +5061,22 @@ msgstr ""
 "sendo que a <em>opção</em> pode ser uma das seguintes:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:101 C/introduction.page:113
+#: C/introduction.page:95 C/introduction.page:107
 msgid "<cmd>speech</cmd>"
 msgstr "<cmd>speech</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:102 C/introduction.page:114
+#: C/introduction.page:96 C/introduction.page:108
 msgid "<cmd>braille</cmd>"
 msgstr "<cmd>braille</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:103 C/introduction.page:115
+#: C/introduction.page:97 C/introduction.page:109
 msgid "<cmd>braille-monitor</cmd>"
 msgstr "<cmd>braille-monitor</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:107
+#: C/introduction.page:101
 msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
@@ -5223,7 +5085,7 @@ msgstr ""
 "opção, sendo que a <em>opção</em> pode ser uma das seguintes:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:119
+#: C/introduction.page:113
 msgid ""
 "<cmd>-i</cmd>, <cmd>--import-file=<em>filename</em></cmd>: Import a profile "
 "from a given <app>Orca</app> profile file"
@@ -5232,14 +5094,14 @@ msgstr ""
 "arquivo de perfil do <app>Orca</app> "
 
 #. (itstool) path: item/p
-#: C/introduction.page:125
+#: C/introduction.page:119
 msgid "<cmd>--replace</cmd>: Replace a currently-running <app>Orca</app>"
 msgstr ""
 "<cmd>--replace</cmd>: Substitui o aplicativo <app>Orca</app> que está "
 "atualmente em execução"
 
 #. (itstool) path: item/p
-#: C/introduction.page:130
+#: C/introduction.page:124
 msgid ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
 msgstr ""
@@ -5247,14 +5109,14 @@ msgstr ""
 "estão sendo executados"
 
 #. (itstool) path: item/p
-#: C/introduction.page:136
+#: C/introduction.page:130
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "<cmd>--debug</cmd>: Envia a saída de depuração para debug-AAAA-MM-DD-HH:MM:"
 "SS.out"
 
 #. (itstool) path: item/p
-#: C/introduction.page:141
+#: C/introduction.page:135
 msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
@@ -5284,20 +5146,6 @@ msgstr ""
 #: C/preferences_braille.page:40
 msgctxt "_"
 msgid ""
-"external ref='figures/preferences_enable_braille_monitor.png' "
-"md5='2dead5fbf717ce30339e2248e4f61aed'"
-msgstr ""
-"external ref='figures/preferences_enable_braille_monitor.png' "
-"md5='2dead5fbf717ce30339e2248e4f61aed'"
-
-#. (itstool) path: media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/preferences_braille.page:53
-msgctxt "_"
-msgid ""
 "external ref='figures/preferences_braille_contracted.png' "
 "md5='81d80b6854847656862fe4ea167d29f8'"
 msgstr ""
@@ -5309,7 +5157,7 @@ msgstr ""
 #. the file changes, the md5 hash will change to let you know you need to
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
-#: C/preferences_braille.page:71
+#: C/preferences_braille.page:58
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_abbreviated_role_names.png' "
@@ -5323,7 +5171,7 @@ msgstr ""
 #. the file changes, the md5 hash will change to let you know you need to
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
-#: C/preferences_braille.page:85
+#: C/preferences_braille.page:72
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_disable_eol_symbol.png' "
@@ -5331,6 +5179,20 @@ msgid ""
 msgstr ""
 "external ref='figures/preferences_disable_eol_symbol.png' "
 "md5='c43c2b7dff5efd265a40a260c2bc0d73'"
+
+#. (itstool) path: media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/preferences_braille.page:83
+msgctxt "_"
+msgid ""
+"external ref='figures/preferences_braille_verbosity.png' "
+"md5='18969c222b3e1ea91cc75d47bb0fe48d'"
+msgstr ""
+"external ref='figures/preferences_braille_verbosity.png' "
+"md5='18969c222b3e1ea91cc75d47bb0fe48d'"
 
 #. (itstool) path: media
 #. This is a reference to an external file such as an image or video. When
@@ -5338,20 +5200,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_braille.page:96
-msgctxt "_"
-msgid ""
-"external ref='figures/preferences_braille_verbosity.png' "
-"md5='18969c222b3e1ea91cc75d47bb0fe48d'"
-msgstr ""
-"external ref='figures/preferences_braille_verbosity.png' "
-"md5='18969c222b3e1ea91cc75d47bb0fe48d'"
-
-#. (itstool) path: media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/preferences_braille.page:109
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_braille_indicators.png' "
@@ -5394,15 +5242,15 @@ msgstr ""
 "Braille."
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:28 C/preferences_braille.page:47
-#: C/preferences_braille.page:65 C/preferences_braille.page:79
-#: C/preferences_braille.page:90 C/preferences_chat.page:31
-#: C/preferences_chat.page:42 C/preferences_chat.page:54
-#: C/preferences_gecko.page:74 C/preferences_gecko.page:87
-#: C/preferences_gecko.page:118 C/preferences_general.page:54
-#: C/preferences_general.page:73 C/preferences_key_echo.page:94
-#: C/preferences_key_echo.page:104 C/preferences_key_echo.page:140
-#: C/preferences_key_echo.page:163 C/preferences_table_navigation.page:66
+#: C/preferences_braille.page:28 C/preferences_braille.page:52
+#: C/preferences_braille.page:66 C/preferences_braille.page:77
+#: C/preferences_chat.page:31 C/preferences_chat.page:42
+#: C/preferences_chat.page:54 C/preferences_gecko.page:74
+#: C/preferences_gecko.page:87 C/preferences_gecko.page:118
+#: C/preferences_general.page:54 C/preferences_general.page:73
+#: C/preferences_key_echo.page:94 C/preferences_key_echo.page:104
+#: C/preferences_key_echo.page:140 C/preferences_key_echo.page:163
+#: C/preferences_table_navigation.page:66
 msgid "Default value: not checked"
 msgstr "Valor padrão: desmarcado"
 
@@ -5415,27 +5263,13 @@ msgstr ""
 "Se você configurar o BrlTTY posteriormente, você deve reiniciar o <app>Orca</"
 "app> para usar o suporte a Braille."
 
-#. (itstool) path: section/p
-#: C/preferences_braille.page:41
-msgid ""
-"Orca's braille monitor provides an on-screen representation of what takes "
-"place on the braille display. This feature is mostly for demonstration "
-"purposes, but is also useful for <app>Orca</app> developers who do not have "
-"access to a braille display."
-msgstr ""
-"O monitor Braille do Orca fornece uma representação Braille sobre a tela a "
-"respeito do que sucede no dispositivo Braille. Na maioria das vezes, este "
-"recurso funciona para fins de demonstração mas também é útil para os "
-"desenvolvedores do <app>Orca</app>, quando não possuem acesso a dispositivos "
-"Braille."
-
 #. (itstool) path: section/title
-#: C/preferences_braille.page:52
+#: C/preferences_braille.page:39
 msgid "Enable Contracted Braille"
 msgstr "Habilitar Braille contraído"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:54
+#: C/preferences_braille.page:41
 msgid ""
 "Orca supports contracted braille via the liblouis project. Because many "
 "distros include liblouis, you will likely automatically have access to "
@@ -5446,7 +5280,7 @@ msgstr ""
 "automático ao suporte ao Braille contraído no <app>Orca</app>."
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:59
+#: C/preferences_braille.page:46
 msgid ""
 "To enable contracted braille on a system where liblouis has been installed, "
 "be sure that the <gui>Enable Contraced Braille</gui> checkbox is checked. "
@@ -5459,12 +5293,12 @@ msgstr ""
 "desejada na caixa de combinação <gui>Tabela de abreviaturas</gui>."
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:70
+#: C/preferences_braille.page:57
 msgid "Abbreviated Role Names"
 msgstr "Nomes de regras abreviados"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:72
+#: C/preferences_braille.page:59
 msgid ""
 "This check box determines the manner in which role names are displayed and "
 "can be used to help conserve real estate on the braille display. For "
@@ -5480,12 +5314,12 @@ msgstr ""
 "marcados, \"dslz\", é exibido."
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:84
+#: C/preferences_braille.page:71
 msgid "Disable end of line symbol"
 msgstr "Desabilitar o símbolo de final de linha"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:86
+#: C/preferences_braille.page:73
 msgid ""
 "Checking this checkbox tells <app>Orca</app> to not present the \"$l\" "
 "string at the end of a line of text."
@@ -5494,12 +5328,12 @@ msgstr ""
 "apresentar o \"$l\" símbolo ao final de uma linha de texto."
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:95 C/preferences_speech.page:131
+#: C/preferences_braille.page:82 C/preferences_speech.page:131
 msgid "Verbosity"
 msgstr "Verbosidade"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:97
+#: C/preferences_braille.page:84
 msgid ""
 "This radio button group determines the amount of information that will be "
 "brailled in certain situations. For example, if it is set to verbose, "
@@ -5512,17 +5346,17 @@ msgstr ""
 "de regras são exibidas. Estas informações não são exibidas no modo resumido."
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:103 C/preferences_speech.page:140
+#: C/preferences_braille.page:90 C/preferences_speech.page:140
 msgid "Default value: <gui>Verbose</gui>"
 msgstr "Valor padrão: <gui>Verboso</gui>"
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:108
+#: C/preferences_braille.page:95
 msgid "Selection and Hyperlink Indicators"
 msgstr "Indicadores de seleção e de links"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:110
+#: C/preferences_braille.page:97
 msgid ""
 "The <gui>Selection Indicator</gui> and <gui>Hyperlink Indicator</gui> radio "
 "button groups allow you to configure <app>Orca</app>'s behavior when "
@@ -5540,17 +5374,17 @@ msgstr ""
 "presente."
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:119
+#: C/preferences_braille.page:106
 msgid "Default value: <gui>Dots 7 and 8</gui>"
 msgstr "Valor padrão: <gui>7 e 8 pontos</gui>"
 
 #. (itstool) path: note/title
-#: C/preferences_braille.page:123
+#: C/preferences_braille.page:110
 msgid "Text Attribute Indicators"
 msgstr "Indicadores de atributo de texto"
 
 #. (itstool) path: note/p
-#: C/preferences_braille.page:124
+#: C/preferences_braille.page:111
 msgid ""
 "You can also optionally have text attributes indicated in braille. Enabling "
 "this feature and choosing which attributes are of interest is done on the "
@@ -7948,3 +7782,160 @@ msgid ""
 "8"
 msgstr ""
 "<gui>Pontos 7 e 8</gui>: Sublinha atributos do texto com os Pontos 7 e 8"
+
+#~ msgid ""
+#~ "Enter list shortcuts mode: <keyseq><key>Orca Modifier</key><key>H</key></"
+#~ "keyseq> (double-clicked)"
+#~ msgstr ""
+#~ "Entra na lista de teclas de atalho: <keyseq><key>Tecla modificadora do "
+#~ "Orca</key><key>H</key></keyseq> (pressionada duas vezes)"
+
+#~ msgid ""
+#~ "Get into List Shortcuts Mode by pressing <keyseq><key>Orca Modifier</key> "
+#~ "<key>H</key></keyseq> twice quickly."
+#~ msgstr ""
+#~ "Entre no modo de lista de atalhos pressionando rapidamente "
+#~ "<keyseq><key>Tecla modificadora do Orca</key> <key>H</key></keyseq> duas "
+#~ "vezes."
+
+#~ msgid "Press <key>Esc</key> to exit List Shortcuts Mode."
+#~ msgstr "Pressione <key>Esc</key> para sair do modo de lista de atalhos."
+
+#~ msgid "Setting up <app>Orca</app> initially and in the future"
+#~ msgstr "Configurando o <app>Orca</app> inicialmente e no futuro"
+
+#~ msgid "Initial Setup"
+#~ msgstr "Configuração inicial"
+
+#~ msgid ""
+#~ "When you run <app>Orca</app> for the first time, it will automatically "
+#~ "enter setup mode. Depending on your active session's configuration, one "
+#~ "of two things will occur:"
+#~ msgstr ""
+#~ "Quando você executar pela primeira vez o <app>Orca</app>, ele entrará "
+#~ "automaticamente no modo de configuração. Dependendo de suas configurações "
+#~ "na sessão ativa, uma de duas coisas acontecerá:"
+
+#~ msgid ""
+#~ "If accessibility support has already been enabled for your session, you "
+#~ "will be placed in the <app>Orca</app> <link xref=\"preferences"
+#~ "\">Preferences</link> dialog box where you can customize <app>Orca</app> "
+#~ "completely and then use it immediately."
+#~ msgstr ""
+#~ "Se o suporte à acessibilidade já estiver habilitada para a sua sessão, "
+#~ "você será posicionado na caixa de diálogo <link xref=\"preferences"
+#~ "\">Preferências</link> do <app>Orca</app> onde será possível personalizar "
+#~ "completamente o <app>Orca</app> e então usá-lo imediatamente."
+
+#~ msgid ""
+#~ "If accessibility support has not already been enabled for your session, "
+#~ "<app>Orca</app>'s <link xref=\"howto_text_setup\">text-based setup</link> "
+#~ "will be launched instead. The text-based setup allows you to configure "
+#~ "the most fundamental settings and enable accessibility support for your "
+#~ "session. You will need to log out and log back in for the new settings to "
+#~ "take effect."
+#~ msgstr ""
+#~ "Se o suporte à acessibilidade não tiver sido habilitada para a sua "
+#~ "sessão, a <link xref=\"howto_text_setup\">Configuração do modo texto</"
+#~ "link> do <app>Orca</app> será carregada. A configuração do modo texto "
+#~ "permite a você configurar os ajustes mais fundamentais e habilitar a "
+#~ "acessibilidade para a sua sessão. Será necessário encerrar a sessão e "
+#~ "abri-la novamente para que as alterações surtam efeito."
+
+#~ msgid "Configuring <app>Orca</app> in the Future"
+#~ msgstr "Configurando o <app>Orca</app> no futuro"
+
+#~ msgid ""
+#~ "Pass the <cmd>--setup</cmd> option to <app>Orca</app> the next time you "
+#~ "run it to automatically be placed in the <link xref=\"preferences"
+#~ "\">Preferences</link> dialog box."
+#~ msgstr ""
+#~ "Passe a opção de <cmd>--setup</cmd> ao <app>Orca</app> na próxima vez que "
+#~ "você executá-lo a fim de que você seja automaticamente direcionado para a "
+#~ "caixa de diálogo de <link xref=\"preferences\">Preferências</link>."
+
+#~ msgid ""
+#~ "Get into the <link xref=\"preferences\">Preferences</link> dialog box by "
+#~ "pressing the <gui>Preferences</gui> button in the <app>Orca</app> main "
+#~ "window or by pressing <keyseq><key>Orca Modifier</key><key>Space</key> </"
+#~ "keyseq> from within any accessible application."
+#~ msgstr ""
+#~ "Acesse a caixa de diálogo <link xref=\"preferences\">Preferências</link> "
+#~ "pressionando o botão <gui>Preferências</gui> na janela principal do "
+#~ "<app>Orca</app> ou pressionando <keyseq><key>Tecla modificadora do Orca</"
+#~ "key><key>Barra de espaço</key> </keyseq> de qualquer aplicativo."
+
+#~ msgid "Enable Braille Monitor"
+#~ msgstr "Habilitar o Monitor de Braille"
+
+#~ msgid ""
+#~ "Orca's Braille Monitor is an on-screen braille representation. This is "
+#~ "mostly for sighted developers who need to verify BrlTTY output, but may "
+#~ "also be useful in other situations, such as visually diagnosing or "
+#~ "verifying braille output. Type <cmd>y</cmd> or <cmd>n</cmd> and press "
+#~ "<key>Return</key>."
+#~ msgstr ""
+#~ "O monitor de Braille do Orca é uma representação braille na tela. Isto é "
+#~ "principalmente útil para desenvolvedores com visão que precisam verificar "
+#~ "a saida do BrlTTY, mas também pode ser útil em outras situações, como "
+#~ "diagnosticar ou verificar visualmente saída em braille. Digite <cmd>s</"
+#~ "cmd> ou <cmd>n</cmd> e pressione <key>Enter</key>."
+
+#~ msgid "Automatically start <app>Orca</app> when you log in"
+#~ msgstr ""
+#~ "Iniciar automaticamente o <app>Orca></app> quando você iniciar sessão"
+
+#~ msgid ""
+#~ "Type <cmd>y</cmd> if you want <app>Orca</app> automatically launched for "
+#~ "you or <cmd>n</cmd> if you do not, and press <key>Return</key>."
+#~ msgstr ""
+#~ "Digite <cmd>s</cmd> se você quer que o <app>Orca</app> seja iniciado "
+#~ "automaticamente o <cmd>n</cmd> se você não quer, e pressione <key>Enter</"
+#~ "key>."
+
+#~ msgid ""
+#~ "That's it. <app>Orca</app> is now ready for use. If accessibility was not "
+#~ "yet enabled, <app>Orca</app> does so now and asks you to logout and back "
+#~ "in for the services to start. Type <cmd>y</cmd> and press <key>Return</"
+#~ "key> to restart your login session. If, on the other hand, accessibility "
+#~ "was already enabled, you will simply be prompted to press <key>Return</"
+#~ "key> after which <app>Orca</app> will be launched for you."
+#~ msgstr ""
+#~ "É isso aí. O <app>Orca</app> agora está pronto para ser utilizado. Se a "
+#~ "acessibilidade ainda não estiver habilitada, <app>Orca</app> o fará agora "
+#~ "e lhe pedirá que encerre sua sessão e volte novamente para que os "
+#~ "serviços sejam iniciados. Digite <cmd>s</cmd> e pressione <key>Enter</"
+#~ "key> para reiniciar sua sessão. Se, por outro lado, a acessibilidade está "
+#~ "habilitada, você simplesmente será solicitado a pressionar <key>Enter</"
+#~ "key>, após o <app>Orca</app> ser iniciado."
+
+#~ msgid "To quit <app>Orca</app>:"
+#~ msgstr "Para finalizar o <app>Orca</app>:"
+
+#~ msgid ""
+#~ "Press <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>. This command "
+#~ "works whether the <app>Orca</app> main window is enabled or not."
+#~ msgstr ""
+#~ "Pressione a <keyseq><key>Tecla modificadora do Orca</key><key>Q</key></"
+#~ "keyseq>. Este comando funciona se a janela principal do <app>Orca</app> "
+#~ "estiver habilitada ou não."
+
+#~ msgctxt "_"
+#~ msgid ""
+#~ "external ref='figures/preferences_enable_braille_monitor.png' "
+#~ "md5='2dead5fbf717ce30339e2248e4f61aed'"
+#~ msgstr ""
+#~ "external ref='figures/preferences_enable_braille_monitor.png' "
+#~ "md5='2dead5fbf717ce30339e2248e4f61aed'"
+
+#~ msgid ""
+#~ "Orca's braille monitor provides an on-screen representation of what takes "
+#~ "place on the braille display. This feature is mostly for demonstration "
+#~ "purposes, but is also useful for <app>Orca</app> developers who do not "
+#~ "have access to a braille display."
+#~ msgstr ""
+#~ "O monitor Braille do Orca fornece uma representação Braille sobre a tela "
+#~ "a respeito do que sucede no dispositivo Braille. Na maioria das vezes, "
+#~ "este recurso funciona para fins de demonstração mas também é útil para os "
+#~ "desenvolvedores do <app>Orca</app>, quando não possuem acesso a "
+#~ "dispositivos Braille."
