@@ -3976,6 +3976,7 @@ class Script(default.Script):
                                         pyatspi.ROLE_TABLE_CELL] \
                   and self.isUselessObject(nextObj)):
                 toAdd = self.utilities.getObjectsFromEOCs(nextObj, nOffset, boundary)
+                toAdd = [x for x in toAdd if x not in objects]
                 done = True
                 for item in toAdd:
                     itemExtents = self.getExtents(item[0], item[1], item[2])
