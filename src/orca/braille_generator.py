@@ -181,6 +181,15 @@ class BrailleGenerator(generator.Generator):
 
         return Atk.role_get_localized_name(atkRole)
 
+    def _generateUnrelatedLabels(self, obj, **args):
+        result = []
+        labels = self._script.utilities.unrelatedLabels(obj)
+        for label in labels:
+            name = self._generateName(label, **args)
+            result.extend(name)
+
+        return result
+
     #####################################################################
     #                                                                   #
     # Keyboard shortcut information                                     #

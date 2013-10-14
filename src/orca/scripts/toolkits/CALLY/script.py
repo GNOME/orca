@@ -34,6 +34,8 @@ import orca.orca as orca
 import orca.scripts.default as default
 import orca.debug as debug
 
+from .formatting import Formatting
+
 # Set with non printable unicode categories. Full table:
 # http://www.fileformat.info/info/unicode/category/index.htm
 #
@@ -115,6 +117,11 @@ class Script(default.Script):
         default.Script.__init__(self, app)
         self._activeDialog = (None, 0) # (Accessible, Timestamp)
         self._activeDialogLabels = {}  # key == hash(obj), value == name
+
+    def getFormatting(self):
+        """Returns the formatting strings for this script."""
+
+        return Formatting(self)
 
     def checkKeyboardEventData(self, keyboardEvent):
         """Processes the given keyboard event.
