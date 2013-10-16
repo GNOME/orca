@@ -49,8 +49,8 @@
     </item>
     <item>
       <p>
-        Press <key>1</key> if you want a list of shortcuts that apply
-        <app>Orca</app>-wide, or press <key>2</key> if you want a list
+        Press <key>F2</key> if you want a list of shortcuts that apply
+        <app>Orca</app>-wide, or press <key>F3</key> if you want a list
         of shortcuts that are specifically for the application with focus.
       </p>
     </item>
