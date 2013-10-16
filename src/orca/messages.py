@@ -834,9 +834,10 @@ LEARN_MODE_START_BRAILLE = _("Learn mode.  Press escape to exit.")
 # Mode.
 LEARN_MODE_START_SPEECH = \
     _("Entering learn mode.  Press any key to hear its function.  " \
-      "To get a list of the screen reader's default shortcuts, press 1. " \
+      "To view the screen reader's documentation, press F1. " \
+      "To get a list of the screen reader's default shortcuts, press F2. " \
       "To get a list of the screen reader's shortcuts for the current application, " \
-      "press 2. To view the screen reader's documentation, press F1. " \
+      "press F3. " \
       "To exit learn mode, press the escape key.")
 
 # Translators: when the user selects (highlights) or unselects text in a

@@ -1046,7 +1046,7 @@ class Script(script.Script):
     def listOrcaShortcuts(self, inputEvent=None):
         """Shows a simple gui listing Orca's bound commands."""
 
-        if not inputEvent or inputEvent.event_string == "1":
+        if not inputEvent or inputEvent.event_string == "F2":
             bound = self.getDefaultKeyBindings().getBoundBindings()
             title = messages.shortcutsFoundOrca(len(bound))
         else:
