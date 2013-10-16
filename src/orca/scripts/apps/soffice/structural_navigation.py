@@ -68,15 +68,17 @@ class StructuralNavigation(structural_navigation.StructuralNavigation):
         except:
             return False
 
+        parent = hash(obj.parent)
+
         # Make sure we're in the correct table first.
         #
-        if not (table in self._script.dynamicRowHeaders or
-                table in self._script.dynamicColumnHeaders):
+        if not (parent in self._script.dynamicRowHeaders or
+                parent in self._script.dynamicColumnHeaders):
             return False
 
         [row, col] = self.getCellCoordinates(obj)
-        return (row == self._script.dynamicColumnHeaders.get(table) \
-                or col == self._script.dynamicRowHeaders.get(table))
+        return (row == self._script.dynamicColumnHeaders.get(parent) \
+                or col == self._script.dynamicRowHeaders.get(parent))
 
     def _tableCellPresentation(self, cell, arg):
         """Presents the table cell or indicates that one was not found.
