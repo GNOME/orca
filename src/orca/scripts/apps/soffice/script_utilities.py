@@ -69,10 +69,17 @@ class Utilities(script_utilities.Utilities):
         any text being shown.
         """
 
-        if obj.getRole() == pyatspi.ROLE_PUSH_BUTTON and obj.name:
+        role = obj.getRole()
+        if role == pyatspi.ROLE_PUSH_BUTTON and obj.name:
             return obj.name
-        else:
-            return script_utilities.Utilities.displayedText(self, obj)
+
+        if role == pyatspi.ROLE_TABLE_CELL:
+            strings = list(map(self.displayedText, [child for child in obj]))
+            text = "\n".join(strings)
+            if text.strip():
+                return text
+
+        return script_utilities.Utilities.displayedText(self, obj)
 
     def isReadOnlyTextArea(self, obj):
         """Returns True if obj is a text entry area that is read only."""
