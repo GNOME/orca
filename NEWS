@@ -1,3 +1,40 @@
+3.10.1 - 16 October 2013
+
+General:
+
+  * Present the wifi network and battery-charged state in the new system
+    status menu
+
+  * Present the position and contents when switching pages in gnome-documents
+
+  * Fix to make SayAll identify text which is a link in non-HTML documents
+
+  * Remove incorrect/obsolete information from Orca's help content
+
+LibreOffice:
+
+  * Fix structural navigation for tables in Writer
+
+  * Present table cell text, if present, rather than the name in Writer
+
+Gecko:
+
+  * Fix for bug 709573 - Orca can hang on a web page in Firefox
+
+  * Handle timeouts in liveregions._getMessage() more gracefully
+
+  * Ignore text-changed events from Thunderbird's status bar
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca            Catalan                     Gil Forcada
+    ca            Catalan (Valencian)         Carles Ferrando
+    es            Spanish                     Daniel Mustieles
+    hu            Hungarian                   Attila Hammer
+    pt_BR         Brazilian Portuguese        Enrico Nicoletto
+
+=========
+
 3.10.0 - 24 September 2013
 
 General:
