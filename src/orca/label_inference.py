@@ -398,7 +398,7 @@ class LabelInference:
         """
 
         thisLine = self._getLineContents(obj)
-        if not thisLine and thisLine[0]:
+        if not (thisLine and thisLine[0]):
             return None
 
         prevObj, start, end, string = thisLine[0]
@@ -459,7 +459,7 @@ class LabelInference:
             return None
 
         thisLine = self._getLineContents(obj)
-        if not thisLine and thisLine[0]:
+        if not (thisLine and thisLine[0]):
             return None
 
         lastObj, start, end, string = thisLine[-1]
