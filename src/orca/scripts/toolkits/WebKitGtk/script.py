@@ -340,6 +340,10 @@ class Script(default.Script):
         - obj: an Accessible object that implements the AccessibleText interface
         """
 
+        if obj.getRole() == pyatspi.ROLE_ENTRY:
+            default.Script.sayCharacter(self, obj)
+            return
+
         boundary = pyatspi.TEXT_BOUNDARY_CHAR
         objects = self.utilities.getObjectsFromEOCs(obj, boundary=boundary)
         for (obj, start, end, string) in objects:
@@ -355,6 +359,10 @@ class Script(default.Script):
         - obj: an Accessible object that implements the AccessibleText interface
         """
 
+        if obj.getRole() == pyatspi.ROLE_ENTRY:
+            default.Script.sayWord(self, obj)
+            return
+
         boundary = pyatspi.TEXT_BOUNDARY_WORD_START
         objects = self.utilities.getObjectsFromEOCs(obj, boundary=boundary)
         for (obj, start, end, string) in objects:
@@ -366,6 +374,10 @@ class Script(default.Script):
         Arguments:
         - obj: an Accessible object that implements the AccessibleText interface
         """
+
+        if obj.getRole() == pyatspi.ROLE_ENTRY:
+            default.Script.sayLine(self, obj)
+            return
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
         objects = self.utilities.getObjectsFromEOCs(obj, boundary=boundary)
@@ -389,6 +401,10 @@ class Script(default.Script):
         - startOffset: the start text offset.
         - endOffset: the end text offset.
         """
+
+        if obj.getRole() == pyatspi.ROLE_ENTRY:
+            default.Script.sayPhrase(self, obj, startOffset, endOffset)
+            return
 
         phrase = self.utilities.substring(obj, startOffset, endOffset)
         if len(phrase) and phrase != "\n":
