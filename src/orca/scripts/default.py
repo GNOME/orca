@@ -1061,7 +1061,6 @@ class Script(script.Script):
 
         if not bound:
             self.presentMessage(title)
-            self.presentMessage(messages.LEARN_MODE_START_SPEECH)
             return True
 
         self.exitLearnMode()

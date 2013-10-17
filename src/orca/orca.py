@@ -244,8 +244,7 @@ def _processKeyboardEvent(event):
         if keyboardEvent.event_string == "F1":
             orca_state.learnModeEnabled = False
             return helpForOrca()
-        if keyboardEvent.event_string in ["F2", "F3"]:
-            orca_state.learnModeEnabled = False
+        if isPressedEvent and keyboardEvent.event_string in ["F2", "F3"]:
             return script.listOrcaShortcuts(keyboardEvent)
     if orca_state.capturingKeys:
         return False
