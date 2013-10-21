@@ -257,7 +257,7 @@ class SpeechGenerator(generator.Generator):
         acss = self.voice(SYSTEM)
         role = args.get('role', obj.getRole())
 
-        doNotPresent = [pyatspi.ROLE_UNKNOWN]
+        doNotPresent = [pyatspi.ROLE_UNKNOWN, pyatspi.ROLE_FILLER]
 
         # egg-list-box, e.g. privacy panel in gnome-control-center
         if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
@@ -1480,46 +1480,15 @@ class SpeechGenerator(generator.Generator):
         previous object with focus.
         """
         result = []
-        acss = self.voice(DEFAULT)
         priorObj = args.get('priorObj', None)
-        requireText = args.get('requireText', True)
         commonAncestor = self._script.utilities.commonAncestor(priorObj, obj)
         if obj != commonAncestor:
             parent = obj.parent
-            if parent \
-                and (obj.getRole() == pyatspi.ROLE_TABLE_CELL) \
-                and (parent.getRole() == pyatspi.ROLE_TABLE_CELL):
-                parent = parent.parent
-            while parent and (parent.parent != parent):
-                if parent == commonAncestor:
+            while parent and not parent in [commonAncestor, parent.parent]:
+                if parent.getRole() == pyatspi.ROLE_APPLICATION:
                     break
                 if not self._script.utilities.isLayoutOnly(parent):
-                    text = self._script.utilities.displayedLabel(parent)
-                    if not text \
-                       and (not requireText \
-                            or (requireText \
-                                and 'Text' in pyatspi.listInterfaces(parent))):
-                        text = self._script.utilities.displayedText(parent)
-                    try:
-                        pRole = parent.getRole()
-                    except:
-                        pRole = None
-                    if not text \
-                       and pRole in [pyatspi.ROLE_MENU, pyatspi.ROLE_PAGE_TAB]:
-                        text = parent.name
-                    if text and len(text.strip()):
-                        roleInfo = self._generateRoleName(parent)
-                        if roleInfo:
-                            roleInfo.reverse()
-                        # Push announcement of cell to the end
-                        #
-                        if pRole not in \
-                               [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_FILLER]:
-                            result.extend(roleInfo)
-                        result.extend(acss)
-                        result.append(text)
-                        if pRole == pyatspi.ROLE_TABLE_CELL:
-                            result.extend(roleInfo)
+                    result.append(self.generate(parent))
                 parent = parent.parent
         result.reverse()
         return result

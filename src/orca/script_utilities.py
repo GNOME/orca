@@ -767,8 +767,8 @@ class Utilities:
         return False
 
     def isLayoutOnly(self, obj):
-        """Returns True if the given object is a table and is for layout
-        purposes only."""
+        """Returns True if the given object is a container which has
+        no presentable information (label, name, displayed text, etc.)."""
 
         layoutOnly = False
 
@@ -786,10 +786,14 @@ class Utilities:
                 if attribute == "layout-guess:true":
                     layoutOnly = True
                     break
-        elif role == pyatspi.ROLE_PANEL:
-            text = self.displayedText(obj)
-            label = self.displayedLabel(obj)
-            if not ((label and len(label)) or (text and len(text))):
+        elif role == pyatspi.ROLE_TABLE_CELL and obj.childCount:
+            layoutOnly = obj[0].getRole() == pyatspi.ROLE_TABLE_CELL
+        elif role == pyatspi.ROLE_SCROLL_PANE:
+            layoutOnly = True
+        elif role == pyatspi.ROLE_LIST_BOX:
+            layoutOnly = False
+        else:
+            if not (self.displayedText(obj) or self.displayedLabel(obj)):
                 layoutOnly = True
 
         if layoutOnly:
