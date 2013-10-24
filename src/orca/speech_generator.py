@@ -1482,6 +1482,14 @@ class SpeechGenerator(generator.Generator):
         result = []
         priorObj = args.get('priorObj', None)
         commonAncestor = self._script.utilities.commonAncestor(priorObj, obj)
+        try:
+            role = commonAncestor.getRole()
+        except:
+            pass
+        else:
+            if role == pyatspi.ROLE_COMBO_BOX:
+                return []
+
         if obj != commonAncestor:
             parent = obj.parent
             while parent and not parent in [commonAncestor, parent.parent]:
