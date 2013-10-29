@@ -490,3 +490,25 @@ class Utilities(script_utilities.Utilities):
                 return charCount > 0
 
         return False
+
+    def selectedChildren(self, obj):
+        if not obj:
+            return []
+
+        # Things only seem broken for certain tables, e.g. the Paths table.
+        # TODO - JD: File the LibreOffice bugs and reference them here.
+        if obj.getRole() != pyatspi.ROLE_TABLE \
+           or self._script.isSpreadSheetCell(obj, True):
+            return script_utilities.Utilities.selectedChildren(self, obj)
+
+        try:
+            selection = obj.querySelection()
+        except:
+            return []
+
+        children = []
+        for i, child in enumerate(obj):
+            if selection.isChildSelected(i):
+                children.append(obj[i])
+
+        return children

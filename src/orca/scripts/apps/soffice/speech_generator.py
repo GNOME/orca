@@ -264,7 +264,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         parent = obj.parent
         try:
             parentTable = parent.queryTable()
-        except NotImplementedError:
+        except:
             parentTable = None
         index = self._script.utilities.cellIndex(obj)
         if "lastRow" in self._script.pointOfReference and parentTable \
@@ -337,7 +337,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         parent = obj.parent
         try:
             parentTable = parent.queryTable()
-        except NotImplementedError:
+        except:
             parentTable = None
         index = self._script.utilities.cellIndex(obj)
         if parentTable and "lastColumn" in self._script.pointOfReference \

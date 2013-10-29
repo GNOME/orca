@@ -775,13 +775,13 @@ class Utilities:
         try:
             attributes = obj.getAttributes()
         except:
-            attributes = None
+            attributes = {}
         try:
             role = obj.getRole()
         except:
             role = None
 
-        if role == pyatspi.ROLE_TABLE and attributes:
+        if role == pyatspi.ROLE_TABLE:
             for attribute in attributes:
                 if attribute == "layout-guess:true":
                     layoutOnly = True
