@@ -525,6 +525,8 @@ class Script(script.Script):
             self.onTextInserted
         listeners["object:active-descendant-changed"]       = \
             self.onActiveDescendantChanged
+        listeners["object:children-changed"]                = \
+            self.onChildrenChanged
         listeners["object:link-selected"]                   = \
             self.onLinkSelected
         listeners["object:state-changed:active"]            = \
@@ -2254,6 +2256,14 @@ class Script(script.Script):
             self.pointOfReference['activeDescendantInfo'] = \
                 [orca_state.locusOfFocus.parent,
                  orca_state.locusOfFocus.getIndexInParent()]
+
+    def onChildrenChanged(self, event):
+        """Called when a child node has changed.
+
+        Arguments:
+        - event: the Event
+        """
+        pass
 
     def onCaretMoved(self, event):
         """Called whenever the caret moves.
