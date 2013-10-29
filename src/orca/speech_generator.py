@@ -1393,35 +1393,26 @@ class SpeechGenerator(generator.Generator):
         and the position of the current item. This object will be an icon
         panel or a layered pane.
         """
+
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
+        container = obj
+        if not 'Selection' in pyatspi.listInterfaces(container):
+            container = obj.parent
+            if not 'Selection' in pyatspi.listInterfaces(container):
+                return []
+
         result = []
         acss = self.voice(SYSTEM)
-        # TODO - JD: Is there a better way to do this other than
-        # hard-coding it in?
-        #
-        if args.get('role', obj.getRole()) \
-                in [pyatspi.ROLE_ICON, pyatspi.ROLE_CANVAS]:
-            obj = obj.parent
-        childCount = obj.childCount
-        selectedItems = []
-        totalSelectedItems = 0
-        currentItem = 0
-        for child in obj:
-            state = child.getState()
-            if state.contains(pyatspi.STATE_SELECTED):
-                totalSelectedItems += 1
-                selectedItems.append(child)
-            if state.contains(pyatspi.STATE_FOCUSED):
-                currentItem = child.getIndexInParent() + 1
-        countString = messages.selectedItemsCount(totalSelectedItems, childCount)
-        result.append(countString)
+        childCount = container.childCount
+        selectedCount = len(self._script.utilities.selectedChildren(container))
+        result.append(messages.selectedItemsCount(selectedCount, childCount))
         result.extend(acss)
         result.append(self._script.formatting.getString(
                           mode='speech',
                           stringType='iconindex') \
-                      % {"index" : currentItem,
+                      % {"index" : obj.getIndexInParent() + 1,
                          "total" : childCount})
         result.extend(acss)
         return result
@@ -1431,16 +1422,18 @@ class SpeechGenerator(generator.Generator):
         specifications) containing the names of all the selected items.
         This object will be an icon panel or a layered pane.
         """
-        result = []
-        # TODO - JD: Is there a better way to do this other than
-        # hard-coding it in?
-        #
-        if args.get('role', obj.getRole()) == pyatspi.ROLE_ICON:
-            obj = obj.parent
-        for child in obj:
-            if child.getState().contains(pyatspi.STATE_SELECTED):
-                result.extend(self._generateLabelAndName(child))
-        return result
+
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        container = obj
+        if not 'Selection' in pyatspi.listInterfaces(container):
+            container = obj.parent
+            if not 'Selection' in pyatspi.listInterfaces(container):
+                return []
+
+        selectedItems = self._script.utilities.selectedChildren(container)
+        return list(map(self._generateLabelAndName, selectedItems))
 
     def _generateUnfocusedDialogCount(self, obj,  **args):
         """Returns an array of strings (and possibly voice and audio

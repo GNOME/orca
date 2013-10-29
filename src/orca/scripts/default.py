@@ -2361,15 +2361,9 @@ class Script(script.Script):
                     newFocus = parent[index]
 
                 else:
-                    # Well...we'll first see if there is a selection.  If there
-                    # is, we'll use it.
-                    #
-                    try:
-                        selection = event.source.querySelection()
-                    except NotImplementedError:
-                        selection = None
-                    if selection and selection.nSelectedChildren > 0:
-                        newFocus = selection.getSelectedChild(0)
+                    selectedChildren = self.utilities.selectedChildren(newFocus)
+                    if selectedChildren:
+                        newFocus = selectedChildren[0]
 
         orca.setLocusOfFocus(event, newFocus)
 
@@ -2495,10 +2489,9 @@ class Script(script.Script):
         elif (event.source != orca_state.locusOfFocus) and \
               event.source.getState().contains(pyatspi.STATE_FOCUSED):
             newFocus = event.source
-            if event.source.childCount:
-                selection = event.source.querySelection()
-                if selection.nSelectedChildren > 0:
-                    newFocus = selection.getSelectedChild(0)
+            selectedChildren = self.utilities.selectedChildren(newFocus)
+            if selectedChildren:
+                newFocus = selectedChildren[0]
 
             orca.setLocusOfFocus(event, newFocus)
 

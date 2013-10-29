@@ -2851,3 +2851,19 @@ class Utilities:
             return 0, 0
 
         return hyperlink.startIndex, hyperlink.endIndex
+
+    def selectedChildren(self, obj):
+        try:
+            selection = obj.querySelection()
+        except:
+            return []
+
+        children = []
+        for x in range(selection.nSelectedChildren):
+            children.append(selection.getSelectedChild(x))
+
+        return children
+
+    def focusedChild(self, obj):
+        isFocused = lambda x: x and x.getState().contains(pyatspi.STATE_FOCUSED)
+        return pyatspi.findDescendant(obj, isFocused)
