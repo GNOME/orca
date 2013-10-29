@@ -1494,6 +1494,13 @@ class SpeechGenerator(generator.Generator):
         result.reverse()
         return result
 
+    def _generateOldAncestors(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the text of the ancestors for
+        the object being left."""
+
+        return []
+
     def _generateNewAncestors(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the text of the ancestors for
