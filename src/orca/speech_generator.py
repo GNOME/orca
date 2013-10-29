@@ -916,7 +916,7 @@ class SpeechGenerator(generator.Generator):
         """
         acss = self.voice(DEFAULT)
         result = generator.Generator._generateCurrentLineText(self, obj, **args)
-        if result:
+        if result and result[0]:
             result.extend(acss)
         return result
 
