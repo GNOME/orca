@@ -790,7 +790,7 @@ class Utilities:
             layoutOnly = obj[0].getRole() == pyatspi.ROLE_TABLE_CELL
         elif role == pyatspi.ROLE_SCROLL_PANE:
             layoutOnly = True
-        elif role == pyatspi.ROLE_LIST_BOX:
+        elif role in [pyatspi.ROLE_LIST_BOX, pyatspi.ROLE_TREE_TABLE]:
             layoutOnly = False
         else:
             if not (self.displayedText(obj) or self.displayedLabel(obj)):
