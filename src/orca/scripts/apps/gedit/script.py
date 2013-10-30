@@ -29,11 +29,9 @@ import pyatspi
 
 import orca.debug as debug
 import orca.scripts.default as default
-import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings as settings
 import orca.speech as speech
-import orca.speechserver as speechserver
 
 from orca.orca_i18n import _
 
@@ -64,16 +62,6 @@ class Script(default.Script):
         self.lastCaretPosition = -1
         self.lastBadWord = ''
         self.lastEventType = ''
-
-    def getListeners(self):
-        """Sets up the AT-SPI event listeners for this script.
-        """
-        listeners = default.Script.getListeners(self)
-
-        listeners["object:state-changed:focused"]           = \
-            self.onStateChanged
-
-        return listeners
 
     def readMisspeltWord(self, event, panel):
         """Speak/braille the current misspelt word plus its context.
@@ -379,27 +367,6 @@ class Script(default.Script):
 
         # Pass the event onto the parent class to be handled in the default way.
         default.Script.onNameChanged(self, event)
-
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes.
-
-        Arguments:
-        - event: the Event
-        """
-
-        # Sometimes an object will tell us it is focused this
-        # way versus issuing a focus event.  GEdit's edit area,
-        # for example, will do this: when you use metacity's
-        # window menu to do things like maximize or unmaximize
-        # a window, you will only get a state-changed event
-        # from the text area when it regains focus.
-        # (See bug #350854 for more details).
-        #
-        if event.type.startswith("object:state-changed:focused") \
-           and (event.detail1):
-            orca.setLocusOfFocus(event, event.source)
-
-        default.Script.onStateChanged(self, event)
 
     # This method tries to detect and handle the following cases:
     # 1) find dialog - phrase found.
