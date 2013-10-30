@@ -49,16 +49,6 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
-    def getListeners(self):
-        """Sets up the AT-SPI event listeners for this script.
-        """
-        listeners = default.Script.getListeners(self)
-
-        listeners["object:state-changed:showing"]           = \
-            self.onStateChanged
-
-        return listeners
-
     def presentStatusBar(self, obj):
         """Presents information about the metacity status bar."""
 

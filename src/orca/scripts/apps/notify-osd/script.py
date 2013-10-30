@@ -38,19 +38,6 @@ import orca.notification_messages as notification_messages
 ########################################################################
 
 class Script(default.Script):
-    def getListeners(self):
-        """Sets up the AT-SPI event listeners for this script.
-        """
-        listeners = default.Script.getListeners(self)
-
-        listeners["object:property-change:accessible-name"] = \
-            self.onNameChange
-
-        listeners["object:property-change:accessible-value"] = \
-            self.onValueChange
-
-        return listeners
-    
     def onValueChange(self, event):
         try:
             ivalue = event.source.queryValue()

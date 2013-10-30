@@ -73,16 +73,6 @@ class Script(default.Script):
         #
         self.searchInterval = 5.0
 
-    def getListeners(self):
-        """Sets up the AT-SPI event listeners for this script.
-        """
-        listeners = default.Script.getListeners(self)
-
-        listeners["object:state-changed:showing"]           = \
-            self.onStateChanged
-
-        return listeners
-
     def _speakSearching(self):
         """If we are still searching, let the user know. Then start another
         timer to go off again and repeat this process.
