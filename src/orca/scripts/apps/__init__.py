@@ -1,5 +1,4 @@
 __all__ = ['Banshee',
-           'ddu',
            'Eclipse',
            'ekiga',
            'empathy',

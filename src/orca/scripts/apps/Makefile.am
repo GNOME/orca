@@ -1,6 +1,5 @@
 SUBDIRS = \
 	Banshee \
-	ddu \
 	Eclipse \
 	ekiga \
 	empathy \
