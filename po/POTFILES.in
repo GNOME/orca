@@ -24,8 +24,6 @@ src/orca/scripts/apps/gnome-mud/script.py
 src/orca/scripts/apps/gnome-search-tool/script.py
 src/orca/scripts/apps/liferea/script.py
 src/orca/scripts/apps/metacity/script.py
-src/orca/scripts/apps/packagemanager/script.py
-src/orca/scripts/apps/packagemanager/tutorialgenerator.py
 src/orca/scripts/apps/planner/braille_generator.py
 src/orca/scripts/apps/planner/speech_generator.py
 src/orca/scripts/apps/Thunderbird/script.py

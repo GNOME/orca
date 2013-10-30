@@ -107,7 +107,6 @@ src/orca/scripts/apps/notification-daemon/Makefile
 src/orca/scripts/apps/notify-osd/Makefile
 src/orca/scripts/apps/nautilus/Makefile
 src/orca/scripts/apps/Mozilla/Makefile
-src/orca/scripts/apps/packagemanager/Makefile
 src/orca/scripts/apps/pidgin/Makefile
 src/orca/scripts/apps/planner/Makefile
 src/orca/scripts/apps/rhythmbox/Makefile

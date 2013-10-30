@@ -28,7 +28,6 @@ SUBDIRS = \
 	notify-osd \
 	nautilus \
 	Mozilla \
-	packagemanager \
 	pidgin \
 	planner \
 	rhythmbox \
