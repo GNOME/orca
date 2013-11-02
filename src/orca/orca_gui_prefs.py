@@ -1177,6 +1177,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         thisIter = model.get_iter(path)
         model.set(thisIter, REPLACEMENT, new_text)
 
+    def pronunciationFocusChange(self, widget, event, isFocused):
+        """Callback for the pronunciation tree's focus-{in,out}-event signal."""
+
+        orca_state.usePronunciationDictionary = not isFocused
+
     def pronunciationCursorChanged(self, widget):
         """Set the search column in the pronunciation dictionary tree view
         depending upon which column the user currently has the cursor in.
@@ -1263,6 +1268,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         #
         self.pronunciationView.connect("cursor_changed",
                                        self.pronunciationCursorChanged)
+
+        self.pronunciationView.connect(
+            "focus_in_event", self.pronunciationFocusChange, True)
+        self.pronunciationView.connect(
+            "focus_out_event", self.pronunciationFocusChange, False)
 
     def _initGUIState(self):
         """Adjust the settings of the various components on the

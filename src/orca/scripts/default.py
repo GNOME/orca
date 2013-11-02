@@ -770,25 +770,6 @@ class Script(script.Script):
         if newLocusOfFocus:
             self.updateBraille(newLocusOfFocus)
 
-            # Check to see if we are in the Pronunciation Dictionary in the
-            # Orca Preferences dialog. If so, then we do not want to use the
-            # pronunciation dictionary to replace the actual words in the
-            # first column of this table.
-            #
-            # [[[TODO: WDW - this should be pushed into script_utilities'
-            # adjustForPronunciation method.]]]
-            #
-            rolesList = [pyatspi.ROLE_TABLE_CELL, \
-                         pyatspi.ROLE_TABLE, \
-                         pyatspi.ROLE_SCROLL_PANE, \
-                         pyatspi.ROLE_PANEL, \
-                         pyatspi.ROLE_PANEL]
-            if self.utilities.hasMatchingHierarchy(newLocusOfFocus, rolesList) \
-               and newLocusOfFocus.getApplication().name == "orca":
-                orca_state.usePronunciationDictionary = False
-            else:
-                orca_state.usePronunciationDictionary = True
-
             # We might be automatically speaking the unbound labels
             # in a dialog box as the result of the dialog box suddenly
             # appearing.  If so, don't interrupt this because of a
