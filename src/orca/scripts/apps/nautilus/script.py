@@ -216,38 +216,6 @@ class Script(default.Script):
         #
         default.Script.onNameChanged(self, event)
 
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes.
-
-        Arguments:
-        - event: the Event
-        """
-
-        # If we've received an "object:state-changed:showing" event for the
-        # poorly named gtk-edit toggle button, then just return. We will have
-        # spoken the information for this component with the previously
-        # received "object:state-changed:focused" event. For all other events,
-        # just let the parent class handle it. See bug #371637 for more
-        # details.
-        #
-        if event.type.startswith("object:state-changed:showing"):
-            rolesList = [pyatspi.ROLE_LABEL, \
-                         pyatspi.ROLE_PANEL, \
-                         pyatspi.ROLE_FILLER, \
-                         pyatspi.ROLE_FILLER, \
-                         pyatspi.ROLE_FILLER, \
-                         pyatspi.ROLE_PANEL, \
-                         pyatspi.ROLE_TOOL_BAR, \
-                         pyatspi.ROLE_PANEL, \
-                         pyatspi.ROLE_FRAME, \
-                         pyatspi.ROLE_APPLICATION]
-            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-                debug.println(self.debugLevel, "nautilus.onStateChanged - " \
-                              + "Location: label.")
-                return
-
-        default.Script.onStateChanged(self, event)
-
     def onSelectionChanged(self, event):
         """Called when an object's selection changes.
 
