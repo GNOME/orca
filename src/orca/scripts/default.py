@@ -677,6 +677,11 @@ class Script(script.Script):
             debug.printException(debug.LEVEL_CONFIGURATION)
         return brailleBindings
 
+    def deactivate(self):
+        """Called when this script is deactivated."""
+
+        self.pointOfReference = {}
+
     def processKeyboardEvent(self, keyboardEvent):
         """Processes the given keyboard event. It uses the super
         class equivalent to do most of the work. The only thing done here
@@ -753,19 +758,6 @@ class Script(script.Script):
             newParent = newLocusOfFocus.parent
         else:
             newParent = None
-
-        # Clear the point of reference.
-        # If the point of reference is a cell, we want to keep the
-        # table-related points of reference.
-        #
-        if oldParent is not None and oldParent == newParent and \
-              newParent.getRole() in [pyatspi.ROLE_TABLE,
-                                      pyatspi.ROLE_TREE_TABLE]:
-            for key in list(self.pointOfReference.keys()):
-                if key not in ('lastRow', 'lastColumn'):
-                    del self.pointOfReference[key]
-        else:
-            self.pointOfReference = {}
 
         if newLocusOfFocus:
             self.updateBraille(newLocusOfFocus)
@@ -2413,37 +2405,33 @@ class Script(script.Script):
         speech.speak(utterances)
 
     def onNameChanged(self, event):
-        """Called whenever a property on an object changes.
+        """Callback for object:property-change:accessible-name events."""
 
-        Arguments:
-        - event: the Event
-        """
+        obj = event.source
+        names = self.pointOfReference.get('names', {})
+        oldName = names.get(hash(obj))
+        if oldName == event.any_data:
+            return
 
-        # [[[TODO: WDW - HACK because gnome-terminal issues a name changed
-        # event for the edit preferences dialog even though the name really
-        # didn't change.  I'm guessing this is going to be a vagary in all
-        # of GTK+.]]]
-        #
         # We are ignoring name changes in comboboxes that have focus
         # see bgo#617204
-        ignoreList = [pyatspi.ROLE_DIALOG, pyatspi.ROLE_COMBO_BOX]
-        if event.source and (event.source.getRole() in ignoreList) \
-           and (event.source == orca_state.locusOfFocus):
+        role = obj.getRole()
+        if role == pyatspi.ROLE_COMBO_BOX:
             return
 
-        # We do this because we can get name change events even if the
-        # name doesn't change.  [[[TODO: WDW - I'm hesitant to rip the
-        # above TODO out, though, because it's been in here for so long.]]]
-        #
-        try:
-            name = event.source.name
-        except:
-            return
-        if self.pointOfReference.get('oldName', None) == name:
-            return
+        # Normally, we only care about name changes in the current object.
+        # But with the new GtkHeaderBar, we are seeing instances where the
+        # real frame remains the same, but the functional frame changes
+        # e.g. g-c-c going from all settings to a specific panel.
+        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
+            if role != pyatspi.ROLE_FRAME \
+               or not obj.getState().contains(pyatspi.STATE_ACTIVE):
+                return
 
-        self.pointOfReference['oldName'] = name
-        self.visualAppearanceChanged(event, event.source)
+        names[hash(obj)] = event.any_data
+        self.pointOfReference['names'] = names
+        self.updateBraille(obj)
+        speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
 
     def onSelectionChanged(self, event):
         """Called when an object's selection changes.
@@ -3865,7 +3853,8 @@ class Script(script.Script):
         # event.
 
         if orca_state.locusOfFocus == event.any_data:
-            oldName = self.pointOfReference.get('oldName', '')
+            names = self.pointOfReference.get('names', {})
+            oldName = names.get(hash(orca_state.locusOfFocus), '')
             if not oldName or event.any_data.name == oldName:
                 return False
 
