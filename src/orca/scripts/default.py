@@ -782,7 +782,6 @@ class Script(script.Script):
                 voice = self.voices[settings.HYPERLINK_VOICE]
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
-
             utterances = self.speechGenerator.generateSpeech(
                 newLocusOfFocus,
                 priorObj=oldLocusOfFocus)
@@ -2434,45 +2433,31 @@ class Script(script.Script):
         speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
 
     def onSelectionChanged(self, event):
-        """Called when an object's selection changes.
+        """Callback for object:selection-changed accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
-        if not event or not event.source:
+        obj = event.source
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_MANAGES_DESCENDANTS):
             return
 
+        if not state.contains(pyatspi.STATE_SHOWING):
+            return
+ 
         # Save the event source, if it is a menu or combo box. It will be
         # useful for optimizing componentAtDesktopCoords in the case that
         # the pointer is hovering over a menu item. The alternative is to
         # traverse the application's tree looking for potential moused-over
         # menu items.
-        if event.source.getRole() in (pyatspi.ROLE_COMBO_BOX,
-                                           pyatspi.ROLE_MENU):
-            self.lastSelectedMenu = event.source
+        if obj.getRole() in (pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_MENU):
+            self.lastSelectedMenu = obj
 
-        # Avoid doing this with objects that manage their descendants
-        # because they'll issue a descendant changed event.
-        #
-        if event.source.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS):
-            return
-
-        if event.source.getRole() == pyatspi.ROLE_COMBO_BOX:
-            self.visualAppearanceChanged(event, event.source)
-
-        # We treat selected children as the locus of focus. When the
-        # selection changed we want to update the locus of focus. If
-        # there is no selection, we default the locus of focus to the
-        # containing object.
-        #
-        elif (event.source != orca_state.locusOfFocus) and \
-              event.source.getState().contains(pyatspi.STATE_FOCUSED):
-            newFocus = event.source
-            selectedChildren = self.utilities.selectedChildren(newFocus)
-            if selectedChildren:
-                newFocus = selectedChildren[0]
-
-            orca.setLocusOfFocus(event, newFocus)
+        # TODO - JD: We need to give more thought to where we look to this
+        # event and where we prefer object:state-changed:selected.
+        selectedChildren = self.utilities.selectedChildren(obj)
+        for child in selectedChildren:
+            if not self.utilities.isLayoutOnly(child):
+                orca.setLocusOfFocus(event, child)
+                break
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
@@ -2983,6 +2968,8 @@ class Script(script.Script):
         - event: the Event
         """
 
+        self.pointOfReference = {}
+
         self.windowActivateTime = time.time()
         orca.setLocusOfFocus(event, event.source)
 
@@ -3010,6 +2997,24 @@ class Script(script.Script):
         Arguments:
         - event: the Event
         """
+
+        self.pointOfReference = {}
+
+        menuRoles = [pyatspi.ROLE_MENU,
+                     pyatspi.ROLE_MENU_ITEM,
+                     pyatspi.ROLE_CHECK_MENU_ITEM,
+                     pyatspi.ROLE_RADIO_MENU_ITEM]
+
+        # If we get into a popup menu, the parent application will likely
+        # emit a window-deactivate event. But functionally we're still in
+        # the same window. In this case, we do not want to update anything.
+        try:
+            role = orca_state.locusOfFocus.getRole()
+        except:
+            pass
+        else:
+            if role in menuRoles:
+                return
 
         # If we receive a "window:deactivate" event for the object that
         # currently has focus, then stop the current speech output.
