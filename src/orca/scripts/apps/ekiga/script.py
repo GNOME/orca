@@ -28,9 +28,6 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.scripts.default as default
-import orca.orca as orca
-import orca.orca_state as orca_state
-import orca.speech as speech
 
 ########################################################################
 #                                                                      #
@@ -66,65 +63,6 @@ class Script(default.Script):
 
         return False
 
-    def onActiveDescendantChanged(self, event):
-        """Called when an object who manages its own descendants detects a
-        change in one of its children.
-
-        Arguments:
-        - event: the Event
-        """
-
-        # The tree table on the left side of Ekiga's Preferences dialog
-        # has STATE_FOCUSABLE, but not STATE_FOCUSED. The default script
-        # will ignore these events as a result. See bug 574221.
-        #
-        window = self.utilities.topLevelObject(event.source)
-        if not window or window.getRole() != pyatspi.ROLE_DIALOG:
-            return default.Script.onActiveDescendantChanged(self, event)
-
-        # There can be cases when the object that fires an
-        # active-descendant-changed event has no children. In this case,
-        # use the object that fired the event, otherwise, use the child.
-        #
-        child = event.any_data
-        if child:
-            speech.stop()
-            orca.setLocusOfFocus(event, child)
-        else:
-            orca.setLocusOfFocus(event, event.source)
-
-        # We'll tuck away the activeDescendant information for future
-        # reference since the AT-SPI gives us little help in finding
-        # this.
-        #
-        if orca_state.locusOfFocus \
-           and (orca_state.locusOfFocus != event.source):
-            self.pointOfReference['activeDescendantInfo'] = \
-                [orca_state.locusOfFocus.parent,
-                 orca_state.locusOfFocus.getIndexInParent()]
-
-    def onFocus(self, event):
-        """Called whenever an object gets focus.
-
-        Arguments:
-        - event: the Event
-        """
-
-        # Selecting items in Ekiga's Preferences dialog causes objects
-        # of ROLE_PAGE_TAB to issue focus: events. These page tabs are
-        # not showing or visible, but they claim to be both. As a result
-        # Orca attempts to present them. Because these page tabs lack a
-        # name as well as STATE_SENSTIVE, this causes us to present
-        # "page grayed." We just want to ignore this creative use of a
-        # Gtk+ widget. See bug 574221.
-        #
-        if event.source.getRole() == pyatspi.ROLE_PAGE_TAB \
-           and not event.source.getState().contains(pyatspi.STATE_SENSITIVE) \
-           and not event.source.name:
-            return
-
-        default.Script.onFocus(self, event)
-
     def onTextInserted(self, event):
         """Called whenever text is inserted into one of Ekiga's text objects.
         Overridden here so that we can present new messages to the user.
@@ -134,8 +72,7 @@ class Script(default.Script):
         """
 
         if self.isChatRoomMsg(event.source):
-            speech.speak(event.any_data)
-            self.displayBrailleMessage(event.any_data)
+            self.presentMessage(event.any_data)
             return
 
         default.Script.onTextInserted(self, event)
@@ -157,3 +94,15 @@ class Script(default.Script):
             return
 
         default.Script.onValueChanged(self, event)
+
+    def skipObjectEvent(self, event):
+        # NOTE: This is here temporarily as part of the preparation for the
+        # deprecation/removal of accessible "focus:" events. Once the change
+        # has been complete, this method should be removed from this script.
+        if event.type == "focus:":
+            return True
+
+        if event.type == "object:state-changed:focused":
+            return False
+
+        return default.Script.skipObjectEvent(self, event)
