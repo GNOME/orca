@@ -2406,6 +2406,8 @@ class Utilities:
         adjustedLine = list(line)
         for n in range(nLinks, 0, -1):
             link = hyperText.getLink(n - 1)
+            if not link:
+                continue
 
             # We only care about links in the string, line:
             #
