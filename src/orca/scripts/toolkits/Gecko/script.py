@@ -441,12 +441,6 @@ class Script(default.Script):
             self.onDocumentLoadComplete
         listeners["document:load-stopped"]                  = \
             self.onDocumentLoadStopped
-        listeners["object:state-changed:showing"]           = \
-            self.onStateChanged
-        listeners["object:children-changed"]                = \
-            self.onChildrenChanged
-        listeners["object:text-changed:insert"]             = \
-            self.onTextInserted
         listeners["object:state-changed:focused"]           = \
             self.onStateFocused
 
@@ -1429,40 +1423,36 @@ class Script(default.Script):
 
         default.Script.onFocus(self, event)
 
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes.
-
-        Arguments:
-        - event: the Event
-        """
+    def onShowingChanged(self, event):
+        """Callback for object:state-changed:showing accessibility events."""
+ 
+        try:
+            eventRole = event.source.getRole()
+            focusedRole = orca_state.locusOfFocus.getRole()
+        except:
+            default.Script.onShowingChanged(self, event)
+            return
 
         # If an autocomplete appears beneath an entry, we don't want
         # to prevent the user from being able to arrow into it.
-        #
-        if event.type.startswith("object:state-changed:showing") \
-           and event.source \
-           and (event.source.getRole() == pyatspi.ROLE_WINDOW) \
-           and orca_state.locusOfFocus:
-            if orca_state.locusOfFocus.getRole() in [pyatspi.ROLE_ENTRY,
-                                                     pyatspi.ROLE_LIST_ITEM]:
-                self._autocompleteVisible = event.detail1
-                # If the autocomplete has just appeared, we want to speak
-                # its appearance if the user's verbosity level is verbose
-                # or if the user forced it to appear with (Alt+)Down Arrow.
-                #
-                if self._autocompleteVisible:
-                    level = _settingsManager.getSetting('speechVerbosityLevel')
-                    speakIt = level == settings.VERBOSITY_LEVEL_VERBOSE
-                    if not speakIt \
-                       and isinstance(orca_state.lastInputEvent, 
-                                      input_event.KeyboardEvent):
-                        keyEvent = orca_state.lastNonModifierKeyEvent
-                        speakIt = (keyEvent.event_string == ("Down"))
-                    if speakIt:
-                        speech.speak(self.speechGenerator.getLocalizedRoleName(\
-                                event.source, pyatspi.ROLE_AUTOCOMPLETE))
+        if eventRole == pyatspi.ROLE_WINDOW \
+           and focusedRole in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_LIST_ITEM]:
+            self._autocompleteVisible = event.detail1
+            # If the autocomplete has just appeared, we want to speak
+            # its appearance if the user's verbosity level is verbose
+            # or if the user forced it to appear with (Alt+)Down Arrow.
+            if self._autocompleteVisible:
+                level = _settingsManager.getSetting('speechVerbosityLevel')
+                speakIt = level == settings.VERBOSITY_LEVEL_VERBOSE
+                if not speakIt:
+                    eventString, mods = self.utilities.lastKeyAndModifiers()
+                    speakIt = eventString == "Down"
+                if speakIt:
+                    speech.speak(self.speechGenerator.getLocalizedRoleName(
+                        event.source, pyatspi.ROLE_AUTOCOMPLETE))
+                    return
 
-        default.Script.onStateChanged(self, event)
+        default.Script.onShowingChanged(self, event)
 
     def onStateFocused(self, event):
         default.Script.onStateChanged(self, event)

@@ -114,14 +114,15 @@ class Script(default.Script):
 
         return True
 
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes."""
-
-        if event.type.startswith("object:state-changed:showing") \
-           and event.source.getRole() == pyatspi.ROLE_ALERT and event.detail1:
-            labels = self.utilities.unrelatedLabels(event.source)
+    def onShowingChanged(self, event):
+        """Callback for object:state-changed:showing accessibility events."""
+ 
+        obj = event.source
+        if obj.getRole() == pyatspi.ROLE_ALERT and event.detail1:
+            labels = self.utilities.unrelatedLabels(obj)
             message = " ".join(map(self.utilities.displayedText, labels))
             self.presentMessage(
                 message, voice=self.voices.get(settings.DEFAULT_VOICE))
-
-        return default.Script.onStateChanged(self, event)
+            return
+ 
+        default.Script.onShowingChanged(self, event)

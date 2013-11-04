@@ -112,48 +112,42 @@ class Script(WebKitGtk.Script):
 
         default.Script.onNameChanged(self, event)
 
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes.
-
-        Arguments:
-        - event: the Event
-        """
-
+    def onShowingChanged(self, event):
+        """Callback for object:state-changed:showing accessibility events."""
+ 
         if not event.detail1:
-            default.Script.onStateChanged(self, event)
+            default.Script.onShowingChanged(self, event)
             return
+
+        obj = event.source
 
         # Present text in the Account Assistant
-        if event.type.startswith("object:state-changed:showing"):
-            try:
-                role = event.source.getRole()
-                relationSet = event.source.getRelationSet()
-            except:
-                return
-
-            if role != pyatspi.ROLE_LABEL or relationSet:
-                default.Script.onStateChanged(self, event)
-                return
-
-            window = self.utilities.topLevelObject(event.source)
-            focusedObj = self.utilities.focusedObject(window)
-            if self.utilities.spatialComparison(event.source, focusedObj) >= 0:
-                return
-
-            # TODO - JD: The very last screen results in a crazy-huge number
-            # of events, and they come in an order that is not good for this
-            # approach. So we'll need to handle this particular case elsewhere.
-            if focusedObj.getRole() == pyatspi.ROLE_CHECK_BOX:
-                labels = self.utilities.unrelatedLabels(window)
-                if len(labels) > 15:
-                    return
-
-            voice = self.voices.get(settings.DEFAULT_VOICE)
-            text = self.utilities.displayedText(event.source)
-            self.presentMessage(text, voice=voice)
+        try:
+            role = obj.getRole()
+            relationSet = obj.getRelationSet()
+        except:
             return
 
-        default.Script.onStateChanged(self, event)
+        if role != pyatspi.ROLE_LABEL or relationSet:
+            default.Script.onShowingChanged(self, event)
+            return
+
+        window = self.utilities.topLevelObject(obj)
+        focusedObj = self.utilities.focusedObject(window)
+        if self.utilities.spatialComparison(obj, focusedObj) >= 0:
+            return
+ 
+        # TODO - JD: The very last screen results in a crazy-huge number
+        # of events, and they come in an order that is not good for this
+        # approach. So we'll need to handle this particular case elsewhere.
+        if focusedObj.getRole() == pyatspi.ROLE_CHECK_BOX:
+            labels = self.utilities.unrelatedLabels(window)
+            if len(labels) > 15:
+                return
+
+        voice = self.voices.get(settings.DEFAULT_VOICE)
+        text = self.utilities.displayedText(obj)
+        self.presentMessage(text, voice=voice)
 
     def skipObjectEvent(self, event):
         # NOTE: This is here temporarily as part of the preparation for the

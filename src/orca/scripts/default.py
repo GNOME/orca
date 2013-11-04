@@ -534,7 +534,7 @@ class Script(script.Script):
         listeners["object:state-changed:focused"]           = \
             self.onStateChanged
         listeners["object:state-changed:showing"]           = \
-            self.onStateChanged
+            self.onShowingChanged
         listeners["object:state-changed:checked"]           = \
             self.onCheckedChanged
         listeners["object:state-changed:pressed"]           = \
@@ -2613,39 +2613,33 @@ class Script(script.Script):
                 #    orca.setLocusOfFocus(event, None)
                 return
 
-        # Handle tooltip popups.
-        #
-        if event.source.getRole() == pyatspi.ROLE_TOOL_TIP:
-            if not event.type.startswith("object:state-changed:showing"):
-                return
+    def onShowingChanged(self, event):
+        """Callback for object:state-changed:showing accessibility events."""
 
+        obj = event.source
+        role = obj.getRole()
+        if role == pyatspi.ROLE_NOTIFICATION:
+            speech.speak(self.speechGenerator.generateSpeech(obj))
+            labels = self.utilities.unrelatedLabels(obj)
+            msg = ''.join(map(self.utilities.displayedText, labels))
+            self.displayBrailleMessage(msg, flashTime=settings.brailleFlashTime)
+            notification_messages.saveMessage(msg)
+            return
+
+        if role == pyatspi.ROLE_TOOL_TIP:
             keyString, mods = self.utilities.lastKeyAndModifiers()
             if keyString != "F1" \
-               and not  _settingsManager.getSetting('presentToolTips'):
+               and not _settingsManager.getSetting('presentToolTips'):
                 return
-
-            if event.detail1 == 1:
-                self.presentToolTip(event.source)
+            if event.detail1:
+                self.presentToolTip(obj)
                 return
-
+ 
             if orca_state.locusOfFocus and keyString == "F1":
                 obj = orca_state.locusOfFocus
                 self.updateBraille(obj)
-                utterances = self.speechGenerator.generateSpeech(obj)
-                utterances.extend(
-                    self.tutorialGenerator.getTutorial(obj, False))
-                speech.speak(utterances)
+                speech.speak(self.speechGenerator.generateSpeech(obj))
                 return
-
-        if event.source.getRole() in state_change_notifiers:
-            notifiers = state_change_notifiers[event.source.getRole()]
-            found = False
-            for state in notifiers:
-                if state and event.type.endswith(state):
-                    found = True
-                    break
-            if found:
-                self.visualAppearanceChanged(event, event.source)
 
     def onTextAttributesChanged(self, event):
         """Called when an object's text attributes change. Right now this
@@ -5099,13 +5093,3 @@ class Script(script.Script):
         message = time.strftime(dateFormat, time.localtime())
         self.presentMessage(message)
         return True
-
-# Dictionary that defines the state changes we care about for various
-# objects.  The key represents the role and the value represents a list
-# of states that we care about.
-#
-state_change_notifiers = {}
-
-state_change_notifiers[pyatspi.ROLE_PANEL]           = ("showing", None)
-state_change_notifiers[pyatspi.ROLE_LABEL]           = ("showing", None)
-state_change_notifiers[pyatspi.ROLE_NOTIFICATION]    = ("showing", None)

@@ -124,26 +124,19 @@ class Script(default.Script):
         if event.source.getRole() != pyatspi.ROLE_STATUS_BAR:
             default.Script.onNameChanged(self, event)
 
-    def onStateChanged(self, event):
-        """The status bar in metacity tells us what toplevel window
-        will be activated when tab is released.  We will key off the
-        text inserted event to determine when to say something, as it
-        seems to be the more reliable event.
+    def onShowingChanged(self, event):
+        """Callback for object:state-changed:showing accessibility events."""
 
-        Arguments:
-        - event: the object:state-changed: Event
-        """
+        obj = event.source
+        role = obj.getRole()
 
-        # Ignore changes on the status bar.  We handle them in
-        # onTextInserted.  The only exception is if the status bar is
-        # suddenly showing.  Then, we want to present it because we
-        # typically do not get onTextInserted events at that time.
-        #
-        if event.source.getRole() != pyatspi.ROLE_STATUS_BAR:
-            default.Script.onStateChanged(self, event)
-        elif (event.type.startswith("object:state-changed:showing")) \
-            and event.detail1:
-            self.presentStatusBar(event.source)
+        # If the status bar is suddenly showing, we need to handle it here
+        # because we typically do not get onTextInserted events at that time.
+        if role == pyatspi.ROLE_STATUS_BAR and event.detail1:
+            self.presentStatusBar(obj)
+            return
+
+        default.Script.onShowingChanged(self, event)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.  This seems to

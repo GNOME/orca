@@ -25,15 +25,14 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.debug as debug
+import pyatspi
+import time
+from gi.repository import GLib
+
 import orca.messages as messages
 import orca.scripts.default as default
 
 from orca.orca_i18n import _
-
-import pyatspi
-import time
-from gi.repository import GLib
 
 ########################################################################
 #                                                                      #
@@ -51,26 +50,9 @@ class Script(default.Script):
         """
 
         default.Script.__init__(self, app)
-
-        # Set the debug level for all the methods in this script.
-        #
-        self.debugLevel = debug.LEVEL_FINEST
-
-        # The table of files found.
-        #
         self.fileTable = None
-
-        # Set to true if we are doing a search.
-        #
         self.searching = False
-
-        # Time value using by the interval timer.
-        #
         self.startTime = None
-
-        # Interval in seconds, between utterances of "Searching" when a
-        # search is in progress.
-        #
         self.searchInterval = 5.0
 
     def _speakSearching(self):
@@ -89,83 +71,40 @@ class Script(default.Script):
 
         return True
 
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes.
+    def onShowingChanged(self, event):
+        """Callback for object:state-changed:showing accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
+        obj = event.source
+        if obj.getRole() != pyatspi.ROLE_PUSH_BUTTON \
+           or not obj.getState().contains(pyatspi.STATE_VISIBLE):
+            return default.Script.onShowingChanged(self, event)
 
-        details = debug.getAccessibleDetails(self.debugLevel, event.source)
-        debug.printObjectEvent(self.debugLevel, event, details)
-
-        rolesList = [pyatspi.ROLE_PUSH_BUTTON, \
-                    pyatspi.ROLE_FILLER, \
-                    pyatspi.ROLE_FILLER, \
-                    pyatspi.ROLE_FILLER, \
-                    pyatspi.ROLE_FRAME, \
-                    pyatspi.ROLE_APPLICATION]
-        visible = event.source.getState().contains(pyatspi.STATE_VISIBLE)
-
-        # Check to see if we have just had an "object:state-changed:showing"
-        # event for the Stop button. If the name is "Stop", and one of its
-        # states is VISIBLE, that means we have started a search. As the
-        # search progresses, regularly inform the user of this by speaking
-        # "Searching" (assuming the search tool has focus).
-        #
         # Translators: the "Stop" string must match what gnome-search-tool
         # is using.  We hate keying off stuff like this, but we're forced
         # to do so in this case.
-        #
-        if self.utilities.hasMatchingHierarchy(event.source, rolesList) and \
-           event.source.name == _("Stop") and visible:
-            debug.println(self.debugLevel,
-                          "gnome-search-tool.onNameChanged - " \
-                          + "search started.")
-
+        if obj.name == _("Stop"):
             self.searching = True
-
-            # If we don't already have a handle to the table containing the
-            # list of files found, then get it now.
-            #
             if not self.fileTable:
-                frame = self.utilities.topLevelObject(event.source)
+                frame = self.utilities.topLevelObject(obj)
                 allTables = self.utilities.descendantsWithRole(
                     frame, pyatspi.ROLE_TABLE)
                 self.fileTable = allTables[0]
 
             GLib.idle_add(self._speakSearching)
+            return
 
-        # Check to see if we have just had an "object:state-changed:showing"
-        # event for the Find button. If the name is "Find", and one of its
-        # states is VISIBLE and we are currently searching, that means we
-        # have just stopped a search. Inform the user that the search is
-        # complete and tell them how many files were found.
-        #
         # Translators: the "Find" string must match what gnome-search-tool
         # is using.  We hate keying off stuff like this, but we're forced
         # to do so in this case.
-        #
-        if self.utilities.hasMatchingHierarchy(event.source, rolesList) \
-           and event.source.name == _("Find") and visible and self.searching:
-            debug.println(self.debugLevel,
-                          "gnome-search-tool.onNameChanged - " \
-                          + "search completed.")
-
+        if obj.name == _("Find") and self.searching:
             self.searching = False
             self.presentMessage(messages.SEARCH_COMPLETE)
-            sensitive = self.fileTable.getState().contains( \
-                                                pyatspi.STATE_SENSITIVE)
-            if sensitive:
+            if self.fileTable.getState().contains(pyatspi.STATE_SENSITIVE):
                 try:
                     fileCount = self.fileTable.queryTable().nRows
+                    self.presentMessage(messages.filesFound(fileCount))
                 except NotImplementedError:
-                    fileCount = 0
-                noFilesString = messages.filesFound(fileCount)
-                self.presentMessage(noFilesString)
-            else:
-                self.presentMessage(messages.FILES_NOT_FOUND)
+                    self.presentMessage(messages.FILES_NOT_FOUND)
+            return
 
-        # Pass the event onto the parent class to be handled in the default way.
-        #
-        default.Script.onStateChanged(self, event)
+        default.Script.onShowingChanged(self, event)
