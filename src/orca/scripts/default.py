@@ -700,7 +700,54 @@ class Script(script.Script):
         except:
             offset = -1
 
-        return obj, offset        
+        return obj, offset
+
+    def _saveFocusedObjectInfo(self, obj):
+        """Saves some basic information about obj. Note that this method is
+        intended to be called primarily (if not only) by locusOfFocusChanged().
+        It is expected that accessible event callbacks will update the point
+        of reference data specific to that event. The goal here is to weed
+        out duplicate events."""
+
+        if not obj:
+            return
+
+        try:
+            role = obj.getRole()
+        except:
+            return
+
+        # We want to save the name because some apps and toolkits emit name
+        # changes after the focus or selection has changed, even though the
+        # name has not.
+        names = self.pointOfReference.get('names', {})
+        names[hash(obj)] = obj.name
+        self.pointOfReference['names'] = names
+
+        # We want to save the offset for text objects because some apps and
+        # toolkits emit caret-moved events immediately after a text object
+        # gains focus, even though the caret has not actually moved.
+        try:
+            text = obj.queryText()
+        except:
+            pass
+        else:
+            self._saveLastCursorPosition(obj, text.caretOffset)
+
+        # We want to save the current row and column of a newly focused
+        # or selected table cell so that on subsequent cell focus/selection
+        # we only present the changed location.
+        if role == pyatspi.ROLE_TABLE_CELL:
+            try:
+                table = obj.parent.queryTable()
+            except:
+                pass
+            else:
+                index = self.utilities.cellIndex(obj)
+                column = table.getColumnAtIndex(index)
+                row = table.getRowAtIndex(index)
+                self.pointOfReference['lastColumn'] = column
+                self.pointOfReference['lastRow'] = row
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -785,21 +832,8 @@ class Script(script.Script):
                 priorObj=oldLocusOfFocus)
             speech.speak(utterances, voice, not shouldNotInterrupt)
 
-            # If this is a table cell, save the current row and column
-            # information in the table cell's table, so that we can use
-            # it the next time.
-            #
-            if newRole == pyatspi.ROLE_TABLE_CELL:
-                try:
-                    table = newParent.queryTable()
-                except:
-                    pass
-                else:
-                    index = self.utilities.cellIndex(newLocusOfFocus)
-                    column = table.getColumnAtIndex(index)
-                    self.pointOfReference['lastColumn'] = column
-                    row = table.getRowAtIndex(index)
-                    self.pointOfReference['lastRow'] = row
+            self._saveFocusedObjectInfo(newLocusOfFocus)
+
         else:
             orca_state.noFocusTimeStamp = time.time()
 
