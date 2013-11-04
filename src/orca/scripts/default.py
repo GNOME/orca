@@ -538,7 +538,7 @@ class Script(script.Script):
         listeners["object:state-changed:checked"]           = \
             self.onCheckedChanged
         listeners["object:state-changed:pressed"]           = \
-            self.onStateChanged
+            self.onPressedChanged
         listeners["object:state-changed:indeterminate"]     = \
             self.onIndeterminateChanged
         listeners["object:state-changed:expanded"]          = \
@@ -2503,6 +2503,16 @@ class Script(script.Script):
 
         names[hash(obj)] = event.any_data
         self.pointOfReference['names'] = names
+        self.updateBraille(obj)
+        speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+
+    def onPressedChanged(self, event):
+        """Callback for object:state-changed:pressed accessibility events."""
+
+        obj = event.source
+        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
+            return
+
         self.updateBraille(obj)
         speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
 
@@ -5099,4 +5109,3 @@ state_change_notifiers = {}
 state_change_notifiers[pyatspi.ROLE_PANEL]           = ("showing", None)
 state_change_notifiers[pyatspi.ROLE_LABEL]           = ("showing", None)
 state_change_notifiers[pyatspi.ROLE_NOTIFICATION]    = ("showing", None)
-state_change_notifiers[pyatspi.ROLE_TOGGLE_BUTTON]   = ("pressed", None)
