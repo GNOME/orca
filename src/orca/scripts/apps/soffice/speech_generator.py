@@ -36,9 +36,6 @@ from . import script_settings
 _settingsManager = settings_manager.getManager()
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
-
-    # pylint: disable-msg=W0142
-
     def __init__(self, script):
         speech_generator.SpeechGenerator.__init__(self, script)
 
@@ -164,7 +161,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         """
 
         result = []
-        if not self._script.isSpreadSheetCell(obj, startFromTable=True):
+        if not self._script.utilities.isSpreadSheetCell(obj, startFromTable=True):
             result.extend(speech_generator.SpeechGenerator.\
                 _generateAvailability(self, obj, **args))
 
@@ -199,6 +196,23 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(acss)
         return result
 
+    def _generateCurrentLineText(self, obj, **args):
+        if self._script.utilities.isDocumentCell(obj.parent):
+            priorObj = args.get('priorObj', None)
+            if priorObj and priorObj.parent != obj.parent:
+                return []
+
+        # TODO - JD: The SayLine, etc. code should be generated and not put
+        # together in the scripts. In addition, the voice crap needs to go
+        # here. Then it needs to be removed from the scripts.
+        [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
+        text = self._script.utilities.adjustForLinks(obj, text, startOffset)
+        text = self._script.utilities.adjustForRepeats(text)
+        if not text:
+            text = [messages.BLANK]
+
+        return [text]
+
     def _generateToggleState(self, obj, **args):
         """Treat toggle buttons in the toolbar specially. This is so we can
         have more natural sounding speech such as "bold on", "bold off", etc."""
@@ -224,71 +238,27 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         is returned. Overridden here so that we can get the dynamic
         row header(s).
         """
+
+        if _settingsManager.getSetting('readTableCellRow'):
+            return []
+
+        newOnly = args.get('newOnly', False)
+        rowHeader, columnHeader = \
+            self._script.utilities.getDynamicHeadersForCell(obj, newOnly)
+        if not rowHeader:
+            return []
+
         result = []
-        acss = self.voice(speech_generator.DEFAULT)
-        try:
-            table = obj.parent.queryTable()
-        except:
-            pass
-        else:
-            index = self._script.utilities.cellIndex(obj)
-            rowIndex = table.getRowAtIndex(index)
-            if rowIndex >= 0 \
-               and hash(obj.parent) in self._script.dynamicRowHeaders:
-                column = self._script.dynamicRowHeaders[hash(obj.parent)]
-                header = self._script.getDynamicColumnHeaderCell(obj, column)
-                try:
-                    headerText = header.queryText()
-                except:
-                    headerText = None
-                if header.childCount > 0:
-                    for child in header:
-                        text = self._script.utilities.substring(child, 0, -1)
-                        if text:
-                            result.append(text)
-                elif headerText:
-                    text = self._script.utilities.substring(header, 0, -1)
-                    if text:
-                        result.append(text)
-        if result:
-            result.extend(acss)
+        text = self._script.utilities.displayedText(rowHeader)
+        if text:
+            result.append(text)
+            result.extend(self.voice(speech_generator.DEFAULT))
+
         return result
 
     def _generateNewRowHeader(self, obj, **args):
-        result = []
-        acss = self.voice(speech_generator.DEFAULT)
-        # Check to see if this spread sheet cell has either a dynamic
-        # row heading associated with it.
-        #
-        table = self._script.getTable(obj)
-        parent = obj.parent
-        try:
-            parentTable = parent.queryTable()
-        except:
-            parentTable = None
-        index = self._script.utilities.cellIndex(obj)
-        if "lastRow" in self._script.pointOfReference and parentTable \
-           and self._script.pointOfReference["lastRow"] != \
-           parentTable.getRowAtIndex(index):
-            if hash(parent) in self._script.dynamicRowHeaders:
-                column = self._script.dynamicRowHeaders[hash(parent)]
-                header = self._script.getDynamicColumnHeaderCell(obj, column)
-                try:
-                    headerText = header.queryText()
-                except:
-                    headerText = None
-                if header.childCount > 0:
-                    for child in header:
-                        text = self._script.utilities.substring(child, 0, -1)
-                        if text:
-                            result.append(text)
-                elif headerText:
-                    text = self._script.utilities.substring(header, 0, -1)
-                    if text:
-                        result.append(text)
-        if result:
-            result.extend(acss)
-        return result
+        args['newOnly'] = True
+        return self._generateRowHeader(obj, **args)
 
     def _generateColumnHeader(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
@@ -297,71 +267,24 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         is returned. Overridden here so that we can get the dynamic
         column header(s).
         """
+
+        newOnly = args.get('newOnly', False)
+        rowHeader, columnHeader = \
+            self._script.utilities.getDynamicHeadersForCell(obj, newOnly)
+        if not columnHeader:
+            return []
+
         result = []
-        acss = self.voice(speech_generator.DEFAULT)
-        try:
-            table = obj.parent.queryTable()
-        except:
-            pass
-        else:
-            index = self._script.utilities.cellIndex(obj)
-            columnIndex = table.getColumnAtIndex(index)
-            if columnIndex >= 0 \
-               and hash(obj.parent) in self._script.dynamicColumnHeaders:
-                row = self._script.dynamicColumnHeaders[hash(obj.parent)]
-                header = self._script.getDynamicRowHeaderCell(obj, row)
-                try:
-                    headerText = header.queryText()
-                except:
-                    headerText = None
-                if header.childCount > 0:
-                    for child in header:
-                        text = self._script.utilities.substring(child, 0, -1)
-                        if text:
-                            result.append(text)
-                elif headerText:
-                    text = self._script.utilities.substring(header, 0, -1)
-                    if text:
-                        result.append(text)
-        if result:
-            result.extend(acss)
+        text = self._script.utilities.displayedText(columnHeader)
+        if text:
+            result.append(text)
+            result.extend(self.voice(speech_generator.DEFAULT))
+
         return result
 
     def _generateNewColumnHeader(self, obj, **args):
-        result = []
-        acss = self.voice(speech_generator.DEFAULT)
-        # Check to see if this spread sheet cell has either a dynamic
-        # row heading associated with it.
-        #
-        table = self._script.getTable(obj)
-        parent = obj.parent
-        try:
-            parentTable = parent.queryTable()
-        except:
-            parentTable = None
-        index = self._script.utilities.cellIndex(obj)
-        if parentTable and "lastColumn" in self._script.pointOfReference \
-           and self._script.pointOfReference["lastColumn"] != \
-           parentTable.getColumnAtIndex(index):
-            if hash(parent) in self._script.dynamicColumnHeaders:
-                row = self._script.dynamicColumnHeaders[hash(parent)]
-                header = self._script.getDynamicRowHeaderCell(obj, row)
-                try:
-                    headerText = header.queryText()
-                except:
-                    headerText = None
-                if header.childCount > 0:
-                    for child in header:
-                        text = self._script.utilities.substring(child, 0, -1)
-                        if text:
-                            result.append(text)
-                elif headerText:
-                    text = self._script.utilities.substring(header, 0, -1)
-                    if text:
-                        result.append(text)
-        if result:
-            result.extend(acss)
-        return result
+        args['newOnly'] = True
+        return self._generateColumnHeader(obj, **args)
 
     def _generateTooLong(self, obj, **args):
         """If there is text in this spread sheet cell, compare the size of
@@ -398,46 +321,55 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(acss)
         return result
 
+    def _generateHasFormula(self, obj, **args):
+        inputLine = self._script.utilities.locateInputLine(obj)
+        if not inputLine:
+            return []
+
+        text = self._script.utilities.displayedText(inputLine)
+        if text.startswith("="):
+            result = [messages.HAS_FORMULA]
+            result.extend(self.voice(speech_generator.SYSTEM))
+            return result
+
+        return []
+
     def _generateSpreadSheetCell(self, obj, **args):
         result = []
-        acss = self.voice(speech_generator.DEFAULT)
-        if self._script.inputLineForCell == None:
-            self._script.inputLineForCell = \
-                self._script.locateInputLine(obj)
-        try:
-            if obj.queryText():
-                objectText = self._script.utilities.substring(obj, 0, -1)
-                if (not script_settings.speakSpreadsheetCoordinates \
-                    or args.get('formatType', 'unfocused') == 'basicWhereAmI') \
-                   and len(objectText) == 0:
-                    objectText = messages.BLANK
-                result.append(objectText)
-                result.extend(acss)
-        except NotImplementedError:
-            pass
+        isBasicWhereAmI = args.get('formatType') == 'basicWhereAmI'
+        speakCoordinates = script_settings.speakSpreadsheetCoordinates
 
-        if script_settings.speakSpreadsheetCoordinates \
-           and args.get('formatType', 'unfocused') != 'basicWhereAmI':
-            nameList = obj.name.split()
-            # We were assuming that the word for "cell" would always
-            # precede the coordinates. This is not the case for all
-            # languages (e.g. Hungarian). See bug #562532. Therefore
-            # examine each item and choose the one which contains a
-            # digit.
-            #
-            for name in nameList:
-                for char in name:
-                    if char.isdigit():
-                        result.append(name)
-                        break
+        try:
+            objectText = self._script.utilities.substring(obj, 0, -1)
+        except:
+            objectText = ''
+        if not objectText and (isBasicWhereAmI or not speakCoordinates):
+            objectText = messages.BLANK
+
+        if objectText:
+            result.append(objectText)
+
+        if speakCoordinates and not isBasicWhereAmI:
+            result.append(self._script.utilities.spreadSheetCellName(obj))
 
         if result:
-            result.extend(acss)
+            result.extend(self.voice(speech_generator.DEFAULT))
+
+        if _settingsManager.getSetting('readTableCellRow'):
+            row, col, table = self._script.utilities.getRowColumnAndTable(obj)
+            lastRow = self._script.pointOfReference.get("lastRow")
+            if row != lastRow:
+                return result
 
         tooLong = self._generateTooLong(obj, **args)
-        if tooLong and len(tooLong):
+        if tooLong:
             result.extend(self._generatePause(obj, **args))
             result.extend(tooLong)
+
+        hasFormula = self._generateHasFormula(obj, **args)
+        if hasFormula:
+            result.extend(self._generatePause(obj, **args))
+            result.extend(hasFormula)
 
         return result
 
@@ -451,77 +383,31 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         Returns a list of utterances to be spoken for the object.
         """
-        result = []
-        if self._script.isSpreadSheetCell(obj):
-            result.extend(self._generateSpreadSheetCell(obj, **args))
-        else:
-            # Check to see how many children this table cell has. If it's
-            # just one (or none), then pass it on to the superclass to be
-            # processed.
-            #
-            # If it's more than one, then get the speech for each child,
-            # and call this method again.
-            #
-            if obj.childCount <= 1:
-                result.extend(speech_generator.SpeechGenerator.\
-                              _generateRealTableCell(self, obj, **args))
-            else:
-                for child in obj:
-                    result.extend(self._generateRealTableCell(child, **args))
-        return result
+        if self._script.utilities.isSpreadSheetCell(obj):
+            return self._generateSpreadSheetCell(obj, **args)
+
+        return speech_generator.SpeechGenerator._generateRealTableCell(
+            self, obj, **args)
 
     def _generateTableCellRow(self, obj, **args):
-        """Get the speech for a table cell row or a single table cell
-        if _settingsManager.getSetting('readTableCellRow') is False. If this isn't inside a
-        spread sheet, just return the utterances returned by the default
-        table cell speech handler.
+        """Get the speech for a table cell row if the user wants to hear
+        the full row and if the row has actually changed."""
 
-        Arguments:
-        - obj: the table cell
+        speakFullRow = _settingsManager.getSetting('readTableCellRow')
+        if speakFullRow:
+            row, column, table = \
+                self._script.utilities.getRowColumnAndTable(obj)
+            lastRow = self._script.pointOfReference.get("lastRow")
+            speakFullRow = row != lastRow
 
-        Returns a list of utterances to be spoken for the object.
-        """
+        if not speakFullRow:
+            return self._generateRealTableCell(obj, **args)
+
         result = []
-        if self._script.isSpreadSheetCell(obj):
-            if _settingsManager.getSetting('readTableCellRow'):
-                parent = obj.parent
-                parentTable = parent.queryTable()
-                index = self._script.utilities.cellIndex(obj)
-                row = parentTable.getRowAtIndex(index)
-                column = parentTable.getColumnAtIndex(index)
-                # This is an indication of whether we should speak all the
-                # table cells (the user has moved focus up or down a row),
-                # or just the current one (focus has moved left or right in
-                # the same row).
-                #
-                speakAll = True
-                if "lastRow" in self._script.pointOfReference and \
-                    "lastColumn" in self._script.pointOfReference:
-                    pointOfReference = self._script.pointOfReference
-                    speakAll = (pointOfReference["lastRow"] != row) or \
-                           ((row == 0 or row == parentTable.nRows-1) and \
-                            pointOfReference["lastColumn"] == column)
-                if speakAll:
-                    [startIndex, endIndex] = \
-                        self._script.getSpreadSheetRowRange(obj)
-                    for i in range(startIndex, endIndex+1):
-                        cell = parentTable.getAccessibleAt(row, i)
-                        showing = cell.getState().contains( \
-                                      pyatspi.STATE_SHOWING)
-                        if showing:
-                            result.extend(self._generateRealTableCell(
-                                              cell, **args))
-                else:
-                    result.extend(self._generateRealTableCell(obj, **args))
-            else:
-                result.extend(self._generateRealTableCell(obj, **args))
-        else:
-            result.extend(
-                speech_generator.SpeechGenerator._generateTableCellRow(
-                    self, obj, **args))
-            if not len(result) \
-               and _settingsManager.getSetting('speakBlankLines'):
-                result.append(messages.BLANK)
+        cells = self._script.utilities.getShowingCellsInRow(obj)
+        for cell in cells:
+            result.extend(self._generateRealTableCell(cell, **args))
+
         return result
 
     def _generateEndOfTableIndicator(self, obj, **args):
@@ -539,10 +425,32 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return (speech_generator.SpeechGenerator._generateEndOfTableIndicator(
                 self, obj, **args))
 
+    def _generateOldAncestors(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the text of the ancestors for
+        the object being left."""
+
+        priorObj = args.get('priorObj', None)
+        if not priorObj:
+            return []
+
+        isTable = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE
+        oldTable = pyatspi.findAncestor(priorObj, isTable)
+        if oldTable:
+            ancestor = self._script.utilities.commonAncestor(oldTable, obj)
+            if ancestor and ancestor.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+                result = [messages.TABLE_LEAVING]
+                result.extend(self.voice(speech_generator.SYSTEM))
+                result.extend(self._generatePause(obj, **args))
+                return result
+
+        return speech_generator.SpeechGenerator._generateOldAncestors(
+            self, obj, **args)
+
     def generateSpeech(self, obj, **args):
         result = []
         if args.get('formatType', 'unfocused') == 'basicWhereAmI' \
-           and self._script.isSpreadSheetCell(obj):
+           and self._script.utilities.isSpreadSheetCell(obj):
             oldRole = self._overrideRole('ROLE_SPREADSHEET_CELL', args)
             # In addition, if focus is in a cell being edited, we cannot
             # query the accessible table interface for coordinates and the

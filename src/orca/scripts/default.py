@@ -3426,7 +3426,11 @@ class Script(script.Script):
             return
 
         if not offset:
-            offset = text.caretOffset - 1
+            if text.caretOffset == -1:
+                offset = text.characterCount
+            else:
+                offset = text.caretOffset - 1
+
         if (offset < 0):
             return
 

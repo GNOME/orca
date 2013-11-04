@@ -97,27 +97,174 @@ class Utilities(script_utilities.Utilities):
 
         return readOnly
 
-    def isDuplicateEvent(self, event):
-        """Returns True if we believe this event is a duplicate which we
-        wish to ignore."""
+    def isSpreadSheetCell(self, obj, startFromTable=False):
+        """Return an indication of whether the given obj is a spread sheet
+        table cell.
 
-        if not event:
+        Arguments:
+        - obj: the object to check.
+        - startFromTable: if True, then the component hierarchy check should
+          start from a table (as opposed to a table cell).
+
+        Returns True if this is a table cell, False otherwise.
+        """
+
+        cell = obj
+        if not startFromTable:
+            obj = obj.parent
+
+        try:
+            table = obj.queryTable()
+        except:
+            # There really doesn't seem to be a good way to identify
+            # when the user is editing a cell because it has a role
+            # of paragraph and no table in the ancestry. This hack is
+            # a carry-over from the whereAmI code.
+            #
+            if cell.getRole() == pyatspi.ROLE_PARAGRAPH:
+                top = self.topLevelObject(cell)
+                return (top and top.name.endswith(" Calc"))
+            else:
+                return False
+        else:
+            return table.nRows in [65536, 1048576]
+
+    def isDocumentCell(self, cell):
+        isCell = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_CELL
+        if not isCell(cell):
+            cell = pyatspi.findAncestor(cell, isCell)
+
+        if not cell or self.isSpreadSheetCell(cell):
             return False
 
-        if event.type.startswith("object:text-caret-moved"):
-            try:
-                obj, offset = \
-                    self._script.pointOfReference["lastCursorPosition"]
-            except:
-                return False
-            else:
-                # Doing an intentional equality check rather than calling
-                # isSameObject() because we'd rather double-present an
-                # object than not present it at all.
-                #
-                return obj == event.source and offset == event.detail1
+        isDocument = lambda x: x and x.getRole() == pyatspi.ROLE_DOCUMENT_FRAME
+        return pyatspi.findAncestor(cell, isDocument) != None
 
-        return False
+    def spreadSheetCellName(self, cell):
+        nameList = cell.name.split()
+        for name in nameList:
+            if not name.isalpha() and name.isalnum():
+                return name
+
+        return ''
+
+    def getRowColumnAndTable(self, cell):
+        """Returns the (row, column, table) tuple for cell."""
+
+        if not (cell and cell.getRole() == pyatspi.ROLE_TABLE_CELL):
+            return -1, -1, None
+
+        cellParent = cell.parent
+        if cellParent and cellParent.getRole() == pyatspi.ROLE_TABLE_CELL:
+            cell = cellParent
+            cellParent = cell.parent
+
+        table = cellParent
+        if table and table.getRole() != pyatspi.ROLE_TABLE:
+            table = table.parent
+
+        try:
+            iTable = table.queryTable()
+        except:
+            return -1, -1, None
+
+        index = self.cellIndex(cell)
+        row = iTable.getRowAtIndex(index)
+        column = iTable.getColumnAtIndex(index)
+
+        return row, column, table
+
+    def getShowingCellsInRow(self, obj):
+        row, column, parentTable = self.getRowColumnAndTable(obj)
+        try:
+            table = parentTable.queryTable()
+        except:
+            return []
+
+        startIndex, endIndex = self.getTableRowRange(obj)
+        cells = []
+        for i in range(startIndex, endIndex):
+            cell = table.getAccessibleAt(row, i)
+            try:
+                showing = cell.getState().contains(pyatspi.STATE_SHOWING)
+            except:
+                continue
+            if showing:
+                cells.append(cell)
+
+        return cells
+
+    def getTableRowRange(self, obj):
+        """If this is spread sheet cell, return the start and end indices
+        of the spread sheet cells for the table that obj is in. Otherwise
+        return the complete range (0, parentTable.nColumns).
+
+        Arguments:
+        - obj: a table cell.
+
+        Returns the start and end table cell indices.
+        """
+
+        parent = obj.parent
+        try:
+            parentTable = parent.queryTable()
+        except NotImplementedError:
+            parentTable = None
+
+        startIndex = 0
+        endIndex = parentTable.nColumns
+
+        if self.isSpreadSheetCell(obj):
+            extents = parent.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+            y = extents.y
+            leftX = extents.x + 1
+            leftCell = \
+                parent.queryComponent().getAccessibleAtPoint(leftX, y, 0)
+            if leftCell:
+                table = leftCell.parent.queryTable()
+                index = self.cellIndex(leftCell)
+                startIndex = table.getColumnAtIndex(index)
+
+            rightX = extents.x + extents.width - 1
+            rightCell = \
+                parent.queryComponent().getAccessibleAtPoint(rightX, y, 0)
+            if rightCell:
+                table = rightCell.parent.queryTable()
+                index = self.cellIndex(rightCell)
+                endIndex = table.getColumnAtIndex(index) + 1
+
+        return [startIndex, endIndex]
+
+    def getDynamicHeadersForCell(self, obj, onlyIfNew=False):
+        if not (self._script.dynamicRowHeaders or self._script.dynamicColumnHeaders):
+            return None, None
+
+        objRow, objCol, table = self.getRowColumnAndTable(obj)
+        if not table:
+            return None, None
+
+        headersRow = self._script.dynamicColumnHeaders.get(hash(table))
+        headersCol = self._script.dynamicRowHeaders.get(hash(table))
+        if headersRow == objRow or headersCol == objCol:
+            return None, None
+
+        getRowHeader = headersCol != None
+        getColHeader = headersRow != None
+        if onlyIfNew:
+            getRowHeader = \
+                getRowHeader and objRow != self._script.pointOfReference.get("lastRow")
+            getColHeader = \
+                getColHeader and objCol!= self._script.pointOfReference.get("lastColumn")
+
+        parentTable = table.queryTable()
+        rowHeader, colHeader = None, None
+        if getColHeader:
+            colHeader = parentTable.getAccessibleAt(headersRow, objCol)
+
+        if getRowHeader:
+            rowHeader = parentTable.getAccessibleAt(objRow, headersCol)
+
+        return rowHeader, colHeader
 
     def isSameObject(self, obj1, obj2):
         same = script_utilities.Utilities.isSameObject(self, obj1, obj2)
@@ -134,6 +281,56 @@ class Utilities(script_utilities.Utilities):
 
         return same
 
+    def isLayoutOnly(self, obj):
+        """Returns True if the given object is a container which has
+        no presentable information (label, name, displayed text, etc.)."""
+
+        role = obj.getRole()
+        if role == pyatspi.ROLE_PANEL and obj.childCount == 1:
+            if obj.name and obj.name == obj[0].name:
+                return True
+
+        if role == pyatspi.ROLE_LIST \
+           and obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
+            return True
+
+        return script_utilities.Utilities.isLayoutOnly(self, obj)
+
+    def locateInputLine(self, obj):
+        """Return the spread sheet input line. This only needs to be found
+        the very first time a spread sheet table cell gets focus. We use the
+        table cell to work back up the component hierarchy until we have found
+        the common panel that both it and the input line reside in. We then
+        use that as the base component to search for a component which has a
+        paragraph role. This will be the input line.
+
+        Arguments:
+        - obj: the spread sheet table cell that has just got focus.
+
+        Returns the spread sheet input line component.
+        """
+
+        if self._script.inputLineForCell:
+            return self._script.inputLineForCell
+
+        isScrollPane = lambda x: x and x.getRole() == pyatspi.ROLE_SCROLL_PANE
+        scrollPane = pyatspi.findAncestor(obj, isScrollPane)
+        if not scrollPane:
+            return None
+
+        toolbar = None
+        for child in scrollPane.parent:
+            if child and child.getRole() == pyatspi.ROLE_TOOL_BAR:
+                toolbar = child
+                break
+
+        isParagraph = lambda x: x and x.getRole() == pyatspi.ROLE_PARAGRAPH
+        allParagraphs = pyatspi.findAllDescendants(toolbar, isParagraph)
+        if len(allParagraphs) == 1:
+            self._script.inputLineForCell = allParagraphs[0]
+
+        return self._script.inputLineForCell
+
     def frameAndDialog(self, obj):
         """Returns the frame and (possibly) the dialog containing
         the object. Overridden here for presentation of the title
@@ -144,7 +341,7 @@ class Utilities(script_utilities.Utilities):
         its thing.
         """
 
-        if not self._script.isSpreadSheetCell(obj):
+        if not self.isSpreadSheetCell(obj):
             return script_utilities.Utilities.frameAndDialog(self, obj)
 
         results = [None, None]
@@ -498,7 +695,7 @@ class Utilities(script_utilities.Utilities):
         # Things only seem broken for certain tables, e.g. the Paths table.
         # TODO - JD: File the LibreOffice bugs and reference them here.
         if obj.getRole() != pyatspi.ROLE_TABLE \
-           or self._script.isSpreadSheetCell(obj, True):
+           or self.isSpreadSheetCell(obj, True):
             return script_utilities.Utilities.selectedChildren(self, obj)
 
         try:

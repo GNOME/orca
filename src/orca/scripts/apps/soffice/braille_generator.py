@@ -54,32 +54,18 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         array is returned. Overridden here so that we can get the
         dynamic row header(s).
         """
-        result = []
-        try:
-            table = obj.parent.queryTable()
-        except:
-            pass
-        else:
-            index = self._script.utilities.cellIndex(obj)
-            rowIndex = table.getRowAtIndex(index)
-            if rowIndex >= 0 \
-               and hash(obj.parent) in self._script.dynamicRowHeaders:
-                column = self._script.dynamicRowHeaders[hash(obj.parent)]
-                header = self._script.getDynamicColumnHeaderCell(obj, column)
-                try:
-                    headerText = header.queryText()
-                except:
-                    headerText = None
-                if header.childCount > 0:
-                    for child in header:
-                        text = self._script.utilities.substring(child, 0, -1)
-                        if text:
-                            result.append(text)
-                elif headerText:
-                    text = self._script.utilities.substring(header, 0, -1)
-                    if text:
-                        result.append(text)
-        return result
+
+        newOnly = args.get('newOnly', False)
+        rowHeader, columnHeader = \
+            self._script.utilities.getDynamicHeadersForCell(obj, newOnly)
+        if not rowHeader:
+            return []
+
+        text = self._script.utilities.displayedText(rowHeader)
+        if text:
+            return [text]
+
+        return []
 
     def _generateColumnHeader(self, obj, **args):
         """Returns an array of strings that represent the column header for an
@@ -87,54 +73,27 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         array is returned. Overridden here so that we can get the
         dynamic column header(s).
         """
-        result = []
-        try:
-            table = obj.parent.queryTable()
-        except:
-            pass
-        else:
-            index = self._script.utilities.cellIndex(obj)
-            columnIndex = table.getColumnAtIndex(index)
-            if columnIndex >= 0 \
-               and hash(obj.parent) in self._script.dynamicColumnHeaders:
-                row = self._script.dynamicColumnHeaders[hash(obj.parent)]
-                header = self._script.getDynamicRowHeaderCell(obj, row)
-                try:
-                    headerText = header.queryText()
-                except:
-                    headerText = None
-                if header.childCount > 0:
-                    for child in header:
-                        text = self._script.utilities.substring(child, 0, -1)
-                        if text:
-                            result.append(text)
-                elif headerText:
-                    text = self._script.utilities.substring(header, 0, -1)
-                    if text:
-                        result.append(text)
-        return result
+
+        newOnly = args.get('newOnly', False)
+        rowHeader, columnHeader = \
+            self._script.utilities.getDynamicHeadersForCell(obj, newOnly)
+        if not columnHeader:
+            return []
+
+        text = self._script.utilities.displayedText(columnHeader)
+        if text:
+            return [text]
+
+        return []
 
     def _generateSpreadSheetCell(self, obj, **args):
-        result = []
-        if self._script.inputLineForCell == None:
-            self._script.inputLineForCell = \
-                self._script.locateInputLine(obj)
-        # If the spread sheet table cell has something in it, then we want
-        # to append the name of the cell (which will be its location). Note
-        # that if the cell was empty, self._script.utilities.displayedText
-        # will have already done this for us.
-        #
         try:
-            if obj.queryText():
-                objectText = self._script.utilities.substring(obj, 0, -1)
-                if objectText and len(objectText) != 0:
-                    result.append(braille.Component(
-                        obj, objectText + " " + obj.name))
-                else:
-                    result.append(braille.Component(obj, obj.name))
+            objectText = self._script.utilities.substring(obj, 0, -1)
+            cellName = self._script.utilities.spreadSheetCellName(obj)
         except:
-            pass
-        return result
+            return []
+
+        return [braille.Component(obj, " ".join((objectText, cellName)))]
 
     def _generateRealTableCell(self, obj, **args):
         """Get the speech for a table cell. If this isn't inside a
@@ -147,7 +106,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         Returns a list of utterances to be spoken for the object.
         """
         result = []
-        if self._script.isSpreadSheetCell(obj):
+        if self._script.utilities.isSpreadSheetCell(obj):
             result.extend(self._generateSpreadSheetCell(obj, **args))
         else:
             # Check to see how many children this table cell has. If it's
@@ -182,7 +141,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         Returns a list of utterances to be spoken for the object.
         """
         result = []
-        if self._script.isSpreadSheetCell(obj):
+        if self._script.utilities.isSpreadSheetCell(obj):
             # Adding in a check here to make sure that the parent is a
             # valid table. It's possible that the parent could be a
             # table cell too (see bug #351501).
@@ -209,8 +168,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                                 and pointOfReference["lastColumn"] == column))
                 if presentAll:
                     [startIndex, endIndex] = \
-                        self._script.getSpreadSheetRowRange(obj)
-                    for i in range(startIndex, endIndex+1):
+                        self._script.utilities.getTableRowRange(obj)
+                    for i in range(startIndex, endIndex):
                         cell = parentTable.getAccessibleAt(row, i)
                         showing = cell.getState().contains( \
                                       pyatspi.STATE_SHOWING)
