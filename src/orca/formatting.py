@@ -224,6 +224,7 @@ formatting = {
             'unfocused': 'labelAndName + percentage'
             },
         pyatspi.ROLE_PUSH_BUTTON: {
+            'focused': 'expandableState',
             'unfocused': 'labelAndName + expandableState + roleName + availability + ' + MNEMONIC + ' + accelerator',
             'basicWhereAmI': 'labelAndName + expandableState + roleName + ' + MNEMONIC + ' + accelerator'
             },

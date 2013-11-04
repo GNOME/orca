@@ -242,14 +242,6 @@ class Script(default.Script):
         - event: the Event
         """
 
-        # Handle state changes when JTree labels become expanded
-        # or collapsed.
-        #
-        if (event.source.getRole() == pyatspi.ROLE_LABEL) and \
-            event.type.startswith("object:state-changed:expanded"):
-            self.visualAppearanceChanged(event, event.source)
-            return
-
         # This is a workaround for a java-access-bridge bug (Bug 355011)
         # where popup menu events are not sent to Orca.
         #

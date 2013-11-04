@@ -542,7 +542,7 @@ class Script(script.Script):
         listeners["object:state-changed:indeterminate"]     = \
             self.onStateChanged
         listeners["object:state-changed:expanded"]          = \
-            self.onStateChanged
+            self.onExpandedChanged
         listeners["object:state-changed:selected"]          = \
             self.onStateChanged
         listeners["object:text-attributes-changed"]         = \
@@ -2313,6 +2313,16 @@ class Script(script.Script):
             self.toggleFlatReviewMode()
 
         self._presentTextAtNewCaretPosition(event)
+
+    def onExpandedChanged(self, event):
+        """Callback for object:state-changed:expanded accessibility events."""
+
+        obj = event.source
+        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
+            return
+
+        self.updateBraille(obj)
+        speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
 
     def onFocus(self, event):
         """Called whenever an object gets focus.
@@ -5053,17 +5063,11 @@ state_change_notifiers[pyatspi.ROLE_CHECK_BOX]       = ("checked",
                                                         "indeterminate",
                                                         None)
 state_change_notifiers[pyatspi.ROLE_PANEL]           = ("showing", None)
-state_change_notifiers[pyatspi.ROLE_LABEL]           = ("showing",
-                                                        "expanded",
-                                                        None)
+state_change_notifiers[pyatspi.ROLE_LABEL]           = ("showing", None)
 state_change_notifiers[pyatspi.ROLE_NOTIFICATION]    = ("showing", None)
-state_change_notifiers[pyatspi.ROLE_PUSH_BUTTON]     = ("expanded", None)
 state_change_notifiers[pyatspi.ROLE_RADIO_BUTTON]    = ("checked", None)
 state_change_notifiers[pyatspi.ROLE_TOGGLE_BUTTON]   = ("checked",
                                                         "pressed",
                                                         None)
-state_change_notifiers[pyatspi.ROLE_TABLE_CELL]      = ("checked",
-                                                        "expanded",
-                                                        None)
-state_change_notifiers[pyatspi.ROLE_LIST_ITEM]       = ("expanded", None)
-state_change_notifiers[pyatspi.ROLE_MENU_ITEM]       = ("expanded", None)
+state_change_notifiers[pyatspi.ROLE_TABLE_CELL]      = ("checked", None)
+

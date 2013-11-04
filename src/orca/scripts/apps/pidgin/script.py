@@ -200,26 +200,18 @@ class Script(default.Script):
 
         default.Script.onWindowActivated(self, event)
 
-    def visualAppearanceChanged(self, event, obj):
-        """Called when the visual appearance of an object changes.
-        Overridden here because we get object:state-changed:expanded
-        events for the buddy list, but the obj is in a hidden column.
+    def onExpandedChanged(self, event):
+        """Callback for object:state-changed:expanded accessibility events."""
 
-        Arguments:
-        - event: if not None, the Event that caused this to happen
-        - obj: the Accessible whose visual appearance changed.
-        """
-
-        if self.chat.isInBuddyList(obj) \
-           and event.type.startswith("object:state-changed:expanded"):
-
-            # The event is associated with the invisible cell. Set it
-            # to the visible cell and then let the default script do
-            # its thing.
-            #
+        # Overridden here because the event.source is in a hidden column.
+        obj = event.source
+        if self.chat.isInBuddyList(obj):
             obj = obj.parent[obj.getIndexInParent() + 1]
+            self.updateBraille(obj)
+            speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+            return
             
-        default.Script.visualAppearanceChanged(self, event, obj)
+        default.Script.onExpandedChanged(self, event)
 
     def skipObjectEvent(self, event):
         # NOTE: This is here temporarily as part of the preparation for the
