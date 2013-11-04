@@ -912,28 +912,6 @@ class Script(default.Script):
             if parent.getRoleName() == 'text frame':
                 return
 
-        # Announce when the toolbar buttons are toggled if we just toggled
-        # them; not if we navigated to some text.
-        #
-        if event.type.startswith("object:state-changed:checked") \
-           and role in [pyatspi.ROLE_TOGGLE_BUTTON, pyatspi.ROLE_PUSH_BUTTON]:
-            weToggledIt = False
-            if isinstance(orca_state.lastInputEvent,
-                          input_event.MouseButtonEvent):
-                x = orca_state.lastInputEvent.x
-                y = orca_state.lastInputEvent.y
-                weToggledIt = event.source.queryComponent().contains(x, y, 0)
-
-            else:
-                keyString, mods = self.utilities.lastKeyAndModifiers()
-                navKeys = ["Up", "Down", "Left", "Right", "Page_Up",
-                           "Page_Down", "Home", "End"]
-                wasCommand = mods & settings.COMMAND_MODIFIER_MASK
-                weToggledIt = wasCommand and keyString not in navKeys
-
-            if weToggledIt:
-                speech.speak(self.speechGenerator.generateSpeech(event.source))
-
         default.Script.onStateChanged(self, event)
 
     def onCaretMoved(self, event):
