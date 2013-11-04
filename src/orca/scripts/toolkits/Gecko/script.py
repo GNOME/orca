@@ -1361,46 +1361,6 @@ class Script(default.Script):
 
         default.Script.onFocus(self, event)
 
-    def onLinkSelected(self, event):
-        """Called when a link gets selected.  Note that in Firefox 3,
-        link selected events are not issued when a link is selected.
-        Instead, a focus: event is issued.  This is 'old' code left
-        over from Yelp and Firefox 2.
-
-        Arguments:
-        - event: the Event
-        """
-
-        text = self.utilities.queryNonEmptyText(event.source)
-        hypertext = event.source.queryHypertext()
-        linkIndex = self.utilities.linkIndex(event.source, text.caretOffset)
-
-        if linkIndex >= 0:
-            link = hypertext.getLink(linkIndex)
-            linkText = text.getText(link.startIndex, link.endIndex)
-            #[string, startOffset, endOffset] = text.getTextAtOffset(
-            #    text.caretOffset,
-            #    pyatspi.TEXT_BOUNDARY_LINE_START)
-            #print "onLinkSelected", event.source.getRole() , string,
-            #print "  caretOffset:     ", text.caretOffset
-            #print "  line startOffset:", startOffset
-            #print "  line endOffset:  ", startOffset
-            #print "  caret in line:   ", text.caretOffset - startOffset
-            speech.speak(linkText, self.voices[settings.HYPERLINK_VOICE])
-        elif text:
-            # We'll just assume the whole thing is a link.  This happens
-            # in yelp when we navigate the table of contents of something
-            # like the Desktop Accessibility Guide.
-            #
-            linkText = text.getText(0, -1)
-            speech.speak(linkText, self.voices[settings.HYPERLINK_VOICE])
-        else:
-            speech.speak(
-                self.speechGenerator.getLocalizedRoleName(event.source),
-                self.voices[settings.HYPERLINK_VOICE])
-
-        self.updateBraille(event.source)
-
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
 

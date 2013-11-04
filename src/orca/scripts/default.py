@@ -527,8 +527,6 @@ class Script(script.Script):
             self.onActiveDescendantChanged
         listeners["object:children-changed"]                = \
             self.onChildrenChanged
-        listeners["object:link-selected"]                   = \
-            self.onLinkSelected
         listeners["object:state-changed:active"]            = \
             self.onStateChanged
         listeners["object:state-changed:focused"]           = \
@@ -2348,26 +2346,6 @@ class Script(script.Script):
                         newFocus = selectedChildren[0]
 
         orca.setLocusOfFocus(event, newFocus)
-
-    def onLinkSelected(self, event):
-        """Called when a hyperlink is selected in a text area.
-
-        Arguments:
-        - event: the Event
-        """
-
-        # [[[TODO: WDW - HACK one might think we could expect an
-        # application to keep its name, but it appears as though
-        # yelp has an identity problem and likes to start calling
-        # itself "yelp," but then changes its name to "Mozilla"
-        # on Fedora Core 4 after the user selects a link.  So, we'll
-        # just assume that link-selected events always come from the
-        # application with focus.]]]
-        #
-        #if orca_state.locusOfFocus \
-        #   and (orca_state.locusOfFocus.app == event.source.app):
-        #    orca.setLocusOfFocus(event, event.source)
-        orca.setLocusOfFocus(event, event.source)
 
     def onMouseButton(self, event):
         """Called whenever the user presses or releases a mouse button.
