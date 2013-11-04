@@ -443,10 +443,6 @@ class Script(default.Script):
             self.onDocumentLoadStopped
         listeners["object:state-changed:showing"]           = \
             self.onStateChanged
-        listeners["object:state-changed:checked"]           = \
-            self.onStateChanged
-        listeners["object:state-changed:indeterminate"]     = \
-            self.onStateChanged
         listeners["object:children-changed"]                = \
             self.onChildrenChanged
         listeners["object:text-changed:insert"]             = \
@@ -1439,23 +1435,6 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
-
-        # HTML radio buttons don't automatically become selected when
-        # they receive focus.  The user has to press the space bar on
-        # them much like checkboxes.  But if the user clicks on the
-        # radio button with the mouse, we'll wind up speaking the
-        # state twice because of the focus event.
-        #
-        if event.type.startswith("object:state-changed:checked") \
-           and event.source \
-           and (event.source.getRole() == pyatspi.ROLE_RADIO_BUTTON) \
-           and (event.detail1 == 1) \
-           and self.inDocumentContent(event.source) \
-           and not self.isAriaWidget(event.source) \
-           and not isinstance(orca_state.lastInputEvent,
-                              input_event.MouseButtonEvent):
-            self.visualAppearanceChanged(event, event.source)
-            return
 
         # If an autocomplete appears beneath an entry, we don't want
         # to prevent the user from being able to arrow into it.

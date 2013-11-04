@@ -536,11 +536,11 @@ class Script(script.Script):
         listeners["object:state-changed:showing"]           = \
             self.onStateChanged
         listeners["object:state-changed:checked"]           = \
-            self.onStateChanged
+            self.onCheckedChanged
         listeners["object:state-changed:pressed"]           = \
             self.onStateChanged
         listeners["object:state-changed:indeterminate"]     = \
-            self.onStateChanged
+            self.onIndeterminateChanged
         listeners["object:state-changed:expanded"]          = \
             self.onExpandedChanged
         listeners["object:state-changed:selected"]          = \
@@ -2267,6 +2267,28 @@ class Script(script.Script):
         """Callback for object:state-changed:busy accessibility events."""
         pass
 
+    def onCheckedChanged(self, event):
+        """Callback for object:state-changed:checked accessibility events."""
+
+        obj = event.source
+        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
+            # Present changes of child widgets of GtkListBox items
+            isListBox = lambda x: x and x.getRole() == pyatspi.ROLE_LIST_BOX
+            if not pyatspi.findAncestor(obj, isListBox):
+                return
+ 
+        # Radio buttons normally change their state when you arrow to them,
+        # so we handle the announcement of their state changes in the focus
+        # handling code.  However, we do need to handle radio buttons where
+        # the user needs to press the space key to select them.
+        if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
+            eventString, mods = self.utilities.lastKeyAndModifiers()
+            if not eventString in [" ", "space"]:
+                return
+ 
+        self.updateBraille(obj)
+        speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+
     def onChildrenChanged(self, event):
         """Called when a child node has changed.
 
@@ -2396,6 +2418,23 @@ class Script(script.Script):
                         newFocus = selectedChildren[0]
 
         orca.setLocusOfFocus(event, newFocus)
+
+    def onIndeterminateChanged(self, event):
+        """Callback for object:state-changed:indeterminate accessibility events."""
+
+        # If this state is cleared, the new state will become checked or unchecked
+        # and we should get object:state-changed:checked events for those cases.
+        # Therefore, if the state is not now indeterminate/partially checked,
+        # ignore this event.
+        if not event.detail1:
+            return
+
+        obj = event.source
+        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
+            return
+
+        self.updateBraille(obj)
+        speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
 
     def onMouseButton(self, event):
         """Called whenever the user presses or releases a mouse button.
@@ -5058,16 +5097,7 @@ class Script(script.Script):
 #
 state_change_notifiers = {}
 
-state_change_notifiers[pyatspi.ROLE_CHECK_MENU_ITEM] = ("checked", None)
-state_change_notifiers[pyatspi.ROLE_CHECK_BOX]       = ("checked",
-                                                        "indeterminate",
-                                                        None)
 state_change_notifiers[pyatspi.ROLE_PANEL]           = ("showing", None)
 state_change_notifiers[pyatspi.ROLE_LABEL]           = ("showing", None)
 state_change_notifiers[pyatspi.ROLE_NOTIFICATION]    = ("showing", None)
-state_change_notifiers[pyatspi.ROLE_RADIO_BUTTON]    = ("checked", None)
-state_change_notifiers[pyatspi.ROLE_TOGGLE_BUTTON]   = ("checked",
-                                                        "pressed",
-                                                        None)
-state_change_notifiers[pyatspi.ROLE_TABLE_CELL]      = ("checked", None)
-
+state_change_notifiers[pyatspi.ROLE_TOGGLE_BUTTON]   = ("pressed", None)

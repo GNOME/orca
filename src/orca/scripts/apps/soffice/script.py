@@ -968,6 +968,31 @@ class Script(default.Script):
 
         default.Script.onCaretMoved(self, event)
 
+    def onCheckedChanged(self, event):
+        """Callback for object:state-changed:checked accessibility events."""
+
+        obj = event.source
+        role = obj.getRole()
+        if not role in [pyatspi.ROLE_TOGGLE_BUTTON, pyatspi.ROLE_PUSH_BUTTON]:
+            default.Script.onCheckedChanged(self, event)
+            return
+ 
+        # Announce when the toolbar buttons are toggled if we just toggled
+        # them; not if we navigated to some text.
+        weToggledIt = False
+        if isinstance(orca_state.lastInputEvent, input_event.MouseButtonEvent):
+            x = orca_state.lastInputEvent.x
+            y = orca_state.lastInputEvent.y
+            weToggledIt = obj.queryComponent().contains(x, y, 0)
+        else:
+            keyString, mods = self.utilities.lastKeyAndModifiers()
+            navKeys = ["Up", "Down", "Left", "Right", "Page_Up", "Page_Down",
+                       "Home", "End"]
+            wasCommand = mods & settings.COMMAND_MODIFIER_MASK
+            weToggledIt = wasCommand and keyString not in navKeys
+        if weToggledIt:
+            speech.speak(self.speechGenerator.generateSpeech(obj))
+
     def getTextLineAtCaret(self, obj, offset=None):
         """Gets the line of text where the caret is. Overridden here to
         handle combo boxes who have a text object with a caret offset
