@@ -529,6 +529,8 @@ class Script(script.Script):
             self.onChildrenChanged
         listeners["object:state-changed:active"]            = \
             self.onStateChanged
+        listeners["object:state-changed:busy"]              = \
+            self.onBusyChanged
         listeners["object:state-changed:focused"]           = \
             self.onStateChanged
         listeners["object:state-changed:showing"]           = \
@@ -2260,6 +2262,10 @@ class Script(script.Script):
             self.pointOfReference['activeDescendantInfo'] = \
                 [orca_state.locusOfFocus.parent,
                  orca_state.locusOfFocus.getIndexInParent()]
+
+    def onBusyChanged(self, event):
+        """Callback for object:state-changed:busy accessibility events."""
+        pass
 
     def onChildrenChanged(self, event):
         """Called when a child node has changed.

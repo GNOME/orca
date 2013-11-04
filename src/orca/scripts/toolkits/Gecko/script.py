@@ -447,8 +447,6 @@ class Script(default.Script):
             self.onStateChanged
         listeners["object:state-changed:indeterminate"]     = \
             self.onStateChanged
-        listeners["object:state-changed:busy"]              = \
-            self.onStateChanged
         listeners["object:children-changed"]                = \
             self.onChildrenChanged
         listeners["object:text-changed:insert"]             = \
@@ -1170,6 +1168,80 @@ class Script(default.Script):
 
         default.Script.onSelectionChanged(self, event)
 
+    def onBusyChanged(self, event):
+        """Callback for object:state-changed:busy accessibility events."""
+
+        try:
+            obj = event.source
+            role = obj.getRole()
+            name = obj.name
+        except:
+            return
+        if role != pyatspi.ROLE_DOCUMENT_FRAME:
+             return
+
+        # The event is for the changing contents of the help frame as the user
+        # navigates from topic to topic in the list on the left. Ignore this.
+        if orca_state.locusOfFocus \
+           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_LIST_ITEM \
+           and not self.inDocumentContent(orca_state.locusOfFocus):
+            return
+ 
+        finishedLoading = False
+        if event.detail1:
+            self._loadingDocumentContent = True
+            message = messages.PAGE_LOADING_START
+        elif name:
+            message = messages.PAGE_LOADING_END_NAMED % name
+            finishedLoading = True
+        else:
+            message = messages.PAGE_LOADING_END
+            finishedLoading = True
+ 
+        if not _settingsManager.getSetting('onlySpeakDisplayedText'):
+            self.presentMessage(message)
+ 
+        if not finishedLoading:
+            return
+
+        # Store the document frame otherwise the first time it gains focus (e.g.
+        # the first time the user arrows off of a link into non-focusable text),
+        # onFocused will start chatting unnecessarily.
+        self._currentFrame = obj
+ 
+        # First try to figure out where the caret is on the newly loaded page.
+        # If it is on an editable object (e.g., a text entry), then present just
+        # that object. Otherwise, force the caret to the top of the page and
+        # start a SayAll from that position.
+        [obj, characterOffset] = self.getCaretContext()
+        atTop = False
+        if not obj:
+            self.clearCaretContext()
+            [obj, characterOffset] = self.getCaretContext()
+            atTop = True
+        if not obj:
+             return
+        if not atTop and not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+            self.clearCaretContext()
+            [obj, characterOffset] = self.getCaretContext()
+            if not obj:
+                return
+ 
+        # For braille, we just show the current line containing the caret. For
+        # speech, however, we will start a Say All operation if the caret is in
+        # an unfocusable area (e.g., it's not in a text entry area such as
+        # Google's search text entry or a link that we just returned to by
+        # pressing the back button). Otherwise, we'll just speak the line that
+        # the caret is on.
+        self.updateBraille(obj)
+        if obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+            speech.speak(self.speechGenerator.generateSpeech(obj))
+        elif not script_settings.sayAllOnLoad:
+            self.speakContents(
+                self.getLineContentsAtOffset(obj, characterOffset))
+        elif _settingsManager.getSetting('enableSpeech'):
+            self.sayAll(None)
+
     def onChildrenChanged(self, event):
         """Called when a child node has changed.  In particular, we are looking
         for addition events often associated with Javascipt insertion.  One such
@@ -1410,95 +1482,6 @@ class Script(default.Script):
                     if speakIt:
                         speech.speak(self.speechGenerator.getLocalizedRoleName(\
                                 event.source, pyatspi.ROLE_AUTOCOMPLETE))
-
-        # We care when the document frame changes it's busy state.  That
-        # means it has started/stopped loading content.
-        #
-        if event.type.startswith("object:state-changed:busy"):
-            if event.source \
-                and (event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME):
-
-                finishedLoading = False
-                if orca_state.locusOfFocus \
-                    and (orca_state.locusOfFocus.getRole() \
-                         == pyatspi.ROLE_LIST_ITEM) \
-                   and not self.inDocumentContent(orca_state.locusOfFocus):
-                    # The event is for the changing contents of the help
-                    # frame as the user navigates from topic to topic in
-                    # the list on the left.  Ignore this.
-                    #
-                    return
-
-                elif event.detail1:
-                    self._loadingDocumentContent = True
-                    message = messages.PAGE_LOADING_START
-
-                elif event.source.name:
-                    message = messages.PAGE_LOADING_END_NAMED % event.source.name
-                    finishedLoading = True
-
-                else:
-                    message = messages.PAGE_LOADING_END
-                    finishedLoading = True
-
-                if not _settingsManager.getSetting('onlySpeakDisplayedText'):
-                    self.presentMessage(message)
-
-                if finishedLoading:
-                    # Store the document frame otherwise the first time it
-                    # gains focus (e.g. the first time the user arrows off
-                    # of a link into non-focusable text), onStateFocused
-                    # will start chatting unnecessarily.
-                    #
-                    self._currentFrame = event.source
-
-                    # We first try to figure out where the caret is on
-                    # the newly loaded page.  If it is on an editable
-                    # object (e.g., a text entry), then we present just
-                    # that object.  Otherwise, we force the caret to the
-                    # top of the page and start a SayAll from that position.
-                    #
-                    [obj, characterOffset] = self.getCaretContext()
-                    atTop = False
-                    if not obj:
-                        self.clearCaretContext()
-                        [obj, characterOffset] = self.getCaretContext()
-                        atTop = True
-
-                    # If we found nothing, then don't do anything.  Otherwise
-                    # determine if we should do a SayAll or not.
-                    #
-                    if not obj:
-                        return
-                    elif not atTop \
-                        and not obj.getState().contains(\
-                            pyatspi.STATE_FOCUSABLE):
-                        self.clearCaretContext()
-                        [obj, characterOffset] = self.getCaretContext()
-                        if not obj:
-                            return
-
-                    # For braille, we just show the current line
-                    # containing the caret.  For speech, however, we
-                    # will start a Say All operation if the caret is
-                    # in an unfocusable area (e.g., it's not in a text
-                    # entry area such as Google's search text entry
-                    # or a link that we just returned to by pressing
-                    # the back button). Otherwise, we'll just speak the
-                    # line that the caret is on.
-                    #
-                    self.updateBraille(obj)
-
-                    if obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-                        speech.speak(self.speechGenerator.generateSpeech(obj))
-                    elif not script_settings.sayAllOnLoad:
-                        self.speakContents(\
-                            self.getLineContentsAtOffset(obj,
-                                                         characterOffset))
-                    elif _settingsManager.getSetting('enableSpeech'):
-                        self.sayAll(None)
-
-            return
 
         default.Script.onStateChanged(self, event)
 

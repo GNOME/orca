@@ -426,22 +426,14 @@ class Script(Gecko.Script):
         Gecko.Script.locusOfFocusChanged(self, event,
                                          oldLocusOfFocus, newLocusOfFocus)
 
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes.
+    def onBusyChanged(self, event):
+        """Callback for object:state-changed:busy accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
-
-        if event.type.startswith("object:state-changed:busy"):
-            if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
-               and not event.detail1:
-                self._messageLoaded = True
-                if self.inDocumentContent():
-                    self._presentMessage(event.source)
-            return
-
-        default.Script.onStateChanged(self, event)
+        obj = event.source
+        if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME and not event.detail1:
+            self._messageLoaded = True
+            if self.inDocumentContent():
+                self._presentMessage(obj)
 
     def onStateFocused(self, event):
         """Called whenever an object's state changes focus.

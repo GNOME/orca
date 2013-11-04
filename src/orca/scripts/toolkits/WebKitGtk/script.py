@@ -85,8 +85,6 @@ class Script(default.Script):
             self.onDocumentLoadComplete
         listeners["document:load-stopped"]                  = \
             self.onDocumentLoadStopped
-        listeners["object:state-changed:busy"]              = \
-            self.onStateChanged
 
         return listeners
 
@@ -294,27 +292,23 @@ class Script(default.Script):
 
         default.Script.onFocus(self, event)
 
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes.
+    def onBusyChanged(self, event):
+        """Callback for object:state-changed:busy accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
-
-        if not event.type.startswith("object:state-changed:busy"):
-            default.Script.onStateChanged(self, event)
+        obj = event.source
+        try:
+            role = obj.getRole()
+            name = obj.name
+        except:
             return
 
-        if not event.source \
-           or event.source.getRole() != pyatspi.ROLE_DOCUMENT_FRAME \
-           or not self._isBrowser:
+        if role != pyatspi.ROLE_DOCUMENT_FRAME or not self._isBrowser:
             return
 
         if event.detail1:
             self.presentMessage(messages.PAGE_LOADING_START)
-        elif event.source.name:
-            self.presentMessage(
-                messages.PAGE_LOADING_END_NAMED % event.source.name)
+        elif name:
+            self.presentMessage(messages.PAGE_LOADING_END_NAMED % name)
         else:
             self.presentMessage(messages.PAGE_LOADING_END)
 
@@ -599,11 +593,11 @@ class Script(default.Script):
 
         document = utils.findAncestor(
             obj, lambda x: x.getRole() == pyatspi.ROLE_DOCUMENT_FRAME)
-        if not document:
+        if not document or document.getState().contains(pyatspi.STATE_BUSY):
             return
 
         allTextObjs = utils.findAllDescendants(
-            document, lambda x: 'Text' in utils.listInterfaces(x))
+            document, lambda x: x and 'Text' in utils.listInterfaces(x))
         allTextObjs = allTextObjs[allTextObjs.index(obj):len(allTextObjs)]
         textObjs = [x for x in allTextObjs if x.parent not in allTextObjs]
         if not textObjs:

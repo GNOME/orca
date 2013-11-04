@@ -607,8 +607,13 @@ class Utilities:
             except (LookupError, RuntimeError):
                 pass
 
+        try:
+            parentRole = obj.parent.getRole()
+        except:
+            parentRole = None
+
         # egg-list-box, e.g. privacy panel in gnome-control-center
-        if not displayedText and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
+        if not displayedText and parentRole == pyatspi.ROLE_LIST_BOX:
             labels = self.unrelatedLabels(obj, onlyShowing=False)
             displayedText = " ".join(map(self.displayedText, labels))
 
