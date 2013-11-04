@@ -824,6 +824,16 @@ class Script(default.Script):
 
         default.Script.onNameChanged(self, event)
 
+    def onActiveChanged(self, event):
+        """Callback for object:state-changed:active accessibility events."""
+
+        # Prevent this events from activating the find operation.
+        # See comment #18 of bug #354463.
+        if self.findCommandRun:
+            return
+ 
+        default.Script.onActiveChanged(self, event)
+
     def onActiveDescendantChanged(self, event):
         """Called when an object who manages its own descendants detects a
         change in one of its children.
@@ -900,13 +910,6 @@ class Script(default.Script):
         parent = event.source.parent
         if parent and parent.getRole() == pyatspi.ROLE_EXTENDED:
             if parent.getRoleName() == 'text frame':
-                return
-
-        # Prevent  "object:state-changed:active" events from activating
-        # the find operation. See comment #18 of bug #354463.
-        #
-        if event.type.startswith("object:state-changed:active"):
-            if self.findCommandRun:
                 return
 
         # Announce when the toolbar buttons are toggled if we just toggled

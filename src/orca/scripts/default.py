@@ -528,7 +528,7 @@ class Script(script.Script):
         listeners["object:children-changed"]                = \
             self.onChildrenChanged
         listeners["object:state-changed:active"]            = \
-            self.onStateChanged
+            self.onActiveChanged
         listeners["object:state-changed:busy"]              = \
             self.onBusyChanged
         listeners["object:state-changed:focused"]           = \
@@ -2230,6 +2230,13 @@ class Script(script.Script):
         """
         pass
 
+    def onActiveChanged(self, event):
+        """Callback for object:state-changed:active accessibility events."""
+
+        if self.findCommandRun:
+            self.findCommandRun = False
+            self.find()
+
     def onActiveDescendantChanged(self, event):
         """Called when an object who manages its own descendants detects a
         change in one of its children.
@@ -2532,14 +2539,6 @@ class Script(script.Script):
         Arguments:
         - event: the Event
         """
-
-        # Do we care?
-        #
-        if event.type.startswith("object:state-changed:active"):
-            if self.findCommandRun:
-                self.findCommandRun = False
-                self.find()
-                return
 
         if event.type.startswith("object:state-changed:selected") \
            and not _settingsManager.getSetting('onlySpeakDisplayedText') \
