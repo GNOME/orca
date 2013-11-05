@@ -3051,8 +3051,7 @@ class Script(default.Script):
             except:
                 pass
 
-        elif includeNonText and (startOffset < 0) \
-             and (not self.utilities.isLayoutOnly(obj)):
+        elif includeNonText and (startOffset < 0):
             extents = obj.queryComponent().getExtents(0)
             if (extents.width != 0) and (extents.height != 0):
                 return [obj, 0]
@@ -3162,8 +3161,7 @@ class Script(default.Script):
             except:
                 pass
 
-        elif includeNonText and (startOffset < 0) \
-            and (not self.utilities.isLayoutOnly(obj)):
+        elif includeNonText and (startOffset < 0):
             extents = obj.queryComponent().getExtents(0)
             if (extents.width != 0) and (extents.height != 0):
                 return [obj, 0]
