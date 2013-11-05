@@ -8,14 +8,15 @@
 # Timo Jyrinki <timo.jyrinki@iki.fi>, 2008.
 # Tommi Vainikainen <thv@iki.fi>, 2010.
 # Jiri Grönroos <jiri.gronroos@iki.fi>, 2011, 2012, 2013.
+# Lasse Liehu <lasse.liehu@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-03-05 01:02+0000\n"
-"PO-Revision-Date: 2013-03-23 15:47+0200\n"
-"Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
+"POT-Creation-Date: 2013-09-10 22:52+0000\n"
+"PO-Revision-Date: 2013-10-28 16:15+0200\n"
+"Last-Translator: Lasse Liehu <lasse.liehu@gmail.com>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -44,10 +45,12 @@ msgid ""
 "Provide access to graphical desktop environments via synthesized speech and/"
 "or refreshable braille"
 msgstr ""
+"Mahdollistaa graafisten työpöytäympäristöjen käytön synteettisen puheen ja/"
+"tai pistekirjoituksen avulla"
 
 #: ../orca.desktop.in.h:5
 msgid "screen reader;speech;braille;"
-msgstr ""
+msgstr "screen reader;speech;braille;näytönlukija;puhe;pistekirjoitus;"
 
 #: ../src/orca/app_gui_prefs.py:136
 #, python-format
@@ -627,7 +630,6 @@ msgstr ""
 #. Translators: These is the name of a braille transation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:148
-#| msgid "Latvian Grade 1"
 msgid "Hungarian Grade 1"
 msgstr "Unkari taso 1"
 
@@ -2846,7 +2848,7 @@ msgstr "Siirtää seuraavaan nappiin."
 #. Translators: this is for navigating among buttons in a document.
 #: ../src/orca/cmdnames.py:763
 msgid "Displays a list of buttons."
-msgstr ""
+msgstr "Näyttää luettelon painikkeista."
 
 #. Translators: this is for navigating among check boxes in a document.
 #: ../src/orca/cmdnames.py:766
@@ -2906,7 +2908,7 @@ msgstr "Siirtyy seuraavaan lomakkeen kenttään."
 #. Translators: this is for navigating among form fields in a document.
 #: ../src/orca/cmdnames.py:799
 msgid "Displays a list of form fields."
-msgstr ""
+msgstr "Näyttää luettelon lomakekentistä."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: ../src/orca/cmdnames.py:802
@@ -2921,7 +2923,7 @@ msgstr "Siirtyy seuraavaan otsakkeeseen."
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: ../src/orca/cmdnames.py:808
 msgid "Displays a list of headings."
-msgstr ""
+msgstr "Näyttää luettelon otsikoista."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
@@ -2940,10 +2942,10 @@ msgstr "Siirtyy seuraavaan tason %d otsakkeeseen."
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: ../src/orca/cmdnames.py:820
-#, fuzzy, python-format
+#, python-format
 #| msgid "No more headings at level %d."
 msgid "Displays a list of headings at level %d."
-msgstr "Ei lisää tason %d otsakkeita."
+msgstr "Näyttää luettelon tason %d otsikoista."
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
@@ -2985,7 +2987,7 @@ msgstr "Ei lisää isoja kohteita."
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:848
 msgid "Displays a list of links."
-msgstr ""
+msgstr "Näyttää luettelon linkeistä."
 
 #. Translators: this is for navigating among lists in a document.
 #: ../src/orca/cmdnames.py:851
@@ -3000,7 +3002,7 @@ msgstr "Siirtyy seuraavaan luetteloon."
 #. Translators: this is for navigating among lists in a document.
 #: ../src/orca/cmdnames.py:857
 msgid "Displays a list of lists."
-msgstr ""
+msgstr "Näyttää luettelon luetteloista."
 
 #. Translators: this is for navigating among list items in a document.
 #: ../src/orca/cmdnames.py:860
@@ -3015,7 +3017,7 @@ msgstr "Siirtyy seuraavaan luettelon kohtaan."
 #. Translators: this is for navigating among list items in a document.
 #: ../src/orca/cmdnames.py:866
 msgid "Displays a list of list items."
-msgstr ""
+msgstr "Näyttää luettelon luettelokohteista."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
@@ -3051,7 +3053,7 @@ msgstr "Siirtää seuraavaan kappaleeseen."
 #. Translators: this is for navigating among paragraphs in a document.
 #: ../src/orca/cmdnames.py:890
 msgid "Displays a list of paragraphs."
-msgstr ""
+msgstr "Näyttää luettelon kappaleista."
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: ../src/orca/cmdnames.py:893
@@ -3095,7 +3097,7 @@ msgstr "Siirtyy edelliseen tauluun."
 #. Translators: this is for navigating among tables in a document.
 #: ../src/orca/cmdnames.py:916
 msgid "Displays a list of tables."
-msgstr ""
+msgstr "Näyttää luettelon taulukoista."
 
 #. Translators: this is for navigating among table cells in a document.
 #: ../src/orca/cmdnames.py:919
@@ -3139,10 +3141,9 @@ msgstr "Siirtyy seuraavaan tallentamattomaan linkkiin."
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: ../src/orca/cmdnames.py:943
-#, fuzzy
 #| msgid "No more unvisited links."
 msgid "Displays a list of unvisited links."
-msgstr "Ei lisää vierailemattomia linkkejä."
+msgstr "Näyttää luettelon linkeistä, joissa ei ole vierailtu."
 
 #. Translators: this is for navigating among visited links in a document.
 #: ../src/orca/cmdnames.py:946
@@ -3156,10 +3157,9 @@ msgstr "Siirtyy seuraavaan vierailtuun linkkiin."
 
 #. Translators: this is for navigating among visited links in a document.
 #: ../src/orca/cmdnames.py:952
-#, fuzzy
 #| msgid "No more visited links."
 msgid "Displays a list of visited links."
-msgstr "Ei lisää vierailtuja linkkejä."
+msgstr "Näyttää luettelon vierailluista linkeistä."
 
 #. Translators: this is the action name for
 #. the 'toggle' action. It must be the same
@@ -3311,11 +3311,10 @@ msgstr "Pikanäppäin"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a blockquote.
 #: ../src/orca/guilabels.py:127
-#, fuzzy
 #| msgid "quote"
 msgctxt "structural navigation"
 msgid "Blockquote"
-msgstr "lainausmerkki"
+msgstr "Lainauslohko"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -3358,7 +3357,6 @@ msgstr ""
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the description of an element.
 #: ../src/orca/guilabels.py:157
-#| msgid "section"
 msgctxt "structural navigation"
 msgid "Description"
 msgstr "Kuvaus"
@@ -3368,8 +3366,6 @@ msgstr "Kuvaus"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a heading.
 #: ../src/orca/guilabels.py:163
-#| msgctxt "textattr"
-#| msgid "Heading"
 msgctxt "structural navigation"
 msgid "Heading"
 msgstr "Otsikko"
@@ -3416,8 +3412,6 @@ msgstr ""
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list item.
 #: ../src/orca/guilabels.py:194
-#| msgid "List with %d item"
-#| msgid_plural "List with %d items"
 msgctxt "structural navigation"
 msgid "List Item"
 msgstr "Luettelokohta"
@@ -3480,7 +3474,6 @@ msgstr "valittu"
 #. contains the state of a widget. Examples include "checked"/"not checked",
 #. "selected"/"not selected", "visited/not visited", etc.
 #: ../src/orca/guilabels.py:232
-#| msgid "Status"
 msgctxt "structural navigation"
 msgid "State"
 msgstr "Tila"
@@ -3490,8 +3483,6 @@ msgstr "Tila"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an entry.
 #: ../src/orca/guilabels.py:238
-#| msgctxt "textattr"
-#| msgid "Text body"
 msgctxt "structural navigation"
 msgid "Text"
 msgstr "Teksti"
@@ -3568,8 +3559,6 @@ msgstr "Lomakekentät"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:285
-#| msgctxt "textattr"
-#| msgid "Heading"
 msgctxt "structural navigation"
 msgid "Headings"
 msgstr "Otsikot"
@@ -3580,7 +3569,6 @@ msgstr "Otsikot"
 #. Level will be a "1" for <h1>, a "2" for <h2>, and so on.
 #: ../src/orca/guilabels.py:291
 #, python-format
-#| msgid "No more headings at level %d."
 msgctxt "structural navigation"
 msgid "Headings at Level %d"
 msgstr "Otsikot tasolla %d"
@@ -3625,8 +3613,6 @@ msgstr "Luettelokohdat"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:318
-#| msgctxt "textattr"
-#| msgid "paragraph style"
 msgctxt "structural navigation"
 msgid "Paragraphs"
 msgstr "Kappaleet"
@@ -3645,7 +3631,6 @@ msgstr "Ei lisää radiovalitsimia."
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:328
-#| msgid "Table Rows"
 msgctxt "structural navigation"
 msgid "Tables"
 msgstr "Taulukot"
@@ -3654,8 +3639,6 @@ msgstr "Taulukot"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:333
-#| msgid "%d unvisited link"
-#| msgid_plural "%d unvisited links"
 msgctxt "structural navigation"
 msgid "Unvisited Links"
 msgstr "Vierailemattomat linkit"
@@ -3664,8 +3647,6 @@ msgstr "Vierailemattomat linkit"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:338
-#| msgid "%d visited link"
-#| msgid_plural "%d visited links"
 msgctxt "structural navigation"
 msgid "Visited Links"
 msgstr "Vieraillut linkit"
@@ -4093,7 +4074,6 @@ msgstr "miinus"
 #. defunct. This is a generic name so that we can still refer to this element
 #. in messages.
 #: ../src/orca/messages.py:40
-#| msgid "Application"
 msgctxt "generic name"
 msgid "application"
 msgstr "sovellus"
@@ -4509,7 +4489,7 @@ msgstr ""
 #. review to the clipboard.
 #: ../src/orca/messages.py:342
 msgid "Copied contents to clipboard."
-msgstr ""
+msgstr "Kopioitu sisältö leikepöydälle."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -4910,6 +4890,8 @@ msgstr "%s-linkki"
 #: ../src/orca/messages.py:652
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr ""
+"Paina ylös- ja alas-näppäimiä liikkuaksesi luettelossa. Paina Escape "
+"poistuaksesi."
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -5111,7 +5093,7 @@ msgstr "Hiiren kohdalla olevaa kohdetta ei löydy."
 #. from getting these objects.
 #: ../src/orca/messages.py:808
 msgid "Error: Could not create list of objects."
-msgstr ""
+msgstr "Virhe: Luetteloa objekteista ei voitu luoda."
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
@@ -5225,7 +5207,6 @@ msgstr "Maamerkkiä ei löytynyt."
 #. link (regardless of visited state). This is a detailed message which will be
 #. presented to the user if no more links can be found.
 #: ../src/orca/messages.py:889
-#| msgid "No more lists."
 msgid "No more links."
 msgstr "Ei lisää linkkejä."
 
@@ -5455,7 +5436,6 @@ msgstr "dia %(position)d/%(count)d"
 #. content. The string representing the profile name is created by the user.
 #: ../src/orca/messages.py:1051
 #, python-format
-#| msgid "Profiles"
 msgid "Profile set to %s."
 msgstr "Profiiliksi asetettu %s."
 
@@ -5465,7 +5445,6 @@ msgstr "Profiiliksi asetettu %s."
 #. profile which would use Spanish text-to-speech and Spanish braille and
 #. selected when reading Spanish content.
 #: ../src/orca/messages.py:1058
-#| msgid "No files found."
 msgid "No profiles found."
 msgstr "Profiileja ei löytynyt."
 
@@ -5829,7 +5808,6 @@ msgstr "Unicode %s"
 #. Translators: This message presents the Orca version number.
 #: ../src/orca/messages.py:1301
 #, python-format
-#| msgid "Orca Preferences for %s"
 msgid "Orca version %s."
 msgstr "Orca-versio %s."
 
@@ -5967,8 +5945,6 @@ msgstr[1] "%d kohtaa"
 #. presented to the user to indicate how many matching items were found.
 #: ../src/orca/messages.py:1401
 #, python-format
-#| msgid "%d file found"
-#| msgid_plural "%d files found"
 msgid "%d item found"
 msgid_plural "%d items found"
 msgstr[0] "%d kohde löytyi"
@@ -6244,16 +6220,12 @@ msgstr "ei valittu"
 
 #. Translators: This is a state which applies to a link.
 #: ../src/orca/object_properties.py:122
-#| msgid "%d visited link"
-#| msgid_plural "%d visited links"
 msgctxt "link state"
 msgid "visited"
 msgstr "vierailtu"
 
 #. Translators: This is a state which applies to a link.
 #: ../src/orca/object_properties.py:125
-#| msgid "%d unvisited link"
-#| msgid_plural "%d unvisited links"
 msgctxt "link state"
 msgid "unvisited"
 msgstr "vierailematon"
@@ -6298,21 +6270,21 @@ msgstr "monivalinta"
 
 #. Translators: this text is the description displayed when Orca is
 #. launched from the command line and the help text is displayed.
-#: ../src/orca/orca_bin.py.in:90
+#: ../src/orca/orca_bin.py.in:91
 #, fuzzy
 msgid "orca - scriptable screen reader"
 msgstr "Orca - näytönlukija ja suurennuslasi"
 
 #. Translators: this text is the description displayed when Orca is
 #. launched from the command line and the help text is displayed.
-#: ../src/orca/orca_bin.py.in:93
+#: ../src/orca/orca_bin.py.in:94
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Ilmoita vioista sähköpostitse osoitteeseen orca-list@gnome.org."
 
 #. Translators: this is the description of the command line option
 #. '-r, --replace' which tells Orca to replace any existing Orca
 #. process(es) that might be running.
-#: ../src/orca/orca_bin.py.in:107
+#: ../src/orca/orca_bin.py.in:108
 msgid "Replace a currently running Orca"
 msgstr "Korvaa nyt suorituksessa oleva Orca"
 
@@ -6321,7 +6293,7 @@ msgstr "Korvaa nyt suorituksessa oleva Orca"
 #. in text form, that the user will need to answer, before Orca will
 #. startup. For this to happen properly, Orca will need to be run
 #. from a terminal window.
-#: ../src/orca/orca_bin.py.in:116
+#: ../src/orca/orca_bin.py.in:117
 msgid "Set up user preferences (text version)"
 msgstr "Määrittele käyttäjän asetukset (tekstiversio)"
 
@@ -6329,28 +6301,28 @@ msgstr "Määrittele käyttäjän asetukset (tekstiversio)"
 #. '-l, --list-apps' which prints the names of running applications
 #. which can be seen by assistive technologies such as Orca and
 #. Accercser.
-#: ../src/orca/orca_bin.py.in:124
+#: ../src/orca/orca_bin.py.in:125
 msgid "Print the known running applications"
 msgstr "Tulostaa tunnetut suoritettavana olevat sovellukset"
 
 #. Translators: this is the description of the command line option
 #. '-e, --enable' which allows the user to specify an option to
 #. enable as Orca is started.
-#: ../src/orca/orca_bin.py.in:131
+#: ../src/orca/orca_bin.py.in:132
 msgid "Force use of option"
 msgstr "Pakota valitsimen käyttö"
 
 #. Translators: this string indicates to the user what should be
 #. provided when using the '-e, --enable' or '-d, --disable' command
 #. line option.
-#: ../src/orca/orca_bin.py.in:135 ../src/orca/orca_bin.py.in:146
+#: ../src/orca/orca_bin.py.in:136 ../src/orca/orca_bin.py.in:147
 msgid "OPTION"
 msgstr "VALITSIN"
 
 #. Translators: this is the description of the command line option
 #. '-d, --disable' which allows the user to specify an option to
 #. enable as Orca is started.
-#: ../src/orca/orca_bin.py.in:142
+#: ../src/orca/orca_bin.py.in:143
 msgid "Prevent use of option"
 msgstr "Estää valitsimen käytön"
 
@@ -6360,39 +6332,39 @@ msgstr "Estää valitsimen käytön"
 #. the user for a particular purpose, such as a 'Spanish' profile
 #. which would include Spanish braille and Spanish text-to-speech.
 #. An Orca settings file contains one or more profiles.
-#: ../src/orca/orca_bin.py.in:156
+#: ../src/orca/orca_bin.py.in:157
 msgid "Load profile"
 msgstr "Lataa profiili"
 
 #. Translators: this string indicates to the user what should be
 #. provided when using the '-p, --profile' command line option.
-#: ../src/orca/orca_bin.py.in:159
+#: ../src/orca/orca_bin.py.in:160
 msgid "NAME"
 msgstr "NIMI"
 
 #. Translators: this is the description of the command line option
 #. '-u, --user-prefs' that allows you to specify an alternate
 #. location from which to loadr the user preferences.
-#: ../src/orca/orca_bin.py.in:166
+#: ../src/orca/orca_bin.py.in:167
 msgid "Use alternate directory for user preferences"
 msgstr "Käytä muuta kansiota käyttäjäasetuksille"
 
 #. Translators: this string indicates to the user what should be
 #. provided when using the '-u, --user-prefs' command line option.
-#: ../src/orca/orca_bin.py.in:169
+#: ../src/orca/orca_bin.py.in:170
 msgid "DIR"
 msgstr ""
 
 #. Translators: this is the description of the command line option
 #. '--debug-file' which allows the user to override the default,
 #. date-based name of the debugging output file.
-#: ../src/orca/orca_bin.py.in:176
+#: ../src/orca/orca_bin.py.in:177
 msgid "Send debug output to the specified file"
 msgstr "Lähetä vianetsintätekstit annettuun tiedostoon"
 
 #. Translators: this string indicates to the user what should be
 #. provided when using the '--debug-file' command line option.
-#: ../src/orca/orca_bin.py.in:179
+#: ../src/orca/orca_bin.py.in:180
 msgid "FILE"
 msgstr "TIEDOSTO"
 
@@ -6404,7 +6376,7 @@ msgstr "TIEDOSTO"
 #. portions of this string should not be translated (i.e., it will
 #. always start with 'debug' and end with '.out', regardless of the
 #. locale.).
-#: ../src/orca/orca_bin.py.in:191
+#: ../src/orca/orca_bin.py.in:192
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr "Lähetä vianetsintä viestiä tiedostoon debug-YYYY-MM-DD-HH:MM:SS.out"
 
@@ -6412,14 +6384,14 @@ msgstr "Lähetä vianetsintä viestiä tiedostoon debug-YYYY-MM-DD-HH:MM:SS.out"
 #. from the command line and includes an invalid option or argument.
 #. After the message, the list of invalid items, as typed by the
 #. user, is displayed.
-#: ../src/orca/orca_bin.py.in:204
+#: ../src/orca/orca_bin.py.in:205
 msgid "The following are not valid: "
 msgstr "Seuraavat valitsimet ovat virheellisiä: "
 
 #. Translators: This message is presented to the user who attempts
 #. to launch Orca from some other environment than the graphical
 #. desktop.
-#: ../src/orca/orca_bin.py.in:309
+#: ../src/orca/orca_bin.py.in:310
 msgid "Cannot start Orca because it cannot connect to the Desktop."
 msgstr ""
 "Orcan käynnistys epäonnistui, koska se ei voinut muodostaa yhteyttä "
@@ -6430,14 +6402,14 @@ msgstr ""
 #. a group of Orca settings configured for a particular purpose,
 #. such as a Spanish profile which would include Spanish braille
 #. and Spanish text-to-speech.
-#: ../src/orca/orca_bin.py.in:330
+#: ../src/orca/orca_bin.py.in:331
 #, python-format
 msgid "Profile could not be loaded: %s"
 msgstr "Profiilin lataus epäonnistui: %s"
 
 #. Translators: This message is presented to the user when
 #. he/she tries to launch Orca, but Orca is already running.
-#: ../src/orca/orca_bin.py.in:336
+#: ../src/orca/orca_bin.py.in:337
 msgid ""
 "Another Orca process is already running for this session.\n"
 "Run \"orca --replace\" to replace that process with a new one."
