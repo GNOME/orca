@@ -291,6 +291,26 @@ class Script(default.Script):
 
         default.Script.onShowingChanged(self, event)
 
+    def onSelectedChanged(self, event):
+        """Callback for object:state-changed:selected accessibility events."""
+        try:
+            state = event.source.getState()
+        except:
+            return
+
+        # Some buttons, like the Wikipedia button, claim to be selected but
+        # lack STATE_SELECTED. The other buttons, such as in the Dash and
+        # event switcher, seem to have the right state. Since the ones with
+        # the wrong state seem to be things we don't want to present anyway
+        # we'll stop doing so and hope we are right.
+
+        if event.detail1:
+            if state.contains(pyatspi.STATE_SELECTED):
+                orca.setLocusOfFocus(event, event.source)
+            return
+
+        default.Script.onSelectedChanged(self, event)
+
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
 
@@ -354,16 +374,6 @@ class Script(default.Script):
                     labels = self.utilities.unrelatedLabels(dialog)
                     for label in labels:
                         self._activeDialogLabels[hash(label)] = label.name
-
-        elif eType.startswith("object:state-changed:selected") and event.detail1:
-            # Some buttons, like the Wikipedia button, claim to be selected but
-            # lack STATE_SELECTED. The other buttons, such as in the Dash and
-            # event switcher, seem to have the right state. Since the ones with
-            # the wrong state seem to be things we don't want to present anyway
-            # we'll stop doing so and hope we are right.
-            if state.contains(pyatspi.STATE_SELECTED):
-                orca.setLocusOfFocus(event, event.source)
-                return
 
         default.Script.onStateChanged(self, event)
 

@@ -544,7 +544,7 @@ class Script(script.Script):
         listeners["object:state-changed:expanded"]          = \
             self.onExpandedChanged
         listeners["object:state-changed:selected"]          = \
-            self.onStateChanged
+            self.onSelectedChanged
         listeners["object:text-attributes-changed"]         = \
             self.onTextAttributesChanged
         listeners["object:text-selection-changed"]          = \
@@ -2516,6 +2516,48 @@ class Script(script.Script):
         self.updateBraille(obj)
         speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
 
+    def onSelectedChanged(self, event):
+        """Callback for object:state-changed:selected accessibility events."""
+
+        obj = event.source
+        state = obj.getState()
+        if not state.contains(pyatspi.STATE_FOCUSED):
+            return
+
+        if not self.utilities.isSameObject(orca_state.locusOfFocus, obj):
+            return
+
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return
+
+        isSelected = state.contains(pyatspi.STATE_SELECTED)
+        announceState = False
+        keyString, mods = self.utilities.lastKeyAndModifiers()
+        if keyString == "space":
+            if mods & settings.CTRL_MODIFIER_MASK:
+                announceState = True
+            else:
+                # If we are already selected and the user presses "space" again,
+                # we don't want to speak an intermediate "unselected" state.
+                announceState = isSelected and event.detail1
+        elif keyString in ["Down", "Up"] \
+             and isSelected and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
+            announceState = True
+
+        if not announceState:
+            return
+
+        # TODO - JD: Unlike the other state-changed callbacks, it seems unwise
+        # to call generateSpeech() here because that also will present the
+        # expandable state if appropriate for the object type. The generators
+        # need to gain some smarts w.r.t. state changes.
+
+        voice = self.voices.get(settings.SYSTEM_VOICE)
+        if event.detail1:
+            speech.speak(messages.TEXT_SELECTED, voice, False)
+        else:
+            speech.speak(messages.TEXT_UNSELECTED, voice, False)
+
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
 
@@ -2549,49 +2591,6 @@ class Script(script.Script):
         Arguments:
         - event: the Event
         """
-
-        if event.type.startswith("object:state-changed:selected") \
-           and not _settingsManager.getSetting('onlySpeakDisplayedText') \
-           and orca_state.locusOfFocus:
-            # If this selection state change is for the object which
-            # currently has the locus of focus, and the last keyboard
-            # event was Space, or we are a focused table cell and we
-            # arrowed Down or Up and are now selected, then let the
-            # user know the selection state.
-            # See bugs #486908 and #519564 for more details.
-            #
-            announceState = False
-            keyString, mods = self.utilities.lastKeyAndModifiers()
-            state = orca_state.locusOfFocus.getState()
-            if state.contains(pyatspi.STATE_FOCUSED) \
-               and self.utilities.isSameObject(
-                event.source, orca_state.locusOfFocus):
-
-                if keyString == "space":
-                    if mods & settings.CTRL_MODIFIER_MASK:
-                        announceState = True
-                    else:
-                        # Weed out a bogus situation. If we are already
-                        # selected and the user presses "space" again,
-                        # we don't want to speak the intermediate
-                        # "unselected" state.
-                        #
-                        eventState = event.source.getState()
-                        selected = eventState.contains(pyatspi.STATE_SELECTED)
-                        announceState = (selected and event.detail1)
-
-                elif keyString in ["Down", "Up"] \
-                     and event.source.getRole() == pyatspi.ROLE_TABLE_CELL \
-                     and state.contains(pyatspi.STATE_SELECTED):
-                    announceState = True
-
-            if announceState:
-                voice = self.voices.get(settings.SYSTEM_VOICE)
-                if event.detail1:
-                    speech.speak(messages.TEXT_SELECTED, voice, False)
-                else:
-                    speech.speak(messages.TEXT_UNSELECTED, voice, False)
-                return
 
         if event.type.startswith("object:state-changed:focused"):
             iconified = False
