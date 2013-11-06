@@ -327,29 +327,7 @@ class Script(default.Script):
 
         activeDialog, timestamp = self._activeDialog
         eType = event.type
-        if eType.startswith("object:state-changed:showing"):
-            # When entering overview with many open windows, we get quite
-            # a few state-changed:showing events for nameless panels. The
-            # act of processing these by the default script causes us to
-            # present nothing, and introduces a significant delay before
-            # presenting the Top Bar button when Ctrl+Alt+Tab was pressed.
-            if role == pyatspi.ROLE_PANEL and not name:
-                return
-
-            # We cannot count on events or their order from dialog boxes.
-            # Therefore, the only way to reliably present a dialog is by
-            # ignoring the events of the dialog itself and keeping track
-            # of the current dialog.
-            if not event.detail1 and event.source == activeDialog:
-                self._activeDialog = (None, 0)
-                self._activeDialogLabels = {}
-                return
-
-            if activeDialog and role == pyatspi.ROLE_LABEL and event.detail1:
-                if self.presentDialogLabel(event):
-                    return
-
-        elif eType.startswith("object:state-changed:focused") and event.detail1:
+        if eType.startswith("object:state-changed:focused") and event.detail1:
             # The dialog will get presented when its first child gets focus.
             if role == pyatspi.ROLE_DIALOG:
                 return

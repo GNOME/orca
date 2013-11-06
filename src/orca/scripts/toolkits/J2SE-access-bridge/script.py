@@ -267,15 +267,6 @@ class Script(default.Script):
                                 orca.setLocusOfFocus(event, item)
                                 return
 
-        # Present a value change in case of an focused popup menu.
-        # Fix for Swing file chooser.
-        #
-        if event.type.startswith("object:state-changed:visible") and \
-                event.source.getRole() == pyatspi.ROLE_POPUP_MENU and \
-                event.source.parent.getState().contains(pyatspi.STATE_FOCUSED):
-            orca.setLocusOfFocus(event, event.source.parent)
-            return
-
         default.Script.onStateChanged(self, event)
 
     def onValueChanged(self, event):

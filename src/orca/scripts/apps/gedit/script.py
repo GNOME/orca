@@ -282,8 +282,6 @@ class Script(default.Script):
                      pyatspi.ROLE_PAGE_TAB,
                      pyatspi.ROLE_PAGE_TAB_LIST]
         if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-            debug.println(self.debugLevel,
-                          "gedit.onStateChanged - print preview - page #.")
             parent = event.source.parent
             label1 = self.utilities.displayedText(parent[1])
             label2 = self.utilities.displayedText(parent[2])
