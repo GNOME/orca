@@ -892,12 +892,8 @@ class Script(default.Script):
 
         default.Script.onChildrenChanged(self, event)
 
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes.
-
-        Arguments:
-        - event: the Event
-        """
+    def onFocusedChanged(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
 
         if self.isStructuralNavigationCommand():
             return
@@ -912,7 +908,7 @@ class Script(default.Script):
         if parent and parent.getRoleName() == 'text frame':
             return
 
-        default.Script.onStateChanged(self, event)
+        default.Script.onFocusedChanged(self, event)
 
     def onCaretMoved(self, event):
         """Called whenever the caret moves.

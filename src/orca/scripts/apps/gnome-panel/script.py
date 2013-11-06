@@ -52,27 +52,3 @@ class Script(default.Script):
         """Returns the speech generator for this script."""
 
         return SpeechGenerator(self)
-
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes.
-
-        Arguments:
-        - event: the Event
-        """
-
-        obj = event.source
-
-        # If focus moves to something within a panel and focus was not
-        # already in the containing panel, the panel will issue its
-        # own state-changed:focused event with detail1 == 1 after the
-        # event for the item with focus.  The panel is not focused,
-        # plus the extraneous event results in unnecessary chattiness
-        # and updates the braille display to "panel."
-        #
-        if obj.getRole() == pyatspi.ROLE_PANEL and \
-             event.type.startswith("object:state-changed:focused") and \
-             event.detail1 == 1 \
-             and not obj.getState().contains(pyatspi.STATE_FOCUSED):
-            return
-
-        default.Script.onStateChanged(self, event)

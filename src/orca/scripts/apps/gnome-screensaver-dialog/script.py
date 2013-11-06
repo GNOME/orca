@@ -32,27 +32,24 @@ import orca.speech as speech
 
 class Script(default.Script):
 
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes.
+    def onFocusedChanged(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
+        obj = event.source
 
         # If we are focused in a password text area, we need to check if
         # there are any useful messages displayed in a couple of labels that
         # are visually below that password area. If there are, then speak
         # them for the user. See bug #529655 for more details.
         #
-        if event.type.startswith("object:state-changed:focused") and \
-           event.source.getRole() == pyatspi.ROLE_PASSWORD_TEXT:
-            obj = event.source.parent.parent.parent
+        if obj.getRole() == pyatspi.ROLE_PASSWORD_TEXT:
+            obj = obj.parent.parent.parent
             for child in obj:
-                if child.getRole() == pyatspi.ROLE_LABEL:
-                    if child.name:
-                        speech.speak(child.name)
-        else:
-            default.Script.onStateChanged(self, event)
+                if child.getRole() == pyatspi.ROLE_LABEL and child.name:
+                    speech.speak(child.name)
+                return
+
+        default.Script.onFocusedChanged(self, event)
 
     def skipObjectEvent(self, event):
         # NOTE: This is here temporarily as part of the preparation for the

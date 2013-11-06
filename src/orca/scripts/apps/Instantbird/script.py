@@ -179,12 +179,8 @@ class Script(Gecko.Script):
 
         default.Script.onNameChanged(self, event)
 
-    def onFocus(self, event):
-        """Called whenever an object gets focus.
-
-        Arguments:
-        - event: the Event
-        """
+    def onFocusedChanged(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
 
         # This seems to be the most reliable way to identify that the
         # active chatroom was changed via keyboard from within the entry.
@@ -204,9 +200,9 @@ class Script(Gecko.Script):
                 return
 
         if self.inDocumentContent(event.source):
-            Gecko.Script.onFocus(self, event)
+            Gecko.Script.onFocusedChanged(self, event)
         else:
-            default.Script.onFocus(self, event)
+            default.Script.onFocusedChanged(self, event)
 
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated."""

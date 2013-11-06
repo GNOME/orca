@@ -441,8 +441,6 @@ class Script(default.Script):
             self.onDocumentLoadComplete
         listeners["document:load-stopped"]                  = \
             self.onDocumentLoadStopped
-        listeners["object:state-changed:focused"]           = \
-            self.onStateFocused
 
         return listeners
 
@@ -1295,12 +1293,10 @@ class Script(default.Script):
         if event.source.getRole() == pyatspi.ROLE_FRAME:
             self.liveMngr.flushMessages()
 
-    def onFocus(self, event):
-        """Called whenever an object gets focus.
+    def onFocusedChanged(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
+        # TODO - JD: Go through all of the crap below. :-/
 
         try:
             eventSourceRole = event.source.getRole()
@@ -1396,7 +1392,7 @@ class Script(default.Script):
                         self.presentLine(obj, characterOffset)
                 return
 
-        default.Script.onFocus(self, event)
+        default.Script.onFocusedChanged(self, event)
 
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
@@ -1428,42 +1424,6 @@ class Script(default.Script):
                     return
 
         default.Script.onShowingChanged(self, event)
-
-    def onStateFocused(self, event):
-        default.Script.onStateChanged(self, event)
-        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME and \
-               event.detail1:
-            documentFrame = event.source
-
-            parent_attribs = self._getAttrDictionary(documentFrame.parent)
-            parent_tag = parent_attribs.get('tag', '')
-
-            if self._loadingDocumentContent or \
-                   documentFrame == self._currentFrame or \
-                   not parent_tag.endswith('browser'):
-                return
-
-            self._currentFrame = documentFrame
-
-            self.displayBrailleMessage(documentFrame.name)
-            speech.stop()
-            speech.speak(
-                "%s %s" \
-                % (documentFrame.name,
-                   self.speechGenerator.getLocalizedRoleName(
-                        documentFrame, pyatspi.ROLE_PAGE_TAB)))
-
-            [obj, characterOffset] = self.getCaretContext()
-            if not obj:
-                [obj, characterOffset] = self.findNextCaretInOrder()
-                self.setCaretContext(obj, characterOffset)
-            if not obj:
-                return
-
-            # When a document tab is tabbed to, we will just present the
-            # line where the caret currently is.
-            #
-            self.presentLine(obj, characterOffset)
 
     def onWindowDeactivated(self, event):
         """Called whenever a toplevel window is deactivated.

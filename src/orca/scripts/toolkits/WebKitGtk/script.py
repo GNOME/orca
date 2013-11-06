@@ -257,12 +257,8 @@ class Script(default.Script):
         if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
             self._loadingDocumentContent = False
 
-    def onFocus(self, event):
-        """Called whenever an object gets focus.
-
-        Arguments:
-        - event: the Event
-        """
+    def onFocusedChanged(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
 
         obj = event.source
         role = obj.getRole()
@@ -274,7 +270,7 @@ class Script(default.Script):
                        pyatspi.ROLE_LIST_ITEM,
                        pyatspi.ROLE_RADIO_BUTTON]
         if role in widgetRoles:
-            default.Script.onFocus(self, event)
+            default.Script.onFocusedChanged(self, event)
             return
 
         textRoles = [pyatspi.ROLE_HEADING,
@@ -290,7 +286,7 @@ class Script(default.Script):
             if lastKey in self.CARET_NAVIGATION_KEYS:
                 return
 
-        default.Script.onFocus(self, event)
+        default.Script.onFocusedChanged(self, event)
 
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""

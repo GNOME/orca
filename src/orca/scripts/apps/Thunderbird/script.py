@@ -238,13 +238,19 @@ class Script(Gecko.Script):
 
         return Gecko.Script.onCaretMoved(self, event)
 
-    def onFocus(self, event):
-        """ Called whenever an object gets focus.
+    def onFocusedChanged(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
 
-        Arguments:
-        - event: the Event
+        # If we get an "object:state-changed:focused" event for a list
+        # item in the spell checking dialog, and it doesn't have a
+        # FOCUSED state (i.e. we didn't navigate to it), then ignore it.
+        # See bug #535192 for more details.
+        #
+        if self._isSpellCheckListItemFocus(event):
+            return
 
-        """
+        # TODO - JD: Determine how much of the stuff below is still needed.
+
         obj = event.source
         parent = obj.parent
         top = self.utilities.topLevelObject(obj)
@@ -279,8 +285,7 @@ class Script(Gecko.Script):
                     # True when it's not actually True. Therefore,
                     # we'll force the propagation as a precaution.
                     #
-                    force = event.type.startswith("focus:")
-                    orca.setLocusOfFocus(event, acc, force=force)
+                    orca.setLocusOfFocus(event, acc, force=True)
                     consume = True
                     break
 
@@ -304,35 +309,6 @@ class Script(Gecko.Script):
 
             self.textArea = event.source
             # Fall-thru to process the event with the default handler.
-
-        if event.type.startswith("focus:"):
-            # If we get a "focus:" event for the "Replace with:" entry in the
-            # spell checking dialog, then clear the current locus of focus so
-            # that this item will be spoken and brailled. See bug #535192 for
-            # more details.
-            #
-            rolesList = [pyatspi.ROLE_ENTRY, \
-                         pyatspi.ROLE_DIALOG, \
-                         pyatspi.ROLE_APPLICATION]
-            if self.utilities.hasMatchingHierarchy(obj, rolesList):
-                dialog = obj.parent
-
-                # Translators: this is what the name of the spell checking
-                # dialog in Thunderbird begins with. The translated form
-                # has to match what Thunderbird is using.  We hate keying
-                # off stuff like this, but we're forced to do so in this case.
-                #
-                if dialog.name.startswith(_("Check Spelling")):
-                    orca_state.locusOfFocus = None
-                    orca.setLocusOfFocus(event, obj)
-
-            # If we get a "focus:" event for a list item in the spell
-            # checking dialog, and it doesn't have a FOCUSED state (i.e.
-            # we didn't navigate to it), then ignore it. See bug #535192
-            # for more details.
-            #
-            if self._isSpellCheckListItemFocus(event):
-                return
 
         # Handle dialogs.
         #
@@ -377,9 +353,9 @@ class Script(Gecko.Script):
             # handle navigation in that case.
             #
             if self.isEditableMessage(event.source):
-                default.Script.onFocus(self, event)
+                default.Script.onFocusedChanged(self, event)
             else:
-                Gecko.Script.onFocus(self, event)
+                Gecko.Script.onFocusedChanged(self, event)
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -435,22 +411,6 @@ class Script(Gecko.Script):
             if self.inDocumentContent():
                 self._presentMessage(obj)
 
-    def onStateFocused(self, event):
-        """Called whenever an object's state changes focus.
-
-        Arguments:
-        - event: the Event
-        """
-
-        # If we get an "object:state-changed:focused" event for a list
-        # item in the spell checking dialog, and it doesn't have a
-        # FOCUSED state (i.e. we didn't navigate to it), then ignore it.
-        # See bug #535192 for more details.
-        #
-        if self._isSpellCheckListItemFocus(event):
-            return
-
-        Gecko.Script.onStateChanged(self, event)
 
     def onTextDeleted(self, event):
         """Called whenever text is from an an object.

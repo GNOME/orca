@@ -79,18 +79,12 @@ class Script(default.Script):
 
         self._saveLastTextPosition(obj)
 
-    def onFocus(self, event):
-        """Called whenever an object gets focus.  Overridden here so that
-        so that we can avoid speaking text when caret moves after new text
-        receives focus and is spoken.
-
-        Arguments:
-        - event: the Event
-        """
+    def onFocusedChanged(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
 
         # Let the default script's normal behavior do its thing
         #
-        default.Script.onFocus(self, event)
+        default.Script.onFocusedChanged(self, event)
 
         self._saveLastTextPosition(event.source)
 

@@ -530,7 +530,7 @@ class Script(script.Script):
         listeners["object:state-changed:busy"]              = \
             self.onBusyChanged
         listeners["object:state-changed:focused"]           = \
-            self.onStateChanged
+            self.onFocusedChanged
         listeners["object:state-changed:showing"]           = \
             self.onShowingChanged
         listeners["object:state-changed:checked"]           = \
@@ -758,8 +758,14 @@ class Script(script.Script):
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
 
-        if newLocusOfFocus \
-           and newLocusOfFocus.getState().contains(pyatspi.STATE_DEFUNCT):
+        if not newLocusOfFocus:
+            orca_state.noFocusTimeStamp = time.time()
+            return
+
+        if newLocusOfFocus.getState().contains(pyatspi.STATE_DEFUNCT):
+            return
+
+        if self.utilities.isSameObject(oldLocusOfFocus, newLocusOfFocus):
             return
 
         try:
@@ -771,71 +777,24 @@ class Script(script.Script):
         except:
             pass
 
-        # We always automatically go back to focus tracking mode when
-        # the focus changes.
-        #
         if self.flatReviewContext:
             self.toggleFlatReviewMode()
 
-        # [[[TODO: WDW - HACK because parents that manage their descendants
-        # can give us a different object each time we ask for the same
-        # exact child.  So...we do a check here to see if the old object
-        # and new object have the same index in the parent and if they
-        # have the same name.  If so, then they are likely to be the same
-        # object.  The reason we check for the name here is a small sanity
-        # check.  This whole algorithm could fail because one might be
-        # deleting/adding identical elements from/to a list or table, thus
-        # the objects really could be different even though they seem the
-        # same.  Logged as bug 319675.]]]
-        #
-        if self.utilities.isSameObject(oldLocusOfFocus, newLocusOfFocus):
-            return
+        self.updateBraille(newLocusOfFocus)
 
-        # Well...now that we got that behind us, let's do what we're supposed
-        # to do.
-        #
-        if oldLocusOfFocus:
-            oldParent = oldLocusOfFocus.parent
+        shouldNotInterrupt = \
+           self.windowActivateTime and time.time() - self.windowActivateTime < 1
+
+        # [[[TODO: WDW - this should move to the generator.]]]
+        if newLocusOfFocus.getRole() == pyatspi.ROLE_LINK:
+            voice = self.voices[settings.HYPERLINK_VOICE]
         else:
-            oldParent = None
-
-        if newLocusOfFocus:
-            newParent = newLocusOfFocus.parent
-        else:
-            newParent = None
-
-        if newLocusOfFocus:
-            self.updateBraille(newLocusOfFocus)
-
-            # We might be automatically speaking the unbound labels
-            # in a dialog box as the result of the dialog box suddenly
-            # appearing.  If so, don't interrupt this because of a
-            # focus event that occurs when something like the "OK"
-            # button gets focus shortly after the window appears.
-            #
-            shouldNotInterrupt = (event and event.type.startswith("focus:")) \
-                and self.windowActivateTime \
-                and ((time.time() - self.windowActivateTime) < 1.0)
-
-            # [[[TODO: WDW - this should move to the generator.]]]
-            #
-            try:
-                newRole = newLocusOfFocus.getRole()
-            except:
-                newRole = None
-            if newRole == pyatspi.ROLE_LINK:
-                voice = self.voices[settings.HYPERLINK_VOICE]
-            else:
-                voice = self.voices[settings.DEFAULT_VOICE]
-            utterances = self.speechGenerator.generateSpeech(
-                newLocusOfFocus,
-                priorObj=oldLocusOfFocus)
-            speech.speak(utterances, voice, not shouldNotInterrupt)
-
-            self._saveFocusedObjectInfo(newLocusOfFocus)
-
-        else:
-            orca_state.noFocusTimeStamp = time.time()
+            voice = self.voices[settings.DEFAULT_VOICE]
+        utterances = self.speechGenerator.generateSpeech(
+            newLocusOfFocus,
+            priorObj=oldLocusOfFocus)
+        speech.speak(utterances, voice, not shouldNotInterrupt)
+        self._saveFocusedObjectInfo(newLocusOfFocus)
 
     def activate(self):
         """Called when this script is activated."""
@@ -2145,16 +2104,6 @@ class Script(script.Script):
         else:
             orca.setLocusOfFocus(event, event.source)
 
-        # We'll tuck away the activeDescendant information for future
-        # reference since the AT-SPI gives us little help in finding
-        # this.
-        #
-        if orca_state.locusOfFocus \
-           and (orca_state.locusOfFocus != event.source):
-            self.pointOfReference['activeDescendantInfo'] = \
-                [orca_state.locusOfFocus.parent,
-                 orca_state.locusOfFocus.getIndexInParent()]
-
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
         pass
@@ -2237,79 +2186,6 @@ class Script(script.Script):
 
         self.updateBraille(obj)
         speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
-
-    def onFocus(self, event):
-        """Called whenever an object gets focus.
-
-        Arguments:
-        - event: the Event
-        """
-
-        state = event.source.getState()
-        if event.type.startswith("focus:") \
-           and state.contains(pyatspi.STATE_FOCUSABLE) \
-           and not state.contains(pyatspi.STATE_FOCUSED):
-            return
-
-        # [[[TODO: WDW - HACK to deal with quirky GTK+ menu behavior.
-        # The problem is that when moving to submenus in a menu, the
-        # menu gets focus first and then the submenu gets focus all
-        # with a single keystroke.  So...focus in menus really means
-        # that the object has focus *and* it is selected.  Now, this
-        # assumes the selected state will be set before focus is given,
-        # which appears to be the case from empirical analysis of the
-        # event stream.  But of course, all menu items and menus in
-        # the complete menu path will have their selected state set,
-        # so, we really only care about the leaf menu or menu item
-        # that it selected.]]]
-        #
-        role = event.source.getRole()
-        if role in (pyatspi.ROLE_MENU,
-                    pyatspi.ROLE_MENU_ITEM,
-                    pyatspi.ROLE_CHECK_MENU_ITEM,
-                    pyatspi.ROLE_RADIO_MENU_ITEM):
-            try:
-                if event.source.querySelection().nSelectedChildren > 0:
-                    return
-            except:
-                pass
-
-        # When tabbing into an egg-list-box, we get a focus: event after the
-        # object:active-descendant-changed event. We already presented the
-        # list box from its object:state-changed:focused event, so we can and
-        # should ignore this event.
-        if role == pyatspi.ROLE_LIST_BOX and orca_state.locusOfFocus \
-                and orca_state.locusOfFocus.parent == event.source:
-            return
-
-        # [[[TODO: WDW - HACK to deal with the fact that active cells
-        # may or may not get focus.  Their parents, however, do tend to
-        # get focus, but when the parent gets focus, it really means
-        # that the selected child in it has focus.  Of course, this all
-        # breaks when more than one child is selected.  Then, we really
-        # need to depend upon the model where focus really works.]]]
-        #
-        newFocus = event.source
-
-        if role in (pyatspi.ROLE_LAYERED_PANE,
-                    pyatspi.ROLE_TABLE,
-                    pyatspi.ROLE_TREE_TABLE,
-                    pyatspi.ROLE_TREE):
-            if event.source.childCount:
-                # We might have tucked away some information for this
-                # thing in the onActiveDescendantChanged method.
-                #
-                if "activeDescendantInfo" in self.pointOfReference:
-                    [parent, index] = \
-                        self.pointOfReference['activeDescendantInfo']
-                    newFocus = parent[index]
-
-                else:
-                    selectedChildren = self.utilities.selectedChildren(newFocus)
-                    if selectedChildren:
-                        newFocus = selectedChildren[0]
-
-        orca.setLocusOfFocus(event, newFocus)
 
     def onIndeterminateChanged(self, event):
         """Callback for object:state-changed:indeterminate accessibility events."""
@@ -2467,32 +2343,45 @@ class Script(script.Script):
                 orca.setLocusOfFocus(event, child)
                 break
 
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes.
+    def onFocus(self, event):
+        """Callback for focus: accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
+        # NOTE: This event type is deprecated and Orca should no longer use it.
+        # This callback remains just to handle bugs in applications and toolkits
+        # during the remainder of the unstable (3.11) development cycle.
 
-        if event.type.startswith("object:state-changed:focused"):
-            iconified = False
-            try:
-                window = self.utilities.topLevelObject(event.source)
-                iconified = window.getState().contains(pyatspi.STATE_ICONIFIED)
-            except:
-                debug.println(debug.LEVEL_FINEST,
-                        "onStateChanged: could not get frame of focused item")
-            if not iconified:
-                if event.detail1:
-                    self.onFocus(event)
-                # We don't set locus of focus of None here because it
-                # wreaks havoc on the code that determines the context
-                # when you tab from widget to widget.  For example,
-                # tabbing between panels in the gtk-demo buttons demo.
-                #
-                #else:
-                #    orca.setLocusOfFocus(event, None)
-                return
+        role = event.source.getRole()
+
+        # https://bugzilla.gnome.org/show_bug.cgi?id=711397
+        if role == pyatspi.ROLE_COMBO_BOX:
+            orca.setLocusOfFocus(event, event.source)
+
+    def onFocusedChanged(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
+
+        if not event.detail1:
+            return
+
+        obj = event.source
+        state = obj.getState()
+        if not state.contains(pyatspi.STATE_FOCUSED):
+            return
+
+        try:
+            window = self.utilities.topLevelObject(obj)
+            iconified = window.getState().contains(pyatspi.STATE_ICONIFIED)
+        except:
+            return
+
+        if iconified:
+            return
+
+        if obj.childCount:
+            selectedChildren = self.utilities.selectedChildren(obj)
+            if len(selectedChildren) == 1:
+                obj = selectedChildren[0]
+
+        orca.setLocusOfFocus(event, obj)
 
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""

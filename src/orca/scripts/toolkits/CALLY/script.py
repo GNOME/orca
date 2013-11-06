@@ -311,49 +311,46 @@ class Script(default.Script):
 
         default.Script.onSelectedChanged(self, event)
 
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes.
+    def onFocusedChanged(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
+        if not event.detail1:
+            return
 
+        obj = event.source
         try:
-            role = event.source.getRole()
-            name = event.source.name
-            state = event.source.getState()
+            role = obj.getRole()
+            name = obj.name
         except:
             return
 
-        activeDialog, timestamp = self._activeDialog
-        eType = event.type
-        if eType.startswith("object:state-changed:focused") and event.detail1:
-            # The dialog will get presented when its first child gets focus.
-            if role == pyatspi.ROLE_DIALOG:
+        # The dialog will get presented when its first child gets focus.
+        if role == pyatspi.ROLE_DIALOG:
+            return
+
+        if role == pyatspi.ROLE_MENU_ITEM and not name \
+           and not self.utilities.labelsForObject(obj):
+            isRealFocus = lambda x: x and x.getRole() == pyatspi.ROLE_SLIDER
+            descendant = pyatspi.findDescendant(obj, isRealFocus)
+            if descendant:
+                orca.setLocusOfFocus(event, descendant)
                 return
 
-            if role == pyatspi.ROLE_MENU_ITEM and not event.source.name \
-               and not self.utilities.labelsForObject(event.source):
-                isRealFocus = lambda x: x and x.getRole() == pyatspi.ROLE_SLIDER
-                descendant = pyatspi.findDescendant(event.source, isRealFocus)
-                if descendant:
-                    orca.setLocusOfFocus(event, descendant)
-                    return
+        # This is to present dialog boxes which are, to the user, newly
+        # activated. And if something is claiming to be focused that is
+        # not in a dialog, that's good to know as well, so update our
+        # state regardless.
+        activeDialog, timestamp = self._activeDialog
+        if not activeDialog:
+            dialog = _parentDialog(obj)
+            self._activeDialog = (dialog, time.time())
+            if dialog:
+                orca.setLocusOfFocus(None, dialog)
+                labels = self.utilities.unrelatedLabels(dialog)
+                for label in labels:
+                    self._activeDialogLabels[hash(label)] = label.name
 
-            # This is to present dialog boxes which are, to the user, newly
-            # activated. And if something is claiming to be focused that is
-            # not in a dialog, that's good to know as well, so update our
-            # state regardless.
-            if not activeDialog:
-                dialog = _parentDialog(event.source)
-                self._activeDialog = (dialog, time.time())
-                if dialog:
-                    orca.setLocusOfFocus(None, dialog)
-                    labels = self.utilities.unrelatedLabels(dialog)
-                    for label in labels:
-                        self._activeDialogLabels[hash(label)] = label.name
-
-        default.Script.onStateChanged(self, event)
+        default.Script.onFocusedChanged(self, event)
 
     def getTextLineAtCaret(self, obj, offset=None):
         """Gets the line of text where the caret is."""

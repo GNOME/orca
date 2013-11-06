@@ -112,45 +112,6 @@ class Script(default.Script):
             if 0 < keyval < 256:
                 keyboardEvent.event_string = chr(keyval)
 
-    def onFocus(self, event):
-        """Called whenever an object gets focus.
-
-        Arguments:
-        - event: the Event
-        """
-
-        role = event.source.getRole()
-
-        # Ignore bogus/senseless focus claims because they just cause us to
-        # be more chatty as a result of the event and then later as a result
-        # of the changed locusOfFocus.
-        #
-        if role == pyatspi.ROLE_ROOT_PANE:
-            return
-
-        if role == pyatspi.ROLE_PAGE_TAB_LIST and orca_state.locusOfFocus \
-           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_PAGE_TAB \
-           and orca_state.locusOfFocus.getState().\
-               contains(pyatspi.STATE_FOCUSED):
-            return
-
-        if role == pyatspi.ROLE_MENU:
-            # Override default.py's onFocus decision to ignore focus
-            # events on MENU items with selected children.  This is
-            # because JMenu's pop up without their children selected,
-            # but for some reason they always have
-            # selection.nSelectedChildren > 0.  I suspect this is a
-            # bug in JMenu.java:getAccessibleSelectionCount, but the
-            # details of Swing's MenuSelectionManager are foreign to
-            # me.  So, for now, we'll just be happy knowing that
-            # Java's menu items will give us focus events when they
-            # are selected.
-            #
-            orca.setLocusOfFocus(event, event.source)
-            return
-
-        default.Script.onFocus(self, event)
-
     def onCaretMoved(self, event):
         # Java's SpinButtons are the most caret movement happy thing
         # I've seen to date.  If you Up or Down on the keyboard to
@@ -207,12 +168,13 @@ class Script(default.Script):
         else:
             default.Script.onSelectionChanged(self, event)
 
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes.
+    def onFocusedChanged(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
+        obj = event.source
+        if not (event.detail1 and obj.getRole() == pyatspi.ROLE_ROOT_PANE):
+            default.Script.onFocusedChangedself, event)
+            return
 
         # This is a workaround for a java-access-bridge bug (Bug 355011)
         # where popup menu events are not sent to Orca.
@@ -220,26 +182,19 @@ class Script(default.Script):
         # When a root pane gets focus, a popup menu may have been invoked.
         # If there is a popup menu, give locus of focus to the armed menu
         # item.
-        #
-        if event.source.getRole() == pyatspi.ROLE_ROOT_PANE and \
-               event.type.startswith("object:state-changed:focused") and \
-               event.detail1 == 1:
+        for child in obj:
+            if child.getRole() == pyatspi.ROLE_LAYERED_PANE:
+                popup = self.utilities.descendantsWithRole(
+                    child, pyatspi.ROLE_POPUP_MENU, False)
+                if len(popup) > 0:
+                    items = self.utilities.descendantsWithRole(
+                        popup[0], pyatspi.ROLE_MENU_ITEM, False)
+                    for item in items:
+                        if item.getState().contains(pyatspi.STATE_ARMED):
+                            orca.setLocusOfFocus(event, item)
+                            return
 
-            for child in event.source:
-                # search the layered pane for a popup menu
-                if child.getRole() == pyatspi.ROLE_LAYERED_PANE:
-                    popup = self.utilities.descendantsWithRole(
-                        child, pyatspi.ROLE_POPUP_MENU, False)
-                    if len(popup) > 0:
-                        # set the locus of focus to the armed menu item
-                        items = self.utilities.descendantsWithRole(
-                            popup[0], pyatspi.ROLE_MENU_ITEM, False)
-                        for item in items:
-                            if item.getState().contains(pyatspi.STATE_ARMED):
-                                orca.setLocusOfFocus(event, item)
-                                return
-
-        default.Script.onStateChanged(self, event)
+        default.Script.onFocusedChanged(self, event)
 
     def onValueChanged(self, event):
         """Called whenever an object's value changes.
