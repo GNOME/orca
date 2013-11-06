@@ -1256,8 +1256,12 @@ class Utilities:
         if not (obj and obj.parent and obj.childCount):
             return False
 
-        if obj.getRole() == pyatspi.ROLE_TABLE_ROW:
+        role = obj.getRole()
+        if role == pyatspi.ROLE_TABLE_ROW:
             return True
+
+        if role == pyatspi.ROLE_TABLE_CELL:
+            return False
 
         if not obj.parent.getRole() == pyatspi.ROLE_TABLE:
             return False
