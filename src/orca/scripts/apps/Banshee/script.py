@@ -2,7 +2,6 @@ import orca.scripts.default as default
 import orca.orca_state as orca_state
 
 from .script_utilities import Utilities
-from .speech_generator import SpeechGenerator
 from .formatting import Formatting
 
 class Script(default.Script):
@@ -15,11 +14,6 @@ class Script(default.Script):
         """
         default.Script.__init__(self, app)
         self._last_seek_value = 0
-
-    def getSpeechGenerator(self):
-        """Returns the speech generator for this script.
-        """
-        return SpeechGenerator(self)
 
     def getFormatting(self):
         """Returns the formatting strings for this script."""
@@ -44,4 +38,3 @@ class Script(default.Script):
             self._last_seek_value = current_value
 
         default.Script.onValueChanged(self, event)
-
