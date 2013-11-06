@@ -30,16 +30,11 @@ class Script(default.Script):
 
         return Utilities(self)
 
-    def visualAppearanceChanged(self, event, obj):
-        if event.type == 'object:property-change:accessible-value' and \
-                self.utilities.isSeekSlider(obj):
-            try:
-                value = obj.queryValue()
-            except NotImplementedError:
-                return default.Script.visualAppearanceChanged(self, event, obj)
-
+    def onValueChanged(self, event):
+        obj = event.source
+        if self.utilities.isSeekSlider(obj):
+            value = obj.queryValue()
             current_value = int(value.currentValue)/1000
-
             if current_value in \
                     range(self._last_seek_value, self._last_seek_value + 4):
                 if self.utilities.isSameObject(obj, orca_state.locusOfFocus):
@@ -48,5 +43,5 @@ class Script(default.Script):
 
             self._last_seek_value = current_value
 
-        default.Script.visualAppearanceChanged(self, event, obj)
+        default.Script.onValueChanged(self, event)
 

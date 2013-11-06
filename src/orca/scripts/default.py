@@ -106,9 +106,7 @@ class Script(script.Script):
         #
         self._unicodeCurrencySymbols = []
 
-        # Used by the visualAppearanceChanged routine for updating whether
-        # progress bars are spoken.
-        #
+        # Used to determine whether progress bar value changes presented.
         self.lastProgressBarTime = {}
         self.lastProgressBarValue = {}
 
@@ -838,119 +836,6 @@ class Script(script.Script):
 
         else:
             orca_state.noFocusTimeStamp = time.time()
-
-    def visualAppearanceChanged(self, event, obj):
-        """Called when the visual appearance of an object changes.  This
-        method should not be called for objects whose visual appearance
-        changes solely because of focus -- setLocusOfFocus is used for that.
-        Instead, it is intended mostly for objects whose notional 'value' has
-        changed, such as a checkbox changing state, a progress bar advancing,
-        a slider moving, text inserted, caret moved, etc.
-
-        Arguments:
-        - event: if not None, the Event that caused this to happen
-        - obj: the Accessible whose visual appearance changed.
-        """
-        # Check if this event is for a progress bar.
-        #
-        if obj.getRole() == pyatspi.ROLE_PROGRESS_BAR:
-            self.handleProgressBarUpdate(event, obj)
-
-        if self.flatReviewContext:
-            if self.utilities.isSameObject(
-                obj,
-                self.flatReviewContext.getCurrentAccessible()):
-                self.updateBrailleReview()
-            return
-
-        # If this object is CONTROLLED_BY the object that currently
-        # has focus, speak/braille this object.
-        #
-        try:
-            relations = obj.getRelationSet()
-        except (LookupError, RuntimeError):
-            relations = []
-        for relation in relations:
-            if relation.getRelationType() \
-                   == pyatspi.RELATION_CONTROLLED_BY:
-                target = relation.getTarget(0)
-                if target == orca_state.locusOfFocus:
-                    self.updateBraille(target)
-                    utterances = self.speechGenerator.generateSpeech(
-                        target, alreadyFocused=True)
-                    utterances.extend(self.tutorialGenerator.getTutorial(
-                               target, True))
-                    speech.speak(utterances)
-                    return
-
-        # If this object is a label, and if it has a LABEL_FOR relation
-        # to the focused object, then we should speak/braille the
-        # focused object, as if it had just got focus.
-        #
-        if obj.getRole() == pyatspi.ROLE_LABEL \
-           and obj.getState().contains(pyatspi.STATE_SHOWING):
-            for relation in relations:
-                if relation.getRelationType() \
-                       == pyatspi.RELATION_LABEL_FOR:
-                    target = relation.getTarget(0)
-                    if target == orca_state.locusOfFocus:
-                        self.updateBraille(target)
-                        utterances = self.speechGenerator.generateSpeech(
-                            target, alreadyFocused=False)
-                        utterances.extend(self.tutorialGenerator.getTutorial(
-                                          target, True))
-                        speech.speak(utterances)
-                        return
-
-        if obj.getRole() == pyatspi.ROLE_NOTIFICATION \
-           and obj.getState().contains(pyatspi.STATE_SHOWING):
-            utterances = self.speechGenerator.generateSpeech(obj)
-            speech.speak(utterances)
-            labels = self.utilities.unrelatedLabels(obj)
-            msg = ''.join(map(self.utilities.displayedText, labels))
-            self.displayBrailleMessage(msg, flashTime=settings.brailleFlashTime)
-            notification_messages.saveMessage(msg)
-
-        # Normally, we only care about name changes in the current object.
-        # But with the new GtkHeaderBar, we are seeing instances where the
-        # real frame remains the same, but the functional frame changes
-        # e.g. g-c-c going from all settings to a specific panel.
-        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
-            if obj.getRole() == pyatspi.ROLE_FRAME:
-                if not obj.getState().contains(pyatspi.STATE_ACTIVE):
-                    return
-            else:
-                # Present state changes of child widgets of GtkListBox items
-                isListBox = lambda x: x and x.getRole() == pyatspi.ROLE_LIST_BOX
-                if not pyatspi.findAncestor(obj, isListBox):
-                    return
-
-        # Radio buttons normally change their state when you arrow to them,
-        # so we handle the announcement of their state changes in the focus
-        # handling code.  However, we do need to handle radio buttons where
-        # the user needs to press the space key so select them.  We see this
-        # in the disk selection area of the OpenSolaris gui-install application
-        # for example.
-        #
-        if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
-            eventStr, mods = self.utilities.lastKeyAndModifiers()
-            if not eventStr in [" ", "space"]:
-                return
-
-        if event:
-            debug.println(debug.LEVEL_FINE,
-                          "VISUAL CHANGE: '%s' '%s' (event='%s')" \
-                          % (obj.name, obj.getRole(), event.type))
-        else:
-            debug.println(debug.LEVEL_FINE,
-                          "VISUAL CHANGE: '%s' '%s' (event=None)" \
-                          % (obj.name, obj.getRole()))
-
-        self.updateBraille(obj)
-        utterances = self.speechGenerator.generateSpeech(
-                         obj, alreadyFocused=True)
-        utterances.extend(self.tutorialGenerator.getTutorial(obj, True))
-        speech.speak(utterances)
 
     def activate(self):
         """Called when this script is activated."""
@@ -3012,23 +2897,29 @@ class Script(script.Script):
         - event: the Event
         """
 
+        obj = event.source
+        role = obj.getRole()
+
         # We'll let caret moved and text inserted events be used to
         # manage spin buttons, since they basically are text areas.
-        #
-        if event.source.getRole() == pyatspi.ROLE_SPIN_BUTTON:
+        if role == pyatspi.ROLE_SPIN_BUTTON:
             return
 
-        # We'll also try to ignore those objects that keep telling
-        # us their value changed even though it hasn't.
-        #
-        value = event.source.queryValue()
+        value = obj.queryValue()
         if "oldValue" in self.pointOfReference \
            and (value.currentValue == self.pointOfReference["oldValue"]):
             return
 
-        self.visualAppearanceChanged(event, event.source)
-        if event.source.getState().contains(pyatspi.STATE_FOCUSED):
-            self.pointOfReference["oldValue"] = value.currentValue
+        if role == pyatspi.ROLE_PROGRESS_BAR:
+            self.handleProgressBarUpdate(event, obj)
+            return
+
+        if not obj.getState().contains(pyatspi.STATE_FOCUSED):
+            return
+
+        self.pointOfReference["oldValue"] = value.currentValue
+        self.updateBraille(obj)
+        speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
 
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated.

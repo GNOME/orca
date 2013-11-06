@@ -1133,31 +1133,6 @@ class Script(default.Script):
 
         default.Script.onTextSelectionChanged(self, event)
 
-    def onSelectionChanged(self, event):
-        """Called when an object's selection changes.
-
-        Arguments:
-        - event: the Event
-        """
-
-        try:
-            role = event.source.getRole()
-        except:
-            pass
-        else:
-            if role == pyatspi.ROLE_MENU:
-                try:
-                    parent = event.source.parent
-                    parentRole = parent.getRole()
-                except:
-                    pass
-                else:
-                    if parentRole == pyatspi.ROLE_COMBO_BOX:
-                        self.visualAppearanceChanged(event, parent)
-                        return
-
-        default.Script.onSelectionChanged(self, event)
-
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
@@ -1517,33 +1492,6 @@ class Script(default.Script):
                      pyatspi.ROLE_APPLICATION]
         if not self.utilities.hasMatchingHierarchy(event.source, rolesList):
             default.Script.handleProgressBarUpdate(self, event, obj)
-
-    def visualAppearanceChanged(self, event, obj):
-        """Called when the visual appearance of an object changes.  This
-        method should not be called for objects whose visual appearance
-        changes solely because of focus -- setLocusOfFocus is used for that.
-        Instead, it is intended mostly for objects whose notional 'value' has
-        changed, such as a checkbox changing state, a progress bar advancing,
-        a slider moving, text inserted, caret moved, etc.
-
-        Arguments:
-        - event: if not None, the Event that caused this to happen
-        - obj: the Accessible whose visual appearance changed.
-        """
-
-        if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON \
-           and self.utilities.isSameObject(orca_state.locusOfFocus, obj):
-            msg = self.speechGenerator.generateSpeech(obj, alreadyFocused=True)
-            if self.inDocumentContent(obj):
-                speech.speak(msg)
-            self.updateBraille(obj)
-            return
-
-        if (obj.getRole() == pyatspi.ROLE_CHECK_BOX) \
-            and obj.getState().contains(pyatspi.STATE_FOCUSED):
-            orca.setLocusOfFocus(event, obj, notifyScript=False)
-
-        default.Script.visualAppearanceChanged(self, event, obj)
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -2100,8 +2048,12 @@ class Script(default.Script):
         if self._loadingDocumentContent:
             return False
 
+        if not orca_state.locusOfFocus:
+            return False
+
         weHandleIt = True
         obj = orca_state.locusOfFocus
+        role = obj.getRole()
         if self.utilities.isEntry(obj):
             text        = obj.queryText()
             length      = text.characterCount
@@ -2163,23 +2115,15 @@ class Script(default.Script):
                     weHandleIt = \
                         obj[index].getRole() == pyatspi.ROLE_COMBO_BOX
                 if not weHandleIt:
-                    weHandleIt = obj.getRole() == pyatspi.ROLE_MENU_ITEM
+                    weHandleIt = role == pyatspi.ROLE_MENU_ITEM
 
-        elif obj and (obj.getRole() == pyatspi.ROLE_COMBO_BOX):
-            # We'll let Firefox handle the navigation of combo boxes.
-            #
+        elif role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_MENU_ITEM]:
             weHandleIt = keyboardEvent.event_string in ["Left", "Right"]
 
-        elif obj and (obj.getRole() in [pyatspi.ROLE_MENU_ITEM,
-                                        pyatspi.ROLE_LIST_ITEM]):
-            # We'll let Firefox handle the navigation of combo boxes and
-            # lists in forms.
-            #
+        elif role == pyatspi.ROLE_LIST_ITEM:
             weHandleIt = not obj.getState().contains(pyatspi.STATE_FOCUSED)
 
-        elif obj and (obj.getRole() == pyatspi.ROLE_LIST):
-            # We'll let Firefox handle the navigation of lists in forms.
-            #
+        elif role == pyatspi.ROLE_LIST:
             weHandleIt = not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
 
         return weHandleIt

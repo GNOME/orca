@@ -151,34 +151,6 @@ class Script(default.Script):
 
         default.Script.onFocus(self, event)
 
-    def onActiveDescendantChanged(self, event):
-        """Called when an object who manages its own descendants detects a
-        change in one of its children.
-
-        Arguments:
-        - event: the Event
-        """
-
-        self.lastDescendantChangedSource = event.source
-
-        # In Java comboboxes, when the list of options is popped up via
-        # an up or down action, control (but not focus) goes to a LIST
-        # object that manages the descendants.  So, we detect that here
-        # and keep focus on the combobox.
-        #
-        if event.source.getRole() == pyatspi.ROLE_COMBO_BOX:
-            self.visualAppearanceChanged(event, event.source)
-            return
-
-        if event.source.getRole() == pyatspi.ROLE_LIST:
-            combobox = self.utilities.ancestorWithRole(
-                event.source, [pyatspi.ROLE_COMBO_BOX], [pyatspi.ROLE_PANEL])
-            if combobox:
-                self.visualAppearanceChanged(event, combobox)
-                return
-
-        default.Script.onActiveDescendantChanged(self, event)
-
     def onCaretMoved(self, event):
         # Java's SpinButtons are the most caret movement happy thing
         # I've seen to date.  If you Up or Down on the keyboard to
