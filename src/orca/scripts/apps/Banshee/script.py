@@ -2,7 +2,6 @@ import orca.scripts.default as default
 import orca.orca_state as orca_state
 
 from .script_utilities import Utilities
-from .formatting import Formatting
 
 class Script(default.Script):
 
@@ -14,10 +13,6 @@ class Script(default.Script):
         """
         default.Script.__init__(self, app)
         self._last_seek_value = 0
-
-    def getFormatting(self):
-        """Returns the formatting strings for this script."""
-        return Formatting(self)
 
     def getUtilities(self):
         """Returns the utilites for this script."""
