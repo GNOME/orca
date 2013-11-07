@@ -2914,7 +2914,7 @@ class Script(script.Script):
             self.handleProgressBarUpdate(event, obj)
             return
 
-        if not obj.getState().contains(pyatspi.STATE_FOCUSED):
+        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
             return
 
         self.pointOfReference["oldValue"] = value.currentValue
