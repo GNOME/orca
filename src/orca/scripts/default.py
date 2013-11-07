@@ -2450,9 +2450,6 @@ class Script(script.Script):
         state = obj.getState()
         if state.contains(pyatspi.STATE_MANAGES_DESCENDANTS):
             return
-
-        if not state.contains(pyatspi.STATE_SHOWING):
-            return
  
         # Save the event source, if it is a menu or combo box. It will be
         # useful for optimizing componentAtDesktopCoords in the case that
