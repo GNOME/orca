@@ -97,6 +97,17 @@ class Utilities(script_utilities.Utilities):
 
         return readOnly
 
+    def isCellBeingEdited(self, obj):
+        if not obj:
+            return False
+
+        parent = obj.parent
+        if parent and parent.getRoleName() == 'text frame':
+            if self.spreadSheetCellName(parent):
+                return True
+
+        return False
+
     def isSpreadSheetCell(self, obj, startFromTable=False):
         """Return an indication of whether the given obj is a spread sheet
         table cell.
@@ -116,16 +127,7 @@ class Utilities(script_utilities.Utilities):
         try:
             table = obj.queryTable()
         except:
-            # There really doesn't seem to be a good way to identify
-            # when the user is editing a cell because it has a role
-            # of paragraph and no table in the ancestry. This hack is
-            # a carry-over from the whereAmI code.
-            #
-            if cell.getRole() == pyatspi.ROLE_PARAGRAPH:
-                top = self.topLevelObject(cell)
-                return (top and top.name.endswith(" Calc"))
-            else:
-                return False
+            return self.isCellBeingEdited(cell)
         else:
             return table.nRows in [65536, 1048576]
 

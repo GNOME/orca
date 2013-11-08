@@ -425,6 +425,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return (speech_generator.SpeechGenerator._generateEndOfTableIndicator(
                 self, obj, **args))
 
+    def _generateNewAncestors(self, obj, **args):
+        priorObj = args.get('priorObj', None)
+        if not priorObj or priorObj.getRoleName() == 'text frame':
+            return []
+
+        return speech_generator.SpeechGenerator._generateNewAncestors(
+            self, obj, **args)
+
     def _generateOldAncestors(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the text of the ancestors for
@@ -432,6 +440,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         priorObj = args.get('priorObj', None)
         if not priorObj:
+            return []
+
+        if obj.getRoleName() == 'text frame':
             return []
 
         isTable = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE

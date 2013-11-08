@@ -902,15 +902,15 @@ class Script(default.Script):
         if self.isStructuralNavigationCommand():
             return
 
-        role = event.source.getRole()
-        if role == pyatspi.ROLE_EXTENDED:
-            if event.source.getRoleName() == 'text frame':
-                return
+        if not event.detail1:
+            return
+
+        if event.source.getRoleName() == 'text frame':
+            return
 
         parent = event.source.parent
-        if parent and parent.getRole() == pyatspi.ROLE_EXTENDED:
-            if parent.getRoleName() == 'text frame':
-                return
+        if parent and parent.getRoleName() == 'text frame':
+            return
 
         default.Script.onStateChanged(self, event)
 
@@ -931,6 +931,9 @@ class Script(default.Script):
         if offset == event.detail1 \
            and self.utilities.isSameObject(obj, event.source):
             return
+
+        if self.utilities.isCellBeingEdited(event.source):
+            orca.setLocusOfFocus(event, event.source.parent)
 
         # The lists and combo boxes in the Formatting toolbar emit
         # object:active-descendant-changed events which cause us
