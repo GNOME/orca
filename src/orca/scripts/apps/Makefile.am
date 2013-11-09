@@ -25,7 +25,6 @@ SUBDIRS = \
 	metacity \
 	notification-daemon \
 	notify-osd \
-	nautilus \
 	Mozilla \
 	pidgin \
 	planner \
