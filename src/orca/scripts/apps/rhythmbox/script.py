@@ -43,15 +43,3 @@ class Script(default.Script):
     def getFormatting(self):
         """Returns the formatting strings for this script."""
         return Formatting(self)
-
-    def skipObjectEvent(self, event):
-        # NOTE: This is here temporarily as part of the preparation for the
-        # deprecation/removal of accessible "focus:" events. Once the change
-        # has been complete, this method should be removed from this script.
-        if event.type == "focus:":
-            return True
-
-        if event.type == "object:state-changed:focused":
-            return False
-
-        return default.Script.skipObjectEvent(self, event)

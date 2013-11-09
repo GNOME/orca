@@ -38,7 +38,7 @@ import orca.notification_messages as notification_messages
 ########################################################################
 
 class Script(default.Script):
-    def onValueChange(self, event):
+    def onValueChanged(self, event):
         try:
             ivalue = event.source.queryValue()
             value = int(ivalue.currentValue)
@@ -50,13 +50,9 @@ class Script(default.Script):
             self.displayBrailleMessage("%s" % value,
                                        flashTime=settings.brailleFlashTime)
 
-    def onNameChange(self, event):
-        """Called whenever an object's accessible name changes in the notify-osd
-        application.
+    def onNameChanged(self, event):
+        """Callback for object:property-change:accessible-name events."""
 
-        Arguments:
-        - event: the Event.
-        """
         try:
             ivalue = event.source.queryValue()
             value = ivalue.currentValue
@@ -82,15 +78,3 @@ class Script(default.Script):
         speech.speak(utterances, None, True)
         self.displayBrailleMessage(message, flashTime=settings.brailleFlashTime)
         notification_messages.saveMessage(message)
-
-    def skipObjectEvent(self, event):
-        # NOTE: This is here temporarily as part of the preparation for the
-        # deprecation/removal of accessible "focus:" events. Once the change
-        # has been completed, this method should be removed from this script.
-        if event.type == "focus:":
-            return True
-
-        if event.type == "object:state-changed:focused":
-            return False
-
-        return default.Script.skipObjectEvent(self, event)
