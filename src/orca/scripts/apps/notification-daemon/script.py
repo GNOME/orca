@@ -39,23 +39,10 @@ import orca.speech as speech
 ########################################################################
 
 class Script(default.Script):
-    def getListeners(self):
-        """Sets up the AT-SPI event listeners for this script.
-        """
-        listeners = default.Script.getListeners(self)
 
-        listeners["window:create"] = \
-            self.onWindowCreate
+    def onWindowCreated(self, event):
+        """Callback for window:create accessibility events."""
 
-        return listeners
-
-    def onWindowCreate(self, event):
-        """Called whenever a window is created in the notification-daemon
-        application.
-
-        Arguments:
-        - event: the Event.
-        """
         a = self.utilities.descendantsWithRole(event.source, pyatspi.ROLE_LABEL)
         texts = [self.utilities.displayedText(acc) for acc in a]
         text = '%s %s' % (messages.NOTIFICATION, ' '.join(texts))

@@ -562,7 +562,7 @@ class Script(script.Script):
         listeners["window:deactivate"]                      = \
             self.onWindowDeactivated
         listeners["window:create"]                          = \
-            self.noOp
+            self.onWindowCreated
 
         return listeners
 
@@ -2836,6 +2836,11 @@ class Script(script.Script):
         #    window:activate   (w2)
         #
         orca_state.activeWindow = event.source
+
+    def onWindowCreated(self, event):
+        """Callback for window:create accessibility events."""
+
+        pass
 
     def onWindowDeactivated(self, event):
         """Called whenever a toplevel window is deactivated.
