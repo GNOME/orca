@@ -79,15 +79,6 @@ class Script(default.Script):
 
         self._saveLastTextPosition(obj)
 
-    def onFocusedChanged(self, event):
-        """Callback for object:state-changed:focused accessibility events."""
-
-        # Let the default script's normal behavior do its thing
-        #
-        default.Script.onFocusedChanged(self, event)
-
-        self._saveLastTextPosition(event.source)
-
     def getUtilities(self):
         """Returns the utilities for this script."""
 
