@@ -2377,6 +2377,12 @@ class Script(script.Script):
         if role == pyatspi.ROLE_COMBO_BOX:
             orca.setLocusOfFocus(event, event.source)
 
+        # Unfiled. But this happens when you are in Gedit, get into a menu
+        # and then press Escape. The text widget emits a focus: event, but
+        # not a state-changed:focused event.
+        if role == pyatspi.ROLE_TEXT:
+            orca.setLocusOfFocus(event, event.source)
+
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
