@@ -48,3 +48,4 @@ patch.*
 /help/*/*.xml
 !/help/C/*.xml
 /help/*/*.mo
+/help/*/*.stamp
