@@ -28,8 +28,3 @@ __license__   = "LGPL"
 # when a message is first loaded.
 #
 sayAllOnLoad = False
-
-# Whether we should grab focus on a focusable ancestor when setting
-# the caret position. See bug 608149.
-#
-grabFocusOnAncestor = True

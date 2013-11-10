@@ -111,7 +111,6 @@ class Script(default.Script):
         self.speakCellSpanCheckButton = None
         self.speakResultsDuringFindCheckButton = None
         self.structuralNavigationCheckButton = None
-        self.grabFocusOnAncestorCheckButton = None
 
         # _caretNavigationFunctions are functions that represent fundamental
         # ways to move the caret (e.g., by the arrow keys).
@@ -165,12 +164,6 @@ class Script(default.Script):
         # means we need to know if that has already taken place.
         #
         self.madeFindAnnouncement = False
-
-        # We need to be able to distinguish focus events that are triggered
-        # by the call to grabFocus() in setCaretPosition() from those that
-        # are valid.  See bug #471537.
-        #
-        self._objectForFocusGrab = None
 
         # We don't want to prevent the user from arrowing into an
         # autocomplete when it appears in a search form.  We need to
@@ -496,13 +489,6 @@ class Script(default.Script):
         self.structuralNavigationCheckButton.set_active(value)
         generalGrid.attach(self.structuralNavigationCheckButton, 0, 1, 1, 1)
 
-        label = guilabels.CARET_NAVIGATION_GRAB_FOCUS
-        value = script_settings.grabFocusOnAncestor
-        self.grabFocusOnAncestorCheckButton = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self.grabFocusOnAncestorCheckButton.set_active(value)
-        generalGrid.attach(self.grabFocusOnAncestorCheckButton, 0, 2, 1, 1)
-
         label = guilabels.CARET_NAVIGATION_START_OF_LINE
         value = script_settings.arrowToLineBeginning
         self.arrowToLineBeginningCheckButton = \
@@ -625,10 +611,6 @@ class Script(default.Script):
         prefs.writelines("%s.structuralNavigationEnabled = %s\n" \
                          % (prefix, value))
         script_settings.structuralNavigationEnabled = value
-
-        value = self.grabFocusOnAncestorCheckButton.get_active()
-        prefs.writelines("%s.grabFocusOnAncestor = %s\n" % (prefix, value))
-        script_settings.grabFocusOnAncestor = value
 
         value = self.arrowToLineBeginningCheckButton.get_active()
         prefs.writelines("%s.arrowToLineBeginning = %s\n" % (prefix, value))
@@ -1301,18 +1283,6 @@ class Script(default.Script):
                                pyatspi.ROLE_AUTOCOMPLETE]:
             return
 
-        # If this event is the result of our calling grabFocus() on
-        # this object in setCaretPosition(), we want to ignore it
-        # unless it happens to be the same object as our current
-        # caret context.
-        #
-        if self.utilities.isSameObject(event.source, self._objectForFocusGrab):
-            [obj, characterOffset] = self.getCaretContext()
-            if not self.utilities.isSameObject(event.source, obj):
-                return
-
-        self._objectForFocusGrab = None
-
         # We also ignore focus events on the panel that holds the document
         # frame.  We end up getting these typically because we've called
         # grabFocus on this panel when we're doing caret navigation.  In
@@ -1413,16 +1383,6 @@ class Script(default.Script):
                     return
 
         default.Script.onShowingChanged(self, event)
-
-    def onWindowDeactivated(self, event):
-        """Called whenever a toplevel window is deactivated.
-
-        Arguments:
-        - event: the Event
-        """
-
-        self._objectForFocusGrab = None
-        default.Script.onWindowDeactivated(self, event)
 
     def handleProgressBarUpdate(self, event, obj):
         """Determine whether this progress bar event should be spoken or not.
@@ -3997,70 +3957,6 @@ class Script(default.Script):
         #
         if obj != orca_state.locusOfFocus:
             orca.setLocusOfFocus(None, obj, notifyScript=False)
-
-            # We'd like the object to have focus if it can take focus.
-            # Otherwise, we bubble up until we find a parent that can
-            # take focus.  This is to allow us to help force focus out
-            # of something such as a text area and back into the
-            # document content.
-            #
-            if script_settings.grabFocusOnAncestor:
-                self._objectForFocusGrab = obj
-            else:
-                self._objectForFocusGrab = None
-
-            while self._objectForFocusGrab and obj:
-                role = self._objectForFocusGrab.getRole()
-
-                # If we're within a link whose children contain the text,
-                # grabbing focus on the link will result in our looping
-                # back to the link and never being able to arrow through
-                # the text.
-                #
-                if role == pyatspi.ROLE_LINK \
-                   and self.utilities.queryNonEmptyText(obj):
-                    self._objectForFocusGrab = None
-                    break
-
-                if self._objectForFocusGrab.getState().contains(\
-                    pyatspi.STATE_FOCUSABLE):
-                    break
-                # Links in image maps seem to lack state focusable. If we're
-                # on such an object, we still want to grab focus on it.
-                #
-                elif role == pyatspi.ROLE_LINK:
-                    parent = self._objectForFocusGrab.parent
-                    if parent.getRole() == pyatspi.ROLE_IMAGE:
-                        break
-
-                self._objectForFocusGrab = self._objectForFocusGrab.parent
-
-            # [[[JD - I *think* we still want to do a focus grab, even with
-            # the issues identified in bug 608149. Nothing bad should result
-            # from grabbing focus on a non-focusable object. But I might be
-            # wrong.]]]
-            #
-            if obj and not self._objectForFocusGrab:
-                try:
-                    obj.queryComponent().grabFocus()
-                except (LookupError, RuntimeError):
-                    pass
-
-            if self._objectForFocusGrab:
-                # [[[See https://bugzilla.mozilla.org/show_bug.cgi?id=363214.
-                # We need to set focus on the parent of the document frame.]]]
-                #
-                # [[[WDW - additional note - just setting focus on the
-                # first focusable object seems to do the trick, so we
-                # won't follow the advice from 363214.  Besides, if we
-                # follow that advice, it doesn't work.]]]
-                #
-                #if objectForFocus.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
-                #    objectForFocus = objectForFocus.parent
-                try:
-                    self._objectForFocusGrab.queryComponent().grabFocus()
-                except (LookupError, RuntimeError):
-                    pass
 
         text = self.utilities.queryNonEmptyText(obj)
         if text:

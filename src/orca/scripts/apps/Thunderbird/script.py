@@ -113,13 +113,6 @@ class Script(Gecko.Script):
         #
         self.sayAllOnLoadCheckButton.set_active(script_settings.sayAllOnLoad)
 
-        # We need to maintain a separate setting for grabFocusOnAncestor
-        # because the version of Gecko used by the Thunderbird might be
-        # different from that used by Firefox. See bug 608149.
-        #
-        self.grabFocusOnAncestorCheckButton.set_active(
-            script_settings.grabFocusOnAncestor)
-
         return grid
 
     def setAppPreferences(self, prefs):
@@ -140,10 +133,6 @@ class Script(Gecko.Script):
         value = self.sayAllOnLoadCheckButton.get_active()
         prefs.writelines("%s.sayAllOnLoad = %s\n" % (prefix, value))
         script_settings.sayAllOnLoad = value
-
-        value = self.grabFocusOnAncestorCheckButton.get_active()
-        prefs.writelines("%s.grabFocusOnAncestor = %s\n" % (prefix, value))
-        script_settings.grabFocusOnAncestor = value
 
     def _debug(self, msg):
         """ Convenience method for printing debug messages"""

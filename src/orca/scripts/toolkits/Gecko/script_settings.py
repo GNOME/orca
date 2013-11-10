@@ -68,9 +68,3 @@ minimumFindLength = 4
 # that may be too verbose so it's configurable.
 #
 onlySpeakChangedLinesDuringFind = False
-
-# Whether we should grab focus on a focusable ancestor when setting
-# the caret position. See bug 608149. We'll default to False because
-# it seems distros are shipping FF 3.6 for GNOME 2.30.
-#
-grabFocusOnAncestor = False
