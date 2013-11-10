@@ -430,20 +430,6 @@ class Script(default.Script):
                 Script.moveToMouseOver,
                 cmdnames.MOUSE_OVER_MOVE)
 
-    def getListeners(self):
-        """Sets up the AT-SPI event listeners for this script.
-        """
-        listeners = default.Script.getListeners(self)
-
-        listeners["document:reload"]                        = \
-            self.onDocumentReload
-        listeners["document:load-complete"]                 = \
-            self.onDocumentLoadComplete
-        listeners["document:load-stopped"]                  = \
-            self.onDocumentLoadStopped
-
-        return listeners
-
     def __getArrowBindings(self):
         """Returns an instance of keybindings.KeyBindings that use the
         arrow keys for navigating HTML content.
@@ -1257,7 +1243,8 @@ class Script(default.Script):
             speech.speak(utterances)
 
     def onDocumentReload(self, event):
-        """Called when the reload button is hit for a web page."""
+        """Callback for document:reload accessibility events."""
+
         # We care about the main document and we'll ignore document
         # events from HTML iframes.
         #
@@ -1265,7 +1252,8 @@ class Script(default.Script):
             self._loadingDocumentContent = True
 
     def onDocumentLoadComplete(self, event):
-        """Called when a web page load is completed."""
+        """Callback for document:load-complete accessibility events."""
+
         # We care about the main document and we'll ignore document
         # events from HTML iframes.
         #
@@ -1276,7 +1264,8 @@ class Script(default.Script):
             self._loadingDocumentTime = time.time()
 
     def onDocumentLoadStopped(self, event):
-        """Called when a web page load is interrupted."""
+        """Callback for document:load-stopped accessibility events."""
+
         # We care about the main document and we'll ignore document
         # events from HTML iframes.
         #

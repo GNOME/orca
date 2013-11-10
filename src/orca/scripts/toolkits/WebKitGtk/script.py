@@ -74,20 +74,6 @@ class Script(default.Script):
 
         self.sayAllOnLoadCheckButton = None
 
-    def getListeners(self):
-        """Sets up the AT-SPI event listeners for this script."""
-
-        listeners = default.Script.getListeners(self)
-
-        listeners["document:reload"]                        = \
-            self.onDocumentReload
-        listeners["document:load-complete"]                 = \
-            self.onDocumentLoadComplete
-        listeners["document:load-stopped"]                  = \
-            self.onDocumentLoadStopped
-
-        return listeners
-
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings."""
@@ -225,13 +211,13 @@ class Script(default.Script):
         default.Script.onCaretMoved(self, event)
 
     def onDocumentReload(self, event):
-        """Called when the reload button is hit for a web page."""
+        """Callback for document:reload accessibility events."""
 
         if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
             self._loadingDocumentContent = True
 
     def onDocumentLoadComplete(self, event):
-        """Called when a web page load is completed."""
+        """Callback for document:load-complete accessibility events."""
 
         if event.source.getRole() != pyatspi.ROLE_DOCUMENT_FRAME:
             return
@@ -252,7 +238,7 @@ class Script(default.Script):
             self.sayAll(None)
 
     def onDocumentLoadStopped(self, event):
-        """Called when a web page load is interrupted."""
+        """Callback for document:load-stopped accessibility events."""
 
         if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
             self._loadingDocumentContent = False

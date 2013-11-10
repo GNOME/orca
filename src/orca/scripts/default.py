@@ -511,6 +511,12 @@ class Script(script.Script):
             self.onFocus
         #listeners["keyboard:modifiers"]                     = \
         #    self.noOp
+        listeners["document:reload"]                        = \
+            self.onDocumentReload
+        listeners["document:load-complete"]                 = \
+            self.onDocumentLoadComplete
+        listeners["document:load-stopped"]                  = \
+            self.onDocumentLoadStopped
         listeners["mouse:button"]                           = \
             self.onMouseButton
         listeners["object:property-change:accessible-name"] = \
@@ -2176,6 +2182,21 @@ class Script(script.Script):
             self.toggleFlatReviewMode()
 
         self._presentTextAtNewCaretPosition(event)
+
+    def onDocumentReload(self, event):
+        """Callback for document:reload accessibility events."""
+
+        pass
+
+    def onDocumentLoadComplete(self, event):
+        """Callback for document:load-complete accessibility events."""
+
+        pass
+
+    def onDocumentLoadStopped(self, event):
+        """Callback for document:load-stopped accessibility events."""
+
+        pass
 
     def onExpandedChanged(self, event):
         """Callback for object:state-changed:expanded accessibility events."""
