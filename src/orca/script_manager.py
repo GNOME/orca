@@ -73,15 +73,18 @@ class ScriptManager:
         """Called when this script manager is activated."""
 
         debug.println(debug.LEVEL_FINEST, 'INFO: Activating script manager')
-        self._defaultScript  = None
-        self.setActiveScript(self.getScript(None), "activate")
+        self._defaultScript = self.getScript(None)
+        self._defaultScript.registerEventListeners()
+        self.setActiveScript(self._defaultScript, "activate")
         debug.println(debug.LEVEL_FINEST, 'INFO: Script manager activated')
 
     def deactivate(self):
         """Called when this script manager is deactivated."""
 
         debug.println(debug.LEVEL_FINEST, 'INFO: Dectivating script manager')
-        self._defaultScript  = None
+        if self._defaultScript:
+            self._defaultScript.deregisterEventListeners()
+        self._defaultScript = None
         self.setActiveScript(None, "deactivate")
         self.appScripts = {}
         self.toolkitScripts = {}
@@ -212,7 +215,6 @@ class ScriptManager:
 
         from .scripts import default
         script = default.Script(app)
-        script.registerEventListeners()
 
         if not app:
             self._defaultScript = script
@@ -239,7 +241,6 @@ class ScriptManager:
             if not toolkitScript:
                 toolkitScript = self._createScript(app, obj)
                 toolkitScripts[objToolkit] = toolkitScript
-                toolkitScript.registerEventListeners()
             self.toolkitScripts[app] = toolkitScripts
 
         try:
@@ -250,7 +251,6 @@ class ScriptManager:
             else:
                 appScript = self._createScript(app, None)
                 self.appScripts[app] = appScript
-                appScript.registerEventListeners()
         except:
             msg = "WARNING: Exception getting app script."
             debug.printException(debug.LEVEL_ALL)
@@ -303,7 +303,6 @@ class ScriptManager:
         appList = [a for a in appList if a != None and a not in desktop]
         for app in appList:
             appScript = self.appScripts.pop(app)
-            appScript.deregisterEventListeners()
             del appScript
 
             try:
@@ -312,7 +311,6 @@ class ScriptManager:
                 pass
             else:
                 for toolkitScript in list(toolkitScripts.values()):
-                    toolkitScript.deregisterEventListeners()
                     del toolkitScript
 
             del app
