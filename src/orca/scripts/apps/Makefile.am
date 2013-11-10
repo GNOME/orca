@@ -16,7 +16,6 @@ SUBDIRS = \
 	gnome-panel \
 	gnome-screensaver-dialog \
 	gnome-search-tool \
-	gnome-system-monitor \
 	gnome-terminal \
 	gnome-window-properties \
 	gtk-window-decorator \

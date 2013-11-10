@@ -95,7 +95,6 @@ src/orca/scripts/apps/gnome-mud/Makefile
 src/orca/scripts/apps/gnome-panel/Makefile
 src/orca/scripts/apps/gnome-screensaver-dialog/Makefile
 src/orca/scripts/apps/gnome-search-tool/Makefile
-src/orca/scripts/apps/gnome-system-monitor/Makefile
 src/orca/scripts/apps/gnome-terminal/Makefile
 src/orca/scripts/apps/gnome-window-properties/Makefile
 src/orca/scripts/apps/gtk-window-decorator/Makefile
