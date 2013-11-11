@@ -1292,6 +1292,14 @@ class Script(default.Script):
         # but no object:state-changed:focused event from Gecko.
         if role == pyatspi.ROLE_MENU:
             orca.setLocusOfFocus(event, event.source)
+            return
+
+        # Unfiled. When the Thunderbird 'do you want to replace this file'
+        # attachment dialog pops up, the 'Replace' button emits a focus:
+        # event, but we only seem to get the object:state-changed:focused
+        # event when it gives up focus.
+        if role == pyatspi.ROLE_PUSH_BUTTON:
+            orca.setLocusOfFocus(event, event.source)
 
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
