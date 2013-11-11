@@ -1,4 +1,4 @@
-SUBDIRS = Gecko J2SE-access-bridge CALLY WebKitGtk
+SUBDIRS = Gecko J2SE-access-bridge CALLY Qt WebKitGtk
 
 orca_python_PYTHON = \
 	__init__.py \
