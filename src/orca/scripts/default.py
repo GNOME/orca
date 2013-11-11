@@ -2119,10 +2119,7 @@ class Script(script.Script):
 
         obj = event.source
         if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
-            # Present changes of child widgets of GtkListBox items
-            isListBox = lambda x: x and x.getRole() == pyatspi.ROLE_LIST_BOX
-            if not pyatspi.findAncestor(obj, isListBox):
-                return
+            return
  
         # Radio buttons normally change their state when you arrow to them,
         # so we handle the announcement of their state changes in the focus
@@ -2367,21 +2364,7 @@ class Script(script.Script):
     def onFocus(self, event):
         """Callback for focus: accessibility events."""
 
-        # NOTE: This event type is deprecated and Orca should no longer use it.
-        # This callback remains just to handle bugs in applications and toolkits
-        # during the remainder of the unstable (3.11) development cycle.
-
-        role = event.source.getRole()
-
-        # https://bugzilla.gnome.org/show_bug.cgi?id=711397
-        if role == pyatspi.ROLE_COMBO_BOX:
-            orca.setLocusOfFocus(event, event.source)
-
-        # Unfiled. But this happens when you are in Gedit, get into a menu
-        # and then press Escape. The text widget emits a focus: event, but
-        # not a state-changed:focused event.
-        if role == pyatspi.ROLE_TEXT:
-            orca.setLocusOfFocus(event, event.source)
+        pass
 
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""

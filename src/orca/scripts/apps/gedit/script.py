@@ -28,14 +28,14 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.debug as debug
-import orca.scripts.default as default
 import orca.orca_state as orca_state
+import orca.scripts.toolkits.gtk as gtk
 import orca.settings as settings
 import orca.speech as speech
 
 from orca.orca_i18n import _
 
-class Script(default.Script):
+class Script(gtk.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.
@@ -44,7 +44,7 @@ class Script(default.Script):
         - app: the application to create a script for.
         """
 
-        default.Script.__init__(self, app)
+        gtk.Script.__init__(self, app)
 
         # Set the debug level for all the methods in this script.
         #
@@ -266,7 +266,7 @@ class Script(default.Script):
         # For everything else, pass the focus event onto the parent class
         # to be handled in the default way.
 
-        default.Script.locusOfFocusChanged(self, event,
+        gtk.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
 
         # If we are doing a Print Preview and we are focused on the
@@ -364,7 +364,7 @@ class Script(default.Script):
             speech.speak(event.source.name)
 
         # Pass the event onto the parent class to be handled in the default way.
-        default.Script.onNameChanged(self, event)
+        gtk.Script.onNameChanged(self, event)
 
     # This method tries to detect and handle the following cases:
     # 1) find dialog - phrase found.
@@ -413,4 +413,4 @@ class Script(default.Script):
         # For everything else, pass the caret moved event onto the parent
         # class to be handled in the default way.
 
-        default.Script.onCaretMoved(self, event)
+        gtk.Script.onCaretMoved(self, event)

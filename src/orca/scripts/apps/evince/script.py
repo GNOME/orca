@@ -29,7 +29,7 @@ import pyatspi
 
 import orca.keybindings as keybindings
 import orca.orca_state as orca_state
-import orca.scripts.default as default
+import orca.scripts.toolkits.gtk as gtk
 import orca.settings as settings
 from orca.structural_navigation import StructuralNavigation
 from .script_utilities import Utilities
@@ -40,7 +40,7 @@ from .script_utilities import Utilities
 #                                                                      #
 ########################################################################
 
-class Script(default.Script):
+class Script(gtk.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.
@@ -49,13 +49,13 @@ class Script(default.Script):
         - app: the application to create a script for.
         """
 
-        default.Script.__init__(self, app)
+        gtk.Script.__init__(self, app)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings."""
 
-        default.Script.setupInputEventHandlers(self)
+        gtk.Script.setupInputEventHandlers(self)
         self.inputEventHandlers.update(
             self.structuralNavigation.inputEventHandlers)
 
@@ -125,4 +125,4 @@ class Script(default.Script):
                 message, voice=self.voices.get(settings.DEFAULT_VOICE))
             return
  
-        default.Script.onShowingChanged(self, event)
+        gtk.Script.onShowingChanged(self, event)

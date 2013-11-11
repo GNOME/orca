@@ -27,12 +27,12 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.scripts.default as default
+import orca.scripts.toolkits.gtk as gtk
 import orca.orca_state as orca_state
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
 
-class Script(default.Script):
+class Script(gtk.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.
@@ -41,7 +41,7 @@ class Script(default.Script):
         - app: the application to create a script for.
         """
 
-        default.Script.__init__(self, app)
+        gtk.Script.__init__(self, app)
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script."""
@@ -77,4 +77,4 @@ class Script(default.Script):
                 text.setCaretOffset(0)
             return self.sayAll(None)
 
-        default.Script.onNameChanged(self, event)
+        gtk.Script.onNameChanged(self, event)

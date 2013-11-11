@@ -27,7 +27,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.scripts.default as default
+import orca.scripts.toolkits.gtk as gtk
 import orca.messages as messages
 
 ########################################################################
@@ -36,7 +36,7 @@ import orca.messages as messages
 #                                                                      #
 ########################################################################
 
-class Script(default.Script):
+class Script(gtk.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.  Callers
@@ -47,7 +47,7 @@ class Script(default.Script):
         - app: the application to create a script for.
         """
 
-        default.Script.__init__(self, app)
+        gtk.Script.__init__(self, app)
 
         self._resultsDisplay = None
         self._statusLine = None
@@ -60,13 +60,13 @@ class Script(default.Script):
         """
 
         if self._resultsDisplay and self._statusLine:
-            default.Script.onWindowActivated(self, event)
+            gtk.Script.onWindowActivated(self, event)
             return
 
         obj = event.source
         role = obj.getRole()
         if role != pyatspi.ROLE_FRAME:
-            default.Script.onWindowActivated(self, event)
+            gtk.Script.onWindowActivated(self, event)
             return
 
         isEditbar = lambda x: x and x.getRole() == pyatspi.ROLE_EDITBAR
@@ -78,7 +78,7 @@ class Script(default.Script):
                        and not x.getState().contains(pyatspi.STATE_EDITABLE)
         self._statusLine = pyatspi.findDescendant(obj, isStatusLine)
 
-        default.Script.onWindowActivated(self, event)
+        gtk.Script.onWindowActivated(self, event)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into gcalctool's text display.
@@ -91,4 +91,4 @@ class Script(default.Script):
             self.presentMessage(self.utilities.displayedText(self._statusLine))
             return
 
-        default.Script.onTextInserted(self, event)
+        gtk.Script.onTextInserted(self, event)

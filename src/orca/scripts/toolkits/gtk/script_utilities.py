@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright (C) 2013 The Orca Team.
+# Copyright (C) 2013 Igalia, S.L.
 #
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
@@ -22,27 +22,27 @@
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2013 The Orca Team."
+__copyright__ = "Copyright (c) 2013 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
 
 import orca.script_utilities as script_utilities
-import orca.scripts.toolkits.gtk as gtk
 
-class Utilities(gtk.Utilities):
+class Utilities(script_utilities.Utilities):
 
     def __init__(self, script):
-        gtk.Utilities.__init__(self, script)
+        script_utilities.Utilities.__init__(self, script)
 
-    def isReadOnlyTextArea(self, obj):
-        if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
-            return False
+    def displayedText(self, obj):
+        displayedText = script_utilities.Utilities.displayedText(self, obj)
+        if displayedText:
+            return displayedText
 
-        return gtk.Utilities.isReadOnlyTextArea(self, obj)
+        # Present GtkLabel children inside a GtkListBox row.
+        if obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
+            labels = self.unrelatedLabels(obj, onlyShowing=False)
+            displayedText = " ".join(map(self.displayedText, labels))
 
-    def isTextArea(self, obj):
-        if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
-            return True
-
-        return gtk.Utilities.isTextArea(self, obj)
+        self._script.generatorCache[self.DISPLAYED_TEXT][obj] = displayedText
+        return displayedText

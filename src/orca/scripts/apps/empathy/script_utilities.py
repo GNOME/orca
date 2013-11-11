@@ -30,13 +30,15 @@ __license__   = "LGPL"
 
 import orca.script_utilities as script_utilities
 
+import orca.scripts.toolkits.gtk as gtk
+
 #############################################################################
 #                                                                           #
 # Utilities                                                                 #
 #                                                                           #
 #############################################################################
 
-class Utilities(script_utilities.Utilities):
+class Utilities(gtk.Utilities):
 
     def __init__(self, script):
         """Creates an instance of the Utilities class.
@@ -45,7 +47,7 @@ class Utilities(script_utilities.Utilities):
         - script: the script with which this instance is associated.
         """
 
-        script_utilities.Utilities.__init__(self, script)
+        gtk.Utilities.__init__(self, script)
 
     #########################################################################
     #                                                                       #
@@ -63,7 +65,7 @@ class Utilities(script_utilities.Utilities):
         Returns: a list of all the child nodes
         """
 
-        reportedNodes = script_utilities.Utilities.childNodes(self, obj)
+        reportedNodes = gtk.Utilities.childNodes(self, obj)
         actualNodes = []
         for node in reportedNodes:
             child = self.realActiveDescendant(node)

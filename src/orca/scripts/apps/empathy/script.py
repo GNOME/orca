@@ -28,7 +28,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.chat as chat
-import orca.scripts.default as default
+import orca.scripts.toolkits.gtk as gtk
 
 from .script_utilities import Utilities
 
@@ -38,7 +38,7 @@ from .script_utilities import Utilities
 #                                                                      #
 ########################################################################
 
-class Script(default.Script):
+class Script(gtk.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application."""
@@ -50,7 +50,7 @@ class Script(default.Script):
                                       pyatspi.ROLE_FILLER,
                                       pyatspi.ROLE_FRAME]]
 
-        default.Script.__init__(self, app)
+        gtk.Script.__init__(self, app)
 
     def getChat(self):
         """Returns the 'chat' class for this script."""
@@ -68,7 +68,7 @@ class Script(default.Script):
         handlers for chat functionality.
         """
 
-        default.Script.setupInputEventHandlers(self)
+        gtk.Script.setupInputEventHandlers(self)
         self.inputEventHandlers.update(self.chat.inputEventHandlers)
 
     def getAppKeyBindings(self):
@@ -107,7 +107,7 @@ class Script(default.Script):
         if self.chat.isChatRoomMsg(event.source):
             return False
 
-        return default.Script.skipObjectEvent(self, event)
+        return gtk.Script.skipObjectEvent(self, event)
 
     def onTextInserted(self, event):
         """Called whenever text is added to an object."""
@@ -120,7 +120,7 @@ class Script(default.Script):
         if self.chat.presentInsertedText(event):
             return
 
-        default.Script.onTextInserted(self, event)
+        gtk.Script.onTextInserted(self, event)
 
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated."""
@@ -132,7 +132,7 @@ class Script(default.Script):
         allPageTabs = self.utilities.descendantsWithRole(
             event.source, pyatspi.ROLE_PAGE_TAB)
 
-        default.Script.onWindowActivated(self, event)
+        gtk.Script.onWindowActivated(self, event)
 
     def onValueChanged(self, event):
         """Called whenever an object's value changes.  Currently, the
@@ -147,4 +147,4 @@ class Script(default.Script):
             #
             return
 
-        default.Script.onValueChanged(self, event)
+        gtk.Script.onValueChanged(self, event)

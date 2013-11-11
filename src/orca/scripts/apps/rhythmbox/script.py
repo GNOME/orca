@@ -27,10 +27,10 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."  \
                 "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
-import orca.scripts.default as default
+import orca.scripts.toolkits.gtk as gtk
 from .formatting import Formatting
 
-class Script(default.Script):
+class Script(gtk.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.
@@ -38,7 +38,7 @@ class Script(default.Script):
         Arguments:
         - app: the application to create a script for.
         """
-        default.Script.__init__(self, app)
+        gtk.Script.__init__(self, app)
 
     def getFormatting(self):
         """Returns the formatting strings for this script."""

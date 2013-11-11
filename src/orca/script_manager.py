@@ -63,8 +63,7 @@ class ScriptManager:
              'vte':              'gnome-terminal',
              'gnome-terminal-server': 'gnome-terminal'}
         self._toolkitNames = \
-            {'gtk':              'GAIL',
-             'clutter':          'CALLY'}
+            {'clutter':          'CALLY'}
 
         self.setActiveScript(None, "__init__")
         debug.println(debug.LEVEL_FINEST, 'INFO: Script manager initialized')

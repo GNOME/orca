@@ -29,7 +29,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.scripts.default as default
+import orca.scripts.toolkits.gtk as gtk
 import orca.orca_state as orca_state
 import orca.settings as settings
 import orca.settings_manager as settings_manager
@@ -43,7 +43,7 @@ _settingsManager = settings_manager.getManager()
 #                                                                      #
 ########################################################################
 
-class Script(default.Script):
+class Script(gtk.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.
@@ -52,7 +52,7 @@ class Script(default.Script):
         - app: the application to create a script for.
         """
 
-        default.Script.__init__(self, app)
+        gtk.Script.__init__(self, app)
 
         # By default, don't present if gnome-terminal is not the active 
         # application.
@@ -85,7 +85,7 @@ class Script(default.Script):
                 utterances = self.speechGenerator.generateSpeech(pageTab)
                 speech.speak(utterances)
 
-        default.Script.locusOfFocusChanged(self, event, 
+        gtk.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
 
     def onTextDeleted(self, event):
@@ -102,7 +102,7 @@ class Script(default.Script):
         #
         if (event.source.getRole() != pyatspi.ROLE_TERMINAL) \
             or (event_string != "BackSpace"):
-            default.Script.onTextDeleted(self, event)
+            gtk.Script.onTextDeleted(self, event)
             return
 
         # Ignore text deletions from non-focused objects, unless the
@@ -140,7 +140,7 @@ class Script(default.Script):
         where the caret is.
         """
         string, caretOffset, lineOffset = \
-                default.Script.getTextLineAtCaret(self, acc)
+                gtk.Script.getTextLineAtCaret(self, acc)
 
         # Sometimes, gnome-terminal will give us very odd values when
         # the user is editing using 'vi' and has positioned the caret

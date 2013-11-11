@@ -29,7 +29,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.scripts.default as default
+import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.settings as settings
 import orca.settings_manager as settings_manager
@@ -101,6 +101,11 @@ class Script(WebKitGtk.Script):
     #                                                                      #
     ########################################################################
 
+    def onFocus(self, event):
+        """Callback for focus: accessibility events."""
+
+        gtk.Script.onFocus(self, event)
+
     def onNameChanged(self, event):
         """Callback for object:property-change:accessible-name events."""
 
@@ -110,13 +115,13 @@ class Script(WebKitGtk.Script):
         if event.source.getRole() == pyatspi.ROLE_FRAME:
             return
 
-        default.Script.onNameChanged(self, event)
+        gtk.Script.onNameChanged(self, event)
 
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
  
         if not event.detail1:
-            default.Script.onShowingChanged(self, event)
+            gtk.Script.onShowingChanged(self, event)
             return
 
         obj = event.source
@@ -129,7 +134,7 @@ class Script(WebKitGtk.Script):
             return
 
         if role != pyatspi.ROLE_LABEL or relationSet:
-            default.Script.onShowingChanged(self, event)
+            gtk.Script.onShowingChanged(self, event)
             return
 
         window = self.utilities.topLevelObject(obj)

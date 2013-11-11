@@ -28,11 +28,12 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.script_utilities as script_utilities
+import orca.scripts.toolkits.gtk as gtk
 
-class Utilities(script_utilities.Utilities):
+class Utilities(gtk.Utilities):
 
     def __init__(self, script):
-        script_utilities.Utilities.__init__(self, script)
+        gtk.Utilities.__init__(self, script)
 
     def offsetsForPhrase(self, obj):
         """Return the start and end offset for the given phrase. Overriden
@@ -52,7 +53,7 @@ class Utilities(script_utilities.Utilities):
             return [0, 0]
 
         if obj.getRole() != pyatspi.ROLE_DOCUMENT_FRAME:
-            return script_utilities.Utilities.offsetsForPhrase(self, obj)
+            return gtk.Utilities.offsetsForPhrase(self, obj)
 
         lastPos = self._script.pointOfReference.get("lastCursorPosition")
         keyString, mods = self.lastKeyAndModifiers()
@@ -70,4 +71,4 @@ class Utilities(script_utilities.Utilities):
                 return [0, text.caretOffset]
             return [lastPos[1], text.caretOffset]
 
-        return script_utilities.Utilities.offsetsForPhrase(self, obj)
+        return gtk.Utilities.offsetsForPhrase(self, obj)

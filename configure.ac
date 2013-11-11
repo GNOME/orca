@@ -116,6 +116,7 @@ src/orca/scripts/toolkits/J2SE-access-bridge/Makefile
 src/orca/scripts/toolkits/CALLY/Makefile
 src/orca/scripts/toolkits/Qt/Makefile
 src/orca/scripts/toolkits/WebKitGtk/Makefile
+src/orca/scripts/toolkits/gtk/Makefile
 src/orca/backends/Makefile
 src/orca/orca_bin.py
 src/orca/orca_i18n.py
