@@ -1099,6 +1099,21 @@ class Script(default.Script):
 
         default.Script.onTextSelectionChanged(self, event)
 
+    def onActiveChanged(self, event):
+        """Callback for object:state-changed:active accessibility events."""
+
+        if self.findCommandRun:
+            self.findCommandRun = False
+            self.find()
+            return
+
+        if not event.detail1:
+            return
+
+        role = event.source.getRole()
+        if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]:
+            orca.setLocusOfFocus(event, event.source)
+
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
@@ -1281,12 +1296,19 @@ class Script(default.Script):
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
-        # TODO - JD: Go through all of the crap below. :-/
+        if not event.detail1:
+            return
 
         try:
             eventSourceRole = event.source.getRole()
         except:
             return
+
+        if eventSourceRole in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]:
+            orca.setLocusOfFocus(event, event.source)
+            return
+
+        # TODO - JD: Go through all of the crap below. :-/
 
         # Ignore events on the frame as they are often intermingled
         # with menu activity, wreaking havoc on the context. We will
@@ -1351,18 +1373,6 @@ class Script(default.Script):
                 if not self.utilities.isSameObject(
                         obj, orca_state.locusOfFocus):
                     orca.setLocusOfFocus(event, obj, notifyScript=False)
-                    # If an alert got focus, let's do the best we can to 
-                    # try to automatically speak its contents while also
-                    # making sure the locus of focus and caret context
-                    # are in the right spot for braille and caret navigation.
-                    # http://bugzilla.gnome.org/show_bug.cgi?id=570551
-                    #
-                    if eventSourceRole == pyatspi.ROLE_ALERT:
-                        speech.speak(self.speechGenerator.generateSpeech(
-                                event.source))
-                        self.updateBraille(obj)
-                    else:
-                        self.presentLine(obj, characterOffset)
                 return
 
         default.Script.onFocusedChanged(self, event)
@@ -2171,6 +2181,22 @@ class Script(default.Script):
         except:
             pass
         obj = obj or orca_state.locusOfFocus
+
+        # TODO - JD: It seems insufficient to take a "if it's ARIA, use
+        # the default script" approach. For instance, an ARIA dialog does
+        # not have "unrelated labels"; it has embedded object characters
+        # just like other Gecko content. Unless and until Gecko exposes
+        # ARIA widgets as proper widgets, we'll need to not be so trusting.
+        # For now, just add hacks on a per-case basis until there is time
+        # to properly review this code.
+        try:
+            role = obj.getRole()
+        except:
+            pass
+        else:
+            if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]:
+                return False
+
         attrs = self._getAttrDictionary(obj)
         if 'isAria' not in self.generatorCache:
             self.generatorCache['isAria'] = {}
