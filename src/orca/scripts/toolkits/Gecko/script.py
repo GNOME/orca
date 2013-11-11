@@ -3795,6 +3795,7 @@ class Script(default.Script):
         prevObj = None
         for content in contents:
             [obj, startOffset, endOffset, string] = content
+            string = self.utilities.adjustForRepeats(string)
             role = obj.getRole()
 
             # If we don't have an object, there's nothing to do. If we have
@@ -3934,11 +3935,8 @@ class Script(default.Script):
     def speakContents(self, contents, speakRole=True):
         """Speaks each string in contents using the associated voice/acss"""
         utterances = self.getUtterancesFromContents(contents, speakRole)
-        clumped = self.clumpUtterances(utterances)
-        for [element, acss] in clumped:
-            if isinstance(element, str):
-                element = self.utilities.adjustForRepeats(element)
-            speech.speak(element, acss, False)
+        for utterance in utterances:
+            speech.speak(utterance, interrupt=False)
 
     def speakCharacterAtOffset(self, obj, characterOffset):
         """Speaks the character at the given characterOffset in the
