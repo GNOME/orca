@@ -401,6 +401,16 @@ class Script(Gecko.Script):
                 self._presentMessage(obj)
 
 
+    def onShowingChanged(self, event):
+        """Callback for object:state-changed:showing accessibility events."""
+
+        # TODO - JD: Once there are separate scripts for the Gecko toolkit
+        # and the Firefox browser, this method can be deleted. It's here
+        # right now just to prevent the Gecko script from presenting non-
+        # existent browsery autocompletes for Thunderbird.
+
+        default.Script.onShowingChanged(self, event)
+
     def onTextDeleted(self, event):
         """Called whenever text is from an an object.
 

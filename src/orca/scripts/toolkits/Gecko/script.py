@@ -1264,6 +1264,20 @@ class Script(default.Script):
         if event.source.getRole() == pyatspi.ROLE_FRAME:
             self.liveMngr.flushMessages()
 
+    def onFocus(self, event):
+        """Callback for focus: accessibility events."""
+
+        # NOTE: This event type is deprecated and Orca should no longer use it.
+        # This callback remains just to handle bugs in applications and toolkits
+        # during the remainder of the unstable (3.11) development cycle.
+
+        role = event.source.getRole()
+
+        # Unfiled. When a context menu pops up, we seem to get a focus: event,
+        # but no object:state-changed:focused event from Gecko.
+        if role == pyatspi.ROLE_MENU:
+            orca.setLocusOfFocus(event, event.source)
+
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
@@ -1355,6 +1369,10 @@ class Script(default.Script):
 
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
+
+        # TODO - JD: Once there are separate scripts for the Gecko toolkit
+        # and the Firefox browser, the stuff below belongs in the browser
+        # script and not in the toolkit script.
  
         try:
             eventRole = event.source.getRole()
