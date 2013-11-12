@@ -3808,6 +3808,14 @@ class Script(default.Script):
                or self.isLabellingContents(obj, contents):
                 continue
 
+            # TODO - JD: this is a temporary and sad hack borrowed from
+            # clumpUtterances() which is no longer called by speakContents().
+            # Ultimately this sort of crap belongs in a generator (along with
+            # other similiar crap).
+            if string == "\n" and len(contents) == 1 \
+               and _settingsManager.getSetting('speakBlankLines'):
+                string = messages.BLANK
+
             # Thunderbird now does something goofy with smileys in
             # email: exposes them as a nested paragraph with a name
             # consisting of the punctuation used to create the smiley
