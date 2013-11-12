@@ -1318,14 +1318,6 @@ class Script(default.Script):
 
         # TODO - JD: Go through all of the crap below. :-/
 
-        # Ignore events on the frame as they are often intermingled
-        # with menu activity, wreaking havoc on the context. We will
-        # ignore autocompletes because we get focus events for the
-        # entry, which is the thing that really has focus anyway.
-        #
-        if eventSourceRole in [pyatspi.ROLE_FRAME,
-                               pyatspi.ROLE_AUTOCOMPLETE]:
-            return
 
         # We also ignore focus events on the panel that holds the document
         # frame.  We end up getting these typically because we've called
