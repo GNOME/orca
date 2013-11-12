@@ -1307,6 +1307,11 @@ class Script(default.Script):
         if not event.detail1:
             return
 
+        obj = event.source
+        if self.isAriaWidget(obj) or not self.inDocumentContent(obj):
+            default.Script.onFocusedChanged(self, event)
+            return
+
         try:
             eventSourceRole = event.source.getRole()
         except:
@@ -1363,9 +1368,7 @@ class Script(default.Script):
             except:
                 pass
 
-        elif eventSourceRole != pyatspi.ROLE_LINK \
-             and self.inDocumentContent(event.source) \
-             and not self.isAriaWidget(event.source):
+        elif eventSourceRole != pyatspi.ROLE_LINK:
             [obj, characterOffset] = \
                 self.findFirstCaretContext(event.source, 0)
             self.setCaretContext(obj, characterOffset)
