@@ -1,3 +1,17 @@
+3.10.2 - 11 November 2013
+
+General:
+
+  * Fix for Orca double-presenting the contents of Nautilus's Places panel
+
+  * Fix a bug in presenting text found in WebKitGtk entries
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ml            Malayalam                   mshameers. Anish A
+
+=========
+
 3.10.1 - 16 October 2013
 
 General:
