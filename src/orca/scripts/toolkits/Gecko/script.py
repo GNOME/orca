@@ -1312,6 +1312,11 @@ class Script(default.Script):
             default.Script.onFocusedChanged(self, event)
             return
 
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EDITABLE):
+            default.Script.onFocusedChanged(self, event)
+            return
+
         try:
             eventSourceRole = event.source.getRole()
         except:
@@ -1355,8 +1360,7 @@ class Script(default.Script):
         # caret context for the document frame.  If we succeed, then
         # we set the focus on the object that's holding the caret.
         #
-        if eventSourceRole == pyatspi.ROLE_DOCUMENT_FRAME \
-           and not event.source.getState().contains(pyatspi.STATE_EDITABLE):
+        if eventSourceRole == pyatspi.ROLE_DOCUMENT_FRAME:
             try:
                 [obj, characterOffset] = self.getCaretContext()
                 state = obj.getState()
