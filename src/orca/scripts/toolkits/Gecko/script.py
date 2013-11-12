@@ -1126,10 +1126,14 @@ class Script(default.Script):
         if role != pyatspi.ROLE_DOCUMENT_FRAME:
              return
 
+        try:
+            focusRole = orca_state.locusOfFocus.getRole()
+        except:
+            focusRole = None
+
         # The event is for the changing contents of the help frame as the user
         # navigates from topic to topic in the list on the left. Ignore this.
-        if orca_state.locusOfFocus \
-           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_LIST_ITEM \
+        if focusRole == pyatspi.ROLE_LIST_ITEM \
            and not self.inDocumentContent(orca_state.locusOfFocus):
             return
  
@@ -1317,70 +1321,16 @@ class Script(default.Script):
             default.Script.onFocusedChanged(self, event)
             return
 
-        try:
-            eventSourceRole = event.source.getRole()
-        except:
-            return
-
-        if eventSourceRole in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]:
+        role = obj.getRole()
+        if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]:
             orca.setLocusOfFocus(event, event.source)
             return
 
-        # TODO - JD: Go through all of the crap below. :-/
-
-
-        # We also ignore focus events on the panel that holds the document
-        # frame.  We end up getting these typically because we've called
-        # grabFocus on this panel when we're doing caret navigation.  In
-        # those cases, we want the locus of focus to be the subcomponent
-        # that really holds the caret.
-        #
-        if eventSourceRole == pyatspi.ROLE_PANEL:
-            documentFrame = self.utilities.documentFrame()
-            if documentFrame and (documentFrame.parent == event.source):
-                return
-            else:
-                # Web pages can contain their own panels.  If the locus
-                # of focus is within that panel, we probably moved off
-                # of a focusable item (like a link within the panel)
-                # to something non-focusable (like text within the panel).
-                # If we don't ignore this event, we'll loop to the top
-                # of the panel.
-                #
-                containingPanel = self.utilities.ancestorWithRole(
-                    orca_state.locusOfFocus,
-                    [pyatspi.ROLE_PANEL],
-                    [pyatspi.ROLE_DOCUMENT_FRAME])
-                if self.utilities.isSameObject(containingPanel, event.source):
-                    return
-
-        # When we get a focus event on the document frame, it's usually
-        # because we did a grabFocus on its parent in setCaretPosition.
-        # We try to handle this here by seeing if there is already a
-        # caret context for the document frame.  If we succeed, then
-        # we set the focus on the object that's holding the caret.
-        #
-        if eventSourceRole == pyatspi.ROLE_DOCUMENT_FRAME:
-            try:
-                [obj, characterOffset] = self.getCaretContext()
-                state = obj.getState()
-                if not state.contains(pyatspi.STATE_FOCUSED):
-                    if not state.contains(pyatspi.STATE_FOCUSABLE) \
-                       or not self.inDocumentContent():
-                        orca.setLocusOfFocus(event, obj)
-                    return
-            except:
-                pass
-
-        elif eventSourceRole != pyatspi.ROLE_LINK:
-            [obj, characterOffset] = \
-                self.findFirstCaretContext(event.source, 0)
-            self.setCaretContext(obj, characterOffset)
-            if not self.utilities.isSameObject(event.source, obj):
-                if not self.utilities.isSameObject(
-                        obj, orca_state.locusOfFocus):
-                    orca.setLocusOfFocus(event, obj, notifyScript=False)
-                return
+        # As the caret moves into a non-focusable element, Gecko emits the
+        # signal on the first focusable element in the ancestry.
+        rolesToIgnore = pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_PANEL
+        if role in rolesToIgnore:
+            return
 
         default.Script.onFocusedChanged(self, event)
 
@@ -1437,68 +1387,33 @@ class Script(default.Script):
         if not self.utilities.hasMatchingHierarchy(event.source, rolesList):
             default.Script.handleProgressBarUpdate(self, event, obj)
 
-    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
-        """Called when the visual object with focus changes.
+    def locusOfFocusChanged(self, event, oldFocus, newFocus):
+        """Called when the object with focus changes.
 
         Arguments:
         - event: if not None, the Event that caused the change
-        - oldLocusOfFocus: Accessible that is the old locus of focus
-        - newLocusOfFocus: Accessible that is the new locus of focus
+        - oldFocus: Accessible that is the old focus
+        - newFocus: Accessible that is the new focus
         """
-        # Sometimes we get different accessibles for the same object.
-        #
-        if self.utilities.isSameObject(oldLocusOfFocus, newLocusOfFocus):
+
+        if not newFocus:
+            orca_state.noFocusTimeStamp = time.time()
             return
 
-        # We always automatically go back to focus tracking mode when
-        # the focus changes.
-        #
-        if self.flatReviewContext:
-            self.toggleFlatReviewMode()
-
-        # Try to handle the case where a spurious focus event was tossed
-        # at us.
-        #
-        if newLocusOfFocus and self.inDocumentContent(newLocusOfFocus):
-            text = self.utilities.queryNonEmptyText(newLocusOfFocus)
-            if text:
-                caretOffset = text.caretOffset
-
-                # If the old locusOfFocus was not in the document frame, and
-                # if the old locusOfFocus's frame is the same as the frame
-                # containing the new locusOfFocus, we likely just returned
-                # from a toolbar (find, location, menu bar, etc.).  We do
-                # not want to speak the hierarchy between that toolbar and
-                # the document frame.
-                #
-                if oldLocusOfFocus and \
-                   not self.inDocumentContent(oldLocusOfFocus):
-                    oldFrame = self.utilities.ancestorWithRole(
-                        oldLocusOfFocus, [pyatspi.ROLE_FRAME], [])
-                    newFrame = self.utilities.ancestorWithRole(
-                        newLocusOfFocus, [pyatspi.ROLE_FRAME], [])
-                    if self.utilities.isSameObject(oldFrame, newFrame) or \
-                           newLocusOfFocus.getRole() == pyatspi.ROLE_DIALOG:
-                        self.setCaretPosition(newLocusOfFocus, caretOffset)
-                        self.presentLine(newLocusOfFocus, caretOffset)
-                        return
-
-            else:
-                caretOffset = 0
-            [obj, characterOffset] = \
-                  self.findFirstCaretContext(newLocusOfFocus, caretOffset)
-            self.setCaretContext(obj, characterOffset)
-
-        # If we've just landed in the Find toolbar, reset
-        # self.madeFindAnnouncement.
-        #
-        if newLocusOfFocus and self.utilities.inFindToolbar(newLocusOfFocus):
+        if self.utilities.inFindToolbar(newFocus):
             self.madeFindAnnouncement = False
 
-        default.Script.locusOfFocusChanged(self,
-                                           event,
-                                           oldLocusOfFocus,
-                                           newLocusOfFocus)
+        if not self.inDocumentContent(newFocus):
+            default.Script.locusOfFocusChanged(self, event, oldFocus, newFocus)
+            return
+
+        caretOffset = 0
+        text = self.utilities.queryNonEmptyText(newFocus)
+        if text and (0 <= text.caretOffset < text.characterCount):
+            caretOffset = text.caretOffset
+
+        self.setCaretContext(newFocus, caretOffset)
+        default.Script.locusOfFocusChanged(self, event, oldFocus, newFocus)
 
     def findObjectOnLine(self, obj, offset, contents):
         """Determines if the item described by the object and offset is
@@ -3976,44 +3891,19 @@ class Script(default.Script):
         given object.
         """
 
-        # Clear the flat review context if the user is currently in a
-        # flat review.
-        #
         if self.flatReviewContext:
             self.toggleFlatReviewMode()
 
-        caretContext = self.getCaretContext()
-
-        # Save where we are in this particular document frame.
-        # We do this because the user might have several URLs
-        # open in several different tabs, and we keep track of
-        # where the caret is for each documentFrame.
-        #
-        documentFrame = self.utilities.documentFrame()
-        if documentFrame:
-            self._documentFrameCaretContext[hash(documentFrame)] = caretContext
-
-        if caretContext == [obj, characterOffset]:
-            return
-
         self.setCaretContext(obj, characterOffset)
 
-        # If the item is a focusable list in an HTML form, we're here
-        # because we've arrowed to it.  We don't want to grab focus on
-        # it and trap the user in the list. The same is true for combo
-        # boxes.
-        #
-        if obj \
-           and obj.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_COMBO_BOX] \
-           and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-            characterOffset = self.utilities.characterOffsetInParent(obj)
-            obj = obj.parent
-            self.setCaretContext(obj, characterOffset)
+        try:
+            state = obj.getState()
+        except:
+            return
 
-        # Reset focus if need be.
-        #
-        if obj != orca_state.locusOfFocus:
-            orca.setLocusOfFocus(None, obj, notifyScript=False)
+        orca.setLocusOfFocus(None, obj, notifyScript=False)
+        if state.contains(pyatspi.STATE_FOCUSABLE):
+            obj.queryComponent().grabFocus()
 
         text = self.utilities.queryNonEmptyText(obj)
         if text:

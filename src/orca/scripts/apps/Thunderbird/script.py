@@ -52,8 +52,6 @@ _settingsManager = settings_manager.getManager()
 class Script(Gecko.Script):
     """The script for Thunderbird."""
 
-    _containingPanelName = ""
-
     def __init__(self, app):
         """ Creates a new script for the given application.
 
@@ -61,26 +59,10 @@ class Script(Gecko.Script):
         - app: the application to create a script for.
         """
 
-        # Set the debug level for all the methods in this script.
-        self.debugLevel = debug.LEVEL_FINEST
-
-        # http://bugzilla.mozilla.org/show_bug.cgi?id=659018
-        if app.toolkitVersion < "7.0":
-            app.setCacheMask(pyatspi.cache.ALL ^ pyatspi.cache.NAME)
-
         # Store the last autocompleted string for the address fields
         # so that we're not too 'chatty'.  See bug #533042.
         #
         self._lastAutoComplete = ""
-
-        # When a mail message gets focus, we'll get a window:activate event
-        # followed by two focus events for the document frame.  We want to
-        # present the message if it was just opened; we don't if it was
-        # already opened and the user has just returned focus to it. Store
-        # the fact that a message was loaded which we should present once
-        # the document frame claims focus. See bug #541018.
-        #
-        self._messageLoaded = False
 
         Gecko.Script.__init__(self, app)
 
@@ -133,41 +115,6 @@ class Script(Gecko.Script):
         value = self.sayAllOnLoadCheckButton.get_active()
         prefs.writelines("%s.sayAllOnLoad = %s\n" % (prefix, value))
         script_settings.sayAllOnLoad = value
-
-    def _debug(self, msg):
-        """ Convenience method for printing debug messages"""
-
-        debug.println(self.debugLevel, "Thunderbird.py: "+msg)
-
-    def _isSpellCheckListItemFocus(self, event):
-        """Check if this event is for a list item in the spell checking
-        dialog and whether it has a FOCUSED state.
-
-        Arguments:
-        - event: the Event
-
-        Return True is this event is for a list item in the spell checking 
-        dialog and it doesn't have a FOCUSED state, Otherwise return False.
-        """
-
-        rolesList = [pyatspi.ROLE_LIST_ITEM, \
-                     pyatspi.ROLE_LIST, \
-                     pyatspi.ROLE_DIALOG, \
-                     pyatspi.ROLE_APPLICATION]
-        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-            dialog = event.source.parent.parent
-
-            # Translators: this is what the name of the spell checking
-            # dialog in Thunderbird begins with. The translated form
-            # has to match what Thunderbird is using.  We hate keying
-            # off stuff like this, but we're forced to do so in this case.
-            #
-            if dialog.name.startswith(_("Check Spelling")):
-                state = event.source.getState()
-                if not state.contains(pyatspi.STATE_FOCUSED):
-                    return True
-
-        return False
 
     def onCaretMoved(self, event):
         """Called whenever the caret moves.
@@ -230,176 +177,40 @@ class Script(Gecko.Script):
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
-        # If we get an "object:state-changed:focused" event for a list
-        # item in the spell checking dialog, and it doesn't have a
-        # FOCUSED state (i.e. we didn't navigate to it), then ignore it.
-        # See bug #535192 for more details.
-        #
-        if self._isSpellCheckListItemFocus(event):
+        if not event.detail1:
             return
 
-        # TODO - JD: Determine how much of the stuff below is still needed.
-
-        obj = event.source
-        parent = obj.parent
-        top = self.utilities.topLevelObject(obj)
-        consume = False
-
-        # Clear the stored autocomplete string.
-        #
         self._lastAutoComplete = ""
 
-        # Don't speak chrome URLs.
-        #
-        if obj.name.startswith("chrome://"):
+        obj = event.source
+        if not self.inDocumentContent(obj):
+            default.Script.onFocusedChanged(self, event)
             return
 
-        # This is a better fix for bug #405541. Thunderbird gives
-        # focus to the cell in the column that is being sorted
-        # (e.g., Date). Braille should show the row beginning with
-        # the first populated cell. Set the locusOfFocus to that
-        # cell and consume the event so that the Gecko script
-        # doesn't reset it.
-        #
-        if obj.getRole() == pyatspi.ROLE_TABLE_CELL \
-           and parent.getRole() != pyatspi.ROLE_LIST_ITEM:
-            table = parent.queryTable()
-            row = table.getRowAtIndex(self.utilities.cellIndex(obj))
-            for i in range(0, table.nColumns):
-                acc = table.getAccessibleAt(row, i)
-                if acc.name:
-                    # For some reason orca.py's check to see if the
-                    # object we're setting the locusOfFocus to is the
-                    # same as the current locusOfFocus is returning
-                    # True when it's not actually True. Therefore,
-                    # we'll force the propagation as a precaution.
-                    #
-                    orca.setLocusOfFocus(event, acc, force=True)
-                    consume = True
-                    break
+        if self.isEditableMessage(obj):
+            self.textArea = obj
+            default.Script.onFocusedChanged(self, event)
+            return
 
-        # Text area (for caching handle for spell checking purposes).
-        #
-        # This works in conjunction with code in the onNameChanged()
-        # method. Check to see if focus is currently in the Thunderbird
-        # message area. If it is, then, if this is the first time, save
-        # a pointer to the document frame which contains the text being
-        # edited.
-        #
-        # Note that this drops through to then use the default event
-        # processing in the parent class for this "focus:" event.
+        role = obj.getRole()
+        if role != pyatspi.ROLE_DOCUMENT_FRAME:
+            Gecko.Script.onFocusedChanged(self, event)
+            return
 
-        rolesList = [pyatspi.ROLE_DOCUMENT_FRAME,
-                     pyatspi.ROLE_INTERNAL_FRAME,
-                     pyatspi.ROLE_FRAME,
-                     pyatspi.ROLE_APPLICATION]
-        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-            self._debug("onFocus - message text area.")
+        contextObj, contextOffset = self.getCaretContext()
+        if contextObj:
+            return
 
-            self.textArea = event.source
-            # Fall-thru to process the event with the default handler.
-
-        # Handle dialogs.
-        #
-        if top and top.getRole() == pyatspi.ROLE_DIALOG:
-            self._speakEnclosingPanel(obj)
-
-        # Handle a newly-opened message.
-        #
-        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
-           and orca_state.locusOfFocus \
-           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_FRAME:
-            if self._messageLoaded:
-                consume = True
-                self._presentMessage(event.source)
-
-            # If the user just gave focus to the message window (e.g. by
-            # Alt+Tabbing back into it), we might have an existing caret
-            # context. But we'll need the document frame in order to verify
-            # this. Therefore try to find the document frame.
-            #
-            elif self.getCaretContext() == [None, -1]:
-                documentFrame = None
-                for child in orca_state.locusOfFocus:
-                    if child.getRole() == pyatspi.ROLE_INTERNAL_FRAME \
-                       and child.childCount \
-                       and child[0].getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
-                        documentFrame = child[0]
-                        break
-                try:
-                    contextObj, contextOffset = \
-                        self._documentFrameCaretContext[hash(documentFrame)]
-                    if contextObj:
-                        orca.setLocusOfFocus(event, contextObj)
-                except:
-                    pass
-
-        if not consume:
-            # Much of the Gecko code is designed to handle Gecko's broken
-            # caret navigation. This is not needed in -- and can sometimes
-            # interfere with our presentation of -- a simple message being
-            # composed by the user. Surely we can count on Thunderbird to
-            # handle navigation in that case.
-            #
-            if self.isEditableMessage(event.source):
-                default.Script.onFocusedChanged(self, event)
-            else:
-                Gecko.Script.onFocusedChanged(self, event)
-
-    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
-        """Called when the visual object with focus changes.
-
-        Arguments:
-        - event: if not None, the Event that caused the change
-        - oldLocusOfFocus: Accessible that is the old locus of focus
-        - newLocusOfFocus: Accessible that is the new locus of focus
-        """
-
-        # If the user has just deleted a message from the middle of the 
-        # message header list, then we want to speak the newly focused 
-        # message in the header list (even though it has the same row 
-        # number as the previously deleted message).
-        # See bug #536451 for more details.
-        #
-        rolesList = [pyatspi.ROLE_TABLE_CELL,
-                     pyatspi.ROLE_TREE_TABLE,
-                     pyatspi.ROLE_SCROLL_PANE,
-                     pyatspi.ROLE_SCROLL_PANE]
-        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-            lastKey, mods = self.utilities.lastKeyAndModifiers()
-            if lastKey == "Delete":
-                oldLocusOfFocus = None
-
-        # If the user has just deleted an open mail message, then we want to
-        # try to speak the new name of the open mail message frame.
-        # See bug #540039 for more details.
-        #
-        rolesList = [pyatspi.ROLE_DOCUMENT_FRAME, \
-                     pyatspi.ROLE_INTERNAL_FRAME, \
-                     pyatspi.ROLE_FRAME, \
-                     pyatspi.ROLE_APPLICATION]
-        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-            lastKey, mods = self.utilities.lastKeyAndModifiers()
-            if lastKey == "Delete":
-                oldLocusOfFocus = None
-                state = newLocusOfFocus.getState()
-                if state.contains(pyatspi.STATE_DEFUNCT):
-                    newLocusOfFocus = event.source
-
-        # Pass the event onto the parent class to be handled in the default way.
-
-        Gecko.Script.locusOfFocusChanged(self, event,
-                                         oldLocusOfFocus, newLocusOfFocus)
+        orca.setLocusOfFocus(event, obj, notifyScript=False)
 
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
         obj = event.source
         if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME and not event.detail1:
-            self._messageLoaded = True
             if self.inDocumentContent():
+                self.speakMessage(obj.name)
                 self._presentMessage(obj)
-
 
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
@@ -489,19 +300,6 @@ class Script(Gecko.Script):
 
         Gecko.Script.onTextInserted(self, event)
 
-    def onVisibleDataChanged(self, event):
-        """Called when the visible data of an object changes."""
-
-        # [[[TODO: JD - In Gecko.py, we need onVisibleDataChanged() to
-        # to detect when the user switches between the tabs holding
-        # different URLs in Firefox.  Thunderbird issues very similar-
-        # looking events as the user types a subject in the message
-        # composition window. For now, rather than trying to distinguish
-        # them  in Gecko.py, we'll simply prevent Gecko.py from seeing when
-        # Thunderbird issues such an event.]]]
-        #
-        return
-
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
 
@@ -562,50 +360,6 @@ class Script(Gecko.Script):
                         allTokens += tokens
                         self.speakMisspeltWord(allTokens, badWord)
 
-    def _speakEnclosingPanel(self, obj):
-        """Speak the enclosing panel for the object, if it is
-        named. Going two containers up the hierarchy appears to be far
-        enough to find a named panel, if there is one.  Don't speak
-        panels whose name begins with 'chrome://'"""
-
-        self._debug("_speakEnclosingPanel")
-
-        parent = obj.parent
-        if not parent:
-            return
-
-        if parent.name != "" \
-            and (not parent.name.startswith("chrome://")) \
-            and (parent.getRole() == pyatspi.ROLE_PANEL):
-
-            # Speak the parent panel name, but only once.
-            #
-            if parent.name != self._containingPanelName:
-                self._containingPanelName = parent.name
-                utterances = []
-                # Translators: this is the name of a panel in Thunderbird.
-                #
-                text = _("%s panel") % parent.name
-                utterances.append(text)
-                speech.speak(utterances)
-        else:
-            grandparent = parent.parent
-            if grandparent \
-                and (grandparent.name != "") \
-                and (not grandparent.name.startswith("chrome://")) \
-                and (grandparent.getRole() == pyatspi.ROLE_PANEL):
-
-                # Speak the grandparent panel name, but only once.
-                #
-                if grandparent.name != self._containingPanelName:
-                    self._containingPanelName = grandparent.name
-                    utterances = []
-                    # Translators: this is the name of a panel in Thunderbird.
-                    #
-                    text = _("%s panel") % grandparent.name
-                    utterances.append(text)
-                    speech.speak(utterances)
-
     def _presentMessage(self, documentFrame):
         """Presents the first line of the message, or the entire message,
         depending on the user's sayAllOnLoad setting."""
@@ -616,7 +370,6 @@ class Script(Gecko.Script):
             self.presentLine(obj, offset)
         elif _settingsManager.getSetting('enableSpeech'):
             self.sayAll(None)
-        self._messageLoaded = False
 
     def sayCharacter(self, obj):
         """Speaks the character at the current caret position."""

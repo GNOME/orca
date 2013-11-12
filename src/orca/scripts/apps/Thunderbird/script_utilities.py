@@ -62,10 +62,13 @@ class Utilities(Gecko.Utilities):
         Overridden here because multiple open messages are not arranged
         in tabs like they are in Firefox."""
 
+        obj = orca_state.locusOfFocus
+        if not obj:
+            return None
+
         if self.inFindToolbar():
             return Gecko.Utilities.documentFrame(self)
 
-        obj = orca_state.locusOfFocus
         while obj:
             role = obj.getRole()
             if role in [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_EMBEDDED]:
