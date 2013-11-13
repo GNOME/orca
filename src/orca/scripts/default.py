@@ -2151,6 +2151,11 @@ class Script(script.Script):
         if not orca_state.locusOfFocus:
             return
 
+        obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
+        if offset == event.detail1 \
+           and self.utilities.isSameObject(obj, event.source):
+            return
+
         # Should the event source be the locusOfFocus?
         #
         try:

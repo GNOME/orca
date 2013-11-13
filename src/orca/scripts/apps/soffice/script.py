@@ -923,11 +923,6 @@ class Script(default.Script):
         if event.detail1 == -1:
             return
 
-        obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
-        if offset == event.detail1 \
-           and self.utilities.isSameObject(obj, event.source):
-            return
-
         if self.utilities.isCellBeingEdited(event.source):
             orca.setLocusOfFocus(event, event.source.parent)
 

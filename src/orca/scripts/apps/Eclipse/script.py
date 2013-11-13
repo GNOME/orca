@@ -46,12 +46,6 @@ class Script(GAIL.Script):
         otherObj. Overridden here so that we can give more feedback to user.
         """
 
-        # Ignore caret movements in a duplicate event if the ofsset is the same
-        obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
-        if offset == event.detail1 \
-           and self.utilities.isSameObject(obj, event.source):
-            return
-
         # Let the default script's normal behavior do its thing
         #
         GAIL.Script._presentTextAtNewCaretPosition(self, event, otherObj)
