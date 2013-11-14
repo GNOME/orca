@@ -1324,7 +1324,7 @@ class Script(default.Script):
         # As the caret moves into a non-focusable element, Gecko emits the
         # signal on the first focusable element in the ancestry.
         rolesToIgnore = pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_PANEL
-        if role in rolesToIgnore:
+        if role in rolesToIgnore and self.inDocumentContent():
             return
 
         default.Script.onFocusedChanged(self, event)
