@@ -95,19 +95,19 @@ STATE_HORIZONTAL = _("horizontal")
 STATE_VERTICAL =  _("vertical")
 
 # Translators: This is a state which applies to a check box.
-STATE_CHECKED = _("checked")
+STATE_CHECKED = C_("checkbox", "checked")
 
 # Translators: This is a state which applies to a check box.
-STATE_NOT_CHECKED = _("not checked")
+STATE_NOT_CHECKED = C_("checkbox", "not checked")
 
 # Translators: This is a state which applies to a check box.
-STATE_PARTIALLY_CHECKED = _("partially checked")
+STATE_PARTIALLY_CHECKED = C_("checkbox", "partially checked")
 
 # Translators: This is a state which applies to a toggle button.
-STATE_PRESSED = _("pressed")
+STATE_PRESSED = C_("togglebutton", "pressed")
 
 # Translators: This is a state which applies to a toggle button.
-STATE_NOT_PRESSED = _("not pressed")
+STATE_NOT_PRESSED = C_("togglebutton", "not pressed")
 
 # Translators: This is a state which applies to a radio button.
 STATE_SELECTED_RADIO_BUTTON = C_("radiobutton", "selected")
