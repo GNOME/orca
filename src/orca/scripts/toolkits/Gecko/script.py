@@ -3768,18 +3768,6 @@ class Script(default.Script):
                 if self.labelInference.infer(prevObj) == string.strip():
                     continue
 
-            # The radio button's label gets added to the context in
-            # default.locusOfFocusChanged() and not through the speech
-            # generator -- unless we wind up having to infer the label.
-            # Therefore, if we have a valid label for a radio button,
-            # we need to add it here.
-            #
-            if (role == pyatspi.ROLE_RADIO_BUTTON) \
-                and not self.isAriaWidget(obj):
-                label = self.utilities.displayedLabel(obj)
-                if label:
-                    utterances.append([label, self.getACSS(obj, label)])
-
             # If we don't have a string, then use the speech generator.
             # Otherwise, we'll want to speak the string and possibly the
             # role.

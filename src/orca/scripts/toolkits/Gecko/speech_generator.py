@@ -523,3 +523,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         else:
             return speech_generator.SpeechGenerator._generatePositionInList(
                 self, obj, **args)
+
+    def _generateNewRadioButtonGroup(self, obj, **args):
+        # TODO - JD: Looking at the default speech generator's method, this
+        # is all kinds of broken. Until that can be sorted out, try to filter
+        # out some of the noise....
+        return []
