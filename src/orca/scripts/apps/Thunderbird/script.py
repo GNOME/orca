@@ -186,37 +186,33 @@ class Script(Gecko.Script):
         Gecko.Script.onTextDeleted(self, event)
 
     def onTextInserted(self, event):
-        """Called whenever text is inserted into an object.
+        """Callback for object:text-changed:insert accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
         obj = event.source
-        parent = obj.parent
-
         try:
-            role = event.source.getRole()
-            parentRole = parent.getRole()
+            role = obj.getRole()
+            parentRole = obj.parent.getRole()
         except:
             return
 
         if role == pyatspi.ROLE_LABEL and parentRole == pyatspi.ROLE_STATUS_BAR:
             return
 
-        # Try to stop unwanted chatter when a new message is being
-        # replied to. See bgo#618484.
-        #
-        if role == pyatspi.ROLE_DOCUMENT_FRAME \
-           and event.source.getState().contains(pyatspi.STATE_EDITABLE) \
-           and event.type.endswith("system"):
+        isSystemEvent = event.type.endswith("system")
+
+        # Try to stop unwanted chatter when a message is being replied to.
+        # See bgo#618484.
+        if isSystemEvent and self.isEditableMessage(obj):
             return
 
         # Speak the autocompleted text, but only if it is different
         # address so that we're not too "chatty." See bug #533042.
-        #
         if parentRole == pyatspi.ROLE_AUTOCOMPLETE:
             if len(event.any_data) == 1:
                 default.Script.onTextInserted(self, event)
+                return
+
+            if self._lastAutoComplete == event.any_data:
                 return
 
             # Mozilla cannot seem to get their ":system" suffix right
@@ -227,18 +223,10 @@ class Script(Gecko.Script):
                 hasSelection = False
             else:
                 hasSelection = text.getNSelections() > 0
-
-            if (hasSelection or event.type.endswith("system")) and event.any_data:
-                # The autocompleted address may start with the name,
-                # or it might start with the text typed by the user
-                # followed by ">>" followed by the address. Therefore
-                # we'll look at whatever follows the ">>" should it
-                # exist.
-                #
-                address = event.any_data.split(">>")[-1]
-                if self._lastAutoComplete != address:
-                    speech.speak(address)
-                self._lastAutoComplete = address
+            if hasSelection or isSystemEvent:
+                speech.speak(event.any_data)
+                self._lastAutoComplete = event.any_data
+                return
 
         Gecko.Script.onTextInserted(self, event)
 
