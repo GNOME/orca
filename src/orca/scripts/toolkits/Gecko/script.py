@@ -926,6 +926,13 @@ class Script(default.Script):
         if not text:
             return
 
+        [obj, characterOffset] = self.getCaretContext()
+        if characterOffset == event.detail1 \
+           and self.utilities.isSameObject(obj, event.source):
+            return
+
+        # TODO - JD: How much of the mess below is still needed?
+
         eventSourceRole = event.source.getRole()
         eventSourceState = event.source.getState()
         eventSourceInDocument = self.inDocumentContent(event.source)
@@ -939,16 +946,6 @@ class Script(default.Script):
             locusOfFocusState = locusOfFocusState.raw()
 
         notify = False
-
-        # Find out if the caret really moved. Firefox 3.1 gives us caret-moved
-        # events when certain focusable objects first get focus. If we haven't
-        # really moved, there's no point in updating braille again -- which is
-        # what we'll wind up doing if this event reaches the default script.
-        #
-        [obj, characterOffset] = self.getCaretContext()
-        if max(0, characterOffset) == event.detail1 \
-           and self.utilities.isSameObject(obj, event.source):
-            return
 
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             string, mods = self.utilities.lastKeyAndModifiers()
@@ -1043,8 +1040,6 @@ class Script(default.Script):
                 #
                 return
 
-        # Pass the event along to the default script for processing.
-        #
         default.Script.onCaretMoved(self, event)
 
     def onTextDeleted(self, event):

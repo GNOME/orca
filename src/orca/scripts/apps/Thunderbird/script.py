@@ -116,64 +116,6 @@ class Script(Gecko.Script):
         prefs.writelines("%s.sayAllOnLoad = %s\n" % (prefix, value))
         script_settings.sayAllOnLoad = value
 
-    def onCaretMoved(self, event):
-        """Called whenever the caret moves.
-
-        Arguments:
-        - event: the Event
-        """
-
-        # Much of the Gecko code is designed to handle Gecko's broken
-        # caret navigation. This is not needed in -- and can sometimes
-        # interfere with our presentation of -- a simple message being
-        # composed by the user. Surely we can count on Thunderbird to
-        # handle navigation in that case.
-        #
-        if self.isEditableMessage(event.source) \
-           or self.isNonHTMLEntry(event.source):
-            self.setCaretContext(event.source, event.detail1)
-            return default.Script.onCaretMoved(self, event)
-
-        # Page_Up/Page_Down are not used by Orca. However, users report
-        # using these keys in Thunderbird without success. The default
-        # script is sometimes rejecting the resulting caret-moved events
-        # based on the locusOfFocus other times Gecko is because of the
-        # caret context.
-        #
-        lastKey, mods = self.utilities.lastKeyAndModifiers()
-        updatePosition = lastKey in ["Page_Up", "Page_Down"]
-
-        # Unlike the unpredictable wild, wild web, odds are good that a
-        # caret-moved event in a message composition window is valid. But
-        # depending upon the locusOfFocus at the time this event is issued
-        # the default Gecko toolkit script might not do the right thing.
-        #
-        if not updatePosition and event.detail1 >= 0:
-            updatePosition = \
-                event.source.getState().contains(pyatspi.STATE_EDITABLE)
-
-        if updatePosition:
-            orca.setLocusOfFocus(event, event.source, notifyScript=False)
-            self.setCaretContext(event.source, event.detail1)
-
-            # The Gecko script, should it be about to pass along this
-            # event to the default script, will set the locusOfFocus to
-            # the object returned by findFirstCaretContext(). If that
-            # object is not the same as the event source or the event
-            # source's parent, the default script will reject the event.
-            # As a result, if the user presses Page_Up or Page_Down and
-            # just so happens to land on an object whose sole contents
-            # is an image, we'll say nothing. Ultimately this should
-            # probably be handled elsewhere, but this close to the next
-            # major (2.24) release, I (JD) am not risking it. :-)
-            #
-            [obj, offset] = \
-                self.findFirstCaretContext(event.source, event.detail1)
-            if obj.getRole() == pyatspi.ROLE_IMAGE:
-                return default.Script.onCaretMoved(self, event)
-
-        return Gecko.Script.onCaretMoved(self, event)
-
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
