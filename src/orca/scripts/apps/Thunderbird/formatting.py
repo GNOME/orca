@@ -36,6 +36,7 @@ import orca.scripts.toolkits.Gecko.formatting as GeckoFormatting
 formatting = {
     'speech': {
         pyatspi.ROLE_DOCUMENT_FRAME: {
+            'unfocused': 'name + roleName + currentLineText',
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + ' + orca.formatting.MNEMONIC,
             'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + orca.formatting.MNEMONIC + ' + ' + orca.formatting.TUTORIAL
             },

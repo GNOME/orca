@@ -917,6 +917,8 @@ class SpeechGenerator(generator.Generator):
         acss = self.voice(DEFAULT)
         result = generator.Generator._generateCurrentLineText(self, obj, **args)
         if result and result[0]:
+            if result[0] == "\n":
+                result[0] = messages.BLANK
             result.extend(acss)
         return result
 
