@@ -2764,19 +2764,7 @@ class Script(default.Script):
                 except:
                     return [obj, -1]
             else:
-                # [[[TODO: WDW - HACK because Gecko currently exposes
-                # whitespace from the raw HTML to us.  We can infer this
-                # by seeing if the extents are nil.  If so, we skip to
-                # the next character.]]]
-                #
-                extents = self.getExtents(obj,
-                                          characterOffset,
-                                          characterOffset + 1)
-                if (extents == (0, 0, 0, 0)) \
-                    and ((characterOffset + 1) < len(unicodeText)):
-                    return self.findFirstCaretContext(obj, characterOffset + 1)
-                else:
-                    return [obj, characterOffset]
+                return [obj, characterOffset]
         elif obj.getRole() == pyatspi.ROLE_TABLE:
             if obj[0] and obj[0].getRole() in [pyatspi.ROLE_CAPTION,
                                                pyatspi.ROLE_LIST]:
