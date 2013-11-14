@@ -2728,52 +2728,51 @@ class Script(default.Script):
         Arguments:
         -obj: an accessible object
         -characterOffset: the offset of the character where to start
-        looking for real rext
+        looking for real text
 
         Returns [obj, characterOffset] that points to real content.
         """
 
-        text = self.utilities.queryNonEmptyText(obj)
-        if text:
-            unicodeText = self.utilities.unicodeText(obj)
-            if characterOffset >= len(unicodeText):
-                if not self.utilities.isEntry(obj):
-                    return [obj, -1]
-                else:
-                    # We're at the end of an entry.  If we return -1,
-                    # and then set the caretContext accordingly,
-                    # findNextCaretInOrder() will think we're at the
-                    # beginning and we'll never escape this entry.
-                    #
-                    return [obj, characterOffset]
+        try:
+            role = obj.getRole()
+        except:
+            return [None, -1]
 
-            character = text.getText(characterOffset, characterOffset + 1)
-            if character == self.EMBEDDED_OBJECT_CHARACTER:
-                if obj.childCount <= 0:
-                    return self.findFirstCaretContext(obj, characterOffset + 1)
-                try:
-                    childIndex = self.getChildIndex(obj, characterOffset)
-
-                    # Handle bogus empty paragraphs.
-                    child = obj[childIndex]
-                    if child.getRole() == pyatspi.ROLE_PARAGRAPH \
-                       and not self.utilities.queryNonEmptyText(child):
-                        return self.findFirstCaretContext(obj, characterOffset + 1)
-
-                    return self.findFirstCaretContext(child, 0)
-                except:
-                    return [obj, -1]
-            else:
-                return [obj, characterOffset]
-        elif obj.getRole() == pyatspi.ROLE_TABLE:
-            if obj[0] and obj[0].getRole() in [pyatspi.ROLE_CAPTION,
-                                               pyatspi.ROLE_LIST]:
-                obj = obj[0]
+        if role == pyatspi.ROLE_TABLE and obj.childCount:
+            child = obj[0]
+            if child.getRole() in [pyatspi.ROLE_CAPTION, pyatspi.ROLE_LIST]:
+                obj = child
             else:
                 obj = obj.queryTable().getAccessibleAt(0, 0)
             return self.findFirstCaretContext(obj, 0)
-        else:
+
+        text = self.utilities.queryNonEmptyText(obj)
+        if not text:
             return [obj, -1]
+
+        if role == pyatspi.ROLE_LIST_ITEM and not characterOffset and obj.name:
+            words = obj.name.split()
+            characterOffset = len(words[0])
+
+        character = text.getText(characterOffset, characterOffset + 1)
+        if character != self.EMBEDDED_OBJECT_CHARACTER:
+            return [obj, characterOffset]
+
+        try:
+            childIndex = self.getChildIndex(obj, characterOffset)
+            child = obj[childIndex]
+
+            # Handle bogus empty paragraphs. Bug 677615.
+            if child.getRole() == pyatspi.ROLE_PARAGRAPH \
+               and not self.utilities.queryNonEmptyText(child):
+                return self.findFirstCaretContext(obj, characterOffset + 1)
+
+            return self.findFirstCaretContext(child, 0)
+
+        except:
+            return [obj, -1]
+
+        return [obj, characterOffset]
 
     def findNextCaretInOrder(self, obj=None,
                              startOffset=-1,
