@@ -1,5 +1,5 @@
 __all__ = ['CALLY',
-           'GAIL.py',
+           'GAIL',
            'Gecko',
            'J2SE-access-bridge',
            'Qt',

@@ -114,6 +114,7 @@ src/orca/scripts/toolkits/Makefile
 src/orca/scripts/toolkits/Gecko/Makefile
 src/orca/scripts/toolkits/J2SE-access-bridge/Makefile
 src/orca/scripts/toolkits/CALLY/Makefile
+src/orca/scripts/toolkits/GAIL/Makefile
 src/orca/scripts/toolkits/Qt/Makefile
 src/orca/scripts/toolkits/WebKitGtk/Makefile
 src/orca/scripts/toolkits/gtk/Makefile
