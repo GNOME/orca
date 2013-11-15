@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 import orca.scripts.toolkits.GAIL as GAIL
 import pyatspi
-from .script_utilities import Utilities
 
 ########################################################################
 #                                                                      #
@@ -47,7 +46,10 @@ class Script(GAIL.Script):
         otherObj. Overridden here so that we can give more feedback to user.
         """
 
-        if self.utilities.isDuplicateEvent(event):
+        # Ignore caret movements in a duplicate event if the ofsset is the same
+        obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
+        if offset == event.detail1 \
+           and self.utilities.isSameObject(obj, event.source):
             return
 
         # Let the default script's normal behavior do its thing
@@ -59,8 +61,8 @@ class Script(GAIL.Script):
         if lastKey in self.movementKeys:
             # already spoken in default script
             return
-        obj = otherObj or event.source
 
+        obj = otherObj or event.source
         if obj.getState().contains(pyatspi.STATE_SINGLE_LINE):
             return
 
@@ -78,11 +80,6 @@ class Script(GAIL.Script):
             self.sayLine(obj)
 
         self._saveLastTextPosition(obj)
-
-    def getUtilities(self):
-        """Returns the utilities for this script."""
-
-        return Utilities(self)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object. Overridden here
