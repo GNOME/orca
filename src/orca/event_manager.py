@@ -45,6 +45,7 @@ class EventManager:
         debug.println(debug.LEVEL_FINEST, 'INFO: Initializing event manager')
         self._scriptListenerCounts = {}
         self.registry = pyatspi.Registry
+        self._active = False
         self._enqueueCount = 0
         self._dequeueCount = 0
         self._eventQueue     = queue.Queue(0)
@@ -61,12 +62,14 @@ class EventManager:
         self._registerListener("window:deactivate")
         self._registerListener("object:children-changed")
         self._registerListener("mouse:button")
+        self._active = True
         debug.println(debug.LEVEL_FINEST, 'INFO: Event manager activated')
 
     def deactivate(self):
         """Called when this event manager is deactivated."""
 
         debug.println(debug.LEVEL_FINEST, 'INFO: Dectivating event manager')
+        self._active = False
         for eventType in list(self._scriptListenerCounts.keys()):
             self.registry.deregisterEventListener(self._enqueue, eventType)
         self._scriptListenerCounts = {}
@@ -74,6 +77,9 @@ class EventManager:
 
     def _ignore(self, event):
         """Returns True if this event should be ignored."""
+
+        if not self._active:
+            return True
 
         ignoredList = ['object:state-changed:defunct',
                        'object:property-change:accessible-parent']

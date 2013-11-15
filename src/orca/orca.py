@@ -649,8 +649,8 @@ def shutdown(script=None, inputEvent=None):
 
     orca_state.activeScript.presentMessage(messages.STOP_ORCA)
 
-    _eventManager.deactivate()
     _scriptManager.deactivate()
+    _eventManager.deactivate()
 
     # Shutdown all the other support.
     #
