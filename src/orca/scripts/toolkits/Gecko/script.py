@@ -4259,14 +4259,15 @@ class Script(default.Script):
 
         Returns True if we actually moved.
         """
+
         [obj, characterOffset] = self.getCaretContext()
-        [previousObj, previousCharOffset] = \
-                                   self.findPreviousLine(obj, characterOffset)
-        if not previousObj:
+        [prevObj, prevCharOffset] = self.findPreviousLine(obj, characterOffset)
+        if not prevObj:
             return False
 
-        self.setCaretPosition(previousObj, previousCharOffset)
-        self.presentLine(previousObj, previousCharOffset)
+        [obj, caretOffset] = self.findFirstCaretContext(prevObj, prevCharOffset)
+        self.setCaretPosition(obj, caretOffset)
+        self.presentLine(prevObj, prevCharOffset)
 
         return True
 
@@ -4279,11 +4280,11 @@ class Script(default.Script):
 
         [obj, characterOffset] = self.getCaretContext()
         [nextObj, nextCharOffset] = self.findNextLine(obj, characterOffset)
-
         if not nextObj:
             return False
 
-        self.setCaretPosition(nextObj, nextCharOffset)
+        [obj, caretOffset] = self.findFirstCaretContext(nextObj, nextCharOffset)
+        self.setCaretPosition(obj, caretOffset)
         self.presentLine(nextObj, nextCharOffset)
 
         return True
