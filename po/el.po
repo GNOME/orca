@@ -13,18 +13,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&k"
-"eywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-11-05 20:32+0000\n"
-"PO-Revision-Date: 2013-11-06 08:12+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=orca&keywords=I18N+L10N&component=i18n\n"
+"POT-Creation-Date: 2013-11-15 03:21+0000\n"
+"PO-Revision-Date: 2013-11-14 17:31+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
-"Language-Team: team@gnome.gr\n"
+"Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"X-Generator: Virtaal 0.7.0\n"
 "X-Project-Style: gnome\n"
 
 #: ../orca.desktop.in.h:1
@@ -6423,7 +6423,7 @@ msgstr "Η εκφώνηση δεν είναι διαθέσιμη."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:4070
+#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3861
 msgid "string not found"
 msgstr "το αλφαριθμητικό δεν βρέθηκε"
 
@@ -6993,28 +6993,33 @@ msgstr "κάθετα"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:98
+msgctxt "checkbox"
 msgid "checked"
 msgstr "επιλεγμένο"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:101
+msgctxt "checkbox"
 msgid "not checked"
-msgstr "μη ελεγμένο"
+msgstr "ανεπίλεκτο"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:104
+msgctxt "checkbox"
 msgid "partially checked"
-msgstr "μερικώς ελεγμένο"
+msgstr "μερικώς επιλεγμένο"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:107
+msgctxt "togglebutton"
 msgid "pressed"
 msgstr "πατημένο"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:110
+msgctxt "togglebutton"
 msgid "not pressed"
-msgstr "μη πατημένο"
+msgstr "απάτητο"
 
 #. Translators: This is a state which applies to a radio button.
 #: ../src/orca/object_properties.py:113
@@ -7624,10 +7629,8 @@ msgstr "Πιέστε tab και Return για τερματισμό."
 #. off stuff like this, but we're forced to do so in this case.
 #.
 #: ../src/orca/scripts/apps/gedit/script.py:259
-#: ../src/orca/scripts/apps/gedit/script.py:334
-#: ../src/orca/scripts/apps/Thunderbird/script.py:176
-#: ../src/orca/scripts/apps/Thunderbird/script.py:325
-#: ../src/orca/scripts/apps/Thunderbird/script.py:591
+#: ../src/orca/scripts/apps/gedit/script.py:332
+#: ../src/orca/scripts/apps/Thunderbird/script.py:278
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
 msgid "Check Spelling"
 msgstr "Έλεγχος Ορθογραφίας"
@@ -7637,14 +7640,14 @@ msgstr "Έλεγχος Ορθογραφίας"
 #. keying off stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:363
+#: ../src/orca/scripts/apps/gedit/script.py:361
 msgid "Phrase not found"
 msgstr "Δεν βρέθηκε η φράση"
 
 #. Translators: this indicates a find command succeeded in
 #. finding something.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:404
+#: ../src/orca/scripts/apps/gedit/script.py:402
 msgid "Phrase found."
 msgstr "Η φράση βρέθηκε."
 
@@ -7683,14 +7686,6 @@ msgstr "Γραφείο "
 msgid "Display more options"
 msgstr "Εμφάνιση περισσότερων επιλογών"
 
-#. Translators: this is the name of a panel in Thunderbird.
-#.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:629
-#: ../src/orca/scripts/apps/Thunderbird/script.py:646
-#, python-format
-msgid "%s panel"
-msgstr "Πίνακας εφαρμογών %s"
-
 #. Translators: these represent the number of pixels
 #. for the left or right margins in a document.  We
 #. are hesitant to interpret the values -- they are
@@ -7698,7 +7693,7 @@ msgstr "Πίνακας εφαρμογών %s"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3687 ../src/orca/scripts/default.py:3699
+#: ../src/orca/scripts/default.py:3478 ../src/orca/scripts/default.py:3490
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7707,7 +7702,7 @@ msgstr[1] "%(key)s %(value)s εικονοστοιχεία"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4653
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4360
 msgid "open"
 msgstr "άνοιγμα"
 
@@ -8835,6 +8830,9 @@ msgid ""
 msgstr ""
 "Πιέστε το αριστερό βέλος για μείωση, πιέστε το δεξί βέλος για αύξηση. Για το "
 "ελάχιστο πατήστε home και για το μέγιστο end."
+
+#~ msgid "%s panel"
+#~ msgstr "Πίνακας εφαρμογών %s"
 
 #~ msgid "Notify me when errors have been logged."
 #~ msgstr ""
