@@ -25,7 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Informal Informatica LTDA."
 __license__   = "LGPL"
 
-import orca.scripts.default as default
+import orca.scripts.toolkits.GAIL as GAIL
 import pyatspi
 from .script_utilities import Utilities
 
@@ -34,11 +34,11 @@ from .script_utilities import Utilities
 # The Eclipse script class.                                            #
 #                                                                      #
 ########################################################################
-class Script(default.Script):
+class Script(GAIL.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application."""
-        default.Script.__init__(self, app)
+        GAIL.Script.__init__(self, app)
         self.movementKeys = ["Up", "Down", "Left", "Right", "Page_Up",
                    "Page_Down", "Home", "End"]
 
@@ -52,7 +52,7 @@ class Script(default.Script):
 
         # Let the default script's normal behavior do its thing
         #
-        default.Script._presentTextAtNewCaretPosition(self, event, otherObj)
+        GAIL.Script._presentTextAtNewCaretPosition(self, event, otherObj)
 
         # check if the obj was spoken in the default script
         lastKey, mods = self.utilities.lastKeyAndModifiers()
@@ -102,7 +102,7 @@ class Script(default.Script):
 
         # Let the default script's normal behavior do its thing
         #
-        default.Script.onTextInserted(self, event)
+        GAIL.Script.onTextInserted(self, event)
         self._saveLastTextPosition(event.source)
 
     def onTextDeleted(self, event):
@@ -116,7 +116,7 @@ class Script(default.Script):
 
         # Let the default script's normal behavior do its thing
         #
-        default.Script.onTextDeleted(self, event)
+        GAIL.Script.onTextDeleted(self, event)
         self._saveLastTextPosition(event.source)
 
     def _saveLastTextPosition(self, obj):
