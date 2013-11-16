@@ -15,6 +15,7 @@ SUBDIRS = \
 	gnome-mud \
 	gnome-panel \
 	gnome-screensaver-dialog \
+	gnome-shell \
 	gnome-search-tool \
 	gnome-terminal \
 	gnome-window-properties \

@@ -23,29 +23,17 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010-2012 Igalia, S.L."
+__copyright__ = "Copyright (c) 2010-2013 Igalia, S.L."
 __license__   = "LGPL"
 
-import pyatspi
-import time
 from gi.repository import Gdk
 
-import orca.orca as orca
 import orca.scripts.default as default
 import orca.debug as debug
 
-from .formatting import Formatting
-
 # Set with non printable unicode categories. Full table:
 # http://www.fileformat.info/info/unicode/category/index.htm
-#
 non_printable_set = ('Cc', 'Cf', 'Cn', 'Co', 'Cs')
-
-########################################################################
-#                                                                      #
-# Utility methods.                                                     #
-#                                                                      #
-########################################################################
 
 def _unicharIsPrint(unichar):
     """ Checks if the unichar is printable
@@ -62,7 +50,6 @@ def _unicharIsPrint(unichar):
     except:
         # Normally a exception is because there are a string
         # instead of a single unicode, 'Control_L'
-        #
         result = False
 
     return result
@@ -86,42 +73,10 @@ def _computeIsText(string):
 
     return is_text
 
-def _parentDialog(obj):
-    """Looks for an object of ROLE_DIALOG in the ancestry of obj.
-
-    Arguments:
-    - obj: an accessible object
-
-    Returns the accessible object if found; otherwise None.
-    """
-
-    isDialog = lambda x: x and x.getRole() == pyatspi.ROLE_DIALOG
-
-    return pyatspi.utils.findAncestor(obj, isDialog)
-
-########################################################################
-#                                                                      #
-# The Cally script class.                                              #
-#                                                                      #
-########################################################################
-
 class Script(default.Script):
 
     def __init__(self, app):
-        """Creates a new script for Cally applications.
-
-        Arguments:
-        - app: the application to create a script for.
-        """
-
         default.Script.__init__(self, app)
-        self._activeDialog = (None, 0) # (Accessible, Timestamp)
-        self._activeDialogLabels = {}  # key == hash(obj), value == name
-
-    def getFormatting(self):
-        """Returns the formatting strings for this script."""
-
-        return Formatting(self)
 
     def checkKeyboardEventData(self, keyboardEvent):
         """Processes the given keyboard event.
@@ -198,177 +153,3 @@ class Script(default.Script):
             keyboardEvent.is_text = _computeIsText(keyboardEvent.event_string)
 
         return default.Script.checkKeyboardEventData(self, keyboardEvent)
-
-    def skipObjectEvent(self, event):
-        """Gives us, and scripts, the ability to decide an event isn't
-        worth taking the time to process under the current circumstances.
-
-        Arguments:
-        - event: the Event
-
-        Returns True if we shouldn't bother processing this object event.
-        """
-
-        try:
-            role = event.source.getRole()
-        except:
-            pass
-        else:
-            # We must handle all dialogs ourselves in this script.
-            if role == pyatspi.ROLE_DIALOG:
-                return False
-
-        return default.Script.skipObjectEvent(self, event)
-
-    def presentDialogLabel(self, event):
-        """Examines and, if appropriate, presents a new or changed label
-        found in a dialog box. Returns True if we handled the presentation
-        here."""
-
-        try:
-            role = event.source.getRole()
-            name = event.source.name
-        except:
-            return False
-
-        activeDialog, timestamp = self._activeDialog
-        if not activeDialog or role != pyatspi.ROLE_LABEL:
-            return False
-
-        obj = hash(event.source)
-        if name == self._activeDialogLabels.get(obj):
-            return True
-
-        if activeDialog == _parentDialog(event.source):
-            self.presentMessage(name)
-            self._activeDialogLabels[obj] = name
-            return True
-
-        return False
-
-    def onNameChanged(self, event):
-        """Called whenever a property on an object changes.
-
-        Arguments:
-        - event: the Event
-        """
-
-        if self.presentDialogLabel(event):
-            return
-
-        default.Script.onNameChanged(self, event)
-
-    def onShowingChanged(self, event):
-        """Callback for object:state-changed:showing accessibility events."""
- 
-        try:
-            role = event.source.getRole()
-            name = event.source.name
-        except:
-            return
- 
-        # When entering overview with many open windows, we get quite
-        # a few state-changed:showing events for nameless panels. The
-        # act of processing these by the default script causes us to
-        # present nothing, and introduces a significant delay before
-        # presenting the Top Bar button when Ctrl+Alt+Tab was pressed.
-        if role == pyatspi.ROLE_PANEL and not name:
-            return
-
-        # We cannot count on events or their order from dialog boxes.
-        # Therefore, the only way to reliably present a dialog is by
-        # ignoring the events of the dialog itself and keeping track
-        # of the current dialog.
-        activeDialog, timestamp = self._activeDialog
-        if not event.detail1 and event.source == activeDialog:
-            self._activeDialog = (None, 0)
-            self._activeDialogLabels = {}
-            return
-
-        if activeDialog and role == pyatspi.ROLE_LABEL and event.detail1:
-            if self.presentDialogLabel(event):
-                return
-
-        default.Script.onShowingChanged(self, event)
-
-    def onSelectedChanged(self, event):
-        """Callback for object:state-changed:selected accessibility events."""
-        try:
-            state = event.source.getState()
-        except:
-            return
-
-        # Some buttons, like the Wikipedia button, claim to be selected but
-        # lack STATE_SELECTED. The other buttons, such as in the Dash and
-        # event switcher, seem to have the right state. Since the ones with
-        # the wrong state seem to be things we don't want to present anyway
-        # we'll stop doing so and hope we are right.
-
-        if event.detail1:
-            if state.contains(pyatspi.STATE_SELECTED):
-                orca.setLocusOfFocus(event, event.source)
-            return
-
-        default.Script.onSelectedChanged(self, event)
-
-    def onFocusedChanged(self, event):
-        """Callback for object:state-changed:focused accessibility events."""
-
-        if not event.detail1:
-            return
-
-        obj = event.source
-        try:
-            role = obj.getRole()
-            name = obj.name
-        except:
-            return
-
-        # The dialog will get presented when its first child gets focus.
-        if role == pyatspi.ROLE_DIALOG:
-            return
-
-        if role == pyatspi.ROLE_MENU_ITEM and not name \
-           and not self.utilities.labelsForObject(obj):
-            isRealFocus = lambda x: x and x.getRole() == pyatspi.ROLE_SLIDER
-            descendant = pyatspi.findDescendant(obj, isRealFocus)
-            if descendant:
-                orca.setLocusOfFocus(event, descendant)
-                return
-
-        # This is to present dialog boxes which are, to the user, newly
-        # activated. And if something is claiming to be focused that is
-        # not in a dialog, that's good to know as well, so update our
-        # state regardless.
-        activeDialog, timestamp = self._activeDialog
-        if not activeDialog:
-            dialog = _parentDialog(obj)
-            self._activeDialog = (dialog, time.time())
-            if dialog:
-                orca.setLocusOfFocus(None, dialog)
-                labels = self.utilities.unrelatedLabels(dialog)
-                for label in labels:
-                    self._activeDialogLabels[hash(label)] = label.name
-
-        default.Script.onFocusedChanged(self, event)
-
-    def getTextLineAtCaret(self, obj, offset=None):
-        """Gets the line of text where the caret is."""
-
-        # TODO - JD/API: This is to work around the braille issue reported
-        # in bgo 677221. When that is resolved, this workaround can be
-        # removed.
-        string, caretOffset, startOffset = \
-            default.Script.getTextLineAtCaret(self, obj, offset)
-
-        if string:
-            return [string, caretOffset, startOffset]
-
-        try:
-            text = obj.queryText()
-        except:
-            pass
-        else:
-            string = text.getText(0, -1)
-
-        return [string, caretOffset, startOffset]
