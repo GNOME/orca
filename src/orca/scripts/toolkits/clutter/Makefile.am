@@ -3,5 +3,5 @@ orca_python_PYTHON = \
 	formatting.py \
 	script.py
 
-orca_pythondir=$(pkgpythondir)/scripts/toolkits/CALLY
+orca_pythondir=$(pkgpythondir)/scripts/toolkits/clutter
 

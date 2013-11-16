@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright (C) 2010-2012 Igalia, S.L.
+# Copyright (C) 2010-2013 Igalia, S.L.
 #
 # Author: Alejandro Pinheiro Iglesias <apinheiro@igalia.com>
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
