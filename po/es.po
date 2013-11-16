@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-10-30 02:57+0000\n"
-"PO-Revision-Date: 2013-10-31 16:43+0100\n"
+"POT-Creation-Date: 2013-11-14 13:52+0000\n"
+"PO-Revision-Date: 2013-11-16 18:06+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Gtranslator 2.91.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Screen Reader"
@@ -2936,7 +2936,6 @@ msgstr "Va al siguiente punto de referencia."
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: ../src/orca/cmdnames.py:835
-#| msgid "Displays a list of links."
 msgid "Displays a list of landmarks."
 msgstr "Muestra una lista de marcas."
 
@@ -3684,7 +3683,6 @@ msgstr "Etiqueta"
 #. tag attribute 'role' used to identify important part of webpage like banners,
 #. main context, search etc.
 #: ../src/orca/guilabels.py:410
-#| msgid "trademark"
 msgctxt "structural navigation"
 msgid "Landmark"
 msgstr "Marca"
@@ -3881,7 +3879,6 @@ msgstr "Encabezados de nivel %d"
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
 #: ../src/orca/guilabels.py:539
-#| msgid "trademark"
 msgctxt "structural navigation"
 msgid "Landmarks"
 msgstr "Marcas"
@@ -5501,12 +5498,6 @@ msgstr "Modo de aprendizaje.  Pulse escape para salir."
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
 #: ../src/orca/messages.py:836
-#| msgid ""
-#| "Entering learn mode.  Press any key to hear its function.  To get a list "
-#| "of the screen reader's default shortcuts, press 1. To get a list of the "
-#| "screen reader's shortcuts for the current application, press 2. To view "
-#| "the screen reader's documentation, press F1. To exit learn mode, press "
-#| "the escape key."
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the "
 "screen reader's documentation, press F1. To get a list of the screen "
@@ -6351,7 +6342,7 @@ msgstr "La voz no está disponible."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:4021
+#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3861
 msgid "string not found"
 msgstr "cadena no encontrada"
 
@@ -6765,11 +6756,11 @@ msgstr[1] "Se encontraron %d atajos predeterminados del lector de pantalla."
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
 msgstr[0] ""
-"Se encontró %(count)d atajo del lector de pantalla para la aplicación %"
-"(application)s."
+"Se encontró %(count)d atajo del lector de pantalla para la aplicación "
+"%(application)s."
 msgstr[1] ""
-"Se encontraron %(count)d atajos del lector de pantalla para la aplicación %"
-"(application)s."
+"Se encontraron %(count)d atajos del lector de pantalla para la aplicación "
+"%(application)s."
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
@@ -6922,26 +6913,36 @@ msgstr "vertical"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:98
+#| msgid "checked"
+msgctxt "checkbox"
 msgid "checked"
-msgstr "marcado"
+msgstr "marcada"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:101
+#| msgid "not checked"
+msgctxt "checkbox"
 msgid "not checked"
-msgstr "no marcado"
+msgstr "no marcada"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:104
+#| msgid "partially checked"
+msgctxt "checkbox"
 msgid "partially checked"
-msgstr "parcialmente marcado"
+msgstr "marcada parcialmente"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:107
+#| msgid "pressed"
+msgctxt "togglebutton"
 msgid "pressed"
 msgstr "pulsado"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:110
+#| msgid "not pressed"
+msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "no pulsado"
 
@@ -7013,19 +7014,12 @@ msgstr "requerido"
 msgid "multi-select"
 msgstr "selección-múltiple"
 
-#. Check to see if we have just had an "object:state-changed:showing"
-#. event for the Find button. If the name is "Find", and one of its
-#. states is VISIBLE and we are currently searching, that means we
-#. have just stopped a search. Inform the user that the search is
-#. complete and tell them how many files were found.
-#.
 #. Translators: the "Find" string must match what gnome-search-tool
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
-#.
-#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:200
-#: ../src/orca/scripts/apps/gedit/script.py:202
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:160
+#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:188
+#: ../src/orca/scripts/apps/gedit/script.py:190
+#: ../src/orca/scripts/apps/gnome-search-tool/script.py:99
 msgid "Find"
 msgstr "Buscar"
 
@@ -7518,11 +7512,11 @@ msgstr "Leer"
 #. keying off stuff like this, but we're forced to do so in
 #. in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:109
+#: ../src/orca/scripts/apps/gedit/script.py:97
 msgid "Change to:"
 msgstr "Cambiar a:"
 
-#: ../src/orca/scripts/apps/gedit/script.py:110
+#: ../src/orca/scripts/apps/gedit/script.py:98
 msgid "Misspelled word:"
 msgstr "Palabra mal escrita:"
 
@@ -7534,15 +7528,15 @@ msgstr "Palabra mal escrita:"
 #. gedit.  We hate keying off stuff like this, but we're
 #. forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:144
+#: ../src/orca/scripts/apps/gedit/script.py:132
 msgid "Completed spell checking"
 msgstr "Corrección ortográfica completada"
 
-#: ../src/orca/scripts/apps/gedit/script.py:145
+#: ../src/orca/scripts/apps/gedit/script.py:133
 msgid "Spell checking is complete."
 msgstr "La corrección ortográfica está completa."
 
-#: ../src/orca/scripts/apps/gedit/script.py:147
+#: ../src/orca/scripts/apps/gedit/script.py:135
 msgid "Press Tab and Return to terminate."
 msgstr "Pulse tab e intro para terminar."
 
@@ -7556,11 +7550,9 @@ msgstr "Pulse tab e intro para terminar."
 #. has to match what Thunderbird is using.  We hate keying
 #. off stuff like this, but we're forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:271
-#: ../src/orca/scripts/apps/gedit/script.py:346
-#: ../src/orca/scripts/apps/Thunderbird/script.py:176
-#: ../src/orca/scripts/apps/Thunderbird/script.py:325
-#: ../src/orca/scripts/apps/Thunderbird/script.py:599
+#: ../src/orca/scripts/apps/gedit/script.py:259
+#: ../src/orca/scripts/apps/gedit/script.py:332
+#: ../src/orca/scripts/apps/Thunderbird/script.py:348
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
 msgid "Check Spelling"
 msgstr "Corregir ortografía"
@@ -7570,14 +7562,14 @@ msgstr "Corregir ortografía"
 #. keying off stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:375
+#: ../src/orca/scripts/apps/gedit/script.py:361
 msgid "Phrase not found"
 msgstr "Frase no encontrada"
 
 #. Translators: this indicates a find command succeeded in
 #. finding something.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:437
+#: ../src/orca/scripts/apps/gedit/script.py:402
 msgid "Phrase found."
 msgstr "Frase encontrada."
 
@@ -7585,17 +7577,10 @@ msgstr "Frase encontrada."
 msgid "Read the latest n messages in the incoming messages text area."
 msgstr "Lee los n últimos mensajes en el área de texto de mensajes entrantes."
 
-#. Check to see if we have just had an "object:state-changed:showing"
-#. event for the Stop button. If the name is "Stop", and one of its
-#. states is VISIBLE, that means we have started a search. As the
-#. search progresses, regularly inform the user of this by speaking
-#. "Searching" (assuming the search tool has focus).
-#.
 #. Translators: the "Stop" string must match what gnome-search-tool
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
-#.
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:131
+#: ../src/orca/scripts/apps/gnome-search-tool/script.py:85
 msgid "Stop"
 msgstr "Parar"
 
@@ -7609,11 +7594,11 @@ msgstr "Trabajar conectado / desconectado"
 #. between workspaces.  The goal here is to find a match
 #. with that prefix.
 #.
-#: ../src/orca/scripts/apps/metacity/script.py:114
+#: ../src/orca/scripts/apps/metacity/script.py:104
 msgid "Workspace "
 msgstr "Área de trabajo "
 
-#: ../src/orca/scripts/apps/metacity/script.py:114
+#: ../src/orca/scripts/apps/metacity/script.py:104
 msgid "Desk "
 msgstr "Escritorio "
 
@@ -7622,14 +7607,6 @@ msgstr "Escritorio "
 msgid "Display more options"
 msgstr "Mostrar más opciones"
 
-#. Translators: this is the name of a panel in Thunderbird.
-#.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:637
-#: ../src/orca/scripts/apps/Thunderbird/script.py:654
-#, python-format
-msgid "%s panel"
-msgstr "panel %s"
-
 #. Translators: these represent the number of pixels
 #. for the left or right margins in a document.  We
 #. are hesitant to interpret the values -- they are
@@ -7637,7 +7614,7 @@ msgstr "panel %s"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3639 ../src/orca/scripts/default.py:3651
+#: ../src/orca/scripts/default.py:3478 ../src/orca/scripts/default.py:3490
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7646,7 +7623,7 @@ msgstr[1] "%(key)s %(value)s píxeles"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4743
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4377
 msgid "open"
 msgstr "abrir"
 
@@ -8750,6 +8727,9 @@ msgid ""
 msgstr ""
 "Para decrementar pulse flecha izquierda, para incrementar pulse flecha "
 "derecha, para el mínimo pulse inicio y para el máximo pulse fin."
+
+#~ msgid "%s panel"
+#~ msgstr "panel %s"
 
 #~ msgid "Notify me when errors have been logged."
 #~ msgstr "Notificarme cuando se registren errores."
