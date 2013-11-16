@@ -787,6 +787,8 @@ class Utilities:
             layoutOnly = True
         elif role in [pyatspi.ROLE_LIST_BOX, pyatspi.ROLE_TREE_TABLE]:
             layoutOnly = False
+        elif role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_WINDOW]:
+            layoutOnly = False
         else:
             if not (self.displayedText(obj) or self.displayedLabel(obj)):
                 layoutOnly = True
