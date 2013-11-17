@@ -1403,6 +1403,9 @@ class Script(default.Script):
             return
 
         caretOffset = 0
+        if self.utilities.inFindToolbar(oldFocus):
+            newFocus, caretOffset = self.getCaretContext()
+
         text = self.utilities.queryNonEmptyText(newFocus)
         if text and (0 <= text.caretOffset < text.characterCount):
             caretOffset = text.caretOffset
