@@ -3618,6 +3618,7 @@ class Script(default.Script):
                 toAdd = self.utilities.getObjectsFromEOCs(nextObj, nOffset, boundary)
                 toAdd = [x for x in toAdd if x not in objects]
                 objects.extend(toAdd)
+                done = not toAdd
             elif (nextObj.getRole() in [pyatspi.ROLE_SECTION,
                                         pyatspi.ROLE_TABLE_CELL] \
                   and self.isUselessObject(nextObj)):
