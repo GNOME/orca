@@ -3405,8 +3405,11 @@ class Script(script.Script):
                 lastProgressBarTime = self.lastProgressBarTime[obj]
                 lastProgressBarValue = self.lastProgressBarValue[obj]
                 value = obj.queryValue()
-                if value.maximumValue == value.minimumValue:
-                    # This is a busy indicator and not a real progress bar.
+                try:
+                    if value.maximumValue == value.minimumValue:
+                        # This is a busy indicator and not a real progress bar.
+                        return
+                except:
                     return
                 percentValue = int((value.currentValue / \
                     (value.maximumValue - value.minimumValue)) * 100.0)
