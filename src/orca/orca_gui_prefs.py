@@ -3015,6 +3015,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
+        factory = _settingsManager.getSetting('speechServerFactory')
+        if factory:
+            self._setSpeechSystemsChoice(factory)
+
+        server = _settingsManager.getSetting('speechServerInfo')
+        if server:
+            self._setSpeechServersChoice(server)
+
         self._cleanupSpeechServers()
         self.restoreSettings()
 
