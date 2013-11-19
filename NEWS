@@ -1,3 +1,113 @@
+3.11.2 - 19 November 2013
+
+Please note: This cycle, Orca is getting an overhaul with much of the
+code being rewritten in preparation for the focus: event deprecation.
+I am also taking this opportunity to remove hacks and improve Orca's
+performance. While every effort is being made to ensure no regressions
+are introduced, please remember that 3.11.x is unstable. If you find a
+bug present only in 3.11.x, please report it on the Orca list.
+
+Gecko:
+
+  * Fix for two hangs in Firefox
+
+  * Try to minimize some of the excessive chattiness with Gecko radio
+    buttons and list items
+
+  * Stop Orca from repeating the end of an autocompleted address in
+    Thunderbird
+
+  * Fix and improve alert presentation for Thunderbird and Firefox
+
+  * Finding the next/previous caret should not call isLayoutOnly()
+    because it leads to lag
+
+  * Implement the "list of" dialog for ARIA landmarks
+
+  * Handle timeouts in liveregions._getMessage() more gracefully
+
+  * Ignore text-changed events from Thunderbird's status bar
+
+  * Stop doing focus grabs when setting the caret position
+
+LibreOffice:
+
+  * Present "has formula" when a Calc cell with a formula gains focus
+
+  * Prevent Orca from announcing "misspelled" with each keypress
+
+  * Work around some brokenness in LibreOffice tables
+
+  * Present table cell text, if present, rather than the name in Writer
+
+  * Fix structural navigation for tables in LibreOffice Writer
+
+General:
+
+  * Fix for Orca becoming silent when canceling out of the Preferences
+    dialog with unapplied synthesizer changes
+
+  * Fix to prevent Orca becoming silent when a broken/incomplete value
+    interface is encountered
+
+  * Do not enqueue accessible events when Orca is being shut down as it
+    can cause Orca to hang
+
+  * Do not exit learn mode or repeat the prompt if no application
+    shortcuts are found
+
+  * Fix for traceback in the Eclipse script
+
+  * Make the "checked" and "pressed" strings context-specific
+
+  * Register only one set of script event listeners; not one for each
+    script
+
+  * Fix for Orca double-presenting the contents of Nautilus's Places panel
+
+  * Fix to prevent Orca from double-speaking name-changed events
+
+  * Simplify and fix bugs in the speech generator's ancestry generation
+
+  * Check in the default script's onCaretMoved() if the caret really moved
+
+  * Use F2 and F3 rather than 1 and 2 to display shortcuts in Learn Mode
+
+  * Store basic point-of-reference info when the locusOfFocus changes
+
+  * Be sure we have line text before adding a voice to present it
+
+  * Workaround for bug 709447 - Orca segfaults when run with the wayland
+    backend
+
+  * Remove many old and now obsolete hacks that were slowing Orca down
+
+  * Rely upon object:state-changed events instead of focus: events
+
+  * Create toolkit scripts for Gtk+ 2, Gtk+ 3, Qt
+
+  * Rename the "CALLY" script "clutter" and create a new gnome-shell
+    script
+
+  * Put logic needed for all scripts into the default script and remove
+    it from the individual scripts
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca            Catalan                     Gil Forcada
+    ca            Catalan (Valencian)         Carles Ferrando
+    de            German                      Simon Bienlein
+    el            Greek                       Dimitris Spingos,
+                                              Efstathios Iosifidis
+    es            Spanish                     Daniel Mustieles
+    gl            Galician                    Fran Diéguez
+    hu            Hungarian                   Attila Hammer, Balázs Úr
+    ml            Malayalam                   mshameers, Anish A
+    pt_BR         Brazilian Portuguese        Enrico Nicoletto
+    sl            Slovenian                   Matej Urbančič
+
+=========
+
 3.10.0 - 24 September 2013
 
 General:
@@ -27,6 +137,7 @@ New and updated translations (THANKS EVERYONE!!!):
 =========
 
 3.9.92 - 16 September 2013
+    es            Spanish                     Daniel Mustieles
 
 General:
 
