@@ -913,132 +913,29 @@ class Script(default.Script):
         return True
 
     def onCaretMoved(self, event):
-        """Caret movement in Gecko is somewhat unreliable and
-        unpredictable, but we need to handle it.  When we detect caret
-        movement, we make sure we update our own notion of the caret
-        position: our caretContext is an [obj, characterOffset] that
-        points to our current item and character (if applicable) of
-        interest.  If our current item doesn't implement the
-        accessible text specialization, the characterOffset value
-        is meaningless (and typically -1)."""
+        """Callback for object:text-caret-moved accessibility events."""
 
         text = self.utilities.queryNonEmptyText(event.source)
         if not text:
             return
 
-        [obj, characterOffset] = self.getCaretContext()
-        if characterOffset == event.detail1 \
-           and self.utilities.isSameObject(obj, event.source):
+        contextObj, contextOffset = self.getCaretContext()
+        if event.detail1 == contextOffset and event.source == contextObj:
             return
 
-        # TODO - JD: How much of the mess below is still needed?
+        obj = event.source
+        if self.isAriaWidget(obj) or not self.inDocumentContent(obj):
+            default.Script.onCaretMoved(self, event)
+            return
 
-        eventSourceRole = event.source.getRole()
-        eventSourceState = event.source.getState()
-        eventSourceInDocument = self.inDocumentContent(event.source)
+        if self.utilities.inFindToolbar():
+            self.presentFindResults(obj, event.detail1)
+            return
 
-        try:
-            locusOfFocusRole = orca_state.locusOfFocus.getRole()
-            locusOfFocusState = orca_state.locusOfFocus.getState()
-        except:
-            locusOfFocusRole = None
-            locusOfFocusState = pyatspi.StateSet()
-            locusOfFocusState = locusOfFocusState.raw()
-
-        notify = False
-
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            string, mods = self.utilities.lastKeyAndModifiers()
-            if self.useCaretNavigationModel(orca_state.lastInputEvent):
-                # Orca is set to control the caret and is in a place where
-                # doing so is appropriate.  Therefore, this event is likely
-                # extraneous and can be ignored. Exceptions:
-                #
-                # 1. If the object is an entry and useCaretNavigationModel is
-                #    true, then we must be at the edge of the entry and about
-                #    to exit it (returning to the document).
-                # 2. If the locusOfFocus was a same-page link, we will get a
-                #    caret moved event for some object within the document
-                #    frame.
-                #
-                if not self.utilities.isEntry(event.source) \
-                   and self.utilities.isSameObject(
-                        event.source, orca_state.locusOfFocus):
-                    return
-
-                # We are getting extraneous events that are not being caught
-                # by the above, and which are causing us to loop. See bug
-                # #552887. This is admittedly a rather broad check. However,
-                # if we're here it's because we're controlling the caret in
-                # which case we don't expect to get caret moved events of
-                # interest other than those mentioned above.
-                #
-                if locusOfFocusRole == pyatspi.ROLE_IMAGE:
-                    return
-                elif locusOfFocusRole == pyatspi.ROLE_LINK:
-                    # Be sure it's not a same-page link. While such beasts
-                    # typically point to anchors, they can point to other
-                    # objects referencing them by name or ID. Therefore,
-                    # get the URI for the link of interest and parse it.
-                    # parsed URI is returned as a tuple containing six
-                    # components: 
-                    # scheme://netloc/path;parameters?query#fragment.
-                    try:
-                        uri = self.utilities.uri(orca_state.locusOfFocus)
-                        uriInfo = urllib.parse.urlparse(uri)
-                    except:
-                        pass
-                    else:
-                        if uriInfo and not uriInfo[5]:
-                            return
-                        else:
-                            notify = True
-                elif eventSourceRole == pyatspi.ROLE_SECTION:
-                    # Google Calendar's Day grid seems to issue these quite
-                    # a bit. If we don't ignore them, we'll loop.
-                    #
-                    return
-
-            elif not self.isNavigableAria(event.source):
-                if script_settings.controlCaretNavigation:
-                    return
-
-            elif self.isAriaWidget(orca_state.locusOfFocus) \
-                 and self.utilities.isSameObject(event.source,
-                                       orca_state.locusOfFocus.parent):
-                return
-
-            elif eventSourceInDocument and not self.inDocumentContent() \
-                 and orca_state.locusOfFocus:
-                # This is an indication that soemthing else is moving
-                # the caret on our behalf, such as a help window, the
-                # Find toolbar, the UIUC accessiblity extension, etc.
-                # If that's the case, we want to update our position.
-                # If we're in the Find toolbar, we also want to present
-                # the results.
-                #
-                if self.utilities.inFindToolbar():
-                    self.presentFindResults(event.source, event.detail1)
-                else:
-                    self.setCaretContext(event.source, event.detail1)
-                return
-
-        # If we're still here, and in document content, update the caret
-        # context and set the locusOfFocus so that the default script's
-        # onCaretMoved will handle.
-        #
-        if eventSourceInDocument and not self.isAriaWidget(event.source):
-            if not self.utilities.isEntry(event.source):
-                [obj, characterOffset] = \
-                    self.findFirstCaretContext(event.source, event.detail1)
-            else:
-                [obj, characterOffset] = [event.source, event.detail1]
-            self.setCaretContext(obj, characterOffset)
-            orca.setLocusOfFocus(event, obj, notifyScript=notify)
-            if notify:
-                # No point in double-brailling the locusOfFocus.
-                #
-                return
+        self.setCaretContext(obj, event.detail1)
+        if not script_settings.controlCaretNavigation \
+           or obj.getState().contains(pyatspi.STATE_EDITABLE):
+            orca.setLocusOfFocus(event, obj, False)
 
         default.Script.onCaretMoved(self, event)
 
@@ -1304,6 +1201,10 @@ class Script(default.Script):
         """Callback for object:state-changed:focused accessibility events."""
 
         if not event.detail1:
+            return
+
+        if not script_settings.controlCaretNavigation:
+            default.Script.onFocusedChanged(self, event)
             return
 
         obj = event.source
