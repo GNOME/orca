@@ -3862,6 +3862,10 @@ class Script(default.Script):
                and extents != prevExtents \
                and lastExtents != prevExtents:
                 toAdd = self.utilities.getObjectsFromEOCs(prevObj, pOffset, boundary)
+                toAdd = [x for x in toAdd if x not in objects]
+                if not toAdd:
+                    break
+
                 # Depending on the line, there's a chance that we got our
                 # current object as part of toAdd. Check for dupes and just
                 # add up to the current object if we find them.
