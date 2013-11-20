@@ -4199,7 +4199,7 @@ class Script(default.Script):
 
         [obj, characterOffset] = self.getCaretContext()
         line = self.getLineContentsAtOffset(obj, characterOffset)
-        obj, characterOffset = line[0][0], line[0][1]
+        obj, characterOffset = self.findFirstCaretContext(line[0][0], line[0][1])
         self.setCaretPosition(obj, characterOffset)
         if not isinstance(orca_state.lastInputEvent, input_event.BrailleEvent):
             self.speakCharacterAtOffset(obj, characterOffset)
