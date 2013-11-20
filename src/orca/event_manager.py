@@ -392,6 +392,7 @@ class EventManager:
             return
 
         eType = str(event.type).upper()
+        startTime = time.time()
         debug.println(debug.eventDebugLevel,
                       "\nvvvvv PROCESS %s %s vvvvv" % (eType, data))
         try:
@@ -399,6 +400,9 @@ class EventManager:
         except:
             debug.printException(debug.LEVEL_WARNING)
             debug.printStack(debug.LEVEL_WARNING)
+        debug.println(debug.eventDebugLevel,
+                      "TOTAL PROCESSING TIME: %.4f" \
+                      % (time.time() - startTime))
         debug.println(debug.eventDebugLevel,
                       "^^^^^ PROCESS %s %s ^^^^^\n" % (eType, data))
 
