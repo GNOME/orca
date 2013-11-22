@@ -173,7 +173,7 @@ class Script(default.Script):
 
         obj = event.source
         if not (event.detail1 and obj.getRole() == pyatspi.ROLE_ROOT_PANE):
-            default.Script.onFocusedChangedself, event)
+            default.Script.onFocusedChanged(self, event)
             return
 
         # This is a workaround for a java-access-bridge bug (Bug 355011)
