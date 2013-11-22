@@ -924,6 +924,10 @@ class Script(default.Script):
             return
 
         obj = event.source
+        firstObj, firstOffset = self.findFirstCaretContext(obj, event.detail1)
+        if firstOffset == contextOffset and firstObj == contextObj:
+            return
+
         if self.isAriaWidget(obj) or not self.inDocumentContent(obj):
             default.Script.onCaretMoved(self, event)
             return
@@ -1309,7 +1313,7 @@ class Script(default.Script):
             default.Script.locusOfFocusChanged(self, event, oldFocus, newFocus)
             return
 
-        caretOffset = 0
+        caretOffset = -1
         if self.utilities.inFindToolbar(oldFocus):
             newFocus, caretOffset = self.getCaretContext()
 
