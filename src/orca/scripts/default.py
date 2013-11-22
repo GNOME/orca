@@ -2129,9 +2129,14 @@ class Script(script.Script):
             eventString, mods = self.utilities.lastKeyAndModifiers()
             if not eventString in [" ", "space"]:
                 return
+
+        oldObj, oldState = self.pointOfReference.get('checkedChange', (None, 0))
+        if hash(oldObj) == hash(obj) and oldState == event.detail1:
+            return
  
         self.updateBraille(obj)
         speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+        self.pointOfReference['checkedChange'] = hash(obj), event.detail1
 
     def onChildrenChanged(self, event):
         """Called when a child node has changed.
@@ -2207,8 +2212,13 @@ class Script(script.Script):
         if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
             return
 
+        oldObj, oldState = self.pointOfReference.get('expandedChange', (None, 0))
+        if hash(oldObj) == hash(obj) and oldState == event.detail1:
+            return
+
         self.updateBraille(obj)
         speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+        self.pointOfReference['expandedChange'] = hash(obj), event.detail1
 
     def onIndeterminateChanged(self, event):
         """Callback for object:state-changed:indeterminate accessibility events."""
@@ -2224,8 +2234,13 @@ class Script(script.Script):
         if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
             return
 
+        oldObj, oldState = self.pointOfReference.get('indeterminateChange', (None, 0))
+        if hash(oldObj) == hash(obj) and oldState == event.detail1:
+            return
+
         self.updateBraille(obj)
         speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+        self.pointOfReference['indeterminateChange'] = hash(obj), event.detail1
 
     def onMouseButton(self, event):
         """Called whenever the user presses or releases a mouse button.
@@ -2297,8 +2312,13 @@ class Script(script.Script):
         if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
             return
 
+        oldObj, oldState = self.pointOfReference.get('pressedChange', (None, 0))
+        if hash(oldObj) == hash(obj) and oldState == event.detail1:
+            return
+
         self.updateBraille(obj)
         speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+        self.pointOfReference['pressedChange'] = hash(obj), event.detail1
 
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""
