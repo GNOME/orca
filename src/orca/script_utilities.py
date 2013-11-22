@@ -1778,7 +1778,11 @@ class Utilities:
         Returns the fully expanded text for the object.
         """
 
-        string = self.substring(obj, startOffset, endOffset)
+        try:
+            string = self.substring(obj, startOffset, endOffset)
+        except:
+            return ""
+
         if self.EMBEDDED_OBJECT_CHARACTER in string:
             # If we're not getting the full text of this object, but
             # rather a substring, we need to figure out the offset of
