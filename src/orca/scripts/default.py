@@ -2402,14 +2402,15 @@ class Script(script.Script):
         if not state.contains(pyatspi.STATE_FOCUSED):
             return
 
-        try:
-            window = self.utilities.topLevelObject(obj)
-            iconified = window.getState().contains(pyatspi.STATE_ICONIFIED)
-        except:
-            return
+        window = self.utilities.topLevelObject(obj)
+        if window:
+            try:
+                iconified = window.getState().contains(pyatspi.STATE_ICONIFIED)
+            except:
+                return
 
-        if iconified:
-            return
+            if iconified:
+                return
 
         if obj.childCount:
             selectedChildren = self.utilities.selectedChildren(obj)
