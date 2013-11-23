@@ -171,28 +171,35 @@ class Script(default.Script):
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
-        obj = event.source
-        if not (event.detail1 and obj.getRole() == pyatspi.ROLE_ROOT_PANE):
-            default.Script.onFocusedChanged(self, event)
+        if not event.detail1:
             return
 
-        # This is a workaround for a java-access-bridge bug (Bug 355011)
-        # where popup menu events are not sent to Orca.
-        #
-        # When a root pane gets focus, a popup menu may have been invoked.
-        # If there is a popup menu, give locus of focus to the armed menu
-        # item.
-        for child in obj:
-            if child.getRole() == pyatspi.ROLE_LAYERED_PANE:
-                popup = self.utilities.descendantsWithRole(
-                    child, pyatspi.ROLE_POPUP_MENU, False)
-                if len(popup) > 0:
-                    items = self.utilities.descendantsWithRole(
-                        popup[0], pyatspi.ROLE_MENU_ITEM, False)
-                    for item in items:
-                        if item.getState().contains(pyatspi.STATE_ARMED):
-                            orca.setLocusOfFocus(event, item)
-                            return
+        obj = event.source
+        role = obj.getRole()
+
+        # Accessibility support for menus in Java is badly broken: Missing
+        # events, missing states, bogus events from other objects, etc.
+        # Therefore if we get an event, however broken, for menus or their
+        # their items that suggests they are selected, we'll just cross our
+        # fingers and hope that's true.
+        menuRoles = [pyatspi.ROLE_MENU,
+                     pyatspi.ROLE_MENU_BAR,
+                     pyatspi.ROLE_MENU_ITEM,
+                     pyatspi.ROLE_CHECK_MENU_ITEM,
+                     pyatspi.ROLE_RADIO_MENU_ITEM,
+                     pyatspi.ROLE_POPUP_MENU]
+
+        if role in menuRoles or obj.parent.getRole() in menuRoles:
+            orca.setLocusOfFocus(event, obj)
+            return
+
+        try:
+            focusRole = orca_state.locusOfFocus.getRole()
+        except:
+            focusRole = None
+
+        if focusRole in menuRoles and role == pyatspi.ROLE_ROOT_PANE:
+            return
 
         default.Script.onFocusedChanged(self, event)
 
@@ -232,3 +239,21 @@ class Script(default.Script):
                 return
 
         default.Script.onValueChanged(self, event)
+
+    def skipObjectEvent(self, event):
+
+        # Accessibility support for menus in Java is badly broken. One problem
+        # is bogus focus claims following menu-related focus claims. Therefore
+        # in this particular toolkit, we mustn't skip events for menus.
+
+        menuRoles = [pyatspi.ROLE_MENU,
+                     pyatspi.ROLE_MENU_BAR,
+                     pyatspi.ROLE_MENU_ITEM,
+                     pyatspi.ROLE_CHECK_MENU_ITEM,
+                     pyatspi.ROLE_RADIO_MENU_ITEM,
+                     pyatspi.ROLE_POPUP_MENU]
+
+        if event.source.getRole() in menuRoles:
+            return False
+
+        return default.Script.skipObjectEvent(self, event)

@@ -149,6 +149,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         
     def generateSpeech(self, obj, **args):
         result = []
+        if obj.getRole() == pyatspi.ROLE_CHECK_BOX \
+           and obj.parent.getRole() == pyatspi.ROLE_MENU:
+            oldRole = self._overrideRole(pyatspi.ROLE_CHECK_MENU_ITEM, args)
+            result.extend(speech_generator.SpeechGenerator.\
+                                           generateSpeech(self, obj, **args))
+            self._restoreRole(oldRole, args)
+
         if args.get('formatType', 'unfocused') == 'basicWhereAmI' \
            and obj.getRole() == pyatspi.ROLE_TEXT:
             spinbox = self._script.utilities.ancestorWithRole(
