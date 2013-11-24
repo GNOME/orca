@@ -1204,6 +1204,14 @@ class Script(default.Script):
         if role == pyatspi.ROLE_PUSH_BUTTON:
             orca.setLocusOfFocus(event, event.source)
 
+        # Some of the dialogs used by Thunderbird (and perhaps Firefox?) seem
+        # to be using Gtk+ 2, along with its associated focused-event issues.
+        # Unfortunately, because Gtk+ 2 doesn't expose a per-object toolkit,
+        # we cannot know that a given widget is Gtk+ 2. Therefore, we'll put
+        # our Gtk+ 2 toolkit script hacks here as well just to be safe.
+        if role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_PASSWORD_TEXT]:
+            orca.setLocusOfFocus(event, event.source)
+
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
