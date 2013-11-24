@@ -74,5 +74,8 @@ class Script(default.Script):
         # Unfiled. But this happens when you are in Gedit, get into a menu
         # and then press Escape. The text widget emits a focus: event, but
         # not a state-changed:focused event.
-        if role == pyatspi.ROLE_TEXT:
+        #
+        # A similar issue can be seen when a text widget starts out having
+        # focus, such as in the old gnome-screensaver dialog.
+        if role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_PASSWORD_TEXT]:
             orca.setLocusOfFocus(event, event.source)
