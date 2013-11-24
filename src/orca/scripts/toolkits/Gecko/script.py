@@ -928,6 +928,9 @@ class Script(default.Script):
         if firstOffset == contextOffset and firstObj == contextObj:
             return
 
+        if contextObj and contextObj.parent == firstObj:
+            return
+
         if self.isAriaWidget(obj) or not self.inDocumentContent(obj):
             default.Script.onCaretMoved(self, event)
             return
