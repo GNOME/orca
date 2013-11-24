@@ -27,10 +27,10 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.scripts.default as default
+import orca.scripts.toolkits.gtk as gtk
 import orca.speech as speech
 
-class Script(default.Script):
+class Script(gtk.Script):
 
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
@@ -49,4 +49,4 @@ class Script(default.Script):
                     speech.speak(child.name)
                 return
 
-        default.Script.onFocusedChanged(self, event)
+        gtk.Script.onFocusedChanged(self, event)
