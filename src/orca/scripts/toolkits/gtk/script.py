@@ -71,6 +71,10 @@ class Script(default.Script):
         if role == pyatspi.ROLE_COMBO_BOX:
             orca.setLocusOfFocus(event, event.source)
 
+        # Unfiled, but a similar case of the above issue with combo boxes.
+        if role == pyatspi.ROLE_PUSH_BUTTON:
+            orca.setLocusOfFocus(event, event.source)
+
         # Unfiled. But this happens when you are in Gedit, get into a menu
         # and then press Escape. The text widget emits a focus: event, but
         # not a state-changed:focused event.

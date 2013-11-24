@@ -59,3 +59,8 @@ class Script(default.Script):
         # event for the menu.
         if role == pyatspi.ROLE_MENU_ITEM:
             orca.setLocusOfFocus(event, event.source)
+
+        # Unfiled, but in at least some dialogs, the first time a push
+        # button gains focus, we only get a focus: event for it.
+        if role == pyatspi.ROLE_PUSH_BUTTON:
+            orca.setLocusOfFocus(event, event.source)
