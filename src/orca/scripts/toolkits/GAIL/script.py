@@ -71,5 +71,10 @@ class Script(default.Script):
         # Unfiled, but yet another case of only getting a focus: event when
         # a widget appears in a parent container and is already focused.
         if role == pyatspi.ROLE_TABLE:
-            orca.setLocusOfFocus(event, event.source)
+            obj = event.source
+            selectedChildren = self.utilities.selectedChildren(obj)
+            if len(selectedChildren) == 1:
+                obj = selectedChildren[0]
+
+            orca.setLocusOfFocus(event, obj)
             return

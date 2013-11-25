@@ -99,5 +99,10 @@ class Script(default.Script):
         # a widget appears in a parent container and is already focused.
         # An example of this particular case is the list of elements dialogs.
         if role == pyatspi.ROLE_TABLE:
-            orca.setLocusOfFocus(event, event.source)
+            obj = event.source
+            selectedChildren = self.utilities.selectedChildren(obj)
+            if len(selectedChildren) == 1:
+                obj = selectedChildren[0]
+
+            orca.setLocusOfFocus(event, obj)
             return
