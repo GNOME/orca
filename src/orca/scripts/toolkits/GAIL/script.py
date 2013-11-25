@@ -52,6 +52,7 @@ class Script(default.Script):
         # focus, such as in the old gnome-screensaver dialog.
         if role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_PASSWORD_TEXT]:
             orca.setLocusOfFocus(event, event.source)
+            return
 
         # Unfiled. When a context menu first appears and an item is already
         # selected, we get a focus: event for that menu item, but there is
@@ -59,8 +60,16 @@ class Script(default.Script):
         # event for the menu.
         if role == pyatspi.ROLE_MENU_ITEM:
             orca.setLocusOfFocus(event, event.source)
+            return
 
         # Unfiled, but in at least some dialogs, the first time a push
         # button gains focus, we only get a focus: event for it.
         if role == pyatspi.ROLE_PUSH_BUTTON:
             orca.setLocusOfFocus(event, event.source)
+            return
+
+        # Unfiled, but yet another case of only getting a focus: event when
+        # a widget appears in a parent container and is already focused.
+        if role == pyatspi.ROLE_TABLE:
+            orca.setLocusOfFocus(event, event.source)
+            return
