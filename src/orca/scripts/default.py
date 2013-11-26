@@ -2369,6 +2369,15 @@ class Script(script.Script):
         state = obj.getState()
         if state.contains(pyatspi.STATE_MANAGES_DESCENDANTS):
             return
+
+        # TODO - JD: We need to give more thought to where we look to this
+        # event and where we prefer object:state-changed:selected.
+
+        # If the current item's selection is toggled, we'll present that
+        # via the state-changed event.
+        keyString, mods = self.utilities.lastKeyAndModifiers()
+        if keyString == "space":
+            return
  
         # Save the event source, if it is a menu or combo box. It will be
         # useful for optimizing componentAtDesktopCoords in the case that
@@ -2378,8 +2387,6 @@ class Script(script.Script):
         if obj.getRole() in (pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_MENU):
             self.lastSelectedMenu = obj
 
-        # TODO - JD: We need to give more thought to where we look to this
-        # event and where we prefer object:state-changed:selected.
         selectedChildren = self.utilities.selectedChildren(obj)
         for child in selectedChildren:
             if not self.utilities.isLayoutOnly(child):
