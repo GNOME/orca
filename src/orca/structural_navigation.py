@@ -3624,8 +3624,8 @@ class StructuralNavigation:
 
     def _linkDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_LINK]
-        columnHeaders.append(guilabels.SN_HEADER_URI)
         columnHeaders.append(guilabels.SN_HEADER_STATE)
+        columnHeaders.append(guilabels.SN_HEADER_URI)
 
         def rowData(obj):
             return [self._getText(obj),
