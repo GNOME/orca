@@ -574,7 +574,7 @@ class Script(default.Script):
             voice = self.speechGenerator.getVoiceForString(obj, string)
             string = self.utilities.adjustForLinks(obj, string, start)
             segments.append([string, start, end, voice])
-            offset = end
+            offset = end + 1
             string, start, end = text.getTextAtOffset(offset, boundary)
 
         return segments
