@@ -62,7 +62,7 @@ cat >> orca-customizations.py << EOF
 orca.settings.userPrefsDir = '$currentDir'
 
 if not orca.debug.debugFile:
-    orca.debug.debugFile = open('$debugFile.debug', 'w', 0)
+    orca.debug.debugFile = open('$debugFile.debug', 'w')
 
     import logging
     for logger in ['braille', 'speech']:
@@ -163,7 +163,7 @@ if [ $orcaRunning -eq 0 ]
 then
     # Run orca and let it settle in.
     #echo starting Orca...
-    orca --user-prefs-dir `pwd`&
+    orca --user-prefs `pwd`&
     sleep $WAIT_TIME
 fi
 
@@ -179,7 +179,7 @@ APP_PID=$!
 
 # Play the keystrokes.
 #
-python $1
+python3 $1
 
 # Let things settle for a couple seconds...
 #
@@ -189,7 +189,7 @@ if [ $orcaRunning -eq 0 ]
 then
     # Terminate Orca
     #echo terminating Orca
-    orca --forcequit > /dev/null 2>&1
+    pkill -9 orca > /dev/null 2>&1
 fi
 
 # Terminate the running application

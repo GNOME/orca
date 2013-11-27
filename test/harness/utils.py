@@ -119,7 +119,7 @@ def assertListEquality(rawOrcaResults, expectedList):
     # If the string comparison failed, do a regex match item by item
     #
     for i in range(0, len(expectedList)):
-	if results[i] == expectedList[i]:
+        if results[i] == expectedList[i]:
             continue
         else:
             expectedResultRE = re.compile(expectedList[i].decode("UTF-8",
@@ -173,7 +173,7 @@ class AssertPresentationAction(AtomicAction):
         """
 
         knownIssue = False
-        print >> myErr, "DIFFERENCES FOUND:"
+        print("DIFFERENCES FOUND:", file=myErr)
         if isinstance(self._expectedResults, [].__class__):
             for result in self._expectedResults:
                 if result.startswith("KNOWN ISSUE") \
@@ -190,18 +190,18 @@ class AssertPresentationAction(AtomicAction):
             # so we need to capture it.  Otherwise, it can hang the tests.
             #
             diffs = list(d.compare(self._expectedResults, results))
-            print >> myErr, '\n'.join(list(diffs))
+            print('\n'.join(list(diffs)), file=myErr)
         except:
-            print >> myErr, "(ERROR COMPUTING DIFFERENCES!!!)"
+            print("(ERROR COMPUTING DIFFERENCES!!!)", file=myErr)
             for i in range(0, max(len(results), len(self._expectedResults))):
                 try:
-                    print >> myErr, "  EXPECTED: %s" \
-                          % self._expectedResults[i].decode("UTF-8", "replace")
+                    print("  EXPECTED: %s" \
+                          % self._expectedResults[i].decode("UTF-8", "replace"), file=myErr)
                 except:
                     pass
                 try:
-                    print >> myErr, "  ACTUAL:   %s" \
-                          % results[i].decode("UTF-8", "replace")
+                    print("  ACTUAL:   %s" \
+                          % results[i].decode("UTF-8", "replace"), file=myErr)
                 except:
                     pass
 
@@ -217,24 +217,24 @@ class AssertPresentationAction(AtomicAction):
         """
 
         knownIssue = False
-        print >> myErr, "EXPECTED:"
+        print("EXPECTED:", file=myErr)
         if isinstance(self._expectedResults, [].__class__):
             for result in self._expectedResults:
                 if result.startswith("KNOWN ISSUE") \
                         or result.startswith("BUG?"):
                     knownIssue = True
-                print >> myErr, '     "%s",' % result
+                print('     "%s",' % result, file=myErr)
         else:
             if self._expectedResults.startswith("KNOWN ISSUE") \
                or self._expectedResults.startswith("BUG?"):
                 knownIssue = True
-            print >> myErr, '     "%s"' % self._expectedResults
-        print >> myErr, "ACTUAL:"
+            print('     "%s"' % self._expectedResults, file=myErr)
+        print("ACTUAL:", file=myErr)
         if isinstance(results, [].__class__):
             for result in results:
-                print >> myErr, '     "%s",' % result
+                print('     "%s",' % result, file=myErr)
         else:
-            print >> myErr, '     "%s"' % results
+            print('     "%s"' % results, file=myErr)
         return knownIssue
 
     def _stopRecording(self):
@@ -242,16 +242,16 @@ class AssertPresentationAction(AtomicAction):
         results = self._assertionPredicate(result, self._expectedResults)
         if not results:
             AssertPresentationAction.totalSucceed += 1
-            print >> myOut, "Test %d of %d SUCCEEDED: %s" \
+            print("Test %d of %d SUCCEEDED: %s" \
                             % (self._num, 
                                AssertPresentationAction.totalCount, 
-                               self._name)
+                               self._name), file=myOut)
         else:
             AssertPresentationAction.totalFail += 1
-            print >> myErr, "Test %d of %d FAILED: %s" \
+            print("Test %d of %d FAILED: %s" \
                             % (self._num, 
                                AssertPresentationAction.totalCount, 
-                               self._name)
+                               self._name), file=myErr)
             if createDiffs:
                 knownIssue = self.printDiffs(results)
             else:
@@ -259,11 +259,11 @@ class AssertPresentationAction(AtomicAction):
 
             if knownIssue:
                 AssertPresentationAction.totalKnownIssues += 1
-                print >> myErr, '[FAILURE WAS EXPECTED - ' \
+                print('[FAILURE WAS EXPECTED - ' \
                                 'LOOK FOR KNOWN ISSUE OR BUG? ' \
-                                'IN EXPECTED RESULTS]'
+                                'IN EXPECTED RESULTS]', file=myErr)
             else:
-                print >> myErr, '[FAILURE WAS UNEXPECTED]'
+                print('[FAILURE WAS UNEXPECTED]', file=myErr)
 
     def __str__(self):
         return 'Assert Presentation Action: %s' % self._name
@@ -276,14 +276,13 @@ class AssertionSummaryAction(AtomicAction):
         AtomicAction.__init__(self, 0, self._printSummary)
 
     def _printSummary(self):
-        print >> myOut, \
-            "SUMMARY: %d SUCCEEDED and %d FAILED (%d UNEXPECTED) of %d for %s"\
+        print("SUMMARY: %d SUCCEEDED and %d FAILED (%d UNEXPECTED) of %d for %s"\
             % (AssertPresentationAction.totalSucceed,
                AssertPresentationAction.totalFail,
                (AssertPresentationAction.totalFail \
                - AssertPresentationAction.totalKnownIssues),
                AssertPresentationAction.totalCount,
-               sys.argv[0])
+               sys.argv[0]), file=myOut)
 
     def __str__(self):
         return 'Start Recording Action'
