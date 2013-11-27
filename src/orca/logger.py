@@ -46,7 +46,7 @@ class Logger:
             debug.debugFile.close()
             debug.debugFile = None
         if debugFile:
-            debug.debugFile = open('%s.debug' % debugFile, 'w', 0)
+            debug.debugFile = open('%s.debug' % debugFile, 'w')
             debug.debugLevel = debugLevel
 
     def setLogFile(self, logFile):
