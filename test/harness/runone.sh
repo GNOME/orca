@@ -163,7 +163,7 @@ if [ $orcaRunning -eq 0 ]
 then
     # Run orca and let it settle in.
     #echo starting Orca...
-    orca --user-prefs `pwd`&
+    $harnessDir/runorca.py --user-prefs `pwd`&
     sleep $WAIT_TIME
 fi
 

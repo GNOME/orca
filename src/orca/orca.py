@@ -60,6 +60,7 @@ except:
 from . import braille
 from . import debug
 from . import event_manager
+from . import logger
 from . import messages
 from . import notification_messages
 from . import orca_state
@@ -73,6 +74,7 @@ from .input_event import KeyboardEvent
 _eventManager = event_manager.getManager()
 _scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
+_logger = logger.getLogger()
 
 try:
     # If we don't have an active desktop, we will get a RuntimeError.
@@ -91,6 +93,9 @@ def onEnabledChanged(gsetting, key):
 
 def getSettingsManager():
     return _settingsManager
+
+def getLogger():
+    return _logger
 
 EXIT_CODE_HANG = 50
 

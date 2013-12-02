@@ -27,20 +27,22 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import importlib
-import logging
-log = logging.getLogger("speech")
 
 import re
 import time
 
 from . import chnames
 from . import debug
+from . import logger
 from . import orca_state
 from . import settings
 from . import sound
 from . import speech_generator
 
 from .acss import ACSS
+
+_logger = logger.getLogger()
+log = _logger.newLog("speech")
 
 # The speech server to use for all speech operations.
 #
@@ -307,10 +309,6 @@ def stop():
 def updateCapitalizationStyle(script=None, inputEvent=None):
     if _speechserver:
         _speechserver.updateCapitalizationStyle()
-    else:
-        logLine = "SPEECH OUTPUT: 'capitalization style' updated"
-        debug.println(debug.LEVEL_INFO, logLine)
-        log.info(logLine)
 
     return True
 
@@ -319,20 +317,12 @@ def updatePunctuationLevel(script=None, inputEvent=None):
 
     if _speechserver:
         _speechserver.updatePunctuationLevel()
-    else:
-        logLine = "SPEECH OUTPUT: 'punctuation level' updated"
-        debug.println(debug.LEVEL_INFO, logLine)
-        log.info(logLine)
 
     return True
 
 def increaseSpeechRate(script=None, inputEvent=None):
     if _speechserver:
         _speechserver.increaseSpeechRate()
-    else:
-        logLine = "SPEECH OUTPUT: 'faster'"
-        debug.println(debug.LEVEL_INFO, logLine)
-        log.info(logLine)
 
     return True
 
@@ -349,20 +339,12 @@ def decreaseSpeechRate(script=None, inputEvent=None):
 def increaseSpeechPitch(script=None, inputEvent=None):
     if _speechserver:
         _speechserver.increaseSpeechPitch()
-    else:
-        logLine = "SPEECH OUTPUT: 'higher'"
-        debug.println(debug.LEVEL_INFO, logLine)
-        log.info(logLine)
 
     return True
 
 def decreaseSpeechPitch(script=None, inputEvent=None):
     if _speechserver:
         _speechserver.decreaseSpeechPitch()
-    else:
-        logLine = "SPEECH OUTPUT: 'lower'"
-        debug.println(debug.LEVEL_INFO, logLine)
-        log.info(logLine)
 
     return True
 

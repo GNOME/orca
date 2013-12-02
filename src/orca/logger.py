@@ -28,86 +28,47 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2012 Igalia, S.L."
 __license__   = "LGPL"
 
-import logging
 import io
-
-from . import debug
+import logging
 
 class Logger:
 
-    def __init__(self, *types):
-        self._types = types or ['braille', 'speech']
-        self._fileHandlers = {}
-        self._streamHandlers = {}
-        self._formatter = logging.Formatter('%(message)s')
+    def __init__(self):
+        self._logs = {}
 
-    def setDebug(self, debugFile, debugLevel):
-        if debug.debugFile:
-            debug.debugFile.close()
-            debug.debugFile = None
-        if debugFile:
-            debug.debugFile = open('%s.debug' % debugFile, 'w')
-            debug.debugLevel = debugLevel
+    def getLogNames(self):
+        return self._logs.keys()
 
-    def setLogFile(self, logFile):
-        self._closeFileHandlers()
-        self._createFileHandlers(logFile)
+    def newLog(self, name, level=logging.INFO):
+        log = logging.getLogger(name)
+        log.setLevel(level)
 
-    def startRecording(self):
-        self._closeStreamHandlers()
-        self._createStreamHandlers()
-
-    def stopRecording(self):
-        return self._closeStreamHandlers()
-
-    def _createFileHandlers(self, fileName):
-        if not fileName:
-            return
-
-        for logger in self._types:
-            handler = logging.FileHandler('%s.%s' % (fileName, logger), 'w')
-            self._fileHandlers[logger] = handler
-            log = logging.getLogger(logger)
-            self._createHandler(log, handler)
-
-    def _createStreamHandlers(self):
-        for logger in self._types:
-            stringIO = io.StringIO()
-            handler = logging.StreamHandler(stringIO)
-            self._streamHandlers[logger] = [stringIO, handler]
-            log = logging.getLogger(logger)
-            self._createHandler(log, handler)
-
-    def _createHandler(self, log, handler):
-        handler.setFormatter(self._formatter)
-        log.setLevel(logging.INFO)
+        handler = logging.StreamHandler(io.StringIO())
+        handler.setFormatter(logging.Formatter('%(message)s'))
         log.addHandler(handler)
 
-    def _closeFileHandlers(self):
-        for logger in self._types:
-            log = logging.getLogger(logger)
-            handler = self._fileHandlers.get(logger)
-            self._closeHandler(log, handler)
+        self._logs[name] = handler.stream
+        return log
 
-    def _closeStreamHandlers(self):
-        result = ''
-        for logger in self._types:
-            log = logging.getLogger(logger)
-            stringIO, handler = self._streamHandlers.get(logger, (None, None))
-            self._closeHandler(log, handler)
-            if stringIO:
-                try:
-                    result += stringIO.getvalue()
-                    stringIO.close()
-                except ValueError:
-                    pass
+    def clearLog(self, name):
+        stream = self._logs.get(name)
+        if stream:
+            stream.truncate(0)
+            stream.seek(0)
 
-        return result
+    def getLogContent(self, name):
+        stream = self._logs.get(name)
+        if stream:
+            return stream.getvalue()
 
-    def _closeHandler(self, log, handler):
-        try:
-            handler.flush()
-            handler.close()
-            log.removeHandler(handler)
-        except:
-            pass
+        return ""
+
+    def shutdown(self):
+        for name in self._logs.keys():
+            stream = self._logs.get(name)
+            stream.close()
+
+_logger = Logger()
+
+def getLogger():
+    return _logger

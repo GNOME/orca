@@ -31,9 +31,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import logging
-log = logging.getLogger("braille")
-
 import signal
 import os
 
@@ -71,7 +68,11 @@ from . import brltablenames
 from . import cmdnames
 from . import debug
 from . import eventsynthesizer
+from . import logger
 from . import orca_state
+
+_logger = logger.getLogger()
+log = _logger.newLog("braille")
 
 # Right now, the orca autogen.sh/configure needs a priori knowledge of
 # where the liblouis tables are.  When running autogen.sh/configure,

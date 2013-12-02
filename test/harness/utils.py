@@ -3,8 +3,15 @@ sure your PYTHONPATH includes the directory containing this
 file in order for the tests that use it to work.  The test
 harness does that automatically for you."""
 
-import orca.logger as logger
-testLogger = logger.Logger()
+from gi.repository import Gio
+testLogger = Gio.DBusProxy.new_for_bus_sync(
+    Gio.BusType.SESSION,
+    Gio.DBusProxyFlags.NONE,
+    None,
+    'org.gnome.Orca',
+    '/org/gnome/Orca',
+    'org.gnome.Orca.Logger',
+    None)
 
 # Where to find Dojo tests.
 #
