@@ -113,4 +113,17 @@ class Script(GAIL.Script):
         if self.utilities.isTextArea(obj):
             self._saveLastCursorPosition(obj, obj.queryText().caretOffset)
 
+    def onSelectionChanged(self, event):
+        """Callback for object:selection-changed accessibility events."""
+
+        obj = event.source
+        state = obj.getState()
+        # sometimes eclipse issues an object:selection-changed for objects not focused.
+        # we do not want that orca announces this objects.
+
+        if not state.contains(pyatspi.STATE_FOCUSED):
+            # the exception, at least for while, is the MenuBar
+            if obj.getRole() != pyatspi.ROLE_MENU_BAR:
+                return
+        GAIL.Script.onSelectionChanged(self, event)
 
