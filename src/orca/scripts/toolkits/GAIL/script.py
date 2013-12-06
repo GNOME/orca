@@ -73,7 +73,7 @@ class Script(default.Script):
         if role == pyatspi.ROLE_TABLE:
             obj = event.source
             selectedChildren = self.utilities.selectedChildren(obj)
-            if len(selectedChildren) == 1:
+            if selectedChildren:
                 obj = selectedChildren[0]
 
             orca.setLocusOfFocus(event, obj)

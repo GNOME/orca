@@ -754,6 +754,9 @@ class Script(script.Script):
                 row = table.getRowAtIndex(index)
                 self.pointOfReference['lastColumn'] = column
                 self.pointOfReference['lastRow'] = row
+        else:
+            self.pointOfReference['lastColumn'] = -1
+            self.pointOfReference['lastRow'] = -1
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -2421,7 +2424,7 @@ class Script(script.Script):
 
         if obj.childCount:
             selectedChildren = self.utilities.selectedChildren(obj)
-            if len(selectedChildren) == 1:
+            if selectedChildren:
                 obj = selectedChildren[0]
 
         orca.setLocusOfFocus(event, obj)
