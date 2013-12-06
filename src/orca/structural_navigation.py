@@ -1271,7 +1271,9 @@ class StructuralNavigation:
         - obj: the accessible object of interest.
         """
 
-        cellRoles = [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_COLUMN_HEADER]
+        cellRoles = [pyatspi.ROLE_TABLE_CELL,
+                     pyatspi.ROLE_COLUMN_HEADER,
+                     pyatspi.ROLE_ROW_HEADER]
         if obj and not obj.getRole() in cellRoles:
             document = self._getDocument()
             obj = self._script.utilities.ancestorWithRole(
@@ -1298,7 +1300,7 @@ class StructuralNavigation:
         - obj: the accessible table cell to examime
         """
 
-        if obj and obj.getRole() == pyatspi.ROLE_COLUMN_HEADER and obj.name:
+        if obj and obj.name:
             return False
 
         text = self._script.utilities.displayedText(obj)
@@ -1346,10 +1348,6 @@ class StructuralNavigation:
         if not (oldRowHeaders or oldColHeaders):
             return
 
-        # We only want to speak the header information that has
-        # changed, and we don't want to speak headers if we're in
-        # a header row/col.
-        #
         if rowDiff and not self._isInHeaderRow(cell):
             rowHeaders = self._getRowHeaders(cell)
             for header in rowHeaders:
@@ -1357,7 +1355,7 @@ class StructuralNavigation:
                     text = self._getCellText(header)
                     speech.speak(text)
 
-        if colDiff and not self._isInHeaderColumn(cell):
+        if colDiff:
             colHeaders = self._getColumnHeaders(cell)
             for header in colHeaders:
                 if not header in oldColHeaders:
@@ -1577,7 +1575,8 @@ class StructuralNavigation:
 
         elif obj.getRole() in [pyatspi.ROLE_TABLE_COLUMN_HEADER,
                                pyatspi.ROLE_TABLE_ROW_HEADER,
-                               pyatspi.ROLE_COLUMN_HEADER]:
+                               pyatspi.ROLE_COLUMN_HEADER,
+                               pyatspi.ROLE_ROW_HEADER]:
             return True
 
         else:
@@ -3333,7 +3332,9 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        role = [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_COLUMN_HEADER]
+        role = [pyatspi.ROLE_TABLE_CELL,
+                pyatspi.ROLE_COLUMN_HEADER,
+                pyatspi.ROLE_ROW_HEADER]
         return MatchCriteria(collection, roles=role)
 
     def _tableCellPredicate(self, obj, arg=None):
@@ -3347,6 +3348,7 @@ class StructuralNavigation:
         """
 
         return (obj and obj.getRole() in [pyatspi.ROLE_COLUMN_HEADER,
+                                          pyatspi.ROLE_ROW_HEADER,
                                           pyatspi.ROLE_TABLE_CELL])
 
     def _tableCellPresentation(self, cell, arg):
