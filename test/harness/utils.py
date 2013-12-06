@@ -129,10 +129,8 @@ def assertListEquality(rawOrcaResults, expectedList):
         if results[i] == expectedList[i]:
             continue
         else:
-            expectedResultRE = re.compile(expectedList[i].decode("UTF-8",
-                                                                 "replace"))
-            if expectedResultRE.match(results[i].decode("UTF-8",
-                                                        "replace")):
+            expectedResultRE = re.compile(expectedList[i])
+            if expectedResultRE.match(results[i]):
                 continue
             else:
                 return results
