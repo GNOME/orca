@@ -15,8 +15,10 @@ from dbus.mainloop.glib import DBusGMainLoop
 
 class LoggerService(dbus.service.Object):
 
-    def __init__(self):
+    def __init__(self, filePrefix):
         self._logger = orca.getLogger()
+        self._logNames = ['braille', 'speech']
+        self._filePrefix = filePrefix
 
         DBusGMainLoop(set_as_default=True)
         busname = dbus.service.BusName('org.gnome.Orca', bus=dbus.SessionBus())
@@ -24,16 +26,18 @@ class LoggerService(dbus.service.Object):
 
     @dbus.service.method(dbus_interface='org.gnome.Orca.Logger', in_signature='', out_signature='')
     def startRecording(self):
-        names = self._logger.getLogNames()
-        for name in names:
+        for name in self._logNames:
             self._logger.clearLog(name)
 
     @dbus.service.method(dbus_interface='org.gnome.Orca.Logger', in_signature='', out_signature='s')
     def stopRecording(self):
         contents = ''
-        names = self._logger.getLogNames()
-        for name in names:
-            contents += self._logger.getLogContent(name)
+        for name in self._logNames:
+            content = self._logger.getLogContent(name)
+            contents += content
+            fileName = open('%s.%s' % (self._filePrefix, name), 'a')
+            fileName.writelines(content)
+            fileName.close()
 
         return contents
 
@@ -42,13 +46,16 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", "--user-prefs", action="store")
+    parser.add_argument("--debug-file", action="store")
     args = parser.parse_args()
+
+    orca.debug.debugFile = open('%s.debug' % args.debug_file, 'w')
 
     manager = orca.getSettingsManager()
     manager.activate(args.user_prefs)
     sys.path.insert(0, manager.getPrefsDir())
 
-    service = LoggerService()
+    service = LoggerService(args.debug_file)
 
     return orca.main()
 

@@ -34,62 +34,26 @@ then
 	useage
 fi
 
-#echo runone.sh: $*
-
 debugFile=`basename $1 .py`
 
 # Number of seconds to wait for Orca and the application to start
 #
 WAIT_TIME=10
 
-# Set up the stuff we want to always be set for every test, regardless
-# if there is a *.params file for the test or not.
-#
-currentDir=`pwd`
-
 cp `dirname $0`/orca-customizations.py.in orca-customizations.py
-
-# If a <testfilename>.customizations file exists, add those settings to
-# what is specified in the default orca-customizations-py.in.
-#
 CUSTOMIZATIONS_FILE=`dirname $1`/$debugFile.customizations
 if [ -f $CUSTOMIZATIONS_FILE ]
 then
     cat $CUSTOMIZATIONS_FILE >> orca-customizations.py
 fi
-cat >> orca-customizations.py << EOF
 
-orca.settings.userPrefsDir = '$currentDir'
-
-if not orca.debug.debugFile:
-    orca.debug.debugFile = open('$debugFile.debug', 'w')
-
-    import logging
-    for logger in ['braille', 'speech']:
-        log = logging.getLogger(logger)
-        formatter = logging.Formatter('%(name)s.%(message)s')
-        handler = logging.FileHandler('$debugFile.%s' % logger, 'w')
-        handler.setFormatter(formatter)
-        log.addHandler(handler)
-        log.setLevel(logging.INFO)
-
-EOF
-
-# Set up our local user settings file for the output format we want.
-#
-# If a <testfilename>.settings file exists, should use that instead of
-# the default user-settings.conf.in.
-#
-# (Orca will look in our local directory first for user-settings.conf
-# before looking in the usual location)
-#
 SETTINGS_FILE=`dirname $1`/$debugFile.settings
 if [ ! -f $SETTINGS_FILE ]
 then
     SETTINGS_FILE=`dirname $0`/user-settings.conf.in
 fi
 cp $SETTINGS_FILE user-settings.conf
-#echo "Using settings file:" $SETTINGS_FILE
+
 
 # Allow us to pass parameters to the command line of the application.
 #
@@ -163,7 +127,7 @@ if [ $orcaRunning -eq 0 ]
 then
     # Run orca and let it settle in.
     #echo starting Orca...
-    $harnessDir/runorca.py --user-prefs `pwd`&
+    $harnessDir/runorca.py --user-prefs `pwd` --debug-file $debugFile &
     sleep $WAIT_TIME
 fi
 
@@ -172,23 +136,14 @@ fi
 #
 echo starting test application $APP_NAME $ARGS $PARAMS ...
 $APP_NAME $ARGS $PARAMS &
-#sleep $WAIT_TIME
 APP_PID=$!
-
-#echo $APP_NAME pid $APP_PID
 
 # Play the keystrokes.
 #
 python3 $1
 
-# Let things settle for a couple seconds...
-#
-#sleep $WAIT_TIME
-
 if [ $orcaRunning -eq 0 ]
 then
-    # Terminate Orca
-    #echo terminating Orca
     pkill -9 orca > /dev/null 2>&1
 fi
 

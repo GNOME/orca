@@ -231,14 +231,12 @@ done
 
 if [ "$coverageMode" -eq 1 ]
 then
-    python $harnessDir/quit.py
     rm user-settings.conf
     echo ...finished generating coverage map.
 fi
 
 if [ "$profileMode" -eq 1 ]
 then
-    python $harnessDir/quit.py
     rm -f user-settings.conf
     mkdir -p ../profile
     profileFilePrefix=../profile/`date +%Y-%m-%d_%H:%M:%S`
