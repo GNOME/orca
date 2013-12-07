@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/python
 
 """Test of the fix for bug 511389."""
@@ -9,19 +8,11 @@ import utils
 sequence = MacroSequence()
 
 ########################################################################
-# We wait for the focus to be on a blank Firefox window.
-#
-sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
-
-########################################################################
-# Load the local "simple form" test case.
+# Load the local test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-
 sequence.append(TypeAction(utils.htmlURLPrefix + "bug-511389.html"))
 sequence.append(KeyComboAction("Return"))
-
 sequence.append(WaitForDocLoad())
 
 ########################################################################
@@ -35,7 +26,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Hello world, this is a test.', cursor=1",
      "SPEECH OUTPUT: 'Hello world'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ', this is a test. '"]))
+     "SPEECH OUTPUT: ', this is a test.'"]))
 
 ########################################################################
 # Down Arrow to the link.
@@ -44,9 +35,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Hello world, this is a test.'",
-     "     VISIBLE:  'Hello world, this is a test.', cursor=1",
-     "BRAILLE LINE:  'Foo'",
+    ["BRAILLE LINE:  'Foo'",
      "     VISIBLE:  'Foo', cursor=1",
      "SPEECH OUTPUT: 'Foo'",
      "SPEECH OUTPUT: 'link'"]))
@@ -82,17 +71,7 @@ sequence.append(utils.AssertPresentationAction(
 # conditions at the test's start.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))
-
-sequence.append(WaitForDocLoad())
-
-# Just a little extra wait to let some events get through.
-#
-sequence.append(PauseAction(3000))
-
 sequence.append(utils.AssertionSummaryAction())
-
 sequence.start()

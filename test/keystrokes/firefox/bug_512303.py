@@ -9,19 +9,11 @@ import utils
 sequence = MacroSequence()
 
 ########################################################################
-# We wait for the focus to be on a blank Firefox window.
-#
-sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
-
-########################################################################
-# Load the local "simple form" test case.
+# Load the local test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-
 sequence.append(TypeAction(utils.htmlURLPrefix + "table-caption.html"))
 sequence.append(KeyComboAction("Return"))
-
 sequence.append(WaitForDocLoad())
 
 ########################################################################
@@ -42,9 +34,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'this is a caption for this table Caption'",
+    ["BRAILLE LINE:  'this is a caption for this table caption'",
      "     VISIBLE:  'this is a caption for this table', cursor=1",
-     "SPEECH OUTPUT: 'this is a caption for this table caption'"]))
+     "SPEECH OUTPUT: 'this is a caption for this table'",
+     "SPEECH OUTPUT: 'caption'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -52,7 +45,12 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'col1 col2 col3'",
      "     VISIBLE:  'col1 col2 col3', cursor=1",
-     "SPEECH OUTPUT: 'col1 column header col2 column header col3 column header'"]))
+     "SPEECH OUTPUT: 'col1'",
+     "SPEECH OUTPUT: 'column header'",
+     "SPEECH OUTPUT: 'col2'",
+     "SPEECH OUTPUT: 'column header'",
+     "SPEECH OUTPUT: 'col3'",
+     "SPEECH OUTPUT: 'column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -60,7 +58,9 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '1 2 3'",
      "     VISIBLE:  '1 2 3', cursor=1",
-     "SPEECH OUTPUT: '1 2 3'"]))
+     "SPEECH OUTPUT: '1'",
+     "SPEECH OUTPUT: '2'",
+     "SPEECH OUTPUT: '3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -68,7 +68,9 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '4 5 6'",
      "     VISIBLE:  '4 5 6', cursor=1",
-     "SPEECH OUTPUT: '4 5 6'"]))
+     "SPEECH OUTPUT: '4'",
+     "SPEECH OUTPUT: '5'",
+     "SPEECH OUTPUT: '6'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -76,7 +78,9 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '7 8 9'",
      "     VISIBLE:  '7 8 9', cursor=1",
-     "SPEECH OUTPUT: '7 8 9'"]))
+     "SPEECH OUTPUT: '7'",
+     "SPEECH OUTPUT: '8'",
+     "SPEECH OUTPUT: '9'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -95,7 +99,9 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '7 8 9'",
      "     VISIBLE:  '7 8 9', cursor=1",
-     "SPEECH OUTPUT: '7 8 9'"]))
+     "SPEECH OUTPUT: '7'",
+     "SPEECH OUTPUT: '8'",
+     "SPEECH OUTPUT: '9'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -103,7 +109,9 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '4 5 6'",
      "     VISIBLE:  '4 5 6', cursor=1",
-     "SPEECH OUTPUT: '4 5 6'"]))
+     "SPEECH OUTPUT: '4'",
+     "SPEECH OUTPUT: '5'",
+     "SPEECH OUTPUT: '6'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -111,7 +119,9 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '1 2 3'",
      "     VISIBLE:  '1 2 3', cursor=1",
-     "SPEECH OUTPUT: '1 2 3'"]))
+     "SPEECH OUTPUT: '1'",
+     "SPEECH OUTPUT: '2'",
+     "SPEECH OUTPUT: '3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -119,15 +129,21 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'col1 col2 col3'",
      "     VISIBLE:  'col1 col2 col3', cursor=1",
-     "SPEECH OUTPUT: 'col1 column header col2 column header col3 column header'"]))
+     "SPEECH OUTPUT: 'col1'",
+     "SPEECH OUTPUT: 'column header'",
+     "SPEECH OUTPUT: 'col2'",
+     "SPEECH OUTPUT: 'column header'",
+     "SPEECH OUTPUT: 'col3'",
+     "SPEECH OUTPUT: 'column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'this is a caption for this table Caption'",
+    ["BRAILLE LINE:  'this is a caption for this table caption'",
      "     VISIBLE:  'this is a caption for this table', cursor=1",
-     "SPEECH OUTPUT: 'this is a caption for this table caption'"]))
+     "SPEECH OUTPUT: 'this is a caption for this table'",
+     "SPEECH OUTPUT: 'caption'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -143,17 +159,7 @@ sequence.append(utils.AssertPresentationAction(
 # conditions at the test's start.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))
-
-sequence.append(WaitForDocLoad())
-
-# Just a little extra wait to let some events get through.
-#
-sequence.append(PauseAction(3000))
-
 sequence.append(utils.AssertionSummaryAction())
-
 sequence.start()

@@ -35,7 +35,7 @@ class LoggerService(dbus.service.Object):
         for name in self._logNames:
             content = self._logger.getLogContent(name)
             contents += content
-            fileName = open('%s.%s' % (self._filePrefix, name), 'a')
+            fileName = open('%s.%s' % (self._filePrefix, name), 'a', encoding='utf-8')
             fileName.writelines(content)
             fileName.close()
 

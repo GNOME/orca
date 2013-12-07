@@ -205,11 +205,17 @@ def println(level, text = ""):
             except TypeError:
                 text = "TypeError when trying to write text"
                 debugFile.writelines([text, "\n"])
+            except:
+                text = "Exception when trying to write text"
+                debugFile.writelines([text, "\n"])
         else:
             try:
                 sys.stderr.writelines([text, "\n"])
             except TypeError:
                 text = "TypeError when trying to write text"
+                sys.stderr.writelines([text, "\n"])
+            except:
+                text = "Exception when trying to write text"
                 sys.stderr.writelines([text, "\n"])
 
 def printResult(level, result=None):

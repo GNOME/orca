@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/python
 
 """Test of navigation by Home/End on a blank line."""
@@ -9,22 +8,12 @@ import utils
 sequence = MacroSequence()
 
 ########################################################################
-# We wait for the focus to be on a blank Firefox window.
-#
-sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
-
-########################################################################
-# Load the local blockquote test case.
+# Load the local test case.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-
 sequence.append(TypeAction(utils.htmlURLPrefix + "bug-591807.html"))
 sequence.append(KeyComboAction("Return"))
-
 sequence.append(WaitForDocLoad())
-sequence.append(WaitForFocus("Test",
-                             acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
 # Press Control+Home to move to the top.
@@ -100,17 +89,7 @@ sequence.append(utils.AssertPresentationAction(
 # conditions at the test's start.
 #
 sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-
 sequence.append(TypeAction("about:blank"))
 sequence.append(KeyComboAction("Return"))
-
-sequence.append(WaitForDocLoad())
-
-# Just a little extra wait to let some events get through.
-#
-sequence.append(PauseAction(3000))
-
 sequence.append(utils.AssertionSummaryAction())
-
 sequence.start()

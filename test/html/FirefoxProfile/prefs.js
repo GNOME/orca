@@ -34,7 +34,7 @@ user_pref("extensions.lastAppVersion", "4.0.1");
 user_pref("extensions.testpilot.runStudies", false);
 user_pref("extensions.update.notifyUser", false);
 user_pref("extensions.update.enabled", false);
-user_pref("intl.charsetmenu.browser.cache", "UTF-8, ISO-8859-1");
+user_pref("intl.charsetmenu.browser.cache", "UTF-8");
 user_pref("network.cookie.prefsMigrated", true);
 user_pref("privacy.sanitize.promptOnSanitize", false);
 user_pref("privacy.sanitize.sanitizeOnShutdown", true);
@@ -46,4 +46,8 @@ user_pref("xxx.legal.rights.seen", "0.0");
 user_pref("browser.rights.3.shown", true);
 user_pref("beagle.autoindex.active", false);
 user_pref("beagle.first.run", false);
+user_pref("intl.charset.default", "UTF-8");
+user_pref("intl.charset.default", "UTF-8");
+user_pref("intl.charsetmenu.browser.cache", "UTF-8");
+user_pref("intl.charsetmenu.browser.static", "UTF-8");
 

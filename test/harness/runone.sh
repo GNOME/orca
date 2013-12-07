@@ -36,10 +36,6 @@ fi
 
 debugFile=`basename $1 .py`
 
-# Number of seconds to wait for Orca and the application to start
-#
-WAIT_TIME=10
-
 cp `dirname $0`/orca-customizations.py.in orca-customizations.py
 CUSTOMIZATIONS_FILE=`dirname $1`/$debugFile.customizations
 if [ -f $CUSTOMIZATIONS_FILE ]
@@ -125,10 +121,8 @@ fi
 
 if [ $orcaRunning -eq 0 ]
 then
-    # Run orca and let it settle in.
-    #echo starting Orca...
     $harnessDir/runorca.py --user-prefs `pwd` --debug-file $debugFile &
-    sleep $WAIT_TIME
+    sleep 4
 fi
 
 # Start the test application and let it settle in. Two processes
@@ -161,11 +155,9 @@ fi
 
 if [ "$APP_NAME" == "firefox" ]
 then
-    #echo killing firefox
     pkill firefox > /dev/null 2>&1
     rm -rf $FF_PROFILE_DIR
 else
-    #echo killing app $APP_NAME $APP_PID
     kill -9 $APP_PID > /dev/null 2>&1
 fi
 
