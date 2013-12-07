@@ -2070,6 +2070,22 @@ class Script(default.Script):
         # events that are not in the document.  Unfortunately, this is an
         # expensive call.  Instead we will do some heuristics to filter out
         # chrome events with the least amount of IPC as possible.
+        chromeEventRoles = [pyatspi.ROLE_AUTOCOMPLETE,
+                            pyatspi.ROLE_FRAME,
+                            pyatspi.ROLE_STATUS_BAR,
+                            pyatspi.ROLE_TOOL_BAR]
+
+        role = event.source.getRole()
+        if role in chromeEventRoles:
+            return False
+
+        try:
+            childRole = event.any_data.getRole()
+        except:
+            pass
+        else:
+            if childRole in chromeEventRoles:
+                return False
 
         # event.type specific checks
         if event.type.startswith('object:children-changed'):
