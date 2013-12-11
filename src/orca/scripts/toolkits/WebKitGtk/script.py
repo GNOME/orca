@@ -549,10 +549,16 @@ class Script(default.Script):
             string = self.utilities.adjustForRepeats(string)
             voice = self.speechGenerator.getVoiceForString(obj, string)
             string = self.utilities.adjustForLinks(obj, string, start)
+            # Incrementing the offset should cause us to eventually reach
+            # the end of the text as indicated by a 0-length string and
+            # start and end offsets of 0. Sometimes WebKitGtk returns the
+            # final text segment instead.
+            if segments and [string, start, end, voice] == segments[-1]:
+                break
+
             segments.append([string, start, end, voice])
             offset = end + 1
             string, start, end = text.getTextAtOffset(offset, boundary)
-
         return segments
 
     def textLines(self, obj):
