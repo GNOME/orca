@@ -4,20 +4,21 @@
 # Alexandre Conte <alente.alemao@gmail.com>, 2013.
 # José Vilmar Estácio de Souza <vilmar@informal.com.br>, 2013.
 # Enrico Nicoletto <liverig@gmail.com>, 2013.
+# Rafael Ferreira <rafael.f.f1@gmail.com>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2013-10-08 12:58+0000\n"
-"PO-Revision-Date: 2013-10-08 17:16-0300\n"
-"Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
+"POT-Creation-Date: 2013-12-07 19:33+0000\n"
+"PO-Revision-Date: 2013-12-10 03:32-0300\n"
+"Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -2965,13 +2966,13 @@ msgstr "Obtendo uma lista de atalhos"
 #. (itstool) path: item/p
 #: C/howto_learn_modes.page:51
 msgid ""
-"Press <key>1</key> if you want a list of shortcuts that apply <app>Orca</"
-"app>-wide, or press <key>2</key> if you want a list of shortcuts that are "
+"Press <key>F2</key> if you want a list of shortcuts that apply <app>Orca</"
+"app>-wide, or press <key>F3</key> if you want a list of shortcuts that are "
 "specifically for the application with focus."
 msgstr ""
-"Pressione <key>1</key> se você quer uma lista de atalhos que se aplicam ao "
-"<app>Orca</app>, ou pressione <key>2</key> se você quer uma lista de atalhos "
-"que são específicos para o aplicativo com foco."
+"Pressione <key>F2</key> se você quer uma lista de atalhos que se aplicam ao "
+"<app>Orca</app>, ou pressione <key>F3</key> se você quer uma lista de "
+"atalhos que são específicos para o aplicativo com foco."
 
 #. (itstool) path: item/p
 #: C/howto_learn_modes.page:58
