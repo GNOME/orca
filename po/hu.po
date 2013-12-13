@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-31 21:29+0200\n"
-"PO-Revision-Date: 2013-07-09 15:10+0100\n"
+"POT-Creation-Date: 2013-12-11 13:05+0100\n"
+"PO-Revision-Date: 2013-12-11 13:09+0100\n"
 "Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -3145,9 +3145,9 @@ msgstr "Meglátogatott hivatkozások listájának megjelenítése."
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1050 ../src/orca/generator.py:474
-#: ../src/orca/generator.py:723 ../src/orca/generator.py:765
-#: ../src/orca/generator.py:811
+#: ../src/orca/flat_review.py:1050 ../src/orca/generator.py:475
+#: ../src/orca/generator.py:741 ../src/orca/generator.py:783
+#: ../src/orca/generator.py:829
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:635
 #: ../src/orca/tutorialgenerator.py:558 ../src/orca/tutorialgenerator.py:598
@@ -6280,7 +6280,7 @@ msgstr "A keresés befejeződött."
 #. have been reloaded.
 #: ../src/orca/messages.py:1393
 msgid "Screen reader settings reloaded."
-msgstr "A képernyőolvasó felhasználói beállítások újratöltése megtörtént."
+msgstr "A képernyőolvasó  beállításainak újratöltése megtörtént."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
@@ -6341,7 +6341,7 @@ msgstr "A beszéd nem érhető el."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1434 ../src/orca/scripts/default.py:4043
+#: ../src/orca/messages.py:1434 ../src/orca/scripts/default.py:4022
 msgid "string not found"
 msgstr "a karakterlánc nem található"
 
@@ -6811,8 +6811,8 @@ msgstr[1] "%d oszloppal"
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
-msgstr[0] "%d nem látogatott hivatkozások"
-msgstr[1] "%d nem látogatott hivatkozások"
+msgstr[0] "%d nem látogatott hivatkozás"
+msgstr[1] "%d nem látogatott hivatkozás"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
@@ -7019,7 +7019,7 @@ msgstr "többválasztós"
 #.
 #: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:200
 #: ../src/orca/scripts/apps/gedit/script.py:202
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:163
+#: ../src/orca/scripts/apps/gnome-search-tool/script.py:160
 msgid "Find"
 msgstr "Keresés"
 
@@ -7560,7 +7560,7 @@ msgstr "Nyomja meg a Tab és az Enter billentyűket a megszakításhoz."
 #: ../src/orca/scripts/apps/gedit/script.py:346
 #: ../src/orca/scripts/apps/Thunderbird/script.py:176
 #: ../src/orca/scripts/apps/Thunderbird/script.py:325
-#: ../src/orca/scripts/apps/Thunderbird/script.py:569
+#: ../src/orca/scripts/apps/Thunderbird/script.py:599
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
 msgid "Check Spelling"
 msgstr "Helyesírás-ellenőrzés"
@@ -7595,7 +7595,7 @@ msgstr "Az utolsó üzenet felolvasása a beérkezett üzenetekből."
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
 #.
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:134
+#: ../src/orca/scripts/apps/gnome-search-tool/script.py:131
 msgid "Stop"
 msgstr "Leállítás"
 
@@ -7654,8 +7654,8 @@ msgstr "Több lehetőség megjelenítése"
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:607
-#: ../src/orca/scripts/apps/Thunderbird/script.py:624
+#: ../src/orca/scripts/apps/Thunderbird/script.py:637
+#: ../src/orca/scripts/apps/Thunderbird/script.py:654
 #, python-format
 msgid "%s panel"
 msgstr "%s panel"
@@ -7667,7 +7667,7 @@ msgstr "%s panel"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3643 ../src/orca/scripts/default.py:3655
+#: ../src/orca/scripts/default.py:3640 ../src/orca/scripts/default.py:3652
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7676,7 +7676,7 @@ msgstr[1] "%(key)s %(value)s képpont"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4800
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4748
 msgid "open"
 msgstr "megnyitás"
 
@@ -7685,7 +7685,7 @@ msgstr "megnyitás"
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:806
+#: ../src/orca/settings.py:783
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%-H óra %-M perc, %-S másodperc."
 
@@ -7694,7 +7694,7 @@ msgstr "%-H óra %-M perc, %-S másodperc."
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:813
+#: ../src/orca/settings.py:790
 msgid "%H hours and %M minutes."
 msgstr "%-H óra %-M perc."
 
