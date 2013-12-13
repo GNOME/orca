@@ -11,9 +11,9 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-10-17 12:23+0000\n"
-"PO-Revision-Date: 2013-10-20 12:00+0200\n"
-"Last-Translator: Balázs Úr <urbalazs at gmail dot com>\n"
+"POT-Creation-Date: 2013-12-07 19:33+0000\n"
+"PO-Revision-Date: 2013-12-11 12:55+0200\n"
+"Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -2953,7 +2953,6 @@ msgstr "Ugrás a következő jelölőre."
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: ../src/orca/cmdnames.py:835
-#| msgid "Displays a list of links."
 msgid "Displays a list of landmarks."
 msgstr "A jelölők listájának megjelenítése."
 
@@ -3159,7 +3158,6 @@ msgstr "Meglátogatott hivatkozások listájának megjelenítése."
 #: ../src/orca/generator.py:741 ../src/orca/generator.py:783
 #: ../src/orca/generator.py:829
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
-#: ../src/orca/scripts/apps/packagemanager/script.py:635
 #: ../src/orca/tutorialgenerator.py:558 ../src/orca/tutorialgenerator.py:598
 msgid "toggle"
 msgstr "kapcsológomb"
@@ -3701,7 +3699,6 @@ msgstr "Címke"
 #. tag attribute 'role' used to identify important part of webpage like banners,
 #. main context, search etc.
 #: ../src/orca/guilabels.py:410
-#| msgid "trademark"
 msgctxt "structural navigation"
 msgid "Landmark"
 msgstr "Jelölő"
@@ -3899,7 +3896,6 @@ msgstr "%d. szintű címsorok listája"
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
 #: ../src/orca/guilabels.py:539
-#| msgid "trademark"
 msgctxt "structural navigation"
 msgid "Landmarks"
 msgstr "Jelölők listája"
@@ -5527,12 +5523,6 @@ msgstr "Tanulómód. Kilépéshez nyomja meg az Esc billentyűt."
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
 #: ../src/orca/messages.py:836
-#| msgid ""
-#| "Entering learn mode.  Press any key to hear its function.  To get a list "
-#| "of the screen reader's default shortcuts, press 1. To get a list of the "
-#| "screen reader's shortcuts for the current application, press 2. To view "
-#| "the screen reader's documentation, press F1. To exit learn mode, press "
-#| "the escape key."
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the "
 "screen reader's documentation, press F1. To get a list of the screen "
@@ -6320,7 +6310,7 @@ msgstr "A keresés befejeződött."
 #. have been reloaded.
 #: ../src/orca/messages.py:1394
 msgid "Screen reader settings reloaded."
-msgstr "A képernyőolvasó felhasználói beállítások újratöltése megtörtént."
+msgstr "A képernyőolvasó beállításainak újratöltése megtörtént."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
@@ -6381,7 +6371,7 @@ msgstr "A beszéd nem érhető el."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:4019
+#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3900
 msgid "string not found"
 msgstr "a karakterlánc nem található"
 
@@ -6851,8 +6841,8 @@ msgstr[1] "%d oszloppal"
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
-msgstr[0] "%d nem látogatott hivatkozások"
-msgstr[1] "%d nem látogatott hivatkozások"
+msgstr[0] "%d nem látogatott hivatkozás"
+msgstr[1] "%d nem látogatott hivatkozás"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
@@ -6955,26 +6945,31 @@ msgstr "függőleges"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:98
+msgctxt "checkbox"
 msgid "checked"
 msgstr "bejelölve"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:101
+msgctxt "checkbox"
 msgid "not checked"
 msgstr "nincs bejelölve"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:104
+msgctxt "checkbox"
 msgid "partially checked"
 msgstr "részben bejelölve"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:107
+msgctxt "togglebutton"
 msgid "pressed"
 msgstr "lenyomva"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:110
+msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "nincs lenyomva"
 
@@ -7047,19 +7042,12 @@ msgstr "szükséges"
 msgid "multi-select"
 msgstr "többválasztós"
 
-#. Check to see if we have just had an "object:state-changed:showing"
-#. event for the Find button. If the name is "Find", and one of its
-#. states is VISIBLE and we are currently searching, that means we
-#. have just stopped a search. Inform the user that the search is
-#. complete and tell them how many files were found.
-#.
 #. Translators: the "Find" string must match what gnome-search-tool
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
-#.
-#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:200
-#: ../src/orca/scripts/apps/gedit/script.py:202
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:160
+#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:188
+#: ../src/orca/scripts/apps/gedit/script.py:190
+#: ../src/orca/scripts/apps/gnome-search-tool/script.py:99
 msgid "Find"
 msgstr "Keresés"
 
@@ -7558,11 +7546,11 @@ msgstr "Olvasott"
 #. keying off stuff like this, but we're forced to do so in
 #. in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:109
+#: ../src/orca/scripts/apps/gedit/script.py:97
 msgid "Change to:"
 msgstr "Csere:"
 
-#: ../src/orca/scripts/apps/gedit/script.py:110
+#: ../src/orca/scripts/apps/gedit/script.py:98
 msgid "Misspelled word:"
 msgstr "Hibásan írt szó:"
 
@@ -7574,15 +7562,15 @@ msgstr "Hibásan írt szó:"
 #. gedit.  We hate keying off stuff like this, but we're
 #. forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:144
+#: ../src/orca/scripts/apps/gedit/script.py:132
 msgid "Completed spell checking"
 msgstr "Helyesírás-ellenőrzés kész"
 
-#: ../src/orca/scripts/apps/gedit/script.py:145
+#: ../src/orca/scripts/apps/gedit/script.py:133
 msgid "Spell checking is complete."
 msgstr "A helyesírás-ellenőrzés befejeződött."
 
-#: ../src/orca/scripts/apps/gedit/script.py:147
+#: ../src/orca/scripts/apps/gedit/script.py:135
 msgid "Press Tab and Return to terminate."
 msgstr "Nyomja meg a Tab és az Enter billentyűket a megszakításhoz."
 
@@ -7596,11 +7584,9 @@ msgstr "Nyomja meg a Tab és az Enter billentyűket a megszakításhoz."
 #. has to match what Thunderbird is using.  We hate keying
 #. off stuff like this, but we're forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:271
-#: ../src/orca/scripts/apps/gedit/script.py:346
-#: ../src/orca/scripts/apps/Thunderbird/script.py:176
-#: ../src/orca/scripts/apps/Thunderbird/script.py:325
-#: ../src/orca/scripts/apps/Thunderbird/script.py:599
+#: ../src/orca/scripts/apps/gedit/script.py:259
+#: ../src/orca/scripts/apps/gedit/script.py:332
+#: ../src/orca/scripts/apps/Thunderbird/script.py:278
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
 msgid "Check Spelling"
 msgstr "Helyesírás-ellenőrzés"
@@ -7610,14 +7596,14 @@ msgstr "Helyesírás-ellenőrzés"
 #. keying off stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:375
+#: ../src/orca/scripts/apps/gedit/script.py:361
 msgid "Phrase not found"
 msgstr "A kifejezés nem található"
 
 #. Translators: this indicates a find command succeeded in
 #. finding something.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:437
+#: ../src/orca/scripts/apps/gedit/script.py:402
 msgid "Phrase found."
 msgstr "A kifejezés megtalálva."
 
@@ -7625,17 +7611,10 @@ msgstr "A kifejezés megtalálva."
 msgid "Read the latest n messages in the incoming messages text area."
 msgstr "Az utolsó üzenet felolvasása a beérkezett üzenetekből."
 
-#. Check to see if we have just had an "object:state-changed:showing"
-#. event for the Stop button. If the name is "Stop", and one of its
-#. states is VISIBLE, that means we have started a search. As the
-#. search progresses, regularly inform the user of this by speaking
-#. "Searching" (assuming the search tool has focus).
-#.
 #. Translators: the "Stop" string must match what gnome-search-tool
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
-#.
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:131
+#: ../src/orca/scripts/apps/gnome-search-tool/script.py:85
 msgid "Stop"
 msgstr "Leállítás"
 
@@ -7649,56 +7628,18 @@ msgstr "Kapcsolódott/kapcsolat nélküli munka"
 #. between workspaces.  The goal here is to find a match
 #. with that prefix.
 #.
-#: ../src/orca/scripts/apps/metacity/script.py:114
+#: ../src/orca/scripts/apps/metacity/script.py:104
 msgid "Workspace "
 msgstr "Munkaterület"
 
-#: ../src/orca/scripts/apps/metacity/script.py:114
+#: ../src/orca/scripts/apps/metacity/script.py:104
 msgid "Desk "
 msgstr "Asztal "
-
-#. Translators: The Package Manager application notifies the
-#. user of minor errors by displaying an icon in the status
-#. bar and adding them to an error log rather than displaying
-#. the error in a dialog box. This string is the label for a
-#. checkbox. If it is checked, Orca will inform the user when
-#. the notification icon has appeared.
-#.
-#: ../src/orca/scripts/apps/packagemanager/script.py:115
-msgid "Notify me when errors have been logged."
-msgstr "Értesítsen, ha hibák kerültek naplózásra."
-
-#. Translators: The Package Manager application notifies the
-#. user of minor errors by displaying an icon in the status
-#. bar and adding them to an error log rather than displaying
-#. the error in a dialog box. This is the message Orca will
-#. present to inform the user that this has occurred.
-#.
-#: ../src/orca/scripts/apps/packagemanager/script.py:250
-msgid "An error occurred. View the error log for details."
-msgstr "Hiba történt. A részletekért nézze meg a hibanaplót."
-
-#. Translators: This is the tutorial string associated with a
-#. specific search field in the Packagemanager application.
-#. It is designed to inform the user how to move directly to
-#. the search results after the search has been completed.
-#.
-#: ../src/orca/scripts/apps/packagemanager/tutorialgenerator.py:60
-msgid "Use Ctrl+L to move focus to the results."
-msgstr "Az eredményekhez ugráshoz használja a Ctrl+L billentyűkombinációt."
 
 #: ../src/orca/scripts/apps/planner/braille_generator.py:67
 #: ../src/orca/scripts/apps/planner/speech_generator.py:63
 msgid "Display more options"
 msgstr "Több lehetőség megjelenítése"
-
-#. Translators: this is the name of a panel in Thunderbird.
-#.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:637
-#: ../src/orca/scripts/apps/Thunderbird/script.py:654
-#, python-format
-msgid "%s panel"
-msgstr "%s panel"
 
 #. Translators: these represent the number of pixels
 #. for the left or right margins in a document.  We
@@ -7707,7 +7648,7 @@ msgstr "%s panel"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3637 ../src/orca/scripts/default.py:3649
+#: ../src/orca/scripts/default.py:3517 ../src/orca/scripts/default.py:3529
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7716,7 +7657,7 @@ msgstr[1] "%(key)s %(value)s képpont"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4743
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4306
 msgid "open"
 msgstr "megnyitás"
 
@@ -8836,3 +8777,14 @@ msgstr ""
 "billentyűt. A legkisebb értékre ugráshoz használja a Home, a legnagyobb "
 "értékre ugráshoz pedig az End billentyűt."
 
+#~ msgid "Notify me when errors have been logged."
+#~ msgstr "Értesítsen, ha hibák kerültek naplózásra."
+
+#~ msgid "An error occurred. View the error log for details."
+#~ msgstr "Hiba történt. A részletekért nézze meg a hibanaplót."
+
+#~ msgid "Use Ctrl+L to move focus to the results."
+#~ msgstr "Az eredményekhez ugráshoz használja a Ctrl+L billentyűkombinációt."
+
+#~ msgid "%s panel"
+#~ msgstr "%s panel"
