@@ -1,3 +1,58 @@
+3.11.3 - 16 December 2013
+
+Please note: This cycle, Orca is getting an overhaul with much of the
+code being rewritten in preparation for the focus: event deprecation.
+I am also taking this opportunity to remove hacks and improve Orca's
+performance. While every effort is being made to ensure no regressions
+are introduced, please remember that 3.11.x is unstable. If you find a
+bug present only in 3.11.x, please report it on the Orca list.
+
+General:
+
+  * Filter out some chrome events when inferring live regions
+
+  * Fixes to prevent hangs when accessing WebKitGtk content
+
+  * Fix for a traceback when Thunderbird becomes unresponsive
+
+  * Add a check to the Gecko script's onCaretMoved() to be sure the caret
+    actually moved
+
+  * Fix bug in column header labels for the links list dialog
+
+  * Ignore selection-changed events when the current item's selection is
+    toggled via Space
+
+  * Filter out some duplicate state-changed events
+
+  * Restore the locus of focus when Alt+Tabbing back into Firefox
+
+  * Fix a chattiness issue for Eclipse
+
+  * Add a sanity check to prevent a hang when using Firefox
+
+  * Clean up the Gecko script's onCaretMoved()
+
+  * Add handling for row headers in structural navigation
+
+  * Fix for Orca not presenting the row when a table regains focus
+
+  * Fix menu-related handling (aka hacks) in the Java toolkit script
+
+  * Work on the test harness and regression tests
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de            German                      Simon Bienlein
+    el            Greek                       Dimitris Spingos
+    es            Spanish                     Daniel Mustieles
+    hu            Hungarian                   Attila Hammer
+    pt_BR         Brazilian Portuguese        Rafael Ferreira
+    tg            Tajik                       Victor Ibragimov
+    zh_CN         Chinese simplified          甘 露
+
+=========
+
 3.11.2 - 19 November 2013
 
 Please note: This cycle, Orca is getting an overhaul with much of the
