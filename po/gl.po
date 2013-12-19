@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca-master-po-gl-70969.merged\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-01 16:21+0100\n"
-"PO-Revision-Date: 2013-11-01 16:23+0200\n"
+"POT-Creation-Date: 2013-12-19 01:35+0100\n"
+"PO-Revision-Date: 2013-12-19 01:35+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: gnome-l10n-gl@gnome.org\n"
 "Language: gl\n"
@@ -6339,7 +6339,7 @@ msgstr "A voz non está dispoñíbel."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:4021
+#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3900
 msgid "string not found"
 msgstr "non se atopou a cadea"
 
@@ -6908,26 +6908,31 @@ msgstr "vertical"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:98
+msgctxt "checkbox"
 msgid "checked"
-msgstr "seleccionado"
+msgstr "marcada"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:101
+msgctxt "checkbox"
 msgid "not checked"
-msgstr "non seleccionado"
+msgstr "desmarcada"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:104
+msgctxt "checkbox"
 msgid "partially checked"
-msgstr "parcialmente marcado"
+msgstr "parcialmente marcada"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:107
+msgctxt "togglebutton"
 msgid "pressed"
 msgstr "premido"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:110
+msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "non premido"
 
@@ -6999,19 +7004,12 @@ msgstr "requerido"
 msgid "multi-select"
 msgstr "selección múltipla"
 
-#. Check to see if we have just had an "object:state-changed:showing"
-#. event for the Find button. If the name is "Find", and one of its
-#. states is VISIBLE and we are currently searching, that means we
-#. have just stopped a search. Inform the user that the search is
-#. complete and tell them how many files were found.
-#.
 #. Translators: the "Find" string must match what gnome-search-tool
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
-#.
 #: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:188
 #: ../src/orca/scripts/apps/gedit/script.py:190
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:150
+#: ../src/orca/scripts/apps/gnome-search-tool/script.py:99
 msgid "Find"
 msgstr "Buscar"
 
@@ -7543,10 +7541,8 @@ msgstr "Prema en Tab e Intro para terminar."
 #. off stuff like this, but we're forced to do so in this case.
 #.
 #: ../src/orca/scripts/apps/gedit/script.py:259
-#: ../src/orca/scripts/apps/gedit/script.py:334
-#: ../src/orca/scripts/apps/Thunderbird/script.py:176
-#: ../src/orca/scripts/apps/Thunderbird/script.py:325
-#: ../src/orca/scripts/apps/Thunderbird/script.py:599
+#: ../src/orca/scripts/apps/gedit/script.py:332
+#: ../src/orca/scripts/apps/Thunderbird/script.py:278
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
 msgid "Check Spelling"
 msgstr "Verificación ortográfica"
@@ -7556,14 +7552,14 @@ msgstr "Verificación ortográfica"
 #. keying off stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:363
+#: ../src/orca/scripts/apps/gedit/script.py:361
 msgid "Phrase not found"
 msgstr "Non se atopou a frase"
 
 #. Translators: this indicates a find command succeeded in
 #. finding something.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:404
+#: ../src/orca/scripts/apps/gedit/script.py:402
 msgid "Phrase found."
 msgstr "Atopouse a frase."
 
@@ -7571,17 +7567,10 @@ msgstr "Atopouse a frase."
 msgid "Read the latest n messages in the incoming messages text area."
 msgstr "Le as últimas n mensaxes na área de texto de mensaxes entrantes."
 
-#. Check to see if we have just had an "object:state-changed:showing"
-#. event for the Stop button. If the name is "Stop", and one of its
-#. states is VISIBLE, that means we have started a search. As the
-#. search progresses, regularly inform the user of this by speaking
-#. "Searching" (assuming the search tool has focus).
-#.
 #. Translators: the "Stop" string must match what gnome-search-tool
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
-#.
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:121
+#: ../src/orca/scripts/apps/gnome-search-tool/script.py:85
 msgid "Stop"
 msgstr "Deter"
 
@@ -7608,14 +7597,6 @@ msgstr "Escritorio "
 msgid "Display more options"
 msgstr "Mostrar máis opcións"
 
-#. Translators: this is the name of a panel in Thunderbird.
-#.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:637
-#: ../src/orca/scripts/apps/Thunderbird/script.py:654
-#, python-format
-msgid "%s panel"
-msgstr "%s panel"
-
 #. Translators: these represent the number of pixels
 #. for the left or right margins in a document.  We
 #. are hesitant to interpret the values -- they are
@@ -7623,7 +7604,7 @@ msgstr "%s panel"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3639 ../src/orca/scripts/default.py:3651
+#: ../src/orca/scripts/default.py:3517 ../src/orca/scripts/default.py:3529
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7632,7 +7613,7 @@ msgstr[1] "%(key)s %(value)s píxels"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4743
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4306
 msgid "open"
 msgstr "abrir"
 
@@ -8738,6 +8719,9 @@ msgid ""
 msgstr ""
 "Para decrementar prema frecha esquerda, para incrementar prema frecha "
 "dereita, para mínimo prema inicio e para o máximo prema fin."
+
+#~ msgid "%s panel"
+#~ msgstr "%s panel"
 
 #~ msgid "Notify me when errors have been logged."
 #~ msgstr "Notificarme cando se rexistren erros."
