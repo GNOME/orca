@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: Tajik Gnome\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-11-14 13:52+0000\n"
-"PO-Revision-Date: 2013-12-03 14:38+0500\n"
+"POT-Creation-Date: 2013-12-19 16:08+0000\n"
+"PO-Revision-Date: 2013-12-20 12:31+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: \n"
-"Language: Tajik\n"
+"Language: tg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=1;\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.3\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Screen Reader"
@@ -2919,7 +2919,6 @@ msgstr "Ба аломати марзии навбатӣ мегузарад."
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: ../src/orca/cmdnames.py:835
-#| msgid "Displays a list of links."
 msgid "Displays a list of landmarks."
 msgstr "Рӯйхати рамзҳои марзаро намоиш медиҳад."
 
@@ -3659,7 +3658,6 @@ msgstr "Барчасп"
 #. tag attribute 'role' used to identify important part of webpage like banners,
 #. main context, search etc.
 #: ../src/orca/guilabels.py:410
-#| msgid "trademark"
 msgctxt "structural navigation"
 msgid "Landmark"
 msgstr "Рамзи марза"
@@ -3856,7 +3854,6 @@ msgstr ""
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
 #: ../src/orca/guilabels.py:539
-#| msgid "trademark"
 msgctxt "structural navigation"
 msgid "Landmarks"
 msgstr "Рамзҳои марза"
@@ -5808,35 +5805,35 @@ msgstr "Бе фокус"
 #. has keyboard focus.
 #: ../src/orca/messages.py:1090
 msgid "No application has focus."
-msgstr ""
+msgstr "Ягон барнома нуқтаи миёна надорад."
 
 #. Translators: This is for navigating document content by moving from anchor to
 #. anchor. (An anchor is a named spot that one can jump to.) This is a detailed
 #. message which will be presented to the user if no more anchors can be found.
 #: ../src/orca/messages.py:1095
 msgid "No more anchors."
-msgstr ""
+msgstr "Ягон лангари дигар нест."
 
 #. Translators: This is for navigating document content by moving from blockquote
 #. to blockquote. This is a detailed message which will be presented to the user
 #. if no more blockquotes can be found.
 #: ../src/orca/messages.py:1100
 msgid "No more blockquotes."
-msgstr ""
+msgstr "Ягон нохунаки блоки дигар нест."
 
 #. Translators: This is for navigating document content by moving from button
 #. to button. This is a detailed message which will be presented to the user
 #. if no more buttons can be found.
 #: ../src/orca/messages.py:1105
 msgid "No more buttons."
-msgstr ""
+msgstr "Ягон тугмаи дигар нест."
 
 #. Translators: This is for navigating document content by moving from check
 #. box to check box. This is a detailed message which will be presented to the
 #. user if no more check boxes can be found.
 #: ../src/orca/messages.py:1110
 msgid "No more check boxes."
-msgstr ""
+msgstr "Ягон байрақчаи дигар нест."
 
 #. Translators: This is for navigating document content by moving from 'large
 #. object' to 'large object'. A 'large object' is a logical chunk of text,
@@ -5844,35 +5841,35 @@ msgstr ""
 #. will be presented to the user if no more check boxes can be found.
 #: ../src/orca/messages.py:1116
 msgid "No more large objects."
-msgstr ""
+msgstr "Ягон объекти калони дигар нест."
 
 #. Translators: This is for navigating document content by moving from combo
 #. box to combo box. This is a detailed message which will be presented to the
 #. user if no more combo boxes can be found.
 #: ../src/orca/messages.py:1121
 msgid "No more combo boxes."
-msgstr ""
+msgstr "Ягон ҷаъбаи мураккаби дигар нест."
 
 #. Translators: This is for navigating document content by moving from entry
 #. to entry. This is a detailed message which will be presented to the user
 #. if no more entries can be found.
 #: ../src/orca/messages.py:1126
 msgid "No more entries."
-msgstr ""
+msgstr "Ягон вуруди дигар нест."
 
 #. Translators: This is for navigating document content by moving from form
 #. field to form field. This is a detailed message which will be presented to
 #. the user if no more form fields can be found.
 #: ../src/orca/messages.py:1131
 msgid "No more form fields."
-msgstr ""
+msgstr "Ягон шакли майдони дигар нест."
 
 #. Translators: This is for navigating document content by moving from heading
 #. to heading. This is a detailed message which will be presented to the user
 #. if no more headings can be found.
 #: ../src/orca/messages.py:1136
 msgid "No more headings."
-msgstr ""
+msgstr "Ягон сарлавҳаи дигар нест."
 
 #. Translators: This is for navigating document content by moving from heading
 #. to heading at a particular level (i.e. only <h1> or only <h2>, etc.). This
@@ -5881,7 +5878,7 @@ msgstr ""
 #: ../src/orca/messages.py:1142
 #, python-format
 msgid "No more headings at level %d."
-msgstr ""
+msgstr "Ягон сарлавҳаи дигар дар сатҳи %d нест."
 
 #. Translators: this is for navigating to the previous ARIA role landmark.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
@@ -5889,28 +5886,28 @@ msgstr ""
 #. This is an indication that one was not found.
 #: ../src/orca/messages.py:1148
 msgid "No landmark found."
-msgstr ""
+msgstr "Ягон рамзи марза ёфт нашуд."
 
 #. Translators: This is for navigating document content by moving from link to
 #. link (regardless of visited state). This is a detailed message which will be
 #. presented to the user if no more links can be found.
 #: ../src/orca/messages.py:1153
 msgid "No more links."
-msgstr ""
+msgstr "Ягон пайванди дигар нест."
 
 #. Translators: This is for navigating document content by moving from bulleted/
 #. numbered list to bulleted/numbered list. This is a detailed message which will
 #. be presented to the user if no more lists can be found.
 #: ../src/orca/messages.py:1158
 msgid "No more lists."
-msgstr ""
+msgstr "Ягон рӯйхати дигар нест."
 
 #. Translators: This is for navigating document content by moving from bulleted/
 #. numbered list item to bulleted/numbered list item. This is a detailed message
 #. which will be presented to the user if no more list items can be found.
 #: ../src/orca/messages.py:1163
 msgid "No more list items."
-msgstr ""
+msgstr "Ягон объекти дигар дар рӯйхат нест."
 
 #. Translators: This is for navigating document content by moving from live
 #. region to live region. A live region is an area of a web page that is
@@ -5919,49 +5916,49 @@ msgstr ""
 #. more info, see http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: ../src/orca/messages.py:1170
 msgid "No more live regions."
-msgstr ""
+msgstr "Ягон минтақаи зиндаи дигар нест."
 
 #. Translators: This is for navigating document content by moving from paragraph
 #. to paragraph. This is a detailed message which will be presented to the user
 #. if no more paragraphs can be found.
 #: ../src/orca/messages.py:1175
 msgid "No more paragraphs."
-msgstr ""
+msgstr "Ягон банди дигар нест."
 
 #. Translators: This is for navigating document content by moving from radio
 #. button to radio button. This is a detailed message which will be presented to
 #. the user if no more radio buttons can be found.
 #: ../src/orca/messages.py:1180
 msgid "No more radio buttons."
-msgstr ""
+msgstr "Ягон аломати қайди дигар нест."
 
 #. Translators: This is for navigating document content by moving from separator
 #. to separator (e.g. <hr> tags). This is a detailed message which will be
 #. presented to the user if no more separators can be found.
 #: ../src/orca/messages.py:1185
 msgid "No more separators."
-msgstr ""
+msgstr "Ягон ҷудокунандаи дигар нест."
 
 #. Translators: This is for navigating document content by moving from table to
 #. to table. This is a detailed message which will be presented to the user if
 #. no more tables can be found.
 #: ../src/orca/messages.py:1190
 msgid "No more tables."
-msgstr ""
+msgstr "Ягон ҷадвали дигар нест."
 
 #. Translators: This is for navigating document content by moving from unvisited
 #. link to unvisited link. This is a detailed message which will be presented to
 #. the user if no more unvisited links can be found.
 #: ../src/orca/messages.py:1195
 msgid "No more unvisited links."
-msgstr ""
+msgstr "Ягон пайванди кушоданашудаи дигар нест."
 
 #. Translators: This is for navigating document content by moving from visited
 #. link to visited link. This is a detailed message which will be presented to
 #. the user if no more visited links can be found.
 #: ../src/orca/messages.py:1200
 msgid "No more visited links."
-msgstr ""
+msgstr "Ягон пайванди кушодашудаи дигар нест."
 
 #. Translators: This message alerts the user to the fact that what will be
 #. presented next came from a notification.
@@ -5980,7 +5977,7 @@ msgstr "Поён"
 #. notifications mode is being exited.
 #: ../src/orca/messages.py:1212
 msgid "Exiting list notification messages mode."
-msgstr ""
+msgstr "Баромад аз ҳолати паёмҳои рӯйхати огоҳӣ."
 
 #. Translators: This is a brief message presented to the user when the top of the
 #. list of notifications is reached.
@@ -5992,7 +5989,7 @@ msgstr "Боло"
 #. Translators: This is a tutorial message for the notification list mode.
 #: ../src/orca/messages.py:1219
 msgid "Press h for help.\n"
-msgstr ""
+msgstr "барои кӯмак \"h\"-ро пахш кунед.\n"
 
 #. Translators: The following string instructs the user how to navigate within
 #. the list notifications mode.
@@ -6298,7 +6295,7 @@ msgstr "Талаффуз дастрас нест."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3861
+#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3900
 msgid "string not found"
 msgstr "сатр ёфт нашудааст"
 
@@ -6870,8 +6867,6 @@ msgstr ""
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:101
-#| msgctxt "radiobutton"
-#| msgid "not selected"
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "интихобнашуда"
@@ -6890,8 +6885,6 @@ msgstr ""
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:110
-#| msgctxt "radiobutton"
-#| msgid "not selected"
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "пахшнашуда"
@@ -7350,11 +7343,11 @@ msgstr ""
 
 #: ../src/orca/orca-setup.ui.h:118
 msgid "Key Bindings"
-msgstr ""
+msgstr "Тугмабандӣ"
 
 #: ../src/orca/orca-setup.ui.h:119
 msgid "Pronunciation Dictionary"
-msgstr ""
+msgstr "Луғати талаффуз"
 
 #: ../src/orca/orca-setup.ui.h:120
 msgid "_New entry"
@@ -7366,15 +7359,15 @@ msgstr "_Нест кардан"
 
 #: ../src/orca/orca-setup.ui.h:122
 msgid "Pronunciation"
-msgstr ""
+msgstr "Талаффуз"
 
 #: ../src/orca/orca-setup.ui.h:123
 msgid "_Speak all"
-msgstr ""
+msgstr "_Ҳамаро талаффуз кардан"
 
 #: ../src/orca/orca-setup.ui.h:124
 msgid "Speak _none"
-msgstr ""
+msgstr "_Талаффуз накардан"
 
 #: ../src/orca/orca-setup.ui.h:125
 msgid "_Reset"
@@ -7387,22 +7380,22 @@ msgstr ""
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: ../src/orca/orca-setup.ui.h:128
 msgid "Move to _bottom"
-msgstr ""
+msgstr "Интиқол додан ба _поён"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: ../src/orca/orca-setup.ui.h:130
 msgid "Move _down one"
-msgstr ""
+msgstr "Интиқол додан ба як сатҳи _поён"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: ../src/orca/orca-setup.ui.h:132
 msgid "Move _up one"
-msgstr ""
+msgstr "Интиқол додан ба як сатҳи _боло"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: ../src/orca/orca-setup.ui.h:134
 msgid "Move to _top"
-msgstr ""
+msgstr "Интиқол додан ба _боло"
 
 #: ../src/orca/orca-setup.ui.h:135
 msgid "Adjust selected attributes"
@@ -7498,7 +7491,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/apps/gedit/script.py:259
 #: ../src/orca/scripts/apps/gedit/script.py:332
-#: ../src/orca/scripts/apps/Thunderbird/script.py:348
+#: ../src/orca/scripts/apps/Thunderbird/script.py:278
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
 msgid "Check Spelling"
 msgstr "Санҷидани имло"
@@ -7546,7 +7539,7 @@ msgstr "Фазои корӣ "
 
 #: ../src/orca/scripts/apps/metacity/script.py:104
 msgid "Desk "
-msgstr ""
+msgstr "Лавҳа"
 
 #: ../src/orca/scripts/apps/planner/braille_generator.py:67
 #: ../src/orca/scripts/apps/planner/speech_generator.py:63
@@ -7560,7 +7553,7 @@ msgstr "Намоиш додани имконоти бештар"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3478 ../src/orca/scripts/default.py:3490
+#: ../src/orca/scripts/default.py:3517 ../src/orca/scripts/default.py:3529
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7569,7 +7562,7 @@ msgstr[1] ""
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4377
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4306
 msgid "open"
 msgstr "кушодан"
 
