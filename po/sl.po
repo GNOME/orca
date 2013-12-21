@@ -40,7 +40,7 @@ msgstr ""
 
 #: ../orca.desktop.in.h:4
 msgid "screen reader;speech;braille;"
-msgstr "govor;zaslonski bralnik;Braillova pisava;brajica;povečevalnik"
+msgstr "govor;zaslonski bralnik;Braillova pisava;brajica;povečevalnik;"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
