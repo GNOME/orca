@@ -158,9 +158,5 @@ then
     pkill firefox > /dev/null 2>&1
     rm -rf $FF_PROFILE_DIR
 else
-    kill -9 $APP_PID > /dev/null 2>&1
+    pkill $APP_NAME > /dev/null 2>&1
 fi
-
-# Temporary hack to kill gnome-help help if it's running.
-HELP_PID=$(ps -A | grep gnome-help | cut -d' ' -f1)
-kill -9 $HELP_PID > /dev/null 2>&1

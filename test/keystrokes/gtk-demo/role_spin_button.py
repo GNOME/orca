@@ -1,171 +1,74 @@
 #!/usr/bin/python
 
-"""Test of spin button output using the gtk-demo Color Selector demo
-"""
+"""Test of spin button output"""
 
 from macaroon.playback import *
 import utils
 
 sequence = MacroSequence()
 
-########################################################################
-# We wait for the demo to come up and for focus to be on the tree table
-#
-sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
-
-########################################################################
-# Once gtk-demo is running, invoke the Color Selector
-#
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Color Selector"))
-sequence.append(KeyComboAction("Return", 500))
+sequence.append(TypeAction("Printing"))
+sequence.append(KeyComboAction("Return"))
 
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Return", 500))
-sequence.append(PauseAction(1000))
-
-########################################################################
-#
-# When the "Changing color" window appears, tab to the "Hue" spin
-# button.
-#
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_UNKNOWN))
-sequence.append(KeyComboAction("Tab", 500))
-sequence.append(KeyComboAction("Tab", 500))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_PUSH_BUTTON))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Tab", 500))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_SPIN_BUTTON))
+sequence.append(KeyComboAction("<Alt>s"))
 sequence.append(utils.AssertPresentationAction(
-    "Hue spin button",
-    ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
-     "     VISIBLE:  'Hue: 240 $l', cursor=9",
-     "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
-     "     VISIBLE:  'Hue: 240 $l', cursor=9",
-     "SPEECH OUTPUT: 'Hue: 240 selected spin button'"]))
+    "Give focus to spin button",
+    ["BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies filler Copies: 1 $l'",
+     "     VISIBLE:  'Copies: 1 $l', cursor=10",
+     "BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies filler Copies: 1 $l'",
+     "     VISIBLE:  'Copies: 1 $l', cursor=10",
+     "SPEECH OUTPUT: 'Copies'",
+     "SPEECH OUTPUT: 'Copies: 1 selected spin button'"]))
 
-########################################################################
-# Do a basic "Where Am I" via KP_Enter.
-#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
-    "Hue spin button Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
-     "     VISIBLE:  'Hue: 240 $l', cursor=9",
-     "SPEECH OUTPUT: 'Hue:'",
+    "Where Am I",
+    ["BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies filler Copies: 1 $l'",
+     "     VISIBLE:  'Copies: 1 $l', cursor=10",
+     "SPEECH OUTPUT: 'Copies:'",
      "SPEECH OUTPUT: 'spin button'",
-     "SPEECH OUTPUT: '240'",
+     "SPEECH OUTPUT: '1'",
      "SPEECH OUTPUT: 'selected.'",
-     "SPEECH OUTPUT: 'Alt h'",
-     "SPEECH OUTPUT: 'Position on the color wheel.'"]))
+     "SPEECH OUTPUT: 'Alt+S'"]))
 
-########################################################################
-# Change the value by arrowing down.
-#
+sequence.append(TypeAction("15"))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "Increment value",
+    ["KNOWN ISSUE: We are double-presenting this",
+     "BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies filler Copies: 16 $l'",
+     "     VISIBLE:  'Copies: 16 $l', cursor=9",
+     "BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies filler Copies: 16 $l'",
+     "     VISIBLE:  'Copies: 16 $l', cursor=9",
+     "BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies filler Copies: 16 $l'",
+     "     VISIBLE:  'Copies: 16 $l', cursor=9",
+     "SPEECH OUTPUT: '16'",
+     "SPEECH OUTPUT: '16'"]))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitAction("object:property-change:accessible-value",
-                           None,
-                           None,
-                           pyatspi.ROLE_SPIN_BUTTON,
-                           5000))
-sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
-    "Hue spin button decrement value",
-    ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
-     "     VISIBLE:  'Hue: 240 $l', cursor=6",
-     "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 239 $l'",
-     "     VISIBLE:  'Hue: 239 $l', cursor=6",
-     "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 239 $l'",
-     "     VISIBLE:  'Hue: 239 $l', cursor=6",
-     "SPEECH OUTPUT: '239'",
-     "SPEECH OUTPUT: '239'"]))
+    "Decrement value",
+    ["BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies filler Copies: 15 $l'",
+     "     VISIBLE:  'Copies: 15 $l', cursor=9",
+     "BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies filler Copies: 15 $l'",
+     "     VISIBLE:  'Copies: 15 $l', cursor=9",
+     "SPEECH OUTPUT: '15'"]))
 
-########################################################################
-# Change the value by arrowing back up.
-#
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up", 500))
-sequence.append(WaitAction("object:property-change:accessible-value",
-                           None,
-                           None,
-                           pyatspi.ROLE_SPIN_BUTTON,
-                           5000))
-sequence.append(PauseAction(1000))
+sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
-    "Hue spin button increment value",
-    ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
-     "     VISIBLE:  'Hue: 240 $l', cursor=6",
-     "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
-     "     VISIBLE:  'Hue: 240 $l', cursor=6",
-     "SPEECH OUTPUT: '240'"]))
+    "Caret navigation",
+    ["BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies filler Copies: 15 $l'",
+     "     VISIBLE:  'Copies: 15 $l', cursor=10",
+     "SPEECH OUTPUT: '5'"]))
 
-########################################################################
-# Arrow right to move the caret.
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Right", 500))
-sequence.append(WaitAction("object:text-caret-moved",
-                           None,
-                           None,
-                           pyatspi.ROLE_SPIN_BUTTON,
-                           5000))
-sequence.append(utils.AssertPresentationAction(
-    "Hue spin button caret navigation",
-    ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
-     "     VISIBLE:  'Hue: 240 $l', cursor=7",
-     "SPEECH OUTPUT: '4'"]))
-
-########################################################################
-# Do a basic "Where Am I" via KP_Enter.
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(PauseAction(3000))
-sequence.append(utils.AssertPresentationAction(
-    "Hue spin button caret navigation",
-    ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
-     "     VISIBLE:  'Hue: 240 $l', cursor=7",
-     "SPEECH OUTPUT: 'Hue:'",
-     "SPEECH OUTPUT: 'spin button'",
-     "SPEECH OUTPUT: '240.'",
-     "SPEECH OUTPUT: 'Alt h'",
-     "SPEECH OUTPUT: 'Position on the color wheel.'"]))
-
-########################################################################
-# Close the Color Chooser dialog
-#
-sequence.append(KeyComboAction         ("<Alt>c"))
-
-########################################################################
-# Close the Color Chooser demo
-#
-sequence.append(WaitForFocus("Change the above color",
-                             acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("<Alt>F4", 500))
-
-########################################################################
-# Go back to the main gtk-demo window and reselect the
-# "Application main window" menu.  Let the harness kill the app.
-#
-#sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
-sequence.append(PauseAction(1000))
-sequence.append(KeyComboAction("Home"))
-
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TREE_TABLE,
-                           5000))
-
-# Just a little extra wait to let some events get through.
-#
-sequence.append(PauseAction(3000))
+sequence.append(KeyComboAction("<Alt>F4"))
 
 sequence.append(utils.AssertionSummaryAction())
-
 sequence.start()

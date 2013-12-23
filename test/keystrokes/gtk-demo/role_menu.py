@@ -1,164 +1,92 @@
 #!/usr/bin/python
 
-"""Test of menu, menu navigation, and menu item output using the
-   gtk-demo Application Main Window demo.
-"""
+"""Test of menu and menu item output."""
 
 from macaroon.playback import *
 import utils
 
 sequence = MacroSequence()
 
-########################################################################
-# We wait for the demo to come up and for focus to be on the tree table
-#
-sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
-
-########################################################################
-# Once gtk-demo is running, invoke the Application Main Window demo
-#
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Application main window", 1000))
-sequence.append(KeyComboAction("Return", 500))
+sequence.append(TypeAction("Application class"))
+sequence.append(KeyComboAction("Return"))
+sequence.append(KeyComboAction("Return"))
 
-########################################################################
-# When the demo comes up, open the File menu via F10.
-#
-#sequence.append(WaitForWindowActivate("Application Window",None))
-sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("F10"))
-sequence.append(WaitForFocus("File",
-                             acc_role=pyatspi.ROLE_MENU))
-sequence.append(utils.AssertPresentationAction(
-    "File menu",
-    ["KNOWN ISSUE - Gtk+ 3 stopped giving us expected events for the first selected/focused item in a menu when the menu is first opened. This is not new to the Gail integration into Gtk+",
-     "BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'",
-     "     VISIBLE:  'File Menu', cursor=1",
-     "SPEECH OUTPUT: 'File menu'"]))
-
-########################################################################
-# Do a basic "Where Am I" via KP_Enter.
-#
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(PauseAction(3000))
+sequence.append(KeyComboAction("<Alt>p"))
 sequence.append(utils.AssertPresentationAction(
-    "File menu Where Am I",
-    ["KNOWN ISSUE - Gtk+ 3 stopped giving us expected events for the first selected/focused item in a menu when the menu is first opened. This is not new to the Gail integration into Gtk+",
-     "BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'",
-     "     VISIBLE:  'File Menu', cursor=1",
-     "SPEECH OUTPUT: 'menu bar",
-     "SPEECH OUTPUT: 'File'",
-     "SPEECH OUTPUT: 'menu 1 of 3.'",
-     "SPEECH OUTPUT: 'f'"]))
+    "Initial menu and menu item",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame Preferences menu'",
+     "     VISIBLE:  'Preferences menu', cursor=1",
+     "BRAILLE LINE:  'gtk3-demo-application application Application Class frame < > Prefer Dark Theme check menu item'",
+     "     VISIBLE:  '< > Prefer Dark Theme check menu', cursor=1",
+     "SPEECH OUTPUT: 'Preferences menu'",
+     "SPEECH OUTPUT: 'Prefer Dark Theme check menu item not checked'"]))
 
-########################################################################
-# Right arrow to the "Preferences" menu.
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Preferences",
-                             acc_role=pyatspi.ROLE_MENU))
-sequence.append(utils.AssertPresentationAction(
-    "Preferences menu",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame Preferences Menu'",
-     "     VISIBLE:  'Preferences Menu', cursor=1",
-     "SPEECH OUTPUT: 'Preferences menu'"]))
-
-########################################################################
-# Do a basic "Where Am I" via KP_Enter.
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(PauseAction(3000))
-sequence.append(utils.AssertPresentationAction(
-    "Preferences menu Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame Preferences Menu'",
-     "     VISIBLE:  'Preferences Menu', cursor=1",
-     "SPEECH OUTPUT: 'menu bar",
-     "SPEECH OUTPUT: 'Preferences",
-     "SPEECH OUTPUT: 'menu 2 of 3.",
-     "SPEECH OUTPUT: 'p'"]))
-
-########################################################################
-# Go down to the "Color" menu.
-#
-sequence.append(KeyComboAction("Down"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Color",
-                             acc_role=pyatspi.ROLE_MENU))
 sequence.append(utils.AssertPresentationAction(
-    "Color menu",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Color Menu'",
-     "     VISIBLE:  'Color Menu', cursor=1",
+    "Next menu item",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame < > Hide Titlebar when maximized check menu item'",
+     "     VISIBLE:  '< > Hide Titlebar when maximized', cursor=1",
+     "SPEECH OUTPUT: 'Hide Titlebar when maximized check menu item not checked'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Next menu item",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame Color menu'",
+     "     VISIBLE:  'Color menu', cursor=1",
      "SPEECH OUTPUT: 'Color menu'"]))
 
-########################################################################
-# Do a basic "Where Am I" via KP_Enter.
-#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
-    "Color menu Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Color Menu'",
-     "     VISIBLE:  'Color Menu', cursor=1",
-     "SPEECH OUTPUT: 'Preferences",
+    "Where Am I",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame Color menu'",
+     "     VISIBLE:  'Color menu', cursor=1",
+     "SPEECH OUTPUT: 'Application Class'",
+     "SPEECH OUTPUT: 'frame'",
+     "SPEECH OUTPUT: 'Preferences'",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'Color'",
-     "SPEECH OUTPUT: 'menu 2 of 4.'",
-     "SPEECH OUTPUT: 'c'"]))
+     "SPEECH OUTPUT: 'menu 3 of 5.'",
+     "SPEECH OUTPUT: 'C'"]))
 
-########################################################################
-# Go down to the "Shape" menu.
-#
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Shape",
-                             acc_role=pyatspi.ROLE_MENU))
+sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
-    "Shape menu",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Shape Menu'",
-     "     VISIBLE:  'Shape Menu', cursor=1",
-     "SPEECH OUTPUT: 'Shape menu'"]))
+    "Get into Color menu",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame Preferences menu & y Red radio menu item(Ctrl+R)'",
+     "     VISIBLE:  '& y Red radio menu item(Ctrl+R)', cursor=1",
+     "SPEECH OUTPUT: 'Red not selected radio menu item Ctrl+R'"]))
 
-########################################################################
-# Do a basic "Where Am I" via KP_Enter.
-#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
-    "Shape menu Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Shape Menu'",
-     "     VISIBLE:  'Shape Menu', cursor=1",
-     "SPEECH OUTPUT: 'Preferences",
+    "Where Am I",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame Preferences menu & y Red radio menu item(Ctrl+R)'",
+     "     VISIBLE:  '& y Red radio menu item(Ctrl+R)', cursor=1",
+     "SPEECH OUTPUT: 'Application Class'",
+     "SPEECH OUTPUT: 'frame'",
+     "SPEECH OUTPUT: 'Preferences'",
      "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: 'Shape'",
-     "SPEECH OUTPUT: 'menu 3 of 4.'",
-     "SPEECH OUTPUT: 's'"]))
+     "SPEECH OUTPUT: 'Color'",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: 'Red'",
+     "SPEECH OUTPUT: 'radio menu item not selected Ctrl+R 1 of 3.'",
+     "SPEECH OUTPUT: 'R'"]))
 
-########################################################################
-# Dismiss the menu and close the Application Window demo window
-#
-sequence.append(KeyComboAction("F10"))
-sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("<Alt>F4", 500))
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Left"))
+sequence.append(utils.AssertPresentationAction(
+    "Get out of Color menu",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame Color menu'",
+     "     VISIBLE:  'Color menu', cursor=1",
+     "SPEECH OUTPUT: 'Color menu'"]))
 
-########################################################################
-# Go back to the main gtk-demo window and reselect the
-# "Application main window" menu.  Let the harness kill the app.
-#
-#sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
-sequence.append(PauseAction(1000))
-sequence.append(KeyComboAction("Home"))
-
-# Just a little extra wait to let some events get through.
-#
-sequence.append(PauseAction(3000))
+sequence.append(KeyComboAction("Escape"))
+sequence.append(KeyComboAction("<Alt>F4"))
 
 sequence.append(utils.AssertionSummaryAction())
-
 sequence.start()

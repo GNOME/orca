@@ -1,125 +1,37 @@
 #!/usr/bin/python
 
-"""Test of radio menu item output using the gtk-demo
-   Application Main Window demo.
-"""
+"""Test of radio menu item output."""
 
 from macaroon.playback import *
 import utils
 
 sequence = MacroSequence()
 
-########################################################################
-# We wait for the demo to come up and for focus to be on the tree table
-#
-sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
-
-########################################################################
-# Once gtk-demo is running, invoke the Application Main Window demo
-#
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Application main window", 1000))
-sequence.append(KeyComboAction("Return", 500))
-
-########################################################################
-# When the demo comes up, open the Preferences menu and right arrow to
-# the "Red" menu item under the "Color" sub menu.
-#
-#sequence.append(WaitForWindowActivate("Application Window",None))
-sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(TypeAction("Application class"))
+sequence.append(KeyComboAction("Return"))
+sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("<Alt>p"))
-sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Color", acc_role=pyatspi.ROLE_MENU))
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Right"))
-sequence.append(WaitForFocus("Red", acc_role=pyatspi.ROLE_CHECK_MENU_ITEM))
-sequence.append(utils.AssertPresentationAction(
-    "Red button",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu <x> Red CheckItem\((Control|Primary) r\)'",
-     "     VISIBLE:  '<x> Red CheckItem\((Control|Primary) r\)', cursor=1",
-     "SPEECH OUTPUT: 'Red check item checked (Control|Primary) r'"]))
+sequence.append(KeyComboAction("C"))
 
-########################################################################
-# Do a basic "Where Am I" via KP_Enter.
-#
-# JD to WDW: I'm not sure if this is a regression or not. Now we are
-# speaking a parent menu which we were not before. I *think* that's
-# a bug fix. :-)
-#
-# WDW to JD: I agree -- it looks like a bug fix (yeah!)
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(PauseAction(3000))
-sequence.append(utils.AssertPresentationAction(
-    "Red button Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu <x> Red CheckItem\((Control|Primary) r\)'",
-     "     VISIBLE:  '<x> Red CheckItem\((Control|Primary) r\)', cursor=1",
-     "SPEECH OUTPUT: 'Preferences'",
-     "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: 'Color'",
-     "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: 'Red'",
-     "SPEECH OUTPUT: 'check item checked (Control|Primary) r 1 of 3.'",
-     "SPEECH OUTPUT: 'r'"]))
-
-########################################################################
-# Down arrow to the "Green" menu item.
-#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Green",
-                             acc_role=pyatspi.ROLE_CHECK_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
-    "Green button",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu < > Green CheckItem\((Control|Primary) g\)'",
-     "     VISIBLE:  '< > Green CheckItem\((Control|Primary) g\)', cursor=1",
-     "SPEECH OUTPUT: 'Green check item not checked (Control|Primary) g'"]))
+    "radio menu item - not selected",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame Preferences menu & y Green radio menu item(Ctrl+G)'",
+     "     VISIBLE:  '& y Green radio menu item(Ctrl+G', cursor=1",
+     "SPEECH OUTPUT: 'Green not selected radio menu item Ctrl+G'"]))
 
-########################################################################
-# Do a basic "Where Am I" via KP_Enter.
-#
-# JD to WDW: I'm not sure if this is a regression or not. Now we are
-# speaking a parent menu which we were not before. I *think* that's
-# a bug fix. :-)
-#
-# WDW to JD: I agree -- it looks like a bug fix (yeah!)
-#
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(PauseAction(3000))
+sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Green button Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu < > Green CheckItem\((Control|Primary) g\)'",
-     "     VISIBLE:  '< > Green CheckItem\((Control|Primary) g\)', cursor=1",
-     "SPEECH OUTPUT: 'Preferences'",
-     "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: 'Color'",
-     "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: 'Green'",
-     "SPEECH OUTPUT: 'check item not checked (Control|Primary) g 2 of 3.'",
-     "SPEECH OUTPUT: 'g'"]))
+    "radio menu item - selected",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame Preferences menu & y Red radio menu item(Ctrl+R)'",
+     "     VISIBLE:  '& y Red radio menu item(Ctrl+R)', cursor=1",
+     "SPEECH OUTPUT: 'Red not selected radio menu item Ctrl+R'"]))
 
-########################################################################
-# Dismiss the menu and close the Application Window demo window
-#
-sequence.append(KeyComboAction("F10"))
-sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(KeyComboAction("<Alt>F4", 500))
-
-########################################################################
-# Go back to the main gtk-demo window and reselect the
-# "Application main window" menu.  Let the harness kill the app.
-#
-#sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
-sequence.append(PauseAction(1000))
-sequence.append(KeyComboAction("Home"))
-
-# Just a little extra wait to let some events get through.
-#
-sequence.append(PauseAction(3000))
+sequence.append(KeyComboAction("Escape"))
+sequence.append(KeyComboAction("<Alt>F4"))
 
 sequence.append(utils.AssertionSummaryAction())
-
 sequence.start()

@@ -1,150 +1,79 @@
 #!/usr/bin/python
 
-"""Test of automatic presentation of dialog contents using the
-   gtk-demo Dialog and Message Boxes demo.
-"""
+"""Test of presentation of dialogs and alerts."""
 
 from macaroon.playback import *
 import utils
 
 sequence = MacroSequence()
 
-########################################################################
-# We wait for the demo to come up and for focus to be on the tree table
-#
-sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
-
-########################################################################
-# Once gtk-demo is running, invoke the Dialog and Message Boxes demo
-#
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Dialog and Message Boxes", 1000))
-#sequence.append(WaitForWindowActivate("Dialogs",None))
-sequence.append(KeyComboAction("Return", 500))
-
-########################################################################
-# Once the demo is up, wait for focus to appear on the "Message Dialog"
-# button and then invoke it.
-#
-sequence.append(WaitForFocus("Message Dialog",
-                             acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Return", 500))
-sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(PauseAction(3000))
-sequence.append(utils.AssertPresentationAction(
-    "Information Alert automatic presentation",
-    ["BRAILLE LINE:  'gtk-demo Application Dialogs Frame (1 dialog)'",
-     "     VISIBLE:  'Dialogs Frame (1 dialog)', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Dialogs Frame (1 dialog) Dialogs Panel Message Dialog Button'",
-     "     VISIBLE:  'Message Dialog Button', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Information Alert'", 
-     "     VISIBLE:  'Information Alert', cursor=1", 
-     "BRAILLE LINE:  'gtk-demo Application Information Alert OK Button'", 
-     "     VISIBLE:  'OK Button', cursor=1", 
-     "SPEECH OUTPUT: 'Dialogs frame 1 unfocused dialog'",
-     "SPEECH OUTPUT: 'Dialogs panel Message Dialog button'",
-     "SPEECH OUTPUT: 'Information This message box has been popped up the following", 
-     "number of times: 1'", 
-     "SPEECH OUTPUT: 'OK button'"]))
-
-########################################################################
-# Dismiss the information window by activating the OK button.
-#
+sequence.append(TypeAction("Dialog and Message Boxes"))
 sequence.append(KeyComboAction("Return"))
 
-########################################################################
-# Once we're back to the main window of the demo, go to the
-# interactive demo, enter some text in the Entry text areas, and
-# invoke the Interactive Demo button.
-#
-#sequence.append(WaitForWindowActivate("Dialogs",None))
-sequence.append(WaitForFocus("Message Dialog",
-                             acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("space"))
+sequence.append(utils.AssertPresentationAction(
+    "Initial dialog",
+    ["BRAILLE LINE:  'gtk-demo application Dialogs frame'",
+     "     VISIBLE:  'Dialogs frame', cursor=1",
+     "BRAILLE LINE:  'gtk-demo application Dialogs frame Dialogs panel Message Dialog push button'",
+     "     VISIBLE:  'Message Dialog push button', cursor=1",
+     "SPEECH OUTPUT: 'Dialogs frame'",
+     "SPEECH OUTPUT: 'Dialogs panel'",
+     "SPEECH OUTPUT: 'Message Dialog push button'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("space"))
+sequence.append(utils.AssertPresentationAction(
+    "Information alert",
+    ["BRAILLE LINE:  'gtk-demo application Information alert'",
+     "     VISIBLE:  'Information alert', cursor=1",
+     "BRAILLE LINE:  'gtk-demo application Information alert OK push button'",
+     "     VISIBLE:  'OK push button', cursor=1",
+     "SPEECH OUTPUT: 'Information This message box has been popped up the following",
+     "number of times: 1'",
+     "SPEECH OUTPUT: 'OK push button'"]))
+
+sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Down"))
 
-sequence.append(WaitForFocus("Interactive Dialog",
-                             acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(TypeAction("Testing"))
-sequence.append(KeyComboAction("Tab", 500))
 
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(KeyComboAction("Tab"))
 sequence.append(TypeAction("Again"))
 
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Alt>i", 500))
-#sequence.append(WaitForWindowActivate("Interactive Dialog",None))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(KeyComboAction("<Alt>i"))
 sequence.append(utils.AssertPresentationAction(
-    "Interactive Dialog no automatic presentation",
-    ["BRAILLE LINE:  'gtk-demo Application Dialogs Frame (1 dialog)'",
-     "     VISIBLE:  'Dialogs Frame (1 dialog)', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Dialogs Frame (1 dialog) Dialogs Panel Entry 2 Again $l'",
-     "     VISIBLE:  'Entry 2 Again $l', cursor=14",
-     "BRAILLE LINE:  'gtk-demo Application Interactive Dialog Dialog'",
-     "     VISIBLE:  'Interactive Dialog Dialog', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Interactive Dialog Dialog Entry 1 Testing $l'",
+    "Entry 1",
+    ["BRAILLE LINE:  'gtk-demo application Interactive Dialog dialog'",
+     "     VISIBLE:  'Interactive Dialog dialog', cursor=1",
+     "BRAILLE LINE:  'gtk-demo application Interactive Dialog dialog Entry 1 Testing $l'",
      "     VISIBLE:  'Entry 1 Testing $l', cursor=16",
-     "SPEECH OUTPUT: 'Dialogs frame 1 unfocused dialog'",
-     "SPEECH OUTPUT: 'Dialogs panel Entry 2 text Again'",
      "SPEECH OUTPUT: 'Interactive Dialog'",
      "SPEECH OUTPUT: 'Entry 1 text Testing selected'"]))
 
-########################################################################
-# Now, do a "Where Am I" in the Interactive Dialog to get the title
-# info via KP_Insert+KP_Enter.
-#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "Entry 2",
+    ["BRAILLE LINE:  'gtk-demo application Interactive Dialog dialog Entry 2 Again $l'",
+     "     VISIBLE:  'Entry 2 Again $l', cursor=14",
+     "BRAILLE LINE:  'gtk-demo application Interactive Dialog dialog Entry 2 Again $l'",
+     "     VISIBLE:  'Entry 2 Again $l', cursor=14",
+     "SPEECH OUTPUT: 'Entry 2 text Again selected'"]))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
-sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
-    "Interactive Dialog Where Am I",
+    "Title bar",
     ["BRAILLE LINE:  'Interactive Dialog'",
      "     VISIBLE:  'Interactive Dialog', cursor=0",
      "SPEECH OUTPUT: 'Interactive Dialog'"]))
 
-########################################################################
-# Tab to the OK button and dismiss the window.
-#
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(TypeAction(" "))
-
-########################################################################
-# Close the Dialogs demo window
-#
-#sequence.append(WaitForWindowActivate("Dialogs",None))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(KeyComboAction("<Alt>F4", 500))
-
-########################################################################
-# Go back to the main gtk-demo window and reselect the
-# "Application main window" menu.  Let the harness kill the app.
-#
-#sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
-sequence.append(PauseAction(1000))
-sequence.append(KeyComboAction("Home"))
-
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TREE_TABLE,
-                           5000))
-
-# Just a little extra wait to let some events get through.
-#
-sequence.append(PauseAction(3000))
-
 sequence.append(utils.AssertionSummaryAction())
-
 sequence.start()
