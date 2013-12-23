@@ -10,16 +10,15 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-10-21 19:02+0000\n"
-"PO-Revision-Date: 2013-10-24 20:50+0100\n"
+"POT-Creation-Date: 2013-12-22 20:17+0000\n"
+"PO-Revision-Date: 2013-12-23 20:03+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Generator: Poedit 1.5.4\n"
 
@@ -3130,7 +3129,6 @@ msgstr "Pokaže seznam obiskanih povezav."
 #: ../src/orca/generator.py:741 ../src/orca/generator.py:783
 #: ../src/orca/generator.py:829
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
-#: ../src/orca/scripts/apps/packagemanager/script.py:635
 #: ../src/orca/tutorialgenerator.py:558 ../src/orca/tutorialgenerator.py:598
 msgid "toggle"
 msgstr "preklopi"
@@ -6334,7 +6332,7 @@ msgstr "Govor ni na voljo."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:4018
+#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3900
 msgid "string not found"
 msgstr "niza ni mogoče najti"
 
@@ -6963,26 +6961,31 @@ msgstr "navpično"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:98
+msgctxt "checkbox"
 msgid "checked"
 msgstr "označeno"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:101
+msgctxt "checkbox"
 msgid "not checked"
 msgstr "ni označeno"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:104
+msgctxt "checkbox"
 msgid "partially checked"
 msgstr "delno označeno"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:107
+msgctxt "togglebutton"
 msgid "pressed"
 msgstr "pritisnjeno"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:110
+msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "ni pritisnjeno"
 
@@ -7054,19 +7057,12 @@ msgstr "zahtevano"
 msgid "multi-select"
 msgstr "več izbir"
 
-#. Check to see if we have just had an "object:state-changed:showing"
-#. event for the Find button. If the name is "Find", and one of its
-#. states is VISIBLE and we are currently searching, that means we
-#. have just stopped a search. Inform the user that the search is
-#. complete and tell them how many files were found.
-#.
 #. Translators: the "Find" string must match what gnome-search-tool
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
-#.
-#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:200
-#: ../src/orca/scripts/apps/gedit/script.py:202
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:160
+#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:188
+#: ../src/orca/scripts/apps/gedit/script.py:190
+#: ../src/orca/scripts/apps/gnome-search-tool/script.py:99
 msgid "Find"
 msgstr "Najdi"
 
@@ -7560,11 +7556,11 @@ msgstr "Prebrano"
 #. keying off stuff like this, but we're forced to do so in
 #. in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:109
+#: ../src/orca/scripts/apps/gedit/script.py:97
 msgid "Change to:"
 msgstr "Spremeni v:"
 
-#: ../src/orca/scripts/apps/gedit/script.py:110
+#: ../src/orca/scripts/apps/gedit/script.py:98
 msgid "Misspelled word:"
 msgstr "Napačno črkovana beseda:"
 
@@ -7576,15 +7572,15 @@ msgstr "Napačno črkovana beseda:"
 #. gedit.  We hate keying off stuff like this, but we're
 #. forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:144
+#: ../src/orca/scripts/apps/gedit/script.py:132
 msgid "Completed spell checking"
 msgstr "Preverjanje črkovanja je končano"
 
-#: ../src/orca/scripts/apps/gedit/script.py:145
+#: ../src/orca/scripts/apps/gedit/script.py:133
 msgid "Spell checking is complete."
 msgstr "Preverjanje črkovanja je končano."
 
-#: ../src/orca/scripts/apps/gedit/script.py:147
+#: ../src/orca/scripts/apps/gedit/script.py:135
 msgid "Press Tab and Return to terminate."
 msgstr "Za uničenje pritisnite Tab in Return."
 
@@ -7598,11 +7594,9 @@ msgstr "Za uničenje pritisnite Tab in Return."
 #. has to match what Thunderbird is using.  We hate keying
 #. off stuff like this, but we're forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:271
-#: ../src/orca/scripts/apps/gedit/script.py:346
-#: ../src/orca/scripts/apps/Thunderbird/script.py:176
-#: ../src/orca/scripts/apps/Thunderbird/script.py:325
-#: ../src/orca/scripts/apps/Thunderbird/script.py:599
+#: ../src/orca/scripts/apps/gedit/script.py:259
+#: ../src/orca/scripts/apps/gedit/script.py:332
+#: ../src/orca/scripts/apps/Thunderbird/script.py:278
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
 msgid "Check Spelling"
 msgstr "Preveri črkovanje"
@@ -7612,14 +7606,14 @@ msgstr "Preveri črkovanje"
 #. keying off stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:375
+#: ../src/orca/scripts/apps/gedit/script.py:361
 msgid "Phrase not found"
 msgstr "Rekla ni mogoče najti"
 
 #. Translators: this indicates a find command succeeded in
 #. finding something.
 #.
-#: ../src/orca/scripts/apps/gedit/script.py:437
+#: ../src/orca/scripts/apps/gedit/script.py:402
 msgid "Phrase found."
 msgstr "Najdeno reklo."
 
@@ -7628,17 +7622,10 @@ msgid "Read the latest n messages in the incoming messages text area."
 msgstr ""
 "Preberi najnovejših n sporočil v besedilnem polju prihajajočih sporočil."
 
-#. Check to see if we have just had an "object:state-changed:showing"
-#. event for the Stop button. If the name is "Stop", and one of its
-#. states is VISIBLE, that means we have started a search. As the
-#. search progresses, regularly inform the user of this by speaking
-#. "Searching" (assuming the search tool has focus).
-#.
 #. Translators: the "Stop" string must match what gnome-search-tool
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
-#.
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:131
+#: ../src/orca/scripts/apps/gnome-search-tool/script.py:85
 msgid "Stop"
 msgstr "Zaustavi"
 
@@ -7652,56 +7639,18 @@ msgstr "Delo z ali brez povezave"
 #. between workspaces.  The goal here is to find a match
 #. with that prefix.
 #.
-#: ../src/orca/scripts/apps/metacity/script.py:114
+#: ../src/orca/scripts/apps/metacity/script.py:104
 msgid "Workspace "
 msgstr "Delovna površina"
 
-#: ../src/orca/scripts/apps/metacity/script.py:114
+#: ../src/orca/scripts/apps/metacity/script.py:104
 msgid "Desk "
 msgstr "Namizje"
-
-#. Translators: The Package Manager application notifies the
-#. user of minor errors by displaying an icon in the status
-#. bar and adding them to an error log rather than displaying
-#. the error in a dialog box. This string is the label for a
-#. checkbox. If it is checked, Orca will inform the user when
-#. the notification icon has appeared.
-#.
-#: ../src/orca/scripts/apps/packagemanager/script.py:115
-msgid "Notify me when errors have been logged."
-msgstr "Opozori, kadar so zabeležene napake."
-
-#. Translators: The Package Manager application notifies the
-#. user of minor errors by displaying an icon in the status
-#. bar and adding them to an error log rather than displaying
-#. the error in a dialog box. This is the message Orca will
-#. present to inform the user that this has occurred.
-#.
-#: ../src/orca/scripts/apps/packagemanager/script.py:250
-msgid "An error occurred. View the error log for details."
-msgstr "Prišlo je do napake. Več podrobnosti je zapisanih v dnevniku napak."
-
-#. Translators: This is the tutorial string associated with a
-#. specific search field in the Packagemanager application.
-#. It is designed to inform the user how to move directly to
-#. the search results after the search has been completed.
-#.
-#: ../src/orca/scripts/apps/packagemanager/tutorialgenerator.py:60
-msgid "Use Ctrl+L to move focus to the results."
-msgstr "S tipkama krmilka+L se dejavnost prenese na rezultate."
 
 #: ../src/orca/scripts/apps/planner/braille_generator.py:67
 #: ../src/orca/scripts/apps/planner/speech_generator.py:63
 msgid "Display more options"
 msgstr "Pokaži več možnosti"
-
-#. Translators: this is the name of a panel in Thunderbird.
-#.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:637
-#: ../src/orca/scripts/apps/Thunderbird/script.py:654
-#, python-format
-msgid "%s panel"
-msgstr "pult %s"
 
 #. Translators: these represent the number of pixels
 #. for the left or right margins in a document.  We
@@ -7710,7 +7659,7 @@ msgstr "pult %s"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3636 ../src/orca/scripts/default.py:3648
+#: ../src/orca/scripts/default.py:3517 ../src/orca/scripts/default.py:3529
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7721,7 +7670,7 @@ msgstr[3] "%(key)s %(value)s točke"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4743
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4306
 msgid "open"
 msgstr "odpri"
 
@@ -8827,6 +8776,18 @@ msgid ""
 msgstr ""
 "Za zmanjšanje pritisnite levo puščico, za povečanje pa desno. Za najmanjšo "
 "vrednost pritisnite tipko Začetek, za največjo pa tipko Konec."
+
+#~ msgid "Notify me when errors have been logged."
+#~ msgstr "Opozori, kadar so zabeležene napake."
+
+#~ msgid "An error occurred. View the error log for details."
+#~ msgstr "Prišlo je do napake. Več podrobnosti je zapisanih v dnevniku napak."
+
+#~ msgid "Use Ctrl+L to move focus to the results."
+#~ msgstr "S tipkama krmilka+L se dejavnost prenese na rezultate."
+
+#~ msgid "%s panel"
+#~ msgstr "pult %s"
 
 #~ msgid "Orca"
 #~ msgstr "Orka"
