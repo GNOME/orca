@@ -47,8 +47,18 @@ AM_CHECK_PYMOD(gi,,,[AC_MSG_ERROR(Could not find python module: gi)])
 AM_CHECK_PYMOD(json,,,[AC_MSG_ERROR(Could not find python module: json)])
 AM_CHECK_PYMOD(brlapi,,[brlapi_available="yes"],[brlapi_available="no"])
 AM_CHECK_PYMOD(speechd,,[speechd_available="yes"],[speechd_available="no"])
+AC_ARG_WITH([liblouis],
+  AS_HELP_STRING([--without-liblouis], [Disable liblouis support]))
+
+AS_IF([test "x$with_liblouis" != xno],
+  [AM_CHECK_PYMOD(louis,,[louis_available="yes"],[louis_available="no"])],
+  [louis_available=no])
+
+if test "x$with_liblouis" = xyes -a "x$louis_available" = xno; then
+  AC_MSG_ERROR([Liblouis was requested but could not be found])
+fi
+
 LOUIS_TABLE_DIR=""
-AM_CHECK_PYMOD(louis,,[louis_available="yes"],[louis_available="no"])
 if test x$louis_available = "xyes"; then
   LOUIS_TABLE_DIR=`pkg-config --variable=tablesdir liblouis`
 fi
