@@ -2091,27 +2091,19 @@ class Script(script.Script):
             self.find()
 
     def onActiveDescendantChanged(self, event):
-        """Called when an object who manages its own descendants detects a
-        change in one of its children.
+        """Callback for object:active-descendant-changed accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
-
-        if not event.source.getState().contains(pyatspi.STATE_FOCUSED):
+        if not event.any_data:
             return
 
-        # There can be cases when the object that fires an
-        # active-descendant-changed event has no children. In this case,
-        # use the object that fired the event, otherwise, use the child.
-        #
-        child = event.any_data
-        if child:
-            if self.stopSpeechOnActiveDescendantChanged(event):
-                speech.stop()
-            orca.setLocusOfFocus(event, child)
-        else:
-            orca.setLocusOfFocus(event, event.source)
+        if not event.source.getState().contains(pyatspi.STATE_FOCUSED) \
+           and not event.any_data.getState().contains(pyatspi.STATE_FOCUSED):
+            return
+
+        if self.stopSpeechOnActiveDescendantChanged(event):
+            speech.stop()
+
+        orca.setLocusOfFocus(event, event.any_data)
 
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
