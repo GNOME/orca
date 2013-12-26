@@ -77,6 +77,11 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
+        # https://bugzilla.gnome.org/show_bug.cgi?id=720989
+        if role == pyatspi.ROLE_MENU == event.source.parent.getRole():
+            orca.setLocusOfFocus(event, event.source)
+            return
+
         # Unfiled, but a similar case of the above issue with combo boxes.
         if role == pyatspi.ROLE_PUSH_BUTTON:
             orca.setLocusOfFocus(event, event.source)
