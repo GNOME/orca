@@ -44,6 +44,11 @@ class Script(default.Script):
 
         role = event.source.getRole()
 
+        # https://bugzilla.gnome.org/show_bug.cgi?id=720987
+        if role == pyatspi.ROLE_TABLE_COLUMN_HEADER:
+            orca.setLocusOfFocus(event, event.source)
+            return
+
         # Unfiled. But this happens when you are in gtk-demo's application demo,
         # get into a menu and then press Escape. The text widget emits a focus:
         # event, but not a state-changed:focused event.
