@@ -589,34 +589,6 @@ class Utilities(script_utilities.Utilities):
 
         return error == "misspelled"
 
-    def substring(self, obj, startOffset, endOffset):
-        """Returns the substring of the given object's text specialization.
-
-        NOTE: This is here to handle the problematic implementation of
-        getText by OpenOffice.  See the bug discussion at:
-
-           http://bugzilla.gnome.org/show_bug.cgi?id=356425)
-
-        Once the OpenOffice issue has been resolved, this method probably
-        should be removed.
-
-        Arguments:
-        - obj: an accessible supporting the accessible text specialization
-        - startOffset: the starting character position
-        - endOffset: the ending character position
-        """
-
-        text = obj.queryText().getText(0, -1)
-        if startOffset >= len(text):
-            startOffset = len(text) - 1
-        if endOffset == -1:
-            endOffset = len(text)
-        elif startOffset >= endOffset:
-            endOffset = startOffset + 1
-        string = text[max(0, startOffset):min(len(text), endOffset)]
-
-        return string
-
     def textAttributes(self, acc, offset, get_defaults=False):
         """Get the text attributes run for a given offset in a given accessible
 

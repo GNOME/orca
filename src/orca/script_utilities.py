@@ -1873,35 +1873,6 @@ class Utilities:
 
         return [currentSelected, otherSelected]
 
-    @staticmethod
-    def isTextSelected(obj, startOffset, endOffset):
-        """Returns an indication of whether the text is selected by
-        comparing the text offset with the various selected regions of
-        text for this accessible object.
-
-        Arguments:
-        - obj: the Accessible object.
-        - startOffset: text start offset.
-        - endOffset: text end offset.
-
-        Returns an indication of whether the text is selected.
-        """
-
-        if startOffset == endOffset:
-            return False
-
-        try:
-            text = obj.queryText()
-        except:
-            return False
-
-        for i in range(text.getNSelections()):
-            [startSelOffset, endSelOffset] = text.getSelection(i)
-            if (startOffset >= startSelOffset) and (endOffset <= endSelOffset):
-                return True
-
-        return False
-
     def isWordMisspelled(self, obj, offset):
         """Identifies if the current word is flagged as misspelled by the
         application. Different applications and toolkits flag misspelled
@@ -1917,80 +1888,6 @@ class Utilities:
         """
 
         return False
-
-    def offsetsForPhrase(self, obj):
-        """Return the start and end offset for the given phrase
-
-        Arguments:
-        - obj: the Accessible object
-        """
-
-        try:
-            text = obj.queryText()
-        except:
-            return [0, 0]
-
-        lastPos = self._script.pointOfReference.get("lastCursorPosition")
-        startOffset = lastPos[1]
-        endOffset = text.caretOffset
-
-        # Swap values if in wrong order.
-        #
-        if (startOffset > endOffset and endOffset != -1) or startOffset == -1:
-            temp = endOffset
-            endOffset = startOffset
-            startOffset = temp
-
-        return [startOffset, endOffset]
-
-    def offsetsForLine(self, obj):
-        """Return the start and end offset for the given line
-
-        Arguments:
-        - obj: the Accessible object
-        """
-
-        lineAndOffsets = self._script.getTextLineAtCaret(obj)
-        return [lineAndOffsets[1], lineAndOffsets[2]]
-
-    def offsetsForWord(self, obj):
-        """Return the start and end offset for the given word
-
-        Arguments:
-        - obj: the Accessible object
-        """
-
-        try:
-            text = obj.queryText()
-        except:
-            return [0, 0]
-
-        wordAndOffsets = text.getTextAtOffset(
-            text.caretOffset, pyatspi.TEXT_BOUNDARY_WORD_START)
-
-        return [wordAndOffsets[1], wordAndOffsets[2]]
-
-    def offsetsForChar(self, obj):
-        """Return the start and end offset for the given character
-
-        Arguments:
-        - obj: the Accessible object
-        """
-
-        try:
-            text = obj.queryText()
-        except:
-            return [0, 0]
-
-        lastKey, mods = self.lastKeyAndModifiers()
-        if mods & settings.SHIFT_MODIFIER_MASK and lastKey == "Right":
-            startOffset = text.caretOffset - 1
-            endOffset = text.caretOffset
-        else:
-            startOffset = text.caretOffset
-            endOffset = text.caretOffset + 1
-
-        return [startOffset, endOffset]
 
     @staticmethod
     def queryNonEmptyText(obj):

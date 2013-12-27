@@ -739,6 +739,9 @@ class Script(script.Script):
             pass
         else:
             self._saveLastCursorPosition(obj, text.caretOffset)
+            textSelections = self.pointOfReference.get('textSelections', {})
+            textSelections[hash(obj)] = text.getSelection(0)
+            self.pointOfReference['textSelections'] = textSelections
 
         # We want to save the current row and column of a newly focused
         # or selected table cell so that on subsequent cell focus/selection
@@ -2183,6 +2186,11 @@ class Script(script.Script):
         if self.flatReviewContext:
             self.toggleFlatReviewMode()
 
+        text = event.source.queryText()
+        self._saveLastCursorPosition(event.source, text.caretOffset)
+        if text.getNSelections():
+            return
+
         self._presentTextAtNewCaretPosition(event)
 
     def onDocumentReload(self, event):
@@ -2699,91 +2707,57 @@ class Script(script.Script):
             self.echoPreviousWord(event.source)
 
     def onTextSelectionChanged(self, event):
-        """Called when an object's text selection changes.
-
-        Arguments:
-        - event: the Event
-        """
+        """Callback for object:text-selection-changed accessibility events."""
 
         obj = event.source
-        spokenRange = self.pointOfReference.get("spokenTextRange") or [0, 0]
-        startOffset, endOffset = spokenRange
+        self.updateBraille(obj)
 
-        if not obj.getState().contains(pyatspi.STATE_FOCUSED):
-            # We're selecting across paragraph (or other text object)
-            # boundaries. If we're here, the selection has changed in
-            # an object which does not have the caret. We need to try
-            # to sort this out.
-            #
-            lastPos = self.pointOfReference.get("lastCursorPosition")
-            if not lastPos:
-                # We have no point of reference. Bail.
-                #
+        # Note: This guesswork to figure out what actually changed with respect
+        # to text selection will get eliminated once the new text-selection API
+        # is added to ATK and implemented by the toolkits. (BGO 638378)
+
+        textSelections = self.pointOfReference.get('textSelections', {})
+        oldStart, oldEnd = textSelections.get(hash(obj), (0, 0))
+
+        # TODO: JD - this doesn't yet handle the case of multiple non-contiguous
+        # selections in a single accessible object.
+
+        text = obj.queryText()
+        newStart, newEnd = text.getSelection(0)
+        textSelections[hash(obj)] = newStart, newEnd
+        self.pointOfReference['textSelections'] = textSelections
+
+        nSelections = text.getNSelections()
+        handled = self._speakTextSelectionState(nSelections)
+        if handled:
+            return
+
+        changes = []
+        oldChars = set(range(oldStart, oldEnd))
+        newChars = set(range(newStart, newEnd))
+        if not oldChars.union(newChars):
+            return
+
+        if oldChars and newChars and not oldChars.intersection(newChars):
+            # A simultaneous unselection and selection centered at one offset.
+            changes.append([oldStart, oldEnd, messages.TEXT_UNSELECTED])
+            changes.append([newStart, newEnd, messages.TEXT_SELECTED])
+        else:
+            change = sorted(oldChars.symmetric_difference(newChars))
+            if not change:
                 return
-            elif endOffset - startOffset > 1:
-                # We're coming at the line from below. And didn't just
-                # land on a blank/empty line. We have other methods for
-                # dealing with this situation.
-                #
-                return
+
+            changeStart, changeEnd = change[0], change[-1] + 1
+            if oldChars < newChars:
+                changes.append([changeStart, changeEnd, messages.TEXT_SELECTED])
             else:
-                # If we do a select all in a document in which each
-                # paragraph is a separate accessible object, we'll
-                # get an event for each of those objects. We don't
-                # want to repeat "(un)selected". See bug #583811.
-                #
-                diff = lastPos[0].getIndexInParent() - obj.getIndexInParent()
-                if abs(diff) > 1:
-                    # We can skip this one because we'll do the
-                    # announcement based on another one.
-                    #
-                    return
-                elif startOffset > 0 and startOffset == endOffset:
-                    try:
-                        text = lastPos[0].queryText()
-                    except:
-                        pass
-                    else:
-                        if startOffset == text.characterCount:
-                            return
+                changes.append([changeStart, changeEnd, messages.TEXT_UNSELECTED])
 
-            # We must be approaching from the top, left, or right. Or
-            # from below but we've found a blank line. Our stored point
-            # of reference tells us our caret location. Figure out how
-            # we got here by looking at our position with respect to
-            # the event under consideration.
-            #
-            relationType = None
-            for relation in lastPos[0].getRelationSet():
-                if relation.getRelationType() in [pyatspi.RELATION_FLOWS_FROM,
-                                                  pyatspi.RELATION_FLOWS_TO] \
-                   and self.utilities.isSameObject(obj, relation.getTarget(0)):
-                    relationType = relation.getRelationType()
-                    break
-
-            # If there's a completely blank line in between our previous
-            # and current locations, where we came from will lack any
-            # offically-selectable characters. As a result, we won't
-            # indicate when a blank line has been selected. Under these
-            # conditions, we'll try to backtrack further.
-            #
-            endOffset = 0
-            while obj and not endOffset:
-                try:
-                    endOffset = obj.queryText().characterCount
-                    startOffset = max(0, endOffset - 1)
-                except:
-                    pass
-
-                if not endOffset:
-                    for relation in obj.getRelationSet():
-                        if relation.getRelationType() == relationType:
-                            obj = relation.getTarget(0)
-                            break
-                    else:
-                        break
-
-        self.speakTextSelectionState(obj, startOffset, endOffset)
+        speakMessage = not _settingsManager.getSetting('onlySpeakDisplayedText')
+        for start, end, message in changes:
+            self.sayPhrase(obj, start, end)
+            if speakMessage:
+                self.speakMessage(message, interrupt=False)
 
     def onColumnReordered(self, event):
         """Called whenever the columns in a table are reordered.
@@ -2976,131 +2950,37 @@ class Script(script.Script):
         keyString, mods = self.utilities.lastKeyAndModifiers()
         if not keyString:
             return
+
         isControlKey = mods & settings.CTRL_MODIFIER_MASK
-        isShiftKey = mods & settings.SHIFT_MODIFIER_MASK
-        lastPos = self.pointOfReference.get("lastCursorPosition")
-        hasLastPos = (lastPos != None)
 
         if keyString in ["Up", "Down"]:
-            # If the user has typed Shift-Up or Shift-Down, then we want
-            # to speak the text that has just been selected or unselected,
-            # otherwise we speak the new line where the text cursor is
-            # currently positioned.
-            #
-            if hasLastPos and isShiftKey and not isControlKey:
-                if keyString == "Up":
-                    # If we have just crossed a paragraph boundary with
-                    # Shift+Up, what we've selected in this object starts
-                    # with the current offset and goes to the end of the
-                    # paragraph.
-                    #
-                    if not self.utilities.isSameObject(lastPos[0], obj):
-                        [startOffset, endOffset] = \
-                            text.caretOffset, text.characterCount
-                    else:
-                        [startOffset, endOffset] = \
-                            self.utilities.offsetsForPhrase(obj)
-                    self.sayPhrase(obj, startOffset, endOffset)
-                    selSpoken = self._speakContiguousSelection(obj,
-                                                   pyatspi.RELATION_FLOWS_TO)
-                else:
-                    selSpoken = self._speakContiguousSelection(obj,
-                                                 pyatspi.RELATION_FLOWS_FROM)
-
-                    # If we have just crossed a paragraph boundary with
-                    # Shift+Down, what we've selected in this object starts
-                    # with the beginning of the paragraph and goes to the
-                    # current offset.
-                    #
-                    if not self.utilities.isSameObject(lastPos[0], obj):
-                        [startOffset, endOffset] = 0, text.caretOffset
-                    else:
-                        [startOffset, endOffset] \
-                            = self.utilities.offsetsForPhrase(obj)
-
-                    if startOffset != endOffset:
-                        self.sayPhrase(obj, startOffset, endOffset)
-
-            else:
-                [startOffset, endOffset] = self.utilities.offsetsForLine(obj)
-                self.sayLine(obj)
+            self.sayLine(obj)
 
         elif keyString in ["Left", "Right"]:
-            # If the user has typed Control-Shift-Up or Control-Shift-Dowm,
-            # then we want to speak the text that has just been selected
-            # or unselected, otherwise if the user has typed Control-Left
-            # or Control-Right, we speak the current word otherwise we speak
-            # the character at the text cursor position.
-            #
-            inNewObj = hasLastPos \
-                       and not self.utilities.isSameObject(lastPos[0], obj)
-
-            if hasLastPos and not inNewObj and isShiftKey and isControlKey:
-                [startOffset, endOffset] = self.utilities.offsetsForPhrase(obj)
-                self.sayPhrase(obj, startOffset, endOffset)
-            elif isControlKey and not isShiftKey:
-                [startOffset, endOffset] = self.utilities.offsetsForWord(obj)
-                if startOffset == endOffset:
-                    self.sayCharacter(obj)
-                else:
-                    self.sayWord(obj)
+            if isControlKey:
+                self.sayWord(obj)
             else:
-                [startOffset, endOffset] = self.utilities.offsetsForChar(obj)
                 self.sayCharacter(obj)
 
         elif keyString == "Page_Up":
-            # If the user has typed Control-Shift-Page_Up, then we want
-            # to speak the text that has just been selected or unselected,
-            # otherwise if the user has typed Control-Page_Up, then we
+            # TODO - JD: Why is Control special here?
+            # If the user has typed Control-Page_Up, then we
             # speak the character to the right of the current text cursor
             # position otherwise we speak the current line.
             #
-            if hasLastPos and isShiftKey and isControlKey:
-                [startOffset, endOffset] = self.utilities.offsetsForPhrase(obj)
-                self.sayPhrase(obj, startOffset, endOffset)
-            elif isControlKey:
-                [startOffset, endOffset] = self.utilities.offsetsForChar(obj)
+            if isControlKey:
                 self.sayCharacter(obj)
             else:
-                [startOffset, endOffset] = self.utilities.offsetsForLine(obj)
                 self.sayLine(obj)
 
         elif keyString == "Page_Down":
-            # If the user has typed Control-Shift-Page_Down, then we want
-            # to speak the text that has just been selected or unselected,
-            # otherwise if the user has just typed Page_Down, then we speak
-            # the current line.
-            #
-            if hasLastPos and isShiftKey and isControlKey:
-                [startOffset, endOffset] = self.utilities.offsetsForPhrase(obj)
-                self.sayPhrase(obj, startOffset, endOffset)
-            else:
-                [startOffset, endOffset] = self.utilities.offsetsForLine(obj)
-                self.sayLine(obj)
+            self.sayLine(obj)
 
         elif keyString in ["Home", "End"]:
-            # If the user has typed Shift-Home or Shift-End, then we want
-            # to speak the text that has just been selected or unselected,
-            # otherwise if the user has typed Control-Home or Control-End,
-            # then we speak the current line otherwise we speak the character
-            # to the right of the current text cursor position.
-            #
-            if hasLastPos and isShiftKey and not isControlKey:
-                [startOffset, endOffset] = self.utilities.offsetsForPhrase(obj)
-                self.sayPhrase(obj, startOffset, endOffset)
-            elif isControlKey:
-                [startOffset, endOffset] = self.utilities.offsetsForLine(obj)
+            if isControlKey:
                 self.sayLine(obj)
             else:
-                [startOffset, endOffset] = self.utilities.offsetsForChar(obj)
                 self.sayCharacter(obj)
-
-        else:
-            startOffset = text.caretOffset
-            endOffset = text.caretOffset
-
-        self._saveLastCursorPosition(obj, text.caretOffset)
-        self._saveSpokenTextRange(startOffset, endOffset)
 
     def __sayAllProgressCallback(self, context, progressType):
         # [[[TODO: WDW - this needs work.  Need to be able to manage
@@ -3668,9 +3548,11 @@ class Script(script.Script):
         - endOffset: the end text offset.
         """
 
-        phrase = self.utilities.substring(obj, startOffset, endOffset)
+        phrase = self.utilities.expandEOCs(obj, startOffset, endOffset)
+        if not phrase:
+            return
 
-        if len(phrase) and phrase != "\n":
+        if len(phrase) > 1 or phrase.isalnum():
             if phrase.isupper():
                 voice = self.voices[settings.UPPERCASE_VOICE]
             else:
@@ -3679,8 +3561,6 @@ class Script(script.Script):
             phrase = self.utilities.adjustForRepeats(phrase)
             speech.speak(phrase, voice)
         else:
-            # Speak blank line if appropriate.
-            #
             self.sayCharacter(obj)
 
     def sayWord(self, obj):
@@ -4172,18 +4052,6 @@ class Script(script.Script):
             phoneticString = phonnames.getPhoneticName(character)
             speech.speak(phoneticString, voice)
 
-    def _saveSpokenTextRange(self, startOffset, endOffset):
-        """Save away the start and end offset of the range of text that
-        was spoken. It will be used by speakTextSelectionState, to try
-        to determine if the text was selected or unselected.
-
-        Arguments:
-        - startOffset: the start of the spoken text range.
-        - endOffset: the end of the spoken text range.
-        """
-
-        self.pointOfReference["spokenTextRange"] = [startOffset, endOffset]
-
     def _saveLastCursorPosition(self, obj, caretOffset):
         """Save away the current text cursor position for next time.
 
@@ -4194,179 +4062,69 @@ class Script(script.Script):
 
         self.pointOfReference["lastCursorPosition"] = [obj, caretOffset]
 
-    def _saveLastTextSelections(self, text):
-        """Save away the list of text selections for next time.
-
-        Arguments:
-        - text: the text object.
-        """
-
-        self.pointOfReference["lastSelections"] = []
-        for i in range(text.getNSelections()):
-            self.pointOfReference["lastSelections"].append(
-              text.getSelection(i))
-
     def _getCtrlShiftSelectionsStrings(self):
         return [messages.PARAGRAPH_SELECTED_DOWN,
                 messages.PARAGRAPH_UNSELECTED_DOWN,
                 messages.PARAGRAPH_SELECTED_UP,
                 messages.PARAGRAPH_UNSELECTED_UP]
 
-    def speakTextSelectionState(self, obj, startOffset, endOffset):
-        """Speak "selected" if the text was just selected, "unselected" if
-        it was just unselected.
-
-        Arguments:
-        - obj: the Accessible object.
-        - startOffset: text start offset.
-        - endOffset: text end offset.
-        """
+    def _speakTextSelectionState(self, nSelections):
+        """Hacky method to speak special cases without any valid sanity
+        checking. It is not long for this world. Do not call it."""
 
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
-            return
+            return False
 
-        try:
-            text = obj.queryText()
-        except:
-            return
-
-        # Handle special cases.
-        #
-        # Control-Shift-Page_Down:
-        #          speak "line selected to end from previous cursor position".
-        # Control-Shift-Page_Up:
-        #        speak "line selected from start to previous cursor position".
-        #
-        # Shift-Page_Down:    speak "page <state> from cursor position".
-        # Shift-Page_Up:      speak "page <state> to cursor position".
-        #
-        # Control-Shift-Down: speak "line <state> down from cursor position".
-        # Control-Shift-Up:   speak "line <state> up from cursor position".
-        #
-        # Control-Shift-Home: speak "document <state> to cursor position".
-        # Control-Shift-End:  speak "document <state> from cursor position".
-        #
-        # Control-a:          speak "entire document selected".
-        #
-        # where <state> is either "selected" or "unselected" depending
-        # upon whether there are any text selections.
-        #
         eventStr, mods = self.utilities.lastKeyAndModifiers()
         isControlKey = mods & settings.CTRL_MODIFIER_MASK
         isShiftKey = mods & settings.SHIFT_MODIFIER_MASK
-        selectedText = (text.getNSelections() != 0)
+        selectedText = nSelections > 0
 
-        specialCaseFound = False
+        line = None
         if (eventStr == "Page_Down") and isShiftKey and isControlKey:
-            specialCaseFound = True
             line = messages.LINE_SELECTED_RIGHT
         elif (eventStr == "Page_Up") and isShiftKey and isControlKey:
-            specialCaseFound = True
             line = messages.LINE_SELECTED_LEFT
-
         elif (eventStr == "Page_Down") and isShiftKey and not isControlKey:
-            specialCaseFound = True
             if selectedText:
                 line = messages.PAGE_SELECTED_DOWN
             else:
                 line = messages.PAGE_UNSELECTED_DOWN
-
         elif (eventStr == "Page_Up") and isShiftKey and not isControlKey:
-            specialCaseFound = True
             if selectedText:
                 line = messages.PAGE_SELECTED_UP
             else:
                 line = messages.PAGE_UNSELECTED_UP
-
         elif (eventStr == "Down") and isShiftKey and isControlKey:
-            specialCaseFound = True
             strings = self._getCtrlShiftSelectionsStrings()
             if selectedText:
                 line = strings[0]
             else:
                 line = strings[1]
-
         elif (eventStr == "Up") and isShiftKey and isControlKey:
-            specialCaseFound = True
             strings = self._getCtrlShiftSelectionsStrings()
             if selectedText:
                 line = strings[2]
             else:
                 line = strings[3]
-
         elif (eventStr == "Home") and isShiftKey and isControlKey:
-            specialCaseFound = True
             if selectedText:
                 line = messages.DOCUMENT_SELECTED_UP
             else:
                 line = messages.DOCUMENT_UNSELECTED_UP
-
         elif (eventStr == "End") and isShiftKey and isControlKey:
-            specialCaseFound = True
             if selectedText:
                 line = messages.DOCUMENT_SELECTED_DOWN
             else:
                 line = messages.DOCUMENT_SELECTED_UP
+        elif (eventStr == "A") and isControlKey and selectedText:
+            line = messages.DOCUMENT_SELECTED_ALL
 
-        elif (eventStr == "A") and isControlKey:
-            # The user has typed Control-A. Check to see if the entire
-            # document has been selected, and if so, let the user know.
-            #
-            charCount = text.characterCount
-            for i in range(0, text.getNSelections()):
-                [startOffset, endOffset] = text.getSelection(i)
-                if text.caretOffset == 0 and \
-                   startOffset == 0 and endOffset == charCount:
-                    specialCaseFound = True
-                    self.updateBraille(obj)
-                    line = messages.DOCUMENT_SELECTED_ALL
-
-        if specialCaseFound:
+        if line:
             speech.speak(line, None, False)
-            return
-        elif startOffset == endOffset:
-            return
+            return True
 
-        try:
-            # If we are selecting by word, then there possibly will be
-            # whitespace characters on either end of the text. We adjust
-            # the startOffset and endOffset to exclude them.
-            #
-            try:
-                tmpStr = text.getText(startOffset, endOffset)
-            except:
-                tmpStr = ''
-            n = len(tmpStr)
-
-            # Don't strip whitespace if string length is one (might be a
-            # space).
-            #
-            if n > 1:
-                while endOffset > startOffset:
-                    if self.utilities.isWordDelimiter(tmpStr[n-1]):
-                        n -= 1
-                        endOffset -= 1
-                    else:
-                        break
-                n = 0
-                while startOffset < endOffset:
-                    if self.utilities.isWordDelimiter(tmpStr[n]):
-                        n += 1
-                        startOffset += 1
-                    else:
-                        break
-
-        except:
-            debug.printException(debug.LEVEL_FINEST)
-
-        if not _settingsManager.getSetting('onlySpeakDisplayedText'):
-            voice = self.voices.get(settings.SYSTEM_VOICE)
-            if self.utilities.isTextSelected(obj, startOffset, endOffset):
-                speech.speak(messages.TEXT_SELECTED, voice, False)
-            elif len(text.getText(startOffset, endOffset)):
-                speech.speak(messages.TEXT_UNSELECTED, voice, False)
-
-        self._saveLastTextSelections(text)
+        return False
 
     def systemBeep(self):
         """Rings the system bell. This is really a hack. Ideally, we want

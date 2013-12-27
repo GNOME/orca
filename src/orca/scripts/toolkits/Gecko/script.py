@@ -1824,6 +1824,9 @@ class Script(default.Script):
         if keyboardEvent.event_string in ["Page_Up", "Page_Down"]:
             return False
 
+        if keyboardEvent.modifiers & settings.SHIFT_MODIFIER_MASK:
+            return False
+
         if self._loadingDocumentContent:
             return False
 

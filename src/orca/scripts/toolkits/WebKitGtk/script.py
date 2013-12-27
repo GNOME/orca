@@ -294,21 +294,6 @@ class Script(default.Script):
         else:
             self.presentMessage(messages.PAGE_LOADING_END)
 
-    def onTextSelectionChanged(self, event):
-        """Called when an object's text selection changes.
-
-        Arguments:
-        - event: the Event
-        """
-
-        # The default script's method attempts to handle various and sundry
-        # complications that simply do not apply here.
-        #
-        spokenRange = self.pointOfReference.get("spokenTextRange") or [0, 0]
-        startOffset, endOffset = spokenRange
-
-        self.speakTextSelectionState(event.source, startOffset, endOffset)
-
     def sayCharacter(self, obj):
         """Speak the character at the caret.
 

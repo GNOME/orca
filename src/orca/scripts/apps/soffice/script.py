@@ -908,6 +908,12 @@ class Script(default.Script):
         if parent and parent.getRoleName() == 'text frame':
             return
 
+        obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
+        textSelections = self.pointOfReference.get('textSelections', {})
+        start, end = textSelections.get(hash(obj), (0, 0))
+        if start != end:
+            return
+
         default.Script.onFocusedChanged(self, event)
 
     def onCaretMoved(self, event):

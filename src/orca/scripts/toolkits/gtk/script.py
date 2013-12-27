@@ -122,3 +122,12 @@ class Script(default.Script):
 
             orca.setLocusOfFocus(event, obj)
             return
+
+    def onTextSelectionChanged(self, event):
+        """Callback for object:text-selection-changed accessibility events."""
+
+        obj = event.source
+        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
+            return
+
+        default.Script.onTextSelectionChanged(self, event)

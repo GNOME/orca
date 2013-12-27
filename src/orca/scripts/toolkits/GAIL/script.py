@@ -28,6 +28,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.orca as orca
+import orca.orca_state as orca_state
 import orca.scripts.default as default
 
 class Script(default.Script):
@@ -88,3 +89,12 @@ class Script(default.Script):
 
             orca.setLocusOfFocus(event, obj)
             return
+
+    def onTextSelectionChanged(self, event):
+        """Callback for object:text-selection-changed accessibility events."""
+
+        obj = event.source
+        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
+            return
+
+        default.Script.onTextSelectionChanged(self, event)

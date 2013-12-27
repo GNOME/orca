@@ -2,6 +2,8 @@
 #
 # Copyright 2013 The Orca Team.
 #
+# Author: Joanmarie Diggs <jdiggs@igalia.com>
+#
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
 # License as published by the Free Software Foundation; either
@@ -32,7 +34,6 @@ import orca.orca_state as orca_state
 import orca.scripts.toolkits.gtk as gtk
 import orca.settings as settings
 from orca.structural_navigation import StructuralNavigation
-from .script_utilities import Utilities
 
 ########################################################################
 #                                                                      #
@@ -68,11 +69,6 @@ class Script(gtk.Script):
             keyBindings.add(keyBinding)
 
         return keyBindings
-
-    def getUtilities(self):
-        """Returns the utilites for this script."""
-
-        return Utilities(self)
 
     def getStructuralNavigation(self):
         """Returns the 'structural navigation' class for this script."""
@@ -126,3 +122,28 @@ class Script(gtk.Script):
             return
  
         gtk.Script.onShowingChanged(self, event)
+
+    def onTextSelectionChanged(self, event):
+        """Callback for object:text-selection-changed accessibility events."""
+
+        # Two functionally different objects (pages of a PDF) are currently
+        # contained in a single accessible object whose contents change. As
+        # a result, when a new text selection spans two pages, we have stored
+        # data for our previous location that makes no sense because that
+        # location no longer exists.
+
+        obj = event.source
+        textSelections = self.pointOfReference.get('textSelections', {})
+        oldStart, oldEnd = textSelections.get(hash(obj), (0, 0))
+
+        crossedPages = False
+        keyString, mods = self.utilities.lastKeyAndModifiers()
+        if keyString in ["Down", "Page_Down", "Right", "End"]:
+            crossedPages = oldStart > obj.queryText().caretOffset
+        elif keyString in ["Up", "Page_Up", "Left", "Home"]:
+            crossedPages = oldEnd < obj.queryText().caretOffset
+
+        if crossedPages:
+            self.pointOfReference['textSelections'] = {}
+
+        gtk.Script.onTextSelectionChanged(self, event)
