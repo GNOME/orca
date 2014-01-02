@@ -2683,6 +2683,9 @@ class Script(script.Script):
         if wasCommand:
             return
 
+        if wasAutoComplete:
+            self.pointOfReference['lastAutoComplete'] = hash(event.source)
+
         try:
             text = event.source.queryText()
         except NotImplementedError:
@@ -2726,6 +2729,9 @@ class Script(script.Script):
         newStart, newEnd = text.getSelection(0)
         textSelections[hash(obj)] = newStart, newEnd
         self.pointOfReference['textSelections'] = textSelections
+
+        if self.pointOfReference.get('lastAutoComplete') == hash(obj):
+            return
 
         nSelections = text.getNSelections()
         handled = self._speakTextSelectionState(nSelections)
