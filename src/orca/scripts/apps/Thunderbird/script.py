@@ -226,6 +226,7 @@ class Script(Gecko.Script):
             if hasSelection or isSystemEvent:
                 speech.speak(event.any_data)
                 self._lastAutoComplete = event.any_data
+                self.pointOfReference['lastAutoComplete'] = hash(obj)
                 return
 
         Gecko.Script.onTextInserted(self, event)

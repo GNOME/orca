@@ -2630,6 +2630,7 @@ class Script(script.Script):
         string = event.any_data
         speakThis = False
         wasCommand = False
+        wasAutoComplete = False
         try:
             role = event.source.getRole()
         except:
@@ -2648,7 +2649,9 @@ class Script(script.Script):
             except:
                 selections = 0
 
-            wasAutoComplete = role == pyatspi.ROLE_TEXT and selections
+            if selections:
+                wasAutoComplete = role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_ENTRY]
+
             if (string == " " and keyString == "space") or string == keyString:
                 pass
             elif wasCommand or wasAutoComplete:
