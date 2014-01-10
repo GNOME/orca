@@ -398,7 +398,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             row, column, table = \
                 self._script.utilities.getRowColumnAndTable(obj)
             lastRow = self._script.pointOfReference.get("lastRow")
-            speakFullRow = row != lastRow
+            if lastRow == -1 and self._script.utilities.isSpreadSheetCell(obj):
+                speakFullRow = False
+            else:
+                speakFullRow = row != lastRow
 
         if not speakFullRow:
             return self._generateRealTableCell(obj, **args)
