@@ -167,6 +167,9 @@ formatting = {
             'basicWhereAmI': 'parentRoleName + labelAndName + selectedItemCount',
             'detailedWhereAmI': 'parentRoleName + labelAndName + selectedItemCount + selectedItems'
             },
+        pyatspi.ROLE_INFO_BAR: {
+            'unfocused': 'labelAndName + unrelatedLabels'
+            },
         pyatspi.ROLE_LABEL: {
             'basicWhereAmI': 'labelAndName + allTextSelection + roleName'
             },
