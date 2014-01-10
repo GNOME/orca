@@ -145,6 +145,7 @@ class Utilities(script_utilities.Utilities):
     def spreadSheetCellName(self, cell):
         nameList = cell.name.split()
         for name in nameList:
+            name = name.replace('.', '')
             if not name.isalpha() and name.isalnum():
                 return name
 
