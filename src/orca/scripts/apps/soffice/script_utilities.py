@@ -326,6 +326,10 @@ class Utilities(script_utilities.Utilities):
                 toolbar = child
                 break
 
+        if not toolbar:
+            debug.println(debug.LEVEL_INFO, "Calc inputline toolbar not found.")
+            return
+
         isParagraph = lambda x: x and x.getRole() == pyatspi.ROLE_PARAGRAPH
         allParagraphs = pyatspi.findAllDescendants(toolbar, isParagraph)
         if len(allParagraphs) == 1:
