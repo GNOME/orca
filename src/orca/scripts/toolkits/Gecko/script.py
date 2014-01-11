@@ -917,6 +917,8 @@ class Script(default.Script):
 
         text = self.utilities.queryNonEmptyText(event.source)
         if not text:
+            if event.source.getRole() == pyatspi.ROLE_LINK:
+                orca.setLocusOfFocus(event, event.source)
             return
 
         contextObj, contextOffset = self.getCaretContext()
