@@ -1978,7 +1978,7 @@ class Script(default.Script):
             # this off to Firefox's native caret navigation because who knows
             # where we'll wind up....
             #
-            if state.contains(pyatspi.STATE_SHOWING):
+            if not state.contains(pyatspi.STATE_SHOWING):
                 return True
 
         # Sometimes the child of an ARIA widget claims focus. It may lack
