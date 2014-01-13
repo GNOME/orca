@@ -236,7 +236,7 @@ class Script(default.Script):
         self.inMouseOverObject = False
 
         # See bug 665522 - comment 5
-        app.setCacheMask(pyatspi.cache.ALL ^ pyatspi.cache.CHILDREN)
+        app.setCacheMask(pyatspi.cache.DEFAULT ^ pyatspi.cache.CHILDREN)
 
     def getBookmarks(self):
         """Returns the "bookmarks" class for this script.
