@@ -1,3 +1,61 @@
+3.11.4 - 14 January 2014
+
+Please note: This cycle, Orca is getting an overhaul with much of the
+code being rewritten in preparation for the focus: event deprecation.
+I am also taking this opportunity to remove hacks and improve Orca's
+performance. While every effort is being made to ensure no regressions
+are introduced, please remember that 3.11.x is unstable. If you find a
+bug present only in 3.11.x, please report it on the Orca list.
+
+Gecko:
+
+  * Use pyatspi.cache.DEFAULT instead of pyatspi.cache.ALL to prevent
+    incorrect caching of object attributes
+
+  * Fix a bug isNavigableAria() which was causing us to override native
+    ARIA navigation incorrectly
+
+  * Update the locusOfFocus when the caret moves to a Gecko anchor
+
+  * Prevent double-speaking autocompleted text in Thunderbird
+
+LibreOffice:
+
+  * Don't treat lack of previous row as a row change in Calc
+
+  * Strip out periods in addition to the localized "cell" for Calc
+    coordinates
+
+  * Recover gracefully when the Calc inputline toolbar is hidden
+    preventing location of the formula text
+
+General:
+
+  * Began rewrite of text-selection-changed support
+
+  * Speak ROLE_INFO_BAR information
+
+  * Work around a missing state-changed event for Gtk+ submenus
+
+  * Work around a missing state-changed event for Gtk+ table column
+    headers
+
+  * Handle more cases for object:active-descendant:changed
+
+  * Fix for bug 721017 - orca has an automagic dependency on liblouis
+    for braille support
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    an            Aragonese                   Jorge Pérez Pérez
+    de            German                      Christian Kirbach
+    gl            Galician                    Fran Diéguez
+    pt_BR         Brazilian Portuguese        Rafael Ferreira
+    sl            Slovenian                   Matej Urbančič
+    tg            Tajik                       Victor Ibragimov
+
+=========
+
 3.11.3 - 16 December 2013
 
 Please note: This cycle, Orca is getting an overhaul with much of the
