@@ -783,7 +783,11 @@ class Utilities:
                     break
         elif role == pyatspi.ROLE_TABLE_CELL and obj.childCount:
             layoutOnly = obj[0].getRole() == pyatspi.ROLE_TABLE_CELL
+        elif role == pyatspi.ROLE_FILLER:
+            layoutOnly = True
         elif role == pyatspi.ROLE_SCROLL_PANE:
+            layoutOnly = True
+        elif role == pyatspi.ROLE_AUTOCOMPLETE:
             layoutOnly = True
         elif role in [pyatspi.ROLE_LIST_BOX, pyatspi.ROLE_TREE_TABLE]:
             layoutOnly = False

@@ -293,134 +293,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateAncestors(self, obj, **args):
-        result = []
-        priorObj = args.get('priorObj', None)
-        commonAncestor = self._script.utilities.commonAncestor(priorObj, obj)
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_LINK:
+            return []
 
-        if obj is commonAncestor:
-            return result
+        args['stopAtRoles'] = [pyatspi.ROLE_DOCUMENT_FRAME,
+                               pyatspi.ROLE_INTERNAL_FRAME,
+                               pyatspi.ROLE_MENU_BAR,
+                               pyatspi.ROLE_TOOL_BAR]
 
-        # Skip items of unknown rolenames, menu bars, labels with
-        # children, and autocompletes.  (With autocompletes, we
-        # wind up speaking the text object). Beginning with Firefox
-        # 3.2, list items have names corresponding with their text.
-        # This results in displayedText returning actual text
-        # and the parent list item being spoken when it should not
-        # be. So we'll take list items out of the context.
-        #
-        skipRoles = [pyatspi.ROLE_UNKNOWN,
-                     pyatspi.ROLE_MENU_BAR,
-                     pyatspi.ROLE_LABEL,
-                     pyatspi.ROLE_AUTOCOMPLETE,
-                     pyatspi.ROLE_LIST_ITEM]
-
-        # Stop if we get to a document frame or an internal frame.
-        #
-        stopRoles = [pyatspi.ROLE_DOCUMENT_FRAME,
-                     pyatspi.ROLE_INTERNAL_FRAME]
-
-        # [[[TODO - JD: Right now we're using this method to get the
-        # full context of menu items in whereAmI. It seems to work for
-        # gtk-demo, but here we're getting way too much context. So for
-        # now, add in a check. Later, look for better way.]]]
-        #
-        if args.get('formatType', 'unfocused') == 'basicWhereAmI':
-            stopRoles.append(pyatspi.ROLE_MENU_BAR)
-
-        # There are some objects we want to include in the context,
-        # but not add their rolenames.
-        #
-        dontSpeakRoles = [pyatspi.ROLE_TABLE_CELL,
-                          pyatspi.ROLE_FILLER]
-
-        parent = obj.parent
-        while parent and (parent.parent != parent):
-            role = parent.getRole()
-            if self._script.utilities.isSameObject(parent, commonAncestor) \
-               or role in stopRoles:
-                break
-
-            if role in skipRoles or self._script.utilities.isLayoutOnly(parent):
-                parent = parent.parent
-                continue
-
-            # If the parent is a menu and its parent is a combo box
-            # we'll speak the object as a combo box.
-            #
-            if role == pyatspi.ROLE_MENU \
-               and parent.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
-                parent = parent.parent
-                continue
-
-            # Also skip the parent if its accessible text is a single
-            # EMBEDDED_OBJECT_CHARACTER: displayedText will end up
-            # coming back to the child of an object for the text if
-            # an object's text contains a single EOC. In addition,
-            # beginning with Firefox 3.2, a table cell may derive its
-            # accessible name from focusable objects it contains (e.g.
-            # links, form fields). displayedText will return the
-            # object's name in this case (because of the presence of
-            # the EOC and other characters). This causes us to be
-            # chatty. So if it's a table cell which contains an EOC,
-            # we will also skip the parent.
-            #
-            parentText = self._script.utilities.queryNonEmptyText(parent)
-            if parentText:
-                unicodeText = parentText.getText(0, -1)
-                if self._script.EMBEDDED_OBJECT_CHARACTER in unicodeText \
-                   and (len(unicodeText) == 1 \
-                        or role == pyatspi.ROLE_TABLE_CELL):
-                    parent = parent.parent
-                    continue
-
-            # Put in the text and label (if they exist).
-            #
-            text = self._script.utilities.displayedText(parent)
-            label = self._script.utilities.displayedLabel(parent)
-            newResult = []
-            acss = self.voice(speech_generator.DEFAULT)
-            if text and (text != label) and len(text.strip()) \
-                and (not text.startswith("chrome://")):
-                newResult.extend(acss)
-                newResult.append(text)
-            if label and len(label.strip()):
-                newResult.extend(acss)
-                newResult.append(label)
-
-            # Finally add the role if it's not among the roles we don't
-            # wish to speak.
-            #
-            if not _settingsManager.getSetting('onlySpeakDisplayedText'):
-                acss = self.voice(speech_generator.SYSTEM)
-                if not (role in dontSpeakRoles) and len(newResult):
-                    roleInfo = self.getLocalizedRoleName(parent)
-                    if roleInfo:
-                        result.extend(acss)
-                        result.append(roleInfo)
-
-            # If this object is an ARIA widget with STATE_REQUIRED, add
-            # that. (Note that for the most part, the ARIA widget itself
-            # has this state, but in the case of a group of radio buttons,
-            # it is the group which has the state).
-            #
-            result.extend(self._generateRequired(parent, **args))
-
-            result.extend(newResult)
-
-            # [[[TODO - JD: Right now we're using this method to get the
-            # full context of menu items in whereAmI. It seems to work for
-            # gtk-demo, but here we're getting way too much context. So for
-            # now, add in a check. Later, look for better way.]]]
-            #
-            if args.get('formatType', 'unfocused') == 'basicWhereAmI' \
-               and parent.getRole() == pyatspi.ROLE_COMBO_BOX:
-                break
-
-            parent = parent.parent
-
-        result.reverse()
-
-        return result
+        return speech_generator.SpeechGenerator._generateAncestors(
+            self, obj, **args)
 
     def _generateDefaultButton(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio

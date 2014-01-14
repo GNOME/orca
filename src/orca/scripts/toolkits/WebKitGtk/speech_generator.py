@@ -154,6 +154,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if role == pyatspi.ROLE_LINK:
             return []
 
+        args['stopAtRoles'] = [pyatspi.ROLE_DOCUMENT_FRAME,
+                               pyatspi.ROLE_INTERNAL_FRAME,
+                               pyatspi.ROLE_MENU_BAR,
+                               pyatspi.ROLE_TOOL_BAR]
+
         return speech_generator.SpeechGenerator._generateAncestors(
             self, obj, **args)
 
