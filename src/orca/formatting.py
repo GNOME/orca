@@ -88,7 +88,7 @@ formatting = {
     'speech': {
         'prefix': {
             'focused': '[]',
-            'unfocused': 'oldAncestors + newAncestors + newRowHeader + newColumnHeader + newRadioButtonGroup',
+            'unfocused': 'oldAncestors + newAncestors',
             'basicWhereAmI': 'toolbar',
             'detailedWhereAmI' : '[]'
             },
