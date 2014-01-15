@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: Tajik Gnome\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-12-19 16:08+0000\n"
-"PO-Revision-Date: 2013-12-20 12:31+0500\n"
+"POT-Creation-Date: 2013-12-20 07:32+0000\n"
+"PO-Revision-Date: 2014-01-15 13:35+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: \n"
 "Language: tg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=1;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.6.3\n"
 
 #: ../orca.desktop.in.h:1
@@ -2707,7 +2707,7 @@ msgstr ""
 #. enabled.
 #: ../src/orca/cmdnames.py:697
 msgid "Monitor live regions."
-msgstr ""
+msgstr "Назорати қисмҳои фаъол"
 
 #. Translators: hovering the mouse over certain objects on a web page causes a
 #. new object to appear such as a pop-up menu. This command will move the user
@@ -3170,7 +3170,7 @@ msgstr "_Бекор кардан"
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/guilabels.py:64
 msgid "_Jump to"
-msgstr ""
+msgstr "_Гузариш ба"
 
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/guilabels.py:67 ../src/orca/orca-setup.ui.h:19
@@ -3998,7 +3998,7 @@ msgstr "Система"
 #: ../src/orca/guilabels.py:633
 msgctxt "VoiceType"
 msgid "Uppercase"
-msgstr ""
+msgstr "Ҳарфҳои калон"
 
 #. Translators this label refers to the name of particular speech synthesis
 #. system. (http://devel.freebsoft.org/speechd)
@@ -6597,7 +6597,8 @@ msgstr[1] "%d байт"
 #, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] ""
+msgstr[0] "%d файл ёфт шудааст"
+msgstr[1] "%d файл ёфт шудаанд"
 
 #. Translators: This message presents the number of forms in a document.
 #: ../src/orca/messages.py:1651
@@ -6831,7 +6832,7 @@ msgstr ""
 #. of icons.
 #: ../src/orca/object_properties.py:77
 msgid "Icon panel"
-msgstr ""
+msgstr "Лавҳаи нишонаҳо"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
@@ -6990,11 +6991,11 @@ msgstr "Ҷустуҷӯи:"
 
 #: ../src/orca/orca-find.ui.h:10
 msgid "_Top of window"
-msgstr ""
+msgstr "_Болои равзана"
 
 #: ../src/orca/orca-find.ui.h:11
 msgid "Top of window"
-msgstr ""
+msgstr "Болои равзана"
 
 #: ../src/orca/orca-find.ui.h:12
 msgid "Start from:"
@@ -7030,7 +7031,7 @@ msgstr "Пешфарз"
 
 #: ../src/orca/orca-setup.ui.h:2
 msgid "Uppercase"
-msgstr ""
+msgstr "Ҳарфҳои калон"
 
 #: ../src/orca/orca-setup.ui.h:3
 msgid "Hyperlink"
@@ -7174,7 +7175,7 @@ msgstr "Садо"
 
 #: ../src/orca/orca-setup.ui.h:55
 msgid "_Enable speech"
-msgstr ""
+msgstr "_Фаъол кардани талаффуз"
 
 #: ../src/orca/orca-setup.ui.h:57
 msgid "Ver_bose"
@@ -7295,7 +7296,7 @@ msgstr ""
 
 #: ../src/orca/orca-setup.ui.h:102
 msgid "Hyperlink Indicator"
-msgstr ""
+msgstr "Индикатори гиперпайвандҳо"
 
 #: ../src/orca/orca-setup.ui.h:103
 msgid "Braille"
@@ -7457,7 +7458,7 @@ msgstr "Тағйир додан ба:"
 
 #: ../src/orca/scripts/apps/gedit/script.py:98
 msgid "Misspelled word:"
-msgstr ""
+msgstr "Калимаи хатоӣ:"
 
 #. The indication that spell checking is complete is when the
 #. "misspelt" word is set to "Completed spell checking". Ugh!
