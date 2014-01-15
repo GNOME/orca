@@ -416,9 +416,13 @@ class LabelInference:
             return None
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
-        line = text.getTextAtOffset(start - 1, boundary)
-        string = line[0].strip()
-        if string:
+        prevLine = self._script.utilities.getObjectsFromEOCs(
+            prevObj, start, boundary)
+        if not (prevLine and prevLine[0]):
+            return None
+
+        prevObj, start, end, string = prevLine[0]
+        if string.strip():
             x, y, width, height = self._getExtents(prevObj, start, end)
             distance = objY - (y + height)
             if distance <= proximity:
@@ -473,7 +477,7 @@ class LabelInference:
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
         nextLine = self._script.utilities.getObjectsFromEOCs(
-            lastObj, end + 1, boundary)
+            lastObj, end, boundary)
         if not (nextLine and nextLine[0]):
             return None
 
@@ -481,7 +485,7 @@ class LabelInference:
         if string.strip():
             x, y, width, height = self._getExtents(nextObj, start, end)
             distance = y - (objY + objHeight)
-            if 0 <= distance <= proximity:
+            if distance <= proximity:
                 return string
 
         return None
