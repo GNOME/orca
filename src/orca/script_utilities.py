@@ -793,6 +793,10 @@ class Utilities:
             layoutOnly = False
         elif role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_WINDOW]:
             layoutOnly = False
+        elif self.isTableRow(obj):
+            state = obj.getState()
+            layoutOnly = not (state.contains(pyatspi.STATE_FOCUSABLE) \
+                              or state.contains(pyatspi.STATE_SELECTABLE))
         else:
             if not (self.displayedText(obj) or self.displayedLabel(obj)):
                 layoutOnly = True
@@ -1262,7 +1266,9 @@ class Utilities:
         if not obj.parent.getRole() == pyatspi.ROLE_TABLE:
             return False
 
-        isCell = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_CELL
+        isCell = lambda x: x and x.getRole() in [pyatspi.ROLE_TABLE_CELL,
+                                                 pyatspi.ROLE_ROW_HEADER,
+                                                 pyatspi.ROLE_COLUMN_HEADER]
         cellChildren = list(filter(isCell, [x for x in obj]))
         if len(cellChildren) == obj.childCount:
             return True        
