@@ -893,8 +893,7 @@ class Script(default.Script):
 
             if lineChanged or not self.madeFindAnnouncement or \
                not script_settings.onlySpeakChangedLinesDuringFind:
-                line = self.getLineContentsAtOffset(obj, offset)
-                self.speakContents(line)
+                self.presentLine(obj, offset)
                 self.madeFindAnnouncement = True
 
     def sayAll(self, inputEvent):
