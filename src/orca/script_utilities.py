@@ -782,7 +782,10 @@ class Utilities:
                     layoutOnly = True
                     break
         elif role == pyatspi.ROLE_TABLE_CELL and obj.childCount:
-            layoutOnly = obj[0].getRole() == pyatspi.ROLE_TABLE_CELL
+            if obj[0].getRole() == pyatspi.ROLE_TABLE_CELL:
+                layoutOnly = True
+            elif obj.parent.getRole() == pyatspi.ROLE_TABLE:
+                layoutOnly = self.isLayoutOnly(obj.parent)
         elif role == pyatspi.ROLE_FILLER:
             layoutOnly = True
         elif role == pyatspi.ROLE_SCROLL_PANE:
