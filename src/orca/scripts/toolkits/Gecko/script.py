@@ -2700,7 +2700,7 @@ class Script(default.Script):
             characterOffset = len(words[0])
 
         character = text.getText(characterOffset, characterOffset + 1)
-        if character != self.EMBEDDED_OBJECT_CHARACTER:
+        if len(character) == 1 and character != self.EMBEDDED_OBJECT_CHARACTER:
             return [obj, characterOffset]
 
         try:
@@ -2708,7 +2708,11 @@ class Script(default.Script):
             child = obj[childIndex]
 
             # Handle bogus empty paragraphs. Bug 677615.
-            if child.getRole() == pyatspi.ROLE_PARAGRAPH \
+            # Make that bogus empty text objects.
+            textRoles = [pyatspi.ROLE_HEADING,
+                         pyatspi.ROLE_PARAGRAPH,
+                         pyatspi.ROLE_SECTION]
+            if child.getRole() in textRoles \
                and not self.utilities.queryNonEmptyText(child):
                 return self.findFirstCaretContext(obj, characterOffset + 1)
 
