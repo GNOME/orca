@@ -159,6 +159,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                                pyatspi.ROLE_FORM,
                                pyatspi.ROLE_MENU_BAR,
                                pyatspi.ROLE_TOOL_BAR]
+        args['skipRoles'] = [pyatspi.ROLE_PARAGRAPH,
+                             pyatspi.ROLE_TEXT]
 
         return speech_generator.SpeechGenerator._generateAncestors(
             self, obj, **args)

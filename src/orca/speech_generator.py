@@ -1485,6 +1485,7 @@ class SpeechGenerator(generator.Generator):
             if role == pyatspi.ROLE_COMBO_BOX:
                 return []
 
+        skipRoles = args.get('skipRoles', [])
         stopAtRoles = args.get('stopAtRoles', [])
         stopAtRoles.append(pyatspi.ROLE_APPLICATION)
         if obj != commonAncestor:
@@ -1493,7 +1494,8 @@ class SpeechGenerator(generator.Generator):
                 parentRole = parent.getRole()
                 if parentRole in stopAtRoles:
                     break
-                if not self._script.utilities.isLayoutOnly(parent):
+                if parentRole not in skipRoles \
+                   and not self._script.utilities.isLayoutOnly(parent):
                     result.append(self.generate(parent))
                 parent = parent.parent
         result.reverse()
