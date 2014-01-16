@@ -452,27 +452,27 @@ formatting = {
             },
         pyatspi.ROLE_MENU: {
             'focused':   '[Component(obj,\
-                                     asString(label + displayedText + roleName + availability) + asString(accelerator))]',
+                                     asString(labelAndName + roleName + availability) + asString(accelerator))]',
             'unfocused': '[Component(obj,\
-                                     asString(label + displayedText + roleName))]',
+                                     asString(labelAndName + roleName))]',
             },
         #pyatspi.ROLE_MENU_BAR: 'default'
         pyatspi.ROLE_MENU_ITEM: {
             'unfocused': '[Component(obj,\
-                                     asString(label + displayedText + expandableState + availability) + asString(accelerator),\
+                                     asString(labelAndName + expandableState + availability) + asString(accelerator),\
                                      indicator=asString(menuItemCheckedState))]'
             },
         #pyatspi.ROLE_OPTION_PANE: 'default'
         pyatspi.ROLE_PAGE_TAB: {
             'focused':   '[Component(obj,\
-                                     asString(label + displayedText + roleName + availability) + asString(accelerator))]',
+                                     asString(labelAndName + roleName + availability) + asString(accelerator))]',
             'unfocused': '[Component(obj,\
-                                     asString(label + displayedText + roleName))]'
+                                     asString(labelAndName + roleName))]'
             },
         #pyatspi.ROLE_PAGE_TAB_LIST: 'default'
         pyatspi.ROLE_PANEL: {
             'unfocused': '[Component(obj,\
-                                     asString((label or displayedText) + roleName))]\
+                                     asString(labelAndName + roleName))]\
                           + (childWidget and ([Region(" ")] + childWidget))'
             },
         pyatspi.ROLE_PARAGRAPH: {
@@ -484,20 +484,20 @@ formatting = {
         #pyatspi.ROLE_PROGRESS_BAR: 'default'
         pyatspi.ROLE_PUSH_BUTTON: {
             'unfocused': '[Component(obj,\
-                                     asString(((label + displayedText) or description) + expandableState + roleName))]'
+                                     asString((labelAndName or description) + expandableState + roleName))]'
             },
         pyatspi.ROLE_RADIO_BUTTON: {
             'unfocused': '[Component(obj,\
-                                     asString(((label + displayedText) or description) + roleName),\
+                                     asString((labelAndName or description) + roleName),\
                                      indicator=asString(radioState))]'
             },
         pyatspi.ROLE_RADIO_MENU_ITEM: {
             'focused':   '[Component(obj,\
-                                     asString(((label + displayedText) or description) + roleName + availability)\
+                                     asString((labelAndName or description) + roleName + availability)\
                                      + asString(accelerator),\
                                      indicator=asString(radioState))]',
             'unfocused': '[Component(obj,\
-                                     asString((label + displayedText) or description)\
+                                     asString(labelAndName or description)\
                                      + asString(accelerator),\
                                      indicator=asString(radioState))]'
             },
@@ -546,7 +546,7 @@ formatting = {
             },
         pyatspi.ROLE_TOGGLE_BUTTON: {
             'unfocused': '[Component(obj,\
-                                     asString(((label + displayedText) or description) + expandableState + roleName),\
+                                     asString((labelAndName or description) + expandableState + roleName),\
                                      indicator=asString(toggleState))]'
             },
         #pyatspi.ROLE_TOOL_BAR: 'default'
