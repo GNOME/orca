@@ -1025,6 +1025,8 @@ class Script(default.Script):
             return
         if role != pyatspi.ROLE_DOCUMENT_FRAME:
              return
+        if self.isAriaWidget(obj.parent):
+            return
 
         try:
             focusRole = orca_state.locusOfFocus.getRole()
