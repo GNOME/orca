@@ -288,7 +288,7 @@ formatting = {
             'focused':   '(tableCell2ChildLabel + tableCell2ChildToggle)\
                           or (cellCheckedState + (expandableState and (expandableState + numberOfChildren)))',
             'unfocused': '(tableCell2ChildLabel + tableCell2ChildToggle)\
-                          or (columnHeaderIfToggleAndNoText\
+                          or (newRowHeader + (newColumnHeader or columnHeaderIfToggleAndNoText) \
                               + cellCheckedState\
                               + (realActiveDescendantDisplayedText or imageDescription + image)\
                               + (expandableState and (expandableState + numberOfChildren))\
