@@ -64,15 +64,23 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return imageLink
 
     def _generateRoleName(self, obj, **args):
-        """Prevents some roles from being spoken."""
-        result = []
+        """Prevents some roles from being displayed."""
+
+        doNotDisplay = [pyatspi.ROLE_FORM,
+                        pyatspi.ROLE_SECTION,
+                        pyatspi.ROLE_UNKNOWN]
+
+        if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+            doNotDisplay.extend([pyatspi.ROLE_LIST,
+                                 pyatspi.ROLE_LIST_ITEM,
+                                 pyatspi.ROLE_PANEL])
+
         role = args.get('role', obj.getRole())
-        if not obj.getRole() in [pyatspi.ROLE_SECTION,
-                                 pyatspi.ROLE_FORM,
-                                 pyatspi.ROLE_UNKNOWN]:
-            result.extend(braille_generator.BrailleGenerator._generateRoleName(
-                self, obj, **args))
-        return result
+        if role in doNotDisplay:
+            return []
+
+        return braille_generator.BrailleGenerator._generateRoleName(
+            self, obj, **args)
 
     def _generateName(self, obj, **args):
         result = []
