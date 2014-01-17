@@ -184,7 +184,7 @@ formatting = {
             'basicWhereAmI': 'linkInfo + siteDescription + fileSize + ' + MNEMONIC
             },
         pyatspi.ROLE_LIST: {
-            'focused': 'focusedItem',
+            'focused': 'labelOrName + multiselectableState + numberOfChildren',
             'unfocused': 'labelOrName + focusedItem + multiselectableState + numberOfChildren'
             },
         pyatspi.ROLE_LIST_ITEM: {
