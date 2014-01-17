@@ -303,6 +303,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         args['stopAtRoles'] = [pyatspi.ROLE_DOCUMENT_FRAME,
+                               pyatspi.ROLE_EMBEDDED,
                                pyatspi.ROLE_INTERNAL_FRAME,
                                pyatspi.ROLE_FORM,
                                pyatspi.ROLE_MENU_BAR,
