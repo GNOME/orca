@@ -34,7 +34,6 @@ import urllib.parse
 
 import orca.bookmarks as bookmarks
 import orca.messages as messages
-import orca.speech as speech
 
 ####################################################################
 #                                                                  #
@@ -56,9 +55,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         obj, characterOffset = self._script.getCaretContext()
         path = self._objToPath()
         self._bookmarks[index] = path, characterOffset
-        utterances = [(messages.BOOKMARK_ENTERED)]
-        utterances.extend(self._script.speechGenerator.generateSpeech(obj))
-        speech.speak(utterances)
+        self._script.presentMessage(messages.BOOKMARK_ENTERED)
         
     def goToBookmark(self, inputEvent, index=None):
         """ Go to the bookmark indexed at this key and this page's URI """

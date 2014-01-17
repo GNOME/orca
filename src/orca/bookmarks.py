@@ -23,7 +23,6 @@ import pickle
 import os
 
 from . import messages
-from . import speech
 from . import orca_state
 from . import settings_manager
 
@@ -70,12 +69,7 @@ class Bookmarks:
         """ Add an in-page accessible object bookmark for this key. """
         context = self._script.getFlatReviewContext()
         self._bookmarks[inputEvent.hw_code] = self._contextToBookmark(context)
-
-        utterances = [messages.BOOKMARK_ENTERED]
-        utterances.extend(
-            self._script.speechGenerator.generateSpeech(
-                context.getCurrentAccessible()))
-        speech.speak(utterances)
+        self._script.presentMessage(messages.BOOKMARK_ENTERED)
 
     def bookmarkCurrentWhereAmI(self, inputEvent):
         """ Report "Where am I" information for this bookmark relative to the 
