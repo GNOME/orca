@@ -132,7 +132,7 @@ formatting = {
             'basicWhereAmI': 'label + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
             },
         pyatspi.ROLE_COMBO_BOX: {
-            'focused': 'name + positionInList',
+            'focused': 'name + roleName + positionInList',
             'unfocused': 'label + name + roleName + positionInList + ' + MNEMONIC + ' + accelerator',
             'basicWhereAmI': 'label + roleName + name + positionInList + ' + MNEMONIC + ' + accelerator'
             },
@@ -193,7 +193,7 @@ formatting = {
             'basicWhereAmI': 'label + roleName + name + positionInList + expandableState + (nodeLevel or nestingLevel)'
             },
         pyatspi.ROLE_MENU: {
-            'focused': '[]',
+            'focused': 'labelAndName + roleName',
             'unfocused': 'labelAndName + allTextSelection + roleName + availability + ' + MNEMONIC + ' + accelerator + positionInList',
             'basicWhereAmI': '(ancestors or parentRoleName) + labelAndName + roleName +  positionInList + ' + MNEMONIC
             },
@@ -209,6 +209,9 @@ formatting = {
             'focused': 'labelAndName + roleName + positionInList + ' + MNEMONIC + ' + accelerator',
             'unfocused': 'labelAndName + roleName + positionInList + ' + MNEMONIC + ' + accelerator',
             'basicWhereAmI': 'parentRoleName + labelAndName + roleName + positionInList + ' + MNEMONIC + ' + accelerator'
+            },
+        pyatspi.ROLE_PANEL: {
+            'focused': 'labelAndName + roleName',
             },
         pyatspi.ROLE_PARAGRAPH: {
             'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',

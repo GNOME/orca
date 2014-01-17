@@ -1496,7 +1496,7 @@ class SpeechGenerator(generator.Generator):
                     break
                 if parentRole not in skipRoles \
                    and not self._script.utilities.isLayoutOnly(parent):
-                    result.append(self.generate(parent))
+                    result.append(self.generate(parent, formatType='focused'))
                 parent = parent.parent
         result.reverse()
         return result
