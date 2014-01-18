@@ -160,63 +160,6 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                            _generateDescription(self, obj, **args)
         return result
 
-    def _generateLabel(self, obj, **args):
-        result = braille_generator.BrailleGenerator._generateLabel(self,
-                                                                   obj,
-                                                                   **args)
-        role = args.get('role', obj.getRole())
-        # We'll attempt to guess the label under some circumstances.
-        #
-        # [[[TODO: WDW - ROLE_ENTRY is noticeably absent from here.  If
-        # we include it here, the label_guess_bug_546815.py tests will
-        # end up showing the label twice.  So, I've pulled the ROLE_ENTRY
-        # out of here.  The effect of that is that we go back to the old
-        # way where the entry will appear on the same line as the text.
-        # I think there's a bug lurking there, though, in that the EOC for
-        # the entry seems to still exist on the braille line.  This was
-        # in the old (pre-refactor) code, too]]]
-        #
-        # [[[TODO: WDW - ROLE_COMBO_BOX, ROLE_PASSWORD, ROLE_CHECK_BOX
-        # and ROLE_RADIO_BUTTON are absent for reasons similar to
-        # ROLE_ENTRY.]]]
-        #
-        if not len(result) \
-           and role in [pyatspi.ROLE_LIST,
-                        pyatspi.ROLE_PARAGRAPH,
-                        pyatspi.ROLE_TEXT] \
-           and self._script.inDocumentContent(obj) \
-           and not self._script.isAriaWidget(obj):
-            label = self._script.labelInference.infer(obj)
-            if label:
-                result.append(label)
-
-        # XUL combo boxes don't always have a label for/by
-        # relationship.  But, they will make their names be
-        # the string of the thing labelling them.
-        #
-        # And certain entries (e.g. in the Downloads window) lack a proper
-        # label, instead prefering to display text within the entry which
-        # is deleted when the widget gets focus. We want to treat this
-        # pseudo label as the actual label.
-        #
-        if not len(result) \
-           and role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_ENTRY] \
-           and not self._script.inDocumentContent(obj):
-            result.append(obj.name)
-
-        # If this is an autocomplete, and we'll make the label be the
-        # name of the autocomplete.
-        #
-        if not len(result):
-            parent = obj.parent
-            if parent and parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
-                label = self._script.utilities.displayedLabel(parent)
-                if not label or not len(label):
-                    label = parent.name
-                result.append(label)
-
-        return result
-
     def _generateExpandedEOCs(self, obj, **args):
         """Returns the expanded embedded object characters for an object."""
         result = []
