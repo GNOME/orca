@@ -3870,6 +3870,7 @@ msgstr "Nadpisy úrovně %d."
 #: ../src/orca/guilabels.py:539
 msgctxt "structural navigation"
 msgid "Landmarks"
+msgstr "Orientační body"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
