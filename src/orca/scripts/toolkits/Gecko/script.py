@@ -1453,7 +1453,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, "BRAILLE: update disabled")
             return
 
-        if not self.inDocumentContent():
+        if self.isAriaWidget(obj) or not self.inDocumentContent():
             default.Script.updateBraille(self, obj, extraRegion)
             return
 
