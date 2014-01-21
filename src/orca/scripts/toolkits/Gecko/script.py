@@ -993,6 +993,10 @@ class Script(default.Script):
         - event: the Event
         """
 
+        if self.utilities.inFindToolbar():
+            self.presentFindResults(event.source, -1)
+            return
+
         if not self.inDocumentContent(orca_state.locusOfFocus) \
            and self.inDocumentContent(event.source):
             return

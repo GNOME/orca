@@ -747,11 +747,13 @@ class Utilities:
         if not obj:
             obj = orca_state.locusOfFocus
 
-        if obj and obj.getRole() == pyatspi.ROLE_ENTRY \
-           and obj.parent.getRole() == pyatspi.ROLE_TOOL_BAR:
-            return True
+        if not (obj and obj.getRole() == pyatspi.ROLE_ENTRY):
+            return False
 
-        return False
+        isToolbar = lambda x: x and x.getRole() == pyatspi.ROLE_TOOL_BAR
+        toolbar = pyatspi.findAncestor(obj, isToolbar)
+
+        return toolbar != None
 
     def isFunctionalDialog(self, obj):
         """Returns True if the window is a functioning as a dialog.
