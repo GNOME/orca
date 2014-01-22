@@ -3645,7 +3645,9 @@ class Script(default.Script):
         # that we don't overspeak heading role info, which we're in danger
         # of doing if a heading includes links or images.
         #
-        doNotSpeakRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_HEADING]
+        doNotSpeakRoles = [pyatspi.ROLE_DOCUMENT_FRAME,
+                           pyatspi.ROLE_HEADING,
+                           pyatspi.ROLE_ALERT]
 
         utterances = []
         prevObj = None
