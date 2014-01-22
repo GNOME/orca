@@ -3647,6 +3647,7 @@ class Script(default.Script):
         #
         doNotSpeakRoles = [pyatspi.ROLE_DOCUMENT_FRAME,
                            pyatspi.ROLE_HEADING,
+                           pyatspi.ROLE_LIST_ITEM,
                            pyatspi.ROLE_ALERT]
 
         utterances = []
