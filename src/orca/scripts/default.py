@@ -2604,12 +2604,7 @@ class Script(script.Script):
         self.updateBraille(event.source)
 
         if event.source.getRole() == pyatspi.ROLE_SPIN_BUTTON:
-            # We cannot use the event.any_data due to a problem with
-            # selected text in spin buttons. See bug #520395 for more
-            # details.
-            #
-            [value, caret, start] = self.getTextLineAtCaret(event.source)
-            speech.speak(value)
+            # Value-changed events should not be handled here.
             return
 
         # If the last input event was a keyboard event, check to see if
@@ -2806,11 +2801,6 @@ class Script(script.Script):
 
         obj = event.source
         role = obj.getRole()
-
-        # We'll let caret moved and text inserted events be used to
-        # manage spin buttons, since they basically are text areas.
-        if role == pyatspi.ROLE_SPIN_BUTTON:
-            return
 
         value = obj.queryValue()
         if "oldValue" in self.pointOfReference \
