@@ -2589,23 +2589,20 @@ class Script(script.Script):
             and (event.source.parent != orca_state.locusOfFocus):
             return
 
-        # We'll also ignore sliders because we get their output via
-        # their values changing.
-        #
-        if event.source.getRole() == pyatspi.ROLE_SLIDER:
+        ignoreRoles = [pyatspi.ROLE_LABEL,
+                       pyatspi.ROLE_SLIDER,
+                       pyatspi.ROLE_SPIN_BUTTON]
+        role = event.source.getRole()
+        if role in ignoreRoles:
             return
 
         state = event.source.getState()            
-        if event.source.getRole() == pyatspi.ROLE_TABLE_CELL \
+        if role == pyatspi.ROLE_TABLE_CELL \
            and not state.contains(pyatspi.STATE_FOCUSED) \
            and not state.contains(pyatspi.STATE_SELECTED):
             return
 
         self.updateBraille(event.source)
-
-        if event.source.getRole() == pyatspi.ROLE_SPIN_BUTTON:
-            # Value-changed events should not be handled here.
-            return
 
         # If the last input event was a keyboard event, check to see if
         # the text for this event matches what the user typed. If it does,
@@ -2626,10 +2623,6 @@ class Script(script.Script):
         speakThis = False
         wasCommand = False
         wasAutoComplete = False
-        try:
-            role = event.source.getRole()
-        except:
-            role = None
         if isinstance(orca_state.lastInputEvent, input_event.MouseButtonEvent):
             speakThis = orca_state.lastInputEvent.button == "2"
         else:
