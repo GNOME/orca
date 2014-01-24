@@ -2069,124 +2069,15 @@ class Script(default.Script):
         """Returns True if the given event (object:children-changed, object:
         text-insert only) should be considered a live region event"""
 
-        # We will try to eliminate objects that cannot be considered live
-        # regions.  We will handle everything else as a live region.  We
-        # will do the cheap tests first
         if self._loadingDocumentContent \
            or not _settingsManager.getSetting('inferLiveRegions'):
             return False
 
-        # Ideally, we would like to do a inDocumentContent() call to filter out
-        # events that are not in the document.  Unfortunately, this is an
-        # expensive call.  Instead we will do some heuristics to filter out
-        # chrome events with the least amount of IPC as possible.
-        chromeEventRoles = [pyatspi.ROLE_AUTOCOMPLETE,
-                            pyatspi.ROLE_FRAME,
-                            pyatspi.ROLE_STATUS_BAR,
-                            pyatspi.ROLE_TOOL_BAR]
-
-        role = event.source.getRole()
-        if role in chromeEventRoles:
-            return False
-
-        try:
-            childRole = event.any_data.getRole()
-        except:
-            pass
-        else:
-            if childRole in chromeEventRoles:
-                return False
-
-        # event.type specific checks
-        if event.type.startswith('object:children-changed'):
-            if event.type.endswith(':system'):
-                # This will filter out list items that are not of interest and
-                # events from other tabs.
-                stateset = event.any_data.getState()
-                if stateset.contains(pyatspi.STATE_SELECTABLE) \
-                    or not stateset.contains(pyatspi.STATE_VISIBLE):
-                    return False
-
-                # Now we need to look at the object attributes
-                attrs = self._getAttrDictionary(event.any_data)
-                # Good live region markup
-                if 'container-live' in attrs:
-                    return True
-
-                # We see this one with the URL bar opening (sometimes)
-                if 'tag' in attrs and attrs['tag'] == 'xul:richlistbox':
-                    return False
-
-                if 'xml-roles' in attrs:
-                    # This eliminates all ARIA widgets that are not
-                    # considered live
-                    attrList = attrs['xml-roles'].split()
-                    if not 'alert' in attrList \
-                       and not 'tooltip' in attrList:
-                        return False
-                    # Only present tooltips when user wants them presented
-                    elif 'tooltip' in attrList \
-                         and not _settingsManager.getSetting('presentToolTips'):
-                        return False
-            else:
-                # Some alerts have been seen without the :system postfix.
-                # We will take care of them separately.
-                attrs = self._getAttrDictionary(event.any_data)
-                if 'xml-roles' in attrs \
-                   and 'alert' in attrs['xml-roles'].split():
-                    return True
-                else:
-                    return False
-
-        elif event.type.startswith('object:text-changed:insert:system'):
-            # Live regions will not be focusable.
-            # Filter out events from hidden tabs (not VISIBLE)
-            stateset = event.source.getState()
-            if stateset.contains(pyatspi.STATE_FOCUSABLE) \
-                   or stateset.contains(pyatspi.STATE_SELECTABLE) \
-                   or not stateset.contains(pyatspi.STATE_VISIBLE):
-                return False
-
-            attrs = self._getAttrDictionary(event.source)
-            # Good live region markup
-            if 'container-live' in attrs:
-                return True
-
-            # This might be too restrictive but we need it to filter
-            # out URLs that are displayed when the location list opens.
-            if attrs.get('tag') in ['xul:description', 'xul:label']:
-                return False
-
-            # This eliminates all ARIA widgets that are not considered live
-            if 'xml-roles' in attrs:
-                return False
-        elif event.type.startswith('object:text-changed:insert'):
-            # We do this since we sometimes get text inserted events
-            # without the ":system" suffix for live regions (see bug
-            # 550873).  [[[WDW - this probably could be conflated into
-            # the block above, making that block check for just
-            # object:text-changed:insert" events, but I wanted to be a
-            # little more conservative since the live region stuff was
-            # done long ago and I've forgotten many of the details.]]]
-            #
-            stateset = event.source.getState()
-            if stateset.contains(pyatspi.STATE_FOCUSABLE) \
-                   or stateset.contains(pyatspi.STATE_SELECTABLE) \
-                   or not stateset.contains(pyatspi.STATE_VISIBLE):
-                return False
-            attrs = self._getAttrDictionary(event.source)
-            return 'container-live' in attrs \
-                   or event.source.getRole() == pyatspi.ROLE_ALERT 
-        else:
-            return False
-
-        # This last filter gets rid of some events that come in after
-        # window:activate event.  They are usually areas of a page that
-        # are built dynamically.
-        if time.time() - self._loadingDocumentTime > 2.0:
+        attrs = self._getAttrDictionary(event.source)
+        if 'container-live' in attrs:
             return True
-        else:
-            return False
+
+        return False
 
     def getChildIndex(self, obj, characterOffset):
         """Given an object that implements accessible text, determine
