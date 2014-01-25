@@ -1099,55 +1099,40 @@ class Script(default.Script):
             self.sayAll(None)
 
     def onChildrenChanged(self, event):
-        """Called when a child node has changed.  In particular, we are looking
-        for addition events often associated with Javascipt insertion.  One such
-        such example would be the programmatic insertion of a tooltip or alert
-        dialog."""
+        """Callback for object:children-changed accessibility events."""
 
-        # no need moving forward if we don't have our target.
         if event.any_data is None:
             return
 
-        # If we just routed the mouse pointer to our current location,
-        # we should say something about what resulted.
-        #
-        if self.lastMouseRoutingTime \
-           and 0 < time.time() - self.lastMouseRoutingTime < 1 \
-           and event.type.startswith("object:children-changed:add"):
-            utterances = []
-            utterances.append(messages.NEW_ITEM_ADDED)
-            utterances.extend(
-                self.speechGenerator.generateSpeech(event.any_data,
-                                                    force = True))
-            speech.speak(utterances)
-            self.lastMouseOverObject = event.any_data
-            self.preMouseOverContext = self.getCaretContext()
+        if not event.type.startswith("object:children-changed:add"):
             return
 
-        # handle live region events
         if self.handleAsLiveRegion(event):
             self.liveMngr.handleEvent(event)
             return
 
-        if event.type.startswith("object:children-changed:add"):
-            try:
-                role = event.source.getRole()
-                childRole = event.any_data.getRole()
-            except:
-                return
+        child = event.any_data
+        try:
+            childRole = child.getRole()
+        except:
+            return
 
-            if not (childRole == pyatspi.ROLE_ALERT \
-               and role in [pyatspi.ROLE_SCROLL_PANE, pyatspi.ROLE_FRAME]):
-                return
+        if childRole in [pyatspi.ROLE_ALERT, pyatspi.ROLE_DIALOG]:
+            orca.setLocusOfFocus(event, child)
+            return
 
+        if self.lastMouseRoutingTime \
+           and 0 < time.time() - self.lastMouseRoutingTime < 1:
             utterances = []
-            utterances.append(
-                self.speechGenerator.getLocalizedRoleName(event.any_data))
-            verbosity = _settingsManager.getSetting('speechVerbosityLevel')
-            if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-                utterances.extend(
-                    self.speechGenerator.generateSpeech(event.any_data))
+            utterances.append(messages.NEW_ITEM_ADDED)
+            utterances.extend(
+                self.speechGenerator.generateSpeech(child, force=True))
             speech.speak(utterances)
+            self.lastMouseOverObject = child
+            self.preMouseOverContext = self.getCaretContext()
+            return
+
+        default.Script.onChildrenChanged(self, event)
 
     def onDocumentReload(self, event):
         """Callback for document:reload accessibility events."""
