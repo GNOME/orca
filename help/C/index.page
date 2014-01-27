@@ -9,7 +9,12 @@
     <license>
       <p>Creative Commons Share Alike 3.0</p>
     </license>
+
+    <desc>Orca is a free, open source, flexible, and extensible screen reader
+    that provides access to the graphical desktop via speech and refreshable
+    braille.</desc>
   </info>
+
   <title>
     <media type="image" mime="image/png" src="figures/orca-logo.png">
       <app>Orca</app>'s logo
