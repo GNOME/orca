@@ -154,6 +154,11 @@ class Script(Gecko.Script):
                 self.speakMessage(obj.name)
                 self._presentMessage(obj)
 
+    def onChildrenChanged(self, event):
+        """Callback for object:children-changed accessibility events."""
+
+        default.Script.onChildrenChanged(self, event)
+
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
 
