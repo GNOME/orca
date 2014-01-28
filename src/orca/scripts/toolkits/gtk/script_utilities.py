@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright (C) 2013 Igalia, S.L.
+# Copyright (C) 2013-2014 Igalia, S.L.
 #
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
@@ -22,7 +22,7 @@
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2013 Igalia, S.L."
+__copyright__ = "Copyright (c) 2013-2014 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
@@ -46,3 +46,24 @@ class Utilities(script_utilities.Utilities):
 
         self._script.generatorCache[self.DISPLAYED_TEXT][obj] = displayedText
         return displayedText
+
+    def isSearchEntry(self, obj, focusedOnly=False):
+        # Another example of why we need subrole support in ATK and AT-SPI2.
+        try:
+            name = obj.name
+            state = obj.getState()
+        except:
+            return False
+
+        if not (name and state.contains(pyatspi.STATE_SINGLE_LINE)):
+            return False
+
+        if focusedOnly and not state.contains(pyatspi.STATE_FOCUSED):
+            return False
+
+        isIcon = lambda x: x and x.getRole() == pyatspi.ROLE_ICON
+        icons = list(filter(isIcon, [x for x in obj]))
+        if icons:
+            return True
+
+        return False

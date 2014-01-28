@@ -30,8 +30,6 @@ import pyatspi
 import orca.debug as debug
 import orca.orca_state as orca_state
 import orca.scripts.toolkits.gtk as gtk
-import orca.settings as settings
-import orca.speech as speech
 
 from orca.orca_i18n import _
 
@@ -155,47 +153,6 @@ class Script(gtk.Script):
             self.lastBadWord = badWord
             self.lastEventType = event.type
 
-    def isFocusOnFindDialog(self):
-        """Return an indication of whether the current locus of focus is on
-        the Find button or the combo box in the Find dialog.
-        """
-
-        obj = orca_state.locusOfFocus
-        if not obj:
-            return False
-
-        rolesList1 = [pyatspi.ROLE_PUSH_BUTTON,
-                      pyatspi.ROLE_FILLER,
-                      pyatspi.ROLE_FILLER,
-                      pyatspi.ROLE_DIALOG,
-                      pyatspi.ROLE_APPLICATION]
-
-        rolesList2 = [pyatspi.ROLE_TEXT,
-                      pyatspi.ROLE_COMBO_BOX,
-                      pyatspi.ROLE_PANEL,
-                      pyatspi.ROLE_FILLER,
-                      pyatspi.ROLE_FILLER,
-                      pyatspi.ROLE_DIALOG,
-                      pyatspi.ROLE_APPLICATION]
-
-        # Translators: this is used to tell us if the focus is on the
-        # "Find" button in gedit's Find dialog.  It must match what
-        # gedit is using.  We hate keying off stuff like this, but
-        # we're forced to do so in this case.
-        #
-        tmp = obj.parent.parent
-        if (self.utilities.hasMatchingHierarchy(obj, rolesList1) \
-            and obj.name == _("Find")) \
-            or (self.utilities.hasMatchingHierarchy(obj, rolesList2) \
-                and tmp.parent.parent.parent.name == _("Find")):
-            return True
-        else:
-            return False
-
-    # This method tries to detect and handle the following cases:
-    # 1) Text area (for caching handle for spell checking purposes).
-    # 2) Check Spelling Dialog.
-
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
 
@@ -291,7 +248,6 @@ class Script(gtk.Script):
 
     # This method tries to detect and handle the following cases:
     # 1) check spelling dialog.
-    # 2) find dialog - phrase not found.
 
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
@@ -336,81 +292,21 @@ class Script(gtk.Script):
                 self.readMisspeltWord(event, event.source.parent)
                 # Fall-thru to process the event with the default handler.
 
-        # 2) find dialog - phrase not found.
-        #
-        # If we've received an "object:property-change:accessible-name" for
-        # the status bar and the current locus of focus is on the Find
-        # button on the Find dialog or the combo box in the Find dialog
-        # and the last input event was a Return and the name for the current
-        # event source is "Phrase not found", then speak it.
-        #
-        # [[[TODO: richb - "Phrase not found" is spoken twice because we
-        # apparently get two identical "object:property-change:accessible-name"
-        # events.]]]
-
-        lastKey, mods = self.utilities.lastKeyAndModifiers()
-
-        # Translators: the "Phrase not found" is the result of a failed
-        # find command.  It must be the same as what gedit uses.  We hate
-        # keying off stuff like this, but we're forced to do so in this
-        # case.
-        #
-        if event.source.getRole() == pyatspi.ROLE_STATUS_BAR \
-           and self.isFocusOnFindDialog() \
-           and lastKey == "Return" \
-           and event.source.name == _("Phrase not found"):
-            debug.println(self.debugLevel,
-                          "gedit.onNameChanged - phrase not found.")
-            speech.speak(event.source.name)
-
-        # Pass the event onto the parent class to be handled in the default way.
         gtk.Script.onNameChanged(self, event)
 
-    # This method tries to detect and handle the following cases:
-    # 1) find dialog - phrase found.
+    def onTextSelectionChanged(self, event):
+        """Callback for object:text-selection-changed accessibility events."""
 
-    def onCaretMoved(self, event):
-        """Called whenever the caret moves.
+        if event.source == orca_state.locusOfFocus:
+            gtk.Script.onTextSelectionChanged(self, event)
+            return
 
-        Arguments:
-        - event: the Event
-        """
+        if not self.utilities.isSearchEntry(orca_state.locusOfFocus, True):
+            return
 
-        details = debug.getAccessibleDetails(self.debugLevel, event.source)
-        debug.printObjectEvent(self.debugLevel, event, details)
+        # To avoid extreme chattiness.
+        keyString, mods = self.utilities.lastKeyAndModifiers()
+        if keyString in ["BackSpace", "Delete"]:
+            return
 
-        # If we've received a text caret moved event and the current locus
-        # of focus is on the Find button on the Find dialog or the combo
-        # box in the Find dialog and the last input event was a Return,
-        # and if the current line contains the phrase we were looking for,
-        # then speak the current text line, to give an indication of what
-        # we've just found.
-        #
-        lastKey, mods = self.utilities.lastKeyAndModifiers()
-        if self.isFocusOnFindDialog() and lastKey == "Return":
-            debug.println(self.debugLevel, "gedit.onCaretMoved - find dialog.")
-            allComboBoxes = self.utilities.descendantsWithRole(
-                orca_state.locusOfFocus.getApplication(),
-                pyatspi.ROLE_COMBO_BOX)
-            phrase = self.utilities.displayedText(allComboBoxes[0])
-            [text, caretOffset, startOffset] = \
-                self.getTextLineAtCaret(event.source)
-            if text.lower().find(phrase) != -1:
-                # Translators: this indicates a find command succeeded in
-                # finding something.
-                #
-                self.presentMessage(_("Phrase found."))
-                utterances = self.speechGenerator.generateSpeech(
-                    event.source, alreadyFocused=True)
-                speech.speak(utterances)
-
-        # If Ctrl+G was used to repeat a find command, speak the line that
-        # the caret moved to.
-        #
-        if lastKey == 'G' and mods & settings.CTRL_MODIFIER_MASK:
-            self.sayLine(event.source)
-
-        # For everything else, pass the caret moved event onto the parent
-        # class to be handled in the default way.
-
-        gtk.Script.onCaretMoved(self, event)
+        self.sayLine(event.source)
