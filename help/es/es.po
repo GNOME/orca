@@ -9,13 +9,13 @@
 # Gonzalo <gonzalo.sanhueza.r@gmail.com>, 2011.
 # Gonzalo Sanhueza <gonzalo.sanhueza.r@gmail.com>, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011., 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2012, 2013.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2012, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2013-11-18 16:38+0000\n"
-"PO-Revision-Date: 2013-11-19 17:00+0100\n"
+"POT-Creation-Date: 2014-01-27 23:38+0000\n"
+"PO-Revision-Date: 2014-01-28 11:06+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -23,13 +23,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.5\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
 msgid "translator-credits"
 msgstr ""
-"Daniel Mustieles <daniel.mustieles@gmail.com>, 2012 - 2013\n"
+"Daniel Mustieles <daniel.mustieles@gmail.com>, 2012 - 2014\n"
 "Jorge González <jorgegonz@svn.gnome.org>, 2011"
 
 #. (itstool) path: media
@@ -37,7 +37,7 @@ msgstr ""
 #. the file changes, the md5 hash will change to let you know you need to
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
-#: C/index.page:14
+#: C/index.page:19
 msgctxt "_"
 msgid ""
 "external ref='figures/orca-logo.png' md5='d8759cff4f184e7134cc5bcd6d32d839'"
@@ -112,8 +112,22 @@ msgstr "Joanmarie Diggs"
 msgid "Creative Commons Share Alike 3.0"
 msgstr "Creative Commons Compartir Igual 3.0"
 
-#. (itstool) path: page/title
+#. (itstool) path: info/desc
 #: C/index.page:13
+#| msgid ""
+#| "<app>Orca</app> is a free, open source, flexible, and extensible screen "
+#| "reader that provides access to the graphical desktop via speech and "
+#| "refreshable braille."
+msgid ""
+"Orca is a free, open source, flexible, and extensible screen reader that "
+"provides access to the graphical desktop via speech and refreshable braille."
+msgstr ""
+"Orca es un lector de pantalla libre, de código abierto, flexible y ampliable "
+"que proporciona acceso al escritorio gráfico a través de voz y Braille "
+"actualizable."
+
+#. (itstool) path: page/title
+#: C/index.page:18
 msgid ""
 "<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\"> "
 "<app>Orca</app>'s logo </media> <app>Orca</app> Screen Reader"
@@ -122,12 +136,12 @@ msgstr ""
 "de <app>Orca</app> </media>Lector de pantalla<app>Orca</app>"
 
 #. (itstool) path: note/title
-#: C/index.page:20
+#: C/index.page:25
 msgid "Before You Begin"
 msgstr "Antes de comenzar"
 
 #. (itstool) path: note/p
-#: C/index.page:21
+#: C/index.page:26
 msgid ""
 "If you are not yet familiar with the navigation commands provided by your "
 "desktop environment, you are encouraged to read that documentation first."
@@ -137,22 +151,22 @@ msgstr ""
 "primero esa documentación."
 
 #. (itstool) path: section/title
-#: C/index.page:28 C/commands.page:17
+#: C/index.page:33 C/commands.page:17
 msgid "Getting Started"
 msgstr "Inicio"
 
 #. (itstool) path: section/title
-#: C/index.page:31
+#: C/index.page:36
 msgid "Reading Documents and Web Pages"
 msgstr "Leer documentos y páginas web"
 
 #. (itstool) path: section/title
-#: C/index.page:34 C/commands.page:26
+#: C/index.page:39 C/commands.page:26
 msgid "Reviewing and Interacting with Screen Contents"
 msgstr "Revisar e interactuar con los contenidos de la pantalla"
 
 #. (itstool) path: section/title
-#: C/index.page:37
+#: C/index.page:42
 msgid "Quick Reference"
 msgstr "Referencia rápida"
 
@@ -420,11 +434,6 @@ msgstr "4. Comandos para controlar <app>Orca</app>"
 
 #. (itstool) path: section/p
 #: C/commands_controlling_orca.page:21
-#| msgid ""
-#| "The following commands can be used to get into <app>Orca</app>'s "
-#| "Preferences dialogs, quit <app>Orca</app>, and bypass <app>Orca</app> "
-#| "commands to avoid shortcut conflicts within the application being "
-#| "accessed."
 msgid ""
 "The following commands can be used to get into <app>Orca</app>'s Preferences "
 "dialogs, toggle <app>Orca</app> on and off, and bypass <app>Orca</app> "
@@ -437,9 +446,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:29
-#| msgid ""
-#| "Quit <app>Orca</app>: <keyseq><key>Orca Modifier</key><key>Q</key></"
-#| "keyseq>."
 msgid ""
 "Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
 "key><key>Alt</key><key>S</key></keyseq>."
@@ -483,12 +489,6 @@ msgstr "Comandos para aprender a usar <app>Orca</app>"
 #. (itstool) path: section/p
 #. (itstool) path: page/p
 #: C/commands_controlling_orca.page:56 C/howto_learn_modes.page:18
-#| msgid ""
-#| "Orca has two modes for learning more about <app>Orca</app>'s commands: "
-#| "Learn Mode and List Shortcuts Mode. In Learn Mode, <app>Orca</app> will "
-#| "announce each keystroke you pressed along with any associated <app>Orca</"
-#| "app> command that keystroke is bound to. List Shortcuts Mode provides you "
-#| "with a list of all the <app>Orca</app> commands you can use."
 msgid ""
 "In Learn Mode, <app>Orca</app> will announce each keystroke you pressed "
 "along with any associated <app>Orca</app> command that keystroke is bound "
@@ -510,7 +510,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:70
-#| msgid "Exit either mode: <keyseq><key>Esc</key></keyseq>"
 msgid "Exit learn mode: <keyseq><key>Esc</key></keyseq>"
 msgstr "Salir del modo de aprendizaje: <keyseq><key>Esc</key></keyseq>"
 
@@ -1492,9 +1491,9 @@ msgid ""
 "<app>Orca</app> will announce the selected text."
 msgstr ""
 "Orca ha dedicado un comando para obtener los atributos del texto en la "
-"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de <app>Orca</"
-"app> desde un objeto de texto en el que se ha seleccionado texto, <app>Orca</"
-"app> hablará el texto seleccionado."
+"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de "
+"<app>Orca</app> desde un objeto de texto en el que se ha seleccionado texto, "
+"<app>Orca</app> hablará el texto seleccionado."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:183
@@ -2888,8 +2887,6 @@ msgstr "Seleccione la distribución que quiere."
 
 #. (itstool) path: info/title
 #: C/howto_learn_modes.page:5
-#| msgctxt "sort"
-#| msgid "5. The \"Learn\" Modes"
 msgctxt "sort"
 msgid "5. \"Learn\" Mode"
 msgstr "5. Modo de «aprendizaje»"
@@ -2901,7 +2898,6 @@ msgstr "Descubrir los comandos de <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/howto_learn_modes.page:17
-#| msgid "The \"Learn\" Modes"
 msgid "\"Learn\" Mode"
 msgstr "Modos de «aprendizaje»"
 
@@ -2935,16 +2931,11 @@ msgstr "Pulse <key>Esc</key> para salir del modo de aprendizaje."
 
 #. (itstool) path: steps/title
 #: C/howto_learn_modes.page:43
-#| msgid "Using List Shortcuts Mode"
 msgid "Getting a List of Shortcuts"
 msgstr "Obtener una lista de atajos"
 
 #. (itstool) path: item/p
 #: C/howto_learn_modes.page:51
-#| msgid ""
-#| "Press <key>1</key> if you want a list of shortcuts that apply <app>Orca</"
-#| "app>-wide, or press <key>2</key> if you want a list of shortcuts that are "
-#| "specifically for the application with focus."
 msgid ""
 "Press <key>F2</key> if you want a list of shortcuts that apply <app>Orca</"
 "app>-wide, or press <key>F3</key> if you want a list of shortcuts that are "
@@ -2964,7 +2955,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_learn_modes.page:64
-#| msgid "Press <key>Esc</key> to exit Learn Mode."
 msgid "Press <key>Esc</key> to exit the list."
 msgstr "Pulse <key>Esc</key> para salir de la lista."
 
@@ -3016,12 +3006,12 @@ msgid ""
 "within that region. Live regions can be \"off\", \"polite\", or \"aggressive"
 "\" to the point of being \"rude.\""
 msgstr ""
-"Las regiones activas tienen un nivel de «comportamiento» asociado establecido "
-"por el autor como un medio para transmitir la importancia de la información "
-"y para sugerir cuándo las tecnologías de asistencia deberían informar a los "
-"usuarios sobre las actualizaciones realizadas en esa región. Las regiones "
-"activas pueden ser «desactivada», «cortés» o «agresiva» hasta el punto de ser "
-"«grosera»."
+"Las regiones activas tienen un nivel de «comportamiento» asociado "
+"establecido por el autor como un medio para transmitir la importancia de la "
+"información y para sugerir cuándo las tecnologías de asistencia deberían "
+"informar a los usuarios sobre las actualizaciones realizadas en esa región. "
+"Las regiones activas pueden ser «desactivada», «cortés» o «agresiva» hasta "
+"el punto de ser «grosera»."
 
 #. (itstool) path: section/title
 #: C/howto_live_regions.page:37
@@ -3092,9 +3082,9 @@ msgid ""
 "with information to present, <app>Orca</app> will present that object and "
 "its information to you."
 msgstr ""
-"La característica «Revisión del ratón» de <app>Orca</app> hace que <app>Orca</"
-"app> muestre el objeto bajo el puntero del ratón. A diferencia de la "
-"característica <link xref=\"howto_flat_review\">revisión</link> de "
+"La característica «Revisión del ratón» de <app>Orca</app> hace que "
+"<app>Orca</app> muestre el objeto bajo el puntero del ratón. A diferencia de "
+"la característica <link xref=\"howto_flat_review\">revisión</link> de "
 "<app>Orca</app>, la revisión del ratón no se limita a la ventana activa; en "
 "lugar de eso, <app>Orca</app> tratará de identificar qué objeto accesible, "
 "si existe alguno, se encuentra visualmente bajo el puntero cuando mueve el "
@@ -3417,8 +3407,8 @@ msgid ""
 "Whether Find should look down and/or to the right for the next match or up "
 "and/or to the left."
 msgstr ""
-"Indica si «Buscar» debe buscar hacia abajo y/o a la derecha o arriba y/o a la "
-"izquierda para la siguiente coincidencia"
+"Indica si «Buscar» debe buscar hacia abajo y/o a la derecha o arriba y/o a "
+"la izquierda para la siguiente coincidencia"
 
 #. (itstool) path: item/p
 #: C/howto_orca_find.page:91
@@ -3698,8 +3688,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_setting_up_orca.page:6
-#| msgctxt "sort"
-#| msgid "3. Orca Configuration"
 msgctxt "sort"
 msgid "4. Orca Configuration"
 msgstr "4. Configuración de Orca"
@@ -3712,7 +3700,6 @@ msgstr "Configuración"
 
 #. (itstool) path: info/desc
 #: C/howto_setting_up_orca.page:8
-#| msgid "Quitting <app>Orca</app>"
 msgid "Setting up <app>Orca</app>"
 msgstr "Configurar <app>Orca</app>"
 
@@ -3723,9 +3710,6 @@ msgstr "Configuración de Orca"
 
 #. (itstool) path: section/p
 #: C/howto_setting_up_orca.page:21
-#| msgid ""
-#| "If you want to configure <app>Orca</app> in the future, you can do one of "
-#| "the following:"
 msgid ""
 "If you want to configure <app>Orca</app>, you can do one of the following:"
 msgstr ""
@@ -3733,9 +3717,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_setting_up_orca.page:27
-#| msgid ""
-#| "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
-#| "pressing <keyseq><key>Orca Modifier</key><key>Space</key> </keyseq>."
 msgid ""
 "Get into the <link xref=\"preferences\">Preferences</link> dialog by "
 "pressing <keyseq><key>Orca Modifier</key><key>Space</key> </keyseq> from "
@@ -4614,8 +4595,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_the_orca_modifier.page:5
-#| msgctxt "sort"
-#| msgid "4. The Orca Modifier"
 msgctxt "sort"
 msgid "3. The Orca Modifier"
 msgstr "3. El modificador de Orca"
@@ -4983,9 +4962,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/introduction.page:46
-#| msgid ""
-#| "Quit <app>Orca</app>: <keyseq><key>Orca Modifier</key><key>Q</key></"
-#| "keyseq>."
 msgid ""
 "To toggle <app>Orca</app> on and off in GNOME, press <keyseq><key>Super</"
 "key><key>Alt</key><key>S</key></keyseq>."
@@ -5009,8 +4985,6 @@ msgstr "Opciones en tiempo de carga"
 
 #. (itstool) path: section/p
 #: C/introduction.page:62
-#| msgid ""
-#| "The following options can be specified when launching <app>Orca</app>:"
 msgid ""
 "The following options can be specified when launching <app>Orca</app> in a "
 "terminal window or within the <gui>Run</gui> dialog:"
@@ -5758,9 +5732,9 @@ msgid ""
 msgstr ""
 "Este botón contador editable es donde puede especificar el número de "
 "caracteres que deben coincidir al menos antes que <app>Orca</app> anuncie la "
-"línea coincidente. Esta opción también está diseñada para prevenir «ruido» ya "
-"que al principio cuando comienza a teclear la cadena de búsqueda hay muchas "
-"coincidencias."
+"línea coincidente. Esta opción también está diseñada para prevenir «ruido» "
+"ya que al principio cuando comienza a teclear la cadena de búsqueda hay "
+"muchas coincidencias."
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:131
@@ -6957,11 +6931,12 @@ msgid ""
 "find in the <gui>Person</gui> combo box will depend on which speech "
 "synthesizers you have installed."
 msgstr ""
-"Este cuadro combinado le permite elegir qué «persona» o «hablante» se debería "
-"usar con la voz seleccionada. Por ejemplo, podría querer tener a David para "
-"hablar de manera predeterminada, pero tener a Alicia para hablar los "
-"hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro combinado "
-"<gui>Persona</gui> dependerá de qué sintetizador de voz tenga instalado."
+"Este cuadro combinado le permite elegir qué «persona» o «hablante» se "
+"debería usar con la voz seleccionada. Por ejemplo, podría querer tener a "
+"David para hablar de manera predeterminada, pero tener a Alicia para hablar "
+"los hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro "
+"combinado <gui>Persona</gui> dependerá de qué sintetizador de voz tenga "
+"instalado."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:74
@@ -7029,8 +7004,8 @@ msgid ""
 msgstr ""
 "Seleccionar nivel de puntuación <gui>Alguna</gui> hace que se hablen todos "
 "los símbolos mencionados anteriormente. Por otro lado, <app>Orca</app> "
-"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», «/», "
-"«&amp;», «#»."
+"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», "
+"«/», «&amp;», «#»."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:111
@@ -7641,13 +7616,13 @@ msgid ""
 "<gui>Present unless</gui> column should be empty for underline. In addition, "
 "you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
-"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de «none». "
-"Esto hace que <app>Orca</app> le informe acerca del texto subrayado siempre "
-"y cuando el texto esté actualmente subrayado. Si quiere que este atributo se "
-"hable siempre independientemente de que el texto esté subrayado o no, "
-"entonces el atributo debería estar marcado y el valor de <gui>Presentar a "
-"menos que</gui> en blanco. Además, debería asegurarse de que la columna "
-"<gui>Hablar</gui> para el subrayado está marcada."
+"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de "
+"«none». Esto hace que <app>Orca</app> le informe acerca del texto subrayado "
+"siempre y cuando el texto esté actualmente subrayado. Si quiere que este "
+"atributo se hable siempre independientemente de que el texto esté subrayado "
+"o no, entonces el atributo debería estar marcado y el valor de "
+"<gui>Presentar a menos que</gui> en blanco. Además, debería asegurarse de "
+"que la columna <gui>Hablar</gui> para el subrayado está marcada."
 
 #. (itstool) path: section/title
 #: C/preferences_text_attributes.page:75
@@ -8640,8 +8615,9 @@ msgstr ""
 #~ "gnome-mag."
 #~ msgstr ""
 #~ "<gui>Filtro del color</gui>: le permite usar uno de los filtros de "
-#~ "«colorblind» disponibles a través de «libcolorblind». Para beneficiarse de "
-#~ "esta característica deberá instalar «libcolorblind» reconstruir «gnome-mag»."
+#~ "«colorblind» disponibles a través de «libcolorblind». Para beneficiarse "
+#~ "de esta característica deberá instalar «libcolorblind» reconstruir «gnome-"
+#~ "mag»."
 
 #~ msgid ""
 #~ "<gui>Multi-Monitor Settings - Source Display</gui>: X Window System "
@@ -8659,8 +8635,8 @@ msgstr ""
 #~ msgstr ""
 #~ "<gui>Configuración multi-monitor - Pantalla destino</gui>: pantalla del "
 #~ "sistema de X Window donde se desea poner la ventana del ampliador. En la "
-#~ "forma de «:0.y» donde y es el número de pantalla donde debería aparecer la "
-#~ "pantalla del ampliador."
+#~ "forma de «:0.y» donde y es el número de pantalla donde debería aparecer "
+#~ "la pantalla del ampliador."
 
 #~ msgid ""
 #~ "@@image: 'figures/preferences_disable_gksu_keyboard_grab.png'; "
@@ -8690,12 +8666,12 @@ msgstr ""
 #~ "Cuando se ejecutan comandos desde el menú, muchas distribuciones usan una "
 #~ "aplicación conocida como «gksu» para autorizar al usuario para ejecutar "
 #~ "estos comandos; gksu es el IGU que le pregunta por su contraseña. Cuando "
-#~ "se ejecuta, gksu activa lo que se conoce como una «captura de teclado», la "
-#~ "cual es una característica que previene cualquier acción de teclado vaya "
-#~ "a cualquier otra aplicación del escritorio, incluyendo <app>Orca</app>. "
-#~ "El resultado de una captura de teclado es que <app>Orca</app> no recibirá "
-#~ "ningún evento de teclado, previniendo que <app>Orca</app> funcione "
-#~ "normalmente."
+#~ "se ejecuta, gksu activa lo que se conoce como una «captura de teclado», "
+#~ "la cual es una característica que previene cualquier acción de teclado "
+#~ "vaya a cualquier otra aplicación del escritorio, incluyendo <app>Orca</"
+#~ "app>. El resultado de una captura de teclado es que <app>Orca</app> no "
+#~ "recibirá ningún evento de teclado, previniendo que <app>Orca</app> "
+#~ "funcione normalmente."
 
 #~ msgid ""
 #~ "By checking the <gui>Disable gksu keyboard grab</gui> checkbox, you will "
