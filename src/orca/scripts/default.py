@@ -2294,6 +2294,11 @@ class Script(script.Script):
         if role == pyatspi.ROLE_COMBO_BOX:
             return
 
+        # Table cell accessibles in trees are often reused. When this occurs,
+        # we get name-changed events when the selection changes.
+        if role == pyatspi.ROLE_TABLE_CELL:
+            return
+
         # Normally, we only care about name changes in the current object.
         # But with the new GtkHeaderBar, we are seeing instances where the
         # real frame remains the same, but the functional frame changes
