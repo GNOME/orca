@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2006-2008 Sun Microsystems Inc.
+# Copyright 2014 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,17 +23,14 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
+                "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
-import time
-from gi.repository import GLib
 
-import orca.messages as messages
-import orca.scripts.default as default
-
-from orca.orca_i18n import _
+import orca.scripts.toolkits.gtk as gtk
+import orca.settings as settings
 
 ########################################################################
 #                                                                      #
@@ -40,7 +38,7 @@ from orca.orca_i18n import _
 #                                                                      #
 ########################################################################
 
-class Script(default.Script):
+class Script(gtk.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.
@@ -49,62 +47,31 @@ class Script(default.Script):
         - app: the application to create a script for.
         """
 
-        default.Script.__init__(self, app)
-        self.fileTable = None
-        self.searching = False
-        self.startTime = None
-        self.searchInterval = 5.0
+        gtk.Script.__init__(self, app)
+        self._savedIgnoredEventsList = []
+        self._floodEvents = ['object:children-changed:add',
+                             'object:property-change:accessible-name',
+                             'object:text-changed:insert',
+                             'object:text-changed:delete']
 
-    def _speakSearching(self):
-        """If we are still searching, let the user know. Then start another
-        timer to go off again and repeat this process.
-        """
+    def activate(self):
+        self._savedIgnoredEventsList = settings.ignoredEventsList
+        gtk.Script.activate(self)
 
-        if not self.searching:
-            return False
-
-        currentTime = time.time()
-        if not self.startTime or \
-           (currentTime > (self.startTime + self.searchInterval)):
-            self.presentMessage(messages.SEARCHING)
-            self.startTime = time.time()
-
-        return True
+    def deactivate(self):
+        settings.ignoredEventsList = self._savedIgnoredEventsList
+        gtk.Script.deactivate(self)
 
     def onShowingChanged(self, event):
-        """Callback for object:state-changed:showing accessibility events."""
+        """Callback for object:state-changed:showing events."""
 
         obj = event.source
-        if obj.getRole() != pyatspi.ROLE_PUSH_BUTTON \
-           or not obj.getState().contains(pyatspi.STATE_VISIBLE):
-            return default.Script.onShowingChanged(self, event)
-
-        # Translators: the "Stop" string must match what gnome-search-tool
-        # is using.  We hate keying off stuff like this, but we're forced
-        # to do so in this case.
-        if obj.name == _("Stop"):
-            self.searching = True
-            if not self.fileTable:
-                frame = self.utilities.topLevelObject(obj)
-                allTables = self.utilities.descendantsWithRole(
-                    frame, pyatspi.ROLE_TABLE)
-                self.fileTable = allTables[0]
-
-            GLib.idle_add(self._speakSearching)
+        if obj.getRole() == pyatspi.ROLE_ANIMATION:
+            if event.detail1:
+                settings.ignoredEventsList.extend(self._floodEvents)
+            else:
+                settings.ignoredEventList = self._savedIgnoredEventsList
+            self.presentTitle(None)
             return
 
-        # Translators: the "Find" string must match what gnome-search-tool
-        # is using.  We hate keying off stuff like this, but we're forced
-        # to do so in this case.
-        if obj.name == _("Find") and self.searching:
-            self.searching = False
-            self.presentMessage(messages.SEARCH_COMPLETE)
-            if self.fileTable.getState().contains(pyatspi.STATE_SENSITIVE):
-                try:
-                    fileCount = self.fileTable.queryTable().nRows
-                    self.presentMessage(messages.filesFound(fileCount))
-                except NotImplementedError:
-                    self.presentMessage(messages.FILES_NOT_FOUND)
-            return
-
-        default.Script.onShowingChanged(self, event)
+        gtk.Script.onShowingChanged(self, event)

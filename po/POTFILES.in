@@ -21,7 +21,6 @@ src/orca/phonnames.py
 src/orca/scripts/apps/evolution/speech_generator.py
 src/orca/scripts/apps/gedit/script.py
 src/orca/scripts/apps/gnome-mud/script.py
-src/orca/scripts/apps/gnome-search-tool/script.py
 src/orca/scripts/apps/liferea/script.py
 src/orca/scripts/apps/metacity/script.py
 src/orca/scripts/apps/planner/braille_generator.py
