@@ -1117,8 +1117,13 @@ class Script(default.Script):
         except:
             return
 
-        if childRole in [pyatspi.ROLE_ALERT, pyatspi.ROLE_DIALOG]:
+        if childRole == pyatspi.ROLE_ALERT:
             orca.setLocusOfFocus(event, child)
+            return
+
+        if childRole == pyatspi.ROLE_DIALOG:
+            if self.isAriaWidget(event.source):
+                orca.setLocusOfFocus(event, child)
             return
 
         if self.lastMouseRoutingTime \
