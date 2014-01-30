@@ -123,6 +123,7 @@ class Script(Gecko.Script):
             return
 
         self._lastAutoComplete = ""
+        self.pointOfReference['lastAutoComplete'] = None
 
         obj = event.source
         if not self.inDocumentContent(obj):
@@ -217,7 +218,7 @@ class Script(Gecko.Script):
                 default.Script.onTextInserted(self, event)
                 return
 
-            if self._lastAutoComplete == event.any_data:
+            if self._lastAutoComplete and self._lastAutoComplete in event.any_data:
                 return
 
             # Mozilla cannot seem to get their ":system" suffix right
@@ -235,6 +236,11 @@ class Script(Gecko.Script):
                 return
 
         Gecko.Script.onTextInserted(self, event)
+
+    def onTextSelectionChanged(self, event):
+        """Callback for object:text-selection-changed accessibility events."""
+
+        default.Script.onTextSelectionChanged(self, event)
 
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
