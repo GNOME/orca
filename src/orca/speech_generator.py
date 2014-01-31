@@ -257,7 +257,9 @@ class SpeechGenerator(generator.Generator):
         acss = self.voice(SYSTEM)
         role = args.get('role', obj.getRole())
 
-        doNotPresent = [pyatspi.ROLE_UNKNOWN, pyatspi.ROLE_FILLER]
+        doNotPresent = [pyatspi.ROLE_UNKNOWN,
+                        pyatspi.ROLE_FILLER,
+                        pyatspi.ROLE_EXTENDED]
 
         # egg-list-box, e.g. privacy panel in gnome-control-center
         if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
