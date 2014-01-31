@@ -930,7 +930,7 @@ class Script(default.Script):
             return
 
         if self.utilities.isCellBeingEdited(event.source):
-            orca.setLocusOfFocus(event, event.source.parent)
+            orca.setLocusOfFocus(event, event.source.parent, False)
 
         # The lists and combo boxes in the Formatting toolbar emit
         # object:active-descendant-changed events which cause us
