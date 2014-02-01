@@ -76,7 +76,10 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return False
 
-        attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
         return attrs.get('toolkit', '') == 'WebKitGtk'
 
     def isReadOnlyTextArea(self, obj):

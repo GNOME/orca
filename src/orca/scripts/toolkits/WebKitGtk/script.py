@@ -213,13 +213,15 @@ class Script(default.Script):
     def onDocumentReload(self, event):
         """Callback for document:reload accessibility events."""
 
-        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
+        if event.source.getRole() in docRoles:
             self._loadingDocumentContent = True
 
     def onDocumentLoadComplete(self, event):
         """Callback for document:load-complete accessibility events."""
 
-        if event.source.getRole() != pyatspi.ROLE_DOCUMENT_FRAME:
+        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
+        if not event.source.getRole() in docRoles:
             return
 
         self._loadingDocumentContent = False
@@ -240,7 +242,8 @@ class Script(default.Script):
     def onDocumentLoadStopped(self, event):
         """Callback for document:load-stopped accessibility events."""
 
-        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
+        if event.source.getRole() in docRoles:
             self._loadingDocumentContent = False
 
     def onFocusedChanged(self, event):
@@ -284,7 +287,8 @@ class Script(default.Script):
         except:
             return
 
-        if role != pyatspi.ROLE_DOCUMENT_FRAME or not self._isBrowser:
+        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
+        if role not in docRoles or not self._isBrowser:
             return
 
         if event.detail1:
@@ -564,8 +568,8 @@ class Script(default.Script):
         if obj.getRole() == pyatspi.ROLE_LINK:
             obj = obj.parent
 
-        document = utils.findAncestor(
-            obj, lambda x: x.getRole() == pyatspi.ROLE_DOCUMENT_FRAME)
+        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
+        document = utils.findAncestor(obj, lambda x: x.getRole() in docRoles)
         if not document or document.getState().contains(pyatspi.STATE_BUSY):
             return
 

@@ -112,9 +112,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                                pyatspi.ROLE_TABLE_CELL])
 
         if not (role in doNotSpeak):
+            docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
             if role == pyatspi.ROLE_IMAGE:
                 link = self._script.utilities.ancestorWithRole(
-                    obj, [pyatspi.ROLE_LINK], [pyatspi.ROLE_DOCUMENT_FRAME])
+                    obj, [pyatspi.ROLE_LINK], docRoles)
                 if link:
                     result.append(self.getLocalizedRoleName(link))
             elif role == pyatspi.ROLE_HEADING:
@@ -155,6 +156,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         args['stopAtRoles'] = [pyatspi.ROLE_DOCUMENT_FRAME,
+                               pyatspi.ROLE_DOCUMENT_WEB,
                                pyatspi.ROLE_EMBEDDED,
                                pyatspi.ROLE_INTERNAL_FRAME,
                                pyatspi.ROLE_FORM,

@@ -570,7 +570,8 @@ class StructuralNavigation:
                     pyatspi.ROLE_TABLE_CELL,
                     pyatspi.ROLE_TEXT,
                     pyatspi.ROLE_SECTION,
-                    pyatspi.ROLE_DOCUMENT_FRAME]
+                    pyatspi.ROLE_DOCUMENT_FRAME,
+                    pyatspi.ROLE_DOCUMENT_WEB]
 
     def __init__(self, script, enabledTypes, enabled=False):
         """Creates an instance of the StructuralNavigation class.
@@ -1169,7 +1170,7 @@ class StructuralNavigation:
         interest is contained.
         """
 
-        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME]
+        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
         stopRoles = [pyatspi.ROLE_FRAME, pyatspi.ROLE_SCROLL_PANE]
         document = self._script.utilities.ancestorWithRole(
             orca_state.locusOfFocus, docRoles, stopRoles)
