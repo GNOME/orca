@@ -602,6 +602,9 @@ class Utilities:
                         break
 
         if not displayedText:
+            # TODO - JD: This should probably get nuked. But all sorts of
+            # existing code might be relying upon this bogus hack. So it
+            # will need thorough testing when removed.
             try:
                 displayedText = obj.name
             except (LookupError, RuntimeError):

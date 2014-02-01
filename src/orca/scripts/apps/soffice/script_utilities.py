@@ -79,7 +79,15 @@ class Utilities(script_utilities.Utilities):
             if text.strip():
                 return text
 
-        return script_utilities.Utilities.displayedText(self, obj)
+        text = script_utilities.Utilities.displayedText(self, obj)
+
+        # TODO - JD: This is needed because the default behavior is to fall
+        # back on the name, which is bogus. Once that has been fixed, this
+        # hack can go.
+        if role == pyatspi.ROLE_TABLE_CELL and text == obj.name:
+            return ""
+
+        return text
 
     def isReadOnlyTextArea(self, obj):
         """Returns True if obj is a text entry area that is read only."""

@@ -69,7 +69,8 @@ formatting = {
             'detailedWhereAmI': 'parentRoleName + columnHeader + rowHeader + roleName + cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + columnAndRow + tableCellRow + expandableState + nodeLevel'
             },
         'REAL_ROLE_TABLE_CELL': {
-            'focused': 'realActiveDescendantDisplayedText',
+            'focused': 'newRowHeader + newColumnHeader + realActiveDescendantDisplayedText',
+            'unfocused': 'newRowHeader + newColumnHeader + realActiveDescendantDisplayedText',
         },
         'ROLE_SPREADSHEET_CELL': {
             # We treat spreadsheet cells differently from other table cells in

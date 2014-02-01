@@ -334,26 +334,27 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return []
 
-    def _generateSpreadSheetCell(self, obj, **args):
-        result = []
+    def _generateRealTableCell(self, obj, **args):
+        """Get the speech for a table cell. If this isn't inside a
+        spread sheet, just return the utterances returned by the default
+        table cell speech handler.
+
+        Arguments:
+        - obj: the table cell
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        result = speech_generator.SpeechGenerator._generateRealTableCell(
+            self, obj, **args)
+
+        if not self._script.utilities.isSpreadSheetCell(obj):
+            return result
+
         isBasicWhereAmI = args.get('formatType') == 'basicWhereAmI'
         speakCoordinates = script_settings.speakSpreadsheetCoordinates
-
-        try:
-            objectText = self._script.utilities.substring(obj, 0, -1)
-        except:
-            objectText = ''
-        if not objectText and (isBasicWhereAmI or not speakCoordinates):
-            objectText = messages.BLANK
-
-        if objectText:
-            result.append(objectText)
-
         if speakCoordinates and not isBasicWhereAmI:
             result.append(self._script.utilities.spreadSheetCellName(obj))
-
-        if result:
-            result.extend(self.voice(speech_generator.DEFAULT))
 
         if _settingsManager.getSetting('readTableCellRow'):
             row, col, table = self._script.utilities.getRowColumnAndTable(obj)
@@ -372,22 +373,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(hasFormula)
 
         return result
-
-    def _generateRealTableCell(self, obj, **args):
-        """Get the speech for a table cell. If this isn't inside a
-        spread sheet, just return the utterances returned by the default
-        table cell speech handler.
-
-        Arguments:
-        - obj: the table cell
-
-        Returns a list of utterances to be spoken for the object.
-        """
-        if self._script.utilities.isSpreadSheetCell(obj):
-            return self._generateSpreadSheetCell(obj, **args)
-
-        return speech_generator.SpeechGenerator._generateRealTableCell(
-            self, obj, **args)
 
     def _generateTableCellRow(self, obj, **args):
         """Get the speech for a table cell row if the user wants to hear
