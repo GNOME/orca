@@ -452,6 +452,8 @@ class Script(default.Script):
         """
 
         def implementsText(obj):
+            if obj.getRole() == pyatspi.ROLE_LIST:
+                return False
             return 'Text' in utils.listInterfaces(obj)
 
         child = obj
