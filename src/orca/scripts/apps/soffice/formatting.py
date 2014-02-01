@@ -63,11 +63,14 @@ formatting = {
             'focused': 'labelAndName + toggleState'
             },
         pyatspi.ROLE_TABLE_CELL: {
-            'focused': '(tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (expandableState and (expandableState + numberOfChildren))',
+            'focused': 'endOfTableIndicator + tableCellRow',
             'unfocused': 'endOfTableIndicator + tableCellRow',
             'basicWhereAmI': 'parentRoleName + columnHeader + rowHeader + roleName + cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + columnAndRow + expandableState + nodeLevel',
             'detailedWhereAmI': 'parentRoleName + columnHeader + rowHeader + roleName + cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + columnAndRow + tableCellRow + expandableState + nodeLevel'
             },
+        'REAL_ROLE_TABLE_CELL': {
+            'focused': 'realActiveDescendantDisplayedText',
+        },
         'ROLE_SPREADSHEET_CELL': {
             # We treat spreadsheet cells differently from other table cells in
             # whereAmI.
@@ -96,7 +99,7 @@ if orca.settings.useExperimentalSpeechProsody:
     formatting['speech']['ROLE_SPREADSHEET_CELL']['basicWhereAmI'] = \
         'roleName + pause + column + pause + columnHeader + pause + row + pause + rowHeader + pause + (textContent or spreadSheetCell) + pause + anyTextSelection + pause'
     formatting['speech'][pyatspi.ROLE_TABLE_CELL]['focused'] = \
-        '((tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState) + pause + (expandableState and (expandableState + pause + numberOfChildren + pause))'
+        'endOfTableIndicator + pause + tableCellRow + pause'
     formatting['speech'][pyatspi.ROLE_TABLE_CELL]['unfocused'] = \
         'endOfTableIndicator + pause + tableCellRow + pause'
     formatting['speech'][pyatspi.ROLE_TABLE_CELL]['basicWhereAmI'] = \
