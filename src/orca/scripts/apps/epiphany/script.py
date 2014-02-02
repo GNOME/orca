@@ -35,7 +35,6 @@ class Script(WebKitGtk.Script):
 
     def __init__(self, app):
         WebKitGtk.Script.__init__(self, app)
-        self._lastCaretContext = None, -1
 
     def onWindowActivated(self, event):
         """Callback for window:activate accessibility events."""
@@ -43,15 +42,11 @@ class Script(WebKitGtk.Script):
         gtk.Script.onWindowActivated(self, event)
 
         obj, offset = self._lastCaretContext
-        if self.utilities.isWebKitGtk(obj):
+        if obj:
             orca.setLocusOfFocus(None, obj)
 
     def onWindowDeactivated(self, event):
         """Callback for window:deactivate accessibility events."""
-
-        obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
-        if self.utilities.isWebKitGtk(obj):
-            self._lastCaretContext = obj, offset
 
         gtk.Script.onWindowDeactivated(self, event)
 

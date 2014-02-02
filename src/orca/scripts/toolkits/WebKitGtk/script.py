@@ -71,6 +71,7 @@ class Script(default.Script):
         default.Script.__init__(self, app)
         self._loadingDocumentContent = False
         self._isBrowser = isBrowser
+        self._lastCaretContext = None, -1
 
         self.sayAllOnLoadCheckButton = None
 
@@ -194,6 +195,8 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+        self._lastCaretContext = event.source, event.detail1
 
         lastKey, mods = self.utilities.lastKeyAndModifiers()
         if lastKey in ['Tab', 'ISO_Left_Tab']:
