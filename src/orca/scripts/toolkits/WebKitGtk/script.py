@@ -251,6 +251,8 @@ class Script(default.Script):
 
         obj = event.source
         role = obj.getRole()
+        self._lastCaretContext = obj, -1
+
         if role == pyatspi.ROLE_LIST_ITEM and obj.childCount:
             return
 
