@@ -3,6 +3,7 @@ SUBDIRS = \
 	Eclipse \
 	ekiga \
 	empathy \
+	epiphany \
 	evince \
 	evolution \
 	gajim \

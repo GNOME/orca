@@ -92,6 +92,7 @@ src/orca/scripts/apps/Banshee/Makefile
 src/orca/scripts/apps/Eclipse/Makefile
 src/orca/scripts/apps/ekiga/Makefile
 src/orca/scripts/apps/empathy/Makefile
+src/orca/scripts/apps/epiphany/Makefile
 src/orca/scripts/apps/evince/Makefile
 src/orca/scripts/apps/evolution/Makefile
 src/orca/scripts/apps/gajim/Makefile
