@@ -1010,6 +1010,12 @@ class Script(default.Script):
         if weToggledIt:
             speech.speak(self.speechGenerator.generateSpeech(obj))
 
+    def onRowReordered(self, event):
+        """Callback for object:row-reordered accessibility events."""
+
+        # We're seeing a crazy ton of these emitted bogusly.
+        pass
+
     def onTextAttributesChanged(self, event):
         """Callback for object:text-attributes-changed accessibility events."""
 
