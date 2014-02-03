@@ -54,14 +54,6 @@ formatting = {
             'unfocused': 'name + allTextSelection + expandableState + availability + positionInList',
             'basicWhereAmI': 'roleName + name + positionInList + expandableState + (nodeLevel or nestingLevel)'
             },
-        pyatspi.ROLE_PUSH_BUTTON: {
-            'unfocused': 'labelAndName + roleName + toggleState + availability',
-            'focused': 'labelAndName + toggleState'
-            },
-        pyatspi.ROLE_TOGGLE_BUTTON: {
-            'unfocused': 'labelAndName + toggleState',
-            'focused': 'labelAndName + toggleState'
-            },
         pyatspi.ROLE_TABLE_CELL: {
             'focused': 'endOfTableIndicator + tableCellRow',
             'unfocused': 'endOfTableIndicator + tableCellRow',
