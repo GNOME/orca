@@ -954,7 +954,9 @@ class Script(default.Script):
 
         obj = event.source
         role = obj.getRole()
-        if not role in [pyatspi.ROLE_TOGGLE_BUTTON, pyatspi.ROLE_PUSH_BUTTON]:
+        parentRole = obj.parent.getRole()
+        if not role in [pyatspi.ROLE_TOGGLE_BUTTON, pyatspi.ROLE_PUSH_BUTTON] \
+           or not parentRole == pyatspi.ROLE_TOOL_BAR:
             default.Script.onCheckedChanged(self, event)
             return
  
