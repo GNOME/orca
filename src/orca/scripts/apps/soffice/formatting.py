@@ -76,7 +76,7 @@ formatting = {
             # We treat spreadsheet cells differently from other table cells in
             # whereAmI.
             #
-            'basicWhereAmI': 'roleName + column + columnHeader + row + rowHeader + (textContent or spreadSheetCell) + anyTextSelection'
+            'basicWhereAmI': 'roleName + column + columnHeader + row + rowHeader + (textContent or realTableCell) + anyTextSelection'
             },
     },
     'braille': {
@@ -98,7 +98,7 @@ formatting = {
 
 if orca.settings.useExperimentalSpeechProsody:
     formatting['speech']['ROLE_SPREADSHEET_CELL']['basicWhereAmI'] = \
-        'roleName + pause + column + pause + columnHeader + pause + row + pause + rowHeader + pause + (textContent or spreadSheetCell) + pause + anyTextSelection + pause'
+        'roleName + pause + column + pause + columnHeader + pause + row + pause + rowHeader + pause + (textContent or realTableCell) + pause + anyTextSelection + pause'
     formatting['speech'][pyatspi.ROLE_TABLE_CELL]['focused'] = \
         'endOfTableIndicator + pause + tableCellRow + pause'
     formatting['speech'][pyatspi.ROLE_TABLE_CELL]['unfocused'] = \
