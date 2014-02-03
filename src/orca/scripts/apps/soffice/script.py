@@ -916,16 +916,6 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
-        # Ditto.
-        if role == pyatspi.ROLE_TABLE:
-            obj = event.source
-            selectedChildren = self.utilities.selectedChildren(obj)
-            if selectedChildren:
-                obj = selectedChildren[0]
-
-            orca.setLocusOfFocus(event, obj)
-            return
-
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
@@ -948,6 +938,10 @@ class Script(default.Script):
         if start != end:
             return
 
+        # We should present this in response to active-descendant-changed events
+        if event.source.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS):
+            return
+
         default.Script.onFocusedChanged(self, event)
 
     def onCaretMoved(self, event):
@@ -965,6 +959,10 @@ class Script(default.Script):
 
         if self.utilities.isCellBeingEdited(event.source):
             orca.setLocusOfFocus(event, event.source.parent, False)
+
+        if not orca_state.locusOfFocus:
+            default.Script.onCaretMoved(self, event)
+            return
 
         if orca_state.locusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
             default.Script.onCaretMoved(self, event)
