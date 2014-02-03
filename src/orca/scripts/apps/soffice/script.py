@@ -892,6 +892,20 @@ class Script(default.Script):
 
         default.Script.onChildrenChanged(self, event)
 
+    def onFocus(self, event):
+        """Callback for focus: accessibility events."""
+
+        # NOTE: This event type is deprecated and Orca should no longer use it.
+        # This callback remains just to handle bugs in applications and toolkits
+        # during the remainder of the unstable (3.11) development cycle.
+
+        role = event.source.getRole()
+
+        # This seems to be something we inherit from Gtk+
+        if role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_PASSWORD_TEXT]:
+            orca.setLocusOfFocus(event, event.source)
+            return
+
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
