@@ -45,10 +45,6 @@ formatting = {
             'basicWhereAmI': orca.formatting.TUTORIAL + ' + description',
             'detailedWhereAmI' : '[]'
             },
-        pyatspi.ROLE_COMBO_BOX: {
-            'focused': 'name + positionInList + availability',
-            'unfocused': 'labelAndName + roleName + positionInList + availability'
-            },
         pyatspi.ROLE_LABEL: {
             'focused': 'expandableState + availability',
             'unfocused': 'name + allTextSelection + expandableState + availability + positionInList',
