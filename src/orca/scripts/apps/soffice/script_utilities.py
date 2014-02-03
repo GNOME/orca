@@ -84,7 +84,8 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: This is needed because the default behavior is to fall
         # back on the name, which is bogus. Once that has been fixed, this
         # hack can go.
-        if role == pyatspi.ROLE_TABLE_CELL and text == obj.name:
+        if role == pyatspi.ROLE_TABLE_CELL and text == obj.name \
+           and (self.isSpreadSheetCell(obj) or self.isDocumentCell(obj)):
             return ""
 
         return text
