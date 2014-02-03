@@ -966,6 +966,10 @@ class Script(default.Script):
         if self.utilities.isCellBeingEdited(event.source):
             orca.setLocusOfFocus(event, event.source.parent, False)
 
+        if orca_state.locusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
+            default.Script.onCaretMoved(self, event)
+            return
+
         # The lists and combo boxes in the Formatting toolbar emit
         # object:active-descendant-changed events which cause us
         # to set the locusOfFocus to the list item. If the user then
