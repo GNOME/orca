@@ -2118,6 +2118,10 @@ class Script(script.Script):
         obj = event.source
         if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
             return
+
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EXPANDABLE):
+            return
  
         # Radio buttons normally change their state when you arrow to them,
         # so we handle the announcement of their state changes in the focus
