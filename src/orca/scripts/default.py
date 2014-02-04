@@ -2427,7 +2427,7 @@ class Script(script.Script):
             if iconified:
                 return
 
-        if obj.childCount:
+        if obj and obj.childCount and obj.getRole() != pyatspi.ROLE_COMBO_BOX:
             selectedChildren = self.utilities.selectedChildren(obj)
             if selectedChildren:
                 obj = selectedChildren[0]
