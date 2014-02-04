@@ -414,7 +414,7 @@ class Script(default.Script):
         text = orca_state.locusOfFocus.queryText()
         string, startOffset, endOffset = text.getTextAtOffset(
             text.caretOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
-        if 0 &lt; startOffset:
+        if 0 < startOffset:
             text.setCaretOffset(startOffset-1)
             return True
 
@@ -444,7 +444,7 @@ class Script(default.Script):
         text = orca_state.locusOfFocus.queryText()
         string, startOffset, endOffset = text.getTextAtOffset(
             text.caretOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
-        if endOffset &lt; text.characterCount:
+        if endOffset < text.characterCount:
             text.setCaretOffset(endOffset)
             return True
 
