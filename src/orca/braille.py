@@ -1331,7 +1331,7 @@ def refresh(panToCursor=True,
         #writeStruct.attrOr = myUnderline
 
         if attributeMask:
-            writeStruct.attrOr = bytes(attributeMask[startPos:endPos], 'UTF-8')
+            writeStruct.attrOr = attributeMask[startPos:endPos]
 
         if not _brlAPIRunning:
             init(_callback, settings.tty)
