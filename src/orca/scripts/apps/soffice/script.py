@@ -407,21 +407,28 @@ class Script(default.Script):
 
         if self.flatReviewContext \
            or not self.isBrailleBeginningShowing() \
-           or self.utilities.isSpreadSheetCell(orca_state.locusOfFocus):
+           or self.utilities.isSpreadSheetCell(orca_state.locusOfFocus) \
+           or not self.utilities.isTextArea(orca_state.locusOfFocus):
             return default.Script.panBrailleLeft(self, inputEvent, panAmount)
 
+        text = orca_state.locusOfFocus.queryText()
+        string, startOffset, endOffset = text.getTextAtOffset(
+            text.caretOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
+        if 0 &lt; startOffset:
+            text.setCaretOffset(startOffset-1)
+            return True
+
         obj = self.utilities.findPreviousObject(orca_state.locusOfFocus)
-        orca.setLocusOfFocus(None, obj, notifyScript=False)
-        self.updateBraille(obj)
-
-        # Hack: When panning to the left in a document, we want to start at
-        # the right/bottom of each new object. For now, we'll pan there.
-        # When time permits, we'll give our braille code some smarts.
-        while self.panBrailleInDirection(panToLeft=False):
+        try:
+            text = obj.queryText()
+        except:
             pass
-        self.refreshBraille(False)
+        else:
+            orca.setLocusOfFocus(None, obj, notifyScript=False)
+            text.setCaretOffset(text.characterCount)
+            return True
 
-        return True
+        return default.Script.panBrailleLeft(self, inputEvent, panAmount)
 
     def panBrailleRight(self, inputEvent=None, panAmount=0):
         """In document content, we want to use the panning keys to browse the
@@ -430,21 +437,28 @@ class Script(default.Script):
 
         if self.flatReviewContext \
            or not self.isBrailleEndShowing() \
-           or self.utilities.isSpreadSheetCell(orca_state.locusOfFocus):
+           or self.utilities.isSpreadSheetCell(orca_state.locusOfFocus) \
+           or not self.utilities.isTextArea(orca_state.locusOfFocus):
             return default.Script.panBrailleRight(self, inputEvent, panAmount)
 
+        text = orca_state.locusOfFocus.queryText()
+        string, startOffset, endOffset = text.getTextAtOffset(
+            text.caretOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
+        if endOffset &lt; text.characterCount:
+            text.setCaretOffset(endOffset)
+            return True
+
         obj = self.utilities.findNextObject(orca_state.locusOfFocus)
-        orca.setLocusOfFocus(None, obj, notifyScript=False)
-        self.updateBraille(obj)
-
-        # Hack: When panning to the right in a document, we want to start at
-        # the left/top of each new object. For now, we'll pan there. When time
-        # permits, we'll give our braille code some smarts.
-        while self.panBrailleInDirection(panToLeft=True):
+        try:
+            text = obj.queryText()
+        except:
             pass
-        self.refreshBraille(False)
+        else:
+            orca.setLocusOfFocus(None, obj, notifyScript=False)
+            text.setCaretOffset(0)
+            return True
 
-        return True
+        return default.Script.panBrailleRight(self, inputEvent, panAmount)
 
     def presentInputLine(self, inputEvent):
         """Presents the contents of the spread sheet input line (assuming we
