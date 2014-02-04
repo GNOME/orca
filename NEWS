@@ -1,3 +1,81 @@
+3.11.5 - 4 February 2014
+
+Please note: This cycle, Orca is getting an overhaul with much of the
+code being rewritten in preparation for the focus: event deprecation.
+I am also taking this opportunity to remove hacks and improve Orca's
+performance. While every effort is being made to ensure no regressions
+are introduced, please remember that 3.11.x is unstable. If you find a
+bug present only in 3.11.x, please report it on the Orca list.
+
+LibreOffice:
+
+  * Fix several braille panning issues
+
+  * Fix several issues with presentation of dynamic headers
+
+Gecko:
+
+  * Handle changes in the Firefox find toolbar hierarchy and events
+
+  * Fix a couple of bugs related to presenting a new ARIA alert or dialog
+
+  * Don't present text-inserted events for non-ARIA labels
+
+  * Only treat properly-marked up ARIA live regions as live regions
+
+  * Present listbox details as part of presenting the first focused child
+
+  * Do not treat 'busy' state changes from ARIA widgets as document loads
+
+  * Don't repeat the "alert" role when navigating in ARIA alerts
+
+  * Use the default updateBraille() for ARIA widgets in Gecko content
+
+  * Handle more instances of bogus empty text objects from Gecko
+
+  * Present find results from Gecko in braille
+
+Epiphany/WebKitGtk:
+
+  * Create a custom script for Epiphany to handle window activation and
+    deactivation better
+
+  * Ignore WebKitGtk's claim that objects of ROLE_LIST implement AtkText
+
+  * Handle ROLE_DOCUMENT_WEB for WebKitGtk content
+
+  * Improve saving and restoring the Epiphany caret context
+
+General:
+
+  * Fix quite a few "chattiness" issues
+
+  * Fix for bug 708664 - Selection and link indicators messing up braille
+
+  * Eliminate duplicated strings when brailling widget information
+
+  * Fix presentation of Gedit's find feature results
+
+  * Rewrite Orca's support for gnome-search-tool
+
+  * Present a message, and don't regenerate speech, when a bookmark is
+    entered
+
+  * Add the ability to skip ancestor generation by role on a per-script
+    basis
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                             Marek Černocký
+    es            Spanish                           Daniel Mustieles
+    lt            Lithuanian                        Aurimas Černius
+    nb            Norwegian bokmål                  Kjartan Maraas
+    tg            Tajik                       Victor Ibragimov
+    zh_HK         Traditional Chinese (Hong Kong)   Chao-Hsiung Liao
+    zh_TW         Traditional Chinese (Taiwan)      Chao-Hsiung Liao
+
+=========
+
 3.11.4 - 14 January 2014
 
 Please note: This cycle, Orca is getting an overhaul with much of the
