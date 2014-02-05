@@ -1313,7 +1313,7 @@ def refresh(panToCursor=True,
             if attributeMask:
                 attributeMask += '\x00'
             writeStruct.regionSize += 1
-        writeStruct.text = bytes(substring, 'UTF-8')
+        writeStruct.text = substring
         writeStruct.cursor = cursorCell
 
         # [[[WDW - if you want to muck around with the dots on the
