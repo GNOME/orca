@@ -305,7 +305,10 @@ class Utilities(script_utilities.Utilities):
                 debug.printStack(debug.LEVEL_WARNING)
                 return -1
 
-        attrs = obj.getAttributes()
+        try:
+            attrs = obj.getAttributes()
+        except:
+            attrs = None
         if attrs is None:
             return -1
         for attr in attrs:
