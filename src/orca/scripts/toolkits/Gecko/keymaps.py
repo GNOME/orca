@@ -61,15 +61,15 @@ arrowKeymap = (
 commonKeymap = (
 
     # keybindings to provide chat room message history.
-    ("f1", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("f2", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("f3", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("f4", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("f5", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("f6", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("f7", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("f8", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("f9", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
+    ("F1", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
+    ("F2", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
+    ("F3", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
+    ("F4", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
+    ("F5", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
+    ("F6", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
+    ("F7", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
+    ("F8", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
+    ("F9", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
 
     # misc
     
