@@ -636,6 +636,28 @@ SPEECH_VOICE_TYPE_UPPERCASE = C_("VoiceType", "Uppercase")
 # system. (http://devel.freebsoft.org/speechd)
 SPEECH_DISPATCHER = _("Speech Dispatcher")
 
+# Translators: This is a label for a group of options related to Orca's behavior
+# when presenting an application's spell check dialog.
+SPELL_CHECK = C_("OptionGroup", "Spell Check")
+
+# Translators: This is a label for a checkbox associated with an Orca setting.
+# When this option is enabled, Orca will spell out the current error in addition
+# to speaking it. For example, if the misspelled word is "foo," enabling this
+# setting would cause Orca to speak "f o o" after speaking "foo".
+SPELL_CHECK_SPELL_ERROR = _("Spell _error")
+
+# Translators: This is a label for a checkbox associated with an Orca setting.
+# When this option is enabled, Orca will spell out the current suggestion in
+# addition to speaking it. For example, if the misspelled word is "foo," and
+# the first suggestion is "for" enabling this setting would cause Orca to speak
+# "f o r" after speaking "for".
+SPELL_CHECK_SPELL_SUGGESTION = _("Spell _suggestion")
+
+# Translators: This is a label for a checkbox associated with an Orca setting.
+# When this option is enabled, Orca will present the context (surrounding text,
+# typically the sentence or line) in which the mistake occurred.
+SPELL_CHECK_PRESENT_CONTEXT = _("Present _context of error")
+
 # Translators: This is a label for an option to tell Orca whether or not it
 # should speak the coordinates of the current spread sheet cell. Coordinates are
 # the row and column position within the spread sheet (i.e. A1, B1, C2 ...)

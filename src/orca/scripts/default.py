@@ -549,6 +549,8 @@ class Script(script.Script):
             self.onExpandedChanged
         listeners["object:state-changed:selected"]          = \
             self.onSelectedChanged
+        listeners["object:state-changed:sensitive"]         = \
+            self.onSensitiveChanged
         listeners["object:text-attributes-changed"]         = \
             self.onTextAttributesChanged
         listeners["object:text-selection-changed"]          = \
@@ -1363,10 +1365,10 @@ class Script(script.Script):
 
         for (charIndex, character) in enumerate(itemString):
             if character.isupper():
-                speech.speak(character,
+                speech.speakCharacter(character,
                              self.voices[settings.UPPERCASE_VOICE])
             else:
-                speech.speak(character)
+                speech.speakCharacter(character)
 
     def _reviewCurrentItem(self, inputEvent, targetCursorCell=0,
                            speechType=1):
@@ -2404,6 +2406,10 @@ class Script(script.Script):
             if not self.utilities.isLayoutOnly(child):
                 orca.setLocusOfFocus(event, child)
                 break
+
+    def onSensitiveChanged(self, event):
+        """Callback for object:state-changed:sensitive accessibility events."""
+        pass
 
     def onFocus(self, event):
         """Callback for focus: accessibility events."""

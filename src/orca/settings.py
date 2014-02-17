@@ -109,6 +109,9 @@ userCustomizableSettings = [
     "presentTimeFormat",
     "activeProfile",
     "startingProfile",
+    "spellcheckSpellError",
+    "spellcheckSpellSuggestion",
+    "spellcheckPresentContext",
 ]
 
 excludeKeys = ["pronunciations",
@@ -823,3 +826,7 @@ presentDateFormat = DATE_FORMAT_LOCALE
 
 # Default tty to pass along to brlapi.
 tty = 7
+
+spellcheckSpellError = True
+spellcheckSpellSuggestion = True
+spellcheckPresentContext = True

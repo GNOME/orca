@@ -115,6 +115,7 @@ class Script:
         self.eventCache = {}
         self.whereAmI = self.getWhereAmI()
         self.bookmarks = self.getBookmarks()
+        self.spellcheck = self.getSpellCheck()
         self.voices = settings.voices
         self.tutorialGenerator = self.getTutorialGenerator()
 
@@ -226,6 +227,10 @@ class Script:
     def getChat(self):
         """Returns the 'chat' class for this script.
         """
+        return None
+
+    def getSpellCheck(self):
+        """Returns the spellcheck support for this script."""
         return None
 
     def getUtilities(self):

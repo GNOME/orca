@@ -27,272 +27,98 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.debug as debug
+import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.toolkits.gtk as gtk
-
-from orca.orca_i18n import _
+from .spellcheck import SpellCheck
 
 class Script(gtk.Script):
 
     def __init__(self, app):
-        """Creates a new script for the given application.
-
-        Arguments:
-        - app: the application to create a script for.
-        """
+        """Creates a new script for the given application."""
 
         gtk.Script.__init__(self, app)
 
-        # Set the debug level for all the methods in this script.
-        #
-        self.debugLevel = debug.LEVEL_FINEST
+    def getSpellCheck(self):
+        """Returns the spellcheck for this script."""
 
-        # This will be used to cache a handle to the gedit text area for
-        # spell checking purposes.
+        return SpellCheck(self)
 
-        self.textArea = None
+    def getAppPreferencesGUI(self):
+        """Returns a GtkGrid containing the application unique configuration
+        GUI items for the current application."""
 
-        # The following variables will be used to try to determine if we've
-        # already handled this misspelt word (see readMisspeltWord() for
-        # more details.
+        from gi.repository import Gtk
 
-        self.lastCaretPosition = -1
-        self.lastBadWord = ''
-        self.lastEventType = ''
+        grid = Gtk.Grid()
+        grid.set_border_width(12)
+        grid.attach(self.spellcheck.getAppPreferencesGUI(), 0, 0, 1, 1)
+        grid.show_all()
 
-    def readMisspeltWord(self, event, panel):
-        """Speak/braille the current misspelt word plus its context.
-           The spell check dialog contains a "paragraph" which shows the
-           context for the current spelling mistake. After speaking/brailling
-           the default action for this component, that a selection of the
-           surronding text from that paragraph with the misspelt word is also
-           spoken.
+        return grid
 
-        Arguments:
-        - event: the event.
-        - panel: the panel in the check spelling dialog containing the label
-                 with the misspelt word.
-        """
+    def setAppPreferences(self, prefs):
+        """Write out the application specific preferences lines and set the
+        new values."""
 
-        # Braille the default action for this component.
-        #
-        self.updateBraille(orca_state.locusOfFocus)
+        self.spellcheck.setAppPreferences(prefs)
 
-        # Look for the label containing the misspelled word.
-        # There will be three labels in the top panel in the Check
-        # Spelling dialog. Look for the one that isn't a label to
-        # another component.
-        #
-        allLabels = self.utilities.descendantsWithRole(
-            panel, pyatspi.ROLE_LABEL)
-        for label in allLabels:
-            # Translators: these are labels from the gedit spell checking
-            # dialog and must be the same strings gedit uses.  We hate
-            # keying off stuff like this, but we're forced to do so in
-            # in this case.
-            #
-            if label.name.startswith(_("Change to:")) or \
-               label.name.startswith(_("Misspelled word:")):
-                continue
-            else:
-                badWord = label.name
-                break
+    def doWhereAmI(self, inputEvent, basicOnly):
+        """Performs the whereAmI operation."""
 
-        # Note that we often get two or more of these focus or property-change
-        # events each time there is a new misspelt word. We extract the
-        # current text caret position and the misspelt word and compare
-        # them against the values saved from the last time this routine
-        # was called. If they are the same then we ignore it.
+        if self.spellcheck.isActive():
+            self.spellcheck.presentErrorDetails(not basicOnly)
+            return
 
-        if self.textArea != None:
-            allText = self.utilities.descendantsWithRole(
-                self.textArea, pyatspi.ROLE_TEXT)
-            caretPosition = allText[0].queryText().caretOffset
+        gtk.Script.doWhereAmI(self,inputEvent, basicOnly)
 
-            debug.println(self.debugLevel, \
-                "gedit.readMisspeltWord: type=%s  word=%s caret position=%d" \
-                % (event.type, badWord, caretPosition))
+    def onActiveDescendantChanged(self, event):
+        """Callback for object:active-descendant-changed accessibility events."""
 
-            if (caretPosition == self.lastCaretPosition) and \
-               (badWord == self.lastBadWord) and \
-               (event.type == self.lastEventType):
-                return
+        if event.source == self.spellcheck.getSuggestionsList():
+            return
 
-            # The indication that spell checking is complete is when the
-            # "misspelt" word is set to "Completed spell checking". Ugh!
-            # Try to detect this and let the user know.
-            #
-            # Translators: this string must be the same that is used by
-            # gedit.  We hate keying off stuff like this, but we're
-            # forced to do so in this case.
-            #
-            if badWord == _("Completed spell checking"):
-                utterance = _("Spell checking is complete.")
-                self.presentMessage(utterance)
-                utterance = _("Press Tab and Return to terminate.")
-                self.presentMessage(utterance)
-                return
+        gtk.Script.onActiveDescendantChanged(self, event)
 
-            # If we have a handle to the gedit text area, then extract out
-            # all the text objects, and create a list of all the words found
-            # in them.
-            #
-            allTokens = []
-            for i in range(0, len(allText)):
-                text = self.utilities.substring(allText[i], 0, -1)
-                tokens = text.split()
-                allTokens += tokens
+    def onCaretMoved(self, event):
+        """Callback for object:text-caret-moved accessibility events."""
 
-            self.speakMisspeltWord(allTokens, badWord)
+        state = event.source.getState()
+        if state.contains(pyatspi.STATE_MULTI_LINE):
+            self.spellcheck.setDocumentPosition(event.source, event.detail1)
 
-            # Save misspelt word information for comparison purposes
-            # next time around.
-            #
-            self.lastCaretPosition = caretPosition
-            self.lastBadWord = badWord
-            self.lastEventType = event.type
+        gtk.Script.onCaretMoved(self, event)
 
-    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
-        """Called when the visual object with focus changes.
+    def onFocusedChanged(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
 
-        Arguments:
-        - event: if not None, the Event that caused the change
-        - oldLocusOfFocus: Accessible that is the old locus of focus
-        - newLocusOfFocus: Accessible that is the new locus of focus
-        """
+        if not event.detail1:
+            return
 
-        details = debug.getAccessibleDetails(self.debugLevel, event.source)
-        debug.printObjectEvent(self.debugLevel, event, details)
+        if event.source.parent == self.spellcheck.getSuggestionsList():
+            self.spellcheck.presentSuggestionListItem()
+            return
 
-        # 1) Text area (for caching handle for spell checking purposes).
-        #
-        # This works in conjunction with code in section 2). Check to see if
-        # focus is currently in the gedit text area. If it is, then, if this
-        # is the first time, save a pointer to the scroll pane which contains
-        # the text being editted.
-        #
-        # Note that this drops through to then use the default event
-        # processing in the parent class for this "focus:" event.
-
-        rolesList = [pyatspi.ROLE_TEXT,
-                     pyatspi.ROLE_SCROLL_PANE,
-                     pyatspi.ROLE_FILLER,
-                     pyatspi.ROLE_PAGE_TAB,
-                     pyatspi.ROLE_PAGE_TAB_LIST,
-                     pyatspi.ROLE_SPLIT_PANE]
-        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-            debug.println(self.debugLevel,
-                          "gedit.locusOfFocusChanged - text area.")
-
-            self.textArea = event.source.parent
-            # Fall-thru to process the event with the default handler.
-
-        # 2) check spelling dialog.
-        #
-        # Check to see if the Spell Check dialog has just appeared and got
-        # focus. If it has, then speak/braille the current misspelt word
-        # plus its context.
-        #
-        # Note that in order to make sure that this focus event is for the
-        # check spelling dialog, a check is made of the localized name of the
-        # option pane. Translators for other locales will need to ensure that
-        # their translation of this string matches what gedit uses in
-        # that locale.
-
-        rolesList = [pyatspi.ROLE_TEXT,
-                     pyatspi.ROLE_FILLER,
-                     pyatspi.ROLE_PANEL,
-                     pyatspi.ROLE_FILLER,
-                     pyatspi.ROLE_FRAME]
-        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-            tmp = event.source.parent.parent
-            frame = tmp.parent.parent
-            # Translators: this is the name of the "Check Spelling" window
-            # in gedit and must be the same as what gedit uses.  We hate
-            # keying off stuff like this, but we're forced to do so in this
-            # case.
-            #
-            if frame.name.startswith(_("Check Spelling")):
-                debug.println(self.debugLevel,
-                        "gedit.locusOfFocusChanged - check spelling dialog.")
-
-                self.readMisspeltWord(event, event.source.parent.parent)
-                # Fall-thru to process the event with the default handler.
-
-        # For everything else, pass the focus event onto the parent class
-        # to be handled in the default way.
-
-        gtk.Script.locusOfFocusChanged(self, event,
-                                           oldLocusOfFocus, newLocusOfFocus)
-
-        # If we are doing a Print Preview and we are focused on the
-        # page number text area, also speak the "of n" labels to the
-        # right of this area. See bug #133275 for more details.
-        #
-        rolesList = [pyatspi.ROLE_TEXT,
-                     pyatspi.ROLE_FILLER,
-                     pyatspi.ROLE_PANEL,
-                     pyatspi.ROLE_TOOL_BAR,
-                     pyatspi.ROLE_FILLER,
-                     pyatspi.ROLE_FILLER,
-                     pyatspi.ROLE_PAGE_TAB,
-                     pyatspi.ROLE_PAGE_TAB_LIST]
-        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-            parent = event.source.parent
-            label1 = self.utilities.displayedText(parent[1])
-            label2 = self.utilities.displayedText(parent[2])
-            items = [label1, label2]
-            self.presentItemsInSpeech(items)
-            self.presentItemsInBraille(items)
-
-    # This method tries to detect and handle the following cases:
-    # 1) check spelling dialog.
+        gtk.Script.onFocusedChanged(self, event)
 
     def onNameChanged(self, event):
-        """Called whenever a property on an object changes.
+        """Callback for object:property-change:accessible-name events."""
 
-        Arguments:
-        - event: the Event
-        """
+        if not self.spellcheck.isActive():
+            gtk.Script.onNameChanged(self, event)
+            return
 
-        details = debug.getAccessibleDetails(self.debugLevel, event.source)
-        debug.printObjectEvent(self.debugLevel, event, details)
+        if event.source.name == self.spellcheck.getMisspelledWord():
+            self.spellcheck.presentErrorDetails()
 
-        # 1) check spelling dialog.
-        #
-        # Check to see if if we've had a property-change event for the
-        # accessible name for the label containing the current misspelt
-        # word in the check spelling dialog.
-        # This (hopefully) means that the user has just corrected a
-        # spelling mistake, in which case, speak/braille the current
-        # misspelt word plus its context.
-        #
-        # Note that in order to make sure that this event is for the
-        # check spelling dialog, a check is made of the localized name of the
-        # frame. Translators for other locales will need to ensure that
-        # their translation of this string matches what gedit uses in
-        # that locale.
+    def onSensitiveChanged(self, event):
+        """Callback for object:state-changed:sensitive accessibility events."""
 
-        rolesList = [pyatspi.ROLE_LABEL,
-                     pyatspi.ROLE_PANEL,
-                     pyatspi.ROLE_FILLER,
-                     pyatspi.ROLE_FRAME]
-        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-            frame = event.source.parent.parent.parent
-            # Translators: this is the name of the "Check Spelling" window
-            # in gedit and must be the same as what gedit uses.  We hate
-            # keying off stuff like this, but we're forced to do so in this
-            # case.
-            #
-            if frame.name.startswith(_("Check Spelling")):
-                debug.println(self.debugLevel,
-                      "gedit.onNameChanged - check spelling dialog.")
+        if event.source == self.spellcheck.getChangeToEntry() \
+           and self.spellcheck.presentCompletionMessage():
+            return
 
-                self.readMisspeltWord(event, event.source.parent)
-                # Fall-thru to process the event with the default handler.
-
-        gtk.Script.onNameChanged(self, event)
+        gtk.Script.onSensitiveChanged(self, event)
 
     def onTextSelectionChanged(self, event):
         """Callback for object:text-selection-changed accessibility events."""
@@ -310,3 +136,20 @@ class Script(gtk.Script):
             return
 
         self.sayLine(event.source)
+
+    def onWindowActivated(self, event):
+        """Callback for window:activate accessibility events."""
+
+        gtk.Script.onWindowActivated(self, event)
+        if not self.spellcheck.isCheckWindow(event.source):
+            return
+
+        self.spellcheck.presentErrorDetails()
+        orca.setLocusOfFocus(None, self.spellcheck.getChangeToEntry(), False)
+
+    def onWindowDeactivated(self, event):
+        """Callback for window:deactivate accessibility events."""
+
+        gtk.Script.onWindowDeactivated(self, event)
+        if self.spellcheck.isCheckWindow(event.source):
+            self.spellcheck.deactivate()

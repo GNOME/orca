@@ -38,6 +38,7 @@ from orca.orca_i18n import _
 
 from .formatting import Formatting
 from .speech_generator import SpeechGenerator
+from .spellcheck import SpellCheck
 from .script_utilities import Utilities
 from . import script_settings
 
@@ -66,11 +67,6 @@ class Script(Gecko.Script):
 
         Gecko.Script.__init__(self, app)
 
-        # This will be used to cache a handle to the Thunderbird text area for
-        # spell checking purposes.
-
-        self.textArea = None
-
     def getFormatting(self):
         """Returns the formatting strings for this script."""
         return Formatting(self)
@@ -79,6 +75,11 @@ class Script(Gecko.Script):
         """Returns the speech generator for this script."""
 
         return SpeechGenerator(self)
+
+    def getSpellCheck(self):
+        """Returns the spellcheck support for this script."""
+
+        return SpellCheck(self)
 
     def getUtilities(self):
         """Returns the utilites for this script."""
@@ -94,6 +95,10 @@ class Script(Gecko.Script):
         # Reapply "say all on load" using the Thunderbird specific setting.
         #
         self.sayAllOnLoadCheckButton.set_active(script_settings.sayAllOnLoad)
+
+        spellcheck = self.spellcheck.getAppPreferencesGUI()
+        grid.attach(spellcheck, 0, len(grid.get_children()), 1, 1)
+        grid.show_all()
 
         return grid
 
@@ -116,6 +121,17 @@ class Script(Gecko.Script):
         prefs.writelines("%s.sayAllOnLoad = %s\n" % (prefix, value))
         script_settings.sayAllOnLoad = value
 
+        self.spellcheck.setAppPreferences(prefs)
+
+    def doWhereAmI(self, inputEvent, basicOnly):
+        """Performs the whereAmI operation."""
+
+        if self.spellcheck.isActive():
+            self.spellcheck.presentErrorDetails(not basicOnly)
+            return
+
+        Gecko.Script.doWhereAmI(self,inputEvent, basicOnly)
+
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
@@ -126,12 +142,18 @@ class Script(Gecko.Script):
         self.pointOfReference['lastAutoComplete'] = None
 
         obj = event.source
+        if self.spellcheck.isAutoFocusEvent(event):
+            orca.setLocusOfFocus(event, event.source, False)
+
+        if obj.parent == self.spellcheck.getSuggestionsList():
+            self.spellcheck.presentSuggestionListItem()
+            return
+
         if not self.inDocumentContent(obj):
             default.Script.onFocusedChanged(self, event)
             return
 
         if self.isEditableMessage(obj):
-            self.textArea = obj
             default.Script.onFocusedChanged(self, event)
             return
 
@@ -155,10 +177,38 @@ class Script(Gecko.Script):
                 self.speakMessage(obj.name)
                 self._presentMessage(obj)
 
+    def onCaretMoved(self, event):
+        """Callback for object:text-caret-moved accessibility events."""
+
+        if self.isEditableMessage(event.source):
+            if event.detail1 == -1:
+                return
+            self.spellcheck.setDocumentPosition(event.source, event.detail1)
+
+        Gecko.Script.onCaretMoved(self, event)
+
     def onChildrenChanged(self, event):
         """Callback for object:children-changed accessibility events."""
 
         default.Script.onChildrenChanged(self, event)
+
+    def onSelectionChanged(self, event):
+        """Callback for object:state-changed:showing accessibility events."""
+
+        # We present changes when the list has focus via focus-changed events.
+        if event.source == self.spellcheck.getSuggestionsList():
+            return
+
+        Gecko.Script.onSelectionChanged(self, event)
+
+    def onSensitiveChanged(self, event):
+        """Callback for object:state-changed:sensitive accessibility events."""
+
+        if event.source == self.spellcheck.getChangeToEntry() \
+           and self.spellcheck.presentCompletionMessage():
+            return
+
+        Gecko.Script.onSensitiveChanged(self, event)
 
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
@@ -204,6 +254,9 @@ class Script(Gecko.Script):
         if role == pyatspi.ROLE_LABEL and parentRole == pyatspi.ROLE_STATUS_BAR:
             return
 
+        if len(event.any_data) > 1 and obj == self.spellcheck.getChangeToEntry():
+            return
+
         isSystemEvent = event.type.endswith("system")
 
         # Try to stop unwanted chatter when a message is being replied to.
@@ -240,14 +293,26 @@ class Script(Gecko.Script):
     def onTextSelectionChanged(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
+        obj = event.source
+        spellCheckEntry = self.spellcheck.getChangeToEntry()
+        if obj == spellCheckEntry:
+            return
+
+        if self.isEditableMessage(obj) and self.spellcheck.isActive():
+            text = obj.queryText()
+            selStart, selEnd = text.getSelection(0)
+            self.spellcheck.setDocumentPosition(obj, selStart)
+            self.spellcheck.presentErrorDetails()
+            return
+
         default.Script.onTextSelectionChanged(self, event)
 
     def onNameChanged(self, event):
-        """Called whenever a property on an object changes.
+        """Callback for object:property-change:accessible-name events."""
 
-        Arguments:
-        - event: the Event
-        """
+        if event.source.name == self.spellcheck.getMisspelledWord():
+            self.spellcheck.presentErrorDetails()
+            return
 
         obj = event.source
 
@@ -268,39 +333,6 @@ class Script(Gecko.Script):
                 [obj, offset] = self.findFirstCaretContext(obj, 0)
                 self.setCaretPosition(obj, offset)
                 return
-
-        # If we get a "object:property-change:accessible-name" event for 
-        # the first item in the Suggestions lists for the spell checking
-        # dialog, then speak the first two labels in that dialog. These
-        # will by the "Misspelled word:" label and the currently misspelled
-        # word. See bug #535192 for more details.
-        #
-        rolesList = [pyatspi.ROLE_LIST_ITEM,
-                     pyatspi.ROLE_LIST,
-                     pyatspi.ROLE_DIALOG,
-                     pyatspi.ROLE_APPLICATION]
-        if self.utilities.hasMatchingHierarchy(obj, rolesList):
-            dialog = obj.parent.parent
-
-            # Translators: this is what the name of the spell checking 
-            # dialog in Thunderbird begins with. The translated form
-            # has to match what Thunderbird is using.  We hate keying
-            # off stuff like this, but we're forced to do so in this case.
-            #
-            if dialog.name.startswith(_("Check Spelling")):
-                if obj.getIndexInParent() == 0:
-                    badWord = self.utilities.displayedText(dialog[1])
-
-                    if self.textArea != None:
-                        # If we have a handle to the Thunderbird message text
-                        # area, then extract out all the text objects, and
-                        # create a list of all the words found in them.
-                        #
-                        allTokens = []
-                        text = self.utilities.substring(self.textArea, 0, -1)
-                        tokens = text.split()
-                        allTokens += tokens
-                        self.speakMisspeltWord(allTokens, badWord)
 
     def _presentMessage(self, documentFrame):
         """Presents the first line of the message, or the entire message,
@@ -383,3 +415,20 @@ class Script(Gecko.Script):
             return False
 
         return Gecko.Script.useCaretNavigationModel(self, keyboardEvent)
+
+    def onWindowActivated(self, event):
+        """Callback for window:activate accessibility events."""
+
+        Gecko.Script.onWindowActivated(self, event)
+        if not self.spellcheck.isCheckWindow(event.source):
+            return
+
+        self.spellcheck.presentErrorDetails()
+        orca.setLocusOfFocus(None, self.spellcheck.getChangeToEntry(), False)
+
+    def onWindowDeactivated(self, event):
+        """Callback for window:deactivate accessibility events."""
+
+        Gecko.Script.onWindowDeactivated(self, event)
+        if self.spellcheck.isCheckWindow(event.source):
+            self.spellcheck.deactivate()
