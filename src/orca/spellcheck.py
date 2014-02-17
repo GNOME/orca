@@ -41,7 +41,12 @@ class SpellCheck:
     def __init__(self, script, hasChangeToEntry=True):
         self._script = script
         self._hasChangeToEntry = hasChangeToEntry
-        self._clearState()
+        self._window = None
+        self._errorWidget = None
+        self._changeToEntry = None
+        self._suggestionsList = None
+        self._activated = False
+        self._documentPosition = None, -1
 
         self.spellErrorCheckButton = None
         self.spellSuggestionCheckButton = None
