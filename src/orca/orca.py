@@ -171,11 +171,15 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
             appname = "'" + app.name + "'"
         except:
             appname = "None"
+        try:
+            name = orca_state.locusOfFocus.name
+            rolename = orca_state.locusOfFocus.getRoleName()
+        except:
+            name = "Error"
+            rolename = "Error"
         debug.println(debug.LEVEL_FINE,
                       "LOCUS OF FOCUS: app=%s name='%s' role='%s'" \
-                      % (appname,
-                         orca_state.locusOfFocus.name,
-                         orca_state.locusOfFocus.getRoleName()))
+                      % (appname, name, rolename))
 
         if event:
             debug.println(debug.LEVEL_FINE,
