@@ -1,3 +1,22 @@
+3.11.90 - 18 February 2014
+
+General:
+
+  * Create new, uniform spellcheck support and implement for Gedit and
+    Thunderbird
+
+  * Fix the live region announcement review keybindings
+
+  * Fix a mysterious Brltty crash triggered by Orca
+
+  * Add a sanity check to hopefully work around a Thunderbird timeout
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    uk            Ukranian                Daniel Korostil
+
+=========
+
 3.11.5 - 4 February 2014
 
 Please note: This cycle, Orca is getting an overhaul with much of the
