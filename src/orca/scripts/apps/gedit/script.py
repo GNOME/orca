@@ -110,8 +110,24 @@ class Script(gtk.Script):
             gtk.Script.onNameChanged(self, event)
             return
 
-        if event.source.name == self.spellcheck.getMisspelledWord():
+        name = event.source.name
+        if name == self.spellcheck.getMisspelledWord():
             self.spellcheck.presentErrorDetails()
+            return
+
+        parent = event.source.parent
+        if parent != self.spellcheck.getSuggestionsList() \
+           or not parent.getState().contains(pyatspi.STATE_FOCUSED):
+            return
+
+        entry = self.spellcheck.getChangeToEntry()
+        if name != self.utilities.displayedText(entry):
+            return
+
+        # If we're here, the locusOfFocus was in the selection list when
+        # that list got destroyed and repopulated. Focus is still there.
+        orca.setLocusOfFocus(event, event.source, False)
+        self.updateBraille(orca_state.locusOfFocus)
 
     def onSensitiveChanged(self, event):
         """Callback for object:state-changed:sensitive accessibility events."""
