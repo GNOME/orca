@@ -850,6 +850,12 @@ LARGE_OBJECT_NEXT = _("Goes to next large object.")
 LARGE_OBJECT_LIST = _("Displays a list of large objects.")
 
 # Translators: this is for navigating among links in a document.
+LINK_PREV = _("Goes to previous link.")
+
+# Translators: this is for navigating among links in a document.
+LINK_NEXT = _("Goes to next link.")
+
+# Translators: this is for navigating among links in a document.
 LINK_LIST = _("Displays a list of links.")
 
 # Translators: this is for navigating among lists in a document.

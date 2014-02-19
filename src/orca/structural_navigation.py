@@ -3576,6 +3576,12 @@ class StructuralNavigation:
         """
 
         bindings = {}
+        prevDesc = cmdnames.LINK_PREV
+        bindings["previous"] = ["k", settings.SHIFT_MODIFIER_MASK, prevDesc]
+
+        nextDesc = cmdnames.LINK_NEXT
+        bindings["next"] = ["k", settings.NO_MODIFIER_MASK, nextDesc]
+
         listDesc = cmdnames.LINK_LIST
         bindings["list"] = ["k", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
