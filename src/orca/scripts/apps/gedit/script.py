@@ -96,6 +96,8 @@ class Script(gtk.Script):
             return
 
         if event.source.parent == self.spellcheck.getSuggestionsList():
+            orca.setLocusOfFocus(event, event.source, False)
+            self.updateBraille(orca_state.locusOfFocus)
             self.spellcheck.presentSuggestionListItem()
             return
 
@@ -146,6 +148,7 @@ class Script(gtk.Script):
 
         self.spellcheck.presentErrorDetails()
         orca.setLocusOfFocus(None, self.spellcheck.getChangeToEntry(), False)
+        self.updateBraille(orca_state.locusOfFocus)
 
     def onWindowDeactivated(self, event):
         """Callback for window:deactivate accessibility events."""
