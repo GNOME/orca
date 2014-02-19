@@ -16,7 +16,7 @@
 # Hugo Vaz Sampaio <hvazsampaio@gmail.com>, 2010.
 # Rodrigo Padula de Oliveira <contato@rodrigopadula.com>, 2011.
 # Antonio Fernandes C. Neto <fernandesn@gnome.org>, 2011, 2012.
-# Enrico Nicoletto <liverig@gmail.com>, 2013.
+# Enrico Nicoletto <liverig@gmail.com>, 2013, 2014.
 # José Vilmar Estácio de Souza <vilmar@informal.com.br>, 2013.
 # Júnior Pires <juniorpiresupe@gmail.com>, 2013.
 # Rafael Ferreira <rafael.f.f1@gmail.com>, 2013, 2014.
@@ -26,9 +26,9 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-12-27 14:24+0000\n"
-"PO-Revision-Date: 2014-01-02 06:21-0300\n"
-"Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
+"POT-Creation-Date: 2014-02-19 13:12+0000\n"
+"PO-Revision-Date: 2014-02-19 14:34-0300\n"
+"Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -2983,174 +2983,186 @@ msgstr "Exibe uma lista de blocos."
 
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:853
+#| msgid "Goes to previous line."
+msgid "Goes to previous link."
+msgstr "Vai para o link anterior."
+
+#. Translators: this is for navigating among links in a document.
+#: ../src/orca/cmdnames.py:856
+#| msgid "Goes to next line."
+msgid "Goes to next link."
+msgstr "Vai para a próximo link."
+
+#. Translators: this is for navigating among links in a document.
+#: ../src/orca/cmdnames.py:859
 msgid "Displays a list of links."
 msgstr "Exibe uma lista de links."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:856
+#: ../src/orca/cmdnames.py:862
 msgid "Goes to previous list."
 msgstr "Vai para a lista anterior."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:859
+#: ../src/orca/cmdnames.py:865
 msgid "Goes to next list."
 msgstr "Vai para a próxima lista."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:862
+#: ../src/orca/cmdnames.py:868
 msgid "Displays a list of lists."
 msgstr "Exibe uma lista de listas."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:865
+#: ../src/orca/cmdnames.py:871
 msgid "Goes to previous list item."
 msgstr "Vai para o item anterior da lista."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:868
+#: ../src/orca/cmdnames.py:874
 msgid "Goes to next list item."
 msgstr "Vai para o próximo item da lista."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:871
+#: ../src/orca/cmdnames.py:877
 msgid "Displays a list of list items."
 msgstr "Exibe uma lista de itens de lista."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:876
+#: ../src/orca/cmdnames.py:882
 msgid "Goes to previous live region."
 msgstr "Vai para a região dinâmica anterior."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:881
+#: ../src/orca/cmdnames.py:887
 msgid "Goes to next live region."
 msgstr "Vai para a próxima região dinâmica."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:886
+#: ../src/orca/cmdnames.py:892
 msgid "Goes to the last live region which made an announcement."
 msgstr "Ir para a ultima região que fez um anúncio."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:889
+#: ../src/orca/cmdnames.py:895
 msgid "Goes to previous paragraph."
 msgstr "Vai para o parágrafo anterior."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:892
+#: ../src/orca/cmdnames.py:898
 msgid "Goes to next paragraph."
 msgstr "Vai para o próximo parágrafo."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:895
+#: ../src/orca/cmdnames.py:901
 msgid "Displays a list of paragraphs."
 msgstr "Exibe uma lista de parágrafos."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:898
+#: ../src/orca/cmdnames.py:904
 msgid "Goes to previous radio button."
 msgstr "Vai para o botão de opção anterior."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:901
+#: ../src/orca/cmdnames.py:907
 msgid "Goes to next radio button."
 msgstr "Vai para o próximo botão de opção."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:904
+#: ../src/orca/cmdnames.py:910
 msgid "Displays a list of radio buttons."
 msgstr "Exibe uma lista de botões de opção."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:908
+#: ../src/orca/cmdnames.py:914
 msgid "Goes to previous separator."
 msgstr "Vai para o caractere anterior."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:912
+#: ../src/orca/cmdnames.py:918
 msgid "Goes to next separator."
 msgstr "Vai para o próximo caractere."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:915
+#: ../src/orca/cmdnames.py:921
 msgid "Goes to previous table."
 msgstr "Vai para a tabela anterior."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:918
+#: ../src/orca/cmdnames.py:924
 msgid "Goes to next table."
 msgstr "Vai para próxima tabela."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:921
+#: ../src/orca/cmdnames.py:927
 msgid "Displays a list of tables."
 msgstr "Exibe uma lista de tabelas."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:924
+#: ../src/orca/cmdnames.py:930
 msgid "Goes down one cell."
 msgstr "Vai para a célula de baixo."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:927
+#: ../src/orca/cmdnames.py:933
 msgid "Goes to the first cell in a table."
 msgstr "Vai para a primeira célula em uma tabela."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:930
+#: ../src/orca/cmdnames.py:936
 msgid "Goes to the last cell in a table."
 msgstr "Vai para a última célula em uma tabela."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:933
+#: ../src/orca/cmdnames.py:939
 msgid "Goes left one cell."
 msgstr "Vai para a célula da esquerda."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:936
+#: ../src/orca/cmdnames.py:942
 msgid "Goes right one cell."
 msgstr "Vai para a célula da direita."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:939
+#: ../src/orca/cmdnames.py:945
 msgid "Goes up one cell."
 msgstr "Vai para a célula de cima."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:942
+#: ../src/orca/cmdnames.py:948
 msgid "Goes to previous unvisited link."
 msgstr "Vai para o link anterior não visitado."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:945
+#: ../src/orca/cmdnames.py:951
 msgid "Goes to next unvisited link."
 msgstr "Vai para o próximo link não visitado."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:948
+#: ../src/orca/cmdnames.py:954
 msgid "Displays a list of unvisited links."
 msgstr "Exibe uma lista de links não visitados."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:951
+#: ../src/orca/cmdnames.py:957
 msgid "Goes to previous visited link."
 msgstr "Vai para o link visitado anteriormente."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:954
+#: ../src/orca/cmdnames.py:960
 msgid "Goes to next visited link."
 msgstr "Vai para o próximo link visitado."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:957
+#: ../src/orca/cmdnames.py:963
 msgid "Displays a list of visited links."
 msgstr "Exibe uma lista de links visitados."
 
@@ -4056,28 +4068,59 @@ msgstr "Maiúscula"
 msgid "Speech Dispatcher"
 msgstr "Speech Dispatcher"
 
+#. Translators: This is a label for a group of options related to Orca's behavior
+#. when presenting an application's spell check dialog.
+#: ../src/orca/guilabels.py:641
+msgctxt "OptionGroup"
+msgid "Spell Check"
+msgstr "Verificação ortográfica"
+
+#. Translators: This is a label for a checkbox associated with an Orca setting.
+#. When this option is enabled, Orca will spell out the current error in addition
+#. to speaking it. For example, if the misspelled word is "foo," enabling this
+#. setting would cause Orca to speak "f o o" after speaking "foo".
+#: ../src/orca/guilabels.py:647
+msgid "Spell _error"
+msgstr "Soletrar _erro"
+
+#. Translators: This is a label for a checkbox associated with an Orca setting.
+#. When this option is enabled, Orca will spell out the current suggestion in
+#. addition to speaking it. For example, if the misspelled word is "foo," and
+#. the first suggestion is "for" enabling this setting would cause Orca to speak
+#. "f o r" after speaking "for".
+#: ../src/orca/guilabels.py:654
+msgid "Spell _suggestion"
+msgstr "Soletrar _sugestão"
+
+#. Translators: This is a label for a checkbox associated with an Orca setting.
+#. When this option is enabled, Orca will present the context (surrounding text,
+#. typically the sentence or line) in which the mistake occurred.
+#: ../src/orca/guilabels.py:659
+msgid "Present _context of error"
+msgstr "Apresentar _contexto do erro"
+
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spread sheet cell. Coordinates are
 #. the row and column position within the spread sheet (i.e. A1, B1, C2 ...)
-#: ../src/orca/guilabels.py:642
+#: ../src/orca/guilabels.py:664
 msgid "Speak spread sheet cell coordinates"
 msgstr "Falar as coordenadas da planilha"
 
 #. Translators: This is a label for an option for whether or not to speak the
 #. header of a table cell in document content.
-#: ../src/orca/guilabels.py:646
+#: ../src/orca/guilabels.py:668
 msgid "Announce cell _header"
 msgstr "Anunciar _cabeçalho da célula"
 
 #. Translators: This is the title of a panel containing options for specifying
 #. how to navigate tables in document content.
-#: ../src/orca/guilabels.py:650
+#: ../src/orca/guilabels.py:672
 msgid "Table Navigation"
 msgstr "Navegação da tabela"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
-#: ../src/orca/guilabels.py:654
+#: ../src/orca/guilabels.py:676
 msgid "Skip _blank cells"
 msgstr "Pular _células em branco"
 
@@ -4085,26 +4128,26 @@ msgstr "Pular _células em branco"
 #. row of a table read; other times they want just the current cell presented to
 #. them. This label is associated with the default presentation to be used.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/guilabels.py:659 ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/guilabels.py:681 ../src/orca/orca-setup.ui.h:60
 msgid "Speak _cell"
 msgstr "Falar célula"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
-#: ../src/orca/guilabels.py:663
+#: ../src/orca/guilabels.py:685
 msgid "Speak _cell coordinates"
 msgstr "Falar as coordenadas da _célula"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many rows and columns
 #. a particular table cell spans in a table).
-#: ../src/orca/guilabels.py:668
+#: ../src/orca/guilabels.py:690
 msgid "Speak _multiple cell spans"
 msgstr "Falar _número de células mescladas"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
-#: ../src/orca/guilabels.py:672
+#: ../src/orca/guilabels.py:694
 msgid "Attribute Name"
 msgstr "Nome do atributo"
 
@@ -4113,20 +4156,20 @@ msgstr "Nome do atributo"
 #. Orca needs to provide its own support. As such, Orca offers the user the
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:679
+#: ../src/orca/guilabels.py:701
 msgid "Control caret navigation"
 msgstr "Usar navegação por cursor"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:684
+#: ../src/orca/guilabels.py:706
 msgid "Enable _structural navigation"
 msgstr "Habilitar navegação _estrutural"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: ../src/orca/guilabels.py:688 ../src/orca/orca-setup.ui.h:56
+#: ../src/orca/guilabels.py:710 ../src/orca/orca-setup.ui.h:56
 msgid "Brie_f"
 msgstr "Cur_to"
 
@@ -5238,7 +5281,7 @@ msgstr "tem fórmula"
 #. information and examples.
 #.
 #: ../src/orca/messages.py:607
-#: ../src/orca/scripts/toolkits/Gecko/braille_generator.py:149
+#: ../src/orca/scripts/toolkits/Gecko/braille_generator.py:157
 msgid "image map link"
 msgstr "link de mapa de imagens"
 
@@ -6367,7 +6410,7 @@ msgstr "Fala indisponível."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3772
+#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3779
 msgid "string not found"
 msgstr "trecho não localizado"
 
@@ -7032,12 +7075,7 @@ msgstr "obrigatório"
 msgid "multi-select"
 msgstr "seleção múltipla"
 
-#. Translators: the "Find" string must match what gnome-search-tool
-#. is using.  We hate keying off stuff like this, but we're forced
-#. to do so in this case.
-#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:188
-#: ../src/orca/scripts/apps/gedit/script.py:190
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:99
+#: ../src/orca/orca-find.ui.h:1
 msgid "Find"
 msgstr "Localizar"
 
@@ -7525,82 +7563,9 @@ msgstr ""
 msgid "Read"
 msgstr "Ler"
 
-#. Translators: these are labels from the gedit spell checking
-#. dialog and must be the same strings gedit uses.  We hate
-#. keying off stuff like this, but we're forced to do so in
-#. in this case.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:97
-msgid "Change to:"
-msgstr "Mudar para:"
-
-#: ../src/orca/scripts/apps/gedit/script.py:98
-msgid "Misspelled word:"
-msgstr "Palavra soletrada incorretamente:"
-
-#. The indication that spell checking is complete is when the
-#. "misspelt" word is set to "Completed spell checking". Ugh!
-#. Try to detect this and let the user know.
-#.
-#. Translators: this string must be the same that is used by
-#. gedit.  We hate keying off stuff like this, but we're
-#. forced to do so in this case.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:132
-msgid "Completed spell checking"
-msgstr "Correção ortográfica completa"
-
-#: ../src/orca/scripts/apps/gedit/script.py:133
-msgid "Spell checking is complete."
-msgstr "A correção ortográfica está completa."
-
-#: ../src/orca/scripts/apps/gedit/script.py:135
-msgid "Press Tab and Return to terminate."
-msgstr "Pressione Tab e Enter para encerrar."
-
-#. Translators: this is the name of the "Check Spelling" window
-#. in gedit and must be the same as what gedit uses.  We hate
-#. keying off stuff like this, but we're forced to do so in this
-#. case.
-#.
-#. Translators: this is what the name of the spell checking
-#. dialog in Thunderbird begins with. The translated form
-#. has to match what Thunderbird is using.  We hate keying
-#. off stuff like this, but we're forced to do so in this case.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:259
-#: ../src/orca/scripts/apps/gedit/script.py:332
-#: ../src/orca/scripts/apps/Thunderbird/script.py:278
-#: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
-msgid "Check Spelling"
-msgstr "Verificação ortográfica"
-
-#. Translators: the "Phrase not found" is the result of a failed
-#. find command.  It must be the same as what gedit uses.  We hate
-#. keying off stuff like this, but we're forced to do so in this
-#. case.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:361
-msgid "Phrase not found"
-msgstr "Expressão não localizada"
-
-#. Translators: this indicates a find command succeeded in
-#. finding something.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:402
-msgid "Phrase found."
-msgstr "Expressão localizada."
-
 #: ../src/orca/scripts/apps/gnome-mud/script.py:119
 msgid "Read the latest n messages in the incoming messages text area."
 msgstr "Leia as últimas n mensagens na área de texto de mensagens recebidas."
-
-#. Translators: the "Stop" string must match what gnome-search-tool
-#. is using.  We hate keying off stuff like this, but we're forced
-#. to do so in this case.
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:85
-msgid "Stop"
-msgstr "Pare"
 
 #: ../src/orca/scripts/apps/liferea/script.py:122
 msgid "Work online / offline"
@@ -7625,6 +7590,15 @@ msgstr "Área "
 msgid "Display more options"
 msgstr "Exibir mais opções"
 
+#. Translators: this is what the name of the spell checking
+#. dialog in Thunderbird begins with. The translated form
+#. has to match what Thunderbird is using.  We hate keying
+#. off stuff like this, but we're forced to do so in this case.
+#.
+#: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
+msgid "Check Spelling"
+msgstr "Verificação ortográfica"
+
 #. Translators: these represent the number of pixels
 #. for the left or right margins in a document.  We
 #. are hesitant to interpret the values -- they are
@@ -7632,7 +7606,7 @@ msgstr "Exibir mais opções"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3389 ../src/orca/scripts/default.py:3401
+#: ../src/orca/scripts/default.py:3396 ../src/orca/scripts/default.py:3408
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7641,7 +7615,7 @@ msgstr[1] "%(key)s %(value)s pixels"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4309
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4205
 msgid "open"
 msgstr "abrir"
 
@@ -7650,7 +7624,7 @@ msgstr "abrir"
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:783
+#: ../src/orca/settings.py:786
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%H horas, %M minutos e %S segundos."
 
@@ -7659,7 +7633,7 @@ msgstr "%H horas, %M minutos e %S segundos."
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:790
+#: ../src/orca/settings.py:793
 msgid "%H hours and %M minutes."
 msgstr "%H horas e %M minutos."
 
@@ -8751,6 +8725,30 @@ msgstr ""
 "Para diminuir, pressione a seta para a esquerda; para aumentar, pressione a "
 "seta para a direita. Para o valor mínimo pressione Home, e para o máximo, "
 "pressione End."
+
+#~ msgid "Change to:"
+#~ msgstr "Mudar para:"
+
+#~ msgid "Misspelled word:"
+#~ msgstr "Palavra soletrada incorretamente:"
+
+#~ msgid "Completed spell checking"
+#~ msgstr "Correção ortográfica completa"
+
+#~ msgid "Spell checking is complete."
+#~ msgstr "A correção ortográfica está completa."
+
+#~ msgid "Press Tab and Return to terminate."
+#~ msgstr "Pressione Tab e Enter para encerrar."
+
+#~ msgid "Phrase not found"
+#~ msgstr "Expressão não localizada"
+
+#~ msgid "Phrase found."
+#~ msgstr "Expressão localizada."
+
+#~ msgid "Stop"
+#~ msgstr "Pare"
 
 #~ msgid "Notify me when errors have been logged."
 #~ msgstr "Notificar-me quando erros forem registrados."
