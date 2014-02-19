@@ -158,6 +158,7 @@ class SpellCheck:
         if not (self.isActive() and self.isComplete()):
             return False
 
+        self._script.clearBraille()
         self._script.presentMessage(self.getCompletionMessage())
         return True
 
