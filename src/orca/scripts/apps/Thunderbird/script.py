@@ -146,7 +146,8 @@ class Script(Gecko.Script):
             orca.setLocusOfFocus(event, event.source, False)
             self.updateBraille(orca_state.locusOfFocus)
 
-        if obj.parent == self.spellcheck.getSuggestionsList():
+        if self.spellcheck.isSuggestionsItem(event.source) \
+           and self.spellcheck.isSuggestionsItem(orca_state.locusOfFocus):
             orca.setLocusOfFocus(event, event.source, False)
             self.updateBraille(orca_state.locusOfFocus)
             self.spellcheck.presentSuggestionListItem()

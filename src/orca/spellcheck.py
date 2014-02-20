@@ -32,6 +32,7 @@ import re
 
 from orca import guilabels
 from orca import messages
+from orca import settings
 from orca import settings_manager
 
 _settingsManager = settings_manager.getManager()
@@ -122,6 +123,9 @@ class SpellCheck:
     def isAutoFocusEvent(self, event):
         return False
 
+    def isSuggestionsItem(self, obj):
+        return obj and obj.parent == self._suggestionsList
+
     def presentContext(self):
         if not self.isActive():
             return False
@@ -151,7 +155,8 @@ class SpellCheck:
         if not string:
             return False
 
-        self._script.speakMessage(messages.MISSPELLED_WORD_CONTEXT % string)
+        voice = self._script.voices.get(settings.DEFAULT_VOICE)
+        self._script.speakMessage(messages.MISSPELLED_WORD_CONTEXT % string, voice=voice)
         return True
 
     def presentCompletionMessage(self):
@@ -159,7 +164,8 @@ class SpellCheck:
             return False
 
         self._script.clearBraille()
-        self._script.presentMessage(self.getCompletionMessage())
+        voice = self._script.voices.get(settings.DEFAULT_VOICE)
+        self._script.presentMessage(self.getCompletionMessage(), voice=voice)
         return True
 
     def presentErrorDetails(self, detailed=False):
@@ -182,7 +188,8 @@ class SpellCheck:
         if not word:
             return False
 
-        self._script.speakMessage(messages.MISSPELLED_WORD % word)
+        voice = self._script.voices.get(settings.DEFAULT_VOICE)
+        self._script.speakMessage(messages.MISSPELLED_WORD % word, voice=voice)
         if detailed or _settingsManager.getSetting('spellcheckSpellError'):
             self._script.spellCurrentItem(word)
 
@@ -201,7 +208,8 @@ class SpellCheck:
 
         label = self._script.utilities.displayedLabel(entry)
         string = self._script.utilities.substring(entry, 0, -1)
-        self._script.speakMessage("%s %s" % (label, string))
+        voice = self._script.voices.get(settings.DEFAULT_VOICE)
+        self._script.speakMessage("%s %s" % (label, string), voice=voice)
         if detailed or _settingsManager.getSetting('spellcheckSpellSuggestion'):
             self._script.spellCurrentItem(string)
 
@@ -220,7 +228,8 @@ class SpellCheck:
             return False
 
         string = items[0].name
-        self._script.speakMessage(string)
+        voice = self._script.voices.get(settings.DEFAULT_VOICE)
+        self._script.speakMessage(string, voice=voice)
         if detailed or _settingsManager.getSetting('spellcheckSpellSuggestion'):
             self._script.spellCurrentItem(string)
 
@@ -232,7 +241,6 @@ class SpellCheck:
         self._changeToEntry = None
         self._suggestionsList = None
         self._activated = False
-        self._documentPosition = None, -1
 
     def _isCandidateWindow(self, window):
         return False
