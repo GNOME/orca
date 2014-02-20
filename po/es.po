@@ -7,23 +7,23 @@
 # Maria Majadas <maria.majadas@hispalinux.es>, 2005.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2007, 2008, 2010, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2010, 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011, 2012, 2013.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011, 2012, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-11-14 13:52+0000\n"
-"PO-Revision-Date: 2013-11-16 18:06+0100\n"
+"POT-Creation-Date: 2014-02-19 03:29+0000\n"
+"PO-Revision-Date: 2014-02-20 14:20+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: Gtranslator 2.91.5\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Screen Reader"
@@ -4033,28 +4033,59 @@ msgstr "Mayúscula"
 msgid "Speech Dispatcher"
 msgstr "Speech Dispatcher"
 
+#. Translators: This is a label for a group of options related to Orca's behavior
+#. when presenting an application's spell check dialog.
+#: ../src/orca/guilabels.py:641
+msgctxt "OptionGroup"
+msgid "Spell Check"
+msgstr "Revisor ortográfico"
+
+#. Translators: This is a label for a checkbox associated with an Orca setting.
+#. When this option is enabled, Orca will spell out the current error in addition
+#. to speaking it. For example, if the misspelled word is "foo," enabling this
+#. setting would cause Orca to speak "f o o" after speaking "foo".
+#: ../src/orca/guilabels.py:647
+msgid "Spell _error"
+msgstr "_Error ortográfico"
+
+#. Translators: This is a label for a checkbox associated with an Orca setting.
+#. When this option is enabled, Orca will spell out the current suggestion in
+#. addition to speaking it. For example, if the misspelled word is "foo," and
+#. the first suggestion is "for" enabling this setting would cause Orca to speak
+#. "f o r" after speaking "for".
+#: ../src/orca/guilabels.py:654
+msgid "Spell _suggestion"
+msgstr "_Sugerencia ortográfica"
+
+#. Translators: This is a label for a checkbox associated with an Orca setting.
+#. When this option is enabled, Orca will present the context (surrounding text,
+#. typically the sentence or line) in which the mistake occurred.
+#: ../src/orca/guilabels.py:659
+msgid "Present _context of error"
+msgstr "Mostrar el _contexto del error"
+
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spread sheet cell. Coordinates are
 #. the row and column position within the spread sheet (i.e. A1, B1, C2 ...)
-#: ../src/orca/guilabels.py:642
+#: ../src/orca/guilabels.py:664
 msgid "Speak spread sheet cell coordinates"
 msgstr "Leer las coordenadas de las celdas en hojas de cálculo"
 
 #. Translators: This is a label for an option for whether or not to speak the
 #. header of a table cell in document content.
-#: ../src/orca/guilabels.py:646
+#: ../src/orca/guilabels.py:668
 msgid "Announce cell _header"
 msgstr "_Anunciar la cabecera de una celda"
 
 #. Translators: This is the title of a panel containing options for specifying
 #. how to navigate tables in document content.
-#: ../src/orca/guilabels.py:650
+#: ../src/orca/guilabels.py:672
 msgid "Table Navigation"
 msgstr "Navegación por tablas"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
-#: ../src/orca/guilabels.py:654
+#: ../src/orca/guilabels.py:676
 msgid "Skip _blank cells"
 msgstr "Saltar celdas en _blanco"
 
@@ -4062,26 +4093,26 @@ msgstr "Saltar celdas en _blanco"
 #. row of a table read; other times they want just the current cell presented to
 #. them. This label is associated with the default presentation to be used.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/guilabels.py:659 ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/guilabels.py:681 ../src/orca/orca-setup.ui.h:60
 msgid "Speak _cell"
 msgstr "Leer _celda"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
-#: ../src/orca/guilabels.py:663
+#: ../src/orca/guilabels.py:685
 msgid "Speak _cell coordinates"
 msgstr "Leer las coordenadas de una _celda"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many rows and columns
 #. a particular table cell spans in a table).
-#: ../src/orca/guilabels.py:668
+#: ../src/orca/guilabels.py:690
 msgid "Speak _multiple cell spans"
 msgstr "Leer _celdas dentro de otra celda"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
-#: ../src/orca/guilabels.py:672
+#: ../src/orca/guilabels.py:694
 msgid "Attribute Name"
 msgstr "Nombre del atributo"
 
@@ -4090,20 +4121,20 @@ msgstr "Nombre del atributo"
 #. Orca needs to provide its own support. As such, Orca offers the user the
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:679
+#: ../src/orca/guilabels.py:701
 msgid "Control caret navigation"
 msgstr "Controla la navegación de cursor"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:684
+#: ../src/orca/guilabels.py:706
 msgid "Enable _structural navigation"
 msgstr "Activar la navegación e_structural"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: ../src/orca/guilabels.py:688 ../src/orca/orca-setup.ui.h:56
+#: ../src/orca/guilabels.py:710 ../src/orca/orca-setup.ui.h:56
 msgid "Brie_f"
 msgstr "_Breve"
 
@@ -5212,7 +5243,7 @@ msgstr "tiene fórmula"
 #. information and examples.
 #.
 #: ../src/orca/messages.py:607
-#: ../src/orca/scripts/toolkits/Gecko/braille_generator.py:149
+#: ../src/orca/scripts/toolkits/Gecko/braille_generator.py:157
 msgid "image map link"
 msgstr "enlace de mapa de imágen"
 
@@ -6342,7 +6373,7 @@ msgstr "La voz no está disponible."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3861
+#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3779
 msgid "string not found"
 msgstr "cadena no encontrada"
 
@@ -6913,35 +6944,30 @@ msgstr "vertical"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:98
-#| msgid "checked"
 msgctxt "checkbox"
 msgid "checked"
 msgstr "marcada"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:101
-#| msgid "not checked"
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "no marcada"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:104
-#| msgid "partially checked"
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "marcada parcialmente"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:107
-#| msgid "pressed"
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "pulsado"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:110
-#| msgid "not pressed"
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "no pulsado"
@@ -7014,12 +7040,7 @@ msgstr "requerido"
 msgid "multi-select"
 msgstr "selección-múltiple"
 
-#. Translators: the "Find" string must match what gnome-search-tool
-#. is using.  We hate keying off stuff like this, but we're forced
-#. to do so in this case.
-#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:188
-#: ../src/orca/scripts/apps/gedit/script.py:190
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:99
+#: ../src/orca/orca-find.ui.h:1
 msgid "Find"
 msgstr "Buscar"
 
@@ -7507,82 +7528,9 @@ msgstr ""
 msgid "Read"
 msgstr "Leer"
 
-#. Translators: these are labels from the gedit spell checking
-#. dialog and must be the same strings gedit uses.  We hate
-#. keying off stuff like this, but we're forced to do so in
-#. in this case.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:97
-msgid "Change to:"
-msgstr "Cambiar a:"
-
-#: ../src/orca/scripts/apps/gedit/script.py:98
-msgid "Misspelled word:"
-msgstr "Palabra mal escrita:"
-
-#. The indication that spell checking is complete is when the
-#. "misspelt" word is set to "Completed spell checking". Ugh!
-#. Try to detect this and let the user know.
-#.
-#. Translators: this string must be the same that is used by
-#. gedit.  We hate keying off stuff like this, but we're
-#. forced to do so in this case.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:132
-msgid "Completed spell checking"
-msgstr "Corrección ortográfica completada"
-
-#: ../src/orca/scripts/apps/gedit/script.py:133
-msgid "Spell checking is complete."
-msgstr "La corrección ortográfica está completa."
-
-#: ../src/orca/scripts/apps/gedit/script.py:135
-msgid "Press Tab and Return to terminate."
-msgstr "Pulse tab e intro para terminar."
-
-#. Translators: this is the name of the "Check Spelling" window
-#. in gedit and must be the same as what gedit uses.  We hate
-#. keying off stuff like this, but we're forced to do so in this
-#. case.
-#.
-#. Translators: this is what the name of the spell checking
-#. dialog in Thunderbird begins with. The translated form
-#. has to match what Thunderbird is using.  We hate keying
-#. off stuff like this, but we're forced to do so in this case.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:259
-#: ../src/orca/scripts/apps/gedit/script.py:332
-#: ../src/orca/scripts/apps/Thunderbird/script.py:348
-#: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
-msgid "Check Spelling"
-msgstr "Corregir ortografía"
-
-#. Translators: the "Phrase not found" is the result of a failed
-#. find command.  It must be the same as what gedit uses.  We hate
-#. keying off stuff like this, but we're forced to do so in this
-#. case.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:361
-msgid "Phrase not found"
-msgstr "Frase no encontrada"
-
-#. Translators: this indicates a find command succeeded in
-#. finding something.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:402
-msgid "Phrase found."
-msgstr "Frase encontrada."
-
 #: ../src/orca/scripts/apps/gnome-mud/script.py:119
 msgid "Read the latest n messages in the incoming messages text area."
 msgstr "Lee los n últimos mensajes en el área de texto de mensajes entrantes."
-
-#. Translators: the "Stop" string must match what gnome-search-tool
-#. is using.  We hate keying off stuff like this, but we're forced
-#. to do so in this case.
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:85
-msgid "Stop"
-msgstr "Parar"
 
 #: ../src/orca/scripts/apps/liferea/script.py:122
 msgid "Work online / offline"
@@ -7607,6 +7555,15 @@ msgstr "Escritorio "
 msgid "Display more options"
 msgstr "Mostrar más opciones"
 
+#. Translators: this is what the name of the spell checking
+#. dialog in Thunderbird begins with. The translated form
+#. has to match what Thunderbird is using.  We hate keying
+#. off stuff like this, but we're forced to do so in this case.
+#.
+#: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
+msgid "Check Spelling"
+msgstr "Corregir ortografía"
+
 #. Translators: these represent the number of pixels
 #. for the left or right margins in a document.  We
 #. are hesitant to interpret the values -- they are
@@ -7614,7 +7571,7 @@ msgstr "Mostrar más opciones"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3478 ../src/orca/scripts/default.py:3490
+#: ../src/orca/scripts/default.py:3396 ../src/orca/scripts/default.py:3408
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7623,7 +7580,7 @@ msgstr[1] "%(key)s %(value)s píxeles"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4377
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4205
 msgid "open"
 msgstr "abrir"
 
@@ -7632,7 +7589,7 @@ msgstr "abrir"
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:783
+#: ../src/orca/settings.py:786
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%H horas, %M minutos y %S segundos."
 
@@ -7641,7 +7598,7 @@ msgstr "%H horas, %M minutos y %S segundos."
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:790
+#: ../src/orca/settings.py:793
 msgid "%H hours and %M minutes."
 msgstr "%H horas y %M minutos."
 
@@ -8727,6 +8684,30 @@ msgid ""
 msgstr ""
 "Para decrementar pulse flecha izquierda, para incrementar pulse flecha "
 "derecha, para el mínimo pulse inicio y para el máximo pulse fin."
+
+#~ msgid "Change to:"
+#~ msgstr "Cambiar a:"
+
+#~ msgid "Misspelled word:"
+#~ msgstr "Palabra mal escrita:"
+
+#~ msgid "Completed spell checking"
+#~ msgstr "Corrección ortográfica completada"
+
+#~ msgid "Spell checking is complete."
+#~ msgstr "La corrección ortográfica está completa."
+
+#~ msgid "Press Tab and Return to terminate."
+#~ msgstr "Pulse tab e intro para terminar."
+
+#~ msgid "Phrase not found"
+#~ msgstr "Frase no encontrada"
+
+#~ msgid "Phrase found."
+#~ msgstr "Frase encontrada."
+
+#~ msgid "Stop"
+#~ msgstr "Parar"
 
 #~ msgid "%s panel"
 #~ msgstr "panel %s"
