@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the orca help.
 #
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2010, 2011, 2012, 2013.
-# Attila Hammer <hammera at pickup dot hu>, 2010, 2013.
+# Attila Hammer <hammera at pickup dot hu>, 2010, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca_help master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-30 14:56+0000\n"
-"PO-Revision-Date: 2013-10-01 15:16+0100\n"
+"POT-Creation-Date: 2014-02-17 23:23+0000\n"
+"PO-Revision-Date: 2014-02-18 06:44+0100\n"
 "Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -24,131 +24,6 @@ msgstr ""
 msgctxt "_"
 msgid "translator-credits"
 msgstr "Hammer Attila <hammera at pickup dot hu>, 2011, 2012, 2013"
-
-#. (itstool) path: media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/index.page:14
-msgctxt "_"
-msgid ""
-"external ref='figures/orca-logo.png' md5='d8759cff4f184e7134cc5bcd6d32d839'"
-msgstr ""
-"external ref='figures/orca-logo.png' md5='d8759cff4f184e7134cc5bcd6d32d839'"
-
-#. (itstool) path: info/title
-#: C/index.page:3
-msgctxt "text"
-msgid "Orca Screen Reader"
-msgstr "Orka képernyőolvasó"
-
-#. (itstool) path: info/title
-#: C/index.page:4
-msgctxt "link"
-msgid "Introduction to the <app>Orca</app> Screen Reader"
-msgstr "Az <app>Orka</app> képernyőolvasó bemutatása"
-
-#. (itstool) path: credit/name
-#: C/index.page:6 C/commands_bookmarks.page:12 C/commands_braille.page:12
-#: C/commands_chat.page:12 C/commands_controlling_orca.page:11
-#: C/commands_debugging.page:10 C/commands_find.page:12
-#: C/commands_flat_review.page:12 C/commands_live_regions.page:12
-#: C/commands_mouse.page:13 C/commands.page:8 C/commands_reading.page:14
-#: C/commands_speech_settings.page:12 C/commands_structural_navigation.page:12
-#: C/commands_table.page:12 C/commands_time_date_notifications.page:12
-#: C/commands_where_am_i.page:12 C/howto_bookmarks.page:7
-#: C/howto_documents.page:10 C/howto_flat_review.page:8 C/howto_forms.page:10
-#: C/howto_key_bindings.page:8 C/howto_keyboard_layout.page:8
-#: C/howto_learn_modes.page:10 C/howto_live_regions.page:10
-#: C/howto_mouse_review.page:8 C/howto_notifications.page:8
-#: C/howto_orca_find.page:8 C/howto_profiles.page:8
-#: C/howto_setting_up_orca.page:12 C/howto_structural_navigation.page:12
-#: C/howto_tables.page:10 C/howto_text_attributes.page:10
-#: C/howto_text_setup.page:8 C/howto_the_orca_modifier.page:11
-#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10
-#: C/introduction.page:10 C/preferences_braille.page:11
-#: C/preferences_chat.page:10 C/preferences_gecko.page:12
-#: C/preferences_general.page:11 C/preferences_introduction.page:8
-#: C/preferences_key_bindings.page:12 C/preferences_key_echo.page:11
-#: C/preferences.page:7 C/preferences_pronunciation.page:12
-#: C/preferences_speech.page:11 C/preferences_table_navigation.page:14
-#: C/preferences_text_attributes.page:13
-msgid "Joanmarie Diggs"
-msgstr "Joanmarie Diggs"
-
-#. (itstool) path: license/p
-#: C/index.page:10 C/commands_bookmarks.page:16 C/commands_braille.page:16
-#: C/commands_chat.page:16 C/commands_controlling_orca.page:15
-#: C/commands_debugging.page:14 C/commands_find.page:16
-#: C/commands_flat_review.page:16 C/commands_live_regions.page:16
-#: C/commands_mouse.page:17 C/commands.page:12 C/commands_reading.page:18
-#: C/commands_speech_settings.page:16 C/commands_structural_navigation.page:16
-#: C/commands_table.page:16 C/commands_time_date_notifications.page:16
-#: C/commands_where_am_i.page:16 C/howto_bookmarks.page:11
-#: C/howto_documents.page:14 C/howto_flat_review.page:12 C/howto_forms.page:14
-#: C/howto_key_bindings.page:12 C/howto_keyboard_layout.page:12
-#: C/howto_learn_modes.page:14 C/howto_live_regions.page:14
-#: C/howto_mouse_review.page:12 C/howto_notifications.page:12
-#: C/howto_orca_find.page:12 C/howto_profiles.page:12
-#: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
-#: C/howto_tables.page:14 C/howto_text_attributes.page:14
-#: C/howto_text_setup.page:12 C/howto_the_orca_modifier.page:15
-#: C/howto_toggling_caps_lock.page:12 C/howto_whereami.page:14
-#: C/introduction.page:14 C/preferences_braille.page:15
-#: C/preferences_chat.page:14 C/preferences_gecko.page:16
-#: C/preferences_general.page:15 C/preferences_introduction.page:12
-#: C/preferences_key_bindings.page:16 C/preferences_key_echo.page:15
-#: C/preferences.page:11 C/preferences_pronunciation.page:16
-#: C/preferences_speech.page:15 C/preferences_table_navigation.page:18
-#: C/preferences_text_attributes.page:17
-msgid "Creative Commons Share Alike 3.0"
-msgstr "Creative Commons Share Alike 3.0"
-
-#. (itstool) path: page/title
-#: C/index.page:13
-msgid ""
-"<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\"> "
-"<app>Orca</app>'s logo </media> <app>Orca</app> Screen Reader"
-msgstr ""
-"<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\"> "
-"<app>Orka</app> logó</media><app>Orka</app> képernyőolvasó"
-
-#. (itstool) path: note/title
-#: C/index.page:20
-msgid "Before You Begin"
-msgstr "Mielőtt tovább lépne"
-
-#. (itstool) path: note/p
-#: C/index.page:21
-msgid ""
-"If you are not yet familiar with the navigation commands provided by your "
-"desktop environment, you are encouraged to read that documentation first."
-msgstr ""
-"Ha még nem járatos abban, hogy hogyan használja billentyűzet segítségével az "
-"Ön által használt asztali környezetet, olvassa el előbb az asztali környezet "
-"erre vonatkozó dokumentációját."
-
-#. (itstool) path: section/title
-#: C/index.page:28 C/commands.page:17
-msgid "Getting Started"
-msgstr "Kezdeti lépések"
-
-#. (itstool) path: section/title
-#: C/index.page:31
-msgid "Reading Documents and Web Pages"
-msgstr "Dokumentumok és weblapok olvasása"
-
-#. (itstool) path: section/title
-#: C/index.page:34 C/commands.page:26
-msgid "Reviewing and Interacting with Screen Contents"
-msgstr "Képernyőtartalom áttekintése és kezelése"
-
-# Megjegyzés: Megváltoztattam az eredeti fordítást, így a főoldalon is jól fog megjelenni
-#. (itstool) path: section/title
-#: C/index.page:37
-msgid "Quick Reference"
-msgstr "Rövid referencia"
 
 #. (itstool) path: info/title
 #: C/commands_bookmarks.page:6
@@ -166,6 +41,62 @@ msgstr "Könyvjelzők"
 #: C/commands_bookmarks.page:8
 msgid "Commands to bookmark and retrieve objects"
 msgstr "Objektumok könyvjelzőzése és lekérése"
+
+#. (itstool) path: credit/name
+#: C/commands_bookmarks.page:12 C/commands_braille.page:12
+#: C/commands_chat.page:12 C/commands_controlling_orca.page:11
+#: C/commands_debugging.page:10 C/commands_find.page:12
+#: C/commands_flat_review.page:12 C/commands_live_regions.page:12
+#: C/commands_mouse.page:13 C/commands.page:8 C/commands_reading.page:14
+#: C/commands_speech_settings.page:12 C/commands_structural_navigation.page:12
+#: C/commands_table.page:12 C/commands_time_date_notifications.page:12
+#: C/commands_where_am_i.page:12 C/howto_bookmarks.page:7
+#: C/howto_documents.page:10 C/howto_flat_review.page:8 C/howto_forms.page:10
+#: C/howto_key_bindings.page:8 C/howto_keyboard_layout.page:8
+#: C/howto_learn_modes.page:10 C/howto_live_regions.page:10
+#: C/howto_mouse_review.page:8 C/howto_notifications.page:8
+#: C/howto_orca_find.page:8 C/howto_profiles.page:8
+#: C/howto_setting_up_orca.page:12 C/howto_structural_navigation.page:12
+#: C/howto_tables.page:10 C/howto_text_attributes.page:10
+#: C/howto_text_setup.page:8 C/howto_the_orca_modifier.page:11
+#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:6
+#: C/introduction.page:10 C/preferences_braille.page:11
+#: C/preferences_chat.page:10 C/preferences_gecko.page:12
+#: C/preferences_general.page:11 C/preferences_introduction.page:8
+#: C/preferences_key_bindings.page:12 C/preferences_key_echo.page:11
+#: C/preferences.page:7 C/preferences_pronunciation.page:12
+#: C/preferences_speech.page:11 C/preferences_table_navigation.page:14
+#: C/preferences_text_attributes.page:13
+msgid "Joanmarie Diggs"
+msgstr "Joanmarie Diggs"
+
+#. (itstool) path: license/p
+#: C/commands_bookmarks.page:16 C/commands_braille.page:16
+#: C/commands_chat.page:16 C/commands_controlling_orca.page:15
+#: C/commands_debugging.page:14 C/commands_find.page:16
+#: C/commands_flat_review.page:16 C/commands_live_regions.page:16
+#: C/commands_mouse.page:17 C/commands.page:12 C/commands_reading.page:18
+#: C/commands_speech_settings.page:16 C/commands_structural_navigation.page:16
+#: C/commands_table.page:16 C/commands_time_date_notifications.page:16
+#: C/commands_where_am_i.page:16 C/howto_bookmarks.page:11
+#: C/howto_documents.page:14 C/howto_flat_review.page:12 C/howto_forms.page:14
+#: C/howto_key_bindings.page:12 C/howto_keyboard_layout.page:12
+#: C/howto_learn_modes.page:14 C/howto_live_regions.page:14
+#: C/howto_mouse_review.page:12 C/howto_notifications.page:12
+#: C/howto_orca_find.page:12 C/howto_profiles.page:12
+#: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
+#: C/howto_tables.page:14 C/howto_text_attributes.page:14
+#: C/howto_text_setup.page:12 C/howto_the_orca_modifier.page:15
+#: C/howto_toggling_caps_lock.page:12 C/howto_whereami.page:14 C/index.page:10
+#: C/introduction.page:14 C/preferences_braille.page:15
+#: C/preferences_chat.page:14 C/preferences_gecko.page:16
+#: C/preferences_general.page:15 C/preferences_introduction.page:12
+#: C/preferences_key_bindings.page:16 C/preferences_key_echo.page:15
+#: C/preferences.page:11 C/preferences_pronunciation.page:16
+#: C/preferences_speech.page:15 C/preferences_table_navigation.page:18
+#: C/preferences_text_attributes.page:17
+msgid "Creative Commons Share Alike 3.0"
+msgstr "Creative Commons Share Alike 3.0"
 
 #. (itstool) path: page/title
 #: C/commands_bookmarks.page:19
@@ -1355,6 +1286,11 @@ msgid "<app>Orca</app>'s Commands"
 msgstr "Az <app>Orka</app> billentyűparancsai"
 
 #. (itstool) path: section/title
+#: C/commands.page:17 C/index.page:33
+msgid "Getting Started"
+msgstr "Kezdeti lépések"
+
+#. (itstool) path: section/title
 #: C/commands.page:20
 msgid "Speech and Braille"
 msgstr "Beszéd és Braille"
@@ -1363,6 +1299,11 @@ msgstr "Beszéd és Braille"
 #: C/commands.page:23
 msgid "Reading Web Pages and Other Documents"
 msgstr "Weboldalak és más dokumentumok olvasása"
+
+#. (itstool) path: section/title
+#: C/commands.page:26 C/index.page:39
+msgid "Reviewing and Interacting with Screen Contents"
+msgstr "Képernyőtartalom áttekintése és kezelése"
 
 #. (itstool) path: section/title
 #: C/commands.page:29
@@ -3016,13 +2957,13 @@ msgstr "A billentyűparancsok listájának megjelenítése"
 #. (itstool) path: item/p
 #: C/howto_learn_modes.page:51
 msgid ""
-"Press <key>1</key> if you want a list of shortcuts that apply <app>Orca</"
-"app>-wide, or press <key>2</key> if you want a list of shortcuts that are "
+"Press <key>F2</key> if you want a list of shortcuts that apply <app>Orca</"
+"app>-wide, or press <key>F3</key> if you want a list of shortcuts that are "
 "specifically for the application with focus."
 msgstr ""
-"Nyomja meg az <key>1</key> billentyűt az <app>Orka</app> általános "
+"Nyomja le az <key>F2</key> billentyűt az <app>Orka</app> általános "
 "billentyűparancsainak felsorolásához. Ha az éppen fókuszban levő alkalmazás "
-"billentyűparancsait szeretné megismerni, akkor nyomja meg a <key>2</key> "
+"billentyűparancsait szeretné megismerni, akkor nyomja le az <key>F3</key> "
 "billentyűt."
 
 #. (itstool) path: item/p
@@ -5050,6 +4991,76 @@ msgstr ""
 "széles körét tudják nyújtani az éppen kijelölt objektumról. Ha ki szeretné "
 "próbálni a hol vagyok műveleteket, nézze meg <link xref=\"commands_where_am_i"
 "\">A hol vagyok művelet billentyűparancsainak</link> listáját."
+
+#. (itstool) path: media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/index.page:19
+msgctxt "_"
+msgid ""
+"external ref='figures/orca-logo.png' md5='d8759cff4f184e7134cc5bcd6d32d839'"
+msgstr ""
+"external ref='figures/orca-logo.png' md5='d8759cff4f184e7134cc5bcd6d32d839'"
+
+#. (itstool) path: info/title
+#: C/index.page:3
+msgctxt "text"
+msgid "Orca Screen Reader"
+msgstr "Orka képernyőolvasó"
+
+#. (itstool) path: info/title
+#: C/index.page:4
+msgctxt "link"
+msgid "Introduction to the <app>Orca</app> Screen Reader"
+msgstr "Az <app>Orka</app> képernyőolvasó bemutatása"
+
+#. (itstool) path: info/desc
+#: C/index.page:13
+msgid ""
+"Orca is a free, open source, flexible, and extensible screen reader that "
+"provides access to the graphical desktop via speech and refreshable braille."
+msgstr ""
+"Az <app>Orka</app> egy rugalmas, nyílt forráskódú, bővíthető és hatékony "
+"képernyőolvasó, amely a beszéd- és Braille-támogatás felhasználó által "
+"személyre szabható kombinációjának használatával teszi elérhetővé az asztali "
+"környezetet."
+
+#. (itstool) path: page/title
+#: C/index.page:18
+msgid ""
+"<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\"> "
+"<app>Orca</app>'s logo </media> <app>Orca</app> Screen Reader"
+msgstr ""
+"<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\"> "
+"<app>Orka</app> logó</media><app>Orka</app> képernyőolvasó"
+
+#. (itstool) path: note/title
+#: C/index.page:25
+msgid "Before You Begin"
+msgstr "Mielőtt tovább lépne"
+
+#. (itstool) path: note/p
+#: C/index.page:26
+msgid ""
+"If you are not yet familiar with the navigation commands provided by your "
+"desktop environment, you are encouraged to read that documentation first."
+msgstr ""
+"Ha még nem járatos abban, hogy hogyan használja billentyűzet segítségével az "
+"Ön által használt asztali környezetet, olvassa el előbb az asztali környezet "
+"erre vonatkozó dokumentációját."
+
+#. (itstool) path: section/title
+#: C/index.page:36
+msgid "Reading Documents and Web Pages"
+msgstr "Dokumentumok és weblapok olvasása"
+
+# Megjegyzés: Megváltoztattam az eredeti fordítást, így a főoldalon is jól fog megjelenni
+#. (itstool) path: section/title
+#: C/index.page:42
+msgid "Quick Reference"
+msgstr "Rövid referencia"
 
 #. (itstool) path: info/title
 #: C/introduction.page:5
