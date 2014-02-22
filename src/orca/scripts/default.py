@@ -1821,21 +1821,21 @@ class Script(script.Script):
                     break
 
             speech.speak(utterances)
+            return
 
-        elif self.utilities.isTextArea(orca_state.locusOfFocus):
-            try:
-                orca_state.locusOfFocus.queryText()
-            except NotImplementedError:
-                utterances = self.speechGenerator.generateSpeech(
-                    orca_state.locusOfFocus)
-                utterances.extend(self.tutorialGenerator.getTutorial(
-                           orca_state.locusOfFocus, False))
-                speech.speak(utterances)
-            except AttributeError:
-                pass
-            else:
-                speech.sayAll(self.textLines(orca_state.locusOfFocus),
-                              self.__sayAllProgressCallback)
+        try:
+            orca_state.locusOfFocus.queryText()
+        except NotImplementedError:
+            utterances = self.speechGenerator.generateSpeech(
+                orca_state.locusOfFocus)
+            utterances.extend(self.tutorialGenerator.getTutorial(
+                orca_state.locusOfFocus, False))
+            speech.speak(utterances)
+        except AttributeError:
+            pass
+        else:
+            speech.sayAll(self.textLines(orca_state.locusOfFocus),
+                          self.__sayAllProgressCallback)
 
         return True
 
