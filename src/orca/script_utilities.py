@@ -1383,7 +1383,7 @@ class Utilities:
                     if stateset.contains(pyatspi.STATE_SHOWING) \
                        and (extents.x >= 0) and (extents.y >= 0) \
                        and (extents.width > 0) and (extents.height > 0) \
-                       and self.isVisibleRegion(
+                       and self.containsRegion(
                             extents.x, extents.y,
                             extents.width, extents.height,
                             parentExtents.x, parentExtents.y,
@@ -2515,7 +2515,7 @@ class Utilities:
                or character == self._script.NO_BREAK_SPACE_CHARACTER
 
     @staticmethod
-    def isVisibleRegion(ax, ay, awidth, aheight, bx, by, bwidth, bheight):
+    def containsRegion(ax, ay, awidth, aheight, bx, by, bwidth, bheight):
         """Returns true if any portion of region 'a' is in region 'b'"""
 
         highestBottom = min(ay + aheight, by + bheight)

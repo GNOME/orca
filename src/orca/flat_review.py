@@ -774,7 +774,7 @@ class Context:
             else:
                 [x, y, width, height] = text.getRangeExtents(
                         substringStartOffset, substringEndOffset, 0)
-                if self.script.utilities.isVisibleRegion(
+                if self.script.utilities.containsRegion(
                         x, y, width, height,
                         cliprect.x, cliprect.y,
                         cliprect.width, cliprect.height):
@@ -1075,7 +1075,7 @@ class Context:
         #
         extents = icomponent.getExtents(0)
 
-        if not self.script.utilities.isVisibleRegion(
+        if not self.script.utilities.containsRegion(
                 extents.x, extents.y,
                 extents.width, extents.height,
                 cliprect.x, cliprect.y,
@@ -1125,7 +1125,7 @@ class Context:
             [width, height] = iimage.getImageSize()
 
             if width != 0 and height != 0 \
-               and self.script.utilities.isVisibleRegion(
+               and self.script.utilities.containsRegion(
                     x, y, width, height,
                     cliprect.x, cliprect.y,
                     cliprect.width, cliprect.height):
