@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2014-02-19 03:29+0000\n"
-"PO-Revision-Date: 2014-02-20 14:20+0100\n"
+"POT-Creation-Date: 2014-02-24 11:13+0000\n"
+"PO-Revision-Date: 2014-02-24 17:19+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -2962,174 +2962,186 @@ msgstr "Muestra una lista de objetos grandes."
 
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:853
+#| msgid "Goes to previous line."
+msgid "Goes to previous link."
+msgstr "Va al enlace anterior."
+
+#. Translators: this is for navigating among links in a document.
+#: ../src/orca/cmdnames.py:856
+#| msgid "Goes to next line."
+msgid "Goes to next link."
+msgstr "Va al siguiente enlace."
+
+#. Translators: this is for navigating among links in a document.
+#: ../src/orca/cmdnames.py:859
 msgid "Displays a list of links."
 msgstr "Muestra una lista de enlaces."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:856
+#: ../src/orca/cmdnames.py:862
 msgid "Goes to previous list."
 msgstr "Va a la lista anterior."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:859
+#: ../src/orca/cmdnames.py:865
 msgid "Goes to next list."
 msgstr "Va a la siguiente lista."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:862
+#: ../src/orca/cmdnames.py:868
 msgid "Displays a list of lists."
 msgstr "Muestra una lista de listas."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:865
+#: ../src/orca/cmdnames.py:871
 msgid "Goes to previous list item."
 msgstr "Va al anterior elemento de lista."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:868
+#: ../src/orca/cmdnames.py:874
 msgid "Goes to next list item."
 msgstr "Va al siguiente elemento de lista."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:871
+#: ../src/orca/cmdnames.py:877
 msgid "Displays a list of list items."
 msgstr "Muestra una lista de elementos de lista."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:876
+#: ../src/orca/cmdnames.py:882
 msgid "Goes to previous live region."
 msgstr "Va a la anterior región activa."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:881
+#: ../src/orca/cmdnames.py:887
 msgid "Goes to next live region."
 msgstr "Va a la siguiente región activa."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:886
+#: ../src/orca/cmdnames.py:892
 msgid "Goes to the last live region which made an announcement."
 msgstr "Va a la última región activa que hizo un anuncio."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:889
+#: ../src/orca/cmdnames.py:895
 msgid "Goes to previous paragraph."
 msgstr "Va al párrafo anterior.."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:892
+#: ../src/orca/cmdnames.py:898
 msgid "Goes to next paragraph."
 msgstr "Va al siguiente párrafo."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:895
+#: ../src/orca/cmdnames.py:901
 msgid "Displays a list of paragraphs."
 msgstr "Muestra una lista de párrafos."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:898
+#: ../src/orca/cmdnames.py:904
 msgid "Goes to previous radio button."
 msgstr "Va al botón de radio anterior."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:901
+#: ../src/orca/cmdnames.py:907
 msgid "Goes to next radio button."
 msgstr "Va al siguiente botón de radio."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:904
+#: ../src/orca/cmdnames.py:910
 msgid "Displays a list of radio buttons."
 msgstr "Muestra una lista de botones de radio."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:908
+#: ../src/orca/cmdnames.py:914
 msgid "Goes to previous separator."
 msgstr "Va al separador anterior."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:912
+#: ../src/orca/cmdnames.py:918
 msgid "Goes to next separator."
 msgstr "Va al siguiente separador."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:915
+#: ../src/orca/cmdnames.py:921
 msgid "Goes to previous table."
 msgstr "Va a la tabla anterior."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:918
+#: ../src/orca/cmdnames.py:924
 msgid "Goes to next table."
 msgstr "Va a la siguiente tabla."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:921
+#: ../src/orca/cmdnames.py:927
 msgid "Displays a list of tables."
 msgstr "Muestra una lista de tablas."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:924
+#: ../src/orca/cmdnames.py:930
 msgid "Goes down one cell."
 msgstr "Va una celda abajo."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:927
+#: ../src/orca/cmdnames.py:933
 msgid "Goes to the first cell in a table."
 msgstr "Va a la primera celda de una tabla."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:930
+#: ../src/orca/cmdnames.py:936
 msgid "Goes to the last cell in a table."
 msgstr "Va a la última celda de una tabla."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:933
+#: ../src/orca/cmdnames.py:939
 msgid "Goes left one cell."
 msgstr "Va una celda a la izquierda."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:936
+#: ../src/orca/cmdnames.py:942
 msgid "Goes right one cell."
 msgstr "Va una celda a la derecha."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:939
+#: ../src/orca/cmdnames.py:945
 msgid "Goes up one cell."
 msgstr "Va una celda arriba."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:942
+#: ../src/orca/cmdnames.py:948
 msgid "Goes to previous unvisited link."
 msgstr "Va al anterior enlace no visitado."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:945
+#: ../src/orca/cmdnames.py:951
 msgid "Goes to next unvisited link."
 msgstr "Va al siguiente enlace no visitado."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:948
+#: ../src/orca/cmdnames.py:954
 msgid "Displays a list of unvisited links."
 msgstr "Muestra una lista de enlaces no visitados."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:951
+#: ../src/orca/cmdnames.py:957
 msgid "Goes to previous visited link."
 msgstr "Va al anterior enlace visitado."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:954
+#: ../src/orca/cmdnames.py:960
 msgid "Goes to next visited link."
 msgstr "Va al siguiente enlace visitado."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:957
+#: ../src/orca/cmdnames.py:963
 msgid "Displays a list of visited links."
 msgstr "Muestra una lista de enlaces visitados."
 
