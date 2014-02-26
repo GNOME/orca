@@ -83,7 +83,9 @@ class Script(default.Script):
             return
 
         # Unfiled, but a similar case of the above issue with combo boxes.
-        if role == pyatspi.ROLE_PUSH_BUTTON:
+        # Seems to happen for checkboxes too. This is why we can't have
+        # nice things.
+        if role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_CHECK_BOX]:
             orca.setLocusOfFocus(event, event.source)
             return
 
