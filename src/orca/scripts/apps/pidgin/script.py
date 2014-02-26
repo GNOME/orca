@@ -29,7 +29,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.messages as messages
-import orca.scripts.default as default
+import orca.scripts.toolkits.GAIL as GAIL
 import orca.speech as speech
 
 from .chat import Chat
@@ -42,7 +42,7 @@ from .speech_generator import SpeechGenerator
 #                                                                      #
 ########################################################################
 
-class Script(default.Script):
+class Script(GAIL.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.
@@ -61,7 +61,7 @@ class Script(default.Script):
                                       pyatspi.ROLE_FILLER,
                                       pyatspi.ROLE_FRAME]]
 
-        default.Script.__init__(self, app)
+        GAIL.Script.__init__(self, app)
 
     def getChat(self):
         """Returns the 'chat' class for this script."""
@@ -84,7 +84,7 @@ class Script(default.Script):
         handlers for chat functionality.
         """
 
-        default.Script.setupInputEventHandlers(self)
+        GAIL.Script.setupInputEventHandlers(self)
         self.inputEventHandlers.update(self.chat.inputEventHandlers)
 
     def getAppKeyBindings(self):
@@ -153,7 +153,7 @@ class Script(default.Script):
         if self.chat.isInBuddyList(event.source):
             return
         else:
-            default.Script.onNameChanged(self, event)
+            GAIL.Script.onNameChanged(self, event)
 
     def onTextDeleted(self, event):
         """Called whenever text is deleted from an object.
@@ -165,7 +165,7 @@ class Script(default.Script):
         if self.chat.isInBuddyList(event.source):
             return
         else:
-            default.Script.onTextDeleted(self, event)
+            GAIL.Script.onTextDeleted(self, event)
 
     def onTextInserted(self, event):
         """Called whenever text is added to an object."""
@@ -173,7 +173,7 @@ class Script(default.Script):
         if self.chat.presentInsertedText(event):
             return
 
-        default.Script.onTextInserted(self, event)
+        GAIL.Script.onTextInserted(self, event)
 
     def onValueChanged(self, event):
         """Called whenever an object's value changes.  Currently, the
@@ -186,7 +186,7 @@ class Script(default.Script):
         if self.chat.isInBuddyList(event.source):
             return
         else:
-            default.Script.onValueChanged(self, event)
+            GAIL.Script.onValueChanged(self, event)
 
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated."""
@@ -198,7 +198,7 @@ class Script(default.Script):
         allPageTabs = self.utilities.descendantsWithRole(
             event.source, pyatspi.ROLE_PAGE_TAB)
 
-        default.Script.onWindowActivated(self, event)
+        GAIL.Script.onWindowActivated(self, event)
 
     def onExpandedChanged(self, event):
         """Callback for object:state-changed:expanded accessibility events."""
@@ -211,4 +211,4 @@ class Script(default.Script):
             speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
             return
             
-        default.Script.onExpandedChanged(self, event)
+        GAIL.Script.onExpandedChanged(self, event)
