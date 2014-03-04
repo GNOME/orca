@@ -1,3 +1,27 @@
+3.11.91 - 4 March 2014
+
+General:
+
+  * Remove the isTextArea check from sayAll
+
+  * Work around several additional missing state-changed:focused events
+
+  * More tweaking of the new spellcheck support
+
+  * Add support for structural navigation by link regardless of visited
+    state
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                       Marek Černocký
+    es            Spanish                     Daniel Mustieles
+    gl            Galician                    Fran Diéguez
+    hu            Hungarian                   Attila Hammer
+    lt            Lithuanian                  Aurimas Černius
+    pt_BR         Brazilian Portuguese        Enrico Nicoletto
+
+=========
+
 3.11.90 - 18 February 2014
 
 General:
