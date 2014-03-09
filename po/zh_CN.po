@@ -14,9 +14,9 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-11-22 20:20+0000\n"
-"PO-Revision-Date: 2014-01-18 10:38+0800\n"
-"Last-Translator: 甘露(Gan Lu) <rhythm.gan@gmail.com>\n"
+"POT-Creation-Date: 2014-03-08 23:16+0000\n"
+"PO-Revision-Date: 2014-03-09 09:32+0800\n"
+"Last-Translator: Wylmer Wang <wantinghard@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -2923,7 +2923,6 @@ msgstr "转到下一个界标。"
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: ../src/orca/cmdnames.py:835
-#| msgid "Displays a list of links."
 msgid "Displays a list of landmarks."
 msgstr "显示界标列表。"
 
@@ -2950,174 +2949,186 @@ msgstr "显示大型对象列表。"
 
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:853
+#| msgid "Goes to previous line."
+msgid "Goes to previous link."
+msgstr "移至上一链接。"
+
+#. Translators: this is for navigating among links in a document.
+#: ../src/orca/cmdnames.py:856
+#| msgid "Goes to next line."
+msgid "Goes to next link."
+msgstr "移至下一链接。"
+
+#. Translators: this is for navigating among links in a document.
+#: ../src/orca/cmdnames.py:859
 msgid "Displays a list of links."
 msgstr "显示链接列表。"
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:856
+#: ../src/orca/cmdnames.py:862
 msgid "Goes to previous list."
 msgstr "转到上一个列表。"
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:859
+#: ../src/orca/cmdnames.py:865
 msgid "Goes to next list."
 msgstr "转到下一个列表。"
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:862
+#: ../src/orca/cmdnames.py:868
 msgid "Displays a list of lists."
 msgstr "显示列表列表。"
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:865
+#: ../src/orca/cmdnames.py:871
 msgid "Goes to previous list item."
 msgstr "转到上一个列表条目。"
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:868
+#: ../src/orca/cmdnames.py:874
 msgid "Goes to next list item."
 msgstr "转到下一个列表条目。"
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:871
+#: ../src/orca/cmdnames.py:877
 msgid "Displays a list of list items."
 msgstr "显示列表项列表。"
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:876
+#: ../src/orca/cmdnames.py:882
 msgid "Goes to previous live region."
 msgstr "回到上一个居住地区。"
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:881
+#: ../src/orca/cmdnames.py:887
 msgid "Goes to next live region."
 msgstr "来到下一个居住地区。"
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:886
+#: ../src/orca/cmdnames.py:892
 msgid "Goes to the last live region which made an announcement."
 msgstr "转到表中最后一个声明的居住地区。"
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:889
+#: ../src/orca/cmdnames.py:895
 msgid "Goes to previous paragraph."
 msgstr "转到上一个段落。"
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:892
+#: ../src/orca/cmdnames.py:898
 msgid "Goes to next paragraph."
 msgstr "转到下一个段落。"
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:895
+#: ../src/orca/cmdnames.py:901
 msgid "Displays a list of paragraphs."
 msgstr "显示段落列表。"
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:898
+#: ../src/orca/cmdnames.py:904
 msgid "Goes to previous radio button."
 msgstr "转到上一个单选按钮。"
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:901
+#: ../src/orca/cmdnames.py:907
 msgid "Goes to next radio button."
 msgstr "转到下一个单选按钮。"
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:904
+#: ../src/orca/cmdnames.py:910
 msgid "Displays a list of radio buttons."
 msgstr "显示单选按钮列表。"
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:908
+#: ../src/orca/cmdnames.py:914
 msgid "Goes to previous separator."
 msgstr "移至前一个分隔符。"
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:912
+#: ../src/orca/cmdnames.py:918
 msgid "Goes to next separator."
 msgstr "移至后一个分隔符。"
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:915
+#: ../src/orca/cmdnames.py:921
 msgid "Goes to previous table."
 msgstr "转到上一个表。"
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:918
+#: ../src/orca/cmdnames.py:924
 msgid "Goes to next table."
 msgstr "转到下一个表。"
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:921
+#: ../src/orca/cmdnames.py:927
 msgid "Displays a list of tables."
 msgstr "显示表格列表。"
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:924
+#: ../src/orca/cmdnames.py:930
 msgid "Goes down one cell."
 msgstr "下移一个单元格。"
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:927
+#: ../src/orca/cmdnames.py:933
 msgid "Goes to the first cell in a table."
 msgstr "转到表中的第一个单元格。"
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:930
+#: ../src/orca/cmdnames.py:936
 msgid "Goes to the last cell in a table."
 msgstr "转到表中的最后一个单元格。"
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:933
+#: ../src/orca/cmdnames.py:939
 msgid "Goes left one cell."
 msgstr "左移一个单元格。"
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:936
+#: ../src/orca/cmdnames.py:942
 msgid "Goes right one cell."
 msgstr "右移一个单元格。"
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:939
+#: ../src/orca/cmdnames.py:945
 msgid "Goes up one cell."
 msgstr "上移一个单元格。"
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:942
+#: ../src/orca/cmdnames.py:948
 msgid "Goes to previous unvisited link."
 msgstr "移至前一个未浏览的连结。"
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:945
+#: ../src/orca/cmdnames.py:951
 msgid "Goes to next unvisited link."
 msgstr "移至下一个未浏览连结。"
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:948
+#: ../src/orca/cmdnames.py:954
 msgid "Displays a list of unvisited links."
 msgstr "显示尚未访问的链接列表。"
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:951
+#: ../src/orca/cmdnames.py:957
 msgid "Goes to previous visited link."
 msgstr "移至前一个浏览过的连结。"
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:954
+#: ../src/orca/cmdnames.py:960
 msgid "Goes to next visited link."
 msgstr "移至下一个浏览过的连结。"
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:957
+#: ../src/orca/cmdnames.py:963
 msgid "Displays a list of visited links."
 msgstr "显示已访问过的链接列表。"
 
@@ -3669,7 +3680,6 @@ msgstr "标签"
 #. tag attribute 'role' used to identify important part of webpage like banners,
 #. main context, search etc.
 #: ../src/orca/guilabels.py:410
-#| msgid "trademark"
 msgctxt "structural navigation"
 msgid "Landmark"
 msgstr "界标"
@@ -3866,7 +3876,6 @@ msgstr "级别为 %d 的标题"
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
 #: ../src/orca/guilabels.py:539
-#| msgid "trademark"
 msgctxt "structural navigation"
 msgid "Landmarks"
 msgstr "界标"
@@ -4019,28 +4028,59 @@ msgstr "大写"
 msgid "Speech Dispatcher"
 msgstr "Speech Dispatcher"
 
+#. Translators: This is a label for a group of options related to Orca's behavior
+#. when presenting an application's spell check dialog.
+#: ../src/orca/guilabels.py:641
+msgctxt "OptionGroup"
+msgid "Spell Check"
+msgstr "拼写检查"
+
+#. Translators: This is a label for a checkbox associated with an Orca setting.
+#. When this option is enabled, Orca will spell out the current error in addition
+#. to speaking it. For example, if the misspelled word is "foo," enabling this
+#. setting would cause Orca to speak "f o o" after speaking "foo".
+#: ../src/orca/guilabels.py:647
+msgid "Spell _error"
+msgstr "拼写错误(_E)"
+
+#. Translators: This is a label for a checkbox associated with an Orca setting.
+#. When this option is enabled, Orca will spell out the current suggestion in
+#. addition to speaking it. For example, if the misspelled word is "foo," and
+#. the first suggestion is "for" enabling this setting would cause Orca to speak
+#. "f o r" after speaking "for".
+#: ../src/orca/guilabels.py:654
+msgid "Spell _suggestion"
+msgstr "拼写建议(_S)"
+
+#. Translators: This is a label for a checkbox associated with an Orca setting.
+#. When this option is enabled, Orca will present the context (surrounding text,
+#. typically the sentence or line) in which the mistake occurred.
+#: ../src/orca/guilabels.py:659
+msgid "Present _context of error"
+msgstr "给出错误上下文(_C)"
+
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spread sheet cell. Coordinates are
 #. the row and column position within the spread sheet (i.e. A1, B1, C2 ...)
-#: ../src/orca/guilabels.py:642
+#: ../src/orca/guilabels.py:664
 msgid "Speak spread sheet cell coordinates"
 msgstr "读出电子表格单元格坐标"
 
 #. Translators: This is a label for an option for whether or not to speak the
 #. header of a table cell in document content.
-#: ../src/orca/guilabels.py:646
+#: ../src/orca/guilabels.py:668
 msgid "Announce cell _header"
 msgstr "发表单元标题(_H)"
 
 #. Translators: This is the title of a panel containing options for specifying
 #. how to navigate tables in document content.
-#: ../src/orca/guilabels.py:650
+#: ../src/orca/guilabels.py:672
 msgid "Table Navigation"
 msgstr "表格导航"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
-#: ../src/orca/guilabels.py:654
+#: ../src/orca/guilabels.py:676
 msgid "Skip _blank cells"
 msgstr "跳过空单元格(_B)"
 
@@ -4048,26 +4088,26 @@ msgstr "跳过空单元格(_B)"
 #. row of a table read; other times they want just the current cell presented to
 #. them. This label is associated with the default presentation to be used.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/guilabels.py:659 ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/guilabels.py:681 ../src/orca/orca-setup.ui.h:60
 msgid "Speak _cell"
 msgstr "读出单元格(_C)"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
-#: ../src/orca/guilabels.py:663
+#: ../src/orca/guilabels.py:685
 msgid "Speak _cell coordinates"
 msgstr "读出单元格坐标(_C)"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many rows and columns
 #. a particular table cell spans in a table).
-#: ../src/orca/guilabels.py:668
+#: ../src/orca/guilabels.py:690
 msgid "Speak _multiple cell spans"
 msgstr "读出多重跨越单元(_M)"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
-#: ../src/orca/guilabels.py:672
+#: ../src/orca/guilabels.py:694
 msgid "Attribute Name"
 msgstr "属性名称"
 
@@ -4076,20 +4116,20 @@ msgstr "属性名称"
 #. Orca needs to provide its own support. As such, Orca offers the user the
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:679
+#: ../src/orca/guilabels.py:701
 msgid "Control caret navigation"
 msgstr "控制光标导航"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:684
+#: ../src/orca/guilabels.py:706
 msgid "Enable _structural navigation"
 msgstr "启用结构化导航(_S)"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: ../src/orca/guilabels.py:688 ../src/orca/orca-setup.ui.h:56
+#: ../src/orca/guilabels.py:710 ../src/orca/orca-setup.ui.h:56
 msgid "Brie_f"
 msgstr "简短(_F)"
 
@@ -5195,7 +5235,7 @@ msgstr "有公式"
 #. information and examples.
 #.
 #: ../src/orca/messages.py:607
-#: ../src/orca/scripts/toolkits/Gecko/braille_generator.py:149
+#: ../src/orca/scripts/toolkits/Gecko/braille_generator.py:157
 msgid "image map link"
 msgstr "图像地图链接"
 
@@ -5481,12 +5521,6 @@ msgstr "学习模式。按 Esc 键离开。"
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
 #: ../src/orca/messages.py:836
-#| msgid ""
-#| "Entering learn mode.  Press any key to hear its function.  To get a list "
-#| "of the screen reader's default shortcuts, press 1. To get a list of the "
-#| "screen reader's shortcuts for the current application, press 2. To view "
-#| "the screen reader's documentation, press F1. To exit learn mode, press "
-#| "the escape key."
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the "
 "screen reader's documentation, press F1. To get a list of the screen "
@@ -5494,9 +5528,9 @@ msgid ""
 "shortcuts for the current application, press F3. To exit learn mode, press "
 "the escape key."
 msgstr ""
-"正在进入学习模式。按任意健倾听它的功能。查看屏幕阅读器文档，请按 "
-"F1。获取屏幕阅读器默认快捷键，请按 F2。获得当前应用程序的屏幕阅读器快捷键，请按 F3。"
-"退出学习模式，请按 ESC 键。"
+"正在进入学习模式。按任意健倾听它的功能。查看屏幕阅读器文档，请按 F1。获取屏幕"
+"阅读器默认快捷键，请按 F2。获得当前应用程序的屏幕阅读器快捷键，请按 F3。退出"
+"学习模式，请按 ESC 键。"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -6325,7 +6359,7 @@ msgstr "语音功能不存在。"
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3889
+#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3779
 msgid "string not found"
 msgstr "未找到字符串"
 
@@ -6865,35 +6899,30 @@ msgstr "竖直"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:98
-#| msgid "checked"
 msgctxt "checkbox"
 msgid "checked"
 msgstr "已勾选"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:101
-#| msgid "not checked"
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "未勾选"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:104
-#| msgid "partially checked"
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "已部分勾选"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:107
-#| msgid "pressed"
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "已按下"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:110
-#| msgid "not pressed"
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "未按下"
@@ -6966,12 +6995,7 @@ msgstr "必需"
 msgid "multi-select"
 msgstr "多选"
 
-#. Translators: the "Find" string must match what gnome-search-tool
-#. is using.  We hate keying off stuff like this, but we're forced
-#. to do so in this case.
-#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:188
-#: ../src/orca/scripts/apps/gedit/script.py:190
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:99
+#: ../src/orca/orca-find.ui.h:1
 msgid "Find"
 msgstr "查找"
 
@@ -7459,82 +7483,9 @@ msgstr ""
 msgid "Read"
 msgstr "读"
 
-#. Translators: these are labels from the gedit spell checking
-#. dialog and must be the same strings gedit uses.  We hate
-#. keying off stuff like this, but we're forced to do so in
-#. in this case.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:97
-msgid "Change to:"
-msgstr "更换为："
-
-#: ../src/orca/scripts/apps/gedit/script.py:98
-msgid "Misspelled word:"
-msgstr "拼写错误的词："
-
-#. The indication that spell checking is complete is when the
-#. "misspelt" word is set to "Completed spell checking". Ugh!
-#. Try to detect this and let the user know.
-#.
-#. Translators: this string must be the same that is used by
-#. gedit.  We hate keying off stuff like this, but we're
-#. forced to do so in this case.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:132
-msgid "Completed spell checking"
-msgstr "已完成拼写检查"
-
-#: ../src/orca/scripts/apps/gedit/script.py:133
-msgid "Spell checking is complete."
-msgstr "已完成拼字检查。"
-
-#: ../src/orca/scripts/apps/gedit/script.py:135
-msgid "Press Tab and Return to terminate."
-msgstr "按下 Tab 及返回键来终止。"
-
-#. Translators: this is the name of the "Check Spelling" window
-#. in gedit and must be the same as what gedit uses.  We hate
-#. keying off stuff like this, but we're forced to do so in this
-#. case.
-#.
-#. Translators: this is what the name of the spell checking
-#. dialog in Thunderbird begins with. The translated form
-#. has to match what Thunderbird is using.  We hate keying
-#. off stuff like this, but we're forced to do so in this case.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:259
-#: ../src/orca/scripts/apps/gedit/script.py:332
-#: ../src/orca/scripts/apps/Thunderbird/script.py:278
-#: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
-msgid "Check Spelling"
-msgstr "检查拼写"
-
-#. Translators: the "Phrase not found" is the result of a failed
-#. find command.  It must be the same as what gedit uses.  We hate
-#. keying off stuff like this, but we're forced to do so in this
-#. case.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:361
-msgid "Phrase not found"
-msgstr "未找到短语"
-
-#. Translators: this indicates a find command succeeded in
-#. finding something.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:402
-msgid "Phrase found."
-msgstr "找到短语。"
-
 #: ../src/orca/scripts/apps/gnome-mud/script.py:119
 msgid "Read the latest n messages in the incoming messages text area."
 msgstr "在接收到的消息文本区域中读取最近的 n 个消息。"
-
-#. Translators: the "Stop" string must match what gnome-search-tool
-#. is using.  We hate keying off stuff like this, but we're forced
-#. to do so in this case.
-#: ../src/orca/scripts/apps/gnome-search-tool/script.py:85
-msgid "Stop"
-msgstr "停止"
 
 #: ../src/orca/scripts/apps/liferea/script.py:122
 msgid "Work online / offline"
@@ -7559,6 +7510,15 @@ msgstr "桌面 "
 msgid "Display more options"
 msgstr "显示更多选项"
 
+#. Translators: this is what the name of the spell checking
+#. dialog in Thunderbird begins with. The translated form
+#. has to match what Thunderbird is using.  We hate keying
+#. off stuff like this, but we're forced to do so in this case.
+#.
+#: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
+msgid "Check Spelling"
+msgstr "检查拼写"
+
 #. Translators: these represent the number of pixels
 #. for the left or right margins in a document.  We
 #. are hesitant to interpret the values -- they are
@@ -7566,7 +7526,7 @@ msgstr "显示更多选项"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3506 ../src/orca/scripts/default.py:3518
+#: ../src/orca/scripts/default.py:3396 ../src/orca/scripts/default.py:3408
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7574,7 +7534,7 @@ msgstr[0] "%(key)s %(value)s 像素"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4279
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4205
 msgid "open"
 msgstr "打开"
 
@@ -7583,7 +7543,7 @@ msgstr "打开"
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:783
+#: ../src/orca/settings.py:786
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%H 小时，%M 分钟零 %S 秒。"
 
@@ -7592,7 +7552,7 @@ msgstr "%H 小时，%M 分钟零 %S 秒。"
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:790
+#: ../src/orca/settings.py:793
 msgid "%H hours and %M minutes."
 msgstr "%H 小时零 %M 分钟。"
 
@@ -8670,6 +8630,30 @@ msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
 msgstr "要减少按左箭头，要增加按右箭头。要转到最小按 home，最大按 end。"
+
+#~ msgid "Change to:"
+#~ msgstr "更换为："
+
+#~ msgid "Misspelled word:"
+#~ msgstr "拼写错误的词："
+
+#~ msgid "Completed spell checking"
+#~ msgstr "已完成拼写检查"
+
+#~ msgid "Spell checking is complete."
+#~ msgstr "已完成拼字检查。"
+
+#~ msgid "Press Tab and Return to terminate."
+#~ msgstr "按下 Tab 及返回键来终止。"
+
+#~ msgid "Phrase not found"
+#~ msgstr "未找到短语"
+
+#~ msgid "Phrase found."
+#~ msgstr "找到短语。"
+
+#~ msgid "Stop"
+#~ msgstr "停止"
 
 #~ msgid "Notify me when errors have been logged."
 #~ msgstr "在错误被记录时通知我。"
