@@ -2266,7 +2266,7 @@ msgid ""
 "<key>Return</key>."
 msgstr ""
 "Navigieren Sie auf die Zelle, welche die Belegung enthält, die Sie ändern "
-"wollen, und drücken Sie key>Eingabe</key>."
+"wollen, und drücken Sie <key>Eingabe</key>."
 
 #: C/howto_key_bindings.page:90(steps/title)
 msgid "Restoring Original Bindings"
@@ -2302,7 +2302,7 @@ msgid ""
 "<key>Return</key>."
 msgstr ""
 "Navigieren sie auf die Zelle, welche die Belegung enthält, die Sie löschen "
-"wollen, und drücken Sie key>Eingabe</key>."
+"wollen, und drücken Sie <key>Eingabe</key>."
 
 #: C/howto_key_bindings.page:130(item/p)
 msgid ""
