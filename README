@@ -1,4 +1,4 @@
-Orca v3.11.91pre
+Orca v3.13.1pre
 
 Introduction
 ========================================================================
@@ -23,7 +23,7 @@ requests.
 Dependencies
 ========================================================================
 
-Orca v3.11.x is supported on GNOME 3.11.x only.  We highly suggest you
+Orca v3.13.x is supported on GNOME 3.13.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 
@@ -38,7 +38,7 @@ Orca also has the following dependencies:
 * BrlAPI           - BrlAPI support for braille (optional)
 * py-setproctitle  - Python library to set the process title (optional)
 
-YOU ALSO NEED THE LATEST AT-SPI2, PYATSPI2 AND ATK FOR THE GNOME 3.11.x
+YOU ALSO NEED THE LATEST AT-SPI2, PYATSPI2 AND ATK FOR THE GNOME 3.13.x
 RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
 NOTE: If you have multiple versions of the python interpreter installed
