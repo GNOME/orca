@@ -39,7 +39,7 @@ import sys
 
 try:
     from gi.repository.Gio import Settings
-    a11yAppSettings = Settings('org.gnome.desktop.a11y.applications')
+    a11yAppSettings = Settings(schema_id='org.gnome.desktop.a11y.applications')
 except:
     a11yAppSettings = None
 
