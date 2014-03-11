@@ -67,3 +67,19 @@ class Utilities(script_utilities.Utilities):
             return True
 
         return False
+
+    def _isNonModalPopOver(self, obj):
+        try:
+            state = obj.getState()
+        except:
+            return False
+
+        if obj.getState().contains(pyatspi.STATE_MODAL):
+            return False
+
+        relations = obj.getRelationSet()
+        for relation in relations:
+            if relation.getRelationType() == pyatspi.RELATION_POPUP_FOR:
+                return True
+
+        return False

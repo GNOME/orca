@@ -125,6 +125,20 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, obj)
             return
 
+    def onShowingChanged(self, event):
+        """Callback for object:state-changed:showing accessibility events."""
+
+        obj = event.source
+        if not self.utilities._isNonModalPopOver(obj):
+            default.Script.onShowingChanged(self, event)
+            return
+
+        if event.detail1:
+            speech.speak(self.speechGenerator.generateSpeech(obj))
+            labels = self.utilities.unrelatedLabels(obj)
+            msg = ' '.join(map(self.utilities.displayedText, labels))
+            self.presentMessage(msg)
+
     def onTextSelectionChanged(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
