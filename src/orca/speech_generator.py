@@ -1523,7 +1523,9 @@ class SpeechGenerator(generator.Generator):
         with focus.
         """
         result = []
-        if args.get('priorObj', None):
+        topLevelObj = self._script.utilities.topLevelObject(obj)
+        if args.get('priorObj') \
+           or (topLevelObj and topLevelObj.getRole() == pyatspi.ROLE_DIALOG):
             result = self._generateAncestors(obj, **args)
         return result
 
