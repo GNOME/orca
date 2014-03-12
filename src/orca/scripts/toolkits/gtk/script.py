@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright (C) 2013 Igalia, S.L.
+# Copyright (C) 2013-2014 Igalia, S.L.
 #
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2013 Igalia, S.L."
+__copyright__ = "Copyright (c) 2013-2014 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
@@ -41,6 +41,23 @@ class Script(default.Script):
 
     def getUtilities(self):
         return Utilities(self)
+
+    def onActiveDescendantChanged(self, event):
+        """Callback for object:active-descendant-changed accessibility events."""
+
+        role = event.source.getRole()
+
+        try:
+            focusedRole = orca_state.locusOfFocus.getRole()
+        except:
+            pass
+        else:
+            # This is very likely typeahead search and not a real focus change.
+            tableRoles = [pyatspi.ROLE_TABLE, pyatspi.ROLE_TREE_TABLE]
+            if focusedRole == pyatspi.ROLE_TEXT and role in tableRoles:
+                orca.setLocusOfFocus(event, event.source, False)
+
+        default.Script.onActiveDescendantChanged(self, event)
 
     def onCheckedChanged(self, event):
         """Callback for object:state-changed:checked accessibility events."""
