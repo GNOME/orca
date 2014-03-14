@@ -942,6 +942,10 @@ class Script(default.Script):
         if event.source.getRoleName() == 'text frame':
             return
 
+        ignoreRoles = [pyatspi.ROLE_FILLER, pyatspi.ROLE_PANEL]
+        if event.source.getRole() in ignoreRoles:
+            return
+
         parent = event.source.parent
         if parent and parent.getRoleName() == 'text frame':
             return
