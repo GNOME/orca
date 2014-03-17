@@ -1197,7 +1197,7 @@ class Context:
 
             if (string == "") \
                 and (role != pyatspi.ROLE_TABLE_CELL):
-                string = accessible.getRoleName()
+                string = accessible.getLocalizedRoleName()
 
             if len(string) and ((clipping[2] != 0) or (clipping[3] != 0)):
                 zones.append(Zone(accessible,
