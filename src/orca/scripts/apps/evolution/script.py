@@ -101,6 +101,10 @@ class Script(WebKitGtk.Script):
     #                                                                      #
     ########################################################################
 
+    def onBusyChanged(self, event):
+        """Callback for object:state-changed:busy accessibility events."""
+        pass
+
     def onFocus(self, event):
         """Callback for focus: accessibility events."""
 
