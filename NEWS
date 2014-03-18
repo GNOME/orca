@@ -1,3 +1,42 @@
+3.11.92 - 18 March 2014
+
+General:
+
+  * Filter out a number of extraneous/unwanted accessibility events from
+    Evolution
+
+  * Eliminate some text-selection and typeahead search "chattiness"
+
+  * Generate ancestors for new dialogs even if there is no prior focused
+    object
+
+  * Fix for bug 726395 - Sometimes flat review presents non-localized
+    rolenames
+
+  * Ignore bogus focus claims from LibreOffice fillers and panels
+
+  * Add support for non-modal GtkPopover
+
+  * Use explicit keyword rather than positional argument for GSettings
+    schema id
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca            Catalan                Pau Iranzo
+    fr            French                 Julien Hardelin, Claude Paroz,
+                                         Alexandre Franke
+    lv            Latvian                Rūdolfs Mazurs
+    nb            Norwegian bokmål       Kjartan Maraas
+    pl            Polish                 Paweł Żołnowski
+    pt            Portuguese             Duarte Loreto
+    ru            Russian                Yuri Myasoedov
+    sr            Serbian                Мирослав Николић
+    sr@latin      Serbian                Miroslav Nikolić
+    uk            Ukranian               Daniel Korostil
+    zh_CN         Chinese (China)        Wylmer Wang
+
+=========
+
 3.11.91 - 4 March 2014
 
 General:
