@@ -121,6 +121,16 @@ class Script(WebKitGtk.Script):
 
         gtk.Script.onNameChanged(self, event)
 
+    def onSelectionChanged(self, event):
+        """Callback for object:selection-changed accessibility events."""
+
+        obj = event.source
+        if obj.getRole() == pyatspi.ROLE_COMBO_BOX \
+           and not obj.getState().contains(pyatspi.STATE_FOCUSED):
+            return
+
+        gtk.Script.onSelectionChanged(self, event)
+
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
  
