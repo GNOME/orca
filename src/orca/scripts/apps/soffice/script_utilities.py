@@ -474,6 +474,26 @@ class Utilities(script_utilities.Utilities):
 
         return nextObj
 
+    @staticmethod
+    def _flowsFromOrToSelection(obj):
+        try:
+            relationSet = obj.getRelationSet()
+        except:
+            return False
+
+        flows = [pyatspi.RELATION_FLOWS_FROM, pyatspi.RELATION_FLOWS_TO]
+        relations = filter(lambda r: r.getRelationType() in flows, relationSet)
+        targets = [r.getTarget(0) for r in relations]
+        for target in targets:
+            try:
+                nSelections = target.queryText().getNSelections()
+            except:
+                return False
+            if nSelections:
+                return True
+
+        return False
+
     #########################################################################
     #                                                                       #
     # Impress-Specific Utilities                                            #

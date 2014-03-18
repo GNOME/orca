@@ -956,6 +956,9 @@ class Script(default.Script):
         if start != end:
             return
 
+        if self.utilities._flowsFromOrToSelection(event.source):
+            return
+
         # We should present this in response to active-descendant-changed events
         if event.source.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS):
             return
@@ -1000,6 +1003,9 @@ class Script(default.Script):
                [pyatspi.ROLE_TOOL_BAR, pyatspi.ROLE_DIALOG],
                [pyatspi.ROLE_FRAME]):
             orca.setLocusOfFocus(event, event.source, False)
+
+        if self.utilities._flowsFromOrToSelection(event.source):
+            return
 
         default.Script.onCaretMoved(self, event)
 
