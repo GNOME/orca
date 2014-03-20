@@ -44,27 +44,6 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator):
     def __init__(self, script):
         WebKitGtk.SpeechGenerator.__init__(self, script)
 
-    def _generateRealTableCell(self, obj, **args):
-        # Check that we are in a table cell in the mail message header list.
-        # If we are and this table cell has an expanded state, then
-        # dont speak the number of items.
-        # See bug #432308 for more details.
-        #
-        rolesList = [pyatspi.ROLE_TABLE_CELL, \
-                     pyatspi.ROLE_TREE_TABLE, \
-                     pyatspi.ROLE_UNKNOWN]
-        if self._script.utilities.hasMatchingHierarchy(obj, rolesList):
-            state = obj.getState()
-            if state and state.contains(pyatspi.STATE_EXPANDABLE):
-                if state.contains(pyatspi.STATE_EXPANDED):
-                    oldRole = self._overrideRole(
-                        'ALTERNATIVE_REAL_ROLE_TABLE_CELL', args)
-                    result = self.generateSpeech(obj, **args)
-                    self._restoreRole(oldRole, args)
-                    return result
-        return speech_generator.SpeechGenerator._generateRealTableCell(
-            self, obj, **args)
-
     def _generateTableCellRow(self, obj, **args):
         """Orca has a feature to automatically read an entire row of a table
         as the user arrows up/down the roles.  This leads to complexity in
