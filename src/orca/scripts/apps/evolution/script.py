@@ -34,7 +34,6 @@ import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.settings as settings
 import orca.settings_manager as settings_manager
 
-from .formatting import Formatting
 from .speech_generator import SpeechGenerator
 
 _settingsManager = settings_manager.getManager()
@@ -62,10 +61,6 @@ class Script(WebKitGtk.Script):
         """
 
         return SpeechGenerator(self)
-
-    def getFormatting(self):
-        """Returns the formatting strings for this script."""
-        return Formatting(self)
 
     def isActivatableEvent(self, event):
         """Returns True if the given event is one that should cause this
