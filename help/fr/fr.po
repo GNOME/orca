@@ -419,7 +419,7 @@ msgstr ""
 "En mode d'apprentissage, <app>Orca</app> annonce chaque combinaison de "
 "touches que vous réalisez ainsi que les commandes d'<app>Orca</app> "
 "associées. Dans ce mode, vous pouvez également obtenir une liste des "
-"raccourcis contenant toutes les commandes d'<app>Orca</ app> que vous pouvez "
+"raccourcis contenant toutes les commandes d'<app>Orca</app> que vous pouvez "
 "utiliser."
 
 #. (itstool) path: item/p
@@ -3721,8 +3721,8 @@ msgid ""
 "within any accessible application."
 msgstr ""
 "Allez dans la boîte de dialogue <link xref=\"preferences\">Préférences</"
-"link> en appuyant sur <keyseq> <key>Touche de modification d'Orca</ "
-"key><key>Espace</ key></ keyseq> à partir de n'importe quelle application "
+"link> en appuyant sur <keyseq> <key>Touche de modification d'Orca</"
+"key><key>Espace</key></keyseq> à partir de n'importe quelle application "
 "accessible ."
 
 #. (itstool) path: item/p
@@ -4602,7 +4602,7 @@ msgid ""
 "That's it. <app>Orca</app> is now ready for use and will be launched if you "
 "are in a graphical desktop environment where accessibility is enabled."
 msgstr ""
-"C'est tout. <app>Orca</ app> est maintenant prêt à être utilisé et sera "
+"C'est tout. <app>Orca</app> est maintenant prêt à être utilisé et sera "
 "lancé si vous êtes dans un environnement de bureau graphique où "
 "l'accessibilité est activée."
 
@@ -5058,7 +5058,7 @@ msgid ""
 "To toggle <app>Orca</app> on and off in GNOME, press <keyseq><key>Super</"
 "key><key>Alt</key><key>S</key></keyseq>."
 msgstr ""
-"Pour activer/désactiver <app>Orca</ app> dans GNOME, appuyez sur "
+"Pour activer/désactiver <app>Orca</app> dans GNOME, appuyez sur "
 "<keyseq><key>Logo</key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: item/p
