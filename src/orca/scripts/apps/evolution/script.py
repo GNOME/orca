@@ -32,11 +32,6 @@ import pyatspi
 import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.settings as settings
-import orca.settings_manager as settings_manager
-
-from .speech_generator import SpeechGenerator
-
-_settingsManager = settings_manager.getManager()
 
 ########################################################################
 #                                                                      #
@@ -53,14 +48,8 @@ class Script(WebKitGtk.Script):
         - app: the application to create a script for.
         """
 
-        WebKitGtk.Script.__init__(self, app)
+        WebKitGtk.Script.__init__(self, app, False)
         self.presentIfInactive = False
-
-    def getSpeechGenerator(self):
-        """Returns the speech generator for this script.
-        """
-
-        return SpeechGenerator(self)
 
     def isActivatableEvent(self, event):
         """Returns True if the given event is one that should cause this
@@ -103,15 +92,15 @@ class Script(WebKitGtk.Script):
     def onFocus(self, event):
         """Callback for focus: accessibility events."""
 
+        if self.utilities.isWebKitGtk(event.source):
+            return
+
         gtk.Script.onFocus(self, event)
 
     def onNameChanged(self, event):
         """Callback for object:property-change:accessible-name events."""
 
-        # Every time the selected mail folder changes, Evolution's frame is
-        # updated to display the newly-selected folder. We need to ignore
-        # this event so as not to double-present the selected folder.
-        if event.source.getRole() == pyatspi.ROLE_FRAME:
+        if self.utilities.isWebKitGtk(event.source):
             return
 
         gtk.Script.onNameChanged(self, event)
@@ -125,40 +114,3 @@ class Script(WebKitGtk.Script):
             return
 
         gtk.Script.onSelectionChanged(self, event)
-
-    def onShowingChanged(self, event):
-        """Callback for object:state-changed:showing accessibility events."""
- 
-        if not event.detail1:
-            gtk.Script.onShowingChanged(self, event)
-            return
-
-        obj = event.source
-
-        # Present text in the Account Assistant
-        try:
-            role = obj.getRole()
-            relationSet = obj.getRelationSet()
-        except:
-            return
-
-        if role != pyatspi.ROLE_LABEL or relationSet:
-            gtk.Script.onShowingChanged(self, event)
-            return
-
-        window = self.utilities.topLevelObject(obj)
-        focusedObj = self.utilities.focusedObject(window)
-        if self.utilities.spatialComparison(obj, focusedObj) >= 0:
-            return
- 
-        # TODO - JD: The very last screen results in a crazy-huge number
-        # of events, and they come in an order that is not good for this
-        # approach. So we'll need to handle this particular case elsewhere.
-        if focusedObj.getRole() == pyatspi.ROLE_CHECK_BOX:
-            labels = self.utilities.unrelatedLabels(window)
-            if len(labels) > 15:
-                return
-
-        voice = self.voices.get(settings.DEFAULT_VOICE)
-        text = self.utilities.displayedText(obj)
-        self.presentMessage(text, voice=voice)

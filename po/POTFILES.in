@@ -18,7 +18,6 @@ src/orca/object_properties.py
 [type: gettext/glade]src/orca/orca-find.ui
 [type: gettext/glade]src/orca/orca-setup.ui
 src/orca/phonnames.py
-src/orca/scripts/apps/evolution/speech_generator.py
 src/orca/scripts/apps/gnome-mud/script.py
 src/orca/scripts/apps/liferea/script.py
 src/orca/scripts/apps/metacity/script.py
