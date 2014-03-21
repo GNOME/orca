@@ -120,6 +120,12 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
+        # Unfiled. Happens in Evolution, but for what seems to be a generic
+        # Gtk+ toggle button. So we'll handle it here.
+        if role == pyatspi.ROLE_TOGGLE_BUTTON:
+            orca.setLocusOfFocus(event, event.source)
+            return
+
         # Unfiled. But this happens when you are in Gedit, get into a menu
         # and then press Escape. The text widget emits a focus: event, but
         # not a state-changed:focused event.
