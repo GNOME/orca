@@ -45,11 +45,13 @@
       </p>
     </item>
   </list>
+  <note style="tip">
+    <title>Enabling Caret Navigation in an Application</title>
     <p>
-      If you are not yet familiar with the caret navigation commands provided by
-      the applications you wish to use, you are encouraged to read that documentation
-      first.
+      Not all applications have caret navigation enabled by default. For many GNOME
+      applications, caret navigation can be toggled on and off by pressing <key>F7</key>.
     </p>
+  </note>
   <p>
     In addition to reading a document by caret navigation, you may find it helpful
     to read, spell, and obtain the Unicode value for the current text. You can do
