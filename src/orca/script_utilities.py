@@ -1554,6 +1554,8 @@ class Utilities:
         # Eliminate duplicates
         d = {}
         for label in labels:
+            if label.name == root.name:
+                continue
             d[label.name] = label
         labels = list(d.values())
 
