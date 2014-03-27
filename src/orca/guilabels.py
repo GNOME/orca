@@ -455,7 +455,7 @@ SN_HEADER_ROLE = C_("structural navigation", "Role")
 # objects in a dialog box so that users can navigate more quickly than they
 # could with native keyboard navigation. This is the title for a column which
 # contains the selected item of a form field.
-SN_HEADER_SELETED_ITEM = C_("structural navigation", "Selected Item")
+SN_HEADER_SELECTED_ITEM = C_("structural navigation", "Selected Item")
 
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they
