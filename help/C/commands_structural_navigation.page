@@ -42,9 +42,21 @@
         </item> 
         <item>
           <p>
+            Display a list of headings:
+            <keyseq><key>Alt</key><key>Shift</key><key>H</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
             Next and previous heading at level 1:
             <keyseq><key>1</key></keyseq> and
             <keyseq><key>Shift</key><key>1</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            Display a list of headings at level 1:
+            <keyseq><key>Alt</key><key>Shift</key><key>1</key></keyseq>
           </p>
         </item>
         <item>
@@ -56,11 +68,23 @@
         </item> 
         <item>
           <p>
+            Display a list of headings at level 2:
+            <keyseq><key>Alt</key><key>Shift</key><key>2</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
             Next and previous heading at level 3:
             <keyseq><key>3</key></keyseq> and
             <keyseq><key>Shift</key><key>3</key></keyseq>
           </p>
         </item> 
+        <item>
+          <p>
+            Display a list of headings at level 3:
+            <keyseq><key>Alt</key><key>Shift</key><key>3</key></keyseq>
+          </p>
+        </item>
         <item>
           <p>
             Next and previous heading at level 4:
@@ -70,6 +94,12 @@
         </item> 
         <item>
           <p>
+            Display a list of headings at level 4:
+            <keyseq><key>Alt</key><key>Shift</key><key>4</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
             Next and previous heading at level 5:
             <keyseq><key>5</key></keyseq> and
             <keyseq><key>Shift</key><key>5</key></keyseq>
@@ -77,11 +107,23 @@
         </item> 
         <item>
           <p>
+            Display a list of headings at level 5:
+            <keyseq><key>Alt</key><key>Shift</key><key>5</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
             Next and previous heading at level 6:
             <keyseq><key>6</key></keyseq> and
             <keyseq><key>Shift</key><key>6</key></keyseq>
           </p>
         </item> 
+        <item>
+          <p>
+            Display a list of headings at level 6:
+            <keyseq><key>Alt</key><key>Shift</key><key>6</key></keyseq>
+          </p>
+        </item>
       </list>
     </section>
     <section id="forms">
@@ -96,11 +138,23 @@
         </item> 
         <item>
           <p>
+            Display a list of form fields:
+            <keyseq><key>Alt</key><key>Shift</key><key>F</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
             Next and previous button:
             <keyseq><key>B</key></keyseq> and
             <keyseq><key>Shift</key><key>B</key></keyseq>
           </p>
         </item> 
+        <item>
+          <p>
+            Display a list of buttons:
+            <keyseq><key>Alt</key><key>Shift</key><key>B</key></keyseq>
+          </p>
+        </item>
         <item>
           <p>
             Next and previous combo box:
@@ -110,6 +164,12 @@
         </item> 
         <item>
           <p>
+            Display a list of combo boxes:
+            <keyseq><key>Alt</key><key>Shift</key><key>C</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
             Next and previous entry:
             <keyseq><key>E</key></keyseq> and
             <keyseq><key>Shift</key><key>E</key></keyseq>
@@ -117,9 +177,21 @@
         </item> 
         <item>
           <p>
+            Display a list of entries:
+            <keyseq><key>Alt</key><key>Shift</key><key>E</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
             Next and previous radio button:
             <keyseq><key>R</key></keyseq> and
             <keyseq><key>Shift</key><key>R</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            Display a list of radio buttons:
+            <keyseq><key>Alt</key><key>Shift</key><key>R</key></keyseq>
           </p>
         </item> 
         <item>
@@ -127,6 +199,12 @@
             Next and previous checkbox:
             <keyseq><key>X</key></keyseq> and
             <keyseq><key>Shift</key><key>X</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            Display a list of checkboxes:
+            <keyseq><key>Alt</key><key>Shift</key><key>X</key></keyseq>
           </p>
         </item> 
         <item>
@@ -143,6 +221,19 @@
       <list>
         <item>
           <p>
+            Next and previous link:
+            <keyseq><key>K</key></keyseq> and
+            <keyseq><key>Shift</key><key>K</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            Display a list of links:
+            <keyseq><key>Alt</key><key>Shift</key><key>K</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
             Next and previous unvisited link:
             <keyseq><key>U</key></keyseq> and
             <keyseq><key>Shift</key><key>U</key></keyseq>
@@ -150,11 +241,23 @@
         </item> 
         <item>
           <p>
+            Display a list of unvisited links:
+            <keyseq><key>Alt</key><key>Shift</key><key>U</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
             Next and previous visited link:
             <keyseq><key>V</key></keyseq> and
             <keyseq><key>Shift</key><key>V</key></keyseq>
           </p>
         </item> 
+        <item>
+          <p>
+            Display a list of visited links:
+            <keyseq><key>Alt</key><key>Shift</key><key>V</key></keyseq>
+          </p>
+        </item>
       </list>
     </section>
     <section id="lists">
@@ -169,11 +272,23 @@
         </item> 
         <item>
           <p>
+            Display a list of lists:
+            <keyseq><key>Alt</key><key>Shift</key><key>L</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
             Next and previous list item:
             <keyseq><key>I</key></keyseq> and
             <keyseq><key>Shift</key><key>I</key></keyseq>
           </p>
         </item> 
+        <item>
+          <p>
+            Display a list of list items:
+            <keyseq><key>Alt</key><key>Shift</key><key>I</key></keyseq>
+          </p>
+        </item>
       </list>
     </section>
     <section id="tables">
@@ -186,6 +301,12 @@
             <keyseq><key>Shift</key><key>T</key></keyseq>
           </p>
         </item> 
+        <item>
+          <p>
+            Display a list of tables:
+            <keyseq><key>Alt</key><key>Shift</key><key>T</key></keyseq>
+          </p>
+        </item>
         <item>
           <p>
             Cell on left:
@@ -236,6 +357,12 @@
         </item> 
         <item>
           <p>
+            Display a list of paragraphs:
+            <keyseq><key>Alt</key><key>Shift</key><key>P</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
             Next and previous blockquote:
             <keyseq><key>Q</key></keyseq> and
             <keyseq><key>Shift</key><key>Q</key></keyseq>
@@ -243,11 +370,23 @@
         </item> 
         <item>
           <p>
+            Display a list of blockquotes:
+            <keyseq><key>Alt</key><key>Shift</key><key>Q</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
             Next and previous "large object":
             <keyseq><key>O</key></keyseq> and
             <keyseq><key>Shift</key><key>O</key></keyseq>
           </p>
         </item> 
+        <item>
+          <p>
+            Display a list of "large objects":
+            <keyseq><key>Alt</key><key>Shift</key><key>O</key></keyseq>
+          </p>
+        </item>
        </list>
     </section>
     <section id="other">
@@ -260,6 +399,12 @@
             <keyseq><key>Shift</key><key>M</key></keyseq>
           </p>
         </item> 
+        <item>
+          <p>
+            Display a list of landmarks:
+            <keyseq><key>Alt</key><key>Shift</key><key>M</key></keyseq>
+          </p>
+        </item>
         <item>
           <p>
             Next and previous separator:
