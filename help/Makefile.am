@@ -57,6 +57,7 @@ HELP_FILES = \
 	commands_live_regions.page \
 	commands_mouse.page \
 	commands.page \
+	commands_profiles.page \
 	commands_reading.page \
 	commands_speech_settings.page \
 	commands_structural_navigation.page \
