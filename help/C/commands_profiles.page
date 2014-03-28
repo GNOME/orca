@@ -1,0 +1,35 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_profiles">
+  <info>
+    <link type="next" xref="commands_speech_settings" />
+    <link type="guide" xref="commands#getting_started" />
+    <link type="seealso" xref="howto_profiles"  />
+    <title type="sort">5. Profiles</title>
+    <title type="link">Profiles</title>
+    <desc>
+      Commands to access saved configurations
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Profile Commands</title>
+    <p>
+      Profiles allow you to save and load multiple configurations so that you
+      can quickly access the settings you need.
+    </p>
+    <p>
+     The following command is not "bound" to a keystroke. If you would like to
+     bind it, please see <link xref="howto_key_bindings">Modifying Keybindings</link>.
+    </p>
+    <list>
+      <item>
+        <p>
+          Cycle to the next profile: (Unbound)
+        </p>
+      </item>
+    </list>
+</page>

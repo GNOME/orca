@@ -1,12 +1,12 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_time_date_notifications">
   <info>
-    <link type="next" xref="commands_speech_settings" />
+    <link type="next" xref="commands_profiles" />
     <link type="guide" xref="commands#getting_started" />
     <link type="seealso" xref="howto_notifications"  />
     <title type="sort">4. Time, Date, and Notification</title>
     <title type="link">Time, Date, and Notification</title>
     <desc>
-      Commands for the getting the time, date, and notification messages
+      Commands for getting the time, date, and notification messages
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
