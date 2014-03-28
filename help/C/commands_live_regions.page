@@ -18,6 +18,10 @@
     </license>
   </info>
   <title>Live Region Commands</title>
+  <p>
+    The following commands can be used to access dynamically-updated
+    content on web pages which have been made accessible through ARIA.
+  </p>
   <list>
     <item>
       <p>
