@@ -17,6 +17,13 @@
     </license>
   </info>
   <title>Bookmark Commands</title>
+  <p>
+    <app>Orca</app> provides several commands which can be used to "bookmark"
+    a given object for the purpose of navigating back to it later. Most of
+    these commands are "bound" to keystrokes. Please see
+    <link xref="howto_key_bindings">Modifying Keybindings</link>
+    for information on how to bind unbound commands.
+  </p>
   <list>
     <item>
       <p>
@@ -52,8 +59,7 @@
     <item>
       <p>
         "Where am I" information for this bookmark relative to the current
-        pointer location: <keyseq><key>Alt</key><key>Shift</key><key>1</key>
-        </keyseq>-<key>6</key>
+        pointer location: (Unbound)
       </p>
     </item>
   </list>

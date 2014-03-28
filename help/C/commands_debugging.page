@@ -15,47 +15,15 @@
     </license>
   </info>
   <title>Debugging Commands</title>
-    <list>
-      <item>
-        <p>
-          Report information on the currently active script:
-          <keyseq><key>Ctrl</key><key>Alt</key><key>Orca Modifier</key>
-          <key>Home</key></keyseq>
-        </p>
-      </item>
-    </list>
-    <note style="tip">
-    <p>
-      In order for the next three commands to be of use, <app>Orca</app> needs
-      to be started from a virtual console or via gnome-terminal. Output is sent
-      to the console only (i.e., it is not sent to speech or braille).
-    </p>
-  </note>
+  <p>
+    You may be asked by the developers to provide some debugging information in
+    order to help them identify the source of a problem you are experiencing.
+    The following command is not "bound" to a keystroke. If you need to bind it,
+    please see <link xref="howto_key_bindings">Modifying Keybindings</link>.
+  </p>
   <list>
     <item>
-      <p>
-        Print a debug listing of all known applications to the console where
-        <app>Orca</app> is running:
-        <keyseq>
-          <key>Ctrl</key><key>Alt</key><key>Orca Modifier</key><key>End</key>
-        </keyseq>
-      </p>
-    </item>
-    <item>
-      <p>
-        Print debug information about the ancestry of the object with focus:
-        <keyseq>
-          <key>Ctrl</key><key>Alt</key><key>Orca Modifier</key><key>Page Up</key>
-        </keyseq>
-      </p>
-    </item>
-    <item>
-      <p>
-        Print debug information about the hierarchy of the application with focus:
-        <keyseq>
-          <key>Ctrl</key><key>Alt</key><key>Orca Modifier</key><key>Page Down</key>
-        </keyseq>
-      </p>
+      <p>Cycle to the next debug level: (Unbound)</p>
     </item>
   </list>
 </page>
