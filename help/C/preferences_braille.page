@@ -45,7 +45,7 @@
     </p>
     <p>
       To enable contracted braille on a system where liblouis has been installed,
-      be sure that the <gui>Enable Contraced Braille</gui> checkbox is checked.
+      be sure that the <gui>Enable Contracted Braille</gui> checkbox is checked.
       Then choose your desired translation table from the <gui>Contraction
       Table</gui> combo box.
     </p>
