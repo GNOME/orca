@@ -1,4 +1,7 @@
-<page xmlns="http://projectmallard.org/1.0/" type="guide" id="index">
+<page xmlns="http://projectmallard.org/1.0/"
+    xmlns:its="http://www.w3.org/2005/11/its"
+    type="guide"
+    id="index">
   <info>
     <title type="text">Orca Screen Reader</title>
     <title type="link">Introduction to the <app>Orca</app> Screen Reader</title>
@@ -16,8 +19,8 @@
   </info>
 
   <title>
-    <media type="image" mime="image/png" src="figures/orca-logo.png">
-      <app>Orca</app>'s logo
+    <media type="image" mime="image/png" src="figures/orca-logo.png" its:translate="no">
+      <span its:translate="yes"><app>Orca</app>'s logo</span>
     </media>
     <app>Orca</app> Screen Reader
   </title>
