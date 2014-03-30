@@ -1,16 +1,16 @@
-# translation of eu.po to Basque
+# Basque translation of orca.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-#
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2008, 2009, 2010, 2011.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2012, 2013, 2014.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: eu\n"
+"Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-22 14:42+0100\n"
-"PO-Revision-Date: 2014-03-22 14:42+0100\n"
+"POT-Creation-Date: 2014-03-30 12:45+0200\n"
+"PO-Revision-Date: 2014-03-30 12:38+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <librezale@librezale.org>\n"
 "Language: eu\n"
@@ -3145,9 +3145,8 @@ msgstr "Bisitatutako esteken zerrenda bistaratzen du."
 #.
 #: ../src/orca/flat_review.py:1050 ../src/orca/generator.py:475
 #: ../src/orca/generator.py:741 ../src/orca/generator.py:783
-#: ../src/orca/generator.py:829
-#: ../src/orca/scripts/apps/evolution/speech_generator.py:122
-#: ../src/orca/tutorialgenerator.py:558 ../src/orca/tutorialgenerator.py:598
+#: ../src/orca/generator.py:829 ../src/orca/tutorialgenerator.py:558
+#: ../src/orca/tutorialgenerator.py:598
 msgid "toggle"
 msgstr "txandakatu"
 
@@ -3689,7 +3688,7 @@ msgstr "Etiketa"
 #: ../src/orca/guilabels.py:410
 msgctxt "structural navigation"
 msgid "Landmark"
-msgstr "Leku ezaguna"
+msgstr "Erreferentzia puntua"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7521,13 +7520,6 @@ msgstr ""
 "Rivabellosa, s : Saioa, t : Toloño, u : Urola, v : Villanueva, w : "
 "Washington, x : Xabier, y : Yemen, z : Zaraitzu"
 
-#. Translators: this in reference to an e-mail message
-#. status of having been read or unread.
-#.
-#: ../src/orca/scripts/apps/evolution/speech_generator.py:136
-msgid "Read"
-msgstr "Irakurri"
-
 #: ../src/orca/scripts/apps/gnome-mud/script.py:119
 msgid "Read the latest n messages in the incoming messages text area."
 msgstr "Irakurri azken n mezuak sarrerako mezuen testu-arean."
@@ -8685,6 +8677,9 @@ msgid ""
 msgstr ""
 "Sakatu ezkerrera gezia gutxiagotzeko, eskuinera gezi handiagotzeko. Sakatu "
 "Hasiera tekla minimora joateko, eta  Amaiera maximora joateko."
+
+#~ msgid "Read"
+#~ msgstr "Irakurri"
 
 #~ msgid "Change to:"
 #~ msgstr "Aldatu eta jarri hau:"
