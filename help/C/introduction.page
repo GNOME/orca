@@ -81,7 +81,7 @@
         </item>
         <item>
           <p>
-            <cmd>-u</cmd>, <cmd>--user-prefs-dir=<em>dirname</em></cmd>:
+            <cmd>-u</cmd>, <cmd>--user-prefs=<em>dirname</em></cmd>:
             Use <em>dirname</em> as the alternate directory for user
             preferences
           </p>
@@ -111,13 +111,13 @@
         </item>
         <item>
             <p>
-              <cmd>-i</cmd>, <cmd>--import-file=<em>filename</em></cmd>:
+              <cmd>-p</cmd>, <cmd>--profile=<em>filename</em></cmd>:
               Import a profile from a given <app>Orca</app> profile file
             </p>
         </item>
         <item>
           <p>
-            <cmd>--replace</cmd>: Replace a currently-running <app>Orca</app>
+            <cmd>-r</cmd>, <cmd>--replace</cmd>: Replace a currently-running <app>Orca</app>
           </p>
         </item>
         <item>
