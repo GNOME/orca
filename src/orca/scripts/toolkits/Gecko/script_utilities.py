@@ -232,6 +232,15 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
+    def inFindToolbar(self, obj=None):
+        if not obj:
+            obj = orca_state.locusOfFocus
+
+        if obj and obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
+            return False
+
+        return script_utilities.Utilities.inFindToolbar(obj)
+
     def isEntry(self, obj):
         """Returns True if we should treat this object as an entry."""
 

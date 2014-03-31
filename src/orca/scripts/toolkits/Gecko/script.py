@@ -995,6 +995,7 @@ class Script(default.Script):
 
         if self.utilities.inFindToolbar():
             self.presentFindResults(event.source, -1)
+            self._saveFocusedObjectInfo(orca_state.locusOfFocus)
             return
 
         if not self.inDocumentContent(orca_state.locusOfFocus) \
