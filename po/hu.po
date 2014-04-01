@@ -5216,7 +5216,7 @@ msgstr "Nem találhatók fájlok."
 #. flat review onto the existing contents of the clipboard.
 #: ../src/orca/messages.py:566
 msgid "Appended contents to clipboard."
-msgstr "Az egyszerű áttekintés tartalma a hozzáfűzve a vágólaphoz."
+msgstr "Az egyszerű áttekintés tartalma hozzáfűzve a vágólaphoz."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
