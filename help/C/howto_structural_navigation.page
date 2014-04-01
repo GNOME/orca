@@ -96,10 +96,10 @@
       <item>
         <p>
           Get into the <link xref="preferences">Orca Preferences</link>
-          dialog box for the current application by pressing:
+          dialog box for the current application by pressing
           <keyseq>
             <key>Ctrl</key><key>Orca Modifier</key><key>Space</key>
-          </keyseq>
+          </keyseq>.
         </p>
       </item>
       <item>
