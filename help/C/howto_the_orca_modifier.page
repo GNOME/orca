@@ -59,7 +59,7 @@
       <p>Move to the <gui>Key Bindings</gui> page.</p>
     </item>
     <item>
-      <p>Move to the <gui>Orca Modifier Key(s)</gui> combobox.</p>
+      <p>Move to the <gui>Screen Reader Modifier Key(s)</gui> combobox.</p>
     </item>
     <item>
       <p>Arrow to the desired modifier. The available options are:</p>
