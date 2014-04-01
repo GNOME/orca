@@ -21,7 +21,7 @@
     <title>Orca Modifier Keys</title>
     <media type="image" mime="image/png" src="figures/preferences_Orca_modifier_keys.png"/>
     <p>
-      The <gui>Orca Modifier Keys</gui> combo box allows you to select which
+      The <gui>Screen Reader Modifier Keys</gui> combo box allows you to select which
       key or keys will serve as the Orca Modifier. The available options are:
     </p>
     <list>
@@ -45,16 +45,14 @@
     <list>
       <item>
         <p>
-          The <gui>Function</gui> column is a description of the
-          <app>Orca</app> operation to be performed.
+          The <gui>Function</gui> column contains a description of the
+          <app>Orca</app> command to be performed.
         </p>
       </item>
       <item>
         <p>
-          The <gui>Key Binding</gui> is the primary way to invoke the function
-          from the keyboard. Note that the key binding may include the word
-          "Orca". This indicates that the <key>Orca Modifier</key> key should
-          be held down along with the other keys. You can modify the value of
+          The <gui>Key Binding</gui> column contains the keyboard shortcut currently
+          assigned to the <app>Orca</app> command. You can modify the value of
           this column by pressing <key>Return</key>, pressing the keys for the
           new binding, and pressing <key>Return</key> again.
         </p>
