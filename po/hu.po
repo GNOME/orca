@@ -4112,7 +4112,7 @@ msgstr "Táblázatnavigáció"
 #. blank cells when navigating tables in document content.
 #: ../src/orca/guilabels.py:676
 msgid "Skip _blank cells"
-msgstr "Üres _sorok kihagyása"
+msgstr "Üres _cellák kihagyása"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented to
