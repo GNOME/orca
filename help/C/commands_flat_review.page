@@ -176,6 +176,16 @@
           <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>K</key></keyseq></p></item>
         </list>
       </item>
+      <item>
+      <p>
+        Copies the contents under flat review to the clipboard: (Unbound)
+      </p>
+      </item>
+        <item>
+        <p>
+          Appends the contents under flat review to the clipboard: (Unbound)
+      </p>
+      </item>
     </list>
   </section>
 </page>
