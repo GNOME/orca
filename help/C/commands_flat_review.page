@@ -21,7 +21,9 @@
     Orca's <link xref="howto_flat_review">Flat Review</link> commands are
     designed for spatially reviewing elements displayed on the screen. They
     also provide a means for reading the current line, word, and character
-    when navigating in the text of a document.
+    when navigating in the text of a document. Most of these commands are
+    "bound" to keystrokes. Please see <link xref="howto_key_bindings">Modifying
+    Keybindings</link> for information on how to bind unbound commands.
   </p>
   <section id="line">
     <title>Commands for Reviewing by Line</title>
@@ -178,12 +180,12 @@
       </item>
       <item>
       <p>
-        Copies the contents under flat review to the clipboard: (Unbound)
+        Copy the contents under flat review to the clipboard: (Unbound)
       </p>
       </item>
         <item>
         <p>
-          Appends the contents under flat review to the clipboard: (Unbound)
+          Append the contents under flat review to the clipboard: (Unbound)
       </p>
       </item>
     </list>
