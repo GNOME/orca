@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2014-02-19 13:03+0000\n"
-"PO-Revision-Date: 2014-02-18 06:25+0100\n"
+"PO-Revision-Date: 2014-04-05 09:42+0100\n"
 "Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -5245,7 +5245,7 @@ msgstr "Az egyszerű áttekintés nem használható."
 #. let the user know he/she just entered flat review.
 #: ../src/orca/messages.py:589
 msgid "Entering flat review."
-msgstr "Belép az egyszerű áttekintés módba."
+msgstr "Belépés az egyszerű áttekintés módba."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
