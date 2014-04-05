@@ -43,9 +43,8 @@
       </item>
       <item>
         <p>
-          Depending on the form, you may also be able to use <app>Orca</app>'s
-          caret navigation commands, in other words, the arrow keys when
-          <app>Orca</app> is controlling the caret.
+          Depending on the form and the application, you may also be
+          able to use the arrow keys to navigate to a given form field.
         </p>
       </item>
    </list>
@@ -83,9 +82,8 @@
       </item>
       <item>
         <p>
-          If you are not in a list or combo box, you can use caret navigation
-          commands to arrow out of the form field, as long as <app>Orca</app>
-          is controlling the caret.
+          Depending on the form and the application, you may also be
+          able to use the arrow keys to navigate out of a given form field.
         </p>
       </item>
     </list>
