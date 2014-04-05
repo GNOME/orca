@@ -1,0 +1,113 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="preferences_voice">
+  <info>
+    <link type="guide" xref="preferences#orca" />
+    <link type="next" xref="preferences_speech" />
+    <title type="sort">2.0 Voice</title>
+    <title type="link">Voice</title>
+    <desc>
+      Configuring the voice used by <app>Orca</app>
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Voice Preferences</title>
+  <section id="voice_type_settings">
+    <title>Voice Type Settings</title>
+    <section>
+      <title>Voice type</title>
+      <p>
+        This combo box makes it possible for you to use different voices so that
+        you can better distinguish uppercase and linked text from other text,
+        and on-screen text from text added by <app>Orca</app>.
+      </p>
+      <note style="tip">
+        <title>Configuring Multiple Voices</title>
+        <p>
+          For each voice you wish to configure, first select the
+          voice in the <gui>Voice type</gui> combo box. Then
+          configure the person, rate, pitch, and volume to be used
+          for that voice.
+        </p>
+      </note>
+    </section>
+    <section>
+      <title>Speech system</title>
+      <p>
+        This combo box allows you to select your preferred speech system from
+        those you have installed, such as Speech Dispatcher.
+      </p>
+    </section>
+    <section>
+      <title>Speech synthesizer</title>
+      <p>
+        This combo box allows you to select the speech synthesizer to be used
+        with your chosen Speech system.
+      </p>
+    </section>
+    <section>
+      <title>Person</title>
+      <p>
+        This combo box allows you to choose which "person" or "speaker" should
+        be used with the selected voice. For instance, you might wish to have
+        David speak by default, but have hyperlinks spoken by Alice. Note that
+        what you find in the <gui>Person</gui> combo box will depend on which
+        speech synthesizers you have installed.
+      </p>
+    </section>
+    <section>
+      <title>Rate, Pitch, and Volume</title>
+      <p>
+        These three left-right sliders allow you to further customize the sound
+        of the person you have just selected.
+      </p>
+    </section>
+  </section>
+  <section id="global_voice_settings">
+  <title>Global Voice Settings</title>
+    <section id="pauses">
+      <title>Break speech into chunks between pauses</title>
+      <p>
+        Depending on the enabled speech settings, <app>Orca</app> may have quite
+        a bit to say about a particular object such as its name, its role, its
+        state, its mnemonic, its tutorial message, and so on. Checking the
+        <gui>Break speech into chunks between pauses</gui> checkbox will cause
+        <app>Orca</app> to insert brief pauses in between each of these pieces
+        of information.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
+    <section id="multicase_strings">
+      <title>Speak multicase strings as words</title>
+      <p>
+        In some text, and especially when working with code, one often comes
+        across a "word" consisting of several words with alternating case, such
+        as "MultiCaseString." Speech synthesizers do not always pronounce such
+        multicase strings correctly. Checking the <gui>Speak multicase strings
+        as words</gui> checkbox will cause <app>Orca</app> to break a word like
+        "MultiCaseString" into separate words ("Multi," "Case," and "String")
+        prior to passing it along to the speech synthesizer.
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+    </section>
+    <section id="say_all_by">
+      <title>Say All By</title>
+      <p>
+        The <gui>Say All By</gui> combo box allows you to specify whether
+        <app>Orca</app> speaks a sentence at a time or a line at a time when
+        doing a "Say All" of a document.
+      </p>
+      <p>
+        Default value: <gui>Sentence</gui>
+      </p>
+    </section>
+  </section>
+</page>

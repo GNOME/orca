@@ -6,7 +6,7 @@
       Configuring <app>Orca</app>'s fundamental behaviors
     </desc>
     <link type="guide" xref="preferences#orca" />
-    <link type="next" xref="preferences_speech" />
+    <link type="next" xref="preferences_voice" />
     <credit type="author">
       <name>Joanmarie Diggs</name>
       <email>joanied@gnome.org</email>

@@ -55,6 +55,7 @@ HELP_FILES = \
 	preferences_pronunciation.page \
 	preferences_speech.page \
 	preferences_table_navigation.page \
-	preferences_text_attributes.page
+	preferences_text_attributes.page \
+	preferences_voice.page
 
 HELP_LINGUAS = de el es fr gl hu pt_BR sl
