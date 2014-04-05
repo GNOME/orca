@@ -2,10 +2,10 @@
   <info>
     <link type="guide" xref="preferences#orca" />
     <link type="next" xref="preferences_braille" />
-    <title type="sort">2. Speech</title>
+    <title type="sort">2.1 Speech</title>
     <title type="link">Speech</title>
     <desc>
-      Configuring the voice and what gets spoken
+      Configuring what gets spoken
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -23,104 +23,8 @@
       <app>Orca</app> will make use of a speech synthesizer.
       Braille-only users will likely want to uncheck this checkbox.
     </p>
-  </section>
-  <section id="tts_options">
-    <title>Text-To-Speech Options</title>
-    <section>
-      <title>Speech system</title>
-      <p>
-        This combo box allows you to select your preferred speech system from
-        those you have installed. Examples include Speech Dispatcher and GNOME
-        Speech.
-      </p>
-    </section>
-    <section>
-      <title>Speech synthesizer</title>
-      <p>
-        This combo box allows you to select the speech synthesizer to be used
-        with your chosen Speech system.
-      </p>
-    </section>
-    <section>
-      <title>Voice settings</title>
-      <p>
-        This combo box makes it possible for you to use different voices so that
-        you can better distinguish uppercase and linked text from other text,
-        and on-screen text from text added by <app>Orca</app>.
-      </p>
-      <note style="tip">
-        <title>Configuring Multiple Voices</title>
-        <p>
-          For each voice you wish to configure, first select the
-          voice in the <gui>Voice settings</gui> combo box. Then
-          configure the person, rate, pitch, and volume to be used
-          for that voice.
-        </p>
-      </note>
-    </section>
-    <section>
-      <title>Person</title>
-      <p>
-        This combo box allows you to choose which "person" or "speaker" should
-        be used with the selected voice. For instance, you might wish to have
-        David speak by default, but have hyperlinks spoken by Alice. Note that
-        what you find in the <gui>Person</gui> combo box will depend on which
-        speech synthesizers you have installed.
-      </p>
-    </section>
-    <section>
-      <title>Rate, Pitch, and Volume</title>
-      <p>
-        These three left-right sliders allow you to further customize the sound
-        of the person you have just selected.
-      </p>
-    </section>
-  </section>
-  <section id="punctuation_level">
-    <title>Punctuation Level</title>
     <p>
-      The <gui>Punctuation Level</gui> radio button group is used to
-      adjust the amount of punctuation spoken by the synthesizer. The
-      available levels are <gui>None</gui>, <gui>Some</gui>, <gui>Most</gui>,
-      and <gui>All</gui>.
-    </p>
-    <section>
-      <title>None</title>
-      <p>
-        Choosing a punctuation level of <gui>None</gui> would, as you expect,
-        cause no punctuation to be spoken. Note, however, that special symbols
-        such as subscripted and superscripted numbers, unicode fractions, and
-        bullets are still spoken at this level, even though some might consider
-        these types of symbols punctuation.
-      </p>
-    </section>
-    <section>
-      <title>Some</title>
-      <p>
-        Choosing a punctuation level of <gui>Some</gui> causes all of the
-        previously-mentioned symbols to be spoken. In addition, <app>Orca</app>
-        will speak known mathematical symbols, currency symbols, and "^", "@",
-        "/", "&amp;", "#".
-      </p>
-    </section>
-    <section>
-      <title>Most</title>
-      <p>
-          Choosing a punctuation level of <gui>Most</gui> causes all of the
-        previous-mentioned symbols to be spoken. In addition, <app>Orca</app>
-        will speak all other known punctuation symbols <em>other than</em> "!",
-        "'", ",", ".", "?".
-      </p>
-    </section>
-    <section>
-      <title>All</title>
-      <p>
-        Choosing a punctuation level of <gui>All</gui>, as expected, causes
-        <app>Orca</app> to speak all known punctuation symbols.
-      </p>
-    </section>
-    <p>
-      Default value: <gui>Most</gui>
+      Default value: checked
     </p>
   </section>
   <section id="verbosity">
@@ -151,9 +55,141 @@
       the full row may not be desired. In that case, <gui>speak cell</gui>
       should instead be chosen.
     </p>
+    <p>
+      Default value: <gui>Speak row</gui>
+    </p>
+  </section>
+  <section id="punctuation_level">
+    <title>Punctuation Level</title>
+    <p>
+      The <gui>Punctuation Level</gui> radio button group is used to
+      adjust the amount of punctuation spoken by the synthesizer. The
+      available levels are <gui>None</gui>, <gui>Some</gui>, <gui>Most</gui>,
+      and <gui>All</gui>.
+    </p>
+    <p>
+      Default value: <gui>Most</gui>
+    </p>
+    <section>
+      <title>None</title>
       <p>
-        Default value: <gui>Speak row</gui>
+        Choosing a punctuation level of <gui>None</gui> would, as you expect,
+        cause no punctuation to be spoken. Note, however, that special symbols
+        such as subscripted and superscripted numbers, unicode fractions, and
+        bullets are still spoken at this level, even though some might consider
+        these types of symbols punctuation.
       </p>
+    </section>
+    <section>
+      <title>Some</title>
+      <p>
+        Choosing a punctuation level of <gui>Some</gui> causes all of the
+        previously-mentioned symbols to be spoken. In addition, <app>Orca</app>
+        will speak known mathematical symbols, currency symbols, and "^", "@",
+        "/", "&amp;", "#".
+      </p>
+    </section>
+    <section>
+      <title>Most</title>
+      <p>
+        Choosing a punctuation level of <gui>Most</gui> causes all of the
+        previous-mentioned symbols to be spoken. In addition, <app>Orca</app>
+        will speak all other known punctuation symbols <em>other than</em> "!",
+        "'", ",", ".", "?".
+      </p>
+    </section>
+    <section>
+      <title>All</title>
+      <p>
+        Choosing a punctuation level of <gui>All</gui>, as expected, causes
+        <app>Orca</app> to speak all known punctuation symbols.
+      </p>
+    </section>
+  </section>
+  <section id="spoken_context">
+    <title>Spoken Context</title>
+    <p>
+      The following items control the presentation of a variety of
+      supplemental, "system" information about the item with focus.
+      Because the associated text does not appear on screen, this
+      information is presented in <app>Orca</app>'s System voice.
+    </p>
+    <section id="only_speak_displayed_text">
+      <title>Only speak displayed text</title>
+      <p>
+        Checking this checkbox causes <app>Orca</app> to only speak actual
+        text displayed on screen. This option is intended primarily for low
+        vision users and users with a visual learning disability.
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+      <note style="note">
+        <p>
+          The follow items will not be available for configuration if
+          the <gui>Only speak displayed text</gui> checkbox is checked.
+        </p>
+      </note>
+    </section>
+    <section id="speak_blank_lines">
+      <title>Speak blank lines</title>
+      <p>
+        If the <gui>Speak blank lines</gui> checkbox is checked,
+        <app>Orca</app> will say "blank" each time you arrow to a blank
+        line. If it is unchecked, <app>Orca</app> will say nothing when
+        you move to a blank line.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
+    <section id="indentation_and_justification">
+      <title>Speak indentation and justification</title>
+      <p>
+        When working with code or editing other documents it is often
+        desirable to be aware of justification and indentation. Checking
+        the <gui>Speak indentation and justification</gui> checkbox will
+        cause <app>Orca</app> to announce this information.
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+    </section>
+    <section id="mnemonics">
+     <title>Speak object mnemonics</title>
+      <p>
+        If the <gui>Speak object mnemonics</gui> checkbox is checked,
+        <app>Orca</app> will announce the mnemonic associated with the
+        object with focus (such as <keyseq><key>Alt</key><key>O</key>
+        </keyseq> for an <gui>OK</gui> button).
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+    </section>
+    <section id="child_position">
+      <title>Speak child position</title>
+      <p>
+        Checking the <gui>Speak child position</gui> checkbox will cause
+        <app>Orca</app> to announce the position of the focused item in
+        menus, lists, and trees (e.g. "9 of 16").
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+    </section>
+    <section id="speak_tutorial_messages">
+      <title>Speak tutorial messages</title>
+      <p>
+        If the <gui>Speak tutorial messages</gui> checkbox is checked, as
+        you move amongst objects in an interface, <app>Orca</app> will
+        provide additional information, such as how to interact with the
+        currently-focused object.
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+    </section>
   </section>
   <section id="progress_bar_updates">
     <title>Progress Bar Updates</title>
@@ -200,105 +236,6 @@
       </p>
       <p>
         Default value: <gui>Application</gui>
-      </p>
-    </section>
-  </section>
-  <section id="only_speak_displayed_text">
-    <title>Only speak displayed text</title>
-    <p>
-      Checking this checkbox causes <app>Orca</app> to only speak actual
-      text displayed on screen. This option is intended primarily for low
-      vision users and users with a visual learning disability.
-    </p>
-  </section>
-  <section id="multicase_strings">
-    <title>Speak multicase strings as words</title>
-    <p>
-      In some texts, and especially when working with code, one often comes
-      across a "word" consisting of several words with alternating case, such
-      as "MultiCaseString." Speech synthesizers do not always pronounce such
-      multicase strings correctly. Checking the <gui>Speak multicase strings
-      as words</gui> checkbox will cause <app>Orca</app> to break a word like
-      "MultiCaseString" into separate words ("Multi," "Case," and "String")
-      prior to passing it along to the speech synthesizer.
-    </p>
-  </section>
-  <section id="pauses">
-    <title>Break speech into chunks between pauses</title>
-    <p>
-      Depending on the enabled speech settings, <app>Orca</app> may have quite
-      a bit to say about a particular object such as its name, its role, its
-      state, its mnemonic, its tutorial message, and so on. Checking the
-      <gui>Break speech into chunks between pauses</gui> checkbox will cause
-      <app>Orca</app> to insert brief pauses in between each of these pieces
-      of information.
-    </p>
-  </section>
-  <section id="say_all_by">
-    <title>Say All By</title>
-    <p>
-      The <gui>Say All By</gui> combo box allows you to specify whether
-      <app>Orca</app> speaks a sentence at a time or a line at a time when
-      doing a "Say All" of a document.
-    </p>
-  </section>
-  <section id="system_voice_items">
-    <title>System Information</title>
-    <p>
-      The following items control the presentation of a variety of
-      supplemental, "system" information about the item with focus.
-      Because the associated text does not appear on screen, this
-      information is presented in <app>Orca</app>'s System voice.
-    </p>
-    <note style="note">
-      <title>Configuration of System Information</title>
-      <p>
-        The follow items will not be available for configuration if
-        the <gui>Only speak displayed text</gui> checkbox is checked.
-      </p>
-      </note>
-      <section id="speak_blank_lines">
-        <title>Speak blank lines</title>
-        <p>
-          If the <gui>Speak blank lines</gui> checkbox is checked,
-          <app>Orca</app> will say "blank" each time you arrow to a blank
-          line. If it is unchecked, <app>Orca</app> will say nothing when
-          you move to a blank line.
-        </p>
-      </section>
-      <section id="indentation_and_justification">
-        <title>Speak indentation and justification</title>
-        <p>
-          When working with code or editing other documents it is often
-          desirable to be aware of justification and indentation. Checking
-          the <gui>Speak indentation and justification</gui> checkbox will
-          cause <app>Orca</app> to announce this information.
-        </p>
-      </section>
-      <section id="mnemonics">
-       <title>Speak object mnemonics</title>
-        <p>
-          If the <gui>Speak object mnemonics</gui> checkbox is checked,
-          <app>Orca</app> will announce the mnemonic associated with the
-          object with focus (such as <keyseq><key>Alt</key><key>O</key>
-          </keyseq> for an <gui>OK</gui> button).
-        </p>
-      </section>
-    <section id="child_position">
-      <title>Speak child position</title>
-      <p>
-        Checking the <gui>Speak child position</gui> checkbox will cause
-        <app>Orca</app> to announce the position of the focused item in
-        menus, lists, and trees (e.g. "9 of 16").
-      </p>
-    </section>
-    <section id="speak_tutorial_messages">
-      <title>Speak tutorial messages</title>
-      <p>
-        If the <gui>Speak tutorial messages</gui> checkbox is checked, as
-        you move amongst objects in an interface, <app>Orca</app> will
-        provide additional information, such as how to interact with the
-        currently-focused object.
       </p>
     </section>
   </section>
