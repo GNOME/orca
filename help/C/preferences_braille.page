@@ -18,7 +18,6 @@
   <title>Braille Preferences</title>
   <section id="braillesupport">
     <title>Enable Braille Support</title>
-    <media type="image" mime="image/png" src="figures/preferences_enable_braille_support.png"/>
     <p>
       This check box toggles whether or not <app>Orca</app> will make
       use of a braille display. If BrlTTY is not running, <app>Orca</app>
@@ -37,7 +36,6 @@
   </section>
   <section id="contractedbraille">
     <title>Enable Contracted Braille</title>
-    <media type="image" mime="image/png" src="figures/preferences_braille_contracted.png"/>
     <p>
       Orca supports contracted braille via the liblouis project. Because many
       distros include liblouis, you will likely automatically have access to
@@ -55,7 +53,6 @@
   </section>
   <section id="rolenames">
     <title>Abbreviated Role Names</title>
-    <media type="image" mime="image/png" src="figures/preferences_abbreviated_role_names.png"/>
     <p>
       This check box determines the manner in which role names are
       displayed and can be used to help conserve real estate on the
@@ -69,7 +66,6 @@
   </section>
   <section id="eolindicator">
     <title>Disable end of line symbol</title>
-    <media type="image" mime="image/png" src="figures/preferences_disable_eol_symbol.png"/>
     <p>
       Checking this checkbox tells <app>Orca</app> to not present the
       "$l" string at the end of a line of text.
@@ -80,7 +76,6 @@
   </section>
   <section id="verbosity">
     <title>Verbosity</title>
-    <media type="image" mime="image/png" src="figures/preferences_braille_verbosity.png"/>
     <p>
       This radio button group determines the amount of information that
       will be brailled in certain situations. For example, if it is set
@@ -93,7 +88,6 @@
   </section>
   <section id="selectionandhyperlink">
     <title>Selection and Hyperlink Indicators</title>
-    <media type="image" mime="image/png" src="figures/preferences_braille_indicators.png"/>
     <p>
       The <gui>Selection Indicator</gui> and <gui>Hyperlink Indicator</gui>
       radio button groups allow you to configure <app>Orca</app>'s behavior

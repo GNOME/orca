@@ -19,7 +19,6 @@
   <title>Key Bindings Preferences</title>
   <section id="orca_modifier_keys">
     <title>Orca Modifier Keys</title>
-    <media type="image" mime="image/png" src="figures/preferences_Orca_modifier_keys.png"/>
     <p>
       The <gui>Screen Reader Modifier Keys</gui> combo box allows you to select which
       key or keys will serve as the Orca Modifier. The available options are:
@@ -37,7 +36,6 @@
   </section>
   <section id="key_bindings_table">
     <title>The Key Bindings Table</title>
-    <media type="image" mime="image/png" src="figures/preferences_key_bindings_table.png"/>
     <p>
       The key bindings table provides a list of <app>Orca</app> operations
       and the keys that are bound to them.

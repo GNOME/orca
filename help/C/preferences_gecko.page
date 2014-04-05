@@ -19,7 +19,6 @@
   <title>Gecko Navigation Preferences</title>
   <section id="page_navigation">
     <title>Page Navigation</title>
-    <media type="image" mime="image/png" src="figures/preferences_gecko_page_navigation.png"/>
     <p>
       The <gui>Page Navigation</gui> group of controls make it possible for you
       to customize how <app>Orca</app> presents, and allow you to interact with,
@@ -99,7 +98,6 @@
   </section>
   <section id="find_options">
     <title>Find Options</title>
-    <media type="image" mime="image/png" src="figures/preferences_gecko_find_options.png"/>
     <p>
       The <gui>Find Options</gui> group of controls make it possible for you to
       customize how <app>Orca</app> presents the results of a search conducted

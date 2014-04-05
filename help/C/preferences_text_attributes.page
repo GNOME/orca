@@ -28,7 +28,6 @@
   </p>
   <section id="table">
     <title>The text attributes table</title>
-    <media type="image" mime="image/png" src="figures/preferences_text_attributes_table.png"/>
     <p>
       The text attributes table is where you specify what attributes will
       and will not be presented and under what conditions. Each row consists
@@ -81,17 +80,13 @@
     </p>
   </section>
   <section id="rearranging">
-    <title>Rearranging the order of presentation</title>
-    <figure>
-      <title>Options for Controlling the Order in Which Attributes Are Presented</title>
-      <desc>
+     <title>Rearranging the order of presentation</title>
+     <p>
         When you initially display the text attribute page, all of your enabled
         attributes are placed at the top of the table in the order in which they
         will be spoken. There are four buttons which can be used to rearrange
         the order of presentation.
-      </desc>
-      <media type="image" mime="image/png" src="figures/preferences_text_attributes_rearranging.png"/>
-    </figure>
+    </p>
     <list>
       <item>
         <p>
@@ -120,16 +115,12 @@
     </list>
   </section>
   <section id="braille_indicator">
-    <title>Braille indicator</title>
-    <figure>
-      <title>Options for Configuring Braille "Underlining" for Formatting</title>
-      <desc>
+    <title>Options for Configuring Braille "Underlining" for Formatting</title>
+    <p>
         Beneath the push buttons is the <gui>Braille Indicator</gui> group
         of radio buttons. Here you can select the cell or cells to be used
         to indicate text which has at least one of the specified attributes.
-      </desc>
-      <media type="image" mime="image/png" src="figures/preferences_text_attributes_braille.png"/>
-    </figure>
+    </p>
     <list>
       <item>
         <p><gui>None</gui>: Do not underline text attributes in braille (the default)</p>

@@ -18,7 +18,6 @@
   <title>Speech Preferences</title>
   <section id="enable_speech">
     <title>Enable speech</title>
-    <media type="image" mime="image/png" src="figures/preferences_enable_speech.png"/>
     <p>
       The <gui>Enable speech</gui> check box controls whether or not
       <app>Orca</app> will make use of a speech synthesizer.
@@ -27,7 +26,6 @@
   </section>
   <section id="tts_options">
     <title>Text-To-Speech Options</title>
-    <media type="image" mime="image/png" src="figures/preferences_tts_options.png"/>
     <section>
       <title>Speech system</title>
       <p>
@@ -72,7 +70,6 @@
     </section>
     <section>
       <title>Rate, Pitch, and Volume</title>
-      <media type="image" mime="image/png" src="figures/preferences_rate_pitch_volume.png"/>
       <p>
         These three left-right sliders allow you to further customize the sound
         of the person you have just selected.
@@ -81,7 +78,6 @@
   </section>
   <section id="punctuation_level">
     <title>Punctuation Level</title>
-    <media type="image" mime="image/png" src="figures/preferences_punctuation_level.png"/>
     <p>
       The <gui>Punctuation Level</gui> radio button group is used to
       adjust the amount of punctuation spoken by the synthesizer. The
@@ -129,7 +125,6 @@
   </section>
   <section id="verbosity">
     <title>Verbosity</title>
-    <media type="image" mime="image/png" src="figures/preferences_speech_verbosity.png"/>
     <p>
       The <gui>Verbosity</gui> setting determines the amount of information
       that will be spoken in various situations. For example, if it is set
@@ -143,7 +138,6 @@
   </section>
   <section id="table_rows">
     <title>Table Rows</title>
-    <media type="image" mime="image/png" src="figures/preferences_table_rows.png"/>
     <p>
       The <gui>Table Rows</gui> radio button group determines what gets
       spoken when navigating amongst rows in a table. The available
@@ -163,7 +157,6 @@
   </section>
   <section id="progress_bar_updates">
     <title>Progress Bar Updates</title>
-    <media type="image" mime="image/png" src="figures/preferences_progress_bar_updates.png"/>
     <section>
       <title>Enabled</title>
       <p>
@@ -212,7 +205,6 @@
   </section>
   <section id="only_speak_displayed_text">
     <title>Only speak displayed text</title>
-    <media type="image" mime="image/png" src="figures/preferences_only_speak_displayed_text.png"/>
     <p>
       Checking this checkbox causes <app>Orca</app> to only speak actual
       text displayed on screen. This option is intended primarily for low
@@ -221,7 +213,6 @@
   </section>
   <section id="multicase_strings">
     <title>Speak multicase strings as words</title>
-    <media type="image" mime="image/png" src="figures/preferences_speak_multicase_strings_as_words.png"/>
     <p>
       In some texts, and especially when working with code, one often comes
       across a "word" consisting of several words with alternating case, such
@@ -233,7 +224,6 @@
     </p>
   </section>
   <section id="pauses">
-    <media type="image" mime="image/png" src="figures/preferences_break_speech_into_chunks.png"/>
     <title>Break speech into chunks between pauses</title>
     <p>
       Depending on the enabled speech settings, <app>Orca</app> may have quite
@@ -245,7 +235,6 @@
     </p>
   </section>
   <section id="say_all_by">
-    <media type="image" mime="image/png" src="figures/preferences_say_all_by.png"/>
     <title>Say All By</title>
     <p>
       The <gui>Say All By</gui> combo box allows you to specify whether
@@ -255,7 +244,6 @@
   </section>
   <section id="system_voice_items">
     <title>System Information</title>
-    <media type="image" mime="image/png" src="figures/preferences_system_voice_options.png"/>
     <p>
       The following items control the presentation of a variety of
       supplemental, "system" information about the item with focus.

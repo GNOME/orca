@@ -15,7 +15,6 @@
     </license>
   </info>
   <title>Chat Preferences</title>
-  <media type="image" mime="image/png" src="figures/preferences_chat.png"/>
   <p>
     The following options allow you to customize how <app>Orca</app>
     behaves when providing access to instant messaging and internet
