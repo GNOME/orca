@@ -43,12 +43,6 @@
   <p>
     When you activate Orca Find, you will be placed in a dialog box.
   </p>
-    <figure>
-      <title>
-        <app>Orca</app>'s Find Dialog
-      </title>
-      <media type="image" mime="image/png" src="figures/orca_find.png"/>
-    </figure>
   <p>
     Here you can specify the following items:
   </p>

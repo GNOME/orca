@@ -17,16 +17,6 @@
     Orca's profiles allow you to save and load multiple configurations so
     that you can quickly access the settings you need.
   </p>
-  <figure>
-    <title>
-      Maintaining Multiple Configurations
-    </title>
-    <desc>
-      These options appear at the bottom of the <gui>General</gui> page of the
-      <app>Orca</app> preferences dialog.
-    </desc>
-    <media type="image" mime="image/png" src="figures/preferences_profiles.png"/>
-  </figure>
   <steps>
     <title>Saving a New Profile</title>
     <item>
@@ -46,9 +36,6 @@
       <p>
         Type the new profile name in the resulting <gui>Save Profile As</gui>
         dialog box.
-      </p>
-      <p>
-        <media type="image" mime="image/png" src="figures/profiles_save_as.png"/>
       </p>
     </item>
     <item>
@@ -78,9 +65,6 @@
       <p>
         You will be asked to confirm. Press the <gui>Yes</gui> button.
       </p>
-      <p>
-        <media type="image" mime="image/png" src="figures/profiles_load.png"/>
-      </p>
     </item>
     <item>
       <p>Press the <gui>OK</gui> button.</p>
@@ -101,9 +85,6 @@
         When prompted for the new profile name, type the same name as current
         profile. When you press the <gui>OK</gui> button, you will be told there
         is a name conflict.
-      </p>
-      <p>
-        <media type="image" mime="image/png" src="figures/profiles_conflict.png"/>
       </p>
     </item>
     <item>

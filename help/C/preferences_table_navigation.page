@@ -19,7 +19,6 @@
     </license>
   </info>
   <title>Table Navigation Preferences</title>
-  <media type="image" mime="image/png" src="figures/preferences_table_navigation.png"/>
   <p>
     The following option allows you to customize how <app>Orca</app>
     behaves when navigating within a table in

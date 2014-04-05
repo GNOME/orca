@@ -24,7 +24,6 @@
       </desc>
     </info>
     <title>Keyboard Layout</title>
-    <media type="image" mime="image/png" src="figures/preferences_keyboard_layout.png"/>
     <p>
       The <gui>keyboard layout</gui> radio button group allows you to specify if
       you will be working on a desktop (i.e. with a numeric keypad) or laptop
@@ -43,7 +42,6 @@
       </desc>
     </info>
     <title>Present Tooltips</title>
-    <media type="image" mime="image/png" src="figures/preferences_present_tooltips.png"/>
     <p>
       When checked, this option will tell <app>Orca</app> to present information
       about tooltips when they appear as the result of mouse hovering. Specific
@@ -63,7 +61,6 @@
       </desc>
     </info>
     <title>Speak Object Under Mouse</title>
-    <media type="image" mime="image/png" src="figures/preferences_speak_object_under_mouse.png"/>
     <p>
       When checked, this option will tell <app>Orca</app> to present
       information about the object under the mouse pointer as you move
@@ -82,7 +79,6 @@
       </desc>
     </info>
     <title>Time Format and Date Format</title>
-    <media type="image" mime="image/png" src="figures/preferences_date_and_time.png"/>
     <p>
       The <gui>Time Format</gui> and <gui>Date Format</gui> combo boxes allow
       you to specify how <app>Orca</app> will speak and braille the time and the
@@ -99,7 +95,6 @@
       </desc>
     </info>
     <title>Profiles</title>
-    <media type="image" mime="image/png" src="figures/preferences_profiles.png"/>
     <p>
       The <gui>Profiles</gui> group of controls, which appear at the bottom
       of the <gui>General</gui> page, make it possible for you to maintain

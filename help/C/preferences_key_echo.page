@@ -18,7 +18,6 @@
   <title>Key Echo Preferences</title>
   <section id="keyecho">
     <title>Enable key echo</title>
-    <media type="image" mime="image/png" src="figures/preferences_key_echo.png"/>
     <p>
       Orca's key echo setting controls what happens each time you press
       a key. To enable key echo, check the "Enable key echo" checkbox.
@@ -98,7 +97,6 @@
   </section>
   <section id="characterecho">
     <title>Enable echo by character</title>
-    <media type="image" mime="image/png" src="figures/preferences_character_echo.png"/>
     <p>
       Enabling this option causes Orca to echo the character
       you just typed.
@@ -143,7 +141,6 @@
   </section>
   <section id="wordandsentenceecho">
     <title>Enable echo by word and Enable echo by sentence</title>
-    <media type="image" mime="image/png" src="figures/preferences_word_and_sentence_echo.png"/>
     <p>
       Checking the <gui>Enable echo by word</gui> checkbox causes
       <app>Orca</app> to echo the word you just typed. Similarly,
