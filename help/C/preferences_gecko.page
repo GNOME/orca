@@ -82,7 +82,7 @@
         the newly opened web page or email.
       </p>
       <p>
-        Default value: checked for Firefox; unchecked for Thunderbird
+        Default value: checked for Firefox; not checked for Thunderbird
       </p>
     </section>
   </section>
