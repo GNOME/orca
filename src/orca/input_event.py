@@ -268,7 +268,15 @@ class KeyboardEvent(InputEvent):
         if orca_state.bypassNextCommand:
             return False
 
-        return self.event_string in settings.orcaModifierKeys
+        if self.event_string in settings.orcaModifierKeys:
+            return True
+
+        if self.keyval_name == "KP_0" \
+           and "KP_Insert" in settings.orcaModifierKeys \
+           and self.modifiers & settings.SHIFT_MODIFIER_MASK:
+            return True
+
+        return False
 
     def isOrcaModified(self):
         """Return True if this key is Orca modified."""
