@@ -66,14 +66,6 @@ BTN_JUMP_TO = _("_Jump to")
 # Translators: This is the label for a button in a dialog.
 BTN_OK = _("_OK")
 
-# Translators: Orca has had to implement its own caret navigation model to work
-# around issues in Gecko/Firefox. In some versions of Firefox, we must perform
-# a focus grab on each object being navigated in order for things to work as
-# expected; in other versions of Firefox, we must avoid doing so in order for
-# things# to work as expected. We cannot identify with certainty which situation
-# the user is in, so we must provide this as an option within Orca.
-CARET_NAVIGATION_GRAB_FOCUS = _("_Grab focus on objects when navigating")
-
 # Translators: When the user arrows up and down in HTML content, and Orca is
 # controlling the caret, the user might want Orca to always position the
 # cursor at the beginning of the line (as opposed to the position directly
