@@ -26,7 +26,7 @@
       text and other content.
     </p>
     <section>
-      <title>Use Orca Caret Navigation</title>
+      <title>Control caret navigation</title>
       <p>
         This checkbox toggles <app>Orca</app>'s caret navigation on and off.
         When it is on, <app>Orca</app> takes control of the caret as you arrow
@@ -45,7 +45,7 @@
        </note>
     </section>
     <section>
-      <title>Use Orca Structural Navigation</title>
+      <title>Enable structural navigation</title>
       <p>
         This checkbox toggles <app>Orca</app>'s
         <link xref="howto_structural_navigation">Structural Navigation</link>
@@ -64,18 +64,6 @@
        </note>
     </section>
     <section>
-      <title>Grab focus on objects when navigating</title>
-      <p>
-        If this checkbox is checked, <app>Orca</app> will perform an explicit
-        focus grab as you navigate using the <app>Orca</app>-controlled caret.
-        Doing this was necessary in older versions of <app>Firefox</app> and
-        <app>Thunderbird</app>.
-      </p>
-      <p>
-        Default value: not checked
-      </p>
-    </section>
-    <section>
       <title>Position cursor at start of line when navigating vertically</title>
       <p>
         If this checkbox is checked, <app>Orca</app> will always move the caret
@@ -85,9 +73,29 @@
         the caret in the same horizontal position as you navigate Up or Down.
       </p>
       <p>
-        Default value: not checked
+        Default value: checked
       </p>
     </section>
+    <section>
+      <title>Automatically start speaking a page when it is first loaded</title>
+      <p>
+        If this checkbox is checked, <app>Orca</app> will perform a Say All on
+        the newly opened web page or email.
+      </p>
+      <p>
+        Default value: checked for Firefox; unchecked for Thunderbird
+      </p>
+    </section>
+  </section>
+  <section id="table_options">
+    <title>Table Options</title>
+    <note>
+      <p>
+        To learn more about <app>Orca's</app> options for navigating within
+        tables, please see <link xref="preferences_table_navigation">Table
+	Navigation Preferences</link>.
+      </p>
+    </note>
   </section>
   <section id="find_options">
     <title>Find Options</title>
