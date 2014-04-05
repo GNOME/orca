@@ -47,13 +47,13 @@
     </p>
     <list>
       <item>
-        <p>Present the last (most recent) notification message: (unbound)</p>
+        <p>Present the last (most recent) notification message: (Unbound)</p>
       </item>
       <item>
-        <p>Present the previous notification message: (unbound)</p>
+        <p>Present the previous notification message: (Unbound)</p>
       </item>
       <item>
-        <p>Present list of all notification messages: (unbound)</p>
+        <p>Present list of all notification messages: (Unbound)</p>
       </item>
     </list>
   </section>
