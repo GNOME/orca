@@ -15,7 +15,7 @@ AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
 toolkit, OpenOffice/LibreOffice, Gecko, and WebKitGtk.  AT-SPI support
 for the KDE Qt toolkit is currently being pursued.
 
-See also http://live.gnome.org/Orca for detailed English and Spanish
+See also http://wiki.gnome.org/Projects/Orca for detailed English and Spanish
 information on Orca, including how to run Orca, how to communicate
 with the Orca user community, and where to log bugs and feature
 requests.
@@ -31,7 +31,7 @@ Orca also has the following dependencies:
 
 * Python           - Python platform (minimum version 3.3)
 * pygobject-3.0    - Python bindings for the GObject library
-* gtk+-3.0         - Gtk+ toolkit
+* gtk+-3.0         - GTK+ toolkit
 * json-py          - a JSON (http://json.org) reader and writer in Python
 * python-speechd   - Python bindings for Speech Dispatcher (optional)
 * BrlTTY           - BrlTTY support for braille (optional)
@@ -41,7 +41,7 @@ Orca also has the following dependencies:
 YOU ALSO NEED THE LATEST AT-SPI2, PYATSPI2 AND ATK FOR THE GNOME 3.13.x
 RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
-NOTE: If you have multiple versions of the python interpreter installed
+NOTE: If you have multiple versions of the Python interpreter installed
 on your machine, you should set the PYTHON environment variable when 
 configuring Orca.  For example:
 
@@ -63,7 +63,7 @@ python -c "import brlapi"
 If you get the following error, the Python bindings for BrlAPI are not
 installed.
 
-See also http://live.gnome.org/Orca/Braille for more information on
+See also http://wiki.gnome.org/Projects/Orca/Braille for more information on
 BrlTTY and also using liblouis for contracted braille.
 
 Running Orca

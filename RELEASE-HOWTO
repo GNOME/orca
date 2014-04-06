@@ -3,7 +3,7 @@ maintainers how to make a release.
 
 The general instructions for a release are here:
 
-  http://live.gnome.org/MaintainersCorner/Releasing
+  http://wiki.gnome.org/MaintainersCorner/Releasing
   http://developer.gnome.org/dotplan/for_maintainers.html
 
 Here's a summary for Orca:
@@ -45,7 +45,7 @@ BUILD THE RELEASE:
 
 ./autogen.sh --prefix=`pwd`/bld && make && make install &&  make distcheck
 
-For sanity, you should run pylint (http://live.gnome.org/Orca/Pylint).
+For sanity, you should run pylint (http://wiki.gnome.org/Projects/Orca/Pylint).
 
 
 TEST THE CANDIDATE:
@@ -104,7 +104,7 @@ Orca is a free, open source, flexible, and extensible screen reader
 that provides access to the graphical desktop via user-customizable
 combinations of speech, braille, and/or magnification. 
 
-You can read more about Orca at http://live.gnome.org/Orca.
+You can read more about Orca at http://wiki.gnome.org/Projects/Orca.
 
 ===================================
 * What's changed for Orca v2.29.92?
