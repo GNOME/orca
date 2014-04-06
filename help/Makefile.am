@@ -54,6 +54,7 @@ HELP_FILES = \
 	preferences.page \
 	preferences_pronunciation.page \
 	preferences_speech.page \
+	preferences_spellcheck.page \
 	preferences_table_navigation.page \
 	preferences_text_attributes.page \
 	preferences_voice.page

@@ -91,6 +91,15 @@
         headers will be included.
       </p>
     </item>
+    <item>
+      <p>
+        If you are in the spell checker of an application where <app>Orca</app>
+        provides enhanced support, a basic Where Am I will repeat the error
+        respecting your <link xref="preferences_spellcheck">spell check
+        preferences</link>. A detailed Where Am I will cause <app>Orca</app> to
+        present the full details of the error.
+      </p>
+    </item>
   </list>
   <p>
     And so on. Again, the goal of <app>Orca</app>'s Where Am I is to provide
