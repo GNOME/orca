@@ -1,0 +1,65 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="preferences_spellcheck">
+  <info>
+    <link type="guide" xref="preferences#application" />
+    <title type="sort">4. Spell Check</title>
+    <title type="link">Spell Check</title>
+    <desc>
+      Configuring <app>Orca's</app> support for Spell Check
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Spell Check Preferences</title>
+  <p>
+    <app>Orca</app> tries to provide a consistent user experience when interacting
+     with application spell checkers. For applications where this enhanced support
+     has been provided, you will find several options which you can adjust to get
+     the verbosity level that works best for you.
+  </p>
+  <note style="tip">
+    <title>You can have both brief and verbose spell check information</title>
+    <p>
+      If you normally want very little verbosity when using a spell checker,
+      but occasionally need detailed information about a given error, you can
+      disable these options. When you need additional details, just use
+      <app>Orca</app>'s detailed <link xref="howto_whereami">Where Am I</link>
+      command to have <app>Orca</app> present the current error as if all of these
+      options were enabled.
+    </p>
+  </note>
+  <section>
+    <title>Spell error</title>
+    <p>
+      If this checkbox is checked, <app>Orca</app> will spell out the misspelled
+      word after speaking it.
+    </p>
+    <p>
+       Default value: checked
+    </p>
+  </section>
+  <section>
+    <title>Spell suggestion</title>
+    <p>
+      If this checkbox is checked, <app>Orca</app> will spell out the suggested
+      correction after speaking it.
+    </p>
+    <p>
+       Default value: checked
+    </p>
+  </section>
+  <section>
+    <title>Present context of error</title>
+    <p>
+      If this checkbox is checked, <app>Orca</app> will speak the sentence or
+      line from the document in which the error is found.
+    </p>
+    <p>
+       Default value: checked
+    </p>
+  </section>
+</page>
