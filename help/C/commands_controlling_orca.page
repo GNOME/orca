@@ -30,6 +30,15 @@
           Toggle <app>Orca</app> on and off in GNOME:
           <keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>.
         </p>
+        <note style="tip">
+           <p>
+             If you are using <app>Orca</app> in another desktop environment in which
+             there is no command to toggle <app>Orca</app> on and off, you may find the
+             command to quit <app>Orca</app> helpful. This command is unbound by default.
+             Please see <link xref="howto_key_bindings">Modifying Keybindings</link> for
+             information on how to bind unbound commands.
+           </p>
+        </note>
       </item>
       <item>
         <p>
