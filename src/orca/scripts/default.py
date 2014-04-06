@@ -2194,10 +2194,7 @@ class Script(script.Script):
 
         text = event.source.queryText()
         self._saveLastCursorPosition(event.source, text.caretOffset)
-
-        textSelections = self.pointOfReference.get('textSelections', {})
-        start, end = textSelections.get(hash(event.source), (0, 0))
-        if text.getNSelections() or start != end:
+        if text.getNSelections():
             return
 
         self._presentTextAtNewCaretPosition(event)
