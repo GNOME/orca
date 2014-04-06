@@ -178,6 +178,12 @@
           <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>K</key></keyseq></p></item>
         </list>
       </item>
+      <item><p>Use Say All to review the current dialog or window:</p>
+        <list>
+          <item><p>Desktop: <key>KP Plus</key> (double-clicked)</p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>Semicolon</key></keyseq> (double-clicked)</p></item>
+        </list>
+      </item>
       <item>
       <p>
         Copy the contents under flat review to the clipboard: (Unbound)
