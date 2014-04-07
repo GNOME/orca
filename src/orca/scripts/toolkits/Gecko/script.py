@@ -3602,7 +3602,8 @@ class Script(default.Script):
             #
             if not len(string) \
                or self.utilities.isEntry(obj) \
-               or self.utilities.isPasswordText(obj):
+               or self.utilities.isPasswordText(obj) \
+               or role == pyatspi.ROLE_PUSH_BUTTON and obj.name:
                 rv = self.speechGenerator.generateSpeech(obj)
                 # Crazy crap to make clump and friends happy until we can
                 # kill them. (They don't deal well with what the speech
