@@ -4071,7 +4071,7 @@ msgstr "Helyesírás-ellenőrzés"
 #. setting would cause Orca to speak "f o o" after speaking "foo".
 #: ../src/orca/guilabels.py:647
 msgid "Spell _error"
-msgstr "A hibás szó _felolvasása"
+msgstr "A _hibás szó betűzése"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will spell out the current suggestion in
@@ -4080,14 +4080,14 @@ msgstr "A hibás szó _felolvasása"
 #. "f o r" after speaking "for".
 #: ../src/orca/guilabels.py:654
 msgid "Spell _suggestion"
-msgstr "_Javítási javaslat felolvasása"
+msgstr "_Javítási javaslat betűzése"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will present the context (surrounding text,
 #. typically the sentence or line) in which the mistake occurred.
 #: ../src/orca/guilabels.py:659
 msgid "Present _context of error"
-msgstr "A _hiba szövegkörnyezetének felolvasása"
+msgstr "A hiba szöveg_környezetének felolvasása"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spread sheet cell. Coordinates are
