@@ -558,6 +558,10 @@ class Utilities:
         except (LookupError, RuntimeError):
             role = None
 
+        role = obj.getRole()
+        if role == pyatspi.ROLE_PUSH_BUTTON and obj.name:
+            return obj.name
+
         if role == pyatspi.ROLE_COMBO_BOX:
             displayedText = self._displayedTextInComboBox(obj)
             if self.DISPLAYED_TEXT not in self._script.generatorCache:
