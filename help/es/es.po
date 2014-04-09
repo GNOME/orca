@@ -14,8 +14,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2014-04-08 10:52+0000\n"
-"PO-Revision-Date: 2014-04-08 16:35+0200\n"
+"POT-Creation-Date: 2014-04-08 22:56+0000\n"
+"PO-Revision-Date: 2014-04-09 16:48+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -116,7 +116,6 @@ msgstr "Comandos de marcadores"
 
 #. (itstool) path: page/p
 #: C/commands_bookmarks.page:20
-#, fuzzy
 #| msgid ""
 #| "<app>Orca</app> provides several commands which can be used to manipulate "
 #| "the mouse pointer and read the contents under it. All of the commands are "
@@ -130,12 +129,12 @@ msgid ""
 "\"howto_key_bindings\">Modifying Keybindings</link> for information on how "
 "to bind unbound commands."
 msgstr ""
-"<app>Orca</app> proporciona varios comandos que se pueden usar para "
-"manipular el puntero del ratón y leer el contenido bajo este. Todos los "
-"comandos están «asociados» a pulsaciones de teclas con una excepción: "
-"alternar el modo de revisión del ratón. Consulte <link xref="
-"\"howto_key_bindings\">Modificar asociaciones de teclas</link> para obtener "
-"más información sobre cómo asociar este comando a una pulsación de tecla."
+"<app>Orca</app> proporciona varios comandos que se pueden usar para guardar "
+"como «marcador» un objeto dado, con el propósito de volver a él más tarde. "
+"La mayoría de estos comandos están «asociados» a pulsaciones de teclas. "
+"Consulte cómo <link xref=\"howto_key_bindings\">Modificar asociaciones de "
+"teclas</link> para obtener más información sobre cómo asociar comandos no "
+"asociados."
 
 #. (itstool) path: item/p
 #: C/commands_bookmarks.page:29
@@ -175,7 +174,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_bookmarks.page:54
-#, fuzzy
 #| msgid ""
 #| "Go to the next/previous bookmark for the application or page: "
 #| "<keyseq><key>Orca Modifier</key><key>B</key></keyseq>"
@@ -183,15 +181,11 @@ msgid ""
 "Go to the next bookmark for the application or page: <keyseq><key>Orca "
 "Modifier</key><key>B</key></keyseq>"
 msgstr ""
-"Ir al siguiente/anterior marcador de la aplicación o de la página: "
+"Ir al siguiente marcador de la aplicación o de la página: "
 "<keyseq><key>Modificador de Orca</key><key>B</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_bookmarks.page:60
-#| msgid ""
-#| "\"Where am I\" information for this bookmark relative to the current "
-#| "pointer location: <keyseq><key>Alt</key><key>Shift</key><key>1</key> </"
-#| "keyseq>-<key>6</key>"
 msgid ""
 "\"Where am I\" information for this bookmark relative to the current pointer "
 "location: (Unbound)"
@@ -406,7 +400,6 @@ msgstr ""
 
 #. (itstool) path: note/p
 #: C/commands_controlling_orca.page:34
-#, fuzzy
 #| msgid ""
 #| "The following commands can be used to customize <app>Orca</app>'s "
 #| "magnification support. You will notice that all of these commands are "
@@ -420,11 +413,12 @@ msgid ""
 "Please see <link xref=\"howto_key_bindings\">Modifying Keybindings</link> "
 "for information on how to bind unbound commands."
 msgstr ""
-"Los siguientes comandos se pueden usar para personalizar el soporte de "
-"magnificación de <app>Orca</app>. Notará que todos estos comandos están «sin "
-"asociar». Consulte <link xref=\"howto_key_bindings\">modificar asociaciones "
-"de teclas</link> para obtener más información sobre cómo asociar estos "
-"comandos a pulsaciones de teclas."
+"Si está usando <app>Orca</app> en otro entorno de escritorio en el que no "
+"haya un comando para activar o desactivar <app>Orca</app> puede que le "
+"resulte útil el comando para salir de <app>Orca</app>. Este comando no está "
+"asociado de manera predeterminada. Consulte cómo <link xref="
+"\"howto_key_bindings\">Modificar las asociaciones de teclas</link> para "
+"obtener información sobre cómo asociar comandos que no estén asociados."
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:44
@@ -517,13 +511,17 @@ msgid ""
 "it, please see <link xref=\"howto_key_bindings\">Modifying Keybindings</"
 "link>."
 msgstr ""
+"Es posible que los desarrolladores le pidan algún tipo de información de "
+"depuración para ayudarles a identificar el origen del problema. El siguiente "
+"comando no está asociado a una pulsación de teclas. Si necesita asociarlo, "
+"consulte cómo <link xref=\"howto_key_bindings\">Modificar las asociaciones "
+"de teclas</link>."
 
 #. (itstool) path: item/p
 #: C/commands_debugging.page:26
-#, fuzzy
 #| msgid "Cycle to the next key echo level: (Unbound)"
 msgid "Cycle to the next debug level: (Unbound)"
-msgstr "Cambiar al siguiente nivel de eco de tecla: (sin asociar)"
+msgstr "Cambiar al siguiente nivel de depuración: (sin asociar)"
 
 #. (itstool) path: info/title
 #: C/commands_find.page:6
@@ -638,7 +636,6 @@ msgstr "Comandos de revisión"
 
 #. (itstool) path: page/p
 #: C/commands_flat_review.page:20
-#, fuzzy
 #| msgid ""
 #| "Orca's <link xref=\"howto_flat_review\">Flat Review</link> commands are "
 #| "designed for spatially reviewing elements displayed on the screen. They "
@@ -654,8 +651,12 @@ msgid ""
 msgstr ""
 "Los comandos de <link xref=\"howto_flat_review\">revisión</link> de Orca "
 "están diseñados para revisar espacialmente los elementos mostrados en la "
-"pantalla. Además, suponen un medio para leer la línea, palabra y carácter "
-"actuales cuando se navega en el texto de un documento."
+"pantalla. También, proporcionan un medio para leer la línea, palabra y "
+"carácter actuales cuando se navega en el texto de un documento. La mayoría "
+"de estos comandos están asociados a pulsaciones de teclas. Consulte <link "
+"xref=\"howto_key_bindings\">Modificar asociaciones de teclas</link> para "
+"obtener más información sobre cómo asociar estos comandos a pulsaciones de "
+"teclas."
 
 #. (itstool) path: section/title
 #: C/commands_flat_review.page:29
@@ -1060,19 +1061,15 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:181
 msgid "Use Say All to review the current dialog or window:"
-msgstr ""
+msgstr "Usar Leer todo para revisar el diálogo o la ventana actuales:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:183
-#| msgid "Desktop: <key>KP Enter</key> (double-clicked)"
 msgid "Desktop: <key>KP Plus</key> (double-clicked)"
 msgstr "Sobremesa: <key>TN +</key> (doble pulsación)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:184
-#| msgid ""
-#| "Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq> (double-"
-#| "clicked)"
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Semicolon</key></keyseq> "
 "(double-clicked)"
@@ -1083,12 +1080,12 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:188
 msgid "Copy the contents under flat review to the clipboard: (Unbound)"
-msgstr ""
+msgstr "Copiar el contenido en revisión al portapapeles: (sin asociar)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:193
 msgid "Append the contents under flat review to the clipboard: (Unbound)"
-msgstr ""
+msgstr "Añadir el contenido en revisión al portapapeles: (sin asociar)"
 
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:6
@@ -1118,6 +1115,8 @@ msgid ""
 "The following commands can be used to access dynamically-updated content on "
 "web pages which have been made accessible through ARIA."
 msgstr ""
+"Los siguientes comandos se pueden usar para acceder al contenido actualizado "
+"dinámicamente en páginas web accesibles mediante ARIA."
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:27
@@ -1347,34 +1346,28 @@ msgstr "Resolución de problemas"
 
 #. (itstool) path: info/title
 #: C/commands_profiles.page:6
-#| msgctxt "sort"
-#| msgid "9. Profiles"
 msgctxt "sort"
 msgid "5. Profiles"
 msgstr "5. Perfiles"
 
 #. (itstool) path: info/title
 #: C/commands_profiles.page:7
-#| msgid "Profiles"
 msgctxt "link"
 msgid "Profiles"
 msgstr "Perfiles"
 
 #. (itstool) path: info/desc
 #: C/commands_profiles.page:8
-#| msgid "Commands for accessing tabular information"
 msgid "Commands to access saved configurations"
 msgstr "Comandos para acceder a la configuración guardada"
 
 #. (itstool) path: page/title
 #: C/commands_profiles.page:19
-#| msgid "Braille Commands"
 msgid "Profile Commands"
 msgstr "Comandos del perfil"
 
 #. (itstool) path: page/p
 #: C/commands_profiles.page:20
-#, fuzzy
 #| msgid ""
 #| "Orca's profiles allow you to save and load multiple configurations so "
 #| "that you can quickly access the settings you need."
@@ -1382,8 +1375,8 @@ msgid ""
 "Profiles allow you to save and load multiple configurations so that you can "
 "quickly access the settings you need."
 msgstr ""
-"Los perfiles de Orca le permiten guardar y cargar varias configuraciones, "
-"por lo que puede acceder rápidamente a la configuración que necesite."
+"Los perfiles le permiten guardar y cargar varias configuraciones, por lo que "
+"puede acceder rápidamente a la configuración que necesite."
 
 #. (itstool) path: page/p
 #: C/commands_profiles.page:24
@@ -1392,13 +1385,15 @@ msgid ""
 "bind it, please see <link xref=\"howto_key_bindings\">Modifying Keybindings</"
 "link>."
 msgstr ""
+"El siguiente comando no está asociado a ninguna pulsación de teclas. Si "
+"quiere asociarlo, consulte cómo <link xref=\"howto_key_bindings\">Modificar "
+"asociaciones de teclas</link>."
 
 #. (itstool) path: item/p
 #: C/commands_profiles.page:30
-#, fuzzy
 #| msgid "Cycle to the next key echo level: (Unbound)"
 msgid "Cycle to the next profile: (Unbound)"
-msgstr "Cambiar al siguiente nivel de eco de tecla: (sin asociar)"
+msgstr "Cambiar al siguiente perfil: (sin asociar)"
 
 #. (itstool) path: info/title
 #: C/commands_reading.page:8
@@ -1658,10 +1653,9 @@ msgstr "Cambiar al siguiente nivel de eco de tecla: (sin asociar)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:51
-#, fuzzy
 #| msgid "Cycle to the next spoken punctuation level: (Unbound)"
 msgid "Cycle to the next capitalization style: (Unbound)"
-msgstr "Cambiar al siguiente nivel de lectura de puntuación: (sin asociar)"
+msgstr "Cambiar al siguiente estilo de capitalización: (sin asociar)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:54
@@ -1741,8 +1735,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:44
-#| msgid ""
-#| "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgid ""
 "Display a list of headings: <keyseq><key>Alt</key><key>Shift</key><key>H</"
 "key></keyseq>"
@@ -1761,9 +1753,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:57
-#| msgid ""
-#| "Last cell in table: <keyseq><key>Alt</key><key>Shift</key><key>End</key></"
-#| "keyseq>"
 msgid ""
 "Display a list of headings at level 1: <keyseq><key>Alt</key><key>Shift</"
 "key><key>1</key></keyseq>"
@@ -1782,9 +1771,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:70
-#| msgid ""
-#| "Last cell in table: <keyseq><key>Alt</key><key>Shift</key><key>End</key></"
-#| "keyseq>"
 msgid ""
 "Display a list of headings at level 2: <keyseq><key>Alt</key><key>Shift</"
 "key><key>2</key></keyseq>"
@@ -1803,9 +1789,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:83
-#| msgid ""
-#| "Last cell in table: <keyseq><key>Alt</key><key>Shift</key><key>End</key></"
-#| "keyseq>"
 msgid ""
 "Display a list of headings at level 3: <keyseq><key>Alt</key><key>Shift</"
 "key><key>3</key></keyseq>"
@@ -1824,9 +1807,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:96
-#| msgid ""
-#| "Last cell in table: <keyseq><key>Alt</key><key>Shift</key><key>End</key></"
-#| "keyseq>"
 msgid ""
 "Display a list of headings at level 4: <keyseq><key>Alt</key><key>Shift</"
 "key><key>4</key></keyseq>"
@@ -1845,9 +1825,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:109
-#| msgid ""
-#| "Last cell in table: <keyseq><key>Alt</key><key>Shift</key><key>End</key></"
-#| "keyseq>"
 msgid ""
 "Display a list of headings at level 5: <keyseq><key>Alt</key><key>Shift</"
 "key><key>5</key></keyseq>"
@@ -1866,9 +1843,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:122
-#| msgid ""
-#| "Last cell in table: <keyseq><key>Alt</key><key>Shift</key><key>End</key></"
-#| "keyseq>"
 msgid ""
 "Display a list of headings at level 6: <keyseq><key>Alt</key><key>Shift</"
 "key><key>6</key></keyseq>"
@@ -1894,8 +1868,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:140
-#| msgid ""
-#| "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgid ""
 "Display a list of form fields: <keyseq><key>Alt</key><key>Shift</key><key>F</"
 "key></keyseq>"
@@ -1914,8 +1886,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:153
-#| msgid ""
-#| "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgid ""
 "Display a list of buttons: <keyseq><key>Alt</key><key>Shift</key><key>B</"
 "key></keyseq>"
@@ -1934,8 +1904,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:166
-#| msgid ""
-#| "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgid ""
 "Display a list of combo boxes: <keyseq><key>Alt</key><key>Shift</key><key>C</"
 "key></keyseq>"
@@ -1954,9 +1922,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:179
-#| msgid ""
-#| "Cell on left: <keyseq><key>Alt</key><key>Shift</key><key>Left</key></"
-#| "keyseq>"
 msgid ""
 "Display a list of entries: <keyseq><key>Alt</key><key>Shift</key><key>E</"
 "key></keyseq>"
@@ -1975,9 +1940,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:192
-#| msgid ""
-#| "Cell on right: <keyseq><key>Alt</key><key>Shift</key><key>Right</key></"
-#| "keyseq>"
 msgid ""
 "Display a list of radio buttons: <keyseq><key>Alt</key><key>Shift</"
 "key><key>R</key></keyseq>"
@@ -1996,8 +1958,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:205
-#| msgid ""
-#| "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgid ""
 "Display a list of checkboxes: <keyseq><key>Alt</key><key>Shift</key><key>X</"
 "key></keyseq>"
@@ -2025,9 +1985,6 @@ msgstr "Enlaces"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:223
-#| msgid ""
-#| "Next and previous list: <keyseq><key>L</key></keyseq> and "
-#| "<keyseq><key>Shift</key><key>L</key></keyseq>"
 msgid ""
 "Next and previous link: <keyseq><key>K</key></keyseq> and "
 "<keyseq><key>Shift</key><key>K</key></keyseq>"
@@ -2037,9 +1994,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:230
-#| msgid ""
-#| "Cell on left: <keyseq><key>Alt</key><key>Shift</key><key>Left</key></"
-#| "keyseq>"
 msgid ""
 "Display a list of links: <keyseq><key>Alt</key><key>Shift</key><key>K</key></"
 "keyseq>"
@@ -2058,8 +2012,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:243
-#| msgid ""
-#| "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgid ""
 "Display a list of unvisited links: <keyseq><key>Alt</key><key>Shift</"
 "key><key>U</key></keyseq>"
@@ -2078,8 +2030,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:256
-#| msgid ""
-#| "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgid ""
 "Display a list of visited links: <keyseq><key>Alt</key><key>Shift</"
 "key><key>V</key></keyseq>"
@@ -2103,9 +2053,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:274
-#| msgid ""
-#| "Cell on left: <keyseq><key>Alt</key><key>Shift</key><key>Left</key></"
-#| "keyseq>"
 msgid ""
 "Display a list of lists: <keyseq><key>Alt</key><key>Shift</key><key>L</key></"
 "keyseq>"
@@ -2124,9 +2071,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:287
-#| msgid ""
-#| "Cell on left: <keyseq><key>Alt</key><key>Shift</key><key>Left</key></"
-#| "keyseq>"
 msgid ""
 "Display a list of list items: <keyseq><key>Alt</key><key>Shift</key><key>I</"
 "key></keyseq>"
@@ -2151,9 +2095,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:305
-#| msgid ""
-#| "First cell in table: <keyseq><key>Alt</key><key>Shift</key><key>Home</"
-#| "key></keyseq>"
 msgid ""
 "Display a list of tables: <keyseq><key>Alt</key><key>Shift</key><key>T</"
 "key></keyseq>"
@@ -2228,9 +2169,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:359
-#| msgid ""
-#| "Cell on right: <keyseq><key>Alt</key><key>Shift</key><key>Right</key></"
-#| "keyseq>"
 msgid ""
 "Display a list of paragraphs: <keyseq><key>Alt</key><key>Shift</key><key>P</"
 "key></keyseq>"
@@ -2249,8 +2187,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:372
-#| msgid ""
-#| "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgid ""
 "Display a list of blockquotes: <keyseq><key>Alt</key><key>Shift</key><key>Q</"
 "key></keyseq>"
@@ -2269,9 +2205,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:385
-#| msgid ""
-#| "Cell on left: <keyseq><key>Alt</key><key>Shift</key><key>Left</key></"
-#| "keyseq>"
 msgid ""
 "Display a list of \"large objects\": <keyseq><key>Alt</key><key>Shift</"
 "key><key>O</key></keyseq>"
@@ -2295,9 +2228,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:403
-#| msgid ""
-#| "Cell on left: <keyseq><key>Alt</key><key>Shift</key><key>Left</key></"
-#| "keyseq>"
 msgid ""
 "Display a list of landmarks: <keyseq><key>Alt</key><key>Shift</key><key>M</"
 "key></keyseq>"
@@ -2406,7 +2336,6 @@ msgstr "Fecha, hora y notificación"
 
 #. (itstool) path: info/desc
 #: C/commands_time_date_notifications.page:8
-#, fuzzy
 #| msgid "Commands for the getting the time, date, and notification messages"
 msgid "Commands for getting the time, date, and notification messages"
 msgstr "Comandos para obtener la fecha, la hora y los mensajes de notificación"
@@ -2467,22 +2396,19 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:50
-#, fuzzy
 #| msgid "Present the last (most recent) notification message: (unbound)"
 msgid "Present the last (most recent) notification message: (Unbound)"
 msgstr ""
-"Presentar el último (el más reciente) mensaje de notificación: (sin asociar)"
+"Presentar el último mensaje (el más reciente) de notificación: (sin asociar)"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:53
-#, fuzzy
 #| msgid "Present the previous notification message: (unbound)"
 msgid "Present the previous notification message: (Unbound)"
 msgstr "Presentar el mensaje de notificación anterior: (sin asociar)"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:56
-#, fuzzy
 #| msgid "Present list of all notification messages: (unbound)"
 msgid "Present list of all notification messages: (Unbound)"
 msgstr ""
@@ -2738,7 +2664,7 @@ msgstr ""
 #. (itstool) path: note/title
 #: C/howto_documents.page:49
 msgid "Enabling Caret Navigation in an Application"
-msgstr ""
+msgstr "Activar la navegación del cursor en una aplicación"
 
 #. (itstool) path: note/p
 #: C/howto_documents.page:50
@@ -2747,6 +2673,9 @@ msgid ""
 "GNOME applications, caret navigation can be toggled on and off by pressing "
 "<key>F7</key>."
 msgstr ""
+"No todas las aplicaciones tienen activada la navegación del cursor activada "
+"de manera predeterminada. Para muchas aplicaciones de GNOME, la navegación "
+"del cursor se puede activar y desactivar pulsando la tecla <key>F7</key>."
 
 #. (itstool) path: page/p
 #: C/howto_documents.page:55
@@ -2925,6 +2854,8 @@ msgid ""
 "Depending on the form and the application, you may also be able to use the "
 "arrow keys to navigate to a given form field."
 msgstr ""
+"Dependiendo del formulario y de la aplicación, es posible que pueda usar las "
+"teclas de flechas para navegar hasta un campo determinado."
 
 #. (itstool) path: section/title
 #: C/howto_forms.page:53
@@ -2985,6 +2916,8 @@ msgid ""
 "Depending on the form and the application, you may also be able to use the "
 "arrow keys to navigate out of a given form field."
 msgstr ""
+"Dependiendo del formulario y de la aplicación, es posible que pueda usar las "
+"teclas de flechas para salir de un campo determinado."
 
 #. (itstool) path: info/title
 #: C/howto_key_bindings.page:5
@@ -4166,7 +4099,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_structural_navigation.page:97
-#, fuzzy
 #| msgid ""
 #| "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog "
 #| "box for the current application by pressing: <keyseq> <key>Ctrl</"
@@ -4907,10 +4839,11 @@ msgstr "Cambiar el «modificador de Orca»"
 
 #. (itstool) path: item/p
 #: C/howto_the_orca_modifier.page:62
-#, fuzzy
 #| msgid "Move to the <gui>Orca Modifier Key(s)</gui> combobox."
 msgid "Move to the <gui>Screen Reader Modifier Key(s)</gui> combobox."
-msgstr "Vaya al cuadro combinado <gui>Tecla modificadoras de Orca</gui>."
+msgstr ""
+"Vaya a la caja combinada <gui>Teclas modificadoras del lector de pantalla</"
+"gui>."
 
 #. (itstool) path: item/p
 #: C/howto_the_orca_modifier.page:65
@@ -5143,6 +5076,11 @@ msgid ""
 "preferences</link>. A detailed Where Am I will cause <app>Orca</app> to "
 "present the full details of the error."
 msgstr ""
+"Si está en el corrector ortográfico o en una aplicación en la que <app>Orca</"
+"app> proporcione un soporte mejorado, una operación Donde estoy básica "
+"repetirá el error respetando sus <link xref=\"preferences_spellcheck"
+"\">preferencias de corrección ortográfica</link>. Una operación Donde estoy "
+"detallada hará que <app>Orca</app> muestre todos los detalles del error."
 
 #. (itstool) path: page/p
 #: C/howto_whereami.page:104
@@ -5349,9 +5287,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/introduction.page:83
-#| msgid ""
-#| "<cmd>-u</cmd>, <cmd>--user-prefs-dir=<em>dirname</em></cmd>: Use "
-#| "<em>dirname</em> as the alternate directory for user preferences"
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs=<em>dirname</em></cmd>: Use <em>dirname</"
 "em> as the alternate directory for user preferences"
@@ -5394,9 +5329,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/introduction.page:113
-#| msgid ""
-#| "<cmd>-i</cmd>, <cmd>--import-file=<em>filename</em></cmd>: Import a "
-#| "profile from a given <app>Orca</app> profile file"
 msgid ""
 "<cmd>-p</cmd>, <cmd>--profile=<em>filename</em></cmd>: Import a profile from "
 "a given <app>Orca</app> profile file"
@@ -5406,7 +5338,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/introduction.page:119
-#| msgid "<cmd>--replace</cmd>: Replace a currently-running <app>Orca</app>"
 msgid ""
 "<cmd>-r</cmd>, <cmd>--replace</cmd>: Replace a currently-running <app>Orca</"
 "app>"
@@ -5512,7 +5443,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:44
-#, fuzzy
 #| msgid ""
 #| "To enable contracted braille on a system where liblouis has been "
 #| "installed, be sure that the <gui>Enable Contraced Braille</gui> checkbox "
@@ -5525,9 +5455,9 @@ msgid ""
 "gui> combo box."
 msgstr ""
 "Para activar el Braille contraído en un sistema donde se ha instalado "
-"liblous, asegúrese de que la casilla de verificación <gui>Activar Braille "
+"liblouis, asegúrese de que la casilla de verificación <gui>Activar Braille "
 "contraído</gui> está marcada. Después, elija la tabla de traducción que "
-"quiera de la caja de combinación <gui>Tabla de contracción</gui>."
+"quiera de la caja combinada <gui>Tabla de contracción</gui>."
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:55
@@ -5787,10 +5717,9 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:28
-#, fuzzy
 #| msgid "Use Orca Caret Navigation"
 msgid "Control caret navigation"
-msgstr "Usar la navegación de cursor de Orca"
+msgstr "Controlar la navegación de cursor"
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:29
@@ -5834,7 +5763,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:47
-#| msgid "Structural Navigation"
 msgid "Enable structural navigation"
 msgstr "Activar la navegación estructural"
 
@@ -5883,14 +5811,13 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:79
-#, fuzzy
 #| msgid "Automatically start <app>Orca</app> when you log in"
 msgid "Automatically start speaking a page when it is first loaded"
-msgstr "Iniciar <app>Orca</app> automáticamente al iniciar la sesión"
+msgstr ""
+"Empezar a leer una página automáticamente cuando se carga por primera vez"
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:80
-#, fuzzy
 #| msgid ""
 #| "If this checkbox is checked, <app>Orca</app> will read the line which "
 #| "matches your current search query."
@@ -5898,17 +5825,17 @@ msgid ""
 "If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
 "newly opened web page or email."
 msgstr ""
-"Si esta casilla está marcada, <app>Orca</app> leerá la línea que coincida "
-"con su búsqueda actual."
+"Si esta casilla está marcada, <app>Orca</app> leerá la página web o el "
+"correo-e completos."
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:84
 msgid "Default value: checked for Firefox; not checked for Thunderbird"
 msgstr ""
+"Valor predeterminado: activado para Firefox, desactivado para Thunderbird"
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:90
-#| msgid "Table Rows"
 msgid "Table Options"
 msgstr "Opciones de tabla"
 
@@ -5919,6 +5846,9 @@ msgid ""
 "please see <link xref=\"preferences_table_navigation\">Table Navigation "
 "Preferences</link>."
 msgstr ""
+"Para aprender más sobre las opciones de <app>Orca</app> para navegar por "
+"tablas, consulta las <link xref=\"preferences_table_navigation"
+"\">Preferencias de navegación por tablas</link>."
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:100
@@ -6308,9 +6238,6 @@ msgstr "Teclas modificadoras de Orca"
 
 #. (itstool) path: section/p
 #: C/preferences_key_bindings.page:22
-#| msgid ""
-#| "The <gui>Orca Modifier Keys</gui> combo box allows you to select which "
-#| "key or keys will serve as the Orca Modifier. The available options are:"
 msgid ""
 "The <gui>Screen Reader Modifier Keys</gui> combo box allows you to select "
 "which key or keys will serve as the Orca Modifier. The available options are:"
@@ -6358,9 +6285,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:45
-#| msgid ""
-#| "The <gui>Function</gui> column is a description of the <app>Orca</app> "
-#| "operation to be performed."
 msgid ""
 "The <gui>Function</gui> column contains a description of the <app>Orca</app> "
 "command to be performed."
@@ -6370,7 +6294,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:51
-#, fuzzy
 #| msgid ""
 #| "The <gui>Alternate</gui> column allows you to specify an additional "
 #| "keybinding for this function. You can modify the value of this column by "
@@ -6382,10 +6305,10 @@ msgid ""
 "column by pressing <key>Return</key>, pressing the keys for the new binding, "
 "and pressing <key>Return</key> again."
 msgstr ""
-"La columna <gui>Alternativa</gui> le permite especificar un atajo de teclado "
-"adicional para esta función. Puede modificar el valor de esta columna "
-"pulsando <key>Intro</key>, pulsando después las teclas para el nuevo atajo, "
-"y pulsando <key>Intro</key> de nuevo."
+"La columna <gui>Asociación de teclas</gui> contiene el atajo de teclado "
+"asignado actualmente al comando de <app>Orca</app>. Puede modificar el valor "
+"de esta columna pulsando <key>Intro</key>, pulsando después las teclas para "
+"el nuevo atajo, y pulsando <key>Intro</key> de nuevo."
 
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:59
@@ -6754,16 +6677,14 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_speech.page:5
-#, fuzzy
 #| msgctxt "sort"
 #| msgid "2. Speech"
 msgctxt "sort"
 msgid "2.1 Speech"
-msgstr "2. Voz"
+msgstr "2.1. Voz"
 
 #. (itstool) path: info/desc
 #: C/preferences_speech.page:7
-#| msgid "Configuring the voice and what gets spoken"
 msgid "Configuring what gets spoken"
 msgstr "Configurar lo que se habla"
 
@@ -7148,32 +7069,29 @@ msgstr "Valor predeterminado: <gui>Aplicación</gui>"
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:4
-#, fuzzy
 #| msgctxt "sort"
 #| msgid "2. Speech"
 msgctxt "sort"
 msgid "4. Spell Check"
-msgstr "2. Voz"
+msgstr "4. Revisión ortográfica"
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:5
 msgctxt "link"
 msgid "Spell Check"
-msgstr ""
+msgstr "Revisión ortográfica"
 
 #. (itstool) path: info/desc
 #: C/preferences_spellcheck.page:6
-#, fuzzy
 #| msgid "Configuring <app>Orca's</app> support for IM and IRC"
 msgid "Configuring <app>Orca's</app> support for Spell Check"
-msgstr "Configurar el soporte de <app>Orca</app> IM e IRC"
+msgstr "Configurar el soporte de <app>Orca</app>  para la revisión ortográfica"
 
 #. (itstool) path: page/title
 #: C/preferences_spellcheck.page:17
-#, fuzzy
 #| msgid "Speech Preferences"
 msgid "Spell Check Preferences"
-msgstr "Preferencias de voz"
+msgstr "Preferencias de la revisión ortográfica"
 
 #. (itstool) path: page/p
 #: C/preferences_spellcheck.page:18
@@ -7183,11 +7101,17 @@ msgid ""
 "enhanced support has been provided, you will find several options which you "
 "can adjust to get the verbosity level that works best for you."
 msgstr ""
+"<app>Orca</app> trata de ofrecer una experiencia de usuario consistente al "
+"interactuar con los correctores ortográficos de las aplicaciones. Para "
+"aquellas aplicaciones en las que se proporciona este soporte mejorado, "
+"encontrará varios opciones que puede ajustar para conseguir el nivel de "
+"detalle que mejor se ajusta a sus necesidades."
 
 #. (itstool) path: note/title
 #: C/preferences_spellcheck.page:25
 msgid "You can have both brief and verbose spell check information"
 msgstr ""
+"Puede tener información escueta y detallada sobre la corrección ortográfica"
 
 #. (itstool) path: note/p
 #: C/preferences_spellcheck.page:26
@@ -7199,17 +7123,21 @@ msgid ""
 "<app>Orca</app> present the current error as if all of these options were "
 "enabled."
 msgstr ""
+"Si normalmente quiere un nivel bajo de detalles al usar un corrector "
+"ortográfico, pero en ocasiones necesita información detallada sobre un "
+"determinado error, puede desactivar estas opciones. Cuando necesite más "
+"detalles, simplemente use el comando detallado <link xref=\"howto_whereami"
+"\">Dónde estoy</link> de <app>Orca</app> para hacer que <app>Orca</app> "
+"muestre el error actual como si todas estas opciones estuviesen activadas"
 
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:36
-#, fuzzy
 #| msgid "Spell current word:"
 msgid "Spell error"
-msgstr "Hablar la palabra actual:"
+msgstr "Error ortográfico"
 
 #. (itstool) path: section/p
 #: C/preferences_spellcheck.page:37
-#, fuzzy
 #| msgid ""
 #| "If this checkbox is checked, <app>Orca</app> will announce the "
 #| "coordinates of each cell you navigate to."
@@ -7217,19 +7145,17 @@ msgid ""
 "If this checkbox is checked, <app>Orca</app> will spell out the misspelled "
 "word after speaking it."
 msgstr ""
-"Si esta casilla está marcada, <app>Orca</app> anunciará las coordenadas de "
-"cada celda a la que navegue."
+"Si esta casilla está marcada, <app>Orca</app> anunciará la palabra mal "
+"escrita después de leerla."
 
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:46
-#, fuzzy
 #| msgid "Spell current line:"
 msgid "Spell suggestion"
-msgstr "Hablar la línea actual:"
+msgstr "Sugerencia ortográfica"
 
 #. (itstool) path: section/p
 #: C/preferences_spellcheck.page:47
-#, fuzzy
 #| msgid ""
 #| "If this checkbox is checked, <app>Orca</app> will announce the "
 #| "coordinates of each cell you navigate to."
@@ -7237,17 +7163,16 @@ msgid ""
 "If this checkbox is checked, <app>Orca</app> will spell out the suggested "
 "correction after speaking it."
 msgstr ""
-"Si esta casilla está marcada, <app>Orca</app> anunciará las coordenadas de "
-"cada celda a la que navegue."
+"Si esta casilla está marcada, <app>Orca</app> anunciará la corrección "
+"sugerida después de leerla."
 
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:56
 msgid "Present context of error"
-msgstr "Presentar el contexto de un error"
+msgstr "Mostrar el contexto de un error"
 
 #. (itstool) path: section/p
 #: C/preferences_spellcheck.page:57
-#, fuzzy
 #| msgid ""
 #| "If this checkbox is checked, <app>Orca</app> will read the line which "
 #| "matches your current search query."
@@ -7255,8 +7180,8 @@ msgid ""
 "If this checkbox is checked, <app>Orca</app> will speak the sentence or line "
 "from the document in which the error is found."
 msgstr ""
-"Si esta casilla está marcada, <app>Orca</app> leerá la línea que coincida "
-"con su búsqueda actual."
+"Si esta casilla está marcada, <app>Orca</app> leerá la frase o la línea del "
+"documento en la que se ha encontrado el error."
 
 #. (itstool) path: info/title
 #: C/preferences_table_navigation.page:8
@@ -7579,22 +7504,19 @@ msgstr "Voz"
 
 #. (itstool) path: info/desc
 #: C/preferences_voice.page:7
-#| msgid "Commands for Learning to Use <app>Orca</app>"
 msgid "Configuring the voice used by <app>Orca</app>"
 msgstr "Configurar la voz usada por <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/preferences_voice.page:18
-#| msgid "Orca Preferences"
 msgid "Voice Preferences"
 msgstr "Preferencias de voz"
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:20
-#, fuzzy
 #| msgid "Voice settings"
 msgid "Voice Type Settings"
-msgstr "Ajustes de voz"
+msgstr "Configuración del tipo de voz"
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:22
@@ -7619,7 +7541,6 @@ msgstr "Configurar múltiples voces"
 
 #. (itstool) path: note/p
 #: C/preferences_voice.page:30
-#, fuzzy
 #| msgid ""
 #| "For each voice you wish to configure, first select the voice in the "
 #| "<gui>Voice settings</gui> combo box. Then configure the person, rate, "
@@ -7629,9 +7550,9 @@ msgid ""
 "<gui>Voice type</gui> combo box. Then configure the person, rate, pitch, and "
 "volume to be used for that voice."
 msgstr ""
-"Para cada voz que desee configurar, primero seleccione la voz en el cuadro "
-"combinado <gui>Ajustes de voz</gui>. Luego configure la persona, la "
-"velocidad, el tono y el volumen que se usarán con esa voz."
+"Para cada voz que desee configurar, primero seleccione la voz en la caja "
+"combinada <gui>Tipo de voz</gui>. Luego configure la persona, la velocidad, "
+"el tono y el volumen que se usarán con esa voz."
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:39
@@ -7640,7 +7561,6 @@ msgstr "Sistema de voz"
 
 #. (itstool) path: section/p
 #: C/preferences_voice.page:40
-#, fuzzy
 #| msgid ""
 #| "This combo box allows you to select your preferred speech system from "
 #| "those you have installed. Examples include Speech Dispatcher and GNOME "
@@ -7649,9 +7569,8 @@ msgid ""
 "This combo box allows you to select your preferred speech system from those "
 "you have installed, such as Speech Dispatcher."
 msgstr ""
-"Este cuadro combinado le permite seleccionar su sistema de voz preferido de "
-"entre los que tenga instalados. Como por ejemplo Speech Dispatcher y GNOME "
-"Speech."
+"Esta caja combinada le permite seleccionar su sistema de voz preferido de "
+"entre los que tenga instalados. Como por ejemplo Speech Dispatcher."
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:46
@@ -7704,10 +7623,9 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:71
-#, fuzzy
 #| msgid "Voice settings"
 msgid "Global Voice Settings"
-msgstr "Ajustes de voz"
+msgstr "Configuración global de voz"
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:73
@@ -7737,7 +7655,6 @@ msgstr "Hablar cadenas con mayúsculas y minúsculas como palabras"
 
 #. (itstool) path: section/p
 #: C/preferences_voice.page:88
-#, fuzzy
 #| msgid ""
 #| "In some texts, and especially when working with code, one often comes "
 #| "across a \"word\" consisting of several words with alternating case, such "
@@ -7760,9 +7677,10 @@ msgstr ""
 "alternancia de capitalización tal como «CadenaMultiCapitalización». Los "
 "sintetizadores de voz no siempre pronuncian correctamente estas cadenas con "
 "mayúsculas y minúsculas. Al marcar la casilla <gui>Hablar cadenas con "
-"mayúsculas y minúsculas como palabras</gui> hará que <app>Orca</app>divida "
-"una palabra con capitalización múltiple en varias palabras separadas antes "
-"de enviarlo al sintetizador de voz."
+"mayúsculas y minúsculas como palabras</gui> hará que <app>Orca</app> divida "
+"una palabra con capitalización múltiple en varias palabras separadas "
+"(«Cadena», «Multi» y «Capitalización») antes de enviarla al sintetizador de "
+"voz."
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:102
@@ -7782,7 +7700,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_voice.page:108
-#| msgid "Default value: <gui>Centered</gui>"
 msgid "Default value: <gui>Sentence</gui>"
 msgstr "Valor predeterminado: <gui>Frase</gui>"
 
