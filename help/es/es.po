@@ -14,8 +14,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2014-04-08 22:56+0000\n"
-"PO-Revision-Date: 2014-04-09 16:48+0200\n"
+"POT-Creation-Date: 2014-04-09 14:54+0000\n"
+"PO-Revision-Date: 2014-04-09 16:55+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -67,7 +67,7 @@ msgstr "Comandos para marcar y obtener objetos"
 #: C/howto_setting_up_orca.page:12 C/howto_structural_navigation.page:12
 #: C/howto_tables.page:10 C/howto_text_attributes.page:10
 #: C/howto_text_setup.page:8 C/howto_the_orca_modifier.page:11
-#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:6
+#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:9
 #: C/introduction.page:10 C/preferences_braille.page:11
 #: C/preferences_chat.page:11 C/preferences_gecko.page:12
 #: C/preferences_general.page:11 C/preferences_introduction.page:8
@@ -97,7 +97,7 @@ msgstr "Joanmarie Diggs"
 #: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
 #: C/howto_tables.page:14 C/howto_text_attributes.page:14
 #: C/howto_text_setup.page:12 C/howto_the_orca_modifier.page:15
-#: C/howto_toggling_caps_lock.page:12 C/howto_whereami.page:14 C/index.page:10
+#: C/howto_toggling_caps_lock.page:12 C/howto_whereami.page:14 C/index.page:13
 #: C/introduction.page:14 C/preferences_braille.page:15
 #: C/preferences_chat.page:15 C/preferences_gecko.page:16
 #: C/preferences_general.page:15 C/preferences_introduction.page:12
@@ -116,12 +116,6 @@ msgstr "Comandos de marcadores"
 
 #. (itstool) path: page/p
 #: C/commands_bookmarks.page:20
-#| msgid ""
-#| "<app>Orca</app> provides several commands which can be used to manipulate "
-#| "the mouse pointer and read the contents under it. All of the commands are "
-#| "\"bound\" to keystrokes with one exception: Toggling Mouse Review Mode. "
-#| "Please see <link xref=\"howto_key_bindings\">Modifying Keybindings</link> "
-#| "for information on how to bind this command to a keystroke."
 msgid ""
 "<app>Orca</app> provides several commands which can be used to \"bookmark\" "
 "a given object for the purpose of navigating back to it later. Most of these "
@@ -174,9 +168,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_bookmarks.page:54
-#| msgid ""
-#| "Go to the next/previous bookmark for the application or page: "
-#| "<keyseq><key>Orca Modifier</key><key>B</key></keyseq>"
 msgid ""
 "Go to the next bookmark for the application or page: <keyseq><key>Orca "
 "Modifier</key><key>B</key></keyseq>"
@@ -400,12 +391,6 @@ msgstr ""
 
 #. (itstool) path: note/p
 #: C/commands_controlling_orca.page:34
-#| msgid ""
-#| "The following commands can be used to customize <app>Orca</app>'s "
-#| "magnification support. You will notice that all of these commands are "
-#| "\"unbound.\" Please see <link xref=\"howto_key_bindings\">Modifying "
-#| "Keybindings</link> for information on how to bind these commands to "
-#| "keystrokes."
 msgid ""
 "If you are using <app>Orca</app> in another desktop environment in which "
 "there is no command to toggle <app>Orca</app> on and off, you may find the "
@@ -519,7 +504,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_debugging.page:26
-#| msgid "Cycle to the next key echo level: (Unbound)"
 msgid "Cycle to the next debug level: (Unbound)"
 msgstr "Cambiar al siguiente nivel de depuración: (sin asociar)"
 
@@ -636,11 +620,6 @@ msgstr "Comandos de revisión"
 
 #. (itstool) path: page/p
 #: C/commands_flat_review.page:20
-#| msgid ""
-#| "Orca's <link xref=\"howto_flat_review\">Flat Review</link> commands are "
-#| "designed for spatially reviewing elements displayed on the screen. They "
-#| "also provide a means for reading the current line, word, and character "
-#| "when navigating in the text of a document."
 msgid ""
 "Orca's <link xref=\"howto_flat_review\">Flat Review</link> commands are "
 "designed for spatially reviewing elements displayed on the screen. They also "
@@ -1315,7 +1294,7 @@ msgid "<app>Orca</app>'s Commands"
 msgstr "Comandos de <app>Orca</app>"
 
 #. (itstool) path: section/title
-#: C/commands.page:17 C/index.page:33
+#: C/commands.page:17 C/index.page:36
 msgid "Getting Started"
 msgstr "Inicio"
 
@@ -1330,7 +1309,7 @@ msgid "Reading Web Pages and Other Documents"
 msgstr "Leer páginas web y otros documentos"
 
 #. (itstool) path: section/title
-#: C/commands.page:26 C/index.page:39
+#: C/commands.page:26 C/index.page:42
 msgid "Reviewing and Interacting with Screen Contents"
 msgstr "Revisar e interactuar con los contenidos de la pantalla"
 
@@ -1368,9 +1347,6 @@ msgstr "Comandos del perfil"
 
 #. (itstool) path: page/p
 #: C/commands_profiles.page:20
-#| msgid ""
-#| "Orca's profiles allow you to save and load multiple configurations so "
-#| "that you can quickly access the settings you need."
 msgid ""
 "Profiles allow you to save and load multiple configurations so that you can "
 "quickly access the settings you need."
@@ -1391,7 +1367,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_profiles.page:30
-#| msgid "Cycle to the next key echo level: (Unbound)"
 msgid "Cycle to the next profile: (Unbound)"
 msgstr "Cambiar al siguiente perfil: (sin asociar)"
 
@@ -1653,7 +1628,6 @@ msgstr "Cambiar al siguiente nivel de eco de tecla: (sin asociar)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:51
-#| msgid "Cycle to the next spoken punctuation level: (Unbound)"
 msgid "Cycle to the next capitalization style: (Unbound)"
 msgstr "Cambiar al siguiente estilo de capitalización: (sin asociar)"
 
@@ -2336,7 +2310,6 @@ msgstr "Fecha, hora y notificación"
 
 #. (itstool) path: info/desc
 #: C/commands_time_date_notifications.page:8
-#| msgid "Commands for the getting the time, date, and notification messages"
 msgid "Commands for getting the time, date, and notification messages"
 msgstr "Comandos para obtener la fecha, la hora y los mensajes de notificación"
 
@@ -2396,20 +2369,17 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:50
-#| msgid "Present the last (most recent) notification message: (unbound)"
 msgid "Present the last (most recent) notification message: (Unbound)"
 msgstr ""
 "Presentar el último mensaje (el más reciente) de notificación: (sin asociar)"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:53
-#| msgid "Present the previous notification message: (unbound)"
 msgid "Present the previous notification message: (Unbound)"
 msgstr "Presentar el mensaje de notificación anterior: (sin asociar)"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:56
-#| msgid "Present list of all notification messages: (unbound)"
 msgid "Present list of all notification messages: (Unbound)"
 msgstr ""
 "Presentar una lista de todos los mensajes de notificación: (sin asociar)"
@@ -4099,10 +4069,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_structural_navigation.page:97
-#| msgid ""
-#| "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog "
-#| "box for the current application by pressing: <keyseq> <key>Ctrl</"
-#| "key><key>Orca Modifier</key><key>Space</key> </keyseq>"
 msgid ""
 "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog box "
 "for the current application by pressing <keyseq> <key>Ctrl</key><key>Orca "
@@ -4839,7 +4805,6 @@ msgstr "Cambiar el «modificador de Orca»"
 
 #. (itstool) path: item/p
 #: C/howto_the_orca_modifier.page:62
-#| msgid "Move to the <gui>Orca Modifier Key(s)</gui> combobox."
 msgid "Move to the <gui>Screen Reader Modifier Key(s)</gui> combobox."
 msgstr ""
 "Vaya a la caja combinada <gui>Teclas modificadoras del lector de pantalla</"
@@ -5096,32 +5061,20 @@ msgstr ""
 "Para probar ¿Dónde estoy?, consulte la lista de <link xref="
 "\"commands_where_am_i\">comandos ¿Dónde estoy?</link>."
 
-#. (itstool) path: media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/index.page:19
-msgctxt "_"
-msgid ""
-"external ref='figures/orca-logo.png' md5='d8759cff4f184e7134cc5bcd6d32d839'"
-msgstr ""
-"external ref='figures/orca-logo.png' md5='d8759cff4f184e7134cc5bcd6d32d839'"
-
 #. (itstool) path: info/title
-#: C/index.page:3
+#: C/index.page:6
 msgctxt "text"
 msgid "Orca Screen Reader"
 msgstr "Lector de pantalla Orca"
 
 #. (itstool) path: info/title
-#: C/index.page:4
+#: C/index.page:7
 msgctxt "link"
 msgid "Introduction to the <app>Orca</app> Screen Reader"
 msgstr "Introducción al lector de pantalla <app>Orca</app>"
 
 #. (itstool) path: info/desc
-#: C/index.page:13
+#: C/index.page:16
 msgid ""
 "Orca is a free, open source, flexible, and extensible screen reader that "
 "provides access to the graphical desktop via speech and refreshable braille."
@@ -5130,22 +5083,26 @@ msgstr ""
 "que proporciona acceso al escritorio gráfico a través de voz y Braille "
 "actualizable."
 
+#. (itstool) path: media/span
+#: C/index.page:23
+#| msgid "<app>Orca</app>'s Find Dialog"
+msgid "<app>Orca</app>'s logo"
+msgstr "Logo de <app>Orca</app>"
+
 #. (itstool) path: page/title
-#: C/index.page:18
-msgid ""
-"<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\"> "
-"<app>Orca</app>'s logo </media> <app>Orca</app> Screen Reader"
-msgstr ""
-"<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\">Logo "
-"de <app>Orca</app> </media>Lector de pantalla<app>Orca</app>"
+#: C/index.page:21
+#| msgctxt "link"
+#| msgid "Introduction to the <app>Orca</app> Screen Reader"
+msgid "<_:media-1/> <app>Orca</app> Screen Reader"
+msgstr "<_:media-1/> Lector de pantalla <app>Orca</app>"
 
 #. (itstool) path: note/title
-#: C/index.page:25
+#: C/index.page:28
 msgid "Before You Begin"
 msgstr "Antes de comenzar"
 
 #. (itstool) path: note/p
-#: C/index.page:26
+#: C/index.page:29
 msgid ""
 "If you are not yet familiar with the navigation commands provided by your "
 "desktop environment, you are encouraged to read that documentation first."
@@ -5155,12 +5112,12 @@ msgstr ""
 "primero esa documentación."
 
 #. (itstool) path: section/title
-#: C/index.page:36
+#: C/index.page:39
 msgid "Reading Documents and Web Pages"
 msgstr "Leer documentos y páginas web"
 
 #. (itstool) path: section/title
-#: C/index.page:42
+#: C/index.page:45
 msgid "Quick Reference"
 msgstr "Referencia rápida"
 
@@ -5443,11 +5400,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:44
-#| msgid ""
-#| "To enable contracted braille on a system where liblouis has been "
-#| "installed, be sure that the <gui>Enable Contraced Braille</gui> checkbox "
-#| "is checked. Then choose your desired translation table from the "
-#| "<gui>Contraction Table</gui> combo box."
 msgid ""
 "To enable contracted braille on a system where liblouis has been installed, "
 "be sure that the <gui>Enable Contracted Braille</gui> checkbox is checked. "
@@ -5717,7 +5669,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:28
-#| msgid "Use Orca Caret Navigation"
 msgid "Control caret navigation"
 msgstr "Controlar la navegación de cursor"
 
@@ -5811,16 +5762,12 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:79
-#| msgid "Automatically start <app>Orca</app> when you log in"
 msgid "Automatically start speaking a page when it is first loaded"
 msgstr ""
 "Empezar a leer una página automáticamente cuando se carga por primera vez"
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:80
-#| msgid ""
-#| "If this checkbox is checked, <app>Orca</app> will read the line which "
-#| "matches your current search query."
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
 "newly opened web page or email."
@@ -6294,11 +6241,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:51
-#| msgid ""
-#| "The <gui>Alternate</gui> column allows you to specify an additional "
-#| "keybinding for this function. You can modify the value of this column by "
-#| "pressing <key>Return</key>, pressing the keys for the new binding, and "
-#| "pressing <key>Return</key> again."
 msgid ""
 "The <gui>Key Binding</gui> column contains the keyboard shortcut currently "
 "assigned to the <app>Orca</app> command. You can modify the value of this "
@@ -6677,8 +6619,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_speech.page:5
-#| msgctxt "sort"
-#| msgid "2. Speech"
 msgctxt "sort"
 msgid "2.1 Speech"
 msgstr "2.1. Voz"
@@ -7069,8 +7009,6 @@ msgstr "Valor predeterminado: <gui>Aplicación</gui>"
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:4
-#| msgctxt "sort"
-#| msgid "2. Speech"
 msgctxt "sort"
 msgid "4. Spell Check"
 msgstr "4. Revisión ortográfica"
@@ -7083,13 +7021,11 @@ msgstr "Revisión ortográfica"
 
 #. (itstool) path: info/desc
 #: C/preferences_spellcheck.page:6
-#| msgid "Configuring <app>Orca's</app> support for IM and IRC"
 msgid "Configuring <app>Orca's</app> support for Spell Check"
 msgstr "Configurar el soporte de <app>Orca</app>  para la revisión ortográfica"
 
 #. (itstool) path: page/title
 #: C/preferences_spellcheck.page:17
-#| msgid "Speech Preferences"
 msgid "Spell Check Preferences"
 msgstr "Preferencias de la revisión ortográfica"
 
@@ -7132,15 +7068,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:36
-#| msgid "Spell current word:"
 msgid "Spell error"
 msgstr "Error ortográfico"
 
 #. (itstool) path: section/p
 #: C/preferences_spellcheck.page:37
-#| msgid ""
-#| "If this checkbox is checked, <app>Orca</app> will announce the "
-#| "coordinates of each cell you navigate to."
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will spell out the misspelled "
 "word after speaking it."
@@ -7150,15 +7082,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:46
-#| msgid "Spell current line:"
 msgid "Spell suggestion"
 msgstr "Sugerencia ortográfica"
 
 #. (itstool) path: section/p
 #: C/preferences_spellcheck.page:47
-#| msgid ""
-#| "If this checkbox is checked, <app>Orca</app> will announce the "
-#| "coordinates of each cell you navigate to."
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will spell out the suggested "
 "correction after speaking it."
@@ -7173,9 +7101,6 @@ msgstr "Mostrar el contexto de un error"
 
 #. (itstool) path: section/p
 #: C/preferences_spellcheck.page:57
-#| msgid ""
-#| "If this checkbox is checked, <app>Orca</app> will read the line which "
-#| "matches your current search query."
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will speak the sentence or line "
 "from the document in which the error is found."
@@ -7514,7 +7439,6 @@ msgstr "Preferencias de voz"
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:20
-#| msgid "Voice settings"
 msgid "Voice Type Settings"
 msgstr "Configuración del tipo de voz"
 
@@ -7541,10 +7465,6 @@ msgstr "Configurar múltiples voces"
 
 #. (itstool) path: note/p
 #: C/preferences_voice.page:30
-#| msgid ""
-#| "For each voice you wish to configure, first select the voice in the "
-#| "<gui>Voice settings</gui> combo box. Then configure the person, rate, "
-#| "pitch, and volume to be used for that voice."
 msgid ""
 "For each voice you wish to configure, first select the voice in the "
 "<gui>Voice type</gui> combo box. Then configure the person, rate, pitch, and "
@@ -7561,10 +7481,6 @@ msgstr "Sistema de voz"
 
 #. (itstool) path: section/p
 #: C/preferences_voice.page:40
-#| msgid ""
-#| "This combo box allows you to select your preferred speech system from "
-#| "those you have installed. Examples include Speech Dispatcher and GNOME "
-#| "Speech."
 msgid ""
 "This combo box allows you to select your preferred speech system from those "
 "you have installed, such as Speech Dispatcher."
@@ -7623,7 +7539,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:71
-#| msgid "Voice settings"
 msgid "Global Voice Settings"
 msgstr "Configuración global de voz"
 
@@ -7655,14 +7570,6 @@ msgstr "Hablar cadenas con mayúsculas y minúsculas como palabras"
 
 #. (itstool) path: section/p
 #: C/preferences_voice.page:88
-#| msgid ""
-#| "In some texts, and especially when working with code, one often comes "
-#| "across a \"word\" consisting of several words with alternating case, such "
-#| "as \"MultiCaseString.\" Speech synthesizers do not always pronounce such "
-#| "multicase strings correctly. Checking the <gui>Speak multicase strings as "
-#| "words</gui> checkbox will cause <app>Orca</app> to break a word like "
-#| "\"MultiCaseString\" into separate words (\"Multi,\" \"Case,\" and \"String"
-#| "\") prior to passing it along to the speech synthesizer."
 msgid ""
 "In some text, and especially when working with code, one often comes across "
 "a \"word\" consisting of several words with alternating case, such as "
@@ -7702,6 +7609,21 @@ msgstr ""
 #: C/preferences_voice.page:108
 msgid "Default value: <gui>Sentence</gui>"
 msgstr "Valor predeterminado: <gui>Frase</gui>"
+
+#~ msgctxt "_"
+#~ msgid ""
+#~ "external ref='figures/orca-logo.png' "
+#~ "md5='d8759cff4f184e7134cc5bcd6d32d839'"
+#~ msgstr ""
+#~ "external ref='figures/orca-logo.png' "
+#~ "md5='d8759cff4f184e7134cc5bcd6d32d839'"
+
+#~ msgid ""
+#~ "<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\"> "
+#~ "<app>Orca</app>'s logo </media> <app>Orca</app> Screen Reader"
+#~ msgstr ""
+#~ "<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png"
+#~ "\">Logo de <app>Orca</app> </media>Lector de pantalla<app>Orca</app>"
 
 #~ msgid ""
 #~ "Report information on the currently active script: <keyseq><key>Ctrl</"
@@ -7783,9 +7705,6 @@ msgstr "Valor predeterminado: <gui>Frase</gui>"
 #~ msgstr ""
 #~ "external ref='figures/orca_find.png' "
 #~ "md5='c57e798757d41146c96c263865c68610'"
-
-#~ msgid "<app>Orca</app>'s Find Dialog"
-#~ msgstr "Diálogo «Buscar» de <app>Orca</app>:"
 
 #~ msgctxt "_"
 #~ msgid ""
