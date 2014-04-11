@@ -30,6 +30,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.keybindings as keybindings
+import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.toolkits.gtk as gtk
 import orca.settings as settings
@@ -109,6 +110,15 @@ class Script(gtk.Script):
             return False
 
         return True
+
+    def onCaretMoved(self, event):
+        """Callback for object:text-caret-moved accessibility events."""
+
+        obj = event.source
+        if obj.getRole() == pyatspi.ROLE_PAGE:
+            orca.setLocusOfFocus(event, event.source, False)
+
+        gtk.Script.onCaretMoved(self, event)
 
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
