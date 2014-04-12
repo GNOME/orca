@@ -206,6 +206,8 @@ formatting = {
             'unfocused': 'roleName + unrelatedLabels'
             },
         pyatspi.ROLE_PAGE: {
+            'focused': 'label + readOnly + currentLineText + anyTextSelection',
+            'unfocused': 'label + readOnly + currentLineText + anyTextSelection + ' + MNEMONIC,
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
             'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
             },
