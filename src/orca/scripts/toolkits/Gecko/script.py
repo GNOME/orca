@@ -238,6 +238,12 @@ class Script(default.Script):
         # See bug 665522 - comment 5
         app.setCacheMask(pyatspi.cache.DEFAULT ^ pyatspi.cache.CHILDREN)
 
+    def deactivate(self):
+        """Called when this script is deactivated."""
+
+        self._loadingDocumentContent = False
+        self._loadingDocumentTime = 0.0
+
     def getBookmarks(self):
         """Returns the "bookmarks" class for this script.
         """
