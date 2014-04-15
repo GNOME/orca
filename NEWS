@@ -1,3 +1,42 @@
+3.12.1 - 15 April 2014
+
+General:
+
+  * Update documentation
+
+  * Clear saved page-loading state when Gecko script is deactivated
+
+  * Add support for ROLE_PAGE now that Evince uses it
+
+  * Prefer the name of a button, even if it implements AtkText
+
+  * Eliminate a false positive identifying selected text with caret-moved
+    events
+
+  * Fix presentation of caret-moved events for Firefox's autocompletes
+
+  * Add an explicit check for KP_0 as the Orca Modifier plus Shift
+
+  * Eliminate some chattiness presenting combo boxes
+
+  * Don't treat the root label as an unrelated label
+
+  * Handle yet another case of missing object:state-changed:focused
+    events for Gtk+
+
+  * Filter out some superfluous name-changed events from Gtk+ apps
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    el            Greek                       Maria Thukididu
+    es            Spanish                     Daniel Mustieles
+    eu            Basque                      Inaki Larranaga Murgoitio
+    hu            Hungarian                   Attila Hammer
+    sl            Slovenian                   Matej Urbančič
+    sk            Slovak                      Peter Vágner
+
+=========
+
 3.12.0 - 24 March 2014
 
 New and updated translations (THANKS EVERYONE!!!):
