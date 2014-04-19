@@ -859,6 +859,20 @@ chnames['\ue00a'] = _("black square")
 #
 chnames['\ue00c'] = _("black diamond")
 
+# Translators: This refers to U+FFFC, the "object replacement character."
+# This character appears in the accessible text of documents and serves as
+# indication of the presence of an object within the text (e.g. an image
+# or form field inside a paragraph). In an application which has full
+# accessibility support for embedded objects, Orca should present the object
+# and NOT speak this character. However, for applications where this support
+# is missing, the user can arrow to this character and Orca should not be
+# silent. This string is what Orca will speak to the user should this occur.
+# More information about this character can be found at:
+# * http://www.fileformat.info/info/unicode/char/fffc/index.htm
+# * http://en.wikipedia.org/wiki/Specials_(Unicode_block)
+#
+chnames['\ufffc'] = _("object replacement character")
+
 def getCharacterName(character):
     """Given a character, return its name as people might refer to it
     in ordinary conversation.
