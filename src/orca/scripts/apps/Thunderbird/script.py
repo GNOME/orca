@@ -203,6 +203,11 @@ class Script(Gecko.Script):
         if event.source == self.spellcheck.getSuggestionsList():
             return
 
+        parent = event.source.parent
+        if parent and parent.getRole() == pyatspi.ROLE_COMBO_BOX \
+           and not parent.getState().contains(pyatspi.STATE_FOCUSED):
+            return
+
         Gecko.Script.onSelectionChanged(self, event)
 
     def onSensitiveChanged(self, event):
@@ -400,16 +405,16 @@ class Script(Gecko.Script):
     def isEditableMessage(self, obj):
         """Returns True if this is a editable message."""
 
-        # For now, look specifically to see if this object is the
-        # document frame. If it's not, we cannot be sure how complex
-        # this message is and should let the Gecko code kick in.
-        #
-        if obj \
-           and obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
-           and obj.getState().contains(pyatspi.STATE_EDITABLE):
-            return True
+        if not obj:
+            return False
 
-        return False
+        if not obj.getState().contains(pyatspi.STATE_EDITABLE):
+            return False
+
+        if self.isNonHTMLEntry(obj):
+            return False
+
+        return True
 
     def useCaretNavigationModel(self, keyboardEvent):
         """Returns True if we should do our own caret navigation."""
