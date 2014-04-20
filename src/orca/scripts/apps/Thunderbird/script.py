@@ -416,15 +416,6 @@ class Script(Gecko.Script):
 
         return True
 
-    def useCaretNavigationModel(self, keyboardEvent):
-        """Returns True if we should do our own caret navigation."""
-
-        if self.isEditableMessage(orca_state.locusOfFocus) \
-           or self.isNonHTMLEntry(orca_state.locusOfFocus):
-            return False
-
-        return Gecko.Script.useCaretNavigationModel(self, keyboardEvent)
-
     def onWindowActivated(self, event):
         """Callback for window:activate accessibility events."""
 
