@@ -132,6 +132,14 @@ class Script(Gecko.Script):
 
         Gecko.Script.doWhereAmI(self,inputEvent, basicOnly)
 
+    def useStructuralNavigationModel(self):
+        """Returns True if structural navigation should be enabled here."""
+
+        if self.isEditableMessage(orca_state.locusOfFocus):
+            return False
+
+        return Gecko.Script.useStructuralNavigationModel(self)
+
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
