@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2014-02-22 11:17+0000\n"
-"PO-Revision-Date: 2014-02-22 15:47+0100\n"
+"POT-Creation-Date: 2014-04-23 10:20+0000\n"
+"PO-Revision-Date: 2014-04-23 21:25+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -1856,6 +1856,22 @@ msgstr "dolní index pravá závorka"
 msgid "right-pointing arrowhead"
 msgstr "hrot šipky vpravo"
 
+#. Translators: This refers to U+FFFC, the "object replacement character."
+#. This character appears in the accessible text of documents and serves as
+#. indication of the presence of an object within the text (e.g. an image
+#. or form field inside a paragraph). In an application which has full
+#. accessibility support for embedded objects, Orca should present the object
+#. and NOT speak this character. However, for applications where this support
+#. is missing, the user can arrow to this character and Orca should not be
+#. silent. This string is what Orca will speak to the user should this occur.
+#. More information about this character can be found at:
+#. * http://www.fileformat.info/info/unicode/char/fffc/index.htm
+#. * http://en.wikipedia.org/wiki/Specials_(Unicode_block)
+#.
+#: ../src/orca/chnames.py:874
+msgid "object replacement character"
+msgstr "znak nahrazující objekt"
+
 #. Translators: this command will move the mouse pointer to the current item
 #. without clicking on it.
 #: ../src/orca/cmdnames.py:37
@@ -3139,9 +3155,8 @@ msgstr "Zobrazí seznam navštívených odkazů."
 #.
 #: ../src/orca/flat_review.py:1050 ../src/orca/generator.py:475
 #: ../src/orca/generator.py:741 ../src/orca/generator.py:783
-#: ../src/orca/generator.py:829
-#: ../src/orca/scripts/apps/evolution/speech_generator.py:122
-#: ../src/orca/tutorialgenerator.py:558 ../src/orca/tutorialgenerator.py:598
+#: ../src/orca/generator.py:829 ../src/orca/tutorialgenerator.py:558
+#: ../src/orca/tutorialgenerator.py:598
 msgid "toggle"
 msgstr "přepnout"
 
@@ -3194,36 +3209,26 @@ msgstr "_Skočit na"
 msgid "_OK"
 msgstr "_Budiž"
 
-#. Translators: Orca has had to implement its own caret navigation model to work
-#. around issues in Gecko/Firefox. In some versions of Firefox, we must perform
-#. a focus grab on each object being navigated in order for things to work as
-#. expected; in other versions of Firefox, we must avoid doing so in order for
-#. things# to work as expected. We cannot identify with certainty which situation
-#. the user is in, so we must provide this as an option within Orca.
-#: ../src/orca/guilabels.py:75
-msgid "_Grab focus on objects when navigating"
-msgstr "_Zachytit zaměření na objektu při navigaci"
-
 #. Translators: When the user arrows up and down in HTML content, and Orca is
 #. controlling the caret, the user might want Orca to always position the
 #. cursor at the beginning of the line (as opposed to the position directly
 #. above/below the current cursor position). Different users have different
 #. preferences. This string is the label for a checkbox which allows users
 #. to set the line-positioning behavior they want.
-#: ../src/orca/guilabels.py:84
+#: ../src/orca/guilabels.py:76
 msgid "_Position cursor at start of line when navigating vertically"
 msgstr "_Umístit kurzor na začátek řádku při svislé navigaci"
 
 #. Translators: If this checkbox is checked, then Orca will tell you when one of
 #. your buddies is typing a message.
-#: ../src/orca/guilabels.py:88
+#: ../src/orca/guilabels.py:80
 msgid "Announce when your _buddies are typing"
 msgstr "Oznámit, když _kamarád píše"
 
 #. Translators: If this checkbox is checked, then Orca will provide the user with
 #. chat room specific message histories rather than just a single history which
 #. contains the latest messages from all the chat rooms that they are in.
-#: ../src/orca/guilabels.py:93
+#: ../src/orca/guilabels.py:85
 msgid "Provide chat room specific _message histories"
 msgstr "Poskytuje historii zvláštních zpráv zobrazených v _místnosti"
 
@@ -3232,21 +3237,21 @@ msgstr "Poskytuje historii zvláštních zpráv zobrazených v _místnosti"
 #. from all channels (i.e. even if the chat application doesn't have focus); speak
 #. messages from a channel only if it is the active channel; speak messages from
 #. any channel, but only if the chat application has focus.
-#: ../src/orca/guilabels.py:100
+#: ../src/orca/guilabels.py:92
 msgid "Speak messages from"
 msgstr "Číst zprávy od"
 
 #. Translators: This is the label of a radio button. If it is selected, Orca will
 #. speak all new chat messages as they appear irrespective of whether or not the
 #. chat application currently has focus. This is the default behaviour.
-#: ../src/orca/guilabels.py:105
+#: ../src/orca/guilabels.py:97
 msgid "All cha_nnels"
 msgstr "Všech_ny kanály"
 
 #. Translators: This is the label of a radio button. If it is selected, Orca will
 #. speak all new chat messages as they appear if and only if the chat application
 #. has focus. The string substituion is for the application name (e.g Pidgin).
-#: ../src/orca/guilabels.py:110
+#: ../src/orca/guilabels.py:102
 #, python-format
 msgid "All channels when an_y %s window is active"
 msgstr "Všechn_y kanály, když je aktivní některé okno %s"
@@ -3254,13 +3259,13 @@ msgstr "Všechn_y kanály, když je aktivní některé okno %s"
 #. Translators: This is the label of a radio button. If it is selected, Orca will
 #. only speak new chat messages for the currently active channel, irrespective of
 #. whether the chat application has focus.
-#: ../src/orca/guilabels.py:115
+#: ../src/orca/guilabels.py:107
 msgid "A channel only if its _window is active"
 msgstr "Pou_ze kanál, jehož okno je aktivní"
 
 #. Translators: If this checkbox is checked, then Orca will speak the name of the
 #. chat room prior to presenting an incoming message.
-#: ../src/orca/guilabels.py:119
+#: ../src/orca/guilabels.py:111
 msgid "_Speak Chat Room name"
 msgstr "Čí_st název diskuzní místnosti"
 
@@ -3271,7 +3276,7 @@ msgstr "Čí_st název diskuzní místnosti"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/guilabels.py:124 ../src/orca/keybindings.py:164
+#: ../src/orca/guilabels.py:116 ../src/orca/keybindings.py:164
 msgid "double click"
 msgstr "dvojité kliknutí"
 
@@ -3282,7 +3287,7 @@ msgstr "dvojité kliknutí"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/guilabels.py:129 ../src/orca/keybindings.py:170
+#: ../src/orca/guilabels.py:121 ../src/orca/keybindings.py:170
 msgid "triple click"
 msgstr "trojité kliknutí"
 
@@ -3290,7 +3295,7 @@ msgstr "trojité kliknutí"
 #. engines as a special item. It refers to the default engine configured within
 #. the speech subsystem. Apart from this item, the user will have a chance to
 #. select a particular speech engine by its real name (Festival, IBMTTS, etc.)
-#: ../src/orca/guilabels.py:135
+#: ../src/orca/guilabels.py:127
 msgid "Default Synthesizer"
 msgstr "Výchozí hlasový výstup"
 
@@ -3300,7 +3305,7 @@ msgstr "Výchozí hlasový výstup"
 #. word) or doesn't pronounce as the user desires (e.g. an acronym) by providing
 #. an alternative string. The "Actual String" here refers to the word to be
 #. corrected as it would actually appear in text being read. Example: "LOL".
-#: ../src/orca/guilabels.py:143
+#: ../src/orca/guilabels.py:135
 msgid "Actual String"
 msgstr "Skutečný řetězec"
 
@@ -3311,7 +3316,7 @@ msgstr "Skutečný řetězec"
 #. an alternative string. The "Replacement String" here refers to how the user
 #. would like the "Actual String" to be pronounced by the speech synthesizer.
 #. Example: "L O L" or "Laughing Out Loud" (for Actual String "LOL").
-#: ../src/orca/guilabels.py:152
+#: ../src/orca/guilabels.py:144
 msgid "Replacement String"
 msgstr "Nahradit řetězcem"
 
@@ -3320,7 +3325,7 @@ msgstr "Nahradit řetězcem"
 #. being pressed, "character echo" presents the character/string of length 1 that
 #. is inserted as a result of the keypress.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/guilabels.py:158 ../src/orca/orca-setup.ui.h:113
+#: ../src/orca/guilabels.py:150 ../src/orca/orca-setup.ui.h:113
 msgid "Enable echo by cha_racter"
 msgstr "Číst po _znacích"
 
@@ -3328,7 +3333,7 @@ msgstr "Číst po _znacích"
 #. by the user. This string refers to a "key echo" option. When this option is
 #. enabled, dead keys will be announced when pressed.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/guilabels.py:163 ../src/orca/orca-setup.ui.h:111
+#: ../src/orca/guilabels.py:155 ../src/orca/orca-setup.ui.h:111
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Oznamovat znaky _diakritiky"
 
@@ -3336,20 +3341,20 @@ msgstr "Oznamovat znaky _diakritiky"
 #. active application for on screen text and widgets. This label is associated
 #. with the setting to begin the search from the current location rather than
 #. from the top of the screen.
-#: ../src/orca/guilabels.py:169 ../src/orca/orca-find.ui.h:9
+#: ../src/orca/guilabels.py:161 ../src/orca/orca-find.ui.h:9
 msgid "C_urrent location"
 msgstr "_Aktuálního místa"
 
 #. Translators: This is the label for a spinbutton. This option allows the user
 #. to specify the number of matched characters that must be present before Orca
 #. speaks the line that contains the results from an application's Find toolbar.
-#: ../src/orca/guilabels.py:174
+#: ../src/orca/guilabels.py:166
 msgid "Minimum length of matched text:"
 msgstr "Minimální délka nalezeného textu:"
 
 #. Translators: This is the label of a panel containing options for what Orca
 #. presents when the user is in the Find toolbar of an application, e.g. Firefox.
-#: ../src/orca/guilabels.py:178
+#: ../src/orca/guilabels.py:170
 msgid "Find Options"
 msgstr "Možnosti vyhledávání"
 
@@ -3357,7 +3362,7 @@ msgstr "Možnosti vyhledávání"
 #. the line that contains the match from an application's Find toolbar should
 #. always be spoken, or only spoken if it is a different line than the line
 #. which contained the last match.
-#: ../src/orca/guilabels.py:184
+#: ../src/orca/guilabels.py:176
 msgid "Onl_y speak changed lines during find"
 msgstr "V průběhu vyhledává_ní číst jen změněné řádky"
 
@@ -3365,28 +3370,28 @@ msgstr "V průběhu vyhledává_ní číst jen změněné řádky"
 #. not Orca will automatically speak the line that contains the match while the
 #. user is performing a search from the Find toolbar of an application, e.g.
 #. Firefox.
-#: ../src/orca/guilabels.py:190
+#: ../src/orca/guilabels.py:182
 msgid "Speak results during _find"
 msgstr "Číst výs_ledky v průběhu vyhledávání"
 
 #. Translators: Function is a table column header where the cells in the column
 #. are a sentence that briefly describes what action Orca will take if and when
 #. the user invokes that keyboard command.
-#: ../src/orca/guilabels.py:195
+#: ../src/orca/guilabels.py:187
 msgid "Function"
 msgstr "Funkce"
 
 #. Translators: Key Binding is a table column header where the cells in the
 #. column represent keyboard combinations the user can press to invoke Orca
 #. commands.
-#: ../src/orca/guilabels.py:200
+#: ../src/orca/guilabels.py:192
 msgid "Key Binding"
 msgstr "Klávesová zkratka"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. can be used in any setting, task, or application. They are not specific
 #. to, for instance, web browsing.
-#: ../src/orca/guilabels.py:205
+#: ../src/orca/guilabels.py:197
 msgctxt "keybindings"
 msgid "Default"
 msgstr "Výchozí"
@@ -3395,13 +3400,13 @@ msgstr "Výchozí"
 #. user to create input gestures from the braille device. The braille bindings
 #. are what determine the actions Orca will take when the user presses these
 #. buttons.
-#: ../src/orca/guilabels.py:211
+#: ../src/orca/guilabels.py:203
 msgid "Braille Bindings"
 msgstr "Braillské klávesové zkratky"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. do not currently have an associated key binding.
-#: ../src/orca/guilabels.py:215
+#: ../src/orca/guilabels.py:207
 msgid "Unbound"
 msgstr "Nepoužito"
 
@@ -3409,13 +3414,13 @@ msgstr "Nepoužito"
 #. This column contains a checkbox which indicates whether a key binding
 #. for an Orca command has been changed by the user to something other than its
 #. default value.
-#: ../src/orca/guilabels.py:221
+#: ../src/orca/guilabels.py:213
 msgctxt "keybindings"
 msgid "Modified"
 msgstr "Změněno"
 
 #. Translators: This label refers to the keyboard layout (desktop or laptop).
-#: ../src/orca/guilabels.py:224 ../src/orca/orca-setup.ui.h:20
+#: ../src/orca/guilabels.py:216 ../src/orca/orca-setup.ui.h:20
 msgid "_Desktop"
 msgstr "_Stolní počítač"
 
@@ -3425,7 +3430,7 @@ msgstr "_Stolní počítač"
 #. title of Orca's application-specific preferences dialog for an application.
 #. The string substituted in is the accessible name of the application (e.g.
 #. "Gedit", "Firefox", etc.
-#: ../src/orca/guilabels.py:232
+#: ../src/orca/guilabels.py:224
 #, python-format
 msgid "Screen Reader Preferences for %s"
 msgstr "Předvolby čtečky obrazovky pro %s"
@@ -3435,7 +3440,7 @@ msgstr "Předvolby čtečky obrazovky pro %s"
 #. or attribute by "marking" it in braille. "Marking" is not the same as writing
 #. out the word; instead marking refers to adding some other indicator, e.g.
 #. "underlining" with braille dots 7-8 a word that is bold.
-#: ../src/orca/guilabels.py:239
+#: ../src/orca/guilabels.py:231
 msgid "Mark in braille"
 msgstr "Označit na braillu"
 
@@ -3449,7 +3454,7 @@ msgstr "Označit na braillu"
 #. stating that he/she would like to have underlined text announced for all cases
 #. (single, double, low, etc.) except when the value of underline is none (i.e.
 #. when it's not underlined). "Present" here is being used as a verb.
-#: ../src/orca/guilabels.py:251
+#: ../src/orca/guilabels.py:243
 msgid "Present Unless"
 msgstr "Prezentovat kromě"
 
@@ -3458,7 +3463,7 @@ msgstr "Prezentovat kromě"
 #. item or attribute (e.g. saying "Bold" as part of the information presented
 #. when the user gives the Orca command to obtain the format and font details of
 #. the current text).
-#: ../src/orca/guilabels.py:258
+#: ../src/orca/guilabels.py:250
 msgid "Speak"
 msgstr "Říci"
 
@@ -3467,7 +3472,7 @@ msgstr "Říci"
 #. A "user profile" is a collection of settings which apply to a given task, such
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
-#: ../src/orca/guilabels.py:265
+#: ../src/orca/guilabels.py:257
 msgid "Save Profile As Conflict"
 msgstr "Konflikt ukládání profilu jako"
 
@@ -3476,7 +3481,7 @@ msgstr "Konflikt ukládání profilu jako"
 #. A "user profile" is a collection of settings which apply to a given task, such
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
-#: ../src/orca/guilabels.py:272
+#: ../src/orca/guilabels.py:264
 msgid "User Profile Conflict!"
 msgstr "Konflikt uživatelského profilu!"
 
@@ -3485,7 +3490,7 @@ msgstr "Konflikt uživatelského profilu!"
 #. A "user profile" is a collection of settings which apply to a given task, such
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
-#: ../src/orca/guilabels.py:279
+#: ../src/orca/guilabels.py:271
 #, python-format
 msgid ""
 "Profile %s already exists.\n"
@@ -3500,7 +3505,7 @@ msgstr ""
 #. collection of settings which apply to a given task such as a "Spanish" profile
 #. which would use Spanish text-to-speech and Spanish braille and selected when
 #. reading Spanish content.
-#: ../src/orca/guilabels.py:289
+#: ../src/orca/guilabels.py:281
 msgid "Load user profile"
 msgstr "Načtení uživatelského profilu"
 
@@ -3510,7 +3515,7 @@ msgstr "Načtení uživatelského profilu"
 #. collection of settings which apply to a given task such as a "Spanish" profile
 #. which would use Spanish text-to-speech and Spanish braille and selected when
 #. reading Spanish content.
-#: ../src/orca/guilabels.py:298
+#: ../src/orca/guilabels.py:290
 msgid ""
 "You are about to change the active profile. If you\n"
 "have just made changes in your preferences, they will\n"
@@ -3530,7 +3535,7 @@ msgstr ""
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text. The
 #. following string is the title of a dialog in which users can save a newly-
 #. defined profile.
-#: ../src/orca/guilabels.py:309
+#: ../src/orca/guilabels.py:301
 msgid "Save Profile As"
 msgstr "Uložení profilu jako"
 
@@ -3540,7 +3545,7 @@ msgstr "Uložení profilu jako"
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text. The
 #. following string is the label for a text entry in which the user enters the
 #. name of a new settings profile being saved via the 'Save Profile As' dialog.
-#: ../src/orca/guilabels.py:317
+#: ../src/orca/guilabels.py:309
 msgid "_Profile Name:"
 msgstr "Název _profilu:"
 
@@ -3548,7 +3553,7 @@ msgstr "Název _profilu:"
 #. should be announced. Choosing "All" means that Orca will present progress bar
 #. updates regardless of what application and window they happen to be in.
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: ../src/orca/guilabels.py:322 ../src/orca/orca-setup.ui.h:8
+#: ../src/orca/guilabels.py:314 ../src/orca/orca-setup.ui.h:8
 msgctxt "ProgressBar"
 msgid "All"
 msgstr "Všechny"
@@ -3557,7 +3562,7 @@ msgstr "Všechny"
 #. should be announced. Choosing "Application" means that Orca will present
 #. progress bar updates as long as the progress bar is in the active application
 #. (but not necessarily in the current window).
-#: ../src/orca/guilabels.py:328
+#: ../src/orca/guilabels.py:320
 msgctxt "ProgressBar"
 msgid "Application"
 msgstr "Aplikace"
@@ -3565,7 +3570,7 @@ msgstr "Aplikace"
 #. Translators: Orca has a setting which determines which progress bar updates
 #. should be announced. Choosing "Window" means that Orca will present progress
 #. bar updates as long as the progress bar is in the active window.
-#: ../src/orca/guilabels.py:333
+#: ../src/orca/guilabels.py:325
 msgctxt "ProgressBar"
 msgid "Window"
 msgstr "Okno"
@@ -3573,7 +3578,7 @@ msgstr "Okno"
 #. Translators: If this setting is chosen, no punctuation symbols will be spoken
 #. as a user reads a document.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
-#: ../src/orca/guilabels.py:337 ../src/orca/orca-setup.ui.h:66
+#: ../src/orca/guilabels.py:329 ../src/orca/orca-setup.ui.h:66
 msgctxt "punctuation level"
 msgid "_None"
 msgstr "Žád_ná"
@@ -3581,25 +3586,25 @@ msgstr "Žád_ná"
 #. Translators: If this setting is chosen, common punctuation symbols (like
 #. comma, period, question mark) will not be spoken as a user reads a document,
 #. but less common symbols (such as #, @, $) will.
-#: ../src/orca/guilabels.py:342 ../src/orca/orca-setup.ui.h:67
+#: ../src/orca/guilabels.py:334 ../src/orca/orca-setup.ui.h:67
 msgid "So_me"
 msgstr "Ně_která"
 
 #. Translators: If this setting is chosen, the majority of punctuation symbols
 #. will be spoken as a user reads a document.
-#: ../src/orca/guilabels.py:346 ../src/orca/orca-setup.ui.h:68
+#: ../src/orca/guilabels.py:338 ../src/orca/orca-setup.ui.h:68
 msgid "M_ost"
 msgstr "_Většina"
 
 #. Translators: If this setting is chosen and the user is reading over an entire
 #. document, Orca will pause at the end of each line.
-#: ../src/orca/guilabels.py:350 ../src/orca/orca-setup.ui.h:5
+#: ../src/orca/guilabels.py:342 ../src/orca/orca-setup.ui.h:5
 msgid "Line"
 msgstr "Řádcích"
 
 #. Translators: If this setting is chosen and the user is reading over an entire
 #. document, Orca will pause at the end of each sentence.
-#: ../src/orca/guilabels.py:354 ../src/orca/orca-setup.ui.h:6
+#: ../src/orca/guilabels.py:346 ../src/orca/orca-setup.ui.h:6
 msgid "Sentence"
 msgstr "Větách"
 
@@ -3607,7 +3612,7 @@ msgstr "Větách"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a blockquote.
-#: ../src/orca/guilabels.py:360
+#: ../src/orca/guilabels.py:352
 msgctxt "structural navigation"
 msgid "Blockquote"
 msgstr "Citace"
@@ -3616,7 +3621,7 @@ msgstr "Citace"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a button.
-#: ../src/orca/guilabels.py:366
+#: ../src/orca/guilabels.py:358
 msgctxt "structural navigation"
 msgid "Button"
 msgstr "Tlačítko"
@@ -3625,7 +3630,7 @@ msgstr "Tlačítko"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the caption of a table.
-#: ../src/orca/guilabels.py:372
+#: ../src/orca/guilabels.py:364
 msgctxt "structural navigation"
 msgid "Caption"
 msgstr "Titulek"
@@ -3634,7 +3639,7 @@ msgstr "Titulek"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a check box.
-#: ../src/orca/guilabels.py:378
+#: ../src/orca/guilabels.py:370
 msgctxt "structural navigation"
 msgid "Check Box"
 msgstr "Zaškrtávací políčko"
@@ -3643,7 +3648,7 @@ msgstr "Zaškrtávací políčko"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the selected item in a combo box.
-#: ../src/orca/guilabels.py:384
+#: ../src/orca/guilabels.py:376
 msgctxt "structural navigation"
 msgid "Combo Box"
 msgstr "Rozbalovací seznam"
@@ -3652,7 +3657,7 @@ msgstr "Rozbalovací seznam"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the description of an element.
-#: ../src/orca/guilabels.py:390
+#: ../src/orca/guilabels.py:382
 msgctxt "structural navigation"
 msgid "Description"
 msgstr "Popis"
@@ -3661,7 +3666,7 @@ msgstr "Popis"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a heading.
-#: ../src/orca/guilabels.py:396
+#: ../src/orca/guilabels.py:388
 msgctxt "structural navigation"
 msgid "Heading"
 msgstr "Nadpis"
@@ -3670,7 +3675,7 @@ msgstr "Nadpis"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a form field.
-#: ../src/orca/guilabels.py:402
+#: ../src/orca/guilabels.py:394
 msgctxt "structural navigation"
 msgid "Label"
 msgstr "Popisek"
@@ -3681,7 +3686,7 @@ msgstr "Popisek"
 #. contains the text of a landmark. ARIA role landmarks are the W3C defined HTML
 #. tag attribute 'role' used to identify important part of webpage like banners,
 #. main context, search etc.
-#: ../src/orca/guilabels.py:410
+#: ../src/orca/guilabels.py:402
 msgctxt "structural navigation"
 msgid "Landmark"
 msgstr "Orientační bod"
@@ -3691,7 +3696,7 @@ msgstr "Orientační bod"
 #. could with native keyboard navigation. This is the title of a column which
 #. contains the level of a heading. Level will be a "1" for <h1>, a "2" for <h2>,
 #. and so on.
-#: ../src/orca/guilabels.py:417
+#: ../src/orca/guilabels.py:409
 msgctxt "structural navigation"
 msgid "Level"
 msgstr "Úroveň"
@@ -3700,7 +3705,7 @@ msgstr "Úroveň"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a link.
-#: ../src/orca/guilabels.py:423
+#: ../src/orca/guilabels.py:415
 msgctxt "structural navigation"
 msgid "Link"
 msgstr "Odkaz"
@@ -3709,7 +3714,7 @@ msgstr "Odkaz"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list.
-#: ../src/orca/guilabels.py:429
+#: ../src/orca/guilabels.py:421
 msgctxt "structural navigation"
 msgid "List"
 msgstr "Seznam"
@@ -3718,7 +3723,7 @@ msgstr "Seznam"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list item.
-#: ../src/orca/guilabels.py:435
+#: ../src/orca/guilabels.py:427
 msgctxt "structural navigation"
 msgid "List Item"
 msgstr "Položka seznamu"
@@ -3727,7 +3732,7 @@ msgstr "Položka seznamu"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an object.
-#: ../src/orca/guilabels.py:441
+#: ../src/orca/guilabels.py:433
 msgctxt "structural navigation"
 msgid "Object"
 msgstr "Objekt"
@@ -3736,7 +3741,7 @@ msgstr "Objekt"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a paragraph.
-#: ../src/orca/guilabels.py:447
+#: ../src/orca/guilabels.py:439
 msgctxt "structural navigation"
 msgid "Paragraph"
 msgstr "Odstavec"
@@ -3745,7 +3750,7 @@ msgstr "Odstavec"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a radio button.
-#: ../src/orca/guilabels.py:453
+#: ../src/orca/guilabels.py:445
 msgctxt "structural navigation"
 msgid "Radio Button"
 msgstr "Skupinový přepínač"
@@ -3755,7 +3760,7 @@ msgstr "Skupinový přepínač"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the role of a widget. Examples include "heading", "paragraph",
 #. "table", "combo box", etc.
-#: ../src/orca/guilabels.py:460
+#: ../src/orca/guilabels.py:452
 msgctxt "structural navigation"
 msgid "Role"
 msgstr "Účel"
@@ -3764,7 +3769,7 @@ msgstr "Účel"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the selected item of a form field.
-#: ../src/orca/guilabels.py:466
+#: ../src/orca/guilabels.py:458
 msgctxt "structural navigation"
 msgid "Selected Item"
 msgstr "Vybraná položka"
@@ -3774,7 +3779,7 @@ msgstr "Vybraná položka"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the state of a widget. Examples include "checked"/"not checked",
 #. "selected"/"not selected", "visited/not visited", etc.
-#: ../src/orca/guilabels.py:473
+#: ../src/orca/guilabels.py:465
 msgctxt "structural navigation"
 msgid "State"
 msgstr "Stav"
@@ -3783,7 +3788,7 @@ msgstr "Stav"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an entry.
-#: ../src/orca/guilabels.py:479
+#: ../src/orca/guilabels.py:471
 msgctxt "structural navigation"
 msgid "Text"
 msgstr "Text"
@@ -3792,7 +3797,7 @@ msgstr "Text"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the URI of a link.
-#: ../src/orca/guilabels.py:485
+#: ../src/orca/guilabels.py:477
 msgctxt "structural navigation"
 msgid "URI"
 msgstr "URI"
@@ -3801,7 +3806,7 @@ msgstr "URI"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the value of a form field.
-#: ../src/orca/guilabels.py:491
+#: ../src/orca/guilabels.py:483
 msgctxt "structural navigation"
 msgid "Value"
 msgstr "Hodnota"
@@ -3809,7 +3814,7 @@ msgstr "Hodnota"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:496
+#: ../src/orca/guilabels.py:488
 msgctxt "structural navigation"
 msgid "Blockquotes"
 msgstr "Citace"
@@ -3817,7 +3822,7 @@ msgstr "Citace"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:501
+#: ../src/orca/guilabels.py:493
 msgctxt "structural navigation"
 msgid "Buttons"
 msgstr "Tlačítka"
@@ -3825,7 +3830,7 @@ msgstr "Tlačítka"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:506
+#: ../src/orca/guilabels.py:498
 msgctxt "structural navigation"
 msgid "Check Boxes"
 msgstr "Zaškrtávací políčka"
@@ -3833,7 +3838,7 @@ msgstr "Zaškrtávací políčka"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:511
+#: ../src/orca/guilabels.py:503
 msgctxt "structural navigation"
 msgid "Combo Boxes"
 msgstr "Rozbalovací seznamy"
@@ -3841,7 +3846,7 @@ msgstr "Rozbalovací seznamy"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:516
+#: ../src/orca/guilabels.py:508
 msgctxt "structural navigation"
 msgid "Entries"
 msgstr "Položky"
@@ -3849,7 +3854,7 @@ msgstr "Položky"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:521
+#: ../src/orca/guilabels.py:513
 msgctxt "structural navigation"
 msgid "Form Fields"
 msgstr "Pole formuláře"
@@ -3857,7 +3862,7 @@ msgstr "Pole formuláře"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:526
+#: ../src/orca/guilabels.py:518
 msgctxt "structural navigation"
 msgid "Headings"
 msgstr "Nadpisy"
@@ -3866,7 +3871,7 @@ msgstr "Nadpisy"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. Level will be a "1" for <h1>, a "2" for <h2>, and so on.
-#: ../src/orca/guilabels.py:532
+#: ../src/orca/guilabels.py:524
 #, python-format
 msgctxt "structural navigation"
 msgid "Headings at Level %d"
@@ -3877,7 +3882,7 @@ msgstr "Nadpisy úrovně %d."
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
-#: ../src/orca/guilabels.py:539
+#: ../src/orca/guilabels.py:531
 msgctxt "structural navigation"
 msgid "Landmarks"
 msgstr "Orientační body"
@@ -3887,7 +3892,7 @@ msgstr "Orientační body"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/guilabels.py:546
+#: ../src/orca/guilabels.py:538
 msgctxt "structural navigation"
 msgid "Large Objects"
 msgstr "Velké objekty"
@@ -3895,7 +3900,7 @@ msgstr "Velké objekty"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:551
+#: ../src/orca/guilabels.py:543
 msgctxt "structural navigation"
 msgid "Links"
 msgstr "Odkazy"
@@ -3903,7 +3908,7 @@ msgstr "Odkazy"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:556
+#: ../src/orca/guilabels.py:548
 msgctxt "structural navigation"
 msgid "Lists"
 msgstr "Seznamy"
@@ -3911,7 +3916,7 @@ msgstr "Seznamy"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:561
+#: ../src/orca/guilabels.py:553
 msgctxt "structural navigation"
 msgid "List Items"
 msgstr "Položky seznamu"
@@ -3919,7 +3924,7 @@ msgstr "Položky seznamu"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:566
+#: ../src/orca/guilabels.py:558
 msgctxt "structural navigation"
 msgid "Paragraphs"
 msgstr "Odstavce"
@@ -3927,7 +3932,7 @@ msgstr "Odstavce"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:571
+#: ../src/orca/guilabels.py:563
 msgctxt "structural navigation"
 msgid "Radio Buttons"
 msgstr "Skupinové přepínače"
@@ -3935,7 +3940,7 @@ msgstr "Skupinové přepínače"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:576
+#: ../src/orca/guilabels.py:568
 msgctxt "structural navigation"
 msgid "Tables"
 msgstr "Tabulky"
@@ -3943,7 +3948,7 @@ msgstr "Tabulky"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:581
+#: ../src/orca/guilabels.py:573
 msgctxt "structural navigation"
 msgid "Unvisited Links"
 msgstr "Nenavštívené odkazy"
@@ -3951,7 +3956,7 @@ msgstr "Nenavštívené odkazy"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:586
+#: ../src/orca/guilabels.py:578
 msgctxt "structural navigation"
 msgid "Visited Links"
 msgstr "Navštívené odkazy"
@@ -3959,14 +3964,14 @@ msgstr "Navštívené odkazy"
 #. Translators: This is the title of a panel holding options for how to navigate
 #. HTML content (e.g., Orca caret navigation, positioning of caret, structural
 #. navigation, etc.).
-#: ../src/orca/guilabels.py:591
+#: ../src/orca/guilabels.py:583
 msgid "Page Navigation"
 msgstr "Navigace na stránce"
 
 #. Translators: When the user loads a new web page, they can optionally have Orca
 #. automatically start reading the page from beginning to end. This is the label
 #. of a checkbox in which users can indicate their preference.
-#: ../src/orca/guilabels.py:597
+#: ../src/orca/guilabels.py:589
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "Auto_maticky číst stránku po jejím prvním načtení"
 
@@ -3977,7 +3982,7 @@ msgstr "Auto_maticky číst stránku po jejím prvním načtení"
 #. queued up and sent to the speech synthesis system once the entire set of
 #. utterances has been calculated.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: ../src/orca/guilabels.py:605 ../src/orca/orca-setup.ui.h:48
+#: ../src/orca/guilabels.py:597 ../src/orca/orca-setup.ui.h:48
 msgid "Break speech into ch_unks between pauses"
 msgstr "Rozdělovat projev na části podle pa_uz"
 
@@ -3987,21 +3992,21 @@ msgstr "Rozdělovat projev na části podle pa_uz"
 #. to the default voice configured for given speech engine within the speech
 #. subsystem. Apart from this item, the list will contain the names of all
 #. available "real" voices provided by the speech engine.
-#: ../src/orca/guilabels.py:613
+#: ../src/orca/guilabels.py:605
 #, python-format
 msgid "%s default voice"
 msgstr "výchozí hlas %s"
 
 #. Translators: This refers to the voice used by Orca when presenting the content
 #. of the screen and other messages.
-#: ../src/orca/guilabels.py:617
+#: ../src/orca/guilabels.py:609
 msgctxt "VoiceType"
 msgid "Default"
 msgstr "Výchozí"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is part of a hyperlink.
-#: ../src/orca/guilabels.py:621
+#: ../src/orca/guilabels.py:613
 msgctxt "VoiceType"
 msgid "Hyperlink"
 msgstr "Odkaz"
@@ -4012,27 +4017,27 @@ msgstr "Odkaz"
 #. indicate the presence of the red squiggly line found under a spelling error;
 #. Orca might say "3 of 6" when a user Tabs into a list of six items and the
 #. third item is selected. And so on.
-#: ../src/orca/guilabels.py:629
+#: ../src/orca/guilabels.py:621
 msgctxt "VoiceType"
 msgid "System"
 msgstr "Systém"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is written in uppercase.
-#: ../src/orca/guilabels.py:633
+#: ../src/orca/guilabels.py:625
 msgctxt "VoiceType"
 msgid "Uppercase"
 msgstr "Velká písmena"
 
 #. Translators this label refers to the name of particular speech synthesis
 #. system. (http://devel.freebsoft.org/speechd)
-#: ../src/orca/guilabels.py:637
+#: ../src/orca/guilabels.py:629
 msgid "Speech Dispatcher"
 msgstr "Speech Dispatcher"
 
 #. Translators: This is a label for a group of options related to Orca's behavior
 #. when presenting an application's spell check dialog.
-#: ../src/orca/guilabels.py:641
+#: ../src/orca/guilabels.py:633
 msgctxt "OptionGroup"
 msgid "Spell Check"
 msgstr "Kontrola pravopisu"
@@ -4041,7 +4046,7 @@ msgstr "Kontrola pravopisu"
 #. When this option is enabled, Orca will spell out the current error in addition
 #. to speaking it. For example, if the misspelled word is "foo," enabling this
 #. setting would cause Orca to speak "f o o" after speaking "foo".
-#: ../src/orca/guilabels.py:647
+#: ../src/orca/guilabels.py:639
 msgid "Spell _error"
 msgstr "H_láskovat chyby"
 
@@ -4050,39 +4055,39 @@ msgstr "H_láskovat chyby"
 #. addition to speaking it. For example, if the misspelled word is "foo," and
 #. the first suggestion is "for" enabling this setting would cause Orca to speak
 #. "f o r" after speaking "for".
-#: ../src/orca/guilabels.py:654
+#: ../src/orca/guilabels.py:646
 msgid "Spell _suggestion"
 msgstr "Hlá_skovat doporučení"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will present the context (surrounding text,
 #. typically the sentence or line) in which the mistake occurred.
-#: ../src/orca/guilabels.py:659
+#: ../src/orca/guilabels.py:651
 msgid "Present _context of error"
 msgstr "Prezentovat _kontext chyby"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spread sheet cell. Coordinates are
 #. the row and column position within the spread sheet (i.e. A1, B1, C2 ...)
-#: ../src/orca/guilabels.py:664
+#: ../src/orca/guilabels.py:656
 msgid "Speak spread sheet cell coordinates"
 msgstr "Číst souřadnice buněk v sešitě"
 
 #. Translators: This is a label for an option for whether or not to speak the
 #. header of a table cell in document content.
-#: ../src/orca/guilabels.py:668
+#: ../src/orca/guilabels.py:660
 msgid "Announce cell _header"
 msgstr "O_znamovat záhlaví buňky"
 
 #. Translators: This is the title of a panel containing options for specifying
 #. how to navigate tables in document content.
-#: ../src/orca/guilabels.py:672
+#: ../src/orca/guilabels.py:664
 msgid "Table Navigation"
 msgstr "Navigace v tabulce"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
-#: ../src/orca/guilabels.py:676
+#: ../src/orca/guilabels.py:668
 msgid "Skip _blank cells"
 msgstr "Přeskakovat prázdné _buňky"
 
@@ -4090,26 +4095,26 @@ msgstr "Přeskakovat prázdné _buňky"
 #. row of a table read; other times they want just the current cell presented to
 #. them. This label is associated with the default presentation to be used.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/guilabels.py:681 ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/guilabels.py:673 ../src/orca/orca-setup.ui.h:60
 msgid "Speak _cell"
 msgstr "Číst _buňku"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
-#: ../src/orca/guilabels.py:685
+#: ../src/orca/guilabels.py:677
 msgid "Speak _cell coordinates"
 msgstr "Čís_t souřadnice buňky"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many rows and columns
 #. a particular table cell spans in a table).
-#: ../src/orca/guilabels.py:690
+#: ../src/orca/guilabels.py:682
 msgid "Speak _multiple cell spans"
 msgstr "Číst _sloučené buňky"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
-#: ../src/orca/guilabels.py:694
+#: ../src/orca/guilabels.py:686
 msgid "Attribute Name"
 msgstr "Název atributu"
 
@@ -4118,20 +4123,20 @@ msgstr "Název atributu"
 #. Orca needs to provide its own support. As such, Orca offers the user the
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:701
+#: ../src/orca/guilabels.py:693
 msgid "Control caret navigation"
 msgstr "Ovládat pohyb kurzoru"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:706
+#: ../src/orca/guilabels.py:698
 msgid "Enable _structural navigation"
 msgstr "Povolit _strukturální navigaci"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: ../src/orca/guilabels.py:710 ../src/orca/orca-setup.ui.h:56
+#: ../src/orca/guilabels.py:702 ../src/orca/orca-setup.ui.h:56
 msgid "Brie_f"
 msgstr "_Stručný"
 
@@ -6367,7 +6372,7 @@ msgstr "Hlasový výstup je nedostupný!"
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3779
+#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3705
 msgid "string not found"
 msgstr "nic nebylo nalezeno"
 
@@ -7545,13 +7550,6 @@ msgstr ""
 "tomáš, v : vojtěch, w : waldemar, x : iks, y : ypsilon, z : zuzana, ě : e s "
 "háčkem, š : šimon, č : čeněk, ř : řehole, ž : žito"
 
-#. Translators: this in reference to an e-mail message
-#. status of having been read or unread.
-#.
-#: ../src/orca/scripts/apps/evolution/speech_generator.py:136
-msgid "Read"
-msgstr "Čtení"
-
 #: ../src/orca/scripts/apps/gnome-mud/script.py:119
 msgid "Read the latest n messages in the incoming messages text area."
 msgstr "Přečíst posledních n zpráv v okně příchozích zpráv"
@@ -7595,7 +7593,7 @@ msgstr "Kontrola pravopisu"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3396 ../src/orca/scripts/default.py:3408
+#: ../src/orca/scripts/default.py:3322 ../src/orca/scripts/default.py:3334
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7605,7 +7603,7 @@ msgstr[2] "%(key)s %(value)s pixelů"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4205
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4213
 msgid "open"
 msgstr "otevřít"
 
