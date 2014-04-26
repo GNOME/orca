@@ -115,7 +115,7 @@ class Script(gtk.Script):
         """Callback for object:text-caret-moved accessibility events."""
 
         obj = event.source
-        if obj.getRole() == pyatspi.ROLE_PAGE:
+        if obj.getState().contains(pyatspi.STATE_FOCUSED):
             orca.setLocusOfFocus(event, event.source, False)
 
         gtk.Script.onCaretMoved(self, event)
