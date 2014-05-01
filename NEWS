@@ -1,3 +1,144 @@
+3.13.1 - 1 May 2014
+
+General:
+
+  * Update the locusOfFocus when when caret moves in a focused object
+    in Evince
+
+  * Ensure we don't use structural navigation in editable messages
+    in Thunderbird
+
+  * Use the Gecko script's useCaretNavigationModel() in Thunderbird
+
+  * Present the replaced obj char for apps which lack AtkHyperlinkImpl
+    support
+
+  * Fix a couple of issues related to composing HTML messages in
+    Thunderbird
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                       Marek Černocký
+    el            Greek                       Dimitris Spingos
+    pt_BR         Brazilian Portuguese        Enrico Nicoletto
+
+=========
+
+3.12.1 - 15 April 2014
+
+General:
+
+  * Update documentation
+
+  * Clear saved page-loading state when Gecko script is deactivated
+
+  * Add support for ROLE_PAGE now that Evince uses it
+
+  * Prefer the name of a button, even if it implements AtkText
+
+  * Eliminate a false positive identifying selected text with caret-moved
+    events
+
+  * Fix presentation of caret-moved events for Firefox's autocompletes
+
+  * Add an explicit check for KP_0 as the Orca Modifier plus Shift
+
+  * Eliminate some chattiness presenting combo boxes
+
+  * Don't treat the root label as an unrelated label
+
+  * Handle yet another case of missing object:state-changed:focused
+    events for Gtk+
+
+  * Filter out some superfluous name-changed events from Gtk+ apps
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    el            Greek                       Maria Thukididu
+    es            Spanish                     Daniel Mustieles
+    eu            Basque                      Inaki Larranaga Murgoitio
+    hu            Hungarian                   Attila Hammer
+    sl            Slovenian                   Matej Urbančič
+    sk            Slovak                      Peter Vágner
+
+=========
+
+3.12.0 - 24 March 2014
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    an            Aragonese                   Jorge Pérez Pérez
+    da            Danish                      Ask H. Larsen
+    eu            Basque                      Inaki Larranaga Murgoitio
+    fi            Finnish                     Jiri Grönroos
+    id            Indonesian                  Andika Triwidada
+    it            Italian                     Milo Casagrande
+
+=========
+
+3.11.92 - 18 March 2014
+
+General:
+
+  * Filter out a number of extraneous/unwanted accessibility events from
+    Evolution
+
+  * Eliminate some text-selection and typeahead search "chattiness"
+
+  * Generate ancestors for new dialogs even if there is no prior focused
+    object
+
+  * Fix for bug 726395 - Sometimes flat review presents non-localized
+    rolenames
+
+  * Ignore bogus focus claims from LibreOffice fillers and panels
+
+  * Add support for non-modal GtkPopover
+
+  * Use explicit keyword rather than positional argument for GSettings
+    schema id
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca            Catalan                Pau Iranzo
+    fr            French                 Julien Hardelin, Claude Paroz,
+                                         Alexandre Franke
+    lv            Latvian                Rūdolfs Mazurs
+    nb            Norwegian bokmål       Kjartan Maraas
+    pl            Polish                 Paweł Żołnowski
+    pt            Portuguese             Duarte Loreto
+    ru            Russian                Yuri Myasoedov
+    sr            Serbian                Мирослав Николић
+    sr@latin      Serbian                Miroslav Nikolić
+    uk            Ukranian               Daniel Korostil
+    zh_CN         Chinese (China)        Wylmer Wang
+
+=========
+
+3.11.91 - 4 March 2014
+
+General:
+
+  * Remove the isTextArea check from sayAll
+
+  * Work around several additional missing state-changed:focused events
+
+  * More tweaking of the new spellcheck support
+
+  * Add support for structural navigation by link regardless of visited
+    state
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                       Marek Černocký
+    es            Spanish                     Daniel Mustieles
+    gl            Galician                    Fran Diéguez
+    hu            Hungarian                   Attila Hammer
+    lt            Lithuanian                  Aurimas Černius
+    pt_BR         Brazilian Portuguese        Enrico Nicoletto
+
+=========
+
 3.11.90 - 18 February 2014
 
 General:

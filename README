@@ -1,4 +1,4 @@
-Orca v3.13.1pre
+Orca v3.13.1
 
 Introduction
 ========================================================================
@@ -60,8 +60,7 @@ installed by running the following command:
 
 python -c "import brlapi"
 
-If you get the following error, the Python bindings for BrlAPI are not
-installed.
+If you get an error, the Python bindings for BrlAPI are not installed.
 
 See also http://wiki.gnome.org/Projects/Orca/Braille for more information on
 BrlTTY and also using liblouis for contracted braille.
