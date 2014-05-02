@@ -63,10 +63,7 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
-        self.savedEnabledBrailledTextAttributes = None
-        self.savedEnabledSpokenTextAttributes = None
         self.speakSpreadsheetCoordinatesCheckButton = None
-        self.savedreadTableCellRow = None
         self.skipBlankCellsCheckButton = None
         self.speakCellCoordinatesCheckButton = None
         self.speakCellHeadersCheckButton = None
@@ -89,49 +86,6 @@ class Script(default.Script):
         self.lastBadWord = ''
         self.lastStartOff = -1
         self.lastEndOff = -1
-
-    def activate(self):
-        """Called when this script is activated."""
-        self.savedreadTableCellRow = \
-            _settingsManager.getSetting('readTableCellRow')
-        _settingsManager.setSetting('readTableCellRow', False)
-
-        self.savedEnabledBrailledTextAttributes = \
-            _settingsManager.getSetting('enabledBrailledTextAttributes')
-
-        self.savedEnabledSpokenTextAttributes = \
-            _settingsManager.getSetting('enabledSpokenTextAttributes')
-
-        # Account for the differences in how OOo expresses indent,
-        # strikethrough, and margins.
-        #
-        attributes = _settingsManager.getSetting('allTextAttributes')
-        attributes.replace("margin:;", "margin:0mm;")
-        _settingsManager.setSetting('allTextAttributes', attributes)
-
-        attributes = \
-            _settingsManager.getSetting('enabledBrailledTextAttributes')
-        attributes.replace("strikethrough:false;", "strikethrough:none;")
-        attributes.replace("indent:0;", "indent:0mm;")
-        _settingsManager.setSetting('enabledBrailledTextAttributes', attributes)
-
-        attributes = _settingsManager.getSetting('enabledSpokenTextAttributes')
-        attributes.replace("strikethrough:false;", "strikethrough:none;")
-        attributes.replace("indent:0;", "indent:0mm;")
-        _settingsManager.setSetting('enabledSpokenTextAttributes', attributes)
-
-        default.Script.activate(self)
-
-    def deactivate(self):
-        """Called when this script is deactivated."""
-        _settingsManager.setSetting('readTableCellRow',
-                                    self.savedreadTableCellRow)
-        _settingsManager.setSetting('enabledBrailledTextAttributes',
-                                    self.savedEnabledBrailledTextAttributes)
-        _settingsManager.setSetting('enabledSpokenTextAttributes',
-                                    self.savedEnabledSpokenTextAttributes)
-
-        default.Script.activate(self)
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
