@@ -1307,11 +1307,15 @@ class Script(script.Script):
             # Always include size and family-name. For the others, if the
             # value is the default, then ignore it.
             #
+            nullValues = ['0', '0mm', 'none', 'false']
             attributes = {}
             for key in userAttrList:
                 if key in allAttributes:
                     textAttr = allAttributes.get(key)
                     userAttr = userAttrDict.get(key)
+                    if textAttr in nullValues and userAttr in nullValues:
+                        continue
+
                     if textAttr != userAttr or len(userAttr) == 0:
                         attributes[key] = textAttr
 
