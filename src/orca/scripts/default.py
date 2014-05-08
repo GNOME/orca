@@ -3501,8 +3501,7 @@ class Script(script.Script):
             self.sayCharacter(obj)
 
     def sayWord(self, obj):
-        """Speaks the word at the caret.  [[[TODO: WDW - what if there is no
-        word at the caret?]]]
+        """Speaks the word at the caret.
 
         Arguments:
         - obj: an Accessible object that implements the AccessibleText
@@ -3517,6 +3516,10 @@ class Script(script.Script):
         [word, startOffset, endOffset] = \
             text.getTextAtOffset(offset,
                                  pyatspi.TEXT_BOUNDARY_WORD_START)
+
+        if not word:
+            self.sayCharacter(obj)
+            return
 
         # Speak a newline if a control-right-arrow or control-left-arrow
         # was used to cross a line boundary. Handling is different for
