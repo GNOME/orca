@@ -896,12 +896,21 @@ class Script(default.Script):
         if event.source.getRoleName() == 'text frame':
             return
 
-        ignoreRoles = [pyatspi.ROLE_FILLER, pyatspi.ROLE_PANEL]
-        if event.source.getRole() in ignoreRoles:
-            return
-
         parent = event.source.parent
         if parent and parent.getRoleName() == 'text frame':
+            return
+
+        if parent and parent.getRole() == pyatspi.ROLE_TOOL_BAR:
+            default.Script.onFocusedChanged(self, event)
+            return
+
+        role = event.source.getRole()
+        ignoreRoles = [pyatspi.ROLE_FILLER, pyatspi.ROLE_PANEL]
+        if role in ignoreRoles:
+            return
+
+        # We will present this when the selection changes.
+        if role == pyatspi.ROLE_MENU:
             return
 
         obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
@@ -913,7 +922,7 @@ class Script(default.Script):
         if self.utilities._flowsFromOrToSelection(event.source):
             return
 
-        if event.source.getRole() == pyatspi.ROLE_PARAGRAPH:
+        if role == pyatspi.ROLE_PARAGRAPH:
             keyString, mods = self.utilities.lastKeyAndModifiers()
             if keyString in ["Left", "Right"]:
                 orca.setLocusOfFocus(event, event.source, False)
@@ -987,10 +996,12 @@ class Script(default.Script):
             x = orca_state.lastInputEvent.x
             y = orca_state.lastInputEvent.y
             weToggledIt = obj.queryComponent().contains(x, y, 0)
+        elif obj.getState().contains(pyatspi.STATE_FOCUSED):
+            weToggledIt = True
         else:
             keyString, mods = self.utilities.lastKeyAndModifiers()
             navKeys = ["Up", "Down", "Left", "Right", "Page_Up", "Page_Down",
-                       "Home", "End"]
+                       "Home", "End", "N"]
             wasCommand = mods & settings.COMMAND_MODIFIER_MASK
             weToggledIt = wasCommand and keyString not in navKeys
         if weToggledIt:

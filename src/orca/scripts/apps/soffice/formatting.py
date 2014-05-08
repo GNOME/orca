@@ -68,10 +68,6 @@ formatting = {
             },
     },
     'braille': {
-        pyatspi.ROLE_LABEL: {
-            'unfocused': '[Text(obj,asString((label or name)))]',
-            'focused': '[Text(obj,asString((label or name)))]'
-            },
         pyatspi.ROLE_LIST: {
             'unfocused': '[Component(obj,\
                                      asString(labelOrName + roleName + required))]'

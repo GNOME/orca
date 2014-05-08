@@ -435,9 +435,7 @@ formatting = {
                                      asString(labelAndName + value + roleName + required))]',
             },
         pyatspi.ROLE_LABEL: {
-            'unfocused': '[Text(obj,\
-                                asString(label),\
-                                asString(eol))]'
+            'unfocused': '[Text(obj, asString(label))]'
             },
         pyatspi.ROLE_LINK: {
             'unfocused': '[Link(obj, asString(currentLineText)\
