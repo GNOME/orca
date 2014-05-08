@@ -913,6 +913,12 @@ class Script(default.Script):
         if self.utilities._flowsFromOrToSelection(event.source):
             return
 
+        if event.source.getRole() == pyatspi.ROLE_PARAGRAPH:
+            keyString, mods = self.utilities.lastKeyAndModifiers()
+            if keyString in ["Left", "Right"]:
+                orca.setLocusOfFocus(event, event.source, False)
+                return
+
         # We should present this in response to active-descendant-changed events
         if event.source.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS):
             return
