@@ -491,10 +491,10 @@ class Generator:
         args['stringType'] = 'checkbox'
         indicators = self._script.formatting.getString(**args)
         state = obj.getState()
-        if state.contains(pyatspi.STATE_INDETERMINATE):
-            result.append(indicators[2])
-        elif state.contains(pyatspi.STATE_CHECKED):
+        if state.contains(pyatspi.STATE_CHECKED):
             result.append(indicators[1])
+        elif state.contains(pyatspi.STATE_INDETERMINATE):
+            result.append(indicators[2])
         else:
             result.append(indicators[0])
         return result
