@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2014-04-08 23:00+0000\n"
-"PO-Revision-Date: 2014-04-09 11:32+0200\n"
+"POT-Creation-Date: 2014-05-08 11:52+0000\n"
+"PO-Revision-Date: 2014-05-10 19:22+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Gtranslator 2.91.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Screen Reader"
@@ -911,7 +911,7 @@ msgstr "copyright"
 #.
 #: ../src/orca/chnames.py:220
 msgid "superscript a"
-msgstr "a sobreescrita"
+msgstr "a sobrescrita"
 
 #. Translators: this is the spoken word for the character '«' (U+00ab)
 #.
@@ -1855,6 +1855,23 @@ msgstr "cierra paréntesis subíndice"
 #: ../src/orca/chnames.py:848
 msgid "right-pointing arrowhead"
 msgstr "flecha apuntando hacia la derecha"
+
+#. Translators: This refers to U+FFFC, the "object replacement character."
+#. This character appears in the accessible text of documents and serves as
+#. indication of the presence of an object within the text (e.g. an image
+#. or form field inside a paragraph). In an application which has full
+#. accessibility support for embedded objects, Orca should present the object
+#. and NOT speak this character. However, for applications where this support
+#. is missing, the user can arrow to this character and Orca should not be
+#. silent. This string is what Orca will speak to the user should this occur.
+#. More information about this character can be found at:
+#. * http://www.fileformat.info/info/unicode/char/fffc/index.htm
+#. * http://en.wikipedia.org/wiki/Specials_(Unicode_block)
+#.
+#: ../src/orca/chnames.py:874
+#| msgid "Goes to next character."
+msgid "object replacement character"
+msgstr "carácter de reemplazo de objeto"
 
 #. Translators: this command will move the mouse pointer to the current item
 #. without clicking on it.
@@ -2962,13 +2979,11 @@ msgstr "Muestra una lista de objetos grandes."
 
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:853
-#| msgid "Goes to previous line."
 msgid "Goes to previous link."
 msgstr "Va al enlace anterior."
 
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:856
-#| msgid "Goes to next line."
 msgid "Goes to next link."
 msgstr "Va al siguiente enlace."
 
@@ -6374,7 +6389,7 @@ msgstr "La voz no está disponible."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3705
+#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3709
 msgid "string not found"
 msgstr "cadena no encontrada"
 
@@ -7565,7 +7580,7 @@ msgstr "Corregir ortografía"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3322 ../src/orca/scripts/default.py:3334
+#: ../src/orca/scripts/default.py:3326 ../src/orca/scripts/default.py:3338
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7574,7 +7589,7 @@ msgstr[1] "%(key)s %(value)s píxeles"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4207
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4213
 msgid "open"
 msgstr "abrir"
 
