@@ -6,3 +6,5 @@ utils.pyc
 *.speech
 *.braille
 *.out
+app-settings
+orca-scripts

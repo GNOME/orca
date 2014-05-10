@@ -84,15 +84,10 @@ else
    fi
 fi
 
-# FIXME(LMS): Temporary hack to tell OpenOffice Writer and Calc
-# to not attempt to recover edited files after a crash. There
-# should be a general way specify command line arguments when
-# starting test applications.
-#
 if [ "$APP_NAME" == "swriter" ] || [ "$APP_NAME" == "oowriter" ] || [ "$APP_NAME" == "scalc" ] || [ "$APP_NAME" == "oocalc" ] || [ "$APP_NAME" == "simpress" ] || [ "$APP_NAME" == "ooimpress" ] || [ "$APP_NAME" == "sbase" ] || [ "$APP_NAME" == "oobase" ] || [ "$APP_NAME" == "soffice" ] || [ "$APP_NAME" == "ooffice" ]
 then
     SOFFICE=1
-    ARGS="-norestore"
+    ARGS="--norestore --nologo"
 fi
 
 # If we're using Firefox, give it a known profile to work from.
@@ -145,6 +140,7 @@ fi
 if [ "x$SOFFICE" == "x1" ]
 then
     APP_PID=$(ps -eo pid,ruid,args | grep norestore | grep -v grep | awk '{ print $1 }')
+    kill $APP_PID > /dev/null 2>&1
 fi
 
 if [ "$APP_NAME" == "epiphany" ]

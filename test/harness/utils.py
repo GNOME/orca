@@ -1,9 +1,12 @@
-"""Utilities that can be imported by tests.  You need to make
-sure your PYTHONPATH includes the directory containing this
-file in order for the tests that use it to work.  The test
-harness does that automatically for you."""
+"""Utilities that can be used by tests."""
+
+import difflib
+import re
+import sys
 
 from gi.repository import Gio
+from macaroon.playback import *
+
 testLogger = Gio.DBusProxy.new_for_bus_sync(
     Gio.BusType.SESSION,
     Gio.DBusProxyFlags.NONE,
@@ -12,67 +15,6 @@ testLogger = Gio.DBusProxy.new_for_bus_sync(
     '/org/gnome/Orca',
     'org.gnome.Orca.Logger',
     None)
-
-# Where to find Dojo tests.
-#
-DojoNightlyURLPrefix="http://archive.dojotoolkit.org/nightly/dojotoolkit/dijit/tests/"
-#DojoURLPrefix="http://localhost/apache2-default/dojo-release-1.1.0b2/dijit/tests/"
-#DojoURLPrefix="http://bashautomation.com/dojo-release-1.1.0b2/dijit/tests/"
-DojoJuly09URLPrefix="http://archive.dojotoolkit.org/dojo-2009-08-05/dojotoolkit/dijit/tests/"
-DojoURLPrefix=DojoJuly09URLPrefix
-
-# Where to find our local HTML tests.
-#
-import sys, os, re
-wd = os.path.dirname(sys.argv[0])
-fullPath = os.path.abspath(wd)
-htmlDir = os.path.abspath(fullPath + "/../../html")
-htmlURLPrefix = "file://" + htmlDir + "/"
-
-# Various Firefox names as a regex.  These are needed because they like
-# to do various things with the app and frame names from release to release. 
-# These regex's attempt to provide a way to manage those differences.
-#
-firefoxAppNames = "(Firefox|Minefield|Namoroka)"
-firefoxFrameNames = "(Mozilla Firefox|Mozilla Firefox 4.0(| Beta [0-9](|pre))|Minefield|Namoroka)"
-firefoxLocationBarNames = "(Location|Search Bookmarks and History)"
-
-# Various OpenOffice names as a regex.  These are needed because OOo likes
-# to do various things with its window titles from release to release. 
-# These regex's attempt to provide a way to manage those differences.
-#
-OOoWriterNames = "(StarOffice Writer|OpenOffice.org Writer|OOo-dev Writer Beta)"
-
-#OOO_VERSION="Release"
-#OOO_VERSION="Beta"
-OOO_VERSION="Dev"
-
-def getOOoName(app):
-    if OOO_VERSION == "Release":
-        return "OpenOffice.org %s" % app
-    elif OOO_VERSION == "Beta":
-        return "OOo-dev %s Beta" % app
-    elif OOO_VERSION == "Dev":
-        return "OOo-dev %s" % app
-        
-def getOOoBrailleLine(app, title, remainder):
-    if OOO_VERSION == "Release":
-        return "soffice Application " + title + " - OpenOffice.org " + app + " Frame " +  title + " - OpenOffice.org " + app + " RootPane ScrollPane Document view " + remainder
-    elif OOO_VERSION == "Beta":
-        return "soffice Application " + title + " - OOo-dev " + app + " Beta Frame " +  title + " - OOo-dev " + app + " Beta RootPane ScrollPane Document view " + remainder
-    elif OOO_VERSION == "Dev":
-        return "soffice Application " + title + " - OOo-dev " + app + " Frame " +  title + " - OOo-dev " + app + " RootPane ScrollPane Document view " + remainder
-
-createDiffs = True
-try:
-    # If the difflib module is not found, fall back to generating the
-    # old-style EXPECTED/ACTUAL output.
-    #
-    import difflib
-except:
-    createDiffs = False
-
-from macaroon.playback import *
 
 enable_assert = \
     environ.get('HARNESS_ASSERT', 'yes') in ('yes', 'true', 'y', '1', 1)
@@ -146,7 +88,7 @@ class AssertPresentationAction(AtomicAction):
     totalFail = 0
     totalKnownIssues = 0
 
-    def __init__(self, name, expectedResults, 
+    def __init__(self, name, expectedResults,
                  assertionPredicate=assertListEquality):
         '''name:               the name of the test
            expectedResults:    the results we want (typically a list of strings
@@ -212,56 +154,23 @@ class AssertPresentationAction(AtomicAction):
 
         return knownIssue
 
-    def printResults(self, results):
-        """Print out the expected results and the actual results.
-
-        Arguments:
-        - results: the actual results.
-
-        Returns an indication of whether this test was expected to fail.
-        """
-
-        knownIssue = False
-        print("EXPECTED:", file=myErr)
-        if isinstance(self._expectedResults, [].__class__):
-            for result in self._expectedResults:
-                if result.startswith("KNOWN ISSUE") \
-                        or result.startswith("BUG?"):
-                    knownIssue = True
-                print('     "%s",' % result, file=myErr)
-        else:
-            if self._expectedResults.startswith("KNOWN ISSUE") \
-               or self._expectedResults.startswith("BUG?"):
-                knownIssue = True
-            print('     "%s"' % self._expectedResults, file=myErr)
-        print("ACTUAL:", file=myErr)
-        if isinstance(results, [].__class__):
-            for result in results:
-                print('     "%s",' % result, file=myErr)
-        else:
-            print('     "%s"' % results, file=myErr)
-        return knownIssue
-
     def _stopRecording(self):
         result = testLogger.stopRecording()
         results = self._assertionPredicate(result, self._expectedResults)
         if not results:
             AssertPresentationAction.totalSucceed += 1
             print("Test %d of %d SUCCEEDED: %s" \
-                            % (self._num, 
-                               AssertPresentationAction.totalCount, 
+                            % (self._num,
+                               AssertPresentationAction.totalCount,
                                self._name), file=myOut)
         else:
             AssertPresentationAction.totalFail += 1
             print("Test %d of %d FAILED: %s" \
-                            % (self._num, 
-                               AssertPresentationAction.totalCount, 
+                            % (self._num,
+                               AssertPresentationAction.totalCount,
                                self._name), file=myErr)
-            if createDiffs:
-                knownIssue = self.printDiffs(results)
-            else:
-                knownIssue = self.printResults(results)
 
+            knownIssue = self.printDiffs(results)
             if knownIssue:
                 AssertPresentationAction.totalKnownIssues += 1
                 print('[FAILURE WAS EXPECTED - ' \
@@ -274,7 +183,7 @@ class AssertPresentationAction(AtomicAction):
         return 'Assert Presentation Action: %s' % self._name
 
 class AssertionSummaryAction(AtomicAction):
-    '''Output the summary of successes and failures of 
+    '''Output the summary of successes and failures of
     AssertPresentationAction assertions.'''
 
     def __init__(self):
@@ -291,4 +200,3 @@ class AssertionSummaryAction(AtomicAction):
 
     def __str__(self):
         return 'Start Recording Action'
-
