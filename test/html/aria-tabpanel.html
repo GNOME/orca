@@ -1,0 +1,263 @@
+<html>
+<head>
+<title>Tabbed UI</title>
+<style type="text/css">
+.tab {
+  color: navy;
+  background-color: lightgrey;
+  border: thin solid navy;
+  text-align: center;
+  font: 9pt Verdana,sans-serif;
+  padding: 4px;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+.tabActive {
+  color:black;
+  font-weight:bold;
+  border:thin dashed black;
+  background-color: beige;
+  border-bottom: thin solid beige;
+  border-left: thin solid navy;
+  border-top: thin solid navy;
+  border-right: thin solid navy;
+}
+
+div[aria-hidden="true"] { display: none; }
+
+.panel {
+  position: relative;
+  top: 3px;
+  background-color: beige;
+  color: navy;
+  width: 95%;
+  height: 85%;
+  font: 12pt Verdana,sans-serif;
+  border: thin solid navy;
+  padding: 10px;
+  overflow: auto;
+}
+
+</style>
+
+<script>
+<!--
+// global to store the item to be focused
+gFocusItem = null;
+
+function doFocus()
+{
+    if (gFocusItem != null) {
+      gFocusItem.focus();
+      gFocusItem=null;
+    }
+}
+
+var KEY_UP = 38;
+var KEY_DOWN = 40;
+var KEY_LEFT = 37;
+var KEY_RIGHT = 39;
+var KEY_ESCAPE = 27;
+var KEY_M = 77;
+var KEY_F10 = 121;
+var KEY_SPACE = 32;
+var KEY_TAB = 9;
+var KEY_PAGEUP = 33;
+var KEY_PAGEDOWN = 34;
+
+// globals to store current tab information
+var gCurrentTabNum = -1;
+var gNumTabs = 5;
+
+function selectTab(nextTabNum)
+{
+  var newTab = document.getElementById("tab" + nextTabNum);
+  gFocusItem = newTab;
+  setTimeout("doFocus()", 0);
+}
+
+function doNavigation(event)
+{
+  var key = event.keyCode; //alert(key);
+  var bEventContinue = true;
+  var nextTabNum;
+  var bDoNextTab = true;  // requires less code if init to true
+  var bCtrlKey = event.ctrlKey;
+  var bAltKey = event.altKey;
+  var direction = 0;
+  var bCycle = false;
+  if ((key == KEY_LEFT || key == KEY_RIGHT) && !bAltKey) {
+    bCycle = false;
+    bEventContinue = false;
+    if (key == KEY_RIGHT) {
+      direction = 1;
+    }
+    else if (key == KEY_LEFT) {
+      direction = -1;
+    }
+  }
+  else if (bCtrlKey && event.shiftKey) {
+    bCycle = true;  //ctrl-shift-pageup, ctrl-shift-pagedown,
+    switch (key) {
+    case KEY_PAGEUP:
+      direction = -1;
+      break;
+    case KEY_PAGEDOWN:
+      direction = 1;
+      break;
+    default:
+      bDoNextTab = false;
+      break;
+    } // end switch
+  } // end of if ctrlKey and shiftKey
+  else {
+    // not a key we care about
+    bDoNextTab = false;
+  }
+
+  if (bDoNextTab == true) {
+    if (direction > 0) {
+      nextTabNum = gCurrentTabNum + 1;
+    }
+    else if  (direction < 0) {
+      nextTabNum = gCurrentTabNum -1;
+    }
+    if (nextTabNum == gNumTabs && bCycle == true) {
+      nextTabNum = 0;
+    }
+    else if (nextTabNum < 0 && bCycle == true) {
+      nextTabNum = gNumTabs -1;
+    }
+    else if ((nextTabNum == gNumTabs || nextTabNum < 0) && bCycle == false)  {
+      bDoNextTab = false; // do nothing
+    }
+    // test again - last section may have changed value of bDoNextTab
+    if (bDoNextTab == true)  {
+      selectTab(nextTabNum);
+    }
+  }
+
+  return bEventContinue;
+}
+
+function handleFocus(event)
+{
+  var newTab = event.target;
+  if (newTab.getAttribute("role") != "tab")
+    return;
+
+  newTabNum = parseInt(newTab.id.charAt(3));
+  if (newTabNum == gCurrentTabNum)
+    return;
+
+  if (gCurrentTabNum >= 0) {
+    var curTab = document.getElementById("tab" + gCurrentTabNum);
+    var curPanel = document.getElementById("panel" + gCurrentTabNum);
+    curPanel.setAttribute("aria-hidden", "true");
+    curPanel.className += ""; // Force refresh of attribute selectors
+    curTab.setAttribute("class", "tab");
+    curTab.tabIndex = "-1";
+  }
+
+  var newTab = document.getElementById("tab" + newTabNum);
+  var newPanel = document.getElementById("panel" + newTabNum);
+  newPanel.removeAttribute("aria-hidden");
+  newPanel.className += ""; // Force refresh of attribute selectors
+  newTab.setAttribute("class", "tab tabActive");
+  newTab.tabIndex = "0";
+
+  gCurrentTabNum = newTabNum;
+}
+
+-->
+</script>
+<style type="text/css"></style></head>
+<body onload="selectTab(0);">
+<div role="tablist" onkeydown="return doNavigation(event);">
+  <span id="tab0" tabindex="0" class="tab tabActive" role="tab" onclick="selectTab(0);" onfocus="handleFocus(event);">
+    Tab Zero
+  </span>
+  <span id="tab1" tabindex="-1" class="tab" role="tab" onclick="selectTab(1);" onfocus="handleFocus(event);">
+    Tab One
+  </span>
+  <span id="tab2" tabindex="-1" class="tab" role="tab" onclick="selectTab(2);" onfocus="handleFocus(event);">
+    Tab Two
+  </span>
+  <span id="tab3" tabindex="-1" class="tab" role="tab" onclick="selectTab(3);" onfocus="handleFocus(event);">
+    Tab Three
+  </span>
+  <span id="tab4" tabindex="-1" class="tab" role="tab" onclick="selectTab(4);" onfocus="handleFocus(event);">
+    Tab Four
+  </span>
+</div>
+
+<div id="tabpanels" role="presentation">
+  <div id="panel0" class="panel" tabindex="-1" role="tabpanel" aria-labelledby="tab0">
+    <span>Panel 0</span>
+    <p>This example requires Firefox 3 or later to work with screen readers -- it
+       uses ARIA properties without namespaces, which is now the correct
+       markup.</p>
+    <div>Use tab key to reach the tab. Once a tab has focus use:
+      <ul>
+        <li>left and right arrows to move from tab to tab. Panel is made visible when
+            tab gets focus. Arrow keys do not cycle around the tabs</li>
+        <li>ctrl-left and ctrl-right arrows behave the same as left and right arrows</li>
+        <li>ctrl-shift-pageup / ctrl-shift-pagedown is the same as left and right arrows but WILL
+            cycle around the tab order (shift was added as a modifier so as not to
+            conflict with the Firefox tabbing keys)</li>
+        <li>Ctrl-shift-tab /ctrl-tab are not implemented since these keys conflict with browser tab switching keys.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="panel1" class="panel" tabindex="-1" role="tabpanel" aria-hidden="true" aria-labelledby="tab1">
+    <span>Panel 1</span>
+    <div>Some fields on the panel </div>
+    <div>
+      <p>Enter month and year: <label for="month">Select Month</label>
+      <select id="month">
+      <option value="1">01</option>
+      <option value="2">02</option>
+      <option value="3">03</option>
+      <option value="4">04</option>
+      <option value="5">05</option>
+      <option value="6">06</option>
+      <option value="7">07</option>
+      <option value="8">08</option>
+      <option value="9">09</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      </select>
+      <label for="year">Select Year</label>
+      <select id="year">
+      <option value="2004">2004</option>
+      <option value="2005">2005</option>
+      <option value="2006">2006</option>
+      </select>
+      </p>
+    </div>
+  </div>
+
+  <div id="panel2" class="panel" role="tabpanel" aria-hidden="true" aria-labelledby="tab2">
+    <span>Panel 2</span>
+    <div>Some fields on the panel</div>
+    <div>
+        <input id="internal" name="urlType" value="internal" checked="true" type="radio"><label for="internal">Internal Portal Bookmark</label>
+        <input id="external" name="urlType" value="external" type="radio"><label for="external">External URL</label>
+        <br><label for="externalAssoc">URL: </label><input id="externalAssoc" value="" type="text">
+        <hr>
+    </div>
+  </div>
+
+  <div id="panel3" class="panel" role="tabpanel" aria-hidden="true" aria-labelledby="tab3">
+    <span>Panel 3</span>
+  </div>
+
+  <div id="panel4" class="panel" role="tabpanel" aria-hidden="true" aria-labelledby="tab4">
+    <span>Panel 4</span>
+  </div>
+</div> 
+</body>
+</html>

@@ -1,0 +1,132 @@
+<html>
+<head>
+<style type="text/css">
+<!--
+.popup {
+  width: 20em;
+  height: 12em;
+  text-align: center;
+  border: 3px solid black;
+  background-color: white;
+  padding: 5%;
+  z-index: 100;
+  position: absolute;
+}
+.popup#alertDisp[aria-hidden="true"]
+  { display : none; }
+
+.popup#alertVis[aria-hidden="true"]
+  { visibility: hidden; }
+
+ .popup > div {
+   clear: both;
+   text-align: right;
+   margin-top: 5px;
+ }
+-->
+</style>
+
+<script type="text/javascript">
+<!--
+var gFocusItem = null;
+
+function doFocus() {
+  try {
+    if (gFocusItem != null) {
+      gFocusItem.focus();
+      gFocusItem=null;
+    }
+  } catch (error) {
+    alert("DEBUG: error in doFocus()");
+  }
+}
+
+var FOCUS_TEXT = "This div is created in the DOM as needed.  Focus is set to it when it is displayed";
+var NOFOCUS_TEXT = "This div is created in the DOM as needed. Focus has NOT been set to it";
+var counter = 0;
+
+function createRemoveAlert(alertText, bGiveFocus)
+{
+  var popupDiv = document.getElementById("insertedAlert");
+  if (popupDiv) {
+    // Remove alert
+    var divParent = document.getElementById("alertParent");
+    divParent.removeChild(popupDiv);
+    return;
+  }
+
+  // Create alert
+  var popupDiv = document.createElement("div");
+  var dataNode = document.createTextNode(alertText);
+  popupDiv.appendChild(dataNode);
+  var close = document.createElement("a");
+  close.setAttribute("onclick", "createRemoveAlert();");
+  close.setAttribute("href", "#");
+  var closeText = document.createTextNode("close");
+  close.appendChild(closeText);
+  var closeDiv = document.createElement("div");
+  closeDiv.appendChild(close);
+  popupDiv.appendChild(closeDiv);
+
+  // try parenting to a div on the page rather than document.body
+  var divParent = document.getElementById("alertParent");
+  divParent.appendChild(popupDiv);
+  popupDiv.id = "insertedAlert";
+  popupDiv.setAttribute("role", "alert");
+  popupDiv.tabIndex = "-1";
+  popupDiv.className = "popup";
+
+  if (bGiveFocus) {
+    gFocusItem = popupDiv;
+    setTimeout("doFocus();", 0);
+  }
+  return false; // handled
+}
+
+function toggleAlert(alertId, bGiveFocus, contentId) {
+  var alertDiv = document.getElementById(alertId);
+  if (alertDiv.getAttribute("aria-hidden") == "true") {
+    alertDiv.removeAttribute("aria-hidden");
+  }
+  else {
+    alertDiv.setAttribute("aria-hidden", "true");
+  }
+  if (bGiveFocus == true) {
+    gFocusItem = (contentId)? document.getElementById(contentId) : alertDiv;
+    setTimeout("doFocus();",0);
+  }
+}
+-->
+</script>
+</head>
+<body>
+<div><button onclick="createRemoveAlert(FOCUS_TEXT, true);">Create and Focus</button></div>
+<div><button onclick="createRemoveAlert(NOFOCUS_TEXT, false);">Create - no Focus</button></div>
+<div><button onclick="toggleAlert('alertVis', true);">Show (via visibility style) and Focus</button></div>
+<div><button onclick="toggleAlert('alertVis');">Show (via visibility style) - no Focus</button></div>
+<div><button onclick="toggleAlert('alertDisp', true);">Show (via display style) and Focus</button></div>
+<div><button onclick="toggleAlert('alertDisp');">Show (via display style) - no Focus</button></div>
+<div><button onclick="toggleAlert('alertDisp', true, 'closeLink');">Show (via display style) and put focus inside alert (on link)</button></div>
+<div role="alert" tabindex="-1" class="popup" aria-hidden="true" id="alertVis">
+  <span>This popup is created as a div in the HTML content, rather than being created in the DOM at
+     the time of use. The visibility style is changed from "hidden" to "visible"
+        to hide and show it.
+  </span>
+  <div style="text-align:right;margin-top:10px;">
+    <a href="javascript:toggleAlert('alertVis');">close</a>
+  </div>
+</div>
+<div role="alert" tabindex="-1" class="popup" aria-hidden="true" id="alertDisp">
+  <span>This popup is created as a div in the HTML content, rather than being created in the DOM at
+     the time of use. The display style is changed from "none" to "block"
+        to hide and show it.
+  </span>
+  <div style="text-align:right;margin-top:10px;">
+    <a id="closeLink" href="javascript:toggleAlert('alertDisp');">close</a>
+  </div>
+</div>
+<div id="alertParent">
+</div>
+<p>Some text after the alert to help with selection in order to view alert source</p>
+</body>
+</html>

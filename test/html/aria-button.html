@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>ARIA Button</title>
+<script type="text/javascript">
+<!--
+// Mouse and keyboard event handlers for controls
+function buttonEvent(event)
+{
+  if ((event.type == "click" && event.button == 0) ||
+      (event.type == "keydown" && (event.keyCode == 32 || event.keyCode ==13))) {
+    alert("Button pressed");
+  }
+};
+-->
+</script>
+<style type="text/css">
+  span[role="button"] { background-color: #eeeeee; margin: 1em; border: medium outset white;}
+
+  fieldset { max-width: 50%; }
+
+  fieldset > div { margin-top: 1em; }
+</style>
+</head>
+<body>
+  <fieldset aria-describedby="groupdesc1">
+    <legend>
+      Order tracking
+    </legend>
+    <div role="description" id="groupdesc1">
+      Order tracking has been enabled for all shipments outside of Texas. For information on orders to Texas, please call 1-555-HELP-NOW for an automated recording.
+    </div>
+    <div>
+      <label for="tracknum">Tracking number</label> <input id="tracknum" type="text">
+    </div>
+    <div>
+    <span role="button" aria-checked="true" tabindex="0" aria-describedby="buttondesc1" onkeydown="return buttonEvent(event);" onclick="return buttonEvent(event);">
+    Check Now
+    </span>
+    <span role="description" id="buttondesc1">
+      Check to see if your order has been shipped.
+    </span>
+  </div>
+  </fieldset>
+</body>
+</html>

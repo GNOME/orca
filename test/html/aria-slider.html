@@ -1,0 +1,281 @@
+<html>
+<head>
+<title>Graphical ARIA Slider</title>
+<script type="text/javascript">
+/* ****** Variables to be set ****** */
+var sliderSize = 300;  //Width of slider in pixels
+var moveValue = 10;  //Value to change the slider on any action.
+
+function displaySlider(slider)
+{
+  var valueNow = parseInt(slider.getAttribute("aria-valuenow"));
+  var valueMin = parseInt(slider.getAttribute("aria-valuemin"));
+  var valueMax = parseInt(slider.getAttribute("aria-valuemax"));
+
+  var barWidth = slider.firstChild.scrollWidth;
+  var grade = sliderSize/valueMax;
+
+  //Set the left padding.
+  var leftPad  = valueNow*grade-barWidth/2;
+  // if it is less then the min width.
+  if(leftPad < valueMin*grade){
+    leftPad = valueMin*grade;
+  }
+  // if it is greater than the max width
+  if(leftPad > valueMax*grade-barWidth){
+    leftPad = valueMax*grade-barWidth;
+  }
+  //The deferance between max and the current value, were going to use it like the valueMin was
+  var valueDown = valueMax-valueNow;
+  //Set the right padding
+  var rightPad  = valueDown*grade-barWidth/2;
+  //If it is less than zero
+  if(rightPad < 0){
+    rightPad = 0;
+  }
+  //If it is too big
+  if(rightPad > valueMax*grade-barWidth-valueMin*grade){
+    rightPad = valueMax*grade-barWidth-valueMin*grade;
+  }
+
+  //Remove cases where *.5 is involved, this can cause the width to change by 1px if we don't fix it
+  if(rightPad >= leftPad){
+  var rightNew = Math.round(rightPad);
+   if(rightNew != rightPad){
+    rightPad = rightNew;
+    leftPad = leftPad-0.5;
+     }
+  }
+  if(leftPad >= rightPad){
+  var leftNew = Math.round(leftPad);
+   if(leftNew != leftPad){
+    leftPad = leftNew;
+    rightPad = rightPad-0.5;
+   }
+  }
+
+  //set the padding
+  slider.style.paddingRight  = rightPad+'px';
+  slider.style.paddingLeft  = leftPad+'px';
+
+  return false;
+}
+
+function handleSliderKey(slider, event)
+{
+  var valueNow = parseInt(slider.getAttribute("aria-valuenow"));
+  var valueMin = parseInt(slider.getAttribute("aria-valuemin"));
+  var valueMax = parseInt(slider.getAttribute("aria-valuemax"));
+
+  // Find the key press and respond to it
+  var delta = 0;
+  var delta = 0;
+  var kLeft = 37;
+  var kRight = 39;
+  var kHome = 36;
+  var kEnd = 35;
+  if (event.keyCode == kLeft) {
+    delta = -moveValue/2;
+  }
+  else if (event.keyCode == kRight) {
+    delta = moveValue/2;
+  }
+  else if (event.keyCode == kHome) {
+    delta = -( valueNow - valueMin );
+  }
+  else if (event.keyCode == kEnd) {
+    delta = valueMax - valueNow
+  }
+  else {
+    return true;
+  }
+
+  // Stop the values going over the max and min
+  valueNow += delta;
+  if (valueNow < valueMin) {
+    valueNow = valueMin;
+  }
+  if (valueNow > valueMax) {
+    valueNow = valueMax;
+  }
+
+  // Set the value and move the slider
+  slider.setAttribute("aria-valuenow", valueNow);
+  slider.setAttribute("aria-valuetext", "$" + valueNow + ".00" );
+  displaySlider(slider);
+
+  return false;
+}
+
+function sliderButton(event, where, id)
+{
+  var slider = document.getElementById(id);
+
+  var valueNow = parseInt(slider.getAttribute("aria-valuenow"));
+  var valueMin = parseInt(slider.getAttribute("aria-valuemin"));
+  var valueMax = parseInt(slider.getAttribute("aria-valuemax"));
+
+  if (where == 'after') {
+    var value = -moveValue;
+  } else {
+    var value = moveValue;
+  }
+
+  // Enter was pressed or mouse clicked on the button
+  if (event.keyCode == 13 || event.button == 0){
+    // Calculate new value
+    var valueNow = valueNow + value;
+
+    // Stop the values going over the max and min
+      if (valueNow < valueMin) {
+        valueNow = valueMin;
+    } else if(valueNow > valueMax) {
+        valueNow = valueMax;
+    }
+
+    // Set the value and move the slider
+    slider.setAttribute("aria-valuenow", valueNow);
+    slider.setAttribute("aria-valuetext", "$" + valueNow + ".00" );
+    displaySlider(slider);
+  }
+}
+
+function barMouseDown(event, bar)
+{
+  if (event.preventDefault) {
+    event.preventDefault();
+  }
+
+  bar.id = 'active';
+  try {
+    document.addEventListener('mousemove',mouseMove, true);
+    document.addEventListener('mouseup',barMouseUp, true);
+  } catch(ex) {  // IE
+    document.attachEvent('onmousemove',mouseMove,true);
+    document.attachEvent('onmouseup',barMouseUp,true);
+  }
+
+  return false
+}
+
+function barMouseUp()
+{
+  var bar = document.getElementById('active');
+  bar.removeAttribute('id');
+
+  try {
+   document.removeEventListener('mousemove', mouseMove, true);
+   document.removeEventListener('mouseup', barMouseUp, true);
+  }
+  catch (ex) { // IE
+  document.detachEvent('onmousemove', mouseMove, true);
+  document.detachEvent('onmouseup', barMouseUp, true);
+  }
+}
+
+function mouseMove(event)
+{
+  //Get the slider we are moveing
+  var slider = document.getElementById('active').parentNode;
+  var valueNow = parseInt(slider.getAttribute("aria-valuenow"));
+  var valueMin = parseInt(slider.getAttribute("aria-valuemin"));
+  var valueMax = parseInt(slider.getAttribute("aria-valuemax"));
+
+  var grade = sliderSize/valueMax;
+
+  // Find what the new value should be and round it.
+  valueNow =  event.clientX/grade-slider.offsetLeft/grade;
+  valueNow = Math.round(valueNow);
+
+  //Stop the values going over the max and min
+  if (valueNow < valueMin) {
+    valueNow = valueMin;
+  }
+  if (valueNow > valueMax) {
+    valueNow = valueMax;
+  }
+   //set the value and move the slider
+  slider.setAttribute("aria-valuenow", valueNow);
+  displaySlider(slider);
+}
+
+function sliderMouseDown(slider,event)
+{
+
+  var valueNow = parseInt(slider.getAttribute("aria-valuenow"));
+  var valueMin = parseInt(slider.getAttribute("aria-valuemin"));
+  var valueMax = parseInt(slider.getAttribute("aria-valuemax"));
+
+ var grade = sliderSize/valueMax;
+
+  // Find where was clicked, and were the bar is.
+  clickPos =  event.clientX-slider.offsetLeft;
+  var barWidth = slider.firstChild.scrollWidth;
+  var barPos =  slider.firstChild.offsetLeft-slider.offsetLeft;
+
+  // Change the value
+  if (clickPos > barPos && clickPos < barPos+barWidth) {
+    return true;
+  } else if(clickPos > barPos) {
+    var valueNow = valueNow+moveValue;
+    if(valueNow > clickPos/grade){
+      valueNow = clickPos/grade;
+    }
+  } else if(clickPos < barPos+barWidth) {
+    var valueNow = valueNow-moveValue;
+    if(valueNow < clickPos/grade){
+      valueNow = clickPos/grade;
+    }
+  }
+
+  // Set the value and move the slider
+  slider.setAttribute("aria-valuenow", valueNow);
+  displaySlider(slider);
+
+  if (event.preventDefault) {
+   event.preventDefault();
+  }
+
+  return false;
+}
+
+//--><!]]>
+</script>
+
+<style type="text/css">
+<!--
+span.right {
+  background:url('right.png') no-repeat;
+  width:17px;
+}
+span.left {
+  background:url('left.png') no-repeat;
+  width:17px;
+}
+#slider1 {
+  background:url('back.png') repeat-x;
+  height:17px;
+}
+.bar {
+  background:url('slider.png') no-repeat;
+  height:17px;
+  width:17px;
+}
+.slider  span {
+  display:table-cell;
+}
+-->
+</style>
+<style type="text/css"></style></head>
+
+<body onload="displaySlider(document.getElementById('slider1'));">
+  <div class="slider">
+  <span>0</span>
+  <span role="button" title="Move slider left" class="left" onclick="sliderButton(event, 'after', 'slider1');" onkeypress="sliderButton(event, 'after', 'slider1');"></span>
+  <span title="My slider" tabindex="0" id="slider1" role="slider" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" aria-valuetext="10%" onmousedown="sliderMouseDown(this,event);" onkeydown="return handleSliderKey(this, event);" style="padding-right: 262px; padding-left: 21px;"><span class="bar" onmousedown="barMouseDown(event,this)"></span>
+  </span>
+  <span title="Move slider right" role="button" class="right" onclick="sliderButton(event, 'before', 'slider1');" onkeypress="sliderButton(event, 'before', 'slider1');"></span>
+  <span>100</span>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1873 @@
+<html>
+<head>
+<title>ARIA Spreadsheet and Menubar</title>
+<script type="text/javascript">
+<!--
+/* PLEASE NOTE THAT THIS IS PROTOTYPE CODE!  It was created as a proof of concept and is not a well designed or robust implementation!  It is not meant to be a best practice example - please use accordinging!  You have been warned.
+*/
+// functions for changing style rules
+
+function changeStyleRule(oRule, styleName, styleValue) {
+  if (oRule.style && oRule.style.setProperty) {
+      oRule.style.setProperty(styleName, styleValue,"");
+      //alert(oRule.style.getPropertyValue(styleName));
+  }
+}
+
+
+// You must specify a "title" attribute in <style> tag or <link> tag for Mozilla.
+function pageGetStyleSheet(sID,doc) {
+  if(!doc)doc=document;
+  if(!sID)
+    return doc.styleSheets[0];
+
+  if (doc.all) {
+    return doc.styleSheets[sID];
+  } else {
+    for (var i = 0; i < doc.styleSheets.length; i++) {
+      var oSS = doc.styleSheets[i];
+      if (oSS.title == sID) return oSS;
+    }
+  }
+}
+
+function cssGetRules(oSS){
+  return (document.all ? oSS.rules : oSS.cssRules);
+}
+
+
+// SIMPLE function to find a particular rule selector
+function cssGetRule(rulesList, ruleIdent) {
+  var foundRule = null;
+  for (var i=0; i < rulesList.length; i++ ) {
+    var sText = rulesList[i].selectorText;
+    if (sText != "undefined" && sText != null) {
+      if (sText.indexOf(ruleIdent) > -1 ) {
+        foundRule = rulesList[i];
+        break;
+      }
+    }
+  }
+  return foundRule;
+}
+
+var TOP_SUFFIX = "top";  // the top menu item has an id that is menuID + TOP_SUFFIX
+var DROP_SUFFIX = "Items"; // the drop menu div has an id that is the menuID + DROP_SUFFIX
+var SUB_SUFFIX = "sub" // items that have sub menus have "sub" in the id
+var KEY_UP = 38;
+var KEY_DOWN = 40;
+var KEY_LEFT = 37;
+var KEY_RIGHT = 39;
+var KEY_ESCAPE = 27;
+var KEY_M=77;
+var KEY=F10 = 121;
+var KEY_SPACE = 32;
+var KEY_TAB = 9;
+
+
+var TEXT_NODE = 3;
+
+Menubar = function(menubarId) {
+  this.activeIdx = -1;  // index of the active menu
+  this.dropOpen = false;  // indicates if menu is open (items are visible)
+  this.itemIdx = -1;  // indicates the index of the active item in an open menu
+  this.id = menubarId;
+  this.menus = new Array(); // array of menu Ids
+  this.menuItems = new Array(); // array of menu items - indexed by menu id
+  this.subMenus = new Array(); // array of sub menu items - indexed by parend menu id
+  this.activeSubId = null; // string with id of open sub menu; null if no sub menu open
+  this.activeSubIndex = -1; // index of active item in sub menu; -1 if no sub menu open
+
+}
+
+/* getters and setters for MenuState object
+*/
+
+Menubar.prototype.setActiveMenuIndex = function(index) {
+   this.activeIdx = index;
+}
+Menubar.prototype.getActiveMenuIndex = function() {
+  return this.activeIdx;
+}
+Menubar.prototype.setActiveOpen = function(isOpen) {
+  this.dropOpen = isOpen;
+}
+Menubar.prototype.isActiveOpen= function() {
+  return this.dropOpen;
+}
+Menubar.prototype.setActiveItemIndex = function(index) {
+  this.itemIdx = index;
+}
+Menubar.prototype.getActiveItemIndex = function() {
+  return this.itemIdx;
+}
+Menubar.prototype.updateAllIndex= function(active, drop, item) {
+  this.activeIdx = active;
+  this.dropOpen = drop;
+  this.itemIdx = item;
+}
+Menubar.prototype.getId = function() {
+  return this.id;
+}
+Menubar.prototype.getMenus = function() {
+  return this.menus; // return array of menu item ids
+}
+Menubar.prototype.getMenuItems = function(menuId) {
+  return this.menuItems[menuId];
+}
+/*  Function to add a menu to the menu bar
+ ** Must be called in menu order!!
+ ** menuId - id of this menu item
+ ** items - array of ids for the menu items in this menu
+ ** returns number of menu items (lenght of menu array)
+ */
+Menubar.prototype.addMenu = function(menuId,items) {
+  this.menus[this.menus.length] = menuId;
+  this.menuItems[menuId] = items;
+
+}
+Menubar.prototype.addSubMenu = function(menuId, items) {
+  this.subMenus[menuId] = items;
+
+}
+Menubar.prototype.getSubMenuItems = function(itemId) {
+
+  return this.subMenus[itemId];
+}
+Menubar.prototype.setActiveSubOpen = function(menuId) {
+  this.activeSubId = menuId;
+}
+Menubar.prototype.getActiveSubOpen = function() {
+  return this.activeSubId;
+}
+Menubar.prototype.setActiveSubIndex= function(index) {
+  this.activeSubIndex = index;
+}
+Menubar.prototype.getActiveSubIndex = function() {
+  return this.activeSubIndex;
+}
+Menubar.prototype.hasSubMenu = function(itemObj) {
+  var bHasSub = false;
+  var itemId = itemObj.getAttribute("id");
+  // see if id contains "sub"
+  if (itemId.indexOf(SUB_SUFFIX) >  -1) {
+    bHasSub = true;
+  }
+  return bHasSub;
+}
+
+Menubar.prototype.doMenu = function(event) {
+  //alert(event.ctrlKey + " : " + event.shiftKey + " : " + event.keyCode);
+  if (event.ctrlKey && event.altKey && event.keyCode == KEY_M) {
+    gFocusBeforeMenus = event.target;
+  //var theMenu = document.getElementById(this.getId());
+    // set focus to first menu (as long as menus are defined)
+    if (this.menus.length > 0) {
+
+      if (this.isActiveOpen() ) {
+        // close any open active items if press menu start key again
+        var activeIndex = this.getActiveMenuIndex();
+        var menu = document.getElementById((this.getMenus()[activeIndex] + DROP_SUFFIX));
+        menu.style.display="none";
+        this.updateAllIndex(-1,false,-1);
+
+      }
+    // set focus to the first menu
+    this.setActiveMenuIndex(0);
+    gFocusItem = document.getElementById((this.menus[0] + TOP_SUFFIX));
+    setTimeout("doFocus();",0);
+    } // end of if menus > 0
+  }
+}
+
+
+
+Menubar.prototype.doNavigation = function(event) {
+  var bEventContinue = true;  // browser can still use event
+  var key = event.keyCode;
+  if ((key >=KEY_LEFT && key <= KEY_DOWN) || key == KEY_ESCAPE) {
+    var idx = this.getActiveMenuIndex();
+    if (idx < 0) {
+      idx = 0;
+    }
+    // if subIndex > -1 a submenu is open - up and down movement will occur in it
+    var subIndex = this.getActiveSubIndex();
+    var subMenuId = this.getActiveSubOpen();
+    var menus = this.getMenus();
+    var menuLen = menus.length;
+    var activeMenuId = menus[idx];
+    //var activeMenu = document.getElementById(activeMenuId);
+    var curDrop = document.getElementById(activeMenuId + DROP_SUFFIX);
+
+
+    if (key == KEY_LEFT || key == KEY_RIGHT) {
+
+      var nextIdx = idx;
+      if (key == KEY_LEFT) { // left
+        nextIdx = (idx + (menuLen-1)) % menuLen;
+
+      }
+      else { // right
+        nextIdx = ((idx + 1) % menuLen);
+      }
+      // if drop menu is displayed, close it and open the next one or move into submenu
+      var bShowNext = this.isActiveOpen();
+      if (bShowNext) {
+        // current drop is open, see if it has submenu
+        if (curDrop) {
+          if (subMenuId != null) {
+            // sub menu is open - close it
+            this.hideSubMenu();
+            if (key == KEY_LEFT) {
+              // find parentItem and set focus to it
+              gFocusItem = document.getElementById(subMenuId);
+              setTimeout("doFocus();",0);
+              return false;
+            }
+            // if right just close and move to next top level menu (which happens below)
+          } // end of submenu open
+          if (key == KEY_RIGHT && subMenuId == null) {
+            // if right arrow and sub menu is not open- get current item in the drop down and see if it has a sub menu
+            var itemIdx = this.getActiveItemIndex();
+            var menuItems = this.getMenuItems(activeMenuId);
+            var curItemInDrop= document.getElementById(menuItems[itemIdx]);
+            var bHasSubMenu = this.hasSubMenu(curItemInDrop);
+            //alert(bHasSubMenu + " " + curItemInDrop.getAttribute("id"));
+            if (bHasSubMenu == true) {
+               return this.showSubMenu(event,curItemInDrop.getAttribute("id"));
+
+            }
+          }
+          // if haven't returned yet - then close the current drop
+          curDrop.style.display = "none"; // only one menudrop child per menu
+          this.setActiveItemIndex(0);
+
+        }
+
+      }
+      this.setActiveMenuIndex(nextIdx);
+      var nextMenuId = menus[nextIdx];
+      gFocusItem=document.getElementById(nextMenuId + TOP_SUFFIX);
+      if (bShowNext == true) {
+        var drop = document.getElementById(nextMenuId + DROP_SUFFIX);
+        if (drop) {
+          drop.style.display="block";
+          var menuItems = this.getMenuItems(nextMenuId);
+          gFocusItem=document.getElementById(menuItems[0]);
+        }
+      }
+
+      setTimeout("doFocus();",0);
+
+    }
+
+    if (key == KEY_UP || key == KEY_DOWN ) {
+      var itemIdx = this.getActiveItemIndex();
+      var bOpen = this.isActiveOpen();
+
+      if (curDrop) {
+        // first see if sub menu is open
+        if (subMenuId != null) {
+          // submenu is open - move within it
+          var subMenus = this.getSubMenuItems(subMenuId);
+          var subLen = subMenus.length;
+          var nextSubIndex =subIndex;
+          if (key == KEY_DOWN) {
+            nextSubIndex = (subIndex +1) % subLen;
+          }
+          else if (key == KEY_UP) {
+            nextSubIndex = (subIndex + (subLen - 1)) % subLen;
+          }
+          gFocusItem = document.getElementById(subMenus[nextSubIndex]);
+          this.setActiveSubIndex(nextSubIndex);
+          setTimeout("doFocus();",0);
+          return false;
+
+        } // end of if sub menus - back to regular processing
+
+        var menuItems = this.getMenuItems(activeMenuId);
+        var itemLen = menuItems.length;
+        var nextItemIdx;
+        if (!bOpen) { // open and set to the first item
+          this.showMenu(event, activeMenuId, true);
+          itemIdx = -1;
+        }
+        if (itemIdx == -1) {
+          nextItemIdx = 0;
+        }
+        else if (key == KEY_DOWN ){
+          nextItemIdx = (itemIdx +1) % itemLen;
+        }
+        else { //UP
+          nextItemIdx = (itemIdx + (itemLen-1)) % itemLen;
+        }
+
+        this.setActiveItemIndex(nextItemIdx);
+        gFocusItem=document.getElementById(menuItems[nextItemIdx]);
+        setTimeout("doFocus();",0);
+      } // end of id curDrop
+    } // end of id up/down
+  // need to prevent propagation of arrow keys
+  /*  try {
+      ev.preventDefault();
+    }
+    catch (err) {
+      try {
+        ev.returnValue=false;
+      }
+      catch (errNext) {
+        ;
+      }
+  }*/
+  bEventContinue = false;
+
+  if (key == KEY_ESCAPE ) {
+      this.closeMenu(event);
+      bEventContinue = false;
+      if (gFocusBeforeMenus) {
+        gFocusItem  = gFocusBeforeMenus;
+        setTimeout("doFocus();",0);
+      }
+      else {
+        document.focus();
+      }
+  } // end of if KEY_ESCAPE
+  } // end of if arrow or escape  key
+  return bEventContinue;
+}
+Menubar.prototype.closeMenu = function(event) {
+// hide the menus
+    var isOpen = this.isActiveOpen();
+    var activeIndex = this.getActiveMenuIndex();
+    if (isOpen && activeIndex != -1) {
+      // find the index of the active menu and close
+      this.hideMenu(event);
+    }
+    else {
+      var menus = this.getMenus();
+      var activeMenuId = menus[activeIndex];
+      var curDrop = document.getElementById(activeMenuId + DROP_SUFFIX);
+          if (!isOpen && curDrop) {
+        // one of the top level menus is active but drop down is not open
+        gBlurItem = curDrop;
+        setTimeout("doBlur()",0);
+      }
+    }
+
+    this.updateAllIndex(-1,false,-1);
+  }
+
+Menubar.prototype.showMenu = function(event, menuId, bFocusFirst) {
+
+    // get the drop menu
+    var menu = document.getElementById((menuId + DROP_SUFFIX));
+    var displayState = "block";
+    var curIndex = this.findMenuIndex(menuId);
+    // see if any menu is open
+    var isOpen = this.isActiveOpen();
+    if (isOpen) {
+      // find the index of this menu item and see if it is different than the active one
+      var activeIndex = this.getActiveMenuIndex();
+
+      if (curIndex != activeIndex && activeIndex != -1 ) {
+        // close the currently open drop menu
+        this.hideMenu(event);
+        // show this one
+        displayState = "block";
+
+      }
+      else { // this is the current menu - hide it
+        displayState = "none";
+      }
+    } // end of if menu open
+    // else is not open - default value of displayState is block -so menu will be shown
+    // set the activeOpen value
+    var isOpen = (displayState == "block" ? true : false);
+    this.setActiveOpen(isOpen);
+    this.setActiveMenuIndex(curIndex);
+    // style="display:none" must be set on the drop elements to use the element.style.display syntax
+    // otherwise need to write cross browser routine to read the effective style (see DHTML book pg 878)
+    menu.style.display = displayState;
+    gFocusItem = menu;  // may be over written is need to set focus on specific menu item
+    if (isOpen && bFocusFirst) {
+      // set focus to an item in the menu
+      if (this.getActiveItemIndex() == -1) {
+        this.setActiveItemIndex(0);  // set to first item
+      }
+      var menuItems = this.getMenuItems(menuId);
+      gFocusItem=document.getElementById(menuItems[this.getActiveItemIndex()]);
+
+    }
+      setTimeout("doFocus();",0);
+
+}
+
+Menubar.prototype.showSubMenu = function(event, menuId) {
+// TODO fix to work with mouse - since only supporting keyboard right now - there will not be another drop menu open
+
+// close any open submenus
+    this.hideSubMenu();
+
+    // get the drop menu
+    var menu = document.getElementById((menuId + DROP_SUFFIX));
+    var assocItem = document.getElementById(menuId);
+    //var container = assocItem.parentNode; // HACK - I know that containing div is parent of menuitem should search for menuitem in parent chain
+    var displayState = "block";
+
+    this.setActiveSubOpen(menuId);
+    // will set focus to first item
+    this.setActiveSubIndex(0);
+    // position drop menu
+
+      var offTop= assocItem.offsetTop + "px";
+      var offLeft = assocItem.offsetLeft + assocItem.offsetWidth + "px";
+      with (menu.style) {
+        top=offTop;
+        left=offLeft;
+        display = displayState;
+      }
+
+    var subItems =this.getSubMenuItems(menuId);
+    var first = document.getElementById(subItems[0]);
+    gFocusItem = first;
+
+    setTimeout("doFocus();",0);
+    event.stopPropagation();
+    return false;  // do not  propagate event
+
+}
+Menubar.prototype.hideSubMenu = function() {
+  var openId = this.getActiveSubOpen();
+  if (openId != null) {
+    var openSub = document.getElementById(openId + DROP_SUFFIX);
+    openSub.style.display="none";
+    this.setActiveSubOpen(null);
+    this.setActiveSubIndex(-1);
+  }
+}
+
+Menubar.prototype.hideMenu = function(event) {
+  var isKey = false;
+    if (event.keyCode) {
+      isKey = true;
+  }
+  if ((isKey && event.keyCode == 13) || (isKey && event.keyCode == KEY_ESCAPE ) || !isKey) {
+    var isOpen = this.isActiveOpen();
+    var activeIndex = this.getActiveMenuIndex();
+    if (isOpen) {
+      var menu = document.getElementById((this.getMenus()[activeIndex] + DROP_SUFFIX));
+      // style="display:none" must be set on the drop elements to use the element.style.display syntax
+      // otherwise need to write cross browser routine to read the effective style (see DHTML book pg 878)
+      menu.style.display="none";
+      this.updateAllIndex(-1,false,-1);
+      this.hideSubMenu();
+      //event.cancelBubble = true; // this is not in the DOM but is supported by IE and Mozilla - could use stopPropagation();
+      gBlurItem = menu;
+      setTimeout("doBlur();",0);
+
+    }
+
+
+  }
+
+}
+
+Menubar.prototype.findMenuIndex = function(menuId) {
+  var menus = this.getMenus();
+  var menuLen = menus.length;
+  var idx = -1;
+  for (var i=0; i < menuLen; i++ ) {
+    if (menus[i] == menuId) {
+      idx = i;
+      break;
+    }
+  }
+  return idx;
+}
+Menubar.prototype.clearMenu = function() {
+}
+
+Menubar.prototype.doAlert = function (event, theElem, alertStr) {
+// only called when is enter key or mouse click
+  var isKey = false;
+    if (event.keyCode) {
+      isKey = true;
+  }
+  if (theElem.getAttribute("aria-disabled") !="true") {
+      this.hideMenu(event);
+      gAlertString = alertStr;
+      setTimeout("delayedAlert(gAlertString);",0);
+
+  }
+  // always stop propagation of enter key or click
+  if (event.stopPropagation) {
+          event.stopPropagation();
+        }
+        else {
+          try {
+            event.cancelBubble=true;
+          } catch (e) {
+            ;
+          }
+      }
+
+
+
+  return false; // do not propagate
+}
+
+
+Menubar.prototype.focusItem = function(event,menuIndex, itemIndex) {
+// called from onmouseover of each menu item
+  // TODO add error handling
+  this.setActiveItemIndex(itemIndex);
+  this.setActiveMenuIndex(menuIndex);
+  //this.setActiveOpen(true);
+  gFocusItem = event.target;
+  setTimeout("doFocus();",0);
+}
+
+Menubar.prototype.doActionTotal = function(event,tableId,key) {
+  this.hideMenu(event);
+   doTotals(tableId, key);
+   // always stop propagation of enter key or click
+    if (event.stopPropagation) {
+            event.stopPropagation();
+          }
+          else {
+            try {
+              event.cancelBubble=true;
+            } catch (e) {
+              ;
+            }
+      }
+
+  return false;
+
+}
+Menubar.prototype.doActionColor = function(event,colorScheme) {
+  this.hideMenu(event);
+   doColor(colorScheme);
+   // always stop propagation of enter key or click
+    if (event.stopPropagation) {
+            event.stopPropagation();
+          }
+          else {
+            try {
+              event.cancelBubble=true;
+            } catch (e) {
+              ;
+            }
+      }
+
+  return false;
+
+}
+function doAction(event, theElem) {
+
+  var isKey = false;
+  if (event.keyCode) {
+    isKey = true;
+  }
+  var bDoAction = false;
+  if ((isKey && event.keyCode == 13) || !isKey) {
+    if (theElem.getAttribute("aria-disabled") =="true") {
+      bDoAction = false;
+    }
+    else {
+      bDoAction = true;
+    }
+  }
+
+
+  return bDoAction;
+}
+
+
+
+
+var topMenu = new Menubar("menuBar");
+topMenu.addMenu("edit", new Array("cut","copy", "paste"));
+topMenu.addMenu("2", new Array("2.1sub", "2.2","2.3","2.4sub"));
+topMenu.addMenu("3", new Array("3.1", "3.2","3.3sub","3.4"));
+topMenu.addMenu("four", new Array("4.1", "4.2","4.3","4.4","4.5"));
+topMenu.addMenu("five", new Array("5.1", "5.2","5.3"));
+topMenu.addSubMenu("2.1sub", new Array("2.1.1", "2.1.2","2.1.3", "2.1.4", "2.1.5"));
+topMenu.addSubMenu("2.4sub", new Array("2.4.1", "2.4.2"));
+topMenu.addSubMenu("3.3sub", new Array("3.3.1", "3.3.2", "3.3.3"));
+
+
+
+// global vars for storing selection and focus information; indexed by the id of the parent table element
+var gCurrentRow = new Array();
+var gCurrentCol = new Array();
+var gCurrentSelected = new Array();
+var gCurrentCell = new Array();
+var gSelectedCells = new Array();
+var gSelecting = new Array();
+var gTabCount = new Array();
+
+gCurrentRow ["table2"] = -1;   // 0 based row number
+gCurrentCol["table2"] = 0;  // 0 based column number
+gCurrentSelected ["table2"]=null;  // currently selected row object
+gCurrentCell["table2"] =null; // currently selected cell object
+gSelectedCells["table2"] = new Array();  // array of currently selected cell objects
+gSelecting["table2"] = false;  // boolean indicating if currently  in multi-select mode ( quicker than checking for entries in gCurrentSelectedCells
+gTabCount["table2"] = 0;  // need to know if tabbing into or out of control
+
+
+// global to store the item to be focused
+gFocusItem =null;
+// global to pass the item needing focus to doBlur() via a setTimeout()
+var gBlurItem= null;
+// global to store the alert string so can call alert() via setTimeout()
+gAlertString = "";
+
+function doFocus() {
+  try {
+    if (gFocusItem != null) {
+      gFocusItem.focus();
+      gFocusItem=null;
+    }
+  } catch (error) {
+    alert("DEBUG: error in doFocus()");
+  }
+}
+function doBlur() {
+  try {
+    if (gBlurItem != null) {
+      gBlurItem.blur();
+      gBlurItem=null;
+    }
+  } catch (error) {
+    alert("DEBUG: error in doBlur()");
+  }
+}
+
+function delayedAlert() {
+  alert(gAlertString);
+  gAlertString = "";
+}
+
+
+function setStyle(theObj, styleName, styleValue, priority) {
+  var bSuccess = false;
+
+  try {
+    if (theObj.style && theObj.style.setProperty) {
+      theObj.style.setProperty(styleName, styleValue,priority);
+      bSuccess = true;
+    }
+  } catch (ex) {
+    alert('exception caught setting style: ' + ex.message); // cannot do anything try the next method
+  }
+  if (!bSuccess) {
+    try {
+      theObj.style[styleName] = styleValue;
+      bSuccess = true;
+    } catch (exNext) {
+      alert('exception caught setting direct style: ' + exNext.message); // cannot do anything
+    }
+  }
+  return bSuccess;
+} // end of setStyle
+
+function findParentElem(evt, parentName) {
+  var srcElem = null;
+try {
+  if (evt.srcElement) {
+    srcElem = evt.srcElement;
+  }
+  else {
+    srcElem = evt.currentTarget;
+  }
+
+  if (srcElem != null ) {
+    // find the source table for the keyup event
+    var tagName = srcElem.tagName;
+    if (tagName != parentName) {
+      // search parent heirarchy
+      var parNode = srcElem.parentNode;
+      while (parNode != null) {
+        if (parNode.type == document.ELEMENT_TYPE) {
+          if (parNode.tagName.toLowerCase() == parentName) {
+            srcElem = parNode;
+            break;
+          }
+        }
+        parNode = parNode.parentNode;
+      }
+    }
+
+  }
+}
+catch (anyError) {
+  ; //srcElem = null;
+}
+  return srcElem;
+}
+
+function findParent (srcElem, parentName) {
+try {
+  if (srcElem != null ) {
+    // find the source table for the keyup event
+    var tagName = srcElem.tagName;
+    if (tagName != parentName) {
+      // search parent heirarchy
+      var parNode = srcElem.parentNode;
+      while (parNode != null) {
+        if (parNode.type == document.ELEMENT_TYPE) {
+          if (parNode.tagName.toLowerCase() == parentName) {
+            srcElem = parNode;
+            break;
+          }
+        }
+        parNode = parNode.parentNode;
+      }
+    }
+
+  }
+}
+catch (anyError) {
+  ; //srcElem = null;
+}
+  return srcElem;
+}
+
+
+function doTableKeys(e) {
+  var evt = (e != null) ? e : ((event) ? event : null);  // Mozilla will include e parameter
+  var bDefaultHandler = true;
+  try {
+  var testCell = document.getElementById("testCell"); // could cache this test object for better performance
+  if (!testCell.focus) {
+  // test cell is the id of a table cell element with a  tabindex="-1".  See if we can set focus to it, if
+  // not, just return, we can not support arrow keys
+    //alert('no arrow key support');
+    return bDefaultHandler;
+  }
+
+  var srcElem = findParentElem(evt,"table");
+  //srcElem=document.getElementById(srcElem.getAttribute("id"));
+  var activeTableId = srcElem.getAttribute("id");
+  var rows = srcElem.rows;
+  var key = evt.keyCode;
+  var bCtrlKey = evt.ctrlKey;
+  var  currentRow = gCurrentRow[activeTableId];
+  var currentCol = gCurrentCol[activeTableId];
+  var nextCell = null;
+
+  if ((key >= KEY_LEFT && key <= KEY_DOWN) && !evt.altKey) {
+    var nextRow = null;
+    var nextRowNum = 0;
+    var nextCol = null;
+    var nextColNum = 0;
+
+
+    if (gSelecting[activeTableId] == true && bCtrlKey == false) {
+      clearSelected(activeTableId);
+    }
+
+
+    // process arrows
+    if (key == KEY_DOWN ) { // down
+
+      nextRowNum = currentRow + 1;
+      if (rows.length > nextRowNum) {
+      var prevCell = null;
+        if (currentRow != -1) {
+          var prevRow = rows[currentRow];
+          prevCell = prevRow.cells[currentCol];
+        }
+        nextRow = rows[nextRowNum];
+        gCurrentRow[activeTableId]=nextRowNum;
+        nextCell = nextRow.cells[currentCol];
+        gCurrentCell[activeTableId] = nextCell;
+        processMovement(prevCell, nextCell, bCtrlKey, activeTableId);
+
+        gFocusItem = nextCell;
+        setTimeout("doFocus()", 0);
+
+      }
+    } // end of down
+    if (key == KEY_UP) { // up
+      nextRowNum = currentRow -1;
+      if (nextRowNum >=0 ) {
+        var prevCell = null;
+        if (currentRow != -1) {
+          var prevRow = rows[currentRow];
+          prevCell = prevRow.cells[currentCol];
+        }
+        nextRow = rows[nextRowNum];
+        gCurrentRow[activeTableId]=nextRowNum;
+        nextCell = nextRow.cells[currentCol];
+        gCurrentCell[activeTableId] = nextCell;
+        processMovement(prevCell, nextCell, bCtrlKey, activeTableId);
+        gFocusItem = nextCell;
+        setTimeout("doFocus()", 0);
+
+      }
+
+    } // end of up
+    if (key == KEY_LEFT ) { // left
+      nextColNum = currentCol -1;
+      var prevCell = null;
+      if (nextColNum >= 0 && currentRow >= 0) {
+        nextRow = rows[currentRow];
+        if (nextRow != null) {
+          prevCell = nextRow.cells[currentCol];
+        }
+        nextCell = nextRow.cells[nextColNum];
+        gCurrentCol[activeTableId] = nextColNum;
+        gCurerntCell  = nextCell;
+        processMovement(prevCell, nextCell, bCtrlKey, activeTableId);
+
+        gFocusItem = nextCell;
+        setTimeout("doFocus()", 0);
+
+      }
+
+    } // end of if left
+    if (key == KEY_RIGHT ) { // right
+      nextColNum = currentCol + 1;
+      var prevCell = null;
+      if (currentRow >=0 ) {
+        nextRow = rows[currentRow];
+        if (nextRow != null && nextColNum < nextRow.cells.length) {
+          prevCell = nextRow.cells[currentCol];
+          nextCell = nextRow.cells[nextColNum];
+          gCurrentCol[activeTableId] = nextColNum;
+          gCurrentCell  = nextCell;
+          processMovement(prevCell, nextCell, bCtrlKey, activeTableId);
+
+          gFocusItem = nextCell;
+          setTimeout("doFocus()", 0);
+        }
+      }
+
+
+    } // end of if right
+    bDefaultHandler = false;
+
+  if (nextCell != null) {
+    gCurrentCell[activeTableId]= nextCell;
+  }
+  } // end of if arrows
+  else if (key == KEY_SPACE && bCtrlKey) {
+    var currentCell = gCurrentCell[activeTableId];
+
+    var bSelected = toggleSelection(activeTableId,currentCell);
+    if (bSelected == "true") {
+      currentCell.className = "cellFocusSelect";
+    }
+    else {
+      currentCell.className = "cellFocus";
+    }
+
+  }
+  else if (key == KEY_ESCAPE) {
+    // pressing escape when editing a cell will end editng - this is not really what we want since
+    // it does not allow the escape to clear the input cell field first - I tried that in ignoreArrows() but
+    // could not get focus back to the cell after the escape.
+    if (gCurrentCell[activeTableId] != null) {
+      endEdit(gCurrentCell[activeTableId], false);
+      gFocusItem = gCurrentCell[activeTableId];
+    setTimeout("doFocus()",0);
+    bDefaultHandler = false;
+    }
+  }
+
+  else if (key == KEY_TAB && !evt.shiftKey ) {
+    // table is losing focus set the style of the current cell to cellBlur
+    gCurrentCell[activeTableId].className = "cellBlur";
+
+
+  }
+
+  } // end of try
+  catch (errorInfo) {
+    //alert(errorInfo);
+  }
+  return bDefaultHandler;
+}
+function processMovement(prevCell, nextCell, bCtrlKey, activeTableId) {
+  if (bCtrlKey == true) {
+          // leave prev cell in same state
+          // set style of prevCell to appropriate state
+          // set style of current cell to cellFocus
+          if (prevCell != null) {
+              var prevStyle = "";
+              if (prevCell.getAttribute("aria-selected") == "true" ) {
+                prevStyle = "cellSelect";
+              }
+              prevCell.className = prevStyle;
+          }
+          nextCell.className = "cellFocus";
+          gSelecting[activeTableId] = true;
+        }
+        else {
+          //bCtrlKey == false
+          // clear select on previous cell
+          // set style of previous cell to empty
+          // select current cell
+          // set style of current cell to cellFocusSelect
+          if (prevCell != null) {
+            removeSelection(activeTableId, prevCell);
+            prevCell.className = "";
+          }
+            addSelection(activeTableId, nextCell);
+            nextCell.className="cellFocusSelect";
+          }
+}
+
+function addSelection(activeTableId, currentCell) {
+    var selectedList = gSelectedCells[activeTableId];
+    var isSelected = currentCell.getAttribute("aria-selected");
+    if (isSelected != "true") {
+      // set selected and add to selection list
+      currentCell.setAttribute("aria-selected", "true");
+      selectedList[selectedList.length] = currentCell;
+      gSelectedCells[activeTableId] = selectedList;
+    }
+}
+
+function removeSelection(activeTableId, currentCell) {
+  var selectedList = gSelectedCells[activeTableId];
+    var isSelected = currentCell.getAttribute("aria-selected");
+    if (isSelected == "true" ) {
+      currentCell.removeAttribute("aria-selected");
+      // remove from list of selected cells
+      var idx = -1;
+      for (var j=0; j < selectedList.length; j++) {
+        if (selectedList[j] == currentCell) {
+          idx = j;
+          break;
+        }
+      }
+      if (idx <= 0) {
+        // remove the cell from the selected List
+        gSelectedCells[activeTableId] = selectedList.splice(idx,1,"");
+      }
+    }
+}
+function toggleSelection(activeTableId, currentCell) {
+// toggle selection of the cell
+  var selectedState = "";
+  var selectedList = gSelectedCells[activeTableId];
+  var isSelected = currentCell.getAttribute("aria-selected");
+    if (isSelected == "true" ) {
+      removeSelection(activeTableId, currentCell);
+
+    }
+    else {
+      addSelection(activeTableId,currentCell);
+      selectedState = "true"
+    }
+    return selectedState; // return current selection state of cell
+} // end of toggleSelection
+
+function clearSelected(activeTableId) {
+  // clear the selected cells
+    gSelecting[activeTableId] = false;
+    var selectedCells = gSelectedCells[activeTableId];
+    for (var k=0; k < selectedCells.length; k++) {
+      selectedCells[k].className = "";
+      selectedCells[k].setAttribute("aria-selected", "false");
+    }
+    gSelectedCells[activeTableId] = new Array();  // just create new, empty array
+} // end of clearSelected()
+
+function doClick(e,rowNum, colNum) {
+  /* put the doClick() in each TD element and pass the row and column number because it was the easiest way to figure out what
+  row and column was clicked in both IE and Mozilla.  Mozilla gives the element with the handler as the currentTarget rather than the
+  actual element.  For example, with onclick on the TABLE, Mozilla gives the event.currentTarget as the TABLE when click on a cell.
+  IE gives the event.srcElement as the TD that was clicked on.
+  Also, could probably determine row and column programmatically if necessary rather than passing rowNum and colNum. Or, pass the element itself!
+  */
+
+  var evt = (e != null) ? e : ((event) ? event : null);  // Mozilla will include e parameter
+  var srcElem = findParentElem(evt,"table");
+  var activeTableId = srcElem.getAttribute("id");
+  var prevCell = gCurrentCell[activeTableId];
+  var rows = document.getElementById(activeTableId).rows;
+  var thisRow = rows[rowNum];
+  var thisCell = thisRow.cells[colNum];
+  // update the global variables for the clicked on cell
+  gCurrentCell[activeTableId] = thisCell;
+  gCurrentRow[activeTableId] = rowNum;
+  gCurrentCol[activeTableId] = colNum;
+  var bCtrlKey = evt.ctrlKey;
+  var bSameCell = (thisCell == prevCell);
+
+  if (gSelecting[activeTableId] == true && bCtrlKey == false) {
+    clearSelected(activeTableId);
+  }
+
+  if (bCtrlKey == false && !bSameCell) {
+    // remove selection from prev cell
+    // add this cell to selection
+    // set state of prev cell to empty
+    // set state of this cell to focusSelect
+    if (prevCell != null) {
+      removeSelection(activeTableId, prevCell);
+      prevCell.className = "";
+    }
+    addSelection(activeTableId, thisCell);
+    thisCell.className="cellFocusSelect";
+  }
+  else if (bCtrlKey == true && !bSameCell) {
+    // leave prev cell in same selection state
+    // update style of prev cell based on state
+    // add this cell to selection
+    // set this cell style to focusselect
+    if (prevCell != null) {
+      var prevStyle = "";
+      if (prevCell.getAttribute("aria-selected") == "true" ) {
+        prevStyle = "cellSelect";
+      }
+        prevCell.className = prevStyle;
+    }
+    addSelection(activeTableId, thisCell);
+    thisCell.className="cellFocusSelect";
+    gSelecting[activeTableId] = true;
+  }
+  else if (bCtrlKey == true && bSameCell) {
+    var bSelected = toggleSelection(activeTableId,thisCell);
+      if (bSelected == "true") {
+        thisCell.className = "cellFocusSelect";
+      }
+      else {
+        thisCell.className = "cellFocus";
+      }
+  }
+  gFocusItem = thisCell;
+  setTimeout("doFocus();", 0);
+
+} // end of doClick
+
+
+function doEvent(evtTarget, evtName, theEvent) {
+  if (evtTarget.fireEvent) {
+    // is IE, need "on" in front of event name
+    evtName = "on" + evtName;
+    evtTarget.fireEvent(evtName, theEvent);
+  }
+  else {
+    evtTarget.dispatchEvent(theEvent);
+  }
+  return;
+}
+
+
+function doLink(linkId) {
+  var theLink = document.getElementById(linkId);
+  var bTryAgain = false;
+  try {
+    theLink.click();  // for IE
+  } catch (clickError) {
+    bTryAgain = true;
+  }
+  if (bTryAgain) {
+    try {
+      var mClick = document.createEvent("MouseEvents");
+      mClick.initEvent("click",true, true);
+      theLink.dispatchEvent(mClick);
+    } catch (e) {
+      alert(e.message); //+ "DEBUG: can't fire event to link element");
+    }
+  }
+
+  return false;
+}
+
+function doEdit(event, parentCell, colNumber) {
+// edit a spreadsheet cell.   Find text node of cell and store data.  Create an input field and label and add to cell; set text node value into cell; remove text node;
+  if (parentCell.getAttribute("aria-readonly") =="true") {
+    return;
+  }
+  if (parentCell.editMode != "true") {
+    var inputId = "col" + colNumber;
+    var inputField = document.createElement("input");
+    setStyle(inputField, "border", "0", "");
+    inputField.setAttribute("id", inputId);
+    var dataNode = null;
+    var editData = "";
+    if (parentCell.hasChildNodes() ) {
+      // TODO find parentCells text node - for now just assuming it is first child
+       dataNode = parentCell.firstChild;
+       parentCell.removeChild(dataNode);
+       editData = dataNode.data;
+    }
+    parentCell.saveData = editData;
+    parentCell.appendChild(inputField);
+    inputField.setAttribute("value",editData);
+    setStyle(inputField,"width", "100%","");
+    try {
+      inputField.addEventListener("blur",checkEdit, true);
+      inputField.addEventListener("keydown", ignoreArrows,true);  // process arrow key input so it does not  get up to parent table onkeydown
+    }
+    catch (ex) { // IE
+      inputField.attachEvent('blur',checkEdit, true);
+      inputField.attachEvent('keydown', ignoreArrows, true);
+    }
+
+    // create label for the cell - use the columnheader as the label
+    var parentTable = findParent(parentCell, "table");
+    var colHeader = parentTable.rows[0].cells[colNumber];
+    inputField.setAttribute("aria-labelledby", colHeader.id);
+
+    parentCell.editMode = "true";
+    // set focus to the input field
+    gFocusItem=inputField;
+    setTimeout("doFocus()", 0);
+  } // end of if edit
+  else   {
+    endEdit(parentCell,true);
+
+    gFocusItem = parentCell;
+    setTimeout("doFocus()",0);
+
+  } // end of else end edit
+
+
+} // end of doEdit()
+
+function endEdit(parentCell, bSave) {
+// end editing remove input node, remove label node
+// currently VERY dependent upon the organization of the DOM
+// cell is in edit mode - store data and leave edit mode
+  // find the input field
+  if (parentCell.hasChildNodes() && parentCell.editMode == "true") {
+    var inputNode = findChildNode(parentCell,"input");
+    /*var inputNode = parentCell.firstChild;  // TODO should never be null but wrap in a try/catch
+    var childNodeName = inputNode.nodeName
+    childNodeName.toLowerCase();
+    while (childNodeName != "input" && inputNode != null) {
+        inputNode = inputNode.nextSibling;
+        childNodeName = inputNode.nodeName.toLowerCase();
+    }*/
+    if (inputNode != null) {
+      var storeData = parentCell.saveData;
+      if (bSave == true) {
+        storeData = inputNode.value;
+      }
+      // remove event listenters
+      try {
+        inputNode.removeEventListener("blur",checkEdit,true);
+        inputNode.removeEventListener("keydown", ignoreArrows, true);
+      }
+      catch (ex) {
+        inputField.detachEvent('blur',checkEdit, true);
+        inputField.detachEvent('keydown', ignoreArrows, true);
+      }
+
+      parentCell.removeChild(inputNode);
+      var labelNode = findChildNode(parentCell, "label");
+      if (labelNode != null) {
+        parentCell.removeChild(labelNode);
+      }
+      var newDataNode = document.createTextNode(storeData);
+      parentCell.appendChild(newDataNode);
+      parentCell.editMode="false";
+    }
+  }
+} // end of endEdit
+
+function findChildNode(startNode, nodeName) {
+// TODO - currently only searchs siblings of startNode - does not recurse
+  var foundNode = null;
+  try {
+    if (startNode.hasChildNodes() ) {
+    var testNode = startNode.firstChild;
+    while (testNode != null && (testNode.nodeName.toLowerCase() != nodeName)) {
+      testNode = testNode.nextSibling;
+    }
+    foundNode = testNode;
+  }
+  } catch (error) {
+    alert("DEBUG - error in findChildNode() - " + error.message);
+    foundNode = null;
+  }
+  return foundNode;
+}
+
+function checkEdit(event) {
+try {
+  var srcElem = findParentElem(event,"table");
+  var currentCell = gCurrentCell[srcElem.id];
+  var parentCell = findParentElem(event,"td");
+  if (parentCell == currentCell) {
+    if (parentCell && parentCell.editMode == "true") {
+      endEdit(parentCell,true);
+    }
+
+    gFocusItem = srcElem;
+    setTimeout("doFocus();", 0);
+  }
+} catch (e) {
+  alert("DEBUG - error in checkEdit: " + e.message);
+}
+}
+
+function ignoreArrows(event) {
+  var eventTarget = event.target;
+  var key = event.keyCode;
+  bEventContinue = true;  // let input field handle the key
+  if (key >=KEY_LEFT && key <= KEY_DOWN) {
+    if (event.stopPropagation) {
+            event.stopPropagation();
+        }
+        else {
+            event.cancelBubble = true;
+        }
+  }
+  /* This does not work - I can not get focus back into the cell after the escape!!!
+  else if (key == KEY_ESCAPE) {
+    // first let escape be used to clear the cell, if cell is empty end editing
+    if (eventTarget.value == "") {
+      if (event.stopPropagation) {
+        event.stopPropagation();
+      }
+      else {
+        event.cancelBubble = true;
+      }
+      var srcElem = findParentElem(event,"table");
+        var currentCell = gCurrentCell[srcElem.id];
+        var parentCell = findParentElem(event,"td");
+        if (parentCell == currentCell) {
+          if (parentCell && parentCell.editMode == "true") {
+            endEdit(parentCell,false);
+          }
+
+        }
+        // focus the table - that will focus the currentCell
+        gFocusItem = srcElem;
+        setTimeout("doFocus();", 0);
+
+    }
+
+  } */
+
+
+} // end of ignoreArrows
+function setCell(tableId) {
+  var currentCell = gCurrentCell[tableId];
+  if (currentCell == null) {
+    // no cell selected, set it to first cell
+    var grid = document.getElementById(tableId);
+    var rows = grid.rows;
+    var firstRow = rows[0];
+    currentCell = firstRow.cells[0];
+    gCurrentRow[tableId] = 0;
+    gCurrentCol[tableId] = 0;
+    gCurrentCell[tableId] = currentCell;
+
+  }
+  currentCell.className="cellFocusSelect";
+  gFocusItem = currentCell;
+  setTimeout("doFocus()", 0);
+
+}
+
+// would like to change the style of the cell when focus leaves the table completely but not sure how to implement since table gets onblur when each cell loses focus
+function blurCell(event, tableId) {
+    var currentCell = gCurrentCell[tableId];
+    if (currentCell != null) {
+      currentCell.className="cellBlur";
+    }
+
+  // else do nothing
+}
+
+// very specific function to change the styles on the page
+function doColor(colorScheme) {
+
+  // get the styles
+  var oSS = pageGetStyleSheet("basic", null);
+  var ssRules = cssGetRules(oSS);
+
+  var colorArray;
+  if (ssRules != null) {
+    switch(colorScheme) {
+      case "grey":
+        colorArray = new Array("#C0C0C0","#F5F5F5","#999999","#F5F5F5");
+        changeColors(ssRules, colorArray);
+        break;
+      case "blues":
+        colorArray = new Array("#00CED1", "#B0E0E6","#000080","#E0FFFF");
+        changeColors(ssRules, colorArray);
+        break;
+      case "green":
+        colorArray = new Array("#3CB371","#90EE90","#008000","#F0FFF0");
+        changeColors(ssRules, colorArray);
+        break;
+      case "rose":
+        colorArray = new Array("#CD5C5C","#F08080","#800000","#FFE4E1");
+        changeColors(ssRules, colorArray);
+      default:
+        // do nothing
+      break;
+    } // end switch
+  }
+
+  return false; // do not propagate
+}
+function changeColors(ssRules, colorArray) {
+  var theRule;
+  // menubar background-color
+  theRule = cssGetRule(ssRules, "menubar");
+  changeStyleRule(theRule, "background-color", colorArray[0]);
+  // menu background-color
+  theRule = cssGetRule(ssRules, "menu");
+  changeStyleRule(theRule, "background-color", colorArray[0]);
+  theRule = cssGetRule(ssRules,"topMenu");
+  changeStyleRule(theRule,  "border-color", colorArray[0]);
+  changeStyleRule(theRule, "background-color", colorArray[0]);
+  theRule = cssGetRule(ssRules, "cellFocusSelect");
+  changeStyleRule(theRule, "background-color", colorArray[0]);
+  theRule = cssGetRule(ssRules, "table");
+  changeStyleRule(theRule, "border-color", colorArray[0]);
+  theRule = cssGetRule(ssRules, "menudrop");
+  changeStyleRule(theRule, "background-color", colorArray[1]);
+  changeStyleRule(theRule, "border-color",colorArray[1]);
+  theRule = cssGetRule(ssRules, "cellSelect");
+  changeStyleRule(theRule, "background-color", colorArray[3]);
+  theRule = cssGetRule(ssRules, "topMenu:focus");
+  changeStyleRule(theRule, "border-color", colorArray[2]);
+  changeStyleRule(theRule, "background-color", colorArray[2]);
+  theRule = cssGetRule(ssRules, "topMenu:hover");
+  changeStyleRule(theRule,  "border-color", colorArray[2]);
+  changeStyleRule(theRule, "background-color", colorArray[2]);
+  theRule = cssGetRule(ssRules, "menuitem:focus");
+  changeStyleRule(theRule,  "border-color", colorArray[2]);
+  changeStyleRule(theRule,  "background-color", colorArray[2]);
+  theRule = cssGetRule(ssRules, "menuitem:hover");
+  changeStyleRule(theRule, "border-color", colorArray[2]);
+  changeStyleRule(theRule, "background-color", colorArray[2]);
+  //theRule = cssGetRule(ssRules, "action");
+  //changeStyleRule(theRule,  "color", colorArray[2]);
+  theRule = cssGetRule(ssRules, "cellBlur");
+  changeStyleRule(theRule,  "backgournd-color", colorArray[3]);
+
+
+
+}
+function doTotals(tableId, key) {
+// simple function to do some totaling of information in the table
+// hard coded to the format of this particular table (i.e. for demo purposes only - NOT general purpose)
+// id of the table containing the data
+// keyName - item name we are totaling
+// column numbers are hard coded
+
+var DATE_COL = 1;
+var EXPENSE_COL = 2;
+var display= "no results";
+var results;
+bEventContinue = false;
+try {
+  var activeTable = document.getElementById(tableId);
+  var tableRows = activeTable.rows;
+
+  //var prevRow = rows[currentRow];
+  //        prevCell = prevRow.cells[currentCol];
+  var lcKey = key.toLowerCase();
+  if (lcKey == "date") {
+    display = "";
+    var exception = "";
+    var dates = new Array();
+    // find all unique dates then total each
+    for(var i=1; i<tableRows.length; i++) {
+      exception="";  //reset
+      var bFound = false;
+      var dateCell = tableRows[i].cells[DATE_COL];
+        if (dateCell.firstChild && dateCell.firstChild.data) {
+            var cellData =dateCell.firstChild.data;
+            if (i == 1) {
+              // first cell - force adding date to array
+              bFound = false;
+            }
+            else {
+              // see if date already exists in array
+              for(var j=0; j<dates.length; j++) {
+                if (dates[j] == cellData) {
+                  bFound = true;
+                  break;
+                }
+              }
+            } // end of else
+            if (bFound == false) {
+              dates[dates.length] = cellData;
+              results = getData(tableRows,cellData,DATE_COL);
+              if (results.length > 0) {
+                var total = calcTotal(results);
+                if (total > 1000) {
+                  exception = " !!! EXCEPTION: daily total over $1000 !!!"
+                }
+                display += "Total for " + cellData + " is $" + total + exception + "\n";
+
+              }
+            }
+          } // end of if celldata
+        } // end of for
+  } // end of if date
+  else {
+    results = getData(tableRows,lcKey,EXPENSE_COL);
+    if (results.length > 0) {
+        var total = calcTotal(results);
+        display = "Total for " + key + " is $" + total;
+    }
+  }
+
+  gAlertString = display;
+  setTimeout("delayedAlert(gAlertString);",0);
+
+} catch (error) {
+  alert("DEBUG- error in doTotals() " + error.message);
+  bEventContinue = true;
+}
+  return bEventContinue;
+}
+function getData(tableRows,lcKey, colNum) {
+// find all rows that contain key and store amount contents in array
+var AMOUNT_COL = 3;
+  var results = new Array();
+  for (var i=1; i<tableRows.length; i++) {
+    var keyCell = tableRows[i].cells[colNum];
+    if (keyCell.firstChild && keyCell.firstChild.data) {
+      var cellData =keyCell.firstChild.data;
+      cellData = cellData.toLowerCase();
+      if (cellData.indexOf(lcKey) > -1) {
+        var amtCell  = tableRows[i].cells[AMOUNT_COL];
+        var data = amtCell.firstChild.data; // lots of assumptions here!!!
+         results[results.length] = data;
+      }
+    }
+  }
+  return results;
+}
+function calcTotal(results) {
+  // results is array of strings to total - may have $
+  var total =0;
+  for (var i=0;  i < results.length; i++) {
+    var value = null;
+    var amt = results[i];
+    var idx = amt.indexOf('$');
+    if (idx > -1) {
+      amt = amt.substring(idx+1); // assumes only one $ and it is at the beginning
+    }
+    value = parseFloat(amt, 10);
+    if (value != NaN) {
+      total += value;
+    }
+  }
+  return total.toFixed(2);
+}
+
+
+
+
+-->
+</script>
+<style type="text/css" id="basic" title="basic">
+table {
+ empty-cells:show;
+ border-collapse: collapse;  // Show empty table cells in IE
+}
+
+.menubar {
+  background-color:#C0C0C0;
+}
+.menu {
+  float:left;
+  width:5em;
+  padding:1px 3px;
+  background-color:#C0C0C0;
+  color:black;
+
+}
+.menudrop {
+  display:none;
+  background-color:#F5F5F5;
+  width:150%;
+  border: solid #999999 1px;
+
+
+}
+.menusub {
+  display:none;
+  background-color:#F5F5F5;
+  border:solid #999999 1px;
+  position:absolute;
+  width:25%;
+}
+
+.content {
+  margin-top:2em;
+  position:absolute;
+  clear:both;
+
+}
+.topMenu {
+  border-style:solid;
+  border-color:#C0C0C0;
+  border-width:1px;
+  background-color:#C0C0C0;
+}
+
+.topMenu:focus {
+  background-color:#999999;
+  border-style:dashed;
+  border-color:#999999;
+  border-width:1px;
+  color:white;
+}
+.topMenu:hover {
+  background-color:#999999;
+  border-style:dashed;
+  border-color:#999999;
+  border-width:1px;
+  color:white;
+}
+
+.menuitem {
+  border-style:solid;
+  border-color:#F5F5F5;
+  border-width:1px;  /*color must be the same as background color (which is inherited from .menudrop) */
+  text-align:justify;
+}
+.menuitem:focus {
+  color:white;
+  background-color:#999999;
+  border-style:dashed;
+  border-color:#999999;
+  border-width:1px;
+
+}
+.menuitem:hover {
+  background-color:#999999;
+  border-style:dashed;
+  border-color:#999999;
+  border-width:1px;
+  color:white;
+
+}
+.menuitem[aria-disabled="true"] {
+  color:#666666;
+}
+.rowSelected {
+  background-color:#66CCCC;
+
+}
+td[aria-readonly="true"] {
+  color:#666666;
+}
+.cellFocusSelect {
+  background-color:#CCCCCC;
+  outline: 1px dashed green;
+
+}
+.cellFocus {
+  outline: 1px dashed green;
+}
+
+.cellSelect {
+  background-color:#DCDCDC;
+}
+.cellBlur {
+  border-width:1px ;
+  border-style:dotted;
+  border-color:#999999;
+  background-color:#F5F5F5;
+}
+table, th, td {
+
+  border-width:2px;
+  border-style:groove;
+  border-color:#CCCCCC;
+
+}
+
+.action {
+  color:#0000FF;
+  text-decoration:underline;
+}
+a:visited {
+  color:#000066;
+}
+
+.leftCellHi {
+  border-left:2px dotted #00FF00;
+  border-top:2px dotted #00FF00;
+  border-bottom:2px dotted #00FF00;
+}
+.middleCellHi {
+  border-top:2px dotted #00FF00;
+  border-bottom:2px dotted #00FF00;
+}
+
+.rightCellHi {
+  border-right:2px dotted #00FF00;
+  border-top:2px dotted #00FF00;
+  border-bottom:2px dotted #00FF00;
+}
+.nosize {
+  position:absolute;
+  width:0px;
+  height:0px;
+  overflow:hidden;
+}
+
+
+</style>
+
+<style type="text/css"></style></head>
+<body onkeydown="topMenu.doMenu(event);" role="application" onload="gFocusItem = document.getElementById('table2'); setTimeout('doFocus();',0); ">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1>Accessible Widgets </h1>
+  
+
+<div style="position:absolute;z-index:2;">
+<div id="theMenuBar" class="menubar" role="menubar" onkeydown="return topMenu.doNavigation(event);" tabindex="-1">
+  <div class="menu" id="edit" onclick="topMenu.showMenu(event, this.id, false);" onkeydown="if (event.keyCode == 13 ) {topMenu.showMenu(event, this.id, true);}" onmouseover="topMenu.showMenu(event,this.id,false);" onmouseout="topMenu.hideMenu(event);">
+    <div tabindex="-1" role="menuitem" aria-haspopup="true" id="edittop" class="topMenu">Edit</div>
+    <div class="menudrop" role="menu" id="editItems">
+      <div id="cut" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doAlert(event,this,'do Cut');" onkeydown="if (event.keyCode == 13) {topMenu.doAlert(event,this,'do cut');}" onmouseover="topMenu.focusItem(event,0,0);">Cut</div>
+      <div id="copy" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doAlert(event,this,'do Copy');" onkeydown="if (event.keyCode == 13) {topMenu.doAlert(event,this,'do copy');}" onmouseover="topMenu.focusItem(event,0,1);">Copy</div>
+      <div id="paste" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doAlert(event,this,'do Paste');" onkeydown="if (event.keyCode == 13) {topMenu.doAlert(event,this,'do paste');}" onmouseover="topMenu.focusItem(event,0,1);">Paste</div>
+    </div>
+  </div>
+  <div class="menu" id="2" onclick="topMenu.showMenu(event, this.id,false);" onkeydown="if (event.keyCode == 13 ) {topMenu.showMenu(event, this.id, true);}" onmouseover="topMenu.showMenu(event,this.id,false);" onmouseout="topMenu.hideMenu(event);">
+    <div tabindex="-1" role="menuitem" aria-haspopup="true" id="2top" class="topMenu">View</div>
+    <div class="menudrop" role="menu" id="2Items" style="display:none;">
+      <div tabindex="-1" role="menuitem" aria-haspopup="true" id="2.1sub" class="menuitem" onkeydown="if (event.keyCode == 13 ) {return topMenu.showSubMenu(event,this.id);}">Themes &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&gt;</div>
+        <div class="menusub" role="menu" id="2.1subItems" style="display:none;">
+          <div id="2.1.1" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doActionColor(event,'grey');" onkeydown="if (event.keyCode == 13) {return topMenu.doActionColor(event,'grey');}">Basic Grey </div>
+          <div id="2.1.2" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doActionColor(event,'blues');" onkeydown="if (event.keyCode == 13) {return topMenu.doActionColor(event,'blues');}">The Blues</div>
+          <div id="2.1.3" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doActionColor(event,'green');" onkeydown="if (event.keyCode == 13) {return topMenu.doActionColor(event,'green');}">Garden</div>
+          <div id="2.1.4" tabindex="-1" role="menuitem" class="menuitem" aria-disabled="true" onclick="return topMenu.doAlert(event,this,'do Item4');" onkeydown="if (event.keyCode == 13) {return topMenu.doActionColor(event,'pink');}">In the Pink</div>
+          <div id="2.1.5" tabindex="-1" role="menuitem" class="menuitem" oonclick="return topMenu.doActionColor(event,'rose');" onkeydown="if (event.keyCode == 13) {return topMenu.doActionColor(event,'rose');}">Rose </div>
+        </div><!-- end themes sub menu items -->
+        <div tabindex="-1" role="menuitem" class="menuitem" id="2.2">Hide</div>
+        <div tabindex="-1" role="menuitem" class="menuitem" id="2.3">Show</div>
+        <div tabindex="-1" role="menuitem" aria-haspopup="true" id="2.4sub" class="menuitem" onclick="return topMenu.showSubMenu(event,this.id);" onkeydown="if (event.keyCode == 13 ) {return topMenu.showSubMenu(event,this.id);}">More &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &gt;</div>
+        <!--<div tabindex="-1" role="menuitem" class="menuitem" id="2.4sub" onclick="return topMenu.showSubMenu(event,this.id);" onkeydown="if (event.keyCode == 13 ) {return topMenu.showSubMenu(event,this.id);}">More &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &gt;</div> -->
+          <div class="menusub" role="menu" id="2.4subItems" style="display:none">
+            <div id="2.4.1" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doAlert(event,this,'do Something 1');" onkeydown="if (event.keyCode == 13) {topMenu.doAlert(event,this,'doSomething 1');}">one </div>
+            <div id="2.4.2" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doAlert(event,this,'do Something 2');" onkeydown="if (event.keyCode == 13) {topMenu.doAlert(event,this,'doSomething 2');}">two</div>
+          </div> <!-- end of more sub menu -->
+      </div><!-- end View drop menu -->
+    </div>
+  <div class="menu" id="3" onclick="topMenu.showMenu(event, this.id,false);" onkeydown="if (event.keyCode == 13 ) {topMenu.showMenu(event, this.id, true);}" onmouseover="topMenu.showMenu(event,this.id,false);" onmouseout="topMenu.hideMenu(event);">
+  <div tabindex="-1" role="menuitem" aria-haspopup="true" id="3top" class="topMenu">Tools</div>
+        <div class="menudrop" role="menu" id="3Items" style="display:none;">
+          <div id="3.1" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doAlert(event,this,'do spell check');" onkeydown="if (event.keyCode == 13) {topMenu.doAlert(event,this,'do spell check');}">Spelling...</div>
+          <div id="3.2" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doAlert(event,this,'do error checking');" onkeydown="if (event.keyCode == 13) {topMenu.doAlert(event,this,'do error checking');}">Error Checking...</div>
+          <div id="3.3sub" tabindex="-1" role="menuitem" aria-haspopup="true" class="menuitem" onclick="return topMenu.showSubMenu(event,this.id);;" onkeydown="if (event.keyCode == 13) {return topMenu.showSubMenu(event,this.id);}">Show Rows &nbsp;&nbsp; &gt;</div>
+          <div class="menusub" role="menu" id="3.3subItems" style="display:none">
+                      <div id="3.3.1" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doAlert(event,this,'highlight even rows');" onkeydown="if (event.keyCode == 13) {topMenu.doAlert(event,this,'highlight even rows');}">even</div>
+                      <div id="3.3.2" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doAlert(event,this,'highlight odd rows');" onkeydown="if (event.keyCode == 13) {topMenu.doAlert(event,this,'hghlight odd rows');}">odd</div>
+                      <div id="3.3.3" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doAlert(event,this,'highlight all rows');" onkeydown="if (event.keyCode == 13) {topMenu.doAlert(event,this,'highlight all rows');}">all</div>
+          </div> <!-- end of more sub menu -->
+          <div id="3.4" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doAlert(event,this,'do Options');" onkeydown="if (event.keyCode == 13) {topMenu.doAlert(event,this,'do Options');}">Options... </div>
+        </div>
+  </div>
+  <div class="menu" id="four" onclick="topMenu.showMenu(event, this.id,false);" onkeydown="if (event.keyCode == 13 ) {topMenu.showMenu(event, this.id, true);}" onmouseover="topMenu.showMenu(event,this.id,false);" onmouseout="topMenu.hideMenu(event);">
+  <div tabindex="-1" role="menuitem" aria-haspopup="true" id="fourtop" class="topMenu">Totals</div>
+        <div class="menudrop" role="menu" id="fourItems" style="display:none;">
+          <div id="4.1" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doActionTotal(event,'table2','lodging');" onkeydown="if (event.keyCode == 13) {return topMenu.doActionTotal(event,'table2','lodging');}">Lodging </div>
+          <div id="4.2" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doActionTotal(event,'table2','breakfast');" onkeydown="if (event.keyCode == 13) {return topMenu.doActionTotal(event,'table2','breakfast');}">Breakfast </div>
+          <div id="4.3" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doActionTotal(event,'table2','lunch');" onkeydown="if (event.keyCode == 13) {return topMenu.doActionTotal(event,'table2','lunch');}">Lunch </div>
+          <div id="4.4" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doActionTotal(event,'table2','dinner');" onkeydown="if (event.keyCode == 13) {return topMenu.doActionTotal(event,'table2','dinner');}">Dinner </div>
+          <div id="4.5" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doActionTotal(event,'table2','date');" onkeydown="if (event.keyCode == 13) {return topMenu.doActionTotal(event,'table2','date');}">By Date </div>
+        </div>
+  </div>
+  <div class="menu" id="five" onclick="topMenu.showMenu(event, this.id,false);" onkeydown="if (event.keyCode == 13 ) {topMenu.showMenu(event, this.id, true);}" onmouseover="topMenu.showMenu(event,this.id,false);" onmouseout="topMenu.hideMenu(event);">
+  <div tabindex="-1" role="menuitem" aria-haspopup="true" id="fivetop" class="topMenu">Help</div>
+        <div class="menudrop" role="menu" id="fiveItems" style="display:none;">
+          <div id="5.1" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doAlert(event,this,'Show Help Index');" onkeydown="if (event.keyCode == 13) {topMenu.doAlert(event,this,'Show Help index');}">Help Index</div>
+          <div id="5.2" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doAlert(event,this,'Show navigation help');" onkeydown="if (event.keyCode == 13) {topMenu.doAlert(event,this,'Show navigation help');}">Navigation Help</div>
+          <div id="5.3" tabindex="-1" role="menuitem" class="menuitem" onclick="return topMenu.doAlert(event,this,'DHTML roadmap Example, March 2005');" onkeydown="if (event.keyCode == 13) {topMenu.doAlert(event,this,'DHTML Roadmap example, March 2005');}">About</div>
+
+        </div>
+  </div>
+</div>
+</div>
+
+<div class="content">
+<div style="height:20em; overflow:auto;">
+<table tabindex="0" border="2" cellspacing="0" id="table2" role="grid" onkeydown=" return doTableKeys(event);" onfocus="setCell(this.id);">
+<thead>
+<tr>
+  <th tabindex="-1" role="columnheader" id="colhead1" style="width:6em" onclick="doClick(event,0,0);" onkeydown="if (event.keyCode==13) {return doLink('aEntry');}" class="cellFocusSelect"><span class="action" title="Sort by Entry #" onclick="alert('sort column on click');" tabindex="-1" id="aEntry">Entry #</span></th>
+  <th tabindex="-1" role="columnheader" id="colhead2" onclick="doClick(event,0,1);" onkeydown="if (event.keyCode==13) {return doLink('aDate');}" style="width:10em"><span class="action" title="Sort by Date" onclick="alert('sort column on click');" tabindex="-1" id="aDate">Date</span></th>
+  <th tabindex="-1" role="columnheader" id="colhead3" onclick="doClick(event,0,2);" onkeydown="if (event.keyCode==13) {return doLink('aExpense');}" style="width:20em"><span class="action" title="Sort by Expense Name" onclick="alert('sort column on click');" tabindex="-1" id="aExpense">Expense</span></th>
+  <th tabindex="-1" role="columnheader" id="colhead4" onclick="doClick(event,0,3);" onkeydown="if (event.keyCode==13) {return doLink('aAmount');}" style="width:8em"><span class="action" title="Sort by Amount" onclick="alert('sort column on click');" tabindex="-1" id="aAmount">Amount</span></th>
+  <th tabindex="-1" role="columnheader" id="colhead5" onclick="doClick(event,0,4);" onkeydown="if (event.keyCode==13) {return doLink('aMerchant');}" style="width:15em"><span class="action" title="Sort by Merchant" onclick="alert('sort column on click');" tabindex="-1" id="aMerchant">Merchant</span></th>
+  <th tabindex="-1" role="columnheader" id="colhead6" style="width:8em"><span>Type</span></th>
+
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,1,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">1</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" id="testCell" onclick="doClick(event,1,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}">03/14/05</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,1,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}">Conference Fee</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,1,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}">$449.00</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,1,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}">CSUN Center on Disability</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,1,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}">credit</td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,2,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">2</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,2,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}">03/15/05</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,2,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}">lodging</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,2,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}">$119.00</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,2,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}">LAX Hilton</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,2,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}">credit</td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,3,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">3</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,3,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}">03/15/05</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,3,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}">dinner</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,3,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}">$24.00</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,3,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}">Chili's</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,3,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}">cash</td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,4,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">4</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,4,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}">03/16/05</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,4,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}">lodging</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,4,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}">$119.00</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,4,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}">LAX Hilton</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,4,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}">credit</td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,5,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">5</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,5,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}">03/16/05</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,5,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}">breakfast</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,5,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}">$6.50</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,5,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}">Starbucks</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,5,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}">cash</td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,6,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">6</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,6,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}">03/16/05</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,6,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}">lunch</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,6,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}">$9.35</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,6,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}">Super Sub Stop</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,6,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}">cash</td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,7,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">7</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,7,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}">03/16/05</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,7,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}">dinner</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,7,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}">$40.00</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,7,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}">Davio's</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,7,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}">credit</td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,8,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">8</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,8,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,8,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,8,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,8,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,8,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}"></td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,9,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">9</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,9,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,9,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,9,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,9,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,9,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}"></td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,10,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">10</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,10,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,10,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,10,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,10,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,10,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}"></td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,11,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">11</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,11,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,11,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,11,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,11,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,11,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}"></td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,12,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">12</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,12,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,12,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,12,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,12,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,12,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}"></td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,13,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">13</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,13,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,13,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,13,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,13,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,13,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}"></td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,14,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">14</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,14,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,14,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,14,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,14,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,14,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}"></td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,15,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">15</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,15,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,15,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,15,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,15,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,15,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}"></td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,16,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">16</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,16,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,16,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,16,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,16,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,16,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}"></td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,17,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">17</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,17,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,17,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,17,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,17,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,17,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}"></td>
+</tr>
+<tr>
+  <td tabindex="-1" role="rowheader" aria-readonly="true" onclick="doClick(event,18,0);" ondblclick="doEdit(event,this,0);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,0);return false;}">18</td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,18,1);" ondblclick="doEdit(event,this,1);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,1);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,18,2);" ondblclick="doEdit(event,this,2);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,2);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,18,3);" ondblclick="doEdit(event,this,3);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,3);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,18,4);" ondblclick="doEdit(event,this,4);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,4);return false;}"></td>
+  <td tabindex="-1" role="gridcell" aria-selected="false" onclick="doClick(event,18,5);" ondblclick="doEdit(event,this,5);" onkeydown="if (event.keyCode == 13) { doEdit(event,this,5);return false;}"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</form>
+</div>
+</body>
+</html>

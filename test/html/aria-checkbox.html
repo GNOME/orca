@@ -1,0 +1,147 @@
+<html>
+<head>
+<title>ARIA Checkbox</title>
+
+<script type="text/javascript" >
+/*
+* @method public getTarget() - helper function to extract the element which fired the event from the event object.
+* @param event - event object
+* @return - the appropriate target based on the varibles supported in the event object.
+*/
+function getTarget(event) {
+  var target = null;
+  if (event.target) {
+    target = event.target;
+  }
+  else if (event.srcElement) {
+    target = event.srcElement;
+  }
+  return target;
+}
+/*******************  End of wrapper functions **********************/
+var CHECK = "checked.gif";
+var UNCHECK = "unchecked.gif";
+var MIXED = "mixed.gif";
+var ELEMENT_NODE = 1;  // IE does not understand Node.ELEMENT_NODE nor nodeObj.ELEMENT_NODE
+// Mouse and keyboard event handlers for controls
+function checkBoxEvent(event)
+{
+  var bEventContinue = true; // Browser can still use event
+  try {
+    if ((event.type == "click" && event.button == 0) ||
+       (event.type == "keydown" && event.keyCode == 32)) {
+      // Toggle checkbox
+      var checkbox = getTarget(event);
+      var checkImg = null;
+      // event could be coming from img
+      if (checkbox.nodeType == ELEMENT_NODE && checkbox.tagName.toUpperCase() == "IMG") {
+        checkImg = checkbox;
+        checkbox = checkbox.parentNode;
+      }
+      else { //event coming from span
+        for (var i=0; i < checkbox.childNodes.length;  i++) {
+          checkImg = checkbox.childNodes[i];
+          if (checkImg.nodeType == ELEMENT_NODE && checkImg.tagName.toUpperCase() == "IMG") {
+            break;
+          }
+        }
+      }
+      if (checkbox.getAttribute("aria-checked") == "true") {
+        checkbox.removeAttribute("aria-checked");
+        checkImg.src = UNCHECK;
+      }
+      else {
+        checkbox.setAttribute("aria-checked", "true");
+        checkImg.src = CHECK;
+      }
+      bEventContinue = false;  // Do not continue propagating event
+    }
+  } catch (error) {
+    bEventContinue = true;
+  }
+  return bEventContinue;
+}
+
+function tristateCheckBoxEvent(event)
+{
+  var bEventContinue = true; // Browser can still use event
+  try {
+    if ((event.type == "click" && event.button == 0) ||
+        (event.type == "keydown" && event.keyCode == 32)) {
+      // Toggle checkbox
+      var checkbox = getTarget(event);
+      var checkImg = null;
+      // event could be coming from img
+      if (checkbox.nodeType == ELEMENT_NODE && checkbox.tagName.toUpperCase() == "IMG") {
+        checkImg = checkbox;
+        checkbox = checkbox.parentNode;
+      }
+      else { //event coming from span
+        for (var i=0; i < checkbox.childNodes.length;  i++) {
+          checkImg = checkbox.childNodes[i];
+          if (checkImg.nodeType == ELEMENT_NODE && checkImg.tagName.toUpperCase() == "IMG") {
+            break;
+          }
+        }
+      }
+      if (checkbox.getAttribute("aria-checked") == "true") {
+        checkbox.removeAttribute("aria-checked");
+        checkImg.src = UNCHECK;
+      }
+      else if (checkbox.getAttribute("aria-checked") == "mixed") {
+        checkbox.setAttribute("aria-checked", "true");
+        checkImg.src = CHECK;
+      }
+      else {
+        checkbox.setAttribute("aria-checked", "mixed");
+        checkImg.src = MIXED;
+      }
+      bEventContinue = false;  // Do not continue propagating event
+    }
+  } catch (error) {
+    bEventContinue = true;
+  }
+  return bEventContinue;
+};
+//]]>
+</script>
+</head>
+<body>
+  <p>Here's a checkbox that you can click on.</p>
+
+  <div>
+    <span role="checkbox" aria-checked="true" tabindex="0"
+      onkeydown="return checkBoxEvent(event);" onclick="return checkBoxEvent(event);" >
+      <img src="checked.gif" role="presentation" alt="" />
+      Include decorative fruit basket
+    </span>
+  </div>
+
+  <div>
+    <span role="checkbox" aria-checked="true" aria-invalid="true" tabindex="0"
+      onkeydown="return checkBoxEvent(event);" onclick="return checkBoxEvent(event);" >
+      <img src="checked.gif" role="presentation" alt="" />
+      Invalid checkbox
+    </span>
+  </div>
+
+  <div>
+    <span role="checkbox" aria-checked="true" aria-required="true" tabindex="0"
+      onkeydown="return checkBoxEvent(event);" onclick="return checkBoxEvent(event);" >
+      <img src="checked.gif" role="presentation" alt="" />
+      Required checkbox
+    </span>
+  </div>
+
+  <div>
+    <span role="checkbox" aria-checked="true" aria-required="true" tabindex="0"
+      onkeydown="return tristateCheckBoxEvent(event);" onclick="return tristateCheckBoxEvent(event);" >
+      <img src="checked.gif" role="presentation" alt="" />
+      Tri-state checkbox
+    </span>
+  </div>
+  <p>
+    <a href="/web/20110104115538/http://www.google.com/">Random Google link</a>
+  </p>
+</body>
+</html>

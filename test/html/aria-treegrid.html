@@ -1,0 +1,329 @@
+<html>
+<head>
+    <script type="text/javascript">
+        var sap = {ui:{keycodes:{SPACE:32, 
+                                 ENTER:13, 
+                                 PAGE_UP : 33,
+	                         PAGE_DOWN : 34,
+	                         END : 35,
+	                         HOME : 36,
+	                         ARROW_LEFT : 37,
+	                         ARROW_UP : 38,
+	                         ARROW_RIGHT : 39,
+	                         ARROW_DOWN : 40,
+	                         TAB : 9
+                                 }}};
+        var grids = [];
+        function getGrid(id) {
+            if (!grids[id]) {
+                var grid = {};
+                grid.focusedRow = 1;
+                grid.focusedCol = 0;
+                grid.table = document.getElementById(id);
+                grids[id] = grid;
+            }
+            return grids[id];
+        }
+        function handleFocus(id, evt) { 
+            var grid = getGrid(id);
+            if (grid) {
+                if (!grid.focusedCell) {
+                    grid.focusedCell = {row:1,col:0};
+                } else {
+                    blurCell(grid.focusedCell,grid);
+                }
+                focusCell(grid.focusedCell,grid);
+                grid.table.tabIndex = "-1";
+                
+            }
+        }
+        function handleClick(id, evt) { 
+            var grid = getGrid(id);
+            if (grid) {
+                var clickedCell = evt.target?evt.target:evt.srcElement;
+                if (clickedCell.tagName=="TD") {
+                    row = grid.table.rows[clickedCell.parentNode.rowIndex];
+                    toggleItem(row,grid)
+                }
+            }
+        }
+        function toggleItem(row,grid) {
+            var expand;            
+            if (row && row.getAttribute("ca")=="to") {
+                    expand = grid.table.rows[row.rowIndex+1];
+                    while (expand && expand.getAttribute("ca")=="ti") {
+                        if (row.getAttribute("aria-expanded")=="false") {
+                            expandRow(expand);
+                            row.setAttribute("aria-expanded","true");
+                            row.getElementsByTagName("SPAN")[0].innerHTML="-";
+                        } else {
+                            collapseRow(expand);
+                            row.setAttribute("aria-expanded","false");
+                            row.getElementsByTagName("SPAN")[0].innerHTML="+";
+                        }
+                        expand = grid.table.rows[expand.rowIndex+1];
+                    }
+            }
+        }
+        function expandRow(row) {
+            row.style.display = "";
+            row.setAttribute("aria-hidden","false");
+        }
+        function collapseRow(row) {
+            row.style.display = "none";
+            row.setAttribute("aria-hidden","true");
+        }
+        
+        function blurCell(cell,grid) {
+            var td = grid.table.rows[cell.row].cells[cell.col];
+            if (td.getAttribute("editable")=="true") return
+            td.tabIndex = "-1";
+        }
+        function focusCell(cell,grid) {
+            var tr = grid.table.rows[cell.row];
+            var td = tr.cells[cell.col];
+            td.tabIndex = "0";
+            td.focus();
+        }
+        function focusNextRow(grid) {
+            row = grid.table.rows[grid.focusedRow];
+            expand = grid.table.rows[row.rowIndex+1];
+            if (row && row.getAttribute("role")=="row") {
+                row.cells[0].tabIndex = "-1";
+                expand = grid.table.rows[row.rowIndex+1];
+                if (row.getAttribute("aria-expanded")=="false") {
+                    while (expand && expand.getAttribute("ca")=="ti") {
+                        expand = grid.table.rows[expand.rowIndex+1];
+                    } 
+                }
+            } else {
+                row.cells[grid.focusedCol].tabIndex = "-1";
+            }
+            if (expand && expand.getAttribute("ca")=="ti") {
+                expand.cells[0].tabIndex ="0";
+                expand.cells[0].focus();
+                grid.focusedRow = expand.rowIndex;
+            } else if (expand) {
+                expand.cells[grid.focusedCol].tabIndex ="0";
+                expand.cells[grid.focusedCol].focus();
+                grid.focusedRow = expand.rowIndex;
+            }
+        }
+        
+        function focusPreviousRow(grid) {
+            row = grid.table.rows[grid.focusedRow];
+            expand = grid.table.rows[row.rowIndex-1];
+            if (row) {
+                row.cells[0].tabIndex = "-1";
+                expand = grid.table.rows[row.rowIndex-1];
+                while (expand && expand.style.display=="none") {
+                    expand = grid.table.rows[expand.rowIndex-1];
+                } 
+            } else {
+                row.cells[grid.focusedCol].tabIndex = "-1";
+            }
+            if (expand && expand.getAttribute("ca")=="ti") {
+                expand.cells[0].tabIndex ="0";
+                expand.cells[0].focus();
+                grid.focusedRow = expand.rowIndex;
+            } else if (expand){
+                expand.cells[grid.focusedCol].tabIndex ="0";
+                expand.cells[grid.focusedCol].focus();
+                grid.focusedRow = expand.rowIndex;
+            }
+        }
+        function focusNextCell(grid) {
+            var row = grid.table.rows[grid.focusedRow];
+            if (row.cells.length>1) {
+                if (grid.focusedCol<row.cells.length-1) {
+                    var cell=row.cells[grid.focusedCol];
+                    cell.tabIndex="-1";
+                    grid.focusedCol++;
+                    var cell=row.cells[grid.focusedCol];
+                    cell.tabIndex="0";
+                    cell.focus();
+                }
+            }
+        }
+        
+        function focusPreviousCell(grid) {
+            var row = grid.table.rows[grid.focusedRow];
+            if (row.cells.length>1) {
+                if (grid.focusedCol>0) {
+                    var cell=row.cells[grid.focusedCol];
+                    cell.tabIndex="-1";
+                    grid.focusedCol--;
+                    var cell=row.cells[grid.focusedCol];
+                    cell.tabIndex="0";
+                    cell.focus();
+                }
+            }
+        }
+        
+        function handleKeyDown(id, evt) { 
+            var grid = getGrid(id);
+                keyCode = evt.keyCode,
+                evtTarget = evt.target ? evt.target : evt.srcElement;
+            if (keyCode == sap.ui.keycodes.ARROW_LEFT) {
+                focusPreviousCell(grid);
+            } else if (keyCode == sap.ui.keycodes.ARROW_RIGHT) {
+                focusNextCell(grid);
+            } else if (keyCode == sap.ui.keycodes.ARROW_UP) {
+                focusPreviousRow(grid);
+            } else if (keyCode == sap.ui.keycodes.ARROW_DOWN) {
+                focusNextRow(grid);
+            } else if (keyCode == sap.ui.keycodes.HOME && evt.ctrlKey) {
+                
+            } else if (keyCode == sap.ui.keycodes.END && evt.ctrlKey) {
+                
+            } else if (keyCode == sap.ui.keycodes.HOME) {
+                
+            } else if (keyCode == sap.ui.keycodes.END) {
+            
+            } else if (keyCode == sap.ui.keycodes.SPACE) {
+                row = grid.table.rows[grid.focusedRow];
+                toggleItem(row,grid);
+            }   
+            if (keyCode != sap.ui.keycodes.TAB){
+                evt.cancelBubble = true;
+                if (evt.preventDefault)
+                    evt.preventDefault();
+                if (evt.stopPropagation) {
+                    evt.stopPropagation();
+                } else {
+                    evt.cancelBubble = true;
+                    evt.returnValue = false;
+                }  
+            } else {
+                grid.table.tabIndex = "0";
+                blurCell(grid.focusedCell,grid);
+               
+            }
+        }
+    </script>
+
+</head>
+<body>       
+    <h3 id="foo">Title</h3>
+    <table aria-labelledby="foo" id="grid-1" border="1" tabindex="0" onfocus="handleFocus('grid-1',event);" onclick="handleClick('grid-1',event);" onkeydown="handleKeyDown('grid-1',event);" role="treegrid" style="width:450;">
+        <colgroup><col style="width:150">
+        <col style="width:150">
+        <col style="width:150">
+        </colgroup><thead>
+            <tr role="row">
+             <th id="grid-1-isbn_id">ISBN</th><th id="grid-1-author_id">Author</th><th id="grid-1-price_id">Price</th>
+            </tr>
+        </thead>
+  <tbody>
+           <tr ca="to" role="row" aria-expanded="false" aria-level="1">
+                <td headers="grid-1-title_id" colspan="3" aria-labelledby="grid-1-title_id">
+                   <span>+</span><strong>A Question of Love</strong></td>
+           </tr>
+           <tr ca="ti" role="row" style="display:none" aria-hidden="true" aria-level="2">
+                <td headers="grid-1-isbn_id" role="gridcell" aria-labelledby="grid-1-isbn_id">
+                    978-3-453-40540-0</td>
+                <td headers="grid-1-author_id" role="gridcell" aria-labelledby="grid-1-author_id">
+                    Nora Roberts</td>
+                <td headers="grid-1-price_id" role="gridcell" aria-labelledby="grid-1-price_id">
+                    $ 9.99</td>
+            </tr>
+            <tr ca="to" role="row" aria-expanded="false" aria-level="1">
+                <td headers="grid-1-title_id" role="gridcell" colspan="3" aria-labelledby="grid-1-title_id">
+                    <span>+</span> <strong>Piece of Peace</strong></td>
+            </tr>            
+            <tr ca="ti" role="row" style="display:none" aria-hidden="true" aria-level="2">
+                <td headers="grid-1-isbn_id" role="gridcell" aria-labelledby="grid-1-isbn_id">
+                    978-3-453-477740-0</td>
+                <td headers="grid-1-author_id" role="gridcell" aria-labelledby="grid-1-author_id">
+                    Gunther Poison</td>
+                <td headers="grid-1-price_id" role="gridcell" aria-labelledby="grid-1-price_id">
+                    $ 13.95</td>
+            </tr>            
+            <tr ca="to" role="row" aria-expanded="false" aria-level="1">
+                <td headers="name_id" role="gridcell" colspan="3" aria-labelledby="grid-1-title_id">
+                  <span>+</span> <strong>International Law</strong></td>
+            </tr>            
+            <tr ca="ti" role="row" style="display:none" aria-hidden="true" aria-level="2">
+                <td headers="grid-1-isbn_id" role="gridcell" aria-labelledby="grid-1-isbn_id">
+                    029-11-131978-07-0</td>
+                <td headers="grid-1-author_id" role="gridcell" aria-labelledby="grid-1-author_id">
+                    Daniela Hunter</td>
+                <td headers="grid-1-price_id" role="gridcell" aria-labelledby="grid-1-price_id">
+                    $ 11.95</td>
+            </tr>            
+            <tr ca="to" role="row" aria-expanded="false" aria-level="1">
+                <td headers="name_id" role="gridcell" colspan="3" aria-labelledby="grid-1-title_id">
+                  <span>+</span> <strong>My Name is Benny</strong></td>
+            </tr>            
+            <tr ca="ti" role="row" style="display:none" aria-hidden="true" aria-level="2">
+                <td headers="grid-1-isbn_id" role="gridcell" aria-labelledby="grid-1-isbn_id">
+                    007-01-206603-00</td>
+                <td headers="grid-1-author_id" role="gridcell" aria-labelledby="grid-1-author_id">
+                    Benjamin Schutz</td>
+                <td headers="grid-1-price_id" role="gridcell" aria-labelledby="grid-1-price_id">
+                    $ 12.50</td>
+            </tr>            
+            <tr ca="to" role="row" aria-expanded="false" aria-level="1">
+                <td headers="name_id" role="gridcell" colspan="3" aria-labelledby="grid-1-title_id">
+                  <span>+</span> <strong>The Charming Butler</strong></td>
+            </tr>            
+            <tr ca="ti" role="row" style="display:none" aria-hidden="true" aria-level="2">
+                <td headers="grid-1-isbn_id" role="gridcell" aria-labelledby="grid-1-isbn_id">
+                    007-02-206983-77</td>
+                <td headers="grid-1-author_id" role="gridcell" aria-labelledby="grid-1-author_id">
+                    Naomi Jackson</td>
+                <td headers="grid-1-price_id" role="gridcell" aria-labelledby="grid-1-price_id">
+                    $ 14.50</td>
+            </tr>            
+            <tr ca="to" role="row" aria-expanded="false" aria-level="1">
+                <td headers="name_id" role="gridcell" colspan="3" aria-labelledby="grid-1-title_id">
+                  <span>+</span> <strong>Lofts</strong></td>
+            </tr>            
+            <tr ca="ti" role="row" style="display:none" aria-hidden="true" aria-level="2">
+                <td headers="grid-1-isbn_id" role="gridcell" aria-labelledby="grid-1-isbn_id">
+                    010-12-656922-70</td>
+                <td headers="grid-1-author_id" role="gridcell" aria-labelledby="grid-1-author_id">
+                    Bud Atkinson</td>
+                <td headers="grid-1-price_id" role="gridcell" aria-labelledby="grid-1-price_id">
+                    $ 22.99</td>
+            </tr>            
+            <tr ca="to" role="row" aria-expanded="false" aria-level="1">
+                <td headers="name_id" role="gridcell" colspan="3" aria-labelledby="grid-1-title_id">
+                  <span>+</span> <strong>DOM Objects</strong></td>
+            </tr>            
+            <tr ca="ti" role="row" style="display:none" aria-hidden="true" aria-level="2">
+                <td headers="grid-1-isbn_id" role="gridcell" aria-labelledby="grid-1-isbn_id">
+                    234-12-081733-67</td>
+                <td headers="grid-1-author_id" role="gridcell" aria-labelledby="grid-1-author_id">
+                    Nurdogan Ghant</td>
+                <td headers="grid-1-price_id" role="gridcell" aria-labelledby="grid-1-price_id">
+                    $ 29.10</td>
+            </tr>            
+            <tr ca="to" role="row" aria-expanded="false" aria-level="1">
+                <td headers="name_id" role="gridcell" colspan="3" aria-labelledby="grid-1-title_id">
+                   <span>+</span> <strong>One Man Show</strong></td>
+            </tr>            
+            <tr ca="ti" role="row" style="display:none" aria-hidden="true" aria-level="2">
+                <td headers="grid-1-isbn_id" role="gridcell" aria-labelledby="grid-1-isbn_id">
+                    282-02-1839812-72</td>
+                <td headers="grid-1-author_id" role="gridcell" aria-labelledby="grid-1-author_id">
+                    Rose Wood</td>
+                <td headers="grid-1-price_id" role="gridcell" aria-labelledby="grid-1-price_id">
+                    $9.30</td>
+            </tr>            
+            <tr ca="to" role="row" aria-expanded="false" aria-level="1">
+                <td headers="name_id" role="gridcell" colspan="3" aria-labelledby="grid-1-title_id">
+                   <span>+</span> <strong>Sugar Fly</strong></td>
+            </tr>            
+            <tr ca="ti" role="row" style="display:none" aria-hidden="true" aria-level="2">
+                <td headers="grid-1-isbn_id" role="gridcell" aria-labelledby="grid-1-isbn_id">
+                    081-01-123093-02</td>
+                <td headers="grid-1-author_id" role="gridcell" aria-labelledby="grid-1-author_id">
+                    Naomi Jackson</td>
+                <td headers="grid-1-price_id" role="gridcell" aria-labelledby="grid-1-price_id">
+                    $ 20.50</td>
+            </tr>            
+        </tbody>
+    </table>
+</body>
+</html>

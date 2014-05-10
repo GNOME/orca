@@ -1,0 +1,129 @@
+<html>
+<head>
+<title>ARIA Progress Bar</title>
+<style type="text/css">
+<!--
+span[role="progressbar"] { color: red; font-family: courier; font-size: .1em;}
+*[aria-hidden] { visibility: hidden; }
+div[role="group"] { border: 3px solid black; width: 50%; }
+-->
+</style>
+<script>
+<!--
+function displayProgress(progress)
+{
+  var valueNow = parseInt(progress.getAttribute("aria-valuenow"));
+  var valueMin = parseInt(progress.getAttribute("aria-valuemin"));
+  var valueMax = parseInt(progress.getAttribute("aria-valuemax"));
+
+  // I'm sure there's something better than using a loop, but I don't feel like looking it up right now
+  var progressText = "|";
+  var count = valueMin;
+  for (; count < valueNow; count += 2) {
+    progressText += "*";
+  }
+  for (; count < valueMax; count += 2) {
+    progressText += "-";
+  }
+  progressText += "|";
+  progress.firstChild.data = progressText;
+  return false;
+}
+
+var gProgressId = "progress1"; // for now just a global to store the progress id
+var gbUpdate = false;
+var gTimerId = null;
+
+function updateProgress()
+{
+  // will update the first time it is drawn but so what - this is a prototype !
+  var progress = document.getElementById(gProgressId);
+  var valueNow = parseInt(progress.getAttribute("aria-valuenow"));
+  var valueMin = parseInt(progress.getAttribute("aria-valuemin"));
+  var valueMax = parseInt(progress.getAttribute("aria-valuemax"));
+  valueNow += 5;
+  if (valueNow < valueMin) {
+    valueNow = valueMin;
+  }
+  if (valueNow > valueMax) {
+    valueNow = valueMax;  //loop around
+  }
+
+  progress.setAttribute("aria-valuenow", valueNow);
+
+  displayProgress(progress);
+
+  if (valueNow == valueMax) {
+    stopProgress();
+    var schedule = document.getElementById("schedule");
+    schedule.removeAttribute("aria-hidden");
+    schedule.className += ""; // Force IE7 reflow
+
+  }
+}
+
+function startProgress()
+{
+  gbUpdate = true;
+  gTimerId = setInterval("updateProgress();", 400);
+  document.getElementById("disabled").removeAttribute("disabled");
+}
+
+function stopProgress()
+{
+  gbUpdate = false;
+  if ( gTimerId != null) {
+    clearInterval(gTimerId);
+    gTimerId = null;
+  }
+  document.getElementById("disabled").setAttribute("disabled", "true");
+}
+-->
+</script><style type="text/css"></style>
+</head>
+
+<body onload="displayProgress(document.getElementById(gProgressId));">
+  <p>Here is  a progress bar that you can start and stop using the buttons below. Both the progress bar and the schedule are within an assertive live region.</p>
+
+  <p style="margin-top:2em;">
+    <button onclick="startProgress();">Load schedule</button><span style="padding-left:5em;">&nbsp;</span>
+    <button id="disabled" onclick="stopProgress();" disabled="true">Cancel</button>
+  </p>
+  <p></p>
+  <div role="group" aria-live="assertive" aria-labelledby="scheduleLabel">
+    <h1 id="scheduleLabel">My schedule</h1>
+    <p> Loading schedule ...
+    <span role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="50" id="progress1" title="My progress">|-------------------------|</span>
+    <table id="schedule" aria-hidden="true" border="1" cellpadding="3" cellspacing="0">
+    <tbody><tr>
+      <td>Monday</td>
+      <td>Work</td>
+    </tr>
+    <tr>
+      <td>Tuesday</td>
+      <td>Work</td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>Work</td>
+    </tr>
+    <tr>
+      <td>Thursday</td>
+      <td>Work</td>
+    </tr>
+    <tr>
+      <td>Friday</td>
+      <td>Work</td>
+    </tr>
+    <tr>
+      <td>Saturday</td>
+      <td>Play</td>
+    </tr>
+    <tr>
+      <td>Sunday</td>
+      <td>Play</td>
+    </tr>
+    </tbody></table>
+  </p></div>
+</body>
+</html>
