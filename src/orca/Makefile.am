@@ -19,6 +19,7 @@ orca_python_PYTHON = \
 	chat.py \
 	chnames.py \
 	cmdnames.py \
+	colornames.py \
 	common_keyboardmap.py \
 	debug.py \
 	desktop_keyboardmap.py \

@@ -31,10 +31,15 @@ import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.default as default
 
+from .script_utilities import Utilities
+
 class Script(default.Script):
 
     def __init__(self, app):
         default.Script.__init__(self, app)
+
+    def getUtilities(self):
+        return Utilities(self)
 
     def onActiveDescendantChanged(self, event):
         """Callback for object:active-descendant-changed accessibility events."""

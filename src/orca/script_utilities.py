@@ -2720,3 +2720,10 @@ class Utilities:
 
     def _isNonModalPopOver(self, obj):
         return False
+
+    def rgbFromString(self, attributeValue):
+        regex = re.compile("rgb|[^\w,]", re.IGNORECASE)
+        string = re.sub(regex, "", attributeValue)
+        red, green, blue = string.split(",")
+
+        return int(red), int(green), int(blue)

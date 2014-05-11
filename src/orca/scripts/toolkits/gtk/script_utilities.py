@@ -26,6 +26,7 @@ __copyright__ = "Copyright (c) 2013-2014 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
+import re
 
 import orca.script_utilities as script_utilities
 
@@ -83,3 +84,10 @@ class Utilities(script_utilities.Utilities):
                 return True
 
         return False
+
+    def rgbFromString(self, attributeValue):
+        regex = re.compile("rgb|[^\w,]", re.IGNORECASE)
+        string = re.sub(regex, "", attributeValue)
+        red, green, blue = string.split(",")
+
+        return int(red) >> 8, int(green) >> 8, int(blue) >> 8

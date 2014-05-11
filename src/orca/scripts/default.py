@@ -37,6 +37,7 @@ from gi.repository import Gtk, Gdk
 
 import pyatspi
 import orca.braille as braille
+import orca.colornames as colornames
 import orca.cmdnames as cmdnames
 import orca.debug as debug
 import orca.eventsynthesizer as eventsynthesizer
@@ -3348,7 +3349,11 @@ class Script(script.Script):
                         localizedValue = \
                             attribute.split(",")[0].strip().strip('"')
                     elif key.endswith("color"):
-                        localizedValue = localizedValue.replace("rgb", "RGB")
+                        r, g, b = self.utilities.rgbFromString(localizedValue)
+                        if _settingsManager.getSetting('useColorNames'):
+                            localizedValue = colornames.rgbToName(r, g, b)
+                        else:
+                            localizedValue = "%i %i %i" % (r, g, b)
 
                     line = line or (localizedKey + " " + localizedValue)
                     self.speakMessage(line)

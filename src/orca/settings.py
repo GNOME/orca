@@ -112,6 +112,7 @@ userCustomizableSettings = [
     "spellcheckSpellError",
     "spellcheckSpellSuggestion",
     "spellcheckPresentContext",
+    "useColorNames",
 ]
 
 excludeKeys = ["pronunciations",
@@ -830,3 +831,5 @@ tty = 7
 spellcheckSpellError = True
 spellcheckSpellSuggestion = True
 spellcheckPresentContext = True
+
+useColorNames = True
