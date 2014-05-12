@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2014-01-28 18:53+0000\n"
-"PO-Revision-Date: 2014-01-31 23:04+0200\n"
+"POT-Creation-Date: 2014-05-12 10:05+0000\n"
+"PO-Revision-Date: 2014-05-12 23:00+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -1857,6 +1857,23 @@ msgstr "apatinis indeksas skliaustų pabaiga"
 msgid "right-pointing arrowhead"
 msgstr "trikampės dešininės rodyklės formos ženklelis"
 
+#. Translators: This refers to U+FFFC, the "object replacement character."
+#. This character appears in the accessible text of documents and serves as
+#. indication of the presence of an object within the text (e.g. an image
+#. or form field inside a paragraph). In an application which has full
+#. accessibility support for embedded objects, Orca should present the object
+#. and NOT speak this character. However, for applications where this support
+#. is missing, the user can arrow to this character and Orca should not be
+#. silent. This string is what Orca will speak to the user should this occur.
+#. More information about this character can be found at:
+#. * http://www.fileformat.info/info/unicode/char/fffc/index.htm
+#. * http://en.wikipedia.org/wiki/Specials_(Unicode_block)
+#.
+#: ../src/orca/chnames.py:874
+#| msgid "Goes to next character."
+msgid "object replacement character"
+msgstr "objekto pakaitinis simbolis"
+
 #. Translators: this command will move the mouse pointer to the current item
 #. without clicking on it.
 #: ../src/orca/cmdnames.py:37
@@ -2932,7 +2949,6 @@ msgstr "Perkelią į kitą sritį."
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: ../src/orca/cmdnames.py:835
-#| msgid "Displays a list of links."
 msgid "Displays a list of landmarks."
 msgstr "Parodo žymelių sąrašą."
 
@@ -2959,176 +2975,1324 @@ msgstr "Parodo didelių objektų sąrašą."
 
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:853
+#| msgid "Goes to previous line."
+msgid "Goes to previous link."
+msgstr "Pereina prie ankstesnio saito."
+
+#. Translators: this is for navigating among links in a document.
+#: ../src/orca/cmdnames.py:856
+#| msgid "Goes to next line."
+msgid "Goes to next link."
+msgstr "Pereina prie kito saito."
+
+#. Translators: this is for navigating among links in a document.
+#: ../src/orca/cmdnames.py:859
 msgid "Displays a list of links."
 msgstr "Parodo nuorodų sąrašą."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:856
+#: ../src/orca/cmdnames.py:862
 msgid "Goes to previous list."
 msgstr "Perkelia prie ankstesnio sąrašo."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:859
+#: ../src/orca/cmdnames.py:865
 msgid "Goes to next list."
 msgstr "Perkelia prie sekančio sąrašo."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:862
+#: ../src/orca/cmdnames.py:868
 msgid "Displays a list of lists."
 msgstr "Parodo sąrašų sąrašą."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:865
+#: ../src/orca/cmdnames.py:871
 msgid "Goes to previous list item."
 msgstr "Perkelia prie ankstesnio sąrašo elemento."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:868
+#: ../src/orca/cmdnames.py:874
 msgid "Goes to next list item."
 msgstr "Perkelia prie sekančio sąrašo elemento."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:871
+#: ../src/orca/cmdnames.py:877
 msgid "Displays a list of list items."
 msgstr "Parodo sąrašo elementų sąrašą."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:876
+#: ../src/orca/cmdnames.py:882
 msgid "Goes to previous live region."
 msgstr "Perkelią į ankstesnę tiesioginę sritį."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:881
+#: ../src/orca/cmdnames.py:887
 msgid "Goes to next live region."
 msgstr "Perkelią į kitą tiesioginę sritį."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:886
+#: ../src/orca/cmdnames.py:892
 msgid "Goes to the last live region which made an announcement."
 msgstr "Perkelią į paskutinę tiesioginę sritį, atlikusią pranešimą."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:889
+#: ../src/orca/cmdnames.py:895
 msgid "Goes to previous paragraph."
 msgstr "Perkelia prie ankstesnės pastraipos."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:892
+#: ../src/orca/cmdnames.py:898
 msgid "Goes to next paragraph."
 msgstr "Perkelia prie kitos pastraipos."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:895
+#: ../src/orca/cmdnames.py:901
 msgid "Displays a list of paragraphs."
 msgstr "Parodo pastraipų sąrašą."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:898
+#: ../src/orca/cmdnames.py:904
 msgid "Goes to previous radio button."
 msgstr "Perkelia prie ankstesnio radijo mygtuko."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:901
+#: ../src/orca/cmdnames.py:907
 msgid "Goes to next radio button."
 msgstr "Perkelia prie kito radijo mygtuko."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:904
+#: ../src/orca/cmdnames.py:910
 msgid "Displays a list of radio buttons."
 msgstr "Parodo radijo mygtukų sąrašą."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:908
+#: ../src/orca/cmdnames.py:914
 msgid "Goes to previous separator."
 msgstr "Perkelia prie ankstesnio skirtuko."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:912
+#: ../src/orca/cmdnames.py:918
 msgid "Goes to next separator."
 msgstr "Perkelia prie kito skirtuko."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:915
+#: ../src/orca/cmdnames.py:921
 msgid "Goes to previous table."
 msgstr "Perkelia prie ankstesnės lentelės."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:918
+#: ../src/orca/cmdnames.py:924
 msgid "Goes to next table."
 msgstr "Perkelia prie sekančios lentelės."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:921
+#: ../src/orca/cmdnames.py:927
 msgid "Displays a list of tables."
 msgstr "Parodo lentelių sąrašą."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:924
+#: ../src/orca/cmdnames.py:930
 msgid "Goes down one cell."
 msgstr "Perkelia vienu langeliu žemyn."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:927
+#: ../src/orca/cmdnames.py:933
 msgid "Goes to the first cell in a table."
 msgstr "Perkelia į pirmąjį lentelės langelį."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:930
+#: ../src/orca/cmdnames.py:936
 msgid "Goes to the last cell in a table."
 msgstr "Perkelia į paskutinįjį lentelės langelį."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:933
+#: ../src/orca/cmdnames.py:939
 msgid "Goes left one cell."
 msgstr "Perkelia vienu langeliu kairėn."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:936
+#: ../src/orca/cmdnames.py:942
 msgid "Goes right one cell."
 msgstr "Perkelia vienu langeliu dešinėn."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:939
+#: ../src/orca/cmdnames.py:945
 msgid "Goes up one cell."
 msgstr "Perkelia vienu langeliu aukštyn."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:942
+#: ../src/orca/cmdnames.py:948
 msgid "Goes to previous unvisited link."
 msgstr "Perkelia prie ankstesnės neaplankytos nuorodos."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:945
+#: ../src/orca/cmdnames.py:951
 msgid "Goes to next unvisited link."
 msgstr "Perkelia prie sekančios neaplankytos nuorodos."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:948
+#: ../src/orca/cmdnames.py:954
 msgid "Displays a list of unvisited links."
 msgstr "Parodo neaplankytų nuorodų sąrašą."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:951
+#: ../src/orca/cmdnames.py:957
 msgid "Goes to previous visited link."
 msgstr "Perkelia prie ankstesnės aplankytos nuorodos."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:954
+#: ../src/orca/cmdnames.py:960
 msgid "Goes to next visited link."
 msgstr "Perkelia prie sekančios aplankytos nuorodos."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:957
+#: ../src/orca/cmdnames.py:963
 msgid "Displays a list of visited links."
 msgstr "Parodo neaplankytų nuorodų sąrašą."
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:35
+msgctxt "color name"
+msgid "alice blue"
+msgstr "alice blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:40
+msgctxt "color name"
+msgid "antique white"
+msgstr "antique white"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:45
+msgctxt "color name"
+msgid "aquamarine"
+msgstr "aquamarine"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:50
+msgctxt "color name"
+msgid "azure"
+msgstr "azure"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:55
+msgctxt "color name"
+msgid "beige"
+msgstr "beige"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:60
+msgctxt "color name"
+msgid "bisque"
+msgstr "bisque"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:65
+#| msgctxt "textattr"
+#| msgid "black"
+msgctxt "color name"
+msgid "black"
+msgstr "juoda"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:70
+#| msgid "black diamond"
+msgctxt "color name"
+msgid "blanched almond"
+msgstr "blanched almond"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:75
+msgctxt "color name"
+msgid "blue"
+msgstr "mėlyna"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:80
+msgctxt "color name"
+msgid "blue violet"
+msgstr "mėlynai violetinė"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:85
+msgctxt "color name"
+msgid "brown"
+msgstr "ruda"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:90
+msgctxt "color name"
+msgid "burlywood"
+msgstr "burlywood"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:95
+msgctxt "color name"
+msgid "cadet blue"
+msgstr "cadet blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:100
+msgctxt "color name"
+msgid "chartreuse"
+msgstr "chartreuse"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:105
+msgctxt "color name"
+msgid "chocolate"
+msgstr "šokoladinė"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:110
+msgctxt "color name"
+msgid "coral"
+msgstr "koralo"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:115
+msgctxt "color name"
+msgid "cornflower blue"
+msgstr "cornflower blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:120
+msgctxt "color name"
+msgid "cornsilk"
+msgstr "cornsilk"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:125
+msgctxt "color name"
+msgid "crimson"
+msgstr "crimson"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:130
+msgctxt "color name"
+msgid "cyan"
+msgstr "žydra"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:135
+msgctxt "color name"
+msgid "dark blue"
+msgstr "tamsiai mėlyna"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:140
+msgctxt "color name"
+msgid "dark cyan"
+msgstr "tamsiai žydra"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:145
+msgctxt "color name"
+msgid "dark goldenrod"
+msgstr "dark goldenrod"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:150
+#| msgid "a grave"
+msgctxt "color name"
+msgid "dark gray"
+msgstr "tamsiai pilka"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:155
+msgctxt "color name"
+msgid "dark green"
+msgstr "tamsiai žalia"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:160
+msgctxt "color name"
+msgid "dark khaki"
+msgstr "tamsi chaki"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:165
+msgctxt "color name"
+msgid "dark magenta"
+msgstr "tamsiai violetinė"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:170
+msgctxt "color name"
+msgid "dark olive green"
+msgstr "tamsi aliejinė žalia"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:175
+msgctxt "color name"
+msgid "dark orange"
+msgstr "tamsiai oranžinė"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:180
+msgctxt "color name"
+msgid "dark orchid"
+msgstr "dark orchid"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:185
+msgctxt "color name"
+msgid "dark red"
+msgstr "tamsiai raudona"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:190
+msgctxt "color name"
+msgid "dark salmon"
+msgstr "dark salmon"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:195
+msgctxt "color name"
+msgid "dark sea green"
+msgstr "dark sea green"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:200
+msgctxt "color name"
+msgid "dark slate blue"
+msgstr "dark slate blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:205
+msgctxt "color name"
+msgid "dark slate gray"
+msgstr "dark slate gray"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:210
+msgctxt "color name"
+msgid "dark turquoise"
+msgstr "dark turquoise"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:215
+msgctxt "color name"
+msgid "dark violet"
+msgstr "tamsiai violetinė"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:220
+msgctxt "color name"
+msgid "deep pink"
+msgstr "deep pink"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:225
+msgctxt "color name"
+msgid "deep sky blue"
+msgstr "deep sky blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:230
+#| msgid "i grave"
+msgctxt "color name"
+msgid "dim gray"
+msgstr "blyški pilka"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:235
+msgctxt "color name"
+msgid "dodger blue"
+msgstr "dodger blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:240
+msgctxt "color name"
+msgid "fire brick"
+msgstr "fire brick"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:245
+msgctxt "color name"
+msgid "floral white"
+msgstr "floral white"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:250
+msgctxt "color name"
+msgid "forest green"
+msgstr "forest green"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:255
+msgctxt "color name"
+msgid "fuchsia"
+msgstr "fuchsia"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:260
+msgctxt "color name"
+msgid "gainsboro"
+msgstr "gainsboro"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#HTML_color_names.
+#: ../src/orca/colornames.py:265
+msgctxt "color name"
+msgid "ghost white"
+msgstr "ghost white"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:270
+msgctxt "color name"
+msgid "gold"
+msgstr "auksinė"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:275
+msgctxt "color name"
+msgid "goldenrod"
+msgstr "goldenrod"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:280
+#| msgid "grayed"
+msgctxt "color name"
+msgid "gray"
+msgstr "pilka"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:285
+#| msgid "degrees"
+msgctxt "color name"
+msgid "green"
+msgstr "žalia"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:290
+msgctxt "color name"
+msgid "green yellow"
+msgstr "žalsvai geltona"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:295
+msgctxt "color name"
+msgid "honeydew"
+msgstr "honeydew"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:300
+msgctxt "color name"
+msgid "hot pink"
+msgstr "hot pink"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:305
+#| msgid "Hindi Grade 1"
+msgctxt "color name"
+msgid "indian red"
+msgstr "indian red"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:310
+msgctxt "color name"
+msgid "indigo"
+msgstr "indigo"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:315
+msgctxt "color name"
+msgid "ivory"
+msgstr "ivory"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:320
+msgctxt "color name"
+msgid "khaki"
+msgstr "chaki"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:325
+msgctxt "color name"
+msgid "lavender"
+msgstr "lavender"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:330
+msgctxt "color name"
+msgid "lavender blush"
+msgstr "lavender blush"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:335
+msgctxt "color name"
+msgid "lawn green"
+msgstr "lawn green"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:340
+msgctxt "color name"
+msgid "lemon chiffon"
+msgstr "lemon chiffon"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:345
+#| msgid "right brace"
+msgctxt "color name"
+msgid "light blue"
+msgstr "šviesiai mėlyna"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:350
+#| msgid "right control"
+msgctxt "color name"
+msgid "light coral"
+msgstr "šviesi koralo"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:355
+#| msgid "right paren"
+msgctxt "color name"
+msgid "light cyan"
+msgstr "šviesiai žydra"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:360
+msgctxt "color name"
+msgid "light goldenrod yellow"
+msgstr "light goldenrod yellow"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:365
+#| msgid "right brace"
+msgctxt "color name"
+msgid "light gray"
+msgstr "šviesiai pilka"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:370
+#| msgid "right paren"
+msgctxt "color name"
+msgid "light green"
+msgstr "šviesiai žalia"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:375
+#| msgid "right paren"
+msgctxt "color name"
+msgid "light pink"
+msgstr "šviesiai rožinė"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:380
+#| msgid "right alt"
+msgctxt "color name"
+msgid "light salmon"
+msgstr "light salmon"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:385
+#| msgid "right paren"
+msgctxt "color name"
+msgid "light sea green"
+msgstr "light sea green"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:390
+#| msgid "right super"
+msgctxt "color name"
+msgid "light sky blue"
+msgstr "light sky blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:395
+msgctxt "color name"
+msgid "light slate gray"
+msgstr "light slate gray"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:400
+msgctxt "color name"
+msgid "light steel blue"
+msgstr "light steel blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:405
+#| msgid "right arrow"
+msgctxt "color name"
+msgid "light yellow"
+msgstr "light yellow"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:410
+msgctxt "color name"
+msgid "lime"
+msgstr "lime"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:415
+msgctxt "color name"
+msgid "lime green"
+msgstr "lime green"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:420
+#| msgid "newline"
+msgctxt "color name"
+msgid "linen"
+msgstr "linen"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:425
+msgctxt "color name"
+msgid "magenta"
+msgstr "violetinė"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:430
+msgctxt "color name"
+msgid "maroon"
+msgstr "bordo"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:435
+msgctxt "color name"
+msgid "medium aquamarine"
+msgstr "medium aquamarine"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:440
+msgctxt "color name"
+msgid "medium blue"
+msgstr "medium blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:445
+msgctxt "color name"
+msgid "medium orchid"
+msgstr "medium orchid"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:450
+msgctxt "color name"
+msgid "medium purple"
+msgstr "medium purple"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:455
+msgctxt "color name"
+msgid "medium sea green"
+msgstr "medium sea green"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:460
+msgctxt "color name"
+msgid "medium slate blue"
+msgstr "medium slate blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:465
+msgctxt "color name"
+msgid "medium spring green"
+msgstr "medium spring green"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:470
+msgctxt "color name"
+msgid "medium turquoise"
+msgstr "medium turquoise"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:475
+msgctxt "color name"
+msgid "medium violet red"
+msgstr "medium violet red"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:480
+msgctxt "color name"
+msgid "midnight blue"
+msgstr "midnight blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:485
+msgctxt "color name"
+msgid "mint cream"
+msgstr "mint cream"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:490
+msgctxt "color name"
+msgid "misty rose"
+msgstr "misty rose"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:495
+msgctxt "color name"
+msgid "moccasin"
+msgstr "moccasin"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:500
+msgctxt "color name"
+msgid "navajo white"
+msgstr "navajo white"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:505
+msgctxt "color name"
+msgid "navy"
+msgstr "navy"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:510
+msgctxt "color name"
+msgid "old lace"
+msgstr "old lace"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:515
+msgctxt "color name"
+msgid "olive"
+msgstr "olive"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:520
+msgctxt "color name"
+msgid "olive drab"
+msgstr "olive drab"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:525
+msgctxt "color name"
+msgid "orange"
+msgstr "oranžinė"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:530
+msgctxt "color name"
+msgid "orange red"
+msgstr "raudonai oranžinė"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:535
+msgctxt "color name"
+msgid "orchid"
+msgstr "orchid"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:540
+msgctxt "color name"
+msgid "pale goldenrod"
+msgstr "pale goldenrod"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:545
+msgctxt "color name"
+msgid "pale green"
+msgstr "pale green"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:550
+msgctxt "color name"
+msgid "pale turquoise"
+msgstr "pale turquoise"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:555
+msgctxt "color name"
+msgid "pale violet red"
+msgstr "pale violet red"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:560
+msgctxt "color name"
+msgid "papaya whip"
+msgstr "papaya whip"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:565
+msgctxt "color name"
+msgid "peach puff"
+msgstr "peach puff"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:570
+msgctxt "color name"
+msgid "peru"
+msgstr "peru"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:575
+msgctxt "color name"
+msgid "pink"
+msgstr "rožinė"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:580
+msgctxt "color name"
+msgid "plum"
+msgstr "plum"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:585
+msgctxt "color name"
+msgid "powder blue"
+msgstr "powder blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:590
+msgctxt "color name"
+msgid "purple"
+msgstr "purpurinė"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:595
+#| msgid "tre"
+msgctxt "color name"
+msgid "red"
+msgstr "raudona"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:600
+msgctxt "color name"
+msgid "rosy brown"
+msgstr "rožinė ruda"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:605
+msgctxt "color name"
+msgid "royal blue"
+msgstr "royal blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:610
+msgctxt "color name"
+msgid "saddle brown"
+msgstr "saddle brown"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:615
+msgctxt "color name"
+msgid "salmon"
+msgstr "salmon"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:620
+msgctxt "color name"
+msgid "sandy brown"
+msgstr "sandy brown"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:625
+#| msgid "degrees"
+msgctxt "color name"
+msgid "sea green"
+msgstr "sea green"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:630
+msgctxt "color name"
+msgid "seashell"
+msgstr "seashell"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:635
+msgctxt "color name"
+msgid "sienna"
+msgstr "sienna"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:640
+msgctxt "color name"
+msgid "silver"
+msgstr "sidabrinė"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:645
+msgctxt "color name"
+msgid "sky blue"
+msgstr "sky blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:650
+msgctxt "color name"
+msgid "slate blue"
+msgstr "slate blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:655
+msgctxt "color name"
+msgid "slate gray"
+msgstr "slate gray"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:660
+msgctxt "color name"
+msgid "snow"
+msgstr "snow"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:665
+msgctxt "color name"
+msgid "spring green"
+msgstr "spring green"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:670
+msgctxt "color name"
+msgid "steel blue"
+msgstr "steel blue"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:675
+#| msgid "btn"
+msgctxt "color name"
+msgid "tan"
+msgstr "tan"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:680
+msgctxt "color name"
+msgid "teal"
+msgstr "teal"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:685
+msgctxt "color name"
+msgid "thistle"
+msgstr "thistle"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:690
+msgctxt "color name"
+msgid "tomato"
+msgstr "tomato"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:695
+msgctxt "color name"
+msgid "turquoise"
+msgstr "turquoise"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:700
+msgctxt "color name"
+msgid "violet"
+msgstr "violetinė"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:705
+msgctxt "color name"
+msgid "wheat"
+msgstr "wheat"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:710
+#| msgid "white space"
+msgctxt "color name"
+msgid "white"
+msgstr "balta"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:715
+#| msgid "white space"
+msgctxt "color name"
+msgid "white smoke"
+msgstr "white smoke"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:720
+msgctxt "color name"
+msgid "yellow"
+msgstr "geltona"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:725
+msgctxt "color name"
+msgid "yellow green"
+msgstr "gelsvai žalia"
 
 #. Translators: this is the action name for
 #. the 'toggle' action. It must be the same
@@ -3136,9 +4300,8 @@ msgstr "Parodo neaplankytų nuorodų sąrašą."
 #.
 #: ../src/orca/flat_review.py:1050 ../src/orca/generator.py:475
 #: ../src/orca/generator.py:741 ../src/orca/generator.py:783
-#: ../src/orca/generator.py:829
-#: ../src/orca/scripts/apps/evolution/speech_generator.py:122
-#: ../src/orca/tutorialgenerator.py:558 ../src/orca/tutorialgenerator.py:598
+#: ../src/orca/generator.py:829 ../src/orca/tutorialgenerator.py:558
+#: ../src/orca/tutorialgenerator.py:598
 msgid "toggle"
 msgstr "perjungti"
 
@@ -3191,36 +4354,26 @@ msgstr "_Pereiti prie"
 msgid "_OK"
 msgstr "_Gerai"
 
-#. Translators: Orca has had to implement its own caret navigation model to work
-#. around issues in Gecko/Firefox. In some versions of Firefox, we must perform
-#. a focus grab on each object being navigated in order for things to work as
-#. expected; in other versions of Firefox, we must avoid doing so in order for
-#. things# to work as expected. We cannot identify with certainty which situation
-#. the user is in, so we must provide this as an option within Orca.
-#: ../src/orca/guilabels.py:75
-msgid "_Grab focus on objects when navigating"
-msgstr "_Aktyvuoti objektus vaikštant."
-
 #. Translators: When the user arrows up and down in HTML content, and Orca is
 #. controlling the caret, the user might want Orca to always position the
 #. cursor at the beginning of the line (as opposed to the position directly
 #. above/below the current cursor position). Different users have different
 #. preferences. This string is the label for a checkbox which allows users
 #. to set the line-positioning behavior they want.
-#: ../src/orca/guilabels.py:84
+#: ../src/orca/guilabels.py:76
 msgid "_Position cursor at start of line when navigating vertically"
 msgstr "Naviguojant vertikaliai, žymiklį laikyti eilutės pradžioje"
 
 #. Translators: If this checkbox is checked, then Orca will tell you when one of
 #. your buddies is typing a message.
-#: ../src/orca/guilabels.py:88
+#: ../src/orca/guilabels.py:80
 msgid "Announce when your _buddies are typing"
 msgstr "Pranešti, kai jūsų _draugai rašo"
 
 #. Translators: If this checkbox is checked, then Orca will provide the user with
 #. chat room specific message histories rather than just a single history which
 #. contains the latest messages from all the chat rooms that they are in.
-#: ../src/orca/guilabels.py:93
+#: ../src/orca/guilabels.py:85
 msgid "Provide chat room specific _message histories"
 msgstr "Pateikti pokalbių kambarių specifines _pranešimų istorijas"
 
@@ -3229,21 +4382,21 @@ msgstr "Pateikti pokalbių kambarių specifines _pranešimų istorijas"
 #. from all channels (i.e. even if the chat application doesn't have focus); speak
 #. messages from a channel only if it is the active channel; speak messages from
 #. any channel, but only if the chat application has focus.
-#: ../src/orca/guilabels.py:100
+#: ../src/orca/guilabels.py:92
 msgid "Speak messages from"
 msgstr "Sakyti pranešimus iš"
 
 #. Translators: This is the label of a radio button. If it is selected, Orca will
 #. speak all new chat messages as they appear irrespective of whether or not the
 #. chat application currently has focus. This is the default behaviour.
-#: ../src/orca/guilabels.py:105
+#: ../src/orca/guilabels.py:97
 msgid "All cha_nnels"
 msgstr "Visi _kanalai"
 
 #. Translators: This is the label of a radio button. If it is selected, Orca will
 #. speak all new chat messages as they appear if and only if the chat application
 #. has focus. The string substituion is for the application name (e.g Pidgin).
-#: ../src/orca/guilabels.py:110
+#: ../src/orca/guilabels.py:102
 #, python-format
 msgid "All channels when an_y %s window is active"
 msgstr "Visi kanalai, kai _bet kuris %s langas yra aktyvus"
@@ -3251,13 +4404,13 @@ msgstr "Visi kanalai, kai _bet kuris %s langas yra aktyvus"
 #. Translators: This is the label of a radio button. If it is selected, Orca will
 #. only speak new chat messages for the currently active channel, irrespective of
 #. whether the chat application has focus.
-#: ../src/orca/guilabels.py:115
+#: ../src/orca/guilabels.py:107
 msgid "A channel only if its _window is active"
 msgstr "Kanalas tik jei jo _langas aktyvus"
 
 #. Translators: If this checkbox is checked, then Orca will speak the name of the
 #. chat room prior to presenting an incoming message.
-#: ../src/orca/guilabels.py:119
+#: ../src/orca/guilabels.py:111
 msgid "_Speak Chat Room name"
 msgstr "_Skaityti pokalbių kambario pavadinimą"
 
@@ -3268,7 +4421,7 @@ msgstr "_Skaityti pokalbių kambario pavadinimą"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/guilabels.py:124 ../src/orca/keybindings.py:164
+#: ../src/orca/guilabels.py:116 ../src/orca/keybindings.py:164
 msgid "double click"
 msgstr "dvigubas paspaudimas"
 
@@ -3279,7 +4432,7 @@ msgstr "dvigubas paspaudimas"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/guilabels.py:129 ../src/orca/keybindings.py:170
+#: ../src/orca/guilabels.py:121 ../src/orca/keybindings.py:170
 msgid "triple click"
 msgstr "trigubas paspaudimas"
 
@@ -3287,7 +4440,7 @@ msgstr "trigubas paspaudimas"
 #. engines as a special item. It refers to the default engine configured within
 #. the speech subsystem. Apart from this item, the user will have a chance to
 #. select a particular speech engine by its real name (Festival, IBMTTS, etc.)
-#: ../src/orca/guilabels.py:135
+#: ../src/orca/guilabels.py:127
 msgid "Default Synthesizer"
 msgstr "Sintezatorius pagal nutylėjimą"
 
@@ -3297,7 +4450,7 @@ msgstr "Sintezatorius pagal nutylėjimą"
 #. word) or doesn't pronounce as the user desires (e.g. an acronym) by providing
 #. an alternative string. The "Actual String" here refers to the word to be
 #. corrected as it would actually appear in text being read. Example: "LOL".
-#: ../src/orca/guilabels.py:143
+#: ../src/orca/guilabels.py:135
 msgid "Actual String"
 msgstr "Tikroji eilutė"
 
@@ -3308,7 +4461,7 @@ msgstr "Tikroji eilutė"
 #. an alternative string. The "Replacement String" here refers to how the user
 #. would like the "Actual String" to be pronounced by the speech synthesizer.
 #. Example: "L O L" or "Laughing Out Loud" (for Actual String "LOL").
-#: ../src/orca/guilabels.py:152
+#: ../src/orca/guilabels.py:144
 msgid "Replacement String"
 msgstr "Pakeičiančioji eilutė"
 
@@ -3317,7 +4470,7 @@ msgstr "Pakeičiančioji eilutė"
 #. being pressed, "character echo" presents the character/string of length 1 that
 #. is inserted as a result of the keypress.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/guilabels.py:158 ../src/orca/orca-setup.ui.h:113
+#: ../src/orca/guilabels.py:150 ../src/orca/orca-setup.ui.h:113
 msgid "Enable echo by cha_racter"
 msgstr "Įjungti _simbolių atkartojimą"
 
@@ -3325,7 +4478,7 @@ msgstr "Įjungti _simbolių atkartojimą"
 #. by the user. This string refers to a "key echo" option. When this option is
 #. enabled, dead keys will be announced when pressed.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/guilabels.py:163 ../src/orca/orca-setup.ui.h:111
+#: ../src/orca/guilabels.py:155 ../src/orca/orca-setup.ui.h:111
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Įjungti ne tarpų _diakritinius klavišus"
 
@@ -3333,20 +4486,20 @@ msgstr "Įjungti ne tarpų _diakritinius klavišus"
 #. active application for on screen text and widgets. This label is associated
 #. with the setting to begin the search from the current location rather than
 #. from the top of the screen.
-#: ../src/orca/guilabels.py:169 ../src/orca/orca-find.ui.h:9
+#: ../src/orca/guilabels.py:161 ../src/orca/orca-find.ui.h:9
 msgid "C_urrent location"
 msgstr "_Esama vieta"
 
 #. Translators: This is the label for a spinbutton. This option allows the user
 #. to specify the number of matched characters that must be present before Orca
 #. speaks the line that contains the results from an application's Find toolbar.
-#: ../src/orca/guilabels.py:174
+#: ../src/orca/guilabels.py:166
 msgid "Minimum length of matched text:"
 msgstr "Mažiausias atitikimo tekstui ilgis:"
 
 #. Translators: This is the label of a panel containing options for what Orca
 #. presents when the user is in the Find toolbar of an application, e.g. Firefox.
-#: ../src/orca/guilabels.py:178
+#: ../src/orca/guilabels.py:170
 msgid "Find Options"
 msgstr "Paieškos nustatymai"
 
@@ -3354,7 +4507,7 @@ msgstr "Paieškos nustatymai"
 #. the line that contains the match from an application's Find toolbar should
 #. always be spoken, or only spoken if it is a different line than the line
 #. which contained the last match.
-#: ../src/orca/guilabels.py:184
+#: ../src/orca/guilabels.py:176
 msgid "Onl_y speak changed lines during find"
 msgstr "Paieškos metu garsiai skaityti tik pakeistas eilutes"
 
@@ -3362,28 +4515,28 @@ msgstr "Paieškos metu garsiai skaityti tik pakeistas eilutes"
 #. not Orca will automatically speak the line that contains the match while the
 #. user is performing a search from the Find toolbar of an application, e.g.
 #. Firefox.
-#: ../src/orca/guilabels.py:190
+#: ../src/orca/guilabels.py:182
 msgid "Speak results during _find"
 msgstr "Garsiai perskaityti rezultatus paieškos metu"
 
 #. Translators: Function is a table column header where the cells in the column
 #. are a sentence that briefly describes what action Orca will take if and when
 #. the user invokes that keyboard command.
-#: ../src/orca/guilabels.py:195
+#: ../src/orca/guilabels.py:187
 msgid "Function"
 msgstr "Funkcija"
 
 #. Translators: Key Binding is a table column header where the cells in the
 #. column represent keyboard combinations the user can press to invoke Orca
 #. commands.
-#: ../src/orca/guilabels.py:200
+#: ../src/orca/guilabels.py:192
 msgid "Key Binding"
 msgstr "Klavišo priskyrimas"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. can be used in any setting, task, or application. They are not specific
 #. to, for instance, web browsing.
-#: ../src/orca/guilabels.py:205
+#: ../src/orca/guilabels.py:197
 msgctxt "keybindings"
 msgid "Default"
 msgstr "Numatytasis"
@@ -3392,13 +4545,13 @@ msgstr "Numatytasis"
 #. user to create input gestures from the braille device. The braille bindings
 #. are what determine the actions Orca will take when the user presses these
 #. buttons.
-#: ../src/orca/guilabels.py:211
+#: ../src/orca/guilabels.py:203
 msgid "Braille Bindings"
 msgstr "Brailio priskyrimai"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. do not currently have an associated key binding.
-#: ../src/orca/guilabels.py:215
+#: ../src/orca/guilabels.py:207
 msgid "Unbound"
 msgstr "Neribotas"
 
@@ -3406,13 +4559,13 @@ msgstr "Neribotas"
 #. This column contains a checkbox which indicates whether a key binding
 #. for an Orca command has been changed by the user to something other than its
 #. default value.
-#: ../src/orca/guilabels.py:221
+#: ../src/orca/guilabels.py:213
 msgctxt "keybindings"
 msgid "Modified"
 msgstr "Pakeistas"
 
 #. Translators: This label refers to the keyboard layout (desktop or laptop).
-#: ../src/orca/guilabels.py:224 ../src/orca/orca-setup.ui.h:20
+#: ../src/orca/guilabels.py:216 ../src/orca/orca-setup.ui.h:20
 msgid "_Desktop"
 msgstr "_Darbastalis"
 
@@ -3422,7 +4575,7 @@ msgstr "_Darbastalis"
 #. title of Orca's application-specific preferences dialog for an application.
 #. The string substituted in is the accessible name of the application (e.g.
 #. "Gedit", "Firefox", etc.
-#: ../src/orca/guilabels.py:232
+#: ../src/orca/guilabels.py:224
 #, python-format
 msgid "Screen Reader Preferences for %s"
 msgstr "%s ekrano skaityklės nustatymai"
@@ -3432,7 +4585,7 @@ msgstr "%s ekrano skaityklės nustatymai"
 #. or attribute by "marking" it in braille. "Marking" is not the same as writing
 #. out the word; instead marking refers to adding some other indicator, e.g.
 #. "underlining" with braille dots 7-8 a word that is bold.
-#: ../src/orca/guilabels.py:239
+#: ../src/orca/guilabels.py:231
 msgid "Mark in braille"
 msgstr "Pažymėti brailiu"
 
@@ -3446,7 +4599,7 @@ msgstr "Pažymėti brailiu"
 #. stating that he/she would like to have underlined text announced for all cases
 #. (single, double, low, etc.) except when the value of underline is none (i.e.
 #. when it's not underlined). "Present" here is being used as a verb.
-#: ../src/orca/guilabels.py:251
+#: ../src/orca/guilabels.py:243
 msgid "Present Unless"
 msgstr "Nenaudojama, kai"
 
@@ -3455,7 +4608,7 @@ msgstr "Nenaudojama, kai"
 #. item or attribute (e.g. saying "Bold" as part of the information presented
 #. when the user gives the Orca command to obtain the format and font details of
 #. the current text).
-#: ../src/orca/guilabels.py:258
+#: ../src/orca/guilabels.py:250
 msgid "Speak"
 msgstr "Garsiai skaityti"
 
@@ -3464,7 +4617,7 @@ msgstr "Garsiai skaityti"
 #. A "user profile" is a collection of settings which apply to a given task, such
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
-#: ../src/orca/guilabels.py:265
+#: ../src/orca/guilabels.py:257
 msgid "Save Profile As Conflict"
 msgstr "Išsaugoti profilį kaip konfliktą"
 
@@ -3473,7 +4626,7 @@ msgstr "Išsaugoti profilį kaip konfliktą"
 #. A "user profile" is a collection of settings which apply to a given task, such
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
-#: ../src/orca/guilabels.py:272
+#: ../src/orca/guilabels.py:264
 msgid "User Profile Conflict!"
 msgstr "Naudotojo profilio konfliktas!"
 
@@ -3482,7 +4635,7 @@ msgstr "Naudotojo profilio konfliktas!"
 #. A "user profile" is a collection of settings which apply to a given task, such
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
-#: ../src/orca/guilabels.py:279
+#: ../src/orca/guilabels.py:271
 #, python-format
 msgid ""
 "Profile %s already exists.\n"
@@ -3497,7 +4650,7 @@ msgstr ""
 #. collection of settings which apply to a given task such as a "Spanish" profile
 #. which would use Spanish text-to-speech and Spanish braille and selected when
 #. reading Spanish content.
-#: ../src/orca/guilabels.py:289
+#: ../src/orca/guilabels.py:281
 msgid "Load user profile"
 msgstr "Įkelti naudotojo profilį"
 
@@ -3507,7 +4660,7 @@ msgstr "Įkelti naudotojo profilį"
 #. collection of settings which apply to a given task such as a "Spanish" profile
 #. which would use Spanish text-to-speech and Spanish braille and selected when
 #. reading Spanish content.
-#: ../src/orca/guilabels.py:298
+#: ../src/orca/guilabels.py:290
 msgid ""
 "You are about to change the active profile. If you\n"
 "have just made changes in your preferences, they will\n"
@@ -3527,7 +4680,7 @@ msgstr ""
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text. The
 #. following string is the title of a dialog in which users can save a newly-
 #. defined profile.
-#: ../src/orca/guilabels.py:309
+#: ../src/orca/guilabels.py:301
 msgid "Save Profile As"
 msgstr "Išsaugoti profilį kaip"
 
@@ -3537,7 +4690,7 @@ msgstr "Išsaugoti profilį kaip"
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text. The
 #. following string is the label for a text entry in which the user enters the
 #. name of a new settings profile being saved via the 'Save Profile As' dialog.
-#: ../src/orca/guilabels.py:317
+#: ../src/orca/guilabels.py:309
 msgid "_Profile Name:"
 msgstr "_Profilio pavadinimas:"
 
@@ -3545,7 +4698,7 @@ msgstr "_Profilio pavadinimas:"
 #. should be announced. Choosing "All" means that Orca will present progress bar
 #. updates regardless of what application and window they happen to be in.
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: ../src/orca/guilabels.py:322 ../src/orca/orca-setup.ui.h:8
+#: ../src/orca/guilabels.py:314 ../src/orca/orca-setup.ui.h:8
 msgctxt "ProgressBar"
 msgid "All"
 msgstr "Visos"
@@ -3554,7 +4707,7 @@ msgstr "Visos"
 #. should be announced. Choosing "Application" means that Orca will present
 #. progress bar updates as long as the progress bar is in the active application
 #. (but not necessarily in the current window).
-#: ../src/orca/guilabels.py:328
+#: ../src/orca/guilabels.py:320
 msgctxt "ProgressBar"
 msgid "Application"
 msgstr "Programa"
@@ -3562,7 +4715,7 @@ msgstr "Programa"
 #. Translators: Orca has a setting which determines which progress bar updates
 #. should be announced. Choosing "Window" means that Orca will present progress
 #. bar updates as long as the progress bar is in the active window.
-#: ../src/orca/guilabels.py:333
+#: ../src/orca/guilabels.py:325
 msgctxt "ProgressBar"
 msgid "Window"
 msgstr "Langas"
@@ -3570,7 +4723,7 @@ msgstr "Langas"
 #. Translators: If this setting is chosen, no punctuation symbols will be spoken
 #. as a user reads a document.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
-#: ../src/orca/guilabels.py:337 ../src/orca/orca-setup.ui.h:66
+#: ../src/orca/guilabels.py:329 ../src/orca/orca-setup.ui.h:66
 msgctxt "punctuation level"
 msgid "_None"
 msgstr "_Nėra"
@@ -3578,25 +4731,25 @@ msgstr "_Nėra"
 #. Translators: If this setting is chosen, common punctuation symbols (like
 #. comma, period, question mark) will not be spoken as a user reads a document,
 #. but less common symbols (such as #, @, $) will.
-#: ../src/orca/guilabels.py:342 ../src/orca/orca-setup.ui.h:67
+#: ../src/orca/guilabels.py:334 ../src/orca/orca-setup.ui.h:67
 msgid "So_me"
 msgstr "_Kai kurie"
 
 #. Translators: If this setting is chosen, the majority of punctuation symbols
 #. will be spoken as a user reads a document.
-#: ../src/orca/guilabels.py:346 ../src/orca/orca-setup.ui.h:68
+#: ../src/orca/guilabels.py:338 ../src/orca/orca-setup.ui.h:68
 msgid "M_ost"
 msgstr "_Dauguma"
 
 #. Translators: If this setting is chosen and the user is reading over an entire
 #. document, Orca will pause at the end of each line.
-#: ../src/orca/guilabels.py:350 ../src/orca/orca-setup.ui.h:5
+#: ../src/orca/guilabels.py:342 ../src/orca/orca-setup.ui.h:5
 msgid "Line"
 msgstr "Eilutė"
 
 #. Translators: If this setting is chosen and the user is reading over an entire
 #. document, Orca will pause at the end of each sentence.
-#: ../src/orca/guilabels.py:354 ../src/orca/orca-setup.ui.h:6
+#: ../src/orca/guilabels.py:346 ../src/orca/orca-setup.ui.h:6
 msgid "Sentence"
 msgstr "Sakinys"
 
@@ -3604,7 +4757,7 @@ msgstr "Sakinys"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a blockquote.
-#: ../src/orca/guilabels.py:360
+#: ../src/orca/guilabels.py:352
 msgctxt "structural navigation"
 msgid "Blockquote"
 msgstr "Citatos blokas"
@@ -3613,7 +4766,7 @@ msgstr "Citatos blokas"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a button.
-#: ../src/orca/guilabels.py:366
+#: ../src/orca/guilabels.py:358
 msgctxt "structural navigation"
 msgid "Button"
 msgstr "Mygtukas"
@@ -3622,7 +4775,7 @@ msgstr "Mygtukas"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the caption of a table.
-#: ../src/orca/guilabels.py:372
+#: ../src/orca/guilabels.py:364
 msgctxt "structural navigation"
 msgid "Caption"
 msgstr "Antraštė"
@@ -3631,7 +4784,7 @@ msgstr "Antraštė"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a check box.
-#: ../src/orca/guilabels.py:378
+#: ../src/orca/guilabels.py:370
 msgctxt "structural navigation"
 msgid "Check Box"
 msgstr "Žymimasis langelis"
@@ -3640,7 +4793,7 @@ msgstr "Žymimasis langelis"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the selected item in a combo box.
-#: ../src/orca/guilabels.py:384
+#: ../src/orca/guilabels.py:376
 msgctxt "structural navigation"
 msgid "Combo Box"
 msgstr "Pasirinkimo sąrašas"
@@ -3649,7 +4802,7 @@ msgstr "Pasirinkimo sąrašas"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the description of an element.
-#: ../src/orca/guilabels.py:390
+#: ../src/orca/guilabels.py:382
 msgctxt "structural navigation"
 msgid "Description"
 msgstr "Aprašymas"
@@ -3658,7 +4811,7 @@ msgstr "Aprašymas"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a heading.
-#: ../src/orca/guilabels.py:396
+#: ../src/orca/guilabels.py:388
 msgctxt "structural navigation"
 msgid "Heading"
 msgstr "Antraštė"
@@ -3667,7 +4820,7 @@ msgstr "Antraštė"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a form field.
-#: ../src/orca/guilabels.py:402
+#: ../src/orca/guilabels.py:394
 msgctxt "structural navigation"
 msgid "Label"
 msgstr "Etiketė"
@@ -3678,8 +4831,7 @@ msgstr "Etiketė"
 #. contains the text of a landmark. ARIA role landmarks are the W3C defined HTML
 #. tag attribute 'role' used to identify important part of webpage like banners,
 #. main context, search etc.
-#: ../src/orca/guilabels.py:410
-#| msgid "trademark"
+#: ../src/orca/guilabels.py:402
 msgctxt "structural navigation"
 msgid "Landmark"
 msgstr "Žymelė"
@@ -3689,7 +4841,7 @@ msgstr "Žymelė"
 #. could with native keyboard navigation. This is the title of a column which
 #. contains the level of a heading. Level will be a "1" for <h1>, a "2" for <h2>,
 #. and so on.
-#: ../src/orca/guilabels.py:417
+#: ../src/orca/guilabels.py:409
 msgctxt "structural navigation"
 msgid "Level"
 msgstr "Lygmuo"
@@ -3698,7 +4850,7 @@ msgstr "Lygmuo"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a link.
-#: ../src/orca/guilabels.py:423
+#: ../src/orca/guilabels.py:415
 msgctxt "structural navigation"
 msgid "Link"
 msgstr "Nuoroda"
@@ -3707,7 +4859,7 @@ msgstr "Nuoroda"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list.
-#: ../src/orca/guilabels.py:429
+#: ../src/orca/guilabels.py:421
 msgctxt "structural navigation"
 msgid "List"
 msgstr "Sąrašas"
@@ -3716,7 +4868,7 @@ msgstr "Sąrašas"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list item.
-#: ../src/orca/guilabels.py:435
+#: ../src/orca/guilabels.py:427
 msgctxt "structural navigation"
 msgid "List Item"
 msgstr "Sąrašo elementas"
@@ -3725,7 +4877,7 @@ msgstr "Sąrašo elementas"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an object.
-#: ../src/orca/guilabels.py:441
+#: ../src/orca/guilabels.py:433
 msgctxt "structural navigation"
 msgid "Object"
 msgstr "Objektas"
@@ -3734,7 +4886,7 @@ msgstr "Objektas"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a paragraph.
-#: ../src/orca/guilabels.py:447
+#: ../src/orca/guilabels.py:439
 msgctxt "structural navigation"
 msgid "Paragraph"
 msgstr "Pastraipa"
@@ -3743,7 +4895,7 @@ msgstr "Pastraipa"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a radio button.
-#: ../src/orca/guilabels.py:453
+#: ../src/orca/guilabels.py:445
 msgctxt "structural navigation"
 msgid "Radio Button"
 msgstr "Radijo mygtukas"
@@ -3753,7 +4905,7 @@ msgstr "Radijo mygtukas"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the role of a widget. Examples include "heading", "paragraph",
 #. "table", "combo box", etc.
-#: ../src/orca/guilabels.py:460
+#: ../src/orca/guilabels.py:452
 msgctxt "structural navigation"
 msgid "Role"
 msgstr "Rolė"
@@ -3762,7 +4914,7 @@ msgstr "Rolė"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the selected item of a form field.
-#: ../src/orca/guilabels.py:466
+#: ../src/orca/guilabels.py:458
 msgctxt "structural navigation"
 msgid "Selected Item"
 msgstr "Pasirinktas elementas"
@@ -3772,7 +4924,7 @@ msgstr "Pasirinktas elementas"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the state of a widget. Examples include "checked"/"not checked",
 #. "selected"/"not selected", "visited/not visited", etc.
-#: ../src/orca/guilabels.py:473
+#: ../src/orca/guilabels.py:465
 msgctxt "structural navigation"
 msgid "State"
 msgstr "Būsena"
@@ -3781,7 +4933,7 @@ msgstr "Būsena"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an entry.
-#: ../src/orca/guilabels.py:479
+#: ../src/orca/guilabels.py:471
 msgctxt "structural navigation"
 msgid "Text"
 msgstr "Tekstas"
@@ -3790,7 +4942,7 @@ msgstr "Tekstas"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the URI of a link.
-#: ../src/orca/guilabels.py:485
+#: ../src/orca/guilabels.py:477
 msgctxt "structural navigation"
 msgid "URI"
 msgstr "URI"
@@ -3799,7 +4951,7 @@ msgstr "URI"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the value of a form field.
-#: ../src/orca/guilabels.py:491
+#: ../src/orca/guilabels.py:483
 msgctxt "structural navigation"
 msgid "Value"
 msgstr "Vertė"
@@ -3807,7 +4959,7 @@ msgstr "Vertė"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:496
+#: ../src/orca/guilabels.py:488
 msgctxt "structural navigation"
 msgid "Blockquotes"
 msgstr "Citatų blokai"
@@ -3815,7 +4967,7 @@ msgstr "Citatų blokai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:501
+#: ../src/orca/guilabels.py:493
 msgctxt "structural navigation"
 msgid "Buttons"
 msgstr "Mygtukai"
@@ -3823,7 +4975,7 @@ msgstr "Mygtukai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:506
+#: ../src/orca/guilabels.py:498
 msgctxt "structural navigation"
 msgid "Check Boxes"
 msgstr "Žymimieji langeliai"
@@ -3831,7 +4983,7 @@ msgstr "Žymimieji langeliai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:511
+#: ../src/orca/guilabels.py:503
 msgctxt "structural navigation"
 msgid "Combo Boxes"
 msgstr "Pasirinkimo sąrašai"
@@ -3839,7 +4991,7 @@ msgstr "Pasirinkimo sąrašai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:516
+#: ../src/orca/guilabels.py:508
 msgctxt "structural navigation"
 msgid "Entries"
 msgstr "Įrašai"
@@ -3847,7 +4999,7 @@ msgstr "Įrašai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:521
+#: ../src/orca/guilabels.py:513
 msgctxt "structural navigation"
 msgid "Form Fields"
 msgstr "Formos laukai"
@@ -3855,7 +5007,7 @@ msgstr "Formos laukai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:526
+#: ../src/orca/guilabels.py:518
 msgctxt "structural navigation"
 msgid "Headings"
 msgstr "Antraštės"
@@ -3864,7 +5016,7 @@ msgstr "Antraštės"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. Level will be a "1" for <h1>, a "2" for <h2>, and so on.
-#: ../src/orca/guilabels.py:532
+#: ../src/orca/guilabels.py:524
 #, python-format
 msgctxt "structural navigation"
 msgid "Headings at Level %d"
@@ -3875,8 +5027,7 @@ msgstr "%d lygmens antraštės"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
-#: ../src/orca/guilabels.py:539
-#| msgid "trademark"
+#: ../src/orca/guilabels.py:531
 msgctxt "structural navigation"
 msgid "Landmarks"
 msgstr "Žymelės"
@@ -3886,7 +5037,7 @@ msgstr "Žymelės"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/guilabels.py:546
+#: ../src/orca/guilabels.py:538
 msgctxt "structural navigation"
 msgid "Large Objects"
 msgstr "Dideli objektai"
@@ -3894,7 +5045,7 @@ msgstr "Dideli objektai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:551
+#: ../src/orca/guilabels.py:543
 msgctxt "structural navigation"
 msgid "Links"
 msgstr "Nuorodos"
@@ -3902,7 +5053,7 @@ msgstr "Nuorodos"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:556
+#: ../src/orca/guilabels.py:548
 msgctxt "structural navigation"
 msgid "Lists"
 msgstr "Sąrašai"
@@ -3910,7 +5061,7 @@ msgstr "Sąrašai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:561
+#: ../src/orca/guilabels.py:553
 msgctxt "structural navigation"
 msgid "List Items"
 msgstr "Sąrašo elementai"
@@ -3918,7 +5069,7 @@ msgstr "Sąrašo elementai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:566
+#: ../src/orca/guilabels.py:558
 msgctxt "structural navigation"
 msgid "Paragraphs"
 msgstr "Pastraipos"
@@ -3926,7 +5077,7 @@ msgstr "Pastraipos"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:571
+#: ../src/orca/guilabels.py:563
 msgctxt "structural navigation"
 msgid "Radio Buttons"
 msgstr "Radijo mygtukai"
@@ -3934,7 +5085,7 @@ msgstr "Radijo mygtukai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:576
+#: ../src/orca/guilabels.py:568
 msgctxt "structural navigation"
 msgid "Tables"
 msgstr "Lentelės"
@@ -3942,7 +5093,7 @@ msgstr "Lentelės"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:581
+#: ../src/orca/guilabels.py:573
 msgctxt "structural navigation"
 msgid "Unvisited Links"
 msgstr "Neaplankytos nuorodos"
@@ -3950,7 +5101,7 @@ msgstr "Neaplankytos nuorodos"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:586
+#: ../src/orca/guilabels.py:578
 msgctxt "structural navigation"
 msgid "Visited Links"
 msgstr "Aplankytos nuorodos"
@@ -3958,14 +5109,14 @@ msgstr "Aplankytos nuorodos"
 #. Translators: This is the title of a panel holding options for how to navigate
 #. HTML content (e.g., Orca caret navigation, positioning of caret, structural
 #. navigation, etc.).
-#: ../src/orca/guilabels.py:591
+#: ../src/orca/guilabels.py:583
 msgid "Page Navigation"
 msgstr "Puslapio navigacija"
 
 #. Translators: When the user loads a new web page, they can optionally have Orca
 #. automatically start reading the page from beginning to end. This is the label
 #. of a checkbox in which users can indicate their preference.
-#: ../src/orca/guilabels.py:597
+#: ../src/orca/guilabels.py:589
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr ""
 "Automatiškai pradėti garsiai skaityti puslapį, kai jis pirmą kartą įkrautas"
@@ -3977,7 +5128,7 @@ msgstr ""
 #. queued up and sent to the speech synthesis system once the entire set of
 #. utterances has been calculated.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: ../src/orca/guilabels.py:605 ../src/orca/orca-setup.ui.h:48
+#: ../src/orca/guilabels.py:597 ../src/orca/orca-setup.ui.h:48
 msgid "Break speech into ch_unks between pauses"
 msgstr "Skaidyti kalbą į _dalis tarp pauzių"
 
@@ -3987,21 +5138,21 @@ msgstr "Skaidyti kalbą į _dalis tarp pauzių"
 #. to the default voice configured for given speech engine within the speech
 #. subsystem. Apart from this item, the list will contain the names of all
 #. available "real" voices provided by the speech engine.
-#: ../src/orca/guilabels.py:613
+#: ../src/orca/guilabels.py:605
 #, python-format
 msgid "%s default voice"
 msgstr "%s balsas pagal nutylėjimą."
 
 #. Translators: This refers to the voice used by Orca when presenting the content
 #. of the screen and other messages.
-#: ../src/orca/guilabels.py:617
+#: ../src/orca/guilabels.py:609
 msgctxt "VoiceType"
 msgid "Default"
 msgstr "Numatytasis"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is part of a hyperlink.
-#: ../src/orca/guilabels.py:621
+#: ../src/orca/guilabels.py:613
 msgctxt "VoiceType"
 msgid "Hyperlink"
 msgstr "Hipersaitas"
@@ -4012,46 +5163,77 @@ msgstr "Hipersaitas"
 #. indicate the presence of the red squiggly line found under a spelling error;
 #. Orca might say "3 of 6" when a user Tabs into a list of six items and the
 #. third item is selected. And so on.
-#: ../src/orca/guilabels.py:629
+#: ../src/orca/guilabels.py:621
 msgctxt "VoiceType"
 msgid "System"
 msgstr "Sistema"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is written in uppercase.
-#: ../src/orca/guilabels.py:633
+#: ../src/orca/guilabels.py:625
 msgctxt "VoiceType"
 msgid "Uppercase"
 msgstr "Didžiosiomis"
 
 #. Translators this label refers to the name of particular speech synthesis
 #. system. (http://devel.freebsoft.org/speechd)
-#: ../src/orca/guilabels.py:637
+#: ../src/orca/guilabels.py:629
 msgid "Speech Dispatcher"
 msgstr "Speech Dispatcher"
+
+#. Translators: This is a label for a group of options related to Orca's behavior
+#. when presenting an application's spell check dialog.
+#: ../src/orca/guilabels.py:633
+msgctxt "OptionGroup"
+msgid "Spell Check"
+msgstr "Rašybos tikrinimas"
+
+#. Translators: This is a label for a checkbox associated with an Orca setting.
+#. When this option is enabled, Orca will spell out the current error in addition
+#. to speaking it. For example, if the misspelled word is "foo," enabling this
+#. setting would cause Orca to speak "f o o" after speaking "foo".
+#: ../src/orca/guilabels.py:639
+msgid "Spell _error"
+msgstr "Rašybos _klaida"
+
+#. Translators: This is a label for a checkbox associated with an Orca setting.
+#. When this option is enabled, Orca will spell out the current suggestion in
+#. addition to speaking it. For example, if the misspelled word is "foo," and
+#. the first suggestion is "for" enabling this setting would cause Orca to speak
+#. "f o r" after speaking "for".
+#: ../src/orca/guilabels.py:646
+msgid "Spell _suggestion"
+msgstr "Rašybos _pasiūlymas"
+
+#. Translators: This is a label for a checkbox associated with an Orca setting.
+#. When this option is enabled, Orca will present the context (surrounding text,
+#. typically the sentence or line) in which the mistake occurred.
+#: ../src/orca/guilabels.py:651
+msgid "Present _context of error"
+msgstr "Pateikti _klaidos kontekstą"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spread sheet cell. Coordinates are
 #. the row and column position within the spread sheet (i.e. A1, B1, C2 ...)
-#: ../src/orca/guilabels.py:642
+#: ../src/orca/guilabels.py:656
 msgid "Speak spread sheet cell coordinates"
 msgstr "Pasakyti langelio koordinates lakšte"
 
 #. Translators: This is a label for an option for whether or not to speak the
 #. header of a table cell in document content.
-#: ../src/orca/guilabels.py:646
+#: ../src/orca/guilabels.py:660
 msgid "Announce cell _header"
 msgstr "Paskelbti langelio antraštę"
 
 #. Translators: This is the title of a panel containing options for specifying
 #. how to navigate tables in document content.
-#: ../src/orca/guilabels.py:650
+#: ../src/orca/guilabels.py:664
 msgid "Table Navigation"
 msgstr "Lentelės navigacija"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
-#: ../src/orca/guilabels.py:654
+#: ../src/orca/guilabels.py:668
 msgid "Skip _blank cells"
 msgstr "Praleisti tuščius langelius"
 
@@ -4059,26 +5241,26 @@ msgstr "Praleisti tuščius langelius"
 #. row of a table read; other times they want just the current cell presented to
 #. them. This label is associated with the default presentation to be used.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/guilabels.py:659 ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/guilabels.py:673 ../src/orca/orca-setup.ui.h:60
 msgid "Speak _cell"
 msgstr "Perskaityti _langelį"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
-#: ../src/orca/guilabels.py:663
+#: ../src/orca/guilabels.py:677
 msgid "Speak _cell coordinates"
 msgstr "Garsiai perskaityti langelio koordinates"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many rows and columns
 #. a particular table cell spans in a table).
-#: ../src/orca/guilabels.py:668
+#: ../src/orca/guilabels.py:682
 msgid "Speak _multiple cell spans"
 msgstr "Garsiai perskaityti langelio dydį"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
-#: ../src/orca/guilabels.py:672
+#: ../src/orca/guilabels.py:686
 msgid "Attribute Name"
 msgstr "Požymio pavadinimas"
 
@@ -4087,20 +5269,20 @@ msgstr "Požymio pavadinimas"
 #. Orca needs to provide its own support. As such, Orca offers the user the
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:679
+#: ../src/orca/guilabels.py:693
 msgid "Control caret navigation"
 msgstr "Naudoti navigaciją žymikliu"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:684
+#: ../src/orca/guilabels.py:698
 msgid "Enable _structural navigation"
 msgstr "Įjungti navigaciją pagal struktūrą"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: ../src/orca/guilabels.py:688 ../src/orca/orca-setup.ui.h:56
+#: ../src/orca/guilabels.py:702 ../src/orca/orca-setup.ui.h:56
 msgid "Brie_f"
 msgstr "_Trumpas"
 
@@ -5494,12 +6676,6 @@ msgstr "Mokymosi režimas. Norėdami išeiti paspauskite grįžties klavišą."
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
 #: ../src/orca/messages.py:836
-#| msgid ""
-#| "Entering learn mode.  Press any key to hear its function.  To get a list "
-#| "of the screen reader's default shortcuts, press 1. To get a list of the "
-#| "screen reader's shortcuts for the current application, press 2. To view "
-#| "the screen reader's documentation, press F1. To exit learn mode, press "
-#| "the escape key."
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the "
 "screen reader's documentation, press F1. To get a list of the screen "
@@ -6342,7 +7518,7 @@ msgstr "Kalbėjimas neprieinamas."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3769
+#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3717
 msgid "string not found"
 msgstr "seka nerasta"
 
@@ -6936,35 +8112,30 @@ msgstr "vertikaliai"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:98
-#| msgid "checked"
 msgctxt "checkbox"
 msgid "checked"
 msgstr "pažymėta"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:101
-#| msgid "not checked"
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "nepažymėta"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:104
-#| msgid "partially checked"
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "dalinai pažymėta"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:107
-#| msgid "pressed"
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "paspausta"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:110
-#| msgid "not pressed"
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "nepaspausta"
@@ -7518,63 +8689,6 @@ msgstr ""
 "november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
 "u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 
-#. Translators: this in reference to an e-mail message
-#. status of having been read or unread.
-#.
-#: ../src/orca/scripts/apps/evolution/speech_generator.py:136
-msgid "Read"
-msgstr "Skaityti"
-
-#. Translators: these are labels from the gedit spell checking
-#. dialog and must be the same strings gedit uses.  We hate
-#. keying off stuff like this, but we're forced to do so in
-#. in this case.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:95
-msgid "Change to:"
-msgstr "Pakeisti į:"
-
-#: ../src/orca/scripts/apps/gedit/script.py:96
-msgid "Misspelled word:"
-msgstr "Netaisyklingas žodis:"
-
-#. The indication that spell checking is complete is when the
-#. "misspelt" word is set to "Completed spell checking". Ugh!
-#. Try to detect this and let the user know.
-#.
-#. Translators: this string must be the same that is used by
-#. gedit.  We hate keying off stuff like this, but we're
-#. forced to do so in this case.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:130
-msgid "Completed spell checking"
-msgstr "Rašybos tikrinimas baigtas"
-
-#: ../src/orca/scripts/apps/gedit/script.py:131
-msgid "Spell checking is complete."
-msgstr "Rašybos tikrinimas baigtas."
-
-#: ../src/orca/scripts/apps/gedit/script.py:133
-msgid "Press Tab and Return to terminate."
-msgstr "Paspauskite „Tab“ ir „Įvesti“, jei norite nutraukti."
-
-#. Translators: this is the name of the "Check Spelling" window
-#. in gedit and must be the same as what gedit uses.  We hate
-#. keying off stuff like this, but we're forced to do so in this
-#. case.
-#.
-#. Translators: this is what the name of the spell checking
-#. dialog in Thunderbird begins with. The translated form
-#. has to match what Thunderbird is using.  We hate keying
-#. off stuff like this, but we're forced to do so in this case.
-#.
-#: ../src/orca/scripts/apps/gedit/script.py:216
-#: ../src/orca/scripts/apps/gedit/script.py:288
-#: ../src/orca/scripts/apps/Thunderbird/script.py:284
-#: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
-msgid "Check Spelling"
-msgstr "Tikrinti rašybą"
-
 #: ../src/orca/scripts/apps/gnome-mud/script.py:119
 msgid "Read the latest n messages in the incoming messages text area."
 msgstr "Skaityti paskutinius n pranešimų įeinančių pranešimų teksto srityje."
@@ -7602,6 +8716,15 @@ msgstr "Darbastalis "
 msgid "Display more options"
 msgstr "Rodyti daugiau parinkčių"
 
+#. Translators: this is what the name of the spell checking
+#. dialog in Thunderbird begins with. The translated form
+#. has to match what Thunderbird is using.  We hate keying
+#. off stuff like this, but we're forced to do so in this case.
+#.
+#: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
+msgid "Check Spelling"
+msgstr "Tikrinti rašybą"
+
 #. Translators: these represent the number of pixels
 #. for the left or right margins in a document.  We
 #. are hesitant to interpret the values -- they are
@@ -7609,7 +8732,7 @@ msgstr "Rodyti daugiau parinkčių"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3386 ../src/orca/scripts/default.py:3398
+#: ../src/orca/scripts/default.py:3327 ../src/orca/scripts/default.py:3339
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7619,7 +8742,7 @@ msgstr[2] "%(key)s %(value)s pikselių"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4199
+#: ../src/orca/scripts/toolkits/Gecko/script.py:4213
 msgid "open"
 msgstr "atverti"
 
@@ -7628,7 +8751,7 @@ msgstr "atverti"
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:783
+#: ../src/orca/settings.py:787
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%H valandų, %M minučių ir %S sekundžių."
 
@@ -7637,7 +8760,7 @@ msgstr "%H valandų, %M minučių ir %S sekundžių."
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:790
+#: ../src/orca/settings.py:794
 msgid "%H hours and %M minutes."
 msgstr "%H valandų ir %M minučių."
 
