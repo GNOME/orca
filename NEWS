@@ -1,3 +1,22 @@
+3.12.2 - 13 May 2014
+
+General:
+
+  * Fix for Orca presenting checked tri-state checkboxes as partially
+    checked
+
+  * Update the locusOfFocus when when caret moves in a focused object
+    in Evince
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    be            Belarusian                  Ihar Hrachyshka
+    ca            Catalan                     Pau Iranzo, Carles Ferrando
+    el            Greek                       Dimitris Spingos
+    ne            Nepali                      Him Prasad Gautam
+
+=========
+
 3.12.1 - 15 April 2014
 
 General:
