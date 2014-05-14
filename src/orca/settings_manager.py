@@ -281,27 +281,6 @@ class SettingsManager(object):
             lang = "%s_%s" % (lang, dialect.upper())
         return lang
 
-    def _getGeneral(self, profile=None):
-        """Get from the active backend the general settings for
-        the current profile"""
-        if profile is None:
-            profile = self.profile
-        self.general = self._backend.getGeneral(profile)
-
-    def _getPronunciations(self, profile=None):
-        """Get from the active backend the pronunciations settings for
-        the current profile"""
-        if profile is None:
-            profile = self.profile
-        self.pronunciations = self._backend.getPronunciations(profile)
-
-    def _getKeybindings(self, profile=None):
-        """Get from the active backend the keybindings settings for
-        the current profile"""
-        if profile is None:
-            profile = self.profile
-        self.keybindings = self._backend.getKeybindings(profile)
-
     def _loadProfileSettings(self, profile=None):
         """Get from the active backend all the settings for the current
         profile and store them in the object's attributes.
