@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2014-04-23 10:20+0000\n"
-"PO-Revision-Date: 2014-04-23 21:25+0100\n"
+"POT-Creation-Date: 2014-05-14 10:05+0000\n"
+"PO-Revision-Date: 2014-05-15 17:21+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -3147,6 +3147,1146 @@ msgstr "přejde na následující navštívený odkaz."
 #: ../src/orca/cmdnames.py:963
 msgid "Displays a list of visited links."
 msgstr "Zobrazí seznam navštívených odkazů."
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:35
+msgctxt "color name"
+msgid "alice blue"
+msgstr "ledově modrá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:40
+msgctxt "color name"
+msgid "antique white"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:45
+msgctxt "color name"
+msgid "aquamarine"
+msgstr "akvamarínová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:50
+msgctxt "color name"
+msgid "azure"
+msgstr "azurová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:55
+msgctxt "color name"
+msgid "beige"
+msgstr "béžová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:60
+msgctxt "color name"
+msgid "bisque"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:65
+#| msgctxt "textattr"
+#| msgid "black"
+msgctxt "color name"
+msgid "black"
+msgstr "černá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:70
+#| msgid "black diamond"
+msgctxt "color name"
+msgid "blanched almond"
+msgstr "mandlová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:75
+msgctxt "color name"
+msgid "blue"
+msgstr "modrá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:80
+msgctxt "color name"
+msgid "blue violet"
+msgstr "modro fialová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:85
+msgctxt "color name"
+msgid "brown"
+msgstr "hnědá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:90
+msgctxt "color name"
+msgid "burlywood"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:95
+msgctxt "color name"
+msgid "cadet blue"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:100
+msgctxt "color name"
+msgid "chartreuse"
+msgstr "chartreuse"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:105
+msgctxt "color name"
+msgid "chocolate"
+msgstr "čokoládová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:110
+msgctxt "color name"
+msgid "coral"
+msgstr "korálová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:115
+msgctxt "color name"
+msgid "cornflower blue"
+msgstr "chrpová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:120
+msgctxt "color name"
+msgid "cornsilk"
+msgstr "kukuřicová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:125
+msgctxt "color name"
+msgid "crimson"
+msgstr "karmínová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:130
+msgctxt "color name"
+msgid "cyan"
+msgstr "modrozelená"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:135
+msgctxt "color name"
+msgid "dark blue"
+msgstr "tmavá modrá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:140
+msgctxt "color name"
+msgid "dark cyan"
+msgstr "tmavá modrozelená"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:145
+msgctxt "color name"
+msgid "dark goldenrod"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:150
+#| msgid "a grave"
+msgctxt "color name"
+msgid "dark gray"
+msgstr "tmavá šedá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:155
+msgctxt "color name"
+msgid "dark green"
+msgstr "tmavá zelená"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:160
+msgctxt "color name"
+msgid "dark khaki"
+msgstr "tmavá khaki"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:165
+msgctxt "color name"
+msgid "dark magenta"
+msgstr "tmavá fuchsiová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:170
+msgctxt "color name"
+msgid "dark olive green"
+msgstr "tmavá olivově zelená"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:175
+msgctxt "color name"
+msgid "dark orange"
+msgstr "tmavá oranžová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:180
+msgctxt "color name"
+msgid "dark orchid"
+msgstr "tmavá orchideová fialová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:185
+msgctxt "color name"
+msgid "dark red"
+msgstr "tmavá červená"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:190
+msgctxt "color name"
+msgid "dark salmon"
+msgstr "tmavá lososová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:195
+msgctxt "color name"
+msgid "dark sea green"
+msgstr "tmavá mořská zeleň"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:200
+msgctxt "color name"
+msgid "dark slate blue"
+msgstr "tmavá břidlicově modrá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:205
+msgctxt "color name"
+msgid "dark slate gray"
+msgstr "tmavá břidlicově šedá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:210
+msgctxt "color name"
+msgid "dark turquoise"
+msgstr "tmavá tyrkysová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:215
+msgctxt "color name"
+msgid "dark violet"
+msgstr "tmavá fialová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:220
+msgctxt "color name"
+msgid "deep pink"
+msgstr "sytá růžová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:225
+msgctxt "color name"
+msgid "deep sky blue"
+msgstr "sytá blankytně modrá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:230
+#| msgid "i grave"
+msgctxt "color name"
+msgid "dim gray"
+msgstr "tmavá šedá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:235
+msgctxt "color name"
+msgid "dodger blue"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:240
+msgctxt "color name"
+msgid "fire brick"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:245
+msgctxt "color name"
+msgid "floral white"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:250
+msgctxt "color name"
+msgid "forest green"
+msgstr "lesní zeleň"
+
+#  fuchsia a magenta jsou synonyma pro stejnou barvu FFOOFF, pro nedostatek 
+#  českých výrazů jsou oba výrazy přeloženy stejně
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:255
+msgctxt "color name"
+msgid "fuchsia"
+msgstr "fuchsiová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:260
+msgctxt "color name"
+msgid "gainsboro"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#HTML_color_names.
+#: ../src/orca/colornames.py:265
+msgctxt "color name"
+msgid "ghost white"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:270
+msgctxt "color name"
+msgid "gold"
+msgstr "zlatá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:275
+msgctxt "color name"
+msgid "goldenrod"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:280
+#| msgid "grayed"
+msgctxt "color name"
+msgid "gray"
+msgstr "šedá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:285
+#| msgid "degrees"
+msgctxt "color name"
+msgid "green"
+msgstr "zelená"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:290
+msgctxt "color name"
+msgid "green yellow"
+msgstr "zeleno žlutá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:295
+msgctxt "color name"
+msgid "honeydew"
+msgstr "medová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:300
+msgctxt "color name"
+msgid "hot pink"
+msgstr "křiklavě růžová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:305
+#| msgid "Hindi Grade 1"
+msgctxt "color name"
+msgid "indian red"
+msgstr "indiánská červená"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:310
+msgctxt "color name"
+msgid "indigo"
+msgstr "indigová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:315
+msgctxt "color name"
+msgid "ivory"
+msgstr "slonová kost"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:320
+msgctxt "color name"
+msgid "khaki"
+msgstr "khaki"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:325
+msgctxt "color name"
+msgid "lavender"
+msgstr "levandulová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:330
+msgctxt "color name"
+msgid "lavender blush"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:335
+msgctxt "color name"
+msgid "lawn green"
+msgstr "trávově zelená"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:340
+msgctxt "color name"
+msgid "lemon chiffon"
+msgstr "bledě citrónová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:345
+#| msgid "right brace"
+msgctxt "color name"
+msgid "light blue"
+msgstr "světlá modrá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:350
+#| msgid "right control"
+msgctxt "color name"
+msgid "light coral"
+msgstr "světlá korálová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:355
+#| msgid "right paren"
+msgctxt "color name"
+msgid "light cyan"
+msgstr "světlá modrozelená"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:360
+msgctxt "color name"
+msgid "light goldenrod yellow"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:365
+#| msgid "right brace"
+msgctxt "color name"
+msgid "light gray"
+msgstr "světlá šedá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:370
+#| msgid "right paren"
+msgctxt "color name"
+msgid "light green"
+msgstr "světlá zelená"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:375
+#| msgid "right paren"
+msgctxt "color name"
+msgid "light pink"
+msgstr "světlá růžová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:380
+#| msgid "right alt"
+msgctxt "color name"
+msgid "light salmon"
+msgstr "světlá lososová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:385
+#| msgid "right paren"
+msgctxt "color name"
+msgid "light sea green"
+msgstr "světlá mořská zeleň"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:390
+#| msgid "right super"
+msgctxt "color name"
+msgid "light sky blue"
+msgstr "světlá blankytně modrá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:395
+msgctxt "color name"
+msgid "light slate gray"
+msgstr "světlá břidlicově šedá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:400
+msgctxt "color name"
+msgid "light steel blue"
+msgstr "světlá ocelově modrá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:405
+#| msgid "right arrow"
+msgctxt "color name"
+msgid "light yellow"
+msgstr "světlá žlutá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:410
+msgctxt "color name"
+msgid "lime"
+msgstr "limetková"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:415
+msgctxt "color name"
+msgid "lime green"
+msgstr "limetkově zelená"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:420
+#| msgid "newline"
+msgctxt "color name"
+msgid "linen"
+msgstr ""
+
+#  fuchsia a magenta jsou synonyma pro stejnou barvu FFOOFF, pro nedostatek 
+#  českých výrazů jsou oba výrazy přeloženy stejně
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:425
+msgctxt "color name"
+msgid "magenta"
+msgstr "fuchsiová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:430
+msgctxt "color name"
+msgid "maroon"
+msgstr "vínová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:435
+msgctxt "color name"
+msgid "medium aquamarine"
+msgstr "střední akvamarínová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:440
+msgctxt "color name"
+msgid "medium blue"
+msgstr "střední modrá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:445
+msgctxt "color name"
+msgid "medium orchid"
+msgstr "střední orchideová fialová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:450
+msgctxt "color name"
+msgid "medium purple"
+msgstr "střední purpurová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:455
+msgctxt "color name"
+msgid "medium sea green"
+msgstr "střední mořská zeleň"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:460
+msgctxt "color name"
+msgid "medium slate blue"
+msgstr "střední břidlicově modrá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:465
+msgctxt "color name"
+msgid "medium spring green"
+msgstr "střední jarní zeleň"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:470
+msgctxt "color name"
+msgid "medium turquoise"
+msgstr "střední tyrkysová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:475
+msgctxt "color name"
+msgid "medium violet red"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:480
+msgctxt "color name"
+msgid "midnight blue"
+msgstr "půlnoční modř"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:485
+msgctxt "color name"
+msgid "mint cream"
+msgstr "peprmintová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:490
+msgctxt "color name"
+msgid "misty rose"
+msgstr "bledě červená"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:495
+msgctxt "color name"
+msgid "moccasin"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:500
+msgctxt "color name"
+msgid "navajo white"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:505
+msgctxt "color name"
+msgid "navy"
+msgstr "námořnická modř"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:510
+msgctxt "color name"
+msgid "old lace"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:515
+msgctxt "color name"
+msgid "olive"
+msgstr "olivová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:520
+msgctxt "color name"
+msgid "olive drab"
+msgstr "olivově šedá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:525
+msgctxt "color name"
+msgid "orange"
+msgstr "oranžová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:530
+msgctxt "color name"
+msgid "orange red"
+msgstr "oranžovo červená"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:535
+msgctxt "color name"
+msgid "orchid"
+msgstr "orchideová fialová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:540
+msgctxt "color name"
+msgid "pale goldenrod"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:545
+msgctxt "color name"
+msgid "pale green"
+msgstr "bledě zelená"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:550
+msgctxt "color name"
+msgid "pale turquoise"
+msgstr "bledě tyrkysová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:555
+msgctxt "color name"
+msgid "pale violet red"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:560
+msgctxt "color name"
+msgid "papaya whip"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:565
+msgctxt "color name"
+msgid "peach puff"
+msgstr "broskvová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:570
+msgctxt "color name"
+msgid "peru"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:575
+msgctxt "color name"
+msgid "pink"
+msgstr "růžová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:580
+msgctxt "color name"
+msgid "plum"
+msgstr "švestková"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:585
+msgctxt "color name"
+msgid "powder blue"
+msgstr ""
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:590
+msgctxt "color name"
+msgid "purple"
+msgstr "purpurová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:595
+#| msgid "tre"
+msgctxt "color name"
+msgid "red"
+msgstr "červená"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:600
+msgctxt "color name"
+msgid "rosy brown"
+msgstr "narůžovělá hnědá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:605
+msgctxt "color name"
+msgid "royal blue"
+msgstr "královská modrá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:610
+msgctxt "color name"
+msgid "saddle brown"
+msgstr "sedlová hnědá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:615
+msgctxt "color name"
+msgid "salmon"
+msgstr "lososová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:620
+msgctxt "color name"
+msgid "sandy brown"
+msgstr "pískově hnědá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:625
+#| msgid "degrees"
+msgctxt "color name"
+msgid "sea green"
+msgstr "mořská zeleň"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:630
+msgctxt "color name"
+msgid "seashell"
+msgstr "lasturová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:635
+msgctxt "color name"
+msgid "sienna"
+msgstr "siena"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:640
+msgctxt "color name"
+msgid "silver"
+msgstr "stříbrná"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:645
+msgctxt "color name"
+msgid "sky blue"
+msgstr "blankytně modrá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:650
+msgctxt "color name"
+msgid "slate blue"
+msgstr "břidlicově modrá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:655
+msgctxt "color name"
+msgid "slate gray"
+msgstr "břidlicově šedá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:660
+msgctxt "color name"
+msgid "snow"
+msgstr "sněhově bílá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:665
+msgctxt "color name"
+msgid "spring green"
+msgstr "jarní zeleň"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:670
+msgctxt "color name"
+msgid "steel blue"
+msgstr "ocelově modrá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:675
+#| msgid "btn"
+msgctxt "color name"
+msgid "tan"
+msgstr "usňová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:680
+msgctxt "color name"
+msgid "teal"
+msgstr "kachní modř"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:685
+msgctxt "color name"
+msgid "thistle"
+msgstr "bodláková"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:690
+msgctxt "color name"
+msgid "tomato"
+msgstr "rajčatová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:695
+msgctxt "color name"
+msgid "turquoise"
+msgstr "tyrkysová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:700
+msgctxt "color name"
+msgid "violet"
+msgstr "fialová"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:705
+msgctxt "color name"
+msgid "wheat"
+msgstr "obilná"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:710
+#| msgid "white space"
+msgctxt "color name"
+msgid "white"
+msgstr "bílá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:715
+#| msgid "white space"
+msgctxt "color name"
+msgid "white smoke"
+msgstr "kouřově bílá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:720
+msgctxt "color name"
+msgid "yellow"
+msgstr "žlutá"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
+#. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: ../src/orca/colornames.py:725
+msgctxt "color name"
+msgid "yellow green"
+msgstr "žluto zelená"
 
 # There is no 'toggle' string in gail package
 #. Translators: this is the action name for
@@ -6372,7 +7512,7 @@ msgstr "Hlasový výstup je nedostupný!"
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3705
+#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3717
 msgid "string not found"
 msgstr "nic nebylo nalezeno"
 
@@ -7593,7 +8733,7 @@ msgstr "Kontrola pravopisu"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3322 ../src/orca/scripts/default.py:3334
+#: ../src/orca/scripts/default.py:3327 ../src/orca/scripts/default.py:3339
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7612,7 +8752,7 @@ msgstr "otevřít"
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:786
+#: ../src/orca/settings.py:787
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%H hodin, %M minut a %S sekund."
 
@@ -7621,7 +8761,7 @@ msgstr "%H hodin, %M minut a %S sekund."
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:793
+#: ../src/orca/settings.py:794
 msgid "%H hours and %M minutes."
 msgstr "%H hodin a %M minut."
 
