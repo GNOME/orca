@@ -628,7 +628,7 @@ def overrideKeyBindings(script, keyBindings):
 def overridePronunciations(script, pronunciations):
     return pronunciations
 
-# This is a list of events that Orca should immidiately drop and never look at.
+# This is a list of events that Orca should immediately drop and never look at.
 #
 ignoredEventsList = ['object:bounds-changed']
 
