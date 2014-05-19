@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2014-05-14 10:05+0000\n"
-"PO-Revision-Date: 2014-05-15 17:21+0200\n"
+"PO-Revision-Date: 2014-05-19 15:58+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -3245,7 +3245,7 @@ msgstr "hnědá"
 #: ../src/orca/colornames.py:90
 msgctxt "color name"
 msgid "burlywood"
-msgstr ""
+msgstr "plavá"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3333,7 +3333,7 @@ msgstr "tmavá modrozelená"
 #: ../src/orca/colornames.py:145
 msgctxt "color name"
 msgid "dark goldenrod"
-msgstr ""
+msgstr "tmavá zlatohnědá"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3487,7 +3487,7 @@ msgstr ""
 #: ../src/orca/colornames.py:240
 msgctxt "color name"
 msgid "fire brick"
-msgstr ""
+msgstr "cihlová"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3545,7 +3545,7 @@ msgstr "zlatá"
 #: ../src/orca/colornames.py:275
 msgctxt "color name"
 msgid "goldenrod"
-msgstr ""
+msgstr "zlatohnědá"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3652,7 +3652,7 @@ msgstr "trávově zelená"
 #: ../src/orca/colornames.py:340
 msgctxt "color name"
 msgid "lemon chiffon"
-msgstr "bledě citrónová"
+msgstr "bledá citrónová"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3687,7 +3687,7 @@ msgstr "světlá modrozelená"
 #: ../src/orca/colornames.py:360
 msgctxt "color name"
 msgid "light goldenrod yellow"
-msgstr ""
+msgstr "světlá zlatožlutá"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3881,7 +3881,7 @@ msgstr "střední tyrkysová"
 #: ../src/orca/colornames.py:475
 msgctxt "color name"
 msgid "medium violet red"
-msgstr ""
+msgstr "fialovočervená"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3905,7 +3905,7 @@ msgstr "peprmintová"
 #: ../src/orca/colornames.py:490
 msgctxt "color name"
 msgid "misty rose"
-msgstr "bledě červená"
+msgstr "bledá červená"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3985,7 +3985,7 @@ msgstr "orchideová fialová"
 #: ../src/orca/colornames.py:540
 msgctxt "color name"
 msgid "pale goldenrod"
-msgstr ""
+msgstr "bledá zlatohnědá"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3993,7 +3993,7 @@ msgstr ""
 #: ../src/orca/colornames.py:545
 msgctxt "color name"
 msgid "pale green"
-msgstr "bledě zelená"
+msgstr "bledá zelená"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4001,7 +4001,7 @@ msgstr "bledě zelená"
 #: ../src/orca/colornames.py:550
 msgctxt "color name"
 msgid "pale turquoise"
-msgstr "bledě tyrkysová"
+msgstr "bledá tyrkysová"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4009,7 +4009,7 @@ msgstr "bledě tyrkysová"
 #: ../src/orca/colornames.py:555
 msgctxt "color name"
 msgid "pale violet red"
-msgstr ""
+msgstr "starorůžová"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4017,7 +4017,7 @@ msgstr ""
 #: ../src/orca/colornames.py:560
 msgctxt "color name"
 msgid "papaya whip"
-msgstr ""
+msgstr "krémová"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4033,7 +4033,7 @@ msgstr "broskvová"
 #: ../src/orca/colornames.py:570
 msgctxt "color name"
 msgid "peru"
-msgstr ""
+msgstr "velbloudí hnědá"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4057,7 +4057,7 @@ msgstr "švestková"
 #: ../src/orca/colornames.py:585
 msgctxt "color name"
 msgid "powder blue"
-msgstr ""
+msgstr "bledá modrá"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
