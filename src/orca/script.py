@@ -106,7 +106,6 @@ class Script:
         self.setupInputEventHandlers()
         self.keyBindings = self.getKeyBindings()
         self.brailleBindings = self.getBrailleBindings()
-        self.app_pronunciation_dict = self.getPronunciations()
 
         self.formatting = self.getFormatting()
         self.brailleGenerator = self.getBrailleGenerator()
@@ -180,15 +179,6 @@ class Script:
         Returns a dictionary where the keys are BrlTTY commands and the
         values are InputEventHandler instances.
         """
-        return {}
-
-    def getPronunciations(self):
-        """Defines the application specific pronunciations for this script.
-
-        Returns a dictionary where the keys are the actual text strings and
-        the values are the replacement strings that are spoken instead.
-        """
-
         return {}
 
     def getBrailleCommandsForInputHandler(self, inputEventHandler):
@@ -283,48 +273,10 @@ class Script:
         """
         return None
 
-    def setAppPreferences(self, prefs):
-        """Write out the application specific preferences lines and set the
-        new values.
+    def getPreferencesFromGUI(self):
+        """Returns a dictionary with the app-specific preferences."""
 
-        Arguments:
-        - prefs: file handle for application preferences.
-        """
-        pass
-
-    def overrideAppKeyBindings(self, script, keyBindings):
-        """Allow for the customization of application specific key bindings.
-
-        Arguments:
-        - script: the application script.
-        - keyBindings: the set of key bindings for this script.
-        """
-
-        return keyBindings
-
-    def overridePronunciations(self, script, pronunciations):
-        """Allow for the customization of application specific pronunciations.
-
-        Arguments:
-        - script: the application script.
-        - pronunciations: the dictionary of pronunciations for this script.
-        """
-
-        return pronunciations
-
-    def getAppState(self):
-        """Returns an object that can be passed to setAppState.  This
-        object will be used by setAppState to restore any state
-        information that was being maintained by the script."""
-        return None
-
-    def setAppState(self, appState):
-        """Sets the application state using the given appState object.
-
-        Arguments:
-        - appState: an object obtained from getAppState
-        """
-        return
+        return {}
 
     def registerEventListeners(self):
         """Tells the event manager to start listening for all the event types

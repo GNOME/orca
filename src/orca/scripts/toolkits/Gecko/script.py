@@ -65,7 +65,6 @@ import orca.speech as speech
 import orca.speechserver as speechserver
 
 from . import keymaps
-from . import script_settings
 from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
 from .formatting import Formatting
@@ -134,12 +133,12 @@ class Script(default.Script):
              Script.monitorLiveRegions,
              Script.reviewLiveAnnouncement]
 
-        if script_settings.controlCaretNavigation:
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "Orca is controlling the caret.")
-        else:
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "Gecko is controlling the caret.")
+        if _settingsManager.getSetting('caretNavigationEnabled') == None:
+            _settingsManager.setSetting('caretNavigationEnabled', True)
+        if _settingsManager.getSetting('caretArrowToLineBeginning') == None:
+            _settingsManager.setSetting('caretArrowToLineBeginning', True)
+        if _settingsManager.getSetting('sayAllOnLoad') == None:
+            _settingsManager.setSetting('sayAllOnLoad', True)
 
         # We keep track of whether we're currently in the process of
         # loading a page.
@@ -305,7 +304,7 @@ class Script(default.Script):
         """Returns the 'structural navigation' class for this script.
         """
         types = self.getEnabledStructuralNavigationTypes()
-        enable = script_settings.structuralNavigationEnabled
+        enable = _settingsManager.getSetting('structuralNavigationEnabled')
         return GeckoStructuralNavigation(self, types, enable)
 
     def setupInputEventHandlers(self):
@@ -451,7 +450,7 @@ class Script(default.Script):
         else:
             keyBindings.load(keymaps.laptopKeymap, self.inputEventHandlers)
 
-        if script_settings.controlCaretNavigation:
+        if _settingsManager.getSetting('caretNavigationEnabled'):
             for keyBinding in self.__getArrowBindings().keyBindings:
                 keyBindings.add(keyBinding)
 
@@ -482,7 +481,7 @@ class Script(default.Script):
         generalAlignment.add(generalGrid)
 
         label = guilabels.USE_CARET_NAVIGATION
-        value = script_settings.controlCaretNavigation
+        value = _settingsManager.getSetting('caretNavigationEnabled')
         self.controlCaretNavigationCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.controlCaretNavigationCheckButton.set_active(value) 
@@ -496,14 +495,14 @@ class Script(default.Script):
         generalGrid.attach(self.structuralNavigationCheckButton, 0, 1, 1, 1)
 
         label = guilabels.CARET_NAVIGATION_START_OF_LINE
-        value = script_settings.arrowToLineBeginning
+        value = _settingsManager.getSetting('caretArrowToLineBeginning')
         self.arrowToLineBeginningCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.arrowToLineBeginningCheckButton.set_active(value)
         generalGrid.attach(self.arrowToLineBeginningCheckButton, 0, 3, 1, 1)
 
         label = guilabels.READ_PAGE_UPON_LOAD
-        value = script_settings.sayAllOnLoad
+        value = _settingsManager.getSetting('sayAllOnLoad')
         self.sayAllOnLoadCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self.sayAllOnLoadCheckButton.set_active(value)
         generalGrid.attach(self.sayAllOnLoadCheckButton, 0, 4, 1, 1)
@@ -562,15 +561,17 @@ class Script(default.Script):
         findGrid = Gtk.Grid()
         findAlignment.add(findGrid)
 
+        verbosity = _settingsManager.getSetting('findResultsVerbosity')
+
         label = guilabels.FIND_SPEAK_RESULTS
-        value = script_settings.speakResultsDuringFind
+        value = verbosity != settings.FIND_SPEAK_NONE
         self.speakResultsDuringFindCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.speakResultsDuringFindCheckButton.set_active(value)
         findGrid.attach(self.speakResultsDuringFindCheckButton, 0, 0, 1, 1)
 
         label = guilabels.FIND_ONLY_SPEAK_CHANGED_LINES
-        value = script_settings.onlySpeakChangedLinesDuringFind
+        value = verbosity == settings.FIND_SPEAK_IF_LINE_CHANGED
         self.changedLinesOnlyCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.changedLinesOnlyCheckButton.set_active(value)
@@ -585,7 +586,7 @@ class Script(default.Script):
         hgrid.attach(self.minimumFindLengthLabel, 0, 0, 1, 1)
 
         self.minimumFindLengthAdjustment = \
-                   Gtk.Adjustment(script_settings.minimumFindLength, 0, 20, 1)
+                   Gtk.Adjustment(_settingsManager.getSetting('findResultsMinimumLength'), 0, 20, 1)
         self.minimumFindLengthSpinButton = Gtk.SpinButton()
         self.minimumFindLengthSpinButton.set_adjustment(
             self.minimumFindLengthAdjustment)
@@ -597,90 +598,28 @@ class Script(default.Script):
 
         return grid
 
-    def setAppPreferences(self, prefs):
-        """Write out the application specific preferences lines and set the
-        new values.
+    def getPreferencesFromGUI(self):
+        """Returns a dictionary with the app-specific preferences."""
 
-        Arguments:
-        - prefs: file handle for application preferences.
-        """
+        if not self.speakResultsDuringFindCheckButton.get_active():
+            verbosity = settings.FIND_SPEAK_NONE
+        elif self.changedLinesOnlyCheckButton.get_active():
+            verbosity = settings.FIND_SPEAK_IF_LINE_CHANGED
+        else:
+            verbosity = settings.FIND_SPEAK_ALL
 
-        prefs.writelines("\n")
-        prefix = "orca.scripts.toolkits.Gecko.script_settings"
-        prefs.writelines("import %s\n\n" % prefix)
-
-        value = self.controlCaretNavigationCheckButton.get_active()
-        prefs.writelines("%s.controlCaretNavigation = %s\n" % (prefix, value))
-        script_settings.controlCaretNavigation = value
-
-        value = self.structuralNavigationCheckButton.get_active()
-        prefs.writelines("%s.structuralNavigationEnabled = %s\n" \
-                         % (prefix, value))
-        script_settings.structuralNavigationEnabled = value
-
-        value = self.arrowToLineBeginningCheckButton.get_active()
-        prefs.writelines("%s.arrowToLineBeginning = %s\n" % (prefix, value))
-        script_settings.arrowToLineBeginning = value
-
-        value = self.sayAllOnLoadCheckButton.get_active()
-        prefs.writelines("%s.sayAllOnLoad = %s\n" % (prefix, value))
-        script_settings.sayAllOnLoad = value
-
-        value = self.speakResultsDuringFindCheckButton.get_active()
-        prefs.writelines("%s.speakResultsDuringFind = %s\n" % (prefix, value))
-        script_settings.speakResultsDuringFind = value
-
-        value = self.changedLinesOnlyCheckButton.get_active()
-        prefs.writelines("%s.onlySpeakChangedLinesDuringFind = %s\n"\
-                         % (prefix, value))
-        script_settings.onlySpeakChangedLinesDuringFind = value
-
-        value = self.minimumFindLengthSpinButton.get_value()
-        prefs.writelines("%s.minimumFindLength = %s\n" % (prefix, value))
-        script_settings.minimumFindLength = value
-
-        # These structural navigation settings used to be application-
-        # specific preferences because at the time structural navigation
-        # was implemented it was part of the Gecko script. These settings
-        # are now part of settings.py so that other scripts can implement
-        # structural navigation. But until that happens, there's no need
-        # to move these controls/change the preferences dialog.
-        # 
-        value = self.speakCellCoordinatesCheckButton.get_active()
-        prefs.writelines("orca.settings.speakCellCoordinates = %s\n" % value)
-        _settingsManager.setSetting('speakCellCoordinates', value)
-
-        value = self.speakCellSpanCheckButton.get_active()
-        prefs.writelines("orca.settings.speakCellSpan = %s\n" % value)
-        _settingsManager.setSetting('speakCellSpan', value)
-
-        value = self.speakCellHeadersCheckButton.get_active()
-        prefs.writelines("orca.settings.speakCellHeaders = %s\n" % value)
-        _settingsManager.setSetting('speakCellHeaders', value)
-
-        value = self.skipBlankCellsCheckButton.get_active()
-        prefs.writelines("orca.settings.skipBlankCells = %s\n" % value)
-        _settingsManager.setSetting('skipBlankCells', value)
-
-    def getAppState(self):
-        """Returns an object that can be passed to setAppState.  This
-        object will be use by setAppState to restore any state information
-        that was being maintained by the script."""
-        return [default.Script.getAppState(self),
-                self._documentFrameCaretContext]
-
-    def setAppState(self, appState):
-        """Sets the application state using the given appState object.
-
-        Arguments:
-        - appState: an object obtained from getAppState
-        """
-        try:
-            [defaultAppState,
-             self._documentFrameCaretContext] = appState
-            default.Script.setAppState(self, defaultAppState)
-        except:
-            debug.printException(debug.LEVEL_WARNING)
+        return {
+            'findResultsVerbosity': verbosity,
+            'findResultsMinimumLength': self.minimumFindLengthSpinButton.get_value(),
+            'sayAllOnLoad': self.sayAllOnLoadCheckButton.get_active(),
+            'structuralNavigationEnabled': self.structuralNavigationCheckButton.get_active(),
+            'caretNavigationEnabled': self.controlCaretNavigationCheckButton.get_active(),
+            'caretArrowToLineBeginning': self.arrowToLineBeginningCheckButton.get_active(),
+            'speakCellCoordinates': self.speakCellCoordinatesCheckButton.get_active(),
+            'speakCellSpan': self.speakCellSpanCheckButton.get_active(),
+            'speakCellHeaders': self.speakCellHeadersCheckButton.get_active(),
+            'skipBlankCells': self.skipBlankCellsCheckButton.get_active()
+        }
 
     def consumesKeyboardEvent(self, keyboardEvent):
         """Called when a key is pressed on the keyboard.
@@ -871,7 +810,7 @@ class Script(default.Script):
         if text and text.getNSelections():
             [start, end] = text.getSelection(0)
             offset = max(offset, start)
-            if end - start >= script_settings.minimumFindLength:
+            if end - start >= _settingsManager.getSetting('findResultsMinimumLength'):
                 enoughSelected = True
 
         # Haing done that, update the caretContext. If the user wants
@@ -880,7 +819,8 @@ class Script(default.Script):
         #
         origObj, origOffset = self.getCaretContext()
         self.setCaretContext(obj, offset)
-        if enoughSelected and script_settings.speakResultsDuringFind:
+        verbosity = _settingsManager.getSetting('findResultsVerbosity')
+        if enoughSelected and verbosity != settings.FIND_SPEAK_NONE:
             origExtents = self.getExtents(origObj, origOffset - 1, origOffset)
             newExtents = self.getExtents(obj, offset - 1, offset)
             lineChanged = not self.onSameLine(origExtents, newExtents)
@@ -898,7 +838,7 @@ class Script(default.Script):
                 self.madeFindAnnouncement = False
 
             if lineChanged or not self.madeFindAnnouncement or \
-               not script_settings.onlySpeakChangedLinesDuringFind:
+               verbosity != settings.FIND_SPEAK_IF_LINE_CHANGED:
                 self.presentLine(obj, offset)
                 self.madeFindAnnouncement = True
 
@@ -947,7 +887,7 @@ class Script(default.Script):
             return
 
         self.setCaretContext(obj, event.detail1)
-        if not script_settings.controlCaretNavigation \
+        if not _settingsManager.getSetting('caretNavigationEnabled') \
            or obj.getState().contains(pyatspi.STATE_EDITABLE):
             orca.setLocusOfFocus(event, obj, False)
 
@@ -1099,7 +1039,7 @@ class Script(default.Script):
         self.updateBraille(obj)
         if obj.getState().contains(pyatspi.STATE_FOCUSABLE):
             speech.speak(self.speechGenerator.generateSpeech(obj))
-        elif not script_settings.sayAllOnLoad:
+        elif not _settingsManager.getSetting('sayAllOnLoad'):
             self.speakContents(
                 self.getLineContentsAtOffset(obj, characterOffset))
         elif _settingsManager.getSetting('enableSpeech'):
@@ -1222,7 +1162,7 @@ class Script(default.Script):
         if not event.detail1:
             return
 
-        if not script_settings.controlCaretNavigation:
+        if not _settingsManager.getSetting('caretNavigationEnabled'):
             default.Script.onFocusedChanged(self, event)
             return
 
@@ -1816,7 +1756,7 @@ class Script(default.Script):
         """Returns True if we should do our own caret navigation.
         """
 
-        if not script_settings.controlCaretNavigation:
+        if not _settingsManager.getSetting('caretNavigationEnabled'):
             return False
 
         if not self.inDocumentContent():
@@ -3968,7 +3908,7 @@ class Script(default.Script):
         [prevObj, prevOffset] = self.findNextCaretInOrder(prevObj,
                                                           prevOffset - 1)
 
-        if not script_settings.arrowToLineBeginning:
+        if not _settingsManager.getSetting('caretArrowToLineBeginning'):
             extents = self.getExtents(obj,
                                       characterOffset,
                                       characterOffset + 1)
@@ -4079,7 +4019,7 @@ class Script(default.Script):
         [nextObj, nextOffset] = \
                   self.findNextCaretInOrder(nextObj, max(0, nextOffset) - 1)
 
-        if not script_settings.arrowToLineBeginning:
+        if not _settingsManager.getSetting('caretArrowToLineBeginning'):
             extents = self.getExtents(obj,
                                       characterOffset,
                                       characterOffset + 1)
@@ -4389,13 +4329,13 @@ class Script(default.Script):
     def toggleCaretNavigation(self, inputEvent):
         """Toggles between Firefox native and Orca caret navigation."""
 
-        if script_settings.controlCaretNavigation:
+        if _settingsManager.getSetting('caretNavigationEnabled'):
             for keyBinding in self.__getArrowBindings().keyBindings:
                 self.keyBindings.removeByHandler(keyBinding.handler)
-            script_settings.controlCaretNavigation = False
+            _settingsManager.setSetting('caretNavigationEnabled', False)
             string = messages.CARET_CONTROL_GECKO
         else:
-            script_settings.controlCaretNavigation = True
+            _settingsManager.setSetting('caretNavigationEnabled', True)
             for keyBinding in self.__getArrowBindings().keyBindings:
                 self.keyBindings.add(keyBinding)
             string = messages.CARET_CONTROL_ORCA

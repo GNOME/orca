@@ -635,7 +635,7 @@ class Script(script.Script):
         keyBindings.load(common_keyboardmap.keymap, self.inputEventHandlers)
 
         try:
-            keyBindings = settings.overrideKeyBindings(self, keyBindings)
+            keyBindings = _settingsManager.overrideKeyBindings(self, keyBindings)
         except:
             debug.println(debug.LEVEL_WARNING,
                           "WARNING: problem overriding keybindings:")

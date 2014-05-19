@@ -57,11 +57,10 @@ class Script(gtk.Script):
 
         return grid
 
-    def setAppPreferences(self, prefs):
-        """Write out the application specific preferences lines and set the
-        new values."""
+    def getPreferencesFromGUI(self):
+        """Returns a dictionary with the app-specific preferences."""
 
-        self.spellcheck.setAppPreferences(prefs)
+        return self.spellcheck.getPreferencesFromGUI()
 
     def doWhereAmI(self, inputEvent, basicOnly):
         """Performs the whereAmI operation."""

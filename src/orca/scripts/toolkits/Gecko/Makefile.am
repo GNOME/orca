@@ -5,7 +5,6 @@ orca_python_PYTHON = \
 	formatting.py \
 	keymaps.py \
 	script.py \
-	script_settings.py \
 	script_utilities.py \
 	speech_generator.py \
 	structural_navigation.py

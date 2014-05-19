@@ -108,16 +108,10 @@ class Script(Gecko.Script):
 
         return self.chat.getAppPreferencesGUI()
 
-    def setAppPreferences(self, prefs):
-        """Write out the application specific preferences lines and set the
-        new values. The chat-related options get written out by the chat
-        module.
+    def getPreferencesFromGUI(self):
+        """Returns a dictionary with the app-specific preferences."""
 
-        Arguments:
-        - prefs: file handle for application preferences.
-        """
-
-        self.chat.setAppPreferences(prefs)
+        return self.chat.getPreferencesFromGUI()
 
     def onTextDeleted(self, event):
         """Called whenever text is deleted from an object.

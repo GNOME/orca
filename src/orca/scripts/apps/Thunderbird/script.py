@@ -40,7 +40,6 @@ from .formatting import Formatting
 from .speech_generator import SpeechGenerator
 from .spellcheck import SpellCheck
 from .script_utilities import Utilities
-from . import script_settings
 
 _settingsManager = settings_manager.getManager()
 
@@ -64,6 +63,9 @@ class Script(Gecko.Script):
         # so that we're not too 'chatty'.  See bug #533042.
         #
         self._lastAutoComplete = ""
+
+        if _settingsManager.getSetting('sayAllOnLoad') == None:
+            _settingsManager.setSetting('sayAllOnLoad', False)
 
         Gecko.Script.__init__(self, app)
 
@@ -92,9 +94,8 @@ class Script(Gecko.Script):
 
         grid = Gecko.Script.getAppPreferencesGUI(self)
 
-        # Reapply "say all on load" using the Thunderbird specific setting.
-        #
-        self.sayAllOnLoadCheckButton.set_active(script_settings.sayAllOnLoad)
+        self.sayAllOnLoadCheckButton.set_active(
+            _settingsManager.getSetting('sayAllOnLoad'))
 
         spellcheck = self.spellcheck.getAppPreferencesGUI()
         grid.attach(spellcheck, 0, len(grid.get_children()), 1, 1)
@@ -102,26 +103,14 @@ class Script(Gecko.Script):
 
         return grid
 
-    def setAppPreferences(self, prefs):
-        """Write out the application specific preferences lines and set the
-        new values.
+    def getPreferencesFromGUI(self):
+        """Returns a dictionary with the app-specific preferences."""
 
-        Arguments:
-        - prefs: file handle for application preferences.
-        """
+        prefs = Gecko.Script.getPreferencesFromGUI(self)
+        prefs['sayAllOnLoad'] = self.sayAllOnLoadCheckButton.get_active()
+        prefs.update(self.spellcheck.getPreferencesFromGUI())
 
-        Gecko.Script.setAppPreferences(self, prefs)
-
-        # Write the Thunderbird specific settings.
-        #
-        prefix = "orca.scripts.apps.Thunderbird.script_settings"
-        prefs.writelines("import %s\n\n" % prefix)
-
-        value = self.sayAllOnLoadCheckButton.get_active()
-        prefs.writelines("%s.sayAllOnLoad = %s\n" % (prefix, value))
-        script_settings.sayAllOnLoad = value
-
-        self.spellcheck.setAppPreferences(prefs)
+        return prefs
 
     def doWhereAmI(self, inputEvent, basicOnly):
         """Performs the whereAmI operation."""
@@ -357,7 +346,7 @@ class Script(Gecko.Script):
 
         [obj, offset] = self.findFirstCaretContext(documentFrame, 0)
         self.setCaretPosition(obj, offset)
-        if not script_settings.sayAllOnLoad:
+        if not _settingsManager.getSetting('sayAllOnLoad'):
             self.presentLine(obj, offset)
         elif _settingsManager.getSetting('enableSpeech'):
             self.sayAll(None)

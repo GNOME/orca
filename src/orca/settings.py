@@ -88,10 +88,12 @@ userCustomizableSettings = [
     "enableMouseReview",
     "mouseDwellDelay",
     "speakCellCoordinates",
+    "speakSpreadsheetCoordinates",
     "speakCellSpan",
     "speakCellHeaders",
     "skipBlankCells",
     "largeObjectTextLength",
+    "structuralNavigationEnabled",
     "wrappedStructuralNavigation",
     "presentRequiredState",
     "brailleRequiredStateString",
@@ -113,6 +115,8 @@ userCustomizableSettings = [
     "spellcheckSpellSuggestion",
     "spellcheckPresentContext",
     "useColorNames",
+    "findResultsVerbosity",
+    "findResultsMinimumLength",
 ]
 
 excludeKeys = ["pronunciations",
@@ -616,18 +620,6 @@ chatAnnounceBuddyTyping = False
 #
 chatRoomHistories = False
 
-# Allow for the customization of key bindings.
-#
-def overrideKeyBindings(script, keyBindings):
-    from . import settings_manager
-    _settingsManager = settings_manager.getManager()
-    return _settingsManager.overrideKeyBindings(script, keyBindings)
-
-# Allow for user customization of pronunciations.
-#
-def overridePronunciations(script, pronunciations):
-    return pronunciations
-
 # This is a list of events that Orca should immediately drop and never look at.
 #
 ignoredEventsList = ['object:bounds-changed']
@@ -650,6 +642,7 @@ brailleContractionTable = ''
 # from cell to cell in a table.
 #
 speakCellCoordinates = True
+speakSpreadsheetCoordinates = True
 
 # Whether or not to speak the number of cells spanned by a cell
 # that occupies more than one row or column of a table.
@@ -833,3 +826,11 @@ spellcheckSpellSuggestion = True
 spellcheckPresentContext = True
 
 useColorNames = True
+
+FIND_SPEAK_NONE = 0
+FIND_SPEAK_IF_LINE_CHANGED  = 1
+FIND_SPEAK_ALL = 2
+findResultsVerbosity = FIND_SPEAK_ALL
+findResultsMinimumLength = 4
+
+structuralNavigationEnabled = True

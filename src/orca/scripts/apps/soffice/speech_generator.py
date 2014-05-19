@@ -31,8 +31,6 @@ import orca.messages as messages
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
 
-from . import script_settings
-
 _settingsManager = settings_manager.getManager()
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
@@ -352,7 +350,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return result
 
         isBasicWhereAmI = args.get('formatType') == 'basicWhereAmI'
-        speakCoordinates = script_settings.speakSpreadsheetCoordinates
+        speakCoordinates = _settingsManager.getSetting('speakSpreadsheetCoordinates')
         if speakCoordinates and not isBasicWhereAmI:
             result.append(self._script.utilities.spreadSheetCellName(obj))
 

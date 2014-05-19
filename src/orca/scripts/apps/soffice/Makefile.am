@@ -3,7 +3,6 @@ orca_python_PYTHON = \
 	braille_generator.py \
 	formatting.py \
 	script.py \
-	script_settings.py \
 	script_utilities.py \
 	speech_generator.py \
 	structural_navigation.py

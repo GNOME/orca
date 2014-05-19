@@ -41,6 +41,7 @@ class Backend:
         self.keybindings = {}
         self.profiles = {}
         self.settingsFile = os.path.join(prefsDir, "user-settings.conf")
+        self.appPrefsDir = os.path.join(prefsDir, "app-settings")
 
     def saveDefaultSettings(self, general, pronunciations, keybindings):
         """ Save default settings for all the properties from
@@ -61,6 +62,30 @@ class Backend:
         self.keybindings = keybindings
 
         settingsFile = open(self.settingsFile, 'w')
+        dump(prefs, settingsFile, indent=4)
+        settingsFile.close()
+
+    def getAppSettings(self, appName):
+        fileName = os.path.join(self.appPrefsDir, "%s.conf" % appName)
+        if os.path.exists(fileName):
+            settingsFile = open(fileName, 'r')
+            prefs = load(settingsFile)
+            settingsFile.close()
+        else:
+            prefs = {}
+
+        return prefs
+
+    def saveAppSettings(self, appName, profile, general, pronunciations, keybindings):
+        prefs = self.getAppSettings(appName)
+        profiles = prefs.get('profiles', {})
+        profiles[profile] = {'general': general,
+                             'pronunciations': pronunciations,
+                             'keybindings': keybindings}
+        prefs['profiles'] = profiles
+
+        fileName = os.path.join(self.appPrefsDir, "%s.conf" % appName)
+        settingsFile = open(fileName, 'w')
         dump(prefs, settingsFile, indent=4)
         settingsFile.close()
 

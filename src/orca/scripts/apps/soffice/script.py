@@ -48,7 +48,6 @@ from .braille_generator import BrailleGenerator
 from .formatting import Formatting
 from .structural_navigation import StructuralNavigation
 from .script_utilities import Utilities
-from . import script_settings
 
 _settingsManager = settings_manager.getManager()
 
@@ -227,7 +226,7 @@ class Script(default.Script):
         grid.set_border_width(12)
 
         label = guilabels.SPREADSHEET_SPEAK_CELL_COORDINATES
-        value = script_settings.speakSpreadsheetCoordinates
+        value = _settingsManager.getSetting('speakSpreadsheetCoordinates')
         self.speakSpreadsheetCoordinatesCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.speakSpreadsheetCoordinatesCheckButton.set_active(value)
@@ -278,60 +277,16 @@ class Script(default.Script):
 
         return grid
 
-    def setAppPreferences(self, prefs):
-        """Write out the application specific preferences lines and set the
-        new values.
+    def getPreferencesFromGUI(self):
+        """Returns a dictionary with the app-specific preferences."""
 
-        Arguments:
-        - prefs: file handle for application preferences.
-        """
-
-        prefs.writelines("\n")
-        prefix = "orca.scripts.apps.soffice.script_settings"
-        prefs.writelines("import %s\n\n" % prefix)
-
-        script_settings.speakSpreadsheetCoordinates = \
-            self.speakSpreadsheetCoordinatesCheckButton.get_active()
-        prefs.writelines("%s.speakSpreadsheetCoordinates = %s\n" % \
-                        (prefix, script_settings.speakSpreadsheetCoordinates))
-
-        value = self.speakCellCoordinatesCheckButton.get_active()
-        _settingsManager.setSetting('speakCellCoordinates', value)
-        prefs.writelines("orca.settings.speakCellCoordinates = %s\n" % value)
-
-        value = self.speakCellSpanCheckButton.get_active()
-        _settingsManager.setSetting('speakCellSpan', value)
-        prefs.writelines("orca.settings.speakCellSpan = %s\n" % value)
-
-        value = self.speakCellHeadersCheckButton.get_active()
-        _settingsManager.setSetting('speakCellHeaders', value)
-        prefs.writelines("orca.settings.speakCellHeaders = %s\n" % value)
-
-        value = self.skipBlankCellsCheckButton.get_active()
-        _settingsManager.setSetting('skipBlankCells', value)
-        prefs.writelines("orca.settings.skipBlankCells = %s\n" % value)
-
-    def getAppState(self):
-        """Returns an object that can be passed to setAppState.  This
-        object will be use by setAppState to restore any state information
-        that was being maintained by the script."""
-        return [default.Script.getAppState(self),
-                self.dynamicColumnHeaders,
-                self.dynamicRowHeaders]
-
-    def setAppState(self, appState):
-        """Sets the application state using the given appState object.
-
-        Arguments:
-        - appState: an object obtained from getAppState
-        """
-        try:
-            [defaultAppState,
-             self.dynamicColumnHeaders,
-             self.dynamicRowHeaders] = appState
-            default.Script.setAppState(self, defaultAppState)
-        except:
-            debug.printException(debug.LEVEL_WARNING)
+        return {
+            'speakCellSpan': self.speakCellSpanCheckButton.get_active(),
+            'speakCellHeaders': self.speakCellHeadersCheckButton.get_active(),
+            'skipBlankCells': self.skipBlankCellsCheckButton.get_active(),
+            'speakCellCoordinates': self.speakCellCoordinatesCheckButton.get_active(),
+            'speakSpreadsheetCoordinates': self.speakSpreadsheetCoordinatesCheckButton.get_active(),
+        }
 
     def isStructuralNavigationCommand(self, inputEvent=None):
         """Checks to see if the inputEvent was a structural navigation

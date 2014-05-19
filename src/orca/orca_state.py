@@ -111,12 +111,3 @@ usePronunciationDictionary = True
 # Handle to the Orca Preferences Glade GUI object.
 #
 orcaOS = None
-
-# Handle to the Orca application specific preferences Glade GUI object.
-#
-appOS = None
-
-# Handle to the Glade warning dialog object that is displayed, if the 
-# user has attempted to start a second instance of a preferences dialog.
-#
-orcaWD = None

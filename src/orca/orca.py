@@ -64,6 +64,7 @@ from . import logger
 from . import messages
 from . import notification_messages
 from . import orca_state
+from . import orca_platform
 from . import script_manager
 from . import settings
 from . import settings_manager
@@ -434,6 +435,8 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         except:
             debug.printException(debug.LEVEL_SEVERE)
 
+    _settingsManager.loadAppSettings(script)
+
     if _settingsManager.getSetting('enableSpeech'):
         try:
             speech.init()
@@ -483,6 +486,27 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
 
     return True
 
+def _showPreferencesUI(script, prefs):
+    if orca_state.orcaOS:
+        orca_state.orcaOS.showGUI()
+        return
+
+    try:
+        module = importlib.import_module('.orca_gui_prefs', 'orca')
+    except:
+        debug.printException(debug.LEVEL_SEVERE)
+        return
+
+    uiFile = os.path.join(orca_platform.prefix,
+                          orca_platform.datadirname,
+                          orca_platform.package,
+                          "ui",
+                          "orca-setup.ui")
+
+    orca_state.orcaOS = module.OrcaSetupGUI(uiFile, "orcaSetupWindow", prefs)
+    orca_state.orcaOS.init(script)
+    orca_state.orcaOS.showGUI()
+
 def showAppPreferencesGUI(script=None, inputEvent=None):
     """Displays the user interace to configure the settings for a
     specific applications within Orca and set up those app-specific
@@ -491,11 +515,12 @@ def showAppPreferencesGUI(script=None, inputEvent=None):
     Returns True to indicate the input event has been consumed.
     """
 
-    try:
-        module = importlib.import_module('.app_gui_prefs', 'orca')
-        module.showPreferencesUI()
-    except:
-        debug.printException(debug.LEVEL_SEVERE)
+    prefs = {}
+    for key in settings.userCustomizableSettings:
+        prefs[key] = _settingsManager.getSetting(key)
+
+    script = script or orca_state.activeScript
+    _showPreferencesUI(script, prefs)
 
     return True
 
@@ -506,11 +531,9 @@ def showPreferencesGUI(script=None, inputEvent=None):
     Returns True to indicate the input event has been consumed.
     """
 
-    try:
-        module = importlib.import_module('.orca_gui_prefs', 'orca')
-        module.showPreferencesUI()
-    except:
-        debug.printException(debug.LEVEL_SEVERE)
+    prefs = _settingsManager.getGeneralSettings(_settingsManager.profile)
+    script = _scriptManager.getDefaultScript()
+    _showPreferencesUI(script, prefs)
 
     return True
 

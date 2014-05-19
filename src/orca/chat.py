@@ -461,46 +461,22 @@ class Chat:
 
         return grid
 
-    def setAppPreferences(self, prefs):
-        """Write out the application specific preferences lines and set the
-        new values.
+    def getPreferencesFromGUI(self):
+        """Returns a dictionary with the app-specific preferences."""
 
-        Arguments:
-        - prefs: file handle for application preferences.
-        """
-
-        prefix = "orca.settings"
-
-        value = self.speakNameCheckButton.get_active()
-        _settingsManager.setSetting('chatSpeakRoomName', value)
-        prefs.writelines("\n")
-        prefs.writelines("%s.chatSpeakRoomName = %s\n" % (prefix, value))
-
-        value = self.buddyTypingCheckButton.get_active()
-        _settingsManager.setSetting('chatAnnounceBuddyTyping', value)
-        prefs.writelines("%s.chatAnnounceBuddyTyping = %s\n" % (prefix, value))
-
-        value = self.chatRoomHistoriesCheckButton.get_active()
-        _settingsManager.setSetting('chatRoomHistories', value)
-        prefs.writelines("%s.chatRoomHistories = %s\n" % (prefix, value))
-
-        value = None
-        option = None
-        if self.allMessagesRadioButton.get_active():
-            value = settings.CHAT_SPEAK_ALL
-            option = ("%s.CHAT_SPEAK_ALL" % prefix)
-        elif self.allChannelsRadioButton.get_active():
-            value = settings.CHAT_SPEAK_ALL_IF_FOCUSED
-            option = ("%s.CHAT_SPEAK_ALL_IF_FOCUSED" % prefix)
+        if self.allChannelsRadioButton.get_active():
+            verbosity = settings.CHAT_SPEAK_ALL_IF_FOCUSED
         elif self.focusedChannelRadioButton.get_active():
-            value = settings.CHAT_SPEAK_FOCUSED_CHANNEL
-            option = ("%s.CHAT_SPEAK_FOCUSED_CHANNEL" % prefix)
+            verbosity = settings.CHAT_SPEAK_FOCUSED_CHANNEL
+        else:
+            verbosity = settings.CHAT_SPEAK_ALL
 
-        if value and option:
-            _settingsManager.setSetting('chatMessageVerbosity', value)
-            prefs.writelines("\n")
-            prefs.writelines("%s.chatMessageVerbosity = %s\n" % \
-                            (prefix, option))
+        return {
+            'chatMessageVerbosity': verbosity,
+            'chatSpeakRoomName': self.speakNameCheckButton.get_active(),
+            'chatAnnounceBuddyTyping': self.buddyTypingCheckButton.get_active(),
+            'chatRoomHistories': self.chatRoomHistoriesCheckButton.get_active(),
+        }
 
     ########################################################################
     #                                                                      #

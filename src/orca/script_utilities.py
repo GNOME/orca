@@ -40,6 +40,7 @@ from . import input_event
 from . import messages
 from . import mouse_review
 from . import orca_state
+from . import pronunciation_dict
 from . import settings
 
 #############################################################################
@@ -2206,30 +2207,6 @@ class Utilities:
 
         return line
 
-    def _pronunciationForSegment(self, segment):
-        """Adjust the word segment to potentially replace it with what
-        those words actually sound like. Two pronunciation dictionaries
-        are checked. First the application specific one (which might be
-        empty), then the default (global) one.
-
-        Arguments:
-        - segment: the string to adjust for words in the pronunciation
-          dictionaries.
-
-        Returns: a new word segment adjusted for words found in the
-        pronunciation dictionaries, or the original word segment if there
-        was no dictionary entry.
-        """
-
-        from . import pronunciation_dict
-
-        newSegment = pronunciation_dict.getPronunciation(
-            segment, self._script.app_pronunciation_dict)
-        if newSegment == segment:
-            newSegment = pronunciation_dict.getPronunciation(segment)
-
-        return newSegment
-
     def adjustForLinks(self, obj, line, startOffset):
         """Adjust line to include the word "link" after any hypertext links.
 
@@ -2296,7 +2273,7 @@ class Utilities:
 
         newLine = ""
         words = self.WORDS_RE.split(line)
-        newLine = ''.join(map(self._pronunciationForSegment, words))
+        newLine = ''.join(map(pronunciation_dict.getPronunciation, words))
 
         return newLine
 

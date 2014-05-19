@@ -43,7 +43,6 @@ import orca.speechserver as speechserver
 import orca.orca_state as orca_state
 import orca.speech as speech
 
-from . import script_settings
 from .structural_navigation import StructuralNavigation
 from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
@@ -72,8 +71,10 @@ class Script(default.Script):
         self._loadingDocumentContent = False
         self._isBrowser = isBrowser
         self._lastCaretContext = None, -1
-
         self.sayAllOnLoadCheckButton = None
+
+        if _settingsManager.getSetting('sayAllOnLoad') == None:
+            _settingsManager.setSetting('sayAllOnLoad', True)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -117,28 +118,18 @@ class Script(default.Script):
         label = guilabels.READ_PAGE_UPON_LOAD
         self.sayAllOnLoadCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
-        self.sayAllOnLoadCheckButton.set_active(script_settings.sayAllOnLoad)
+        self.sayAllOnLoadCheckButton.set_active(
+            _settingsManager.getSetting('sayAllOnLoad'))
         grid.attach(self.sayAllOnLoadCheckButton, 0, 0, 1, 1)
 
         grid.show_all()
 
         return grid
 
-    def setAppPreferences(self, prefs):
-        """Write out the application specific preferences lines and set the
-        new values.
+    def getPreferencesFromGUI(self):
+        """Returns a dictionary with the app-specific preferences."""
 
-        Arguments:
-        - prefs: file handle for application preferences.
-        """
-
-        prefs.writelines("\n")
-        prefix = "orca.scripts.toolkits.WebKitGtk.script_settings"
-        prefs.writelines("import %s\n\n" % prefix)
-
-        value = self.sayAllOnLoadCheckButton.get_active()
-        prefs.writelines("%s.sayAllOnLoad = %s\n" % (prefix, value))
-        script_settings.sayAllOnLoad = value
+        return {'sayAllOnLoad': self.sayAllOnLoadCheckButton.get_active()}
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script."""
@@ -238,7 +229,7 @@ class Script(default.Script):
         orca.setLocusOfFocus(event, obj, False)
 
         self.updateBraille(obj)
-        if script_settings.sayAllOnLoad \
+        if _settingsManager.getSetting('sayAllOnLoad') \
            and _settingsManager.getSetting('enableSpeech'):
             self.sayAll(None)
 

@@ -290,21 +290,11 @@ class SpellCheck:
 
         return frame
 
-    def setAppPreferences(self, prefs):
+    def getPreferencesFromGUI(self):
+        """Returns a dictionary with the app-specific preferences."""
 
-        prefix = "orca.settings"
-
-        value = self.spellErrorCheckButton.get_active()
-        _settingsManager.setSetting('spellcheckSpellError', value)
-        prefs.writelines("\n")
-        prefs.writelines("%s.spellcheckSpellError = %s\n" % (prefix, value))
-
-        value = self.spellSuggestionCheckButton.get_active()
-        _settingsManager.setSetting('spellcheckSpellSuggestion', value)
-        prefs.writelines("\n")
-        prefs.writelines("%s.spellcheckSpellSuggestion = %s\n" % (prefix, value))
-
-        value = self.presentContextCheckButton.get_active()
-        _settingsManager.setSetting('spellcheckPresentContext', value)
-        prefs.writelines("\n")
-        prefs.writelines("%s.spellcheckPresentContext = %s\n" % (prefix, value))
+        return {
+            'spellcheckSpellError': self.spellErrorCheckButton.get_active(),
+            'spellcheckSpellSuggestion': self.spellSuggestionCheckButton.get_active(),
+            'spellcheckPresentContext': self.presentContextCheckButton.get_active()
+        }
