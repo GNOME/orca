@@ -89,9 +89,6 @@ class ACSS(dict):
         """Update name if we delete a key."""
         dict.__delitem__(self, key)
 
-    def updateName(self):
-        """Update name based on settings."""
-
     def name(self):
         _name = 'acss-'
         names = list(self.keys())

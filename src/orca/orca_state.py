@@ -44,10 +44,6 @@ activeWindow = None
 #
 activeScript = None
 
-# The object event currently being processed.
-#
-currentObjectEvent = None
-
 # The "click" count. Used to determine if the user has double or triple
 # "clicked" a key.
 #
@@ -56,7 +52,6 @@ clickCount = 0
 # Used to capture keys to redefine key bindings by the user.
 #
 capturingKeys   = False
-lastCapturedKey = None
 
 # The last non-modifier key event received.
 #
@@ -72,26 +67,9 @@ lastInputEvent = None
 #
 bypassNextCommand = False
 
-# The last timestamp from a device event. Used to set focus for the Orca
-# configuration GUI.
-#
-lastInputEventTimestamp = 0
-
 # Records the last time a key was echoed.
 #
 lastKeyEchoTime = None
-
-# The time that the last "No focus" event occured.
-#
-noFocusTimestamp = 0.0
-
-# The last word spoken.
-#
-lastWord = ""
-
-# The last word examined for the misspelled indicator.
-#
-lastWordCheckedForSpelling = ""
 
 # The last searchQuery
 #
@@ -101,12 +79,6 @@ searchQuery = None
 # and exit when you press escape.
 #
 learnModeEnabled = False
-
-# Whether we should use the pronunciation dictionary to help speak 
-# certain words. This will be True everywhere except when focus is 
-# in the Pronunciation Dictionary in the Orca Preferences dialog.
-#
-usePronunciationDictionary = True
 
 # Handle to the Orca Preferences Glade GUI object.
 #

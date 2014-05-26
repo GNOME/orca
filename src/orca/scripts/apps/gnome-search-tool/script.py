@@ -29,8 +29,8 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.event_manager as event_manager
 import orca.scripts.toolkits.gtk as gtk
-import orca.settings as settings
 
 ########################################################################
 #                                                                      #
@@ -48,29 +48,21 @@ class Script(gtk.Script):
         """
 
         gtk.Script.__init__(self, app)
-        self._savedIgnoredEventsList = []
         self._floodEvents = ['object:children-changed:add',
                              'object:property-change:accessible-name',
                              'object:text-changed:insert',
                              'object:text-changed:delete']
-
-    def activate(self):
-        self._savedIgnoredEventsList = settings.ignoredEventsList
-        gtk.Script.activate(self)
-
-    def deactivate(self):
-        settings.ignoredEventsList = self._savedIgnoredEventsList
-        gtk.Script.deactivate(self)
 
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing events."""
 
         obj = event.source
         if obj.getRole() == pyatspi.ROLE_ANIMATION:
+            _manager = event_manager.getManager()
             if event.detail1:
-                settings.ignoredEventsList.extend(self._floodEvents)
+                _manager.ignoreEventTypes(self._floodEvents)
             else:
-                settings.ignoredEventList = self._savedIgnoredEventsList
+                _manager.unignoreEventTypes(self._floodEvents)
             self.presentTitle(None)
             return
 

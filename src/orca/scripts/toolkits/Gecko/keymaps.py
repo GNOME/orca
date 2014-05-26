@@ -28,17 +28,17 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs, Mesar Hameed."
 __license__   = "LGPL"
 
-import orca.settings as settings
+import orca.keybindings as keybindings
 
 # Storing values 
-defaultModifierMask = settings.defaultModifierMask
-ORCA_MODIFIER_MASK = settings.ORCA_MODIFIER_MASK
-NO_MODIFIER_MASK = settings.NO_MODIFIER_MASK
-ORCA_SHIFT_MODIFIER_MASK = settings.ORCA_SHIFT_MODIFIER_MASK
-ORCA_CTRL_MODIFIER_MASK = settings.ORCA_CTRL_MODIFIER_MASK
-CTRL_MODIFIER_MASK = settings.CTRL_MODIFIER_MASK
-ALT_MODIFIER_MASK = settings.ALT_MODIFIER_MASK
-SHIFT_MODIFIER_MASK = settings.SHIFT_MODIFIER_MASK
+defaultModifierMask = keybindings.defaultModifierMask
+ORCA_MODIFIER_MASK = keybindings.ORCA_MODIFIER_MASK
+NO_MODIFIER_MASK = keybindings.NO_MODIFIER_MASK
+ORCA_SHIFT_MODIFIER_MASK = keybindings.ORCA_SHIFT_MODIFIER_MASK
+ORCA_CTRL_MODIFIER_MASK = keybindings.ORCA_CTRL_MODIFIER_MASK
+CTRL_MODIFIER_MASK = keybindings.CTRL_MODIFIER_MASK
+ALT_MODIFIER_MASK = keybindings.ALT_MODIFIER_MASK
+SHIFT_MODIFIER_MASK = keybindings.SHIFT_MODIFIER_MASK
 
 # KeyBindings that use the arrow keys for navigating HTML content.
 arrowKeymap = (

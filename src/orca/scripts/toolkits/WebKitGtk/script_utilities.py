@@ -31,7 +31,7 @@ import pyatspi
 import re
 
 import orca.script_utilities as script_utilities
-import orca.settings as settings
+import orca.keybindings as keybindings
 
 #############################################################################
 #                                                                           #
@@ -145,7 +145,7 @@ class Utilities(script_utilities.Utilities):
         else:
             if boundary == pyatspi.TEXT_BOUNDARY_CHAR:
                 key, mods = self.lastKeyAndModifiers()
-                if (mods & settings.SHIFT_MODIFIER_MASK) and key == 'Right':
+                if (mods & keybindings.SHIFT_MODIFIER_MASK) and key == 'Right':
                     offset -= 1
             segment, start, end = text.getTextAtOffset(offset, boundary)
 

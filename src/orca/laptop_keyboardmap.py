@@ -28,14 +28,14 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs, Mesar Hameed."
 __license__   = "LGPL"
 
-from . import settings
+from . import keybindings
 
 # Storing values 
-defaultModifierMask = settings.defaultModifierMask
-ORCA_MODIFIER_MASK = settings.ORCA_MODIFIER_MASK
-NO_MODIFIER_MASK = settings.NO_MODIFIER_MASK
-ORCA_SHIFT_MODIFIER_MASK = settings.ORCA_SHIFT_MODIFIER_MASK
-ORCA_CTRL_MODIFIER_MASK = settings.ORCA_CTRL_MODIFIER_MASK
+defaultModifierMask = keybindings.defaultModifierMask
+ORCA_MODIFIER_MASK = keybindings.ORCA_MODIFIER_MASK
+NO_MODIFIER_MASK = keybindings.NO_MODIFIER_MASK
+ORCA_SHIFT_MODIFIER_MASK = keybindings.ORCA_SHIFT_MODIFIER_MASK
+ORCA_CTRL_MODIFIER_MASK = keybindings.ORCA_CTRL_MODIFIER_MASK
 
 keymap = (
     

@@ -128,7 +128,7 @@ class Backend:
             if key == 'voices':
                 for voiceType, voiceDef in list(value.items()):
                     value[voiceType] = acss.ACSS(voiceDef)
-            if key not in settings.excludeKeys:
+            if key not in ['startingProfile', 'activeProfile']:
                 generalSettings[key] = value
         try:
             generalSettings['activeProfile'] = profileSettings['profile']

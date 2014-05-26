@@ -35,8 +35,6 @@ import pyatspi
 import subprocess
 import sys
 
-from . import orca_state
-
 # Used to turn off all debugging.
 #
 LEVEL_OFF = 10000
@@ -118,6 +116,12 @@ debugFile = None
 eventDebugLevel  = LEVEL_FINEST
 eventDebugFilter = None
 
+# If True, we output debug information for the event queue.  We
+# use this in addition to log level to prevent debug logic from
+# bogging down event handling.
+#
+debugEventQueue = False
+
 # What module(s) should be traced if traceit is being used. By default
 # we'll just attend to ourself. (And by default, we will not enable
 # traceit.) Note that enabling this functionality will drag your system
@@ -162,6 +166,8 @@ TRACE_ROLES = []
 # So we'll default to True.
 #
 TRACE_ONLY_PROCESSING_EVENTS = True
+
+objEvent = None
 
 def printException(level):
     """Prints out information regarding the current exception.
@@ -377,7 +383,6 @@ def _getFileAndModule(frame):
     return filename, module
 
 def _shouldTraceIt():
-    objEvent = orca_state.currentObjectEvent
     if not objEvent:
         return not TRACE_ONLY_PROCESSING_EVENTS
 

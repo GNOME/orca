@@ -1768,7 +1768,7 @@ class Script(default.Script):
         if keyboardEvent.event_string in ["Page_Up", "Page_Down"]:
             return False
 
-        if keyboardEvent.modifiers & settings.SHIFT_MODIFIER_MASK:
+        if keyboardEvent.modifiers & keybindings.SHIFT_MODIFIER_MASK:
             return False
 
         if self._loadingDocumentContent:
@@ -1820,7 +1820,7 @@ class Script(default.Script):
                and not self._autocompleteVisible:
                 weHandleIt = keyboardEvent.event_string in ["Up", "Down"]
 
-        elif keyboardEvent.modifiers & settings.ALT_MODIFIER_MASK:
+        elif keyboardEvent.modifiers & keybindings.ALT_MODIFIER_MASK:
             # Alt+Down Arrow is the Firefox command to expand/collapse the
             # *currently focused* combo box.  When Orca is controlling the
             # caret, it is possible to navigate into a combo box *without
@@ -1880,7 +1880,7 @@ class Script(default.Script):
         #
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             mods = orca_state.lastInputEvent.modifiers
-            isOrcaKey = mods & settings.ORCA_MODIFIER_MASK
+            isOrcaKey = mods & keybindings.ORCA_MODIFIER_MASK
             if isOrcaKey:
                 return True
 

@@ -474,6 +474,23 @@ CONSOLE_SETUP_START = _("Screen reader setup.")
 # based setup.
 CONSOLE_SETUP_COMPLETE = _("Setup complete.  Press Return to continue.")
 
+DATE_FORMAT_LOCALE = "%x"
+DATE_FORMAT_NUMBERS_DM = "%d/%m"
+DATE_FORMAT_NUMBERS_MD = "%m/%d"
+DATE_FORMAT_NUMBERS_DMY = "%d/%m/%Y"
+DATE_FORMAT_NUMBERS_MDY = "%m/%d/%Y"
+DATE_FORMAT_NUMBERS_YMD = "%Y/%m/%d"
+DATE_FORMAT_FULL_DM = "%A, %-d %B"
+DATE_FORMAT_FULL_MD = "%A, %B %-d"
+DATE_FORMAT_FULL_DMY = "%A, %-d %B, %Y"
+DATE_FORMAT_FULL_MDY = "%A, %B %-d, %Y"
+DATE_FORMAT_FULL_YMD = "%Y. %B %-d, %A."
+DATE_FORMAT_ABBREVIATED_DM = "%a, %-d %b"
+DATE_FORMAT_ABBREVIATED_MD = "%a, %b %-d"
+DATE_FORMAT_ABBREVIATED_DMY = "%a, %-d %b, %Y"
+DATE_FORMAT_ABBREVIATED_MDY = "%a, %b %-d, %Y"
+DATE_FORMAT_ABBREVIATED_YMD = "%Y. %b %-d, %a."
+
 # Translators: The "default" button in a dialog box is the button that gets
 # activated when Enter is pressed anywhere within that dialog box.
 DEFAULT_BUTTON_IS = _("Default button is %s")
@@ -1557,6 +1574,20 @@ TEXT_SELECTED = C_("text", "selected")
 # Translators: when the user unselects (un-highlights) text in a document, Orca
 # lets them know.
 TEXT_UNSELECTED = C_("text", "unselected")
+
+TIME_FORMAT_LOCALE = "%X"
+TIME_FORMAT_24_HMS = "%H:%M:%S"
+TIME_FORMAT_24_HM  = "%H:%M"
+
+# Translators: Orca has a feature to speak the time when the user presses a
+# shortcut key. This is one of the alternative formats that the user may wish
+# it to be presented with.
+TIME_FORMAT_24_HMS_WITH_WORDS = _("%H hours, %M minutes and %S seconds.")
+
+# Translators: Orca has a feature to speak the time when the user presses a
+# shortcut key. This is one of the alternative formats that the user may wish
+# it to be presented with.
+TIME_FORMAT_24_HM_WITH_WORDS = _("%H hours and %M minutes.")
 
 # Translators: this is information about a unicode character reported to the
 # user.  The value is the unicode number value of this character in hex.

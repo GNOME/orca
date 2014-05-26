@@ -656,14 +656,14 @@ class Text(Region):
         #
         stringLength = len(self.rawLine) - len(self.label)
         lineEndOffset = self.lineOffset + stringLength
-        regionMask = [settings.TEXT_ATTR_BRAILLE_NONE]*stringLength
+        regionMask = [settings.BRAILLE_UNDERLINE_NONE]*stringLength
 
         attrIndicator = settings.textAttributesBrailleIndicator
         selIndicator = settings.brailleSelectorIndicator
         linkIndicator = settings.brailleLinkIndicator
         script = orca_state.activeScript
 
-        if getLinkMask and linkIndicator != settings.BRAILLE_LINK_NONE:
+        if getLinkMask and linkIndicator != settings.BRAILLE_UNDERLINE_NONE:
             try:
                 hyperText = self.accessible.queryHypertext()
                 nLinks = hyperText.getNLinks()
@@ -692,14 +692,14 @@ class Text(Region):
                                                     offset, True)
                 if endOffset <= offset:
                     break
-                mask = settings.TEXT_ATTR_BRAILLE_NONE
+                mask = settings.BRAILLE_UNDERLINE_NONE
                 offset = endOffset
                 for attrib in attributes:
                     if enabledAttributes.get(attrib, '') != '':
                         if enabledAttributes[attrib] != attributes[attrib]:
                             mask = attrIndicator
                             break
-                if mask != settings.TEXT_ATTR_BRAILLE_NONE:
+                if mask != settings.BRAILLE_UNDERLINE_NONE:
                     maskStart = max(startOffset - self.lineOffset, 0)
                     maskEnd = min(endOffset - self.lineOffset, stringLength)
                     for i in range(maskStart, maskEnd):
@@ -1062,7 +1062,7 @@ def _realignViewport(string, focusOffset, cursorOffset):
     # viewport.
     #
     if (cursorOffset < 0) \
-       or (settings.brailleAlignmentStyle == settings.ALIGN_BRAILLE_BY_EDGE) \
+       or (settings.brailleAlignmentStyle == settings.BRAILLE_ALIGN_BY_EDGE) \
        or not (cursorOffset >= viewport[0]
                and cursorOffset < (viewport[0] + _displaySize[0])):
         pass
@@ -1087,12 +1087,12 @@ def _realignViewport(string, focusOffset, cursorOffset):
         # in between the margins.  The only time we go outside the
         # margins are when we are at the ends of the string.
         #
-        if settings.brailleAlignmentStyle == settings.ALIGN_BRAILLE_BY_MARGIN:
+        if settings.brailleAlignmentStyle == settings.BRAILLE_ALIGN_BY_MARGIN:
             if cursorOffset < leftMargin:
                 jump = cursorOffset - leftMargin
             elif cursorOffset > rightMargin:
                 jump = cursorOffset - rightMargin
-        elif settings.brailleAlignmentStyle == settings.ALIGN_BRAILLE_BY_WORD:
+        elif settings.brailleAlignmentStyle == settings.BRAILLE_ALIGN_BY_WORD:
             # When we align by word, we want to try to show complete
             # words at the edges of the braille display.  When we're
             # near the left edge, we'll try to start a word at the

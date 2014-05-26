@@ -450,8 +450,7 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'readonly'
-        if settings.presentReadOnlyText \
-           and self._script.utilities.isReadOnlyTextArea(obj):
+        if self._script.utilities.isReadOnlyTextArea(obj):
             result.append(self._script.formatting.getString(**args))
         return result
 

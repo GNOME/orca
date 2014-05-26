@@ -402,7 +402,7 @@ class SettingsManager(object):
         self.profileGeneral = {}
 
         for key, value in list(general.items()):
-            if key in settings.excludeKeys:
+            if key in ['startingProfile', 'activeProfile']:
                 continue
             elif key == 'profile':
                 self.profileGeneral[key] = value

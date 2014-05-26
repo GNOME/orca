@@ -308,7 +308,7 @@ class Chat:
         #
         self.messageKeys = \
             ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"]
-        self.messageKeyModifier = settings.ORCA_MODIFIER_MASK
+        self.messageKeyModifier = keybindings.ORCA_MODIFIER_MASK
         self.inputEventHandlers = {}
         self.setupInputEventHandlers()
         self.keyBindings = self.getKeyBindings()
@@ -366,22 +366,22 @@ class Chat:
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
+                keybindings.defaultModifierMask,
+                keybindings.NO_MODIFIER_MASK,
                 self.inputEventHandlers["togglePrefixHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
+                keybindings.defaultModifierMask,
+                keybindings.NO_MODIFIER_MASK,
                 self.inputEventHandlers["toggleBuddyTypingHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
+                keybindings.defaultModifierMask,
+                keybindings.NO_MODIFIER_MASK,
                 self.inputEventHandlers["toggleMessageHistoriesHandler"]))
 
         for messageKey in self.messageKeys:
@@ -389,7 +389,7 @@ class Chat:
                 keybindings.KeyBinding(
                     messageKey,
                     self.messageKeyModifier,
-                    settings.ORCA_MODIFIER_MASK,
+                    keybindings.ORCA_MODIFIER_MASK,
                     self.inputEventHandlers["reviewMessage"]))
 
         return keyBindings

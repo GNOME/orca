@@ -176,39 +176,39 @@ class Script(default.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "a",
-                settings.defaultModifierMask,
-                settings.ORCA_MODIFIER_MASK,
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["presentInputLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "r",
-                settings.defaultModifierMask,
-                settings.ORCA_MODIFIER_MASK,
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["setDynamicColumnHeadersHandler"],
                 1))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "r",
-                settings.defaultModifierMask,
-                settings.ORCA_MODIFIER_MASK,
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["clearDynamicColumnHeadersHandler"],
                 2))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "c",
-                settings.defaultModifierMask,
-                settings.ORCA_MODIFIER_MASK,
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["setDynamicRowHeadersHandler"],
                 1))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "c",
-                settings.defaultModifierMask,
-                settings.ORCA_MODIFIER_MASK,
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["clearDynamicRowHeadersHandler"],
                 2))
 
@@ -663,8 +663,8 @@ class Script(default.Script):
             # But this will get us to speak the entire paragraph when navigation by
             # paragraph has occurred.
             event_string, mods = self.utilities.lastKeyAndModifiers()
-            isControlKey = mods & settings.CTRL_MODIFIER_MASK
-            isShiftKey = mods & settings.SHIFT_MODIFIER_MASK
+            isControlKey = mods & keybindings.CTRL_MODIFIER_MASK
+            isShiftKey = mods & keybindings.SHIFT_MODIFIER_MASK
             if event_string in ["Up", "Down"] and isControlKey and not isShiftKey:
                 if self.utilities.displayedText(newLocusOfFocus):
                     speech.speak(self.utilities.displayedText(newLocusOfFocus))
@@ -957,7 +957,7 @@ class Script(default.Script):
             keyString, mods = self.utilities.lastKeyAndModifiers()
             navKeys = ["Up", "Down", "Left", "Right", "Page_Up", "Page_Down",
                        "Home", "End", "N"]
-            wasCommand = mods & settings.COMMAND_MODIFIER_MASK
+            wasCommand = mods & keybindings.COMMAND_MODIFIER_MASK
             weToggledIt = wasCommand and keyString not in navKeys
         if weToggledIt:
             speech.speak(self.speechGenerator.generateSpeech(obj))

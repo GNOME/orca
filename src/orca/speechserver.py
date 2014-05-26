@@ -195,7 +195,7 @@ class SpeechServer(object):
             voice = ACSS(settings.voices[settings.DEFAULT_VOICE])
 
         event_string = event.getKeyName()
-        if orca_state.activeScript and orca_state.usePronunciationDictionary:
+        if orca_state.activeScript:
             event_string = orca_state.activeScript.\
                 utilities.adjustForPronunciation(event_string)
 

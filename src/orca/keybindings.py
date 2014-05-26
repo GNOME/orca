@@ -39,6 +39,37 @@ from .orca_i18n import _
 _keysymsCache = {}
 _keycodeCache = {}
 
+MODIFIER_ORCA = 8
+NO_MODIFIER_MASK              =  0
+ALT_MODIFIER_MASK             =  1 << pyatspi.MODIFIER_ALT
+CTRL_MODIFIER_MASK            =  1 << pyatspi.MODIFIER_CONTROL
+ORCA_MODIFIER_MASK            =  1 << MODIFIER_ORCA
+ORCA_ALT_MODIFIER_MASK        = (1 << MODIFIER_ORCA |
+                                 1 << pyatspi.MODIFIER_ALT)
+ORCA_CTRL_MODIFIER_MASK       = (1 << MODIFIER_ORCA |
+                                 1 << pyatspi.MODIFIER_CONTROL)
+ORCA_CTRL_ALT_MODIFIER_MASK   = (1 << MODIFIER_ORCA |
+                                 1 << pyatspi.MODIFIER_CONTROL |
+                                 1 << pyatspi.MODIFIER_ALT)
+ORCA_SHIFT_MODIFIER_MASK      = (1 << MODIFIER_ORCA |
+                                 1 << pyatspi.MODIFIER_SHIFT)
+SHIFT_MODIFIER_MASK           =  1 << pyatspi.MODIFIER_SHIFT
+SHIFT_ALT_MODIFIER_MASK       = (1 << pyatspi.MODIFIER_SHIFT |
+                                 1 << pyatspi.MODIFIER_ALT)
+CTRL_ALT_MODIFIER_MASK        = (1 << pyatspi.MODIFIER_CONTROL |
+                                 1 << pyatspi.MODIFIER_ALT)
+COMMAND_MODIFIER_MASK         = (1 << pyatspi.MODIFIER_ALT |
+                                 1 << pyatspi.MODIFIER_CONTROL |
+                                 1 << pyatspi.MODIFIER_META2 |
+                                 1 << pyatspi.MODIFIER_META3)
+NON_LOCKING_MODIFIER_MASK     = (1 << pyatspi.MODIFIER_SHIFT |
+                                 1 << pyatspi.MODIFIER_ALT |
+                                 1 << pyatspi.MODIFIER_CONTROL |
+                                 1 << pyatspi.MODIFIER_META2 |
+                                 1 << pyatspi.MODIFIER_META3 |
+                                 1 << MODIFIER_ORCA)
+defaultModifierMask = NON_LOCKING_MODIFIER_MASK
+
 def getKeycode(keysym):
     """Converts an XKeysym string (e.g., 'KP_Enter') to a keycode that
     should match the event.hw_code for key events.
@@ -102,7 +133,7 @@ def getModifierNames(mods):
     """
 
     text = ""
-    if mods & settings.ORCA_MODIFIER_MASK:
+    if mods & ORCA_MODIFIER_MASK:
         if settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
             # Translators: this is presented in a GUI to represent the
             # "insert" key when used as the Orca modifier.
@@ -135,17 +166,17 @@ def getModifierNames(mods):
         text += _("Meta2") + "+"
     #if mods & (1 << pyatspi.MODIFIER_META):
     #    text += _("Meta") + "+"
-    if mods & settings.ALT_MODIFIER_MASK:
+    if mods & ALT_MODIFIER_MASK:
         # Translators: this is presented in a GUI to represent the
         # "left alt" modifier.
         #
         text += _("Alt_L") + "+"
-    if mods & settings.CTRL_MODIFIER_MASK:
+    if mods & CTRL_MODIFIER_MASK:
         # Translators: this is presented in a GUI to represent the
         # "control" modifier.
         #
         text += _("Ctrl") + "+"
-    if mods & settings.SHIFT_MODIFIER_MASK:
+    if mods & SHIFT_MODIFIER_MASK:
         # Translators: this is presented in a GUI to represent the
         # "shift " modifier.
         #

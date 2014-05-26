@@ -134,6 +134,9 @@ class Script(script.Script):
         #
         self.currentReviewContents = ""
 
+        self._lastWord = ""
+        self._lastWordCheckedForSpelling = ""
+
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings."""
@@ -909,6 +912,7 @@ class Script(script.Script):
 
         self.presentMessage(messages.LEARN_MODE_STOP)
         orca_state.learnModeEnabled = False
+        return True
 
     def listOrcaShortcuts(self, inputEvent=None):
         """Shows a simple gui listing Orca's bound commands."""
@@ -2357,7 +2361,7 @@ class Script(script.Script):
         announceState = False
         keyString, mods = self.utilities.lastKeyAndModifiers()
         if keyString == "space":
-            if mods & settings.CTRL_MODIFIER_MASK:
+            if mods & keybindings.CTRL_MODIFIER_MASK:
                 announceState = True
             else:
                 # If we are already selected and the user presses "space" again,
@@ -2567,7 +2571,7 @@ class Script(script.Script):
             character = event.any_data
 
         elif keyString == "Delete" \
-             or (keyString == "D" and mods & settings.CTRL_MODIFIER_MASK):
+             or (keyString == "D" and mods & keybindings.CTRL_MODIFIER_MASK):
             # Speak the character to the right of the caret after
             # the current right character has been deleted.
             #
@@ -2647,7 +2651,7 @@ class Script(script.Script):
             speakThis = orca_state.lastInputEvent.button == "2"
         else:
             keyString, mods = self.utilities.lastKeyAndModifiers()
-            wasCommand = mods & settings.COMMAND_MODIFIER_MASK
+            wasCommand = mods & keybindings.COMMAND_MODIFIER_MASK
             if not wasCommand and keyString in ["Return", "Tab", "space"] \
                and role == pyatspi.ROLE_TERMINAL \
                and event.any_data.strip():
@@ -2963,7 +2967,7 @@ class Script(script.Script):
         if not keyString:
             return
 
-        isControlKey = mods & settings.CTRL_MODIFIER_MASK
+        isControlKey = mods & keybindings.CTRL_MODIFIER_MASK
 
         if keyString in ["Up", "Down"]:
             self.sayLine(obj)
@@ -3398,7 +3402,7 @@ class Script(script.Script):
         # caret is (i.e. the selected character).
         #
         eventString, mods = self.utilities.lastKeyAndModifiers()
-        if (mods & settings.SHIFT_MODIFIER_MASK) \
+        if (mods & keybindings.SHIFT_MODIFIER_MASK) \
            and eventString in ["Right", "Down"]:
             offset -= 1
 
@@ -3516,7 +3520,7 @@ class Script(script.Script):
         text = obj.queryText()
         offset = text.caretOffset
         lastKey, mods = self.utilities.lastKeyAndModifiers()
-        lastWord = orca_state.lastWord
+        lastWord = self._lastWord
 
         [word, startOffset, endOffset] = \
             text.getTextAtOffset(offset,
@@ -3554,7 +3558,7 @@ class Script(script.Script):
         self.speakMisspelledIndicator(obj, startOffset)
 
         word = self.utilities.adjustForRepeats(word)
-        orca_state.lastWord = word
+        self._lastWord = word
         speech.speak(word, voice)
 
     def stopSpeechOnActiveDescendantChanged(self, event):
@@ -4021,8 +4025,8 @@ class Script(script.Script):
             return False
 
         eventStr, mods = self.utilities.lastKeyAndModifiers()
-        isControlKey = mods & settings.CTRL_MODIFIER_MASK
-        isShiftKey = mods & settings.SHIFT_MODIFIER_MASK
+        isControlKey = mods & keybindings.CTRL_MODIFIER_MASK
+        isShiftKey = mods & keybindings.SHIFT_MODIFIER_MASK
         selectedText = nSelections > 0
 
         line = None
@@ -4111,19 +4115,19 @@ class Script(script.Script):
                 text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
             if not charAndOffsets[0].strip() \
                or self.utilities.isWordDelimiter(charAndOffsets[0]):
-                orca_state.lastWordCheckedForSpelling = charAndOffsets[0]
+                self._lastWordCheckedForSpelling = charAndOffsets[0]
                 return
 
             wordAndOffsets = \
                 text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_WORD_START)
             if self.utilities.isWordMisspelled(obj, offset) \
-               and wordAndOffsets[0] != orca_state.lastWordCheckedForSpelling:
+               and wordAndOffsets[0] != self._lastWordCheckedForSpelling:
                 self.speakMessage(messages.MISSPELLED)
             # Store this word so that we do not continue to present the
             # presence of the red squiggly as the user arrows amongst
             # the characters.
             #
-            orca_state.lastWordCheckedForSpelling = wordAndOffsets[0]
+            self._lastWordCheckedForSpelling = wordAndOffsets[0]
 
     ############################################################################
     #                                                                          #

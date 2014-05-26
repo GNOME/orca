@@ -1173,7 +1173,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
     def pronunciationFocusChange(self, widget, event, isFocused):
         """Callback for the pronunciation tree's focus-{in,out}-event signal."""
 
-        orca_state.usePronunciationDictionary = not isFocused
+        _settingsManager.setSetting('usePronunciationDictionary', not isFocused)
 
     def pronunciationCursorChanged(self, widget):
         """Set the search column in the pronunciation dictionary tree view
@@ -1332,78 +1332,78 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         sdtime = time.strftime
         ltime = time.localtime
         self.populateComboBox(combobox2,
-          [sdtime(settings.DATE_FORMAT_LOCALE, ltime()),
-           sdtime(settings.DATE_FORMAT_NUMBERS_DM, ltime()),
-           sdtime(settings.DATE_FORMAT_NUMBERS_MD, ltime()),
-           sdtime(settings.DATE_FORMAT_NUMBERS_DMY, ltime()),
-           sdtime(settings.DATE_FORMAT_NUMBERS_MDY, ltime()),
-           sdtime(settings.DATE_FORMAT_NUMBERS_YMD, ltime()),
-           sdtime(settings.DATE_FORMAT_FULL_DM, ltime()),
-           sdtime(settings.DATE_FORMAT_FULL_MD, ltime()),
-           sdtime(settings.DATE_FORMAT_FULL_DMY, ltime()),
-           sdtime(settings.DATE_FORMAT_FULL_MDY, ltime()),
-           sdtime(settings.DATE_FORMAT_FULL_YMD, ltime()),
-           sdtime(settings.DATE_FORMAT_ABBREVIATED_DM, ltime()),
-           sdtime(settings.DATE_FORMAT_ABBREVIATED_MD, ltime()),
-           sdtime(settings.DATE_FORMAT_ABBREVIATED_DMY, ltime()),
-           sdtime(settings.DATE_FORMAT_ABBREVIATED_MDY, ltime()),
-           sdtime(settings.DATE_FORMAT_ABBREVIATED_YMD, ltime())
+          [sdtime(messages.DATE_FORMAT_LOCALE, ltime()),
+           sdtime(messages.DATE_FORMAT_NUMBERS_DM, ltime()),
+           sdtime(messages.DATE_FORMAT_NUMBERS_MD, ltime()),
+           sdtime(messages.DATE_FORMAT_NUMBERS_DMY, ltime()),
+           sdtime(messages.DATE_FORMAT_NUMBERS_MDY, ltime()),
+           sdtime(messages.DATE_FORMAT_NUMBERS_YMD, ltime()),
+           sdtime(messages.DATE_FORMAT_FULL_DM, ltime()),
+           sdtime(messages.DATE_FORMAT_FULL_MD, ltime()),
+           sdtime(messages.DATE_FORMAT_FULL_DMY, ltime()),
+           sdtime(messages.DATE_FORMAT_FULL_MDY, ltime()),
+           sdtime(messages.DATE_FORMAT_FULL_YMD, ltime()),
+           sdtime(messages.DATE_FORMAT_ABBREVIATED_DM, ltime()),
+           sdtime(messages.DATE_FORMAT_ABBREVIATED_MD, ltime()),
+           sdtime(messages.DATE_FORMAT_ABBREVIATED_DMY, ltime()),
+           sdtime(messages.DATE_FORMAT_ABBREVIATED_MDY, ltime()),
+           sdtime(messages.DATE_FORMAT_ABBREVIATED_YMD, ltime())
           ])
 
         indexdate = DATE_FORMAT_LOCALE
         dateFormat = self.prefsDict["presentDateFormat"]
-        if dateFormat == settings.DATE_FORMAT_LOCALE:
+        if dateFormat == messages.DATE_FORMAT_LOCALE:
             indexdate = DATE_FORMAT_LOCALE
-        elif dateFormat == settings.DATE_FORMAT_NUMBERS_DM:
+        elif dateFormat == messages.DATE_FORMAT_NUMBERS_DM:
             indexdate = DATE_FORMAT_NUMBERS_DM
-        elif dateFormat == settings.DATE_FORMAT_NUMBERS_MD:
+        elif dateFormat == messages.DATE_FORMAT_NUMBERS_MD:
             indexdate = DATE_FORMAT_NUMBERS_MD
-        elif dateFormat == settings.DATE_FORMAT_NUMBERS_DMY:
+        elif dateFormat == messages.DATE_FORMAT_NUMBERS_DMY:
             indexdate = DATE_FORMAT_NUMBERS_DMY
-        elif dateFormat == settings.DATE_FORMAT_NUMBERS_MDY:
+        elif dateFormat == messages.DATE_FORMAT_NUMBERS_MDY:
             indexdate = DATE_FORMAT_NUMBERS_MDY
-        elif dateFormat == settings.DATE_FORMAT_NUMBERS_YMD:
+        elif dateFormat == messages.DATE_FORMAT_NUMBERS_YMD:
             indexdate = DATE_FORMAT_NUMBERS_YMD
-        elif dateFormat == settings.DATE_FORMAT_FULL_DM:
+        elif dateFormat == messages.DATE_FORMAT_FULL_DM:
             indexdate = DATE_FORMAT_FULL_DM
-        elif dateFormat == settings.DATE_FORMAT_FULL_MD:
+        elif dateFormat == messages.DATE_FORMAT_FULL_MD:
             indexdate = DATE_FORMAT_FULL_MD
-        elif dateFormat == settings.DATE_FORMAT_FULL_DMY:
+        elif dateFormat == messages.DATE_FORMAT_FULL_DMY:
             indexdate = DATE_FORMAT_FULL_DMY
-        elif dateFormat == settings.DATE_FORMAT_FULL_MDY:
+        elif dateFormat == messages.DATE_FORMAT_FULL_MDY:
             indexdate = DATE_FORMAT_FULL_MDY
-        elif dateFormat == settings.DATE_FORMAT_FULL_YMD:
+        elif dateFormat == messages.DATE_FORMAT_FULL_YMD:
             indexdate = DATE_FORMAT_FULL_YMD
-        elif dateFormat == settings.DATE_FORMAT_ABBREVIATED_DM:
+        elif dateFormat == messages.DATE_FORMAT_ABBREVIATED_DM:
             indexdate = DATE_FORMAT_ABBREVIATED_DM
-        elif dateFormat == settings.DATE_FORMAT_ABBREVIATED_MD:
+        elif dateFormat == messages.DATE_FORMAT_ABBREVIATED_MD:
             indexdate = DATE_FORMAT_ABBREVIATED_MD
-        elif dateFormat == settings.DATE_FORMAT_ABBREVIATED_DMY:
+        elif dateFormat == messages.DATE_FORMAT_ABBREVIATED_DMY:
             indexdate = DATE_FORMAT_ABBREVIATED_DMY
-        elif dateFormat == settings.DATE_FORMAT_ABBREVIATED_MDY:
+        elif dateFormat == messages.DATE_FORMAT_ABBREVIATED_MDY:
             indexdate = DATE_FORMAT_ABBREVIATED_MDY
-        elif dateFormat == settings.DATE_FORMAT_ABBREVIATED_YMD:
+        elif dateFormat == messages.DATE_FORMAT_ABBREVIATED_YMD:
             indexdate = DATE_FORMAT_ABBREVIATED_YMD
         combobox2.set_active (indexdate)
         
         combobox3 = self.get_widget("timeFormatCombo")
         self.populateComboBox(combobox3,
-          [sdtime(settings.TIME_FORMAT_LOCALE, ltime()),
-           sdtime(settings.TIME_FORMAT_24_HMS, ltime()),
-           sdtime(settings.TIME_FORMAT_24_HMS_WITH_WORDS, ltime()),
-           sdtime(settings.TIME_FORMAT_24_HM, ltime()),
-           sdtime(settings.TIME_FORMAT_24_HM_WITH_WORDS, ltime())])
+          [sdtime(messages.TIME_FORMAT_LOCALE, ltime()),
+           sdtime(messages.TIME_FORMAT_24_HMS, ltime()),
+           sdtime(messages.TIME_FORMAT_24_HMS_WITH_WORDS, ltime()),
+           sdtime(messages.TIME_FORMAT_24_HM, ltime()),
+           sdtime(messages.TIME_FORMAT_24_HM_WITH_WORDS, ltime())])
         indextime = TIME_FORMAT_LOCALE
         timeFormat = self.prefsDict["presentTimeFormat"]
-        if timeFormat == settings.TIME_FORMAT_LOCALE:
+        if timeFormat == messages.TIME_FORMAT_LOCALE:
             indextime = TIME_FORMAT_LOCALE
-        elif timeFormat == settings.TIME_FORMAT_24_HMS:
+        elif timeFormat == messages.TIME_FORMAT_24_HMS:
             indextime = TIME_FORMAT_24_HMS
-        elif timeFormat == settings.TIME_FORMAT_24_HMS_WITH_WORDS:
+        elif timeFormat == messages.TIME_FORMAT_24_HMS_WITH_WORDS:
             indextime = TIME_FORMAT_24_HMS_WITH_WORDS
-        elif timeFormat == settings.TIME_FORMAT_24_HM:
+        elif timeFormat == messages.TIME_FORMAT_24_HM:
             indextime = TIME_FORMAT_24_HM
-        elif timeFormat == settings.TIME_FORMAT_24_HM_WITH_WORDS:
+        elif timeFormat == messages.TIME_FORMAT_24_HM_WITH_WORDS:
             indextime = TIME_FORMAT_24_HM_WITH_WORDS
         combobox3.set_active (indextime)
 
@@ -1478,21 +1478,21 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.get_widget("brailleVerboseButton").set_active(True)
 
         selectionIndicator = prefs["brailleSelectorIndicator"]
-        if selectionIndicator == settings.BRAILLE_SEL_7:
+        if selectionIndicator == settings.BRAILLE_UNDERLINE_7:
             self.get_widget("brailleSelection7Button").set_active(True)
-        elif selectionIndicator == settings.BRAILLE_SEL_8:
+        elif selectionIndicator == settings.BRAILLE_UNDERLINE_8:
             self.get_widget("brailleSelection8Button").set_active(True)
-        elif selectionIndicator == settings.BRAILLE_SEL_BOTH:
+        elif selectionIndicator == settings.BRAILLE_UNDERLINE_BOTH:
             self.get_widget("brailleSelectionBothButton").set_active(True)
         else:
             self.get_widget("brailleSelectionNoneButton").set_active(True)
 
         linkIndicator = prefs["brailleLinkIndicator"]
-        if linkIndicator == settings.BRAILLE_LINK_7:
+        if linkIndicator == settings.BRAILLE_UNDERLINE_7:
             self.get_widget("brailleLink7Button").set_active(True)
-        elif linkIndicator == settings.BRAILLE_LINK_8:
+        elif linkIndicator == settings.BRAILLE_UNDERLINE_8:
             self.get_widget("brailleLink8Button").set_active(True)
-        elif linkIndicator == settings.BRAILLE_LINK_BOTH:
+        elif linkIndicator == settings.BRAILLE_UNDERLINE_BOTH:
             self.get_widget("brailleLinkBothButton").set_active(True)
         else:
             self.get_widget("brailleLinkNoneButton").set_active(True)
@@ -1525,11 +1525,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._createTextAttributesTreeView()
 
         brailleIndicator = prefs["textAttributesBrailleIndicator"]
-        if brailleIndicator == settings.TEXT_ATTR_BRAILLE_7:
+        if brailleIndicator == settings.BRAILLE_UNDERLINE_7:
             self.get_widget("textBraille7Button").set_active(True)
-        elif brailleIndicator == settings.TEXT_ATTR_BRAILLE_8:
+        elif brailleIndicator == settings.BRAILLE_UNDERLINE_8:
             self.get_widget("textBraille8Button").set_active(True)
-        elif brailleIndicator == settings.TEXT_ATTR_BRAILLE_BOTH:
+        elif brailleIndicator == settings.BRAILLE_UNDERLINE_BOTH:
             self.get_widget("textBrailleBothButton").set_active(True)
         else:
             self.get_widget("textBrailleNoneButton").set_active(True)
@@ -1681,7 +1681,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                                    modifierMask,
                                    0)
 
-        ts = orca_state.lastInputEventTimestamp
+        ts = orca_state.lastInputEvent.timestamp
         if ts == 0:
             ts = Gtk.get_current_event_time()
         orcaSetupWindow.present_with_time(ts)
@@ -2208,16 +2208,16 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if widget.get_active():
             if widget.get_label() == guilabels.BRAILLE_DOT_7:
                 self.prefsDict["brailleSelectorIndicator"] = \
-                    settings.BRAILLE_SEL_7
+                    settings.BRAILLE_UNDERLINE_7
             elif widget.get_label() == guilabels.BRAILLE_DOT_8:
                 self.prefsDict["brailleSelectorIndicator"] = \
-                    settings.BRAILLE_SEL_8
+                    settings.BRAILLE_UNDERLINE_8
             elif widget.get_label() == guilabels.BRAILLE_DOT_7_8:
                 self.prefsDict["brailleSelectorIndicator"] = \
-                    settings.BRAILLE_SEL_BOTH
+                    settings.BRAILLE_UNDERLINE_BOTH
             else:
                 self.prefsDict["brailleSelectorIndicator"] = \
-                    settings.BRAILLE_SEL_NONE
+                    settings.BRAILLE_UNDERLINE_NONE
 
     def brailleLinkChanged(self, widget):
         """Signal handler for the "toggled" signal for the
@@ -2236,16 +2236,16 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if widget.get_active():
             if widget.get_label() == guilabels.BRAILLE_DOT_7:
                 self.prefsDict["brailleLinkIndicator"] = \
-                    settings.BRAILLE_LINK_7
+                    settings.BRAILLE_UNDERLINE_7
             elif widget.get_label() == guilabels.BRAILLE_DOT_8:
                 self.prefsDict["brailleLinkIndicator"] = \
-                    settings.BRAILLE_LINK_8
+                    settings.BRAILLE_UNDERLINE_8
             elif widget.get_label() == guilabels.BRAILLE_DOT_7_8:
                 self.prefsDict["brailleLinkIndicator"] = \
-                    settings.BRAILLE_LINK_BOTH
+                    settings.BRAILLE_UNDERLINE_BOTH
             else:
                 self.prefsDict["brailleLinkIndicator"] = \
-                    settings.BRAILLE_LINK_NONE
+                    settings.BRAILLE_UNDERLINE_NONE
 
     def brailleIndicatorChanged(self, widget):
         """Signal handler for the "toggled" signal for the
@@ -2263,16 +2263,16 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if widget.get_active():
             if widget.get_label() == guilabels.BRAILLE_DOT_7:
                 self.prefsDict["textAttributesBrailleIndicator"] = \
-                    settings.TEXT_ATTR_BRAILLE_7
+                    settings.BRAILLE_UNDERLINE_7
             elif widget.get_label() == guilabels.BRAILLE_DOT_8:
                 self.prefsDict["textAttributesBrailleIndicator"] = \
-                    settings.TEXT_ATTR_BRAILLE_8
+                    settings.BRAILLE_UNDERLINE_8
             elif widget.get_label() == guilabels.BRAILLE_DOT_7_8:
                 self.prefsDict["textAttributesBrailleIndicator"] = \
-                    settings.TEXT_ATTR_BRAILLE_BOTH
+                    settings.BRAILLE_UNDERLINE_BOTH
             else:
                 self.prefsDict["textAttributesBrailleIndicator"] = \
-                    settings.TEXT_ATTR_BRAILLE_NONE
+                    settings.BRAILLE_UNDERLINE_NONE
 
     def punctuationLevelChanged(self, widget):
         """Signal handler for the "toggled" signal for the noneButton,
@@ -2363,37 +2363,37 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         dateFormatCombo = widget.get_active()
         if dateFormatCombo == DATE_FORMAT_LOCALE:
-            newFormat = settings.DATE_FORMAT_LOCALE
+            newFormat = messages.DATE_FORMAT_LOCALE
         elif dateFormatCombo == DATE_FORMAT_NUMBERS_DM:
-            newFormat = settings.DATE_FORMAT_NUMBERS_DM
+            newFormat = messages.DATE_FORMAT_NUMBERS_DM
         elif dateFormatCombo == DATE_FORMAT_NUMBERS_MD:
-            newFormat = settings.DATE_FORMAT_NUMBERS_MD
+            newFormat = messages.DATE_FORMAT_NUMBERS_MD
         elif dateFormatCombo == DATE_FORMAT_NUMBERS_DMY:
-            newFormat = settings.DATE_FORMAT_NUMBERS_DMY
+            newFormat = messages.DATE_FORMAT_NUMBERS_DMY
         elif dateFormatCombo == DATE_FORMAT_NUMBERS_MDY:
-            newFormat = settings.DATE_FORMAT_NUMBERS_MDY
+            newFormat = messages.DATE_FORMAT_NUMBERS_MDY
         elif dateFormatCombo == DATE_FORMAT_NUMBERS_YMD:
-            newFormat = settings.DATE_FORMAT_NUMBERS_YMD
+            newFormat = messages.DATE_FORMAT_NUMBERS_YMD
         elif dateFormatCombo == DATE_FORMAT_FULL_DM:
-            newFormat = settings.DATE_FORMAT_FULL_DM
+            newFormat = messages.DATE_FORMAT_FULL_DM
         elif dateFormatCombo == DATE_FORMAT_FULL_MD:
-            newFormat = settings.DATE_FORMAT_FULL_MD
+            newFormat = messages.DATE_FORMAT_FULL_MD
         elif dateFormatCombo == DATE_FORMAT_FULL_DMY:
-            newFormat = settings.DATE_FORMAT_FULL_DMY
+            newFormat = messages.DATE_FORMAT_FULL_DMY
         elif dateFormatCombo == DATE_FORMAT_FULL_MDY:
-            newFormat = settings.DATE_FORMAT_FULL_MDY
+            newFormat = messages.DATE_FORMAT_FULL_MDY
         elif dateFormatCombo == DATE_FORMAT_FULL_YMD:
-            newFormat = settings.DATE_FORMAT_FULL_YMD
+            newFormat = messages.DATE_FORMAT_FULL_YMD
         elif dateFormatCombo == DATE_FORMAT_ABBREVIATED_DM:
-            newFormat = settings.DATE_FORMAT_ABBREVIATED_DM
+            newFormat = messages.DATE_FORMAT_ABBREVIATED_DM
         elif dateFormatCombo == DATE_FORMAT_ABBREVIATED_MD:
-            newFormat = settings.DATE_FORMAT_ABBREVIATED_MD
+            newFormat = messages.DATE_FORMAT_ABBREVIATED_MD
         elif dateFormatCombo == DATE_FORMAT_ABBREVIATED_DMY:
-            newFormat = settings.DATE_FORMAT_ABBREVIATED_DMY
+            newFormat = messages.DATE_FORMAT_ABBREVIATED_DMY
         elif dateFormatCombo == DATE_FORMAT_ABBREVIATED_MDY:
-            newFormat = settings.DATE_FORMAT_ABBREVIATED_MDY
+            newFormat = messages.DATE_FORMAT_ABBREVIATED_MDY
         elif dateFormatCombo == DATE_FORMAT_ABBREVIATED_YMD:
-            newFormat = settings.DATE_FORMAT_ABBREVIATED_YMD
+            newFormat = messages.DATE_FORMAT_ABBREVIATED_YMD
         self.prefsDict["presentDateFormat"] = newFormat
     
     def timeFormatChanged(self, widget):
@@ -2407,15 +2407,15 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         timeFormatCombo = widget.get_active()
         if timeFormatCombo == TIME_FORMAT_LOCALE:
-            newFormat = settings.TIME_FORMAT_LOCALE
+            newFormat = messages.TIME_FORMAT_LOCALE
         elif timeFormatCombo == TIME_FORMAT_24_HMS:
-            newFormat = settings.TIME_FORMAT_24_HMS
+            newFormat = messages.TIME_FORMAT_24_HMS
         elif timeFormatCombo == TIME_FORMAT_24_HMS_WITH_WORDS:
-            newFormat = settings.TIME_FORMAT_24_HMS_WITH_WORDS
+            newFormat = messages.TIME_FORMAT_24_HMS_WITH_WORDS
         elif timeFormatCombo == TIME_FORMAT_24_HM:
-            newFormat = settings.TIME_FORMAT_24_HM
+            newFormat = messages.TIME_FORMAT_24_HM
         elif timeFormatCombo == TIME_FORMAT_24_HM_WITH_WORDS:
-            newFormat  = settings.TIME_FORMAT_24_HM_WITH_WORDS
+            newFormat  = messages.TIME_FORMAT_24_HM_WITH_WORDS
         self.prefsDict["presentTimeFormat"] =  newFormat
 
     def speechVerbosityChanged(self, widget):
@@ -2561,7 +2561,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         orcaMods = settings.orcaModifierKeys
         if eventString in orcaMods:
-            self._capturedKey = ['', settings.ORCA_MODIFIER_MASK, 0]
+            self._capturedKey = ['', keybindings.ORCA_MODIFIER_MASK, 0]
             return False
 
         modifierKeys =  ['Alt_L', 'Alt_R', 'Control_L', 'Control_R',
@@ -2576,9 +2576,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             return True
 
         string, modifiers, clickCount = self._capturedKey
-        isOrcaModifier = modifiers & settings.ORCA_MODIFIER_MASK
+        isOrcaModifier = modifiers & keybindings.ORCA_MODIFIER_MASK
         if isOrcaModifier:
-            eventState |= settings.ORCA_MODIFIER_MASK
+            eventState |= keybindings.ORCA_MODIFIER_MASK
             self._capturedKey = [eventString, eventState, clickCount + 1]
 
         return True
@@ -2600,7 +2600,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if not keyName or keyName in ["Return", "Escape"]:
             return False
 
-        isOrcaModifier = modifiers & settings.ORCA_MODIFIER_MASK
+        isOrcaModifier = modifiers & keybindings.ORCA_MODIFIER_MASK
         if keyName in ["Delete", "BackSpace"] and not isOrcaModifier:
             editable.set_text("")
             self._presentMessage(messages.KB_DELETED)
@@ -2609,7 +2609,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             return True
 
         self.newBinding = keybindings.KeyBinding(keyName,
-                                                 settings.defaultModifierMask,
+                                                 keybindings.defaultModifierMask,
                                                  modifiers,
                                                  None,
                                                  clickCount)
@@ -2664,11 +2664,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         mods = mods & Gdk.ModifierType.MODIFIER_MASK
         if mods & (1 << pyatspi.MODIFIER_SHIFTLOCK) \
-           and mods & settings.ORCA_MODIFIER_MASK:
+           and mods & keybindings.ORCA_MODIFIER_MASK:
             mods ^= (1 << pyatspi.MODIFIER_SHIFTLOCK)
 
         treeModel.set(myiter,
-                      modMask, str(settings.defaultModifierMask),
+                      modMask, str(keybindings.defaultModifierMask),
                       modUsed, str(int(mods)),
                       key, string,
                       text, new_text,

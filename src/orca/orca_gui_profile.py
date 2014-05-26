@@ -90,7 +90,7 @@ class OrcaProfileGUI(Gtk.Dialog):
         self.prefsDialog = prefsDialog
         self.profileEntry.set_text(self.profileString)
 
-        ts = orca_state.lastInputEventTimestamp
+        ts = orca_state.lastInputEvent.timestamp
         if ts == 0:
             ts = Gtk.get_current_event_time()
         self.present_with_time(ts)

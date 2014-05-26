@@ -292,7 +292,7 @@ class SpeechServer(speechserver.SpeechServer):
         if isinstance(text, ACSS):
             text = ''
         text = self.__addVerbalizedPunctuation(text)
-        if orca_state.activeScript and orca_state.usePronunciationDictionary:
+        if orca_state.activeScript:
             text = orca_state.activeScript.\
                 utilities.adjustForPronunciation(text)
 
@@ -431,7 +431,7 @@ class SpeechServer(speechserver.SpeechServer):
             self._send_command(self._client.char, character)
             return
 
-        if orca_state.activeScript and orca_state.usePronunciationDictionary:
+        if orca_state.activeScript:
             name = orca_state.activeScript.\
                 utilities.adjustForPronunciation(name)
         self.speak(name, acss)

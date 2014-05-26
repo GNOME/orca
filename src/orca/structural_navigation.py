@@ -184,7 +184,7 @@ class StructuralNavigationObject:
             self.keyBindings.add(
                 keybindings.KeyBinding(
                     keysymstring,
-                    settings.defaultModifierMask,
+                    keybindings.defaultModifierMask,
                     modifiers,
                     self.inputEventHandlers[handlerName]))
 
@@ -200,7 +200,7 @@ class StructuralNavigationObject:
             self.keyBindings.add(
                 keybindings.KeyBinding(
                     keysymstring,
-                    settings.defaultModifierMask,
+                    keybindings.defaultModifierMask,
                     modifiers,
                     self.inputEventHandlers[handlerName]))
 
@@ -216,7 +216,7 @@ class StructuralNavigationObject:
             self.keyBindings.add(
                 keybindings.KeyBinding(
                     keysymstring,
-                    settings.defaultModifierMask,
+                    keybindings.defaultModifierMask,
                     modifiers,
                     self.inputEventHandlers[handlerName]))
 
@@ -236,7 +236,7 @@ class StructuralNavigationObject:
             self.keyBindings.add(
                 keybindings.KeyBinding(
                     keysymstring,
-                    settings.defaultModifierMask,
+                    keybindings.defaultModifierMask,
                     modifiers,
                     self.inputEventHandlers[handlerName]))
 
@@ -255,7 +255,7 @@ class StructuralNavigationObject:
             self.keyBindings.add(
                 keybindings.KeyBinding(
                     keysymstring,
-                    settings.defaultModifierMask,
+                    keybindings.defaultModifierMask,
                     modifiers,
                     self.inputEventHandlers[handlerName]))
 
@@ -274,7 +274,7 @@ class StructuralNavigationObject:
             self.keyBindings.add(
                 keybindings.KeyBinding(
                     keysymstring,
-                    settings.defaultModifierMask,
+                    keybindings.defaultModifierMask,
                     modifiers,
                     self.inputEventHandlers[handlerName]))
 
@@ -305,7 +305,7 @@ class StructuralNavigationObject:
             self.keyBindings.add(
                 keybindings.KeyBinding(
                     keysymstring,
-                    settings.defaultModifierMask,
+                    keybindings.defaultModifierMask,
                     modifiers,
                     self.inputEventHandlers[handlerName]))
 
@@ -327,7 +327,7 @@ class StructuralNavigationObject:
         handler = input_event.InputEventHandler(function, description)
         keyBinding = keybindings.KeyBinding(
                          keysymstring,
-                         settings.defaultModifierMask,
+                         keybindings.defaultModifierMask,
                          modifiers,
                          handler)
 
@@ -685,8 +685,8 @@ class StructuralNavigation:
         keyBindings.add(
             keybindings.KeyBinding(
                 "z",
-                settings.defaultModifierMask,
-                settings.ORCA_MODIFIER_MASK,
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["toggleStructuralNavigationHandler"]))
 
         for structuralNavigationObject in list(self.enabledObjects.values()):
@@ -1806,10 +1806,10 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.ANCHOR_PREV
-        bindings["previous"] = ["a", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["a", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.ANCHOR_NEXT
-        bindings["next"] = ["a", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["a", keybindings.NO_MODIFIER_MASK, nextDesc]
         return bindings
 
     def _anchorCriteria(self, collection, arg=None):
@@ -1877,13 +1877,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.BLOCKQUOTE_PREV
-        bindings["previous"] = ["q", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["q", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.BLOCKQUOTE_NEXT
-        bindings["next"] = ["q", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["q", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.BLOCKQUOTE_LIST
-        bindings["list"] = ["q", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["q", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _blockquoteCriteria(self, collection, arg=None):
@@ -1963,13 +1963,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.BUTTON_PREV
-        bindings["previous"] = ["b", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["b", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.BUTTON_NEXT
-        bindings["next"] = ["b", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["b", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.BUTTON_LIST
-        bindings["list"] = ["b", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["b", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _buttonCriteria(self, collection, arg=None):
@@ -2045,13 +2045,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.CHECK_BOX_PREV
-        bindings["previous"] = ["x", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["x", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.CHECK_BOX_NEXT
-        bindings["next"] = ["x", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["x", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.CHECK_BOX_LIST
-        bindings["list"] = ["x", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["x", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _checkBoxCriteria(self, collection, arg=None):
@@ -2128,13 +2128,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.LARGE_OBJECT_PREV
-        bindings["previous"] = ["o", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["o", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.LARGE_OBJECT_NEXT
-        bindings["next"] = ["o", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["o", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.LARGE_OBJECT_LIST
-        bindings["list"] = ["o", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["o", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _chunkCriteria(self, collection, arg=None):
@@ -2219,13 +2219,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.COMBO_BOX_PREV
-        bindings["previous"] = ["c", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["c", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.COMBO_BOX_NEXT
-        bindings["next"] = ["c", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["c", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.COMBO_BOX_LIST
-        bindings["list"] = ["c", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["c", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _comboBoxCriteria(self, collection, arg=None):
@@ -2302,13 +2302,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.ENTRY_PREV
-        bindings["previous"] = ["e", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["e", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.ENTRY_NEXT
-        bindings["next"] = ["e", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["e", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.ENTRY_LIST
-        bindings["list"] = ["e", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["e", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _entryCriteria(self, collection, arg=None):
@@ -2398,14 +2398,14 @@ class StructuralNavigation:
         bindings = {}
         prevDesc = cmdnames.FORM_FIELD_PREV
         bindings["previous"] = ["Tab",
-                                settings.ORCA_SHIFT_MODIFIER_MASK,
+                                keybindings.ORCA_SHIFT_MODIFIER_MASK,
                                 prevDesc]
 
         nextDesc = cmdnames.FORM_FIELD_NEXT
-        bindings["next"] = ["Tab", settings.ORCA_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["Tab", keybindings.ORCA_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.FORM_FIELD_LIST
-        bindings["list"] = ["f", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["f", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _formFieldCriteria(self, collection, arg=None):
@@ -2490,13 +2490,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.HEADING_PREV
-        bindings["previous"] = ["h", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["h", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.HEADING_NEXT
-        bindings["next"] = ["h", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["h", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.HEADING_LIST
-        bindings["list"] = ["h", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["h", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
 
         prevAtLevelBindings = []
         nextAtLevelBindings = []
@@ -2505,17 +2505,17 @@ class StructuralNavigation:
         for i in range(minLevel, maxLevel + 1):
             prevDesc = cmdnames.HEADING_AT_LEVEL_PREV % i
             prevAtLevelBindings.append([str(i),
-                                        settings.SHIFT_MODIFIER_MASK,
+                                        keybindings.SHIFT_MODIFIER_MASK,
                                         prevDesc])
 
             nextDesc = cmdnames.HEADING_AT_LEVEL_NEXT % i
             nextAtLevelBindings.append([str(i),
-                                        settings.NO_MODIFIER_MASK,
+                                        keybindings.NO_MODIFIER_MASK,
                                         nextDesc])
 
             listDesc = cmdnames.HEADING_AT_LEVEL_LIST %i
             listAtLevelBindings.append([str(i),
-                                        settings.SHIFT_ALT_MODIFIER_MASK,
+                                        keybindings.SHIFT_ALT_MODIFIER_MASK,
                                         listDesc])
 
         bindings["previousAtLevel"] = prevAtLevelBindings
@@ -2622,13 +2622,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.LANDMARK_PREV
-        bindings["previous"] = ["m", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["m", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.LANDMARK_NEXT
-        bindings["next"] = ["m", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["m", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.LANDMARK_LIST
-        bindings["list"] = ["m", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["m", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _landmarkCriteria(self, collection, arg=None):
@@ -2719,13 +2719,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.LIST_PREV
-        bindings["previous"] = ["l", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["l", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.LIST_NEXT
-        bindings["next"] = ["l", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["l", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.LIST_LIST
-        bindings["list"] = ["l", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["l", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _listCriteria(self, collection, arg=None):
@@ -2819,13 +2819,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.LIST_ITEM_PREV
-        bindings["previous"] = ["i", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["i", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.LIST_ITEM_NEXT
-        bindings["next"] = ["i", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["i", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.LIST_ITEM_LIST
-        bindings["list"] = ["i", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["i", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _listItemCriteria(self, collection, arg=None):
@@ -2907,13 +2907,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.LIVE_REGION_PREV
-        bindings["previous"] = ["d", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["d", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.LIVE_REGION_NEXT
-        bindings["next"] = ["d", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["d", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         desc = cmdnames.LIVE_REGION_LAST
-        bindings["last"] = ["y", settings.NO_MODIFIER_MASK, desc]
+        bindings["last"] = ["y", keybindings.NO_MODIFIER_MASK, desc]
         return bindings
 
     def _liveRegionCriteria(self, collection, arg=None):
@@ -2987,13 +2987,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.PARAGRAPH_PREV
-        bindings["previous"] = ["p", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["p", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.PARAGRAPH_NEXT
-        bindings["next"] = ["p", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["p", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.PARAGRAPH_LIST
-        bindings["list"] = ["p", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["p", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _paragraphCriteria(self, collection, arg=None):
@@ -3073,13 +3073,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.RADIO_BUTTON_PREV
-        bindings["previous"] = ["r", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["r", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.RADIO_BUTTON_NEXT
-        bindings["next"] = ["r", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["r", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.RADIO_BUTTON_LIST
-        bindings["list"] = ["r", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["r", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _radioButtonCriteria(self, collection, arg=None):
@@ -3156,10 +3156,10 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.SEPARATOR_PREV
-        bindings["previous"] = ["s", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["s", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.SEPARATOR_NEXT
-        bindings["next"] = ["s", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["s", keybindings.NO_MODIFIER_MASK, nextDesc]
         return bindings
 
     def _separatorCriteria(self, collection, arg=None):
@@ -3218,13 +3218,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.TABLE_PREV
-        bindings["previous"] = ["t", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["t", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.TABLE_NEXT
-        bindings["next"] = ["t", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["t", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.TABLE_LIST
-        bindings["list"] = ["t", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["t", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _tableCriteria(self, collection, arg=None):
@@ -3305,22 +3305,22 @@ class StructuralNavigation:
 
         bindings = {}
         desc = cmdnames.TABLE_CELL_LEFT
-        bindings["left"] = ["Left", settings.SHIFT_ALT_MODIFIER_MASK, desc]
+        bindings["left"] = ["Left", keybindings.SHIFT_ALT_MODIFIER_MASK, desc]
 
         desc = cmdnames.TABLE_CELL_RIGHT
-        bindings["right"] = ["Right", settings.SHIFT_ALT_MODIFIER_MASK, desc]
+        bindings["right"] = ["Right", keybindings.SHIFT_ALT_MODIFIER_MASK, desc]
 
         desc = cmdnames.TABLE_CELL_UP
-        bindings["up"] = ["Up", settings.SHIFT_ALT_MODIFIER_MASK, desc]
+        bindings["up"] = ["Up", keybindings.SHIFT_ALT_MODIFIER_MASK, desc]
 
         desc = cmdnames.TABLE_CELL_DOWN
-        bindings["down"] = ["Down", settings.SHIFT_ALT_MODIFIER_MASK, desc]
+        bindings["down"] = ["Down", keybindings.SHIFT_ALT_MODIFIER_MASK, desc]
 
         desc = cmdnames.TABLE_CELL_FIRST
-        bindings["first"] = ["Home", settings.SHIFT_ALT_MODIFIER_MASK, desc]
+        bindings["first"] = ["Home", keybindings.SHIFT_ALT_MODIFIER_MASK, desc]
 
         desc = cmdnames.TABLE_CELL_LAST
-        bindings["last"] = ["End", settings.SHIFT_ALT_MODIFIER_MASK, desc]
+        bindings["last"] = ["End", keybindings.SHIFT_ALT_MODIFIER_MASK, desc]
         return bindings
 
     def _tableCellCriteria(self, collection, arg=None):
@@ -3399,13 +3399,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.UNVISITED_LINK_PREV
-        bindings["previous"] = ["u", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["u", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.UNVISITED_LINK_NEXT
-        bindings["next"] = ["u", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["u", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.UNVISITED_LINK_LIST
-        bindings["list"] = ["u", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["u", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
 
         return bindings
 
@@ -3492,13 +3492,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.VISITED_LINK_PREV
-        bindings["previous"] = ["v", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["v", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.VISITED_LINK_NEXT
-        bindings["next"] = ["v", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["v", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.VISITED_LINK_LIST
-        bindings["list"] = ["v", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["v", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
 
         return bindings
 
@@ -3577,13 +3577,13 @@ class StructuralNavigation:
 
         bindings = {}
         prevDesc = cmdnames.LINK_PREV
-        bindings["previous"] = ["k", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["k", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
 
         nextDesc = cmdnames.LINK_NEXT
-        bindings["next"] = ["k", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["k", keybindings.NO_MODIFIER_MASK, nextDesc]
 
         listDesc = cmdnames.LINK_LIST
-        bindings["list"] = ["k", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["k", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _linkCriteria(self, collection, arg=None):

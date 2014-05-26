@@ -1987,7 +1987,7 @@ class Utilities:
                      or (not self.isReadOnlyTextArea(orca_state.locusOfFocus) \
                          and (orca_state.locusOfFocus.getState().contains( \
                                   pyatspi.STATE_FOCUSABLE)))) \
-                and not (event.modifiers & settings.ORCA_CTRL_MODIFIER_MASK)
+                and not (event.modifiers & keybindings.ORCA_CTRL_MODIFIER_MASK)
 
     def wordAtCoords(self, acc, x, y):
         """Get the word at the given coords in the accessible.
@@ -2270,6 +2270,9 @@ class Utilities:
         Returns: a new line adjusted for words found in the pronunciation
         dictionary.
         """
+
+        if not settings.usePronunciationDictionary:
+            return line
 
         newLine = ""
         words = self.WORDS_RE.split(line)

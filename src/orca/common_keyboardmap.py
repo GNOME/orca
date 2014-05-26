@@ -28,17 +28,17 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010-2011 The Orca Team"
 __license__   = "LGPL"
 
-from . import settings
+from . import keybindings
 
 # Storing values 
-defaultModifierMask = settings.defaultModifierMask
-ORCA_MODIFIER_MASK = settings.ORCA_MODIFIER_MASK
-NO_MODIFIER_MASK = settings.NO_MODIFIER_MASK
-ORCA_SHIFT_MODIFIER_MASK = settings.ORCA_SHIFT_MODIFIER_MASK
-ORCA_CTRL_MODIFIER_MASK = settings.ORCA_CTRL_MODIFIER_MASK
-ORCA_ALT_MODIFIER_MASK = settings.ORCA_ALT_MODIFIER_MASK
-ORCA_CTRL_ALT_MODIFIER_MASK = settings.ORCA_CTRL_ALT_MODIFIER_MASK
-SHIFT_ALT_MODIFIER_MASK = settings.SHIFT_ALT_MODIFIER_MASK
+defaultModifierMask = keybindings.defaultModifierMask
+ORCA_MODIFIER_MASK = keybindings.ORCA_MODIFIER_MASK
+NO_MODIFIER_MASK = keybindings.NO_MODIFIER_MASK
+ORCA_SHIFT_MODIFIER_MASK = keybindings.ORCA_SHIFT_MODIFIER_MASK
+ORCA_CTRL_MODIFIER_MASK = keybindings.ORCA_CTRL_MODIFIER_MASK
+ORCA_ALT_MODIFIER_MASK = keybindings.ORCA_ALT_MODIFIER_MASK
+ORCA_CTRL_ALT_MODIFIER_MASK = keybindings.ORCA_CTRL_ALT_MODIFIER_MASK
+SHIFT_ALT_MODIFIER_MASK = keybindings.SHIFT_ALT_MODIFIER_MASK
 
 keymap = (
 

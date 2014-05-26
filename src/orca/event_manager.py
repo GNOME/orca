@@ -35,14 +35,15 @@ from . import input_event
 from . import messages
 from . import orca_state
 from . import script_manager
-from . import settings
 
 _scriptManager = script_manager.getManager()
 
 class EventManager:
 
-    def __init__(self):
+    def __init__(self, asyncMode=True):
         debug.println(debug.LEVEL_FINEST, 'INFO: Initializing event manager')
+        debug.println(debug.LEVEL_FINEST, 'INFO: Async Mode is %s' % asyncMode)
+        self._asyncMode = asyncMode
         self._scriptListenerCounts = {}
         self.registry = pyatspi.Registry
         self._active = False
@@ -51,7 +52,11 @@ class EventManager:
         self._eventQueue     = queue.Queue(0)
         self._gidleId        = 0
         self._gidleLock      = threading.Lock()
-        self.noFocusTimestamp = 0.0
+        self._gilSleepTime = 0.00001
+        self._synchronousToolkits = ['VCL']
+        self._ignoredEvents = ['object:bounds-changed',
+                               'object:state-changed:defunct',
+                               'object:property-change:accessible-parent']
         debug.println(debug.LEVEL_FINEST, 'INFO: Event manager initialized')
 
     def activate(self):
@@ -75,16 +80,23 @@ class EventManager:
         self._scriptListenerCounts = {}
         debug.println(debug.LEVEL_FINEST, 'INFO: Event manager deactivated')
 
+    def ignoreEventTypes(self, eventTypeList):
+        for eventType in eventTypeList:
+            if not eventType in self._ignoredEvents:
+                self._ignoredEvents.append(eventType)
+
+    def unignoreEventTypes(self, eventTypeList):
+        for eventType in eventTypeList:
+            if eventType in self._ignoredEvents:
+                self._ignoredEvents.remove(eventType)
+
     def _ignore(self, event):
         """Returns True if this event should be ignored."""
 
         if not self._active:
             return True
 
-        ignoredList = ['object:state-changed:defunct',
-                       'object:property-change:accessible-parent']
-        ignoredList.extend(settings.ignoredEventsList)
-        if list(filter(event.type.startswith, ignoredList)):
+        if list(filter(event.type.startswith, self._ignoredEvents)):
             return True
 
         # This should ultimately be changed as there are valid reasons
@@ -96,7 +108,7 @@ class EventManager:
         return False
 
     def _addToQueue(self, event, asyncMode):
-        debugging = settings.debugEventQueue
+        debugging = debug.debugEventQueue
         if debugging:
             debug.println(debug.LEVEL_ALL, "           acquiring lock...")
         self._gidleLock.acquire()
@@ -112,14 +124,14 @@ class EventManager:
             debug.println(debug.LEVEL_ALL, "           ...put complete")
 
         if asyncMode and not self._gidleId:
-            if settings.gilSleepTime:
-                time.sleep(settings.gilSleepTime)
+            if self._gilSleepTime:
+                time.sleep(self._gilSleepTime)
             self._gidleId = GLib.idle_add(self._dequeue)
 
         if debugging:
             debug.println(debug.LEVEL_ALL, "           releasing lock...")
         self._gidleLock.release()
-        if settings.debugEventQueue:
+        if debug.debugEventQueue:
             debug.println(debug.LEVEL_ALL, "           ...released")
 
     def _queuePrintln(self, e, isEnqueue=True):
@@ -149,7 +161,7 @@ class EventManager:
         - e: an at-spi event.
         """
 
-        if settings.debugEventQueue:
+        if debug.debugEventQueue:
             if self._enqueueCount:
                 msg = "_enqueue entered before exiting (count = %d)" \
                     % self._enqueueCount
@@ -159,20 +171,20 @@ class EventManager:
         inputEvents = (input_event.KeyboardEvent, input_event.BrailleEvent)
         isObjectEvent = not isinstance(e, inputEvents)
         if isObjectEvent and self._ignore(e):
-            if settings.debugEventQueue:
+            if debug.debugEventQueue:
                 self._enqueueCount -= 1
             return
 
         self._queuePrintln(e)
 
-        asyncMode = settings.asyncMode
+        asyncMode = self._asyncMode
         if isObjectEvent:
             app = e.source.getApplication()
             try:
                 toolkitName = app.toolkitName
             except:
                 toolkitName = None
-            if toolkitName in settings.synchronousToolkits:
+            if toolkitName in self._synchronousToolkits:
                 asyncMode = False
             script = _scriptManager.getScript(app, e.source)
             script.eventCache[e.type] = (e, time.time())
@@ -181,7 +193,7 @@ class EventManager:
         if not asyncMode:
             self._dequeue()
 
-        if settings.debugEventQueue:
+        if debug.debugEventQueue:
             self._enqueueCount -= 1
 
     def _dequeue(self):
@@ -190,7 +202,7 @@ class EventManager:
 
         rerun = True
 
-        if settings.debugEventQueue:
+        if debug.debugEventQueue:
             debug.println(debug.LEVEL_ALL,
                           "event_manager._dequeue %d" % self._dequeueCount)
             self._dequeueCount += 1
@@ -202,7 +214,7 @@ class EventManager:
             if isinstance(event, inputEvents):
                 self._processInputEvent(event)
             else:
-                orca_state.currentObjectEvent = event
+                debug.objEvent = event
                 debugging = not debug.eventDebugFilter \
                             or debug.eventDebugFilter.match(event.type)
                 if debugging:
@@ -218,7 +230,7 @@ class EventManager:
                     debug.println(debug.eventDebugLevel,
                                   "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" \
                                   % event.type)
-                orca_state.currentObjectEvent = None
+                debug.objEvent = None
 
             # [[[TODO: HACK - it would seem logical to only do this if we
             # discover the queue is empty, but this inroduces a hang for
@@ -226,22 +238,18 @@ class EventManager:
             # lock.  So...we do it here.]]]
             #
             try:
-                noFocus = \
-                    not orca_state.activeScript \
-                    or (not orca_state.locusOfFocus and \
-                        self.noFocusTimestamp != orca_state.noFocusTimestamp)
+                noFocus = not (orca_state.activeScript or orca_state.locusOfFocus)
             except:
                 noFocus = True
 
             self._gidleLock.acquire()
             if self._eventQueue.empty():
                 if noFocus:
-                    if settings.gilSleepTime:
-                        time.sleep(settings.gilSleepTime)
+                    if self._gilSleepTime:
+                        time.sleep(self._gilSleepTime)
                     fullMessage = messages.NO_FOCUS
                     defaultScript = _scriptManager.getDefaultScript()
                     defaultScript.presentMessage(fullMessage, '')
-                    self.noFocusTimestamp = orca_state.noFocusTimestamp
                 self._gidleId = 0
                 rerun = False # destroy and don't call again
             self._gidleLock.release()
@@ -253,7 +261,7 @@ class EventManager:
         except:
             debug.printException(debug.LEVEL_SEVERE)
 
-        if settings.debugEventQueue:
+        if debug.debugEventQueue:
             self._dequeueCount -= 1
             debug.println(debug.LEVEL_ALL,
                           "Leaving _dequeue. Count: %d" % self._dequeueCount)

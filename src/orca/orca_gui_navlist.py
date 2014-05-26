@@ -102,7 +102,7 @@ class OrcaNavListGUI:
 
     def showGUI(self):
         self._gui.show_all()
-        ts = orca_state.lastInputEventTimestamp
+        ts = orca_state.lastInputEvent.timestamp
         if ts == 0:
             ts = Gtk.get_current_event_time()
         self._gui.present_with_time(ts)

@@ -60,6 +60,7 @@ except:
 from . import braille
 from . import debug
 from . import event_manager
+from . import keybindings
 from . import logger
 from . import messages
 from . import notification_messages
@@ -216,12 +217,17 @@ def _processKeyboardEvent(event):
     """
     global _orcaModifierPressed
 
-    # Weed out duplicate and otherwise bogus events.
     keyboardEvent = KeyboardEvent(event)
     debug.println(debug.LEVEL_FINE, keyboardEvent.toString())
-    if keyboardEvent.ignoreDueToTimestamp():
-        debug.println(debug.LEVEL_FINE, "IGNORING EVENT DUE TO TIMESTAMP")
-        return
+
+    # Weed out duplicate and otherwise bogus events.
+    # TODO - JD: Be sure these are the right values to return
+    if not keyboardEvent.timestamp:
+        debug.println(debug.LEVEL_FINE, "IGNORING EVENT: NO TIMESTAMP")
+        return False
+    if keyboardEvent == orca_state.lastInputEvent:
+        debug.println(debug.LEVEL_FINE, "IGNORING EVENT: DUPLICATE")
+        return False
 
     # Figure out what we've got.
     isOrcaModifier = keyboardEvent.isOrcaModifier()
@@ -229,10 +235,9 @@ def _processKeyboardEvent(event):
     if isOrcaModifier:
         _orcaModifierPressed = isPressedEvent
     if _orcaModifierPressed:
-        keyboardEvent.modifiers |= settings.ORCA_MODIFIER_MASK
+        keyboardEvent.modifiers |= keybindings.ORCA_MODIFIER_MASK
 
     # Update our state.
-    orca_state.lastInputEventTimestamp = event.timestamp
     orca_state.lastInputEvent = keyboardEvent
     if not keyboardEvent.isModifierKey():
         keyboardEvent.setClickCount()
@@ -619,7 +624,7 @@ def init(registry):
 
     return True
 
-def start(registry):
+def start(registry, cacheValues):
     """Starts Orca.
     """
 
@@ -637,11 +642,11 @@ def start(registry):
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
 
-    if settings.cacheValues:
+    if cacheValues:
         pyatspi.setCacheLevel(pyatspi.CACHE_PROPERTIES)
 
     debug.println(debug.LEVEL_FINEST, 'INFO: Orca starting registry')
-    registry.start(gil=settings.useGILIdleHandler)
+    registry.start(gil=False)
 
 def die(exitCode=1):
     pid = os.getpid()
@@ -757,7 +762,7 @@ def abortOnSignal(signum, frame):
                   % signum)
     die(signum)
 
-def main():
+def main(cacheValues=True):
     """The main entry point for Orca.  The exit codes for Orca will
     loosely be based on signals, where the exit code will be the
     signal used to terminate Orca (if a signal was used).  Otherwise,
@@ -798,7 +803,7 @@ def main():
             setLocusOfFocus(None, window)
 
     try:
-        start(pyatspi.Registry) # waits until we stop the registry
+        start(pyatspi.Registry, cacheValues) # waits until we stop the registry
     except:
         die(EXIT_CODE_HANG)
     return 0

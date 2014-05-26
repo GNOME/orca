@@ -32,7 +32,6 @@ import orca.scripts.default as default
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.orca_state as orca_state
-import orca.settings as settings
 import orca.speech as speech
 
 from orca.orca_i18n import _ # for gettext support
@@ -129,8 +128,8 @@ class Script(default.Script):
             keyBindings.add(
                 keybindings.KeyBinding(
                     messagekey,
-                    settings.defaultModifierMask,
-                    settings.ORCA_MODIFIER_MASK,
+                    keybindings.defaultModifierMask,
+                    keybindings.ORCA_MODIFIER_MASK,
                     self.inputEventHandlers["readPreviousMessageHandler"]))
 
         return keyBindings

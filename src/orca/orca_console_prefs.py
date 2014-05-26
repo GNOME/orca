@@ -100,11 +100,6 @@ def setupSpeech(prefsDict):
     global speechServerChoice
     global speechVoiceChoice
 
-    # Use this because callbacks in this setup can hang.
-    # TODO: Is this true still??
-    #
-    settings.enableSpeechCallbacks = False
-
     factories = speech.getSpeechServerFactories()
     if len(factories) == 0:
         print(messages.SPEECH_UNAVAILABLE)

@@ -32,6 +32,7 @@ import time
 import unicodedata
 
 from . import debug
+from . import keybindings
 from . import keynames
 from . import messages
 from . import orca_state
@@ -145,7 +146,7 @@ class KeyboardEvent(InputEvent):
         # conversion. [[[WDW - this is making assumptions about
         # mapping ASCII control characters to UTF-8.]]]
         #
-        if (self.modifiers & settings.CTRL_MODIFIER_MASK) \
+        if (self.modifiers & keybindings.CTRL_MODIFIER_MASK) \
             and (not self.is_text) and (len(self.event_string) == 1):
             value = ord(self.event_string[0])
             if value < 32:
@@ -182,6 +183,17 @@ class KeyboardEvent(InputEvent):
 
         if not self.isLockingKey():
             self.shouldEcho = self.shouldEcho and settings.enableKeyEcho
+
+    def __eq__(self, other):
+        if not other:
+            return False
+
+        if self.type == other.type \
+           and self.hw_code == other.hw_code \
+           and self.timestamp == other.timestamp:
+            return True
+
+        return False
 
     def toString(self):
         return ("KEYBOARDEVENT: type=%d\n" % self.type) \
@@ -273,7 +285,7 @@ class KeyboardEvent(InputEvent):
 
         if self.keyval_name == "KP_0" \
            and "KP_Insert" in settings.orcaModifierKeys \
-           and self.modifiers & settings.SHIFT_MODIFIER_MASK:
+           and self.modifiers & keybindings.SHIFT_MODIFIER_MASK:
             return True
 
         return False
@@ -284,7 +296,7 @@ class KeyboardEvent(InputEvent):
         if orca_state.bypassNextCommand:
             return False
 
-        return self.modifiers & settings.ORCA_MODIFIER_MASK
+        return self.modifiers & keybindings.ORCA_MODIFIER_MASK
 
     def isPrintableKey(self):
         """Return True if this is a printable key."""
@@ -356,26 +368,6 @@ class KeyboardEvent(InputEvent):
         """Returns the string to be used for presenting the key to the user."""
 
         return keynames.getKeyName(self.event_string)
-
-    def ignoreDueToTimestamp(self):
-        """Returns True if the event should be ignored due to its timestamp,
-        which might be completely absent or suggest that this input event is
-        a duplicate."""
-
-        if not self.timestamp:
-            return True
-        if self.timestamp != orca_state.lastInputEventTimestamp:
-            return False
-        if not orca_state.lastInputEvent:
-            return False
-        if isinstance(self, MouseButtonEvent) \
-           or isinstance(orca_state.lastInputEvent, MouseButtonEvent):
-            return False
-        if self.hw_code == orca_state.lastInputEvent.hw_code \
-           and self.type == orca_state.lastInputEvent.type:
-            return True
-
-        return False
 
 class BrailleEvent(InputEvent):
 
