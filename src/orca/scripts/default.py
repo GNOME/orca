@@ -4143,6 +4143,43 @@ class Script(script.Script):
         """Convenience method to present the KeyboardEvent event. Returns True
         if we fully present the event; False otherwise."""
 
+        if not orca_state.learnModeEnabled:
+            if event.shouldEcho == False or event.isOrcaModified():
+                return False
+
+        try:
+            role = orca_state.locusOfFocus.getRole()
+        except:
+            return False
+
+        if role == pyatspi.ROLE_PASSWORD_TEXT:
+            return False
+
+        # Worst. Hack. EVER. We have no reliable way of knowing a password is
+        # being entered into a terminal -- other than the fact that the text
+        # typed ain't there. As a result, we have to do special things when
+        # not in special modes. :( See bgo 668025.
+        if role == pyatspi.ROLE_TERMINAL:
+            if not event.isPressedKey():
+                try:
+                    text = orca_state.locusOfFocus.queryText()
+                    o = text.caretOffset
+                    string = text.getText(o-1, o)
+                except:
+                    pass
+                else:
+                    if not event.event_string in [string, 'space']:
+                        return False
+            elif not (orca_state.learnModeEnabled or event.isLockingKey()):
+                return False
+
+        elif not event.isPressedKey():
+            return False
+
+        orca_state.lastKeyEchoTime = time.time()
+        debug.println(debug.LEVEL_FINEST,
+                      "Script.presentKeyboardEvent: %s" % event.event_string)
+
         braille.displayKeyEvent(event)
         orcaModifierPressed = event.isOrcaModifier() and event.isPressedKey()
         if event.isCharacterEchoable() and not orcaModifierPressed:

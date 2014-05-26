@@ -377,54 +377,6 @@ class KeyboardEvent(InputEvent):
 
         return False
 
-    def present(self):
-        """Presents the event via the appropriate medium/media. Returns True
-        if we presented the event. False if there was some reason the event
-        was not worthy of presentation."""
-
-        if not orca_state.learnModeEnabled:
-            if self.shouldEcho == False or self.isOrcaModified():
-                return False
-
-        try:
-            role = orca_state.locusOfFocus.getRole()
-        except:
-            return False
-
-        if role == pyatspi.ROLE_PASSWORD_TEXT:
-            return False
-
-        # Worst. Hack. EVER. We have no reliable way of knowing a password is
-        # being entered into a terminal -- other than the fact that the text
-        # typed ain't there. As a result, we have to do special things when
-        # not in special modes. :( See bgo 668025.
-        if role == pyatspi.ROLE_TERMINAL:
-            if not self.isPressedKey():
-                try:
-                    text = orca_state.locusOfFocus.queryText()
-                    o = text.caretOffset
-                    string = text.getText(o-1, o)
-                except:
-                    pass
-                else:
-                    if not self.event_string in [string, 'space']:
-                        return False
-            elif not (orca_state.learnModeEnabled or self.isLockingKey()):
-                return False
-
-        elif not self.isPressedKey():
-            return False
-
-        orca_state.lastKeyEchoTime = time.time()
-        debug.println(debug.LEVEL_FINEST,
-                      "KeyboardEvent.present: %s" % self.event_string)
-
-        script = orca_state.activeScript
-        if script:
-            return script.presentKeyboardEvent(self)
-
-        return False
-
 class BrailleEvent(InputEvent):
 
     def __init__(self, event):

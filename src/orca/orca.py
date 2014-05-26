@@ -240,12 +240,15 @@ def _processKeyboardEvent(event):
 
     # Echo it based on what it is and the user's settings.
     script = orca_state.activeScript
-    if script:
-        if isPressedEvent:
-            script.presentationInterrupt()
-        keyboardEvent.present()
-        if keyboardEvent.isModifierKey() and not isOrcaModifier:
-            return False
+    if not script:
+        debug.println(debug.LEVEL_FINE, "IGNORING EVENT DUE TO NO SCRIPT")
+        return False
+
+    if isPressedEvent:
+        script.presentationInterrupt()
+    script.presentKeyboardEvent(keyboardEvent)
+    if keyboardEvent.isModifierKey() and not isOrcaModifier:
+        return False
  
     # Special modes.
     if not isPressedEvent and keyboardEvent.event_string == "Escape":
