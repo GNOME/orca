@@ -136,6 +136,11 @@ formatting = {
             'unfocused': 'label + name + roleName + positionInList + ' + MNEMONIC + ' + accelerator',
             'basicWhereAmI': 'label + roleName + name + positionInList + ' + MNEMONIC + ' + accelerator'
             },
+        pyatspi.ROLE_DIAL: {
+            'focused': 'value',
+            'unfocused': 'labelOrName + roleName + value + required + availability + ' + MNEMONIC,
+            'basicWhereAmI': 'labelOrName + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
+            },
         pyatspi.ROLE_DIALOG: {
             'unfocused': 'labelAndName + unrelatedLabels'
             },
@@ -404,7 +409,10 @@ formatting = {
                           + [Region(" " + asString(roleName))]'
             },
         #pyatspi.ROLE_DESKTOP_ICON: 'default'
-        #pyatspi.ROLE_DIAL: 'default'
+        pyatspi.ROLE_DIAL: {
+            'unfocused': '[Component(obj,\
+                                     asString(labelOrName + value + roleName + required))]'
+            },
         #pyatspi.ROLE_DIALOG: 'default'
         #pyatspi.ROLE_DIRECTORY_PANE: 'default'
         pyatspi.ROLE_EMBEDDED: {
