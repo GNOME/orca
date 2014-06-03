@@ -262,6 +262,11 @@ formatting = {
             'unfocused': 'labelAndName + radioState + roleName + availability + ' + MNEMONIC + ' + accelerator + positionInList',
             'basicWhereAmI': 'ancestors + labelAndName + roleName + radioState + accelerator + positionInList + ' + MNEMONIC
             },
+        pyatspi.ROLE_SCROLL_BAR: {
+            'focused': 'value',
+            'unfocused': 'labelOrName + roleName + value + required + availability + ' + MNEMONIC,
+            'basicWhereAmI': 'labelOrName + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
+            },
         pyatspi.ROLE_SECTION: {
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
             'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
@@ -517,7 +522,10 @@ formatting = {
                                      indicator=asString(radioState))]'
             },
         #pyatspi.ROLE_ROW_HEADER: 'default'
-        #pyatspi.ROLE_SCROLL_BAR: 'default'
+        pyatspi.ROLE_SCROLL_BAR: {
+            'unfocused': '[Component(obj,\
+                                     asString(labelOrName + value + roleName + required))]'
+            },
         pyatspi.ROLE_SCROLL_PANE: {
             'unfocused': 'asPageTabOrScrollPane'
             },
