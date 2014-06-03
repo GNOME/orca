@@ -59,7 +59,6 @@ userCustomizableSettings = [
     "enableBraille",
     "enableBrailleContext",
     "disableBrailleEOL",
-    "brailleEOLIndicator",
     "brailleVerbosityLevel",
     "brailleRolenameStyle",
     "brailleSelectorIndicator",
@@ -221,8 +220,6 @@ flashIsPersistent              = False
 enableContractedBraille        = False
 brailleContractionTable        = ''
 disableBrailleEOL              = False
-brailleEOLIndicator            = " $l"
-brailleTableCellDelimiter      = " "
 brailleRolenameStyle           = BRAILLE_ROLENAME_STYLE_LONG
 brailleSelectorIndicator       = BRAILLE_UNDERLINE_BOTH
 brailleLinkIndicator           = BRAILLE_UNDERLINE_BOTH

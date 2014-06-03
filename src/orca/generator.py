@@ -34,6 +34,7 @@ import pyatspi
 from . import braille
 from . import debug
 from . import messages
+from . import object_properties
 from . import settings
 
 from .orca_i18n import _         # for gettext support
@@ -913,7 +914,7 @@ class Generator:
                         cellResult = self._generateRealTableCell(cell, **args)
                         if cellResult and result and self._mode == 'braille':
                             result.append(braille.Region(
-                                    settings.brailleTableCellDelimiter))
+                                object_properties.TABLE_CELL_DELIMITER_BRAILLE))
                         result.extend(cellResult)
             else:
                 result.extend(self._generateRealTableCell(obj, **args))

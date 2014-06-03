@@ -29,6 +29,7 @@ import pyatspi
 
 import orca.braille as braille
 import orca.braille_generator as braille_generator
+import orca.object_properties as object_properties
 import orca.settings_manager as settings_manager
 
 _settingsManager = settings_manager.getManager()
@@ -123,9 +124,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                 for child in obj:
                     cellResult = self._generateRealTableCell(child, **args)
                     if cellResult and result and self._mode == 'braille':
-                        delimiter = _settingsManager.getSetting(
-                            'brailleTableCellDelimiter')
-                        result.append(braille.Region(delimiter))
+                        result.append(braille.Region(
+                            object_properties.TABLE_CELL_DELIMITER_BRAILLE))
                     result.extend(cellResult)
         return result
 
@@ -178,9 +178,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                                                                      **args)
                             if cellResult and result \
                                and self._mode == 'braille':
-                                delimiter = _settingsManager.getSetting(
-                                    'brailleTableCellDelimiter')
-                                result.append(braille.Region(delimiter))
+                                result.append(braille.Region(
+                                    object_properties.TABLE_CELL_DELIMITER_BRAILLE))
                             result.extend(cellResult)
                 else:
                     result.extend(self._generateRealTableCell(obj, **args))

@@ -29,8 +29,8 @@ import copy
 
 import pyatspi
 
-from . import settings
 from . import object_properties
+from . import settings
 
 # pylint: disable-msg=C0301
 
@@ -66,7 +66,7 @@ formatting = {
             'groupindex': object_properties.GROUP_INDEX_SPEECH,
         },
         'braille': {
-            'eol': settings.brailleEOLIndicator,
+            'eol': object_properties.EOL_INDICATOR_BRAILLE,
             'required': object_properties.STATE_REQUIRED_BRAILLE,
             'readonly': object_properties.STATE_READ_ONLY_BRAILLE,
             'insensitive': object_properties.STATE_INSENSITIVE_BRAILLE,
