@@ -229,9 +229,6 @@ flashVerbosityLevel            = VERBOSITY_LEVEL_VERBOSE
 brailleAlignmentStyle          = BRAILLE_ALIGN_BY_EDGE
 brailleAlignmentMargin         = 3
 brailleMaximumJump             = 8
-brailleForceRoles              = [pyatspi.ROLE_COMBO_BOX,
-                                  pyatspi.ROLE_MENU,
-                                  pyatspi.ROLE_TEAROFF_MENU_ITEM]
 
 # Keyboard and Echo
 keyboardLayout               = GENERAL_KEYBOARD_LAYOUT_DESKTOP
