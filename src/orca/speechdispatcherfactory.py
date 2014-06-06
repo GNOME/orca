@@ -71,13 +71,6 @@ class SpeechServer(speechserver.SpeechServer):
     
     DEFAULT_SERVER_ID = 'default'
     _SERVER_NAMES = {DEFAULT_SERVER_ID: guilabels.DEFAULT_SYNTHESIZER}
-    
-    KEY_NAMES = {
-        '_':     'underscore',
-        ' ':     'space',
-        'space': 'space',
-        '"':     'double-quote',
-        }
 
     def getFactoryName():
         return guilabels.SPEECH_DISPATCHER
@@ -433,18 +426,10 @@ class SpeechServer(speechserver.SpeechServer):
         self.speak(name, acss)
 
     def speakKeyEvent(self, event):
-        acss = ACSS(settings.voices[settings.DEFAULT_VOICE])
-        if event.isPrintableKey():
-            # We currently only handle printable characters by Speech
-            # Dispatcher's KEY command.  For other keys, such as Ctrl, Shift
-            # etc. we prefer Orca's verbalization.
-            if event.event_string.isupper():
-                acss = settings.voices[settings.UPPERCASE_VOICE]
-
-            key = self.KEY_NAMES.get(event.event_string, event.event_string)
-            self._apply_acss(acss)
-            self._send_command(self._client.key, key)
-            return
+        if event.isPrintableKey() and event.event_string.isupper():
+            acss = settings.voices[settings.UPPERCASE_VOICE]
+        else:
+            acss = ACSS(settings.voices[settings.DEFAULT_VOICE])
 
         event_string = event.getKeyName()
         if orca_state.activeScript:
