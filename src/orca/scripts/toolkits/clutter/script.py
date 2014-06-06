@@ -30,6 +30,7 @@ from gi.repository import Gdk
 
 import orca.scripts.default as default
 import orca.debug as debug
+from .script_utilities import Utilities
 
 # Set with non printable unicode categories. Full table:
 # http://www.fileformat.info/info/unicode/category/index.htm
@@ -77,6 +78,9 @@ class Script(default.Script):
 
     def __init__(self, app):
         default.Script.__init__(self, app)
+
+    def getUtilities(self):
+        return Utilities(self)
 
     def checkKeyboardEventData(self, keyboardEvent):
         """Processes the given keyboard event.

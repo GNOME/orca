@@ -1973,22 +1973,22 @@ class Utilities:
         if not orca_state.locusOfFocus or not settings.enableEchoByCharacter:
             return False
 
-        # The check here in English is something like this: "If this
-        # character echo is enabled, then character echo is likely to
-        # happen if the locus of focus is a focusable editable text
-        # area or terminal and neither of the Ctrl, Alt, or Orca
-        # modifiers are pressed.  If that's the case, then character
-        # echo will kick in for us."
-        #
-        return (self.isTextArea(orca_state.locusOfFocus)\
-                     or orca_state.locusOfFocus.getRole() \
-                        == pyatspi.ROLE_ENTRY) \
-                and (orca_state.locusOfFocus.getRole() \
-                     == pyatspi.ROLE_TERMINAL \
-                     or (not self.isReadOnlyTextArea(orca_state.locusOfFocus) \
-                         and (orca_state.locusOfFocus.getState().contains( \
-                                  pyatspi.STATE_FOCUSABLE)))) \
-                and not (event.modifiers & keybindings.ORCA_CTRL_MODIFIER_MASK)
+        if len(event.event_string) != 1 \
+           or not event.event_string.isalnum() \
+           or event.modifiers & keybindings.ORCA_CTRL_MODIFIER_MASK:
+            return False
+
+        obj = orca_state.locusOfFocus
+        role = obj.getRole()
+        if role == pyatspi.ROLE_TERMINAL:
+            return True
+        if role == pyatspi.ROLE_PASSWORD_TEXT:
+            return False
+
+        if obj.getState().contains(pyatspi.STATE_EDITABLE):
+            return True
+
+        return False
 
     def wordAtCoords(self, acc, x, y):
         """Get the word at the given coords in the accessible.
