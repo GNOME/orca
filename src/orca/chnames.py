@@ -209,7 +209,7 @@ chnames['\u00a7'] = _("section")
 
 # Translators: this is the spoken word for the character '¨' (U+00a8)
 #
-chnames['\u00a8'] = _("umlaut")
+chnames['\u00a8'] = _("diaeresis")
 
 # Translators: this is the spoken word for the character '©' (U+00a9)
 #
