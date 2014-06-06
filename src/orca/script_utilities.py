@@ -36,6 +36,7 @@ import re
 from . import chnames
 from . import debug
 from . import keynames
+from . import keybindings
 from . import input_event
 from . import messages
 from . import mouse_review
