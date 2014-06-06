@@ -257,7 +257,7 @@ chnames['\u00b3'] = _("superscript 3")
 
 # Translators: this is the spoken word for the character '´' (U+00b4)
 #
-chnames['\u00b4'] = _("acute accent")
+chnames['\u00b4'] = _("acute")
 
 # Translators: this is the spoken word for the character 'µ' (U+00b5)
 #
