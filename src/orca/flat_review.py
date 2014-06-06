@@ -616,7 +616,7 @@ class Context:
             role = None
 
         if role == pyatspi.ROLE_TABLE_CELL:
-            searchZone = orca_state.activeScript.\
+            searchZone = self.script.\
                 utilities.realActiveDescendant(orca_state.locusOfFocus)
         else:
             searchZone = orca_state.locusOfFocus

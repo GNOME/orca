@@ -34,8 +34,6 @@ from . import orca_state
 class OrcaCommandListGUI:
 
     def __init__(self, title, columnHeaders, rows, canPerformCommands):
-        self._focusedObject = orca_state.locusOfFocus
-        self._activeScript = orca_state.activeScript
         self._tree = None
         self._okButton = None
         self._gui = self._createCommandListDialog(columnHeaders, rows)

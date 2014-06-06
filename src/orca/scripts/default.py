@@ -2079,7 +2079,7 @@ class Script(script.Script):
         debug.debugLevel = levels[levelIndex]
         briefMessage = levels[levelIndex + 1]
         fullMessage =  "Debug level %s." % briefMessage
-        orca_state.activeScript.presentMessage(fullMessage, briefMessage)
+        self.presentMessage(fullMessage, briefMessage)
 
         return True
 
@@ -3298,12 +3298,12 @@ class Script(script.Script):
         """
 
         for key in keys:
-            localizedKey = text_attribute_names.getTextAttributeName(key)
+            localizedKey = text_attribute_names.getTextAttributeName(key, self)
             if key in attributes:
                 line = ""
                 attribute = attributes[key]
                 localizedValue = \
-                    text_attribute_names.getTextAttributeName(attribute)
+                    text_attribute_names.getTextAttributeName(attribute, self)
                 if attribute:
                     key = self.getAtkNameForAttribute(key)
                     # If it's the 'weight' attribute and greater than 400, just

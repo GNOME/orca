@@ -948,11 +948,12 @@ class SpeechGenerator(generator.Generator):
 
         if attributesDictionary:
             for key in keys:
-                localizedKey = text_attribute_names.getTextAttributeName(key)
+                localizedKey = text_attribute_names.getTextAttributeName(
+                    key, self._script)
                 if key in attributesDictionary:
                     attribute = attributesDictionary[key]
-                    localizedValue = \
-                        text_attribute_names.getTextAttributeName(attribute)
+                    localizedValue = text_attribute_names.getTextAttributeName(
+                        attribute, self._script)
                     if attribute:
                         # If it's the 'weight' attribute and greater than 400,
                         # just speak it as bold, otherwise speak the weight.

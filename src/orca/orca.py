@@ -267,7 +267,7 @@ def _processKeyboardEvent(event):
     if orca_state.capturingKeys:
         return False
     if notification_messages.listNotificationMessagesModeEnabled:
-        return notification_messages.listNotificationMessages(keyboardEvent)
+        return notification_messages.listNotificationMessages(script, keyboardEvent)
 
     # See if the event manager wants it (i.e. it is bound to a command.
     if _eventManager.processKeyboardEvent(keyboardEvent):

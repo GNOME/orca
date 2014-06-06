@@ -27,7 +27,6 @@ __copyright__ = "Copyright (c) 2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 from .orca_i18n import C_
-from . import orca_state
 
 # Translators: this is a structure to assist in the generation of
 # localized strings for the various text attributes. 
@@ -761,7 +760,7 @@ def getTextAttributeKey(localizedTextAttr):
 
     return localizedTextAttr
 
-def getTextAttributeName(textAttr):
+def getTextAttributeName(textAttr, script=None):
     """Given a text attribute, returns its localized equivalent.
 
     Arguments:
@@ -773,7 +772,7 @@ def getTextAttributeName(textAttr):
 
     # Normalize the name to an Atk name before attempting to look it up.
     #
-    if orca_state.activeScript:
-        textAttr = orca_state.activeScript.getAtkNameForAttribute(textAttr)
+    if script:
+        textAttr = script.getAtkNameForAttribute(textAttr)
 
     return _textAttributeTable.get(textAttr, textAttr)

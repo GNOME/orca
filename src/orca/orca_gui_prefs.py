@@ -873,11 +873,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         for i in range(0, len(attrList)):
             for path in range(0, len(allAttrList)):
-                localizedKey = \
-                        text_attribute_names.getTextAttributeName(attrList[i])
-                localizedValue = \
-                        text_attribute_names.getTextAttributeName( \
-                                                        attrDict[attrList[i]])
+                localizedKey = text_attribute_names.getTextAttributeName(
+                    attrList[i], self.script)
+                localizedValue = text_attribute_names.getTextAttributeName(
+                    attrDict[attrList[i]], self.script)
                 if localizedKey == model[path][NAME]:
                     thisIter = model.get_iter(path)
                     model.set_value(thisIter, NAME, localizedKey)
@@ -911,8 +910,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         for i in range(0, len(attrList)):
             for path in range(0, len(allAttrList)):
-                localizedKey = \
-                        text_attribute_names.getTextAttributeName(attrList[i])
+                localizedKey = text_attribute_names.getTextAttributeName(
+                    attrList[i], self.script)
                 if localizedKey == model[path][NAME]:
                     thisIter = model.get_iter(path)
                     model.set_value(thisIter, IS_BRAILLED, state)
@@ -1067,11 +1066,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             _settingsManager.getSetting('allTextAttributes'))
         for i in range(0, len(allAttrList)):
             thisIter = model.append()
-            localizedKey = \
-                text_attribute_names.getTextAttributeName(allAttrList[i])
-            localizedValue = \
-                text_attribute_names.getTextAttributeName( \
-                                             allAttrDict[allAttrList[i]])
+            localizedKey = text_attribute_names.getTextAttributeName(
+                allAttrList[i], self.script)
+            localizedValue = text_attribute_names.getTextAttributeName(
+                allAttrDict[allAttrList[i]], self.script)
             model.set_value(thisIter, NAME, localizedKey)
             model.set_value(thisIter, IS_SPOKEN, False)
             model.set_value(thisIter, IS_BRAILLED, False)
