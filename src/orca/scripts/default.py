@@ -2687,11 +2687,13 @@ class Script(script.Script):
                     or (_settingsManager.getSetting('enableEchoByCharacter') \
                         and string \
                         and role != pyatspi.ROLE_PASSWORD_TEXT \
-                        and len(string) == 1)
+                        and len(string.strip()) == 1)
 
         if speakThis:
             if string.isupper():
                 speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
+            elif not string.isalnum():
+                speech.speakCharacter(string)
             else:
                 speech.speak(string)
 

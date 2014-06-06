@@ -1974,7 +1974,6 @@ class Utilities:
             return False
 
         if len(event.event_string) != 1 \
-           or not event.event_string.isalnum() \
            or event.modifiers & keybindings.ORCA_CTRL_MODIFIER_MASK:
             return False
 
