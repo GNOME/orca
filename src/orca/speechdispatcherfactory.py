@@ -335,9 +335,9 @@ class SpeechServer(speechserver.SpeechServer):
     def _cancel(self):
         self._send_command(self._client.cancel)
 
-    def _change_default_speech_rate(self, decrease=False):
+    def _change_default_speech_rate(self, step, decrease=False):
         acss = settings.voices[settings.DEFAULT_VOICE]
-        delta = settings.speechRateDelta * (decrease and -1 or +1)
+        delta = step * (decrease and -1 or +1)
         try:
             rate = acss[ACSS.RATE]
         except KeyError:
@@ -349,9 +349,9 @@ class SpeechServer(speechserver.SpeechServer):
         self.speak(decrease and messages.SPEECH_SLOWER \
                    or messages.SPEECH_FASTER, acss=acss)
 
-    def _change_default_speech_pitch(self, decrease=False):
+    def _change_default_speech_pitch(self, step, decrease=False):
         acss = settings.voices[settings.DEFAULT_VOICE]
-        delta = settings.speechPitchDelta * (decrease and -1 or +1)
+        delta = step * (decrease and -1 or +1)
         try:
             pitch = acss[ACSS.AVERAGE_PITCH]
         except KeyError:
@@ -441,16 +441,16 @@ class SpeechServer(speechserver.SpeechServer):
         self.speak(event_string, acss=acss)
 
     def increaseSpeechRate(self, step=5):
-        self._change_default_speech_rate()
+        self._change_default_speech_rate(step)
 
     def decreaseSpeechRate(self, step=5):
-        self._change_default_speech_rate(decrease=True)
+        self._change_default_speech_rate(step, decrease=True)
 
     def increaseSpeechPitch(self, step=0.5):
-        self._change_default_speech_pitch()
+        self._change_default_speech_pitch(step)
 
     def decreaseSpeechPitch(self, step=0.5):
-        self._change_default_speech_pitch(decrease=True)
+        self._change_default_speech_pitch(step, decrease=True)
 
     def stop(self):
         self._cancel()
