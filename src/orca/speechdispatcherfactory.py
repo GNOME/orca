@@ -406,10 +406,6 @@ class SpeechServer(speechserver.SpeechServer):
         if text:
             self._speak(text, acss)
 
-    def queueText(self, text="", acss=None):
-        if text:
-            self._speak(text, acss)
-
     def speakUtterances(self, utteranceList, acss=None, interrupt=True):
         #if interrupt:
         #    self._cancel()
@@ -437,19 +433,27 @@ class SpeechServer(speechserver.SpeechServer):
         self.speak(name, acss)
 
     def speakKeyEvent(self, event):
+        acss = ACSS(settings.voices[settings.DEFAULT_VOICE])
         if event.isPrintableKey():
             # We currently only handle printable characters by Speech
             # Dispatcher's KEY command.  For other keys, such as Ctrl, Shift
             # etc. we prefer Orca's verbalization.
             if event.event_string.isupper():
                 acss = settings.voices[settings.UPPERCASE_VOICE]
-            else:
-                acss = None
+
             key = self.KEY_NAMES.get(event.event_string, event.event_string)
             self._apply_acss(acss)
             self._send_command(self._client.key, key)
-        else:
-            return super(SpeechServer, self).speakKeyEvent(event)
+            return
+
+        event_string = event.getKeyName()
+        if orca_state.activeScript:
+            event_string = orca_state.activeScript.\
+                utilities.adjustForPronunciation(event_string)
+
+        lockingStateString = event.getLockingStateString()
+        event_string = "%s %s" % (event_string, lockingStateString)
+        self.speak(event_string, acss=acss)
 
     def increaseSpeechRate(self, step=5):
         self._change_default_speech_rate()

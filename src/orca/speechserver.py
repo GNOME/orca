@@ -30,16 +30,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import logging
-from . import settings
-from . import orca_state
-
-log = logging.getLogger("speech")
-
-from . import debug
-
-from .acss import ACSS
-
 class VoiceFamily(dict):
     """Holds the family description for a voice."""
 
@@ -141,35 +131,6 @@ class SpeechServer(object):
         voice families known by the speech server."""
         pass
 
-    def queueText(self, text="", acss=None):
-        """Adds the text to the queue.
-
-        Arguments:
-        - text: text to be spoken
-        - acss: acss.ACSS instance; if None,
-                the default voice settings will be used.
-                Otherwise, the acss settings will be
-                used to augment/override the default
-                voice settings.
-
-        Output is produced by the next call to speak.
-        """
-        pass
-
-    def queueTone(self, pitch=440, duration=50):
-        """Adds a tone to the queue.
-
-        Output is produced by the next call to speak.
-        """
-        pass
-
-    def queueSilence(self, duration=50):
-        """Adds silence to the queue.
-
-        Output is produced by the next call to speak.
-        """
-        pass
-
     def speakCharacter(self, character, acss=None):
         """Speaks a single character immediately.
 
@@ -189,24 +150,7 @@ class SpeechServer(object):
         Arguments:
         - event: the input_event.KeyboardEvent.
         """
-        if event.isPrintableKey() and event.event_string.isupper():
-            voice = ACSS(settings.voices[settings.UPPERCASE_VOICE])
-        else:
-            voice = ACSS(settings.voices[settings.DEFAULT_VOICE])
-
-        event_string = event.getKeyName()
-        if orca_state.activeScript:
-            event_string = orca_state.activeScript.\
-                utilities.adjustForPronunciation(event_string)
-
-        lockingStateString = event.getLockingStateString()
-        event_string = "%s %s" % (event_string, lockingStateString)
-
-        logLine = "SPEECH OUTPUT: '" + event_string +"'"
-        debug.println(debug.LEVEL_INFO, logLine)
-        log.info(logLine)
-
-        self.speak(event_string, acss=voice)
+        pass
 
     def speakUtterances(self, utteranceList, acss=None, interrupt=True):
         """Speaks the given list of utterances immediately.
@@ -256,11 +200,7 @@ class SpeechServer(object):
                              type is one of PROGRESS, INTERRUPTED, or
                              COMPLETED.
         """
-        for [context, acss] in utteranceIterator:
-            logLine = "SPEECH OUTPUT: '" + context.utterance + "'"
-            debug.println(debug.LEVEL_INFO, logLine)
-            log.info(logLine)
-            self.speak(context.utterance, acss)
+        pass
 
     def increaseSpeechRate(self, step=5):
         """Increases the speech rate.

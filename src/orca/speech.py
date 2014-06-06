@@ -252,20 +252,19 @@ def speakKeyEvent(event):
     Arguments:
     - event: input_event.KeyboardEvent to speak.
     """
+
     if settings.silenceSpeech:
         return
 
-    if _speechserver:
-        _speechserver.speakKeyEvent(event)
-        return
-
-    # This should only happen during regression tests.
     keyname = event.getKeyName()
     lockingStateString = event.getLockingStateString()
     msg = "%s %s" % (keyname, lockingStateString)
     logLine = "SPEECH OUTPUT: '%s'" % msg
     debug.println(debug.LEVEL_INFO, logLine)
     log.info(logLine)
+
+    if _speechserver:
+        _speechserver.speakKeyEvent(event)
 
 def speakCharacter(character, acss=None):
     """Speaks a single character immediately.
