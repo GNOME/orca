@@ -3899,19 +3899,6 @@ class Script(script.Script):
             if not moreLines:
                 done = True
 
-    def getTextEndOffset(self, textInterface):
-        """Returns the offset which should be used as the end offset.
-        By default, this is -1. However, this value triggers an assertion
-        in certain apps. See bug 598797.
-
-        Argument:
-        - textInterface: the accessible text interface for which the end
-          offset is desired.
-
-        """
-
-        return -1
-
     def getTextLineAtCaret(self, obj, offset=None):
         """Gets the line of text where the caret is.
 

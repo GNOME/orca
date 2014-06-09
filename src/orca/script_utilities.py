@@ -580,7 +580,7 @@ class Utilities:
         except NotImplementedError:
             pass
         else:
-            displayedText = text.getText(0, self._script.getTextEndOffset(text))
+            displayedText = text.getText(0, text.characterCount)
 
             # [[[WDW - HACK to account for things such as Gecko that want
             # to use the EMBEDDED_OBJECT_CHARACTER on a label to hold the
@@ -1248,7 +1248,7 @@ class Utilities:
                     except NotImplementedError:
                         continue
                     else:
-                        if text.getText(0, self._script.getTextEndOffset(text)):
+                        if text.getText(0, text.characterCount):
                             activeDescendant = child
 
         self._script.generatorCache[self.REAL_ACTIVE_DESCENDANT][obj] = \
@@ -1609,7 +1609,7 @@ class Utilities:
                         morePossibleSelections = True
                     else:
                         displayedText = prevObjText.getText(0,
-                            self._script.getTextEndOffset(prevObjText))
+                            prevObjText.characterCount)
                         if len(displayedText) == 0:
                             current = prevObj
                             morePossibleSelections = True
@@ -1631,7 +1631,7 @@ class Utilities:
                         morePossibleSelections = True
                     else:
                         displayedText = nextObjText.getText(0,
-                            self._script.getTextEndOffset(nextObjText))
+                            nextObjText.characterCount)
                         if len(displayedText) == 0:
                             current = nextObj
                             morePossibleSelections = True
@@ -1779,7 +1779,7 @@ class Utilities:
         else:
             otherSelected = False
             text = obj.queryText()
-            displayedText = text.getText(0, self._script.getTextEndOffset(text))
+            displayedText = text.getText(0, text.characterCount)
             if (text.caretOffset == 0) or len(displayedText) == 0:
                 current = obj
                 morePossibleSelections = True
@@ -1794,7 +1794,7 @@ class Utilities:
                                 otherSelected = True
                             else:
                                 displayedText = prevObjText.getText(0,
-                                    self._script.getTextEndOffset(prevObjText))
+                                    prevObjText.characterCount)
                                 if len(displayedText) == 0:
                                     current = prevObj
                                     morePossibleSelections = True
@@ -1813,7 +1813,7 @@ class Utilities:
                                 otherSelected = True
                             else:
                                 displayedText = nextObjText.getText(0,
-                                    self._script.getTextEndOffset(nextObjText))
+                                    nextObjText.characterCount)
                                 if len(displayedText) == 0:
                                     current = nextObj
                                     morePossibleSelections = True
@@ -2005,7 +2005,7 @@ class Utilities:
         except NotImplementedError:
             return '', 0, 0
 
-        text_contents = ti.getText(0, self._script.getTextEndOffset(ti))
+        text_contents = ti.getText(0, ti.characterCount)
         line_offsets = []
         start_offset = 0
         while True:
