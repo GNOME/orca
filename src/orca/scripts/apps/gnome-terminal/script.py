@@ -30,12 +30,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.scripts.toolkits.gtk as gtk
-import orca.orca_state as orca_state
-import orca.settings as settings
-import orca.settings_manager as settings_manager
 import orca.speech as speech
-
-_settingsManager = settings_manager.getManager()
 
 ########################################################################
 #                                                                      #
@@ -87,46 +82,6 @@ class Script(gtk.Script):
 
         gtk.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
-
-    def onTextDeleted(self, event):
-        """Called whenever text is deleted from an object.
-
-        Arguments:
-        - event: the Event
-        """
-
-        event_string, mods = self.utilities.lastKeyAndModifiers()
-
-        # We only do special things when people press backspace
-        # in terminals.
-        #
-        if (event.source.getRole() != pyatspi.ROLE_TERMINAL) \
-            or (event_string != "BackSpace"):
-            gtk.Script.onTextDeleted(self, event)
-            return
-
-        # Ignore text deletions from non-focused objects, unless the
-        # currently focused object is the parent of the object from which
-        # text was deleted.
-        #
-        if (event.source != orca_state.locusOfFocus) \
-            and (event.source.parent != orca_state.locusOfFocus):
-            return
-
-        self.updateBraille(event.source)
-
-        # Speak the character that has just been deleted.
-        #
-        character = event.any_data
-        if character.isupper():
-            voice = self.voices[settings.UPPERCASE_VOICE]
-        else:
-            voice = self.voices[settings.DEFAULT_VOICE]
-
-        if len(character) == 1:
-            speech.speakCharacter(character, voice)
-        else:
-            speech.speak(character, voice, False)
 
     def getTextLineAtCaret(self, acc, offset=None):
         """Gets the line of text where the caret is.
