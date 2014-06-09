@@ -27,11 +27,8 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import importlib
-
-import re
 import time
 
-from . import chnames
 from . import debug
 from . import logger
 from . import orca_state
@@ -47,12 +44,6 @@ log = _logger.newLog("speech")
 # The speech server to use for all speech operations.
 #
 _speechserver = None
-
-# regular expressions for multiCaseStrings
-#
-multiCaseReg1 = re.compile("([a-z]+)([A-Z])")
-multiCaseReg2 = re.compile("([A-Z][A-Z]+)([A-Z][a-z]+)")
-multiCaseReg3 = re.compile("([A-Z])([A-Z][a-z]+)")
 
 def getSpeechServerFactories():
     """Imports all known SpeechServer factory modules.  Returns a list
@@ -152,13 +143,6 @@ def sayAll(utteranceIterator, progressCallback):
 
 def _speak(text, acss, interrupt):
     """Speaks the individual string using the given ACSS."""
-
-    if settings.speakMultiCaseStringsAsWords:
-        text = _processMultiCaseString(text)
-    if orca_state.activeScript:
-        text = orca_state.activeScript.utilities.adjustForPronunciation(text)
-    if settings.speakMultiCaseStringsAsWords:
-        text = _processMultiCaseString(text)
 
     logLine = "SPEECH OUTPUT: '" + text + "'"
     extraDebug = ""
@@ -280,9 +264,8 @@ def speakCharacter(character, acss=None):
     if settings.silenceSpeech:
         return
 
-    spokenCharacter = chnames.getCharacterName(character)
-    debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + spokenCharacter + "'")
-    log.info("SPEECH OUTPUT: '%s'" % spokenCharacter)
+    debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + character + "'")
+    log.info("SPEECH OUTPUT: '%s'" % character)
 
     if _speechserver:
         _speechserver.speakCharacter(character, acss=acss)
@@ -385,13 +368,3 @@ def test():
                 server.shutdown()
             except:
                 debug.printException(debug.LEVEL_OFF)
-
-def _processMultiCaseString(string):
-    """Helper function, applies the regexes to split multiCaseStrings
-    to multiple words.
-    """
-
-    string = multiCaseReg1.sub('\\1 \\2', string)
-    string = multiCaseReg2.sub('\\1 \\2', string)
-    string = multiCaseReg3.sub('\\1 \\2', string)    
-    return string

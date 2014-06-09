@@ -309,7 +309,7 @@ class Script(default.Script):
         objects = self.utilities.getObjectsFromEOCs(obj, boundary=boundary)
         for (obj, start, end, string) in objects:
             if string:
-                speech.speakCharacter(string)
+                self.speakCharacter(string)
             else:
                 speech.speak(self.speechGenerator.generateSpeech(obj))
 

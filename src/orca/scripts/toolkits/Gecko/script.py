@@ -3630,8 +3630,7 @@ class Script(default.Script):
         self.speakMisspelledIndicator(obj, characterOffset)
         if obj:
             if character and character != self.EMBEDDED_OBJECT_CHARACTER:
-                speech.speakCharacter(character,
-                                      self.getACSS(obj, character))
+                self.speakCharacter(character)
             elif not self.utilities.isEntry(obj):
                 # We won't have a character if we move to the end of an
                 # entry (in which case we're not on a character and therefore

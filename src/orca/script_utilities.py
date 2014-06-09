@@ -2260,6 +2260,10 @@ class Utilities:
 
         return "".join(adjustedLine)
 
+    @staticmethod
+    def _processMultiCaseString(string):
+        return re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', string)
+
     def adjustForPronunciation(self, line):
         """Adjust the line to replace words in the pronunciation dictionary,
         with what those words actually sound like.
@@ -2271,12 +2275,18 @@ class Utilities:
         dictionary.
         """
 
+        if settings.speakMultiCaseStringsAsWords:
+            line = self._processMultiCaseString(line)
+
         if not settings.usePronunciationDictionary:
             return line
 
         newLine = ""
         words = self.WORDS_RE.split(line)
         newLine = ''.join(map(pronunciation_dict.getPronunciation, words))
+
+        if settings.speakMultiCaseStringsAsWords:
+            newLine = self._processMultiCaseString(newLine)
 
         return newLine
 

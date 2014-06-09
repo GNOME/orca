@@ -37,6 +37,7 @@ from gi.repository import Gtk, Gdk
 
 import pyatspi
 import orca.braille as braille
+import orca.chnames as chnames
 import orca.colornames as colornames
 import orca.cmdnames as cmdnames
 import orca.debug as debug
@@ -1372,12 +1373,8 @@ class Script(script.Script):
         - itemString: the string to spell.
         """
 
-        for (charIndex, character) in enumerate(itemString):
-            if character.isupper():
-                speech.speakCharacter(character,
-                             self.voices[settings.UPPERCASE_VOICE])
-            else:
-                speech.speakCharacter(character)
+        for character in itemString:
+            self.speakCharacter(character)
 
     def _reviewCurrentItem(self, inputEvent, targetCursorCell=0,
                            speechType=1):
@@ -1527,11 +1524,8 @@ class Script(script.Script):
                     self.speakUnicodeCharacter(charString)
                 elif speechType == 2:
                     self.phoneticSpellCurrentItem(charString)
-                elif charString.isupper():
-                    speech.speakCharacter(charString,
-                                          self.voices[settings.UPPERCASE_VOICE])
                 else:
-                    speech.speakCharacter(charString)
+                    self.speakCharacter(charString)
 
         self.updateBrailleReview()
         self.currentReviewContents = charString
@@ -2582,6 +2576,10 @@ class Script(script.Script):
         else:
             return
 
+        if len(character) == 1:
+            self.speakCharacter(character)
+            return
+
         if self.utilities.linkIndex(event.source, text.caretOffset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
         elif character.isupper():
@@ -2593,10 +2591,7 @@ class Script(script.Script):
         # right now because it is typically something else
         # related to this event.
         #
-        if len(character) == 1:
-            speech.speakCharacter(character, voice)
-        else:
-            speech.speak(character, voice, False)
+        speech.speak(character, voice, False)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
@@ -2693,7 +2688,7 @@ class Script(script.Script):
             if string.isupper():
                 speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
             elif not string.isalnum():
-                speech.speakCharacter(string)
+                self.speakCharacter(string)
             else:
                 speech.speak(string)
 
@@ -3446,7 +3441,7 @@ class Script(script.Script):
             return
         else:
             self.speakMisspelledIndicator(obj, offset)
-            speech.speakCharacter(character, voice)
+            self.speakCharacter(character)
 
     def sayLine(self, obj):
         """Speaks the line of an AccessibleText object that contains the
@@ -3541,14 +3536,12 @@ class Script(script.Script):
         if lastKey == "Right" and len(lastWord) > 0:
             lastChar = lastWord[len(lastWord) - 1]
             if lastChar == "\n" and lastWord != word:
-                voice = self.voices[settings.DEFAULT_VOICE]
-                speech.speakCharacter("\n", voice)
+                self.speakCharacter("\n")
 
         if lastKey == "Left" and len(word) > 0:
             lastChar = word[len(word) - 1]
             if lastChar == "\n" and lastWord != word:
-                voice = self.voices[settings.DEFAULT_VOICE]
-                speech.speakCharacter("\n", voice)
+                self.speakCharacter("\n")
 
         if self.utilities.linkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
@@ -4592,6 +4585,18 @@ class Script(script.Script):
     # (scripts should not call methods in speech.py directly)              #
     #                                                                      #
     ########################################################################
+
+    def speakCharacter(self, character):
+        """Method to speak a single character. Scripts should use this
+        method rather than calling speech.speakCharacter directly."""
+
+        if character.isupper():
+            voice = self.voices[settings.UPPERCASE_VOICE]
+        else:
+            voice = self.voices[settings.DEFAULT_VOICE]
+
+        spokenCharacter = chnames.getCharacterName(character)
+        speech.speakCharacter(spokenCharacter, voice)
 
     def speakMessage(self, string, voice=None, interrupt=True):
         """Method to speak a single string. Scripts should use this
