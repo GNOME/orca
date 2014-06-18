@@ -1398,15 +1398,18 @@ class Utilities:
         - obj: the Accessible object
         """
 
-        while obj and obj.parent and (obj != obj.parent) \
-              and (obj.parent.getRole() != pyatspi.ROLE_APPLICATION):
-            obj = obj.parent
+        if not obj:
+            return None
 
-        if obj and obj.parent and \
-           (obj.parent.getRole() == pyatspi.ROLE_APPLICATION):
-            pass
-        else:
-            obj = None
+        stopAtRoles = [pyatspi.ROLE_ALERT,
+                       pyatspi.ROLE_DIALOG,
+                       pyatspi.ROLE_FRAME,
+                       pyatspi.ROLE_WINDOW]
+
+        while obj and obj.parent \
+              and not obj.getRole() in stopAtRoles \
+              and not obj.parent.getRole() == pyatspi.ROLE_APPLICATION:
+            obj = obj.parent
 
         return obj
 

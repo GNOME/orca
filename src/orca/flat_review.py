@@ -594,12 +594,7 @@ class Context:
         else:
             # We want to stop at the window or frame or equivalent level.
             #
-            obj = orca_state.locusOfFocus
-            while obj \
-                      and obj.parent \
-                      and (obj.parent.getRole() != pyatspi.ROLE_APPLICATION) \
-                      and (obj != obj.parent):
-                obj = obj.parent
+            obj = script.utilities.topLevelObject(orca_state.locusOfFocus)
             if obj:
                 self.lines = self.clusterZonesByLine(self.getShowingZones(obj))
             else:
