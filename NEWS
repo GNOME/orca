@@ -1,3 +1,70 @@
+3.13.3 - 23 June 2014
+
+General:
+
+  * Implement support for presenting color names instead of RGB values
+
+  * Fix several issues in character echo
+
+  * Use the same string when presenting U+00A8
+
+  * Present the acute accent using the same name when typing and reading
+
+  * Stop using speechdispatcher's KEY command for printable key echo
+
+  * Don't double-present punctuation when keyecho and character echo are
+    both enabled
+
+  * Always respect braille verbosity levels when presenting widget roles
+
+  * Fall back on sayCharacter() when there is no word for sayWord() to
+    present
+
+  * Don't present focus changes when navigating by character or word in
+    Writer
+
+  * Fix several LibreOffice UI-presentation related issues
+
+  * Fix a regression in changing rate and pitch on the fly
+
+  * Present focused scrollbars
+
+  * Add support for ROLE_DIAL
+
+  * Fix for Orca presenting checked tri-state checkboxes as partially
+    checked
+
+  * Handle an instance of Gtk+ failing to emit object:state-changed:focused
+    events
+
+  * Handle some common variations in values for absent text attributes
+
+  * Do explicit checks for window-like roles when getting the top-level
+    object
+
+  * Remove the non-performant, buggy heuristic hack to find displayed
+    labels
+
+  * Convert application settings to use the settings manager's backend
+
+  * Use the default script's onTextDeleted callback for gnome-terminal
+
+  * Some pre-gsettings-migration cleanup
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    be            Belarusian                  Ihar Hrachyshka
+    ca            Catalan (Valencian)         Carles Ferrando
+    cs            Czech                       Marek Černocký
+    el            Greek                       Dimitris Spingos
+    es            Spanish                     Daniel Mustieles
+    gl            Galician                    Fran Diéguez
+    id            Indonesian                  Andika Triwidada
+    lt            Lithuanian                  Aurimas Černius
+    ne            Nepali                      Him Prasad Gautam
+
+=========
+
 3.13.1 - 1 May 2014
 
 General:
