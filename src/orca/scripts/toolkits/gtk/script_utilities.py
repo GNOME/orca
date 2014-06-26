@@ -75,10 +75,14 @@ class Utilities(script_utilities.Utilities):
         except:
             return False
 
-        if obj.getState().contains(pyatspi.STATE_MODAL):
+        if state.contains(pyatspi.STATE_MODAL):
             return False
 
-        relations = obj.getRelationSet()
+        try:
+            relations = obj.getRelationSet()
+        except:
+            return False
+
         for relation in relations:
             if relation.getRelationType() == pyatspi.RELATION_POPUP_FOR:
                 return True
