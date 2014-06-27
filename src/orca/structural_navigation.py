@@ -853,11 +853,16 @@ class StructuralNavigation:
         # object rather than the current caret offset. See bug 567984.
         #
         if isNext and self._script.utilities.isSameObject(obj, document):
-            pred = self.isAfterDocumentOffset
-            if criteria.applyPredicate:
-                pred = pred and structuralNavigationObject.predicate
-            criteria.applyPredicate = True
-            structuralNavigationObject.predicate = pred
+            try:
+                document.queryText()
+            except NotImplementedError:
+                pass
+            else:
+                pred = self.isAfterDocumentOffset
+                if criteria.applyPredicate:
+                    pred = pred and structuralNavigationObject.predicate
+                criteria.applyPredicate = True
+                structuralNavigationObject.predicate = pred
 
         rule = collection.createMatchRule(criteria.states.raw(),
                                           criteria.matchStates,
