@@ -14,8 +14,8 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
-    "1. Right Arrow to Page Setup page tab",
-    ["BRAILLE LINE:  'gtk-demo application Print dialog Page Setup page tab'",
+    "1. Right Arrow to the Page Setup page tab",
+    ["BRAILLE LINE:  'gtk3-demo application Print dialog Page Setup page tab'",
      "     VISIBLE:  'Page Setup page tab', cursor=1",
      "SPEECH OUTPUT: 'Page Setup page tab'"]))
 
@@ -23,7 +23,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Page Setup page tab Where Am I",
-    ["BRAILLE LINE:  'gtk-demo application Print dialog Page Setup page tab'",
+    ["BRAILLE LINE:  'gtk3-demo application Print dialog Page Setup page tab'",
      "     VISIBLE:  'Page Setup page tab', cursor=1",
      "SPEECH OUTPUT: 'page tab list'",
      "SPEECH OUTPUT: 'Page Setup'",

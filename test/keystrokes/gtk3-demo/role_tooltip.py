@@ -10,6 +10,7 @@ sequence = MacroSequence()
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(TypeAction("Printing"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
 
 sequence.append(KeyComboAction("<Alt>e"))
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
@@ -29,11 +30,13 @@ sequence.append(KeyComboAction("<Control>F1"))
 sequence.append(utils.AssertPresentationAction(
     "2. Hide tooltip",
     ["KNOWN ISSUE: Too much context",
-     "BRAILLE LINE:  'gtk-demo application Print dialog General page tab &=y Pages: radio button'",
+     "BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Range panel Range &=y Pages: radio button'",
      "     VISIBLE:  '&=y Pages: radio button', cursor=1",
-     "SPEECH OUTPUT: 'Print Range Copies'",
+     "SPEECH OUTPUT: 'Print'",
      "SPEECH OUTPUT: 'General'",
      "SPEECH OUTPUT: 'page tab'",
+     "SPEECH OUTPUT: 'Range'",
+     "SPEECH OUTPUT: 'panel'",
      "SPEECH OUTPUT: 'Pages:'",
      "SPEECH OUTPUT: 'selected radio button'"]))
 

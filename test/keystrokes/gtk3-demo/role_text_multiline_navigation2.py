@@ -8,9 +8,10 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(TypeAction("Application main window"))
+sequence.append(TypeAction("Application class"))
 sequence.append(KeyComboAction("Return"))
-sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
 
 sequence.append(TypeAction("This is a test. "))
 sequence.append(KeyComboAction("Return"))
@@ -44,7 +45,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Shift+Up to deselect some text and select some text above",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame This is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test.  $l'",
      "     VISIBLE:  'This is a test.  $l', cursor=17",
      "SPEECH OUTPUT: 'is only a test.'",
      "SPEECH OUTPUT: 'unselected' voice=system",
@@ -88,7 +89,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Page_Up"))
 sequence.append(utils.AssertPresentationAction(
     "7. Page up",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame This is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test.  $l'",
      "     VISIBLE:  'This is a test.  $l', cursor=1",
      "SPEECH OUTPUT: 'This is a test. '"]))
 
@@ -104,7 +105,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Page_Up"))
 sequence.append(utils.AssertPresentationAction(
     "9. Shift+Page_Up to select text",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame This is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test.  $l'",
      "     VISIBLE:  'This is a test.  $l', cursor=1",
      "SPEECH OUTPUT: 'page selected to cursor position'"]))
 
@@ -123,7 +124,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Page_Up"))
 sequence.append(utils.AssertPresentationAction(
     "11. Page_Up",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame This is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test.  $l'",
      "     VISIBLE:  'This is a test.  $l', cursor=1",
      "SPEECH OUTPUT: 'This is a test. '"]))
 

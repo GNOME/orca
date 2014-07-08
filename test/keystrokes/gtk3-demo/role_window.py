@@ -13,9 +13,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "1. Window Where Am I",
-    ["BRAILLE LINE:  'GTK+ Code Demos'",
-     "     VISIBLE:  'GTK+ Code Demos', cursor=0",
-     "SPEECH OUTPUT: 'GTK+ Code Demos'"]))
+    ["BRAILLE LINE:  'Application Class'",
+     "     VISIBLE:  'Application Class', cursor=0",
+     "SPEECH OUTPUT: 'Application Class'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -10,29 +10,26 @@ sequence = MacroSequence()
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(TypeAction("Combo boxes"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "1. Warning combo box item",
-    ["BRAILLE LINE:  'gtk-demo application window'",
-     "     VISIBLE:  'gtk-demo application window', cursor=22",
-     "BRAILLE LINE:  'gtk-demo application Combo boxes frame Some stock icons panel  combo boxWarning Warning'",
-     "     VISIBLE:  'Warning', cursor=1",
-     "SPEECH OUTPUT: 'window'",
-     "SPEECH OUTPUT: 'Warning'"]))
+    ["BRAILLE LINE:  'gtk3-demo application Combo boxes frame'",
+     "     VISIBLE:  'Combo boxes frame', cursor=1",
+     "BRAILLE LINE:  'gtk3-demo application Combo boxes frame Items with icons panel Warning combo box'",
+     "     VISIBLE:  'Warning combo box', cursor=1",
+     "SPEECH OUTPUT: 'Combo boxes frame'",
+     "SPEECH OUTPUT: 'Items with icons panel'",
+     "SPEECH OUTPUT: 'Warning combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Warning combo box item Where Am I",
-    ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Some stock icons panel  combo boxWarning Warning'",
-     "     VISIBLE:  'Warning', cursor=1",
-     "SPEECH OUTPUT: 'Combo boxes'",
-     "SPEECH OUTPUT: 'frame'",
-     "SPEECH OUTPUT: 'Some stock icons'",
-     "SPEECH OUTPUT: 'panel'",
-     "SPEECH OUTPUT: 'Warning'",
+    ["BRAILLE LINE:  'gtk3-demo application Combo boxes frame Items with icons panel Warning combo box'",
+     "     VISIBLE:  'Warning combo box', cursor=1",
      "SPEECH OUTPUT: 'combo box'",
      "SPEECH OUTPUT: 'Warning'",
      "SPEECH OUTPUT: '1 of 5'"]))
@@ -41,7 +38,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. New combo box item",
-    ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Some stock icons panel  combo boxWarning New'",
+    ["BRAILLE LINE:  'gtk3-demo application Combo boxes frame Items with icons panel  combo boxNew New'",
      "     VISIBLE:  'New', cursor=1",
      "SPEECH OUTPUT: 'New'"]))
 
@@ -50,25 +47,24 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "4. New combo box item Where Am I",
     ["KNOWN ISSUE: We're a bit chatty here and have some spacing issues",
-     "BRAILLE LINE:  'gtk-demo application Combo boxes frame Some stock icons panel  combo boxWarning New'",
+     "BRAILLE LINE:  'gtk3-demo application Combo boxes frame Items with icons panel  combo boxNew New'",
      "     VISIBLE:  'New', cursor=1",
      "SPEECH OUTPUT: 'Combo boxes'",
      "SPEECH OUTPUT: 'frame'",
-     "SPEECH OUTPUT: 'Some stock icons'",
+     "SPEECH OUTPUT: 'Items with icons'",
      "SPEECH OUTPUT: 'panel'",
-     "SPEECH OUTPUT: 'Warning'",
+     "SPEECH OUTPUT: 'New'",
      "SPEECH OUTPUT: 'combo box'",
      "SPEECH OUTPUT: 'New'",
      "SPEECH OUTPUT: '3 of 5'"]))
 
-sequence.append(KeyComboAction("Escape"))
 sequence.append(KeyComboAction("Tab"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "5. Editable text combo box",
-    ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel  $l'",
+    ["BRAILLE LINE:  'gtk3-demo application Combo boxes frame Editable panel  $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Editable panel'",
      "SPEECH OUTPUT: 'text'"]))
@@ -78,16 +74,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("r"))
 sequence.append(utils.AssertPresentationAction(
     "6. Editable text combo box typing",
-    ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel Fou $l'",
-     "     VISIBLE:  'Fou $l', cursor=5",
-     "BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel Four $l'",
+    ["BRAILLE LINE:  'gtk3-demo application Combo boxes frame Editable panel Four $l'",
+     "     VISIBLE:  'Four $l', cursor=5",
+     "BRAILLE LINE:  'gtk3-demo application Combo boxes frame Editable panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "7. Editable text combo box Where Am I",
-    ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel Four $l'",
+    ["BRAILLE LINE:  'gtk3-demo application Combo boxes frame Editable panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5",
      "SPEECH OUTPUT: 'text'",
      "SPEECH OUTPUT: 'Four'"]))
@@ -96,7 +92,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "8. Editable text combo box open button",
-    ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel Four $l combo box'",
+    ["BRAILLE LINE:  'gtk3-demo application Combo boxes frame Editable panel Four $l combo box'",
      "     VISIBLE:  'Four $l combo box', cursor=5",
      "SPEECH OUTPUT: 'Four combo box'"]))
 
@@ -104,9 +100,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(utils.AssertPresentationAction(
     "9. Editable text combo box with selected text",
-    ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel Four $l'",
+    ["BRAILLE LINE:  'gtk3-demo application Combo boxes frame Editable panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5",
-     "BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel Four $l'",
+     "BRAILLE LINE:  'gtk3-demo application Combo boxes frame Editable panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5",
      "SPEECH OUTPUT: 'text Four selected'"]))
 
@@ -114,7 +110,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "10. Editable text combo box with selected text Where Am I",
-    ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel Four $l'",
+    ["BRAILLE LINE:  'gtk3-demo application Combo boxes frame Editable panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5",
      "SPEECH OUTPUT: 'text'",
      "SPEECH OUTPUT: 'Four'",

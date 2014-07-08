@@ -8,9 +8,10 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(TypeAction("Application main window"))
+sequence.append(TypeAction("Application class"))
 sequence.append(KeyComboAction("Return"))
-sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
 
 sequence.append(TypeAction("This is a test. "))
 sequence.append(KeyComboAction("Return"))
@@ -114,7 +115,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "10. Ctrl+Home to beginning of document",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame This is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test.  $l'",
      "     VISIBLE:  'This is a test.  $l', cursor=1",
      "SPEECH OUTPUT: 'This is a test. '"]))
 
@@ -130,7 +131,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "12. Ctrl+Home back to beginning of document",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame This is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test.  $l'",
      "     VISIBLE:  'This is a test.  $l', cursor=1",
      "SPEECH OUTPUT: 'This is a test. '"]))
 
@@ -138,7 +139,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "13. Right once to 'h' in 'This'",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame This is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test.  $l'",
      "     VISIBLE:  'This is a test.  $l', cursor=2",
      "SPEECH OUTPUT: 'h'"]))
 
@@ -146,7 +147,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "14. Right a second time to 'i' in 'This'",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame This is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test.  $l'",
      "     VISIBLE:  'This is a test.  $l', cursor=3",
      "SPEECH OUTPUT: 'i'"]))
 
@@ -154,7 +155,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "15. Right a third time to 's' in 'This'",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame This is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test.  $l'",
      "     VISIBLE:  'This is a test.  $l', cursor=4",
      "SPEECH OUTPUT: 's'"]))
 
@@ -162,7 +163,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "16. Ctrl+Right to end of 'This'",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame This is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test.  $l'",
      "     VISIBLE:  'This is a test.  $l', cursor=5",
      "SPEECH OUTPUT: 'newline'",
      "SPEECH OUTPUT: 'This '"]))
@@ -171,7 +172,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "17. Ctrl+Right to end of 'is'",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame This is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test.  $l'",
      "     VISIBLE:  'This is a test.  $l', cursor=8",
      "SPEECH OUTPUT: 'is '"]))
 
@@ -179,7 +180,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "18. Ctrl+Right to end of 'a'",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame This is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test.  $l'",
      "     VISIBLE:  'This is a test.  $l', cursor=10",
      "SPEECH OUTPUT: 'a '"]))
 
@@ -284,7 +285,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "31. Ctrl+Home to beginning of document",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame This is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test.  $l'",
      "     VISIBLE:  'This is a test.  $l', cursor=1",
      "SPEECH OUTPUT: 'This is a test. '"]))
 
@@ -292,7 +293,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete"))
 sequence.append(utils.AssertPresentationAction(
     "32. Delete right 'T' in 'This'",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame his is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame his is a test.  $l'",
      "     VISIBLE:  'his is a test.  $l', cursor=1",
      "SPEECH OUTPUT: 'h'"]))
 
@@ -300,7 +301,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete"))
 sequence.append(utils.AssertPresentationAction(
     "33. Delete right 'h' in 'his'",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame is is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame is is a test.  $l'",
      "     VISIBLE:  'is is a test.  $l', cursor=1",
      "SPEECH OUTPUT: 'i'"]))
 
@@ -308,7 +309,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Delete"))
 sequence.append(utils.AssertPresentationAction(
     "34. Ctrl+Delete right remaining 'is' of 'This'",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame  is a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame  is a test.  $l'",
      "     VISIBLE:  ' is a test.  $l', cursor=1",
      "SPEECH OUTPUT: 'space'"]))
 
@@ -316,7 +317,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Delete"))
 sequence.append(utils.AssertPresentationAction(
     "35. Ctrl+Delete right 'is'",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame  a test.  $l'",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame  a test.  $l'",
      "     VISIBLE:  ' a test.  $l', cursor=1",
      "SPEECH OUTPUT: 'space'"]))
 
@@ -342,8 +343,6 @@ sequence.append(utils.AssertPresentationAction(
     "38. BackSpace '.' after 'test'",
     ["BRAILLE LINE:  'This is only a test $l'",
      "     VISIBLE:  'This is only a test $l', cursor=20",
-     "BRAILLE LINE:  'This is only a test $l'",
-     "     VISIBLE:  'This is only a test $l', cursor=20",
      "SPEECH OUTPUT: 'dot'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -361,8 +360,6 @@ sequence.append(KeyComboAction("<Control>BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "40. Ctrl+BackSpace to delete 'a'",
     ["BRAILLE LINE:  'This is only  $l'",
-     "     VISIBLE:  'This is only  $l', cursor=14",
-     "BRAILLE LINE:  'This is only  $l'",
      "     VISIBLE:  'This is only  $l', cursor=14",
      "SPEECH OUTPUT: 'a '"]))
 

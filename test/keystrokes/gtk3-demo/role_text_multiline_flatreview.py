@@ -8,9 +8,10 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(TypeAction("Application main window"))
+sequence.append(TypeAction("Application class"))
 sequence.append(KeyComboAction("Return"))
-sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
 
 sequence.append(TypeAction("This is a test. "))
 sequence.append(KeyComboAction("Return"))
@@ -250,32 +251,33 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "15. KP_7 to flat review toolbar",
-    ["BRAILLE LINE:  'Open & y toggle button Quit panel GTK! $l'",
-     "     VISIBLE:  'Open & y toggle button Quit pane', cursor=1",
-     "SPEECH OUTPUT: 'Open not pressed toggle button Quit panel GTK!'"]))
+    ["KNOWN ISSUE: gtk3-demo's toolbar widgets lack names that were present in the past",
+     "BRAILLE LINE:  'push button panel push button $l'",
+     "     VISIBLE:  'push button panel push button $l', cursor=1",
+     "SPEECH OUTPUT: 'push button panel push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "16. KP_7 to flat review menu",
-    ["BRAILLE LINE:  'File Preferences Help $l'",
-     "     VISIBLE:  'File Preferences Help $l', cursor=1",
-     "SPEECH OUTPUT: 'File Preferences Help'"]))
+    ["BRAILLE LINE:  'Preferences Help $l'",
+     "     VISIBLE:  'Preferences Help $l', cursor=1",
+     "SPEECH OUTPUT: 'Preferences Help'"]))
 
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_6"))
+sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
-    "17. KP_6 to flat review 'Preferences'",
-    ["BRAILLE LINE:  'File Preferences Help $l'",
-     "     VISIBLE:  'File Preferences Help $l', cursor=6",
+    "17. KP_5 to flat review 'Preferences'",
+    ["BRAILLE LINE:  'Preferences Help $l'",
+     "     VISIBLE:  'Preferences Help $l', cursor=1",
      "SPEECH OUTPUT: 'Preferences'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "18. KP_6 to flat review 'Help'",
-    ["BRAILLE LINE:  'File Preferences Help $l'",
-     "     VISIBLE:  'File Preferences Help $l', cursor=18",
+    ["BRAILLE LINE:  'Preferences Help $l'",
+     "     VISIBLE:  'Preferences Help $l', cursor=13",
      "SPEECH OUTPUT: 'Help'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -294,7 +296,7 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "20. Insert+KP_9 to flat review end",
     ["BRAILLE LINE:  'Cursor at row 1 column 0 - 60 chars in document $l'",
-     "     VISIBLE:  'ars in document $l', cursor=15",
+     "     VISIBLE:  'Cursor at row 1 column 0 - 60 ch', cursor=1",
      "SPEECH OUTPUT: 'Cursor at row 1 column 0 - 60 chars in document'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -303,9 +305,9 @@ sequence.append(KeyComboAction("KP_7"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "21. Insert+KP_7 to flat review home",
-    ["BRAILLE LINE:  'File Preferences Help $l'",
-     "     VISIBLE:  'File Preferences Help $l', cursor=1",
-     "SPEECH OUTPUT: 'File Preferences Help'"]))
+    ["BRAILLE LINE:  'Preferences Help $l'",
+     "     VISIBLE:  'Preferences Help $l', cursor=1",
+     "SPEECH OUTPUT: 'Preferences Help'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -313,9 +315,9 @@ sequence.append(KeyComboAction("KP_6"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "22. Insert+KP_6 to flat review below",
-    ["BRAILLE LINE:  'Open & y toggle button Quit panel GTK! $l'",
-     "     VISIBLE:  'Open & y toggle button Quit pane', cursor=1",
-     "SPEECH OUTPUT: 'Open'"]))
+    ["BRAILLE LINE:  'push button panel push button $l'",
+     "     VISIBLE:  'push button panel push button $l', cursor=1",
+     "SPEECH OUTPUT: 'push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -323,9 +325,9 @@ sequence.append(KeyComboAction("KP_4"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "23. Insert+KP_4 to flat review above",
-    ["BRAILLE LINE:  'File Preferences Help $l'",
-     "     VISIBLE:  'File Preferences Help $l', cursor=1",
-     "SPEECH OUTPUT: 'File'"]))
+    ["BRAILLE LINE:  'Preferences Help $l'",
+     "     VISIBLE:  'Preferences Help $l', cursor=1",
+     "SPEECH OUTPUT: 'Preferences'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Subtract"))

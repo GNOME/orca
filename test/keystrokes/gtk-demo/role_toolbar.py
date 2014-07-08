@@ -8,60 +8,52 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(TypeAction("Application class"))
+sequence.append(TypeAction("Application main window"))
 sequence.append(KeyComboAction("Return"))
-sequence.append(KeyComboAction("Return"))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Control>Tab"))
-sequence.append(utils.AssertPresentationAction(
-    "Push button initial focus",
-    ["KNOWN ISSUE: The widgets on the toolbar no longer have accessible names, so Orca cannot present them.",
-     "BRAILLE LINE:  'gtk3-demo-application application Application Class frame push button'",
-     "     VISIBLE:  'push button', cursor=1",
-     "SPEECH OUTPUT: 'push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
-    "Where Am I",
-    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame push button'",
-     "     VISIBLE:  'push button', cursor=1",
-     "SPEECH OUTPUT: 'tool bar push button'"]))
+    "1. Where Am I",
+    ["BRAILLE LINE:  'gtk-demo application Application Window frame Open push button'",
+     "     VISIBLE:  'Open push button', cursor=1",
+     "SPEECH OUTPUT: 'tool bar'",
+     "SPEECH OUTPUT: 'Open'",
+     "SPEECH OUTPUT: 'push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
-    "Open triangle toggle button",
-    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame & y Menu toggle button'",
-     "     VISIBLE:  '& y Menu toggle button', cursor=1",
-     "SPEECH OUTPUT: 'Menu toggle button not pressed'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(utils.AssertPresentationAction(
-    "Open triangle toggle button Where Am I",
-    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame & y Menu toggle button'",
-     "     VISIBLE:  '& y Menu toggle button', cursor=1",
-     "SPEECH OUTPUT: 'tool bar'",
-     "SPEECH OUTPUT: 'Menu'",
+    "2. Open triangle toggle button",
+    ["BRAILLE LINE:  'gtk-demo application Application Window frame & y toggle button'",
+     "     VISIBLE:  '& y toggle button', cursor=1",
      "SPEECH OUTPUT: 'toggle button not pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(utils.AssertPresentationAction(
+    "3. Open triangle toggle button Where Am I",
+    ["BRAILLE LINE:  'gtk-demo application Application Window frame & y toggle button'",
+     "     VISIBLE:  '& y toggle button', cursor=1",
+     "SPEECH OUTPUT: 'tool bar toggle button not pressed'"]))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
-    "Next push button",
-    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame push button'",
-     "     VISIBLE:  'push button', cursor=1",
-     "SPEECH OUTPUT: 'push button'"]))
+    "4. Next push button",
+    ["BRAILLE LINE:  'gtk-demo application Application Window frame Quit push button'",
+     "     VISIBLE:  'Quit push button', cursor=1",
+     "SPEECH OUTPUT: 'Quit push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
-    "Where Am I",
-    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame push button'",
-     "     VISIBLE:  'push button', cursor=1",
-     "SPEECH OUTPUT: 'tool bar push button'"]))
+    "6. Where Am I",
+    ["BRAILLE LINE:  'gtk-demo application Application Window frame Quit push button'",
+     "     VISIBLE:  'Quit push button', cursor=1",
+     "SPEECH OUTPUT: 'tool bar'",
+     "SPEECH OUTPUT: 'Quit'",
+     "SPEECH OUTPUT: 'push button'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

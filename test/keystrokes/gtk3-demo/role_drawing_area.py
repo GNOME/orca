@@ -11,6 +11,7 @@ sequence.append(KeyComboAction("<Control>f"))
 sequence.append(TypeAction("Drawing Area"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
@@ -20,14 +21,13 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Checkerboard pattern $l', cursor=1",
      "SPEECH OUTPUT: 'Checkerboard pattern'"]))
 
-# Gtk+ 2 lacks the proper role.
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "2. Flat review next line",
-    ["BRAILLE LINE:  'unknown $l'",
-     "     VISIBLE:  'unknown $l', cursor=1",
-     "SPEECH OUTPUT: 'unknown'"]))
+    ["BRAILLE LINE:  'drawing area $l'",
+     "     VISIBLE:  'drawing area $l', cursor=1",
+     "SPEECH OUTPUT: 'drawing area'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

@@ -8,9 +8,10 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(TypeAction("Application main window"))
+sequence.append(TypeAction("Application class"))
 sequence.append(KeyComboAction("Return"))
-sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
 
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Return"))
@@ -123,7 +124,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. 1 Tab",
-    ["SPEECH OUTPUT: 'left control '",
+    ["KNOWN ISSUE: We verbalize AND speak it rather than just verbalizing it",
+     "SPEECH OUTPUT: 'left control '",
      "SPEECH OUTPUT: '1 tab ' voice=system",
      "SPEECH OUTPUT: '	'"]))
 

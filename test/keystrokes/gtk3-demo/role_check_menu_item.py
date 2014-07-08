@@ -8,45 +8,43 @@ sequence = MacroSequence()
 import utils
 
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(TypeAction("Application main window"))
+sequence.append(TypeAction("Application class"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("<Alt>p"))
-sequence.append(KeyComboAction("Down"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "1. Arrow to check menu item - checked",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame <x> Bold check menu item(Ctrl+B)'",
-     "     VISIBLE:  '<x> Bold check menu item(Ctrl+B)', cursor=1",
-     "SPEECH OUTPUT: 'Bold check menu item checked Ctrl+B'"]))
+    "1. Arrow to first check menu item - not checked",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame < > Hide Titlebar when maximized check menu item'",
+     "     VISIBLE:  '< > Hide Titlebar when maximized', cursor=1",
+     "SPEECH OUTPUT: 'Hide Titlebar when maximized check menu item not checked'"]))
 
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Escape"))
 sequence.append(KeyComboAction("<Alt>p"))
-sequence.append(KeyComboAction("Down"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "2. Arrow to check menu item - not checked",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame < > Bold check menu item(Ctrl+B)'",
-     "     VISIBLE:  '< > Bold check menu item(Ctrl+B)', cursor=1",
-     "SPEECH OUTPUT: 'Bold check menu item not checked Ctrl+B'"]))
+    "2. Arrow to first check menu item - checked",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame <x> Hide Titlebar when maximized check menu item'",
+     "     VISIBLE:  '<x> Hide Titlebar when maximized', cursor=1",
+     "SPEECH OUTPUT: 'Hide Titlebar when maximized check menu item checked'"]))
 
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Escape"))
 sequence.append(KeyComboAction("<Alt>p"))
-sequence.append(KeyComboAction("Down"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "3. Arrow to check menu item - checked",
-    ["BRAILLE LINE:  'gtk-demo application Application Window frame <x> Bold check menu item(Ctrl+B)'",
-     "     VISIBLE:  '<x> Bold check menu item(Ctrl+B)', cursor=1",
-     "SPEECH OUTPUT: 'Bold check menu item checked Ctrl+B'"]))
+    "3. Arrow to first check menu item - not checked",
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame < > Hide Titlebar when maximized check menu item'",
+     "     VISIBLE:  '< > Hide Titlebar when maximized', cursor=1",
+     "SPEECH OUTPUT: 'Hide Titlebar when maximized check menu item not checked'"]))
 
 sequence.append(KeyComboAction("Escape"))
 sequence.append(KeyComboAction("<Alt>F4"))

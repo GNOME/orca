@@ -10,23 +10,25 @@ sequence = MacroSequence()
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(TypeAction("Printing"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>s"))
 sequence.append(utils.AssertPresentationAction(
     "1. Give focus to spin button",
-    ["BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies: 1 $l'",
+    ["BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Copies panel Copies: 1 $l'",
      "     VISIBLE:  'Copies: 1 $l', cursor=10",
-     "BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies: 1 $l'",
+     "BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Copies panel Copies: 1 $l'",
      "     VISIBLE:  'Copies: 1 $l', cursor=10",
      "SPEECH OUTPUT: 'General page tab'",
+     "SPEECH OUTPUT: 'Copies panel'",
      "SPEECH OUTPUT: 'Copies: 1 selected spin button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Where Am I",
-    ["BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies: 1 $l'",
+    ["BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Copies panel Copies: 1 $l'",
      "     VISIBLE:  'Copies: 1 $l', cursor=10",
      "SPEECH OUTPUT: 'Copies:'",
      "SPEECH OUTPUT: 'spin button'",
@@ -41,11 +43,11 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Increment value",
     ["KNOWN ISSUE: We are double-presenting this",
-     "BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies: 16 $l'",
+     "BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Copies panel Copies: 16 $l'",
      "     VISIBLE:  'Copies: 16 $l', cursor=9",
-     "BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies: 16 $l'",
+     "BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Copies panel Copies: 16 $l'",
      "     VISIBLE:  'Copies: 16 $l', cursor=9",
-     "BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies: 16 $l'",
+     "BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Copies panel Copies: 16 $l'",
      "     VISIBLE:  'Copies: 16 $l', cursor=9",
      "SPEECH OUTPUT: '16'",
      "SPEECH OUTPUT: '16'"]))
@@ -54,9 +56,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Decrement value",
-    ["BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies: 15 $l'",
+    ["BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Copies panel Copies: 15 $l'",
      "     VISIBLE:  'Copies: 15 $l', cursor=9",
-     "BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies: 15 $l'",
+     "BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Copies panel Copies: 15 $l'",
      "     VISIBLE:  'Copies: 15 $l', cursor=9",
      "SPEECH OUTPUT: '15'"]))
 
@@ -64,7 +66,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "5. Caret navigation",
-    ["BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies: 15 $l'",
+    ["BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Copies panel Copies: 15 $l'",
      "     VISIBLE:  'Copies: 15 $l', cursor=10",
      "SPEECH OUTPUT: '5'"]))
 
