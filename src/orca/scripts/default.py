@@ -3001,19 +3001,22 @@ class Script(script.Script):
         # the visual progress of what is being spoken as well as
         # positioning the cursor when speech has stopped.]]]
         #
-        text = context.obj.queryText()
+        try:
+            text = context.obj.queryText()
+            char = text.getText(context.currentOffset, context.currentOffset+1)
+        except:
+            return
+
+        # Setting the caret at the offset of an embedded object results in
+        # focus changes.
+        if char == self.EMBEDDED_OBJECT_CHARACTER:
+            return
+
         if progressType == speechserver.SayAllContext.PROGRESS:
-            #print "PROGRESS", context.utterance, context.currentOffset
-            #obj = context.obj
-            #[x, y, width, height] = obj.text.getCharacterExtents(
-            #    context.currentOffset, 0)
-            #print context.currentOffset, x, y, width, height
             return
         elif progressType == speechserver.SayAllContext.INTERRUPTED:
-            #print "INTERRUPTED", context.utterance, context.currentOffset
             text.setCaretOffset(context.currentOffset)
         elif progressType == speechserver.SayAllContext.COMPLETED:
-            #print "COMPLETED", context.utterance, context.currentOffset
             orca.setLocusOfFocus(None, context.obj, notifyScript=False)
             text.setCaretOffset(context.currentOffset)
 

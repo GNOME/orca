@@ -757,38 +757,6 @@ class Script(default.Script):
                     self.findNextLine(obj, characterOffset)
             done = (obj == None)
 
-    def __sayAllProgressCallback(self, context, callbackType):
-        if callbackType == speechserver.SayAllContext.PROGRESS:
-            #print "PROGRESS", context.utterance, context.currentOffset
-            #
-            # Attempt to keep the content visible on the screen as
-            # it is being read, but avoid links as grabFocus sometimes
-            # makes them disappear and sayAll to subsequently stop.
-            #
-            if context.currentOffset == 0 and \
-               context.obj.getRole() in [pyatspi.ROLE_HEADING,
-                                         pyatspi.ROLE_SECTION,
-                                         pyatspi.ROLE_PARAGRAPH] \
-               and context.obj.parent.getRole() != pyatspi.ROLE_LINK:
-                characterCount = context.obj.queryText().characterCount
-                self.setCaretPosition(context.obj, characterCount-1)
-        elif callbackType == speechserver.SayAllContext.INTERRUPTED:
-            #print "INTERRUPTED", context.utterance, context.currentOffset
-            try:
-                self.setCaretPosition(context.obj, context.currentOffset)
-            except:
-                characterCount = context.obj.queryText().characterCount
-                self.setCaretPosition(context.obj, characterCount-1)
-            self.updateBraille(context.obj)
-        elif callbackType == speechserver.SayAllContext.COMPLETED:
-            #print "COMPLETED", context.utterance, context.currentOffset
-            try:
-                self.setCaretPosition(context.obj, context.currentOffset)
-            except:
-                characterCount = context.obj.queryText().characterCount
-                self.setCaretPosition(context.obj, characterCount-1)
-            self.updateBraille(context.obj)
-
     def presentFindResults(self, obj, offset):
         """Updates the caret context to the match indicated by obj and
         offset.  Then presents the results according to the user's
