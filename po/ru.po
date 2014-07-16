@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2014-07-14 10:13+0000\n"
-"PO-Revision-Date: 2014-07-14 20:25+0400\n"
+"PO-Revision-Date: 2014-07-16 18:27+0400\n"
 "Last-Translator: Yuri Myasoedov <ymyasoedov@yandex.ru>\n"
 "Language-Team: русский <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -3205,7 +3205,7 @@ msgstr "бежевый"
 #: ../src/orca/colornames.py:60
 msgctxt "color name"
 msgid "bisque"
-msgstr ""
+msgstr "бисквитный"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3238,7 +3238,7 @@ msgstr "синий"
 #: ../src/orca/colornames.py:80
 msgctxt "color name"
 msgid "blue violet"
-msgstr ""
+msgstr "сине-фиолетовый"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3254,7 +3254,7 @@ msgstr "коричневый"
 #: ../src/orca/colornames.py:90
 msgctxt "color name"
 msgid "burlywood"
-msgstr ""
+msgstr "желтовато-коричневый"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3262,7 +3262,7 @@ msgstr ""
 #: ../src/orca/colornames.py:95
 msgctxt "color name"
 msgid "cadet blue"
-msgstr ""
+msgstr "серо-синий"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3302,7 +3302,7 @@ msgstr "васильковый"
 #: ../src/orca/colornames.py:120
 msgctxt "color name"
 msgid "cornsilk"
-msgstr ""
+msgstr "бледно-жёлтый"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3374,7 +3374,7 @@ msgstr "тёмный хаки"
 #: ../src/orca/colornames.py:165
 msgctxt "color name"
 msgid "dark magenta"
-msgstr ""
+msgstr "тёмный маджента"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3382,7 +3382,7 @@ msgstr ""
 #: ../src/orca/colornames.py:170
 msgctxt "color name"
 msgid "dark olive green"
-msgstr ""
+msgstr "тёмный оливково-зелёный"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3390,7 +3390,7 @@ msgstr ""
 #: ../src/orca/colornames.py:175
 msgctxt "color name"
 msgid "dark orange"
-msgstr ""
+msgstr "тёмно-оранжевый"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3398,7 +3398,7 @@ msgstr ""
 #: ../src/orca/colornames.py:180
 msgctxt "color name"
 msgid "dark orchid"
-msgstr ""
+msgstr "тёмно-лиловый"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3422,7 +3422,7 @@ msgstr "тёмная лососина"
 #: ../src/orca/colornames.py:195
 msgctxt "color name"
 msgid "dark sea green"
-msgstr ""
+msgstr "тёмный зелёный морской"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3438,7 +3438,7 @@ msgstr "тёмно-аспидный синий"
 #: ../src/orca/colornames.py:205
 msgctxt "color name"
 msgid "dark slate gray"
-msgstr ""
+msgstr "тёмный аспидно-серый"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3503,7 +3503,7 @@ msgstr "кирпичный"
 #: ../src/orca/colornames.py:245
 msgctxt "color name"
 msgid "floral white"
-msgstr ""
+msgstr "цветочно-белый"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3511,7 +3511,7 @@ msgstr ""
 #: ../src/orca/colornames.py:250
 msgctxt "color name"
 msgid "forest green"
-msgstr ""
+msgstr "лесная зелень"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3527,7 +3527,7 @@ msgstr "фуксия"
 #: ../src/orca/colornames.py:260
 msgctxt "color name"
 msgid "gainsboro"
-msgstr ""
+msgstr "светлый серо-фиолетовый"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3535,7 +3535,7 @@ msgstr ""
 #: ../src/orca/colornames.py:265
 msgctxt "color name"
 msgid "ghost white"
-msgstr ""
+msgstr "туманно-белый"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3583,7 +3583,7 @@ msgstr "жёлто-зелёный"
 #: ../src/orca/colornames.py:295
 msgctxt "color name"
 msgid "honeydew"
-msgstr ""
+msgstr "белая мускатная дыня"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3616,7 +3616,7 @@ msgstr "индиго"
 #: ../src/orca/colornames.py:315
 msgctxt "color name"
 msgid "ivory"
-msgstr ""
+msgstr "слоновая кость"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3654,9 +3654,10 @@ msgstr "зелёная лужайка"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:340
+#, fuzzy
 msgctxt "color name"
 msgid "lemon chiffon"
-msgstr ""
+msgstr "лимонный воздушный кекс"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3753,7 +3754,7 @@ msgstr "небесно-голубой светлый"
 #: ../src/orca/colornames.py:395
 msgctxt "color name"
 msgid "light slate gray"
-msgstr ""
+msgstr "светлый аспидно-серый"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3761,7 +3762,7 @@ msgstr ""
 #: ../src/orca/colornames.py:400
 msgctxt "color name"
 msgid "light steel blue"
-msgstr ""
+msgstr "светло-синяя сталь"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3819,7 +3820,7 @@ msgstr "коричнево-малиновый"
 #: ../src/orca/colornames.py:435
 msgctxt "color name"
 msgid "medium aquamarine"
-msgstr ""
+msgstr "умеренный аквамарин"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3827,7 +3828,7 @@ msgstr ""
 #: ../src/orca/colornames.py:440
 msgctxt "color name"
 msgid "medium blue"
-msgstr ""
+msgstr "умеренный синий"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3835,7 +3836,7 @@ msgstr ""
 #: ../src/orca/colornames.py:445
 msgctxt "color name"
 msgid "medium orchid"
-msgstr ""
+msgstr "умеренный цвет орхидеи"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3843,7 +3844,7 @@ msgstr ""
 #: ../src/orca/colornames.py:450
 msgctxt "color name"
 msgid "medium purple"
-msgstr ""
+msgstr "умеренный фиолетовый"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3851,7 +3852,7 @@ msgstr ""
 #: ../src/orca/colornames.py:455
 msgctxt "color name"
 msgid "medium sea green"
-msgstr ""
+msgstr "море умеренного зелёного цвета"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3859,7 +3860,7 @@ msgstr ""
 #: ../src/orca/colornames.py:460
 msgctxt "color name"
 msgid "medium slate blue"
-msgstr ""
+msgstr "умеренный аспидно-синий"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3867,7 +3868,7 @@ msgstr ""
 #: ../src/orca/colornames.py:465
 msgctxt "color name"
 msgid "medium spring green"
-msgstr ""
+msgstr "умеренный весенне-зелёный"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3875,7 +3876,7 @@ msgstr ""
 #: ../src/orca/colornames.py:470
 msgctxt "color name"
 msgid "medium turquoise"
-msgstr ""
+msgstr "умеренный бирюзовый"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4180,7 +4181,7 @@ msgstr "аспидно-серый"
 #: ../src/orca/colornames.py:660
 msgctxt "color name"
 msgid "snow"
-msgstr ""
+msgstr "снежный"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
