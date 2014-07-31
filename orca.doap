@@ -11,6 +11,7 @@
   <download-page rdf:resource="http://download.gnome.org/sources/orca/" />
   <bug-database rdf:resource="https://bugzilla.gnome.org/browse.cgi?product=orca" />
   <category rdf:resource="http://api.gnome.org/doap-extensions#apps" />
+  <programming-language>Python</programming-language>
   <maintainer>
     <foaf:Person>
       <foaf:name>Joanmarie Diggs</foaf:name>
