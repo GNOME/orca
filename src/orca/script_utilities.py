@@ -558,7 +558,6 @@ class Utilities:
         except (LookupError, RuntimeError):
             role = None
 
-        role = obj.getRole()
         if role == pyatspi.ROLE_PUSH_BUTTON and obj.name:
             return obj.name
 
