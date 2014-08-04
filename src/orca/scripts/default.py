@@ -2355,12 +2355,7 @@ class Script(script.Script):
         announceState = False
         keyString, mods = self.utilities.lastKeyAndModifiers()
         if keyString == "space":
-            if mods & keybindings.CTRL_MODIFIER_MASK:
-                announceState = True
-            else:
-                # If we are already selected and the user presses "space" again,
-                # we don't want to speak an intermediate "unselected" state.
-                announceState = isSelected and event.detail1
+            announceState = True
         elif keyString in ["Down", "Up"] \
              and isSelected and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
             announceState = True
