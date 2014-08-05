@@ -192,6 +192,10 @@ formatting = {
             'focused': 'labelOrName + multiselectableState + numberOfChildren',
             'unfocused': 'labelOrName + focusedItem + multiselectableState + numberOfChildren'
             },
+        pyatspi.ROLE_LIST_BOX: {
+            'focused': 'labelOrName + multiselectableState + numberOfChildren',
+            'unfocused': 'labelOrName + focusedItem + multiselectableState + numberOfChildren'
+            },
         pyatspi.ROLE_LIST_ITEM: {
             'focused': 'expandableState + availability',
             'unfocused': 'labelAndName + allTextSelection + expandableState + availability + positionInList + childWidget',
@@ -460,6 +464,11 @@ formatting = {
                                      asString(label + focusedItem + roleName),\
                                      asString(label) and (len(asString(label)) + 1) or 0)]'
         },
+        pyatspi.ROLE_LIST_BOX: {
+            'unfocused': '[Component(obj,\
+                                     asString(label + focusedItem + roleName),\
+                                     asString(label) and (len(asString(label)) + 1) or 0)]'
+        },
         pyatspi.ROLE_LIST_ITEM: {
             'focused':   '[Component(obj,\
                                      asString(label + displayedText + expandableState + roleName + availability) + asString(accelerator))]\
@@ -611,6 +620,8 @@ if settings.useExperimentalSpeechProsody:
     formatting['speech'][pyatspi.ROLE_LINK]['basicWhereAmI'] = \
         'linkInfo + pause + siteDescription + pause + fileSize + pause + ' + MNEMONIC
     formatting['speech'][pyatspi.ROLE_LIST]['unfocused'] = \
+        'labelOrName + pause + focusedItem + pause + multiselectableState + numberOfChildren + pause'
+    formatting['speech'][pyatspi.ROLE_LIST_BOX]['unfocused'] = \
         'labelOrName + pause + focusedItem + pause + multiselectableState + numberOfChildren + pause'
     formatting['speech'][pyatspi.ROLE_LIST_ITEM]['unfocused'] = \
         'labelAndName + allTextSelection + pause + expandableState + pause + availability + positionInList + pause + childWidget'

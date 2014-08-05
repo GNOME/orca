@@ -303,7 +303,7 @@ class BrailleGenerator(generator.Generator):
     def _generateFocusedItem(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
-        if role != pyatspi.ROLE_LIST:
+        if role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
             return result
 
         try:

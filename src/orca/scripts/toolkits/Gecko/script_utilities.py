@@ -136,6 +136,7 @@ class Utilities(script_utilities.Utilities):
             bogus = False
             if self._script.inDocumentContent() \
                and obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
+                                     pyatspi.ROLE_LIST_BOX,
                                      pyatspi.ROLE_LIST]:
                 # Bogus case #1:
                 # <label></label> surrounding the entire combo box/list which
