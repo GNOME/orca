@@ -1838,9 +1838,6 @@ class Script(default.Script):
         if not self.structuralNavigation.enabled:
             return False
 
-        if not self.isNavigableAria(orca_state.locusOfFocus):
-            return False
-
         if self._loadingDocumentContent:
             return False
 
