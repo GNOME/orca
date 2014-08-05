@@ -1281,7 +1281,7 @@ class Script(default.Script):
                 state = candidate.getState()
             except (LookupError, RuntimeError):
                 state = pyatspi.StateSet()
-            if role in [pyatspi.ROLE_LIST, pyatspi.ROLE_COMBO_BOX] \
+            if role in [pyatspi.ROLE_LIST, pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST_BOX] \
                and state.contains(pyatspi.STATE_FOCUSABLE) \
                and not self.utilities.isSameObject(obj, candidate):
                 start = self.utilities.characterOffsetInParent(candidate)
@@ -1811,7 +1811,7 @@ class Script(default.Script):
                 if not weHandleIt:
                     weHandleIt = role == pyatspi.ROLE_MENU_ITEM
 
-        elif role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_MENU_ITEM]:
+        elif role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_MENU_ITEM, pyatspi.ROLE_LIST_BOX]:
             weHandleIt = keyboardEvent.event_string in ["Left", "Right"]
 
         elif role == pyatspi.ROLE_LIST_ITEM:
@@ -2158,6 +2158,7 @@ class Script(default.Script):
                      pyatspi.ROLE_COMBO_BOX,
                      pyatspi.ROLE_DOCUMENT_FRAME,
                      pyatspi.ROLE_LIST,
+                     pyatspi.ROLE_LIST_BOX,
                      pyatspi.ROLE_ENTRY,
                      pyatspi.ROLE_PASSWORD_TEXT,
                      pyatspi.ROLE_PUSH_BUTTON]
@@ -2557,6 +2558,7 @@ class Script(default.Script):
         #
         doNotDescend = obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
                        and obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
+                                             pyatspi.ROLE_LIST_BOX,
                                              pyatspi.ROLE_LIST]
 
         text = self.utilities.queryNonEmptyText(obj)
@@ -2666,6 +2668,7 @@ class Script(default.Script):
         #
         doNotDescend = obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
                        and obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
+                                             pyatspi.ROLE_LIST_BOX,
                                              pyatspi.ROLE_LIST]
 
         text = self.utilities.queryNonEmptyText(obj)
@@ -2813,7 +2816,7 @@ class Script(default.Script):
             while previousObj.childCount:
                 role = previousObj.getRole()
                 state = previousObj.getState()
-                if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_MENU]:
+                if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST_BOX, pyatspi.ROLE_MENU]:
                     break
                 elif role == pyatspi.ROLE_LIST \
                      and state.contains(pyatspi.STATE_FOCUSABLE) \
@@ -2870,7 +2873,7 @@ class Script(default.Script):
         # a bit of a challenge.]]]
         #
         role = obj.getRole()
-        if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_MENU]:
+        if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST_BOX, pyatspi.ROLE_MENU]:
             descend = False
         elif role == pyatspi.ROLE_LIST \
             and obj.getState().contains(pyatspi.STATE_FOCUSABLE) \

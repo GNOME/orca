@@ -145,6 +145,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                         pyatspi.ROLE_COMBO_BOX,
                         pyatspi.ROLE_ENTRY,
                         pyatspi.ROLE_LIST,
+                        pyatspi.ROLE_LIST_BOX,
                         pyatspi.ROLE_PARAGRAPH,
                         pyatspi.ROLE_PASSWORD_TEXT,
                         pyatspi.ROLE_RADIO_BUTTON,
