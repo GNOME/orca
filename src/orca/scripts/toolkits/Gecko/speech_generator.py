@@ -155,7 +155,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
             # We're having to hack around yet another Mozilla bug:
             # https://bugzilla.mozilla.org/show_bug.cgi?id=960241
-            focusedOnly = role != pyatspi.ROLE_LIST
+            focusedOnly = role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]
 
             label = self._script.labelInference.infer(obj, focusedOnly)
             if label:
