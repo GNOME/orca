@@ -289,7 +289,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result = []
         acss = self.voice(speech_generator.SYSTEM)
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_LIST:
+        if role in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
             result.append(messages.listItemCount(obj.childCount))
             result.extend(acss)
         else:
