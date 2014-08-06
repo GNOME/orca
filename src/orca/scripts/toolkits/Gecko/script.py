@@ -1730,9 +1730,6 @@ class Script(default.Script):
         if not self.inDocumentContent():
             return False
 
-        if not self.isNavigableAria(orca_state.locusOfFocus):
-            return False
-
         if keyboardEvent.event_string in ["Page_Up", "Page_Down"]:
             return False
 
@@ -1765,6 +1762,10 @@ class Script(default.Script):
             #
             if keyboardEvent.event_string in ["Home", "End"]:
                 return False
+
+            if obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX \
+              and keyboardEvent.event_string in ["Up", "Down"]:
+               return False
 
             # We want to use our caret navigation model in an entry if
             # there's nothing in the entry, we're at the beginning of
