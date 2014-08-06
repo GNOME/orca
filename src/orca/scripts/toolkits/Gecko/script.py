@@ -3146,7 +3146,8 @@ class Script(default.Script):
         text = self.utilities.queryNonEmptyText(obj)
         if text:
             word = text.getTextAtOffset(characterOffset, boundary)
-            if word[1] < characterOffset <= word[2]:
+            if word[1] < characterOffset <= word[2] \
+               and not word[0].startswith(self.EMBEDDED_OBJECT_CHARACTER):
                 characterOffset = word[1]
 
         contents = self.utilities.getObjectsFromEOCs(obj, characterOffset, boundary)
