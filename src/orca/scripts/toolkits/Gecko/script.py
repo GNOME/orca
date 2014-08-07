@@ -1394,16 +1394,6 @@ class Script(default.Script):
                 lineContentsOffset = max(0, focusedCharacterOffset - 1)
                 needToRefresh = True
 
-        if not self.isNavigableAria(focusedObj):
-            # Sometimes looking for the first caret context means that we
-            # are on a child within a non-navigable object (such as the
-            # text within a page tab). If so, set the focusedObj to the
-            # parent widget.
-            #
-            if not self.isAriaWidget(focusedObj):
-                focusedObj, focusedCharacterOffset = focusedObj.parent, 0
-                lineContentsOffset = 0
-
         # Sometimes we just want to present the current object rather
         # than the full line. For instance, if we're on a slider we
         # should just present that slider. We'll assume we want the
@@ -1875,63 +1865,6 @@ class Script(default.Script):
                 obj = obj.parent
 
         return False
-
-    def isNavigableAria(self, obj):
-        """Returns True if the object being examined is an ARIA widget where
-           we want to provide Orca keyboard navigation.  Returning False
-           indicates that we want Firefox to handle key commands.
-        """
-
-        try:
-            state = obj.getState()
-        except (LookupError, RuntimeError):
-            debug.println(debug.LEVEL_SEVERE,
-                          "isNavigableAria() - obj no longer exists")
-            return True
-        except:
-            pass
-        else:
-            # If the current object isn't even showing, we don't want to hand
-            # this off to Firefox's native caret navigation because who knows
-            # where we'll wind up....
-            #
-            if not state.contains(pyatspi.STATE_SHOWING):
-                return True
-
-        # Sometimes the child of an ARIA widget claims focus. It may lack
-        # the attributes we're looking for. Therefore, if obj is not an
-        # ARIA widget, we'll also consider the parent's attributes.
-        #
-        attrs = self._getAttrDictionary(obj)
-        if obj and not self.isAriaWidget(obj):
-            attrs.update(self._getAttrDictionary(obj.parent))
-
-        try:
-            # ARIA landmark widgets
-            if set(attrs['xml-roles'].split()).intersection(\
-               set(settings.ariaLandmarks)):
-                return True
-            # ARIA live region
-            elif 'container-live' in attrs:
-                return True
-            # Don't treat links as ARIA widgets. And we should be able to
-            # escape/exit ARIA entries just like we do HTML entries (How
-            # is the user supposed to know which he/she happens to be in?)
-            #
-            elif obj.getRole() in [pyatspi.ROLE_ENTRY,
-                                   pyatspi.ROLE_LINK,
-                                   pyatspi.ROLE_ALERT,
-                                   pyatspi.ROLE_PARAGRAPH,
-                                   pyatspi.ROLE_SECTION]:
-                return obj.parent.getRole() not in [pyatspi.ROLE_COMBO_BOX,
-                                                    pyatspi.ROLE_PAGE_TAB]
-            # All other ARIA widgets we will assume are navigable if
-            # they are not focused.
-            #
-            else:
-                return not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
-        except (KeyError, TypeError):
-            return True
 
     def isAriaWidget(self, obj=None):
         """Returns True if the object being examined is an ARIA widget.
