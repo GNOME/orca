@@ -1812,7 +1812,7 @@ class Script(default.Script):
                 if not weHandleIt:
                     weHandleIt = role == pyatspi.ROLE_MENU_ITEM
 
-        elif role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_MENU_ITEM, pyatspi.ROLE_LIST_BOX]:
+        elif role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST_BOX]:
             weHandleIt = keyboardEvent.event_string in ["Left", "Right"]
 
         elif role == pyatspi.ROLE_LIST_ITEM:
@@ -1820,6 +1820,9 @@ class Script(default.Script):
 
         elif role == pyatspi.ROLE_LIST:
             weHandleIt = not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
+
+        elif role in [pyatspi.ROLE_MENU, pyatspi.ROLE_MENU_ITEM]:
+            weHandleIt = False
 
         return weHandleIt
 
