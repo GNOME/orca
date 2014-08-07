@@ -3182,35 +3182,6 @@ class Script(default.Script):
 
         if not obj:
             return []
-        
-        # If it's an ARIA widget, we want the default generators to give
-        # us all the details.
-        #
-        if not self.isNavigableAria(obj):
-            if not self.isAriaWidget(obj):
-                obj = obj.parent
-
-            objects = [[obj, 0, 1, ""]]
-            ext = obj.queryComponent().getExtents(0)
-            extents = [ext.x, ext.y, ext.width, ext.height]
-            for i in range(obj.getIndexInParent() + 1, obj.parent.childCount):
-                newObj = obj.parent[i]
-                ext = newObj.queryComponent().getExtents(0)
-                newExtents = [ext.x, ext.y, ext.width, ext.height]
-                if self.onSameLine(extents, newExtents):
-                    objects.append([newObj, 0, 1, ""])
-                else:
-                    break
-            for i in range(obj.getIndexInParent() - 1, -1, -1):
-                newObj = obj.parent[i]
-                ext = newObj.queryComponent().getExtents(0)
-                newExtents = [ext.x, ext.y, ext.width, ext.height]
-                if self.onSameLine(extents, newExtents):
-                    objects[0:0] = [[newObj, 0, 1, ""]]
-                else:
-                    break
-
-            return objects
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
 
