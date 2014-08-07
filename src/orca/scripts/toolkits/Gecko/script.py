@@ -1827,6 +1827,9 @@ class Script(default.Script):
         elif role in [pyatspi.ROLE_SLIDER, pyatspi.ROLE_SPIN_BUTTON]:
             weHandleIt = False
 
+        elif role == pyatspi.ROLE_PAGE_TAB:
+            weHandleIt = False
+
         return weHandleIt
 
     def useStructuralNavigationModel(self):
