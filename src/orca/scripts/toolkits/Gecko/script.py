@@ -1824,7 +1824,7 @@ class Script(default.Script):
         elif role in [pyatspi.ROLE_MENU, pyatspi.ROLE_MENU_ITEM]:
             weHandleIt = False
 
-        elif role in [pyatspi.ROLE_SLIDER]:
+        elif role in [pyatspi.ROLE_SLIDER, pyatspi.ROLE_SPIN_BUTTON]:
             weHandleIt = False
 
         return weHandleIt
