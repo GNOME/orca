@@ -170,13 +170,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
     def generateBraille(self, obj, **args):
         result = []
-        # ARIA widgets get treated like regular default widgets.
-        #
         args['includeContext'] = not self._script.inDocumentContent(obj)
-        args['useDefaultFormatting'] = \
-            self._script.isAriaWidget(obj) \
-            or ((obj.getRole() == pyatspi.ROLE_LIST) \
-                and (not obj.getState().contains(pyatspi.STATE_FOCUSABLE)))
 
         oldRole = None
         if self._script.utilities.isEntry(obj):
@@ -195,7 +189,6 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         result.extend(braille_generator.BrailleGenerator.\
                           generateBraille(self, obj, **args))
         del args['includeContext']
-        del args['useDefaultFormatting']
         if oldRole:
             self._restoreRole(oldRole, args)
         return result

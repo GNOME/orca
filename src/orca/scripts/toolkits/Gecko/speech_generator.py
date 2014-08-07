@@ -150,8 +150,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                         pyatspi.ROLE_PASSWORD_TEXT,
                         pyatspi.ROLE_RADIO_BUTTON,
                         pyatspi.ROLE_TEXT] \
-           and self._script.inDocumentContent() \
-           and not self._script.isAriaWidget(obj):
+           and self._script.inDocumentContent():
 
             # We're having to hack around yet another Mozilla bug:
             # https://bugzilla.mozilla.org/show_bug.cgi?id=960241
@@ -237,8 +236,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if not force and self._script.inDocumentContent(obj):
             doNotSpeak.append(pyatspi.ROLE_TABLE_CELL)
-            if not self._script.isAriaWidget(obj) \
-               and args.get('formatType', 'unfocused') != 'basicWhereAmI':
+            if args.get('formatType', 'unfocused') != 'basicWhereAmI':
                 doNotSpeak.append(pyatspi.ROLE_LIST_ITEM)
                 doNotSpeak.append(pyatspi.ROLE_LIST)
 
@@ -321,8 +319,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         specifications) that represent the default button in a dialog.
         This method should initially be called with a top-level window.
         """
-        if self._script.inDocumentContent(obj) \
-           and not self._script.isAriaWidget(obj):
+        if self._script.inDocumentContent(obj):
             return []
 
         return speech_generator.SpeechGenerator.\
@@ -377,13 +374,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(speech_generator.SpeechGenerator.\
                                            generateSpeech(self, obj, **args))
             self._restoreRole(oldRole, args)
-        # ARIA widgets get treated like regular default widgets.
-        #
         else:
-            args['useDefaultFormatting'] = self._script.isAriaWidget(obj)
             result.extend(speech_generator.SpeechGenerator.\
                                            generateSpeech(self, obj, **args))
-            del args['useDefaultFormatting']
         return result
 
     def getAttribute(self, obj, attributeName):
