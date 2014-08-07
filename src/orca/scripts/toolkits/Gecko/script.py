@@ -1818,7 +1818,7 @@ class Script(default.Script):
         elif role == pyatspi.ROLE_LIST_ITEM:
             weHandleIt = not obj.getState().contains(pyatspi.STATE_FOCUSED)
 
-        elif role == pyatspi.ROLE_LIST:
+        elif role in [pyatspi.ROLE_LIST, pyatspi.ROLE_TABLE_CELL]:
             weHandleIt = not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
 
         elif role in [pyatspi.ROLE_MENU, pyatspi.ROLE_MENU_ITEM]:
