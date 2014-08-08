@@ -1982,32 +1982,6 @@ class Script(default.Script):
 
             return True
 
-    def isFormField(self, obj):
-        """Returns True if the given object is a field inside of a form."""
-
-        if not obj or not self.inDocumentContent(obj):
-            return False
-
-        formRoles = [pyatspi.ROLE_CHECK_BOX,
-                     pyatspi.ROLE_RADIO_BUTTON,
-                     pyatspi.ROLE_COMBO_BOX,
-                     pyatspi.ROLE_DOCUMENT_FRAME,
-                     pyatspi.ROLE_LIST,
-                     pyatspi.ROLE_LIST_BOX,
-                     pyatspi.ROLE_ENTRY,
-                     pyatspi.ROLE_PASSWORD_TEXT,
-                     pyatspi.ROLE_PUSH_BUTTON]
-
-        state = obj.getState()
-        isField = obj.getRole() in formRoles \
-                  and state.contains(pyatspi.STATE_FOCUSABLE) \
-                  and state.contains(pyatspi.STATE_SENSITIVE)
-
-        if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
-            isField = isField and state.contains(pyatspi.STATE_EDITABLE)
-
-        return isField
-
     def isUselessObject(self, obj):
         """Returns true if the given object is an obj that doesn't
         have any meaning associated with it and it is not inside a
@@ -2195,59 +2169,6 @@ class Script(default.Script):
                 break
 
         return lastChild
-
-    def getMeaningfulObjectsFromLine(self, line):
-        """Attempts to strip a list of (obj, start, end) tuples into one
-        that contains only meaningful objects."""
-
-        if not line or not len(line):
-            return []
-
-        lineContents = []
-        for item in line:
-            role = item[0].getRole()
-
-            # If it's labelling something on this line, don't move to
-            # it.
-            #
-            if role == pyatspi.ROLE_LABEL \
-               and self.isLabellingContents(item[0], line):
-                continue
-
-            # Rather than do a brute force label infer, we'll focus on
-            # entries as they are the most common and their label is
-            # likely on this line.  The functional label may be made up
-            # of several objects, so we'll examine the strings of what
-            # we've got and pop off the ones that match.
-            #
-            elif self.utilities.isEntry(item[0]):
-                label = \
-                    self.labelInference.inferFromTextLeft(item[0]) \
-                    or self.labelInference.inferFromTextRight(item[0]) 
-                index = len(lineContents) - 1
-                while label and index >= 0:
-                    prevItem = lineContents[index]
-                    prevText = self.utilities.queryNonEmptyText(prevItem[0])
-                    if prevText:
-                        string = prevText.getText(prevItem[1], prevItem[2])
-                        if label.endswith(string):
-                            lineContents.pop()
-                            length = len(label) - len(string)
-                            label = label[0:length]
-                        else:
-                            break
-                    index -= 1
-
-            else:
-                text = self.utilities.queryNonEmptyText(item[0])
-                if text:
-                    string = text.getText(item[1], item[2])
-                    if not len(string.strip()):
-                        continue
-
-            lineContents.append(item)
-
-        return lineContents
 
     def getPageSummary(self, obj):
         """Returns the quantity of headings, forms, tables, visited links,
