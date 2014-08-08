@@ -846,7 +846,7 @@ class Script(default.Script):
         if contextObj and contextObj.parent == firstObj:
             return
 
-        if self.isAriaWidget(obj) or not self.inDocumentContent(obj):
+        if not self.inDocumentContent(obj):
             default.Script.onCaretMoved(self, event)
             return
 
@@ -944,8 +944,6 @@ class Script(default.Script):
             return
         if role != pyatspi.ROLE_DOCUMENT_FRAME:
              return
-        if self.isAriaWidget(obj.parent):
-            return
 
         try:
             focusRole = orca_state.locusOfFocus.getRole()
@@ -1037,7 +1035,7 @@ class Script(default.Script):
             return
 
         if childRole == pyatspi.ROLE_DIALOG:
-            if self.isAriaWidget(event.source):
+            if self.inDocumentContent(event.source):
                 orca.setLocusOfFocus(event, child)
             return
 
@@ -1135,7 +1133,7 @@ class Script(default.Script):
             return
 
         obj = event.source
-        if self.isAriaWidget(obj) or not self.inDocumentContent(obj):
+        if not self.inDocumentContent(obj):
             default.Script.onFocusedChanged(self, event)
             return
 
@@ -1362,11 +1360,16 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, "BRAILLE: update disabled")
             return
 
-        if self.isAriaWidget(obj) or not self.inDocumentContent():
+        if not self.inDocumentContent():
             default.Script.updateBraille(self, obj, extraRegion)
             return
 
         if not obj:
+            return
+
+        if obj.getState().contains(pyatspi.STATE_FOCUSED) \
+           and obj.getRole() not in [pyatspi.ROLE_LINK, pyatspi.ROLE_ALERT]:
+            default.Script.updateBraille(self, obj, extraRegion)
             return
 
         line = self.getNewBrailleLine(clearBraille=True, addLine=True)
@@ -1394,15 +1397,6 @@ class Script(default.Script):
                 lineContentsOffset = max(0, focusedCharacterOffset - 1)
                 needToRefresh = True
 
-        # Sometimes we just want to present the current object rather
-        # than the full line. For instance, if we're on a slider we
-        # should just present that slider. We'll assume we want the
-        # full line, however.
-        #
-        presentOnlyFocusedObj = False
-        if focusedObj and focusedObj.getRole() == pyatspi.ROLE_SLIDER:
-            presentOnlyFocusedObj = True
-
         contents = self.currentLineContents
         index = self.findObjectOnLine(focusedObj,
                                       max(0, lineContentsOffset),
@@ -1426,13 +1420,12 @@ class Script(default.Script):
             [obj, startOffset, endOffset, string] = content
             if not obj:
                 continue
-            elif presentOnlyFocusedObj and not isFocusedObj:
-                continue
 
             role = obj.getRole()
             if (not len(string) and role != pyatspi.ROLE_PARAGRAPH) \
                or self.utilities.isEntry(obj) \
                or self.utilities.isPasswordText(obj) \
+               or obj.name \
                or role in [pyatspi.ROLE_LINK, pyatspi.ROLE_PUSH_BUTTON]:
                 [regions, fRegion] = \
                           self.brailleGenerator.generateBraille(obj)
@@ -1648,7 +1641,6 @@ class Script(default.Script):
         entire document.
         """
         if self.flatReviewContext \
-           or self.isAriaWidget(orca_state.locusOfFocus) \
            or not self.inDocumentContent() \
            or not self.isBrailleBeginningShowing():
             default.Script.panBrailleLeft(self, inputEvent, panAmount)
@@ -1664,7 +1656,6 @@ class Script(default.Script):
         entire document.
         """
         if self.flatReviewContext \
-           or self.isAriaWidget(orca_state.locusOfFocus) \
            or not self.inDocumentContent() \
            or not self.isBrailleEndShowing():
             default.Script.panBrailleRight(self, inputEvent, panAmount)
@@ -1865,41 +1856,6 @@ class Script(default.Script):
                 obj = obj.parent
 
         return False
-
-    def isAriaWidget(self, obj=None):
-        """Returns True if the object being examined is an ARIA widget.
-
-        Arguments:
-        - obj: The accessible object of interest.  If None, the
-        locusOfFocus is examined.
-        """
-        try:
-            return self.generatorCache['isAria'][obj]
-        except:
-            pass
-        obj = obj or orca_state.locusOfFocus
-
-        # TODO - JD: It seems insufficient to take a "if it's ARIA, use
-        # the default script" approach. For instance, an ARIA dialog does
-        # not have "unrelated labels"; it has embedded object characters
-        # just like other Gecko content. Unless and until Gecko exposes
-        # ARIA widgets as proper widgets, we'll need to not be so trusting.
-        # For now, just add hacks on a per-case basis until there is time
-        # to properly review this code.
-        try:
-            role = obj.getRole()
-        except:
-            pass
-        else:
-            if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]:
-                return False
-
-        attrs = self._getAttrDictionary(obj)
-        if 'isAria' not in self.generatorCache:
-            self.generatorCache['isAria'] = {}
-        self.generatorCache['isAria'][obj] = \
-            ('xml-roles' in attrs and 'live' not in attrs)
-        return self.generatorCache['isAria'][obj]
 
     def _getAttrDictionary(self, obj):
         if not obj:
@@ -2752,8 +2708,7 @@ class Script(default.Script):
                 return previousObj.parent.parent
             elif role == pyatspi.ROLE_LIST_ITEM:
                 parent = previousObj.parent
-                if parent.getState().contains(pyatspi.STATE_FOCUSABLE) \
-                   and not self.isAriaWidget(parent):
+                if parent.getState().contains(pyatspi.STATE_FOCUSABLE):
                     return parent
 
             while previousObj.childCount:
@@ -2762,8 +2717,7 @@ class Script(default.Script):
                 if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST_BOX, pyatspi.ROLE_MENU]:
                     break
                 elif role == pyatspi.ROLE_LIST \
-                     and state.contains(pyatspi.STATE_FOCUSABLE) \
-                     and not self.isAriaWidget(previousObj):
+                     and state.contains(pyatspi.STATE_FOCUSABLE):
                     break
                 elif previousObj.childCount > 1000:
                     break
@@ -2819,8 +2773,7 @@ class Script(default.Script):
         if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST_BOX, pyatspi.ROLE_MENU]:
             descend = False
         elif role == pyatspi.ROLE_LIST \
-            and obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
-            and not self.isAriaWidget(obj):
+            and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
             descend = False
         elif obj.childCount > 1000:
             descend = False
