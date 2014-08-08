@@ -234,6 +234,8 @@ class Script(default.Script):
         self.preMouseOverContext = [None, -1]
         self.inMouseOverObject = False
 
+        self._inFocusMode = False
+
         # See bug 665522 - comment 5
         app.setCacheMask(pyatspi.cache.DEFAULT ^ pyatspi.cache.CHILDREN)
 
@@ -427,6 +429,11 @@ class Script(default.Script):
             input_event.InputEventHandler(
                 Script.moveToMouseOver,
                 cmdnames.MOUSE_OVER_MOVE)
+
+        self.inputEventHandlers["togglePresentationModeHandler"] = \
+            input_event.InputEventHandler(
+                Script.togglePresentationMode,
+                cmdnames.TOGGLE_PRESENTATION_MODE)
 
     def __getArrowBindings(self):
         """Returns an instance of keybindings.KeyBindings that use the
@@ -856,10 +863,14 @@ class Script(default.Script):
 
         self.setCaretContext(obj, event.detail1)
         if not _settingsManager.getSetting('caretNavigationEnabled') \
+           or self._inFocusMode \
            or obj.getState().contains(pyatspi.STATE_EDITABLE):
             orca.setLocusOfFocus(event, obj, False)
 
         default.Script.onCaretMoved(self, event)
+
+        if self._useFocusMode(obj) != self._inFocusMode:
+            self.togglePresentationMode(None)
 
     def onTextDeleted(self, event):
         """Called whenever text is from an an object.
@@ -1095,6 +1106,9 @@ class Script(default.Script):
     def onFocus(self, event):
         """Callback for focus: accessibility events."""
 
+        if not self.inDocumentContent(event.source):
+            return
+
         # NOTE: This event type is deprecated and Orca should no longer use it.
         # This callback remains just to handle bugs in applications and toolkits
         # during the remainder of the unstable (3.11) development cycle.
@@ -1214,6 +1228,49 @@ class Script(default.Script):
         if not self.utilities.hasMatchingHierarchy(event.source, rolesList):
             default.Script.handleProgressBarUpdate(self, event, obj)
 
+    def _useFocusMode(self, obj):
+        try:
+            role = obj.getRole()
+            state = obj.getState()
+        except:
+            return False
+
+        if not state.contains(pyatspi.STATE_FOCUSED) \
+           and not state.contains(pyatspi.STATE_SELECTED):
+            return False
+
+        if state.contains(pyatspi.STATE_EDITABLE) \
+           or state.contains(pyatspi.STATE_EXPANDABLE):
+            return True
+
+        focusModeRoles = [pyatspi.ROLE_COMBO_BOX,
+                          pyatspi.ROLE_ENTRY,
+                          pyatspi.ROLE_LIST_BOX,
+                          pyatspi.ROLE_LIST_ITEM,
+                          pyatspi.ROLE_MENU,
+                          pyatspi.ROLE_MENU_ITEM,
+                          pyatspi.ROLE_CHECK_MENU_ITEM,
+                          pyatspi.ROLE_RADIO_MENU_ITEM,
+                          pyatspi.ROLE_PAGE_TAB,
+                          pyatspi.ROLE_PASSWORD_TEXT,
+                          pyatspi.ROLE_PROGRESS_BAR,
+                          pyatspi.ROLE_SLIDER,
+                          pyatspi.ROLE_SPIN_BUTTON,
+                          pyatspi.ROLE_TOOL_BAR,
+                          pyatspi.ROLE_TABLE_CELL,
+                          pyatspi.ROLE_TABLE_ROW,
+                          pyatspi.ROLE_TABLE,
+                          pyatspi.ROLE_TREE_TABLE,
+                          pyatspi.ROLE_TREE]
+
+        if role in focusModeRoles:
+            return True
+
+        if obj.parent.getRole() in focusModeRoles:
+            return True
+
+        return False
+
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
         """Called when the object with focus changes.
 
@@ -1232,6 +1289,7 @@ class Script(default.Script):
 
         if not self.inDocumentContent(newFocus):
             default.Script.locusOfFocusChanged(self, event, oldFocus, newFocus)
+            self._inFocusMode = False
             return
 
         caretOffset = -1
@@ -1244,6 +1302,9 @@ class Script(default.Script):
 
         self.setCaretContext(newFocus, caretOffset)
         default.Script.locusOfFocusChanged(self, event, oldFocus, newFocus)
+
+        if self._useFocusMode(newFocus) != self._inFocusMode:
+            self.togglePresentationMode(None)
 
     def findObjectOnLine(self, obj, offset, contents):
         """Determines if the item described by the object and offset is
@@ -1367,8 +1428,7 @@ class Script(default.Script):
         if not obj:
             return
 
-        if obj.getState().contains(pyatspi.STATE_FOCUSED) \
-           and obj.getRole() not in [pyatspi.ROLE_LINK, pyatspi.ROLE_ALERT]:
+        if self._inFocusMode:
             default.Script.updateBraille(self, obj, extraRegion)
             return
 
@@ -1705,7 +1765,8 @@ class Script(default.Script):
         """Returns True if we should do our own caret navigation.
         """
 
-        if not _settingsManager.getSetting('caretNavigationEnabled'):
+        if not _settingsManager.getSetting('caretNavigationEnabled') \
+           or self._inFocusMode:
             return False
 
         if not self.inDocumentContent():
@@ -1723,95 +1784,7 @@ class Script(default.Script):
         if not orca_state.locusOfFocus:
             return False
 
-        weHandleIt = True
-        obj = orca_state.locusOfFocus
-        role = obj.getRole()
-        if self.utilities.isEntry(obj):
-            text        = obj.queryText()
-            length      = text.characterCount
-            caretOffset = text.caretOffset
-            singleLine  = obj.getState().contains(
-                pyatspi.STATE_SINGLE_LINE)
-
-            # Single line entries have an additional newline character
-            # at the end.
-            #
-            newLineAdjustment = int(not singleLine)
-
-            # Home and End should not be overridden if we're in an
-            # entry.
-            #
-            if keyboardEvent.event_string in ["Home", "End"]:
-                return False
-
-            if obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX \
-              and keyboardEvent.event_string in ["Up", "Down"]:
-               return False
-
-            # We want to use our caret navigation model in an entry if
-            # there's nothing in the entry, we're at the beginning of
-            # the entry and press Left or Up, or we're at the end of the
-            # entry and press Right or Down.
-            #
-            if length == 0 \
-               or ((length == 1) and (text.getText(0, -1) == "\n")):
-                weHandleIt = True
-            elif caretOffset <= 0:
-                weHandleIt = keyboardEvent.event_string \
-                             in ["Up", "Left"]
-            elif caretOffset >= length - newLineAdjustment \
-                 and not self._autocompleteVisible:
-                weHandleIt = keyboardEvent.event_string \
-                             in ["Down", "Right"]
-            else:
-                weHandleIt = False
-
-            if singleLine and not weHandleIt \
-               and not self._autocompleteVisible:
-                weHandleIt = keyboardEvent.event_string in ["Up", "Down"]
-
-        elif keyboardEvent.modifiers & keybindings.ALT_MODIFIER_MASK:
-            # Alt+Down Arrow is the Firefox command to expand/collapse the
-            # *currently focused* combo box.  When Orca is controlling the
-            # caret, it is possible to navigate into a combo box *without
-            # giving focus to that combo box*.  Under these circumstances,
-            # the menu item has focus.  Because the user knows that he/she
-            # is on a combo box, he/she expects to be able to use Alt+Down
-            # Arrow to expand the combo box.  Therefore, if a menu item has
-            # focus and Alt+Down Arrow is pressed, we will handle it by
-            # giving the combo box focus and expanding it as the user
-            # expects.  We also want to avoid grabbing focus on a combo box.
-            # Therefore, if the caret is immediately before a combo box,
-            # we'll hand it the same way.
-            #
-            if keyboardEvent.event_string == "Down":
-                [obj, offset] = self.getCaretContext()
-                index = self.getChildIndex(obj, offset)
-                if index >= 0:
-                    weHandleIt = \
-                        obj[index].getRole() == pyatspi.ROLE_COMBO_BOX
-                if not weHandleIt:
-                    weHandleIt = role == pyatspi.ROLE_MENU_ITEM
-
-        elif role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST_BOX]:
-            weHandleIt = keyboardEvent.event_string in ["Left", "Right"]
-
-        elif role == pyatspi.ROLE_LIST_ITEM:
-            weHandleIt = not obj.getState().contains(pyatspi.STATE_FOCUSED)
-
-        elif role in [pyatspi.ROLE_LIST, pyatspi.ROLE_TABLE_CELL]:
-            weHandleIt = not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
-
-        elif role in [pyatspi.ROLE_MENU, pyatspi.ROLE_MENU_ITEM]:
-            weHandleIt = False
-
-        elif role in [pyatspi.ROLE_SLIDER, pyatspi.ROLE_SPIN_BUTTON]:
-            weHandleIt = False
-
-        elif role == pyatspi.ROLE_PAGE_TAB:
-            weHandleIt = False
-
-        return weHandleIt
+        return True
 
     def useStructuralNavigationModel(self):
         """Returns True if we should do our own structural navigation.
@@ -1819,43 +1792,16 @@ class Script(default.Script):
         or a list.
         """
 
-        letThemDoItEditableRoles = [pyatspi.ROLE_ENTRY,
-                                    pyatspi.ROLE_TEXT,
-                                    pyatspi.ROLE_PASSWORD_TEXT]
-        letThemDoItSelectionRoles = [pyatspi.ROLE_LIST,
-                                     pyatspi.ROLE_LIST_ITEM,
-                                     pyatspi.ROLE_MENU_ITEM]
+        if not self.structuralNavigation.enabled or self._inFocusMode:
+            return False
 
-        if not self.structuralNavigation.enabled:
+        if not self.inDocumentContent():
             return False
 
         if self._loadingDocumentContent:
             return False
 
-        # If the Orca_Modifier key was pressed, we're handling it.
-        #
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            mods = orca_state.lastInputEvent.modifiers
-            isOrcaKey = mods & keybindings.ORCA_MODIFIER_MASK
-            if isOrcaKey:
-                return True
-
-        obj = orca_state.locusOfFocus
-        while obj:
-            if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
-                # Don't use the structural navivation model if the
-                # user is editing the document.
-                return not obj.getState().contains(pyatspi.STATE_EDITABLE)
-            elif obj.getRole() in letThemDoItEditableRoles:
-                return not obj.getState().contains(pyatspi.STATE_EDITABLE)
-            elif obj.getRole() in letThemDoItSelectionRoles:
-                return not obj.getState().contains(pyatspi.STATE_FOCUSED)
-            elif obj.getRole() == pyatspi.ROLE_COMBO_BOX:
-                return False
-            else:
-                obj = obj.parent
-
-        return False
+        return True
 
     def _getAttrDictionary(self, obj):
         if not obj:
@@ -4160,6 +4106,23 @@ class Script(default.Script):
                                     int(inputEvent.event_string[1:]))
         else:
             self.presentMessage(messages.LIVE_REGIONS_OFF)
+
+    def togglePresentationMode(self, inputEvent):
+        if self._inFocusMode:
+            [obj, characterOffset] = self.getCaretContext()
+            try:
+                parentRole = obj.parent.getRole()
+            except:
+                parentRole = None
+            if parentRole == pyatspi.ROLE_LIST_BOX:
+                self.setCaretContext(obj.parent, -1)
+            elif parentRole == pyatspi.ROLE_MENU:
+                self.setCaretContext(obj.parent.parent, -1)
+
+            self.presentMessage(messages.MODE_BROWSE)
+        else:
+            self.presentMessage(messages.MODE_FOCUS)
+        self._inFocusMode = not self._inFocusMode
 
     def toggleCaretNavigation(self, inputEvent):
         """Toggles between Firefox native and Orca caret navigation."""

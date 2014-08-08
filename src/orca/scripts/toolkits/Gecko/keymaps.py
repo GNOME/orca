@@ -85,6 +85,8 @@ commonKeymap = (
     ("F12", defaultModifierMask, ORCA_MODIFIER_MASK,
     "toggleCaretNavigationHandler"),
 
+    ("a", defaultModifierMask, ORCA_MODIFIER_MASK, "togglePresentationModeHandler"),
+
     ("Right", defaultModifierMask, ORCA_MODIFIER_MASK,
     "goNextObjectInOrderHandler"),
 

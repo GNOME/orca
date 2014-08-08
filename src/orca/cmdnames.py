@@ -944,6 +944,22 @@ TABLE_CELL_RIGHT = _("Goes right one cell.")
 # Translators: this is for navigating among table cells in a document.
 TABLE_CELL_UP = _("Goes up one cell.")
 
+# Translators: Orca has a number of commands that override the default
+# behavior within an application. For instance, on a web page, "h" moves
+# you to the next heading. What should happen when you press an "h" in
+# an entry on a web page depends: If you want to resume reading content,
+# "h" should move to the next heading; if you want to enter text, "h"
+# should not not move you to the next heading. Similarly, if you are
+# at the bottom of an entry and press Down arrow, should you leave the
+# entry? Again, it depends on if you want to resume reading content or
+# if you are editing the text in the entry. Because Orca doesn't know
+# what you want to do, it has two modes: In browse mode, Orca treats
+# key presses as commands to read the content; in focus mode, Orca treats
+# key presses as something that should be handled by the focused widget.
+# This string is associated with the Orca command to manually switch
+# between these two modes.
+TOGGLE_PRESENTATION_MODE = _("Switches between browse mode and focus mode.")
+
 # Translators: this is for navigating among unvisited links in a document.
 UNVISITED_LINK_PREV = _("Goes to previous unvisited link.")
 

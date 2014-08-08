@@ -1075,6 +1075,36 @@ MISSPELLED_WORD = _("Misspelled word: %s")
 # containing the misspelled word in the document. This is known as the context.
 MISSPELLED_WORD_CONTEXT = _("Context is %s")
 
+# Translators: Orca has a number of commands that override the default
+# behavior within an application. For instance, on a web page, "h" moves
+# you to the next heading. What should happen when you press an "h" in
+# an entry on a web page depends: If you want to resume reading content,
+# "h" should move to the next heading; if you want to enter text, "h"
+# should not not move you to the next heading. Similarly, if you are
+# at the bottom of an entry and press Down arrow, should you leave the
+# entry? Again, it depends on if you want to resume reading content or
+# if you are editing the text in the entry. Because Orca doesn't know
+# what you want to do, it has two modes: In browse mode, Orca treats
+# key presses as commands to read the content; in focus mode, Orca treats
+# key presses as something that should be handled by the focused widget.
+# This string is the message presented when Orca switches to browse mode.
+MODE_BROWSE = _("Browse mode")
+
+# Translators: Orca has a number of commands that override the default
+# behavior within an application. For instance, on a web page, "h" moves
+# you to the next heading. What should happen when you press an "h" in
+# an entry on a web page depends: If you want to resume reading content,
+# "h" should move to the next heading; if you want to enter text, "h"
+# should not not move you to the next heading. Similarly, if you are
+# at the bottom of an entry and press Down arrow, should you leave the
+# entry? Again, it depends on if you want to resume reading content or
+# if you are editing the text in the entry. Because Orca doesn't know
+# what you want to do, it has two modes: In browse mode, Orca treats
+# key presses as commands to read the content; in focus mode, Orca treats
+# key presses as something that should be handled by the focused widget.
+# This string is the message presented when Orca switches to focus mode.
+MODE_FOCUS = _("Focus mode")
+
 # Translators: Hovering the mouse over certain objects on a web page causes a 
 # new object to appear such as a pop-up menu. Orca has a command will move the
 # user to the object which just appeared as a result of the user hovering the
