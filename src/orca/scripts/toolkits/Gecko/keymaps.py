@@ -86,12 +86,6 @@ commonKeymap = (
     "toggleCaretNavigationHandler"),
 
     ("a", defaultModifierMask, ORCA_MODIFIER_MASK, "togglePresentationModeHandler"),
-
-    ("Right", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "goNextObjectInOrderHandler"),
-
-    ("Left", defaultModifierMask, ORCA_MODIFIER_MASK, 
-    "goPreviousObjectInOrderHandler"),
 )
 
 desktopKeymap = (
