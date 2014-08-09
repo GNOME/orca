@@ -836,11 +836,14 @@ class Script(default.Script):
             return
 
         obj = event.source
+        state = obj.getState()
+
         firstObj, firstOffset = self.findFirstCaretContext(obj, event.detail1)
         if firstOffset == contextOffset and firstObj == contextObj:
             return
 
-        if contextObj and contextObj.parent == firstObj:
+        if contextObj and contextObj.parent == firstObj \
+           and not state.contains(pyatspi.STATE_EDITABLE):
             return
 
         if not self.inDocumentContent(obj):
@@ -854,7 +857,7 @@ class Script(default.Script):
         self.setCaretContext(obj, event.detail1)
         if not _settingsManager.getSetting('caretNavigationEnabled') \
            or self._inFocusMode \
-           or obj.getState().contains(pyatspi.STATE_EDITABLE):
+           or state.contains(pyatspi.STATE_EDITABLE):
             orca.setLocusOfFocus(event, obj, False)
 
         default.Script.onCaretMoved(self, event)
