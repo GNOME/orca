@@ -28,7 +28,9 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.orca as orca
+import orca.cmdnames as cmdnames
 import orca.debug as debug
+import orca.input_event as input_event
 import orca.scripts.default as default
 import orca.settings_manager as settings_manager
 import orca.orca_state as orca_state
@@ -68,6 +70,14 @@ class Script(Gecko.Script):
             _settingsManager.setSetting('sayAllOnLoad', False)
 
         Gecko.Script.__init__(self, app)
+
+    def setupInputEventHandlers(self):
+        Gecko.Script.setupInputEventHandlers(self)
+
+        self.inputEventHandlers["togglePresentationModeHandler"] = \
+            input_event.InputEventHandler(
+                Script.togglePresentationMode,
+                cmdnames.TOGGLE_PRESENTATION_MODE)
 
     def getFormatting(self):
         """Returns the formatting strings for this script."""
@@ -120,6 +130,18 @@ class Script(Gecko.Script):
             return
 
         Gecko.Script.doWhereAmI(self,inputEvent, basicOnly)
+
+    def _useFocusMode(self, obj):
+        if self.isEditableMessage(obj):
+            return True
+
+        return Gecko.Script._useFocusMode(self, obj)
+
+    def togglePresentationMode(self, inputEvent):
+        if self._inFocusMode and self.isEditableMessage(orca_state.locusOfFocus):
+            return
+
+        Gecko.Script.togglePresentationMode(self, inputEvent)
 
     def useStructuralNavigationModel(self):
         """Returns True if structural navigation should be enabled here."""
