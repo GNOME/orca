@@ -1256,9 +1256,6 @@ class Script(default.Script):
         if role in focusModeRoles:
             return True
 
-        if obj.parent.getRole() in focusModeRoles:
-            return True
-
         return False
 
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
