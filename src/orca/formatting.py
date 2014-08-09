@@ -37,7 +37,7 @@ from . import settings
 TUTORIAL = '(tutorial and (pause + tutorial) or [])'
 MNEMONIC = '(mnemonic and (pause + mnemonic + lineBreak) or [])'
 
-BRAILLE_TEXT = '[Text(obj, asString(label + placeholderText), asString(eol))]\
+BRAILLE_TEXT = '[Text(obj, asString(labelOrName + placeholderText), asString(eol))]\
                 + (required and [Region(" " + asString(required))])\
                 + (readOnly and [Region(" " + asString(readOnly))])'
 
