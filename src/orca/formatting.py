@@ -155,8 +155,8 @@ formatting = {
         pyatspi.ROLE_ENTRY: {
             'focused': 'labelOrName + placeholderText + readOnly + textRole + currentLineText + allTextSelection',
             'unfocused': 'labelOrName + placeholderText + readOnly + textRole + currentLineText + allTextSelection + ' + MNEMONIC,
-            'basicWhereAmI': 'label + placeholderText + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
-            'detailedWhereAmI': 'label + placeholderText + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
+            'basicWhereAmI': 'labelOrName + placeholderText + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
+            'detailedWhereAmI': 'labelOrName + placeholderText + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
             },
         pyatspi.ROLE_FRAME: {
             'focused': 'labelAndName + roleName',
