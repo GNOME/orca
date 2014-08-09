@@ -185,7 +185,7 @@ formatting = {
             'detailedWhereAmI': 'labelAndName + roleName + selectedItemCount + selectedItems'
             },
         pyatspi.ROLE_LINK: {
-            'unfocused': 'labelAndName + roleName + availability + ' + MNEMONIC,
+            'unfocused': 'labelAndName + roleName + expandableState + availability + ' + MNEMONIC,
             'basicWhereAmI': 'linkInfo + siteDescription + fileSize + ' + MNEMONIC
             },
         pyatspi.ROLE_LIST: {
@@ -617,6 +617,8 @@ if settings.useExperimentalSpeechProsody:
         'labelAndName + pause+ roleName + pause + selectedItemCount + pause'
     formatting['speech'][pyatspi.ROLE_LAYERED_PANE]['detailedWhereAmI'] = \
         'labelAndName + pause + roleName + pause + selectedItemCount + pause+ selectedItems + pause'
+    formatting['speech'][pyatspi.ROLE_LINK]['unfocused'] = \
+        'labelAndName + roleName + pause + expandableState + availability + ' + MNEMONIC
     formatting['speech'][pyatspi.ROLE_LINK]['basicWhereAmI'] = \
         'linkInfo + pause + siteDescription + pause + fileSize + pause + ' + MNEMONIC
     formatting['speech'][pyatspi.ROLE_LIST]['unfocused'] = \
