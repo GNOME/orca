@@ -1230,6 +1230,9 @@ class Script(default.Script):
            and not state.contains(pyatspi.STATE_SELECTED):
             return False
 
+        if self._inFocusMode:
+            return True
+
         if state.contains(pyatspi.STATE_EDITABLE) \
            or state.contains(pyatspi.STATE_EXPANDABLE):
             return True
