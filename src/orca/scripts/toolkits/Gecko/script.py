@@ -1096,7 +1096,8 @@ class Script(default.Script):
     def onFocus(self, event):
         """Callback for focus: accessibility events."""
 
-        if not self.inDocumentContent(event.source):
+        # We should get proper state-changed events for these.
+        if self.inDocumentContent(event.source):
             return
 
         # NOTE: This event type is deprecated and Orca should no longer use it.
