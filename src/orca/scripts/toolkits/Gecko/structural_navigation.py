@@ -133,13 +133,6 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
 
         self._script.setCaretPosition(obj, characterOffset)
 
-    def _isUselessObject(self, obj):
-        """Returns true if the given object is an obj that doesn't
-        have any meaning associated with it.
-        """
-
-        return self._script.isUselessObject(obj)
-
     #####################################################################
     #                                                                   #
     # Methods for presenting objects                                    #

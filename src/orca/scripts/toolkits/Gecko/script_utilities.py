@@ -259,17 +259,6 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def isLayoutOnly(self, obj):
-        """Returns True if the given object is for layout purposes only."""
-
-        if self._script.isUselessObject(obj):
-            debug.println(debug.LEVEL_FINEST,
-                          "Object deemed to be useless: %s" % obj)
-            return True
-
-        else:
-            return script_utilities.Utilities.isLayoutOnly(self, obj)
-
     def isPasswordText(self, obj):
         """Returns True if we should treat this object as password text."""
 

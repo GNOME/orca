@@ -1985,83 +1985,6 @@ class Script(default.Script):
 
             return True
 
-    def isUselessObject(self, obj):
-        """Returns true if the given object is an obj that doesn't
-        have any meaning associated with it and it is not inside a
-        link."""
-
-        if not obj:
-            return True
-
-        useless = False
-
-        textObj = self.utilities.queryNonEmptyText(obj)
-        if not textObj and obj.getRole() == pyatspi.ROLE_PARAGRAPH:
-            # Under these circumstances, this object is useless even
-            # if it is the child of a link.
-            #
-            return True
-        elif obj.getRole() in [pyatspi.ROLE_IMAGE, \
-                               pyatspi.ROLE_TABLE_CELL, \
-                               pyatspi.ROLE_SECTION]:
-            text = self.utilities.displayedText(obj)
-            if (not text) or (len(text) == 0):
-                text = self.utilities.displayedLabel(obj)
-                if (not text) or (len(text) == 0):
-                    useless = True
-
-        if useless:
-            link = self.utilities.ancestorWithRole(
-                obj, [pyatspi.ROLE_LINK], [pyatspi.ROLE_DOCUMENT_FRAME])
-            if link:
-                if obj.getRole() == pyatspi.ROLE_IMAGE:
-                    # If this object had alternative text and/or a title,
-                    # we wouldn't be here. We need to determine if this
-                    # image is indeed worth presenting and not a duplicate
-                    # piece of information. See Facebook's timeline and/or
-                    # bug 584540.
-                    #
-                    for child in obj.parent:
-                        if self.utilities.displayedText(child):
-                            # Some other sibling is presenting information.
-                            # We'll treat this image as useless.
-                            #
-                            break
-                    else:
-                        # No other siblings are presenting information.
-                        #
-                        if obj.parent.getRole() == pyatspi.ROLE_LINK:
-                            if not link.name:
-                                # If no siblings are presenting information,
-                                # but the link had a name, then we'd know we
-                                # had text along with the image(s). Given the
-                                # lack of name, we'll treat the first image as
-                                # the useful one and ignore the rest.
-                                #
-                                useless = obj.getIndexInParent() > 0
-                        else:
-                            # The image must be in a paragraph or section or
-                            # heading or something else that might result in
-                            # it being on its own line.
-                            #
-                            textObj = \
-                                self.utilities.queryNonEmptyText(obj.parent)
-                            if textObj:
-                                text = textObj.getText(0, -1)
-                                text = text.replace(\
-                                    self.EMBEDDED_OBJECT_CHARACTER, "").strip()
-                                if not text:
-                                    # There's no other text on this line inside
-                                    # of this link. We don't want to skip over
-                                    # this line, so we'll treat the first image
-                                    # as useful.
-                                    #
-                                    useless = obj.getIndexInParent() > 0
-                else:
-                    useless = False
-
-        return useless
-
     def pursueForFlatReview(self, obj):
         """Determines if we should look any further at the object
         for flat review."""
@@ -3099,9 +3022,7 @@ class Script(default.Script):
                 toAdd = [x for x in toAdd if x not in objects]
                 objects.extend(toAdd)
                 done = not toAdd
-            elif (nextObj.getRole() in [pyatspi.ROLE_SECTION,
-                                        pyatspi.ROLE_TABLE_CELL] \
-                  and self.isUselessObject(nextObj)):
+            elif nextObj.getRole() in [pyatspi.ROLE_SECTION, pyatspi.ROLE_TABLE_CELL]:
                 toAdd = self.utilities.getObjectsFromEOCs(nextObj, nOffset, boundary)
                 toAdd = [x for x in toAdd if x not in objects]
                 done = True
@@ -3215,13 +3136,6 @@ class Script(default.Script):
                 #
                 if len(contents) > 1 and not len(string):
                     continue
-
-            # If it is a "useless" image (i.e. not a link, no associated
-            # text), ignore it, unless it's the only thing here.
-            #
-            elif role == pyatspi.ROLE_IMAGE and self.isUselessObject(obj) \
-                 and len(contents) > 1:
-                continue
 
             # If the focused item is a checkbox or a radio button for which
             # we had to infer the label, odds are that the inferred label is

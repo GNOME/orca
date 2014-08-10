@@ -1204,17 +1204,6 @@ class StructuralNavigation:
 
         return False
 
-    def _isUselessObject(self, obj):
-        """Returns True if the accessible object obj is an object
-        that doesn't have any meaning associated with it. Individual
-        scripts should override this method as needed.  Gecko does.
-
-        Arguments:
-        - obj: the accessible object of interest.
-        """
-
-        return False
-
     #########################################################################
     #                                                                       #
     # Methods for Presenting Objects                                        #
@@ -2179,8 +2168,7 @@ class StructuralNavigation:
             except:
                 characterCount = 0
 
-            if characterCount > settings.largeObjectTextLength \
-               and not self._isUselessObject(obj):
+            if characterCount > settings.largeObjectTextLength:
                 isMatch = True
 
         return isMatch
