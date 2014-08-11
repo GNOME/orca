@@ -356,3 +356,7 @@ sounds = {}
 # TODO - JD: Is this still needed now that AT-SPI has its own timeout?
 timeoutTime             = 10   # a value of 0 means don't do hang checking
 timeoutCallback         = None # Set by orca.py:init to orca.timeout
+
+# NOTE: At the moment items here are experimental and may be changed or
+# replaced or removed.
+structNavTriggersFocusMode = True

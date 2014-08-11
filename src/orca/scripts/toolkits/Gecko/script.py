@@ -236,6 +236,9 @@ class Script(default.Script):
 
         self._inFocusMode = False
 
+        self._lastCommandWasCaretNav = False
+        self._lastCommandWasStructNav = False
+
         # See bug 665522 - comment 5
         app.setCacheMask(pyatspi.cache.DEFAULT ^ pyatspi.cache.CHILDREN)
 
@@ -654,23 +657,35 @@ class Script(default.Script):
         if user_bindings:
             handler = user_bindings.getInputHandler(keyboardEvent)
             if handler and handler.function in self._caretNavigationFunctions:
-                return self.useCaretNavigationModel(keyboardEvent)
+                consumes = self.useCaretNavigationModel(keyboardEvent)
+                self._lastCommandWasCaretNav = consumes
+                self._lastCommandWasStructNav = False
             elif handler \
                  and (handler.function in self.structuralNavigation.functions \
                       or handler.function in self._liveRegionFunctions):
-                return self.useStructuralNavigationModel()
+                consumes = self.useStructuralNavigationModel()
+                self._lastCommandWasCaretNav = False
+                self._lastCommandWasStructNav = consumes
             else:
                 consumes = handler != None
+                self._lastCommandWasCaretNav = False
+                self._lastCommandWasStructNav = False
         if not consumes:
             handler = self.keyBindings.getInputHandler(keyboardEvent)
             if handler and handler.function in self._caretNavigationFunctions:
-                return self.useCaretNavigationModel(keyboardEvent)
+                consumes = self.useCaretNavigationModel(keyboardEvent)
+                self._lastCommandWasCaretNav = consumes
+                self._lastCommandWasStructNav = False
             elif handler \
                  and (handler.function in self.structuralNavigation.functions \
                       or handler.function in self._liveRegionFunctions):
-                return self.useStructuralNavigationModel()
+                consumes = self.useStructuralNavigationModel()
+                self._lastCommandWasCaretNav = False
+                self._lastCommandWasStructNav = consumes
             else:
                 consumes = handler != None
+                self._lastCommandWasCaretNav = False
+                self._lastCommandWasStructNav = False
         return consumes
 
     def textLines(self, obj):
@@ -1223,6 +1238,10 @@ class Script(default.Script):
             default.Script.handleProgressBarUpdate(self, event, obj)
 
     def _useFocusMode(self, obj):
+        if not orca.settings.structNavTriggersFocusMode \
+           and self._lastCommandWasStructNav:
+            return False
+
         try:
             role = obj.getRole()
             state = obj.getState()
