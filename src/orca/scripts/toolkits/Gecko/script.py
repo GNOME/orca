@@ -883,9 +883,6 @@ class Script(default.Script):
 
         default.Script.onCaretMoved(self, event)
 
-        if self._useFocusMode(obj) != self._inFocusMode:
-            self.togglePresentationMode(None)
-
     def onTextDeleted(self, event):
         """Called whenever text is from an an object.
 
@@ -3305,6 +3302,8 @@ class Script(default.Script):
         orca.setLocusOfFocus(None, obj, notifyScript=False)
         if state.contains(pyatspi.STATE_FOCUSABLE):
             obj.queryComponent().grabFocus()
+            if self._useFocusMode(obj) != self._inFocusMode:
+                self.togglePresentationMode(None)
 
         text = self.utilities.queryNonEmptyText(obj)
         if text:
