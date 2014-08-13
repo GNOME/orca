@@ -1323,6 +1323,9 @@ class Script(default.Script):
         self.setCaretContext(newFocus, caretOffset)
         default.Script.locusOfFocusChanged(self, event, oldFocus, newFocus)
 
+        if self._focusModeIsSticky:
+            return
+
         if self._useFocusMode(newFocus) != self._inFocusMode:
             self.togglePresentationMode(None)
 
@@ -3293,6 +3296,8 @@ class Script(default.Script):
             self.toggleFlatReviewMode()
 
         self.setCaretContext(obj, characterOffset)
+        if self._focusModeIsSticky:
+            return
 
         try:
             state = obj.getState()
@@ -3302,12 +3307,13 @@ class Script(default.Script):
         orca.setLocusOfFocus(None, obj, notifyScript=False)
         if state.contains(pyatspi.STATE_FOCUSABLE):
             obj.queryComponent().grabFocus()
-            if self._useFocusMode(obj) != self._inFocusMode:
-                self.togglePresentationMode(None)
 
         text = self.utilities.queryNonEmptyText(obj)
         if text:
             text.setCaretOffset(characterOffset)
+
+        if self._useFocusMode(obj) != self._inFocusMode:
+            self.togglePresentationMode(None)
 
     def moveToMouseOver(self, inputEvent):
         """Positions the caret offset to the next character or object
