@@ -86,6 +86,7 @@ commonKeymap = (
     "toggleCaretNavigationHandler"),
 
     ("a", defaultModifierMask, ORCA_MODIFIER_MASK, "togglePresentationModeHandler"),
+    ("a", defaultModifierMask, ORCA_MODIFIER_MASK, "enableStickyFocusModeHandler", 2),
 )
 
 desktopKeymap = (

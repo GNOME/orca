@@ -235,6 +235,7 @@ class Script(default.Script):
         self.inMouseOverObject = False
 
         self._inFocusMode = False
+        self._focusModeIsSticky = False
 
         self._lastCommandWasCaretNav = False
         self._lastCommandWasStructNav = False
@@ -427,6 +428,11 @@ class Script(default.Script):
             input_event.InputEventHandler(
                 Script.togglePresentationMode,
                 cmdnames.TOGGLE_PRESENTATION_MODE)
+
+        self.inputEventHandlers["enableStickyFocusModeHandler"] = \
+            input_event.InputEventHandler(
+                Script.enableStickyFocusMode,
+                cmdnames.SET_FOCUS_MODE_STICKY)
 
     def __getArrowBindings(self):
         """Returns an instance of keybindings.KeyBindings that use the
@@ -1238,8 +1244,15 @@ class Script(default.Script):
             default.Script.handleProgressBarUpdate(self, event, obj)
 
     def _useFocusMode(self, obj):
+        if self._focusModeIsSticky:
+            return True
+
         if not orca.settings.structNavTriggersFocusMode \
            and self._lastCommandWasStructNav:
+            return False
+
+        if not orca.settings.caretNavTriggersFocusMode \
+           and self._lastCommandWasCaretNav:
             return False
 
         try:
@@ -1251,9 +1264,6 @@ class Script(default.Script):
         if not state.contains(pyatspi.STATE_FOCUSED) \
            and not state.contains(pyatspi.STATE_SELECTED):
             return False
-
-        if self._inFocusMode:
-            return True
 
         if state.contains(pyatspi.STATE_EDITABLE) \
            or state.contains(pyatspi.STATE_EXPANDABLE):
@@ -3811,6 +3821,11 @@ class Script(default.Script):
         else:
             self.presentMessage(messages.LIVE_REGIONS_OFF)
 
+    def enableStickyFocusMode(self, inputEvent):
+        self._inFocusMode = True
+        self._focusModeIsSticky = True
+        self.presentMessage(messages.MODE_FOCUS_IS_STICKY)
+
     def togglePresentationMode(self, inputEvent):
         if self._inFocusMode:
             [obj, characterOffset] = self.getCaretContext()
@@ -3827,6 +3842,7 @@ class Script(default.Script):
         else:
             self.presentMessage(messages.MODE_FOCUS)
         self._inFocusMode = not self._inFocusMode
+        self._focusModeIsSticky = False
 
     def toggleCaretNavigation(self, inputEvent):
         """Toggles between Firefox native and Orca caret navigation."""

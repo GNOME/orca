@@ -360,3 +360,4 @@ timeoutCallback         = None # Set by orca.py:init to orca.timeout
 # NOTE: At the moment items here are experimental and may be changed or
 # replaced or removed.
 structNavTriggersFocusMode = True
+caretNavTriggersFocusMode = False
