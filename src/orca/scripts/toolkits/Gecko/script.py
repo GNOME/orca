@@ -1633,18 +1633,6 @@ class Script(default.Script):
             return
 
         [obj, characterOffset] = self.getCaretContext()
-        text = self.utilities.queryNonEmptyText(obj)
-        if text:
-            # If the caret is at the end of text and we're not in an
-            # entry, something bad is going on, so decrement the offset
-            # before speaking the character.
-            #
-            string = text.getText(0, -1)
-            if characterOffset >= len(string) \
-               and not obj.getState().contains(pyatspi.STATE_EDITABLE):
-                print("YIKES in Gecko.sayCharacter!")
-                characterOffset -= 1
-
         if characterOffset >= 0:
             self.speakCharacterAtOffset(obj, characterOffset)
 
@@ -1660,20 +1648,6 @@ class Script(default.Script):
             return
 
         [obj, characterOffset] = self.getCaretContext()
-        text = self.utilities.queryNonEmptyText(obj)
-        if text:
-            # [[[TODO: WDW - the caret might be at the end of the text.
-            # Not quite sure what to do in this case.  What we'll do here
-            # is just speak the previous word.  But...maybe we want to
-            # make sure we say something like "end of line" or move the
-            # caret context to the beginning of the next word via
-            # a call to goNextWord.]]]
-            #
-            string = text.getText(0, -1)
-            if characterOffset >= len(string) \
-               and not obj.getState().contains(pyatspi.STATE_EDITABLE):
-                print("YIKES in Gecko.sayWord!")
-                characterOffset -= 1
 
         # Ideally in an entry we would just let default.sayWord() handle
         # things.  That fails to work when navigating backwords by word.
@@ -1701,21 +1675,6 @@ class Script(default.Script):
             return
 
         [obj, characterOffset] = self.getCaretContext()
-        text = self.utilities.queryNonEmptyText(obj)
-        if text:
-            # [[[TODO: WDW - the caret might be at the end of the text.
-            # Not quite sure what to do in this case.  What we'll do here
-            # is just speak the current line.  But...maybe we want to
-            # make sure we say something like "end of line" or move the
-            # caret context to the beginning of the next line via
-            # a call to goNextLine.]]]
-            #
-            string = text.getText(0, -1)
-            if characterOffset >= len(string) \
-               and not obj.getState().contains(pyatspi.STATE_EDITABLE):
-                print("YIKES in Gecko.sayLine!")
-                characterOffset -= 1
-
         self.speakContents(self.getLineContentsAtOffset(obj, characterOffset))
 
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
