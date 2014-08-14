@@ -736,14 +736,6 @@ PRESENT_INPUT_LINE = _("Presents the contents of the input line.")
 # writing functions.
 STRUCTURAL_NAVIGATION_TOGGLE = _("Toggles structural navigation keys.")
 
-# Translators: this is for navigating among anchors in a document. An anchor is
-# a named spot that one can jump to.
-ANCHOR_PREV = _("Goes to previous anchor.")
-
-# Translators: this is for navigating among anchors in a document. An anchor is
-# a named spot that one can jump to.
-ANCHOR_NEXT = _("Goes to next anchor.")
-
 # Translators: this is for navigating among blockquotes in a document.
 BLOCKQUOTE_PREV = _("Goes to previous blockquote.")
 
@@ -770,6 +762,18 @@ CHECK_BOX_NEXT = _("Goes to next check box.")
 
 # Translators: this is for navigating among check boxes in a document.
 CHECK_BOX_LIST = _("Displays a list of check boxes.")
+
+# Translators: this is for navigating among clickable objects in a document.
+# A "clickable" is a web element with an "onClick" handler.
+CLICKABLE_PREV = _("Goes to previous clickable.")
+
+# Translators: this is for navigating among clickable objects in a document.
+# A "clickable" is a web element with an "onClick" handler.
+CLICKABLE_NEXT = _("Goes to next clickable.")
+
+# Translators: this is for navigating among clickable objects in a document.
+# A "clickable" is a web element with an "onClick" handler.
+CLICKABLE_LIST = _("Displays a list of clickables.")
 
 # Translators: this is for navigating among combo boxes in a document.
 COMBO_BOX_PREV = _("Goes to previous combo box.")

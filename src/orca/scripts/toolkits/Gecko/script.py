@@ -282,11 +282,11 @@ class Script(default.Script):
         enabled in this script.
         """
 
-        enabledTypes = [GeckoStructuralNavigation.ANCHOR,
-                        GeckoStructuralNavigation.BLOCKQUOTE,
+        enabledTypes = [GeckoStructuralNavigation.BLOCKQUOTE,
                         GeckoStructuralNavigation.BUTTON,
                         GeckoStructuralNavigation.CHECK_BOX,
                         GeckoStructuralNavigation.CHUNK,
+                        GeckoStructuralNavigation.CLICKABLE,
                         GeckoStructuralNavigation.COMBO_BOX,
                         GeckoStructuralNavigation.ENTRY,
                         GeckoStructuralNavigation.FORM_FIELD,
@@ -1508,6 +1508,7 @@ class Script(default.Script):
             if (not len(string) and role != pyatspi.ROLE_PARAGRAPH) \
                or self.utilities.isEntry(obj) \
                or self.utilities.isPasswordText(obj) \
+               or self.utilities.isClickableElement(obj) \
                or role in [pyatspi.ROLE_LINK, pyatspi.ROLE_PUSH_BUTTON]:
                 [regions, fRegion] = \
                           self.brailleGenerator.generateBraille(obj)
@@ -3147,7 +3148,8 @@ class Script(default.Script):
             if not len(string) \
                or self.utilities.isEntry(obj) \
                or self.utilities.isPasswordText(obj) \
-               or role == pyatspi.ROLE_PUSH_BUTTON and obj.name:
+               or role == pyatspi.ROLE_PUSH_BUTTON and obj.name \
+               or self.utilities.isClickableElement(obj):
                 rv = self.speechGenerator.generateSpeech(obj)
                 # Crazy crap to make clump and friends happy until we can
                 # kill them. (They don't deal well with what the speech

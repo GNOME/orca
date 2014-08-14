@@ -151,8 +151,7 @@ class Script(default.Script):
         """Returns a list of the structural navigation object types
         enabled in this script."""
 
-        enabledTypes = [StructuralNavigation.ANCHOR,
-                        StructuralNavigation.BLOCKQUOTE,
+        enabledTypes = [StructuralNavigation.BLOCKQUOTE,
                         StructuralNavigation.BUTTON,
                         StructuralNavigation.CHECK_BOX,
                         StructuralNavigation.CHUNK,

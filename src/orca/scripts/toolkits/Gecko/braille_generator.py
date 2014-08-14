@@ -175,6 +175,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         oldRole = None
         if self._script.utilities.isEntry(obj):
             oldRole = self._overrideRole(pyatspi.ROLE_ENTRY, args)
+        elif self._script.utilities.isClickableElement(obj):
+            oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
 
         # Treat menu items in collapsed combo boxes as if the combo box
         # had focus. This will make things more consistent with how we

@@ -372,6 +372,12 @@ SN_HEADER_CHECK_BOX = C_("structural navigation", "Check Box")
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they
 # could with native keyboard navigation. This is the title for a column which
+# contains the text displayed for a web element with an "onClick" handler.
+SN_HEADER_CLICKABLE = C_("structural navigation", "Clickable")
+
+# Translators: Orca has a command that presents a list of structural navigation
+# objects in a dialog box so that users can navigate more quickly than they
+# could with native keyboard navigation. This is the title for a column which
 # contains the selected item in a combo box.
 SN_HEADER_COMBO_BOX = C_("structural navigation", "Combo Box")
 
@@ -496,6 +502,12 @@ SN_TITLE_BUTTON = C_("structural navigation", "Buttons")
 # objects in a dialog box so that users can navigate more quickly than they
 # could with native keyboard navigation. This is the title of such a dialog box.
 SN_TITLE_CHECK_BOX = C_("structural navigation", "Check Boxes")
+
+# Translators: Orca has a command that presents a list of structural navigation
+# objects in a dialog box so that users can navigate more quickly than they
+# could with native keyboard navigation. This is the title of such a dialog box.
+# "Clickables" are web elements which have an "onClick" handler.
+SN_TITLE_CLICKABLE = C_("structural navigation", "Clickables")
 
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they

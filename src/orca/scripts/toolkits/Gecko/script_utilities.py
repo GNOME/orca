@@ -599,3 +599,23 @@ class Utilities(script_utilities.Utilities):
                 objects.extend(toAdd)
 
         return objects
+
+    def isClickableElement(self, obj):
+        # For Gecko, we want to identify things which are ONLY clickable.
+        # Things which are focusable, while technically "clickable", are
+        # easily discoverable (e.g. via role) and activatable (e.g. via
+        # pressing Space or Enter.
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_FOCUSABLE):
+            return False
+
+        try:
+            action = obj.queryAction()
+        except NotImplementedError:
+            return False
+
+        for i in range(action.nActions):
+            if action.getName(i) in ["click"]:
+                return True
+
+        return False

@@ -222,6 +222,16 @@ class SpeechGenerator(generator.Generator):
             result.extend(acss)
         return result
 
+    def _generateClickable(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        acss = self.voice(SYSTEM)
+        result = generator.Generator._generateClickable(self, obj, **args)
+        if result:
+            result.extend(acss)
+        return result
+
     def _generateTextRole(self, obj, **args):
         """A convenience method to prevent the pyatspi.ROLE_PARAGRAPH role
         from being spoken. In the case of a pyatspi.ROLE_PARAGRAPH

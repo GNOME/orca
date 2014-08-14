@@ -523,11 +523,11 @@ class StructuralNavigation:
     # should be all that is needed to implement navigation by blockquote
     # in OOo Writer documents.
     #
-    ANCHOR          = "anchor"
     BLOCKQUOTE      = "blockquote"
     BUTTON          = "button"
     CHECK_BOX       = "checkBox"
     CHUNK           = "chunk"
+    CLICKABLE       = "clickable"
     COMBO_BOX       = "comboBox"
     ENTRY           = "entry"
     FORM_FIELD      = "formField"
@@ -874,6 +874,7 @@ class StructuralNavigation:
                                           criteria.interfaces,
                                           criteria.matchInterfaces,
                                           criteria.invert)
+
         if criteria.applyPredicate:
             predicate = structuralNavigationObject.predicate
         else:
@@ -1777,87 +1778,6 @@ class StructuralNavigation:
     # be all that is needed to implement navigation by blockquote
     # in OOo Writer documents.
     #
-
-    ########################
-    #                      #
-    # Anchors              #
-    #                      #
-    ########################
-
-    def _anchorBindings(self):
-        """Returns a dictionary of [keysymstring, modifiers, description]
-        lists for navigating amongst anchors.
-        """
-
-        # NOTE: This doesn't handle the case where the anchor is not an
-        # old-school <a name/id="foo"></a> anchor. For instance on the
-        # GNOME wiki, an "anchor" is actually an id applied to some other
-        # tag (e.g. <h2 id="foo">My Heading</h2>.  We'll have to be a
-        # bit more clever for those.  With the old-school anchors, this
-        # seems to work nicely and provides the user with a way to jump
-        # among defined areas without having to find a Table of Contents
-        # group of links (assuming such a thing is even present on the
-        # page).
-
-        bindings = {}
-        prevDesc = cmdnames.ANCHOR_PREV
-        bindings["previous"] = ["a", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
-
-        nextDesc = cmdnames.ANCHOR_NEXT
-        bindings["next"] = ["a", keybindings.NO_MODIFIER_MASK, nextDesc]
-        return bindings
-
-    def _anchorCriteria(self, collection, arg=None):
-        """Returns the MatchCriteria to be used for locating anchors
-        by collection.
-
-        Arguments:
-        - collection: the collection interface for the document
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        role = [pyatspi.ROLE_LINK]
-        state = [pyatspi.STATE_FOCUSABLE]
-        stateMatch = collection.MATCH_NONE
-        return MatchCriteria(collection,
-                             states=state,
-                             matchStates=stateMatch,
-                             roles=role)
-
-    def _anchorPredicate(self, obj, arg=None):
-        """The predicate to be used for verifying that the object
-        obj is an anchor.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        isMatch = False
-        if obj and obj.getRole() == pyatspi.ROLE_LINK:
-            state = obj.getState()
-            isMatch = not state.contains(pyatspi.STATE_FOCUSABLE)
-        return isMatch
-
-    def _anchorPresentation(self, obj, arg=None):
-        """Presents the anchor or indicates that one was not found.
-
-        Arguments:
-        - obj: the accessible object under consideration.
-        - arg: an optional argument which may need to be included in
-          the criteria (e.g. the level of a heading).
-        """
-
-        if obj:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
-            self._presentObject(obj, characterOffset)
-        else:
-            full = messages.NO_MORE_ANCHORS
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
 
     ########################
     #                      #
@@ -3647,3 +3567,79 @@ class StructuralNavigation:
                     self._script.utilities.uri(obj)]
 
         return guilabels.SN_TITLE_LINK, columnHeaders, rowData
+
+    ########################
+    #                      #
+    # Clickables           #
+    #                      #
+    ########################
+
+    def _clickableBindings(self):
+        """Returns a dictionary of [keysymstring, modifiers, description]
+        lists for navigating amongst "clickable" objects."""
+
+        bindings = {}
+        prevDesc = cmdnames.CLICKABLE_PREV
+        bindings["previous"] = ["a", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
+
+        nextDesc = cmdnames.CLICKABLE_NEXT
+        bindings["next"] = ["a", keybindings.NO_MODIFIER_MASK, nextDesc]
+
+        listDesc = cmdnames.CLICKABLE_LIST
+        bindings["list"] = ["a", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        return bindings
+
+    def _clickableCriteria(self, collection, arg=None):
+        """Returns the MatchCriteria to be used for locating clickables
+        by collection.
+
+        Arguments:
+        - collection: the collection interface for the document
+        - arg: an optional argument which may need to be included in
+          the criteria (e.g. the level of a heading).
+        """
+
+        # TODO - JD: At the moment, matching via interface crashes Orca.
+        # Until that's addressed, we'll just use the predicate approach.
+        # See https://bugzilla.gnome.org/show_bug.cgi?id=734805.
+        return MatchCriteria(collection,
+                             applyPredicate=True)
+
+    def _clickablePredicate(self, obj, arg=None):
+        """The predicate to be used for verifying that the object
+        obj is a clickable.
+
+        Arguments:
+        - obj: the accessible object under consideration.
+        - arg: an optional argument which may need to be included in
+          the criteria (e.g. the level of a heading).
+        """
+
+        return self._script.utilities.isClickableElement(obj)
+
+    def _clickablePresentation(self, obj, arg=None):
+        """Presents the clickable or indicates that one was not found.
+
+        Arguments:
+        - obj: the accessible object under consideration.
+        - arg: an optional argument which may need to be included in
+          the criteria (e.g. the level of a heading).
+        """
+
+        if obj:
+            [obj, characterOffset] = self._getCaretPosition(obj)
+            self._setCaretPosition(obj, characterOffset)
+            self._presentObject(obj, characterOffset)
+        elif not arg:
+            full = messages.NO_MORE_CLICKABLES
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+            self._script.presentMessage(full, brief)
+
+    def _clickableDialogData(self):
+        columnHeaders = [guilabels.SN_HEADER_CLICKABLE]
+        columnHeaders.append(guilabels.SN_HEADER_ROLE)
+
+        def rowData(obj):
+            return [self._getText(obj), self._getRoleName(obj)]
+
+        return guilabels.SN_TITLE_CLICKABLE, columnHeaders, rowData

@@ -411,6 +411,16 @@ class Generator:
     #                                                                   #
     #####################################################################
 
+    def _generateClickable(self, obj, **args):
+        if not args.get('mode', None):
+            args['mode'] = self._mode
+        args['stringType'] = 'clickable'
+
+        if self._script.utilities.isClickableElement(obj):
+            return [self._script.formatting.getString(**args)]
+
+        return []
+
     def _generateAvailability(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
         represent the grayed/sensitivity/availability state of the

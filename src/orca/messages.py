@@ -1147,11 +1147,6 @@ NO_FOCUS =  _("No focus")
 # has keyboard focus.
 NO_FOCUSED_APPLICATION =  _("No application has focus.")
 
-# Translators: This is for navigating document content by moving from anchor to
-# anchor. (An anchor is a named spot that one can jump to.) This is a detailed
-# message which will be presented to the user if no more anchors can be found.
-NO_MORE_ANCHORS = _("No more anchors.")
-
 # Translators: This is for navigating document content by moving from blockquote
 # to blockquote. This is a detailed message which will be presented to the user
 # if no more blockquotes can be found.
@@ -1172,6 +1167,11 @@ NO_MORE_CHECK_BOXES = _("No more check boxes.")
 # such as a paragraph, a list, a table, etc. This is a detailed message which
 # will be presented to the user if no more check boxes can be found.
 NO_MORE_CHUNKS = _("No more large objects.")
+
+# Translators: This is for navigating document content by moving amongst web
+# elements which have an "onClick" action. This is a detailed message which
+# will be presented to the user if no more clickable elements can be found.
+NO_MORE_CLICKABLES = _("No more clickables.")
 
 # Translators: This is for navigating document content by moving from combo
 # box to combo box. This is a detailed message which will be presented to the

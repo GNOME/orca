@@ -76,6 +76,10 @@ ROLE_HEADING_LEVEL_SPEECH = _("%(role)s level %(level)d")
 # of icons.
 ROLE_ICON_PANEL = _("Icon panel")
 
+# Translators: This is a state which applies to elements in document content
+# which have an "onClick" action.
+STATE_CLICKABLE = _("clickable")
+
 # Translators: This is a state which applies to items which can be expanded
 # or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 # means the item's children are not showing; expanded means they are.

@@ -2719,3 +2719,6 @@ class Utilities:
         red, green, blue = string.split(",")
 
         return int(red), int(green), int(blue)
+
+    def isClickableElement(self, obj):
+        return False
