@@ -59,6 +59,7 @@ class ScriptManager:
              'gaim':             'pidgin',
              'empathy-chat':     'empathy',
              'gnome-calculator': 'gcalctool',
+             'marco':            'metacity',
              'Nereid':           'Banshee',
              'vte':              'gnome-terminal',
              'gnome-terminal-server': 'gnome-terminal'}
