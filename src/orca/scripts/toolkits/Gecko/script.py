@@ -772,7 +772,7 @@ class Script(default.Script):
                     self.findNextCaretInOrder(obj, characterOffset)
             else:
                 [obj, characterOffset] = \
-                    self.findNextLine(obj, characterOffset)
+                    self._findNextLine(obj, characterOffset)
             done = (obj == None)
 
     def presentFindResults(self, obj, offset):
@@ -1840,7 +1840,7 @@ class Script(default.Script):
         #
         text = self.utilities.queryNonEmptyText(obj)
         if text and obj.getRole() != pyatspi.ROLE_MENU_ITEM:
-            extents = text.getRangeExtents(startOffset, endOffset, 0)
+            extents = list(text.getRangeExtents(startOffset, endOffset, 0))
         elif obj.getRole() == pyatspi.ROLE_MENU \
              and obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
             ext = obj.parent.queryComponent().getExtents(0)
@@ -1860,43 +1860,28 @@ class Script(default.Script):
         Returns True if a and b are on the same line.
         """
 
-        # If a and b are identical, by definition they are on the same line.
-        #
         if a == b:
             return True
 
-        # For now, we'll just take a look at the bottom of the area.
-        # The code after this takes the whole extents into account,
-        # but that logic has issues in the case where we have
-        # something very tall next to lots of shorter lines (e.g., an
-        # image with lots of text to the left or right of it.  The
-        # number 11 here represents something that seems to work well
-        # with superscripts and subscripts on a line as well as pages
-        # with smaller fonts on them, such as craig's list.
-        #
-        if abs(a[1] - b[1]) > 11:
+        aX, aY, aWidth, aHeight = a
+        bX, bY, bWidth, bHeight = b
+
+        if aWidth == 0 and aHeight == 0:
+            return bY <= aY <= bY + bHeight
+        if bWidth == 0 and bHeight == 0:
+            return aY <= bY <= aY + aHeight
+
+        highestBottom = min(aY + aHeight, bY + bHeight)
+        lowestTop = max(aY, bY)
+        if lowestTop >= highestBottom:
             return False
 
-        # If there's an overlap of 1 pixel or less, they are on different
-        # lines.  Keep in mind "lowest" and "highest" mean visually on the
-        # screen, but that the value is the y coordinate.
-        #
-        highestBottom = min(a[1] + a[3], b[1] + b[3])
-        lowestTop     = max(a[1],        b[1])
-        if lowestTop >= highestBottom - 1:
+        aMiddle = aY + aHeight / 2
+        bMiddle = bY + bHeight / 2
+        if abs(aMiddle - bMiddle) > pixelDelta:
             return False
 
         return True
-
-        # If we do overlap, lets see how much.  We'll require a 25% overlap
-        # for now...
-        #
-        #if lowestTop < highestBottom:
-        #    overlapAmount = highestBottom - lowestTop
-        #    shortestHeight = min(a[3], b[3])
-        #    return ((1.0 * overlapAmount) / shortestHeight) > 0.25
-        #else:
-        #    return False
 
     def isLabellingContents(self, obj, contents):
         """Given and obj and a list of [obj, startOffset, endOffset] tuples,
@@ -2842,95 +2827,9 @@ class Script(default.Script):
             return []
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
-
-        # Find the beginning of this line w.r.t. this object.
-        #
         text = self.utilities.queryNonEmptyText(obj)
-        if not text:
+        if not text or offset == -1:
             offset = 0
-        else:            
-            if offset == -1:
-                offset = 0
-
-            [line, start, end] = text.getTextAtOffset(offset, boundary)
-
-            # If we're still seeing bogusity, which we only seem to see when
-            # moving up, locate the previous character and use it instead.
-            #
-            if not (start <= offset < end):
-                pObj, pOffset = self.findPreviousCaretInOrder(obj, end)
-                if pObj:
-                    obj, offset = pObj, pOffset
-                    text = self.utilities.queryNonEmptyText(obj)
-                    if text:
-                        [line, start, end] = \
-                            text.getTextAtOffset(offset, boundary)
-
-            if start <= offset < end:
-                # So far so good. If the line doesn't begin with an EOC, we
-                # have our first character for this object.
-                #
-                try:
-                    isEOC = line.startswith(self.EMBEDDED_OBJECT_CHARACTER)
-                except:
-                    isEOC = False
-                if not isEOC:
-                    offset = start
-                else:
-                    # The line may begin with a link, or it may begin with
-                    # an anchor which makes this text something one can jump
-                    # to via a link. Anchors are bad.
-                    #
-                    childIndex = self.getChildIndex(obj, start)
-                    if childIndex >= 0:
-                        child = obj[childIndex]
-                        childText = self.utilities.queryNonEmptyText(child)
-                        if not childText:
-                            # It's probably an anchor. It might be something
-                            # else, but that's okay because we do another
-                            # check later to make sure we have everything on
-                            # the left. Set the offset to just after the
-                            # assumed anchor.
-                            #
-                            offset = start + 1
-                        elif obj.getRole() == pyatspi.ROLE_PARAGRAPH \
-                             and child.getRole() == pyatspi.ROLE_PARAGRAPH:
-                            # We don't normally see nested paragraphs. But
-                            # they occur at least when a paragraph begins
-                            # with a multi-line-high character. If we set
-                            # the beginning of this line to that initial
-                            # character, we'll get stuck. See bug 592383.
-                            #
-                            if end - start > 1 and end - offset == 1:
-                                # We must be Up Arrowing. Set the offset to
-                                # just past the EOC so that we present the
-                                # line rather than saying "blank."
-                                #
-                                offset = start + 1
-                        else:
-                            # It's a link that ends on our left. Who knows
-                            # where it starts? Might be on the previous
-                            # line. We will assume that it begins on this
-                            # line if the start offset is 0. However, it
-                            # might be an image link which occupies more
-                            # than just this line. To be safe, we'll also
-                            # look to be sure that the text does not start
-                            # with an embedded object character. See bug
-                            # 587794.
-                            #
-                            cOffset = childText.characterCount - 1
-                            [cLine, cStart, cEnd] = \
-                                childText.getTextAtOffset(cOffset, boundary)
-                            if cStart == 0 \
-                               and not cLine.startswith(\
-                                self.EMBEDDED_OBJECT_CHARACTER) \
-                               and obj.getRole() != pyatspi.ROLE_PANEL:
-                                # It starts on this line.
-                                #
-                                obj = child
-                                offset = cStart
-                            else:
-                                offset = start + 1
 
         extents = self.getExtents(obj, offset, offset + 1)
 
@@ -2948,17 +2847,6 @@ class Script(default.Script):
             if not prevObj or self.utilities.isSameObject(prevObj, firstObj):
                 break
 
-            text = self.utilities.queryNonEmptyText(prevObj)
-            if text:
-                line = text.getTextAtOffset(pOffset, boundary)
-                pOffset = line[1]
-                # If a line begins with a link, getTextAtOffset might
-                # return a zero-length string. If we have a valid offset
-                # increment the pOffset by 1 before getting the extents.
-                #
-                if line[1] > 0 and line[1] == line[2]:
-                    pOffset += 1
-
             prevExtents = self.getExtents(prevObj, pOffset, pOffset + 1)
             if self.onSameLine(extents, prevExtents) \
                and extents != prevExtents \
@@ -2968,15 +2856,7 @@ class Script(default.Script):
                 if not toAdd:
                     break
 
-                # Depending on the line, there's a chance that we got our
-                # current object as part of toAdd. Check for dupes and just
-                # add up to the current object if we find them.
-                #
-                try:
-                    index = toAdd.index(objects[0])
-                except:
-                    index = len(toAdd)
-                objects[0:0] = toAdd[0:index]
+                objects[0:0] = toAdd[0:]
             else:
                 break
 
@@ -2989,41 +2869,19 @@ class Script(default.Script):
         while not done:
             [lastObj, start, end, string] = objects[-1]
             [nextObj, nOffset] = self.findNextCaretInOrder(lastObj, end)
-            if self.utilities.isSameObject(lastObj, nextObj):
-                [nextObj, nOffset] = \
-                    self.findNextCaretInOrder(nextObj, nOffset)
-
             if not nextObj or self.utilities.isSameObject(nextObj, lastObj):
                 break
 
-            text = self.utilities.queryNonEmptyText(nextObj)
-            if text:
-                line = text.getTextAtOffset(nOffset + 1, boundary)
-                nOffset = line[1]
-
             nextExtents = self.getExtents(nextObj, nOffset, nOffset + 1)
-
             if self.onSameLine(extents, nextExtents) \
                and extents != nextExtents \
-               and lastExtents != nextExtents \
-               or nextExtents == (0, 0, 0, 0):
+               and lastExtents != nextExtents:
                 toAdd = self.utilities.getObjectsFromEOCs(nextObj, nOffset, boundary)
                 toAdd = [x for x in toAdd if x not in objects]
-                objects.extend(toAdd)
-                done = not toAdd
-            elif nextObj.getRole() in [pyatspi.ROLE_SECTION, pyatspi.ROLE_TABLE_CELL]:
-                toAdd = self.utilities.getObjectsFromEOCs(nextObj, nOffset, boundary)
-                toAdd = [x for x in toAdd if x not in objects]
-                done = True
-                for item in toAdd:
-                    itemExtents = self.getExtents(item[0], item[1], item[2])
-                    if self.onSameLine(extents, itemExtents):
-                        objects.append(item)
-                        done = False
-                    else:
-                        done = True
-                if done:
+                if not toAdd:
                     break
+
+                objects.extend(toAdd)
             else:
                 break
 
@@ -3437,216 +3295,43 @@ class Script(default.Script):
         self.speakMisspelledIndicator(obj, startOffset)
         self.speakContents(contents)
 
-    def findPreviousLine(self, obj, characterOffset, updateCache=True):
-        """Locates the caret offset at the previous line in the document
-        window.
-
-        Arguments:
-        -obj:             the object from which the search should begin
-        -characterOffset: the offset within obj from which the search should
-                          begin
-        -updateCache:     whether or not we should update the line cache
-
-        Returns the [obj, characterOffset] at the beginning of the line.
-        """
-
+    def _findPreviousLine(self, obj, characterOffset):
         if not obj:
             [obj, characterOffset] = self.getCaretContext()
 
         if not obj:
             return self.getTopOfFile()
 
-        currentLine = self.currentLineContents
-        index = self.findObjectOnLine(obj, characterOffset, currentLine)
-        if index < 0:
-            text = self.utilities.queryNonEmptyText(obj)
-            if text and text.characterCount == characterOffset:
-                characterOffset -= 1
-            currentLine = self.getLineContentsAtOffset(obj, characterOffset)
-
-        prevObj = currentLine[0][0]
-        prevOffset = currentLine[0][1]
-        [prevObj, prevOffset] = \
-            self.findPreviousCaretInOrder(currentLine[0][0], currentLine[0][1])
-
-        extents = self.getExtents(currentLine[0][0],
-                                  currentLine[0][1],
-                                  currentLine[0][2])
+        extents = self.getExtents(obj, characterOffset, characterOffset + 1)
+        prevObj, prevOffset = self.findPreviousCaretInOrder(obj, characterOffset)
         prevExtents = self.getExtents(prevObj, prevOffset, prevOffset + 1)
-        while self.onSameLine(extents, prevExtents) \
-              and (extents != prevExtents):
-            [prevObj, prevOffset] = \
-                self.findPreviousCaretInOrder(prevObj, prevOffset)
+        while prevObj and self.onSameLine(extents, prevExtents):
+            prevObj, prevOffset = self.findPreviousCaretInOrder(prevObj, prevOffset)
             prevExtents = self.getExtents(prevObj, prevOffset, prevOffset + 1)
 
-        # If the user did some back-to-back arrowing, we might already have
-        # the line contents.
-        #
-        prevLine = self._previousLineContents
-        index = self.findObjectOnLine(prevObj, prevOffset, prevLine)
-        if index < 0:
-            prevLine = self.getLineContentsAtOffset(prevObj, prevOffset)
-
-        if not prevLine:
-            return [None, -1]
-
-        prevObj = prevLine[0][0]
-        prevOffset = prevLine[0][1]
-
-        failureCount = 0
-        while failureCount < 5 and prevObj and currentLine == prevLine:
-            # For some reason we're stuck. We'll try a few times by
-            # caret before trying by object.
-            #
-            # print "find prev line failed", prevObj, prevOffset
-            [prevObj, prevOffset] = \
-                      self.findPreviousCaretInOrder(prevObj, prevOffset)
-            prevLine = self.getLineContentsAtOffset(prevObj, prevOffset)
-            failureCount += 1
-        if currentLine == prevLine:
-            # print "find prev line still stuck", prevObj, prevOffset
-            documentFrame = self.utilities.documentFrame()
-            prevObj = self.findPreviousObject(prevObj, documentFrame)
-            prevOffset = 0
-
-        [prevObj, prevOffset] = self.findNextCaretInOrder(prevObj,
-                                                          prevOffset - 1)
-
-        if not _settingsManager.getSetting('caretArrowToLineBeginning'):
-            extents = self.getExtents(obj,
-                                      characterOffset,
-                                      characterOffset + 1)
-            oldX = extents[0]
-            for item in prevLine:
-                extents = self.getExtents(item[0], item[1], item[1] + 1)
-                newX1 = extents[0]
-                newX2 = newX1 + extents[2]
-                if newX1 < oldX <= newX2:
-                    newObj = item[0]
-                    newOffset = 0
-                    text = self.utilities.queryNonEmptyText(prevObj)
-                    if text:
-                        newY = extents[1] + extents[3] / 2
-                        newOffset = text.getOffsetAtPoint(oldX, newY, 0)
-                        if 0 <= newOffset <= characterOffset:
-                            prevOffset = newOffset
-                            prevObj = newObj
-                    break
-
-        if updateCache:
-            self._nextLineContents = self.currentLineContents
-            self.currentLineContents = prevLine
+        prevLine = self.getLineContentsAtOffset(prevObj, prevOffset)
+        if prevLine:
+            prevObj = prevLine[0][0]
+            prevOffset = prevLine[0][1]
 
         return [prevObj, prevOffset]
 
-    def findNextLine(self, obj, characterOffset, updateCache=True):
-        """Locates the caret offset at the next line in the document
-        window.
-
-        Arguments:
-        -obj:             the object from which the search should begin
-        -characterOffset: the offset within obj from which the search should
-                          begin
-        -updateCache:     whether or not we should update the line cache
-
-        Returns the [obj, characterOffset] at the beginning of the line.
-        """
-
+    def _findNextLine(self, obj, characterOffset):
         if not obj:
             [obj, characterOffset] = self.getCaretContext()
 
         if not obj:
             return self.getBottomOfFile()
 
-        currentLine = self.currentLineContents
-        index = self.findObjectOnLine(obj, characterOffset, currentLine)
-        if index < 0:
-            currentLine = self.getLineContentsAtOffset(obj, characterOffset)
-
-        [nextObj, nextOffset] = \
-            self.findNextCaretInOrder(currentLine[-1][0],
-                                      currentLine[-1][2] - 1)
-
-        extents = self.getExtents(currentLine[-1][0],
-                                  currentLine[-1][1],
-                                  currentLine[-1][2])
+        extents = self.getExtents(obj, characterOffset, characterOffset + 1)
+        nextObj, nextOffset = self.findNextCaretInOrder(obj, characterOffset)
         nextExtents = self.getExtents(nextObj, nextOffset, nextOffset + 1)
-        while self.onSameLine(extents, nextExtents) \
-              and (extents != nextExtents):
-            [nextObj, nextOffset] = \
-                self.findNextCaretInOrder(nextObj, nextOffset)
+        while nextObj and self.onSameLine(extents, nextExtents):
+            nextObj, nextOffset = self.findNextCaretInOrder(nextObj, nextOffset)
             nextExtents = self.getExtents(nextObj, nextOffset, nextOffset + 1)
 
-        # If the user did some back-to-back arrowing, we might already have
-        # the line contents.
-        #
-        nextLine = self._nextLineContents
-        index = self.findObjectOnLine(nextObj, nextOffset, nextLine)
-        if index < 0:
-            nextLine = self.getLineContentsAtOffset(nextObj, nextOffset)
-
-        if not nextLine:
-            return [None, -1]
-
-        failureCount = 0
-        while failureCount < 5 and nextObj and currentLine == nextLine:
-            # For some reason we're stuck. We'll try a few times by
-            # caret before trying by object.
-            #
-            #print "find next line failed", nextObj, nextOffset
-            [nextObj, nextOffset] = \
-                      self.findNextCaretInOrder(nextObj, nextOffset)
-            if nextObj:
-                nextLine = self.getLineContentsAtOffset(nextObj, nextOffset)
-                failureCount += 1
-
-        if currentLine == nextLine:
-            #print "find next line still stuck", nextObj, nextOffset
-            documentFrame = self.utilities.documentFrame()
-            nextObj = self.findNextObject(nextObj, documentFrame)
-            nextOffset = 0
-
-        # On a page which contains tables which are not only nested, but
-        # are surrounded by line break characters and/or embedded within
-        # a paragraph or span, there's an excellent chance that we'll skip
-        # right over the nested content. See bug #555055. If we can detect
-        # this condition, we should set the nextOffset to the EOC which
-        # represents the nested content before findNextCaretInOrder does
-        # its thing.
-        #
-        if nextOffset == 0 \
-           and self.getCharacterAtOffset(nextObj, nextOffset) == "\n" \
-           and self.getCharacterAtOffset(nextObj, nextOffset + 1) == \
-               self.EMBEDDED_OBJECT_CHARACTER:
-            nextOffset += 1
-
-        [nextObj, nextOffset] = \
-                  self.findNextCaretInOrder(nextObj, max(0, nextOffset) - 1)
-
-        if not _settingsManager.getSetting('caretArrowToLineBeginning'):
-            extents = self.getExtents(obj,
-                                      characterOffset,
-                                      characterOffset + 1)
-            oldX = extents[0]
-            for item in nextLine:
-                extents = self.getExtents(item[0], item[1], item[1] + 1)
-                newX1 = extents[0]
-                newX2 = newX1 + extents[2]
-                if newX1 < oldX <= newX2:
-                    newObj = item[0]
-                    newOffset = 0
-                    text = self.utilities.queryNonEmptyText(nextObj)
-                    if text:
-                        newY = extents[1] + extents[3] / 2
-                        newOffset = text.getOffsetAtPoint(oldX, newY, 0)
-                        if newOffset >= 0:
-                            nextOffset = newOffset
-                            nextObj = newObj
-                    break
-
-        if updateCache:
-            self._previousLineContents = self.currentLineContents
-            self.currentLineContents = nextLine
+        if nextObj and nextExtents == [0, 0, 0, 0]:
+            nextObj, nextOffset = self.findNextCaretInOrder(nextObj, nextOffset)
 
         return [nextObj, nextOffset]
 
@@ -3658,7 +3343,7 @@ class Script(default.Script):
         """
 
         [obj, characterOffset] = self.getCaretContext()
-        [prevObj, prevCharOffset] = self.findPreviousLine(obj, characterOffset)
+        [prevObj, prevCharOffset] = self._findPreviousLine(obj, characterOffset)
         if not prevObj:
             return False
 
@@ -3676,7 +3361,7 @@ class Script(default.Script):
         """
 
         [obj, characterOffset] = self.getCaretContext()
-        [nextObj, nextCharOffset] = self.findNextLine(obj, characterOffset)
+        [nextObj, nextCharOffset] = self._findNextLine(obj, characterOffset)
         if not nextObj:
             return False
 
