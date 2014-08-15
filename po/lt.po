@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2014-05-12 10:05+0000\n"
-"PO-Revision-Date: 2014-05-12 23:00+0300\n"
+"POT-Creation-Date: 2014-08-15 10:21+0000\n"
+"PO-Revision-Date: 2014-08-15 23:43+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -898,9 +898,12 @@ msgstr "sekcija"
 
 #. Translators: this is the spoken word for the character '¨' (U+00a8)
 #.
-#: ../src/orca/chnames.py:212
-msgid "umlaut"
-msgstr "umliautas"
+#. Translators: this is how someone would speak the name of the
+#. non-spacing diacritical key for the diaeresis glyph
+#.
+#: ../src/orca/chnames.py:212 ../src/orca/keynames.py:275
+msgid "diaeresis"
+msgstr "su brūkšniu"
 
 #. Translators: this is the spoken word for the character '©' (U+00a9)
 #.
@@ -970,9 +973,12 @@ msgstr "pakelta kubu"
 
 #. Translators: this is the spoken word for the character '´' (U+00b4)
 #.
-#: ../src/orca/chnames.py:260
-msgid "acute accent"
-msgstr "dešininis kirtis"
+#. Translators: this is how someone would speak the name of the
+#. non-spacing diacritical key for the acute glyph
+#.
+#: ../src/orca/chnames.py:260 ../src/orca/keynames.py:260
+msgid "acute"
+msgstr "su dešininiu kirčiu"
 
 #. Translators: this is the spoken word for the character 'µ' (U+00b5)
 #.
@@ -1870,7 +1876,6 @@ msgstr "trikampės dešininės rodyklės formos ženklelis"
 #. * http://en.wikipedia.org/wiki/Specials_(Unicode_block)
 #.
 #: ../src/orca/chnames.py:874
-#| msgid "Goes to next character."
 msgid "object replacement character"
 msgstr "objekto pakaitinis simbolis"
 
@@ -2793,140 +2798,149 @@ msgstr "Perskaito įvesties eilutės turinį."
 msgid "Toggles structural navigation keys."
 msgstr "Perjungia navigacijos pagal struktūrą klavišus"
 
-#. Translators: this is for navigating among anchors in a document. An anchor is
-#. a named spot that one can jump to.
-#: ../src/orca/cmdnames.py:741
-msgid "Goes to previous anchor."
-msgstr "Perkelia prie ankstesnio inkaro."
-
-#. Translators: this is for navigating among anchors in a document. An anchor is
-#. a named spot that one can jump to.
-#: ../src/orca/cmdnames.py:745
-msgid "Goes to next anchor."
-msgstr "Perkelia prie kito inkaro."
-
 #. Translators: this is for navigating among blockquotes in a document.
-#: ../src/orca/cmdnames.py:748
+#: ../src/orca/cmdnames.py:740
 msgid "Goes to previous blockquote."
 msgstr "Perkelia prie ankstesnio citatos bloko."
 
 #. Translators: this is for navigating among blockquotes in a document.
-#: ../src/orca/cmdnames.py:751
+#: ../src/orca/cmdnames.py:743
 msgid "Goes to next blockquote."
 msgstr "Perkelia prie sekančio citatos bloko."
 
 #. Translators: this is for navigating among blockquotes in a document.
-#: ../src/orca/cmdnames.py:754
+#: ../src/orca/cmdnames.py:746
 msgid "Displays a list of blockquotes."
 msgstr "Parodo citatų blokų sąrašą."
 
 #. Translators: this is for navigating among buttons in a document.
-#: ../src/orca/cmdnames.py:757
+#: ../src/orca/cmdnames.py:749
 msgid "Goes to previous button."
 msgstr "Perkelia prie ankstesnio mygtuko."
 
 #. Translators: this is for navigating among buttons in a document.
-#: ../src/orca/cmdnames.py:760
+#: ../src/orca/cmdnames.py:752
 msgid "Goes to next button."
 msgstr "Perkelia prie kito mygtuko."
 
 #. Translators: this is for navigating among buttons in a document.
-#: ../src/orca/cmdnames.py:763
+#: ../src/orca/cmdnames.py:755
 msgid "Displays a list of buttons."
 msgstr "Parodo mygtukų sąrašą."
 
 #. Translators: this is for navigating among check boxes in a document.
-#: ../src/orca/cmdnames.py:766
+#: ../src/orca/cmdnames.py:758
 msgid "Goes to previous check box."
 msgstr "Perkelia prie kito žymimojo langelio."
 
 #. Translators: this is for navigating among check boxes in a document.
-#: ../src/orca/cmdnames.py:769
+#: ../src/orca/cmdnames.py:761
 msgid "Goes to next check box."
 msgstr "Perkelia prie kito kito žymimojo langelio."
 
 #. Translators: this is for navigating among check boxes in a document.
-#: ../src/orca/cmdnames.py:772
+#: ../src/orca/cmdnames.py:764
 msgid "Displays a list of check boxes."
 msgstr "Parodo žymimųjų langelių sąrašą."
 
+#. Translators: this is for navigating among clickable objects in a document.
+#. A "clickable" is a web element with an "onClick" handler.
+#: ../src/orca/cmdnames.py:768
+#| msgid "Goes to previous table."
+msgid "Goes to previous clickable."
+msgstr "Pereina prie ankstesnio spaudžiamo elemento."
+
+#. Translators: this is for navigating among clickable objects in a document.
+#. A "clickable" is a web element with an "onClick" handler.
+#: ../src/orca/cmdnames.py:772
+#| msgid "Goes to next table."
+msgid "Goes to next clickable."
+msgstr "Pereina prie kito spaudžiamo elemento."
+
+#. Translators: this is for navigating among clickable objects in a document.
+#. A "clickable" is a web element with an "onClick" handler.
+#: ../src/orca/cmdnames.py:776
+#| msgid "Displays a list of tables."
+msgid "Displays a list of clickables."
+msgstr "Parodo spaudžiamų elementų sąrašą."
+
 #. Translators: this is for navigating among combo boxes in a document.
-#: ../src/orca/cmdnames.py:775
+#: ../src/orca/cmdnames.py:779
 msgid "Goes to previous combo box."
 msgstr "Perkelia prie ankstesnio pasirinkimo lauko."
 
 #. Translators: this is for navigating among combo boxes in a document.
-#: ../src/orca/cmdnames.py:778
+#: ../src/orca/cmdnames.py:782
 msgid "Goes to next combo box."
 msgstr "Perkelia prie kito pasirinkimo lauko."
 
 #. Translators: this is for navigating among combo boxes in a document.
-#: ../src/orca/cmdnames.py:781
+#: ../src/orca/cmdnames.py:785
 msgid "Displays a list of combo boxes."
 msgstr "Parodo pasirinkimo sąrašų sąrašą."
 
 #. Translators: this is for navigating among entries in a document.
-#: ../src/orca/cmdnames.py:784
+#: ../src/orca/cmdnames.py:788
 msgid "Goes to previous entry."
 msgstr "Perkelia prie ankstesnio įvedimo lauko."
 
 #. Translators: this is for navigating among entries in a document.
-#: ../src/orca/cmdnames.py:787
+#: ../src/orca/cmdnames.py:791
 msgid "Goes to next entry."
 msgstr "Perkelia prie kito įvedimo lauko."
 
 #. Translators: this is for navigating among entries in a document.
-#: ../src/orca/cmdnames.py:790
+#: ../src/orca/cmdnames.py:794
 msgid "Displays a list of entries."
 msgstr "Parodo įvedimo laukų sąrašą."
 
 #. Translators: this is for navigating among form fields in a document.
-#: ../src/orca/cmdnames.py:793
+#: ../src/orca/cmdnames.py:797
 msgid "Goes to previous form field."
 msgstr "Perkelia prie ankstesnio formos laukelio."
 
 #. Translators: this is for navigating among form fields in a document.
-#: ../src/orca/cmdnames.py:796
+#: ../src/orca/cmdnames.py:800
 msgid "Goes to next form field."
 msgstr "Perkelia prie sekančio formos laukelio."
 
 #. Translators: this is for navigating among form fields in a document.
-#: ../src/orca/cmdnames.py:799
+#: ../src/orca/cmdnames.py:803
 msgid "Displays a list of form fields."
 msgstr "Parodo formos laukų sąrašą."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
-#: ../src/orca/cmdnames.py:802
+#: ../src/orca/cmdnames.py:806
 msgid "Goes to previous heading."
 msgstr "Perkelia prie ankstesnės antraštės."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
-#: ../src/orca/cmdnames.py:805
+#: ../src/orca/cmdnames.py:809
 msgid "Goes to next heading."
 msgstr "Perkelia prie sekančios antraštės."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
-#: ../src/orca/cmdnames.py:808
+#: ../src/orca/cmdnames.py:812
 msgid "Displays a list of headings."
 msgstr "Parodo antraščių sąrašą."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
-#: ../src/orca/cmdnames.py:812
+#: ../src/orca/cmdnames.py:816
 #, python-format
 msgid "Goes to previous heading at level %d."
 msgstr "Perkelia prie ankstesnės %d lygio antraštės."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
-#: ../src/orca/cmdnames.py:816
+#: ../src/orca/cmdnames.py:820
 #, python-format
 msgid "Goes to next heading at level %d."
 msgstr "Perkelia prie kitos %d lygio antraštės."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
-#: ../src/orca/cmdnames.py:820
+#: ../src/orca/cmdnames.py:824
 #, python-format
 msgid "Displays a list of headings at level %d."
 msgstr "Parodo %d lygmens antraštes."
@@ -2934,227 +2948,256 @@ msgstr "Parodo %d lygmens antraštes."
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
-#: ../src/orca/cmdnames.py:825
+#: ../src/orca/cmdnames.py:829
 msgid "Goes to previous landmark."
 msgstr "Perkelią į ankstesnę sritį."
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
-#: ../src/orca/cmdnames.py:830
+#: ../src/orca/cmdnames.py:834
 msgid "Goes to next landmark."
 msgstr "Perkelią į kitą sritį."
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
-#: ../src/orca/cmdnames.py:835
+#: ../src/orca/cmdnames.py:839
 msgid "Displays a list of landmarks."
 msgstr "Parodo žymelių sąrašą."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/cmdnames.py:840
+#: ../src/orca/cmdnames.py:844
 msgid "Goes to previous large object."
 msgstr "Perkelia prie ankstesnio stambaus objekto."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/cmdnames.py:845
+#: ../src/orca/cmdnames.py:849
 msgid "Goes to next large object."
 msgstr "Perkelia prie sekančio stambaus objekto."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/cmdnames.py:850
+#: ../src/orca/cmdnames.py:854
 msgid "Displays a list of large objects."
 msgstr "Parodo didelių objektų sąrašą."
 
 #. Translators: this is for navigating among links in a document.
-#: ../src/orca/cmdnames.py:853
-#| msgid "Goes to previous line."
+#: ../src/orca/cmdnames.py:857
 msgid "Goes to previous link."
 msgstr "Pereina prie ankstesnio saito."
 
 #. Translators: this is for navigating among links in a document.
-#: ../src/orca/cmdnames.py:856
-#| msgid "Goes to next line."
+#: ../src/orca/cmdnames.py:860
 msgid "Goes to next link."
 msgstr "Pereina prie kito saito."
 
 #. Translators: this is for navigating among links in a document.
-#: ../src/orca/cmdnames.py:859
+#: ../src/orca/cmdnames.py:863
 msgid "Displays a list of links."
 msgstr "Parodo nuorodų sąrašą."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:862
+#: ../src/orca/cmdnames.py:866
 msgid "Goes to previous list."
 msgstr "Perkelia prie ankstesnio sąrašo."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:865
+#: ../src/orca/cmdnames.py:869
 msgid "Goes to next list."
 msgstr "Perkelia prie sekančio sąrašo."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:868
+#: ../src/orca/cmdnames.py:872
 msgid "Displays a list of lists."
 msgstr "Parodo sąrašų sąrašą."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:871
+#: ../src/orca/cmdnames.py:875
 msgid "Goes to previous list item."
 msgstr "Perkelia prie ankstesnio sąrašo elemento."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:874
+#: ../src/orca/cmdnames.py:878
 msgid "Goes to next list item."
 msgstr "Perkelia prie sekančio sąrašo elemento."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:877
+#: ../src/orca/cmdnames.py:881
 msgid "Displays a list of list items."
 msgstr "Parodo sąrašo elementų sąrašą."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:882
+#: ../src/orca/cmdnames.py:886
 msgid "Goes to previous live region."
 msgstr "Perkelią į ankstesnę tiesioginę sritį."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:887
+#: ../src/orca/cmdnames.py:891
 msgid "Goes to next live region."
 msgstr "Perkelią į kitą tiesioginę sritį."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:892
+#: ../src/orca/cmdnames.py:896
 msgid "Goes to the last live region which made an announcement."
 msgstr "Perkelią į paskutinę tiesioginę sritį, atlikusią pranešimą."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:895
+#: ../src/orca/cmdnames.py:899
 msgid "Goes to previous paragraph."
 msgstr "Perkelia prie ankstesnės pastraipos."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:898
+#: ../src/orca/cmdnames.py:902
 msgid "Goes to next paragraph."
 msgstr "Perkelia prie kitos pastraipos."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:901
+#: ../src/orca/cmdnames.py:905
 msgid "Displays a list of paragraphs."
 msgstr "Parodo pastraipų sąrašą."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:904
+#: ../src/orca/cmdnames.py:908
 msgid "Goes to previous radio button."
 msgstr "Perkelia prie ankstesnio radijo mygtuko."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:907
+#: ../src/orca/cmdnames.py:911
 msgid "Goes to next radio button."
 msgstr "Perkelia prie kito radijo mygtuko."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:910
+#: ../src/orca/cmdnames.py:914
 msgid "Displays a list of radio buttons."
 msgstr "Parodo radijo mygtukų sąrašą."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:914
+#: ../src/orca/cmdnames.py:918
 msgid "Goes to previous separator."
 msgstr "Perkelia prie ankstesnio skirtuko."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:918
+#: ../src/orca/cmdnames.py:922
 msgid "Goes to next separator."
 msgstr "Perkelia prie kito skirtuko."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:921
+#: ../src/orca/cmdnames.py:925
 msgid "Goes to previous table."
 msgstr "Perkelia prie ankstesnės lentelės."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:924
+#: ../src/orca/cmdnames.py:928
 msgid "Goes to next table."
 msgstr "Perkelia prie sekančios lentelės."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:927
+#: ../src/orca/cmdnames.py:931
 msgid "Displays a list of tables."
 msgstr "Parodo lentelių sąrašą."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:930
+#: ../src/orca/cmdnames.py:934
 msgid "Goes down one cell."
 msgstr "Perkelia vienu langeliu žemyn."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:933
+#: ../src/orca/cmdnames.py:937
 msgid "Goes to the first cell in a table."
 msgstr "Perkelia į pirmąjį lentelės langelį."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:936
+#: ../src/orca/cmdnames.py:940
 msgid "Goes to the last cell in a table."
 msgstr "Perkelia į paskutinįjį lentelės langelį."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:939
+#: ../src/orca/cmdnames.py:943
 msgid "Goes left one cell."
 msgstr "Perkelia vienu langeliu kairėn."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:942
+#: ../src/orca/cmdnames.py:946
 msgid "Goes right one cell."
 msgstr "Perkelia vienu langeliu dešinėn."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:945
+#: ../src/orca/cmdnames.py:949
 msgid "Goes up one cell."
 msgstr "Perkelia vienu langeliu aukštyn."
 
+#. Translators: Orca has a number of commands that override the default
+#. behavior within an application. For instance, on a web page, "h" moves
+#. you to the next heading. What should happen when you press an "h" in
+#. an entry on a web page depends: If you want to resume reading content,
+#. "h" should move to the next heading; if you want to enter text, "h"
+#. should not not move you to the next heading. Similarly, if you are
+#. at the bottom of an entry and press Down arrow, should you leave the
+#. entry? Again, it depends on if you want to resume reading content or
+#. if you are editing the text in the entry. Because Orca doesn't know
+#. what you want to do, it has two modes: In browse mode, Orca treats
+#. key presses as commands to read the content; in focus mode, Orca treats
+#. key presses as something that should be handled by the focused widget.
+#. This string is associated with the Orca command to manually switch
+#. between these two modes.
+#: ../src/orca/cmdnames.py:965
+msgid "Switches between browse mode and focus mode."
+msgstr "Perjungia tarp naršymo ir fokusavimo veiksenų."
+
+#. Translators: (Please see the previous, detailed translator notes about
+#. Focus mode and Browse mode.) In order to minimize the amount of work Orca
+#. users need to do to switch between focus mode and browse mode, Orca attempts
+#. to automatically switch to the mode which is appropriate to the current
+#. web element. Sometimes, however, this automatic mode switching is not what
+#. the user wants. A good example being web apps which have their own keyboard
+#. navigation and use interaction model. As a result, Orca has a command which
+#. enables setting a "sticky" focus mode which disables all automatic toggling.
+#. This string is associated with the Orca command to enable sticky focus mode.
+#: ../src/orca/cmdnames.py:976
+msgid "Enables sticky focus mode."
+msgstr "Įjungia kibaus fokuso veikseną."
+
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:948
+#: ../src/orca/cmdnames.py:979
 msgid "Goes to previous unvisited link."
 msgstr "Perkelia prie ankstesnės neaplankytos nuorodos."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:951
+#: ../src/orca/cmdnames.py:982
 msgid "Goes to next unvisited link."
 msgstr "Perkelia prie sekančios neaplankytos nuorodos."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:954
+#: ../src/orca/cmdnames.py:985
 msgid "Displays a list of unvisited links."
 msgstr "Parodo neaplankytų nuorodų sąrašą."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:957
+#: ../src/orca/cmdnames.py:988
 msgid "Goes to previous visited link."
 msgstr "Perkelia prie ankstesnės aplankytos nuorodos."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:960
+#: ../src/orca/cmdnames.py:991
 msgid "Goes to next visited link."
 msgstr "Perkelia prie sekančios aplankytos nuorodos."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:963
+#: ../src/orca/cmdnames.py:994
 msgid "Displays a list of visited links."
 msgstr "Parodo neaplankytų nuorodų sąrašą."
 
@@ -3210,8 +3253,6 @@ msgstr "bisque"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:65
-#| msgctxt "textattr"
-#| msgid "black"
 msgctxt "color name"
 msgid "black"
 msgstr "juoda"
@@ -3220,7 +3261,6 @@ msgstr "juoda"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:70
-#| msgid "black diamond"
 msgctxt "color name"
 msgid "blanched almond"
 msgstr "blanched almond"
@@ -3349,7 +3389,6 @@ msgstr "dark goldenrod"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:150
-#| msgid "a grave"
 msgctxt "color name"
 msgid "dark gray"
 msgstr "tamsiai pilka"
@@ -3478,7 +3517,6 @@ msgstr "deep sky blue"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:230
-#| msgid "i grave"
 msgctxt "color name"
 msgid "dim gray"
 msgstr "blyški pilka"
@@ -3559,7 +3597,6 @@ msgstr "goldenrod"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:280
-#| msgid "grayed"
 msgctxt "color name"
 msgid "gray"
 msgstr "pilka"
@@ -3568,7 +3605,6 @@ msgstr "pilka"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:285
-#| msgid "degrees"
 msgctxt "color name"
 msgid "green"
 msgstr "žalia"
@@ -3601,7 +3637,6 @@ msgstr "hot pink"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:305
-#| msgid "Hindi Grade 1"
 msgctxt "color name"
 msgid "indian red"
 msgstr "indian red"
@@ -3666,7 +3701,6 @@ msgstr "lemon chiffon"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:345
-#| msgid "right brace"
 msgctxt "color name"
 msgid "light blue"
 msgstr "šviesiai mėlyna"
@@ -3675,7 +3709,6 @@ msgstr "šviesiai mėlyna"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:350
-#| msgid "right control"
 msgctxt "color name"
 msgid "light coral"
 msgstr "šviesi koralo"
@@ -3684,7 +3717,6 @@ msgstr "šviesi koralo"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:355
-#| msgid "right paren"
 msgctxt "color name"
 msgid "light cyan"
 msgstr "šviesiai žydra"
@@ -3701,7 +3733,6 @@ msgstr "light goldenrod yellow"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:365
-#| msgid "right brace"
 msgctxt "color name"
 msgid "light gray"
 msgstr "šviesiai pilka"
@@ -3710,7 +3741,6 @@ msgstr "šviesiai pilka"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:370
-#| msgid "right paren"
 msgctxt "color name"
 msgid "light green"
 msgstr "šviesiai žalia"
@@ -3719,7 +3749,6 @@ msgstr "šviesiai žalia"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:375
-#| msgid "right paren"
 msgctxt "color name"
 msgid "light pink"
 msgstr "šviesiai rožinė"
@@ -3728,7 +3757,6 @@ msgstr "šviesiai rožinė"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:380
-#| msgid "right alt"
 msgctxt "color name"
 msgid "light salmon"
 msgstr "light salmon"
@@ -3737,7 +3765,6 @@ msgstr "light salmon"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:385
-#| msgid "right paren"
 msgctxt "color name"
 msgid "light sea green"
 msgstr "light sea green"
@@ -3746,7 +3773,6 @@ msgstr "light sea green"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:390
-#| msgid "right super"
 msgctxt "color name"
 msgid "light sky blue"
 msgstr "light sky blue"
@@ -3771,7 +3797,6 @@ msgstr "light steel blue"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:405
-#| msgid "right arrow"
 msgctxt "color name"
 msgid "light yellow"
 msgstr "light yellow"
@@ -3796,7 +3821,6 @@ msgstr "lime green"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:420
-#| msgid "newline"
 msgctxt "color name"
 msgid "linen"
 msgstr "linen"
@@ -4077,7 +4101,6 @@ msgstr "purpurinė"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:595
-#| msgid "tre"
 msgctxt "color name"
 msgid "red"
 msgstr "raudona"
@@ -4126,7 +4149,6 @@ msgstr "sandy brown"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:625
-#| msgid "degrees"
 msgctxt "color name"
 msgid "sea green"
 msgstr "sea green"
@@ -4207,7 +4229,6 @@ msgstr "steel blue"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:675
-#| msgid "btn"
 msgctxt "color name"
 msgid "tan"
 msgstr "tan"
@@ -4264,7 +4285,6 @@ msgstr "wheat"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:710
-#| msgid "white space"
 msgctxt "color name"
 msgid "white"
 msgstr "balta"
@@ -4273,7 +4293,6 @@ msgstr "balta"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:715
-#| msgid "white space"
 msgctxt "color name"
 msgid "white smoke"
 msgstr "white smoke"
@@ -4298,9 +4317,9 @@ msgstr "gelsvai žalia"
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1050 ../src/orca/generator.py:475
-#: ../src/orca/generator.py:741 ../src/orca/generator.py:783
-#: ../src/orca/generator.py:829 ../src/orca/tutorialgenerator.py:558
+#: ../src/orca/flat_review.py:1045 ../src/orca/generator.py:485
+#: ../src/orca/generator.py:751 ../src/orca/generator.py:793
+#: ../src/orca/generator.py:839 ../src/orca/tutorialgenerator.py:558
 #: ../src/orca/tutorialgenerator.py:598
 msgid "toggle"
 msgstr "perjungti"
@@ -4421,7 +4440,7 @@ msgstr "_Skaityti pokalbių kambario pavadinimą"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/guilabels.py:116 ../src/orca/keybindings.py:164
+#: ../src/orca/guilabels.py:116 ../src/orca/keybindings.py:195
 msgid "double click"
 msgstr "dvigubas paspaudimas"
 
@@ -4432,7 +4451,7 @@ msgstr "dvigubas paspaudimas"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/guilabels.py:121 ../src/orca/keybindings.py:170
+#: ../src/orca/guilabels.py:121 ../src/orca/keybindings.py:201
 msgid "triple click"
 msgstr "trigubas paspaudimas"
 
@@ -4792,8 +4811,17 @@ msgstr "Žymimasis langelis"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
-#. contains the selected item in a combo box.
+#. contains the text displayed for a web element with an "onClick" handler.
 #: ../src/orca/guilabels.py:376
+msgctxt "structural navigation"
+msgid "Clickable"
+msgstr "Spaudžiamas elementas"
+
+#. Translators: Orca has a command that presents a list of structural navigation
+#. objects in a dialog box so that users can navigate more quickly than they
+#. could with native keyboard navigation. This is the title for a column which
+#. contains the selected item in a combo box.
+#: ../src/orca/guilabels.py:382
 msgctxt "structural navigation"
 msgid "Combo Box"
 msgstr "Pasirinkimo sąrašas"
@@ -4802,7 +4830,7 @@ msgstr "Pasirinkimo sąrašas"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the description of an element.
-#: ../src/orca/guilabels.py:382
+#: ../src/orca/guilabels.py:388
 msgctxt "structural navigation"
 msgid "Description"
 msgstr "Aprašymas"
@@ -4811,7 +4839,7 @@ msgstr "Aprašymas"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a heading.
-#: ../src/orca/guilabels.py:388
+#: ../src/orca/guilabels.py:394
 msgctxt "structural navigation"
 msgid "Heading"
 msgstr "Antraštė"
@@ -4820,7 +4848,7 @@ msgstr "Antraštė"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a form field.
-#: ../src/orca/guilabels.py:394
+#: ../src/orca/guilabels.py:400
 msgctxt "structural navigation"
 msgid "Label"
 msgstr "Etiketė"
@@ -4831,7 +4859,7 @@ msgstr "Etiketė"
 #. contains the text of a landmark. ARIA role landmarks are the W3C defined HTML
 #. tag attribute 'role' used to identify important part of webpage like banners,
 #. main context, search etc.
-#: ../src/orca/guilabels.py:402
+#: ../src/orca/guilabels.py:408
 msgctxt "structural navigation"
 msgid "Landmark"
 msgstr "Žymelė"
@@ -4841,7 +4869,7 @@ msgstr "Žymelė"
 #. could with native keyboard navigation. This is the title of a column which
 #. contains the level of a heading. Level will be a "1" for <h1>, a "2" for <h2>,
 #. and so on.
-#: ../src/orca/guilabels.py:409
+#: ../src/orca/guilabels.py:415
 msgctxt "structural navigation"
 msgid "Level"
 msgstr "Lygmuo"
@@ -4850,7 +4878,7 @@ msgstr "Lygmuo"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a link.
-#: ../src/orca/guilabels.py:415
+#: ../src/orca/guilabels.py:421
 msgctxt "structural navigation"
 msgid "Link"
 msgstr "Nuoroda"
@@ -4859,7 +4887,7 @@ msgstr "Nuoroda"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list.
-#: ../src/orca/guilabels.py:421
+#: ../src/orca/guilabels.py:427
 msgctxt "structural navigation"
 msgid "List"
 msgstr "Sąrašas"
@@ -4868,7 +4896,7 @@ msgstr "Sąrašas"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list item.
-#: ../src/orca/guilabels.py:427
+#: ../src/orca/guilabels.py:433
 msgctxt "structural navigation"
 msgid "List Item"
 msgstr "Sąrašo elementas"
@@ -4877,7 +4905,7 @@ msgstr "Sąrašo elementas"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an object.
-#: ../src/orca/guilabels.py:433
+#: ../src/orca/guilabels.py:439
 msgctxt "structural navigation"
 msgid "Object"
 msgstr "Objektas"
@@ -4886,7 +4914,7 @@ msgstr "Objektas"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a paragraph.
-#: ../src/orca/guilabels.py:439
+#: ../src/orca/guilabels.py:445
 msgctxt "structural navigation"
 msgid "Paragraph"
 msgstr "Pastraipa"
@@ -4895,7 +4923,7 @@ msgstr "Pastraipa"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a radio button.
-#: ../src/orca/guilabels.py:445
+#: ../src/orca/guilabels.py:451
 msgctxt "structural navigation"
 msgid "Radio Button"
 msgstr "Radijo mygtukas"
@@ -4905,7 +4933,7 @@ msgstr "Radijo mygtukas"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the role of a widget. Examples include "heading", "paragraph",
 #. "table", "combo box", etc.
-#: ../src/orca/guilabels.py:452
+#: ../src/orca/guilabels.py:458
 msgctxt "structural navigation"
 msgid "Role"
 msgstr "Rolė"
@@ -4914,7 +4942,7 @@ msgstr "Rolė"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the selected item of a form field.
-#: ../src/orca/guilabels.py:458
+#: ../src/orca/guilabels.py:464
 msgctxt "structural navigation"
 msgid "Selected Item"
 msgstr "Pasirinktas elementas"
@@ -4924,7 +4952,7 @@ msgstr "Pasirinktas elementas"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the state of a widget. Examples include "checked"/"not checked",
 #. "selected"/"not selected", "visited/not visited", etc.
-#: ../src/orca/guilabels.py:465
+#: ../src/orca/guilabels.py:471
 msgctxt "structural navigation"
 msgid "State"
 msgstr "Būsena"
@@ -4933,7 +4961,7 @@ msgstr "Būsena"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an entry.
-#: ../src/orca/guilabels.py:471
+#: ../src/orca/guilabels.py:477
 msgctxt "structural navigation"
 msgid "Text"
 msgstr "Tekstas"
@@ -4942,7 +4970,7 @@ msgstr "Tekstas"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the URI of a link.
-#: ../src/orca/guilabels.py:477
+#: ../src/orca/guilabels.py:483
 msgctxt "structural navigation"
 msgid "URI"
 msgstr "URI"
@@ -4951,7 +4979,7 @@ msgstr "URI"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the value of a form field.
-#: ../src/orca/guilabels.py:483
+#: ../src/orca/guilabels.py:489
 msgctxt "structural navigation"
 msgid "Value"
 msgstr "Vertė"
@@ -4959,7 +4987,7 @@ msgstr "Vertė"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:488
+#: ../src/orca/guilabels.py:494
 msgctxt "structural navigation"
 msgid "Blockquotes"
 msgstr "Citatų blokai"
@@ -4967,7 +4995,7 @@ msgstr "Citatų blokai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:493
+#: ../src/orca/guilabels.py:499
 msgctxt "structural navigation"
 msgid "Buttons"
 msgstr "Mygtukai"
@@ -4975,7 +5003,7 @@ msgstr "Mygtukai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:498
+#: ../src/orca/guilabels.py:504
 msgctxt "structural navigation"
 msgid "Check Boxes"
 msgstr "Žymimieji langeliai"
@@ -4983,7 +5011,18 @@ msgstr "Žymimieji langeliai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:503
+#. "Clickables" are web elements which have an "onClick" handler.
+#: ../src/orca/guilabels.py:510
+#| msgctxt "structural navigation"
+#| msgid "Tables"
+msgctxt "structural navigation"
+msgid "Clickables"
+msgstr "Spaudžiami elementai"
+
+#. Translators: Orca has a command that presents a list of structural navigation
+#. objects in a dialog box so that users can navigate more quickly than they
+#. could with native keyboard navigation. This is the title of such a dialog box.
+#: ../src/orca/guilabels.py:515
 msgctxt "structural navigation"
 msgid "Combo Boxes"
 msgstr "Pasirinkimo sąrašai"
@@ -4991,7 +5030,7 @@ msgstr "Pasirinkimo sąrašai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:508
+#: ../src/orca/guilabels.py:520
 msgctxt "structural navigation"
 msgid "Entries"
 msgstr "Įrašai"
@@ -4999,7 +5038,7 @@ msgstr "Įrašai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:513
+#: ../src/orca/guilabels.py:525
 msgctxt "structural navigation"
 msgid "Form Fields"
 msgstr "Formos laukai"
@@ -5007,7 +5046,7 @@ msgstr "Formos laukai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:518
+#: ../src/orca/guilabels.py:530
 msgctxt "structural navigation"
 msgid "Headings"
 msgstr "Antraštės"
@@ -5016,7 +5055,7 @@ msgstr "Antraštės"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. Level will be a "1" for <h1>, a "2" for <h2>, and so on.
-#: ../src/orca/guilabels.py:524
+#: ../src/orca/guilabels.py:536
 #, python-format
 msgctxt "structural navigation"
 msgid "Headings at Level %d"
@@ -5027,7 +5066,7 @@ msgstr "%d lygmens antraštės"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
-#: ../src/orca/guilabels.py:531
+#: ../src/orca/guilabels.py:543
 msgctxt "structural navigation"
 msgid "Landmarks"
 msgstr "Žymelės"
@@ -5037,7 +5076,7 @@ msgstr "Žymelės"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/guilabels.py:538
+#: ../src/orca/guilabels.py:550
 msgctxt "structural navigation"
 msgid "Large Objects"
 msgstr "Dideli objektai"
@@ -5045,7 +5084,7 @@ msgstr "Dideli objektai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:543
+#: ../src/orca/guilabels.py:555
 msgctxt "structural navigation"
 msgid "Links"
 msgstr "Nuorodos"
@@ -5053,7 +5092,7 @@ msgstr "Nuorodos"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:548
+#: ../src/orca/guilabels.py:560
 msgctxt "structural navigation"
 msgid "Lists"
 msgstr "Sąrašai"
@@ -5061,7 +5100,7 @@ msgstr "Sąrašai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:553
+#: ../src/orca/guilabels.py:565
 msgctxt "structural navigation"
 msgid "List Items"
 msgstr "Sąrašo elementai"
@@ -5069,7 +5108,7 @@ msgstr "Sąrašo elementai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:558
+#: ../src/orca/guilabels.py:570
 msgctxt "structural navigation"
 msgid "Paragraphs"
 msgstr "Pastraipos"
@@ -5077,7 +5116,7 @@ msgstr "Pastraipos"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:563
+#: ../src/orca/guilabels.py:575
 msgctxt "structural navigation"
 msgid "Radio Buttons"
 msgstr "Radijo mygtukai"
@@ -5085,7 +5124,7 @@ msgstr "Radijo mygtukai"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:568
+#: ../src/orca/guilabels.py:580
 msgctxt "structural navigation"
 msgid "Tables"
 msgstr "Lentelės"
@@ -5093,7 +5132,7 @@ msgstr "Lentelės"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:573
+#: ../src/orca/guilabels.py:585
 msgctxt "structural navigation"
 msgid "Unvisited Links"
 msgstr "Neaplankytos nuorodos"
@@ -5101,7 +5140,7 @@ msgstr "Neaplankytos nuorodos"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:578
+#: ../src/orca/guilabels.py:590
 msgctxt "structural navigation"
 msgid "Visited Links"
 msgstr "Aplankytos nuorodos"
@@ -5109,14 +5148,14 @@ msgstr "Aplankytos nuorodos"
 #. Translators: This is the title of a panel holding options for how to navigate
 #. HTML content (e.g., Orca caret navigation, positioning of caret, structural
 #. navigation, etc.).
-#: ../src/orca/guilabels.py:583
+#: ../src/orca/guilabels.py:595
 msgid "Page Navigation"
 msgstr "Puslapio navigacija"
 
 #. Translators: When the user loads a new web page, they can optionally have Orca
 #. automatically start reading the page from beginning to end. This is the label
 #. of a checkbox in which users can indicate their preference.
-#: ../src/orca/guilabels.py:589
+#: ../src/orca/guilabels.py:601
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr ""
 "Automatiškai pradėti garsiai skaityti puslapį, kai jis pirmą kartą įkrautas"
@@ -5128,7 +5167,7 @@ msgstr ""
 #. queued up and sent to the speech synthesis system once the entire set of
 #. utterances has been calculated.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: ../src/orca/guilabels.py:597 ../src/orca/orca-setup.ui.h:48
+#: ../src/orca/guilabels.py:609 ../src/orca/orca-setup.ui.h:48
 msgid "Break speech into ch_unks between pauses"
 msgstr "Skaidyti kalbą į _dalis tarp pauzių"
 
@@ -5138,21 +5177,21 @@ msgstr "Skaidyti kalbą į _dalis tarp pauzių"
 #. to the default voice configured for given speech engine within the speech
 #. subsystem. Apart from this item, the list will contain the names of all
 #. available "real" voices provided by the speech engine.
-#: ../src/orca/guilabels.py:605
+#: ../src/orca/guilabels.py:617
 #, python-format
 msgid "%s default voice"
 msgstr "%s balsas pagal nutylėjimą."
 
 #. Translators: This refers to the voice used by Orca when presenting the content
 #. of the screen and other messages.
-#: ../src/orca/guilabels.py:609
+#: ../src/orca/guilabels.py:621
 msgctxt "VoiceType"
 msgid "Default"
 msgstr "Numatytasis"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is part of a hyperlink.
-#: ../src/orca/guilabels.py:613
+#: ../src/orca/guilabels.py:625
 msgctxt "VoiceType"
 msgid "Hyperlink"
 msgstr "Hipersaitas"
@@ -5163,27 +5202,27 @@ msgstr "Hipersaitas"
 #. indicate the presence of the red squiggly line found under a spelling error;
 #. Orca might say "3 of 6" when a user Tabs into a list of six items and the
 #. third item is selected. And so on.
-#: ../src/orca/guilabels.py:621
+#: ../src/orca/guilabels.py:633
 msgctxt "VoiceType"
 msgid "System"
 msgstr "Sistema"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is written in uppercase.
-#: ../src/orca/guilabels.py:625
+#: ../src/orca/guilabels.py:637
 msgctxt "VoiceType"
 msgid "Uppercase"
 msgstr "Didžiosiomis"
 
 #. Translators this label refers to the name of particular speech synthesis
 #. system. (http://devel.freebsoft.org/speechd)
-#: ../src/orca/guilabels.py:629
+#: ../src/orca/guilabels.py:641
 msgid "Speech Dispatcher"
 msgstr "Speech Dispatcher"
 
 #. Translators: This is a label for a group of options related to Orca's behavior
 #. when presenting an application's spell check dialog.
-#: ../src/orca/guilabels.py:633
+#: ../src/orca/guilabels.py:645
 msgctxt "OptionGroup"
 msgid "Spell Check"
 msgstr "Rašybos tikrinimas"
@@ -5192,7 +5231,7 @@ msgstr "Rašybos tikrinimas"
 #. When this option is enabled, Orca will spell out the current error in addition
 #. to speaking it. For example, if the misspelled word is "foo," enabling this
 #. setting would cause Orca to speak "f o o" after speaking "foo".
-#: ../src/orca/guilabels.py:639
+#: ../src/orca/guilabels.py:651
 msgid "Spell _error"
 msgstr "Rašybos _klaida"
 
@@ -5201,39 +5240,39 @@ msgstr "Rašybos _klaida"
 #. addition to speaking it. For example, if the misspelled word is "foo," and
 #. the first suggestion is "for" enabling this setting would cause Orca to speak
 #. "f o r" after speaking "for".
-#: ../src/orca/guilabels.py:646
+#: ../src/orca/guilabels.py:658
 msgid "Spell _suggestion"
 msgstr "Rašybos _pasiūlymas"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will present the context (surrounding text,
 #. typically the sentence or line) in which the mistake occurred.
-#: ../src/orca/guilabels.py:651
+#: ../src/orca/guilabels.py:663
 msgid "Present _context of error"
 msgstr "Pateikti _klaidos kontekstą"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spread sheet cell. Coordinates are
 #. the row and column position within the spread sheet (i.e. A1, B1, C2 ...)
-#: ../src/orca/guilabels.py:656
+#: ../src/orca/guilabels.py:668
 msgid "Speak spread sheet cell coordinates"
 msgstr "Pasakyti langelio koordinates lakšte"
 
 #. Translators: This is a label for an option for whether or not to speak the
 #. header of a table cell in document content.
-#: ../src/orca/guilabels.py:660
+#: ../src/orca/guilabels.py:672
 msgid "Announce cell _header"
 msgstr "Paskelbti langelio antraštę"
 
 #. Translators: This is the title of a panel containing options for specifying
 #. how to navigate tables in document content.
-#: ../src/orca/guilabels.py:664
+#: ../src/orca/guilabels.py:676
 msgid "Table Navigation"
 msgstr "Lentelės navigacija"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
-#: ../src/orca/guilabels.py:668
+#: ../src/orca/guilabels.py:680
 msgid "Skip _blank cells"
 msgstr "Praleisti tuščius langelius"
 
@@ -5241,26 +5280,26 @@ msgstr "Praleisti tuščius langelius"
 #. row of a table read; other times they want just the current cell presented to
 #. them. This label is associated with the default presentation to be used.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/guilabels.py:673 ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/guilabels.py:685 ../src/orca/orca-setup.ui.h:60
 msgid "Speak _cell"
 msgstr "Perskaityti _langelį"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
-#: ../src/orca/guilabels.py:677
+#: ../src/orca/guilabels.py:689
 msgid "Speak _cell coordinates"
 msgstr "Garsiai perskaityti langelio koordinates"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many rows and columns
 #. a particular table cell spans in a table).
-#: ../src/orca/guilabels.py:682
+#: ../src/orca/guilabels.py:694
 msgid "Speak _multiple cell spans"
 msgstr "Garsiai perskaityti langelio dydį"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
-#: ../src/orca/guilabels.py:686
+#: ../src/orca/guilabels.py:698
 msgid "Attribute Name"
 msgstr "Požymio pavadinimas"
 
@@ -5269,20 +5308,20 @@ msgstr "Požymio pavadinimas"
 #. Orca needs to provide its own support. As such, Orca offers the user the
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:693
+#: ../src/orca/guilabels.py:705
 msgid "Control caret navigation"
 msgstr "Naudoti navigaciją žymikliu"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:698
+#: ../src/orca/guilabels.py:710
 msgid "Enable _structural navigation"
 msgstr "Įjungti navigaciją pagal struktūrą"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: ../src/orca/guilabels.py:702 ../src/orca/orca-setup.ui.h:56
+#: ../src/orca/guilabels.py:714 ../src/orca/orca-setup.ui.h:56
 msgid "Brie_f"
 msgstr "_Trumpas"
 
@@ -5514,25 +5553,11 @@ msgid "begin"
 msgstr "pradėti"
 
 #. Translators: this is how someone would speak the name of the
-#. non-spacing diacritical key for the acute glyph
-#.
-#: ../src/orca/keynames.py:260
-msgid "acute"
-msgstr "su dešininiu kirčiu"
-
-#. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the circumflex glyph
 #.
 #: ../src/orca/keynames.py:265
 msgid "circumflex"
 msgstr "su stogeliu"
-
-#. Translators: this is how someone would speak the name of the
-#. non-spacing diacritical key for the diaeresis glyph
-#.
-#: ../src/orca/keynames.py:275
-msgid "diaeresis"
-msgstr "su brūkšniu"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the ring glyph
@@ -5556,7 +5581,7 @@ msgstr "minus"
 
 #. Translators: this is presented in a GUI to represent the
 #. "insert" key when used as the Orca modifier.
-#: ../src/orca/keybindings.py:109
+#: ../src/orca/keybindings.py:140
 msgid "Insert"
 msgstr "Įterpti"
 
@@ -5565,49 +5590,49 @@ msgstr "Įterpti"
 #. Translators: this is presented in a GUI to represent the
 #. "caps lock" modifier.
 #.
-#: ../src/orca/keybindings.py:113 ../src/orca/keybindings.py:118
+#: ../src/orca/keybindings.py:144 ../src/orca/keybindings.py:149
 msgid "Caps_Lock"
 msgstr "_Didž"
 
 #. Translators: this is presented in a GUI to represent the
 #. "right alt" modifier.
 #.
-#: ../src/orca/keybindings.py:125
+#: ../src/orca/keybindings.py:156
 msgid "Alt_R"
 msgstr "Alt_R"
 
 #. Translators: this is presented in a GUI to represent the
 #. "super" modifier.
 #.
-#: ../src/orca/keybindings.py:130
+#: ../src/orca/keybindings.py:161
 msgid "Super"
 msgstr "Super"
 
 #. Translators: this is presented in a GUI to represent the
 #. "meta 2" modifier.
 #.
-#: ../src/orca/keybindings.py:135
+#: ../src/orca/keybindings.py:166
 msgid "Meta2"
 msgstr "Meta2"
 
 #. Translators: this is presented in a GUI to represent the
 #. "left alt" modifier.
 #.
-#: ../src/orca/keybindings.py:142
+#: ../src/orca/keybindings.py:173
 msgid "Alt_L"
 msgstr "Alt_L"
 
 #. Translators: this is presented in a GUI to represent the
 #. "control" modifier.
 #.
-#: ../src/orca/keybindings.py:147
+#: ../src/orca/keybindings.py:178
 msgid "Ctrl"
 msgstr "Ctrl"
 
 #. Translators: this is presented in a GUI to represent the
 #. "shift " modifier.
 #.
-#: ../src/orca/keybindings.py:152
+#: ../src/orca/keybindings.py:183
 msgid "Shift"
 msgstr "Shift"
 
@@ -6203,7 +6228,7 @@ msgstr "Sąranka baigta. Norėdami tęsti, paspauskite Return."
 
 #. Translators: The "default" button in a dialog box is the button that gets
 #. activated when Enter is pressed anywhere within that dialog box.
-#: ../src/orca/messages.py:479
+#: ../src/orca/messages.py:496
 #, python-format
 msgid "Default button is %s"
 msgstr "Mygtukas pagal nutylėjimą yra %s"
@@ -6212,7 +6237,7 @@ msgstr "Mygtukas pagal nutylėjimą yra %s"
 #. one or several consequtive subscripted characters. For example, 'X' followed
 #. by 'subscript 2' followed by 'subscript 3' should be presented to the user as
 #. 'X subscript 23'.
-#: ../src/orca/messages.py:485
+#: ../src/orca/messages.py:502
 #, python-format
 msgid " subscript %s"
 msgstr "apatinis indeksas %s"
@@ -6221,7 +6246,7 @@ msgstr "apatinis indeksas %s"
 #. one or several consequtive superscripted characters. For example, 'X' followed
 #. by 'superscript 2' followed by 'superscript 3' should be presented to the user
 #. as 'X superscript 23'.
-#: ../src/orca/messages.py:491
+#: ../src/orca/messages.py:508
 #, python-format
 msgid " superscript %s"
 msgstr "viršutinis indeksas %s"
@@ -6230,7 +6255,7 @@ msgstr "viršutinis indeksas %s"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects the entire
 #. document by pressing Ctrl+A.
-#: ../src/orca/messages.py:497
+#: ../src/orca/messages.py:514
 msgid "entire document selected"
 msgstr "pasirinktas visas dokumentas"
 
@@ -6238,7 +6263,7 @@ msgstr "pasirinktas visas dokumentas"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the end of the document by pressing Ctrl+Shift+End.
-#: ../src/orca/messages.py:503
+#: ../src/orca/messages.py:520
 msgid "document selected from cursor position"
 msgstr "dokumentas pasirinktas nuo žymiklio pozicijos"
 
@@ -6246,7 +6271,7 @@ msgstr "dokumentas pasirinktas nuo žymiklio pozicijos"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user unselects previously
 #. selected text by pressing Ctrl+Shift+End.
-#: ../src/orca/messages.py:509
+#: ../src/orca/messages.py:526
 msgid "document unselected from cursor position"
 msgstr "dokumento žymėjimas pašalintas nuo žymiklio pozicijos"
 
@@ -6254,7 +6279,7 @@ msgstr "dokumento žymėjimas pašalintas nuo žymiklio pozicijos"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the start of the document by pressing Ctrl+Shift+Home.
-#: ../src/orca/messages.py:515
+#: ../src/orca/messages.py:532
 msgid "document selected to cursor position"
 msgstr "dokumentas pasirinktas iki žymiklio pozicijos"
 
@@ -6262,14 +6287,14 @@ msgstr "dokumentas pasirinktas iki žymiklio pozicijos"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user unselects previously
 #. selected text by pressing Ctrl+Shift+Home.
-#: ../src/orca/messages.py:521
+#: ../src/orca/messages.py:538
 msgid "document unselected to cursor position"
 msgstr "dokumento žymėjimas pašalintas iki žymiklio pozicijos"
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This message is
 #. presented when the user sets the row to a particular row number.
-#: ../src/orca/messages.py:526
+#: ../src/orca/messages.py:543
 #, python-format
 msgid "Dynamic column header set for row %d"
 msgstr "Dinaminė stulpelio antraštė nustatyta eilutei %d"
@@ -6278,7 +6303,7 @@ msgstr "Dinaminė stulpelio antraštė nustatyta eilutei %d"
 #. or table should be treated as containing column headers. This message is
 #. presented when the user unsets the row so it is no longer treated as if it
 #. contained column headers.
-#: ../src/orca/messages.py:532
+#: ../src/orca/messages.py:549
 msgid "Dynamic column header cleared."
 msgstr "Dinaminė stulpelio antraštė išvalyta."
 
@@ -6286,7 +6311,7 @@ msgstr "Dinaminė stulpelio antraštė išvalyta."
 #. spreadsheet or table should be treated as containing column headers. This
 #. message is presented when the user sets the column to a particular column
 #. number.
-#: ../src/orca/messages.py:538
+#: ../src/orca/messages.py:555
 #, python-format
 msgid "Dynamic row header set for column %s"
 msgstr "Dinaminė eilutės antraštė nustatyta stulpeliui %s"
@@ -6295,31 +6320,31 @@ msgstr "Dinaminė eilutės antraštė nustatyta stulpeliui %s"
 #. spreadsheet or table should be treated as containing column headers. This
 #. message is presented when the user unsets the column so it is no longer
 #. treated as if it contained row headers.
-#: ../src/orca/messages.py:544
+#: ../src/orca/messages.py:561
 msgid "Dynamic row header cleared."
 msgstr "Dinaminė eilutės antraštė išvalyta."
 
 #. Translators: this is used to announce that the current input line in a
 #. spreadsheet is blank/empty.
-#: ../src/orca/messages.py:548
+#: ../src/orca/messages.py:565
 msgid "empty"
 msgstr "tuščia"
 
 #. Translators: This is the size of a file in kilobytes
-#: ../src/orca/messages.py:551
+#: ../src/orca/messages.py:568
 #, python-format
 msgid "%.2f kilobytes"
 msgstr "%.2f kilobaitai"
 
 #. Translators: This is the size of a file in megabytes
-#: ../src/orca/messages.py:554
+#: ../src/orca/messages.py:571
 #, python-format
 msgid "%.2f megabytes"
 msgstr "%.2f megabaitai"
 
 #. Translators: This message is presented to the user after performing a file
 #. search to indicate there were no matches.
-#: ../src/orca/messages.py:558
+#: ../src/orca/messages.py:575
 msgid "No files found."
 msgstr "Failų nerasta."
 
@@ -6329,7 +6354,7 @@ msgstr "Failų nerasta."
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know that he/she successfully appended the contents under
 #. flat review onto the existing contents of the clipboard.
-#: ../src/orca/messages.py:566
+#: ../src/orca/messages.py:583
 msgid "Appended contents to clipboard."
 msgstr "Į iškarpinę pridėtas turinys."
 
@@ -6339,7 +6364,7 @@ msgstr "Į iškarpinę pridėtas turinys."
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know that he/she successfully copied the contents under flat
 #. review to the clipboard.
-#: ../src/orca/messages.py:574
+#: ../src/orca/messages.py:591
 msgid "Copied contents to clipboard."
 msgstr "Į iškarpinę nukopijuojas turinys."
 
@@ -6349,7 +6374,7 @@ msgstr "Į iškarpinę nukopijuojas turinys."
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know that he/she attempted to use a flat review command when
 #. not using flat review.
-#: ../src/orca/messages.py:582
+#: ../src/orca/messages.py:599
 msgid "Not using flat review."
 msgstr "Nenaudojama paprastos peržiūros veiksena."
 
@@ -6358,7 +6383,7 @@ msgstr "Nenaudojama paprastos peržiūros veiksena."
 #. the text from all objects in a window (e.g., buttons, labels, etc.) as a
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know he/she just entered flat review.
-#: ../src/orca/messages.py:589
+#: ../src/orca/messages.py:606
 msgid "Entering flat review."
 msgstr "Įeinama į paprastos peržiūros veikseną."
 
@@ -6367,13 +6392,13 @@ msgstr "Įeinama į paprastos peržiūros veikseną."
 #. the text from all objects in a window (e.g., buttons, labels, etc.) as a
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know he/she just entered flat review.
-#: ../src/orca/messages.py:596
+#: ../src/orca/messages.py:613
 msgid "Leaving flat review."
 msgstr "Baigiama plokščia peržiūra."
 
 #. Translators: this means a particular cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
-#: ../src/orca/messages.py:600
+#: ../src/orca/messages.py:617
 msgid "has formula"
 msgstr "su formule"
 
@@ -6389,7 +6414,7 @@ msgstr "su formule"
 #. Please see http://en.wikipedia.org/wiki/Imagemap for more
 #. information and examples.
 #.
-#: ../src/orca/messages.py:607
+#: ../src/orca/messages.py:624
 #: ../src/orca/scripts/toolkits/Gecko/braille_generator.py:157
 msgid "image map link"
 msgstr "paveikslėlio saitas"
@@ -6398,7 +6423,7 @@ msgstr "paveikslėlio saitas"
 #. that the key combination (e.g., Ctrl+Alt+f) they just entered has already been
 #. bound to another command and is thus unavailable. The string substituted in is
 #. the name of the command which already has the binding.
-#: ../src/orca/messages.py:613
+#: ../src/orca/messages.py:630
 #, python-format
 msgid "The key entered is already bound to %s"
 msgstr "Įvestas klavišas jau susietas su %s"
@@ -6406,7 +6431,7 @@ msgstr "Įvestas klavišas jau susietas su %s"
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. that Orca has recorded a new key combination (e.g. Alt+Ctrl+g) as a result of
 #. their input. The string substituted in is the new key combination.
-#: ../src/orca/messages.py:618
+#: ../src/orca/messages.py:635
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "Klavišas įrašytas: %s. Patvirtinimui spauskite Enter."
@@ -6414,7 +6439,7 @@ msgstr "Klavišas įrašytas: %s. Patvirtinimui spauskite Enter."
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. that Orca has assigned a new key combination (e.g. Alt+Ctrl+g) as a result of
 #. their input. The string substituted in is the new key combination.
-#: ../src/orca/messages.py:623
+#: ../src/orca/messages.py:640
 #, python-format
 msgid "The new key is: %s"
 msgstr "Naujas klavišas yra: %s"
@@ -6422,21 +6447,21 @@ msgstr "Naujas klavišas yra: %s"
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. Orca is about to delete an existing key combination (e.g. Alt+Ctrl+g) as a
 #. result of their input.
-#: ../src/orca/messages.py:628
+#: ../src/orca/messages.py:645
 msgid "Key binding deleted. Press enter to confirm."
 msgstr "Klavišo susiejimas ištrintas. Patvirtinimui spauskite Enter."
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. Orca has deleted an existing key combination (e.g. Alt+Ctrl+g) as a result of
 #. their input.
-#: ../src/orca/messages.py:633
+#: ../src/orca/messages.py:650
 msgid "The keybinding has been removed."
 msgstr "Klavišo susiejimas buvo pašalintas."
 
 #. Translators: This is a spoken and/or brailled message asking the user to press
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new key binding for an
 #. Orca command.
-#: ../src/orca/messages.py:638
+#: ../src/orca/messages.py:655
 msgid "enter new key"
 msgstr "įveskite naują klavišą"
 
@@ -6452,7 +6477,7 @@ msgstr "įveskite naują klavišą"
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: ../src/orca/messages.py:652
+#: ../src/orca/messages.py:669
 msgctxt "key echo"
 msgid "key"
 msgstr "klavišui"
@@ -6467,7 +6492,7 @@ msgstr "klavišui"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: ../src/orca/messages.py:664
+#: ../src/orca/messages.py:681
 msgid "Key echo set to key."
 msgstr "Klavišo aidas nustatytas klavišui."
 
@@ -6483,7 +6508,7 @@ msgstr "Klavišo aidas nustatytas klavišui."
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: ../src/orca/messages.py:678
+#: ../src/orca/messages.py:695
 msgctxt "key echo"
 msgid "None"
 msgstr "Nėra"
@@ -6498,7 +6523,7 @@ msgstr "Nėra"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: ../src/orca/messages.py:690
+#: ../src/orca/messages.py:707
 msgid "Key echo set to None."
 msgstr "Klavišo aidas nustatytas į jokį."
 
@@ -6514,7 +6539,7 @@ msgstr "Klavišo aidas nustatytas į jokį."
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: ../src/orca/messages.py:704
+#: ../src/orca/messages.py:721
 msgctxt "key echo"
 msgid "key and word"
 msgstr "klavišui ir žodžiui"
@@ -6529,7 +6554,7 @@ msgstr "klavišui ir žodžiui"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: ../src/orca/messages.py:716
+#: ../src/orca/messages.py:733
 msgid "Key echo set to key and word."
 msgstr "Klavišo aidas nustatytas klavišui ir žodžiui."
 
@@ -6545,7 +6570,7 @@ msgstr "Klavišo aidas nustatytas klavišui ir žodžiui."
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: ../src/orca/messages.py:730
+#: ../src/orca/messages.py:747
 msgctxt "key echo"
 msgid "sentence"
 msgstr "sakinys"
@@ -6560,7 +6585,7 @@ msgstr "sakinys"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: ../src/orca/messages.py:742
+#: ../src/orca/messages.py:759
 msgid "Key echo set to sentence."
 msgstr "Klavišų atkartojimas nustatytas į sakinį."
 
@@ -6576,7 +6601,7 @@ msgstr "Klavišų atkartojimas nustatytas į sakinį."
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: ../src/orca/messages.py:756
+#: ../src/orca/messages.py:773
 msgctxt "key echo"
 msgid "word"
 msgstr "žodis"
@@ -6591,7 +6616,7 @@ msgstr "žodis"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: ../src/orca/messages.py:768
+#: ../src/orca/messages.py:785
 msgid "Key echo set to word."
 msgstr "Klavišų pakartojimas nustatytas į žodį."
 
@@ -6607,7 +6632,7 @@ msgstr "Klavišų pakartojimas nustatytas į žodį."
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: ../src/orca/messages.py:782
+#: ../src/orca/messages.py:799
 msgctxt "key echo"
 msgid "word and sentence"
 msgstr "žodžiui ir sakiniui"
@@ -6622,40 +6647,40 @@ msgstr "žodžiui ir sakiniui"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: ../src/orca/messages.py:794
+#: ../src/orca/messages.py:811
 msgid "Key echo set to word and sentence."
 msgstr "Klavišo aidas nustatytas žodžiui ir sakiniui."
 
 #. Translators: Inaccessible means that the application cannot be read by Orca.
 #. This usually means the application is not friendly to the assistive technology
 #. infrastructure.
-#: ../src/orca/messages.py:799
+#: ../src/orca/messages.py:816
 msgid "inaccessible"
 msgstr "neprieinama"
 
 #. Translators: This brief message indicates that indentation and
 #. justification will be spoken.
-#: ../src/orca/messages.py:804
+#: ../src/orca/messages.py:821
 msgctxt "indentation and justification"
 msgid "Disabled"
 msgstr "Išjungtas"
 
 #. Translators: This detailed message indicates that indentation and
 #. justification will not be spoken.
-#: ../src/orca/messages.py:809
+#: ../src/orca/messages.py:826
 msgid "Speaking of indentation and justification disabled."
 msgstr "Įtraukų ir lygiuočių skaitymas išjungtas."
 
 #. Translators: This brief message indicates that indentation and
 #. justification will be spoken.
-#: ../src/orca/messages.py:814
+#: ../src/orca/messages.py:831
 msgctxt "indentation and justification"
 msgid "Enabled"
 msgstr "Įjungtas"
 
 #. Translators: This detailed message indicates that indentation and
 #. justification will be spoken.
-#: ../src/orca/messages.py:819
+#: ../src/orca/messages.py:836
 msgid "Speaking of indentation and justification enabled."
 msgstr "Įtraukų ir lygiuočių skaitymas įjungtas."
 
@@ -6665,7 +6690,7 @@ msgstr "Įtraukų ir lygiuočių skaitymas įjungtas."
 #. combination, or they might just be to echo the name of the key if Orca doesn't
 #. have a handler. This message is what is presented on the braille display when
 #. entering Learn Mode.
-#: ../src/orca/messages.py:827
+#: ../src/orca/messages.py:844
 msgid "Learn mode.  Press escape to exit."
 msgstr "Mokymosi režimas. Norėdami išeiti paspauskite grįžties klavišą."
 
@@ -6675,7 +6700,7 @@ msgstr "Mokymosi režimas. Norėdami išeiti paspauskite grįžties klavišą."
 #. combination, or they might just be to echo the name of the key if Orca doesn't
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
-#: ../src/orca/messages.py:836
+#: ../src/orca/messages.py:853
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the "
 "screen reader's documentation, press F1. To get a list of the screen "
@@ -6693,7 +6718,7 @@ msgstr ""
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the end of the line by pressing Shift+Down.
-#: ../src/orca/messages.py:847
+#: ../src/orca/messages.py:864
 msgid "line selected down from cursor position"
 msgstr "eilutė pasirinkta žemyn nuo žymiklio pozicijos"
 
@@ -6701,7 +6726,7 @@ msgstr "eilutė pasirinkta žemyn nuo žymiklio pozicijos"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the start of the line by pressing Shift+Up.
-#: ../src/orca/messages.py:853
+#: ../src/orca/messages.py:870
 msgid "line selected up from cursor position"
 msgstr "eilutė pasirinkta aukštyn nuo žymiklio pozicijos"
 
@@ -6710,7 +6735,7 @@ msgstr "eilutė pasirinkta aukštyn nuo žymiklio pozicijos"
 #. unselected. This message is presented when the user unselects previously
 #. selected text from the current location to the end of the paragraph by
 #. pressing Shift+Down.
-#: ../src/orca/messages.py:860
+#: ../src/orca/messages.py:877
 msgid "line unselected down from cursor position"
 msgstr "eilutės žymėjimas pašalintas nuo žymiklio pozicijos"
 
@@ -6719,7 +6744,7 @@ msgstr "eilutės žymėjimas pašalintas nuo žymiklio pozicijos"
 #. unselected. This message is presented when the user unselects previously
 #. selected text from the current location to the start of the paragraph by
 #. pressing Shift+Up.
-#: ../src/orca/messages.py:867
+#: ../src/orca/messages.py:884
 msgid "line unselected up from cursor position"
 msgstr "eilutės žymėjimas pašalintas aukštyn nuo žymiklio pozicijos"
 
@@ -6729,7 +6754,7 @@ msgstr "eilutės žymėjimas pašalintas aukštyn nuo žymiklio pozicijos"
 #. combination, or they might just be to echo the name of the key if Orca doesn't
 #. have a handler. This message is what is presented in speech and braille when
 #. exiting Learn Mode.
-#: ../src/orca/messages.py:875
+#: ../src/orca/messages.py:892
 msgid "Exiting learn mode."
 msgstr "Išjungiamas mokymosi režimas."
 
@@ -6737,7 +6762,7 @@ msgstr "Išjungiamas mokymosi režimas."
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the start of the line by pressing Ctrl+Shift+Page_Up.
-#: ../src/orca/messages.py:881
+#: ../src/orca/messages.py:898
 msgid "line selected from start to previous cursor position"
 msgstr "eilutė pažymėta iki pradžios nuo žymiklio pozicijos"
 
@@ -6745,43 +6770,43 @@ msgstr "eilutė pažymėta iki pradžios nuo žymiklio pozicijos"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the end of the line by pressing Ctrl+Shift+Page_Down.
-#: ../src/orca/messages.py:887
+#: ../src/orca/messages.py:904
 msgid "line selected to end from previous cursor position"
 msgstr "eilutė pažymėta iki pabaigos nuo žymiklio pozicijos"
 
 #. Translators: this indicates that this piece of text is a hypertext link.
-#: ../src/orca/messages.py:890
+#: ../src/orca/messages.py:907
 msgid "link"
 msgstr "nuoroda"
 
 #. Translators: this is an indication that a given link points to an object
 #. that is on the same page.
-#: ../src/orca/messages.py:894
+#: ../src/orca/messages.py:911
 msgid "same page"
 msgstr "tas pats puslapis"
 
 #. Translators: this is an indication that a given link points to an object
 #. that is at the same site (but not on the same page as the link).
-#: ../src/orca/messages.py:898
+#: ../src/orca/messages.py:915
 msgid "same site"
 msgstr "ta pati svetainė"
 
 #. Translators: this is an indication that a given link points to an object
 #. that is at a different site than that of the link.
-#: ../src/orca/messages.py:902
+#: ../src/orca/messages.py:919
 msgid "different site"
 msgstr "kita svetainė"
 
 #. Translators: this refers to a link to a file, where the first item is the
 #. protocol (ftp, ftps, or file) and the second item the name of the file being
 #. linked to.
-#: ../src/orca/messages.py:907
+#: ../src/orca/messages.py:924
 #, python-format
 msgid "%(uri)s link to %(file)s"
 msgstr "%(uri)s saisto su %(file)s"
 
 #. Translators: this message conveys the protocol of a link eg. http, mailto.
-#: ../src/orca/messages.py:910
+#: ../src/orca/messages.py:927
 #, python-format
 msgid "%s link"
 msgstr "%s nuoroda"
@@ -6789,7 +6814,7 @@ msgstr "%s nuoroda"
 #. Translators: The following string instructs the user how to navigate amongst
 #. the list of commands presented in learn mode, as well as how to exit the list
 #. when finished.
-#: ../src/orca/messages.py:916
+#: ../src/orca/messages.py:933
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr ""
 "Naudokite rodykles aukštyn ir žemyn vaikščiojimui sąraše. Spauskite išeiti "
@@ -6803,7 +6828,7 @@ msgstr ""
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed to
 #. "off" for all of the live regions.
-#: ../src/orca/messages.py:926
+#: ../src/orca/messages.py:943
 msgid "All live regions set to off"
 msgstr "Visi tiesioginiai regionai išjungti"
 
@@ -6815,7 +6840,7 @@ msgstr "Visi tiesioginiai regionai išjungti"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level for all live
 #. regions has been restored to their original values.
-#: ../src/orca/messages.py:936
+#: ../src/orca/messages.py:953
 msgid "live regions politeness levels restored"
 msgstr "tiesioginių regionų mandagumo lygiai atstatyti"
 
@@ -6826,7 +6851,7 @@ msgstr "tiesioginių regionų mandagumo lygiai atstatyti"
 #. idle ("polite"), and when there is a change ("assertive"). Orca has several
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user of the "politeness" level for the current live region.
-#: ../src/orca/messages.py:945
+#: ../src/orca/messages.py:962
 #, python-format
 msgid "politeness level %s"
 msgstr "mandagumo lygis %s"
@@ -6839,7 +6864,7 @@ msgstr "mandagumo lygis %s"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed for
 #. the current live region.
-#: ../src/orca/messages.py:955
+#: ../src/orca/messages.py:972
 msgid "setting live region to assertive"
 msgstr "tiesioginis regionas nustatomas į kategorišką"
 
@@ -6851,7 +6876,7 @@ msgstr "tiesioginis regionas nustatomas į kategorišką"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed for
 #. the current live region.
-#: ../src/orca/messages.py:965
+#: ../src/orca/messages.py:982
 msgid "setting live region to off"
 msgstr "išjungiamas tiesioginis regionas"
 
@@ -6863,7 +6888,7 @@ msgstr "išjungiamas tiesioginis regionas"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed for
 #. the current live region.
-#: ../src/orca/messages.py:975
+#: ../src/orca/messages.py:992
 msgid "setting live region to polite"
 msgstr "tiesioginis regionas nustatomas į mandagų"
 
@@ -6875,7 +6900,7 @@ msgstr "tiesioginis regionas nustatomas į mandagų"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed for
 #. the current live region.
-#: ../src/orca/messages.py:985
+#: ../src/orca/messages.py:1002
 msgid "setting live region to rude"
 msgstr "tiesioginis regionas nustatomas į šiurkštų"
 
@@ -6888,7 +6913,7 @@ msgstr "tiesioginis regionas nustatomas į šiurkštų"
 #. opt to have no notifications presented (politeness level of "off") and still
 #. manually review recent updates to live regions via Orca commands for doing so
 #. -- as long as the monitoring of live regions is enabled.
-#: ../src/orca/messages.py:996
+#: ../src/orca/messages.py:1013
 msgid "Live regions monitoring off"
 msgstr "Tiesioginės srities stebėjimas išjungtas"
 
@@ -6901,7 +6926,7 @@ msgstr "Tiesioginės srities stebėjimas išjungtas"
 #. opt to have no notifications presented (politeness level of "off") and still
 #. manually review recent updates to live regions via Orca commands for doing so
 #. -- as long as the monitoring of live regions is enabled.
-#: ../src/orca/messages.py:1007
+#: ../src/orca/messages.py:1024
 msgid "Live regions monitoring on"
 msgstr "Tiesioginės srities stebėjimas įjungtas"
 
@@ -6910,7 +6935,7 @@ msgstr "Tiesioginės srities stebėjimas įjungtas"
 #. Orca has several features to facilitate accessing live regions. This message
 #. is presented to inform the user that a cached message is not available for the
 #. the current live region.
-#: ../src/orca/messages.py:1014
+#: ../src/orca/messages.py:1031
 msgid "no live message saved"
 msgstr "joks tiesioginis pranešimas neišsaugotas"
 
@@ -6919,14 +6944,14 @@ msgstr "joks tiesioginis pranešimas neišsaugotas"
 #. Orca has several features to facilitate accessing live regions. This message
 #. is presented to inform the user that Orca's live region features have been
 #. turned off.
-#: ../src/orca/messages.py:1021
+#: ../src/orca/messages.py:1038
 msgid "Live region support is off"
 msgstr "Tiesioginės srities palaikymas išjungtas"
 
 #. Translators: Orca has a command that allows the user to move the mouse pointer
 #. to the current object. This is a brief message which will be presented if for
 #. some reason Orca cannot identify/find the current location.
-#: ../src/orca/messages.py:1026
+#: ../src/orca/messages.py:1043
 msgctxt "location"
 msgid "Not found"
 msgstr "Nerasta"
@@ -6934,7 +6959,7 @@ msgstr "Nerasta"
 #. Translators: Orca has a command that allows the user to move the mouse pointer
 #. to the current object. This is a detailed message which will be presented if
 #. for some reason Orca cannot identify/find the current location.
-#: ../src/orca/messages.py:1031
+#: ../src/orca/messages.py:1048
 msgid "Could not find current location."
 msgstr "Nepavyko rasti dabartinės vietos."
 
@@ -6943,7 +6968,7 @@ msgstr "Nepavyko rasti dabartinės vietos."
 #. lowercase; if Caps Lock is "on", they will instead appear in uppercase. This
 #. string is also applied to Num Lock and potentially will be applied to similar
 #. keys in the future.
-#: ../src/orca/messages.py:1038
+#: ../src/orca/messages.py:1055
 msgctxt "locking key state"
 msgid "off"
 msgstr "išjungta"
@@ -6953,21 +6978,21 @@ msgstr "išjungta"
 #. lowercase; if Caps Lock is "on", they will instead appear in uppercase. This
 #. string is also applied to Num Lock and potentially will be applied to similar
 #. keys in the future.
-#: ../src/orca/messages.py:1045
+#: ../src/orca/messages.py:1062
 msgctxt "locking key state"
 msgid "on"
 msgstr "įjungta"
 
 #. Translators: This is to inform the user of the presence of the red squiggly
 #. line which indicates that a given word is not spelled correctly.
-#: ../src/orca/messages.py:1049
+#: ../src/orca/messages.py:1066
 msgid "misspelled"
 msgstr "netaisyklingas žodis"
 
 #. Translators: Orca tries to provide more compelling output of the spell check
 #. dialog in some applications. The first thing it does is let the user know
 #. what the misspelled word is.
-#: ../src/orca/messages.py:1054
+#: ../src/orca/messages.py:1071
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "Neteisingai parašytas žodis: %s"
@@ -6975,16 +7000,63 @@ msgstr "Neteisingai parašytas žodis: %s"
 #. Translators: Orca tries to provide more compelling output of the spell check
 #. dialog in some applications. The second thing it does is give the phrase
 #. containing the misspelled word in the document. This is known as the context.
-#: ../src/orca/messages.py:1059
+#: ../src/orca/messages.py:1076
 #, python-format
 msgid "Context is %s"
 msgstr " Kontekstas yra %s"
+
+#. Translators: Orca has a number of commands that override the default
+#. behavior within an application. For instance, on a web page, "h" moves
+#. you to the next heading. What should happen when you press an "h" in
+#. an entry on a web page depends: If you want to resume reading content,
+#. "h" should move to the next heading; if you want to enter text, "h"
+#. should not not move you to the next heading. Similarly, if you are
+#. at the bottom of an entry and press Down arrow, should you leave the
+#. entry? Again, it depends on if you want to resume reading content or
+#. if you are editing the text in the entry. Because Orca doesn't know
+#. what you want to do, it has two modes: In browse mode, Orca treats
+#. key presses as commands to read the content; in focus mode, Orca treats
+#. key presses as something that should be handled by the focused widget.
+#. This string is the message presented when Orca switches to browse mode.
+#: ../src/orca/messages.py:1091
+msgid "Browse mode"
+msgstr "Naršymo veiksena"
+
+#. Translators: Orca has a number of commands that override the default
+#. behavior within an application. For instance, on a web page, "h" moves
+#. you to the next heading. What should happen when you press an "h" in
+#. an entry on a web page depends: If you want to resume reading content,
+#. "h" should move to the next heading; if you want to enter text, "h"
+#. should not not move you to the next heading. Similarly, if you are
+#. at the bottom of an entry and press Down arrow, should you leave the
+#. entry? Again, it depends on if you want to resume reading content or
+#. if you are editing the text in the entry. Because Orca doesn't know
+#. what you want to do, it has two modes: In browse mode, Orca treats
+#. key presses as commands to read the content; in focus mode, Orca treats
+#. key presses as something that should be handled by the focused widget.
+#. This string is the message presented when Orca switches to focus mode.
+#: ../src/orca/messages.py:1106
+msgid "Focus mode"
+msgstr "Fokuso veiksena"
+
+#. Translators: (Please see the previous, detailed translator notes about
+#. Focus mode and Browse mode.) In order to minimize the amount of work Orca
+#. users need to do to switch between focus mode and browse mode, Orca attempts
+#. to automatically switch to the mode which is appropriate to the current
+#. web element. Sometimes, however, this automatic mode switching is not what
+#. the user wants. A good example being web apps which have their own keyboard
+#. navigation and use interaction model. As a result, Orca has a command which
+#. enables setting a "sticky" focus mode which disables all automatic toggling.
+#. This string is the message presented when Orca switches to sticky focus mode.
+#: ../src/orca/messages.py:1117
+msgid "Focus mode is sticky."
+msgstr "Kimbanti fokuso veiksena."
 
 #. Translators: Hovering the mouse over certain objects on a web page causes a
 #. new object to appear such as a pop-up menu. Orca has a command will move the
 #. user to the object which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
-#: ../src/orca/messages.py:1065
+#: ../src/orca/messages.py:1123
 msgid "Mouse over object not found."
 msgstr "Nerastas objektas po pele."
 
@@ -6993,14 +7065,14 @@ msgstr "Nerastas objektas po pele."
 #. could with native keyboard navigation. This is a message that will be
 #. presented to the user when an error (such as the operation timing out) kept us
 #. from getting these objects.
-#: ../src/orca/messages.py:1072
+#: ../src/orca/messages.py:1130
 msgid "Error: Could not create list of objects."
 msgstr "Klaida: nepavyko sukurti objektų sąrašo."
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
 #. list that's inside another list).
-#: ../src/orca/messages.py:1077 ../src/orca/object_properties.py:47
+#: ../src/orca/messages.py:1135 ../src/orca/object_properties.py:47
 #, python-format
 msgid "Nesting level %d"
 msgstr "Pošakių lygis %d"
@@ -7008,47 +7080,40 @@ msgstr "Pošakių lygis %d"
 #. Translators: Orca has a command that moves the mouse pointer to the current
 #. location on a web page. If moving the mouse pointer caused an item to appear
 #. such as a pop-up menu, we want to present that fact.
-#: ../src/orca/messages.py:1082
+#: ../src/orca/messages.py:1140
 msgid "New item has been added"
 msgstr "Pridėtas naujas elementas"
 
 #. Translators: This is intended to be a short phrase to present the fact that no
 #. no accessible component has keyboard focus.
-#: ../src/orca/messages.py:1086
+#: ../src/orca/messages.py:1144
 msgid "No focus"
 msgstr "Nėra fokusavimo"
 
 #. Translators: This message presents the fact that no accessible application has
 #. has keyboard focus.
-#: ../src/orca/messages.py:1090
+#: ../src/orca/messages.py:1148
 msgid "No application has focus."
 msgstr "Nepasirinkta nei viena programa."
-
-#. Translators: This is for navigating document content by moving from anchor to
-#. anchor. (An anchor is a named spot that one can jump to.) This is a detailed
-#. message which will be presented to the user if no more anchors can be found.
-#: ../src/orca/messages.py:1095
-msgid "No more anchors."
-msgstr "Daugiau inkarų nėra."
 
 #. Translators: This is for navigating document content by moving from blockquote
 #. to blockquote. This is a detailed message which will be presented to the user
 #. if no more blockquotes can be found.
-#: ../src/orca/messages.py:1100
+#: ../src/orca/messages.py:1153
 msgid "No more blockquotes."
 msgstr "Daugiau citatų blokų nėra."
 
 #. Translators: This is for navigating document content by moving from button
 #. to button. This is a detailed message which will be presented to the user
 #. if no more buttons can be found.
-#: ../src/orca/messages.py:1105
+#: ../src/orca/messages.py:1158
 msgid "No more buttons."
 msgstr "Daugiau mygtukų nėra."
 
 #. Translators: This is for navigating document content by moving from check
 #. box to check box. This is a detailed message which will be presented to the
 #. user if no more check boxes can be found.
-#: ../src/orca/messages.py:1110
+#: ../src/orca/messages.py:1163
 msgid "No more check boxes."
 msgstr "Daugiau žymimųjų langelių nėra."
 
@@ -7056,35 +7121,43 @@ msgstr "Daugiau žymimųjų langelių nėra."
 #. object' to 'large object'. A 'large object' is a logical chunk of text,
 #. such as a paragraph, a list, a table, etc. This is a detailed message which
 #. will be presented to the user if no more check boxes can be found.
-#: ../src/orca/messages.py:1116
+#: ../src/orca/messages.py:1169
 msgid "No more large objects."
 msgstr "Daugiau didelių objektų nėra."
+
+#. Translators: This is for navigating document content by moving amongst web
+#. elements which have an "onClick" action. This is a detailed message which
+#. will be presented to the user if no more clickable elements can be found.
+#: ../src/orca/messages.py:1174
+#| msgid "No more tables."
+msgid "No more clickables."
+msgstr "Daugiau spaudžiamų elementų nėra."
 
 #. Translators: This is for navigating document content by moving from combo
 #. box to combo box. This is a detailed message which will be presented to the
 #. user if no more combo boxes can be found.
-#: ../src/orca/messages.py:1121
+#: ../src/orca/messages.py:1179
 msgid "No more combo boxes."
 msgstr "Daugiau pasirinkimo laukų nėra."
 
 #. Translators: This is for navigating document content by moving from entry
 #. to entry. This is a detailed message which will be presented to the user
 #. if no more entries can be found.
-#: ../src/orca/messages.py:1126
+#: ../src/orca/messages.py:1184
 msgid "No more entries."
 msgstr "Daugiau įvedimo laukų nėra."
 
 #. Translators: This is for navigating document content by moving from form
 #. field to form field. This is a detailed message which will be presented to
 #. the user if no more form fields can be found.
-#: ../src/orca/messages.py:1131
+#: ../src/orca/messages.py:1189
 msgid "No more form fields."
 msgstr "Daugiau anketos laukų nėra."
 
 #. Translators: This is for navigating document content by moving from heading
 #. to heading. This is a detailed message which will be presented to the user
 #. if no more headings can be found.
-#: ../src/orca/messages.py:1136
+#: ../src/orca/messages.py:1194
 msgid "No more headings."
 msgstr "Daugiau antraščių nėra."
 
@@ -7092,7 +7165,7 @@ msgstr "Daugiau antraščių nėra."
 #. to heading at a particular level (i.e. only <h1> or only <h2>, etc.). This
 #. is a detailed message which will be presented to the user if no more headings
 #. at the desired level can be found.
-#: ../src/orca/messages.py:1142
+#: ../src/orca/messages.py:1200
 #, python-format
 msgid "No more headings at level %d."
 msgstr "Medžio lygyje %d daugiau antraščių nėra."
@@ -7101,28 +7174,28 @@ msgstr "Medžio lygyje %d daugiau antraščių nėra."
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
 #. This is an indication that one was not found.
-#: ../src/orca/messages.py:1148
+#: ../src/orca/messages.py:1206
 msgid "No landmark found."
 msgstr "Sričių nerasta."
 
 #. Translators: This is for navigating document content by moving from link to
 #. link (regardless of visited state). This is a detailed message which will be
 #. presented to the user if no more links can be found.
-#: ../src/orca/messages.py:1153
+#: ../src/orca/messages.py:1211
 msgid "No more links."
 msgstr "Daugiau nuorodų nėra."
 
 #. Translators: This is for navigating document content by moving from bulleted/
 #. numbered list to bulleted/numbered list. This is a detailed message which will
 #. be presented to the user if no more lists can be found.
-#: ../src/orca/messages.py:1158
+#: ../src/orca/messages.py:1216
 msgid "No more lists."
 msgstr "Daugiau sąrašų nėra."
 
 #. Translators: This is for navigating document content by moving from bulleted/
 #. numbered list item to bulleted/numbered list item. This is a detailed message
 #. which will be presented to the user if no more list items can be found.
-#: ../src/orca/messages.py:1163
+#: ../src/orca/messages.py:1221
 msgid "No more list items."
 msgstr "Daugiau sąrašo elementų nėra."
 
@@ -7131,86 +7204,86 @@ msgstr "Daugiau sąrašo elementų nėra."
 #. periodically updated, e.g. stock ticker. This is a detailed message which
 #. will be presented to the user if no more live regions can be found. For
 #. more info, see http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/messages.py:1170
+#: ../src/orca/messages.py:1228
 msgid "No more live regions."
 msgstr "Daugiau tiesioginių sričių nėra."
 
 #. Translators: This is for navigating document content by moving from paragraph
 #. to paragraph. This is a detailed message which will be presented to the user
 #. if no more paragraphs can be found.
-#: ../src/orca/messages.py:1175
+#: ../src/orca/messages.py:1233
 msgid "No more paragraphs."
 msgstr "Daugiau pastraipų nėra."
 
 #. Translators: This is for navigating document content by moving from radio
 #. button to radio button. This is a detailed message which will be presented to
 #. the user if no more radio buttons can be found.
-#: ../src/orca/messages.py:1180
+#: ../src/orca/messages.py:1238
 msgid "No more radio buttons."
 msgstr "Daugiau radijo mygtukų nėra."
 
 #. Translators: This is for navigating document content by moving from separator
 #. to separator (e.g. <hr> tags). This is a detailed message which will be
 #. presented to the user if no more separators can be found.
-#: ../src/orca/messages.py:1185
+#: ../src/orca/messages.py:1243
 msgid "No more separators."
 msgstr "Daugiau skirtukų nėra."
 
 #. Translators: This is for navigating document content by moving from table to
 #. to table. This is a detailed message which will be presented to the user if
 #. no more tables can be found.
-#: ../src/orca/messages.py:1190
+#: ../src/orca/messages.py:1248
 msgid "No more tables."
 msgstr "Daugiau lentelių nėra."
 
 #. Translators: This is for navigating document content by moving from unvisited
 #. link to unvisited link. This is a detailed message which will be presented to
 #. the user if no more unvisited links can be found.
-#: ../src/orca/messages.py:1195
+#: ../src/orca/messages.py:1253
 msgid "No more unvisited links."
 msgstr "Daugiau neaplankytų nuorodų nėra."
 
 #. Translators: This is for navigating document content by moving from visited
 #. link to visited link. This is a detailed message which will be presented to
 #. the user if no more visited links can be found.
-#: ../src/orca/messages.py:1200
+#: ../src/orca/messages.py:1258
 msgid "No more visited links."
 msgstr "Daugiau aplankytų nuorodų nėra."
 
 #. Translators: This message alerts the user to the fact that what will be
 #. presented next came from a notification.
-#: ../src/orca/messages.py:1204
+#: ../src/orca/messages.py:1262
 msgid "Notification"
 msgstr "Pranešimas"
 
 #. Translators: This is a brief message presented to the user when the bottom of
 #. the list of notifications is reached.
-#: ../src/orca/messages.py:1208
+#: ../src/orca/messages.py:1266
 msgctxt "notification"
 msgid "Bottom"
 msgstr "Apačia"
 
 #. Translators: This message is presented to the user to confirm the list of
 #. notifications mode is being exited.
-#: ../src/orca/messages.py:1212
+#: ../src/orca/messages.py:1270
 msgid "Exiting list notification messages mode."
 msgstr "Esamų pranešimų sąrašo veiksena."
 
 #. Translators: This is a brief message presented to the user when the top of the
 #. list of notifications is reached.
-#: ../src/orca/messages.py:1216
+#: ../src/orca/messages.py:1274
 msgctxt "notification"
 msgid "Top"
 msgstr "Viršus"
 
 #. Translators: This is a tutorial message for the notification list mode.
-#: ../src/orca/messages.py:1219
+#: ../src/orca/messages.py:1277
 msgid "Press h for help.\n"
 msgstr "Spauskite h pagalbai.\n"
 
 #. Translators: The following string instructs the user how to navigate within
 #. the list notifications mode.
-#: ../src/orca/messages.py:1224
+#: ../src/orca/messages.py:1282
 msgid ""
 "Use Up, Down, Home or End to navigate in the list.\n"
 "Press Escape to exit.\n"
@@ -7224,40 +7297,40 @@ msgstr ""
 
 #. Translators: This message is presented to the user when the notifications list
 #. is empty.
-#: ../src/orca/messages.py:1231
+#: ../src/orca/messages.py:1289
 msgid "No notification messages"
 msgstr "Nėra pranešimų"
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
 #. with text formatting (bold, italics, underlining, justification, etc.).
-#: ../src/orca/messages.py:1236
+#: ../src/orca/messages.py:1294
 msgid "off"
 msgstr "išjungta"
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
 #. with text formatting (bold, italics, underlining, justification, etc.).
-#: ../src/orca/messages.py:1241
+#: ../src/orca/messages.py:1299
 msgid "on"
 msgstr "įjungta"
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has started loading.
-#: ../src/orca/messages.py:1245
+#: ../src/orca/messages.py:1303
 msgid "Loading.  Please wait."
 msgstr "Įkeliama. Prašome palaukti."
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has finished loading.
-#: ../src/orca/messages.py:1249
+#: ../src/orca/messages.py:1307
 msgid "Finished loading."
 msgstr "Įkėlimas baigtas."
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has finished loading. The string substitution is for the name of the
 #. object which has just finished loading (most likely the page's title).
-#: ../src/orca/messages.py:1254
+#: ../src/orca/messages.py:1312
 #, python-format
 msgid "Finished loading %s."
 msgstr "%s įkėlimas baigtas."
@@ -7266,7 +7339,7 @@ msgstr "%s įkėlimas baigtas."
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the end of the page by pressing Shift+Page_Down.
-#: ../src/orca/messages.py:1260
+#: ../src/orca/messages.py:1318
 msgid "page selected from cursor position"
 msgstr "puslapis pasirinktas nuo žymiklio pozicijos"
 
@@ -7274,7 +7347,7 @@ msgstr "puslapis pasirinktas nuo žymiklio pozicijos"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the start of the page by pressing Shift+Page_Up.
-#: ../src/orca/messages.py:1266
+#: ../src/orca/messages.py:1324
 msgid "page selected to cursor position"
 msgstr "puslapis pasirinktas iki žymiklio pozicijos"
 
@@ -7282,7 +7355,7 @@ msgstr "puslapis pasirinktas iki žymiklio pozicijos"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user unselects a previously
 #. selected page by pressing Shift+Page_Down.
-#: ../src/orca/messages.py:1272
+#: ../src/orca/messages.py:1330
 msgid "page unselected from cursor position"
 msgstr "puslapio žymėjimas pašalintas nuo žymiklio pozicijos"
 
@@ -7290,7 +7363,7 @@ msgstr "puslapio žymėjimas pašalintas nuo žymiklio pozicijos"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user unselects a previously
 #. selected page by pressing Shift+Page_Up.
-#: ../src/orca/messages.py:1278
+#: ../src/orca/messages.py:1336
 msgid "page unselected to cursor position"
 msgstr "puslapio žymėjimas pašalintas iki žymiklio pozicijos"
 
@@ -7298,7 +7371,7 @@ msgstr "puslapio žymėjimas pašalintas iki žymiklio pozicijos"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the end of the paragraph by pressing Ctrl+Shift+Down.
-#: ../src/orca/messages.py:1284
+#: ../src/orca/messages.py:1342
 msgid "paragraph selected down from cursor position"
 msgstr "pastraipa pažymėta žemyn nuo žymiklio pozicijos"
 
@@ -7306,7 +7379,7 @@ msgstr "pastraipa pažymėta žemyn nuo žymiklio pozicijos"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects from the
 #. current location to the start of the paragraph by pressing Ctrl+Shift+UP.
-#: ../src/orca/messages.py:1290
+#: ../src/orca/messages.py:1348
 msgid "paragraph selected up from cursor position"
 msgstr "pastraipa pažymėta aukštyn nuo žymiklio pozicijos"
 
@@ -7315,7 +7388,7 @@ msgstr "pastraipa pažymėta aukštyn nuo žymiklio pozicijos"
 #. unselected. This message is presented when the user unselects previously
 #. selected text from the current location to the end of the paragraph by
 #. pressing Ctrl+Shift+Down.
-#: ../src/orca/messages.py:1297
+#: ../src/orca/messages.py:1355
 msgid "paragraph unselected down from cursor position"
 msgstr "pastraipos žymėjimas pašalintas žemyn nuo žymiklio pozicijos"
 
@@ -7324,14 +7397,14 @@ msgstr "pastraipos žymėjimas pašalintas žemyn nuo žymiklio pozicijos"
 #. unselected. This message is presented when the user unselects previously
 #. selected text from the current location to the start of the paragraph by
 #. pressing Ctrl+Shift+UP.
-#: ../src/orca/messages.py:1304
+#: ../src/orca/messages.py:1362
 msgid "paragraph unselected up from cursor position"
 msgstr "pastraipos žymėjimas pašalintas aukštyn nuo žymiklio pozicijos"
 
 #. Translators: This message appears in a warning dialog when the user performs
 #. the command to get into Orca's preferences dialog when the preferences dialog
 #. is already open.
-#: ../src/orca/messages.py:1310
+#: ../src/orca/messages.py:1368
 msgid ""
 "You already have an instance of an Orca preferences dialog open.\n"
 "Please close it before opening a new one."
@@ -7341,7 +7414,7 @@ msgstr ""
 
 #. Translators: This message is an indication of the position of the focused
 #. slide and the total number of slides in the presentation.
-#: ../src/orca/messages.py:1315
+#: ../src/orca/messages.py:1373
 #, python-format
 msgid "slide %(position)d of %(count)d"
 msgstr "paslinkti %(position)d per %(count)d"
@@ -7351,7 +7424,7 @@ msgstr "paslinkti %(position)d per %(count)d"
 #. which apply to a given task, such as a "Spanish" profile which would use
 #. Spanish text-to-speech and Spanish braille and selected when reading Spanish
 #. content. The string representing the profile name is created by the user.
-#: ../src/orca/messages.py:1322
+#: ../src/orca/messages.py:1380
 #, python-format
 msgid "Profile set to %s."
 msgstr "Profilis nustatytas į %s."
@@ -7361,14 +7434,14 @@ msgstr "Profilis nustatytas į %s."
 #. is a collection of settings which apply to a given task, such as a "Spanish"
 #. profile which would use Spanish text-to-speech and Spanish braille and
 #. selected when reading Spanish content.
-#: ../src/orca/messages.py:1329
+#: ../src/orca/messages.py:1387
 msgid "No profiles found."
 msgstr "Nerasta profilių."
 
 #. Translators: this is an index value so that we can present value changes
 #. regarding a specific progress bar in environments where there are multiple
 #. progress bars (e.g. in the Firefox downloads dialog).
-#: ../src/orca/messages.py:1334
+#: ../src/orca/messages.py:1392
 #, python-format
 msgid "Progress bar %d."
 msgstr "Pažangos juosta %d."
@@ -7377,7 +7450,7 @@ msgstr "Pažangos juosta %d."
 #. through the different levels of spoken punctuation. The options are:
 #. All puntuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: ../src/orca/messages.py:1340
+#: ../src/orca/messages.py:1398
 msgctxt "spoken punctuation"
 msgid "All"
 msgstr "Visi"
@@ -7386,7 +7459,7 @@ msgstr "Visi"
 #. through the different levels of spoken punctuation. The options are:
 #. All puntuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: ../src/orca/messages.py:1346
+#: ../src/orca/messages.py:1404
 msgid "Punctuation level set to all."
 msgstr "Skyrybos lygis nustatytas į visus."
 
@@ -7394,7 +7467,7 @@ msgstr "Skyrybos lygis nustatytas į visus."
 #. through the different levels of spoken punctuation. The options are:
 #. All puntuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: ../src/orca/messages.py:1352
+#: ../src/orca/messages.py:1410
 msgctxt "spoken punctuation"
 msgid "Most"
 msgstr "Dauguma"
@@ -7403,7 +7476,7 @@ msgstr "Dauguma"
 #. through the different levels of spoken punctuation. The options are:
 #. All puntuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: ../src/orca/messages.py:1358
+#: ../src/orca/messages.py:1416
 msgid "Punctuation level set to most."
 msgstr "Skyrybos lygis nustatytas į dažną."
 
@@ -7411,7 +7484,7 @@ msgstr "Skyrybos lygis nustatytas į dažną."
 #. through the different levels of spoken punctuation. The options are:
 #. All puntuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: ../src/orca/messages.py:1364
+#: ../src/orca/messages.py:1422
 msgctxt "spoken punctuation"
 msgid "None"
 msgstr "Nėra"
@@ -7420,7 +7493,7 @@ msgstr "Nėra"
 #. through the different levels of spoken punctuation. The options are:
 #. All puntuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: ../src/orca/messages.py:1370
+#: ../src/orca/messages.py:1428
 msgid "Punctuation level set to none."
 msgstr "Skyrybos lygis nustatytas į jokį."
 
@@ -7428,7 +7501,7 @@ msgstr "Skyrybos lygis nustatytas į jokį."
 #. through the different levels of spoken punctuation. The options are:
 #. All puntuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: ../src/orca/messages.py:1376
+#: ../src/orca/messages.py:1434
 msgctxt "spoken punctuation"
 msgid "Some"
 msgstr "Kai kurie"
@@ -7437,57 +7510,57 @@ msgstr "Kai kurie"
 #. through the different levels of spoken punctuation. The options are:
 #. All puntuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: ../src/orca/messages.py:1382
+#: ../src/orca/messages.py:1440
 msgid "Punctuation level set to some."
 msgstr "Skyrybos lygis nustatytas į dalinį."
 
 #. Translators: This message is presented to indicate that a search has begun
 #. or is still taking place.
-#: ../src/orca/messages.py:1386
+#: ../src/orca/messages.py:1444
 msgid "Searching."
 msgstr "Ieškoma."
 
 #. Translators: This message is presented to indicate a search executed by the
 #. user has been completed.
-#: ../src/orca/messages.py:1390
+#: ../src/orca/messages.py:1448
 msgid "Search complete."
 msgstr "Paieška baigta."
 
 #. Translators: This message is presented to the user when Orca's preferences
 #. have been reloaded.
-#: ../src/orca/messages.py:1394
+#: ../src/orca/messages.py:1452
 msgid "Screen reader settings reloaded."
 msgstr "Ekrano skaityklės naudotojo nustatymai įkelti iš naujo."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
-#: ../src/orca/messages.py:1398
+#: ../src/orca/messages.py:1456
 msgid "Speech disabled."
 msgstr "Kalbėjimas išjungtas."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been turned back on.
-#: ../src/orca/messages.py:1402
+#: ../src/orca/messages.py:1460
 msgid "Speech enabled."
 msgstr "Kalbėjimas įjungtas."
 
 #. Translators: This string announces speech rate change.
-#: ../src/orca/messages.py:1405
+#: ../src/orca/messages.py:1463
 msgid "faster."
 msgstr "greičiau."
 
 #. Translators: This string announces speech rate change.
-#: ../src/orca/messages.py:1408
+#: ../src/orca/messages.py:1466
 msgid "slower."
 msgstr "lėčiau."
 
 #. Translators: This string announces speech pitch change.
-#: ../src/orca/messages.py:1411
+#: ../src/orca/messages.py:1469
 msgid "higher."
 msgstr "aukščiau."
 
 #. Translators: This string announces speech pitch change.
-#: ../src/orca/messages.py:1414
+#: ../src/orca/messages.py:1472
 msgid "lower."
 msgstr "žemiau."
 
@@ -7495,22 +7568,22 @@ msgstr "žemiau."
 #. string. The extra space you see at the beginning is because we need the
 #. speech synthesis engine to speak the new string well. For example, "Open..."
 #. turns into "Open dot dot dot".
-#: ../src/orca/messages.py:1420
+#: ../src/orca/messages.py:1478
 msgid " dot dot dot"
 msgstr " taškas taškas taškas"
 
 #. Translators: This message is presented to the user when Orca is launched.
-#: ../src/orca/messages.py:1423
+#: ../src/orca/messages.py:1481
 msgid "Screen reader on."
 msgstr "Ekrano skaityklė įjungta."
 
 #. Translators: This message is presented to the user when Orca is quit.
-#: ../src/orca/messages.py:1426
+#: ../src/orca/messages.py:1484
 msgid "Screen reader off."
 msgstr "Ekrano skaityklė išjungta."
 
 #. Translators: This message means speech synthesis is not installed or working.
-#: ../src/orca/messages.py:1429
+#: ../src/orca/messages.py:1487
 msgid "Speech is unavailable."
 msgstr "Kalbėjimas neprieinamas."
 
@@ -7518,7 +7591,7 @@ msgstr "Kalbėjimas neprieinamas."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1435 ../src/orca/scripts/default.py:3717
+#: ../src/orca/messages.py:1493 ../src/orca/scripts/default.py:3714
 msgid "string not found"
 msgstr "seka nerasta"
 
@@ -7528,7 +7601,7 @@ msgstr "seka nerasta"
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: ../src/orca/messages.py:1443
+#: ../src/orca/messages.py:1501
 msgid "Structural navigation keys off."
 msgstr "Struktūrinės navigacijos klavišai išjungti."
 
@@ -7538,7 +7611,7 @@ msgstr "Struktūrinės navigacijos klavišai išjungti."
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: ../src/orca/messages.py:1451
+#: ../src/orca/messages.py:1509
 msgid "Structural navigation keys on."
 msgstr "Struktūrinės navigacijos klavišai įjungti."
 
@@ -7548,79 +7621,79 @@ msgstr "Struktūrinės navigacijos klavišai įjungti."
 #. type, such as from link to link, or from heading to heading, or from form
 #. field to form field. This is a brief message which will be presented to the
 #. user if the desired structural navigation object could not be found.
-#: ../src/orca/messages.py:1459
+#: ../src/orca/messages.py:1517
 msgctxt "structural navigation"
 msgid "Not found"
 msgstr "Nerasta"
 
 #. Translators: This message describes the (row, col) position of a table cell.
-#: ../src/orca/messages.py:1462
+#: ../src/orca/messages.py:1520
 #, python-format
 msgid "Row %(row)d, column %(column)d."
 msgstr "Eilutė %(row)d, stulpelis %(column)d."
 
 #. Translators: This message is presented to indicate the user is in the last
 #. cell of a table in a document.
-#: ../src/orca/messages.py:1466
+#: ../src/orca/messages.py:1524
 msgid "End of table"
 msgstr "Lentelė pabaiga"
 
 #. Translators: This message is presented when a user is navigating within a
 #. table and then navigates out of it.
-#: ../src/orca/messages.py:1470
+#: ../src/orca/messages.py:1528
 msgid "leaving table."
 msgstr "išeinama iš lentelės."
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: ../src/orca/messages.py:1475
+#: ../src/orca/messages.py:1533
 msgid "Speak cell"
 msgstr "Garsiai perskaityti langelį"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: ../src/orca/messages.py:1480
+#: ../src/orca/messages.py:1538
 msgid "Speak row"
 msgstr "Garsiai perskaityti eilutę"
 
 #. Translators: a uniform table is one in which each table cell occupies one row
 #. and one column (i.e. a perfect grid). In contrast, a non-uniform table is one
 #. in which at least one table cell occupies more than one row and/or column.
-#: ../src/orca/messages.py:1485
+#: ../src/orca/messages.py:1543
 msgid "Non-uniform"
 msgstr "Nevienalytis"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. If the user gives a table navigation command but is not in a
 #. table, presents this message.
-#: ../src/orca/messages.py:1490
+#: ../src/orca/messages.py:1548
 msgid "Not in a table."
 msgstr "išeinama iš lentelės."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
-#: ../src/orca/messages.py:1494
+#: ../src/orca/messages.py:1552
 msgid "Columns reordered"
 msgstr "Stulpeliai perrikiuoti"
 
 #. Translators: This is a message presented to users when the rows in a table
 #. have been reordered.
-#: ../src/orca/messages.py:1498
+#: ../src/orca/messages.py:1556
 msgid "Rows reordered"
 msgstr "Eilutės perrikiuotos"
 
 #. Translators: this is in reference to a column in a table. The substitution
 #. is the index (e.g. the first column is "column 1").
-#: ../src/orca/messages.py:1502
+#: ../src/orca/messages.py:1560
 #, python-format
 msgid "column %d"
 msgstr "stulpelis %d"
 
 #. Translators: this is in reference to a column in a table. If the user is in
 #. the first column of a table with five columns, the position is "column 1 of 5"
-#: ../src/orca/messages.py:1506
+#: ../src/orca/messages.py:1564
 #, python-format
 msgid "column %(index)d of %(total)d"
 msgstr "stulpelis %(index)d iš %(total)d"
@@ -7628,27 +7701,27 @@ msgstr "stulpelis %(index)d iš %(total)d"
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell below the current cell and is already in the last row.
-#: ../src/orca/messages.py:1511
+#: ../src/orca/messages.py:1569
 msgid "Bottom of column."
 msgstr "Stulpelio apačia"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell above the current cell and is already in the first row.
-#: ../src/orca/messages.py:1516
+#: ../src/orca/messages.py:1574
 msgid "Top of column."
 msgstr "Stulpelio viršus"
 
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
-#: ../src/orca/messages.py:1520
+#: ../src/orca/messages.py:1578
 #, python-format
 msgid "row %d"
 msgstr "eilutė %d"
 
 #. Translators: this is in reference to a row in a table. If the user is in the
 #. the first row of a table with five rows, the position is "row 1 of 5"
-#: ../src/orca/messages.py:1524
+#: ../src/orca/messages.py:1582
 #, python-format
 msgid "row %(index)d of %(total)d"
 msgstr "eilutė %(index)d iš %(total)d"
@@ -7656,72 +7729,86 @@ msgstr "eilutė %(index)d iš %(total)d"
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the left of the current cell and is already in the first column.
-#: ../src/orca/messages.py:1529
+#: ../src/orca/messages.py:1587
 msgid "Beginning of row."
 msgstr "Eilutės pradžia"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the right of the current cell and is already in the last column.
-#: ../src/orca/messages.py:1534
+#: ../src/orca/messages.py:1592
 msgid "End of row."
 msgstr "Eilutės pabaiga"
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted a table row.
-#: ../src/orca/messages.py:1538
+#: ../src/orca/messages.py:1596
 msgid "Row deleted."
 msgstr "Eilutė ištrinta."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted the last row of a table.
-#: ../src/orca/messages.py:1542
+#: ../src/orca/messages.py:1600
 msgid "Last row deleted."
 msgstr "Paskutinė eilutė ištrinta."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row.
-#: ../src/orca/messages.py:1546
+#: ../src/orca/messages.py:1604
 msgid "Row inserted."
 msgstr "Eilutė įterpta."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row at the end of the table. This typically happens when the
 #. user presses Tab from within the last cell of the table.
-#: ../src/orca/messages.py:1551
+#: ../src/orca/messages.py:1609
 msgid "Row inserted at the end of the table."
 msgstr "Eilutė įterpta į lentelės pabaigą."
 
 #. Translators: when the user selects (highlights) text in a document, Orca lets
 #. them know.
-#: ../src/orca/messages.py:1555
+#: ../src/orca/messages.py:1613
 msgctxt "text"
 msgid "selected"
 msgstr "pažymėtas"
 
 #. Translators: when the user unselects (un-highlights) text in a document, Orca
 #. lets them know.
-#: ../src/orca/messages.py:1559
+#: ../src/orca/messages.py:1617
 msgctxt "text"
 msgid "unselected"
 msgstr "pažymėjimas nuimtas"
 
+#. Translators: Orca has a feature to speak the time when the user presses a
+#. shortcut key. This is one of the alternative formats that the user may wish
+#. it to be presented with.
+#: ../src/orca/messages.py:1626
+msgid "%H hours, %M minutes and %S seconds."
+msgstr "%H valandų, %M minučių ir %S sekundžių."
+
+#. Translators: Orca has a feature to speak the time when the user presses a
+#. shortcut key. This is one of the alternative formats that the user may wish
+#. it to be presented with.
+#: ../src/orca/messages.py:1631
+msgid "%H hours and %M minutes."
+msgstr "%H valandų ir %M minučių."
+
 #. Translators: this is information about a unicode character reported to the
 #. user.  The value is the unicode number value of this character in hex.
-#: ../src/orca/messages.py:1563
+#: ../src/orca/messages.py:1635
 #, python-format
 msgid "Unicode %s"
 msgstr "Unikodas %s"
 
 #. Translators: This message presents the Orca version number.
-#: ../src/orca/messages.py:1566
+#: ../src/orca/messages.py:1638
 #, python-format
 msgid "Screen reader version %s."
 msgstr "Ekrano skaityklės versija %s."
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
-#: ../src/orca/messages.py:1570
+#: ../src/orca/messages.py:1642
 msgid "white space"
 msgstr "tarpai"
 
@@ -7729,7 +7816,7 @@ msgstr "tarpai"
 #. top of a page or list is reached without that object being found, we "wrap" to
 #. the bottom and continue looking upwards. We need to inform the user when this
 #. is taking place.
-#: ../src/orca/messages.py:1576
+#: ../src/orca/messages.py:1648
 msgid "Wrapping to bottom."
 msgstr "Einama iki apačios."
 
@@ -7737,21 +7824,21 @@ msgstr "Einama iki apačios."
 #. bottom of a page or list is reached without that object being found, we "wrap"
 #. to the top and continue looking downwards. We need to inform the user when
 #. this is taking place.
-#: ../src/orca/messages.py:1582
+#: ../src/orca/messages.py:1654
 msgid "Wrapping to top."
 msgstr "Einama iki viršaus."
 
 #. Translators, normally layered panes and tables have items in them. Thus it is
 #. noteworthy when this is not the case. This message is presented to the user to
 #. indicate the current layered pane or table contains zero items.
-#: ../src/orca/messages.py:1587
+#: ../src/orca/messages.py:1659
 msgid "0 items"
 msgstr "0 įrašų"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: ../src/orca/messages.py:1595 ../src/orca/messages.py:1614
+#: ../src/orca/messages.py:1667 ../src/orca/messages.py:1686
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
@@ -7760,7 +7847,7 @@ msgstr[1] "Langelis iš %d eilučių"
 msgstr[2] "Langelis iš %d eilučių"
 
 #. Translators: this represents the number of columns in a table.
-#: ../src/orca/messages.py:1600
+#: ../src/orca/messages.py:1672
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
@@ -7771,7 +7858,7 @@ msgstr[2] "%d stulpelių"
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: ../src/orca/messages.py:1607
+#: ../src/orca/messages.py:1679
 #, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
@@ -7782,7 +7869,7 @@ msgstr[2] "Langelis iš %d stulpelių"
 #. Translators: People can enter a string of text that is too wide to be
 #. fully displayed in a spreadsheet cell. This message will be spoken if
 #. such a cell is encountered.
-#: ../src/orca/messages.py:1624
+#: ../src/orca/messages.py:1696
 #, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
@@ -7793,7 +7880,7 @@ msgstr[2] " %d simbolių per ilga"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a braille message containing the app which just claimed focus.
-#: ../src/orca/messages.py:1632
+#: ../src/orca/messages.py:1704
 #, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
@@ -7804,7 +7891,7 @@ msgstr[2] "(%d dialogų)"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a spoken message containing the app which just claimed focus.
-#: ../src/orca/messages.py:1638
+#: ../src/orca/messages.py:1710
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -7813,7 +7900,7 @@ msgstr[1] "%d neaktyvūs dialogai"
 msgstr[2] "%d neaktyvių dialogų"
 
 #. Translators: This is the size of a file in bytes
-#: ../src/orca/messages.py:1642
+#: ../src/orca/messages.py:1714
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -7823,7 +7910,7 @@ msgstr[2] "%d baitų"
 
 #. Translators: This message informs the user who many files were found as
 #. a result of a search.
-#: ../src/orca/messages.py:1647
+#: ../src/orca/messages.py:1719
 #, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
@@ -7832,7 +7919,7 @@ msgstr[1] "Rasti %d failai"
 msgstr[2] "Rasta %d failų"
 
 #. Translators: This message presents the number of forms in a document.
-#: ../src/orca/messages.py:1651
+#: ../src/orca/messages.py:1723
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
@@ -7841,7 +7928,7 @@ msgstr[1] "%d formos"
 msgstr[2] "%d formų"
 
 #. Translators: This message presents the number of headings in a document.
-#: ../src/orca/messages.py:1655
+#: ../src/orca/messages.py:1727
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -7851,7 +7938,7 @@ msgstr[2] "%d antraščių"
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
-#: ../src/orca/messages.py:1660
+#: ../src/orca/messages.py:1732
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -7862,7 +7949,7 @@ msgstr[2] "%d elementų"
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
 #. presented to the user to indicate how many matching items were found.
-#: ../src/orca/messages.py:1666
+#: ../src/orca/messages.py:1738
 #, python-format
 msgid "%d item found"
 msgid_plural "%d items found"
@@ -7871,7 +7958,7 @@ msgstr[1] "Rasti %d elementai"
 msgstr[2] "Rasta %d elementų"
 
 #. Translators: This message describes a bulleted or numbered list.
-#: ../src/orca/messages.py:1670
+#: ../src/orca/messages.py:1742
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -7881,7 +7968,7 @@ msgstr[2] "Sąrašas su %d elementų"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: ../src/orca/messages.py:1675
+#: ../src/orca/messages.py:1747
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -7891,7 +7978,7 @@ msgstr[2] "%d pranešimų.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: ../src/orca/messages.py:1680
+#: ../src/orca/messages.py:1752
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -7902,7 +7989,7 @@ msgstr[2] "%d procentų."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: ../src/orca/messages.py:1686
+#: ../src/orca/messages.py:1758
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -7913,7 +8000,7 @@ msgstr[2] "perskaityta %d procentų dokumento"
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
 #. %s is the spoken word for the character.
-#: ../src/orca/messages.py:1694
+#: ../src/orca/messages.py:1766
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -7923,7 +8010,7 @@ msgstr[2] "%(count)d %(repeatChar)s simbolių"
 
 #. Translators: This message is presented to indicate the number of selected
 #. objects (e.g. icons) and the total number of those objects.
-#: ../src/orca/messages.py:1701
+#: ../src/orca/messages.py:1773
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -7935,7 +8022,7 @@ msgstr[2] "Pasirinkta %(index)d elementas iš %(total)d"
 #. shortcuts associated with Orca commands which are not specific to the
 #. current application. It appears as the title of the dialog containing
 #. the list.
-#: ../src/orca/messages.py:1710
+#: ../src/orca/messages.py:1782
 #, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
@@ -7946,7 +8033,7 @@ msgstr[2] "Rasta %d ekrano skaityklės numatytųjų trumpinių"
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
 #. application. It appears as the title of the dialog containing the list.
-#: ../src/orca/messages.py:1718
+#: ../src/orca/messages.py:1790
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
@@ -7956,7 +8043,7 @@ msgstr[2] "Rasta %(count)d ekrano skaityklės trumpinių %(application)s"
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: ../src/orca/messages.py:1725
+#: ../src/orca/messages.py:1797
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -7966,7 +8053,7 @@ msgstr[2] "%d tarpų "
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: ../src/orca/messages.py:1730
+#: ../src/orca/messages.py:1802
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -7975,7 +8062,7 @@ msgstr[1] "%d tabuliatoriai"
 msgstr[2] "%d tabuliatorių "
 
 #. Translators: This message presents the number of tables in a document.
-#: ../src/orca/messages.py:1734
+#: ../src/orca/messages.py:1806
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -7984,7 +8071,7 @@ msgstr[1] "%d lentelės"
 msgstr[2] "%d lentelių"
 
 #. Translators: this represents the number of rows in a table.
-#: ../src/orca/messages.py:1738
+#: ../src/orca/messages.py:1810
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -7993,7 +8080,7 @@ msgstr[1] "lentelė iš %d eilučių"
 msgstr[2] "lentelė iš %d eilučių"
 
 #. Translators: this represents the number of columns in a table.
-#: ../src/orca/messages.py:1742
+#: ../src/orca/messages.py:1814
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -8003,7 +8090,7 @@ msgstr[2] "%d stulpelių"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: ../src/orca/messages.py:1751
+#: ../src/orca/messages.py:1823
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -8013,7 +8100,7 @@ msgstr[2] "%d neaplankytų nuorodų"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: ../src/orca/messages.py:1756
+#: ../src/orca/messages.py:1828
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
@@ -8084,95 +8171,101 @@ msgstr "%(role)s lygis %(level)d"
 msgid "Icon panel"
 msgstr "piktogramų skydelis"
 
+#. Translators: This is a state which applies to elements in document content
+#. which have an "onClick" action.
+#: ../src/orca/object_properties.py:81
+msgid "clickable"
+msgstr "spaudžiamas"
+
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:82
+#: ../src/orca/object_properties.py:86
 msgid "collapsed"
 msgstr "sutraukta"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:87
+#: ../src/orca/object_properties.py:91
 msgid "expanded"
 msgstr "išplėsta"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:91
+#: ../src/orca/object_properties.py:95
 msgid "horizontal"
 msgstr "horizontaliai"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:95
+#: ../src/orca/object_properties.py:99
 msgid "vertical"
 msgstr "vertikaliai"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:98
+#: ../src/orca/object_properties.py:102
 msgctxt "checkbox"
 msgid "checked"
 msgstr "pažymėta"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:101
+#: ../src/orca/object_properties.py:105
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "nepažymėta"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:104
+#: ../src/orca/object_properties.py:108
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "dalinai pažymėta"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:107
+#: ../src/orca/object_properties.py:111
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "paspausta"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:110
+#: ../src/orca/object_properties.py:114
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "nepaspausta"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:113
+#: ../src/orca/object_properties.py:117
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "pažymėta"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:116
+#: ../src/orca/object_properties.py:120
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "nepasirinkta"
 
 #. Translators: This is a state which applies to a table cell.
-#: ../src/orca/object_properties.py:119
+#: ../src/orca/object_properties.py:123
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "nepažymėta"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:122
+#: ../src/orca/object_properties.py:126
 msgctxt "link state"
 msgid "visited"
 msgstr "aplankyta"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:125
+#: ../src/orca/object_properties.py:129
 msgctxt "link state"
 msgid "unvisited"
 msgstr "neaplankyta"
 
 #. Translators: This state represents an item on the screen that has been set
 #. insensitive (or grayed out).
-#: ../src/orca/object_properties.py:129 ../src/orca/object_properties.py:133
+#: ../src/orca/object_properties.py:133 ../src/orca/object_properties.py:137
 msgid "grayed"
 msgstr "papilkintas"
 
@@ -8181,7 +8274,7 @@ msgstr "papilkintas"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the spoken
 #. version.
-#: ../src/orca/object_properties.py:140
+#: ../src/orca/object_properties.py:144
 msgctxt "text"
 msgid "read only"
 msgstr "tik skaitymui"
@@ -8191,20 +8284,20 @@ msgstr "tik skaitymui"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the braille
 #. version. (Because braille displays have limited real estate, we abbreviate.)
-#: ../src/orca/object_properties.py:147
+#: ../src/orca/object_properties.py:151
 msgctxt "text"
 msgid "rdonly"
 msgstr "nerašo"
 
 #. Translators: Certain objects (such as form controls on web pages) can have
 #. STATE_REQUIRED set to inform the user that this field must be filled out.
-#: ../src/orca/object_properties.py:151 ../src/orca/object_properties.py:155
+#: ../src/orca/object_properties.py:155 ../src/orca/object_properties.py:159
 msgid "required"
 msgstr "būtinas"
 
 #. Translators: "multi-select" refers to a web form list in which more than
 #. one item can be selected at a time.
-#: ../src/orca/object_properties.py:159
+#: ../src/orca/object_properties.py:163
 msgid "multi-select"
 msgstr "multi-pažymėjimas"
 
@@ -8689,7 +8782,7 @@ msgstr ""
 "november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
 "u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 
-#: ../src/orca/scripts/apps/gnome-mud/script.py:119
+#: ../src/orca/scripts/apps/gnome-mud/script.py:118
 msgid "Read the latest n messages in the incoming messages text area."
 msgstr "Skaityti paskutinius n pranešimų įeinančių pranešimų teksto srityje."
 
@@ -8732,7 +8825,7 @@ msgstr "Tikrinti rašybą"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3327 ../src/orca/scripts/default.py:3339
+#: ../src/orca/scripts/default.py:3326 ../src/orca/scripts/default.py:3338
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -8742,34 +8835,16 @@ msgstr[2] "%(key)s %(value)s pikselių"
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:4213
+#: ../src/orca/scripts/toolkits/Gecko/script.py:3757
 msgid "open"
 msgstr "atverti"
-
-#. Translators: Orca has a feature to speak the time
-#. when the user presses a shortcut key.
-#. This is one of the alternative formats that the
-#. user may wish to be presented with.
-#.
-#: ../src/orca/settings.py:787
-msgid "%H hours, %M minutes and %S seconds."
-msgstr "%H valandų, %M minučių ir %S sekundžių."
-
-#. Translators: Orca has a feature to speak the time
-#. when the user presses a shortcut key.
-#. This is one of the alternative formats that the
-#. user may wish to be presented with.
-#.
-#: ../src/orca/settings.py:794
-msgid "%H hours and %M minutes."
-msgstr "%H valandų ir %M minučių."
 
 #. Translators: this attribute specifies the background color of the text.
 #. The value is an RGB value of the format "u,u,u".
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:62
+#: ../src/orca/text_attribute_names.py:61
 msgctxt "textattr"
 msgid "background color"
 msgstr "fono spalva"
@@ -8781,7 +8856,7 @@ msgstr "fono spalva"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:71
+#: ../src/orca/text_attribute_names.py:70
 msgctxt "textattr"
 msgid "background full height"
 msgstr "fono visas aukštis"
@@ -8791,7 +8866,7 @@ msgstr "fono visas aukštis"
 #. See
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:78
+#: ../src/orca/text_attribute_names.py:77
 msgctxt "textattr"
 msgid "background stipple"
 msgstr "fono taškavimas"
@@ -8801,7 +8876,7 @@ msgstr "fono taškavimas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:85
+#: ../src/orca/text_attribute_names.py:84
 msgctxt "textattr"
 msgid "direction"
 msgstr "kryptis"
@@ -8811,7 +8886,7 @@ msgstr "kryptis"
 #. See
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:92
+#: ../src/orca/text_attribute_names.py:91
 msgctxt "textattr"
 msgid "editable"
 msgstr "redaguojamas"
@@ -8820,7 +8895,7 @@ msgstr "redaguojamas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:98
+#: ../src/orca/text_attribute_names.py:97
 msgctxt "textattr"
 msgid "family name"
 msgstr "šeimos pavadinimas"
@@ -8830,7 +8905,7 @@ msgstr "šeimos pavadinimas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:105
+#: ../src/orca/text_attribute_names.py:104
 msgctxt "textattr"
 msgid "foreground color"
 msgstr "priekinio plano spalva"
@@ -8840,7 +8915,7 @@ msgstr "priekinio plano spalva"
 #. See
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:112
+#: ../src/orca/text_attribute_names.py:111
 msgctxt "textattr"
 msgid "foreground stipple"
 msgstr "priekinio plano taškavimas"
@@ -8851,7 +8926,7 @@ msgstr "priekinio plano taškavimas"
 #. http://www.w3.org/TR/2002/WD-css3-fonts-20020802/#font-effect
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:120
+#: ../src/orca/text_attribute_names.py:119
 msgctxt "textattr"
 msgid "font effect"
 msgstr "šrifto efektas"
@@ -8861,7 +8936,7 @@ msgstr "šrifto efektas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:127
+#: ../src/orca/text_attribute_names.py:126
 msgctxt "textattr"
 msgid "indent"
 msgstr "įtrauka"
@@ -8870,7 +8945,7 @@ msgstr "įtrauka"
 #. the text, such as it being a misspelled word. See:
 #. https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
 #.
-#: ../src/orca/text_attribute_names.py:133
+#: ../src/orca/text_attribute_names.py:132
 msgctxt "textattr"
 msgid "mistake"
 msgstr "klaida"
@@ -8884,7 +8959,7 @@ msgstr "klaida"
 #. See
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:144
+#: ../src/orca/text_attribute_names.py:143
 msgctxt "textattr"
 msgid "invisible"
 msgstr "nematomas"
@@ -8894,7 +8969,7 @@ msgstr "nematomas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:151
+#: ../src/orca/text_attribute_names.py:150
 msgctxt "textattr"
 msgid "justification"
 msgstr "lygiuotė"
@@ -8904,7 +8979,7 @@ msgstr "lygiuotė"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:158
+#: ../src/orca/text_attribute_names.py:157
 msgctxt "textattr"
 msgid "language"
 msgstr "kalba"
@@ -8913,7 +8988,7 @@ msgstr "kalba"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:164
+#: ../src/orca/text_attribute_names.py:163
 msgctxt "textattr"
 msgid "left margin"
 msgstr "kairė paraštė"
@@ -8923,7 +8998,7 @@ msgstr "kairė paraštė"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-line-height
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:171
+#: ../src/orca/text_attribute_names.py:170
 msgctxt "textattr"
 msgid "line height"
 msgstr "eilutės aukštis"
@@ -8936,7 +9011,7 @@ msgstr "eilutės aukštis"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:181
+#: ../src/orca/text_attribute_names.py:180
 msgctxt "textattr"
 msgid "paragraph style"
 msgstr "pastraipos stilius"
@@ -8946,7 +9021,7 @@ msgstr "pastraipos stilius"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:188
+#: ../src/orca/text_attribute_names.py:187
 msgctxt "textattr"
 msgid "pixels above lines"
 msgstr "pikseliai virš eilučių"
@@ -8956,7 +9031,7 @@ msgstr "pikseliai virš eilučių"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:195
+#: ../src/orca/text_attribute_names.py:194
 msgctxt "textattr"
 msgid "pixels below lines"
 msgstr "pikseliai žemiau eilučių"
@@ -8967,7 +9042,7 @@ msgstr "pikseliai žemiau eilučių"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:203
+#: ../src/orca/text_attribute_names.py:202
 msgctxt "textattr"
 msgid "pixels inside wrap"
 msgstr "pikseliai laužyme"
@@ -8976,7 +9051,7 @@ msgstr "pikseliai laužyme"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:209
+#: ../src/orca/text_attribute_names.py:208
 msgctxt "textattr"
 msgid "right margin"
 msgstr "dešinė paraštė"
@@ -8986,7 +9061,7 @@ msgstr "dešinė paraštė"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:216
+#: ../src/orca/text_attribute_names.py:215
 msgctxt "textattr"
 msgid "rise"
 msgstr "pakeltas"
@@ -8996,7 +9071,7 @@ msgstr "pakeltas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:223
+#: ../src/orca/text_attribute_names.py:222
 msgctxt "textattr"
 msgid "scale"
 msgstr "skalė"
@@ -9005,7 +9080,7 @@ msgstr "skalė"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:229
+#: ../src/orca/text_attribute_names.py:228
 msgctxt "textattr"
 msgid "size"
 msgstr "dydis"
@@ -9017,7 +9092,7 @@ msgstr "dydis"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:238
+#: ../src/orca/text_attribute_names.py:237
 msgctxt "textattr"
 msgid "stretch"
 msgstr "ištempimas"
@@ -9028,7 +9103,7 @@ msgstr "ištempimas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:246
+#: ../src/orca/text_attribute_names.py:245
 msgctxt "textattr"
 msgid "strike through"
 msgstr "perbraukimas"
@@ -9038,7 +9113,7 @@ msgstr "perbraukimas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:253
+#: ../src/orca/text_attribute_names.py:252
 msgctxt "textattr"
 msgid "style"
 msgstr "stilius"
@@ -9048,7 +9123,7 @@ msgstr "stilius"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/text.html#propdef-text-decoration
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:260
+#: ../src/orca/text_attribute_names.py:259
 msgctxt "textattr"
 msgid "text decoration"
 msgstr "teksto spalvinimas"
@@ -9060,7 +9135,7 @@ msgstr "teksto spalvinimas"
 #. http://www.w3.org/TR/2003/CR-css3-text-20030514/#glyph-orientation-horizontal
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:269
+#: ../src/orca/text_attribute_names.py:268
 msgctxt "textattr"
 msgid "text rotation"
 msgstr "teksto pasukimas"
@@ -9070,7 +9145,7 @@ msgstr "teksto pasukimas"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/text.html#propdef-text-shadow
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:276
+#: ../src/orca/text_attribute_names.py:275
 msgctxt "textattr"
 msgid "text shadow"
 msgstr "teksto šešėlis"
@@ -9080,7 +9155,7 @@ msgstr "teksto šešėlis"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:283
+#: ../src/orca/text_attribute_names.py:282
 msgctxt "textattr"
 msgid "underline"
 msgstr "pabraukimas"
@@ -9090,7 +9165,7 @@ msgstr "pabraukimas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:290
+#: ../src/orca/text_attribute_names.py:289
 msgctxt "textattr"
 msgid "variant"
 msgstr "variantas"
@@ -9100,7 +9175,7 @@ msgstr "variantas"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:297
+#: ../src/orca/text_attribute_names.py:296
 msgctxt "textattr"
 msgid "vertical align"
 msgstr "vertikali lygiuotė"
@@ -9110,7 +9185,7 @@ msgstr "vertikali lygiuotė"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/fonts.html#propdef-font-weight
 #.
-#: ../src/orca/text_attribute_names.py:304
+#: ../src/orca/text_attribute_names.py:303
 msgctxt "textattr"
 msgid "weight"
 msgstr "svoris"
@@ -9120,7 +9195,7 @@ msgstr "svoris"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:311
+#: ../src/orca/text_attribute_names.py:310
 msgctxt "textattr"
 msgid "wrap mode"
 msgstr "laužymo veiksena"
@@ -9132,7 +9207,7 @@ msgstr "laužymo veiksena"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:320
+#: ../src/orca/text_attribute_names.py:319
 msgctxt "textattr"
 msgid "writing mode"
 msgstr "rašymo veiksena"
@@ -9149,7 +9224,7 @@ msgstr "rašymo veiksena"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:336
+#: ../src/orca/text_attribute_names.py:335
 msgctxt "textattr"
 msgid "true"
 msgstr "teigiama"
@@ -9160,7 +9235,7 @@ msgstr "teigiama"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:344
+#: ../src/orca/text_attribute_names.py:343
 msgctxt "textattr"
 msgid "false"
 msgstr "neigiama"
@@ -9172,7 +9247,7 @@ msgstr "neigiama"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:353
+#: ../src/orca/text_attribute_names.py:352
 msgctxt "textattr"
 msgid "none"
 msgstr "nėra"
@@ -9182,7 +9257,7 @@ msgstr "nėra"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:360
+#: ../src/orca/text_attribute_names.py:359
 msgctxt "textattr"
 msgid "engrave"
 msgstr "graviruotas"
@@ -9192,7 +9267,7 @@ msgstr "graviruotas"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:367
+#: ../src/orca/text_attribute_names.py:366
 msgctxt "textattr"
 msgid "emboss"
 msgstr "uždėtas"
@@ -9202,7 +9277,7 @@ msgstr "uždėtas"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:374
+#: ../src/orca/text_attribute_names.py:373
 msgctxt "textattr"
 msgid "outline"
 msgstr "apibrėžtas"
@@ -9212,7 +9287,7 @@ msgstr "apibrėžtas"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:381
+#: ../src/orca/text_attribute_names.py:380
 msgctxt "textattr"
 msgid "overline"
 msgstr "po linija"
@@ -9222,7 +9297,7 @@ msgstr "po linija"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:388
+#: ../src/orca/text_attribute_names.py:387
 msgctxt "textattr"
 msgid "line through"
 msgstr "per liniją"
@@ -9232,7 +9307,7 @@ msgstr "per liniją"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:395
+#: ../src/orca/text_attribute_names.py:394
 msgctxt "textattr"
 msgid "blink"
 msgstr "blyksi"
@@ -9242,7 +9317,7 @@ msgstr "blyksi"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:402
+#: ../src/orca/text_attribute_names.py:401
 msgctxt "textattr"
 msgid "black"
 msgstr "juodas"
@@ -9252,7 +9327,7 @@ msgstr "juodas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:409
+#: ../src/orca/text_attribute_names.py:408
 msgctxt "textattr"
 msgid "single"
 msgstr "viengubas"
@@ -9262,7 +9337,7 @@ msgstr "viengubas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:416
+#: ../src/orca/text_attribute_names.py:415
 msgctxt "textattr"
 msgid "double"
 msgstr "dvigubas"
@@ -9272,7 +9347,7 @@ msgstr "dvigubas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:423
+#: ../src/orca/text_attribute_names.py:422
 msgctxt "textattr"
 msgid "low"
 msgstr "žemiau"
@@ -9282,7 +9357,7 @@ msgstr "žemiau"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:430
+#: ../src/orca/text_attribute_names.py:429
 msgctxt "textattr"
 msgid "char"
 msgstr "simbolis"
@@ -9292,7 +9367,7 @@ msgstr "simbolis"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:437
+#: ../src/orca/text_attribute_names.py:436
 msgctxt "textattr"
 msgid "word"
 msgstr "žodis"
@@ -9305,7 +9380,7 @@ msgstr "žodis"
 #. http://library.gnome.org/devel/atk/1.27/AtkText.html#AtkTextAttribute
 #. http://library.gnome.org/devel/gtk/stable/GtkTextTag.html#GtkWrapMode
 #.
-#: ../src/orca/text_attribute_names.py:447
+#: ../src/orca/text_attribute_names.py:446
 msgctxt "textattr"
 msgid "word char"
 msgstr "žodžio simbolis"
@@ -9315,7 +9390,7 @@ msgstr "žodžio simbolis"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:454
+#: ../src/orca/text_attribute_names.py:453
 msgctxt "textattr"
 msgid "ltr"
 msgstr "deš"
@@ -9325,7 +9400,7 @@ msgstr "deš"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:461
+#: ../src/orca/text_attribute_names.py:460
 msgctxt "textattr"
 msgid "rtl"
 msgstr "kair"
@@ -9335,7 +9410,7 @@ msgstr "kair"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:468
+#: ../src/orca/text_attribute_names.py:467
 msgctxt "textattr"
 msgid "left"
 msgstr "kairinė"
@@ -9345,7 +9420,7 @@ msgstr "kairinė"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:475
+#: ../src/orca/text_attribute_names.py:474
 msgctxt "textattr"
 msgid "right"
 msgstr "dešininė"
@@ -9355,7 +9430,7 @@ msgstr "dešininė"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:482
+#: ../src/orca/text_attribute_names.py:481
 msgctxt "textattr"
 msgid "center"
 msgstr "centrinė"
@@ -9364,7 +9439,7 @@ msgstr "centrinė"
 #. text attributes: "justification". In Gecko, when no justification has
 #. be explicitly set, they report a justification of "start".
 #.
-#: ../src/orca/text_attribute_names.py:488
+#: ../src/orca/text_attribute_names.py:487
 msgctxt "textattr"
 msgid "no justification"
 msgstr "jokios lygiuotės"
@@ -9374,7 +9449,7 @@ msgstr "jokios lygiuotės"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:495
+#: ../src/orca/text_attribute_names.py:494
 msgctxt "textattr"
 msgid "fill"
 msgstr "užpildymas"
@@ -9384,7 +9459,7 @@ msgstr "užpildymas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:502
+#: ../src/orca/text_attribute_names.py:501
 msgctxt "textattr"
 msgid "ultra condensed"
 msgstr "ypač suspaustas"
@@ -9394,7 +9469,7 @@ msgstr "ypač suspaustas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:509
+#: ../src/orca/text_attribute_names.py:508
 msgctxt "textattr"
 msgid "extra condensed"
 msgstr "ypač suspaustas"
@@ -9404,7 +9479,7 @@ msgstr "ypač suspaustas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:516
+#: ../src/orca/text_attribute_names.py:515
 msgctxt "textattr"
 msgid "condensed"
 msgstr "suspaustas"
@@ -9414,7 +9489,7 @@ msgstr "suspaustas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:523
+#: ../src/orca/text_attribute_names.py:522
 msgctxt "textattr"
 msgid "semi condensed"
 msgstr "pusiau suspaustas"
@@ -9424,7 +9499,7 @@ msgstr "pusiau suspaustas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:530
+#: ../src/orca/text_attribute_names.py:529
 msgctxt "textattr"
 msgid "normal"
 msgstr "įprastinis"
@@ -9434,7 +9509,7 @@ msgstr "įprastinis"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:537
+#: ../src/orca/text_attribute_names.py:536
 msgctxt "textattr"
 msgid "semi expanded"
 msgstr "pusiau išplėstas"
@@ -9444,7 +9519,7 @@ msgstr "pusiau išplėstas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:544
+#: ../src/orca/text_attribute_names.py:543
 msgctxt "textattr"
 msgid "expanded"
 msgstr "išplėstas"
@@ -9454,7 +9529,7 @@ msgstr "išplėstas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:551
+#: ../src/orca/text_attribute_names.py:550
 msgctxt "textattr"
 msgid "extra expanded"
 msgstr "labai išplėstas"
@@ -9464,7 +9539,7 @@ msgstr "labai išplėstas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:558
+#: ../src/orca/text_attribute_names.py:557
 msgctxt "textattr"
 msgid "ultra expanded"
 msgstr "ypač išplėstas"
@@ -9474,7 +9549,7 @@ msgstr "ypač išplėstas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:565
+#: ../src/orca/text_attribute_names.py:564
 msgctxt "textattr"
 msgid "small caps"
 msgstr "mažosios raidės"
@@ -9484,7 +9559,7 @@ msgstr "mažosios raidės"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:572
+#: ../src/orca/text_attribute_names.py:571
 msgctxt "textattr"
 msgid "oblique"
 msgstr "įstrižas"
@@ -9494,7 +9569,7 @@ msgstr "įstrižas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:579
+#: ../src/orca/text_attribute_names.py:578
 msgctxt "textattr"
 msgid "italic"
 msgstr "pasviręs"
@@ -9504,7 +9579,7 @@ msgstr "pasviręs"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:586
+#: ../src/orca/text_attribute_names.py:585
 msgctxt "textattr"
 msgid "Default"
 msgstr "Numatytasis"
@@ -9514,7 +9589,7 @@ msgstr "Numatytasis"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:593
+#: ../src/orca/text_attribute_names.py:592
 msgctxt "textattr"
 msgid "Text body"
 msgstr "Teksto pagrindas"
@@ -9524,7 +9599,7 @@ msgstr "Teksto pagrindas"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:600
+#: ../src/orca/text_attribute_names.py:599
 msgctxt "textattr"
 msgid "Heading"
 msgstr "Antraštė"
@@ -9535,7 +9610,7 @@ msgstr "Antraštė"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:608
+#: ../src/orca/text_attribute_names.py:607
 msgctxt "textattr"
 msgid "baseline"
 msgstr "pagrindinė eilutė"
@@ -9545,7 +9620,7 @@ msgstr "pagrindinė eilutė"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:615
+#: ../src/orca/text_attribute_names.py:614
 msgctxt "textattr"
 msgid "sub"
 msgstr "apatinis indeksas"
@@ -9555,7 +9630,7 @@ msgstr "apatinis indeksas"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:622
+#: ../src/orca/text_attribute_names.py:621
 msgctxt "textattr"
 msgid "super"
 msgstr "viršutinis indeksas"
@@ -9565,7 +9640,7 @@ msgstr "viršutinis indeksas"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:629
+#: ../src/orca/text_attribute_names.py:628
 msgctxt "textattr"
 msgid "top"
 msgstr "viršuje"
@@ -9575,7 +9650,7 @@ msgstr "viršuje"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:636
+#: ../src/orca/text_attribute_names.py:635
 msgctxt "textattr"
 msgid "text-top"
 msgstr "teksto viršus"
@@ -9585,7 +9660,7 @@ msgstr "teksto viršus"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:643
+#: ../src/orca/text_attribute_names.py:642
 msgctxt "textattr"
 msgid "middle"
 msgstr "viduryje"
@@ -9595,7 +9670,7 @@ msgstr "viduryje"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:650
+#: ../src/orca/text_attribute_names.py:649
 msgctxt "textattr"
 msgid "bottom"
 msgstr "apačioje"
@@ -9605,7 +9680,7 @@ msgstr "apačioje"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:657
+#: ../src/orca/text_attribute_names.py:656
 msgctxt "textattr"
 msgid "text-bottom"
 msgstr "teksto apačia"
@@ -9616,7 +9691,7 @@ msgstr "teksto apačia"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:665
+#: ../src/orca/text_attribute_names.py:664
 msgctxt "textattr"
 msgid "inherit"
 msgstr "paveldi"
@@ -9626,7 +9701,7 @@ msgstr "paveldi"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:672
+#: ../src/orca/text_attribute_names.py:671
 msgctxt "textattr"
 msgid "lr-tb"
 msgstr "kd-va"
@@ -9636,7 +9711,7 @@ msgstr "kd-va"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:679
+#: ../src/orca/text_attribute_names.py:678
 msgctxt "textattr"
 msgid "rl-tb"
 msgstr "dk-va"
@@ -9646,7 +9721,7 @@ msgstr "dk-va"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:686
+#: ../src/orca/text_attribute_names.py:685
 msgctxt "textattr"
 msgid "tb-rl"
 msgstr "va-dk"
@@ -9656,7 +9731,7 @@ msgstr "va-dk"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:693
+#: ../src/orca/text_attribute_names.py:692
 msgctxt "textattr"
 msgid "tb-lr"
 msgstr "va-kd"
@@ -9666,7 +9741,7 @@ msgstr "va-kd"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:700
+#: ../src/orca/text_attribute_names.py:699
 msgctxt "textattr"
 msgid "bt-rl"
 msgstr "av-dk"
@@ -9676,7 +9751,7 @@ msgstr "av-dk"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:707
+#: ../src/orca/text_attribute_names.py:706
 msgctxt "textattr"
 msgid "bt-lr"
 msgstr "bt-lr"
@@ -9686,7 +9761,7 @@ msgstr "bt-lr"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:714
+#: ../src/orca/text_attribute_names.py:713
 msgctxt "textattr"
 msgid "lr"
 msgstr "kd"
@@ -9696,7 +9771,7 @@ msgstr "kd"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:721
+#: ../src/orca/text_attribute_names.py:720
 msgctxt "textattr"
 msgid "rl"
 msgstr "dk"
@@ -9706,7 +9781,7 @@ msgstr "dk"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:728
+#: ../src/orca/text_attribute_names.py:727
 msgctxt "textattr"
 msgid "tb"
 msgstr "va"
@@ -9714,7 +9789,7 @@ msgstr "va"
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "strikethrough." It refers to the line style.
 #.
-#: ../src/orca/text_attribute_names.py:733
+#: ../src/orca/text_attribute_names.py:732
 msgctxt "textattr"
 msgid "solid"
 msgstr "paryškintas"
@@ -9727,8 +9802,8 @@ msgstr "paryškintas"
 #. Translators: This is the text-spelling attribute. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:740
-#: ../src/orca/text_attribute_names.py:745
+#: ../src/orca/text_attribute_names.py:739
+#: ../src/orca/text_attribute_names.py:744
 msgctxt "textattr"
 msgid "spelling"
 msgstr "rašyba"
