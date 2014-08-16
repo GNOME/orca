@@ -1831,24 +1831,24 @@ class Script(default.Script):
         if not obj:
             return [0, 0, 0, 0]
 
-        # The menu items that are children of combo boxes have unique
-        # extents based on their physical position, even though they are
-        # not showing.  Therefore, if the object in question is a menu
-        # item, get the object extents rather than the range extents for
-        # the text. Similarly, if it's a menu in a combo box, get the
-        # extents of the combo box.
-        #
+        role = obj.getRole()
+        treatAsWhole = [pyatspi.ROLE_CHECK_MENU_ITEM,
+                        pyatspi.ROLE_MENU_ITEM,
+                        pyatspi.ROLE_RADIO_MENU_ITEM,
+                        pyatspi.ROLE_PUSH_BUTTON]
+
         text = self.utilities.queryNonEmptyText(obj)
-        if text and obj.getRole() != pyatspi.ROLE_MENU_ITEM:
-            extents = list(text.getRangeExtents(startOffset, endOffset, 0))
-        elif obj.getRole() == pyatspi.ROLE_MENU \
-             and obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
+        if text and not role in treatAsWhole:
+            return list(text.getRangeExtents(startOffset, endOffset, 0))
+
+        parentRole = obj.parent.getRole()
+        if role in [pyatspi.ROLE_MENU, pyatspi.ROLE_LIST_ITEM] \
+           and parentRole in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST_BOX]:
             ext = obj.parent.queryComponent().getExtents(0)
-            extents = [ext.x, ext.y, ext.width, ext.height]
         else:
             ext = obj.queryComponent().getExtents(0)
-            extents = [ext.x, ext.y, ext.width, ext.height]
-        return extents
+
+        return [ext.x, ext.y, ext.width, ext.height]
 
     def onSameLine(self, a, b, pixelDelta=5):
         """Determine if extents a and b are on the same line.
