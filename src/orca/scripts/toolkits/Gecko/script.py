@@ -291,6 +291,7 @@ class Script(default.Script):
                         GeckoStructuralNavigation.ENTRY,
                         GeckoStructuralNavigation.FORM_FIELD,
                         GeckoStructuralNavigation.HEADING,
+                        GeckoStructuralNavigation.IMAGE,
                         GeckoStructuralNavigation.LANDMARK,
                         GeckoStructuralNavigation.LINK,
                         GeckoStructuralNavigation.LIST,

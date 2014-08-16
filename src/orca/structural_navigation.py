@@ -532,6 +532,7 @@ class StructuralNavigation:
     ENTRY           = "entry"
     FORM_FIELD      = "formField"
     HEADING         = "heading"
+    IMAGE           = "image"
     LANDMARK        = "landmark"
     LINK            = "link"
     LIST            = "list"        # Bulleted/numbered lists
@@ -573,6 +574,9 @@ class StructuralNavigation:
                     pyatspi.ROLE_SECTION,
                     pyatspi.ROLE_DOCUMENT_FRAME,
                     pyatspi.ROLE_DOCUMENT_WEB]
+
+    IMAGE_ROLES = [pyatspi.ROLE_IMAGE,
+                   pyatspi.ROLE_IMAGE_MAP]
 
     def __init__(self, script, enabledTypes, enabled=False):
         """Creates an instance of the StructuralNavigation class.
@@ -1699,6 +1703,15 @@ class StructuralNavigation:
             item = self._getSelectedItem(obj)
             if item:
                 text = item.name
+        if not text and obj.getRole() == pyatspi.ROLE_IMAGE:
+            try:
+                image = obj.queryImage()
+            except:
+                text = obj.description
+            else:
+                text = image.imageDescription or obj.description
+            if not text and obj.parent.getRole() == pyatspi.ROLE_LINK:
+                text = self._script.utilities.linkBasename(obj.parent)
 
         return text
 
@@ -2522,6 +2535,77 @@ class StructuralNavigation:
                 return [self._getText(obj)]
 
         return title, columnHeaders, rowData
+
+    ########################
+    #                      #
+    # Images               #
+    #                      #
+    ########################
+
+    def _imageBindings(self):
+        """Returns a dictionary of [keysymstring, modifiers, description]
+        lists for navigating amongst images."""
+
+        bindings = {}
+        prevDesc = cmdnames.IMAGE_PREV
+        bindings["previous"] = ["g", keybindings.SHIFT_MODIFIER_MASK, prevDesc]
+
+        nextDesc = cmdnames.IMAGE_NEXT
+        bindings["next"] = ["g", keybindings.NO_MODIFIER_MASK, nextDesc]
+
+        listDesc = cmdnames.IMAGE_LIST
+        bindings["list"] = ["g", keybindings.SHIFT_ALT_MODIFIER_MASK, listDesc]
+        return bindings
+
+    def _imageCriteria(self, collection, arg=None):
+        """Returns the MatchCriteria to be used for locating images
+        by collection.
+
+        Arguments:
+        - collection: the collection interface for the document
+        - arg: an optional argument which may need to be included in
+          the criteria (e.g. the level of a heading).
+        """
+
+        return MatchCriteria(collection, roles=self.IMAGE_ROLES)
+
+    def _imagePredicate(self, obj, arg=None):
+        """The predicate to be used for verifying that the object
+        obj is an image.
+
+        Arguments:
+        - obj: the accessible object under consideration.
+        - arg: an optional argument which may need to be included in
+          the criteria (e.g. the level of a heading).
+        """
+
+        return (obj and obj.getRole() in self.IMAGE_ROLES)
+
+    def _imagePresentation(self, obj, arg=None):
+        """Presents the image/graphic or indicates that one was not found.
+
+        Arguments:
+        - obj: the accessible object under consideration.
+        - arg: an optional argument which may need to be included in
+          the criteria (e.g. the level of a heading).
+        """
+
+        if obj:
+            [newObj, characterOffset] = self._getCaretPosition(obj)
+            self._setCaretPosition(newObj, characterOffset)
+            self._presentObject(obj, 0)
+        else:
+            full = messages.NO_MORE_IMAGES
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+            self._script.presentMessage(full, brief)
+
+    def _imageDialogData(self):
+        columnHeaders = [guilabels.SN_HEADER_IMAGE]
+
+        def rowData(obj):
+            return [self._getText(obj) or self._getRoleName(obj)]
+
+        return guilabels.SN_TITLE_IMAGE, columnHeaders, rowData
 
     ########################
     #                      #

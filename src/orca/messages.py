@@ -1199,6 +1199,11 @@ NO_MORE_HEADINGS = _("No more headings.")
 # at the desired level can be found.
 NO_MORE_HEADINGS_AT_LEVEL = _("No more headings at level %d.")
 
+# Translators: This is for navigating document content by moving from image
+# to image. This is a detailed message which will be presented to the user
+# if no more images can be found.
+NO_MORE_IMAGES = _("No more images.")
+
 # Translators: this is for navigating to the previous ARIA role landmark.
 # ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 # identify important part of webpage like banners, main context, search etc.

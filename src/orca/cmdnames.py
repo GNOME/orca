@@ -823,6 +823,15 @@ HEADING_AT_LEVEL_NEXT = _("Goes to next heading at level %d.")
 # <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 HEADING_AT_LEVEL_LIST = _("Displays a list of headings at level %d.")
 
+# Translators: this is for navigating among images in a document.
+IMAGE_PREV = _("Goes to previous image.")
+
+# Translators: this is for navigating among images in a document.
+IMAGE_NEXT = _("Goes to next image.")
+
+# Translators: this is for navigating among images in a document.
+IMAGE_LIST = _("Displays a list of images.")
+
 # Translators: this is for navigating among ARIA landmarks in a document. ARIA
 # role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 # important part of webpage like banners, main context, search etc.
