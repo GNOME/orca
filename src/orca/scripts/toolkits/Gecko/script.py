@@ -1174,6 +1174,10 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
+        if obj.parent.getRole() == pyatspi.ROLE_LIST_BOX \
+           and not self._useFocusMode(obj):
+            return
+
         # As the caret moves into a non-focusable element, Gecko emits the
         # signal on the first focusable element in the ancestry.
         rolesToIgnore = pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_PANEL
