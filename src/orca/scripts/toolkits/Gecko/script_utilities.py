@@ -601,6 +601,9 @@ class Utilities(script_utilities.Utilities):
         return objects
 
     def isClickableElement(self, obj):
+        if not self._script.inDocumentContent(obj):
+            return False
+
         # For Gecko, we want to identify things which are ONLY clickable.
         # Things which are focusable, while technically "clickable", are
         # easily discoverable (e.g. via role) and activatable (e.g. via
