@@ -97,7 +97,6 @@ class Script(default.Script):
         default.Script.__init__(self, app)
         # Initialize variables to make pylint happy.
         #
-        self.arrowToLineBeginningCheckButton = None
         self.changedLinesOnlyCheckButton = None
         self.controlCaretNavigationCheckButton = None
         self.minimumFindLengthAdjustment = None
@@ -135,8 +134,6 @@ class Script(default.Script):
 
         if _settingsManager.getSetting('caretNavigationEnabled') == None:
             _settingsManager.setSetting('caretNavigationEnabled', True)
-        if _settingsManager.getSetting('caretArrowToLineBeginning') == None:
-            _settingsManager.setSetting('caretArrowToLineBeginning', True)
         if _settingsManager.getSetting('sayAllOnLoad') == None:
             _settingsManager.setSetting('sayAllOnLoad', True)
 
@@ -501,13 +498,6 @@ class Script(default.Script):
         self.structuralNavigationCheckButton.set_active(value)
         generalGrid.attach(self.structuralNavigationCheckButton, 0, 1, 1, 1)
 
-        label = guilabels.CARET_NAVIGATION_START_OF_LINE
-        value = _settingsManager.getSetting('caretArrowToLineBeginning')
-        self.arrowToLineBeginningCheckButton = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self.arrowToLineBeginningCheckButton.set_active(value)
-        generalGrid.attach(self.arrowToLineBeginningCheckButton, 0, 3, 1, 1)
-
         label = guilabels.READ_PAGE_UPON_LOAD
         value = _settingsManager.getSetting('sayAllOnLoad')
         self.sayAllOnLoadCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
@@ -621,7 +611,6 @@ class Script(default.Script):
             'sayAllOnLoad': self.sayAllOnLoadCheckButton.get_active(),
             'structuralNavigationEnabled': self.structuralNavigationCheckButton.get_active(),
             'caretNavigationEnabled': self.controlCaretNavigationCheckButton.get_active(),
-            'caretArrowToLineBeginning': self.arrowToLineBeginningCheckButton.get_active(),
             'speakCellCoordinates': self.speakCellCoordinatesCheckButton.get_active(),
             'speakCellSpan': self.speakCellSpanCheckButton.get_active(),
             'speakCellHeaders': self.speakCellHeadersCheckButton.get_active(),
