@@ -39,6 +39,42 @@ from .orca_i18n import _, C_
 # it to show all of its contents. And so on.
 ACTIVATE = _("_Activate")
 
+# Translators: Orca has a number of commands that override the default behavior
+# within an application. For instance, on a web page Orca's Structural Navigation
+# command "h" moves you to the next heading. What should happen when you press
+# "h" in an entry on a web page depends: If you want to resume reading content,
+# "h" should move to the next heading; if you want to enter text, "h" should not
+# move you to the next heading. Because Orca doesn't know what you want to do,
+# it has two modes: In browse mode, Orca treats key presses as commands to read
+# the content; in focus mode, Orca treats key presses as something that should be
+# handled by the focused widget. Orca optionally can attempt to detect which mode
+# is appropriate for the current situation and switch automatically. This string
+# is a label for a GUI option to enable such automatic switching when structural
+# navigation commands are used. As an example, if this setting were enabled,
+# pressing "e" to move to the next entry would move focus there and also turn
+# focus mode on so that the next press of "e" would type an "e" into the entry.
+# If this setting is not enabled, the second press of "e" would continue to be
+# a navigation command to move amongst entries.
+AUTO_FOCUS_MODE_STRUCT_NAV = _("Automatic focus mode during structural navigation")
+
+# Translators: Orca has a number of commands that override the default behavior
+# within an application. For instance, if you are at the bottom of an entry and
+# press Down arrow, should you leave the entry? It depends on if you want to
+# resume reading content or if you are editing the text in the entry. Because
+# Orca doesn't know what you want to do, it has two modes: In browse mode, Orca
+# treats key presses as commands to read the content; in focus mode, Orca treats
+# key presses as something that should be handled by the focused widget. Orca
+# optionally can attempt to detect which mode is appropriate for the current
+# situation and switch automatically. This string is a label for a GUI option to
+# enable such automatic switching when caret navigation commands are used. As an
+# example, if this setting were enabled, pressing Down Arrow would allow you to
+# move into an entry but once you had done so, Orca would switch to Focus mode
+# and subsequent presses of Down Arrow would be controlled by the web browser
+# and not by Orca. If this setting is not enabled, Orca would continue to control
+# what happens when you press an arrow key, thus making it possible to arrow out
+# of the entry.
+AUTO_FOCUS_MODE_CARET_NAV = _("Automatic focus mode during caret navigation")
+
 # Translators: A single braille cell on a refreshable braille display consists
 # of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects 
 # this option, Dot 7 will be used to 'underline' text of interest, e.g. when
@@ -65,15 +101,6 @@ BTN_JUMP_TO = _("_Jump to")
 
 # Translators: This is the label for a button in a dialog.
 BTN_OK = _("_OK")
-
-# Translators: When the user arrows up and down in HTML content, and Orca is
-# controlling the caret, the user might want Orca to always position the
-# cursor at the beginning of the line (as opposed to the position directly
-# above/below the current cursor position). Different users have different
-# preferences. This string is the label for a checkbox which allows users
-# to set the line-positioning behavior they want.
-CARET_NAVIGATION_START_OF_LINE = \
-    _("_Position cursor at start of line when navigating vertically")
 
 # Translators: If this checkbox is checked, then Orca will tell you when one of
 # your buddies is typing a message.

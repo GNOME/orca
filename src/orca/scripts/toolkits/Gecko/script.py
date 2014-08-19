@@ -109,6 +109,8 @@ class Script(default.Script):
         self.speakCellSpanCheckButton = None
         self.speakResultsDuringFindCheckButton = None
         self.structuralNavigationCheckButton = None
+        self.autoFocusModeStructNavCheckButton = None
+        self.autoFocusModeCaretNavCheckButton = None
 
         # _caretNavigationFunctions are functions that represent fundamental
         # ways to move the caret (e.g., by the arrow keys).
@@ -491,12 +493,24 @@ class Script(default.Script):
         self.controlCaretNavigationCheckButton.set_active(value) 
         generalGrid.attach(self.controlCaretNavigationCheckButton, 0, 0, 1, 1)
 
+        label = guilabels.AUTO_FOCUS_MODE_CARET_NAV
+        value = _settingsManager.getSetting('caretNavTriggersFocusMode')
+        self.autoFocusModeCaretNavCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
+        self.autoFocusModeCaretNavCheckButton.set_active(value)
+        generalGrid.attach(self.autoFocusModeCaretNavCheckButton, 0, 1, 1, 1)
+
         label = guilabels.USE_STRUCTURAL_NAVIGATION
         value = self.structuralNavigation.enabled
         self.structuralNavigationCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.structuralNavigationCheckButton.set_active(value)
-        generalGrid.attach(self.structuralNavigationCheckButton, 0, 1, 1, 1)
+        generalGrid.attach(self.structuralNavigationCheckButton, 0, 2, 1, 1)
+
+        label = guilabels.AUTO_FOCUS_MODE_STRUCT_NAV
+        value = _settingsManager.getSetting('structNavTriggersFocusMode')
+        self.autoFocusModeStructNavCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
+        self.autoFocusModeStructNavCheckButton.set_active(value)
+        generalGrid.attach(self.autoFocusModeStructNavCheckButton, 0, 3, 1, 1)
 
         label = guilabels.READ_PAGE_UPON_LOAD
         value = _settingsManager.getSetting('sayAllOnLoad')
@@ -610,7 +624,9 @@ class Script(default.Script):
             'findResultsMinimumLength': self.minimumFindLengthSpinButton.get_value(),
             'sayAllOnLoad': self.sayAllOnLoadCheckButton.get_active(),
             'structuralNavigationEnabled': self.structuralNavigationCheckButton.get_active(),
+            'structNavTriggersFocusMode': self.autoFocusModeStructNavCheckButton.get_active(),
             'caretNavigationEnabled': self.controlCaretNavigationCheckButton.get_active(),
+            'caretNavTriggersFocusMode': self.autoFocusModeCaretNavCheckButton.get_active(),
             'speakCellCoordinates': self.speakCellCoordinatesCheckButton.get_active(),
             'speakCellSpan': self.speakCellSpanCheckButton.get_active(),
             'speakCellHeaders': self.speakCellHeadersCheckButton.get_active(),

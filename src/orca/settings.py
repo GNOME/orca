@@ -111,6 +111,8 @@ userCustomizableSettings = [
     "useColorNames",
     "findResultsVerbosity",
     "findResultsMinimumLength",
+    "structNavTriggersFocusMode",
+    "caretNavTriggersFocusMode",
 ]
 
 GENERAL_KEYBOARD_LAYOUT_DESKTOP = 1
@@ -357,7 +359,5 @@ sounds = {}
 timeoutTime             = 10   # a value of 0 means don't do hang checking
 timeoutCallback         = None # Set by orca.py:init to orca.timeout
 
-# NOTE: At the moment items here are experimental and may be changed or
-# replaced or removed.
 structNavTriggersFocusMode = False
 caretNavTriggersFocusMode = False
