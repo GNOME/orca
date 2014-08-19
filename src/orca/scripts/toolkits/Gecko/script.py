@@ -1001,6 +1001,9 @@ class Script(default.Script):
         if not finishedLoading:
             return
 
+        if not self._focusModeIsSticky:
+            self._inFocusMode = False
+
         # Store the document frame otherwise the first time it gains focus (e.g.
         # the first time the user arrows off of a link into non-focusable text),
         # onFocused will start chatting unnecessarily.
