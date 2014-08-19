@@ -1,0 +1,28 @@
+#!/usr/bin/python
+
+"""Test of sayAll."""
+
+from macaroon.playback import *
+import utils
+
+sequence = MacroSequence()
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_Add"))
+sequence.append(utils.AssertPresentationAction(
+    "1. KP_Add to do a SayAll",
+    ["SPEECH OUTPUT: 'Heading 1.'",
+     "SPEECH OUTPUT: 'heading level 1'",
+     "SPEECH OUTPUT: 'Heading 2.'",
+     "SPEECH OUTPUT: 'heading level 1'",
+     "SPEECH OUTPUT: 'sect 1 Heading 3.'",
+     "SPEECH OUTPUT: 'heading level 1'",
+     "SPEECH OUTPUT: 'sect 2 Heading 4.'",
+     "SPEECH OUTPUT: 'heading level 1'",
+     "SPEECH OUTPUT: 'sect 3 Heading 5.'",
+     "SPEECH OUTPUT: 'heading level 1'",
+     "SPEECH OUTPUT: 'Heading 6.'",
+     "SPEECH OUTPUT: 'heading level 1'"]))
+
+sequence.append(utils.AssertionSummaryAction())
+sequence.start()

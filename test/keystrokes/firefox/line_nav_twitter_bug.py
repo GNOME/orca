@@ -1,117 +1,71 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/python
 
-"""Test of line navigation output of Firefox."""
+"""Test of line navigation."""
 
 from macaroon.playback import *
 import utils
 
 sequence = MacroSequence()
 
-########################################################################
-# We wait for the focus to be on a blank Firefox window.
-#
-sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
-
-########################################################################
-# Load the local "simple form" test case.
-#
-sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-
-sequence.append(TypeAction(utils.htmlURLPrefix + "twitter-bug.html"))
-sequence.append(KeyComboAction("Return"))
-
-sequence.append(WaitForDocLoad())
-
-sequence.append(WaitForFocus("Test",
-                             acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
-
-########################################################################
-# Press Control+Home to move to the top.
-#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
-    "Top of file",
+    "1. Top of file",
     ["BRAILLE LINE:  'This is a test.'",
      "     VISIBLE:  'This is a test.', cursor=1",
      "SPEECH OUTPUT: 'This is a test.'"]))
-
-########################################################################
-# Down Arrow.
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "1. Line Down",
-    ["BRAILLE LINE:  'foo Image h2'",
-     "     VISIBLE:  'foo Image h2', cursor=1",
-     "BRAILLE LINE:  'foo Image h2'",
-     "     VISIBLE:  'foo Image h2', cursor=1",
-     "SPEECH OUTPUT: 'foo link image heading level 2'",
-     "SPEECH OUTPUT: 'foo link image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
-    ["BRAILLE LINE:  'Joanmarie h2'",
-     "     VISIBLE:  'Joanmarie h2', cursor=1",
-     "SPEECH OUTPUT: 'Joanmarie heading level 2'"]))
+    ["BRAILLE LINE:  'foo image h2'",
+     "     VISIBLE:  'foo image h2', cursor=1",
+     "SPEECH OUTPUT: 'foo'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'image'",
+     "SPEECH OUTPUT: 'heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
+    ["KNOWN ISSUE: We either need to treat this as one line or two, but not both.",
+     "BRAILLE LINE:  'foo image Joanmarie h2'",
+     "     VISIBLE:  'foo image Joanmarie h2', cursor=11",
+     "SPEECH OUTPUT: 'foo'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'image'",
+     "SPEECH OUTPUT: 'Joanmarie'",
+     "SPEECH OUTPUT: 'heading level 2'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "4. Line Down",
     ["BRAILLE LINE:  'Another test'",
      "     VISIBLE:  'Another test', cursor=1",
      "SPEECH OUTPUT: 'Another test'"]))
 
-########################################################################
-# Up Arrow.
-#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "1. Line Up",
-    ["BRAILLE LINE:  'Joanmarie h2'",
-     "     VISIBLE:  'Joanmarie h2', cursor=1",
-     "SPEECH OUTPUT: 'Joanmarie heading level 2'"]))
+    "5. Line Up",
+    ["KNOWN ISSUE: We're skipping the text to the right of the image",
+     "BRAILLE LINE:  'foo image h2'",
+     "     VISIBLE:  'foo image h2', cursor=1",
+     "SPEECH OUTPUT: 'foo'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'image'",
+     "SPEECH OUTPUT: 'heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "2. Line Up",
-    ["BRAILLE LINE:  'foo Image h2'",
-     "     VISIBLE:  'foo Image h2', cursor=1",
-     "SPEECH OUTPUT: 'foo link image heading level 2'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "3. Line Up",
+    "6. Line Up",
     ["BRAILLE LINE:  'This is a test.'",
      "     VISIBLE:  'This is a test.', cursor=1",
      "SPEECH OUTPUT: 'This is a test.'"]))
 
-########################################################################
-# Move to the location bar by pressing Control+L.  When it has focus
-# type "about:blank" and press Return to restore the browser to the
-# conditions at the test's start.
-#
-sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-
-sequence.append(TypeAction("about:blank"))
-sequence.append(KeyComboAction("Return"))
-
-sequence.append(WaitForDocLoad())
-
-# Just a little extra wait to let some events get through.
-#
-sequence.append(PauseAction(3000))
-
 sequence.append(utils.AssertionSummaryAction())
-
 sequence.start()

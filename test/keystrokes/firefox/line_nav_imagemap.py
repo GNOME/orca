@@ -1,100 +1,259 @@
 #!/usr/bin/python
 
-"""Test of line navigation output of Firefox on a page with an
-imagemap.
-"""
+"""Test of line navigation on a page with an imagemap."""
 
 from macaroon.playback import *
 import utils
 
 sequence = MacroSequence()
 
-########################################################################
-# We wait for the focus to be on a blank Firefox window.
-#
-sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
-
-########################################################################
-# Load the local "backwards" test case.
-#
-sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-
-sequence.append(TypeAction(utils.htmlURLPrefix + "backwards.html"))
-sequence.append(KeyComboAction("Return"))
-
-sequence.append(WaitForDocLoad())
-
-sequence.append(WaitForFocus("Backwards Stuff",
-                             acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
-
-########################################################################
-# Press Control+Home to move to the top.
-#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
-    "Top of file",
+    "1. Top of file",
     ["BRAILLE LINE:  'This looks like A to Z, but it's really Z to A.'",
      "     VISIBLE:  'This looks like A to Z, but it's', cursor=1",
      "SPEECH OUTPUT: 'This looks like A to Z, but it's really Z to A.'"]))
-
-########################################################################
-# Down Arrow to the End.
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(1000))
-sequence.append(utils.AssertPresentationAction(
-    "1. line Down",
-    ["BRAILLE LINE:  'Test: z y x w v u t s r q p o n m l k j i h g f e d c b a'",
-     "     VISIBLE:  'Test: z y x w v u t s r q p o n ', cursor=1",
-     "SPEECH OUTPUT: 'Test: z link y link x link w link v link u link t link s link r link q link p link o link n link m link l link k link j link i link h link g link f link e link d link c link b link a link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. line Down",
+    ["BRAILLE LINE:  'Test: z y x w v u t s r q p o n m l k j i h g f e d c b a'",
+     "     VISIBLE:  'Test: z y x w v u t s r q p o n ', cursor=1",
+     "SPEECH OUTPUT: 'Test:'",
+     "SPEECH OUTPUT: 'z'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'z'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'y'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'y'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'x'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'x'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'w'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'w'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'v'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'v'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'u'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'u'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 't'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 't'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 's'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 's'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'r'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'r'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'q'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'q'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'p'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'p'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'o'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'o'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'n'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'n'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'm'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'm'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'l'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'l'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'k'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'k'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'j'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'j'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'i'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'i'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'h'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'h'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'g'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'g'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'f'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'f'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'e'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'e'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'd'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'd'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'c'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'c'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'b'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'b'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'a'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'a'",
+     "SPEECH OUTPUT: 'image map link'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "3. line Down",
     ["BRAILLE LINE:  'Here is some text.'",
      "     VISIBLE:  'Here is some text.', cursor=1",
      "SPEECH OUTPUT: 'Here is some text.'"]))
 
-########################################################################
-# Up Arrow to the Top.
-#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "1. line Up",
+    "4. line Up",
     ["BRAILLE LINE:  'Test: z y x w v u t s r q p o n m l k j i h g f e d c b a'",
      "     VISIBLE:  'Test: z y x w v u t s r q p o n ', cursor=1",
-     "SPEECH OUTPUT: 'Test: z link y link x link w link v link u link t link s link r link q link p link o link n link m link l link k link j link i link h link g link f link e link d link c link b link a link'"]))
+     "SPEECH OUTPUT: 'Test:'",
+     "SPEECH OUTPUT: 'z'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'z'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'y'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'y'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'x'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'x'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'w'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'w'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'v'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'v'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'u'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'u'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 't'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 't'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 's'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 's'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'r'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'r'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'q'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'q'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'p'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'p'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'o'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'o'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'n'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'n'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'm'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'm'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'l'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'l'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'k'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'k'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'j'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'j'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'i'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'i'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'h'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'h'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'g'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'g'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'f'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'f'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'e'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'e'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'd'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'd'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'c'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'c'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'b'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'b'",
+     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'a'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'a'",
+     "SPEECH OUTPUT: 'image map link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "2. line Up",
+    "5. line Up",
     ["BRAILLE LINE:  'This looks like A to Z, but it's really Z to A.'",
      "     VISIBLE:  'This looks like A to Z, but it's', cursor=1",
      "SPEECH OUTPUT: 'This looks like A to Z, but it's really Z to A.'"]))
 
-########################################################################
-# Move to the location bar by pressing Control+L.  When it has focus
-# type "about:blank" and press Return to restore the browser to the
-# conditions at the test's start.
-#
-sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-
-sequence.append(TypeAction("about:blank"))
-sequence.append(KeyComboAction("Return"))
-
-sequence.append(WaitForDocLoad())
-
-# Just a little extra wait to let some events get through.
-#
-sequence.append(PauseAction(3000))
-
 sequence.append(utils.AssertionSummaryAction())
-
 sequence.start()

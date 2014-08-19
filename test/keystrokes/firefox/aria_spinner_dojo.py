@@ -1,0 +1,68 @@
+#!/usr/bin/python
+
+"""Test of Dojo spinner presentation."""
+
+from macaroon.playback import *
+import utils
+
+sequence = MacroSequence()
+
+sequence.append(KeyComboAction("<Control>Home"))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "1. Tab to the first spinner",
+    ["BRAILLE LINE:  '900 onChange: onChange: not fired yet! $l Set value to 400 push button Set value to null push button Set required to false push button'",
+     "     VISIBLE:  '900 onChange: onChange: not fire', cursor=1",
+     "BRAILLE LINE:  'Focus mode'",
+     "     VISIBLE:  'Focus mode', cursor=0",
+     "BRAILLE LINE:  'Spinbox #1: 900 $l'",
+     "     VISIBLE:  'Spinbox #1: 900 $l', cursor=13",
+     "BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=1",
+     "SPEECH OUTPUT: 'Spinbox #1: 900 selected spin button'",
+     "SPEECH OUTPUT: 'Focus mode' voice=system"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "2. Decrement first spinner",
+    ["BRAILLE LINE:  'Spinbox #1: 900 $l'",
+     "     VISIBLE:  'Spinbox #1: 900 $l', cursor=13",
+     "BRAILLE LINE:  'Spinbox #1: 899 $l'",
+     "     VISIBLE:  'Spinbox #1: 899 $l', cursor=13",
+     "SPEECH OUTPUT: '899'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "3. Decrement first spinner",
+    ["BRAILLE LINE:  'Spinbox #1: 898 $l'",
+     "     VISIBLE:  'Spinbox #1: 898 $l', cursor=13",
+     "BRAILLE LINE:  'Spinbox #1: 898 $l'",
+     "     VISIBLE:  'Spinbox #1: 898 $l', cursor=13",
+     "SPEECH OUTPUT: '898'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "4. Increment first spinner",
+    ["BRAILLE LINE:  'Spinbox #1: 899 $l'",
+     "     VISIBLE:  'Spinbox #1: 899 $l', cursor=13",
+     "BRAILLE LINE:  'Spinbox #1: 899 $l'",
+     "     VISIBLE:  'Spinbox #1: 899 $l', cursor=13",
+     "SPEECH OUTPUT: '899'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_Enter"))
+sequence.append(utils.AssertPresentationAction(
+    "5. basic whereAmI",
+    ["BRAILLE LINE:  'Spinbox #1: 899 $l'",
+     "     VISIBLE:  'Spinbox #1: 899 $l', cursor=13",
+     "SPEECH OUTPUT: 'Spinbox #1:'",
+     "SPEECH OUTPUT: 'spin button'",
+     "SPEECH OUTPUT: '899'"]))
+
+sequence.append(utils.AssertionSummaryAction())
+sequence.start()

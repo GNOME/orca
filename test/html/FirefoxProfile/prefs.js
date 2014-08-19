@@ -50,4 +50,4 @@ user_pref("intl.charset.default", "UTF-8");
 user_pref("intl.charset.default", "UTF-8");
 user_pref("intl.charsetmenu.browser.cache", "UTF-8");
 user_pref("intl.charsetmenu.browser.static", "UTF-8");
-
+user_pref("spellchecker.dictionary", "en_US");

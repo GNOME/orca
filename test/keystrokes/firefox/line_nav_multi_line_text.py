@@ -1,60 +1,33 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/python
 
-"""Test of line navigation output of Firefox on a page with multi-
-line table cells and sections.
-"""
+"""Test of line navigation on a page with multi-line cells and sections."""
 
 from macaroon.playback import *
 import utils
 
 sequence = MacroSequence()
 
-########################################################################
-# We wait for the focus to be on a blank Firefox window.
-#
-sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
-
-########################################################################
-# Load the local "simple form" test case.
-#
-sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-
-sequence.append(TypeAction(utils.htmlURLPrefix + "multi-line.html"))
-sequence.append(KeyComboAction("Return"))
-
-sequence.append(WaitForDocLoad())
-
-sequence.append(WaitForFocus("Mutli-Line Test",
-                             acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
-
-########################################################################
-# Press Control+Home to move to the top.
-#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
-    "Top of file",
+    "1. Top of file",
     ["BRAILLE LINE:  'Table test'",
      "     VISIBLE:  'Table test', cursor=1",
-     "SPEECH OUTPUT: 'Table test'"]))
+     "SPEECH OUTPUT: 'Table test '"]))
 
-########################################################################
-# Down Arrow.
-#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down",
+    "2. Line Down",
     ["BRAILLE LINE:  'foo bar'",
      "     VISIBLE:  'foo bar', cursor=1",
-     "SPEECH OUTPUT: 'foo bar'"]))
+     "SPEECH OUTPUT: 'foo'",
+     "SPEECH OUTPUT: 'bar'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down",
+    "3. Line Down",
     ["BRAILLE LINE:  'foo'",
      "     VISIBLE:  'foo', cursor=1",
      "SPEECH OUTPUT: 'foo",
@@ -63,7 +36,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down",
+    "4. Line Down",
     ["BRAILLE LINE:  'foo'",
      "     VISIBLE:  'foo', cursor=1",
      "SPEECH OUTPUT: 'foo'"]))
@@ -71,7 +44,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down",
+    "5. Line Down",
     ["BRAILLE LINE:  'bar'",
      "     VISIBLE:  'bar', cursor=1",
      "SPEECH OUTPUT: 'bar",
@@ -80,7 +53,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down",
+    "6. Line Down",
     ["BRAILLE LINE:  'bar'",
      "     VISIBLE:  'bar', cursor=1",
      "SPEECH OUTPUT: 'bar'"]))
@@ -88,162 +61,208 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down",
+    "7. Line Down",
     ["BRAILLE LINE:  'Hello h3'",
      "     VISIBLE:  'Hello h3', cursor=1",
-     "SPEECH OUTPUT: 'Hello heading level 3'"]))
+     "SPEECH OUTPUT: 'Hello'",
+     "SPEECH OUTPUT: 'heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down",
+    "8. Line Down",
     ["BRAILLE LINE:  '•This is a test that is not very interesting.'",
-     "     VISIBLE:  '•This is a test that is not very', cursor=1",
-     "SPEECH OUTPUT: '• This is a test link  that is not very interesting.'"]))
+     "     VISIBLE:  'This is a test that is not very ', cursor=1",
+     "SPEECH OUTPUT: '•'",
+     "SPEECH OUTPUT: 'This is a test'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: ' that is not very interesting.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down",
+    "9. Line Down",
     ["BRAILLE LINE:  '•But it looks like a real-world example.'",
-     "     VISIBLE:  '•But it looks like a real-world ', cursor=1",
-     "SPEECH OUTPUT: '• But it looks like link  a real-world example.'"]))
+     "     VISIBLE:  'But it looks like a real-world e', cursor=1",
+     "SPEECH OUTPUT: '•'",
+     "SPEECH OUTPUT: 'But it looks like'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: ' a real-world example.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down",
+    "10. Line Down",
     ["BRAILLE LINE:  '•And that's why this silly test is here.'",
-     "     VISIBLE:  '•And that's why this silly test ', cursor=1",
-     "SPEECH OUTPUT: '• And that's link  why this silly test is here.'"]))
+     "     VISIBLE:  'And that's why this silly test i', cursor=1",
+     "SPEECH OUTPUT: '•'",
+     "SPEECH OUTPUT: 'And that's'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: ' why this silly test is here.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down",
+    "11. Line Down",
     ["BRAILLE LINE:  'So it's far more interesting than it looks.'",
      "     VISIBLE:  'So it's far more interesting tha', cursor=1",
-     "SPEECH OUTPUT: 'So it's far more interesting link  than it looks.'"]))
+     "SPEECH OUTPUT: 'So it's '",
+     "SPEECH OUTPUT: 'far more interesting'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: ' than it looks.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down",
+    "12. Line Down",
     ["BRAILLE LINE:  'World h3'",
      "     VISIBLE:  'World h3', cursor=1",
-     "SPEECH OUTPUT: 'World heading level 3'"]))
+     "SPEECH OUTPUT: 'World'",
+     "SPEECH OUTPUT: 'heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down",
+    "13. Line Down",
     ["BRAILLE LINE:  '•The thing is we can't copy content.'",
-     "     VISIBLE:  '•The thing is we can't copy cont', cursor=1",
-     "SPEECH OUTPUT: '• The thing is link  we can't copy content.'"]))
+     "     VISIBLE:  'The thing is we can't copy conte', cursor=1",
+     "SPEECH OUTPUT: '•'",
+     "SPEECH OUTPUT: 'The thing is'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: ' we can't copy content.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down",
+    "14. Line Down",
     ["BRAILLE LINE:  '•So we must create silly tests.'",
-     "     VISIBLE:  '•So we must create silly tests.', cursor=1",
-     "SPEECH OUTPUT: '• So we must link  create silly tests.'"]))
+     "     VISIBLE:  '•So we must create silly tests.', cursor=2",
+     "SPEECH OUTPUT: '•'",
+     "SPEECH OUTPUT: 'So we must'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: ' create silly tests.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down",
+    "15. Line Down",
     ["BRAILLE LINE:  '•Oh well.'",
-     "     VISIBLE:  '•Oh well.', cursor=1",
-     "SPEECH OUTPUT: '• Oh link  well.'"]))
+     "     VISIBLE:  '•Oh well.', cursor=2",
+     "SPEECH OUTPUT: '•'",
+     "SPEECH OUTPUT: 'Oh'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: ' well.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Down",
+    "16. Line Down",
     ["BRAILLE LINE:  'At least it's over.'",
      "     VISIBLE:  'At least it's over.', cursor=1",
-     "SPEECH OUTPUT: 'At least it's over link .'"]))
+     "SPEECH OUTPUT: 'At least it's",
+     "SPEECH OUTPUT: 'over'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: '.'"]))
 
-########################################################################
-# Up Arrow.
-#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up",
+    "17. Line Up",
     ["BRAILLE LINE:  '•Oh well.'",
-     "     VISIBLE:  '•Oh well.', cursor=1",
-     "SPEECH OUTPUT: '• Oh link  well.'"]))
+     "     VISIBLE:  '•Oh well.', cursor=2",
+     "SPEECH OUTPUT: '•'",
+     "SPEECH OUTPUT: 'Oh'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: ' well.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up",
+    "18. Line Up",
     ["BRAILLE LINE:  '•So we must create silly tests.'",
-     "     VISIBLE:  '•So we must create silly tests.', cursor=1",
-     "SPEECH OUTPUT: '• So we must link  create silly tests.'"]))
+     "     VISIBLE:  '•So we must create silly tests.', cursor=2",
+     "SPEECH OUTPUT: '•'",
+     "SPEECH OUTPUT: 'So we must'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: ' create silly tests.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up",
+    "19. Line Up",
     ["BRAILLE LINE:  '•The thing is we can't copy content.'",
-     "     VISIBLE:  '•The thing is we can't copy cont', cursor=1",
-     "SPEECH OUTPUT: '• The thing is link  we can't copy content.'"]))
+     "     VISIBLE:  'The thing is we can't copy conte', cursor=1",
+     "SPEECH OUTPUT: '•'",
+     "SPEECH OUTPUT: 'The thing is'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: ' we can't copy content.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up",
+    "20. Line Up",
     ["BRAILLE LINE:  'World h3'",
      "     VISIBLE:  'World h3', cursor=1",
-     "SPEECH OUTPUT: 'World heading level 3'"]))
+     "SPEECH OUTPUT: 'World'",
+     "SPEECH OUTPUT: 'heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up",
+    "21. Line Up",
     ["BRAILLE LINE:  'So it's far more interesting than it looks.'",
      "     VISIBLE:  'So it's far more interesting tha', cursor=1",
-     "SPEECH OUTPUT: 'So it's far more interesting link  than it looks.'"]))
+     "SPEECH OUTPUT: 'So it's '",
+     "SPEECH OUTPUT: 'far more interesting'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: ' than it looks.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up",
+    "22. Line Up",
     ["BRAILLE LINE:  '•And that's why this silly test is here.'",
-     "     VISIBLE:  '•And that's why this silly test ', cursor=1",
-     "SPEECH OUTPUT: '• And that's link  why this silly test is here.'"]))
+     "     VISIBLE:  'And that's why this silly test i', cursor=1",
+     "SPEECH OUTPUT: '•'",
+     "SPEECH OUTPUT: 'And that's'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: ' why this silly test is here.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up",
+    "23. Line Up",
     ["BRAILLE LINE:  '•But it looks like a real-world example.'",
-     "     VISIBLE:  '•But it looks like a real-world ', cursor=1",
-     "SPEECH OUTPUT: '• But it looks like link  a real-world example.'"]))
+     "     VISIBLE:  'But it looks like a real-world e', cursor=1",
+     "SPEECH OUTPUT: '•'",
+     "SPEECH OUTPUT: 'But it looks like'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: ' a real-world example.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up",
+    "24. Line Up",
     ["BRAILLE LINE:  '•This is a test that is not very interesting.'",
-     "     VISIBLE:  '•This is a test that is not very', cursor=1",
-     "SPEECH OUTPUT: '• This is a test link  that is not very interesting.'"]))
+     "     VISIBLE:  'This is a test that is not very ', cursor=1",
+     "SPEECH OUTPUT: '•'",
+     "SPEECH OUTPUT: 'This is a test'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: ' that is not very interesting.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up",
+    "25. Line Up",
     ["BRAILLE LINE:  'Hello h3'",
      "     VISIBLE:  'Hello h3', cursor=1",
-     "SPEECH OUTPUT: 'Hello heading level 3'"]))
+     "SPEECH OUTPUT: 'Hello'",
+     "SPEECH OUTPUT: 'heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up",
+    "26. Line Up",
     ["BRAILLE LINE:  'bar'",
      "     VISIBLE:  'bar', cursor=1",
      "SPEECH OUTPUT: 'bar'"]))
@@ -251,7 +270,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up",
+    "27. Line Up",
     ["BRAILLE LINE:  'bar'",
      "     VISIBLE:  'bar', cursor=1",
      "SPEECH OUTPUT: 'bar",
@@ -260,7 +279,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up",
+    "28. Line Up",
     ["BRAILLE LINE:  'foo'",
      "     VISIBLE:  'foo', cursor=1",
      "SPEECH OUTPUT: 'foo'"]))
@@ -268,7 +287,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up",
+    "29. Line Up",
     ["BRAILLE LINE:  'foo'",
      "     VISIBLE:  'foo', cursor=1",
      "SPEECH OUTPUT: 'foo",
@@ -277,36 +296,19 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up",
+    "30. Line Up",
     ["BRAILLE LINE:  'foo bar'",
      "     VISIBLE:  'foo bar', cursor=1",
-     "SPEECH OUTPUT: 'foo bar'"]))
+     "SPEECH OUTPUT: 'foo'",
+     "SPEECH OUTPUT: 'bar'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "Line Up",
+    "31. Line Up",
     ["BRAILLE LINE:  'Table test'",
      "     VISIBLE:  'Table test', cursor=1",
-     "SPEECH OUTPUT: 'Table test'"]))
-
-########################################################################
-# Move to the location bar by pressing Control+L.  When it has focus
-# type "about:blank" and press Return to restore the browser to the
-# conditions at the test's start.
-#
-sequence.append(KeyComboAction("<Control>l"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-
-sequence.append(TypeAction("about:blank"))
-sequence.append(KeyComboAction("Return"))
-
-sequence.append(WaitForDocLoad())
-
-# Just a little extra wait to let some events get through.
-#
-sequence.append(PauseAction(3000))
+     "SPEECH OUTPUT: 'Table test '"]))
 
 sequence.append(utils.AssertionSummaryAction())
-
 sequence.start()
