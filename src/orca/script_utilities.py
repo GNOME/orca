@@ -2722,3 +2722,6 @@ class Utilities:
 
     def isClickableElement(self, obj):
         return False
+
+    def hasLongDesc(self, obj):
+        return False

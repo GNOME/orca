@@ -622,3 +622,18 @@ class Utilities(script_utilities.Utilities):
                 return True
 
         return False
+
+    def hasLongDesc(self, obj):
+        if not self._script.inDocumentContent(obj):
+            return False
+
+        try:
+            action = obj.queryAction()
+        except NotImplementedError:
+            return False
+
+        for i in range(action.nActions):
+            if action.getName(i) in ["showlongdesc"]:
+                return True
+
+        return False

@@ -65,6 +65,7 @@ formatting = {
             'iconindex': object_properties.ICON_INDEX_SPEECH,
             'groupindex': object_properties.GROUP_INDEX_SPEECH,
             'clickable': object_properties.STATE_CLICKABLE,
+            'haslongdesc': object_properties.STATE_HAS_LONGDESC,
         },
         'braille': {
             'eol': object_properties.EOL_INDICATOR_BRAILLE,
