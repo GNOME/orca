@@ -1,3 +1,58 @@
+3.13.90 - 19 August 2014
+
+Gecko:
+
+  * Create Browse and Focus modes to make acceess to web content and web
+    apps more reliable
+
+  * Add support for presentation of longdesc and "clickable" elements
+
+  * Add support for structural navigation by image and by "clickable"
+
+  * Present the accessible description when giving focus to objects
+
+  * Present expanded state for links which can be expanded
+
+  * Fix a number of bugs that caused Orca to loop and/or skip over content
+
+  * Fix a number of bugs related to presentation of ARIA
+
+  * Improve presentation of list boxes
+
+  * Eliminate double-brailling of links in list items
+
+  * Fix a couple of SayAll bugs
+
+Evince:
+
+  * Fix a traceback that occurred when form field widgets lost focus
+
+  * Fix a hang that can occur when using structural navigation with forms
+
+Other:
+
+  * Check for accessible names when presenting entries
+
+  * Fix bug 732550 - Orca does not announce selection state toggling in Qt
+
+  * Fix for Orca going silent when speaking of child position is enabled
+
+  * Map 'marco' to 'metacity' in the script manager
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    el            Greek                             Tom Tryfonidis,
+                                                    Maria Mavridou
+    es            Spanish                           Daniel Mustieles
+    fi            Finnish                           Lasse Liehu
+    lt            Lithuanian                        Aurimas Černius
+    nb            Norwegian bokmål                  Kjartan Maraas
+    ru            Russian                           Yuri Myasoedov
+    zh_HK         Traditional Chinese (Hong Kong)   Chao-Hsiung Liao
+    zh_TW         Traditional Chinese (Taiwan)      Chao-Hsiung Liao
+
+=========
+
 3.13.3 - 23 June 2014
 
 General:
