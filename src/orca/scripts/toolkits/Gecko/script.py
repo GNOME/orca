@@ -852,6 +852,11 @@ class Script(default.Script):
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
+        if self._lastCommandWasCaretNav:
+            msg = "INFO: Caret-moved event ignored: last command was caret nav"
+            debug.println(debug.LEVEL_INFO, msg)
+            return
+
         text = self.utilities.queryNonEmptyText(event.source)
         if not text:
             if event.source.getRole() == pyatspi.ROLE_LINK:
