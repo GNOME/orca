@@ -37,7 +37,7 @@ formatting = {
         'suffix': {
             'focused': '[]',
             'unfocused': 'newNodeLevel + unselectedCell + clickable + hasLongDesc + ' + orca.formatting.TUTORIAL + ' + description ',
-            'basicWhereAmI': orca.formatting.TUTORIAL + ' + description + liveRegionDescription',
+            'basicWhereAmI': orca.formatting.TUTORIAL + ' + clickable + hasLongDesc + description + liveRegionDescription',
             'detailedWhereAmI' : '[]'
             },
         'default': {
