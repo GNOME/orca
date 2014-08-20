@@ -13,39 +13,35 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. Down Arrow",
-    ["KNOWN ISSUE: We're moving to the end of this line and getting stuck",
-     "BRAILLE LINE:  'dog'",
-     "     VISIBLE:  'dog', cursor=1",
-     "SPEECH OUTPUT: 'dog'"]))
+    ["BRAILLE LINE:  'cat'",
+     "     VISIBLE:  'cat', cursor=1",
+     "SPEECH OUTPUT: 'cat'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Down Arrow",
-    ["KNOWN ISSUE: We're moving to the end of this line and getting stuck",
-     "BRAILLE LINE:  'dog'",
-     "     VISIBLE:  'dog', cursor=1",
-     "SPEECH OUTPUT: 'dog'"]))
+    ["BRAILLE LINE:  'sparrow'",
+     "     VISIBLE:  'sparrow', cursor=1",
+     "SPEECH OUTPUT: 'sparrow'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "3. Basic whereAmI",
-    ["KNOWN ISSUE: We're moving to the end of this line and getting stuck",
-     "BRAILLE LINE:  'dog'",
-     "     VISIBLE:  'dog', cursor=1",
+    ["BRAILLE LINE:  'sparrow'",
+     "     VISIBLE:  'sparrow', cursor=1",
      "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: 'dog'",
-     "SPEECH OUTPUT: '1 of 4'"]))
+     "SPEECH OUTPUT: 'sparrow'",
+     "SPEECH OUTPUT: '3 of 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "4. Up Arrow",
-    ["KNOWN ISSUE: We're moving to the end of this line and getting stuck",
-     "BRAILLE LINE:  'dog'",
-     "     VISIBLE:  'dog', cursor=1",
-     "SPEECH OUTPUT: 'dog'"]))
+    ["BRAILLE LINE:  'cat'",
+     "     VISIBLE:  'cat', cursor=1",
+     "SPEECH OUTPUT: 'cat'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -13,13 +13,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "1. l to first list",
-    ["KNOWN ISSUE: We are missing the list item marker here and in other tests.",
-     "BRAILLE LINE:  'List with 4 items'",
+    ["BRAILLE LINE:  'List with 4 items'",
      "     VISIBLE:  'List with 4 items', cursor=0",
-     "BRAILLE LINE:  'remember what the heck we are doing each day'",
-     "     VISIBLE:  'remember what the heck we are do', cursor=1",
+     "BRAILLE LINE:  '1.remember what the heck we are doing each day'",
+     "     VISIBLE:  '1.remember what the heck we are ', cursor=1",
      "SPEECH OUTPUT: 'List with 4 items' voice=system",
-     "SPEECH OUTPUT: 'remember what the heck we are doing each day'"]))
+     "SPEECH OUTPUT: '1.remember what the heck we are doing each day'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("l"))
@@ -27,10 +26,10 @@ sequence.append(utils.AssertPresentationAction(
     "2. l to second list",
     ["BRAILLE LINE:  'List with 6 items'",
      "     VISIBLE:  'List with 6 items', cursor=0",
-     "BRAILLE LINE:  'And use roman numerals,'",
-     "     VISIBLE:  'And use roman numerals,', cursor=1",
+     "BRAILLE LINE:  'VI.And use roman numerals,'",
+     "     VISIBLE:  'VI.And use roman numerals,', cursor=1",
      "SPEECH OUTPUT: 'List with 6 items' voice=system",
-     "SPEECH OUTPUT: 'And use roman numerals,'"]))
+     "SPEECH OUTPUT: 'VI.And use roman numerals,'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("l"))
@@ -39,7 +38,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'List with 1 item'",
      "     VISIBLE:  'List with 1 item', cursor=0",
      "BRAILLE LINE:  '•listing item'",
-     "     VISIBLE:  '•listing item', cursor=2",
+     "     VISIBLE:  '•listing item', cursor=1",
      "SPEECH OUTPUT: 'List with 1 item' voice=system",
      "SPEECH OUTPUT: '•listing item'"]))
 
@@ -52,7 +51,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Nesting level 1'",
      "     VISIBLE:  'Nesting level 1', cursor=0",
      "BRAILLE LINE:  '◦first sublevel'",
-     "     VISIBLE:  '◦first sublevel', cursor=2",
+     "     VISIBLE:  '◦first sublevel', cursor=1",
      "SPEECH OUTPUT: 'List with 1 item' voice=system",
      "SPEECH OUTPUT: 'Nesting level 1' voice=system",
      "SPEECH OUTPUT: '◦first sublevel'"]))
@@ -66,7 +65,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Nesting level 2'",
      "     VISIBLE:  'Nesting level 2', cursor=0",
      "BRAILLE LINE:  '▪look for the bullet on'",
-     "     VISIBLE:  '▪look for the bullet on', cursor=2",
+     "     VISIBLE:  '▪look for the bullet on', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items' voice=system",
      "SPEECH OUTPUT: 'Nesting level 2' voice=system",
      "SPEECH OUTPUT: '▪look for the bullet on'"]))
@@ -80,7 +79,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Nesting level 3'",
      "     VISIBLE:  'Nesting level 3', cursor=0",
      "BRAILLE LINE:  '▪each sublevel'",
-     "     VISIBLE:  '▪each sublevel', cursor=2",
+     "     VISIBLE:  '▪each sublevel', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items' voice=system",
      "SPEECH OUTPUT: 'Nesting level 3' voice=system",
      "SPEECH OUTPUT: '▪each sublevel'"]))
@@ -94,7 +93,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Nesting level 2'",
      "     VISIBLE:  'Nesting level 2', cursor=0",
      "BRAILLE LINE:  '◦if your TYPE is circle'",
-     "     VISIBLE:  '◦if your TYPE is circle', cursor=2",
+     "     VISIBLE:  '◦if your TYPE is circle', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items' voice=system",
      "SPEECH OUTPUT: 'Nesting level 2' voice=system",
      "SPEECH OUTPUT: '◦if your TYPE is circle'"]))
@@ -108,7 +107,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Nesting level 1'",
      "     VISIBLE:  'Nesting level 1', cursor=0",
      "BRAILLE LINE:  '◦was a composer who was not square'",
-     "     VISIBLE:  '◦was a composer who was not squa', cursor=2",
+     "     VISIBLE:  '◦was a composer who was not squa', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items' voice=system",
      "SPEECH OUTPUT: 'Nesting level 1' voice=system",
      "SPEECH OUTPUT: '◦was a composer who was not square'"]))
@@ -120,7 +119,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'List with 3 items'",
      "     VISIBLE:  'List with 3 items', cursor=0",
      "BRAILLE LINE:  '◦feeling listless'",
-     "     VISIBLE:  '◦feeling listless', cursor=2",
+     "     VISIBLE:  '◦feeling listless', cursor=1",
      "SPEECH OUTPUT: 'List with 3 items' voice=system",
      "SPEECH OUTPUT: '◦feeling listless'"]))
 
@@ -132,11 +131,11 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Wrapping to top.', cursor=0",
      "BRAILLE LINE:  'List with 4 items'",
      "     VISIBLE:  'List with 4 items', cursor=0",
-     "BRAILLE LINE:  'remember what the heck we are doing each day'",
-     "     VISIBLE:  'remember what the heck we are do', cursor=1",
+     "BRAILLE LINE:  '1.remember what the heck we are doing each day'",
+     "     VISIBLE:  '1.remember what the heck we are ', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.' voice=system",
      "SPEECH OUTPUT: 'List with 4 items' voice=system",
-     "SPEECH OUTPUT: 'remember what the heck we are doing each day'"]))
+     "SPEECH OUTPUT: '1.remember what the heck we are doing each day'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))
@@ -147,7 +146,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'List with 3 items'",
      "     VISIBLE:  'List with 3 items', cursor=0",
      "BRAILLE LINE:  '◦feeling listless'",
-     "     VISIBLE:  '◦feeling listless', cursor=2",
+     "     VISIBLE:  '◦feeling listless', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to bottom.' voice=system",
      "SPEECH OUTPUT: 'List with 3 items' voice=system",
      "SPEECH OUTPUT: '◦feeling listless'"]))
@@ -161,7 +160,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Nesting level 1'",
      "     VISIBLE:  'Nesting level 1', cursor=0",
      "BRAILLE LINE:  '◦was a composer who was not square'",
-     "     VISIBLE:  '◦was a composer who was not squa', cursor=2",
+     "     VISIBLE:  '◦was a composer who was not squa', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items' voice=system",
      "SPEECH OUTPUT: 'Nesting level 1' voice=system",
      "SPEECH OUTPUT: '◦was a composer who was not square'"]))
@@ -175,7 +174,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Nesting level 2'",
      "     VISIBLE:  'Nesting level 2', cursor=0",
      "BRAILLE LINE:  '◦if your TYPE is circle'",
-     "     VISIBLE:  '◦if your TYPE is circle', cursor=2",
+     "     VISIBLE:  '◦if your TYPE is circle', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items' voice=system",
      "SPEECH OUTPUT: 'Nesting level 2' voice=system",
      "SPEECH OUTPUT: '◦if your TYPE is circle'"]))
@@ -189,7 +188,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Nesting level 3'",
      "     VISIBLE:  'Nesting level 3', cursor=0",
      "BRAILLE LINE:  '▪each sublevel'",
-     "     VISIBLE:  '▪each sublevel', cursor=2",
+     "     VISIBLE:  '▪each sublevel', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items' voice=system",
      "SPEECH OUTPUT: 'Nesting level 3' voice=system",
      "SPEECH OUTPUT: '▪each sublevel'"]))
@@ -203,7 +202,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Nesting level 2'",
      "     VISIBLE:  'Nesting level 2', cursor=0",
      "BRAILLE LINE:  '▪look for the bullet on'",
-     "     VISIBLE:  '▪look for the bullet on', cursor=2",
+     "     VISIBLE:  '▪look for the bullet on', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items' voice=system",
      "SPEECH OUTPUT: 'Nesting level 2' voice=system",
      "SPEECH OUTPUT: '▪look for the bullet on'"]))
@@ -217,7 +216,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Nesting level 1'",
      "     VISIBLE:  'Nesting level 1', cursor=0",
      "BRAILLE LINE:  '◦first sublevel'",
-     "     VISIBLE:  '◦first sublevel', cursor=2",
+     "     VISIBLE:  '◦first sublevel', cursor=1",
      "SPEECH OUTPUT: 'List with 1 item' voice=system",
      "SPEECH OUTPUT: 'Nesting level 1' voice=system",
      "SPEECH OUTPUT: '◦first sublevel'"]))
@@ -229,7 +228,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'List with 1 item'",
      "     VISIBLE:  'List with 1 item', cursor=0",
      "BRAILLE LINE:  '•listing item'",
-     "     VISIBLE:  '•listing item', cursor=2",
+     "     VISIBLE:  '•listing item', cursor=1",
      "SPEECH OUTPUT: 'List with 1 item' voice=system",
      "SPEECH OUTPUT: '•listing item'"]))
 
@@ -239,10 +238,10 @@ sequence.append(utils.AssertPresentationAction(
     "18. shift + l",
     ["BRAILLE LINE:  'List with 6 items'",
      "     VISIBLE:  'List with 6 items', cursor=0",
-     "BRAILLE LINE:  'And use roman numerals,'",
-     "     VISIBLE:  'And use roman numerals,', cursor=1",
+     "BRAILLE LINE:  'VI.And use roman numerals,'",
+     "     VISIBLE:  'VI.And use roman numerals,', cursor=1",
      "SPEECH OUTPUT: 'List with 6 items' voice=system",
-     "SPEECH OUTPUT: 'And use roman numerals,'"]))
+     "SPEECH OUTPUT: 'VI.And use roman numerals,'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))
@@ -250,10 +249,10 @@ sequence.append(utils.AssertPresentationAction(
     "19. shift + l",
     ["BRAILLE LINE:  'List with 4 items'",
      "     VISIBLE:  'List with 4 items', cursor=0",
-     "BRAILLE LINE:  'remember what the heck we are doing each day'",
-     "     VISIBLE:  'remember what the heck we are do', cursor=1",
+     "BRAILLE LINE:  '1.remember what the heck we are doing each day'",
+     "     VISIBLE:  '1.remember what the heck we are ', cursor=1",
      "SPEECH OUTPUT: 'List with 4 items' voice=system",
-     "SPEECH OUTPUT: 'remember what the heck we are doing each day'"]))
+     "SPEECH OUTPUT: '1.remember what the heck we are doing each day'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

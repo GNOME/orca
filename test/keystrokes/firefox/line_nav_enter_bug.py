@@ -13,12 +13,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'Home Bugzilla'",
      "     VISIBLE:  'Home Bugzilla', cursor=1",
-     "BRAILLE LINE:  'Home Bugzilla'",
-     "     VISIBLE:  'Home Bugzilla', cursor=0",
      "SPEECH OUTPUT: 'Home'",
-     "SPEECH OUTPUT: 'Bugzilla'",
-     "SPEECH OUTPUT: 'Home'",
-     "SPEECH OUTPUT: 'link' voice=hyperlink"]))
+     "SPEECH OUTPUT: 'Bugzilla'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -622,12 +618,8 @@ sequence.append(utils.AssertPresentationAction(
     "58. Line Up",
     ["BRAILLE LINE:  'Home Bugzilla'",
      "     VISIBLE:  'Home Bugzilla', cursor=1",
-     "BRAILLE LINE:  'Home Bugzilla'",
-     "     VISIBLE:  'Home Bugzilla', cursor=0",
      "SPEECH OUTPUT: 'Home'",
-     "SPEECH OUTPUT: 'Bugzilla'",
-     "SPEECH OUTPUT: 'Home'",
-     "SPEECH OUTPUT: 'link' voice=hyperlink"]))
+     "SPEECH OUTPUT: 'Bugzilla'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

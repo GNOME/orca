@@ -78,7 +78,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Up to anchors.html",
     ["BRAILLE LINE:  '•anchors.html'",
-     "     VISIBLE:  '•anchors.html', cursor=2",
+     "     VISIBLE:  '•anchors.html', cursor=1",
      "SPEECH OUTPUT: '•'",
      "SPEECH OUTPUT: 'anchors.html'",
      "SPEECH OUTPUT: 'link'"]))

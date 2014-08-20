@@ -32,12 +32,8 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  'Home Page'",
      "     VISIBLE:  'Home Page', cursor=1",
-     "BRAILLE LINE:  'Home Page'",
-     "     VISIBLE:  'Home Page', cursor=0",
      "SPEECH OUTPUT: 'Home Page'",
-     "SPEECH OUTPUT: 'Sun Developer Network'",
-     "SPEECH OUTPUT: 'Home Page'",
-     "SPEECH OUTPUT: 'link' voice=hyperlink"]))
+     "SPEECH OUTPUT: 'Sun Developer Network'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -264,7 +260,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "24. Line Down",
     ["BRAILLE LINE:  '\u2022Java Web Start Installation Notes'",
-     "     VISIBLE:  'Java Web Start Installation Note', cursor=1",
+     "     VISIBLE:  '\u2022Java Web Start Installation Not', cursor=1",
      "SPEECH OUTPUT: '\u2022'",
      "SPEECH OUTPUT: 'Java Web Start Installation Notes'",
      "SPEECH OUTPUT: 'link'"]))
@@ -284,7 +280,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "26. Line Down",
     ["BRAILLE LINE:  'Install formats - This version of the JDK is available in two installation formats. \u2022Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'",
-     "     VISIBLE:  '\u2022Self-extracting Binary File - T', cursor=2",
+     "     VISIBLE:  '\u2022Self-extracting Binary File - T', cursor=1",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'Install formats - This version of the JDK is available in two installation formats. '",
      "SPEECH OUTPUT: '\u2022Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can '"]))
@@ -312,7 +308,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "29. Line Down",
     ["BRAILLE LINE:  '\u2022RPM Packages - A rpm.bin file containing RPM packages, installed with the rpm utility. Requires root access to install. RPM packages are the recommended method for'",
-     "     VISIBLE:  '\u2022RPM Packages - A rpm.bin file c', cursor=2",
+     "     VISIBLE:  '\u2022RPM Packages - A rpm.bin file c', cursor=1",
      "SPEECH OUTPUT: '\u2022RPM Packages - A rpm.bin file containing RPM packages, installed with the rpm utility. Requires root access to install. RPM packages are the recommended method for '"]))
 
 sequence.append(utils.StartRecordingAction())

@@ -857,6 +857,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return
 
+        if self._lastCommandWasStructNav:
+            msg = "INFO: Caret-moved event ignored: last command was struct nav"
+            debug.println(debug.LEVEL_INFO, msg)
+            return
+
         text = self.utilities.queryNonEmptyText(event.source)
         if not text:
             if event.source.getRole() == pyatspi.ROLE_LINK:
@@ -1202,6 +1207,12 @@ class Script(default.Script):
             if contextObj:
                 orca.setLocusOfFocus(event, contextObj)
                 return
+
+        # If we caused this event, we don't want to double-present it.
+        if self._lastCommandWasCaretNav:
+            msg = "INFO: Focus change event ignored: last command was caret nav"
+            debug.println(debug.LEVEL_INFO, msg)
+            return
 
         default.Script.onFocusedChanged(self, event)
 
@@ -2168,10 +2179,6 @@ class Script(default.Script):
         text = self.utilities.queryNonEmptyText(obj)
         if not text:
             return [obj, -1]
-
-        if role == pyatspi.ROLE_LIST_ITEM and not characterOffset and obj.name:
-            words = obj.name.split()
-            characterOffset = len(words[0])
 
         character = text.getText(characterOffset, characterOffset + 1)
         if len(character) == 1 and character != self.EMBEDDED_OBJECT_CHARACTER:
