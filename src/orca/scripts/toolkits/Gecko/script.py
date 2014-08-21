@@ -122,7 +122,6 @@ class Script(default.Script):
              Script.goPreviousWord,
              Script.goNextLine,
              Script.goPreviousLine,
-             Script.expandComboBox,
              Script.goTopOfFile,
              Script.goBottomOfFile,
              Script.goBeginningOfLine,
@@ -371,11 +370,6 @@ class Script(default.Script):
             input_event.InputEventHandler(
                 Script.goEndOfLine,
                 cmdnames.CARET_NAVIGATION_LINE_END)
-
-        self.inputEventHandlers["expandComboBoxHandler"] = \
-            input_event.InputEventHandler(
-                Script.expandComboBox,
-                cmdnames.CARET_NAVIGATION_EXPAND_COMBO_BOX)
 
         self.inputEventHandlers["advanceLivePoliteness"] = \
             input_event.InputEventHandler(
@@ -3431,42 +3425,6 @@ class Script(default.Script):
         [obj, characterOffset] = self.getBottomOfFile()
         self.setCaretPosition(obj, characterOffset)
         self.presentLine(obj, characterOffset)
-
-    def expandComboBox(self, inputEvent):
-        """If focus is on a menu item, but the containing combo box does not
-        have focus, give the combo box focus and expand it.  Note that this
-        is necessary because with Orca controlling the caret it is possible
-        to arrow to a menu item within the combo box without actually giving
-        the containing combo box focus.
-        """
-
-        [obj, characterOffset] = self.getCaretContext()
-        comboBox = None
-        if obj.getRole() == pyatspi.ROLE_MENU_ITEM:
-            comboBox = self.utilities.ancestorWithRole(
-                obj, [pyatspi.ROLE_COMBO_BOX], [pyatspi.ROLE_DOCUMENT_FRAME])
-        else:
-            index = self.getChildIndex(obj, characterOffset)
-            if index >= 0:
-                comboBox = obj[index]
-
-        if not comboBox:
-            return
-
-        try:
-            action = comboBox.queryAction()
-        except:
-            pass
-        else:
-            orca.setLocusOfFocus(None, comboBox)
-            comboBox.queryComponent().grabFocus()
-            for i in range(0, action.nActions):
-                name = action.getName(i)
-                # Translators: this is the action name for the 'open' action.
-                #
-                if name in ["open", _("open")]:
-                    action.doAction(i)
-                    break
 
     def advanceLivePoliteness(self, inputEvent):
         """Advances live region politeness level."""

@@ -51,7 +51,6 @@ arrowKeymap = (
     ("Left", defaultModifierMask, CTRL_MODIFIER_MASK, "goPreviousWordHandler"),
     ("Up", defaultModifierMask, NO_MODIFIER_MASK, "goPreviousLineHandler"),
     ("Down", defaultModifierMask, NO_MODIFIER_MASK, "goNextLineHandler"),
-    ("Down", defaultModifierMask, ALT_MODIFIER_MASK, "expandComboBoxHandler"),
     ("Home", defaultModifierMask, CTRL_MODIFIER_MASK, "goTopOfFileHandler"),
     ("End", defaultModifierMask, CTRL_MODIFIER_MASK, "goBottomOfFileHandler"),
     ("Home", defaultModifierMask, NO_MODIFIER_MASK, "goBeginningOfLineHandler"),
