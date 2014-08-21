@@ -2787,7 +2787,6 @@ class Script(default.Script):
 
         # Check for things on the left.
         #
-        lastExtents = (0, 0, 0, 0)
         done = False
         while not done:
             [firstObj, start, end, string] = objects[0]
@@ -2796,9 +2795,7 @@ class Script(default.Script):
                 break
 
             prevExtents = self.getExtents(prevObj, pOffset, pOffset + 1)
-            if self.onSameLine(extents, prevExtents) \
-               and extents != prevExtents \
-               and lastExtents != prevExtents:
+            if self.onSameLine(extents, prevExtents):
                 toAdd = self.utilities.getObjectsFromEOCs(prevObj, pOffset, boundary)
                 toAdd = [x for x in toAdd if x not in objects]
                 if not toAdd:
@@ -2808,11 +2805,8 @@ class Script(default.Script):
             else:
                 break
 
-            lastExtents = prevExtents
-
         # Check for things on the right.
         #
-        lastExtents = (0, 0, 0, 0)
         done = False
         while not done:
             [lastObj, start, end, string] = objects[-1]
@@ -2821,9 +2815,7 @@ class Script(default.Script):
                 break
 
             nextExtents = self.getExtents(nextObj, nOffset, nOffset + 1)
-            if self.onSameLine(extents, nextExtents) \
-               and extents != nextExtents \
-               and lastExtents != nextExtents:
+            if self.onSameLine(extents, nextExtents):
                 toAdd = self.utilities.getObjectsFromEOCs(nextObj, nOffset, boundary)
                 toAdd = [x for x in toAdd if x not in objects]
                 if not toAdd:
@@ -2832,8 +2824,6 @@ class Script(default.Script):
                 objects.extend(toAdd)
             else:
                 break
-
-            lastExtents = nextExtents
 
         return objects
 
@@ -3274,12 +3264,9 @@ class Script(default.Script):
         extents = self.getExtents(obj, characterOffset, characterOffset + 1)
         nextObj, nextOffset = self.findNextCaretInOrder(obj, characterOffset)
         nextExtents = self.getExtents(nextObj, nextOffset, nextOffset + 1)
-        while nextObj and self.onSameLine(extents, nextExtents):
+        while nextObj and (nextExtents == [0, 0, 0, 0] or self.onSameLine(extents, nextExtents)):
             nextObj, nextOffset = self.findNextCaretInOrder(nextObj, nextOffset)
             nextExtents = self.getExtents(nextObj, nextOffset, nextOffset + 1)
-
-        if nextObj and nextExtents == [0, 0, 0, 0]:
-            nextObj, nextOffset = self.findNextCaretInOrder(nextObj, nextOffset)
 
         return [nextObj, nextOffset]
 
