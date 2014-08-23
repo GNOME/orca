@@ -62,10 +62,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "6. Line Up",
-    ["BRAILLE LINE:  ' combo box'",
-     "     VISIBLE:  ' combo box', cursor=1",
-     "BRAILLE LINE:  ' combo box'",
-     "     VISIBLE:  ' combo box', cursor=1",
+    ["BRAILLE LINE:  'More Actions: combo box'",
+     "     VISIBLE:  'More Actions: combo box', cursor=1",
      "SPEECH OUTPUT: 'More Actions:'",
      "SPEECH OUTPUT: 'combo box'"]))
 

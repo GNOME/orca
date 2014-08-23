@@ -19,8 +19,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Fruits Oranges Pineapples', cursor=0",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "BRAILLE LINE:  'Fruits expanded list item'",
-     "     VISIBLE:  'Fruits expanded list item', cursor=1",
      "SPEECH OUTPUT: 'Fruits expanded tree level 1'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
@@ -28,7 +26,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic whereAmI",
-    ["BRAILLE LINE:  'Fruits expanded list item'",
+    ["BRAILLE LINE:  'Fruits Oranges Pineapples'",
+     "     VISIBLE:  'Fruits Oranges Pineapples', cursor=0",
+     "BRAILLE LINE:  'Fruits expanded list item'",
      "     VISIBLE:  'Fruits expanded list item', cursor=1",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: 'Fruits'",
@@ -60,8 +60,6 @@ sequence.append(utils.AssertPresentationAction(
     "5. Down arrow to apples",
     ["BRAILLE LINE:  'Apples collapsed list item'",
      "     VISIBLE:  'Apples collapsed list item', cursor=1",
-     "BRAILLE LINE:  'Apples collapsed list item'",
-     "     VISIBLE:  'Apples collapsed list item', cursor=1",
      "SPEECH OUTPUT: 'Apples collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -89,8 +87,6 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "8. Down arrow to granny smith",
     ["BRAILLE LINE:  'Granny Smith collapsed list item'",
-     "     VISIBLE:  'Granny Smith collapsed list item', cursor=1",
-     "BRAILLE LINE:  'Granny Smith collapsed list item'",
      "     VISIBLE:  'Granny Smith collapsed list item', cursor=1",
      "SPEECH OUTPUT: 'Granny Smith collapsed'"]))
 
@@ -169,8 +165,6 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "16. Down arrow to vegetables",
     ["BRAILLE LINE:  'Vegetables expanded list item'",
-     "     VISIBLE:  'Vegetables expanded list item', cursor=1",
-     "BRAILLE LINE:  'Vegetables expanded list item'",
      "     VISIBLE:  'Vegetables expanded list item', cursor=1",
      "SPEECH OUTPUT: 'Vegetables expanded tree level 1'"]))
 

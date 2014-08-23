@@ -11,12 +11,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to Tracking number text entry",
-    ["BRAILLE LINE:  'Tracking number Tracking number  $l'",
+    ["KNOWN ISSUE: Double braille?",
+     "BRAILLE LINE:  'Tracking number Tracking number  $l'",
      "     VISIBLE:  'Tracking number  $l', cursor=17",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
      "SPEECH OUTPUT: 'Tracking number entry'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
@@ -24,7 +23,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "2. Tab to Check Now push button",
-    ["BRAILLE LINE:  'Check Now push button'",
+    ["BRAILLE LINE:  'Tracking number Tracking number  $l'",
+     "     VISIBLE:  'Tracking number  $l', cursor=17",
+     "BRAILLE LINE:  'Check Now push button'",
      "     VISIBLE:  'Check Now push button', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",

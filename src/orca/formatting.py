@@ -134,7 +134,7 @@ formatting = {
             'basicWhereAmI': 'label + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
             },
         pyatspi.ROLE_COMBO_BOX: {
-            'focused': 'name + roleName + positionInList',
+            'focused': 'expandableState',
             'unfocused': 'label + name + roleName + positionInList + ' + MNEMONIC + ' + accelerator',
             'basicWhereAmI': 'label + roleName + name + positionInList + ' + MNEMONIC + ' + accelerator'
             },
@@ -401,7 +401,7 @@ formatting = {
             },
         pyatspi.ROLE_CHECK_BOX: {
             'unfocused': '[Component(obj,\
-                                     asString(label + displayedText + roleName),\
+                                     asString(labelOrName + roleName),\
                                      indicator=asString(checkedState))]'
             },
         pyatspi.ROLE_CHECK_MENU_ITEM: {
@@ -416,7 +416,7 @@ formatting = {
             # combobox starts.]]]
             #
             'unfocused': '((comboBoxTextObj and [Text(comboBoxTextObj[0], asString(label), asString(eol))])\
-                           or [Component(obj, asString(label + displayedText), label and (len(asString(label)) + 1) or 0)])\
+                           or [Component(obj, asString(label + name), label and (len(asString(label)) + 1) or 0)])\
                           + [Region(" " + asString(roleName))]'
             },
         #pyatspi.ROLE_DESKTOP_ICON: 'default'
@@ -601,7 +601,7 @@ if settings.useExperimentalSpeechProsody:
         'labelAndName + roleName + checkedState + required + availability + ' + MNEMONIC + ' + accelerator + pause + positionInList'
     formatting['speech'][pyatspi.ROLE_CHECK_MENU_ITEM]['basicWhereAmI'] = \
         'ancestors + pause + labelAndName + roleName + checkedState + pause + accelerator + pause + positionInList + ' + MNEMONIC
-    formatting['speech'][pyatspi.ROLE_COMBO_BOX]['focused'] = 'name + pause + positionInList + pause'
+    formatting['speech'][pyatspi.ROLE_COMBO_BOX]['focused'] = 'expandableState'
     formatting['speech'][pyatspi.ROLE_COMBO_BOX]['unfocused'] = 'label + name + roleName + pause + positionInList + ' + MNEMONIC + ' + accelerator'
     formatting['speech'][pyatspi.ROLE_COMBO_BOX]['basicWhereAmI'] = \
         'label + roleName + pause + name + positionInList + ' + MNEMONIC + ' + accelerator'

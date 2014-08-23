@@ -14,13 +14,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to slider 1",
-    ["KNOWN ISSUE: Why are we clearing braille here?",
-     "BRAILLE LINE:  '30 slider'",
+    ["BRAILLE LINE:  '30 slider'",
      "     VISIBLE:  '30 slider', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
      "SPEECH OUTPUT: 'slider 30'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
@@ -29,6 +26,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic whereAmI on slider 1",
     ["BRAILLE LINE:  '30 slider'",
+     "     VISIBLE:  '30 slider', cursor=1",
+     "BRAILLE LINE:  '30 slider'",
      "     VISIBLE:  '30 slider', cursor=1",
      "SPEECH OUTPUT: 'slider 30 30 percent.'"]))
 
@@ -60,11 +59,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "6. Tab to slider 2's left range",
-    ["KNOWN ISSUE: Why are we clearing braille here?",
-     "BRAILLE LINE:  '1950 slider'",
+    ["BRAILLE LINE:  '1950 slider'",
      "     VISIBLE:  '1950 slider', cursor=1",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
      "SPEECH OUTPUT: 'slider 1950'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -95,11 +91,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "10. Tab to slider 2's right range",
-    ["KNOWN ISSUE: Why are we clearing braille here?",
-     "BRAILLE LINE:  '2000 slider'",
+    ["BRAILLE LINE:  '2000 slider'",
      "     VISIBLE:  '2000 slider', cursor=1",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
      "SPEECH OUTPUT: 'slider 2000'"]))
 
 sequence.append(utils.StartRecordingAction())

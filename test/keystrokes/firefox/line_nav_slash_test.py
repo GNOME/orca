@@ -117,8 +117,6 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE - Sometimes we also say 'Recent Tags'. Might be a timing issue. And the presentation is wrong regardless.",
      "BRAILLE LINE:  '& y radio button Some polls'",
      "     VISIBLE:  '& y radio button Some polls', cursor=1",
-     "BRAILLE LINE:  '& y radio button Some polls'",
-     "     VISIBLE:  '& y radio button Some polls', cursor=1",
      "SPEECH OUTPUT: 'not selected'",
      "SPEECH OUTPUT: 'radio button'",
      "SPEECH OUTPUT: 'Some polls '",
@@ -139,8 +137,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "13. Line Up",
     ["BRAILLE LINE:  '& y radio button Some polls'",
-     "     VISIBLE:  '& y radio button Some polls', cursor=1",
-     "BRAILLE LINE:  '& y radio button Some polls'",
      "     VISIBLE:  '& y radio button Some polls', cursor=1",
      "SPEECH OUTPUT: 'Some polls'",
      "SPEECH OUTPUT: 'not selected'",

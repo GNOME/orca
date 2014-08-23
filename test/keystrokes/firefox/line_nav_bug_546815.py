@@ -152,8 +152,6 @@ sequence.append(utils.AssertPresentationAction(
     "16. Line Down",
     ["BRAILLE LINE:  '< > check box bird'",
      "     VISIBLE:  '< > check box bird', cursor=1",
-     "BRAILLE LINE:  '< > check box bird'",
-     "     VISIBLE:  '< > check box bird', cursor=1",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'not checked'",
      "SPEECH OUTPUT: 'bird ",
@@ -165,8 +163,6 @@ sequence.append(utils.AssertPresentationAction(
     "17. Line Down",
     ["BRAILLE LINE:  '< > check box fish'",
      "     VISIBLE:  '< > check box fish', cursor=1",
-     "BRAILLE LINE:  '< > check box fish'",
-     "     VISIBLE:  '< > check box fish', cursor=1",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'not checked'",
      "SPEECH OUTPUT: 'fish ",
@@ -177,8 +173,6 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "18. Line Down",
     ["KNOWN ISSUE: We're treating the separator as if it were on this line",
-     "BRAILLE LINE:  '< > check box wild animal separator'",
-     "     VISIBLE:  '< > check box wild animal separa', cursor=1",
      "BRAILLE LINE:  '< > check box wild animal separator'",
      "     VISIBLE:  '< > check box wild animal separa', cursor=1",
      "SPEECH OUTPUT: 'check box'",
@@ -199,9 +193,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "20. Line Down",
-    ["KNOWN ISSUE: Braille doesn't match the speech",
-     "BRAILLE LINE:  'separator'",
-     "     VISIBLE:  'separator', cursor=0",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -228,8 +221,6 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: We are combining lines here.",
      "BRAILLE LINE:  '&=y radio button cabernet sauvignon'",
      "     VISIBLE:  '&=y radio button cabernet sauvig', cursor=1",
-     "BRAILLE LINE:  '&=y radio button cabernet sauvignon'",
-     "     VISIBLE:  '&=y radio button cabernet sauvig', cursor=1",
      "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'radio button'",
      "SPEECH OUTPUT: 'cabernet sauvignon ",
@@ -240,8 +231,6 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "24. Line Down",
     ["BRAILLE LINE:  '& y radio button merlot'",
-     "     VISIBLE:  '& y radio button merlot', cursor=1",
-     "BRAILLE LINE:  '& y radio button merlot'",
      "     VISIBLE:  '& y radio button merlot', cursor=1",
      "SPEECH OUTPUT: 'not selected'",
      "SPEECH OUTPUT: 'radio button'",
@@ -254,8 +243,6 @@ sequence.append(utils.AssertPresentationAction(
     "25. Line Down",
     ["BRAILLE LINE:  '& y radio button nebbiolo'",
      "     VISIBLE:  '& y radio button nebbiolo', cursor=1",
-     "BRAILLE LINE:  '& y radio button nebbiolo'",
-     "     VISIBLE:  '& y radio button nebbiolo', cursor=1",
      "SPEECH OUTPUT: 'not selected'",
      "SPEECH OUTPUT: 'radio button'",
      "SPEECH OUTPUT: 'nebbiolo ",
@@ -266,8 +253,6 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "26. Line Down",
     ["BRAILLE LINE:  '& y radio button pinot noir'",
-     "     VISIBLE:  '& y radio button pinot noir', cursor=1",
-     "BRAILLE LINE:  '& y radio button pinot noir'",
      "     VISIBLE:  '& y radio button pinot noir', cursor=1",
      "SPEECH OUTPUT: 'not selected'",
      "SPEECH OUTPUT: 'radio button'",
@@ -280,8 +265,6 @@ sequence.append(utils.AssertPresentationAction(
     "27. Line Down",
     ["BRAILLE LINE:  '& y radio button don't drink wine'",
      "     VISIBLE:  '& y radio button don't drink win', cursor=1",
-     "BRAILLE LINE:  '& y radio button don't drink wine'",
-     "     VISIBLE:  '& y radio button don't drink win', cursor=1",
      "SPEECH OUTPUT: 'not selected'",
      "SPEECH OUTPUT: 'radio button'",
      "SPEECH OUTPUT: 'don't drink wine '"]))
@@ -291,8 +274,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "28. Line Up",
     ["BRAILLE LINE:  '& y radio button pinot noir'",
-     "     VISIBLE:  '& y radio button pinot noir', cursor=1",
-     "BRAILLE LINE:  '& y radio button pinot noir'",
      "     VISIBLE:  '& y radio button pinot noir', cursor=1",
      "SPEECH OUTPUT: 'pinot noir'",
      "SPEECH OUTPUT: 'not selected'",
@@ -304,8 +285,6 @@ sequence.append(utils.AssertPresentationAction(
     "29. Line Up",
     ["BRAILLE LINE:  '& y radio button nebbiolo'",
      "     VISIBLE:  '& y radio button nebbiolo', cursor=1",
-     "BRAILLE LINE:  '& y radio button nebbiolo'",
-     "     VISIBLE:  '& y radio button nebbiolo', cursor=1",
      "SPEECH OUTPUT: 'nebbiolo'",
      "SPEECH OUTPUT: 'not selected'",
      "SPEECH OUTPUT: 'radio button'"]))
@@ -316,8 +295,6 @@ sequence.append(utils.AssertPresentationAction(
     "30. Line Up",
     ["BRAILLE LINE:  '& y radio button merlot'",
      "     VISIBLE:  '& y radio button merlot', cursor=1",
-     "BRAILLE LINE:  '& y radio button merlot'",
-     "     VISIBLE:  '& y radio button merlot', cursor=1",
      "SPEECH OUTPUT: 'merlot'",
      "SPEECH OUTPUT: 'not selected'",
      "SPEECH OUTPUT: 'radio button'"]))
@@ -327,8 +304,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "31. Line Up",
     ["BRAILLE LINE:  '&=y radio button cabernet sauvignon'",
-     "     VISIBLE:  '&=y radio button cabernet sauvig', cursor=1",
-     "BRAILLE LINE:  '&=y radio button cabernet sauvignon'",
      "     VISIBLE:  '&=y radio button cabernet sauvig', cursor=1",
      "SPEECH OUTPUT: 'Would type of wine do you like?'",
      "SPEECH OUTPUT: 'selected'",
@@ -357,9 +332,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "34. Line Up",
-    ["KNOWN ISSUE: Braille doesn't match the speech",
-     "BRAILLE LINE:  'separator'",
-     "     VISIBLE:  'separator', cursor=0",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -377,8 +351,6 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: We're treating the separator as if it were on this line",
      "BRAILLE LINE:  '< > check box wild animal separator'",
      "     VISIBLE:  '< > check box wild animal separa', cursor=1",
-     "BRAILLE LINE:  '< > check box wild animal separator'",
-     "     VISIBLE:  '< > check box wild animal separa', cursor=1",
      "SPEECH OUTPUT: 'wild animal'",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'not checked'",
@@ -390,8 +362,6 @@ sequence.append(utils.AssertPresentationAction(
     "37. Line Up",
     ["BRAILLE LINE:  '< > check box fish'",
      "     VISIBLE:  '< > check box fish', cursor=1",
-     "BRAILLE LINE:  '< > check box fish'",
-     "     VISIBLE:  '< > check box fish', cursor=1",
      "SPEECH OUTPUT: 'fish'",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'not checked'"]))
@@ -401,8 +371,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "38. Line Up",
     ["KNOWN ISSUE: This isn't quite right",
-     "BRAILLE LINE:  '< > check box bird'",
-     "     VISIBLE:  '< > check box bird', cursor=1",
      "BRAILLE LINE:  '< > check box bird'",
      "     VISIBLE:  '< > check box bird', cursor=1",
      "SPEECH OUTPUT: 'What are your favorite pets?'",

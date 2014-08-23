@@ -46,8 +46,6 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: Something is causing us to keep presenting the field",
      "BRAILLE LINE:  'Tell me a little more about yourself: I am a monkey with a long tail.  I like  $l'",
      "     VISIBLE:  'I am a monkey with a long tail. ', cursor=1",
-     "BRAILLE LINE:  'Tell me a little more about yourself: I am a monkey with a long tail.  I like  $l'",
-     "     VISIBLE:  'I am a monkey with a long tail. ', cursor=1",
      "SPEECH OUTPUT: 'Tell me a little more about yourself:",
      "'",
      "SPEECH OUTPUT: 'entry'",
@@ -105,9 +103,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "9. line Down",
-    ["KNOWN ISSUE: We're double brailling the checkbox labels",
-     "BRAILLE LINE:  'Check one or more: < > Red Red check box Red < > Blue Blue check box Blue < > Green Green check box Green'",
-     "     VISIBLE:  'Check one or more: < > Red Red c', cursor=1",
+    ["BRAILLE LINE:  'Check one or more: < > Red check box Red < > Blue check box Blue < > Green check box Green'",
+     "     VISIBLE:  'Check one or more: < > Red check', cursor=1",
      "SPEECH OUTPUT: 'Check one or more: '",
      "SPEECH OUTPUT: 'Red'",
      "SPEECH OUTPUT: 'check box'",
@@ -123,8 +120,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "10. line Down",
-    ["BRAILLE LINE:  'Make a selection:  combo box'",
-     "     VISIBLE:  'Make a selection:  combo box', cursor=1",
+    ["BRAILLE LINE:  'Make a selection: Water combo box'",
+     "     VISIBLE:  'Make a selection: Water combo bo', cursor=1",
      "SPEECH OUTPUT: 'Make a selection: '",
      "SPEECH OUTPUT: 'Water'",
      "SPEECH OUTPUT: 'combo box'"]))
@@ -148,8 +145,6 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "12. line Down",
     ["BRAILLE LINE:  'Hockey list box'",
-     "     VISIBLE:  'Hockey list box', cursor=1",
-     "BRAILLE LINE:  'Hockey list box'",
      "     VISIBLE:  'Hockey list box', cursor=1",
      "SPEECH OUTPUT: 'Which sports do you like?'",
      "SPEECH OUTPUT: 'Hockey'",
@@ -198,8 +193,6 @@ sequence.append(utils.AssertPresentationAction(
     "16. line Up",
     ["BRAILLE LINE:  'Hockey list box'",
      "     VISIBLE:  'Hockey list box', cursor=1",
-     "BRAILLE LINE:  'Hockey list box'",
-     "     VISIBLE:  'Hockey list box', cursor=1",
      "SPEECH OUTPUT: 'Which sports do you like?'",
      "SPEECH OUTPUT: 'Hockey'",
      "SPEECH OUTPUT: 'multi-select'",
@@ -222,8 +215,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "18. line Up",
-    ["BRAILLE LINE:  'Make a selection:  combo box'",
-     "     VISIBLE:  'Make a selection:  combo box', cursor=1",
+    ["BRAILLE LINE:  'Make a selection: Water combo box'",
+     "     VISIBLE:  'Make a selection: Water combo bo', cursor=1",
      "SPEECH OUTPUT: 'Make a selection: '",
      "SPEECH OUTPUT: 'Water'",
      "SPEECH OUTPUT: 'combo box'"]))
@@ -232,9 +225,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "19. line Up",
-    ["KNOWN ISSUE: We're double brailling the checkbox labels",
-     "BRAILLE LINE:  'Check one or more: < > Red Red check box Red < > Blue Blue check box Blue < > Green Green check box Green'",
-     "     VISIBLE:  'Check one or more: < > Red Red c', cursor=1",
+    ["BRAILLE LINE:  'Check one or more: < > Red check box Red < > Blue check box Blue < > Green check box Green'",
+     "     VISIBLE:  'Check one or more: < > Red check', cursor=1",
      "SPEECH OUTPUT: 'Check one or more: '",
      "SPEECH OUTPUT: 'Red'",
      "SPEECH OUTPUT: 'check box'",
@@ -251,8 +243,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "20. line Up",
     ["KNOWN ISSUE: Why aren't we speaking this? Ditto for the next few items.",
-     "BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=1",
      "BRAILLE LINE:  '      $l'",
      "     VISIBLE:  '      $l', cursor=1"]))
 

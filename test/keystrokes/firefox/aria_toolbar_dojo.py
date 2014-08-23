@@ -24,8 +24,6 @@ sequence.append(utils.AssertPresentationAction(
     "2. Down Arrow",
     ["BRAILLE LINE:  'input before toolbar1 $l'",
      "     VISIBLE:  'input before toolbar1 $l', cursor=1",
-     "BRAILLE LINE:  'input before toolbar1 $l'",
-     "     VISIBLE:  'input before toolbar1 $l', cursor=1",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'input before toolbar1'"]))
 

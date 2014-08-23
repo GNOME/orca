@@ -45,8 +45,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '&=y Internal Portal Bookmark rad', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",
-     "BRAILLE LINE:  '&=y Internal Portal Bookmark radio button Internal Portal Bookmark & y External URL radio button External URL'",
-     "     VISIBLE:  '&=y Internal Portal Bookmark rad', cursor=1",
      "SPEECH OUTPUT: 'Internal Portal Bookmark selected radio button'",
      "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
@@ -54,7 +52,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.AssertPresentationAction(
     "5. Shift+Tab out of contents",
-    ["BRAILLE LINE:  'Tab Zero Tab One Tab Two Tab Three Tab Four'",
+    ["BRAILLE LINE:  '&=y Internal Portal Bookmark radio button'",
+     "     VISIBLE:  '&=y Internal Portal Bookmark rad', cursor=1",
+     "BRAILLE LINE:  'Tab Zero Tab One Tab Two Tab Three Tab Four'",
      "     VISIBLE:  'Tab Two Tab Three Tab Four', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",

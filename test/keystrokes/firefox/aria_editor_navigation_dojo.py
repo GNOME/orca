@@ -32,8 +32,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '', cursor=1",
      "BRAILLE LINE:  'editor0 tool bar'",
      "     VISIBLE:  'editor0 tool bar', cursor=1",
-     "BRAILLE LINE:  'editor0 tool bar'",
-     "     VISIBLE:  'editor0 tool bar', cursor=1",
      "SPEECH OUTPUT: 'editor0'",
      "SPEECH OUTPUT: 'tool bar'"]))
 

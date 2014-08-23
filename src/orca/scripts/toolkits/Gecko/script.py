@@ -846,6 +846,10 @@ class Script(default.Script):
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
+        if not self.inDocumentContent(event.source):
+            default.Script.onCaretMoved(self, event)
+            return
+
         if self._lastCommandWasCaretNav:
             msg = "INFO: Caret-moved event ignored: last command was caret nav"
             debug.println(debug.LEVEL_INFO, msg)
@@ -860,6 +864,18 @@ class Script(default.Script):
         if not text:
             if event.source.getRole() == pyatspi.ROLE_LINK:
                 orca.setLocusOfFocus(event, event.source)
+                self.setCaretContext(event.source, event.detail1)
+            return
+
+        char, start, end = text.getTextAtOffset(event.detail1, pyatspi.TEXT_BOUNDARY_CHAR)
+        if char == self.EMBEDDED_OBJECT_CHARACTER:
+            msg = "INFO: Caret-moved event ignored: Caret moved to embedded object"
+            debug.println(debug.LEVEL_INFO, msg)
+            return
+
+        if not char:
+            msg = "INFO: Caret-moved event ignored: Caret moved to empty character"
+            debug.println(debug.LEVEL_INFO, msg)
             return
 
         contextObj, contextOffset = self.getCaretContext()
@@ -875,10 +891,6 @@ class Script(default.Script):
 
         if contextObj and contextObj.parent == firstObj \
            and not state.contains(pyatspi.STATE_EDITABLE):
-            return
-
-        if not self.inDocumentContent(obj):
-            default.Script.onCaretMoved(self, event)
             return
 
         if self.utilities.inFindToolbar():
@@ -946,6 +958,13 @@ class Script(default.Script):
 
         if not self.inDocumentContent(orca_state.locusOfFocus) \
            and self.inDocumentContent(event.source):
+            return
+
+        text = self.utilities.queryNonEmptyText(event.source)
+        char, start, end = text.getTextAtOffset(text.caretOffset, pyatspi.TEXT_BOUNDARY_CHAR)
+        if char == self.EMBEDDED_OBJECT_CHARACTER:
+            msg = "INFO: Text-selection event ignored: Caret offset is at embedded object"
+            debug.println(debug.LEVEL_INFO, msg)
             return
 
         default.Script.onTextSelectionChanged(self, event)
@@ -1480,39 +1499,17 @@ class Script(default.Script):
 
         line = self.getNewBrailleLine(clearBraille=True, addLine=True)
 
-        # Some text areas have a character offset of -1 when you tab
-        # into them.  In these cases, they show all the text as being
-        # selected.  We don't know quite what to do in that case,
-        # so we'll just pretend the caret is at the beginning (0).
-        #
         [focusedObj, focusedCharacterOffset] = self.getCaretContext()
-
-        # [[[TODO: HACK - WDW when composing e-mail in Thunderbird and
-        # when entering text in editable text areas, Gecko likes to
-        # force the last character of a line to be a newline.  So,
-        # we adjust for this because we want to keep meaningful text
-        # on the display.]]]
-        #
-        needToRefresh = False
-        lineContentsOffset = focusedCharacterOffset
-        focusedObjText = self.utilities.queryNonEmptyText(focusedObj)
-        if focusedObjText:
-            char = focusedObjText.getText(focusedCharacterOffset,
-                                          focusedCharacterOffset + 1)
-            if char == "\n":
-                lineContentsOffset = max(0, focusedCharacterOffset - 1)
-                needToRefresh = True
-
         contents = self.currentLineContents
         index = self.findObjectOnLine(focusedObj,
-                                      max(0, lineContentsOffset),
+                                      max(0, focusedCharacterOffset),
                                       contents)
-        if index < 0 or needToRefresh:
+        if index < 0:
             contents = self.getLineContentsAtOffset(focusedObj,
-                                                    max(0, lineContentsOffset))
+                                                    max(0, focusedCharacterOffset))
             self.currentLineContents = contents
             index = self.findObjectOnLine(focusedObj,
-                                          max(0, lineContentsOffset),
+                                          max(0, focusedCharacterOffset),
                                           contents)
 
         if not len(contents):
@@ -1630,13 +1627,6 @@ class Script(default.Script):
 
             if isLastObject:
                 line.regions[-1].string = line.regions[-1].string.rstrip(" ")
-
-            # If we're inside of a combo box, we only want to display
-            # the selected menu item.
-            #
-            if obj.getRole() == pyatspi.ROLE_MENU_ITEM \
-               and obj.getState().contains(pyatspi.STATE_FOCUSED):
-                break
 
         if extraRegion:
             self.addBrailleRegionToLine(extraRegion, line)

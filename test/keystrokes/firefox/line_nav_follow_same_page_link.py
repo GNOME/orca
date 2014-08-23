@@ -42,9 +42,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "4. Return",
-    ["BRAILLE LINE:  '•Second item'",
-     "     VISIBLE:  '•Second item', cursor=2",
-     "BRAILLE LINE:  'seas. '",
+    ["BRAILLE LINE:  'seas. '",
      "     VISIBLE:  'seas. ', cursor=7",
      "SPEECH OUTPUT: 'link' voice=hyperlink"]))
 

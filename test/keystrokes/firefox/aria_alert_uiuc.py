@@ -17,10 +17,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'dialog', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",
-     "BRAILLE LINE:  'Alert Box'",
-     "     VISIBLE:  'Alert Box', cursor=0",
-     "BRAILLE LINE:  'Alert Box'",
-     "     VISIBLE:  'Alert Box', cursor=0",
      "SPEECH OUTPUT: 'Alert BoxYou must choose a number between 1 and 10!Close'",
      "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
@@ -28,7 +24,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Down to message",
-    ["BRAILLE LINE:  'You must choose a number'",
+    ["BRAILLE LINE:  'dialog'",
+     "     VISIBLE:  'dialog', cursor=1",
+     "BRAILLE LINE:  'You must choose a number'",
      "     VISIBLE:  'You must choose a number', cursor=1",
      "SPEECH OUTPUT: 'You must choose a number '"]))
 
@@ -44,13 +42,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "4. Close Alert",
-    ["KNOWN ISSUE: We shouldn't be brailling the EOC",
-     "BRAILLE LINE:  'Guess a number between 1 and 10 12 $l'",
+    ["BRAILLE LINE:  'Guess a number between 1 and 10 12 $l'",
      "     VISIBLE:  'ss a number between 1 and 10 12 ', cursor=32",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "BRAILLE LINE:  '\ufffc $l'",
-     "     VISIBLE:  '\ufffc $l', cursor=1",
      "BRAILLE LINE:  'Guess a number between 1 and 10 12 $l'",
      "     VISIBLE:  'ss a number between 1 and 10 12 ', cursor=32",
      "SPEECH OUTPUT: 'Guess a number between 1 and 10 entry 12 selected'",

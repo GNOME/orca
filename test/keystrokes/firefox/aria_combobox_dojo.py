@@ -14,16 +14,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to the first combo box",
-    ["KNOWN ISSUE: We are presenting an EOC.",
-     "BRAILLE LINE:  'US State test 1 (200% Courier font):  \u25bc push button US State test 1 (200% Courier font): California $l'",
+    ["BRAILLE LINE:  'US State test 1 (200% Courier font):  \u25bc push button US State test 1 (200% Courier font): California $l'",
      "     VISIBLE:  '(200% Courier font): California ', cursor=32",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
      "     VISIBLE:  '(200% Courier font): California ', cursor=32",
-     "BRAILLE LINE:  '\ufffc'",
-     "     VISIBLE:  '\ufffc', cursor=1",
-     "SPEECH OUTPUT: 'combo box'",
+     "SPEECH OUTPUT: 'collapsed'",
      "SPEECH OUTPUT: 'US State test 1 (200% Courier font): entry California selected'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
@@ -33,9 +30,9 @@ sequence.append(utils.AssertPresentationAction(
     "2. Replace existing text with a 'C'",
     ["KNOWN ISSUE: It would be good to present the appearance of the popup so one knows there's something to Down arrow into.",
      "BRAILLE LINE:  'US State test 1 (200% Courier font): C $l'",
-     "     VISIBLE:  'e test 1 (200% Courier font): C ', cursor=32",
+     "     VISIBLE:  '(200% Courier font): C $l', cursor=23",
      "BRAILLE LINE:  'US State test 1 (200% Courier font): C $l'",
-     "     VISIBLE:  'e test 1 (200% Courier font): C ', cursor=32"]))
+     "     VISIBLE:  '(200% Courier font): C $l', cursor=23"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -43,9 +40,9 @@ sequence.append(utils.AssertPresentationAction(
     "3. Down Arrow",
     ["KNOWN ISSUE: Too much braille updating",
      "BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
-     "     VISIBLE:  'e test 1 (200% Courier font): Ca', cursor=30",
+     "     VISIBLE:  '(200% Courier font): California ', cursor=21",
      "BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
-     "     VISIBLE:  'e test 1 (200% Courier font): Ca', cursor=30",
+     "     VISIBLE:  '(200% Courier font): California ', cursor=21",
      "BRAILLE LINE:  'California (CA)'",
      "     VISIBLE:  'California (CA)', cursor=1",
      "BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
@@ -131,7 +128,7 @@ sequence.append(utils.AssertPresentationAction(
     "11. Escape",
     ["BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
      "     VISIBLE:  '(200% Courier font): California ', cursor=32",
-     "SPEECH OUTPUT: 'combo box'",
+     "SPEECH OUTPUT: 'collapsed'",
      "SPEECH OUTPUT: 'US State test 1 (200% Courier font): entry California selected'"]))
 
 sequence.append(utils.AssertionSummaryAction())

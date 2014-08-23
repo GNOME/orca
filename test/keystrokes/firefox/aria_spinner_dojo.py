@@ -19,8 +19,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Focus mode', cursor=0",
      "BRAILLE LINE:  'Spinbox #1: 900 $l'",
      "     VISIBLE:  'Spinbox #1: 900 $l', cursor=13",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
      "SPEECH OUTPUT: 'Spinbox #1: 900 selected spin button'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 

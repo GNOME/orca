@@ -95,8 +95,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "10. Line Down",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+    ["BRAILLE LINE:  'The Orca logo image'",
+     "     VISIBLE:  'The Orca logo image', cursor=20",
      "SPEECH OUTPUT: 'The Orca logo'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'",
