@@ -347,6 +347,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             self, obj, **args)
 
         if not self._script.utilities.isSpreadSheetCell(obj):
+            if _settingsManager.getSetting('speakCellCoordinates'):
+                result.append(obj.name)
             return result
 
         isBasicWhereAmI = args.get('formatType') == 'basicWhereAmI'
