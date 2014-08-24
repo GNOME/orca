@@ -426,6 +426,12 @@ formatting = {
             },
         #pyatspi.ROLE_DIALOG: 'default'
         #pyatspi.ROLE_DIRECTORY_PANE: 'default'
+        pyatspi.ROLE_DOCUMENT_FRAME: {
+            'focused': '[Text(obj, asString(placeholderText), asString(eol))]\
+                          + (required and [Region(" " + asString(required))])\
+                          + (readOnly and [Region(" " + asString(readOnly))])',
+            'unfocused': BRAILLE_TEXT
+            },
         pyatspi.ROLE_EMBEDDED: {
             'unfocused': '[Component(obj,\
                                      asString(label + displayedText) or asString(applicationName))]'
