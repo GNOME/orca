@@ -638,8 +638,8 @@ class Script(default.Script):
                      pyatspi.ROLE_ROOT_PANE,
                      pyatspi.ROLE_FRAME,
                      pyatspi.ROLE_APPLICATION]
-        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-            for child in event.source.parent:
+        if self.utilities.hasMatchingHierarchy(newLocusOfFocus, rolesList):
+            for child in newLocusOfFocus.parent:
                 if child.getRole() == pyatspi.ROLE_PAGE_TAB_LIST:
                     for tab in child:
                         eventState = tab.getState()
