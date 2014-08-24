@@ -23,10 +23,10 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "2. Next form field",
-    ["KNOWN ISSUE: This isn't right. But when done outside of the test it works as expected.",
-     "BRAILLE LINE:  ' $l'",
+    ["KNOWN ISSUE: The placement of the entries with respect to the punctuation is not right.",
+     "BRAILLE LINE:  'Amusing numbers fall between  and  $l . $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Amusing numbers fall between entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -34,10 +34,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "3. Next form field",
-    ["KNOWN ISSUE: This isn't right. But when done outside of the test it works as expected.",
-     "BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'"]))
+    ["BRAILLE LINE:  'Amusing numbers fall between  and  $l . $l'",
+     "     VISIBLE:  ' $l . $l', cursor=1",
+     "SPEECH OUTPUT: 'and entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -362,10 +361,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "35. Next form field",
-    ["KNOWN ISSUE: This isn't right",
-     "BRAILLE LINE:  'bandaid graphic  $l $l'",
-     "     VISIBLE:  'bandaid graphic  $l $l', cursor=20",
-     "SPEECH OUTPUT: 'We mustn't forget images as labels -- even if that practice is lame entry'"]))
+    ["BRAILLE LINE:  'bandaid graphic $l'",
+     "     VISIBLE:  'bandaid graphic $l', cursor=16",
+     "SPEECH OUTPUT: 'bandaid graphic entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -384,8 +382,6 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "37. Next form field",
     ["BRAILLE LINE:  'Magic disappearing text trick:  $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  'Magic disappearing text trick:  $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Magic disappearing text trick: entry'"]))
 

@@ -1521,7 +1521,7 @@ class Script(default.Script):
         for i, content in enumerate(contents):
             isFocusedObj = (i == index)
             [obj, startOffset, endOffset, string] = content
-            if not obj:
+            if not obj or self.isLabellingContents(obj, contents):
                 continue
 
             role = obj.getRole()
@@ -1529,7 +1529,9 @@ class Script(default.Script):
                or self.utilities.isEntry(obj) \
                or self.utilities.isPasswordText(obj) \
                or self.utilities.isClickableElement(obj) \
-               or role in [pyatspi.ROLE_LINK, pyatspi.ROLE_PUSH_BUTTON]:
+               or role in [pyatspi.ROLE_LINK, pyatspi.ROLE_PUSH_BUTTON,
+                           pyatspi.ROLE_CHECK_BOX, pyatspi.ROLE_RADIO_BUTTON,
+                           pyatspi.ROLE_TOGGLE_BUTTON, pyatspi.ROLE_COMBO_BOX]:
                 [regions, fRegion] = \
                           self.brailleGenerator.generateBraille(obj)
 

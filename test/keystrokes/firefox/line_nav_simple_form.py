@@ -13,8 +13,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. line Down",
-    ["BRAILLE LINE:  'Magic disappearing text trick: tab to me and I disappear $l'",
-     "     VISIBLE:  'Magic disappearing text trick: t', cursor=1",
+    ["BRAILLE LINE:  'Magic disappearing text trick:  $l'",
+     "     VISIBLE:  'Magic disappearing text trick:  ', cursor=1",
      "SPEECH OUTPUT: 'Magic disappearing text trick: '",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'tab to me and I disappear'"]))
@@ -103,7 +103,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "9. line Down",
-    ["BRAILLE LINE:  'Check one or more: < > Red check box Red < > Blue check box Blue < > Green check box Green'",
+    ["BRAILLE LINE:  'Check one or more: < > Red check box < > Blue check box < > Green check box'",
      "     VISIBLE:  'Check one or more: < > Red check', cursor=1",
      "SPEECH OUTPUT: 'Check one or more: '",
      "SPEECH OUTPUT: 'Red'",
@@ -225,7 +225,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "19. line Up",
-    ["BRAILLE LINE:  'Check one or more: < > Red check box Red < > Blue check box Blue < > Green check box Green'",
+    ["BRAILLE LINE:  'Check one or more: < > Red check box < > Blue check box < > Green check box'",
      "     VISIBLE:  'Check one or more: < > Red check', cursor=1",
      "SPEECH OUTPUT: 'Check one or more: '",
      "SPEECH OUTPUT: 'Red'",

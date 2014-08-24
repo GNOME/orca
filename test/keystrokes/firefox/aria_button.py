@@ -11,9 +11,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to Tracking number text entry",
-    ["KNOWN ISSUE: Double braille?",
-     "BRAILLE LINE:  'Tracking number Tracking number  $l'",
-     "     VISIBLE:  'Tracking number  $l', cursor=17",
+    ["KNOWN ISSUE: The initial space should be removed",
+     "BRAILLE LINE:  ' Tracking number  $l'",
+     "     VISIBLE:  ' Tracking number  $l', cursor=18",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'Tracking number entry'",
@@ -23,8 +23,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "2. Tab to Check Now push button",
-    ["BRAILLE LINE:  'Tracking number Tracking number  $l'",
-     "     VISIBLE:  'Tracking number  $l', cursor=17",
+    ["BRAILLE LINE:  ' Tracking number  $l'",
+     "     VISIBLE:  ' Tracking number  $l', cursor=18",
      "BRAILLE LINE:  'Check Now push button'",
      "     VISIBLE:  'Check Now push button', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
