@@ -13,9 +13,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "1. Where Am I on Product summary link", 
-    ["KNOWN ISSUE: This seems broken",
-     "BRAILLE LINE:  '3. (designed for maintainers)Product summary'",
-     "     VISIBLE:  'Product summary', cursor=1",
+    ["BRAILLE LINE:  '3.Product summary (designed for maintainers)'",
+     "     VISIBLE:  'Product summary (designed for ma', cursor=1",
      "SPEECH OUTPUT: 'http link Product summary different site'"]))
 
 sequence.append(KeyComboAction("<Control>Home"))

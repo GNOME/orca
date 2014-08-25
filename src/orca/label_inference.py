@@ -134,11 +134,10 @@ class LabelInference:
         """Returns True if we should not permit inference based on text below
         the object obj."""
 
-        roles = [pyatspi.ROLE_COMBO_BOX,
-                 pyatspi.ROLE_LIST,
-                 pyatspi.ROLE_LIST_BOX]
+        roles = [pyatspi.ROLE_ENTRY,
+                 pyatspi.ROLE_PASSWORD_TEXT]
 
-        return obj.getRole() in roles
+        return obj.getRole() not in roles
 
     def _isSimpleObject(self, obj):
         """Returns True if the given object has 'simple' contents, such as text

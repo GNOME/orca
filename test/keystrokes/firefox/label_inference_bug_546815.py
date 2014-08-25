@@ -15,8 +15,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "1. Next form field",
-    ["BRAILLE LINE:  'Enter your Name: text field using default type=text $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+    ["BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
+     "     VISIBLE:  ' $l text field using default typ', cursor=1",
      "SPEECH OUTPUT: 'Enter your Name: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -25,8 +25,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "2. Next form field",
-    ["BRAILLE LINE:  '1. Enter your Address: text field using SIZE and  $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+    ["BRAILLE LINE:  '1. Enter your Address:  $l text field using SIZE and'",
+     "     VISIBLE:  ' $l text field using SIZE and', cursor=1",
      "SPEECH OUTPUT: '1. Enter your Address: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -35,8 +35,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "3. Next form field",
-    ["BRAILLE LINE:  '2. Enter your City: 3. Enter your State:  $l 4. Enter your Country: US $l image text field using  $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using'",
+     "     VISIBLE:  ' $l 3. Enter your State:  $l 4. ', cursor=1",
      "SPEECH OUTPUT: '2. Enter your City: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -45,7 +45,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "4. Next form field",
-    ["BRAILLE LINE:  '2. Enter your City: 3. Enter your State:  $l 4. Enter your Country: US $l image text field using  $l'",
+    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using'",
      "     VISIBLE:  ' $l 4. Enter your Country: US $l', cursor=1",
      "SPEECH OUTPUT: '3. Enter your State: entry'"]))
 
@@ -55,8 +55,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "5. Next form field",
-    ["BRAILLE LINE:  '2. Enter your City: 3. Enter your State:  $l 4. Enter your Country: US $l image text field using  $l'",
-     "     VISIBLE:  'US $l image text field using  $l', cursor=1",
+    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using'",
+     "     VISIBLE:  'US $l image text field using', cursor=1",
      "SPEECH OUTPUT: '4. Enter your Country: entry US'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -88,7 +88,7 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: This is broken",
      "BRAILLE LINE:  '< > check box bird'",
      "     VISIBLE:  '< > check box bird', cursor=1",
-     "SPEECH OUTPUT: 'What are your favorite pets? check box not checked'"]))
+     "SPEECH OUTPUT: 'check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -120,7 +120,7 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: This is broken",
      "BRAILLE LINE:  '&=y radio button cabernet sauvignon'",
      "     VISIBLE:  '&=y radio button cabernet sauvig', cursor=1",
-     "SPEECH OUTPUT: 'Would type of wine do you like? selected radio button'"]))
+     "SPEECH OUTPUT: 'selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -170,8 +170,8 @@ sequence.append(utils.AssertPresentationAction(
     "16. Next form field",
     ["BRAILLE LINE:  'Wrapping to top.'",
      "     VISIBLE:  'Wrapping to top.', cursor=0",
-     "BRAILLE LINE:  'Enter your Name: text field using default type=text $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+     "BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
+     "     VISIBLE:  ' $l text field using default typ', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.' voice=system",
      "SPEECH OUTPUT: 'Enter your Name: entry'"]))
 

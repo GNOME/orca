@@ -11,7 +11,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Add"))
 sequence.append(utils.AssertPresentationAction(
     "1. KP_Add to do a SayAll",
-    ["KNOWN ISSUE: We're not presenting the URIs for the otherwise useless imagemaps",
+    ["KNOWN ISSUE: Due to a test-timing, flakiness issue we do not always speak the urls for the last imagemap links",
      "SPEECH OUTPUT: 'This looks like A to Z, but it's really Z to A.'",
      "SPEECH OUTPUT: 'Test:'",
      "SPEECH OUTPUT: 'z link z image map link'",
@@ -47,7 +47,8 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: 'blank'",
      "SPEECH OUTPUT: 'blank'",
-     "SPEECH OUTPUT: 'image'",
+     "SPEECH OUTPUT: 'shop.safeway.com link shop.safeway.com image map link'",
+     "SPEECH OUTPUT: 'Rancher's Reserve link Rancher's Reserve image map link'",
      "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: 'blank'",
      "SPEECH OUTPUT: 'blank'"]))

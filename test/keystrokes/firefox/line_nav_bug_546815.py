@@ -45,9 +45,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
-    ["BRAILLE LINE:  'Enter your Name:\xa0 $l text field using default type=text'",
-     "     VISIBLE:  'Enter your Name:\xa0 $l text field ', cursor=1",
-     "SPEECH OUTPUT: 'Enter your Name:\xa0'",
+    ["BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
+     "     VISIBLE:  'Enter your Name:  $l text field ', cursor=1",
+     "SPEECH OUTPUT: 'Enter your Name: '",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'text field using default type=text'"]))
 
@@ -55,9 +55,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
-    ["BRAILLE LINE:  '1. Enter your Address:\xa0 $l text field using SIZE and'",
-     "     VISIBLE:  '1. Enter your Address:\xa0 $l text ', cursor=1",
-     "SPEECH OUTPUT: '1. Enter your Address:\xa0'",
+    ["BRAILLE LINE:  '1. Enter your Address:  $l text field using SIZE and'",
+     "     VISIBLE:  '1. Enter your Address:  $l text ', cursor=1",
+     "SPEECH OUTPUT: '1. Enter your Address: '",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'text field using SIZE and '"]))
 
@@ -74,13 +74,13 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["KNOWN ISSUE: Sometimes we display the 'US'; other times we do not. Seems to be test flakiness.",
-     "BRAILLE LINE:  '2. Enter your City:\xa0 $l 3. Enter your State:\xa0 $l 4. Enter your Country:\xa0US $l image text field using'",
-     "     VISIBLE:  '2. Enter your City:\xa0 $l 3. Enter', cursor=1",
-     "SPEECH OUTPUT: '2. Enter your City:\xa0'",
+     "BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using'",
+     "     VISIBLE:  '2. Enter your City:  $l 3. Enter', cursor=1",
+     "SPEECH OUTPUT: '2. Enter your City: '",
      "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: '3. Enter your State:\xa0'",
+     "SPEECH OUTPUT: '3. Enter your State: '",
      "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: '4. Enter your Country:\xa0'",
+     "SPEECH OUTPUT: '4. Enter your Country: '",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'US'",
      "SPEECH OUTPUT: 'image'",
@@ -98,9 +98,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "10. Line Down",
-    ["BRAILLE LINE:  '5. Enter your Zip:\xa0 $l'",
-     "     VISIBLE:  '5. Enter your Zip:\xa0 $l', cursor=1",
-     "SPEECH OUTPUT: '5. Enter your Zip:\xa0'",
+    ["BRAILLE LINE:  '5. Enter your Zip:  $l'",
+     "     VISIBLE:  '5. Enter your Zip:  $l', cursor=1",
+     "SPEECH OUTPUT: '5. Enter your Zip: '",
      "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -115,9 +115,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "12. Line Down",
-    ["BRAILLE LINE:  'character:\xa0 $l'",
-     "     VISIBLE:  'character:\xa0 $l', cursor=1",
-     "SPEECH OUTPUT: 'character:\xa0'",
+    ["BRAILLE LINE:  'character:  $l'",
+     "     VISIBLE:  'character:  $l', cursor=1",
+     "SPEECH OUTPUT: 'character: '",
      "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -133,9 +133,9 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "14. Line Down",
     ["KNOWN ISSUE: Why is the checkbox all by itself?",
-     "BRAILLE LINE:  '\xa0CheckBox:'",
-     "     VISIBLE:  '\xa0CheckBox:', cursor=1",
-     "SPEECH OUTPUT: '\xa0CheckBox:'"]))
+     "BRAILLE LINE:  ' CheckBox:'",
+     "     VISIBLE:  ' CheckBox:', cursor=1",
+     "SPEECH OUTPUT: ' CheckBox:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -273,11 +273,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "28. Line Up",
-    ["BRAILLE LINE:  '& y radio button pinot noir'",
+    ["KNOWN ISSUE: We're repeating things here and in the next few tests which we should not be",
+     "BRAILLE LINE:  '& y radio button pinot noir'",
      "     VISIBLE:  '& y radio button pinot noir', cursor=1",
      "SPEECH OUTPUT: 'pinot noir'",
      "SPEECH OUTPUT: 'not selected'",
-     "SPEECH OUTPUT: 'radio button'"]))
+     "SPEECH OUTPUT: 'radio button'",
+     "SPEECH OUTPUT: 'pinot noir ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -287,7 +290,9 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '& y radio button nebbiolo', cursor=1",
      "SPEECH OUTPUT: 'nebbiolo'",
      "SPEECH OUTPUT: 'not selected'",
-     "SPEECH OUTPUT: 'radio button'"]))
+     "SPEECH OUTPUT: 'radio button'",
+     "SPEECH OUTPUT: 'nebbiolo ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -297,7 +302,9 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '& y radio button merlot', cursor=1",
      "SPEECH OUTPUT: 'merlot'",
      "SPEECH OUTPUT: 'not selected'",
-     "SPEECH OUTPUT: 'radio button'"]))
+     "SPEECH OUTPUT: 'radio button'",
+     "SPEECH OUTPUT: 'merlot ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -305,7 +312,6 @@ sequence.append(utils.AssertPresentationAction(
     "31. Line Up",
     ["BRAILLE LINE:  '&=y radio button cabernet sauvignon'",
      "     VISIBLE:  '&=y radio button cabernet sauvig', cursor=1",
-     "SPEECH OUTPUT: 'Would type of wine do you like?'",
      "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'radio button'",
      "SPEECH OUTPUT: 'cabernet sauvignon ",
@@ -354,6 +360,8 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'wild animal'",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'not checked'",
+     "SPEECH OUTPUT: 'wild animal ",
+     "'",
      "SPEECH OUTPUT: 'separator'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -364,7 +372,9 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '< > check box fish', cursor=1",
      "SPEECH OUTPUT: 'fish'",
      "SPEECH OUTPUT: 'check box'",
-     "SPEECH OUTPUT: 'not checked'"]))
+     "SPEECH OUTPUT: 'not checked'",
+     "SPEECH OUTPUT: 'fish ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -373,7 +383,6 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: This isn't quite right",
      "BRAILLE LINE:  '< > check box bird'",
      "     VISIBLE:  '< > check box bird', cursor=1",
-     "SPEECH OUTPUT: 'What are your favorite pets?'",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'not checked'",
      "SPEECH OUTPUT: 'bird ",
@@ -393,9 +402,9 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "40. Line Up",
     ["KNOWN ISSUE: Why is the checkbox all by itself?",
-     "BRAILLE LINE:  '\xa0CheckBox:'",
-     "     VISIBLE:  '\xa0CheckBox:', cursor=1",
-     "SPEECH OUTPUT: '\xa0CheckBox:'"]))
+     "BRAILLE LINE:  ' CheckBox:'",
+     "     VISIBLE:  ' CheckBox:', cursor=1",
+     "SPEECH OUTPUT: ' CheckBox:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -409,9 +418,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "42. Line Up",
-    ["BRAILLE LINE:  'character:\xa0 $l'",
-     "     VISIBLE:  'character:\xa0 $l', cursor=1",
-     "SPEECH OUTPUT: 'character:\xa0'",
+    ["BRAILLE LINE:  'character:  $l'",
+     "     VISIBLE:  'character:  $l', cursor=1",
+     "SPEECH OUTPUT: 'character: '",
      "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -426,9 +435,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "44. Line Up",
-    ["BRAILLE LINE:  '5. Enter your Zip:\xa0 $l'",
-     "     VISIBLE:  '5. Enter your Zip:\xa0 $l', cursor=1",
-     "SPEECH OUTPUT: '5. Enter your Zip:\xa0'",
+    ["BRAILLE LINE:  '5. Enter your Zip:  $l'",
+     "     VISIBLE:  '5. Enter your Zip:  $l', cursor=1",
+     "SPEECH OUTPUT: '5. Enter your Zip: '",
      "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -443,13 +452,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "46. Line Up",
-    ["BRAILLE LINE:  '2. Enter your City:\xa0 $l 3. Enter your State:\xa0 $l 4. Enter your Country:\xa0US $l image text field using'",
-     "     VISIBLE:  '2. Enter your City:\xa0 $l 3. Enter', cursor=1",
-     "SPEECH OUTPUT: '2. Enter your City:\xa0'",
+    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using'",
+     "     VISIBLE:  '2. Enter your City:  $l 3. Enter', cursor=1",
+     "SPEECH OUTPUT: '2. Enter your City: '",
      "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: '3. Enter your State:\xa0'",
+     "SPEECH OUTPUT: '3. Enter your State: '",
      "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: '4. Enter your Country:\xa0'",
+     "SPEECH OUTPUT: '4. Enter your Country: '",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'US'",
      "SPEECH OUTPUT: 'image'",
@@ -467,9 +476,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "48. Line Up",
-    ["BRAILLE LINE:  '1. Enter your Address:\xa0 $l text field using SIZE and'",
-     "     VISIBLE:  '1. Enter your Address:\xa0 $l text ', cursor=1",
-     "SPEECH OUTPUT: '1. Enter your Address:\xa0'",
+    ["BRAILLE LINE:  '1. Enter your Address:  $l text field using SIZE and'",
+     "     VISIBLE:  '1. Enter your Address:  $l text ', cursor=1",
+     "SPEECH OUTPUT: '1. Enter your Address: '",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'text field using SIZE and '"]))
 
@@ -477,9 +486,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "49. Line Up",
-    ["BRAILLE LINE:  'Enter your Name:\xa0 $l text field using default type=text'",
-     "     VISIBLE:  'Enter your Name:\xa0 $l text field ', cursor=1",
-     "SPEECH OUTPUT: 'Enter your Name:\xa0'",
+    ["BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
+     "     VISIBLE:  'Enter your Name:  $l text field ', cursor=1",
+     "SPEECH OUTPUT: 'Enter your Name: '",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'text field using default type=text'"]))
 

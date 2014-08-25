@@ -17,15 +17,16 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Type something rather amusing here: entry'"]))
 
+sequence.append(PauseAction(3000))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "2. Next form field",
-    ["KNOWN ISSUE: The placement of the entries with respect to the punctuation is not right.",
-     "BRAILLE LINE:  'Amusing numbers fall between  and  $l . $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+    ["BRAILLE LINE:  'Amusing numbers fall between  $l and  $l .'",
+     "     VISIBLE:  ' $l and  $l .', cursor=1",
      "SPEECH OUTPUT: 'Amusing numbers fall between entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -34,8 +35,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "3. Next form field",
-    ["BRAILLE LINE:  'Amusing numbers fall between  and  $l . $l'",
-     "     VISIBLE:  ' $l . $l', cursor=1",
+    ["BRAILLE LINE:  'Amusing numbers fall between  $l and  $l .'",
+     "     VISIBLE:  ' $l .', cursor=1",
      "SPEECH OUTPUT: 'and entry'"]))
 
 sequence.append(utils.StartRecordingAction())

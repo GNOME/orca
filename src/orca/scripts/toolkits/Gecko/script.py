@@ -1847,9 +1847,11 @@ class Script(default.Script):
             return [0, 0, 0, 0]
 
         role = obj.getRole()
-        treatAsWhole = [pyatspi.ROLE_CHECK_MENU_ITEM,
+        treatAsWhole = [pyatspi.ROLE_CHECK_BOX,
+                        pyatspi.ROLE_CHECK_MENU_ITEM,
                         pyatspi.ROLE_MENU_ITEM,
                         pyatspi.ROLE_RADIO_MENU_ITEM,
+                        pyatspi.ROLE_RADIO_BUTTON,
                         pyatspi.ROLE_PUSH_BUTTON]
 
         text = self.utilities.queryNonEmptyText(obj)
@@ -2789,11 +2791,19 @@ class Script(default.Script):
             prevExtents = self.getExtents(prevObj, pOffset, pOffset + 1)
             if self.onSameLine(extents, prevExtents):
                 toAdd = self.utilities.getObjectsFromEOCs(prevObj, pOffset, boundary)
-                toAdd = [x for x in toAdd if x not in objects]
+
+                # This shouldn't be needed. But getObjectsFromEOCs is insane,
+                # and there are Gecko AtkText bugs. This is the safest hack
+                # this close to the impending stable release.
+                try:
+                    index = toAdd.index(objects[0])
+                except:
+                    index = len(toAdd)
+                toAdd = toAdd[0:index]
                 if not toAdd:
                     break
 
-                objects[0:0] = toAdd[0:]
+                objects[0:0] = toAdd
             else:
                 break
 
@@ -2914,21 +2924,6 @@ class Script(default.Script):
                 if len(contents) > 1 and not len(string):
                     continue
 
-            # If the focused item is a checkbox or a radio button for which
-            # we had to infer the label, odds are that the inferred label is
-            # immediately to the right. Under these circumstances, we'll
-            # double speak the "label". It would be nice to avoid that.
-            # [[[TODO - JD: This is the simple version. It does not handle
-            # the possibility of the fake label being comprised of multiple
-            # objects.]]]
-            #
-            if prevObj \
-               and prevObj.getRole() in [pyatspi.ROLE_CHECK_BOX,
-                                         pyatspi.ROLE_RADIO_BUTTON] \
-               and prevObj.getState().contains(pyatspi.STATE_FOCUSED):
-                if self.labelInference.infer(prevObj) == string.strip():
-                    continue
-
             # If we don't have a string, then use the speech generator.
             # Otherwise, we'll want to speak the string and possibly the
             # role.
@@ -2936,8 +2931,10 @@ class Script(default.Script):
             if not len(string) \
                or self.utilities.isEntry(obj) \
                or self.utilities.isPasswordText(obj) \
-               or role == pyatspi.ROLE_PUSH_BUTTON and obj.name \
-               or self.utilities.isClickableElement(obj):
+               or self.utilities.isClickableElement(obj) \
+               or role in [pyatspi.ROLE_PUSH_BUTTON,
+                           pyatspi.ROLE_CHECK_BOX, pyatspi.ROLE_RADIO_BUTTON,
+                           pyatspi.ROLE_TOGGLE_BUTTON, pyatspi.ROLE_COMBO_BOX]:
                 rv = self.speechGenerator.generateSpeech(obj)
                 # Crazy crap to make clump and friends happy until we can
                 # kill them. (They don't deal well with what the speech
