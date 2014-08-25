@@ -8,9 +8,6 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(PauseAction(3000))
-sequence.append(KeyPressAction(0, None, "KP_Insert"))
-sequence.append(KeyComboAction("a"))
-sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("<Control>End"))
 
 sequence.append(utils.StartRecordingAction())
@@ -38,10 +35,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Up",
-    ["BRAILLE LINE:  ' combo box  combo box  $l Or push button'",
-     "     VISIBLE:  ' combo box  combo box  $l Or pus', cursor=1",
-     "BRAILLE LINE:  ' combo box  combo box  $l Or push button'",
-     "     VISIBLE:  ' combo box  combo box  $l Or pus', cursor=1",
+    ["BRAILLE LINE:  '--- combo box --- combo box  $l Or push button'",
+     "     VISIBLE:  '--- combo box --- combo box  $l ', cursor=1",
      "SPEECH OUTPUT: '---'",
      "SPEECH OUTPUT: 'combo box'",
      "SPEECH OUTPUT: '---'",
@@ -55,8 +50,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Up",
     ["BRAILLE LINE:  '< > check box Not (negate this whole chart)'",
-     "     VISIBLE:  '< > check box Not (negate this w', cursor=1",
-     "BRAILLE LINE:  '< > check box Not (negate this whole chart)'",
      "     VISIBLE:  '< > check box Not (negate this w', cursor=1",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'not checked'",
@@ -102,8 +95,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "9. Line Up",
-    ["BRAILLE LINE:  'Sort results by:  combo box'",
-     "     VISIBLE:  'Sort results by:  combo box', cursor=1",
+    ["BRAILLE LINE:  'Sort results by: Reuse same sort as last time combo box'",
+     "     VISIBLE:  'Sort results by: Reuse same sort', cursor=1",
      "SPEECH OUTPUT: 'Sort results by: '",
      "SPEECH OUTPUT: 'Reuse same sort as last time'",
      "SPEECH OUTPUT: 'combo box'"]))
@@ -113,8 +106,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "10. Line Up",
     ["BRAILLE LINE:  'Unspecified list box'",
-     "     VISIBLE:  'Unspecified list box', cursor=1",
-     "BRAILLE LINE:  'Unspecified list box'",
      "     VISIBLE:  'Unspecified list box', cursor=1",
      "SPEECH OUTPUT: 'GNOME target:'",
      "SPEECH OUTPUT: 'Unspecified'",
@@ -136,8 +127,6 @@ sequence.append(utils.AssertPresentationAction(
     "12. Line Up",
     ["BRAILLE LINE:  'Unspecified list box'",
      "     VISIBLE:  'Unspecified list box', cursor=1",
-     "BRAILLE LINE:  'Unspecified list box'",
-     "     VISIBLE:  'Unspecified list box', cursor=1",
      "SPEECH OUTPUT: 'GNOME version:'",
      "SPEECH OUTPUT: 'Unspecified'",
      "SPEECH OUTPUT: 'multi-select'",
@@ -158,16 +147,13 @@ sequence.append(utils.AssertPresentationAction(
     "14. Line Up",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "15. Line Up",
-    ["KNOWN ISSUE: On the way down the cursor is at offset 4; on the way up, at offset 0",
-     "BRAILLE LINE:  'and the new value was:'",
+    ["BRAILLE LINE:  'and the new value was:'",
      "     VISIBLE:  'and the new value was:', cursor=0",
      "SPEECH OUTPUT: 'and the new value was:'"]))
 
@@ -176,8 +162,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "16. Line Up",
     ["BRAILLE LINE:  '[Bug creation] list box'",
-     "     VISIBLE:  '[Bug creation] list box', cursor=1",
-     "BRAILLE LINE:  '[Bug creation] list box'",
      "     VISIBLE:  '[Bug creation] list box', cursor=1",
      "SPEECH OUTPUT: 'where one or more of the following changed:'",
      "SPEECH OUTPUT: '[Bug creation]'",
@@ -189,8 +173,8 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "17. Line Up",
     ["BRAILLE LINE:  'where one or more of the following changed:'",
-    "     VISIBLE:  'where one or more of the followi', cursor=6",
-    "SPEECH OUTPUT: 'where one or more of the following changed:'"]))
+     "     VISIBLE:  'where one or more of the followi', cursor=1",
+     "SPEECH OUTPUT: 'where one or more of the following changed:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -206,8 +190,6 @@ sequence.append(utils.AssertPresentationAction(
     "19. Line Up",
     ["BRAILLE LINE:  ' $l and  $l'",
      "     VISIBLE:  ' $l and  $l', cursor=1",
-     "BRAILLE LINE:  ' $l and Now $l'",
-     "     VISIBLE:  ' $l and Now $l', cursor=1",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: ' and '",
      "SPEECH OUTPUT: 'entry'",
@@ -219,8 +201,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "20. Line Up",
-    ["KNOWN ISSUE: On the way down the cursor is at offset 5; on the way up, at offset 0",
-     "BRAILLE LINE:  'Only bugs changed between:'",
+    ["BRAILLE LINE:  'Only bugs changed between:'",
      "     VISIBLE:  'Only bugs changed between:', cursor=0",
      "SPEECH OUTPUT: 'Only bugs changed between:'"]))
 
@@ -245,10 +226,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "23. Line Up",
-    ["BRAILLE LINE:  ' combo box bugs numbered:  $l'",
-     "     VISIBLE:  ' combo box bugs numbered:  $l', cursor=1",
-     "BRAILLE LINE:  ' combo box bugs numbered:  $l'",
-     "     VISIBLE:  ' combo box bugs numbered:  $l', cursor=1",
+    ["BRAILLE LINE:  'Only include combo box bugs numbered:  $l'",
+     "     VISIBLE:  'Only include combo box bugs numb', cursor=1",
      "SPEECH OUTPUT: 'Only include'",
      "SPEECH OUTPUT: 'combo box'",
      "SPEECH OUTPUT: 'bugs numbered: '",
@@ -268,18 +247,14 @@ sequence.append(utils.AssertPresentationAction(
     "25. Line Up",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "26. Line Up",
-    ["BRAILLE LINE:  ' combo box'",
-     "     VISIBLE:  ' combo box', cursor=1",
-     "BRAILLE LINE:  ' combo box'",
-     "     VISIBLE:  ' combo box', cursor=1",
+    ["BRAILLE LINE:  'contains combo box'",
+     "     VISIBLE:  'contains combo box', cursor=1",
      "SPEECH OUTPUT: 'contains'",
      "SPEECH OUTPUT: 'combo box'"]))
 
@@ -290,8 +265,6 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: This is different from the Down version. Down includes 'a commenter'.",
      "BRAILLE LINE:  '< > check box table cell'",
      "     VISIBLE:  '< > check box table cell', cursor=1",
-     "BRAILLE LINE:  '< > check box table cell'",
-     "     VISIBLE:  '< > check box table cell', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -299,8 +272,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "28. Line Up",
     ["BRAILLE LINE:  '<x> check box a CC list member'",
-     "     VISIBLE:  '<x> check box a CC list member', cursor=1",
-     "BRAILLE LINE:  '<x> check box a CC list member'",
      "     VISIBLE:  '<x> check box a CC list member', cursor=1",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'checked'",
@@ -312,8 +283,6 @@ sequence.append(utils.AssertPresentationAction(
     "29. Line Up",
     ["BRAILLE LINE:  '<x> check box the QA contact'",
      "     VISIBLE:  '<x> check box the QA contact', cursor=1",
-     "BRAILLE LINE:  '<x> check box the QA contact'",
-     "     VISIBLE:  '<x> check box the QA contact', cursor=1",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'checked'",
      "SPEECH OUTPUT: ' the QA contact '"]))
@@ -324,8 +293,6 @@ sequence.append(utils.AssertPresentationAction(
     "30. Line Up",
     ["BRAILLE LINE:  '<x> check box the reporter'",
      "     VISIBLE:  '<x> check box the reporter', cursor=1",
-     "BRAILLE LINE:  '<x> check box the reporter'",
-     "     VISIBLE:  '<x> check box the reporter', cursor=1",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'checked'",
      "SPEECH OUTPUT: ' the reporter '"]))
@@ -335,8 +302,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "31. Line Up",
     ["BRAILLE LINE:  '<x> check box the bug assignee'",
-     "     VISIBLE:  '<x> check box the bug assignee', cursor=1",
-     "BRAILLE LINE:  '<x> check box the bug assignee'",
      "     VISIBLE:  '<x> check box the bug assignee', cursor=1",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'checked'",
@@ -356,18 +321,14 @@ sequence.append(utils.AssertPresentationAction(
     "33. Line Up",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "34. Line Up",
-    ["BRAILLE LINE:  ' combo box'",
-     "     VISIBLE:  ' combo box', cursor=1",
-     "BRAILLE LINE:  ' combo box'",
-     "     VISIBLE:  ' combo box', cursor=1",
+    ["BRAILLE LINE:  'contains combo box'",
+     "     VISIBLE:  'contains combo box', cursor=1",
      "SPEECH OUTPUT: 'contains'",
      "SPEECH OUTPUT: 'combo box'"]))
 
@@ -378,8 +339,6 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: This is different from the Down version. Down includes 'a commenter'.",
      "BRAILLE LINE:  '< > check box table cell'",
      "     VISIBLE:  '< > check box table cell', cursor=1",
-     "BRAILLE LINE:  '< > check box table cell'",
-     "     VISIBLE:  '< > check box table cell', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -387,8 +346,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "36. Line Up",
     ["BRAILLE LINE:  '< > check box a CC list member'",
-     "     VISIBLE:  '< > check box a CC list member', cursor=1",
-     "BRAILLE LINE:  '< > check box a CC list member'",
      "     VISIBLE:  '< > check box a CC list member', cursor=1",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'not checked'",
@@ -400,8 +357,6 @@ sequence.append(utils.AssertPresentationAction(
     "37. Line Up",
     ["BRAILLE LINE:  '< > check box the QA contact'",
      "     VISIBLE:  '< > check box the QA contact', cursor=1",
-     "BRAILLE LINE:  '< > check box the QA contact'",
-     "     VISIBLE:  '< > check box the QA contact', cursor=1",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'not checked'",
      "SPEECH OUTPUT: ' the QA contact '"]))
@@ -412,8 +367,6 @@ sequence.append(utils.AssertPresentationAction(
     "38. Line Up",
     ["BRAILLE LINE:  '< > check box the reporter'",
      "     VISIBLE:  '< > check box the reporter', cursor=1",
-     "BRAILLE LINE:  '< > check box the reporter'",
-     "     VISIBLE:  '< > check box the reporter', cursor=1",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'not checked'",
      "SPEECH OUTPUT: ' the reporter '"]))
@@ -423,8 +376,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "39. Line Up",
     ["BRAILLE LINE:  '<x> check box the bug assignee'",
-     "     VISIBLE:  '<x> check box the bug assignee', cursor=1",
-     "BRAILLE LINE:  '<x> check box the bug assignee'",
      "     VISIBLE:  '<x> check box the bug assignee', cursor=1",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'checked'",
@@ -452,8 +403,6 @@ sequence.append(utils.AssertPresentationAction(
     "42. Line Up",
     ["BRAILLE LINE:  'All list box'",
      "     VISIBLE:  'All list box', cursor=1",
-     "BRAILLE LINE:  'All list box'",
-     "     VISIBLE:  'All list box', cursor=1",
      "SPEECH OUTPUT: 'OS:'",
      "SPEECH OUTPUT: 'All'",
      "SPEECH OUTPUT: 'multi-select'",
@@ -473,8 +422,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "44. Line Up",
     ["BRAILLE LINE:  'Immediate list box'",
-     "     VISIBLE:  'Immediate list box', cursor=1",
-     "BRAILLE LINE:  'Immediate list box'",
      "     VISIBLE:  'Immediate list box', cursor=1",
      "SPEECH OUTPUT: 'Priority:'",
      "SPEECH OUTPUT: 'Immediate'",
@@ -496,8 +443,6 @@ sequence.append(utils.AssertPresentationAction(
     "46. Line Up",
     ["BRAILLE LINE:  'blocker list box'",
      "     VISIBLE:  'blocker list box', cursor=1",
-     "BRAILLE LINE:  'blocker list box'",
-     "     VISIBLE:  'blocker list box', cursor=1",
      "SPEECH OUTPUT: 'Severity:'",
      "SPEECH OUTPUT: 'blocker'",
      "SPEECH OUTPUT: 'multi-select'",
@@ -518,8 +463,6 @@ sequence.append(utils.AssertPresentationAction(
     "48. Line Up",
     ["BRAILLE LINE:  'FIXED list box'",
      "     VISIBLE:  'FIXED list box', cursor=1",
-     "BRAILLE LINE:  'FIXED list box'",
-     "     VISIBLE:  'FIXED list box', cursor=1",
      "SPEECH OUTPUT: 'Resolution:'",
      "SPEECH OUTPUT: 'FIXED'",
      "SPEECH OUTPUT: 'multi-select'",
@@ -539,8 +482,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "50. Line Up",
     ["KNOWN ISSUE: Should we be doing a different presentation of these selected children?",
-     "BRAILLE LINE:  'UNCONFIRMED NEW ASSIGNED REOPENED NEEDINFO list box'",
-     "     VISIBLE:  'UNCONFIRMED NEW ASSIGNED REOPENE', cursor=1",
      "BRAILLE LINE:  'UNCONFIRMED NEW ASSIGNED REOPENED NEEDINFO list box'",
      "     VISIBLE:  'UNCONFIRMED NEW ASSIGNED REOPENE', cursor=1",
      "SPEECH OUTPUT: 'Status:'",
@@ -573,8 +514,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "53. Line Up",
-    ["BRAILLE LINE:  'Keywords:  combo box $l'",
-     "     VISIBLE:  'Keywords:  combo box $l', cursor=1",
+    ["BRAILLE LINE:  'Keywords: contains all of the keywords combo box $l'",
+     "     VISIBLE:  'Keywords: contains all of the ke', cursor=1",
      "SPEECH OUTPUT: 'Keywords'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: ': '",
@@ -587,8 +528,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "54. Line Up",
-    ["BRAILLE LINE:  'Whiteboard: combo box $l table cell'",
-     "     VISIBLE:  'Whiteboard: combo box $l table c', cursor=1",
+    ["BRAILLE LINE:  'Whiteboard: contains all of the words/strings combo box $l table cell'",
+     "     VISIBLE:  'Whiteboard: contains all of the ', cursor=1",
      "SPEECH OUTPUT: 'Whiteboard:'",
      "SPEECH OUTPUT: 'row header'",
      "SPEECH OUTPUT: 'contains all of the words/strings'",
@@ -600,8 +541,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "55. Line Up",
-    ["BRAILLE LINE:  'A Comment: combo box $l table cell'",
-     "     VISIBLE:  'A Comment: combo box $l table ce', cursor=1",
+    ["BRAILLE LINE:  'A Comment: contains the string combo box $l table cell'",
+     "     VISIBLE:  'A Comment: contains the string c', cursor=1",
      "SPEECH OUTPUT: 'A Comment:'",
      "SPEECH OUTPUT: 'row header'",
      "SPEECH OUTPUT: 'contains the string'",
@@ -614,8 +555,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "56. Line Up",
     ["BRAILLE LINE:  '--- list box'",
-     "     VISIBLE:  '--- list box', cursor=1",
-     "BRAILLE LINE:  '--- list box'",
      "     VISIBLE:  '--- list box', cursor=1",
      "SPEECH OUTPUT: 'Target Milestone:'",
      "SPEECH OUTPUT: '---'",
@@ -637,8 +576,6 @@ sequence.append(utils.AssertPresentationAction(
     "58. Line Up",
     ["BRAILLE LINE:  '0.0.1 list box'",
      "     VISIBLE:  '0.0.1 list box', cursor=1",
-     "BRAILLE LINE:  '0.0.1 list box'",
-     "     VISIBLE:  '0.0.1 list box', cursor=1",
      "SPEECH OUTPUT: 'Version:'",
      "SPEECH OUTPUT: '0.0.1'",
      "SPEECH OUTPUT: 'multi-select'",
@@ -658,8 +595,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "60. Line Up",
     ["BRAILLE LINE:  'abiscan list box'",
-     "     VISIBLE:  'abiscan list box', cursor=1",
-     "BRAILLE LINE:  'abiscan list box'",
      "     VISIBLE:  'abiscan list box', cursor=1",
      "SPEECH OUTPUT: 'Component:'",
      "SPEECH OUTPUT: 'abiscan'",
@@ -683,8 +618,6 @@ sequence.append(utils.AssertPresentationAction(
     "62. Line Up",
     ["BRAILLE LINE:  'accerciser list box'",
      "     VISIBLE:  'accerciser list box', cursor=1",
-     "BRAILLE LINE:  'accerciser list box'",
-     "     VISIBLE:  'accerciser list box', cursor=1",
      "SPEECH OUTPUT: 'Product:'",
      "SPEECH OUTPUT: 'accerciser'",
      "SPEECH OUTPUT: 'multi-select'",
@@ -705,8 +638,6 @@ sequence.append(utils.AssertPresentationAction(
     "64. Line Up",
     ["BRAILLE LINE:  'Admin list box'",
      "     VISIBLE:  'Admin list box', cursor=1",
-     "BRAILLE LINE:  'Admin list box'",
-     "     VISIBLE:  'Admin list box', cursor=1",
      "SPEECH OUTPUT: 'Classification:'",
      "SPEECH OUTPUT: 'Admin'",
      "SPEECH OUTPUT: 'multi-select'",
@@ -725,8 +656,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "66. Line Up",
-    ["BRAILLE LINE:  'Summary: combo box $l Search push button'",
-     "     VISIBLE:  'Summary: combo box $l Search pus', cursor=1",
+    ["BRAILLE LINE:  'Summary: contains all of the words/strings combo box $l Search push button'",
+     "     VISIBLE:  'Summary: contains all of the wor', cursor=1",
      "SPEECH OUTPUT: 'Summary:'",
      "SPEECH OUTPUT: 'row header'",
      "SPEECH OUTPUT: 'contains all of the words/strings'",
