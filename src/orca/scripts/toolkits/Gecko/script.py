@@ -1205,10 +1205,6 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
-        if obj.parent.getRole() == pyatspi.ROLE_LIST_BOX \
-           and not self._useFocusMode(obj):
-            return
-
         # As the caret moves into a non-focusable element, Gecko emits the
         # signal on the first focusable element in the ancestry.
         rolesToIgnore = pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_PANEL
@@ -1225,6 +1221,13 @@ class Script(default.Script):
         if self._lastCommandWasCaretNav:
             msg = "INFO: Focus change event ignored: last command was caret nav"
             debug.println(debug.LEVEL_INFO, msg)
+            return
+
+        if self._lastCommandWasStructNav:
+            msg = "INFO: Focus change event handled manually: last command was struct nav"
+            debug.println(debug.LEVEL_INFO, msg)
+            self.setCaretContext(event.source, -1)
+            orca.setLocusOfFocus(event, event.source)
             return
 
         default.Script.onFocusedChanged(self, event)
