@@ -771,9 +771,15 @@ class Utilities:
 
         return False
 
+    def isHidden(self, obj):
+        return False
+
     def isLayoutOnly(self, obj):
         """Returns True if the given object is a container which has
         no presentable information (label, name, displayed text, etc.)."""
+
+        if self.isHidden(obj):
+            return True
 
         layoutOnly = False
 
@@ -1172,10 +1178,12 @@ class Utilities:
                    and ci.getLayer() == pyatspi.LAYER_POPUP:
                     return child
 
-    @staticmethod
-    def pursueForFlatReview(obj):
+    def pursueForFlatReview(self, obj):
         """Determines if we should look any further at the object
         for flat review."""
+
+        if self.isHidden(obj):
+            return False
 
         try:
             state = obj.getState()

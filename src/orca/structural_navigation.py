@@ -813,6 +813,7 @@ class StructuralNavigation:
         col.freeMatchRule(rule)
         if criteria.applyPredicate:
             rv = list(filter(structuralNavigationObject.predicate, rv))
+        rv = list(filter(lambda x: not self._script.utilities.isHidden(x), rv))
 
         return rv
 
@@ -1011,6 +1012,7 @@ class StructuralNavigation:
                         True)
                     wrapped = True
                     if len(results) > 0 \
+                       and not self._script.utilities.isHidden(results[0]) \
                        and (not predicate or predicate(results[0])):
                         match = results[0]
                     else:
@@ -1024,7 +1026,8 @@ class StructuralNavigation:
                             True)
             elif len(results) > 0:
                 if results[0] in ancestors \
-                   or predicate and not predicate(results[0]):
+                   or self._script.utilities.isHidden(results[0]) \
+                   or (predicate and not predicate(results[0])):
                     results = collection.getMatchesTo(\
                         results[0],
                         matchRule,
@@ -1075,7 +1078,8 @@ class StructuralNavigation:
                 True)
             if len(results) > 0 and not results[0] in ancestors:
                 currentObj = results[0]
-                if not predicate or predicate(currentObj):
+                if not self._script.utilities.isHidden(currentObj) \
+                   and (not predicate or predicate(currentObj)):
                     match = currentObj
             elif wrap and not wrapped:
                 wrapped = True

@@ -264,6 +264,12 @@ class Utilities(script_utilities.Utilities):
 
         return obj and obj.getRole() == pyatspi.ROLE_PASSWORD_TEXT
 
+    def isHidden(self, obj):
+        attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        isHidden = attrs.get('hidden', False)
+
+        return isHidden
+
     def isReadOnlyTextArea(self, obj):
         """Returns True if obj is a text entry area that is read only."""
 

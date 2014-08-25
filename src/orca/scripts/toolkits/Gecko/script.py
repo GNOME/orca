@@ -2162,8 +2162,10 @@ class Script(default.Script):
                                              pyatspi.ROLE_LIST_BOX,
                                              pyatspi.ROLE_LIST]
 
+        isHidden = self.utilities.isHidden(obj)
+
         text = self.utilities.queryNonEmptyText(obj)
-        if text:
+        if text and not isHidden:
             unicodeText = self.utilities.unicodeText(obj)
 
             # Delete the final space character if we find it.  Otherwise,
@@ -2195,7 +2197,7 @@ class Script(default.Script):
         # to place the caret inside the list, but rather treat the list
         # as a single object.  Otherwise, if it has children, look there.
         #
-        elif obj.childCount and obj[0] and not doNotDescend:
+        elif obj.childCount and obj[0] and not doNotDescend and not isHidden:
             try:
                 return self.findNextCaretInOrder(obj[0],
                                                  -1,
@@ -2203,7 +2205,7 @@ class Script(default.Script):
             except:
                 pass
 
-        elif includeNonText and (startOffset < 0):
+        elif includeNonText and startOffset < 0 and not isHidden:
             extents = obj.queryComponent().getExtents(0)
             if (extents.width != 0) and (extents.height != 0):
                 return [obj, 0]
@@ -2272,8 +2274,10 @@ class Script(default.Script):
                                              pyatspi.ROLE_LIST_BOX,
                                              pyatspi.ROLE_LIST]
 
+        isHidden = self.utilities.isHidden(obj)
+
         text = self.utilities.queryNonEmptyText(obj)
-        if text:
+        if text and not isHidden:
             unicodeText = self.utilities.unicodeText(obj)
 
             # Delete the final space character if we find it.  Otherwise,
@@ -2305,7 +2309,8 @@ class Script(default.Script):
         # to place the caret inside the list, but rather treat the list
         # as a single object.  Otherwise, if it has children, look there.
         #
-        elif obj.childCount and obj[obj.childCount - 1] and not doNotDescend:
+        elif obj.childCount and obj[obj.childCount - 1] and not doNotDescend \
+             and not isHidden:
             try:
                 return self.findPreviousCaretInOrder(
                     obj[obj.childCount - 1],
@@ -2314,7 +2319,7 @@ class Script(default.Script):
             except:
                 pass
 
-        elif includeNonText and (startOffset < 0):
+        elif includeNonText and startOffset < 0 and not isHidden:
             extents = obj.queryComponent().getExtents(0)
             if (extents.width != 0) and (extents.height != 0):
                 return [obj, 0]
