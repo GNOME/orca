@@ -77,7 +77,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>m"))
 sequence.append(utils.AssertPresentationAction(
-    "8. m to previous landmark",
+    "8. Shift+m to previous landmark",
     ["BRAILLE LINE:  'Wrapping to bottom.'",
      "     VISIBLE:  'Wrapping to bottom.', cursor=0",
      "BRAILLE LINE:  'contentinfo'",
@@ -88,7 +88,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>m"))
 sequence.append(utils.AssertPresentationAction(
-    "9. m to previous landmark",
+    "9. Shift+m to previous landmark",
     ["BRAILLE LINE:  'search'",
      "     VISIBLE:  'search', cursor=1",
      "SPEECH OUTPUT: 'search'"]))
@@ -96,7 +96,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>m"))
 sequence.append(utils.AssertPresentationAction(
-    "10. m to previous landmark",
+    "10. Shift+m to previous landmark",
     ["KNOWN ISSUE: We are skipping over complementary on the way back",
      "BRAILLE LINE:  'application'",
      "     VISIBLE:  'application', cursor=1",
@@ -106,7 +106,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>m"))
 sequence.append(utils.AssertPresentationAction(
-    "11. m to previous landmark",
+    "11. Shift+m to previous landmark",
     ["KNOWN ISSUE: We are skipping over navigation on the way back",
      "BRAILLE LINE:  'navigation main complementary'",
      "     VISIBLE:  'navigation main complementary', cursor=1",
@@ -115,7 +115,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>m"))
 sequence.append(utils.AssertPresentationAction(
-    "12. m to previous landmark",
+    "12. Shift+m to previous landmark",
     ["BRAILLE LINE:  'banner'",
      "     VISIBLE:  'banner', cursor=1",
      "SPEECH OUTPUT: 'banner'"]))

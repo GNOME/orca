@@ -1,0 +1,25 @@
+<html>
+<body>
+<p>This element is not hidden.</p>
+<p aria-hidden="true">This element hidden by ARIA.</p>
+<p hidden>This element hidden by HTML5 hidden.</p>
+<p style="display:none">This element hidden by display:none.</p>
+<p style="position:absolute;left:-9999px">This element hidden by position off screen.</p>
+<div>
+    <p>This element is in a parent which is not hidden.</p>
+</div>
+<div aria-hidden="true">
+   <p>This element is in a parent hidden by ARIA.</p>
+</div>
+<div hidden>
+    <p hidden>This element is in a parent hidden by HTML5 hidden.</p>
+</div>
+<div style="display:none">
+    <p>This element is in a parent hidden by display:none.</p>
+</div>
+<div style="position:absolute;left:-9999px">
+    <p>This element is in a parent hidden by position off screen</p>
+</div>
+<p>This element is not hidden.</p>
+</body>
+</html>
