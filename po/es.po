@@ -5,8 +5,8 @@
 #
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2006.
 # Maria Majadas <maria.majadas@hispalinux.es>, 2005.
-# Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2007, 2008, 2010, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2010, 2011.
+# Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2007, 2008, 2010, 2011, 2014.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011, 2012, 2013, 2014.
 #
 msgid ""
@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2014-08-19 06:30+0000\n"
-"PO-Revision-Date: 2014-08-19 12:49+0200\n"
+"POT-Creation-Date: 2014-08-22 10:17+0000\n"
+"PO-Revision-Date: 2014-08-26 17:09+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -1979,7 +1979,7 @@ msgstr "Entra y sale del modo de revisión."
 #. The home position is the beginning of the content in the window.
 #: ../src/orca/cmdnames.py:110
 msgid "Moves flat review to the home position."
-msgstr "Mover revisión a la posición inicial."
+msgstr "Mueve la revisión a la posición inicial."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1998,7 +1998,7 @@ msgstr "Mueve la revisión a la posición final."
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: ../src/orca/cmdnames.py:126
 msgid "Moves flat review to the beginning of the previous line."
-msgstr "Mover revisión al comienzo de la línea anterior."
+msgstr "Mueve la revisión al comienzo de la línea anterior."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2223,7 +2223,7 @@ msgstr "Copia el contenido en revisión al portapapeles."
 #. the existing contents of the clipboard.
 #: ../src/orca/cmdnames.py:314
 msgid "Appends the contents under flat review to the clipboard."
-msgstr "Añade el contenido el revisión al portapapeles."
+msgstr "Añade el contenido de revisión al portapapeles."
 
 #. Translators: when users are navigating a table, they sometimes want the
 #. entire row of a table read; other times they just want the current cell
@@ -2461,13 +2461,13 @@ msgstr "Conmutar el modo de revisión del ratón."
 #. braille.
 #: ../src/orca/cmdnames.py:489
 msgid "Present current time."
-msgstr "Mostrar la hora actual."
+msgstr "Presentar la hora actual."
 
 #. Translators: Orca has a command to present the current date in speech and in
 #. braille.
 #: ../src/orca/cmdnames.py:493
 msgid "Present current date."
-msgstr "Mostrar la fecha actual."
+msgstr "Presentar la fecha actual."
 
 #. Translators: Orca normally intercepts all keyboard commands and only passes
 #. them along to the current application when they are not Orca commands. This
@@ -2850,23 +2850,20 @@ msgstr "Muestra una lista de casillas."
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: ../src/orca/cmdnames.py:768
-#| msgid "Goes to previous table."
 msgid "Goes to previous clickable."
-msgstr "Va a la pulsable anterior."
+msgstr "Va al anterior elemento que se puede pulsar."
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: ../src/orca/cmdnames.py:772
-#| msgid "Goes to next table."
 msgid "Goes to next clickable."
-msgstr "Va a la siguiente pulsable."
+msgstr "Va al siguiente elemento que se puede pulsar."
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: ../src/orca/cmdnames.py:776
-#| msgid "Displays a list of tables."
 msgid "Displays a list of clickables."
-msgstr "Muestra una lista de pulsables."
+msgstr "Muestra una lista de elementos que se pueden pulsar."
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: ../src/orca/cmdnames.py:779
@@ -2951,19 +2948,16 @@ msgstr "Muestra una lista de encabezados de nivel %d."
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:827
-#| msgid "Goes to previous line."
 msgid "Goes to previous image."
 msgstr "Va a la imagen anterior."
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:830
-#| msgid "Goes to next line."
 msgid "Goes to next image."
 msgstr "Va a la siguiente imagen."
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:833
-#| msgid "Displays a list of tables."
 msgid "Displays a list of images."
 msgstr "Muestra una lista de imágenes."
 
@@ -3093,7 +3087,7 @@ msgstr "Muestra una lista de párrafos."
 #. Translators: this is for navigating among radio buttons in a document.
 #: ../src/orca/cmdnames.py:917
 msgid "Goes to previous radio button."
-msgstr "Va al botón de radio anterior."
+msgstr "Va al anterior botón de radio."
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: ../src/orca/cmdnames.py:920
@@ -3109,7 +3103,7 @@ msgstr "Muestra una lista de botones de radio."
 #. document.
 #: ../src/orca/cmdnames.py:927
 msgid "Goes to previous separator."
-msgstr "Va al separador anterior."
+msgstr "Va al anterior separador."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
@@ -3120,7 +3114,7 @@ msgstr "Va al siguiente separador."
 #. Translators: this is for navigating among tables in a document.
 #: ../src/orca/cmdnames.py:934
 msgid "Goes to previous table."
-msgstr "Va a la tabla anterior."
+msgstr "Va a la anterior tabla."
 
 #. Translators: this is for navigating among tables in a document.
 #: ../src/orca/cmdnames.py:937
@@ -3178,7 +3172,7 @@ msgstr "Va una celda arriba."
 #. between these two modes.
 #: ../src/orca/cmdnames.py:974
 msgid "Switches between browse mode and focus mode."
-msgstr "Cambia entre modo de exploración y modo de foco."
+msgstr "Cambia entre modo navegación y modo foco."
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -4339,9 +4333,9 @@ msgstr "yellow green"
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1045 ../src/orca/generator.py:485
-#: ../src/orca/generator.py:751 ../src/orca/generator.py:793
-#: ../src/orca/generator.py:839 ../src/orca/tutorialgenerator.py:558
+#: ../src/orca/flat_review.py:1045 ../src/orca/generator.py:495
+#: ../src/orca/generator.py:761 ../src/orca/generator.py:803
+#: ../src/orca/generator.py:849 ../src/orca/tutorialgenerator.py:558
 #: ../src/orca/tutorialgenerator.py:598
 msgid "toggle"
 msgstr "conmutar"
@@ -4373,7 +4367,6 @@ msgstr "Activar"
 #. If this setting is not enabled, the second press of "e" would continue to be
 #. a navigation command to move amongst entries.
 #: ../src/orca/guilabels.py:58
-#| msgid "Enable _structural navigation"
 msgid "Automatic focus mode during structural navigation"
 msgstr "Modo de foco automático durante la navegación estructural"
 
@@ -4841,7 +4834,7 @@ msgstr "Bloque"
 #: ../src/orca/guilabels.py:385
 msgctxt "structural navigation"
 msgid "Button"
-msgstr "Botón"
+msgstr "Botón"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -4868,7 +4861,7 @@ msgstr "Casilla"
 #: ../src/orca/guilabels.py:403
 msgctxt "structural navigation"
 msgid "Clickable"
-msgstr "Pulsable"
+msgstr "Se puede pulsar"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -4886,7 +4879,7 @@ msgstr "Caja combinada"
 #: ../src/orca/guilabels.py:415
 msgctxt "structural navigation"
 msgid "Description"
-msgstr "Descripción"
+msgstr "Descripción"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -4902,7 +4895,6 @@ msgstr "Encabezado"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text (alt text, title, etc.) associated with an image.
 #: ../src/orca/guilabels.py:427
-#| msgid "image"
 msgctxt "structural navigation"
 msgid "Image"
 msgstr "Imagen"
@@ -4980,7 +4972,7 @@ msgstr "Objeto"
 #: ../src/orca/guilabels.py:478
 msgctxt "structural navigation"
 msgid "Paragraph"
-msgstr "Párrafo"
+msgstr "Párrafo"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5076,11 +5068,9 @@ msgstr "Casillas"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. "Clickables" are web elements which have an "onClick" handler.
 #: ../src/orca/guilabels.py:543
-#| msgctxt "structural navigation"
-#| msgid "Tables"
 msgctxt "structural navigation"
 msgid "Clickables"
-msgstr "Pulsables"
+msgstr "Se puede pulsar"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5118,10 +5108,9 @@ msgstr "Encabezados"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:568
-#| msgid "image"
 msgctxt "structural navigation"
 msgid "Images"
-msgstr "Imágenes"
+msgstr "Imágenes"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5207,7 +5196,7 @@ msgstr "Tablas"
 #: ../src/orca/guilabels.py:623
 msgctxt "structural navigation"
 msgid "Unvisited Links"
-msgstr "Enlace no visitados"
+msgstr "Enlaces no visitados"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5376,6 +5365,16 @@ msgstr "Leer _celdas dentro de otra celda"
 msgid "Attribute Name"
 msgstr "Nombre del atributo"
 
+# Notas:
+# Añadir una nota
+#
+# Comentarios extraídos:
+# Translators: Gecko native caret navigation is where Firefox itself controls
+# how the arrow keys move the caret around HTML content. It's often broken, so
+# Orca needs to provide its own support. As such, Orca offers the user the
+# ability to switch between the Firefox mode and the Orca mode. This is the
+# label of a checkbox in which users can indicate their default preference.
+#
 #. Translators: Gecko native caret navigation is where Firefox itself controls
 #. how the arrow keys move the caret around HTML content. It's often broken, so
 #. Orca needs to provide its own support. As such, Orca offers the user the
@@ -5383,7 +5382,7 @@ msgstr "Nombre del atributo"
 #. label of a checkbox in which users can indicate their default preference.
 #: ../src/orca/guilabels.py:743
 msgid "Control caret navigation"
-msgstr "Controla la navegación de cursor"
+msgstr "Controlar la navegación del cursor"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
@@ -5716,7 +5715,7 @@ msgstr "Mayús"
 #: ../src/orca/messages.py:40
 msgctxt "generic name"
 msgid "application"
-msgstr "aplicación"
+msgstr "aplicación"
 
 #. Translators: This is presented when the user has navigated to an empty line.
 #: ../src/orca/messages.py:43
@@ -5919,7 +5918,7 @@ msgstr "Forzar el uso de la opción"
 #. using the '-e, --enable' or '-d, --disable' command line options.
 #: ../src/orca/messages.py:192
 msgid "OPTION"
-msgstr "OPCIÓN"
+msgstr "OPCIÓN"
 
 #. Translators: This message is displayed when the user starts Orca from the
 #. command line and includes an invalid option or argument. After the message,
@@ -5967,7 +5966,7 @@ msgstr ""
 #. but the launch fails due to an error related to the settings manager.
 #: ../src/orca/messages.py:226
 msgid "Could not activate the settings manager. Exiting."
-msgstr "No se pudo activar el gestor de la configuración. Saliendo."
+msgstr "No se pudo activar el gestor de configuración. Saliendo."
 
 #. Translators: This message is presented to the user when he/she tries to launch
 #. Orca, but Orca is already running.
@@ -7096,7 +7095,7 @@ msgstr "El contexto es %s"
 #. This string is the message presented when Orca switches to browse mode.
 #: ../src/orca/messages.py:1091
 msgid "Browse mode"
-msgstr "Modo de exploración"
+msgstr "Modo navegación"
 
 #. Translators: Orca has a number of commands that override the default
 #. behavior within an application. For instance, on a web page, "h" moves
@@ -7112,9 +7111,8 @@ msgstr "Modo de exploración"
 #. key presses as something that should be handled by the focused widget.
 #. This string is the message presented when Orca switches to focus mode.
 #: ../src/orca/messages.py:1106
-#| msgid "List shortcuts mode."
 msgid "Focus mode"
-msgstr "Modo del foco"
+msgstr "Modo foco"
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -7127,7 +7125,7 @@ msgstr "Modo del foco"
 #. This string is the message presented when Orca switches to sticky focus mode.
 #: ../src/orca/messages.py:1117
 msgid "Focus mode is sticky."
-msgstr "El modo del foco es pegajoso"
+msgstr "El modo de foco es pegajoso"
 
 #. Translators: Hovering the mouse over certain objects on a web page causes a
 #. new object to appear such as a pop-up menu. Orca has a command will move the
@@ -7206,9 +7204,8 @@ msgstr "No hay más objetos grandes."
 #. elements which have an "onClick" action. This is a detailed message which
 #. will be presented to the user if no more clickable elements can be found.
 #: ../src/orca/messages.py:1174
-#| msgid "No more tables."
 msgid "No more clickables."
-msgstr "No hay más pulsables."
+msgstr "No hay más elementos que se puedan pulsar."
 
 #. Translators: This is for navigating document content by moving from combo
 #. box to combo box. This is a detailed message which will be presented to the
@@ -7251,7 +7248,6 @@ msgstr "No hay más encabezados de nivel %d."
 #. to image. This is a detailed message which will be presented to the user
 #. if no more images can be found.
 #: ../src/orca/messages.py:1205
-#| msgid "No more tables."
 msgid "No more images."
 msgstr "No hay más imágenes."
 
@@ -8237,7 +8233,7 @@ msgstr "Icono del panel"
 #. which have an "onClick" action.
 #: ../src/orca/object_properties.py:81
 msgid "clickable"
-msgstr "pulsable"
+msgstr "se puede pulsar"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
@@ -8253,81 +8249,89 @@ msgstr "contraído"
 msgid "expanded"
 msgstr "expandido"
 
+#. Translators: This is a state which applies to elements in document conent
+#. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
+#: ../src/orca/object_properties.py:95
+#| msgctxt "structural navigation"
+#| msgid "Description"
+msgid "has long description"
+msgstr "tiene una descripción larga"
+
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:95
+#: ../src/orca/object_properties.py:99
 msgid "horizontal"
 msgstr "horizontal"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:99
+#: ../src/orca/object_properties.py:103
 msgid "vertical"
 msgstr "vertical"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:102
+#: ../src/orca/object_properties.py:106
 msgctxt "checkbox"
 msgid "checked"
 msgstr "marcada"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:105
+#: ../src/orca/object_properties.py:109
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "no marcada"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:108
+#: ../src/orca/object_properties.py:112
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "marcada parcialmente"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:111
+#: ../src/orca/object_properties.py:115
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "pulsado"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:114
+#: ../src/orca/object_properties.py:118
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "no pulsado"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:117
+#: ../src/orca/object_properties.py:121
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "seleccionado"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:120
+#: ../src/orca/object_properties.py:124
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "no seleccionado"
 
 #. Translators: This is a state which applies to a table cell.
-#: ../src/orca/object_properties.py:123
+#: ../src/orca/object_properties.py:127
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "no seleccionado"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:126
+#: ../src/orca/object_properties.py:130
 msgctxt "link state"
 msgid "visited"
 msgstr "visitado"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:129
+#: ../src/orca/object_properties.py:133
 msgctxt "link state"
 msgid "unvisited"
 msgstr "no visitado"
 
 #. Translators: This state represents an item on the screen that has been set
 #. insensitive (or grayed out).
-#: ../src/orca/object_properties.py:133 ../src/orca/object_properties.py:137
+#: ../src/orca/object_properties.py:137 ../src/orca/object_properties.py:141
 msgid "grayed"
 msgstr "sombreado"
 
@@ -8336,7 +8340,7 @@ msgstr "sombreado"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the spoken
 #. version.
-#: ../src/orca/object_properties.py:144
+#: ../src/orca/object_properties.py:148
 msgctxt "text"
 msgid "read only"
 msgstr "sólo lectura"
@@ -8346,20 +8350,20 @@ msgstr "sólo lectura"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the braille
 #. version. (Because braille displays have limited real estate, we abbreviate.)
-#: ../src/orca/object_properties.py:151
+#: ../src/orca/object_properties.py:155
 msgctxt "text"
 msgid "rdonly"
 msgstr "sólolec"
 
 #. Translators: Certain objects (such as form controls on web pages) can have
 #. STATE_REQUIRED set to inform the user that this field must be filled out.
-#: ../src/orca/object_properties.py:155 ../src/orca/object_properties.py:159
+#: ../src/orca/object_properties.py:159 ../src/orca/object_properties.py:163
 msgid "required"
 msgstr "requerido"
 
 #. Translators: "multi-select" refers to a web form list in which more than
 #. one item can be selected at a time.
-#: ../src/orca/object_properties.py:163
+#: ../src/orca/object_properties.py:167
 msgid "multi-select"
 msgstr "selección-múltiple"
 
@@ -8515,7 +8519,7 @@ msgstr "Leer el objeto debajo del ra_tón."
 
 #: ../src/orca/orca-setup.ui.h:35
 msgid "Mouse"
-msgstr "Ratón"
+msgstr "Ratón"
 
 #: ../src/orca/orca-setup.ui.h:36
 msgid "General"
@@ -8893,12 +8897,6 @@ msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
 msgstr[0] "%(key)s %(value)s píxel"
 msgstr[1] "%(key)s %(value)s píxeles"
-
-#. Translators: this is the action name for the 'open' action.
-#.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:3452
-msgid "open"
-msgstr "abrir"
 
 #. Translators: this attribute specifies the background color of the text.
 #. The value is an RGB value of the format "u,u,u".
@@ -9982,6 +9980,9 @@ msgid ""
 msgstr ""
 "Para decrementar pulse flecha izquierda, para incrementar pulse flecha "
 "derecha, para el mínimo pulse inicio y para el máximo pulse fin."
+
+#~ msgid "open"
+#~ msgstr "abrir"
 
 #~ msgid "umlaut"
 #~ msgstr "diéresis"
