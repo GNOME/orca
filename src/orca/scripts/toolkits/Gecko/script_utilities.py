@@ -822,24 +822,21 @@ class Utilities(script_utilities.Utilities):
                 break
 
             objects[0:0] = onLeft
-            prevObj, pOffset = self._script.findPreviousCaretInOrder(onLeft[0][0], onLeft[0][1])
-            if prevObj == onLeft[0][0]:
-                prevObj, pOffset = self._script.findPreviousCaretInOrder(prevObj, pOffset)
+            firstObj, firstStart = objects[0][0], objects[0][1]
+            prevObj, pOffset = self._script.findPreviousCaretInOrder(firstObj, firstStart)
 
         # Check for things on the same line to the right of this object.
-        lastObj, lastStart, lastEnd, lastString = objects[-1]
-        while lastObj and lastString and not lastString.endswith("\n"):
-            nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
-            if not nextObj:
-                break
-
+        lastObj, lastEnd = objects[-1][0], objects[-1][2]
+        nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
+        while nextObj:
             onRight = self._getLineContentsForObj(nextObj, nOffset)
             onRight = list(filter(_include, onRight))
             if not onRight:
                 break
 
             objects.extend(onRight)
-            lastObj, lastStart, lastEnd, lastString = objects[-1]
+            lastObj, lastEnd = objects[-1][0], objects[-1][2]
+            nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
 
         return objects
 
