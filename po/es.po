@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2014-08-22 10:17+0000\n"
+"POT-Creation-Date: 2014-08-27 22:19+0000\n"
 "PO-Revision-Date: 2014-08-26 17:09+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
@@ -2333,7 +2333,7 @@ msgstr "Aumenta el tono de la voz."
 #. We call it 'silencing'.
 #: ../src/orca/cmdnames.py:393
 msgid "Toggles the silencing of speech."
-msgstr "Conmuta el silencio de la voz."
+msgstr "Conmuta el silencio del habla."
 
 #. Translators: this string is associated with the keyboard shortcut to quit
 #. Orca.
@@ -7617,13 +7617,13 @@ msgstr "Configuración de usuario del lector de pantalla recargada."
 #. has been temporarily turned off.
 #: ../src/orca/messages.py:1461
 msgid "Speech disabled."
-msgstr "Voz desactivada."
+msgstr "Habla desactivada."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been turned back on.
 #: ../src/orca/messages.py:1465
 msgid "Speech enabled."
-msgstr "Voz activada."
+msgstr "Habla activada."
 
 #. Translators: This string announces speech rate change.
 #: ../src/orca/messages.py:1468
@@ -8252,8 +8252,6 @@ msgstr "expandido"
 #. Translators: This is a state which applies to elements in document conent
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
 #: ../src/orca/object_properties.py:95
-#| msgctxt "structural navigation"
-#| msgid "Description"
 msgid "has long description"
 msgstr "tiene una descripción larga"
 
@@ -8579,7 +8577,7 @@ msgstr "Voz"
 
 #: ../src/orca/orca-setup.ui.h:55
 msgid "_Enable speech"
-msgstr "_Activar voz"
+msgstr "_Activar habla"
 
 #: ../src/orca/orca-setup.ui.h:57
 msgid "Ver_bose"
@@ -8661,7 +8659,7 @@ msgstr "Actualizaciones de barras de progreso"
 
 #: ../src/orca/orca-setup.ui.h:88
 msgid "Speech"
-msgstr "Voz"
+msgstr "Habla"
 
 #: ../src/orca/orca-setup.ui.h:89
 msgid "Enable Braille _support"
