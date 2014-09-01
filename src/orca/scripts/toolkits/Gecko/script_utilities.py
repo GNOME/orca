@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2010 Joanmarie Diggs.
+# Copyright 2014 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -25,7 +26,8 @@
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
+__copyright__ = "Copyright (c) 2010 Joanmarie Diggs." \
+                "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
@@ -506,6 +508,341 @@ class Utilities(script_utilities.Utilities):
     #                                                                       #
     #########################################################################
 
+    # TODO - JD: Ultimately "utilities" need to be properly organized into
+    # functionality-based modules. But they belong even less in the script.
+
+    def extentsAreOnSameLine(self, a, b, pixelDelta=5):
+        """Determine if extents a and b are on the same line.
+
+        Arguments:
+        -a: [x, y, width, height]
+        -b: [x, y, width, height]
+
+        Returns True if a and b are on the same line.
+        """
+
+        if a == b:
+            return True
+
+        aX, aY, aWidth, aHeight = a
+        bX, bY, bWidth, bHeight = b
+
+        if aWidth == 0 and aHeight == 0:
+            return bY <= aY <= bY + bHeight
+        if bWidth == 0 and bHeight == 0:
+            return aY <= bY <= aY + aHeight
+
+        highestBottom = min(aY + aHeight, bY + bHeight)
+        lowestTop = max(aY, bY)
+        if lowestTop >= highestBottom:
+            return False
+
+        aMiddle = aY + aHeight / 2
+        bMiddle = bY + bHeight / 2
+        if abs(aMiddle - bMiddle) > pixelDelta:
+            return False
+
+        return True
+
+    def getExtents(self, obj, startOffset, endOffset):
+        """Returns [x, y, width, height] of the text at the given offsets
+        if the object implements accessible text, or just the extents of
+        the object if it doesn't implement accessible text.
+        """
+        if not obj:
+            return [0, 0, 0, 0]
+
+        role = obj.getRole()
+        text = self.queryNonEmptyText(obj)
+        if text and not self._treatTextObjectAsWhole(obj):
+            return list(text.getRangeExtents(startOffset, endOffset, 0))
+
+        parentRole = obj.parent.getRole()
+        if role in [pyatspi.ROLE_MENU, pyatspi.ROLE_LIST_ITEM] \
+           and parentRole in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST_BOX]:
+            ext = obj.parent.queryComponent().getExtents(0)
+        else:
+            ext = obj.queryComponent().getExtents(0)
+
+        return [ext.x, ext.y, ext.width, ext.height]
+
+    def findObjectInContents(self, obj, offset, contents):
+        if not obj or not contents:
+            return -1
+
+        matches = [x for x in contents if self.isSameObject(x[0], obj)]
+        match = [x for x in matches if x[1] <= offset < x[2]]
+        if match and match[0] and match[0] in contents:
+            return contents.index(match[0])
+
+        return -1
+
+    def _treatTextObjectAsWhole(self, obj):
+        roles = [pyatspi.ROLE_CHECK_BOX,
+                 pyatspi.ROLE_CHECK_MENU_ITEM,
+                 pyatspi.ROLE_MENU_ITEM,
+                 pyatspi.ROLE_RADIO_MENU_ITEM,
+                 pyatspi.ROLE_RADIO_BUTTON,
+                 pyatspi.ROLE_PUSH_BUTTON]
+
+        role = obj.getRole()
+        if role in roles:
+            return True
+
+        return False
+
+    def __findRange(self, obj, offset, boundary):
+        # We should not have to do any of this. Seriously. This is why
+        # We can't have nice things.
+        if not obj:
+            return '', 0, 0
+
+        text = self.queryNonEmptyText(obj)
+        if not text:
+            return '', 0, 1
+
+        allText = text.getText(0, -1)
+        extents = list(text.getRangeExtents(offset, offset + 1, 0))
+
+        def _inThisWord(span):
+            return span[0] <= offset <= span[1]
+
+        def _onThisLine(span):
+            rangeExtents = list(text.getRangeExtents(span[0], span[0] + 1, 0))
+            return self.extentsAreOnSameLine(extents, rangeExtents)
+
+        words = [m.span() for m in re.finditer("[^\s\ufffc]+", allText)]
+        if boundary == pyatspi.TEXT_BOUNDARY_LINE_START:
+            segments = list(filter(_onThisLine, words))
+        elif boundary == pyatspi.TEXT_BOUNDARY_WORD_START:
+            segments = list(filter(_inThisWord, words))
+        else:
+            return '', 0, 0
+
+        if segments and segments[0]:
+            start = segments[0][0]
+            end = segments[-1][1] + 1
+            if start <= offset < end:
+                string = allText[start:end]
+                return string, start, end
+
+        return allText[offset:offset+1], offset, offset + 1
+
+    def _getTextAtOffset(self, obj, offset, boundary):
+        if not obj:
+            return '', 0, 0
+
+        text = self.queryNonEmptyText(obj)
+        if not text:
+            return '', 0, 1
+
+        if self._treatTextObjectAsWhole(obj):
+            return text.getText(0, -1), 0, text.characterCount
+
+        offset = max(0, offset)
+        string, start, end = text.getTextAtOffset(offset, boundary)
+
+        # The above should be all that we need to do, but....
+        needSadHack = False
+        testString, testStart, testEnd = text.getTextAtOffset(start, boundary)
+        if (string, start, end) != (testString, testStart, testEnd):
+            s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]")
+            s2 = testString.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]")
+            msg = "FAIL: Bad results for text at offset for %s using %s.\n" \
+                  "      For offset %i - String: '%s', Start: %i, End: %i.\n" \
+                  "      For offset %i - String: '%s', Start: %i, End: %i.\n" \
+                  "      The bug is the above results should be the same.\n" \
+                  "      This very likely needs to be fixed by Mozilla." \
+                  % (obj, boundary, offset, s1.replace("\n", "\\n"), start, end,
+                     start, s2.replace("\n", "\\n"), testStart, testEnd)
+            debug.println(debug.LEVEL_INFO, msg)
+            needSadHack = True
+        elif not string and 0 <= offset < text.characterCount:
+            s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]")
+            s2 = text.getText(0, -1).replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]")
+            msg = "FAIL: Bad results for text at offset %i for %s using %s:\n" \
+                  "      String: '%s', Start: %i, End: %i.\n" \
+                  "      The bug is no text reported for a valid offset.\n" \
+                  "      Character count: %i, Full text: '%s'.\n" \
+                  "      This very likely needs to be fixed by Mozilla." \
+                  % (offset, obj, boundary, s1.replace("\n", "\\n"), start, end,
+                     text.characterCount, s2.replace("\n", "\\n"))
+            debug.println(debug.LEVEL_INFO, msg)
+            needSadHack = True
+        elif not (start <= offset < end):
+            s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]")
+            msg = "FAIL: Bad results for text at offset %i for %s using %s:\n" \
+                  "      String: '%s', Start: %i, End: %i.\n" \
+                  "      The bug is the range returned is outside of the offset.\n" \
+                  "      This very likely needs to be fixed by Mozilla." \
+                  % (offset, obj, boundary, s1.replace("\n", "\\n"), start, end)
+            debug.println(debug.LEVEL_INFO, msg)
+            needSadHack = True
+
+        if needSadHack:
+            sadString, sadStart, sadEnd = self.__findRange(obj, offset, boundary)
+            s = sadString.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]")
+            msg = "HACK: Attempting to recover from above failure.\n" \
+                  "      Returning: '%s' (%i, %i) " % (s, sadStart, sadEnd)
+            debug.println(debug.LEVEL_INFO, msg)
+            return sadString, sadStart, sadEnd
+
+        if not boundary == pyatspi.TEXT_BOUNDARY_LINE_START:
+            return text.getText(start, end), start, end
+
+        # Then there are Gecko and authoring bugs we can deal with.
+        extents = list(text.getRangeExtents(offset, offset + 1, 0))
+        while 0 < start:
+            pString, pStart, pEnd = text.getTextAtOffset(start - 1, boundary)
+            if not (pString and pStart < start):
+                break
+
+            pExtents = list(text.getRangeExtents(pStart, pStart + 1, 0))
+            if not self.extentsAreOnSameLine(extents, pExtents):
+                break
+
+            start = pStart
+
+        while end < text.characterCount:
+            nString, nStart, nEnd = text.getTextAtOffset(end, boundary)
+            if not (nString and end < nEnd):
+                break
+
+            nExtents = list(text.getRangeExtents(nEnd, nEnd + 1, 0))
+            if not self.extentsAreOnSameLine(extents, nExtents):
+                break
+
+            end = nEnd
+
+        return text.getText(start, end), start, end
+
+    def _getWordContentsForObj(self, obj, offset):
+        if not obj:
+            return []
+
+        boundary = pyatspi.TEXT_BOUNDARY_WORD_START
+        string, start, end = self._getTextAtOffset(obj, offset, boundary)
+        if string and string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1:
+            return [[obj, start, end, string]]
+
+        return self.getObjectsFromEOCs(obj, start, boundary)
+
+    def getWordContentsAtOffset(self, obj, offset):
+        if not obj:
+            return []
+
+        objects = self._getWordContentsForObj(obj, offset)
+        extents = self.getExtents(obj, offset, offset + 1)
+
+        def _include(x):
+            if x in objects:
+                return False
+
+            xObj, xStart, xEnd, xString = x
+            if xStart == xEnd or not xString:
+                return False
+
+            xExtents = self.getExtents(xObj, xStart, xStart + 1)
+            return self.extentsAreOnSameLine(extents, xExtents)
+
+        # Check for things in the same word to the left of this object.
+        firstObj, firstStart, firstEnd, firstString = objects[0]
+        prevObj, pOffset = self._script.findPreviousCaretInOrder(firstObj, firstStart)
+        while prevObj and firstString:
+            text = self.queryNonEmptyText(prevObj)
+            if not text or text.getText(pOffset, pOffset + 1).isspace():
+                break
+
+            onLeft = self._getWordContentsForObj(prevObj, pOffset)
+            onLeft = list(filter(_include, onLeft))
+            if not onLeft:
+                break
+
+            objects[0:0] = onLeft
+            firstObj, firstStart, firstEnd, firstString = objects[0]
+            prevObj, pOffset = self._script.findPreviousCaretInOrder(firstObj, firstStart)
+
+        # Check for things in the same word to the right of this object.
+        lastObj, lastStart, lastEnd, lastString = objects[-1]
+        while lastObj and lastString and not lastString[-1].isspace():
+            nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
+            onRight = self._getWordContentsForObj(nextObj, nOffset)
+            onRight = list(filter(_include, onRight))
+            if not onRight:
+                break
+
+            objects.extend(onRight)
+            lastObj, lastStart, lastEnd, lastString = objects[-1]
+
+        # We want to treat the list item marker as its own word.
+        firstObj, firstStart, firstEnd, firstString = objects[0]
+        if firstStart == 0 and firstObj.getRole() == pyatspi.ROLE_LIST_ITEM:
+            objects = [objects[0]]
+
+        return objects
+
+    def _getLineContentsForObj(self, obj, offset):
+        if not obj:
+            return []
+
+        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+        string, start, end = self._getTextAtOffset(obj, offset, boundary)
+        if string and string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1:
+            return [[obj, start, end, string]]
+
+        return self.getObjectsFromEOCs(obj, start, boundary)
+
+    def getLineContentsAtOffset(self, obj, offset):
+        if not obj:
+            return []
+
+        objects = []
+        extents = self.getExtents(obj, offset, offset + 1)
+
+        def _include(x):
+            if x in objects:
+                return False
+
+            xObj, xStart, xEnd, xString = x
+            if xStart == xEnd:
+                return False
+
+            xExtents = self.getExtents(xObj, xStart, xStart + 1)
+            return self.extentsAreOnSameLine(extents, xExtents)
+
+        objects = self._getLineContentsForObj(obj, offset)
+
+        # Check for things on the same line to the left of this object.
+        firstObj, firstStart = objects[0][0], objects[0][1]
+        prevObj, pOffset = self._script.findPreviousCaretInOrder(firstObj, firstStart)
+        while prevObj:
+            onLeft = self._getLineContentsForObj(prevObj, pOffset)
+            onLeft = list(filter(_include, onLeft))
+            if not onLeft:
+                break
+
+            objects[0:0] = onLeft
+            prevObj, pOffset = self._script.findPreviousCaretInOrder(onLeft[0][0], onLeft[0][1])
+            if prevObj == onLeft[0][0]:
+                prevObj, pOffset = self._script.findPreviousCaretInOrder(prevObj, pOffset)
+
+        # Check for things on the same line to the right of this object.
+        lastObj, lastStart, lastEnd, lastString = objects[-1]
+        while lastObj and lastString and not lastString.endswith("\n"):
+            nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
+            if not nextObj:
+                break
+
+            onRight = self._getLineContentsForObj(nextObj, nOffset)
+            onRight = list(filter(_include, onRight))
+            if not onRight:
+                break
+
+            objects.extend(onRight)
+            lastObj, lastStart, lastEnd, lastString = objects[-1]
+
+        return objects
+
     def getObjectsFromEOCs(self, obj, offset=None, boundary=None):
         """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
         with [obj, startOffset, endOffset, string] tuples.
@@ -539,8 +876,7 @@ class Utilities(script_utilities.Utilities):
                 offset = max(0, text.caretOffset)
 
             if boundary:
-                [string, start, end] = \
-                    text.getTextAtOffset(offset, boundary)
+                [string, start, end] = self._getTextAtOffset(obj, offset, boundary)
                 if end == -1:
                     end = text.characterCount
             else:
