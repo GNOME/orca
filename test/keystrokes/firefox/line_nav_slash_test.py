@@ -114,9 +114,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "11. Line Down",
-    ["KNOWN ISSUE - Sometimes we also say 'Recent Tags'. Might be a timing issue. And the presentation is wrong regardless.",
-     "BRAILLE LINE:  '& y radio button Some polls'",
-     "     VISIBLE:  '& y radio button Some polls', cursor=1",
+    ["BRAILLE LINE:  '& y radio button Some polls'",
+     "     VISIBLE:  '& y radio button Some polls', cursor=0",
      "SPEECH OUTPUT: 'not selected'",
      "SPEECH OUTPUT: 'radio button'",
      "SPEECH OUTPUT: 'Some polls '",
@@ -138,7 +137,7 @@ sequence.append(utils.AssertPresentationAction(
     "13. Line Up",
     ["KNOWN ISSUE: We should not be re-presenting the panel",
      "BRAILLE LINE:  '& y radio button Some polls'",
-     "     VISIBLE:  '& y radio button Some polls', cursor=1",
+     "     VISIBLE:  '& y radio button Some polls', cursor=0",
      "SPEECH OUTPUT: 'Some polls'",
      "SPEECH OUTPUT: 'not selected'",
      "SPEECH OUTPUT: 'radio button'",

@@ -7,12 +7,14 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(3000))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow in Focus Mode",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1"]))
+     "     VISIBLE:  '', cursor=0"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -29,9 +31,9 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Up Arrow in Browse Mode",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
+     "     VISIBLE:  '', cursor=0",
      "BRAILLE LINE:  'editor0 tool bar'",
-     "     VISIBLE:  'editor0 tool bar', cursor=1",
+     "     VISIBLE:  'editor0 tool bar', cursor=0",
      "SPEECH OUTPUT: 'editor0'",
      "SPEECH OUTPUT: 'tool bar'"]))
 

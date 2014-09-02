@@ -21,7 +21,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Press button",
     ["KNOWN ISSUE: Because the link has focus, we double-present it.",
      "BRAILLE LINE:  'This popup is created as a div in the'",
-     "     VISIBLE:  'This popup is created as a div i', cursor=1",
+     "     VISIBLE:  'This popup is created as a div i', cursor=0",
      "BRAILLE LINE:  'close'",
      "     VISIBLE:  'close', cursor=1",
      "BRAILLE LINE:  'close'",

@@ -16,7 +16,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Give focus to a widget in the first Tab",
     ["BRAILLE LINE:  '&=y Thick and cheesy radio button'",
-     "     VISIBLE:  '&=y Thick and cheesy radio butto', cursor=1",
+     "     VISIBLE:  '&=y Thick and cheesy radio butto', cursor=0",
      "SPEECH OUTPUT: 'Thick and cheesy selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -91,7 +91,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '< > Pepperoni check box'",
      "     VISIBLE:  '< > Pepperoni check box', cursor=1",
      "BRAILLE LINE:  '<x> Pepperoni check box'",
-     "     VISIBLE:  '<x> Pepperoni check box', cursor=1",
+     "     VISIBLE:  '<x> Pepperoni check box', cursor=0",
      "SPEECH OUTPUT: 'checked'"]))
 
 sequence.append(utils.AssertionSummaryAction())

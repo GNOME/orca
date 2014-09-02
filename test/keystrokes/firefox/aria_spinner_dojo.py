@@ -13,8 +13,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to the first spinner",
-    ["BRAILLE LINE:  '900 onChange: not fired yet! $l Set value to 400 push button Set value to null push button Set required to false push button'",
-     "     VISIBLE:  '900 onChange: not fired yet! $l ', cursor=1",
+    ["BRAILLE LINE:  '900'",
+     "     VISIBLE:  '900', cursor=0",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "BRAILLE LINE:  'Spinbox #1: 900 $l'",
