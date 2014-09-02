@@ -690,30 +690,6 @@ class Utilities(script_utilities.Utilities):
         if not boundary == pyatspi.TEXT_BOUNDARY_LINE_START:
             return text.getText(start, end), start, end
 
-        # Then there are Gecko and authoring bugs we can deal with.
-        extents = list(text.getRangeExtents(offset, offset + 1, 0))
-        while 0 < start:
-            pString, pStart, pEnd = text.getTextAtOffset(start - 1, boundary)
-            if not (pString and pStart < start):
-                break
-
-            pExtents = list(text.getRangeExtents(pStart, pStart + 1, 0))
-            if not self.extentsAreOnSameLine(extents, pExtents):
-                break
-
-            start = pStart
-
-        while end < text.characterCount:
-            nString, nStart, nEnd = text.getTextAtOffset(end, boundary)
-            if not (nString and end < nEnd):
-                break
-
-            nExtents = list(text.getRangeExtents(nEnd, nEnd + 1, 0))
-            if not self.extentsAreOnSameLine(extents, nExtents):
-                break
-
-            end = nEnd
-
         return text.getText(start, end), start, end
 
     def _getWordContentsForObj(self, obj, offset):
