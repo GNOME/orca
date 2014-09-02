@@ -763,6 +763,11 @@ class Utilities(script_utilities.Utilities):
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
         string, start, end = self._getTextAtOffset(obj, offset, boundary)
+
+        while string.startswith(self.EMBEDDED_OBJECT_CHARACTER):
+            string = string[1:]
+            start += 1
+
         if string and string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1:
             return [[obj, start, end, string]]
 

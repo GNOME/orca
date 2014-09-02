@@ -293,12 +293,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "26. Line Down",
-    ["BRAILLE LINE:  'been led by the access image Accessibility Program Office of Sun'",
-     "     VISIBLE:  'been led by the access image Acc', cursor=1",
+    ["BRAILLE LINE:  'been led by the Accessibility Program Office of Sun'",
+     "     VISIBLE:  'been led by the Accessibility Pr', cursor=1",
      "SPEECH OUTPUT: 'been led by the '",
-     "SPEECH OUTPUT: 'access'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: 'Accessibility Program Office of Sun '",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'"]))
@@ -405,12 +402,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "35. Line Down",
-    ["BRAILLE LINE:  'Darragh Ó Héiligh www.digitaldarragh.com image has created several audio guides for Orca. This is a fantastic'",
-     "     VISIBLE:  'Darragh Ó Héiligh www.digitaldar', cursor=1",
+    ["BRAILLE LINE:  'Darragh Ó Héiligh has created several audio guides for Orca. This is a fantastic'",
+     "     VISIBLE:  'Darragh Ó Héiligh has created se', cursor=1",
      "SPEECH OUTPUT: 'Darragh Ó Héiligh'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'www.digitaldarragh.com'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: ' has created several audio guides for Orca. This is a fantastic '"]))
@@ -419,12 +413,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "36. Line Down",
-    ["BRAILLE LINE:  'contribution (THANKS!)!!! The audio guides can be found at linuxat image http://www.digitaldarragh.com'",
+    ["BRAILLE LINE:  'contribution (THANKS!)!!! The audio guides can be found at http://www.digitaldarragh.com'",
      "     VISIBLE:  'contribution (THANKS!)!!! The au', cursor=1",
      "SPEECH OUTPUT: 'contribution (THANKS!)!!! The audio guides can be found at '",
-     "SPEECH OUTPUT: 'linuxat'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: 'http://www.digitaldarragh.com'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'"]))
@@ -567,12 +558,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "50. Line Down",
-    ["BRAILLE LINE:  'designed to present information as you navigate the desktop using the keynav-1 image built-in navigation'",
+    ["BRAILLE LINE:  'designed to present information as you navigate the desktop using the built-in navigation'",
      "     VISIBLE:  'designed to present information ', cursor=1",
      "SPEECH OUTPUT: 'designed to present information as you navigate the desktop using the '",
-     "SPEECH OUTPUT: 'keynav-1'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: 'built-in navigation '",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'"]))

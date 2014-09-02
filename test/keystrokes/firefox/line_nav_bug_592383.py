@@ -35,18 +35,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Down",
-    ["BRAILLE LINE:  'W   hy did the chicken cross the road? Give up? It was to escape from the enormous capital letter at the'",
-     "     VISIBLE:  'W   hy did the chicken cross the', cursor=1",
-     "SPEECH OUTPUT: 'W'",
+    ["BRAILLE LINE:  '   hy did the chicken cross the road? Give up? It was to escape from the enormous capital letter at the'",
+     "     VISIBLE:  '   hy did the chicken cross the ', cursor=1",
      "SPEECH OUTPUT: '   hy did the chicken cross the road? Give up? It was to escape from the enormous capital letter at the '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Down",
-    ["BRAILLE LINE:  'W beginning of this paragraph. These are the things that keep chickens up at night. No. Really.They are.'",
-     "     VISIBLE:  'W beginning of this paragraph. T', cursor=1",
-     "SPEECH OUTPUT: 'W'",
+    ["BRAILLE LINE:  'beginning of this paragraph. These are the things that keep chickens up at night. No. Really.They are.'",
+     "     VISIBLE:  'beginning of this paragraph. The', cursor=1",
      "SPEECH OUTPUT: 'beginning of this paragraph. These are the things that keep chickens up at night. No. Really.They are. '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -69,24 +67,38 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "8. Up",
-    ["BRAILLE LINE:  'W beginning of this paragraph. These are the things that keep chickens up at night. No. Really.They are.'",
-     "     VISIBLE:  'W beginning of this paragraph. T', cursor=1",
-     "SPEECH OUTPUT: 'W'",
+    ["BRAILLE LINE:  'beginning of this paragraph. These are the things that keep chickens up at night. No. Really.They are.'",
+     "     VISIBLE:  'beginning of this paragraph. The', cursor=1",
      "SPEECH OUTPUT: 'beginning of this paragraph. These are the things that keep chickens up at night. No. Really.They are. '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "9. Up",
-    ["KNOWN ISSUE: On the way up, thanks to the giant W, we are skipping over the text between the two",
-     "BRAILLE LINE:  'So is this one, but the next one will not be.'",
+    ["BRAILLE LINE:  '   hy did the chicken cross the road? Give up? It was to escape from the enormous capital letter at the'",
+     "     VISIBLE:  '   hy did the chicken cross the ', cursor=1",
+     "SPEECH OUTPUT: '   hy did the chicken cross the road? Give up? It was to escape from the enormous capital letter at the '"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "10. Up",
+    ["BRAILLE LINE:  'W'",
+     "     VISIBLE:  'W', cursor=1",
+     "SPEECH OUTPUT: 'W'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "11. Up",
+    ["BRAILLE LINE:  'So is this one, but the next one will not be.'",
      "     VISIBLE:  'So is this one, but the next one', cursor=1",
      "SPEECH OUTPUT: 'So is this one, but the next one will not be.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "10. Up",
+    "12. Up",
     ["BRAILLE LINE:  'This is a normal paragraph.'",
      "     VISIBLE:  'This is a normal paragraph.', cursor=1",
      "SPEECH OUTPUT: 'This is a normal paragraph.'"]))
