@@ -7,6 +7,9 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(3000))
+sequence.append(KeyComboAction("Tab"))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
@@ -102,12 +105,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
-    ["BRAILLE LINE:  'Archives orca-list image ) | FAQ | DocIndex'",
-     "     VISIBLE:  'Archives orca-list image ) | FAQ', cursor=1",
+    ["BRAILLE LINE:  'Archives) | FAQ | DocIndex'",
+     "     VISIBLE:  'Archives) | FAQ | DocIndex', cursor=1",
      "SPEECH OUTPUT: 'Archives'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'orca-list'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: ') | '",
@@ -293,38 +293,37 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "26. Line Down",
-    ["KNOWN ISSUE: Part of the line is missing.",
-     "BRAILLE LINE:  'been led by the'",
-     "     VISIBLE:  'been led by the', cursor=1",
-     "SPEECH OUTPUT: 'been led by the '"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "27. Line Down",
-    ["BRAILLE LINE:  'Microsystems, Inc. access image Microsystems, Inc. with'",
-     "     VISIBLE:  'Microsystems, Inc. access image ', cursor=1",
-     "SPEECH OUTPUT: 'Microsystems, Inc.'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'",
+    ["BRAILLE LINE:  'been led by the access image Accessibility Program Office of Sun'",
+     "     VISIBLE:  'been led by the access image Acc', cursor=1",
+     "SPEECH OUTPUT: 'been led by the '",
      "SPEECH OUTPUT: 'access'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: 'Accessibility Program Office of Sun '",
      "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'image'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "27. Line Down",
+    ["KNOWN ISSUE: Braille has lost the 'with'",
+     "BRAILLE LINE:  'Microsystems, Inc. contributions from many'",
+     "     VISIBLE:  'Microsystems, Inc. contributions', cursor=1",
+     "SPEECH OUTPUT: 'Microsystems, Inc.'",
+     "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: ' with '"]))
+     "SPEECH OUTPUT: 'with '",
+     "SPEECH OUTPUT: 'contributions from many '",
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "28. Line Down",
-    ["KNOWN ISSUE: Why the double braille?",
-     "BRAILLE LINE:  'community members community members.'",
-     "     VISIBLE:  'community members community memb', cursor=1",
+    ["BRAILLE LINE:  'community members.'",
+     "     VISIBLE:  'community members.', cursor=1",
      "SPEECH OUTPUT: 'community members'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'contributions from many '",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: '. '"]))
 
@@ -340,8 +339,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "30. Line Down",
-    ["KNOWN ISSUE: Part of the line is missing.",
-     "BRAILLE LINE:  'problems in other components, is maintained in buglist image Bugzilla (please see our'",
+    ["BRAILLE LINE:  'problems in other components, is maintained in buglist image Bugzilla \(please see our notes on how we'",
      "     VISIBLE:  'problems in other components, is', cursor=1",
      "SPEECH OUTPUT: 'problems in other components, is maintained in '",
      "SPEECH OUTPUT: 'buglist'",
@@ -350,20 +348,19 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Bugzilla'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: ' (please see our '"]))
+     "SPEECH OUTPUT: ' \(please see our '",
+     "SPEECH OUTPUT: 'notes on how we '",
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "31. Line Down",
-    ["KNOWN ISSUE: Why the double braille?",
-     "BRAILLE LINE:  'use Bugzilla use Bugzilla).'",
-     "     VISIBLE:  'use Bugzilla use Bugzilla).', cursor=1",
+    ["BRAILLE LINE:  'use Bugzilla\).'",
+     "     VISIBLE:  'use Bugzilla\).', cursor=1",
      "SPEECH OUTPUT: 'use Bugzilla'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'notes on how we '",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '). '"]))
+     "SPEECH OUTPUT: '\). '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -408,9 +405,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "35. Line Down",
-    ["BRAILLE LINE:  'Darragh Ó Héiligh has created several audio guides for Orca. This is a fantastic'",
-     "     VISIBLE:  'Darragh Ó Héiligh has created se', cursor=1",
+    ["BRAILLE LINE:  'Darragh Ó Héiligh www.digitaldarragh.com image has created several audio guides for Orca. This is a fantastic'",
+     "     VISIBLE:  'Darragh Ó Héiligh www.digitaldar', cursor=1",
      "SPEECH OUTPUT: 'Darragh Ó Héiligh'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'image'",
+     "SPEECH OUTPUT: 'www.digitaldarragh.com'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: ' has created several audio guides for Orca. This is a fantastic '"]))
@@ -419,35 +419,35 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "36. Line Down",
-    ["BRAILLE LINE:  'contribution (THANKS!)!!! The audio guides can be found at'",
+    ["BRAILLE LINE:  'contribution (THANKS!)!!! The audio guides can be found at linuxat image http://www.digitaldarragh.com'",
      "     VISIBLE:  'contribution (THANKS!)!!! The au', cursor=1",
-     "SPEECH OUTPUT: 'contribution (THANKS!)!!! The audio guides can be found at '"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "37. Line Down",
-    ["BRAILLE LINE:  '/linuxat.asp linuxat image /linuxat.asp and include the following:'",
-     "     VISIBLE:  '/linuxat.asp linuxat image /linu', cursor=1",
-     "SPEECH OUTPUT: '/linuxat.asp'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'",
+     "SPEECH OUTPUT: 'contribution (THANKS!)!!! The audio guides can be found at '",
      "SPEECH OUTPUT: 'linuxat'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: 'http://www.digitaldarragh.com'",
      "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'image'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "37. Line Down",
+    ["BRAILLE LINE:  '/linuxat.asp '",
+     "     VISIBLE:  '/linuxat.asp ', cursor=1",
+     "SPEECH OUTPUT: '/linuxat.asp'",
+     "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: ' and include the following: '"]))
+     "SPEECH OUTPUT: 'and include the following: '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "38. Line Down",
-    ["BRAILLE LINE:  '•Walk through of the installation of Ubuntu 7.4. Very helpful tutorial'",
-     "     VISIBLE:  '•Walk through of the installatio', cursor=1",
+    ["BRAILLE LINE:  '• ubuntu-7-4-install-walk-through image'",
+     "     VISIBLE:  '• ubuntu-7-4-install-walk-throug', cursor=1",
      "SPEECH OUTPUT: '•'",
-     "SPEECH OUTPUT: 'Walk through of the installation of Ubuntu 7.4. Very helpful tutorial'",
+     "SPEECH OUTPUT: 'ubuntu-7-4-install-walk-through'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'"]))
 
@@ -455,10 +455,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "39. Line Down",
-    ["BRAILLE LINE:  '•Review of Fedora 7 and the Orca screen reader for the Gnome graphical desktop'",
-     "     VISIBLE:  '•Review of Fedora 7 and the Orca', cursor=1",
+    ["BRAILLE LINE:  '• linux-and-orca-review image'",
+     "     VISIBLE:  '• linux-and-orca-review image', cursor=1",
      "SPEECH OUTPUT: '•'",
-     "SPEECH OUTPUT: 'Review of Fedora 7 and the Orca screen reader for the Gnome graphical desktop'",
+     "SPEECH OUTPUT: 'linux-and-orca-review'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'"]))
 
@@ -466,10 +466,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "40. Line Down",
-    ["BRAILLE LINE:  '•Guide to installing the latest versions of Firefox and Orca'",
-     "     VISIBLE:  '•Guide to installing the latest ', cursor=1",
+    ["BRAILLE LINE:  '• installing-firefox-and-orca image'",
+     "     VISIBLE:  '• installing-firefox-and-orca im', cursor=1",
      "SPEECH OUTPUT: '•'",
-     "SPEECH OUTPUT: 'Guide to installing the latest versions of Firefox and Orca'",
+     "SPEECH OUTPUT: 'installing-firefox-and-orca'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'"]))
 
@@ -567,26 +567,26 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "50. Line Down",
-    ["BRAILLE LINE:  'designed to present information as you navigate the desktop using the'",
+    ["BRAILLE LINE:  'designed to present information as you navigate the desktop using the keynav-1 image built-in navigation'",
      "     VISIBLE:  'designed to present information ', cursor=1",
-     "SPEECH OUTPUT: 'designed to present information as you navigate the desktop using the '"]))
+     "SPEECH OUTPUT: 'designed to present information as you navigate the desktop using the '",
+     "SPEECH OUTPUT: 'keynav-1'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'image'",
+     "SPEECH OUTPUT: 'built-in navigation '",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "51. Line Down",
-    ["BRAILLE LINE:  'mechanisms of GNOME keynav-1 image mechanisms of GNOME. These navigation mechanisms are consistent across most'",
-    "     VISIBLE:  'mechanisms of GNOME keynav-1 ima', cursor=1",
-    "SPEECH OUTPUT: 'mechanisms of GNOME'",
-    "SPEECH OUTPUT: 'link'",
-    "SPEECH OUTPUT: 'image'",
-    "SPEECH OUTPUT: 'keynav-1'",
-    "SPEECH OUTPUT: 'link'",
-    "SPEECH OUTPUT: 'image'",
-    "SPEECH OUTPUT: 'built-in navigation '",
-    "SPEECH OUTPUT: 'link'",
-    "SPEECH OUTPUT: 'image'",
-    "SPEECH OUTPUT: '. These navigation mechanisms are consistent across most '"]))
+    ["BRAILLE LINE:  'mechanisms of GNOME. These navigation mechanisms are consistent across most'",
+     "     VISIBLE:  'mechanisms of GNOME. These navig', cursor=1",
+     "SPEECH OUTPUT: 'mechanisms of GNOME'",
+     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'image'",
+     "SPEECH OUTPUT: '. These navigation mechanisms are consistent across most '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -600,21 +600,21 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "53. Line Down",
-    ["BRAILLE LINE:  'You may sometimes wish to control Orca itself, such as bringing up the'",
+    ["BRAILLE LINE:  'You may sometimes wish to control Orca itself, such as bringing up the Orca Configuration'",
      "     VISIBLE:  'You may sometimes wish to contro', cursor=1",
-     "SPEECH OUTPUT: 'You may sometimes wish to control Orca itself, such as bringing up the '"]))
+     "SPEECH OUTPUT: 'You may sometimes wish to control Orca itself, such as bringing up the '",
+     "SPEECH OUTPUT: 'Orca Configuration '",
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "54. Line Down",
-    ["BRAILLE LINE:  'GUI GUI (accessed by pressing Insert+Space when Orca is running) and for using flat review'",
-     "     VISIBLE:  'GUI GUI (accessed by pressing In', cursor=1",
+    ["BRAILLE LINE:  'GUI '",
+     "     VISIBLE:  'GUI ', cursor=1",
      "SPEECH OUTPUT: 'GUI'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'Orca Configuration '",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' (accessed by pressing Insert+Space when Orca is running) and for using flat review '"]))
+     "SPEECH OUTPUT: '(accessed by pressing Insert+Space when Orca is running) and for using flat review '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -897,10 +897,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "81. Line Down",
-    ["BRAILLE LINE:  '•Dive Into Python, Mark Pilgrim'",
-     "     VISIBLE:  '•Dive Into Python, Mark Pilgrim', cursor=1",
+    ["BRAILLE LINE:  '• www.diveintopython.org image'",
+     "     VISIBLE:  '• www.diveintopython.org image', cursor=1",
      "SPEECH OUTPUT: '•'",
-     "SPEECH OUTPUT: 'Dive Into Python, Mark Pilgrim'",
+     "SPEECH OUTPUT: 'www.diveintopython.org'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'"]))
 
@@ -908,10 +908,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "82. Line Down",
-    ["BRAILLE LINE:  '•Python in a Nutshell, Alex Martelli'",
-     "     VISIBLE:  '•Python in a Nutshell, Alex Mart', cursor=1",
+    ["BRAILLE LINE:  '• 103-6779448-2183842 image'",
+     "     VISIBLE:  '• 103-6779448-2183842 image', cursor=1",
      "SPEECH OUTPUT: '•'",
-     "SPEECH OUTPUT: 'Python in a Nutshell, Alex Martelli'",
+     "SPEECH OUTPUT: '103-6779448-2183842'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'"]))
 
@@ -919,10 +919,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "83. Line Down",
-    ["BRAILLE LINE:  '•Python Pocket Reference, Mark Lutz'",
-     "     VISIBLE:  '•Python Pocket Reference, Mark L', cursor=1",
+    ["BRAILLE LINE:  '• 103-6779448-2183842 image'",
+     "     VISIBLE:  '• 103-6779448-2183842 image', cursor=1",
      "SPEECH OUTPUT: '•'",
-     "SPEECH OUTPUT: 'Python Pocket Reference, Mark Lutz'",
+     "SPEECH OUTPUT: '103-6779448-2183842'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'"]))
 
@@ -931,7 +931,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "84. Line Down",
     ["BRAILLE LINE:  'separator'",
-     "     VISIBLE:  'separator', cursor=1",
+     "     VISIBLE:  'separator', cursor=0",
      "SPEECH OUTPUT: 'separator'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -963,7 +963,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "88. Line Down",
     ["BRAILLE LINE:  'separator'",
-     "     VISIBLE:  'separator', cursor=1",
+     "     VISIBLE:  'separator', cursor=0",
      "SPEECH OUTPUT: 'separator'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1044,7 +1044,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "97. Line Down",
     ["BRAILLE LINE:  'More Actions: combo box'",
-     "     VISIBLE:  'More Actions: combo box', cursor=1",
+     "     VISIBLE:  'More Actions: combo box', cursor=0",
      "SPEECH OUTPUT: 'More Actions:'",
      "SPEECH OUTPUT: 'combo box'"]))
 
@@ -1071,7 +1071,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "100. Line Down",
     ["BRAILLE LINE:  'GnomeWorldWide image'",
-     "     VISIBLE:  'GnomeWorldWide image', cursor=1",
+     "     VISIBLE:  'GnomeWorldWide image', cursor=0",
      "SPEECH OUTPUT: 'GnomeWorldWide'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'"]))

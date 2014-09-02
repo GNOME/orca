@@ -7,6 +7,7 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Control>Home"))
 
 sequence.append(utils.StartRecordingAction())
@@ -31,95 +32,38 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Down Arrow",
-    ["BRAILLE LINE:  'Buttons: '",
-     "     VISIBLE:  'Buttons: ', cursor=1",
-     "SPEECH OUTPUT: 'Buttons: '"]))
+    ["KNOWN ISSUE: Whether or not this is the ideal presentation is questionable. But it is more correct that what we were doing.",
+     "BRAILLE LINE:  'Buttons: Copy Toggles: Italic Dropdowns: TooltipDialogColorPalette Combos: Menusave options push button Menu2 push button save options2 push button'",
+     "     VISIBLE:  'Buttons: Copy Toggles: Italic Dr', cursor=1",
+     "SPEECH OUTPUT: 'Buttons: '",
+     "SPEECH OUTPUT: 'Copy'",
+     "SPEECH OUTPUT: ' Toggles: '",
+     "SPEECH OUTPUT: 'Italic'",
+     "SPEECH OUTPUT: 'push button'",
+     "SPEECH OUTPUT: 'Italic'",
+     "SPEECH OUTPUT: 'push button'",
+     "SPEECH OUTPUT: 'push button'",
+     "SPEECH OUTPUT: 'Dropdowns: '",
+     "SPEECH OUTPUT: ' Combos: '",
+     "SPEECH OUTPUT: 'Menu'",
+     "SPEECH OUTPUT: 'save options'",
+     "SPEECH OUTPUT: 'push button'",
+     "SPEECH OUTPUT: 'text'",
+     "SPEECH OUTPUT: 'clickable'",
+     "SPEECH OUTPUT: 'save options2'",
+     "SPEECH OUTPUT: 'push button'",
+     "SPEECH OUTPUT: 'Ordered list'",
+     "SPEECH OUTPUT: 'push button'",
+     "SPEECH OUTPUT: 'push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Down Arrow",
-    ["KNOWN ISSUE: These results are not correct here and in the following assertions",
-     "BRAILLE LINE:  'push button'",
-     "     VISIBLE:  'push button', cursor=1",
-     "BRAILLE LINE:  'push button'",
-     "     VISIBLE:  'push button', cursor=1",
-     "SPEECH OUTPUT: 'push button'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Right"))
-sequence.append(utils.AssertPresentationAction(
-    "5. Right Arrow on toolbar",
-    ["BRAILLE LINE:  'push button'",
-     "     VISIBLE:  'push button', cursor=1",
-     "SPEECH OUTPUT: 'push button'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Right"))
-sequence.append(utils.AssertPresentationAction(
-    "6. Right Arrow on toolbar",
-    ["BRAILLE LINE:  'Copy'",
-     "     VISIBLE:  'Copy', cursor=1"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Left"))
-sequence.append(utils.AssertPresentationAction(
-    "7. Left Arrow on toolbar",
-    ["BRAILLE LINE:  'push button'",
-     "     VISIBLE:  'push button', cursor=1",
-     "SPEECH OUTPUT: 'push button'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("End"))
-sequence.append(utils.AssertPresentationAction(
-    "8. End to last widget on toolbar",
-    ["BRAILLE LINE:  'push button'",
-     "     VISIBLE:  'push button', cursor=1",
-     "SPEECH OUTPUT: 'push button'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "9. Down Arrow",
-    ["BRAILLE LINE:  'Copy'",
-     "     VISIBLE:  'Copy', cursor=1",
-     "SPEECH OUTPUT: 'Copy'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "10. Down Arrow",
-    ["BRAILLE LINE:  'push button'",
-     "     VISIBLE:  'push button', cursor=1",
-     "BRAILLE LINE:  'push button'",
-     "     VISIBLE:  'push button', cursor=1",
-     "SPEECH OUTPUT: 'push button'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "11. Down Arrow",
-    ["BRAILLE LINE:  ' Toggles: '",
-     "     VISIBLE:  ' Toggles: ', cursor=1",
-     "SPEECH OUTPUT: ' Toggles: '"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "12. Down Arrow",
-    ["BRAILLE LINE:  'push button'",
-     "     VISIBLE:  'push button', cursor=1",
-     "BRAILLE LINE:  'push button'",
-     "     VISIBLE:  'push button', cursor=1",
-     "SPEECH OUTPUT: 'push button'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Right"))
-sequence.append(utils.AssertPresentationAction(
-    "13. Right Arrow on toolbar",
-    ["BRAILLE LINE:  'push button'",
-     "     VISIBLE:  'push button', cursor=1",
-     "SPEECH OUTPUT: 'push button'"]))
+    ["BRAILLE LINE:  'input after toolbar1 $l'",
+     "     VISIBLE:  'input after toolbar1 $l', cursor=1",
+     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'input after toolbar1'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()
