@@ -592,12 +592,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "58. Line Up",
-    ["BRAILLE LINE:  'Please also refer to the Download/Installation page for detailed information on various distributions as well as installing Orca directly from source.'",
+    ["BRAILLE LINE:  'Please also refer to the Download/Installation page for detailed information on various'",
      "     VISIBLE:  'Please also refer to the Downloa', cursor=1",
      "SPEECH OUTPUT: 'Please also refer to the '",
      "SPEECH OUTPUT: 'Download/Installation page'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' for detailed information on various distributions as well as installing Orca directly from source. '"]))
+     "SPEECH OUTPUT: ' for detailed information on various '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

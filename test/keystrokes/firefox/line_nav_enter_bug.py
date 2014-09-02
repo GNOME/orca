@@ -565,9 +565,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "57. Line Up",
-    ["BRAILLE LINE:  'Enter Bug: orca \u2013 This page lets you enter a new bug into Bugzilla. h1'",
+    ["BRAILLE LINE:  'Enter Bug: orca \u2013 This page lets you enter a new bug h1'",
      "     VISIBLE:  'Enter Bug: orca – This page lets', cursor=1",
-     "SPEECH OUTPUT: 'Enter Bug: orca \u2013 This page lets you enter a new bug into Bugzilla.'",
+     "SPEECH OUTPUT: 'Enter Bug: orca \u2013 This page lets you enter a new bug '",
      "SPEECH OUTPUT: 'heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
