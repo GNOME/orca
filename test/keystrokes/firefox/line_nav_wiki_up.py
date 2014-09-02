@@ -229,8 +229,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "23. Line Up",
-    ["BRAILLE LINE:  '• Design documents:  orca image Orca Documentation Series'",
-     "     VISIBLE:  '• Design documents:  orca image ', cursor=1",
+    ["BRAILLE LINE:  '• Design documents: orca image Orca Documentation Series'",
+     "     VISIBLE:  '• Design documents: orca image O', cursor=1",
      "SPEECH OUTPUT: '•'",
      "SPEECH OUTPUT: 'Design documents: '",
      "SPEECH OUTPUT: 'orca'",
@@ -545,12 +545,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "53. Line Up",
-    ["BRAILLE LINE:  'designed to present information as you navigate the desktop using the keynav-1 image built-in navigation'",
+    ["BRAILLE LINE:  'designed to present information as you navigate the desktop using the built-in navigation'",
      "     VISIBLE:  'designed to present information ', cursor=1",
      "SPEECH OUTPUT: 'designed to present information as you navigate the desktop using the '",
-     "SPEECH OUTPUT: 'keynav-1'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: 'built-in navigation '",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'"]))
@@ -618,7 +615,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "60. Line Up",
-    ["BRAILLE LINE:  'provided by default on a number of operating system distributions, including  www.opensolaris.org image Open Solaris'",
+    ["BRAILLE LINE:  'provided by default on a number of operating system distributions, including www.opensolaris.org image Open Solaris'",
      "     VISIBLE:  'provided by default on a number ', cursor=1",
      "SPEECH OUTPUT: 'provided by default on a number of operating system distributions, including '",
      "SPEECH OUTPUT: 'www.opensolaris.org'",
@@ -702,12 +699,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "67. Line Up",
-    ["BRAILLE LINE:  'contribution (THANKS!)!!! The audio guides can be found at linuxat image http://www.digitaldarragh.com'",
+    ["BRAILLE LINE:  'contribution (THANKS!)!!! The audio guides can be found at http://www.digitaldarragh.com'",
      "     VISIBLE:  'contribution (THANKS!)!!! The au', cursor=1",
      "SPEECH OUTPUT: 'contribution (THANKS!)!!! The audio guides can be found at '",
-     "SPEECH OUTPUT: 'linuxat'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: 'http://www.digitaldarragh.com'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'"]))
@@ -716,9 +710,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "68. Line Up",
-    ["BRAILLE LINE:  'www.digitaldarragh.com image Darragh Ó Héiligh has created several audio guides for Orca. This is a fantastic'",
-     "     VISIBLE:  'www.digitaldarragh.com image Dar', cursor=0",
-     "SPEECH OUTPUT: 'www.digitaldarragh.com'",
+    ["BRAILLE LINE:  'Darragh Ó Héiligh has created several audio guides for Orca. This is a fantastic'",
+     "     VISIBLE:  'Darragh Ó Héiligh has created se', cursor=1",
+     "SPEECH OUTPUT: 'Darragh Ó Héiligh'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: ' has created several audio guides for Orca. This is a fantastic '"]))
@@ -824,12 +818,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "77. Line Up",
-    ["BRAILLE LINE:  'been led by the access image Accessibility Program Office of Sun'",
-     "     VISIBLE:  'been led by the access image Acc', cursor=1",
+    ["BRAILLE LINE:  'been led by the Accessibility Program Office of Sun'",
+     "     VISIBLE:  'been led by the Accessibility Pr', cursor=1",
      "SPEECH OUTPUT: 'been led by the '",
-     "SPEECH OUTPUT: 'access'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: 'Accessibility Program Office of Sun '",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'"]))
