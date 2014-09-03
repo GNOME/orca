@@ -1,3 +1,41 @@
+3.13.91 - 2 September 2014
+
+Gecko:
+
+  * Significant reworking of caret navigation by line to improve accuracy
+    and responsiveness and to eliminate getting stuck and looping
+
+  * Fix many bugs related to caret navigation by word
+
+  * Add support for aria-hidden="true"
+
+  * Present longdesc and clickable as part of Where Am I
+
+  * Fix an issue with structural navigation into list boxes
+
+  * Fix several bugs in presentation of Gecko form fields
+
+  * Fix several issues related to braille presentation of ARIA widgets
+
+  * Fix a regression introduced in 3.13.90 which caused Thunderbird
+    message composition to not be properly displayed in braille
+
+LibreOffice:
+
+  * Speak cell coordinates for Writer tables
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                       Marek Černocký
+    el            Greek                       Tom Tryfonidis
+    es            Spanish                     Francisco Javier Dorado
+    fr            French                      Claude Paroz
+    gl            Galician                    Fran Diéguez
+    nb            Norwegian bokmål            Kjartan Maraas
+    pt_BR         Brazilian Portuguese        Enrico Nicoletto
+
+=========
+
 3.13.90 - 19 August 2014
 
 Gecko:
