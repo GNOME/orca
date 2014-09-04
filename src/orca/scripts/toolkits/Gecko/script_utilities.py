@@ -689,22 +689,31 @@ class Utilities(script_utilities.Utilities):
 
         return text.getText(start, end), start, end
 
-    def _getWordContentsForObj(self, obj, offset):
+    def _getContentsForObj(self, obj, offset, boundary):
         if not obj:
             return []
 
-        boundary = pyatspi.TEXT_BOUNDARY_WORD_START
         string, start, end = self._getTextAtOffset(obj, offset, boundary)
-        if string and string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1:
+        if not string:
             return [[obj, start, end, string]]
 
-        return self.getObjectsFromEOCs(obj, start, boundary)
+        stringOffset = offset - start
+        strings = [m.span() for m in re.finditer("[^\ufffc]+", string)]
+        strings = list(filter(lambda x: x[0] <= stringOffset <= x[1], strings))
+        if len(strings) == 1:
+            rangeStart, rangeEnd = strings[0]
+            start += rangeStart
+            string = string[rangeStart:rangeEnd]
+            end = start + len(string)
+
+        return [[obj, start, end, string]]
 
     def getWordContentsAtOffset(self, obj, offset):
         if not obj:
             return []
 
-        objects = self._getWordContentsForObj(obj, offset)
+        boundary = pyatspi.TEXT_BOUNDARY_WORD_START
+        objects = self._getContentsForObj(obj, offset, boundary)
         extents = self.getExtents(obj, offset, offset + 1)
 
         def _include(x):
@@ -726,7 +735,7 @@ class Utilities(script_utilities.Utilities):
             if not text or text.getText(pOffset, pOffset + 1).isspace():
                 break
 
-            onLeft = self._getWordContentsForObj(prevObj, pOffset)
+            onLeft = self._getContentsForObj(prevObj, pOffset, boundary)
             onLeft = list(filter(_include, onLeft))
             if not onLeft:
                 break
@@ -739,7 +748,7 @@ class Utilities(script_utilities.Utilities):
         lastObj, lastStart, lastEnd, lastString = objects[-1]
         while lastObj and lastString and not lastString[-1].isspace():
             nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
-            onRight = self._getWordContentsForObj(nextObj, nOffset)
+            onRight = self._getContentsForObj(nextObj, nOffset, boundary)
             onRight = list(filter(_include, onRight))
             if not onRight:
                 break
@@ -753,26 +762,6 @@ class Utilities(script_utilities.Utilities):
             objects = [objects[0]]
 
         return objects
-
-    def _getLineContentsForObj(self, obj, offset):
-        if not obj:
-            return []
-
-        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
-        string, start, end = self._getTextAtOffset(obj, offset, boundary)
-        if not string:
-            return [[obj, start, end, string]]
-
-        stringOffset = offset - start
-        strings = [m.span() for m in re.finditer("[^\ufffc]+", string)]
-        strings = list(filter(lambda x: x[0] <= stringOffset <= x[1], strings))
-        if len(strings) == 1:
-            rangeStart, rangeEnd = strings[0]
-            start += rangeStart
-            string = string[rangeStart:rangeEnd]
-            end = start + len(string)
-
-        return [[obj, start, end, string]]
 
     def getLineContentsAtOffset(self, obj, offset):
         if not obj:
@@ -792,13 +781,14 @@ class Utilities(script_utilities.Utilities):
             xExtents = self.getExtents(xObj, xStart, xStart + 1)
             return self.extentsAreOnSameLine(extents, xExtents)
 
-        objects = self._getLineContentsForObj(obj, offset)
+        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+        objects = self._getContentsForObj(obj, offset, boundary)
 
         # Check for things on the same line to the left of this object.
         firstObj, firstStart = objects[0][0], objects[0][1]
         prevObj, pOffset = self._script.findPreviousCaretInOrder(firstObj, firstStart)
         while prevObj:
-            onLeft = self._getLineContentsForObj(prevObj, pOffset)
+            onLeft = self._getContentsForObj(prevObj, pOffset, boundary)
             onLeft = list(filter(_include, onLeft))
             if not onLeft:
                 break
@@ -811,7 +801,7 @@ class Utilities(script_utilities.Utilities):
         lastObj, lastEnd = objects[-1][0], objects[-1][2]
         nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
         while nextObj:
-            onRight = self._getLineContentsForObj(nextObj, nOffset)
+            onRight = self._getContentsForObj(nextObj, nOffset, boundary)
             onRight = list(filter(_include, onRight))
             if not onRight:
                 break
