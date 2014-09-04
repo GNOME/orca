@@ -687,9 +687,6 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg)
             return sadString, sadStart, sadEnd
 
-        if not boundary == pyatspi.TEXT_BOUNDARY_LINE_START:
-            return text.getText(start, end), start, end
-
         return text.getText(start, end), start, end
 
     def _getWordContentsForObj(self, obj, offset):
@@ -763,15 +760,19 @@ class Utilities(script_utilities.Utilities):
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
         string, start, end = self._getTextAtOffset(obj, offset, boundary)
-
-        while string.startswith(self.EMBEDDED_OBJECT_CHARACTER):
-            string = string[1:]
-            start += 1
-
-        if string and string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1:
+        if not string:
             return [[obj, start, end, string]]
 
-        return self.getObjectsFromEOCs(obj, start, boundary)
+        stringOffset = offset - start
+        strings = [m.span() for m in re.finditer("[^\ufffc]+", string)]
+        strings = list(filter(lambda x: x[0] <= stringOffset <= x[1], strings))
+        if len(strings) == 1:
+            rangeStart, rangeEnd = strings[0]
+            start += rangeStart
+            string = string[rangeStart:rangeEnd]
+            end = start + len(string)
+
+        return [[obj, start, end, string]]
 
     def getLineContentsAtOffset(self, obj, offset):
         if not obj:
