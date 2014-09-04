@@ -308,11 +308,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "30. Line Down",
-    ["BRAILLE LINE:  'Choose the install format that is most suitable to your needs.    $l'",
+    ["BRAILLE LINE:  'Choose the install format that is most suitable to your needs.'",
      "     VISIBLE:  'Choose the install format that i', cursor=1",
-     "SPEECH OUTPUT: 'Choose the install format that is most suitable to your needs. '",
-     "SPEECH OUTPUT: ' '",
-     "SPEECH OUTPUT: 'text'"]))
+     "SPEECH OUTPUT: 'Choose the install format that is most suitable to your needs. '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -399,13 +397,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "41. Line Down",
-    ["BRAILLE LINE:  'Use these instructions if you want to use the self-extracting binary file to install the JDK. If you want to install RPM packages instead, see Installation of RPM File. '",
+    ["BRAILLE LINE:  'Use these instructions if you want to use the self-extracting binary file to install the JDK. If you want to install RPM packages instead, see Installation of RPM File.'",
      "     VISIBLE:  'Use these instructions if you wa', cursor=1",
      "SPEECH OUTPUT: 'Use these instructions if you want to use the self-extracting binary file to install the JDK. If you want to install RPM packages instead, see '",
      "SPEECH OUTPUT: 'Installation of RPM File'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '. '",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: '. '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

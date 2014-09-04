@@ -29,12 +29,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
-    ["KNOWN ISSUE: We're re-presenting the image",
-     "BRAILLE LINE:  'foo image'",
-     "     VISIBLE:  'foo image', cursor=0",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'",
+    ["BRAILLE LINE:  ' Before Line After'",
+     "     VISIBLE:  ' Before Line After', cursor=1",
      "SPEECH OUTPUT: ' Before '",
      "SPEECH OUTPUT: 'Line'",
      "SPEECH OUTPUT: 'link'",
@@ -45,30 +41,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
-    ["KNOWN ISSUE: We're getting stuck here",
-     "BRAILLE LINE:  'foo image'",
-     "     VISIBLE:  'foo image', cursor=0",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: ' Before '",
-     "SPEECH OUTPUT: 'Line'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' After",
-     "'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Control>End"))
-sequence.append(utils.AssertPresentationAction(
-    "5. End of file",
     ["BRAILLE LINE:  'End'",
-     "     VISIBLE:  'End', cursor=3",
+     "     VISIBLE:  'End', cursor=1",
      "SPEECH OUTPUT: 'End'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "6. Line Up",
+    "5. Line Up",
     ["BRAILLE LINE:  'foo image'",
      "     VISIBLE:  'foo image', cursor=0",
      "SPEECH OUTPUT: 'foo'",
@@ -83,7 +63,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "7. Line Up",
+    "6. Line Up",
     ["BRAILLE LINE:  'Start'",
      "     VISIBLE:  'Start', cursor=1",
      "SPEECH OUTPUT: 'Start'"]))
