@@ -15,16 +15,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to grid",
-    ["BRAILLE LINE:  'SelSort Sel column Msg'",
-     "     VISIBLE:  'SelSort Sel column Msg', cursor=0",
+    ["BRAILLE LINE:  'Selected Sort Sel column push button Msg'",
+     "     VISIBLE:  'Selected Sort Sel column push bu', cursor=1",
      "SPEECH OUTPUT: 'Selected Sort Sel column push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. basic whereAmI",
-    ["BRAILLE LINE:  'SelSort Sel column Msg'",
-     "     VISIBLE:  'SelSort Sel column Msg', cursor=0",
+    ["BRAILLE LINE:  'Selected Sort Sel column push button Msg'",
+     "     VISIBLE:  'Selected Sort Sel column push bu', cursor=1",
      "SPEECH OUTPUT: 'Selected Sort Sel column'",
      "SPEECH OUTPUT: 'push button'"]))
 
@@ -32,24 +32,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Move down into first data row",
-    ["KNOWN ISSUE: It appears we are not treating this as an ARIA widget",
-     "BRAILLE LINE:  'SelSort Sel column Msg'",
-     "     VISIBLE:  'SelSort Sel column Msg', cursor=4",
-     "SPEECH OUTPUT: 'Sel'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'clickable'",
-     "SPEECH OUTPUT: 'Sort Sel column'",
-     "SPEECH OUTPUT: 'Msg'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'clickable'"]))
+    ["BRAILLE LINE:  'Sort Msg column'",
+     "     VISIBLE:  'Sort Msg column', cursor=1",
+     "SPEECH OUTPUT: 'Sort Msg column'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "4. Move right in first data row",
     ["KNOWN ISSUE: It appears we are not treating this as an ARIA widget",
-     "BRAILLE LINE:  'SelSort Sel column Msg'",
-     "     VISIBLE:  'SelSort Sel column Msg', cursor=5",
+     "BRAILLE LINE:  'Sort Msg column'",
+     "     VISIBLE:  'Sort Msg column', cursor=2",
      "SPEECH OUTPUT: 'o'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -57,8 +50,8 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "5. Move right in first data row",
     ["KNOWN ISSUE: It appears we are not treating this as an ARIA widget",
-     "BRAILLE LINE:  'SelSort Sel column Msg'",
-     "     VISIBLE:  'SelSort Sel column Msg', cursor=6",
+     "BRAILLE LINE:  'Sort Msg column'",
+     "     VISIBLE:  'Sort Msg column', cursor=3",
      "SPEECH OUTPUT: 'r'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -66,8 +59,8 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "6. Move right in first data row",
     ["KNOWN ISSUE: It appears we are not treating this as an ARIA widget",
-     "BRAILLE LINE:  'SelSort Sel column Msg'",
-     "     VISIBLE:  'SelSort Sel column Msg', cursor=7",
+     "BRAILLE LINE:  'Sort Msg column'",
+     "     VISIBLE:  'Sort Msg column', cursor=4",
      "SPEECH OUTPUT: 't'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -75,13 +68,10 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "7. Move down to third row",
     ["KNOWN ISSUE: It appears we are not treating this as an ARIA widget",
-     "BRAILLE LINE:  'SelSort Sel column Msg'",
-     "     VISIBLE:  'SelSort Sel column Msg', cursor=20",
-     "SPEECH OUTPUT: 'Sel'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'clickable'",
-     "SPEECH OUTPUT: 'Sort Sel column'",
-     "SPEECH OUTPUT: 'Msg'",
+     "BRAILLE LINE:  'Status Sort Status column push button'",
+     "     VISIBLE:  'Status Sort Status column push b', cursor=1",
+     "SPEECH OUTPUT: 'Status Sort Status column'",
+     "SPEECH OUTPUT: 'push button'",
      "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: 'clickable'"]))
 

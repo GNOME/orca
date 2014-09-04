@@ -13,17 +13,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("m"))
 sequence.append(utils.AssertPresentationAction(
     "1. m to next landmark",
-    ["KNOWN ISSUE: Braille should not treat these as a single line",
-     "BRAILLE LINE:  'navigation main complementary'",
-     "     VISIBLE:  'navigation main complementary', cursor=1",
+    ["BRAILLE LINE:  'navigation main'",
+     "     VISIBLE:  'navigation main', cursor=1",
      "SPEECH OUTPUT: 'navigation'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("m"))
 sequence.append(utils.AssertPresentationAction(
     "2. m to next landmark",
-    ["BRAILLE LINE:  'navigation main complementary'",
-     "     VISIBLE:  'navigation main complementary', cursor=12",
+    ["BRAILLE LINE:  'navigation main'",
+     "     VISIBLE:  'navigation main', cursor=12",
      "SPEECH OUTPUT: 'main '",
      "SPEECH OUTPUT: 'application'",
      "SPEECH OUTPUT: 'embedded'"]))
@@ -108,8 +107,8 @@ sequence.append(KeyComboAction("<Shift>m"))
 sequence.append(utils.AssertPresentationAction(
     "11. Shift+m to previous landmark",
     ["KNOWN ISSUE: We are skipping over navigation on the way back",
-     "BRAILLE LINE:  'navigation main complementary'",
-     "     VISIBLE:  'navigation main complementary', cursor=1",
+     "BRAILLE LINE:  'navigation main'",
+     "     VISIBLE:  'navigation main', cursor=1",
      "SPEECH OUTPUT: 'navigation'"]))
 
 sequence.append(utils.StartRecordingAction())

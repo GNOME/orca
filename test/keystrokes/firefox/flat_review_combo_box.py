@@ -15,7 +15,7 @@ sequence.append(KeyComboAction("KP_8"))
 sequence.append(utils.AssertPresentationAction(
     "1. Flat review current line",
     ["BRAILLE LINE:  'Severity: Severity normal combo box'",
-     "     VISIBLE:  'Severity normal combo box', cursor=10",
+     "     VISIBLE:  'Severity: Severity normal combo ', cursor=0",
      "BRAILLE LINE:  'Severity Severity :  normal $l'",
      "     VISIBLE:  'Severity Severity :  normal $l', cursor=22",
      "SPEECH OUTPUT: 'Severity Severity :  normal'"]))

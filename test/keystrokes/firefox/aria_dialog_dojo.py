@@ -16,10 +16,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "1. Launch dialog",
-    ["BRAILLE LINE:  'TabContainer Dialog h0  Cancel push button'",
-     "     VISIBLE:  'TabContainer Dialog h0  Cancel p', cursor=0",
-     "BRAILLE LINE:  'First tab'",
-     "     VISIBLE:  'First tab', cursor=1",
+    ["KNOWN ISSUE: We're presenting embedded object characters. This should go away with the braille fixes.",
+     "BRAILLE LINE:  '\ufffc\ufffc'",
+     "     VISIBLE:  '\ufffc\ufffc', cursor=0",
+     "BRAILLE LINE:  'First tab Second tab'",
+     "     VISIBLE:  'First tab Second tab', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "BRAILLE LINE:  'First tab page tab'",

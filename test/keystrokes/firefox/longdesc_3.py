@@ -10,7 +10,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "1. Where Am I on image",
     ["BRAILLE LINE:  'the image image'",
-     "     VISIBLE:  'the image image', cursor=1",
+     "     VISIBLE:  'the image image', cursor=0",
      "SPEECH OUTPUT: 'the image'",
      "SPEECH OUTPUT: 'image has long description'"]))
 

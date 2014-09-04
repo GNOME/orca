@@ -94,8 +94,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(utils.AssertPresentationAction(
     "9. Previous Word",
-    ["BRAILLE LINE:  'Hello W o r ld. Go orld.odbye w'",
-     "     VISIBLE:  'Hello W o r ld. Go orld.odbye w', cursor=25",
+    ["BRAILLE LINE:  'Hello W o r ld. Goodbye world.'",
+     "     VISIBLE:  'Hello W o r ld. Goodbye world.', cursor=19",
      "SPEECH OUTPUT: 'w'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'orld.'"]))
