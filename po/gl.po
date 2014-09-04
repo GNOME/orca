@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca-master-po-gl-70969.merged\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-23 15:36+0200\n"
-"PO-Revision-Date: 2014-08-23 16:02+0200\n"
+"POT-Creation-Date: 2014-09-04 21:40+0200\n"
+"PO-Revision-Date: 2014-09-04 21:40+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: gnome-l10n-gl@gnome.org\n"
 "Language: gl\n"
@@ -3311,7 +3311,7 @@ msgstr "marrón"
 #: ../src/orca/colornames.py:90
 msgctxt "color name"
 msgid "burlywood"
-msgstr ""
+msgstr "burlywood"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
