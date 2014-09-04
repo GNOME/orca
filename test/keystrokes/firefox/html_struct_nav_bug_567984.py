@@ -60,7 +60,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. Down",
-    ["BRAILLE LINE:  'A 75 éves Arthur Nadeltõl több százmillió dollár követelnének az ügyfelei, de még a férfit sem találják. '",
+    ["BRAILLE LINE:  'A 75 éves Arthur Nadeltõl több százmillió dollár követelnének az ügyfelei, de még a férfit sem találják.'",
      "     VISIBLE:  'A 75 éves Arthur Nadeltõl több s', cursor=1",
      "SPEECH OUTPUT: 'A 75 éves Arthur Nadeltõl több százmillió dollár követelnének az ügyfelei, de még a férfit sem találják. '"]))
 
@@ -88,7 +88,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "9. Down",
-    ["BRAILLE LINE:  'Megállapodott Putyin és Tyimosenko az orosz-ukrán szerzõdésrõl. Amint lepapírozzák, jön a gáz. '",
+    ["BRAILLE LINE:  'Megállapodott Putyin és Tyimosenko az orosz-ukrán szerzõdésrõl. Amint lepapírozzák, jön a gáz.'",
      "     VISIBLE:  'Megállapodott Putyin és Tyimosen', cursor=1",
      "SPEECH OUTPUT: 'Megállapodott Putyin és Tyimosenko az orosz-ukrán szerzõdésrõl. Amint lepapírozzák, jön a gáz. '"]))
 

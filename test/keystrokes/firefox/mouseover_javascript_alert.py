@@ -29,7 +29,7 @@ sequence.append(KeyComboAction("Escape"))
 sequence.append(utils.AssertPresentationAction(
     "2. Escape to dismiss the dialog.",
     ["BRAILLE LINE:  'Orca Logo image'",
-     "     VISIBLE:  'Orca Logo image', cursor=1",
+     "     VISIBLE:  'Orca Logo image', cursor=0",
      "SPEECH OUTPUT: 'Orca Logo image'"]))
 
 sequence.append(utils.AssertionSummaryAction())
