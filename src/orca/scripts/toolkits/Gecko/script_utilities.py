@@ -763,6 +763,16 @@ class Utilities(script_utilities.Utilities):
 
         return objects
 
+    def _contentIsSubsetOf(self, contentA, contentB):
+        objA, startA, endA, stringA = contentA
+        objB, startB, endB, stringB = contentB
+        if objA == objB:
+            setA = set(range(startA, endA))
+            setB = set(range(startB, endB))
+            return setA.issubset(setB)
+
+        return False
+
     def getLineContentsAtOffset(self, obj, offset):
         if not obj:
             return []
@@ -792,6 +802,9 @@ class Utilities(script_utilities.Utilities):
             onLeft = list(filter(_include, onLeft))
             if not onLeft:
                 break
+
+            if self._contentIsSubsetOf(objects[0], onLeft[-1]):
+                objects.pop(0)
 
             objects[0:0] = onLeft
             firstObj, firstStart = objects[0][0], objects[0][1]
