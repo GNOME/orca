@@ -131,21 +131,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "16. Line Up",
-    ["KNOWN ISSUE: Due to a Gecko bug in which we get the wrong line at offset for list items, we are presenting this twice on the way up. They have already fixed this bug in Nightly",
-     "BRAILLE LINE:  '2.This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have'",
+    ["BRAILLE LINE:  '2.This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have'",
      "     VISIBLE:  '2.This is a list item that spans', cursor=1",
-     "SPEECH OUTPUT: '2.This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have '",
-     "SPEECH OUTPUT: 'This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have '"]))
+     "SPEECH OUTPUT: '2.This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "17. Line Up",
-    ["KNOWN ISSUE: Due to a Gecko bug in which we get the wrong line at offset for list items, we are presenting this twice on the way up. They have already fixed this bug in Nightly.",
-     "BRAILLE LINE:  '1.This is a short list item. This is a short list item.'",
-     "     VISIBLE:  '1.This is a short list item. Thi', cursor=1",
-     "SPEECH OUTPUT: '1.This is a short list item. '",
-     "SPEECH OUTPUT: 'This is a short list item. '"]))
+    ["BRAILLE LINE:  '1.This is a short list item.'",
+     "     VISIBLE:  '1.This is a short list item.', cursor=1",
+     "SPEECH OUTPUT: '1.This is a short list item. '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

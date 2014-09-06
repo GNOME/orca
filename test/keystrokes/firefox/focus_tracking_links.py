@@ -26,9 +26,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Foo'",
      "     VISIBLE:  'Foo', cursor=1",
      "SPEECH OUTPUT: 'Foo'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '",
-     "'"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

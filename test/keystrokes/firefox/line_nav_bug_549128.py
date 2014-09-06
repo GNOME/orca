@@ -47,9 +47,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'The Ideal Gift Collection'",
      "     VISIBLE:  'The Ideal Gift Collection', cursor=1",
      "SPEECH OUTPUT: 'The Ideal Gift Collection'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '",
-     "'"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -58,7 +56,6 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: The new smarts for hacking around Gecko AtkText bugs hasn't yet been given to braille.",
      "BRAILLE LINE:  '\xa0'",
      "     VISIBLE:  '\xa0', cursor=1",
-     "SPEECH OUTPUT: '\xa0'",
      "SPEECH OUTPUT: '2 (5 oz.) Filet Mignons",
      "'"]))
 
@@ -68,7 +65,6 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
     ["BRAILLE LINE:  '\xa0'",
      "     VISIBLE:  '\xa0', cursor=1",
-     "SPEECH OUTPUT: '\xa0'",
      "SPEECH OUTPUT: '2 (5 oz.) Top Sirloins",
      "'"]))
 
@@ -78,7 +74,6 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["BRAILLE LINE:  '\xa0'",
      "     VISIBLE:  '\xa0', cursor=1",
-     "SPEECH OUTPUT: '\xa0'",
      "SPEECH OUTPUT: '4 (4 oz.) Foobar Steaks Burgers",
      "'"]))
 
@@ -88,7 +83,6 @@ sequence.append(utils.AssertPresentationAction(
     "9. Line Down",
     ["BRAILLE LINE:  '\xa0'",
      "     VISIBLE:  '\xa0', cursor=1",
-     "SPEECH OUTPUT: '\xa0'",
      "SPEECH OUTPUT: '6 (5.75 oz.) Stuffed Baked Potatoes",
      "'"]))
 
@@ -98,7 +92,6 @@ sequence.append(utils.AssertPresentationAction(
     "10. Line Down",
     ["BRAILLE LINE:  '\xa0'",
      "     VISIBLE:  '\xa0', cursor=1",
-     "SPEECH OUTPUT: '\xa0'",
      "SPEECH OUTPUT: '2 (4.5 oz.) Stuffed Sole with Scallops and Crab",
      "'"]))
 
@@ -108,7 +101,6 @@ sequence.append(utils.AssertPresentationAction(
     "11. Line Down",
     ["BRAILLE LINE:  '\xa0'",
      "     VISIBLE:  '\xa0', cursor=1",
-     "SPEECH OUTPUT: '\xa0'",
      "SPEECH OUTPUT: '1 (6 in.) Chocolate Lover's Cake",
      "'"]))
 
@@ -134,7 +126,6 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: The new smarts for hacking around Gecko AtkText bugs hasn't yet been given to braille.",
      "BRAILLE LINE:  '\xa0'",
      "     VISIBLE:  '\xa0', cursor=1",
-     "SPEECH OUTPUT: '\xa0'",
      "SPEECH OUTPUT: '1 (6 in.) Chocolate Lover's Cake",
      "'"]))
 
@@ -144,7 +135,6 @@ sequence.append(utils.AssertPresentationAction(
     "15. Line Up",
     ["BRAILLE LINE:  '\xa0'",
      "     VISIBLE:  '\xa0', cursor=1",
-     "SPEECH OUTPUT: '\xa0'",
      "SPEECH OUTPUT: '2 (4.5 oz.) Stuffed Sole with Scallops and Crab",
      "'"]))
 
@@ -154,7 +144,6 @@ sequence.append(utils.AssertPresentationAction(
     "16. Line Up",
     ["BRAILLE LINE:  '\xa0'",
      "     VISIBLE:  '\xa0', cursor=1",
-     "SPEECH OUTPUT: '\xa0'",
      "SPEECH OUTPUT: '6 (5.75 oz.) Stuffed Baked Potatoes",
      "'"]))
 
@@ -164,7 +153,6 @@ sequence.append(utils.AssertPresentationAction(
     "17. Line Up",
     ["BRAILLE LINE:  '\xa0'",
      "     VISIBLE:  '\xa0', cursor=1",
-     "SPEECH OUTPUT: '\xa0'",
      "SPEECH OUTPUT: '4 (4 oz.) Foobar Steaks Burgers",
      "'"]))
 
@@ -174,7 +162,6 @@ sequence.append(utils.AssertPresentationAction(
     "18. Line Up",
     ["BRAILLE LINE:  '\xa0'",
      "     VISIBLE:  '\xa0', cursor=1",
-     "SPEECH OUTPUT: '\xa0'",
      "SPEECH OUTPUT: '2 (5 oz.) Top Sirloins",
      "'"]))
 
@@ -184,7 +171,6 @@ sequence.append(utils.AssertPresentationAction(
     "19. Line Up",
     ["BRAILLE LINE:  '\xa0'",
      "     VISIBLE:  '\xa0', cursor=1",
-     "SPEECH OUTPUT: '\xa0'",
      "SPEECH OUTPUT: '2 (5 oz.) Filet Mignons",
      "'"]))
 
@@ -195,9 +181,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'The Ideal Gift Collection'",
      "     VISIBLE:  'The Ideal Gift Collection', cursor=1",
      "SPEECH OUTPUT: 'The Ideal Gift Collection'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '",
-     "'"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

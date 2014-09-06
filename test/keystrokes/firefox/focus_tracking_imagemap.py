@@ -11,12 +11,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab",
-    ["KNOWN ISSUE: This seems a bit redundant/chatty",
-     "BRAILLE LINE:  'Test: z y x w v u t s r q p o n m l k j i h g f e d c b a'",
+    ["BRAILLE LINE:  'Test: z y x w v u t s r q p o n m l k j i h g f e d c b a'",
      "     VISIBLE:  'Test: z y x w v u t s r q p o n ', cursor=0",
      "SPEECH OUTPUT: 'z'",
-     "SPEECH OUTPUT: 'link' voice=hyperlink",
-     "SPEECH OUTPUT: 'z image map link'"]))
+     "SPEECH OUTPUT: 'image map link rect' voice=hyperlink"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -25,8 +23,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Test: z y x w v u t s r q p o n m l k j i h g f e d c b a'",
      "     VISIBLE:  'Test: z y x w v u t s r q p o n ', cursor=0",
      "SPEECH OUTPUT: 'y'",
-     "SPEECH OUTPUT: 'link' voice=hyperlink",
-     "SPEECH OUTPUT: 'y image map link'"]))
+     "SPEECH OUTPUT: 'image map link rect' voice=hyperlink"]))
 
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
@@ -60,8 +57,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Test: z y x w v u t s r q p o n m l k j i h g f e d c b a'",
      "     VISIBLE:  'Test: z y x w v u t s r q p o n ', cursor=0",
      "SPEECH OUTPUT: 'a'",
-     "SPEECH OUTPUT: 'link' voice=hyperlink",
-     "SPEECH OUTPUT: 'a image map link'"]))
+     "SPEECH OUTPUT: 'image map link rect' voice=hyperlink"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

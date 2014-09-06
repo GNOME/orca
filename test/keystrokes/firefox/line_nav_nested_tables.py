@@ -14,8 +14,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'nested-tables image'",
      "     VISIBLE:  'nested-tables image', cursor=0",
      "SPEECH OUTPUT: 'nested-tables'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'"]))
+     "SPEECH OUTPUT: 'image'",
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -33,8 +33,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: '  .  '",
      "SPEECH OUTPUT: 'Reports'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' '"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -214,7 +213,7 @@ sequence.append(utils.AssertPresentationAction(
     "24. line Up",
     ["BRAILLE LINE:  ' '",
      "     VISIBLE:  ' ', cursor=1",
-     "SPEECH OUTPUT: ' '"]))
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -279,7 +278,7 @@ sequence.append(utils.AssertPresentationAction(
     "32. line Up",
     ["BRAILLE LINE:  ' '",
      "     VISIBLE:  ' ', cursor=1",
-     "SPEECH OUTPUT: ' '"]))
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -295,7 +294,7 @@ sequence.append(utils.AssertPresentationAction(
     "34. line Up",
     ["BRAILLE LINE:  ' '",
      "     VISIBLE:  ' ', cursor=1",
-     "SPEECH OUTPUT: '  '"]))
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -329,8 +328,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: '  .  '",
      "SPEECH OUTPUT: 'Reports'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' '"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -339,8 +337,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'nested-tables image'",
      "     VISIBLE:  'nested-tables image', cursor=0",
      "SPEECH OUTPUT: 'nested-tables'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'"]))
+     "SPEECH OUTPUT: 'image'",
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()
