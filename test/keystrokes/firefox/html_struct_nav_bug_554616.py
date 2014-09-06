@@ -7,6 +7,7 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Control>Home"))
 
 sequence.append(utils.StartRecordingAction())
@@ -153,8 +154,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Home"))
 sequence.append(utils.AssertPresentationAction(
     "9. Alt Shift Home",
-    ["KNOWN ISSUE: We are double-presenting the column header text in speech",
-     "BRAILLE LINE:  'installer (10186 KB)'",
+    ["BRAILLE LINE:  'installer (10186 KB)'",
      "     VISIBLE:  'installer (10186 KB)', cursor=1",
      "BRAILLE LINE:  'Snapshot version Date (UTC) Download'",
      "     VISIBLE:  'Snapshot version Date (UTC) Down', cursor=1",
@@ -162,7 +162,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Snapshot version Date (UTC) Down', cursor=1",
      "BRAILLE LINE:  'Row 1, column 1.'",
      "     VISIBLE:  'Row 1, column 1.', cursor=0",
-     "SPEECH OUTPUT: 'Snapshot version'",
      "SPEECH OUTPUT: 'Snapshot version'",
      "SPEECH OUTPUT: 'column header'",
      "SPEECH OUTPUT: 'Row 1, column 1.' voice=system"]))
