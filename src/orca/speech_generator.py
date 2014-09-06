@@ -223,7 +223,9 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateClickable(self, obj, **args):
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if _settingsManager.getSetting('onlySpeakDisplayedText') \
+           or _settingsManager.getSetting('speechVerbosityLevel') \
+               == settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
         acss = self.voice(SYSTEM)
