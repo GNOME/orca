@@ -7,11 +7,12 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(KeyComboAction("Tab"))
+
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
-    "1. Line Down",
+    "1. Top of File",
     ["BRAILLE LINE:  'Snapshot version Date (UTC) Download'",
      "     VISIBLE:  'Snapshot version Date (UTC) Down', cursor=1",
      "SPEECH OUTPUT: 'Snapshot version'",

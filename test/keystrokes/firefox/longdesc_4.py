@@ -12,7 +12,6 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: 'Empty images are exposed to us as text, without AtspiAction, and the Firefox right-click menu lacks View Description",
      "BRAILLE LINE:  'the image'",
      "     VISIBLE:  'the image', cursor=0",
-     "SPEECH OUTPUT: 'text'",
      "SPEECH OUTPUT: 'the image'"]))
 
 #sequence.append(PauseAction(3000))

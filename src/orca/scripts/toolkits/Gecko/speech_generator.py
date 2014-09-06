@@ -90,7 +90,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                             break
                 if child and child.name:
                     result.append(child.name)
-                if result:
                     result.extend(acss)
 
         else:
@@ -98,6 +97,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                               self, obj, **args))
         if not result and role == pyatspi.ROLE_LIST_ITEM:
             result.append(self._script.utilities.expandEOCs(obj))
+            result.extend(acss)
 
         acss = self.voice(speech_generator.HYPERLINK)
         link = None
@@ -123,14 +123,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if that description is different from that of the name and
         label.
         """
-        if args.get('role', obj.getRole()) == pyatspi.ROLE_LINK \
-           and obj.parent.getRole() == pyatspi.ROLE_IMAGE:
-            result = self._generateName(obj, **args)
-            result.append(messages.IMAGE_MAP_LINK)
-        else:
-            result = speech_generator.SpeechGenerator.\
-                           _generateDescription(self, obj, **args)
-        return result
+        formatType = args.get('formatType')
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_TEXT and formatType != 'basicWhereAmI':
+            return []
+
+        return speech_generator.SpeechGenerator._generateDescription(
+            self, obj, **args)
 
     def _generateLabel(self, obj, **args):
         acss = self.voice(speech_generator.DEFAULT)
@@ -159,6 +158,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             label = self._script.labelInference.infer(obj, focusedOnly)
             if label:
                 result.append(label)
+                result.extend(acss)
 
         # XUL combo boxes don't always have a label for/by
         # relationship.  But, they will make their names be
@@ -168,9 +168,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and role == pyatspi.ROLE_COMBO_BOX \
            and not self._script.inDocumentContent():
             result.append(obj.name)
-
-        if result:
             result.extend(acss)
+
         return result
 
     def _generateLabelAndName(self, obj, **args):
@@ -192,6 +191,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateLabelOrName(self, obj, **args):
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_TEXT:
+            return []
+
         result = []
         if obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
             # This is the main difference between this class and the default
@@ -228,6 +231,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                           pyatspi.ROLE_MENU_ITEM,
                           pyatspi.ROLE_PARAGRAPH,
                           pyatspi.ROLE_SECTION,
+                          pyatspi.ROLE_TEXT,
                           pyatspi.ROLE_UNKNOWN]
         else:
             # We never ever want to speak 'unknown'
@@ -242,32 +246,37 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if not (role in doNotSpeak):
             if role == pyatspi.ROLE_IMAGE:
+                result.append(self.getLocalizedRoleName(obj, role))
+                result.extend(acss)
                 link = self._script.utilities.ancestorWithRole(
                     obj, [pyatspi.ROLE_LINK], [pyatspi.ROLE_DOCUMENT_FRAME])
                 if link:
                     result.append(self.getLocalizedRoleName(link))
+                    result.extend(acss)
 
-            if role == pyatspi.ROLE_HEADING:
+            elif role == pyatspi.ROLE_HEADING:
                 level = self._script.getHeadingLevel(obj)
                 if level:
                     result.append(object_properties.ROLE_HEADING_LEVEL_SPEECH % {
                         'role': self.getLocalizedRoleName(obj, role),
                         'level': level})
+                    result.extend(acss)
                 else:
                     result.append(self.getLocalizedRoleName(obj, role))
+                    result.extend(acss)
+
+            elif role == pyatspi.ROLE_LINK:
+                if obj.parent.getRole() == pyatspi.ROLE_IMAGE:
+                    result.append(messages.IMAGE_MAP_LINK)
+                    result.extend(acss)
+                else:
+                    result.append(self.getLocalizedRoleName(obj, role))
+                    result.extend(acss)
+                    if obj.childCount and obj[0].getRole() == pyatspi.ROLE_IMAGE:
+                        result.append(self.getLocalizedRoleName(obj[0]))
+                        result.extend(acss)
             else:
                 result.append(self.getLocalizedRoleName(obj, role))
-
-            if result:
-                result.extend(acss)
-
-            if role == pyatspi.ROLE_LINK \
-               and obj.childCount and obj[0].getRole() == pyatspi.ROLE_IMAGE:
-                # If this is a link with a child which is an image, we
-                # want to indicate that.
-                #
-                acss = self.voice(speech_generator.HYPERLINK)
-                result.append(self.getLocalizedRoleName(obj[0]))
                 result.extend(acss)
 
         return result

@@ -7,6 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(KeyComboAction("Tab"))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
@@ -178,7 +180,6 @@ sequence.append(utils.AssertPresentationAction(
     "16. Line Down",
     ["BRAILLE LINE:  ' table cell'",
      "     VISIBLE:  ' table cell', cursor=1",
-     "SPEECH OUTPUT: ' '",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -239,7 +240,6 @@ sequence.append(utils.AssertPresentationAction(
     "22. Line Down",
     ["BRAILLE LINE:  ' table cell'",
      "     VISIBLE:  ' table cell', cursor=1",
-     "SPEECH OUTPUT: ' '",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -273,7 +273,6 @@ sequence.append(utils.AssertPresentationAction(
     "26. Line Down",
     ["BRAILLE LINE:  ' table cell'",
      "     VISIBLE:  ' table cell', cursor=1",
-     "SPEECH OUTPUT: ' '",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -344,7 +343,6 @@ sequence.append(utils.AssertPresentationAction(
     "34. Line Up",
     ["BRAILLE LINE:  ' table cell'",
      "     VISIBLE:  ' table cell', cursor=1",
-     "SPEECH OUTPUT: ' '",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -379,7 +377,6 @@ sequence.append(utils.AssertPresentationAction(
     "38. Line Up",
     ["BRAILLE LINE:  ' table cell'",
      "     VISIBLE:  ' table cell', cursor=1",
-     "SPEECH OUTPUT: ' '",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -441,7 +438,6 @@ sequence.append(utils.AssertPresentationAction(
     "44. Line Up",
     ["BRAILLE LINE:  ' table cell'",
      "     VISIBLE:  ' table cell', cursor=1",
-     "SPEECH OUTPUT: ' '",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())

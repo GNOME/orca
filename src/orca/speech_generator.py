@@ -242,6 +242,26 @@ class SpeechGenerator(generator.Generator):
             result.extend(acss)
         return result
 
+    def _generateAvailability(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        acss = self.voice(SYSTEM)
+        result = generator.Generator._generateAvailability(self, obj, **args)
+        if result:
+            result.extend(acss)
+        return result
+
+    def _generateRequired(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        acss = self.voice(SYSTEM)
+        result = generator.Generator._generateRequired(self, obj, **args)
+        if result:
+            result.extend(acss)
+        return result
+
     def _generateTextRole(self, obj, **args):
         """A convenience method to prevent the pyatspi.ROLE_PARAGRAPH role
         from being spoken. In the case of a pyatspi.ROLE_PARAGRAPH
@@ -942,6 +962,14 @@ class SpeechGenerator(generator.Generator):
             if result[0] == "\n":
                 result[0] = messages.BLANK
             result.extend(acss)
+        return result
+
+    def _generateDisplayedText(self, obj, **args):
+        acss = self.voice(DEFAULT)
+        result = generator.Generator._generateDisplayedText(self, obj, **args)
+        if result:
+            result.extend(acss)
+
         return result
 
     def _getCharacterAttributes(self,

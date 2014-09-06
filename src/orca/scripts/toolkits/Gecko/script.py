@@ -2624,44 +2624,11 @@ class Script(default.Script):
 
         utterances = []
         prevObj = None
+        contents = self.utilities.filterContentsForPresentation(contents)
         for content in contents:
             [obj, startOffset, endOffset, string] = content
             string = self.utilities.adjustForRepeats(string)
             role = obj.getRole()
-
-            # If we don't have an object, there's nothing to do. If we have
-            # a string, but it consists solely of spaces, we have nothing to
-            # say. If it's a label for an object in our contents, we'll get
-            # that label via the speech generator for the object.
-            #
-            if not obj \
-               or len(string) and not len(string.strip(" ")) \
-               or self.isLabellingContents(obj, contents):
-                continue
-
-            # TODO - JD: this is a temporary and sad hack borrowed from
-            # clumpUtterances() which is no longer called by speakContents().
-            # Ultimately this sort of crap belongs in a generator (along with
-            # other similiar crap).
-            if string == "\n" and len(contents) == 1 \
-               and _settingsManager.getSetting('speakBlankLines'):
-                string = messages.BLANK
-
-            # Thunderbird now does something goofy with smileys in
-            # email: exposes them as a nested paragraph with a name
-            # consisting of the punctuation used to create the smiley
-            # and an empty accessible text object. This causes us to
-            # speak tutorial info for each smiley. :-( type in text.
-            #
-            elif role == pyatspi.ROLE_PARAGRAPH and not len(string):
-                string = obj.name
-                # We also see goofiness in some pages. That can cause
-                # SayAll by Sentence to spit up. See bug 591351. So
-                # if we still do not have string and if we've got
-                # more than object in contents, let's dump this one.
-                #
-                if len(contents) > 1 and not len(string):
-                    continue
 
             # If we don't have a string, then use the speech generator.
             # Otherwise, we'll want to speak the string and possibly the
@@ -2671,7 +2638,7 @@ class Script(default.Script):
                or self.utilities.isEntry(obj) \
                or self.utilities.isPasswordText(obj) \
                or self.utilities.isClickableElement(obj) \
-               or role in [pyatspi.ROLE_PUSH_BUTTON,
+               or role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_IMAGE,
                            pyatspi.ROLE_CHECK_BOX, pyatspi.ROLE_RADIO_BUTTON,
                            pyatspi.ROLE_TOGGLE_BUTTON, pyatspi.ROLE_COMBO_BOX]:
                 rv = self.speechGenerator.generateSpeech(obj)
@@ -2709,6 +2676,9 @@ class Script(default.Script):
 
             prevObj = obj
 
+        if not utterances:
+            utterances = [messages.BLANK, self.voices[settings.DEFAULT_VOICE]]
+
         return utterances
 
     def clumpUtterances(self, utterances):
@@ -2721,7 +2691,11 @@ class Script(default.Script):
 
         clumped = []
 
-        for [element, acss] in utterances:
+        for utterance in utterances:
+            try:
+                [element, acss] = utterance
+            except:
+                continue
             if len(clumped) == 0:
                 clumped = [[element, acss]]
             elif acss == clumped[-1][1] \

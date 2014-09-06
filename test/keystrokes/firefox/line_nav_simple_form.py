@@ -81,7 +81,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "8. line Down",
     ["BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=1"]))
+     "     VISIBLE:  '      $l', cursor=1",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -137,9 +138,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Dashing picture of Willie Walker image'",
      "     VISIBLE:  'Dashing picture of Willie Walker', cursor=0",
      "SPEECH OUTPUT: 'Dashing picture of Willie Walker'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: '",
-     "'"]))
+     "SPEECH OUTPUT: 'image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -162,9 +161,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Dashing picture of Willie Walker image'",
      "     VISIBLE:  'Dashing picture of Willie Walker', cursor=0",
      "SPEECH OUTPUT: 'Dashing picture of Willie Walker'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: '",
-     "'"]))
+     "SPEECH OUTPUT: 'image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -218,7 +215,8 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "20. line Up",
     ["BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=1"]))
+     "     VISIBLE:  '      $l', cursor=1",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

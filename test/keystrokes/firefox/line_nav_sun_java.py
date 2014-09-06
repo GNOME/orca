@@ -20,7 +20,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '\xbb\xa0'",
      "SPEECH OUTPUT: 'search tips'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '\xa0 '",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'Search'",
      "SPEECH OUTPUT: 'Submit Search'",
@@ -59,7 +58,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0"]))
+     "     VISIBLE:  '', cursor=0",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -111,9 +111,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'System Requirements'",
      "     VISIBLE:  'System Requirements', cursor=1",
      "SPEECH OUTPUT: 'System Requirements'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '",
-     "'"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -122,9 +120,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'JDK Installation Instructions'",
      "     VISIBLE:  'JDK Installation Instructions', cursor=1",
      "SPEECH OUTPUT: 'JDK Installation Instructions'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '",
-     "'"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -132,13 +128,8 @@ sequence.append(utils.AssertPresentationAction(
     "12. Line Down",
     ["BRAILLE LINE:  '\xa0Installation of Self-Extracting Binary'",
      "     VISIBLE:  '\xa0Installation of Self-Extracting', cursor=1",
-     "SPEECH OUTPUT: '\xa0'",
-     "SPEECH OUTPUT: '\xa0'",
-     "SPEECH OUTPUT: '\xa0'",
      "SPEECH OUTPUT: 'Installation of Self-Extracting Binary'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '",
-     "'"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -146,11 +137,8 @@ sequence.append(utils.AssertPresentationAction(
     "13. Line Down",
     ["BRAILLE LINE:  '\xa0\xa0\xa0Installation of RPM File'",
      "     VISIBLE:  '\xa0\xa0\xa0Installation of RPM File', cursor=1",
-     "SPEECH OUTPUT: '\xa0\xa0\xa0'",
      "SPEECH OUTPUT: 'Installation of RPM File'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '",
-     "'"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -159,9 +147,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Java Plugin Browser Registration Instructions'",
      "     VISIBLE:  'Java Plugin Browser Registration', cursor=1",
      "SPEECH OUTPUT: 'Java Plugin Browser Registration Instructions'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '",
-     "'"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -170,9 +156,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Java Web Start Installation Notes'",
      "     VISIBLE:  'Java Web Start Installation Note', cursor=1",
      "SPEECH OUTPUT: 'Java Web Start Installation Notes'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '",
-     "'"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -334,7 +318,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "33. Line Down",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1"]))
+     "     VISIBLE:  '', cursor=1",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -358,7 +343,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "36. Line Down",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1"]))
+     "     VISIBLE:  '', cursor=1",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -382,7 +368,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "39. Line Down",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1"]))
+     "     VISIBLE:  '', cursor=1",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

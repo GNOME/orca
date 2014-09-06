@@ -49,13 +49,9 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'The Orca logo image'",
      "     VISIBLE:  'The Orca logo image', cursor=0",
      "SPEECH OUTPUT: 'The Orca logo'",
-     "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'Hey, look, it's our logo!'",
-     "SPEECH OUTPUT: '",
-     "'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'"]))
+     "SPEECH OUTPUT: 'Hey, look, it's our logo!'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -243,13 +239,9 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'The Orca logo image'",
      "     VISIBLE:  'The Orca logo image', cursor=0",
      "SPEECH OUTPUT: 'The Orca logo'",
-     "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'Hey, look, it's our logo!'",
-     "SPEECH OUTPUT: '",
-     "'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'"]))
+     "SPEECH OUTPUT: 'Hey, look, it's our logo!'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

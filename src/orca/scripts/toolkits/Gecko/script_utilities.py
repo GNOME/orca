@@ -825,6 +825,16 @@ class Utilities(script_utilities.Utilities):
 
         return objects
 
+    def filterContentsForPresentation(self, contents):
+        def _include(x):
+            obj, start, end, string = x
+            if not obj or (string and not string.strip()) \
+               or self._script.isLabellingContents(obj, contents):
+                return False
+            return True
+
+        return list(filter(_include, contents))
+
     def getObjectsFromEOCs(self, obj, offset=None, boundary=None):
         """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
         with [obj, startOffset, endOffset, string] tuples.

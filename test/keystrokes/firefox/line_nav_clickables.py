@@ -44,7 +44,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Clickable span: Click Me. More text.'",
      "     VISIBLE:  'Clickable span: Click Me. More t', cursor=1",
      "SPEECH OUTPUT: 'Clickable span: '",
-     "SPEECH OUTPUT: 'text'",
      "SPEECH OUTPUT: 'Click Me.'",
      "SPEECH OUTPUT: 'clickable'",
      "SPEECH OUTPUT: ' More text.'"]))
@@ -98,7 +97,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Clickable span: Click Me. More text.'",
      "     VISIBLE:  'Clickable span: Click Me. More t', cursor=1",
      "SPEECH OUTPUT: 'Clickable span: '",
-     "SPEECH OUTPUT: 'text'",
      "SPEECH OUTPUT: 'Click Me.'",
      "SPEECH OUTPUT: 'clickable'",
      "SPEECH OUTPUT: ' More text.'"]))

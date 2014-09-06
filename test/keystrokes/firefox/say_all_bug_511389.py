@@ -16,8 +16,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: ', this is a test.'",
      "SPEECH OUTPUT: 'Foo'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '",
-     "'",
      "SPEECH OUTPUT: 'Bar'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: '",

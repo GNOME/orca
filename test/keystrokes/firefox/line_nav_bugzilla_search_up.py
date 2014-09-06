@@ -26,10 +26,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'And push button       Add anothe', cursor=1",
      "SPEECH OUTPUT: 'And'",
      "SPEECH OUTPUT: 'push button'",
-     "SPEECH OUTPUT: '       '",
      "SPEECH OUTPUT: 'Add another boolean chart'",
-     "SPEECH OUTPUT: 'push button'",
-     "SPEECH OUTPUT: '       '"]))
+     "SPEECH OUTPUT: 'push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -77,7 +75,6 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Up",
     ["BRAILLE LINE:  '    < > check box and remember these as my default search options'",
      "     VISIBLE:  '    < > check box and remember t', cursor=1",
-     "SPEECH OUTPUT: '    '",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'not checked'",
      "SPEECH OUTPUT: ' and remember these as my default search options '"]))
@@ -193,9 +190,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'and '",
      "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'Now'",
-     "SPEECH OUTPUT: '",
-     "'"]))
+     "SPEECH OUTPUT: 'Now'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -683,11 +678,9 @@ sequence.append(utils.AssertPresentationAction(
     "68. Line Up",
     ["BRAILLE LINE:  ' Short Bug Search Form Complicated Bug Search Form  '",
      "     VISIBLE:  ' Short Bug Search Form Complicat', cursor=1",
-     "SPEECH OUTPUT: ' '",
      "SPEECH OUTPUT: 'Short Bug Search Form '",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'Complicated Bug Search Form '",
-     "SPEECH OUTPUT: ' '"]))
+     "SPEECH OUTPUT: 'Complicated Bug Search Form '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
