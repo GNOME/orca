@@ -1059,7 +1059,6 @@ class StructuralNavigation:
         whether wrapping took place.
         """
 
-        currentObj = currentObj or self.getCurrentObject()
         ancestors = []
         [currentObj, offset] = self._script.getCaretContext()
         obj = currentObj.parent
@@ -1077,8 +1076,18 @@ class StructuralNavigation:
                 1,
                 True)
             if len(results) > 0 and not results[0] in ancestors:
-                currentObj = results[0]
-                if not self._script.utilities.isHidden(currentObj) \
+                result = results[0]
+
+                # This can occur with anonymous blocks.
+                if result.parent == currentObj:
+                    o = self._script.utilities.characterOffsetInParent(result)
+                    isBefore = o < offset
+                else:
+                    isBefore = False
+
+                currentObj = result
+                if not (isBefore and not wrapped) \
+                   and not self._script.utilities.isHidden(currentObj) \
                    and (not predicate or predicate(currentObj)):
                     match = currentObj
             elif wrap and not wrapped:

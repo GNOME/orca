@@ -31,10 +31,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("2"))
 sequence.append(utils.AssertPresentationAction(
     "3. 2 for second heading", 
-    ["KNOWN ISSUE: This is not the second heading. We looped.",
-     "BRAILLE LINE:  'First Heading h2'",
-     "     VISIBLE:  'First Heading h2', cursor=1",
-     "SPEECH OUTPUT: 'First Heading '",
+    ["BRAILLE LINE:  'Second Heading h2'",
+     "     VISIBLE:  'Second Heading h2', cursor=1",
+     "SPEECH OUTPUT: 'Second Heading '",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'heading level 2'"]))
 
