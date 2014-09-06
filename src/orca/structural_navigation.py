@@ -958,7 +958,7 @@ class StructuralNavigation:
         whether wrapping took place.
         """
 
-        currentObj = currentObj or self.getCurrentObject()
+        [currentObj, offset] = self._script.getCaretContext()
         document = self._getDocument()
 
         # If the current object is the document itself, find an actual
@@ -968,6 +968,25 @@ class StructuralNavigation:
         #
         if self._script.utilities.isSameObject(currentObj, document):
             currentObj = self._findNextObject(currentObj, document)
+            offset = 0
+
+        # If the caret context is in a block element that contains children,
+        # the "next" match as far as the collection interface is concerned
+        # is actually the "previous" match as far as we're concerned.
+        nextMatch = collection.getMatchesFrom(
+            currentObj,
+            matchRule,
+            collection.SORT_ORDER_CANONICAL,
+            collection.TREE_INORDER,
+            1,
+            True)
+
+        if nextMatch and nextMatch[0].parent == currentObj:
+            o = self._script.utilities.characterOffsetInParent(nextMatch[0])
+            if 0 <= o < offset \
+               and not self._script.utilities.isHidden(nextMatch[0]) \
+               and (not predicate or predicate(nextMatch[0])):
+                return nextMatch[0], False
 
         ancestors = []
         obj = currentObj.parent
