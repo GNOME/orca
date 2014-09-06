@@ -1362,14 +1362,14 @@ class StructuralNavigation:
         if not (oldRowHeaders or oldColHeaders):
             return
 
-        if rowDiff and not self._isInHeaderRow(cell):
+        if rowDiff and not self._isHeader(cell):
             rowHeaders = self._getRowHeaders(cell)
             for header in rowHeaders:
                 if not header in oldRowHeaders:
                     text = self._getCellText(header)
                     speech.speak(text)
 
-        if colDiff:
+        if colDiff and not self._isHeader(cell):
             colHeaders = self._getColumnHeaders(cell)
             for header in colHeaders:
                 if not header in oldColHeaders:
@@ -1528,54 +1528,6 @@ class StructuralNavigation:
                             columnHeaders.append(cell)
 
         return columnHeaders
-
-    def _isInHeaderRow(self, obj):
-        """Returns True if all of the cells in the same row as this cell are
-        headers.
-
-        Arguments:
-        - obj: the accessible table cell whose row is to be examined.
-        """
-
-        if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            parentTable = self.getTableForCell(obj)
-            try:
-                table = parentTable.queryTable()
-            except:
-                return True
-
-            index = self._script.utilities.cellIndex(obj)
-            row = table.getRowAtIndex(index)
-            for col in range(table.nColumns):
-                cell = table.getAccessibleAt(row, col)
-                if not self._isHeader(cell):
-                    return False
-
-        return True
-
-    def _isInHeaderColumn(self, obj):
-        """Returns True if all of the cells in the same column as this cell
-        are headers.
-
-        Arguments:
-        - obj: the accessible table cell whose column is to be examined.
-        """
-
-        if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            parentTable = self.getTableForCell(obj)
-            try:
-                table = parentTable.queryTable()
-            except:
-                return True
-
-            index = self._script.utilities.cellIndex(obj)
-            col = table.getColumnAtIndex(index)
-            for row in range(table.nRows):
-                cell = table.getAccessibleAt(row, col)
-                if not self._isHeader(cell):
-                    return False
-
-        return True
 
     def _isHeader(self, obj):
         """Returns True if the table cell is a header.
