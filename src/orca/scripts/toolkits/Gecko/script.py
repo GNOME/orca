@@ -1234,8 +1234,9 @@ class Script(default.Script):
         if self._lastCommandWasStructNav:
             msg = "INFO: Focus change event handled manually: last command was struct nav"
             debug.println(debug.LEVEL_INFO, msg)
-            self.setCaretContext(event.source, 0)
-            orca.setLocusOfFocus(event, event.source)
+            if role != pyatspi.ROLE_LINK:
+                self.setCaretContext(event.source, 0)
+                orca.setLocusOfFocus(event, event.source)
             return
 
         default.Script.onFocusedChanged(self, event)
