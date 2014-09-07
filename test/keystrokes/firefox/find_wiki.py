@@ -34,16 +34,18 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "3. Return to next result",
-    ["BRAILLE LINE:  'Orca is a free, open source, flexible, extensible, and  $l'",
-     "     VISIBLE:  'Orca is a free, open source, fle', cursor=1",
+    ["KNOWN ISSUE: Displayed text will happen as part of the braille generation rewrite",
+     "BRAILLE LINE:  'paragraph'",
+     "     VISIBLE:  'paragraph', cursor=1",
      "SPEECH OUTPUT: 'Orca is a free, open source, flexible, extensible, and '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "4. Return to next result",
-    ["BRAILLE LINE:  'synthesis, braille, and magnification, Orca helps provide  $l'",
-     "     VISIBLE:  's, braille, and magnification, O', cursor=32",
+    ["KNOWN ISSUE: Displayed text will happen as part of the braille generation rewrite",
+     "BRAILLE LINE:  'paragraph'",
+     "     VISIBLE:  'paragraph', cursor=1",
      "SPEECH OUTPUT: 'synthesis, braille, and magnification, Orca helps provide '"]))
 
 sequence.append(utils.StartRecordingAction())
