@@ -802,6 +802,8 @@ class Utilities:
                 layoutOnly = True
             elif obj.parent.getRole() == pyatspi.ROLE_TABLE:
                 layoutOnly = self.isLayoutOnly(obj.parent)
+        elif role == pyatspi.ROLE_SECTION:
+            layoutOnly = True
         elif role == pyatspi.ROLE_FILLER:
             layoutOnly = True
         elif role == pyatspi.ROLE_SCROLL_PANE:

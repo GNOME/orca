@@ -140,7 +140,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Cut'",
      "     VISIBLE:  'Cut', cursor=1",
      "SPEECH OUTPUT: 'Edit! edit title panel'",
-     "SPEECH OUTPUT: 'Edit! Edit! edit title menu'",
+     "SPEECH OUTPUT: 'Edit! menu'",
      "SPEECH OUTPUT: 'Cut'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
@@ -214,7 +214,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Submenu menu'",
      "     VISIBLE:  'Submenu menu', cursor=1",
      "SPEECH OUTPUT: 'Edit! edit title panel'",
-     "SPEECH OUTPUT: 'Edit! Edit! edit title menu'",
+     "SPEECH OUTPUT: 'Edit! menu'",
      "SPEECH OUTPUT: 'Submenu menu'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -288,24 +288,24 @@ sequence.append(KeyComboAction("space"))
 sequence.append(utils.AssertPresentationAction(
     "28. Toggle the state of the toggle me off button",
     ["KNOWN ISSUE: This seems an excessive amount of braille updating",
-     "BRAILLE LINE:  '& y toggle me on Toggle me off toggle button Toggle me off Toggle me'",
-     "     VISIBLE:  '& y toggle me on Toggle me off t', cursor=1",
-     "BRAILLE LINE:  '& y toggle me on Toggle me off toggle button toggle me on Toggle me'",
-     "     VISIBLE:  '& y toggle me on Toggle me off t', cursor=1",
-     "BRAILLE LINE:  '& y toggle me on Toggle me off toggle button toggle me on Toggle me'",
-     "     VISIBLE:  '& y toggle me on Toggle me off t', cursor=1",
+     "BRAILLE LINE:  '& y toggle me on toggle button Toggle me off Toggle me'",
+     "     VISIBLE:  '& y toggle me on toggle button T', cursor=1",
+     "BRAILLE LINE:  '& y toggle me on toggle button toggle me on Toggle me'",
+     "     VISIBLE:  '& y toggle me on toggle button t', cursor=1",
+     "BRAILLE LINE:  '& y toggle me on toggle button toggle me on Toggle me'",
+     "     VISIBLE:  '& y toggle me on toggle button t', cursor=1",
      "SPEECH OUTPUT: 'not pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("space"))
 sequence.append(utils.AssertPresentationAction(
     "29. Toggle the state of the toggle me off button",
-    ["BRAILLE LINE:  '&=y toggle me off Toggle me off toggle button toggle me on Toggle me'",
-     "     VISIBLE:  '&=y toggle me off Toggle me off ', cursor=1",
-     "BRAILLE LINE:  '&=y toggle me off Toggle me off toggle button toggle me off Toggle me'",
-     "     VISIBLE:  '&=y toggle me off Toggle me off ', cursor=1",
-     "BRAILLE LINE:  '&=y toggle me off Toggle me off toggle button toggle me off Toggle me'",
-     "     VISIBLE:  '&=y toggle me off Toggle me off ', cursor=1",
+    ["BRAILLE LINE:  '&=y toggle me off toggle button toggle me on Toggle me'",
+     "     VISIBLE:  '&=y toggle me off toggle button ', cursor=1",
+     "BRAILLE LINE:  '&=y toggle me off toggle button toggle me off Toggle me'",
+     "     VISIBLE:  '&=y toggle me off toggle button ', cursor=1",
+     "BRAILLE LINE:  '&=y toggle me off toggle button toggle me off Toggle me'",
+     "     VISIBLE:  '&=y toggle me off toggle button ', cursor=1",
      "SPEECH OUTPUT: 'pressed'"]))
 
 sequence.append(utils.StartRecordingAction())

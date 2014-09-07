@@ -47,13 +47,10 @@ formatting = {
             'detailedWhereAmI' : 'pageSummary'
             },
         pyatspi.ROLE_ALERT: {
-            'unfocused': 'expandedEOCs or (labelAndName + unrelatedLabels)'
+            'unfocused': 'expandedEOCs or (labelOrName + unrelatedLabels)'
             },
         pyatspi.ROLE_DIALOG: {
-            'unfocused': 'expandedEOCs or (labelAndName + unrelatedLabels)'
-            },
-        pyatspi.ROLE_DOCUMENT_FRAME: {
-            'unfocused': 'name + roleName'
+            'unfocused': 'expandedEOCs or (labelOrName + unrelatedLabels)'
             },
         # [[[TODO: JD - We should decide if we want to provide
         # information about the table dimensions, whether or not
