@@ -1076,11 +1076,8 @@ class Generator:
         found.  Otherwise, an empty array is returned.
         """
         result = []
-        text = self._script.utilities.displayedText(
-            self._script.utilities.realActiveDescendant(obj))
-        if text:
-            result = [text]
-        return result
+        rad = self._script.utilities.realActiveDescendant(obj)
+        return self._generateDisplayedText(rad, **args)
 
     def _generateRealActiveDescendantRoleName(self, obj, **args ):
         """Objects, such as tables and trees, can represent individual cells

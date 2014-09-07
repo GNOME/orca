@@ -66,7 +66,8 @@ sequence.append(utils.AssertPresentationAction(
     "6. basic whereAmI",
     ["BRAILLE LINE:  '+A Question of Love table cell'",
      "     VISIBLE:  '+A Question of Love table cell', cursor=1",
-     "SPEECH OUTPUT: 'table row +A Question of Love'"]))
+     "SPEECH OUTPUT: 'table row'",
+     "SPEECH OUTPUT: '+A Question of Love'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
@@ -84,7 +85,8 @@ sequence.append(utils.AssertPresentationAction(
     "8. basic whereAmI",
     ["BRAILLE LINE:  '-A Question of Love table cell'",
      "     VISIBLE:  '-A Question of Love table cell', cursor=1",
-     "SPEECH OUTPUT: 'table row -A Question of Love'"]))
+     "SPEECH OUTPUT: 'table row'",
+     "SPEECH OUTPUT: '-A Question of Love'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

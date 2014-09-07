@@ -140,6 +140,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # We'll attempt to infer the label under some circumstances.
         #
         if not len(result) \
+           and not obj.name \
            and role in [pyatspi.ROLE_CHECK_BOX,
                         pyatspi.ROLE_COMBO_BOX,
                         pyatspi.ROLE_ENTRY,
@@ -170,24 +171,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.append(obj.name)
             result.extend(acss)
 
-        return result
-
-    def _generateLabelAndName(self, obj, **args):
-        result = []
-        role = args.get('role', obj.getRole())
-        # For radio buttons, the label is handled as a context and we
-        # assume we don't have to guess it.  If we need to guess it,
-        # we need to add it to utterances.
-        #
-        if role == pyatspi.ROLE_RADIO_BUTTON \
-           and self._script.utilities.displayedLabel(obj):
-            result.extend(
-                speech_generator.SpeechGenerator._generateName(
-                    self, obj, **args))
-        else:
-            result.extend(
-                speech_generator.SpeechGenerator._generateLabelAndName(
-                    self, obj, **args))
         return result
 
     def _generateLabelOrName(self, obj, **args):
