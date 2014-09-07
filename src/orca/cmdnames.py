@@ -392,6 +392,12 @@ INCREASE_SPEECH_PITCH = _("Increases the speech pitch.")
 #  We call it 'silencing'.
 TOGGLE_SPEECH = _("Toggles the silencing of speech.")
 
+# Translators: Orca's verbosity levels control how much (or how little)
+# Orca will speak when presenting objects as the user navigates within
+# applications and reads content. The levels can be toggled via command.
+# This string describes that command.
+TOGGLE_SPEECH_VERBOSITY = _("Toggles speech verbosity level.")
+
 # Translators: this string is associated with the keyboard shortcut to quit
 # Orca.
 QUIT_ORCA = _("Quits the screen reader")
