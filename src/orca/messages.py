@@ -1476,6 +1476,20 @@ SPEECH_HIGHER = _("higher.")
 # Translators: This string announces speech pitch change.
 SPEECH_LOWER  = _("lower.")
 
+# Translators: Orca's verbosity levels control how much (or how little)
+# Orca will speak when presenting objects as the user navigates within
+# applications and reads content. The two levels are "brief" and "verbose".
+# The following string is a message spoken to the user upon toggling
+# this setting via command.
+SPEECH_VERBOSITY_BRIEF = C_("Speech", "Verbosity level: brief")
+
+# Translators: Orca's verbosity levels control how much (or how little)
+# Orca will speak when presenting objects as the user navigates within
+# applications and reads content. The two levels are "brief" and "verbose".
+# The following string is a message spoken to the user upon toggling
+# this setting via command.
+SPEECH_VERBOSITY_VERBOSE = C_("Speech", "Verbosity level: verbose")
+
 # Translators: We replace the ellipses (both manual and UTF-8) with a spoken
 # string. The extra space you see at the beginning is because we need the
 # speech synthesis engine to speak the new string well. For example, "Open..."

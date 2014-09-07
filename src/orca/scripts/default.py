@@ -414,6 +414,11 @@ class Script(script.Script):
                 Script.toggleSilenceSpeech,
                 cmdnames.TOGGLE_SPEECH)
 
+        self.inputEventHandlers["toggleSpeechVerbosityHandler"] = \
+            input_event.InputEventHandler(
+                Script.toggleSpeechVerbosity,
+                cmdnames.TOGGLE_SPEECH_VERBOSITY)
+
         self.inputEventHandlers[ \
           "toggleSpeakingIndentationJustificationHandler"] = \
             input_event.InputEventHandler(
@@ -1873,6 +1878,21 @@ class Script(script.Script):
         else:
             self.presentMessage(messages.SPEECH_DISABLED)
             _settingsManager.setSetting('silenceSpeech', True)
+        return True
+
+    def toggleSpeechVerbosity(self, inputEvent=None):
+        """Toggles speech verbosity level between verbose and brief."""
+
+        value = _settingsManager.getSetting('speechVerbosityLevel')
+        if value == settings.VERBOSITY_LEVEL_BRIEF:
+            self.presentMessage(messages.SPEECH_VERBOSITY_VERBOSE)
+            _settingsManager.setSetting(
+                'speechVerbosityLevel', settings.VERBOSITY_LEVEL_VERBOSE)
+        else:
+            self.presentMessage(messages.SPEECH_VERBOSITY_BRIEF)
+            _settingsManager.setSetting(
+                'speechVerbosityLevel', settings.VERBOSITY_LEVEL_BRIEF)
+
         return True
 
     def toggleSpeakingIndentationJustification(self, inputEvent=None):

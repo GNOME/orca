@@ -60,6 +60,9 @@ keymap = (
     ("s", defaultModifierMask, ORCA_MODIFIER_MASK,
     "toggleSilenceSpeechHandler"),
 
+    ("v", defaultModifierMask, ORCA_MODIFIER_MASK,
+    "toggleSpeechVerbosityHandler"),
+
     ("t", defaultModifierMask, ORCA_MODIFIER_MASK,
     "presentTimeHandler", 1),
 
