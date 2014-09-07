@@ -3440,13 +3440,9 @@ class StructuralNavigation:
         """
 
         if obj:
-            # We were counting on the Gecko script's setCaretPosition
-            # to do the focus grab. It turns out that we do not always
-            # want setCaretPosition to grab focus on a link (e.g. when
-            # arrowing in the text of a paragraph which is a child of
-            # a link. Therefore, we need to grab focus here.
-            #
-            obj.queryComponent().grabFocus()
+            [obj, characterOffset] = self._getCaretPosition(obj)
+            self._setCaretPosition(obj, characterOffset)
+            self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_UNVISITED_LINKS
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
@@ -3530,8 +3526,11 @@ class StructuralNavigation:
         - arg: an optional argument which may need to be included in
           the criteria (e.g. the level of a heading).
         """
+
         if obj:
-            obj.queryComponent().grabFocus()
+            [obj, characterOffset] = self._getCaretPosition(obj)
+            self._setCaretPosition(obj, characterOffset)
+            self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_VISITED_LINKS
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
@@ -3612,13 +3611,9 @@ class StructuralNavigation:
         """
 
         if obj:
-            # We were counting on the Gecko script's setCaretPosition
-            # to do the focus grab. It turns out that we do not always
-            # want setCaretPosition to grab focus on a link (e.g. when
-            # arrowing in the text of a paragraph which is a child of
-            # a link. Therefore, we need to grab focus here.
-            #
-            obj.queryComponent().grabFocus()
+            [obj, characterOffset] = self._getCaretPosition(obj)
+            self._setCaretPosition(obj, characterOffset)
+            self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_LINKS
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
