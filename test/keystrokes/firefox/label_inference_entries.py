@@ -25,7 +25,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "2. Next form field",
-    ["BRAILLE LINE:  'Amusing numbers fall between  $l and  $l .'",
+    ["BRAILLE LINE:  'Amusing numbers fall between  $l and  $l.'",
      "     VISIBLE:  'Amusing numbers fall between  $l', cursor=0",
      "SPEECH OUTPUT: 'Amusing numbers fall between entry'"]))
 
@@ -36,7 +36,7 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "3. Next form field",
     ["KNOWN ISSUE: We are not scrolling to the entry",
-     "BRAILLE LINE:  'Amusing numbers fall between  $l and  $l .'",
+     "BRAILLE LINE:  'Amusing numbers fall between  $l and  $l.'",
      "     VISIBLE:  'Amusing numbers fall between  $l', cursor=0",
      "SPEECH OUTPUT: 'and entry'"]))
 

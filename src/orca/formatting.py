@@ -37,7 +37,7 @@ from . import settings
 TUTORIAL = '(tutorial and (pause + tutorial) or [])'
 MNEMONIC = '(mnemonic and (pause + mnemonic + lineBreak) or [])'
 
-BRAILLE_TEXT = '[Text(obj, asString(labelOrName + placeholderText), asString(eol))]\
+BRAILLE_TEXT = '[Text(obj, asString(labelOrName + placeholderText), asString(eol), startOffset, endOffset)]\
                 + (required and [Region(" " + asString(required))])\
                 + (readOnly and [Region(" " + asString(readOnly))])'
 
@@ -144,6 +144,7 @@ formatting = {
             'basicWhereAmI': 'labelOrName + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
             },
         pyatspi.ROLE_DIALOG: {
+            'focused': 'labelOrName',
             'unfocused': 'labelOrName + unrelatedLabels'
             },
         pyatspi.ROLE_DOCUMENT_FRAME: {
@@ -250,8 +251,8 @@ formatting = {
             },
         pyatspi.ROLE_PUSH_BUTTON: {
             'focused': 'expandableState',
-            'unfocused': 'labelOrName + expandableState + roleName + availability + ' + MNEMONIC + ' + accelerator',
-            'basicWhereAmI': 'labelOrName + expandableState + roleName + ' + MNEMONIC + ' + accelerator'
+            'unfocused': 'labelAndName + expandableState + roleName + availability + ' + MNEMONIC + ' + accelerator',
+            'basicWhereAmI': 'labelAndName + expandableState + roleName + ' + MNEMONIC + ' + accelerator'
             },
         pyatspi.ROLE_RADIO_BUTTON: {
             'focused': 'radioState',
@@ -426,10 +427,12 @@ formatting = {
             'unfocused': '[Component(obj,\
                                      asString(labelOrName + value + roleName + required))]'
             },
-        #pyatspi.ROLE_DIALOG: 'default'
+        pyatspi.ROLE_DIALOG: {
+            'unfocused': '[Component(obj, asString(labelOrName + roleName))]'
+            },
         #pyatspi.ROLE_DIRECTORY_PANE: 'default'
         pyatspi.ROLE_DOCUMENT_FRAME: {
-            'focused': '[Text(obj, asString(placeholderText), asString(eol))]\
+            'focused': '[Text(obj, asString(placeholderText), asString(eol), startOffset, endOffset)]\
                           + (required and [Region(" " + asString(required))])\
                           + (readOnly and [Region(" " + asString(readOnly))])',
             'unfocused': BRAILLE_TEXT
@@ -480,14 +483,15 @@ formatting = {
                                      asString(label) and (len(asString(label)) + 1) or 0)]'
         },
         pyatspi.ROLE_LIST_ITEM: {
-            'focused':   '[Component(obj,\
+            'focused':   '((substring and ' + BRAILLE_TEXT + ')\
+                          or ([Component(obj,\
                                      asString(label + displayedText + expandableState + roleName + availability) + asString(accelerator))]\
                           + (nestingLevel and [Region(" " + asString(nestingLevel))])\
-                          + (childWidget and ([Region(" ")] + childWidget))',
-            'unfocused': '[Component(obj,\
-                                     asString(label + displayedText + expandableState))]\
-                          + (nestingLevel and [Region(" " + asString(nestingLevel))])\
-                          + (childWidget and ([Region(" ")] + childWidget))',
+                          + (childWidget and ([Region(" ")] + childWidget))))',
+            'unfocused': '((substring and ' + BRAILLE_TEXT + ')\
+                          or ([Component(obj, asString(labelOrName + expandableState))]\
+                              + (nestingLevel and [Region(" " + asString(nestingLevel))])\
+                              + (childWidget and ([Region(" ")] + childWidget))))',
             },
         pyatspi.ROLE_MENU: {
             'focused':   '[Component(obj,\
@@ -510,9 +514,12 @@ formatting = {
             },
         #pyatspi.ROLE_PAGE_TAB_LIST: 'default'
         pyatspi.ROLE_PANEL: {
-            'unfocused': '[Component(obj,\
-                                     asString(labelAndName + roleName))]\
-                          + (childWidget and ([Region(" ")] + childWidget))'
+            'unfocused': '((substring and ' + BRAILLE_TEXT + ')\
+                          or ([Component(obj, asString(labelAndName + roleName))]\
+                             + (childWidget and ([Region(" ")] + childWidget))))'
+            },
+        pyatspi.ROLE_PARAGRAPH: {
+            'unfocused': BRAILLE_TEXT
             },
         pyatspi.ROLE_PASSWORD_TEXT: {
             'unfocused': BRAILLE_TEXT
@@ -520,7 +527,7 @@ formatting = {
         #pyatspi.ROLE_PROGRESS_BAR: 'default'
         pyatspi.ROLE_PUSH_BUTTON: {
             'unfocused': '[Component(obj,\
-                                     asString((labelOrName or description) + expandableState + roleName))]'
+                                     asString((labelAndName or description) + expandableState + roleName))]'
             },
         pyatspi.ROLE_RADIO_BUTTON: {
             'unfocused': '[Component(obj,\
@@ -545,6 +552,9 @@ formatting = {
         pyatspi.ROLE_SCROLL_PANE: {
             'unfocused': 'asPageTabOrScrollPane'
             },
+        pyatspi.ROLE_SECTION: {
+            'unfocused': BRAILLE_TEXT
+            },
         #'REAL_ROLE_SCROLL_PANE': 'default'
         pyatspi.ROLE_SLIDER: {
             'unfocused': '[Component(obj,\
@@ -558,10 +568,11 @@ formatting = {
         #pyatspi.ROLE_SPLIT_PANE: 'default'
         #pyatspi.ROLE_TABLE: 'default'
         pyatspi.ROLE_TABLE_CELL: {
-            'unfocused': 'tableCellRow',
+            'unfocused': '((substring and ' + BRAILLE_TEXT + ') or tableCellRow)',
             },
         'REAL_ROLE_TABLE_CELL': {
-            'unfocused': '(tableCell2ChildToggle + tableCell2ChildLabel)\
+            'unfocused': '((tableCell2ChildToggle + tableCell2ChildLabel)\
+                          or (substring and ' + BRAILLE_TEXT + ') \
                           or (cellCheckedState\
                               + (columnHeaderIfToggleAndNoText and [Region(" "), Component(obj, asString(columnHeaderIfToggleAndNoText))])\
                               + ((realActiveDescendantDisplayedText and [Component(obj, asString(realActiveDescendantDisplayedText))])\
@@ -569,7 +580,7 @@ formatting = {
                               + (realActiveDescendantRoleName and [Component(obj, (realActiveDescendantDisplayedText and " " or "") + asString(realActiveDescendantRoleName))])\
                               + (expandableState and [Region(" " + asString(expandableState))])\
                               + (required and [Region(" " + asString(required))]))\
-                          or ([Component(obj,"")])'
+                          or ([Component(obj,"")]))'
             },
         #pyatspi.ROLE_TABLE_COLUMN_HEADER: 'default'
         #pyatspi.ROLE_TABLE_ROW_HEADER: 'default'

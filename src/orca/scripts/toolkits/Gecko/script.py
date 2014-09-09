@@ -1395,15 +1395,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, "BRAILLE: update disabled")
             return
 
-        if not self.inDocumentContent():
+        if not self.inDocumentContent() or self._inFocusMode:
             default.Script.updateBraille(self, obj, extraRegion)
             return
 
         if not obj:
-            return
-
-        if self._inFocusMode:
-            default.Script.updateBraille(self, obj, extraRegion)
             return
 
         line = self.getNewBrailleLine(clearBraille=True, addLine=True)
@@ -1413,121 +1409,43 @@ class Script(default.Script):
         if not len(contents):
             return
 
+        contents = self.utilities.filterContentsForPresentation(contents)
         index = self.utilities.findObjectInContents(focusedObj, focusedOffset, contents)
-        whitespace = [" ", "\n", self.NO_BREAK_SPACE_CHARACTER]
-
         focusedRegion = None
+        lastObj = None
         for i, content in enumerate(contents):
-            isFocusedObj = (i == index)
             [obj, startOffset, endOffset, string] = content
-            if not obj or self.isLabellingContents(obj, contents):
-                continue
+            [regions, fRegion] = self.brailleGenerator.generateBraille(
+                obj, startOffset=startOffset, endOffset=endOffset)
+            if i == index:
+                focusedRegion = fRegion
 
-            role = obj.getRole()
-            if (not len(string) and role != pyatspi.ROLE_PARAGRAPH) \
-               or self.utilities.isEntry(obj) \
-               or self.utilities.isPasswordText(obj) \
-               or self.utilities.isClickableElement(obj) \
-               or role in [pyatspi.ROLE_LINK, pyatspi.ROLE_PUSH_BUTTON,
-                           pyatspi.ROLE_CHECK_BOX, pyatspi.ROLE_RADIO_BUTTON,
-                           pyatspi.ROLE_TOGGLE_BUTTON, pyatspi.ROLE_COMBO_BOX]:
-                [regions, fRegion] = \
-                          self.brailleGenerator.generateBraille(obj)
-
-                if isFocusedObj:
-                    focusedRegion = fRegion
-
-            else:
-                regions = [self.getNewBrailleText(obj,
-                                                  startOffset=startOffset,
-                                                  endOffset=endOffset)]
-
-                if role == pyatspi.ROLE_CAPTION:
-                    regions.append(self.getNewBrailleRegion(
-                        " " + self.brailleGenerator.getLocalizedRoleName(obj)))
-
-                if isFocusedObj:
-                    focusedRegion = regions[0]
-
-            # We only want to display the heading role and level if we
-            # have found the final item in that heading, or if that
-            # heading contains no children.
-            #
-            isLastObject = (i == len(contents) - 1)
-            if role == pyatspi.ROLE_HEADING \
-               and (isLastObject or not obj.childCount):
-                heading = obj
-            elif isLastObject:
-                heading = self.utilities.ancestorWithRole(
-                    obj, [pyatspi.ROLE_HEADING], [pyatspi.ROLE_DOCUMENT_FRAME])
-            else:
-                heading = None
-
-            if heading:
-                level = self.getHeadingLevel(heading)
-                headingString = \
-                    object_properties.ROLE_HEADING_LEVEL_BRAILLE % level
-                if not string.endswith(" "):
-                    headingString = " " + headingString
-                if not isLastObject:
-                    headingString += " "
-                regions.append(self.getNewBrailleRegion((headingString)))
-
-            # Add whitespace if we need it. [[[TODO: JD - But should we be
-            # doing this in the braille generators rather than here??]]]
-            #
-            if regions and len(line.regions) \
-               and regions[0].string and line.regions[-1].string \
-               and not regions[0].string[0] in whitespace \
-               and not line.regions[-1].string[-1] in whitespace:
-
-                # There is nothing separating the previous braille region from
-                # this one. We might or might not want to add some whitespace
-                # for readability.
-                #
-                lastObj = contents[i - 1][0]
-
-                # If we have two of the same braille class, or if the previous
-                # region is a component or a generic region, or an image link,
-                # we should add some space.
-                #
-                if line.regions[-1].__class__ == regions[0].__class__ \
-                   or line.regions[-1].__class__ in [braille.Component,
-                                                     braille.Region] \
-                   or lastObj.getRole() == pyatspi.ROLE_IMAGE \
-                   or obj.getRole() == pyatspi.ROLE_IMAGE:
+            if line.regions and regions:
+                if line.regions[-1].string:
+                    lastChar = line.regions[-1].string[-1]
+                else:
+                    lastChar = ""
+                if regions[0].string:
+                    nextChar = regions[0].string[0]
+                else:
+                    nextChar = ""
+                if self.utilities.needsSeparator(lastChar, nextChar):
                     self.addToLineAsBrailleRegion(" ", line)
 
-                # The above check will catch table cells with uniform
-                # contents and form fields -- and do so more efficiently
-                # than walking up the hierarchy. But if we have a cell
-                # with text next to a cell with a link.... Ditto for
-                # sections on the same line.
-                #
-                else:
-                    layoutRoles = [pyatspi.ROLE_TABLE_CELL,
-                                   pyatspi.ROLE_SECTION,
-                                   pyatspi.ROLE_LIST_ITEM]
-                    if role in layoutRoles:
-                        acc1 = obj
-                    else:
-                        acc1 = self.utilities.ancestorWithRole(
-                            obj, layoutRoles, [pyatspi.ROLE_DOCUMENT_FRAME])
-                    if acc1:
-                        if lastObj.getRole() == acc1.getRole():
-                            acc2 = lastObj
-                        else:
-                            acc2 = self.utilities.ancestorWithRole(
-                                lastObj,
-                                layoutRoles,
-                                [pyatspi.ROLE_DOCUMENT_FRAME])
-                        if not self.utilities.isSameObject(acc1, acc2):
-                            self.addToLineAsBrailleRegion(" ", line)
-
             self.addBrailleRegionsToLine(regions, line)
+            lastObj = obj
 
-            if isLastObject:
-                line.regions[-1].string = line.regions[-1].string.rstrip(" ")
+        if line.regions:
+            line.regions[-1].string = line.regions[-1].string.rstrip(" ")
+
+        # TODO - JD: This belongs in the generator.
+        if lastObj and lastObj.getRole() != pyatspi.ROLE_HEADING:
+            heading = self.utilities.ancestorWithRole(
+                lastObj, [pyatspi.ROLE_HEADING], [pyatspi.ROLE_DOCUMENT_FRAME])
+            if heading:
+                level = self.utilities.headingLevel(heading)
+                string = " %s" % object_properties.ROLE_HEADING_LEVEL_BRAILLE % level
+                self.addToLineAsBrailleRegion(string, line)
 
         if extraRegion:
             self.addBrailleRegionToLine(extraRegion, line)
@@ -1765,26 +1683,6 @@ class Script(default.Script):
 
         return None
  
-    def getHeadingLevel(self, obj):
-        """Determines the heading level of the given object.  A value
-        of 0 means there is no heading level."""
-
-        level = 0
-
-        if obj is None:
-            return level
-
-        if obj.getRole() == pyatspi.ROLE_HEADING:
-            attributes = obj.getAttributes()
-            if attributes is None:
-                return level
-            for attribute in attributes:
-                if attribute.startswith("level:"):
-                    level = int(attribute.split(":")[1])
-                    break
-
-        return level
-
     def getTopOfFile(self):
         """Returns the object and first caret offset at the top of the
          document frame."""
@@ -1997,7 +1895,11 @@ class Script(default.Script):
         doNotDescend = obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
                        and obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
                                              pyatspi.ROLE_LIST_BOX,
-                                             pyatspi.ROLE_LIST]
+                                             pyatspi.ROLE_LIST,
+                                             pyatspi.ROLE_PUSH_BUTTON,
+                                             pyatspi.ROLE_TABLE_CELL,
+                                             pyatspi.ROLE_TOGGLE_BUTTON,
+                                             pyatspi.ROLE_TOOL_BAR]
 
         isHidden = self.utilities.isHidden(obj)
 
@@ -2109,7 +2011,11 @@ class Script(default.Script):
         doNotDescend = obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
                        and obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
                                              pyatspi.ROLE_LIST_BOX,
-                                             pyatspi.ROLE_LIST]
+                                             pyatspi.ROLE_LIST,
+                                             pyatspi.ROLE_PUSH_BUTTON,
+                                             pyatspi.ROLE_TABLE_CELL,
+                                             pyatspi.ROLE_TOGGLE_BUTTON,
+                                             pyatspi.ROLE_TOOL_BAR]
 
         isHidden = self.utilities.isHidden(obj)
 
@@ -2440,50 +2346,36 @@ class Script(default.Script):
         where the caret is.
         """
 
-        # We'll let the default script handle entries and other entry-like
-        # things (e.g. the text portion of a dojo spin button).
-        #
-        if not self.inDocumentContent(obj) \
+        if self._inFocusMode or not self.inDocumentContent(obj) \
            or self.utilities.isEntry(obj) \
            or self.utilities.isPasswordText(obj):
             return default.Script.getTextLineAtCaret(self, obj, offset)
 
-        # Find the current line.
-        #
-        contextObj, contextOffset = self.getCaretContext()
-        contextOffset = max(0, contextOffset)
-        contents = self.getLineContentsAtOffset(contextObj, contextOffset)
+        if offset == None:
+            try:
+                offset = max(0, obj.queryText().caretOffset)
+            except:
+                offset = 0
 
-        # Determine the caretOffset.
-        #
-        if self.utilities.isSameObject(obj, contextObj):
+        contextObj, contextOffset = self.getCaretContext()
+        if self.utilities.isSameObject(contextObj, obj):
             caretOffset = contextOffset
         else:
-            try:
-                text = obj.queryText()
-            except:
-                caretOffset = 0
-            else:
-                caretOffset = text.caretOffset
+            caretOffset = offset
 
-        # The reason we typically use this method is to present the contents
-        # of the current line, so our initial assumption is that the obj
-        # being passed in is also on this line. We'll try that first. We
-        # might have multiple instances of obj, in which case we'll have
-        # to consider the offset as well.
-        #
-        for content in contents:
-            candidate, startOffset, endOffset, string = content
-            if self.utilities.isSameObject(candidate, obj) \
-               and (offset is None or (startOffset <= offset <= endOffset)):
+        contents = self.getLineContentsAtOffset(obj, offset)
+        contents = list(filter(lambda x: x[0] == obj, contents))
+        if len(contents) == 1:
+            index = 0
+        else:
+            index = self.utilities.findObjectInContents(obj, offset, contents)
+
+        if index > -1:
+            candidate, startOffset, endOffset, string = contents[index]
+            if string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1:
                 return string, caretOffset, startOffset
 
-        # If we're still here, obj presumably is not on this line. This
-        # shouldn't happen, but if it does we'll let the default script
-        # handle it for now.
-        #
-        #print "getTextLineAtCaret failed"
-        return default.Script.getTextLineAtCaret(self, obj, offset)
+        return '', 0, 0
 
     def searchForCaretLocation(self, acc):
         """Attempts to locate the caret on the page independent of our

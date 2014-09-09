@@ -53,9 +53,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
-    ["KNOWN ISSUE: The new smarts for hacking around Gecko AtkText bugs hasn't yet been given to braille.",
-     "BRAILLE LINE:  '\xa0'",
-     "     VISIBLE:  '\xa0', cursor=1",
+    ["BRAILLE LINE:  '2 (5 oz.) Filet Mignons'",
+     "     VISIBLE:  '2 (5 oz.) Filet Mignons', cursor=0",
      "SPEECH OUTPUT: '2 (5 oz.) Filet Mignons",
      "'"]))
 
@@ -63,8 +62,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
-    ["BRAILLE LINE:  '\xa0'",
-     "     VISIBLE:  '\xa0', cursor=1",
+    ["BRAILLE LINE:  '2 (5 oz.) Top Sirloins'",
+     "     VISIBLE:  '2 (5 oz.) Top Sirloins', cursor=0",
      "SPEECH OUTPUT: '2 (5 oz.) Top Sirloins",
      "'"]))
 
@@ -72,8 +71,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
-    ["BRAILLE LINE:  '\xa0'",
-     "     VISIBLE:  '\xa0', cursor=1",
+    ["BRAILLE LINE:  '4 (4 oz.) Foobar Steaks Burgers'",
+     "     VISIBLE:  '4 (4 oz.) Foobar Steaks Burgers', cursor=0",
      "SPEECH OUTPUT: '4 (4 oz.) Foobar Steaks Burgers",
      "'"]))
 
@@ -81,8 +80,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "9. Line Down",
-    ["BRAILLE LINE:  '\xa0'",
-     "     VISIBLE:  '\xa0', cursor=1",
+    ["BRAILLE LINE:  '6 (5.75 oz.) Stuffed Baked Potatoes'",
+     "     VISIBLE:  '6 (5.75 oz.) Stuffed Baked Potat', cursor=0",
      "SPEECH OUTPUT: '6 (5.75 oz.) Stuffed Baked Potatoes",
      "'"]))
 
@@ -90,8 +89,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "10. Line Down",
-    ["BRAILLE LINE:  '\xa0'",
-     "     VISIBLE:  '\xa0', cursor=1",
+    ["BRAILLE LINE:  '2 (4.5 oz.) Stuffed Sole with Scallops and Crab'",
+     "     VISIBLE:  '2 (4.5 oz.) Stuffed Sole with Sc', cursor=0",
      "SPEECH OUTPUT: '2 (4.5 oz.) Stuffed Sole with Scallops and Crab",
      "'"]))
 
@@ -99,8 +98,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "11. Line Down",
-    ["BRAILLE LINE:  '\xa0'",
-     "     VISIBLE:  '\xa0', cursor=1",
+    ["BRAILLE LINE:  '1 (6 in.) Chocolate Lover's Cake'",
+     "     VISIBLE:  '1 (6 in.) Chocolate Lover's Cake', cursor=0",
      "SPEECH OUTPUT: '1 (6 in.) Chocolate Lover's Cake",
      "'"]))
 
@@ -123,9 +122,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "14. Line Up",
-    ["KNOWN ISSUE: The new smarts for hacking around Gecko AtkText bugs hasn't yet been given to braille.",
-     "BRAILLE LINE:  '\xa0'",
-     "     VISIBLE:  '\xa0', cursor=1",
+    ["BRAILLE LINE:  '1 (6 in.) Chocolate Lover's Cake'",
+     "     VISIBLE:  '1 (6 in.) Chocolate Lover's Cake', cursor=0",
      "SPEECH OUTPUT: '1 (6 in.) Chocolate Lover's Cake",
      "'"]))
 
@@ -133,8 +131,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "15. Line Up",
-    ["BRAILLE LINE:  '\xa0'",
-     "     VISIBLE:  '\xa0', cursor=1",
+    ["BRAILLE LINE:  '2 (4.5 oz.) Stuffed Sole with Scallops and Crab'",
+     "     VISIBLE:  '2 (4.5 oz.) Stuffed Sole with Sc', cursor=0",
      "SPEECH OUTPUT: '2 (4.5 oz.) Stuffed Sole with Scallops and Crab",
      "'"]))
 
@@ -142,8 +140,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "16. Line Up",
-    ["BRAILLE LINE:  '\xa0'",
-     "     VISIBLE:  '\xa0', cursor=1",
+    ["BRAILLE LINE:  '6 (5.75 oz.) Stuffed Baked Potatoes'",
+     "     VISIBLE:  '6 (5.75 oz.) Stuffed Baked Potat', cursor=0",
      "SPEECH OUTPUT: '6 (5.75 oz.) Stuffed Baked Potatoes",
      "'"]))
 
@@ -151,8 +149,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "17. Line Up",
-    ["BRAILLE LINE:  '\xa0'",
-     "     VISIBLE:  '\xa0', cursor=1",
+    ["BRAILLE LINE:  '4 (4 oz.) Foobar Steaks Burgers'",
+     "     VISIBLE:  '4 (4 oz.) Foobar Steaks Burgers', cursor=0",
      "SPEECH OUTPUT: '4 (4 oz.) Foobar Steaks Burgers",
      "'"]))
 
@@ -160,8 +158,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "18. Line Up",
-    ["BRAILLE LINE:  '\xa0'",
-     "     VISIBLE:  '\xa0', cursor=1",
+    ["BRAILLE LINE:  '2 (5 oz.) Top Sirloins'",
+     "     VISIBLE:  '2 (5 oz.) Top Sirloins', cursor=0",
      "SPEECH OUTPUT: '2 (5 oz.) Top Sirloins",
      "'"]))
 
@@ -169,8 +167,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "19. Line Up",
-    ["BRAILLE LINE:  '\xa0'",
-     "     VISIBLE:  '\xa0', cursor=1",
+    ["BRAILLE LINE:  '2 (5 oz.) Filet Mignons'",
+     "     VISIBLE:  '2 (5 oz.) Filet Mignons', cursor=0",
      "SPEECH OUTPUT: '2 (5 oz.) Filet Mignons",
      "'"]))
 

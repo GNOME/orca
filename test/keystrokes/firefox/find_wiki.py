@@ -10,13 +10,14 @@ sequence = MacroSequence()
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(KeyComboAction("<Control>F"))
 sequence.append(TypeAction("orca"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "1. Return to next result",
-    ["BRAILLE LINE:  'Welcome to Orca! heading'",
-     "     VISIBLE:  'Welcome to Orca! heading', cursor=12",
+    ["BRAILLE LINE:  'Welcome to Orca! h1'",
+     "     VISIBLE:  'Welcome to Orca! h1', cursor=12",
      "SPEECH OUTPUT: 'Welcome to Orca!'",
      "SPEECH OUTPUT: 'heading level 1'"]))
 
@@ -34,18 +35,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "3. Return to next result",
-    ["KNOWN ISSUE: Displayed text will happen as part of the braille generation rewrite",
-     "BRAILLE LINE:  'paragraph'",
-     "     VISIBLE:  'paragraph', cursor=1",
+    ["BRAILLE LINE:  'Orca is a free, open source, flexible, extensible, and  $l'",
+     "     VISIBLE:  'Orca is a free, open source, fle', cursor=1",
      "SPEECH OUTPUT: 'Orca is a free, open source, flexible, extensible, and '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "4. Return to next result",
-    ["KNOWN ISSUE: Displayed text will happen as part of the braille generation rewrite",
-     "BRAILLE LINE:  'paragraph'",
-     "     VISIBLE:  'paragraph', cursor=1",
+    ["BRAILLE LINE:  'Orca is a free, open source, flexible, extensible, and  $l'",
+     "     VISIBLE:  'rce, flexible, extensible, and  ', cursor=32",
      "SPEECH OUTPUT: 'synthesis, braille, and magnification, Orca helps provide '"]))
 
 sequence.append(utils.StartRecordingAction())

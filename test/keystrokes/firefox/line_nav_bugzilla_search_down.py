@@ -44,8 +44,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
-    ["BRAILLE LINE:  ' Short Bug Search Form Complicated Bug Search Form  '",
-     "     VISIBLE:  ' Short Bug Search Form Complicat', cursor=1",
+    ["BRAILLE LINE:  'Short Bug Search Form Complicated Bug Search Form'",
+     "     VISIBLE:  'Short Bug Search Form Complicate', cursor=0",
      "SPEECH OUTPUT: 'Short Bug Search Form '",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'Complicated Bug Search Form '"]))
@@ -87,10 +87,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
-    ["BRAILLE LINE:  'Admin list box'",
-     "     VISIBLE:  'Admin list box', cursor=0",
+    ["BRAILLE LINE:  'Admin  list box'",
+     "     VISIBLE:  'Admin  list box', cursor=0",
      "SPEECH OUTPUT: 'Classification:'",
-     "SPEECH OUTPUT: 'Admin'",
+     "SPEECH OUTPUT: 'Admin '",
      "SPEECH OUTPUT: 'multi-select'",
      "SPEECH OUTPUT: 'List with 8 items'"]))
 
@@ -180,27 +180,25 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "15. Line Down",
-    ["BRAILLE LINE:  'A Comment: contains the string combo box $l table cell'",
+    ["BRAILLE LINE:  'A Comment: contains the string combo box $l'",
      "     VISIBLE:  'A Comment: contains the string c', cursor=1",
      "SPEECH OUTPUT: 'A Comment:'",
      "SPEECH OUTPUT: 'row header'",
      "SPEECH OUTPUT: 'contains the string'",
      "SPEECH OUTPUT: 'combo box'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'blank'"]))
+     "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "16. Line Down",
-    ["BRAILLE LINE:  'Whiteboard: contains all of the words/strings combo box $l table cell'",
+    ["BRAILLE LINE:  'Whiteboard: contains all of the words/strings combo box $l'",
      "     VISIBLE:  'Whiteboard: contains all of the ', cursor=1",
      "SPEECH OUTPUT: 'Whiteboard:'",
      "SPEECH OUTPUT: 'row header'",
      "SPEECH OUTPUT: 'contains all of the words/strings'",
      "SPEECH OUTPUT: 'combo box'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'blank'"]))
+     "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -510,9 +508,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "48. Line Down",
-    ["BRAILLE LINE:  'table cell \(comma-separated list\)'",
-     "     VISIBLE:  'table cell \(comma-separated list', cursor=0",
-     "SPEECH OUTPUT: 'blank'",
+    ["BRAILLE LINE:  '(comma-separated list)'",
+     "     VISIBLE:  '(comma-separated list)', cursor=0",
      "SPEECH OUTPUT: '(comma-separated list)'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -535,8 +532,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "51. Line Down",
-    ["BRAILLE LINE:  ' $l '",
-     "     VISIBLE:  ' $l ', cursor=0",
+    ["BRAILLE LINE:  ' $l and'",
+     "     VISIBLE:  ' $l and', cursor=0",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'and '",
      "SPEECH OUTPUT: 'entry'",
@@ -648,8 +645,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "63. Line Down",
-    ["BRAILLE LINE:  '    < > check box and remember these as my default search options'",
-     "     VISIBLE:  '    < > check box and remember t', cursor=1",
+    ["BRAILLE LINE:  '< > check box and remember these as my default search options'",
+     "     VISIBLE:  '< > check box and remember these', cursor=0",
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'not checked'",
      "SPEECH OUTPUT: ' and remember these as my default search options '"]))
@@ -684,8 +681,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "67. Line Down",
-    ["BRAILLE LINE:  '--- combo box --- combo box  $l Or push button'",
-     "     VISIBLE:  '--- combo box --- combo box  $l ', cursor=0",
+    ["BRAILLE LINE:  '--- combo box --- combo box $l Or push button'",
+     "     VISIBLE:  '--- combo box --- combo box $l O', cursor=0",
      "SPEECH OUTPUT: '---'",
      "SPEECH OUTPUT: 'combo box'",
      "SPEECH OUTPUT: '---'",
@@ -698,8 +695,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "68. Line Down",
-    ["BRAILLE LINE:  'And push button       Add another boolean chart push button      '",
-     "     VISIBLE:  'And push button       Add anothe', cursor=1",
+    ["BRAILLE LINE:  'And push button Add another boolean chart push button'",
+     "     VISIBLE:  'And push button Add another bool', cursor=1",
      "SPEECH OUTPUT: 'And'",
      "SPEECH OUTPUT: 'push button'",
      "SPEECH OUTPUT: 'Add another boolean chart'",

@@ -50,26 +50,6 @@ class Utilities(script_utilities.Utilities):
 
         script_utilities.Utilities.__init__(self, script)
 
-    def headingLevel(self, obj):
-        """Determines the heading level of the given object.  A value
-        of 0 means there is no heading level."""
-
-        level = 0
-
-        if obj is None:
-            return level
-
-        if obj.getRole() == pyatspi.ROLE_HEADING:
-            attributes = obj.getAttributes()
-            if attributes is None:
-                return level
-            for attribute in attributes:
-                if attribute.startswith("level:"):
-                    level = int(attribute.split(":")[1])
-                    break
-
-        return level
-
     def isWebKitGtk(self, obj):
         """Returns True if this object is a WebKitGtk object."""
 

@@ -20,8 +20,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic Where Am I next item",
-    ["BRAILLE LINE:  '• In a paragraph'",
-     "     VISIBLE:  '• In a paragraph', cursor=1",
+    ["BRAILLE LINE:  '•In a paragraph'",
+     "     VISIBLE:  '•In a paragraph', cursor=1",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: '• In a paragraph'",
      "SPEECH OUTPUT: '2 of 4'"]))
@@ -31,8 +31,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "3. Basic Where Am I next item",
-    ["BRAILLE LINE:  '• In a section'",
-     "     VISIBLE:  '• In a section', cursor=1",
+    ["BRAILLE LINE:  '•In a section'",
+     "     VISIBLE:  '•In a section', cursor=1",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: '• In a section'",
      "SPEECH OUTPUT: '3 of 4'"]))
@@ -75,8 +75,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "7. Basic Where Am I next item",
-    ["BRAILLE LINE:  '• In a paragraph that's in a section'",
-     "     VISIBLE:  '• In a paragraph that's in a sec', cursor=1",
+    ["BRAILLE LINE:  '•In a paragraph that's in a section'",
+     "     VISIBLE:  '•In a paragraph that's in a sect', cursor=1",
      "SPEECH OUTPUT: 'list item'",
      "SPEECH OUTPUT: '• In a paragraph that's in a section'",
      "SPEECH OUTPUT: '4 of 4'"]))

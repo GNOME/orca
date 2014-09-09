@@ -32,6 +32,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.braille_generator as braille_generator
+import orca.object_properties as object_properties
 
 from orca.orca_i18n import _ # for gettext support
 
@@ -63,23 +64,49 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                 obj, [pyatspi.ROLE_LINK], [pyatspi.ROLE_DOCUMENT_FRAME])
         return imageLink
 
+    def __generateHeadingRole(self, obj):
+        result = []
+        level = self._script.utilities.headingLevel(obj)
+        result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
+
+        return result
+
     def _generateRoleName(self, obj, **args):
         """Prevents some roles from being displayed."""
 
         doNotDisplay = [pyatspi.ROLE_FORM,
                         pyatspi.ROLE_SECTION,
+                        pyatspi.ROLE_PARAGRAPH,
                         pyatspi.ROLE_UNKNOWN]
 
         if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
             doNotDisplay.extend([pyatspi.ROLE_LIST,
                                  pyatspi.ROLE_LIST_ITEM,
+                                 pyatspi.ROLE_COLUMN_HEADER,
+                                 pyatspi.ROLE_ROW_HEADER,
+                                 pyatspi.ROLE_TABLE_CELL,
                                  pyatspi.ROLE_PANEL])
+
+        if args.get('startOffset') != None and args.get('endOffset') != None:
+            doNotDisplay.append(pyatspi.ROLE_ALERT)
 
         role = args.get('role', obj.getRole())
         if role in doNotDisplay:
             return []
 
-        return braille_generator.BrailleGenerator._generateRoleName(
+        if role == pyatspi.ROLE_HEADING:
+            return self.__generateHeadingRole(obj)
+
+        result = braille_generator.BrailleGenerator._generateRoleName(
+            self, obj, **args)
+
+        return result
+
+    def _generateLabelOrName(self, obj, **args):
+        if self._script.utilities.isTextBlockElement(obj):
+            return []
+
+        return braille_generator.BrailleGenerator._generateLabelOrName(
             self, obj, **args)
 
     def _generateName(self, obj, **args):
@@ -163,7 +190,10 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
     def _generateExpandedEOCs(self, obj, **args):
         """Returns the expanded embedded object characters for an object."""
         result = []
-        text = self._script.utilities.expandEOCs(obj)
+
+        startOffset = args.get('startOffset', 0)
+        endOffset = args.get('endOffset', -1)
+        text = self._script.utilities.expandEOCs(obj, startOffset, endOffset)
         if text:
             result.append(text)
         return result
@@ -171,11 +201,11 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
     def generateBraille(self, obj, **args):
         result = []
         args['includeContext'] = not self._script.inDocumentContent(obj)
-
         oldRole = None
         if self._script.utilities.isEntry(obj):
             oldRole = self._overrideRole(pyatspi.ROLE_ENTRY, args)
-        elif self._script.utilities.isClickableElement(obj):
+        elif self._script.utilities.isClickableElement(obj) \
+             or self._script.utilities.isLink(obj):
             oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
 
         # Treat menu items in collapsed combo boxes as if the combo box
@@ -194,3 +224,20 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if oldRole:
             self._restoreRole(oldRole, args)
         return result
+
+    def _generateEol(self, obj, **args):
+        end = args.get('endOffset')
+        if end == None or obj.getState().contains(pyatspi.STATE_EDITABLE) \
+           or not self._script.inDocumentContent(obj):
+            return braille_generator.BrailleGenerator._generateEol(self, obj, **args)
+
+        return []
+
+    def _generateNestingLevel(self, obj, **args):
+        start = args.get('startOffset')
+        end = args.get('endOffset')
+        if start != None and end != None:
+            return []
+
+        return braille_generator.BrailleGenerator._generateNestingLevel(
+            self, obj, **args)

@@ -87,86 +87,6 @@ class Utilities(script_utilities.Utilities):
 
         return index
 
-    def displayedText(self, obj):
-        """Returns the text being displayed for an object.
-
-        Arguments:
-        - obj: the object
-
-        Returns the text being displayed for an object or None if there isn't
-        any text being shown.  Overridden in this script because we have lots
-        of whitespace we need to remove.
-        """
-
-        displayedText = script_utilities.Utilities.displayedText(self, obj)
-        if displayedText \
-           and not (obj.getState().contains(pyatspi.STATE_EDITABLE) \
-                    or obj.getRole() in [pyatspi.ROLE_ENTRY,
-                                         pyatspi.ROLE_PASSWORD_TEXT]):
-            displayedText = displayedText.strip()
-            # Some ARIA widgets (e.g. the list items in the chat box
-            # in gmail) implement the accessible text interface but
-            # only contain whitespace.
-            #
-            if not displayedText \
-               and obj.getState().contains(pyatspi.STATE_FOCUSED):
-                label = self.displayedLabel(obj)
-                if not label:
-                    displayedText = obj.name
-
-        return displayedText
-
-    def displayedLabel(self, obj):
-        """If there is an object labelling the given object, return the
-        text being displayed for the object labelling this object.
-        Otherwise, return None.  Overridden here to handle instances
-        of bogus labels and form fields where a lack of labels necessitates
-        our attempt to guess the text that is functioning as a label.
-
-        Argument:
-        - obj: the object in question
-
-        Returns the string of the object labelling this object, or None
-        if there is nothing of interest here.
-        """
-
-        string = None
-        labels = self.labelsForObject(obj)
-        for label in labels:
-            # Check to see if the official labels are valid.
-            #
-            bogus = False
-            if self._script.inDocumentContent() \
-               and obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
-                                     pyatspi.ROLE_LIST_BOX,
-                                     pyatspi.ROLE_LIST]:
-                # Bogus case #1:
-                # <label></label> surrounding the entire combo box/list which
-                # makes the entire combo box's/list's contents serve as the
-                # label. We can identify this case because the child of the
-                # label is the combo box/list. See bug #428114, #441476.
-                #
-                if label.childCount:
-                    bogus = (label[0].getRole() == obj.getRole())
-
-            if not bogus:
-                # Bogus case #2:
-                # <label></label> surrounds not just the text serving as the
-                # label, but whitespace characters as well (e.g. the text
-                # serving as the label is on its own line within the HTML).
-                # Because of the Mozilla whitespace bug, these characters
-                # will become part of the label which will cause the label
-                # and name to no longer match and Orca to seemingly repeat
-                # the label.  Therefore, strip out surrounding whitespace.
-                # See bug #441610 and
-                # https://bugzilla.mozilla.org/show_bug.cgi?id=348901
-                #
-                expandedLabel = self.expandEOCs(label)
-                if expandedLabel:
-                    string = self.appendString(string, expandedLabel.strip())
-
-        return string
-
     def documentFrame(self):
         """Returns the document frame that holds the content being shown."""
 
@@ -239,7 +159,8 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             obj = orca_state.locusOfFocus
 
-        if obj and obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
+        if obj and obj.parent \
+           and obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
             return False
 
         return script_utilities.Utilities.inFindToolbar(obj)
@@ -257,6 +178,23 @@ class Utilities(script_utilities.Utilities):
            and obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
                                  pyatspi.ROLE_PARAGRAPH,
                                  pyatspi.ROLE_TEXT]:
+            return True
+
+        return False
+
+    def isLink(self, obj):
+        """Returns True if we should treat this object as a link."""
+
+        if not obj:
+            return False
+
+        role = obj.getRole()
+        if role == pyatspi.ROLE_LINK:
+            return True
+
+        if role == pyatspi.ROLE_TEXT \
+           and obj.parent.getRole() == pyatspi.ROLE_LINK \
+           and obj.name and obj.name == obj.parent.name:
             return True
 
         return False
@@ -583,7 +521,8 @@ class Utilities(script_utilities.Utilities):
                  pyatspi.ROLE_MENU_ITEM,
                  pyatspi.ROLE_RADIO_MENU_ITEM,
                  pyatspi.ROLE_RADIO_BUTTON,
-                 pyatspi.ROLE_PUSH_BUTTON]
+                 pyatspi.ROLE_PUSH_BUTTON,
+                 pyatspi.ROLE_TOGGLE_BUTTON]
 
         role = obj.getRole()
         if role in roles:
@@ -825,15 +764,62 @@ class Utilities(script_utilities.Utilities):
 
         return objects
 
+    def isTextBlockElement(self, obj):
+        if not self._script.inDocumentContent(obj):
+            return False
+
+        textBlockElements = [pyatspi.ROLE_COLUMN_HEADER,
+                             pyatspi.ROLE_DOCUMENT_FRAME,
+                             pyatspi.ROLE_FORM,
+                             pyatspi.ROLE_HEADING,
+                             pyatspi.ROLE_LIST_ITEM,
+                             pyatspi.ROLE_PANEL,
+                             pyatspi.ROLE_PARAGRAPH,
+                             pyatspi.ROLE_ROW_HEADER,
+                             pyatspi.ROLE_SECTION,
+                             pyatspi.ROLE_TEXT,
+                             pyatspi.ROLE_TABLE_CELL]
+
+        role = obj.getRole()
+        if not role in textBlockElements:
+            return False
+
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EDITABLE):
+            return False
+
+        if not state.contains(pyatspi.STATE_FOCUSABLE) \
+           or role == pyatspi.ROLE_DOCUMENT_FRAME:
+            return True
+
+        return False
+
     def filterContentsForPresentation(self, contents):
         def _include(x):
             obj, start, end, string = x
-            if not obj or (string and not string.strip()) \
+            if not obj:
+                return False
+
+            if (self.isTextBlockElement(obj) and not string.strip()) \
                or self._script.isLabellingContents(obj, contents):
                 return False
+
             return True
 
         return list(filter(_include, contents))
+
+    def needsSeparator(self, lastChar, nextChar):
+        if lastChar.isspace() or nextChar.isspace():
+            return False
+
+        openingPunctuation = ["(", "[", "{", "<"]
+        closingPunctuation = [".", "?", "!", ":", ",", ";", ")", "]", "}", ">"]
+        if lastChar in closingPunctuation or nextChar in openingPunctuation:
+            return True
+        if lastChar in openingPunctuation or nextChar in closingPunctuation:
+            return False
+
+        return lastChar.isalnum()
 
     def getObjectsFromEOCs(self, obj, offset=None, boundary=None):
         """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS

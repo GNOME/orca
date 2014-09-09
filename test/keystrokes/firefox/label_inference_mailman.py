@@ -15,8 +15,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "1. Next form field",
-    ["BRAILLE LINE:  ' search mozilla:  $l Go push button'",
-     "     VISIBLE:  ' search mozilla:  $l Go push but', cursor=0",
+    ["BRAILLE LINE:  'search mozilla:  $l Go push button'",
+     "     VISIBLE:  'search mozilla:  $l Go push butt', cursor=0",
      "SPEECH OUTPUT: 'search mozilla: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -26,8 +26,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "2. Next form field",
     ["KNOWN ISSUE: We are not scrolling to the current item",
-     "BRAILLE LINE:  ' search mozilla:  $l Go push button'",
-     "     VISIBLE:  ' search mozilla:  $l Go push but', cursor=0",
+     "BRAILLE LINE:  'search mozilla:  $l Go push button'",
+     "     VISIBLE:  'search mozilla:  $l Go push butt', cursor=0",
      "SPEECH OUTPUT: 'Go push button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -36,8 +36,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "3. Next form field",
-    ["BRAILLE LINE:  'Your email address: $l '",
-     "     VISIBLE:  'Your email address: $l ', cursor=0",
+    ["BRAILLE LINE:  'Your email address: $l'",
+     "     VISIBLE:  'Your email address: $l', cursor=0",
      "SPEECH OUTPUT: 'Your email address: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -46,8 +46,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "4. Next form field",
-    ["BRAILLE LINE:  'Your name (optional): $l '",
-     "     VISIBLE:  'Your name (optional): $l ', cursor=0",
+    ["BRAILLE LINE:  'Your name (optional): $l'",
+     "     VISIBLE:  'Your name (optional): $l', cursor=0",
      "SPEECH OUTPUT: 'Your name (optional): entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -56,8 +56,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "5. Next form field",
-    ["BRAILLE LINE:  'Pick a password: $l '",
-     "     VISIBLE:  'Pick a password: $l ', cursor=0",
+    ["BRAILLE LINE:  'Pick a password: $l'",
+     "     VISIBLE:  'Pick a password: $l', cursor=0",
      "SPEECH OUTPUT: 'Pick a password: password text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -66,8 +66,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "6. Next form field",
-    ["BRAILLE LINE:  'Reenter password to confirm: $l '",
-     "     VISIBLE:  'Reenter password to confirm: $l ', cursor=0",
+    ["BRAILLE LINE:  'Reenter password to confirm: $l'",
+     "     VISIBLE:  'Reenter password to confirm: $l', cursor=0",
      "SPEECH OUTPUT: 'Reenter password to confirm: password text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -106,7 +106,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "10. Next form field",
-    ["BRAILLE LINE:  'Admin address:  $l Password:  $l  Visit Subscriber List push button'",
+    ["BRAILLE LINE:  'Admin address:  $l Password:  $l Visit Subscriber List push button'",
      "     VISIBLE:  'Admin address:  $l Password:  $l', cursor=0",
      "SPEECH OUTPUT: 'Admin address: entry'"]))
 
@@ -116,7 +116,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "11. Next form field",
-    ["BRAILLE LINE:  'Admin address:  $l Password:  $l  Visit Subscriber List push button'",
+    ["BRAILLE LINE:  'Admin address:  $l Password:  $l Visit Subscriber List push button'",
      "     VISIBLE:  'Admin address:  $l Password:  $l', cursor=0",
      "SPEECH OUTPUT: 'Password: password text'"]))
 
@@ -126,7 +126,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "12. Next form field",
-    ["BRAILLE LINE:  'Admin address:  $l Password:  $l  Visit Subscriber List push button'",
+    ["BRAILLE LINE:  'Admin address:  $l Password:  $l Visit Subscriber List push button'",
      "     VISIBLE:  'Admin address:  $l Password:  $l', cursor=0",
      "SPEECH OUTPUT: 'Visit Subscriber List push button'"]))
 

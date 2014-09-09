@@ -16,11 +16,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "1. Space to press the Show TabContainer Dialog",
-    ["KNOWN ISSUE: We're presenting embedded object characters. This should go away with the braille fixes.",
-     "BRAILLE LINE:  '\ufffc\ufffc'",
-     "     VISIBLE:  '\ufffc\ufffc', cursor=0",
-     "BRAILLE LINE:  'First tab Second tab'",
-     "     VISIBLE:  'First tab Second tab', cursor=1",
+    ["BRAILLE LINE:  'TabContainer Dialog dialog'",
+     "     VISIBLE:  'TabContainer Dialog dialog', cursor=0",
+     "BRAILLE LINE:  'First tab page tab Second tab page tab'",
+     "     VISIBLE:  'First tab page tab Second tab pa', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "BRAILLE LINE:  'First tab page tab'",

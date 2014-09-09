@@ -63,9 +63,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "4. Tab",
-    ["KNOWN ISSUE: Braille is displaying embedded object characters. This should be fixed as part of the braille redo.",
-     "BRAILLE LINE:  'table cell \ufffc'",
-     "     VISIBLE:  'table cell \ufffc', cursor=12",
+    ["BRAILLE LINE:  'wk09_frozenmovie'",
+     "     VISIBLE:  'wk09_frozenmovie', cursor=1",
      "SPEECH OUTPUT: 'wk09_frozenmovie link image' voice=hyperlink"]))
 
 sequence.append(utils.AssertionSummaryAction())

@@ -23,9 +23,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Page_Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Ctrl Page Down to second tab",
-    ["KNOWN ISSUE: Missing a space",
-     "BRAILLE LINE:  'Crust VeggiesCarnivore Delivery'",
-     "     VISIBLE:  'Crust VeggiesCarnivore Delivery', cursor=7",
+    ["BRAILLE LINE:  'Crust page tab Veggies page tab Carnivore Delivery'",
+     "     VISIBLE:  'Veggies page tab Carnivore Deliv', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "BRAILLE LINE:  'Veggies page tab'",

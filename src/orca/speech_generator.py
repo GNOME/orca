@@ -1170,6 +1170,11 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
 

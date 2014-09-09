@@ -848,15 +848,6 @@ class Script(script.Script):
         line = self.getNewBrailleLine()
         braille.addLine(line)
 
-        # For multiline text areas, we only show the context if we
-        # are on the very first line.  Otherwise, we show only the
-        # line.
-        #
-        try:
-            text = obj.queryText()
-        except NotImplementedError:
-            text = None
-
         result = self.brailleGenerator.generateBraille(obj)
         self.addBrailleRegionsToLine(result[0], line)
 

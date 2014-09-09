@@ -2735,3 +2735,20 @@ class Utilities:
 
     def hasLongDesc(self, obj):
         return False
+
+    def headingLevel(self, obj):
+        level = 0
+
+        if obj is None:
+            return level
+
+        if obj.getRole() == pyatspi.ROLE_HEADING:
+            attributes = obj.getAttributes()
+            if attributes is None:
+                return level
+            for attribute in attributes:
+                if attribute.startswith("level:"):
+                    level = int(attribute.split(":")[1])
+                    break
+
+        return level
