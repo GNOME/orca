@@ -344,7 +344,7 @@ class Generator:
         result.extend(label)
         if not len(label):
             result.extend(name)
-        elif len(name) and name[0] != label[0]:
+        elif len(name) and name[0].strip() != label[0].strip():
             result.extend(name)
         return result
 
@@ -948,12 +948,34 @@ class Generator:
     #                                                                   #
     #####################################################################
 
+    def _generateSubstring(self, obj, **args):
+        start = args.get('startOffset')
+        end = args.get('endOffset')
+        if start == None or end == None:
+            return []
+
+        substring = self._script.utilities.substring(obj, start, end)
+        if substring and substring.strip() != obj.name:
+            return [substring]
+
+        return []
+
+    def _generateStartOffset(self, obj, **args):
+        return args.get('startOffset')
+
+    def _generateEndOffset(self, obj, **args):
+        return args.get('endOffset')
+
     def _generateCurrentLineText(self, obj, **args ):
         """Returns an array of strings for use by speech and braille
         that represents the current line of text, if
         this is a text object.  [[[WDW - consider returning an empty
         array if this is not a text object.]]]
         """
+        result = self._generateSubstring(obj, **args)
+        if result:
+            return result
+
         [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
         return [text]
 
@@ -961,6 +983,10 @@ class Generator:
         """Returns an array of strings for use by speech and braille that
         represents all the text being displayed by the object.
         """
+        result = self._generateSubstring(obj, **args)
+        if result:
+            return result
+
         displayedText = self._script.utilities.displayedText(obj)
         if not displayedText:
             return []

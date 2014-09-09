@@ -52,7 +52,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'Classification: multi-select List with 8 items'",
-     "SPEECH OUTPUT: 'Admin'",
+     "SPEECH OUTPUT: 'Admin '",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -232,7 +232,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '<x> check box', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",
-     "SPEECH OUTPUT: 'Email and Numbering panel'",
+     "SPEECH OUTPUT: 'Email and Numbering  panel'",
      "SPEECH OUTPUT: 'the bug assignee check box checked'",
      "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
@@ -452,8 +452,8 @@ sequence.append(utils.AssertPresentationAction(
     "46. Tab",
     ["BRAILLE LINE:  'Search push button'",
      "     VISIBLE:  'Search push button', cursor=1",
-     "BRAILLE LINE:  '    < > check box and remember these as my default search options'",
-     "     VISIBLE:  '    < > check box and remember t', cursor=0",
+     "BRAILLE LINE:  '< > check box and remember these as my default search options'",
+     "     VISIBLE:  '< > check box and remember these', cursor=0",
      "SPEECH OUTPUT: 'and remember these as my default search options check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -468,8 +468,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "48. Tab",
-    ["BRAILLE LINE:  '--- combo box --- combo box  $l Or push button'",
-     "     VISIBLE:  '--- combo box --- combo box  $l ', cursor=0",
+    ["BRAILLE LINE:  '--- combo box --- combo box $l Or push button'",
+     "     VISIBLE:  '--- combo box --- combo box $l O', cursor=0",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: '--- combo box'",
@@ -479,8 +479,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "49. Tab",
-    ["BRAILLE LINE:  '--- combo box --- combo box  $l Or push button'",
-     "     VISIBLE:  '--- combo box --- combo box  $l ', cursor=0",
+    ["BRAILLE LINE:  '--- combo box --- combo box $l Or push button'",
+     "     VISIBLE:  '--- combo box --- combo box $l O', cursor=0",
      "BRAILLE LINE:  '--- combo box'",
      "     VISIBLE:  '--- combo box', cursor=1",
      "SPEECH OUTPUT: '--- combo box'"]))

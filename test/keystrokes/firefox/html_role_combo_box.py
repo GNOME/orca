@@ -30,8 +30,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Severity normal combo box', cursor=10",
      "SPEECH OUTPUT: 'Severity'",
      "SPEECH OUTPUT: 'combo box'",
-     "SPEECH OUTPUT: 'normal'",
-     "SPEECH OUTPUT: '4 of 7'"]))
+     "SPEECH OUTPUT: 'normal'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

@@ -11,8 +11,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
-    ["BRAILLE LINE:  'FAQ h1'",
-     "     VISIBLE:  'FAQ h1', cursor=1",
+    ["BRAILLE LINE:  'FAQ  h1'",
+     "     VISIBLE:  'FAQ  h1', cursor=1",
      "SPEECH OUTPUT: 'FAQ '",
      "SPEECH OUTPUT: 'heading level 1'"]))
 
@@ -258,8 +258,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "29. Line Up",
-    ["BRAILLE LINE:  'FAQ h1'",
-     "     VISIBLE:  'FAQ h1', cursor=1",
+    ["BRAILLE LINE:  'FAQ  h1'",
+     "     VISIBLE:  'FAQ  h1', cursor=1",
      "SPEECH OUTPUT: 'FAQ '",
      "SPEECH OUTPUT: 'heading level 1'"]))
 

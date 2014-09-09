@@ -11,8 +11,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Add"))
 sequence.append(utils.AssertPresentationAction(
     "1. KP_Add to do a SayAll",
-    ["KNOWN ISSUE: Due to a test-timing, flakiness issue we do not always speak the urls for the last imagemap links",
-     "SPEECH OUTPUT: 'This looks like A to Z, but it's really Z to A.'",
+    ["SPEECH OUTPUT: 'This looks like A to Z, but it's really Z to A.'",
      "SPEECH OUTPUT: 'Test:'",
      "SPEECH OUTPUT: 'z image map link rect'",
      "SPEECH OUTPUT: 'y image map link rect'",
@@ -42,16 +41,10 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'a image map link rect'",
      "SPEECH OUTPUT: 'Here is some text.'",
      "SPEECH OUTPUT: 'Safeway had some interesting (and problematic) image maps. I didn't steal the images, but if you tab and look at the status bar, you should be able to see the URI for each region. We should also be speaking and brailling it correctly now -- at least as best as we can given what they gave us.'",
-     "SPEECH OUTPUT: 'blank'",
      "SPEECH OUTPUT: 'wk09_frozenmovie image link'",
      "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'blank'",
-     "SPEECH OUTPUT: 'blank'",
-     "SPEECH OUTPUT: 'shop.safeway.com link shop.safeway.com image map link'",
-     "SPEECH OUTPUT: 'Rancher's Reserve link Rancher's Reserve image map link'",
      "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'blank'",
-     "SPEECH OUTPUT: 'blank'"]))
+     "SPEECH OUTPUT: 'image'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

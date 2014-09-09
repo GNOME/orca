@@ -38,7 +38,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
-    ["BRAILLE LINE:  'Amusing numbers fall between  $l and  $l .'",
+    ["BRAILLE LINE:  'Amusing numbers fall between  $l and  $l.'",
      "     VISIBLE:  'Amusing numbers fall between  $l', cursor=1",
      "SPEECH OUTPUT: 'Amusing numbers fall between '",
      "SPEECH OUTPUT: 'entry'",
@@ -522,7 +522,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "57. Line Up",
-    ["BRAILLE LINE:  'Amusing numbers fall between  $l and  $l .'",
+    ["BRAILLE LINE:  'Amusing numbers fall between  $l and  $l.'",
      "     VISIBLE:  'Amusing numbers fall between  $l', cursor=1",
      "SPEECH OUTPUT: 'Amusing numbers fall between '",
      "SPEECH OUTPUT: 'entry'",

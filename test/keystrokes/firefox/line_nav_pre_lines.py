@@ -20,7 +20,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -28,7 +28,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -72,7 +72,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -88,7 +88,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "10. Line Up",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -96,7 +96,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "11. Line Up",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -140,7 +140,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "16. Line Up",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -148,7 +148,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "17. Line Up",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())

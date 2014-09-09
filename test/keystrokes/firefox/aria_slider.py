@@ -11,9 +11,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. tab to slider",
-    ["KNOWN ISSUE: The braille lacks spaces",
-     "BRAILLE LINE:  '0Move slider leftMy slider 10% slider'",
-     "     VISIBLE:  '0Move slider leftMy slider 10% s', cursor=0",
+    ["BRAILLE LINE:  '0 Move slider left My slider 10% slider'",
+     "     VISIBLE:  '0 Move slider left My slider 10%', cursor=0",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'My slider slider 10%'",
@@ -23,9 +22,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. basic whereAmI",
-    ["KNOWN ISSUE: The braille lacks spaces",
-     "BRAILLE LINE:  '0Move slider leftMy slider 10% slider'",
-     "     VISIBLE:  '0Move slider leftMy slider 10% s', cursor=0",
+    ["BRAILLE LINE:  '0 Move slider left My slider 10% slider'",
+     "     VISIBLE:  '0 Move slider left My slider 10%', cursor=0",
      "BRAILLE LINE:  'My slider 10% slider'",
      "     VISIBLE:  'My slider 10% slider', cursor=1",
      "SPEECH OUTPUT: 'My slider'",

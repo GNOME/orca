@@ -15,7 +15,7 @@ sequence.append(KeyComboAction("End"))
 sequence.append(utils.AssertPresentationAction(
     "1. End",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: 'newline'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -23,7 +23,7 @@ sequence.append(KeyComboAction("Home"))
 sequence.append(utils.AssertPresentationAction(
     "2. Home",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: 'newline'"]))
 
 sequence.append(utils.AssertionSummaryAction())

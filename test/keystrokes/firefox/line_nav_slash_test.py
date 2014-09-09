@@ -82,8 +82,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
-    ["BRAILLE LINE:  'Nickname  $l Password  $l Log in push button'",
-     "     VISIBLE:  'Nickname  $l Password  $l Log in', cursor=1",
+    ["BRAILLE LINE:  'Nickname $l Password $l Log in push button'",
+     "     VISIBLE:  'Nickname $l Password $l Log in p', cursor=1",
      "SPEECH OUTPUT: 'Nickname'",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'Password'",
@@ -167,8 +167,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "16. Line Up",
-    ["BRAILLE LINE:  'Nickname  $l Password  $l Log in push button'",
-     "     VISIBLE:  'Nickname  $l Password  $l Log in', cursor=1",
+    ["BRAILLE LINE:  'Nickname $l Password $l Log in push button'",
+     "     VISIBLE:  'Nickname $l Password $l Log in p', cursor=1",
      "SPEECH OUTPUT: 'Nickname'",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'Password'",

@@ -538,7 +538,7 @@ class Text(Region):
         try:
             endOffset = endOffset - self.lineOffset
         except TypeError:
-            pass
+            endOffset = len(string)
 
         try:
             self.startOffset = startOffset - self.lineOffset

@@ -13,8 +13,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow in Focus Mode",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0"]))
+    ["BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=0"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -30,8 +30,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Up Arrow in Browse Mode",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+    ["BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=0",
      "BRAILLE LINE:  'editor0 tool bar'",
      "     VISIBLE:  'editor0 tool bar', cursor=0",
      "SPEECH OUTPUT: 'editor0'",

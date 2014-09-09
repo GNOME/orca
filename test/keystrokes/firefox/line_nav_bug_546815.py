@@ -332,8 +332,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'check box'",
      "SPEECH OUTPUT: 'not checked'",
      "SPEECH OUTPUT: 'wild animal ",
-     "'",
-     "SPEECH OUTPUT: 'separator'"]))
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

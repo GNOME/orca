@@ -19,38 +19,35 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=0",
-     "SPEECH OUTPUT: 'document frame'"]))
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=0",
-     "SPEECH OUTPUT: 'document frame'",
-     "SPEECH OUTPUT: 'document frame'"]))
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
     ["KNOWN ISSUE: We're stuck here",
-     "BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=0",
-     "SPEECH OUTPUT: 'document frame'",
-     "SPEECH OUTPUT: 'document frame'"]))
+     "BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
     ["KNOWN ISSUE: We're stuck here",
-     "BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=0",
-     "SPEECH OUTPUT: 'document frame'",
-     "SPEECH OUTPUT: 'document frame'"]))
+     "BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>End"))
@@ -64,10 +61,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Up",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=0",
-     "SPEECH OUTPUT: 'document frame'",
-     "SPEECH OUTPUT: 'document frame'"]))
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
