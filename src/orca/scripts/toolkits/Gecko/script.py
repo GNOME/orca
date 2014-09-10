@@ -1902,9 +1902,11 @@ class Script(default.Script):
                                              pyatspi.ROLE_TOOL_BAR]
 
         isHidden = self.utilities.isHidden(obj)
+        isOffScreenLabel = self.utilities.isOffScreenLabel(obj, startOffset)
+        skip = isHidden or isOffScreenLabel
 
         text = self.utilities.queryNonEmptyText(obj)
-        if text and not isHidden:
+        if text and not skip:
             unicodeText = self.utilities.unicodeText(obj)
 
             # Delete the final space character if we find it.  Otherwise,
@@ -1936,7 +1938,7 @@ class Script(default.Script):
         # to place the caret inside the list, but rather treat the list
         # as a single object.  Otherwise, if it has children, look there.
         #
-        elif obj.childCount and obj[0] and not doNotDescend and not isHidden:
+        elif obj.childCount and obj[0] and not doNotDescend and not skip:
             try:
                 return self.findNextCaretInOrder(obj[0],
                                                  -1,
@@ -1944,7 +1946,7 @@ class Script(default.Script):
             except:
                 pass
 
-        elif includeNonText and startOffset < 0 and not isHidden:
+        elif includeNonText and startOffset < 0 and not skip:
             extents = obj.queryComponent().getExtents(0)
             if (extents.width != 0) and (extents.height != 0):
                 return [obj, 0]
@@ -2018,9 +2020,11 @@ class Script(default.Script):
                                              pyatspi.ROLE_TOOL_BAR]
 
         isHidden = self.utilities.isHidden(obj)
+        isOffScreenLabel = self.utilities.isOffScreenLabel(obj, startOffset)
+        skip = isHidden or isOffScreenLabel
 
         text = self.utilities.queryNonEmptyText(obj)
-        if text and not isHidden:
+        if text and not skip:
             unicodeText = self.utilities.unicodeText(obj)
 
             # Delete the final space character if we find it.  Otherwise,
@@ -2053,7 +2057,7 @@ class Script(default.Script):
         # as a single object.  Otherwise, if it has children, look there.
         #
         elif obj.childCount and obj[obj.childCount - 1] and not doNotDescend \
-             and not isHidden:
+             and not skip:
             try:
                 return self.findPreviousCaretInOrder(
                     obj[obj.childCount - 1],
@@ -2062,7 +2066,7 @@ class Script(default.Script):
             except:
                 pass
 
-        elif includeNonText and startOffset < 0 and not isHidden:
+        elif includeNonText and startOffset < 0 and not skip:
             extents = obj.queryComponent().getExtents(0)
             if (extents.width != 0) and (extents.height != 0):
                 return [obj, 0]
