@@ -2573,6 +2573,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if eventString in modifierKeys:
             return False
 
+        eventState = eventState & Gtk.accelerator_get_default_mod_mask()
         if not self._capturedKey \
            or eventString in ['Return', 'Escape']:
             self._capturedKey = [eventString, eventState, 1]
