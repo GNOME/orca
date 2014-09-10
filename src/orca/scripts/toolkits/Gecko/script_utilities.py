@@ -801,7 +801,8 @@ class Utilities(script_utilities.Utilities):
                 return False
 
             if (self.isTextBlockElement(obj) and not string.strip()) \
-               or self._script.isLabellingContents(obj, contents):
+               or self._script.isLabellingContents(obj, contents) \
+               or self.isOffScreenLabel(obj, start):
                 return False
 
             return True
@@ -919,6 +920,20 @@ class Utilities(script_utilities.Utilities):
                 objects.extend(toAdd)
 
         return objects
+
+    def isOffScreenLabel(self, obj, offset=0):
+        if not obj:
+            return False
+
+        isLabelFor = lambda x: x.getRelationType() == pyatspi.RELATION_LABEL_FOR
+        relations = list(filter(isLabelFor, obj.getRelationSet()))
+        if relations:
+            offset = max(offset, 0)
+            x, y, width, height = self.getExtents(obj, offset, offset + 1)
+            if x < 0 or y < 0:
+                return True
+
+        return False
 
     def isClickableElement(self, obj):
         if not self._script.inDocumentContent(obj):
