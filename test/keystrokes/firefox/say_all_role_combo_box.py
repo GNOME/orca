@@ -13,18 +13,24 @@ sequence.append(utils.AssertPresentationAction(
     "1. KP_Add to do a SayAll",
     ["SPEECH OUTPUT: 'Severity'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ': Severity normal combo box'",
+     "SPEECH OUTPUT: ':'",
+     "SPEECH OUTPUT: 'Severity'",
+     "SPEECH OUTPUT: 'normal'",
+     "SPEECH OUTPUT: 'combo box'",
      "SPEECH OUTPUT: 'Priority'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ': Normal combo box'",
-     "SPEECH OUTPUT: 'Resolution: ",
-     "'",
+     "SPEECH OUTPUT: ':'",
+     "SPEECH OUTPUT: 'Normal'",
+     "SPEECH OUTPUT: 'combo box'",
+     "SPEECH OUTPUT: 'Resolution:'",
      "SPEECH OUTPUT: 'FIXED'",
      "SPEECH OUTPUT: 'combo box'",
      "SPEECH OUTPUT: 'Version'",
-     "SPEECH OUTPUT: '2.16 combo box'",
+     "SPEECH OUTPUT: '2.16'",
+     "SPEECH OUTPUT: 'combo box'",
      "SPEECH OUTPUT: 'Component'",
-     "SPEECH OUTPUT: 'Speech combo box'"]))
+     "SPEECH OUTPUT: 'Speech'",
+     "SPEECH OUTPUT: 'combo box'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -16,7 +16,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. Shift+Tab to button",
     ["BRAILLE LINE:  'Firefox application Print dialog Print push button'",
      "     VISIBLE:  'Print push button', cursor=1",
-     "SPEECH OUTPUT: 'Print push button'"]))
+     "SPEECH OUTPUT: 'Print'",
+     "SPEECH OUTPUT: 'push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))

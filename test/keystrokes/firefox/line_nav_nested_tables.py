@@ -14,8 +14,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'nested-tables image'",
      "     VISIBLE:  'nested-tables image', cursor=0",
      "SPEECH OUTPUT: 'nested-tables'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -25,13 +24,13 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Campus  .  Classroom  .  Communi', cursor=1",
      "SPEECH OUTPUT: 'Campus'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '  .  '",
+     "SPEECH OUTPUT: '.'",
      "SPEECH OUTPUT: 'Classroom'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '  .  '",
+     "SPEECH OUTPUT: '.'",
      "SPEECH OUTPUT: 'Communicate'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '  .  '",
+     "SPEECH OUTPUT: '.'",
      "SPEECH OUTPUT: 'Reports'",
      "SPEECH OUTPUT: 'link'"]))
 
@@ -49,7 +48,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. line Down",
     ["BRAILLE LINE:  'Below is a list of the courses that make up your learning plan.'",
      "     VISIBLE:  'Below is a list of the courses t', cursor=1",
-     "SPEECH OUTPUT: 'Below is a list of the courses that make up your learning plan. '"]))
+     "SPEECH OUTPUT: 'Below is a list of the courses that make up your learning plan.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -301,7 +300,7 @@ sequence.append(utils.AssertPresentationAction(
     "35. line Up",
     ["BRAILLE LINE:  'Below is a list of the courses that make up your learning plan.'",
      "     VISIBLE:  'Below is a list of the courses t', cursor=1",
-     "SPEECH OUTPUT: 'Below is a list of the courses that make up your learning plan. '"]))
+     "SPEECH OUTPUT: 'Below is a list of the courses that make up your learning plan.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -319,13 +318,13 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Campus  .  Classroom  .  Communi', cursor=1",
      "SPEECH OUTPUT: 'Campus'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '  .  '",
+     "SPEECH OUTPUT: '.'",
      "SPEECH OUTPUT: 'Classroom'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '  .  '",
+     "SPEECH OUTPUT: '.'",
      "SPEECH OUTPUT: 'Communicate'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '  .  '",
+     "SPEECH OUTPUT: '.'",
      "SPEECH OUTPUT: 'Reports'",
      "SPEECH OUTPUT: 'link'"]))
 
@@ -336,8 +335,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'nested-tables image'",
      "     VISIBLE:  'nested-tables image', cursor=0",
      "SPEECH OUTPUT: 'nested-tables'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'image link'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

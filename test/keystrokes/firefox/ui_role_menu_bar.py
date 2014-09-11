@@ -17,8 +17,10 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Edit menu', cursor=1",
      "BRAILLE LINE:  'Firefox application Mozilla Firefox frame Menu Bar tool bar Application menu bar Undo grayed(Ctrl+Z)'",
      "     VISIBLE:  'Undo grayed(Ctrl+Z)', cursor=1",
-     "SPEECH OUTPUT: 'Edit menu'",
-     "SPEECH OUTPUT: 'Undo grayed Ctrl+Z'"]))
+     "SPEECH OUTPUT: 'Edit'",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: 'Undo'",
+     "SPEECH OUTPUT: 'grayed Ctrl+Z'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -26,8 +28,10 @@ sequence.append(utils.AssertPresentationAction(
     "2. Left Arrow on menu bar",
     ["BRAILLE LINE:  'Firefox application Mozilla Firefox frame Menu Bar tool bar Application menu bar New Tab(Ctrl+T)'",
      "     VISIBLE:  'New Tab(Ctrl+T)', cursor=1",
-     "SPEECH OUTPUT: 'File menu'",
-     "SPEECH OUTPUT: 'New Tab Ctrl+T'"]))
+     "SPEECH OUTPUT: 'File'",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: 'New Tab'",
+     "SPEECH OUTPUT: 'Ctrl+T'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))

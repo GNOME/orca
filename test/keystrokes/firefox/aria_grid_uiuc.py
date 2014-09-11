@@ -17,7 +17,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. Tab to grid",
     ["BRAILLE LINE:  'Selected Sort Sel column push button Msg '",
      "     VISIBLE:  'Selected Sort Sel column push bu', cursor=1",
-     "SPEECH OUTPUT: 'Selected Sort Sel column push button'"]))
+     "SPEECH OUTPUT: 'Selected Sort Sel column'",
+     "SPEECH OUTPUT: 'push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -72,8 +73,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Status Sort Status column push b', cursor=1",
      "SPEECH OUTPUT: 'Status Sort Status column'",
      "SPEECH OUTPUT: 'push button'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'clickable'"]))
+     "SPEECH OUTPUT: 'image clickable'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

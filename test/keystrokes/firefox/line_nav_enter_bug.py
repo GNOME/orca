@@ -16,6 +16,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Home Bugzilla'",
      "     VISIBLE:  'Home Bugzilla', cursor=1",
      "SPEECH OUTPUT: 'Home'",
+     "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'Bugzilla'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -26,25 +27,25 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'New bug · Browse · Search · Repo', cursor=1",
      "SPEECH OUTPUT: 'New bug'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' · '",
+     "SPEECH OUTPUT: '·'",
      "SPEECH OUTPUT: 'Browse'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' · '",
+     "SPEECH OUTPUT: '·'",
      "SPEECH OUTPUT: 'Search'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' · '",
+     "SPEECH OUTPUT: '·'",
      "SPEECH OUTPUT: 'Reports'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' · '",
+     "SPEECH OUTPUT: '·'",
      "SPEECH OUTPUT: 'Account'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' · '",
+     "SPEECH OUTPUT: '·'",
      "SPEECH OUTPUT: 'Admin'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' · '",
+     "SPEECH OUTPUT: '·'",
      "SPEECH OUTPUT: 'Help'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'Logged In joanmarie.diggs@gmail.com | '",
+     "SPEECH OUTPUT: 'Logged In joanmarie.diggs@gmail.com |'",
      "SPEECH OUTPUT: 'Log Out'",
      "SPEECH OUTPUT: 'link'"]))
 
@@ -54,7 +55,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  'Enter Bug: orca – This page lets you enter a new bug  h1'",
      "     VISIBLE:  'Enter Bug: orca – This page lets', cursor=1",
-     "SPEECH OUTPUT: 'Enter Bug: orca – This page lets you enter a new bug '",
+     "SPEECH OUTPUT: 'Enter Bug: orca – This page lets you enter a new bug'",
      "SPEECH OUTPUT: 'heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -88,10 +89,10 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
     ["BRAILLE LINE:  'Before reporting a bug, please read the bug writing guidelines,'",
      "     VISIBLE:  'Before reporting a bug, please r', cursor=1",
-     "SPEECH OUTPUT: 'Before reporting a bug, please read the '",
+     "SPEECH OUTPUT: 'Before reporting a bug, please read the'",
      "SPEECH OUTPUT: 'bug writing guidelines'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ', '"]))
+     "SPEECH OUTPUT: ','"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -99,10 +100,10 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["BRAILLE LINE:  'please look at the list of most frequently reported bugs, and please'",
      "     VISIBLE:  'please look at the list of most ', cursor=1",
-     "SPEECH OUTPUT: 'please look at the list of '",
+     "SPEECH OUTPUT: 'please look at the list of'",
      "SPEECH OUTPUT: 'most frequently reported bugs'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ', and please '"]))
+     "SPEECH OUTPUT: ', and please'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -112,10 +113,10 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'search or browse for the bug.', cursor=1",
      "SPEECH OUTPUT: 'search'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' or '",
+     "SPEECH OUTPUT: 'or'",
      "SPEECH OUTPUT: 'browse'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' for the bug. '"]))
+     "SPEECH OUTPUT: 'for the bug.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -150,7 +151,6 @@ sequence.append(utils.AssertPresentationAction(
     "13. Line Down",
     ["BRAILLE LINE:  '2.21.x  list box'",
      "     VISIBLE:  '2.21.x  list box', cursor=0",
-     "SPEECH OUTPUT: 'Version:'",
      "SPEECH OUTPUT: '2.21.x '",
      "SPEECH OUTPUT: 'List with 9 items'"]))
 
@@ -162,7 +162,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Component:', cursor=1",
      "SPEECH OUTPUT: 'Component'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ': '"]))
+     "SPEECH OUTPUT: ':'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -170,7 +170,6 @@ sequence.append(utils.AssertPresentationAction(
     "15. Line Down",
     ["BRAILLE LINE:  'braille  list box'",
      "     VISIBLE:  'braille  list box', cursor=0",
-     "SPEECH OUTPUT: 'Component:'",
      "SPEECH OUTPUT: 'braille '",
      "SPEECH OUTPUT: 'List with 5 items'"]))
 
@@ -188,7 +187,7 @@ sequence.append(utils.AssertPresentationAction(
     "17. Line Down",
     ["BRAILLE LINE:  'GNOME'",
      "     VISIBLE:  'GNOME', cursor=1",
-     "SPEECH OUTPUT: 'GNOME '",
+     "SPEECH OUTPUT: 'GNOME'",
      "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -199,7 +198,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'version:', cursor=1",
      "SPEECH OUTPUT: 'version'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ': '"]))
+     "SPEECH OUTPUT: ':'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -218,7 +217,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'OS: Linux combo box', cursor=1",
      "SPEECH OUTPUT: 'OS'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ': '",
+     "SPEECH OUTPUT: ':'",
      "SPEECH OUTPUT: 'Linux'",
      "SPEECH OUTPUT: 'combo box'"]))
 
@@ -230,7 +229,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Severity: normal combo box', cursor=1",
      "SPEECH OUTPUT: 'Severity'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ': '",
+     "SPEECH OUTPUT: ':'",
      "SPEECH OUTPUT: 'normal'",
      "SPEECH OUTPUT: 'combo box'"]))
 
@@ -300,7 +299,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Keywords:', cursor=1",
      "SPEECH OUTPUT: 'Keywords'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ': '"]))
+     "SPEECH OUTPUT: ':'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -318,7 +317,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Keywords:', cursor=1",
      "SPEECH OUTPUT: 'Keywords'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ': '"]))
+     "SPEECH OUTPUT: ':'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -351,7 +350,6 @@ sequence.append(utils.AssertPresentationAction(
     "35. Line Up",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=0",
-     "SPEECH OUTPUT: 'Description:'",
      "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -387,7 +385,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Severity: normal combo box', cursor=1",
      "SPEECH OUTPUT: 'Severity'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ': '",
+     "SPEECH OUTPUT: ':'",
      "SPEECH OUTPUT: 'normal'",
      "SPEECH OUTPUT: 'combo box'"]))
 
@@ -399,7 +397,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'OS: Linux combo box', cursor=1",
      "SPEECH OUTPUT: 'OS'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ': '",
+     "SPEECH OUTPUT: ':'",
      "SPEECH OUTPUT: 'Linux'",
      "SPEECH OUTPUT: 'combo box'"]))
 
@@ -409,7 +407,6 @@ sequence.append(utils.AssertPresentationAction(
     "41. Line Up",
     ["BRAILLE LINE:  'Unspecified combo box'",
      "     VISIBLE:  'Unspecified combo box', cursor=0",
-     "SPEECH OUTPUT: 'GNOME version:'",
      "SPEECH OUTPUT: 'Unspecified'",
      "SPEECH OUTPUT: 'combo box'"]))
 
@@ -421,7 +418,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'version:', cursor=1",
      "SPEECH OUTPUT: 'version'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ': '"]))
+     "SPEECH OUTPUT: ':'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -429,7 +426,7 @@ sequence.append(utils.AssertPresentationAction(
     "43. Line Up",
     ["BRAILLE LINE:  'GNOME'",
      "     VISIBLE:  'GNOME', cursor=1",
-     "SPEECH OUTPUT: 'GNOME '",
+     "SPEECH OUTPUT: 'GNOME'",
      "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -446,7 +443,6 @@ sequence.append(utils.AssertPresentationAction(
     "45. Line Up",
     ["BRAILLE LINE:  'braille  list box'",
      "     VISIBLE:  'braille  list box', cursor=0",
-     "SPEECH OUTPUT: 'Component:'",
      "SPEECH OUTPUT: 'braille '",
      "SPEECH OUTPUT: 'List with 5 items'"]))
 
@@ -458,7 +454,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Component:', cursor=1",
      "SPEECH OUTPUT: 'Component'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ': '"]))
+     "SPEECH OUTPUT: ':'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -466,7 +462,6 @@ sequence.append(utils.AssertPresentationAction(
     "47. Line Up",
     ["BRAILLE LINE:  '2.21.x  list box'",
      "     VISIBLE:  '2.21.x  list box', cursor=0",
-     "SPEECH OUTPUT: 'Version:'",
      "SPEECH OUTPUT: '2.21.x '",
      "SPEECH OUTPUT: 'List with 9 items'"]))
 
@@ -505,10 +500,10 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'search or browse for the bug.', cursor=1",
      "SPEECH OUTPUT: 'search'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' or '",
+     "SPEECH OUTPUT: 'or'",
      "SPEECH OUTPUT: 'browse'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' for the bug. '"]))
+     "SPEECH OUTPUT: 'for the bug.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -516,10 +511,10 @@ sequence.append(utils.AssertPresentationAction(
     "52. Line Up",
     ["BRAILLE LINE:  'please look at the list of most frequently reported bugs, and please'",
      "     VISIBLE:  'please look at the list of most ', cursor=1",
-     "SPEECH OUTPUT: 'please look at the list of '",
+     "SPEECH OUTPUT: 'please look at the list of'",
      "SPEECH OUTPUT: 'most frequently reported bugs'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ', and please '"]))
+     "SPEECH OUTPUT: ', and please'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -527,10 +522,10 @@ sequence.append(utils.AssertPresentationAction(
     "53. Line Up",
     ["BRAILLE LINE:  'Before reporting a bug, please read the bug writing guidelines,'",
      "     VISIBLE:  'Before reporting a bug, please r', cursor=1",
-     "SPEECH OUTPUT: 'Before reporting a bug, please read the '",
+     "SPEECH OUTPUT: 'Before reporting a bug, please read the'",
      "SPEECH OUTPUT: 'bug writing guidelines'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ', '"]))
+     "SPEECH OUTPUT: ','"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -563,7 +558,7 @@ sequence.append(utils.AssertPresentationAction(
     "57. Line Up",
     ["BRAILLE LINE:  'Enter Bug: orca \u2013 This page lets you enter a new bug  h1'",
      "     VISIBLE:  'Enter Bug: orca – This page lets', cursor=1",
-     "SPEECH OUTPUT: 'Enter Bug: orca \u2013 This page lets you enter a new bug '",
+     "SPEECH OUTPUT: 'Enter Bug: orca \u2013 This page lets you enter a new bug'",
      "SPEECH OUTPUT: 'heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -574,25 +569,25 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'New bug · Browse · Search · Repo', cursor=1",
      "SPEECH OUTPUT: 'New bug'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' · '",
+     "SPEECH OUTPUT: '·'",
      "SPEECH OUTPUT: 'Browse'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' · '",
+     "SPEECH OUTPUT: '·'",
      "SPEECH OUTPUT: 'Search'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' · '",
+     "SPEECH OUTPUT: '·'",
      "SPEECH OUTPUT: 'Reports'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' · '",
+     "SPEECH OUTPUT: '·'",
      "SPEECH OUTPUT: 'Account'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' · '",
+     "SPEECH OUTPUT: '·'",
      "SPEECH OUTPUT: 'Admin'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' · '",
+     "SPEECH OUTPUT: '·'",
      "SPEECH OUTPUT: 'Help'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'Logged In joanmarie.diggs@gmail.com | '",
+     "SPEECH OUTPUT: 'Logged In joanmarie.diggs@gmail.com |'",
      "SPEECH OUTPUT: 'Log Out'",
      "SPEECH OUTPUT: 'link'"]))
 
@@ -603,6 +598,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Home Bugzilla'",
      "     VISIBLE:  'Home Bugzilla', cursor=1",
      "SPEECH OUTPUT: 'Home'",
+     "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'Bugzilla'"]))
 
 sequence.append(utils.AssertionSummaryAction())

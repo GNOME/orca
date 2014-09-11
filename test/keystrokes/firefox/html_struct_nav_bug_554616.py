@@ -69,11 +69,10 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Download'",
      "SPEECH OUTPUT: 'installer'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' (10190 KB)",
-     "'",
+     "SPEECH OUTPUT: '(10190 KB)'",
      "SPEECH OUTPUT: 'portable archive'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' (9154 KB)'",
+     "SPEECH OUTPUT: '(9154 KB)'",
      "SPEECH OUTPUT: 'Row 2, column 3.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -90,11 +89,10 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Row 3, column 3.', cursor=0",
      "SPEECH OUTPUT: 'installer'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' (10193 KB)",
-     "'",
+     "SPEECH OUTPUT: '(10193 KB)'",
      "SPEECH OUTPUT: 'portable archive'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' (9149 KB)'",
+     "SPEECH OUTPUT: '(9149 KB)'",
      "SPEECH OUTPUT: 'Row 3, column 3.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -143,11 +141,10 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Download'",
      "SPEECH OUTPUT: 'installer'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' (10186 KB)",
-     "'",
+     "SPEECH OUTPUT: '(10186 KB)'",
      "SPEECH OUTPUT: 'portable archive'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' (9146 KB)'",
+     "SPEECH OUTPUT: '(9146 KB)'",
      "SPEECH OUTPUT: 'Row 4, column 3.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())

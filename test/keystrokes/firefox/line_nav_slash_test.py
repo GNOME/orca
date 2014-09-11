@@ -106,9 +106,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Line Down",
     ["BRAILLE LINE:  'What is your favorite poison?'",
      "     VISIBLE:  'What is your favorite poison?', cursor=1",
-     "SPEECH OUTPUT: 'What is your favorite poison?",
-     "'",
-     "SPEECH OUTPUT: 'panel'"]))
+     "SPEECH OUTPUT: 'What is your favorite poison?"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -116,10 +114,8 @@ sequence.append(utils.AssertPresentationAction(
     "11. Line Down",
     ["BRAILLE LINE:  '& y radio button Some polls'",
      "     VISIBLE:  '& y radio button Some polls', cursor=0",
-     "SPEECH OUTPUT: 'not selected'",
-     "SPEECH OUTPUT: 'radio button'",
-     "SPEECH OUTPUT: 'Some polls '",
-     "SPEECH OUTPUT: 'panel'"]))
+     "SPEECH OUTPUT: 'not selected radio button'",
+     "SPEECH OUTPUT: 'Some polls'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -135,14 +131,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "13. Line Up",
-    ["KNOWN ISSUE: We should not be re-presenting the panel",
-     "BRAILLE LINE:  '& y radio button Some polls'",
+    ["BRAILLE LINE:  '& y radio button Some polls'",
      "     VISIBLE:  '& y radio button Some polls', cursor=0",
-     "SPEECH OUTPUT: 'Some polls'",
-     "SPEECH OUTPUT: 'not selected'",
-     "SPEECH OUTPUT: 'radio button'",
-     "SPEECH OUTPUT: 'Some polls '",
-     "SPEECH OUTPUT: 'panel'"]))
+     "SPEECH OUTPUT: 'not selected radio button'",
+     "SPEECH OUTPUT: 'Some polls'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -150,9 +142,7 @@ sequence.append(utils.AssertPresentationAction(
     "14. Line Up",
     ["BRAILLE LINE:  'What is your favorite poison?'",
      "     VISIBLE:  'What is your favorite poison?', cursor=1",
-     "SPEECH OUTPUT: 'What is your favorite poison?",
-     "'",
-     "SPEECH OUTPUT: 'panel'"]))
+     "SPEECH OUTPUT: 'What is your favorite poison?"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

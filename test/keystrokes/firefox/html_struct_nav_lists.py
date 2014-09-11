@@ -35,24 +35,26 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "3. l to third list",
-    ["BRAILLE LINE:  'List with 1 item'",
-     "     VISIBLE:  'List with 1 item', cursor=0",
+    ["KNOWN ISSUE: We are presenting tree level for a non-tree",
+     "BRAILLE LINE:  'List with 2 items'",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  '•listing item'",
      "     VISIBLE:  '•listing item', cursor=1",
-     "SPEECH OUTPUT: 'List with 1 item' voice=system",
-     "SPEECH OUTPUT: '•listing item'"]))
+     "SPEECH OUTPUT: 'List with 2 items' voice=system",
+     "SPEECH OUTPUT: '•listing item'",
+     "SPEECH OUTPUT: 'tree level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "4. l to third list's first sub list",
-    ["BRAILLE LINE:  'List with 1 item'",
-     "     VISIBLE:  'List with 1 item', cursor=0",
+    ["BRAILLE LINE:  'List with 2 items'",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  'Nesting level 1'",
      "     VISIBLE:  'Nesting level 1', cursor=0",
      "BRAILLE LINE:  '◦first sublevel'",
      "     VISIBLE:  '◦first sublevel', cursor=1",
-     "SPEECH OUTPUT: 'List with 1 item' voice=system",
+     "SPEECH OUTPUT: 'List with 2 items' voice=system",
      "SPEECH OUTPUT: 'Nesting level 1' voice=system",
      "SPEECH OUTPUT: '◦first sublevel'"]))
 
@@ -115,7 +117,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
-    "9. l to last sub list in the third list",
+    "9. l to the fourth list",
     ["BRAILLE LINE:  'List with 3 items'",
      "     VISIBLE:  'List with 3 items', cursor=0",
      "BRAILLE LINE:  '◦feeling listless'",
@@ -211,13 +213,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
     "16. shift + l",
-    ["BRAILLE LINE:  'List with 1 item'",
-     "     VISIBLE:  'List with 1 item', cursor=0",
+    ["BRAILLE LINE:  'List with 2 items'",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  'Nesting level 1'",
      "     VISIBLE:  'Nesting level 1', cursor=0",
      "BRAILLE LINE:  '◦first sublevel'",
      "     VISIBLE:  '◦first sublevel', cursor=1",
-     "SPEECH OUTPUT: 'List with 1 item' voice=system",
+     "SPEECH OUTPUT: 'List with 2 items' voice=system",
      "SPEECH OUTPUT: 'Nesting level 1' voice=system",
      "SPEECH OUTPUT: '◦first sublevel'"]))
 
@@ -225,12 +227,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
     "17. shift + l",
-    ["BRAILLE LINE:  'List with 1 item'",
-     "     VISIBLE:  'List with 1 item', cursor=0",
+    ["KNOWN ISSUE: We are presenting tree level for a non-tree",
+     "BRAILLE LINE:  'List with 2 items'",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  '•listing item'",
      "     VISIBLE:  '•listing item', cursor=1",
-     "SPEECH OUTPUT: 'List with 1 item' voice=system",
-     "SPEECH OUTPUT: '•listing item'"]))
+     "SPEECH OUTPUT: 'List with 2 items' voice=system",
+     "SPEECH OUTPUT: '•listing item'",
+     "SPEECH OUTPUT: 'tree level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))

@@ -12,8 +12,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'the image image'",
      "     VISIBLE:  'the image image', cursor=0",
      "SPEECH OUTPUT: 'the image'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'has long description'"]))
+     "SPEECH OUTPUT: 'image has long description'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))

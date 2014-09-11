@@ -13,7 +13,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'FAQ  h1'",
      "     VISIBLE:  'FAQ  h1', cursor=1",
-     "SPEECH OUTPUT: 'FAQ '",
+     "SPEECH OUTPUT: 'FAQ'",
      "SPEECH OUTPUT: 'heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -94,8 +94,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Line Down",
     ["BRAILLE LINE:  'Q. What is a battery?'",
      "     VISIBLE:  'Q. What is a battery?', cursor=1",
-     "SPEECH OUTPUT: 'Q. What is a battery?",
-     "'"]))
+     "SPEECH OUTPUT: 'Q. What is a battery?'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -111,8 +110,7 @@ sequence.append(utils.AssertPresentationAction(
     "12. Line Down",
     ["BRAILLE LINE:  'Q. Which way is up?'",
      "     VISIBLE:  'Q. Which way is up?', cursor=1",
-     "SPEECH OUTPUT: 'Q. Which way is up?",
-     "'"]))
+     "SPEECH OUTPUT: 'Q. Which way is up?'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -120,7 +118,7 @@ sequence.append(utils.AssertPresentationAction(
     "13. Line Down",
     ["BRAILLE LINE:  'A. That way.'",
      "     VISIBLE:  'A. That way.', cursor=1",
-     "SPEECH OUTPUT: 'A. That way. '"]))
+     "SPEECH OUTPUT: 'A. That way.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -128,8 +126,7 @@ sequence.append(utils.AssertPresentationAction(
     "14. Line Down",
     ["BRAILLE LINE:  'Q. Why did Orca used to get stuck on this page?'",
      "     VISIBLE:  'Q. Why did Orca used to get stuc', cursor=1",
-     "SPEECH OUTPUT: 'Q. Why did Orca used to get stuck on this page?",
-     "'"]))
+     "SPEECH OUTPUT: 'Q. Why did Orca used to get stuck on this page?'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -145,8 +142,7 @@ sequence.append(utils.AssertPresentationAction(
     "16. Line Up",
     ["BRAILLE LINE:  'Q. Why did Orca used to get stuck on this page?'",
      "     VISIBLE:  'Q. Why did Orca used to get stuc', cursor=1",
-     "SPEECH OUTPUT: 'Q. Why did Orca used to get stuck on this page?",
-     "'"]))
+     "SPEECH OUTPUT: 'Q. Why did Orca used to get stuck on this page?'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -154,7 +150,7 @@ sequence.append(utils.AssertPresentationAction(
     "17. Line Up",
     ["BRAILLE LINE:  'A. That way.'",
      "     VISIBLE:  'A. That way.', cursor=1",
-     "SPEECH OUTPUT: 'A. That way. '"]))
+     "SPEECH OUTPUT: 'A. That way.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -162,8 +158,7 @@ sequence.append(utils.AssertPresentationAction(
     "18. Line Up",
     ["BRAILLE LINE:  'Q. Which way is up?'",
      "     VISIBLE:  'Q. Which way is up?', cursor=1",
-     "SPEECH OUTPUT: 'Q. Which way is up?",
-     "'"]))
+     "SPEECH OUTPUT: 'Q. Which way is up?'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -179,8 +174,7 @@ sequence.append(utils.AssertPresentationAction(
     "20. Line Up",
     ["BRAILLE LINE:  'Q. What is a battery?'",
      "     VISIBLE:  'Q. What is a battery?', cursor=1",
-     "SPEECH OUTPUT: 'Q. What is a battery?",
-     "'"]))
+     "SPEECH OUTPUT: 'Q. What is a battery?'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -260,7 +254,7 @@ sequence.append(utils.AssertPresentationAction(
     "29. Line Up",
     ["BRAILLE LINE:  'FAQ  h1'",
      "     VISIBLE:  'FAQ  h1', cursor=1",
-     "SPEECH OUTPUT: 'FAQ '",
+     "SPEECH OUTPUT: 'FAQ'",
      "SPEECH OUTPUT: 'heading level 1'"]))
 
 sequence.append(utils.AssertionSummaryAction())

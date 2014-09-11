@@ -18,8 +18,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'Bar'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '",
-     "The end.'"]))
+     "SPEECH OUTPUT: 'The end.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

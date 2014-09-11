@@ -28,7 +28,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'close', cursor=1",
      "SPEECH OUTPUT: 'This popup is created as a div in the HTML content, rather than being created in the DOM at the time of use. The display style is changed from \"none\" to \"block\" to hide and show it. close'",
      "SPEECH OUTPUT: 'close'",
-     "SPEECH OUTPUT: 'link' voice=hyperlink"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

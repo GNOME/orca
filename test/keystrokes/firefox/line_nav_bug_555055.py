@@ -16,7 +16,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Line Down",
     ["BRAILLE LINE:  'Hello world!'",
      "     VISIBLE:  'Hello world!', cursor=1",
-     "SPEECH OUTPUT: 'Hello world! '"]))
+     "SPEECH OUTPUT: 'Hello world!'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -224,7 +224,7 @@ sequence.append(utils.AssertPresentationAction(
     "27. Line Up",
     ["BRAILLE LINE:  'Hello world!'",
      "     VISIBLE:  'Hello world!', cursor=1",
-     "SPEECH OUTPUT: 'Hello world! '"]))
+     "SPEECH OUTPUT: 'Hello world!'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

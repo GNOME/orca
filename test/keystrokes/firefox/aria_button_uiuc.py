@@ -19,7 +19,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '& y Font Larger toggle button & ', cursor=1",
      "BRAILLE LINE:  '& y Font Larger toggle button & y Font Smaller toggle button &=y Italic toggle button & y Bold toggle button'",
      "     VISIBLE:  '& y Font Larger toggle button & ', cursor=1",
-     "SPEECH OUTPUT: 'Font Larger toggle button not pressed'"]))
+     "SPEECH OUTPUT: 'Font Larger'",
+     "SPEECH OUTPUT: 'toggle button not pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -38,7 +39,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '& y Font Smaller toggle button &', cursor=1",
      "BRAILLE LINE:  '& y Font Larger toggle button & y Font Smaller toggle button &=y Italic toggle button & y Bold toggle button'",
      "     VISIBLE:  '& y Font Smaller toggle button &', cursor=1",
-     "SPEECH OUTPUT: 'Font Smaller toggle button not pressed'"]))
+     "SPEECH OUTPUT: 'Font Smaller'",
+     "SPEECH OUTPUT: 'toggle button not pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
@@ -55,7 +57,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '&=y Italic toggle button & y Bol', cursor=1",
      "BRAILLE LINE:  '& y Font Larger toggle button & y Font Smaller toggle button &=y Italic toggle button & y Bold toggle button'",
      "     VISIBLE:  '&=y Italic toggle button & y Bol', cursor=1",
-     "SPEECH OUTPUT: 'Italic toggle button pressed'"]))
+     "SPEECH OUTPUT: 'Italic'",
+     "SPEECH OUTPUT: 'toggle button pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
@@ -73,7 +76,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '& y Bold toggle button', cursor=1",
      "BRAILLE LINE:  '& y Font Larger toggle button & y Font Smaller toggle button & y Italic toggle button & y Bold toggle button'",
      "     VISIBLE:  '& y Bold toggle button', cursor=1",
-     "SPEECH OUTPUT: 'Bold toggle button not pressed'"]))
+     "SPEECH OUTPUT: 'Bold'",
+     "SPEECH OUTPUT: 'toggle button not pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))

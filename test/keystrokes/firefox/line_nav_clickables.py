@@ -17,7 +17,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'Clickable image:'",
      "     VISIBLE:  'Clickable image:', cursor=1",
-     "SPEECH OUTPUT: 'Clickable image: '"]))
+     "SPEECH OUTPUT: 'Clickable image:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -26,8 +26,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Orca Logo'",
      "     VISIBLE:  'Orca Logo', cursor=0",
      "SPEECH OUTPUT: 'Orca Logo'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'clickable'"]))
+     "SPEECH OUTPUT: 'image clickable'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -43,10 +42,10 @@ sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
     ["BRAILLE LINE:  'Clickable span: Click Me. More text.'",
      "     VISIBLE:  'Clickable span: Click Me. More t', cursor=1",
-     "SPEECH OUTPUT: 'Clickable span: '",
+     "SPEECH OUTPUT: 'Clickable span:'",
      "SPEECH OUTPUT: 'Click Me.'",
      "SPEECH OUTPUT: 'clickable'",
-     "SPEECH OUTPUT: ' More text.'"]))
+     "SPEECH OUTPUT: 'More text.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -54,7 +53,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
     ["BRAILLE LINE:  'Clickable div:'",
      "     VISIBLE:  'Clickable div:', cursor=1",
-     "SPEECH OUTPUT: 'Clickable div: '"]))
+     "SPEECH OUTPUT: 'Clickable div:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -88,7 +87,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Line Up",
     ["BRAILLE LINE:  'Clickable div:'",
      "     VISIBLE:  'Clickable div:', cursor=1",
-     "SPEECH OUTPUT: 'Clickable div: '"]))
+     "SPEECH OUTPUT: 'Clickable div:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -96,10 +95,10 @@ sequence.append(utils.AssertPresentationAction(
     "10. Line Up",
     ["BRAILLE LINE:  'Clickable span: Click Me. More text.'",
      "     VISIBLE:  'Clickable span: Click Me. More t', cursor=1",
-     "SPEECH OUTPUT: 'Clickable span: '",
+     "SPEECH OUTPUT: 'Clickable span:'",
      "SPEECH OUTPUT: 'Click Me.'",
      "SPEECH OUTPUT: 'clickable'",
-     "SPEECH OUTPUT: ' More text.'"]))
+     "SPEECH OUTPUT: 'More text.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

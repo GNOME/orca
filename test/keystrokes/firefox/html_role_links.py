@@ -24,7 +24,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  '•anchors.html'",
      "     VISIBLE:  '•anchors.html', cursor=2",
      "SPEECH OUTPUT: 'anchors.html'",
-     "SPEECH OUTPUT: 'link' voice=hyperlink"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -35,7 +35,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  '•blockquotes.html'",
      "     VISIBLE:  '•blockquotes.html', cursor=2",
      "SPEECH OUTPUT: 'blockquotes.html'",
-     "SPEECH OUTPUT: 'link' voice=hyperlink"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -46,7 +46,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  '•bugzilla_top.html'",
      "     VISIBLE:  '•bugzilla_top.html', cursor=2",
      "SPEECH OUTPUT: 'bugzilla_top.html'",
-     "SPEECH OUTPUT: 'link' voice=hyperlink"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
@@ -57,7 +57,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  '•blockquotes.html'",
      "     VISIBLE:  '•blockquotes.html', cursor=2",
      "SPEECH OUTPUT: 'blockquotes.html'",
-     "SPEECH OUTPUT: 'link' voice=hyperlink"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))

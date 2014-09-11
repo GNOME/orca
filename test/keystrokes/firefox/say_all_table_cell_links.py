@@ -12,9 +12,7 @@ sequence.append(KeyComboAction("KP_Add"))
 sequence.append(utils.AssertPresentationAction(
     "1. KP_Add to do a SayAll",
     ["SPEECH OUTPUT: 'Here are some links'",
-     "SPEECH OUTPUT: 'HTML Tags",
-     "",
-     "'",
+     "SPEECH OUTPUT: 'HTML Tags'",
      "SPEECH OUTPUT: '<!-->'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: '<!DOCTYPE>'",

@@ -15,7 +15,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow in View menu",
     ["BRAILLE LINE:  'Firefox application Mozilla Firefox frame Menu Bar tool bar Application menu bar < > Full Screen check menu item'",
      "     VISIBLE:  '< > Full Screen check menu item', cursor=1",
-     "SPEECH OUTPUT: 'Full Screen check menu item not checked'"]))
+     "SPEECH OUTPUT: 'Full Screen'",
+     "SPEECH OUTPUT: 'check menu item not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))

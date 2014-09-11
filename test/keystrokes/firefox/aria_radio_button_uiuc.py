@@ -20,8 +20,10 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '&=y Radio Maria radio button', cursor=1",
      "BRAILLE LINE:  '&=y Radio Maria radio button'",
      "     VISIBLE:  '&=y Radio Maria radio button', cursor=1",
-     "SPEECH OUTPUT: 'Lunch Options panel'",
-     "SPEECH OUTPUT: 'Radio Maria selected radio button'"]))
+     "SPEECH OUTPUT: 'Lunch Options'",
+     "SPEECH OUTPUT: 'panel'",
+     "SPEECH OUTPUT: 'Radio Maria'",
+     "SPEECH OUTPUT: 'selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -40,8 +42,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  '& y Rainbow Gardens radio button'",
      "     VISIBLE:  '& y Rainbow Gardens radio button', cursor=1",
      "SPEECH OUTPUT: 'Rainbow Gardens'",
-     "SPEECH OUTPUT: 'not selected'",
-     "SPEECH OUTPUT: 'radio button'"]))
+     "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -69,8 +70,10 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '&=y Water radio button', cursor=1",
      "BRAILLE LINE:  '&=y Water radio button'",
      "     VISIBLE:  '&=y Water radio button', cursor=1",
-     "SPEECH OUTPUT: 'Drink Options panel'",
-     "SPEECH OUTPUT: 'Water selected radio button'"]))
+     "SPEECH OUTPUT: 'Drink Options'",
+     "SPEECH OUTPUT: 'panel'",
+     "SPEECH OUTPUT: 'Water'",
+     "SPEECH OUTPUT: 'selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -80,8 +83,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  '& y Tea radio button'",
      "     VISIBLE:  '& y Tea radio button', cursor=1",
      "SPEECH OUTPUT: 'Tea'",
-     "SPEECH OUTPUT: 'not selected'",
-     "SPEECH OUTPUT: 'radio button'"]))
+     "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -91,8 +93,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  '& y Water radio button'",
      "     VISIBLE:  '& y Water radio button', cursor=1",
      "SPEECH OUTPUT: 'Water'",
-     "SPEECH OUTPUT: 'not selected'",
-     "SPEECH OUTPUT: 'radio button'"]))
+     "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

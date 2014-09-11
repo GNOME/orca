@@ -21,11 +21,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("m"))
 sequence.append(utils.AssertPresentationAction(
     "2. m to next landmark",
-    ["BRAILLE LINE:  'navigation main'",
+    ["KNOWN ISSUE: We're reporting the browser name",
+     "BRAILLE LINE:  'navigation main'",
      "     VISIBLE:  'navigation main', cursor=12",
-     "SPEECH OUTPUT: 'main '",
-     "SPEECH OUTPUT: 'application'",
-     "SPEECH OUTPUT: 'embedded'"]))
+     "SPEECH OUTPUT: 'main'",
+     "SPEECH OUTPUT: 'Firefox'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("m"))
@@ -33,8 +33,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. m to next landmark",
     ["BRAILLE LINE:  'application'",
      "     VISIBLE:  'application', cursor=1",
-     "SPEECH OUTPUT: 'application'",
-     "SPEECH OUTPUT: 'embedded'"]))
+     "SPEECH OUTPUT: 'Firefox'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("m"))
@@ -42,8 +41,8 @@ sequence.append(utils.AssertPresentationAction(
     "4. m to next landmark",
     ["BRAILLE LINE:  'complementary'",
      "     VISIBLE:  'complementary', cursor=1",
-     "SPEECH OUTPUT: 'complementary '",
-     "SPEECH OUTPUT: 'form '",
+     "SPEECH OUTPUT: 'complementary'",
+     "SPEECH OUTPUT: 'form'",
      "SPEECH OUTPUT: 'search'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -96,11 +95,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>m"))
 sequence.append(utils.AssertPresentationAction(
     "10. Shift+m to previous landmark",
-    ["KNOWN ISSUE: We are skipping over complementary on the way back",
+    ["KNOWN ISSUE: We are skipping over complementary on the way back and speaking 'Firefox'",
      "BRAILLE LINE:  'application'",
      "     VISIBLE:  'application', cursor=1",
-     "SPEECH OUTPUT: 'application'",
-     "SPEECH OUTPUT: 'embedded'"]))
+     "SPEECH OUTPUT: 'Firefox'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>m"))

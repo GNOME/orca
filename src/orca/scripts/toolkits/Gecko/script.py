@@ -741,23 +741,26 @@ class Script(default.Script):
                 contents = self.getObjectContentsAtOffset(obj, characterOffset)
             else:
                 contents = self.getLineContentsAtOffset(obj, characterOffset)
-            utterances = self.getUtterancesFromContents(contents)
-            clumped = self.clumpUtterances(utterances)
-            for i in range(len(clumped)):
-                [obj, startOffset, endOffset, text] = \
-                                             contents[min(i, len(contents)-1)]
-                [element, voice] = clumped[i]
-                if isinstance(element, str):
-                    element = self.utilities.adjustForRepeats(element)
-                if isinstance(element, (Pause, ACSS)):
-                    # At the moment, SayAllContext is expecting a string; not
-                    # a Pause. For now, being conservative and catching that
-                    # here. See bug #591351.
-                    #
+            for content in contents:
+                obj, startOffset, endOffset, text = content
+                if self.isLabellingContents(obj, contents):
                     continue
-                yield [speechserver.SayAllContext(obj, element,
-                                                  startOffset, endOffset),
-                       voice]
+
+                utterances = self.getUtterancesFromContents([content], True)
+
+                # TODO - JD: This is sad, but it's better than the old, broken
+                # clumpUtterances(). We really need to fix the speechservers'
+                # SayAll support. In the meantime, the generators should be
+                # providing one ACSS per string.
+                elements = list(filter(lambda x: isinstance(x, str), utterances[0]))
+                voices = list(filter(lambda x: isinstance(x, ACSS), utterances[0]))
+                if len(elements) != len(voices):
+                    continue
+
+                for i, element in enumerate(elements):
+                    yield [speechserver.SayAllContext(obj, element,
+                                                      startOffset, endOffset),
+                           voices[i]]
 
             obj = contents[-1][0]
             characterOffset = contents[-1][2]
@@ -831,6 +834,14 @@ class Script(default.Script):
                           self.__sayAllProgressCallback)
 
         return True
+
+    def __sayAllProgressCallback(self, context, progressType):
+        if not self.inDocumentContent():
+            default.Script.__sayAllProgressCallback(self, context, progressType)
+            return
+
+        orca.setLocusOfFocus(None, context.obj, notifyScript=False)
+        self.setCaretContext(context.obj, context.currentOffset)
 
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
@@ -1476,25 +1487,16 @@ class Script(default.Script):
         # EMBEDDED_OBJECT_CHARACTER model of Gecko.  For all other
         # things, however, we can defer to the default scripts.
         #
-        if not self.inDocumentContent():
+        if not self.inDocumentContent() or self.utilities.isEntry(obj):
             default.Script.sayWord(self, obj)
             return
 
         [obj, characterOffset] = self.getCaretContext()
-
-        # Ideally in an entry we would just let default.sayWord() handle
-        # things.  That fails to work when navigating backwords by word.
-        # Because getUtterancesFromContents() now uses the speech_generator
-        # with entries, we need to handle word navigation in entries here.
-        #
         wordContents = self.utilities.getWordContentsAtOffset(obj, characterOffset)
+
         [textObj, startOffset, endOffset, word] = wordContents[0]
         self.speakMisspelledIndicator(textObj, startOffset)
-        if not self.utilities.isEntry(textObj):
-            self.speakContents(wordContents)
-        else:
-            word = self.utilities.substring(textObj, startOffset, endOffset)
-            speech.speak([word], self.getACSS(textObj, word))
+        self.speakContents(wordContents)
 
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
@@ -2479,141 +2481,51 @@ class Script(default.Script):
     #                                                                  #
     ####################################################################
 
-    # [[[TODO: WDW - this needs to be moved to the speech generator.]]]
-    #
-    def getACSS(self, obj, string):
-        """Returns the ACSS to speak anything for the given obj."""
-
-        if obj.getRole() == pyatspi.ROLE_LINK:
-            acss = self.voices[settings.HYPERLINK_VOICE]
-        elif string and isinstance(string, str) \
-            and string.isupper() \
-            and string.strip().isalpha():
-            acss = self.voices[settings.UPPERCASE_VOICE]
-        else:
-            acss = self.voices[settings.DEFAULT_VOICE]
-
-        return acss
-
-    def getUtterancesFromContents(self, contents, speakRole=True):
+    def getUtterancesFromContents(self, contents, eliminatePauses=False):
         """Returns a list of [text, acss] tuples based upon the list
         of [obj, startOffset, endOffset, string] tuples passed in.
 
         Arguments:
         -contents: a list of [obj, startOffset, endOffset, string] tuples
-        -speakRole: if True, speak the roles of objects
         """
 
         if not len(contents):
             return []
 
-        # Even if we want to speakRole, we don't want to do that for the
-        # document frame.  And we're going to special-case headings so that
-        # that we don't overspeak heading role info, which we're in danger
-        # of doing if a heading includes links or images.
-        #
-        doNotSpeakRoles = [pyatspi.ROLE_DOCUMENT_FRAME,
-                           pyatspi.ROLE_HEADING,
-                           pyatspi.ROLE_LIST_ITEM,
-                           pyatspi.ROLE_TEXT,
-                           pyatspi.ROLE_ALERT]
-
         utterances = []
-        prevObj = None
         contents = self.utilities.filterContentsForPresentation(contents)
+        lastObj = None
         for content in contents:
             [obj, startOffset, endOffset, string] = content
-            string = self.utilities.adjustForRepeats(string)
-            role = obj.getRole()
+            utterance = self.speechGenerator.generateSpeech(
+                obj, startOffset=startOffset, endOffset=endOffset)
+            if eliminatePauses:
+                utterance = list(filter(lambda x: not isinstance(x, Pause), utterance))
+            if utterance and utterance[0]:
+                utterances.append(utterance)
+            lastObj = obj
 
-            # If we don't have a string, then use the speech generator.
-            # Otherwise, we'll want to speak the string and possibly the
-            # role.
-            #
-            if not len(string) \
-               or self.utilities.isEntry(obj) \
-               or self.utilities.isPasswordText(obj) \
-               or self.utilities.isClickableElement(obj) \
-               or role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_IMAGE,
-                           pyatspi.ROLE_CHECK_BOX, pyatspi.ROLE_RADIO_BUTTON,
-                           pyatspi.ROLE_TOGGLE_BUTTON, pyatspi.ROLE_COMBO_BOX]:
-                rv = self.speechGenerator.generateSpeech(obj)
-                # Crazy crap to make clump and friends happy until we can
-                # kill them. (They don't deal well with what the speech
-                # generator provides.)
-                for item in rv:
-                    if isinstance(item, str):
-                        utterances.append([item, self.getACSS(obj, item)])
-            else:
-                utterances.append([string, self.getACSS(obj, string)])
-                if speakRole and not role in doNotSpeakRoles:
-                    utterance = self.speechGenerator.getRoleName(obj)
-                    if utterance:
-                        utterances.append(utterance)
-  
-            # If the object is a heading, or is contained within a heading,
-            # speak that role information at the end of the object.
-            #
-            isLastObject = (contents.index(content) == (len(contents) - 1))
-            isHeading = (role == pyatspi.ROLE_HEADING)
-            if speakRole and (isLastObject or isHeading):
-                if isHeading:
-                    heading = obj
-                else:
-                    heading = self.utilities.ancestorWithRole(
-                        obj,
-                        [pyatspi.ROLE_HEADING],
-                        [pyatspi.ROLE_DOCUMENT_FRAME])
-
-                if heading:
-                    utterance = self.speechGenerator.getRoleName(heading)
-                    if utterance:
-                        utterances.append(utterance)
-
-            prevObj = obj
+        # TODO - JD: This belongs in the generator.
+        if lastObj and lastObj.getRole() != pyatspi.ROLE_HEADING:
+            heading = self.utilities.ancestorWithRole(
+                lastObj, [pyatspi.ROLE_HEADING], [pyatspi.ROLE_DOCUMENT_FRAME])
+            if heading:
+                utterance = self.speechGenerator.getRoleName(heading)
+                utterances.append(utterance)
 
         if not utterances:
-            utterances = [messages.BLANK, self.voices[settings.DEFAULT_VOICE]]
+            if eliminatePauses:
+                string = ""
+            else:
+                string = messages.BLANK
+            utterances = [string, self.voices[settings.DEFAULT_VOICE]]
 
         return utterances
 
-    def clumpUtterances(self, utterances):
-        """Returns a list of utterances clumped together by acss.
-
-        Arguments:
-        -utterances: unclumped utterances
-        -speakRole: if True, speak the roles of objects
-        """
-
-        clumped = []
-
-        for utterance in utterances:
-            try:
-                [element, acss] = utterance
-            except:
-                continue
-            if len(clumped) == 0:
-                clumped = [[element, acss]]
-            elif acss == clumped[-1][1] \
-                 and isinstance(element, str) \
-                 and isinstance(clumped[-1][0], str):
-                clumped[-1][0] = clumped[-1][0].rstrip(" ")
-                clumped[-1][0] += " " + element
-            else:
-                clumped.append([element, acss])
-
-        if (len(clumped) == 1) and (clumped[0][0] == "\n"):
-            if _settingsManager.getSetting('speakBlankLines'):
-                return [[messages.BLANK, self.voices[settings.SYSTEM_VOICE]]]
-
-        if len(clumped) and isinstance(clumped[-1][0], str):
-            clumped[-1][0] = clumped[-1][0].rstrip(" ")
-
-        return clumped
-
-    def speakContents(self, contents, speakRole=True):
+    def speakContents(self, contents):
         """Speaks each string in contents using the associated voice/acss"""
-        utterances = self.getUtterancesFromContents(contents, speakRole)
+
+        utterances = self.getUtterancesFromContents(contents)
         for utterance in utterances:
             speech.speak(utterance, interrupt=False)
 

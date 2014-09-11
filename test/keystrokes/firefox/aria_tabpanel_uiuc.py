@@ -17,7 +17,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. Give focus to a widget in the first Tab",
     ["BRAILLE LINE:  '&=y Thick and cheesy radio button'",
      "     VISIBLE:  '&=y Thick and cheesy radio butto', cursor=0",
-     "SPEECH OUTPUT: 'Thick and cheesy selected radio button'"]))
+     "SPEECH OUTPUT: 'Thick and cheesy'",
+     "SPEECH OUTPUT: 'selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Page_Down"))
@@ -29,7 +30,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Focus mode', cursor=0",
      "BRAILLE LINE:  'Veggies page tab'",
      "     VISIBLE:  'Veggies page tab', cursor=1",
-     "SPEECH OUTPUT: 'Veggies page tab'",
+     "SPEECH OUTPUT: 'Veggies'",
+     "SPEECH OUTPUT: 'page tab'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -40,7 +42,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Carnivore page tab', cursor=1",
      "BRAILLE LINE:  'Carnivore page tab'",
      "     VISIBLE:  'Carnivore page tab', cursor=1",
-     "SPEECH OUTPUT: 'Carnivore page tab'"]))
+     "SPEECH OUTPUT: 'Carnivore'",
+     "SPEECH OUTPUT: 'page tab'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -60,7 +63,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Delivery page tab', cursor=1",
      "BRAILLE LINE:  'Delivery page tab'",
      "     VISIBLE:  'Delivery page tab', cursor=1",
-     "SPEECH OUTPUT: 'Delivery page tab'"]))
+     "SPEECH OUTPUT: 'Delivery'",
+     "SPEECH OUTPUT: 'page tab'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -70,7 +74,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Carnivore page tab', cursor=1",
      "BRAILLE LINE:  'Carnivore page tab'",
      "     VISIBLE:  'Carnivore page tab', cursor=1",
-     "SPEECH OUTPUT: 'Carnivore page tab'"]))
+     "SPEECH OUTPUT: 'Carnivore'",
+     "SPEECH OUTPUT: 'page tab'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -80,7 +85,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '< > Pepperoni check box', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",
-     "SPEECH OUTPUT: 'Pepperoni check box not checked'",
+     "SPEECH OUTPUT: 'Pepperoni'",
+     "SPEECH OUTPUT: 'check box not checked'",
      "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
