@@ -16,7 +16,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'slider 1 10 slider', cursor=0",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'slider 1 slider 10'",
+     "SPEECH OUTPUT: 'slider 1'",
+     "SPEECH OUTPUT: 'slider 10'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -62,7 +63,10 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Slider1 Value: 10.0% $l rdonly', cursor=21",
      "BRAILLE LINE:  'Slider1 Value: 10.0% $l rdonly'",
      "     VISIBLE:  'Slider1 Value: 10.0% $l rdonly', cursor=21",
-     "SPEECH OUTPUT: 'Slider1 Value: read only entry 10.0% selected'"]))
+     "SPEECH OUTPUT: 'Slider1 Value:",
+     "SPEECH OUTPUT: 'read only entry'",
+     "SPEECH OUTPUT: '10.0%'",
+     "SPEECH OUTPUT: 'selected'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -72,7 +76,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Disable previous slider push but', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",
-     "SPEECH OUTPUT: 'Disable previous slider push button'",
+     "SPEECH OUTPUT: 'Disable previous slider'",
+     "SPEECH OUTPUT: 'push button'",
      "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -85,7 +90,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'slider 2 10 slider', cursor=0",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'slider 2 slider 10'",
+     "SPEECH OUTPUT: 'slider 2'",
+     "SPEECH OUTPUT: 'slider 10'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())

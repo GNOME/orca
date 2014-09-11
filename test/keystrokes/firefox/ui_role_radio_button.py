@@ -16,8 +16,10 @@ sequence.append(utils.AssertPresentationAction(
     "1. Alt a to radio button group",
     ["BRAILLE LINE:  'Firefox application Print dialog General page tab &=y All Pages radio button'",
      "     VISIBLE:  '&=y All Pages radio button', cursor=1",
-     "SPEECH OUTPUT: 'General page tab'",
-     "SPEECH OUTPUT: 'All Pages selected radio button'"]))
+     "SPEECH OUTPUT: 'General'",
+     "SPEECH OUTPUT: 'page tab'",
+     "SPEECH OUTPUT: 'All Pages'",
+     "SPEECH OUTPUT: 'selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))

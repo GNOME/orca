@@ -39,8 +39,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'installer (10190 KB)', cursor=1",
      "SPEECH OUTPUT: 'installer'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' (10190 KB)",
-     "'"]))
+     "SPEECH OUTPUT: '(10190 KB)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -50,7 +49,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'portable archive (9154 KB)', cursor=1",
      "SPEECH OUTPUT: 'portable archive'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' (9154 KB)'"]))
+     "SPEECH OUTPUT: '(9154 KB)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -69,8 +68,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'installer (10193 KB)', cursor=1",
      "SPEECH OUTPUT: 'installer'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' (10193 KB)",
-     "'"]))
+     "SPEECH OUTPUT: '(10193 KB)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -80,7 +78,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'portable archive (9149 KB)', cursor=1",
      "SPEECH OUTPUT: 'portable archive'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' (9149 KB)'"]))
+     "SPEECH OUTPUT: '(9149 KB)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -92,8 +90,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Tue Nov 4 16:39:02 2008'",
      "SPEECH OUTPUT: 'installer'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' (10193 KB)",
-     "'"]))
+     "SPEECH OUTPUT: '(10193 KB)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -103,7 +100,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'portable archive (9154 KB)', cursor=1",
      "SPEECH OUTPUT: 'portable archive'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' (9154 KB)'"]))
+     "SPEECH OUTPUT: '(9154 KB)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -115,8 +112,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Wed Nov 5 16:39:00 2008'",
      "SPEECH OUTPUT: 'installer'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ' (10190 KB)",
-     "'"]))
+     "SPEECH OUTPUT: '(10190 KB)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

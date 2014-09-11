@@ -21,8 +21,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  'HTML Tags'",
      "     VISIBLE:  'HTML Tags', cursor=1",
-     "SPEECH OUTPUT: 'HTML Tags",
-     "'"]))
+     "SPEECH OUTPUT: 'HTML Tags'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -119,8 +118,7 @@ sequence.append(utils.AssertPresentationAction(
     "13. Line Up",
     ["BRAILLE LINE:  'HTML Tags'",
      "     VISIBLE:  'HTML Tags', cursor=1",
-     "SPEECH OUTPUT: 'HTML Tags",
-     "'"]))
+     "SPEECH OUTPUT: 'HTML Tags'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

@@ -22,8 +22,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Label:'",
      "     VISIBLE:  'Label:', cursor=1",
      "SPEECH OUTPUT: 'Label'",
-     "SPEECH OUTPUT: ': ",
-     "'"]))
+     "SPEECH OUTPUT: ':'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -58,8 +57,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Label:'",
      "     VISIBLE:  'Label:', cursor=1",
      "SPEECH OUTPUT: 'Label'",
-     "SPEECH OUTPUT: ': ",
-     "'"]))
+     "SPEECH OUTPUT: ':'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

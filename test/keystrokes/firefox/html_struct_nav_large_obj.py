@@ -96,24 +96,24 @@ sequence.append(utils.AssertPresentationAction(
      "all you need do is take me, ",
      "dissolve me under the tongue, ",
      "all you need do is swallow me, ",
-     "just wash me down with water. '",
+     "just wash me down with water.'",
      "SPEECH OUTPUT: 'I know how to cope with misfortune, ",
      "how to endure bad news, ",
      "take the edge of injustice, ",
      "make up for the absence of God, ",
      "help pick out your widow's weeds. ",
      "What are you waiting for - ",
-     "have faith in chemistry's compassion. '",
+     "have faith in chemistry's compassion.'",
      "SPEECH OUTPUT: 'You're still a young man/woman, ",
      "you really should settle down somehow. ",
      "Who said ",
-     "life must be lived courageously? '",
+     "life must be lived courageously?'",
      "SPEECH OUTPUT: 'Hand your abyss over to me - ",
      "I will line it up with soft sleep, ",
      "you'll be grateful for ",
-     "the four-footed landing. '",
+     "the four-footed landing.'",
      "SPEECH OUTPUT: 'Sell me your soul. ",
-     "There's no other buyer likely to turn up. '"]))
+     "There's no other buyer likely to turn up.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>o"))

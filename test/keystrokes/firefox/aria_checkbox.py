@@ -15,7 +15,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '<x> Include decorative fruit bas', cursor=1",
      "BRAILLE LINE:  '<x> Include decorative fruit basket check box'",
      "     VISIBLE:  '<x> Include decorative fruit bas', cursor=1",
-     "SPEECH OUTPUT: 'Include decorative fruit basket check box checked'"]))
+     "SPEECH OUTPUT: 'Include decorative fruit basket'",
+     "SPEECH OUTPUT: 'check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
@@ -33,7 +34,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '<x> Invalid checkbox check box', cursor=1",
      "BRAILLE LINE:  '<x> Invalid checkbox check box'",
      "     VISIBLE:  '<x> Invalid checkbox check box', cursor=1",
-     "SPEECH OUTPUT: 'Invalid checkbox check box checked'"]))
+     "SPEECH OUTPUT: 'Invalid checkbox'",
+     "SPEECH OUTPUT: 'check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
@@ -51,7 +53,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '<x> Required checkbox check box', cursor=1",
      "BRAILLE LINE:  '<x> Required checkbox check box'",
      "     VISIBLE:  '<x> Required checkbox check box', cursor=1",
-     "SPEECH OUTPUT: 'Required checkbox check box checked required'"]))
+     "SPEECH OUTPUT: 'Required checkbox'",
+     "SPEECH OUTPUT: 'check box checked required'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
@@ -86,7 +89,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '<x> Tri-state checkbox check box', cursor=1",
      "BRAILLE LINE:  '<x> Tri-state checkbox check box'",
      "     VISIBLE:  '<x> Tri-state checkbox check box', cursor=1",
-     "SPEECH OUTPUT: 'Tri-state checkbox check box checked required'"]))
+     "SPEECH OUTPUT: 'Tri-state checkbox'",
+     "SPEECH OUTPUT: 'check box checked required'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))

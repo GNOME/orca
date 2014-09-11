@@ -16,7 +16,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Next Word",
     ["BRAILLE LINE:  'Hello W o r l d. Go odbye w orld.'",
      "     VISIBLE:  'Hello W o r l d. Go odbye w orld', cursor=6",
-     "SPEECH OUTPUT: 'Hello '"]))
+     "SPEECH OUTPUT: 'Hello'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
@@ -32,7 +32,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'l'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'd. '"]))
+     "SPEECH OUTPUT: 'd.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
@@ -41,7 +41,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Hello W o r l d. Go odbye w orld.'",
      "     VISIBLE:  'odbye w orld.', cursor=1",
      "SPEECH OUTPUT: 'Go'",
-     "SPEECH OUTPUT: 'odbye '",
+     "SPEECH OUTPUT: 'odbye'",
      "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -60,7 +60,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Next Word",
     ["BRAILLE LINE:  'More stuff! Yay!'",
      "     VISIBLE:  'More stuff! Yay!', cursor=5",
-     "SPEECH OUTPUT: 'More '"]))
+     "SPEECH OUTPUT: 'More'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
@@ -70,7 +70,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'More stuff! Yay!', cursor=12",
      "SPEECH OUTPUT: 'stuff'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '! '"]))
+     "SPEECH OUTPUT: '!'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
@@ -80,7 +80,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'More stuff! Yay!', cursor=6",
      "SPEECH OUTPUT: 'stuff'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: '! '"]))
+     "SPEECH OUTPUT: '!'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
@@ -88,7 +88,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Previous Word",
     ["BRAILLE LINE:  'More stuff! Yay!'",
      "     VISIBLE:  'More stuff! Yay!', cursor=1",
-     "SPEECH OUTPUT: 'More '"]))
+     "SPEECH OUTPUT: 'More'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
@@ -107,7 +107,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Hello W o r l d. Go odbye w orld.'",
      "     VISIBLE:  'd. Go odbye w orld.', cursor=4",
      "SPEECH OUTPUT: 'Go'",
-     "SPEECH OUTPUT: 'odbye '",
+     "SPEECH OUTPUT: 'odbye'",
      "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -124,7 +124,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'l'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'd. '"]))
+     "SPEECH OUTPUT: 'd.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
@@ -132,7 +132,7 @@ sequence.append(utils.AssertPresentationAction(
     "12. Previous Word",
     ["BRAILLE LINE:  'Hello W o r l d. Go odbye w orld.'",
      "     VISIBLE:  'Hello W o r l d. Go odbye w orld', cursor=1",
-     "SPEECH OUTPUT: 'Hello '"]))
+     "SPEECH OUTPUT: 'Hello'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

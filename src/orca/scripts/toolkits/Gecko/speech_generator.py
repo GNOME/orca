@@ -34,6 +34,7 @@ import pyatspi
 
 import orca.messages as messages
 import orca.object_properties as object_properties
+import orca.orca_state as orca_state
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
 
@@ -53,6 +54,18 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def __init__(self, script):
         speech_generator.SpeechGenerator.__init__(self, script)
+
+    def _getACSS(self, obj, string):
+        if obj.getRole() == pyatspi.ROLE_LINK:
+            acss = self.voice(speech_generator.HYPERLINK)
+        elif isinstance(string, str) \
+            and string.isupper() \
+            and string.strip().isalpha():
+            acss = self.voice(speech_generator.UPPERCASE)
+        else:
+            acss = self.voice(speech_generator.DEFAULT)
+
+        return acss
 
     def _generateName(self, obj, **args):
         result = []
@@ -123,6 +136,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if that description is different from that of the name and
         label.
         """
+        start = args.get('startOffset')
+        end = args.get('endOffset')
+        if start != None and end != None:
+            return []
+
         formatType = args.get('formatType')
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_TEXT and formatType != 'basicWhereAmI':
@@ -152,6 +170,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                         pyatspi.ROLE_TEXT] \
            and self._script.inDocumentContent():
 
+            # TODO: JD - isLabellingContents() needs smarts to identify labels
+            # we'll later infer. For now, this keeps us from double-presenting.
+            start = args.get('startOffset')
+            end = args.get('endOffset')
+            if start != None and end != None:
+                return []
+
             # We're having to hack around yet another Mozilla bug:
             # https://bugzilla.mozilla.org/show_bug.cgi?id=960241
             focusedOnly = role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]
@@ -174,21 +199,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateLabelOrName(self, obj, **args):
-        role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_TEXT:
+        if self._script.utilities.isTextBlockElement(obj):
             return []
 
-        result = []
-        if obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
-            # This is the main difference between this class and the default
-            # class - we'll give this thing a name here, and we'll make it
-            # be the name of the autocomplete.
-            #
-            result.extend(self._generateLabelOrName(obj.parent, **args))
-        else:
-            result.extend(speech_generator.SpeechGenerator._generateLabelOrName(
-                self, obj, **args))
-        return result
+        return speech_generator.SpeechGenerator._generateLabelOrName(
+            self, obj, **args)
 
     def _generateRoleName(self, obj, **args):
         """Prevents some roles from being spoken."""
@@ -226,6 +241,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if args.get('formatType', 'unfocused') != 'basicWhereAmI':
                 doNotSpeak.append(pyatspi.ROLE_LIST_ITEM)
                 doNotSpeak.append(pyatspi.ROLE_LIST)
+            if args.get('startOffset') != None and args.get('endOffset') != None:
+                doNotSpeak.append(pyatspi.ROLE_DOCUMENT_FRAME)
+                doNotSpeak.append(pyatspi.ROLE_ALERT)
 
         if not (role in doNotSpeak):
             if role == pyatspi.ROLE_IMAGE:
@@ -267,7 +285,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generateExpandedEOCs(self, obj, **args):
         """Returns the expanded embedded object characters for an object."""
         result = []
-        text = self._script.utilities.expandEOCs(obj)
+
+        startOffset = args.get('startOffset', 0)
+        endOffset = args.get('endOffset', -1)
+        text = self._script.utilities.expandEOCs(obj, startOffset, endOffset)
         if text:
             result.append(text)
         return result
@@ -287,6 +308,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 speech_generator.SpeechGenerator._generateNumberOfChildren(
                     self, obj, **args))
         return result
+
+    def _generateNewAncestors(self, obj, **args):
+        # TODO - JD: This is not the right way to do this, but we can fix
+        # that as part of the removal of formatting strings.
+        start = args.get('startOffset')
+        end = args.get('endOffset')
+        if start != None or end != None:
+            return []
+
+        return speech_generator.SpeechGenerator._generateNewAncestors(
+            self, obj, **args)
 
     def _generateAncestors(self, obj, **args):
         role = args.get('role', obj.getRole())
@@ -366,6 +398,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(speech_generator.SpeechGenerator.\
                                            generateSpeech(self, obj, **args))
             self._restoreRole(oldRole, args)
+        elif self._script.utilities.isLink(obj):
+            oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
+            result.extend(speech_generator.SpeechGenerator.\
+                                           generateSpeech(self, obj, **args))
+            self._restoreRole(oldRole, args)
         else:
             result.extend(speech_generator.SpeechGenerator.\
                                            generateSpeech(self, obj, **args))
@@ -408,3 +445,63 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # is all kinds of broken. Until that can be sorted out, try to filter
         # out some of the noise....
         return []
+
+    def _generateAnyTextSelection(self, obj, **args):
+        if not obj == orca_state.locusOfFocus:
+            return []
+
+        return speech_generator.SpeechGenerator._generateAnyTextSelection(
+            self, obj, **args)
+
+    def _generateAllTextSelection(self, obj, **args):
+        if not obj == orca_state.locusOfFocus:
+            return []
+
+        return speech_generator.SpeechGenerator._generateAllTextSelection(
+            self, obj, **args)
+
+    def _generateSubstring(self, obj, **args):
+        start = args.get('startOffset')
+        end = args.get('endOffset')
+        if start == None or end == None:
+            return []
+
+        string = self._script.utilities.substring(obj, start, end)
+        string = self._script.utilities.adjustForRepeats(string)
+        if not string:
+            return []
+
+        if not self._script.utilities.isEntry(obj) \
+           and not self._script.utilities.isPasswordText(obj):
+            string = string.strip()
+
+        result = [string]
+        result.extend(self._getACSS(obj, string))
+        return result
+
+    # TODO - JD: While working on the Gecko rewrite, I found a metric crapton
+    # of text generation methods (including, but not limited to, these below).
+    # Are these really all needed? Seriously??
+    def _generateCurrentLineText(self, obj, **args):
+        result = self._generateSubstring(obj, **args)
+        if result:
+            return result
+
+        return speech_generator.SpeechGenerator._generateCurrentLineText(
+            self, obj, **args)
+
+    def _generateDisplayedText(self, obj, **args):
+        result = self._generateSubstring(obj, **args)
+        if result:
+            return result
+
+        return speech_generator.SpeechGenerator._generateDisplayedText(
+            self, obj, **args)
+
+    def _generateTextContent(self, obj, **args):
+        result = self._generateSubstring(obj, **args)
+        if result:
+            return result
+
+        return speech_generator.SpeechGenerator._generateTextContent(
+            self, obj, **args)

@@ -22,7 +22,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  'Lists are not only fun to make, they are fun to use. They help us:'",
      "     VISIBLE:  'Lists are not only fun to make, ', cursor=1",
-     "SPEECH OUTPUT: 'Lists are not only fun to make, they are fun to use. They help us: '"]))
+     "SPEECH OUTPUT: 'Lists are not only fun to make, they are fun to use. They help us:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -38,7 +38,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
     ["BRAILLE LINE:  '2.arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'",
      "     VISIBLE:  '2.arrange long and arbitrary lin', cursor=1",
-     "SPEECH OUTPUT: '2.arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some '"]))
+     "SPEECH OUTPUT: '2.arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -70,7 +70,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["BRAILLE LINE:  'Your ordered lists can start at a strange number, like:'",
      "     VISIBLE:  'Your ordered lists can start at ', cursor=1",
-     "SPEECH OUTPUT: 'Your ordered lists can start at a strange number, like: '"]))
+     "SPEECH OUTPUT: 'Your ordered lists can start at a strange number, like:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -134,7 +134,7 @@ sequence.append(utils.AssertPresentationAction(
     "16. Line Up",
     ["BRAILLE LINE:  'Your ordered lists can start at a strange number, like:'",
      "     VISIBLE:  'Your ordered lists can start at ', cursor=1",
-     "SPEECH OUTPUT: 'Your ordered lists can start at a strange number, like: '"]))
+     "SPEECH OUTPUT: 'Your ordered lists can start at a strange number, like:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -166,7 +166,7 @@ sequence.append(utils.AssertPresentationAction(
     "20. Line Up",
     ["BRAILLE LINE:  '2.arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'",
      "     VISIBLE:  '2.arrange long and arbitrary lin', cursor=1",
-     "SPEECH OUTPUT: '2.arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some '"]))
+     "SPEECH OUTPUT: '2.arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -182,7 +182,7 @@ sequence.append(utils.AssertPresentationAction(
     "22. Line Up",
     ["BRAILLE LINE:  'Lists are not only fun to make, they are fun to use. They help us:'",
      "     VISIBLE:  'Lists are not only fun to make, ', cursor=1",
-     "SPEECH OUTPUT: 'Lists are not only fun to make, they are fun to use. They help us: '"]))
+     "SPEECH OUTPUT: 'Lists are not only fun to make, they are fun to use. They help us:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

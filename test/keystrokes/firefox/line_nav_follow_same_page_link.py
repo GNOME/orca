@@ -25,7 +25,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  '•First item'",
      "     VISIBLE:  '•First item', cursor=2",
      "SPEECH OUTPUT: 'First item'",
-     "SPEECH OUTPUT: 'link' voice=hyperlink"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -36,7 +36,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  '•Second item'",
      "     VISIBLE:  '•Second item', cursor=2",
      "SPEECH OUTPUT: 'Second item'",
-     "SPEECH OUTPUT: 'link' voice=hyperlink"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
@@ -44,7 +44,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Return",
     ["BRAILLE LINE:  'seas. '",
      "     VISIBLE:  'seas. ', cursor=0",
-     "SPEECH OUTPUT: 'link' voice=hyperlink"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

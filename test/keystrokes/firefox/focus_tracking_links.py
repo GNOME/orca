@@ -17,7 +17,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Hello world, this is a test.', cursor=1",
      "SPEECH OUTPUT: 'Hello world'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ', this is a test. '"]))
+     "SPEECH OUTPUT: ', this is a test.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -37,7 +37,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Bar'",
      "     VISIBLE:  'Bar', cursor=1",
      "SPEECH OUTPUT: 'Bar'",
-     "SPEECH OUTPUT: 'link' voice=hyperlink"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
@@ -48,7 +48,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Foo'",
      "     VISIBLE:  'Foo', cursor=1",
      "SPEECH OUTPUT: 'Foo'",
-     "SPEECH OUTPUT: 'link' voice=hyperlink"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -22,8 +22,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'foo image h2'",
      "     VISIBLE:  'foo image h2', cursor=0",
      "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'image link'",
      "SPEECH OUTPUT: 'heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -59,8 +58,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'foo image h2'",
      "     VISIBLE:  'foo image h2', cursor=0",
      "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'image link'",
      "SPEECH OUTPUT: 'heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())

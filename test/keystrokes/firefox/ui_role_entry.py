@@ -7,8 +7,9 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(KeyComboAction("<Alt>b"))
-sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
+sequence.append(KeyComboAction("<Control><Shift>o"))
+
 
 ########################################################################
 # Tab three times, then down arrow twice to Bookmarks Menu. (This is
@@ -17,6 +18,8 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
+sequence.append(PauseAction(3000))
+
 sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("<Alt>o"))
@@ -115,7 +118,8 @@ sequence.append(utils.AssertPresentationAction(
     "10. Alt+D to Description",
     ["BRAILLE LINE:  'Description:  $l'",
      "     VISIBLE:  'Description:  $l', cursor=14",
-     "SPEECH OUTPUT: 'Description: entry'"]))
+     "SPEECH OUTPUT: 'Description:'",
+     "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(TypeAction("Here is the first line."))
 sequence.append(KeyComboAction("Return"))

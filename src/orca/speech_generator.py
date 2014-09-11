@@ -37,6 +37,7 @@ from . import settings
 from . import settings_manager
 from . import sound
 from . import text_attribute_names
+from . import acss
 
 class Pause:
     """A dummy class to indicate we want to insert a pause into an
@@ -960,9 +961,9 @@ class SpeechGenerator(generator.Generator):
         """
         acss = self.voice(DEFAULT)
         result = generator.Generator._generateCurrentLineText(self, obj, **args)
-        if result and result[0]:
-            if result[0] == "\n":
-                result[0] = messages.BLANK
+        if result:
+            if result == ["\n"]:
+                result = [messages.BLANK]
             result.extend(acss)
         return result
 
@@ -1916,4 +1917,4 @@ class SpeechGenerator(generator.Generator):
         if rv and rv.get('established') == False:
             rv.pop('established')
 
-        return [rv]
+        return [acss.ACSS(rv)]

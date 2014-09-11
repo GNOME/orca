@@ -15,8 +15,10 @@ sequence.append(utils.AssertPresentationAction(
     "1. y for the Page Style menu",
     ["BRAILLE LINE:  'Firefox application Mozilla Firefox frame Menu Bar tool bar Application menu bar View menu & y No Style radio menu item'",
      "     VISIBLE:  '& y No Style radio menu item', cursor=1",
-     "SPEECH OUTPUT: 'Page Style menu'",
-     "SPEECH OUTPUT: 'No Style not selected radio menu item'"]))
+     "SPEECH OUTPUT: 'Page Style'",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: 'No Style'",
+     "SPEECH OUTPUT: 'not selected radio menu item'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -40,7 +42,8 @@ sequence.append(utils.AssertPresentationAction(
     "3. Down Arrow in menu",
     ["BRAILLE LINE:  'Firefox application Mozilla Firefox frame Menu Bar tool bar Application menu bar View menu &=y Basic Page Style radio menu item'",
      "     VISIBLE:  '&=y Basic Page Style radio menu ', cursor=1",
-     "SPEECH OUTPUT: 'Basic Page Style selected radio menu item'"]))
+     "SPEECH OUTPUT: 'Basic Page Style'",
+     "SPEECH OUTPUT: 'selected radio menu item'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))

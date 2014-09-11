@@ -21,7 +21,10 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
      "     VISIBLE:  '(200% Courier font): California ', cursor=32",
      "SPEECH OUTPUT: 'collapsed'",
-     "SPEECH OUTPUT: 'US State test 1 (200% Courier font): entry California selected'",
+     "SPEECH OUTPUT: 'US State test 1 (200% Courier font):'",
+     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'California'",
+     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -48,8 +51,10 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
      "     VISIBLE:  'ate test 1 (200% Courier font): ', cursor=32",
      "SPEECH OUTPUT: 'California'",
-     "SPEECH OUTPUT: 'California panel'",
-     "SPEECH OUTPUT: 'California List with 3 items'",
+     "SPEECH OUTPUT: 'California'",
+     "SPEECH OUTPUT: 'panel'",
+     "SPEECH OUTPUT: 'California'",
+     "SPEECH OUTPUT: 'List with 3 items'",
      "SPEECH OUTPUT: 'California (CA)'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -129,7 +134,10 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
      "     VISIBLE:  '(200% Courier font): California ', cursor=32",
      "SPEECH OUTPUT: 'collapsed'",
-     "SPEECH OUTPUT: 'US State test 1 (200% Courier font): entry California selected'"]))
+     "SPEECH OUTPUT: 'US State test 1 (200% Courier font):'",
+     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'California'",
+     "SPEECH OUTPUT: 'selected'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()
