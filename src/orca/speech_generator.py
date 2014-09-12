@@ -1914,7 +1914,7 @@ class SpeechGenerator(generator.Generator):
         voicename = voiceType.get(key) or voiceType.get(DEFAULT)
         voices = _settingsManager.getSetting('voices')
         rv = voices.get(voicename)
-        if rv and rv.get('established') == False:
-            rv.pop('established')
+        if not rv or rv.get('established') == False:
+            rv = voices.get(voiceType.get(DEFAULT))
 
         return [acss.ACSS(rv)]
