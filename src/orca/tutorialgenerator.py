@@ -411,6 +411,10 @@ class TutorialGenerator:
 
         Returns a list of tutorial utterances to be spoken for the object.
         """
+
+        if not obj.getState().contains(pyatspi.STATE_EDITABLE):
+            return []
+
         utterances = []
         # Translators: This is the tutorial string for when landing
         # on text fields.
