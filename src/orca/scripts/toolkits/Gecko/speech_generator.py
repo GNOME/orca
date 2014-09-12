@@ -202,8 +202,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
-        return speech_generator.SpeechGenerator._generateLabelOrName(
+        result = speech_generator.SpeechGenerator._generateLabelOrName(
             self, obj, **args)
+
+        if not result and obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
+            result = self._generateLabelOrName(obj.parent, **args)
+
+        return result
 
     def _generateRoleName(self, obj, **args):
         """Prevents some roles from being spoken."""
