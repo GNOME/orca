@@ -113,6 +113,7 @@ userCustomizableSettings = [
     "findResultsMinimumLength",
     "structNavTriggersFocusMode",
     "caretNavTriggersFocusMode",
+    "layoutMode",
 ]
 
 GENERAL_KEYBOARD_LAYOUT_DESKTOP = 1
@@ -361,3 +362,5 @@ timeoutCallback         = None # Set by orca.py:init to orca.timeout
 
 structNavTriggersFocusMode = False
 caretNavTriggersFocusMode = False
+
+layoutMode = True
