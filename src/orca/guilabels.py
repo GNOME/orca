@@ -137,6 +137,18 @@ CHAT_SPEAK_MESSAGES_ACTIVE = _("A channel only if its _window is active")
 # chat room prior to presenting an incoming message.
 CHAT_SPEAK_ROOM_NAME = _("_Speak Chat Room name")
 
+# Translators: When presenting the content of a line on a web page, Orca by
+# default presents the full line, including any links or form fields on that
+# line, in order to reflect the on-screen layout as seen by sighted users.
+# Not all users like this presentation, however, and prefer to have objects
+# treated as if they were on individual lines, such as is done by Windows
+# screen readers, so that unrelated objects (e.g. links in a navbar) are not
+# all jumbled together. As a result, this is now configurable. If layout mode
+# is enabled, Orca will present the full line as it appears on the screen; if
+# it is disabled, Orca will treat each object as if it were on a separate line,
+# both for presentation and navigation.
+CONTENT_LAYOUT_MODE = _("Enable layout mode for content")
+
 # Translators: Orca's keybindings support double and triple "clicks" or key
 # presses, similar to using a mouse. This string appears in Orca's preferences
 # dialog after a keybinding which requires a double click.

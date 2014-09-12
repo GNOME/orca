@@ -108,6 +108,7 @@ class Script(default.Script):
         self.structuralNavigationCheckButton = None
         self.autoFocusModeStructNavCheckButton = None
         self.autoFocusModeCaretNavCheckButton = None
+        self.layoutModeCheckButton = None
 
         # _caretNavigationFunctions are functions that represent fundamental
         # ways to move the caret (e.g., by the arrow keys).
@@ -507,6 +508,12 @@ class Script(default.Script):
         self.sayAllOnLoadCheckButton.set_active(value)
         generalGrid.attach(self.sayAllOnLoadCheckButton, 0, 4, 1, 1)
 
+        label = guilabels.CONTENT_LAYOUT_MODE
+        value = _settingsManager.getSetting('layoutMode')
+        self.layoutModeCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
+        self.layoutModeCheckButton.set_active(value)
+        generalGrid.attach(self.layoutModeCheckButton, 0, 5, 1, 1)
+
         tableFrame = Gtk.Frame()
         grid.attach(tableFrame, 0, 1, 1, 1)
 
@@ -617,6 +624,7 @@ class Script(default.Script):
             'caretNavigationEnabled': self.controlCaretNavigationCheckButton.get_active(),
             'caretNavTriggersFocusMode': self.autoFocusModeCaretNavCheckButton.get_active(),
             'speakCellCoordinates': self.speakCellCoordinatesCheckButton.get_active(),
+            'layoutMode': self.layoutModeCheckButton.get_active(),
             'speakCellSpan': self.speakCellSpanCheckButton.get_active(),
             'speakCellHeaders': self.speakCellHeadersCheckButton.get_active(),
             'skipBlankCells': self.skipBlankCellsCheckButton.get_active()
