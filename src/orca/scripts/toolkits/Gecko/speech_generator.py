@@ -419,6 +419,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if attribute.startswith(attributeName):
                 return attribute.split(":")[1]
 
+    def _generateNewNodeLevel(self, obj, **args):
+        if self._script.utilities.isTextBlockElement(obj):
+            return []
+
+        return speech_generator.SpeechGenerator._generateNewNodeLevel(
+            self, obj, **args)
+
     def _generatePositionInList(self, obj, **args):
         if self._script.utilities.isTextBlockElement(obj):
             return []
