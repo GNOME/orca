@@ -420,6 +420,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 return attribute.split(":")[1]
 
     def _generatePositionInList(self, obj, **args):
+        if self._script.utilities.isTextBlockElement(obj):
+            return []
+
         position = self.getAttribute(obj, "posinset")
         total = self.getAttribute(obj, "setsize")
         if position and total and not obj.getRole() in \
