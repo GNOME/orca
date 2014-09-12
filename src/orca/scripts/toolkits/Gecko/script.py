@@ -2527,9 +2527,7 @@ class Script(default.Script):
     def speakContents(self, contents):
         """Speaks each string in contents using the associated voice/acss"""
 
-        utterances = self.getUtterancesFromContents(contents)
-        for utterance in utterances:
-            speech.speak(utterance, interrupt=False)
+        speech.speak(self.getUtterancesFromContents(contents))
 
     def speakCharacterAtOffset(self, obj, characterOffset):
         """Speaks the character at the given characterOffset in the
