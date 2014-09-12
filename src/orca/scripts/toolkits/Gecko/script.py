@@ -2463,7 +2463,8 @@ class Script(default.Script):
             return []
 
         if self.utilities.findObjectInContents(obj, offset, self.currentLineContents) == -1:
-            self.currentLineContents = self.utilities.getLineContentsAtOffset(obj, offset)
+            self.currentLineContents = self.utilities.getLineContentsAtOffset(
+                obj, offset, _settingsManager.getSetting('layoutMode'))
 
         return self.currentLineContents
 

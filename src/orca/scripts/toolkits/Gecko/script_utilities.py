@@ -712,7 +712,7 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def getLineContentsAtOffset(self, obj, offset):
+    def getLineContentsAtOffset(self, obj, offset, layoutMode=True):
         if not obj:
             return []
 
@@ -732,6 +732,8 @@ class Utilities(script_utilities.Utilities):
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
         objects = self._getContentsForObj(obj, offset, boundary)
+        if not layoutMode:
+            return objects
 
         # Check for things on the same line to the left of this object.
         firstObj, firstStart = objects[0][0], objects[0][1]
