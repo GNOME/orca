@@ -85,10 +85,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "8. Next form field",
-    ["KNOWN ISSUE: This is broken",
-     "BRAILLE LINE:  '< > check box bird'",
+    ["BRAILLE LINE:  '< > check box bird'",
      "     VISIBLE:  '< > check box bird', cursor=0",
-     "SPEECH OUTPUT: 'check box not checked'"]))
+     "SPEECH OUTPUT: 'bird check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -116,10 +115,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "11. Next form field",
-    ["KNOWN ISSUE: This is broken",
-     "BRAILLE LINE:  '&=y radio button cabernet sauvignon'",
+    ["BRAILLE LINE:  '&=y radio button cabernet sauvignon'",
      "     VISIBLE:  '&=y radio button cabernet sauvig', cursor=0",
-     "SPEECH OUTPUT: 'selected radio button'"]))
+     "SPEECH OUTPUT: 'cabernet sauvignon selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

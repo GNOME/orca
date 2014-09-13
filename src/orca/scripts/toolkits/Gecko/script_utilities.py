@@ -637,8 +637,18 @@ class Utilities(script_utilities.Utilities):
             return [[obj, start, end, string]]
 
         stringOffset = offset - start
-        strings = [m.span() for m in re.finditer("[^\ufffc]+", string)]
-        strings = list(filter(lambda x: x[0] <= stringOffset <= x[1], strings))
+        try:
+            char = string[stringOffset]
+        except:
+            pass
+        else:
+            if char == self.EMBEDDED_OBJECT_CHARACTER:
+                childIndex = self._script.getChildIndex(obj, offset)
+                child = obj[childIndex]
+                return [[child, 0, 1, ""]]
+
+        ranges = [m.span() for m in re.finditer("[^\ufffc]+", string)]
+        strings = list(filter(lambda x: x[0] <= stringOffset <= x[1], ranges))
         if len(strings) == 1:
             rangeStart, rangeEnd = strings[0]
             start += rangeStart
