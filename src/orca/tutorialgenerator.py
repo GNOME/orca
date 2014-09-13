@@ -781,14 +781,15 @@ class TutorialGenerator:
         if not settings.enableTutorialMessages:
             return []
 
+        utterances = []
         role = obj.getRole()
         if role in self.tutorialGenerators:
             generator = self.tutorialGenerators[role]
         else:
             generator = self._getDefaultTutorial
         msg = generator(obj, alreadyFocused, forceTutorial)
-        utterances = [" ".join(msg)]
         if msg:
+            utterances = [" ".join(msg)]
             self.lastTutorial = msg
         if forceTutorial:
             self.lastTutorial = ""
