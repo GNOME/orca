@@ -95,6 +95,10 @@ class Utilities(script_utilities.Utilities):
 
         return text
 
+    def getLineContentsAtOffset(self, obj, offset, layoutMode=True):
+        return self.getObjectsFromEOCs(
+            obj, offset, pyatspi.TEXT_BOUNDARY_LINE_START)
+
     def getObjectsFromEOCs(self, obj, offset=None, boundary=None):
         """Breaks the string containing a mixture of text and embedded object
         characters into a list of (obj, startOffset, endOffset, string) tuples.

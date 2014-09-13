@@ -87,10 +87,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "8. Next form field",
-    ["KNOWN ISSUE: We are not infering the label here.",
-     "BRAILLE LINE:  ' $l'",
+    ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=0",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'First Name entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -98,10 +97,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "9. Next form field",
-    ["KNOWN ISSUE: We are not infering the label here.",
-     "BRAILLE LINE:  ' $l'",
+    ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=0",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'M.I. entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -109,10 +107,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "10. Next form field",
-    ["KNOWN ISSUE: We are not infering the label here.",
-     "BRAILLE LINE:  ' $l'",
+    ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=0",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Last Name entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

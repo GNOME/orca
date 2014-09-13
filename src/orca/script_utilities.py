@@ -2676,6 +2676,9 @@ class Utilities:
             debug.printException(debug.LEVEL_WARNING)
             return ""
 
+    def getLineContentsAtOffset(self, obj, offset, layoutMode=True):
+        return []
+
     def getObjectsFromEOCs(self, obj, offset=None, boundary=None):
         """Breaks the string containing a mixture of text and embedded object
         characters into a list of (obj, startOffset, endOffset, string) tuples.

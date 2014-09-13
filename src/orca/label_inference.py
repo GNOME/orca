@@ -260,24 +260,15 @@ class LabelInference:
             start, end = self._script.utilities.getHyperlinkRange(obj)
             obj = obj.parent
 
-        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
-
         try:
             text = obj.queryText()
-        except NotImplementedError:
-            pass
-        except AttributeError:
-            debug.println(debug.LEVEL_FINE, "INFER _getLineContents: no obj")
+        except:
+            start = 0
         else:
             if start == None:
                 start = max(0, text.caretOffset)
-            else:
-                start = max(0, start - 1)
-            string, start, end = text.getTextAtOffset(start, boundary)
-            if string.endswith('\n'):
-                start = end
 
-        rv = self._script.utilities.getObjectsFromEOCs(obj, start, boundary)
+        rv = self._script.utilities.getLineContentsAtOffset(obj, start)
         self._lineCache[key] = rv
 
         return rv
@@ -414,9 +405,8 @@ class LabelInference:
         if not (objWidth and objHeight):
             return None
 
-        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
-        prevLine = self._script.utilities.getObjectsFromEOCs(
-            prevObj, start, boundary)
+        start = max(start - 1, 0)
+        prevLine = self._script.utilities.getLineContentsAtOffset(prevObj, start)
         if not (prevLine and prevLine[0]):
             return None
 
@@ -474,9 +464,7 @@ class LabelInference:
         if not (objWidth and objHeight):
             return None
 
-        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
-        nextLine = self._script.utilities.getObjectsFromEOCs(
-            lastObj, end, boundary)
+        nextLine = self._script.utilities.getLineContentsAtOffset(lastObj, end)
         if not (nextLine and nextLine[0]):
             return None
 

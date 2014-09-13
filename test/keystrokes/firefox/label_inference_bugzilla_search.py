@@ -28,7 +28,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Summary: contains all of the wor', cursor=0",
      "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Summary: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -125,7 +125,7 @@ sequence.append(utils.AssertPresentationAction(
     "11. Tab",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'A Comment: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -141,7 +141,7 @@ sequence.append(utils.AssertPresentationAction(
     "13. Tab",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Whiteboard: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -175,7 +175,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Keywords: contains all of the ke', cursor=0",
      "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Keywords entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -369,7 +369,7 @@ sequence.append(utils.AssertPresentationAction(
     "37. Tab",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: '(comma-separated list) entry'"]))
+     "SPEECH OUTPUT: 'bugs numbered: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -388,7 +388,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Now $l', cursor=4",
      "BRAILLE LINE:  'Now $l'",
      "     VISIBLE:  'Now $l', cursor=4",
-     "SPEECH OUTPUT: '(YYYY-MM-DD or relative dates) entry Now selected'"]))
+     "SPEECH OUTPUT: 'and entry Now selected'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
