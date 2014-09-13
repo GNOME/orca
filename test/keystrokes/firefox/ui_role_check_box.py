@@ -17,8 +17,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Right Arrow to Page Setup",
     ["BRAILLE LINE:  'Firefox application Print dialog Page Setup page tab'",
      "     VISIBLE:  'Page Setup page tab', cursor=1",
-     "SPEECH OUTPUT: 'Page Setup'",
-     "SPEECH OUTPUT: 'page tab'"]))
+     "SPEECH OUTPUT: 'Page Setup page tab'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -26,8 +25,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Right Arrow to Options",
     ["BRAILLE LINE:  'Firefox application Print dialog Options page tab'",
      "     VISIBLE:  'Options page tab', cursor=1",
-     "SPEECH OUTPUT: 'Options'",
-     "SPEECH OUTPUT: 'page tab'"]))
+     "SPEECH OUTPUT: 'Options page tab'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -35,8 +33,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Tab to checkbox",
     ["BRAILLE LINE:  'Firefox application Print dialog Options page tab <x> Ignore Scaling and Shrink To Fit Page Width check box'",
      "     VISIBLE:  '<x> Ignore Scaling and Shrink To', cursor=1",
-     "SPEECH OUTPUT: 'Ignore Scaling and Shrink To Fit Page Width'",
-     "SPEECH OUTPUT: 'check box checked'"]))
+     "SPEECH OUTPUT: 'Ignore Scaling and Shrink To Fit Page Width check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -44,8 +41,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Basic Where Am I",
     ["BRAILLE LINE:  'Firefox application Print dialog Options page tab <x> Ignore Scaling and Shrink To Fit Page Width check box'",
      "     VISIBLE:  '<x> Ignore Scaling and Shrink To', cursor=1",
-     "SPEECH OUTPUT: 'Ignore Scaling and Shrink To Fit Page Width'",
-     "SPEECH OUTPUT: 'check box checked.'",
+     "SPEECH OUTPUT: 'Ignore Scaling and Shrink To Fit Page Width check box checked.'",
      "SPEECH OUTPUT: 'Alt+H'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -62,8 +58,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Basic Where Am I",
     ["BRAILLE LINE:  'Firefox application Print dialog Options page tab < > Ignore Scaling and Shrink To Fit Page Width check box'",
      "     VISIBLE:  '< > Ignore Scaling and Shrink To', cursor=1",
-     "SPEECH OUTPUT: 'Ignore Scaling and Shrink To Fit Page Width'",
-     "SPEECH OUTPUT: 'check box not checked.'",
+     "SPEECH OUTPUT: 'Ignore Scaling and Shrink To Fit Page Width check box not checked.'",
      "SPEECH OUTPUT: 'Alt+H'"]))
 
 sequence.append(utils.StartRecordingAction())

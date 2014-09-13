@@ -31,9 +31,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Basic whereAmI",
     ["BRAILLE LINE:  'sparrow'",
      "     VISIBLE:  'sparrow', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: 'sparrow'",
-     "SPEECH OUTPUT: '3 of 4'"]))
+     "SPEECH OUTPUT: 'list item sparrow'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

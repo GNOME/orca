@@ -21,8 +21,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Firefox application MouseOvers - Mozilla Firefox frame dialog OK push button'",
      "     VISIBLE:  'OK push button', cursor=1",
      "SPEECH OUTPUT: 'Welcome to mouseover-enabled Orca!'",
-     "SPEECH OUTPUT: 'OK'",
-     "SPEECH OUTPUT: 'push button'"]))
+     "SPEECH OUTPUT: 'OK push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
@@ -30,8 +29,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Escape to dismiss the dialog.",
     ["BRAILLE LINE:  'Orca Logo image'",
      "     VISIBLE:  'Orca Logo image', cursor=0",
-     "SPEECH OUTPUT: 'Orca Logo'",
-     "SPEECH OUTPUT: 'image'"]))
+     "SPEECH OUTPUT: 'Orca Logo image'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

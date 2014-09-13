@@ -16,8 +16,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'Here are some entries h2'",
      "     VISIBLE:  'Here are some entries h2', cursor=1",
-     "SPEECH OUTPUT: 'Here are some entries'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Here are some entries heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -70,8 +69,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
     ["BRAILLE LINE:  'What the heck should we do here? h2'",
      "     VISIBLE:  'What the heck should we do here?', cursor=1",
-     "SPEECH OUTPUT: 'What the heck should we do here?'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'What the heck should we do here? heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -105,8 +103,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Line Down",
     ["BRAILLE LINE:  'Sometimes labels can be below the fields due to <br /> h2'",
      "     VISIBLE:  'Sometimes labels can be below th', cursor=1",
-     "SPEECH OUTPUT: 'Sometimes labels can be below the fields due to <br />'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Sometimes labels can be below the fields due to <br /> heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -162,8 +159,7 @@ sequence.append(utils.AssertPresentationAction(
     "17. Line Down",
     ["BRAILLE LINE:  'Other times it's due to layout tables h2'",
      "     VISIBLE:  'Other times it's due to layout t', cursor=1",
-     "SPEECH OUTPUT: 'Other times it's due to layout tables'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Other times it's due to layout tables heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -215,8 +211,7 @@ sequence.append(utils.AssertPresentationAction(
     "23. Line Down",
     ["BRAILLE LINE:  'Second verse same as the first (only now the labels are above the fields) h2'",
      "     VISIBLE:  'Second verse same as the first (', cursor=1",
-     "SPEECH OUTPUT: 'Second verse same as the first (only now the labels are above the fields)'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Second verse same as the first (only now the labels are above the fields) heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -268,8 +263,7 @@ sequence.append(utils.AssertPresentationAction(
     "29. Line Down",
     ["BRAILLE LINE:  'Decisions, decisions.... When in doubt, closest table cell text wins h2'",
      "     VISIBLE:  'Decisions, decisions.... When in', cursor=1",
-     "SPEECH OUTPUT: 'Decisions, decisions.... When in doubt, closest table cell text wins'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Decisions, decisions.... When in doubt, closest table cell text wins heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -286,8 +280,7 @@ sequence.append(utils.AssertPresentationAction(
     "31. Line Up",
     ["BRAILLE LINE:  'Decisions, decisions.... When in doubt, closest table cell text wins h2'",
      "     VISIBLE:  'Decisions, decisions.... When in', cursor=1",
-     "SPEECH OUTPUT: 'Decisions, decisions.... When in doubt, closest table cell text wins'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Decisions, decisions.... When in doubt, closest table cell text wins heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -339,8 +332,7 @@ sequence.append(utils.AssertPresentationAction(
     "37. Line Up",
     ["BRAILLE LINE:  'Second verse same as the first (only now the labels are above the fields) h2'",
      "     VISIBLE:  'Second verse same as the first (', cursor=1",
-     "SPEECH OUTPUT: 'Second verse same as the first (only now the labels are above the fields)'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Second verse same as the first (only now the labels are above the fields) heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -392,8 +384,7 @@ sequence.append(utils.AssertPresentationAction(
     "43. Line Up",
     ["BRAILLE LINE:  'Other times it's due to layout tables h2'",
      "     VISIBLE:  'Other times it's due to layout t', cursor=1",
-     "SPEECH OUTPUT: 'Other times it's due to layout tables'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Other times it's due to layout tables heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -449,8 +440,7 @@ sequence.append(utils.AssertPresentationAction(
     "50. Line Up",
     ["BRAILLE LINE:  'Sometimes labels can be below the fields due to <br /> h2'",
      "     VISIBLE:  'Sometimes labels can be below th', cursor=1",
-     "SPEECH OUTPUT: 'Sometimes labels can be below the fields due to <br />'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Sometimes labels can be below the fields due to <br /> heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -484,8 +474,7 @@ sequence.append(utils.AssertPresentationAction(
     "54. Line Up",
     ["BRAILLE LINE:  'What the heck should we do here? h2'",
      "     VISIBLE:  'What the heck should we do here?', cursor=1",
-     "SPEECH OUTPUT: 'What the heck should we do here?'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'What the heck should we do here? heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -538,8 +527,7 @@ sequence.append(utils.AssertPresentationAction(
     "59. Line Up",
     ["BRAILLE LINE:  'Here are some entries h2'",
      "     VISIBLE:  'Here are some entries h2', cursor=1",
-     "SPEECH OUTPUT: 'Here are some entries'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Here are some entries heading level 2'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

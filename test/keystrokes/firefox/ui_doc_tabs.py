@@ -17,10 +17,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Orca - GNOME Live! page tab', cursor=1",
      "BRAILLE LINE:  'Home'",
      "     VISIBLE:  'Home', cursor=0",
-     "SPEECH OUTPUT: 'Orca - GNOME Live!'",
-     "SPEECH OUTPUT: 'page tab'",
-     "SPEECH OUTPUT: 'Home'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'Orca - GNOME Live! page tab'",
+     "SPEECH OUTPUT: 'Home link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>1"))
@@ -30,10 +28,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'HTML test page page tab', cursor=1",
      "BRAILLE LINE:  'Test Formats'",
      "     VISIBLE:  'Test Formats', cursor=0",
-     "SPEECH OUTPUT: 'HTML test page'",
-     "SPEECH OUTPUT: 'page tab'",
-     "SPEECH OUTPUT: 'Test Formats'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'HTML test page page tab'",
+     "SPEECH OUTPUT: 'Test Formats link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>3"))
@@ -45,10 +41,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' $l Show push button [Help]', cursor=0",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'GNOME Bug Tracking System'",
-     "SPEECH OUTPUT: 'page tab'",
-     "SPEECH OUTPUT: 'Enter a bug # or some search terms:'",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'GNOME Bug Tracking System page tab'",
+     "SPEECH OUTPUT: 'Enter a bug # or some search terms: entry'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -61,10 +55,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Orca - GNOME Live! page tab', cursor=1",
      "BRAILLE LINE:  'Home'",
      "     VISIBLE:  'Home', cursor=0",
-     "SPEECH OUTPUT: 'Orca - GNOME Live!'",
-     "SPEECH OUTPUT: 'page tab'",
-     "SPEECH OUTPUT: 'Home'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'Orca - GNOME Live! page tab'",
+     "SPEECH OUTPUT: 'Home link'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

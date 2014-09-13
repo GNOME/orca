@@ -21,8 +21,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Down into the caption",
     ["BRAILLE LINE:  'this is a caption for this table caption'",
      "     VISIBLE:  'this is a caption for this table', cursor=1",
-     "SPEECH OUTPUT: 'this is a caption for this table'",
-     "SPEECH OUTPUT: 'caption'"]))
+     "SPEECH OUTPUT: 'this is a caption for this table caption'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -30,12 +29,9 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down to headers row",
     ["BRAILLE LINE:  'col1 col2 col3'",
      "     VISIBLE:  'col1 col2 col3', cursor=1",
-     "SPEECH OUTPUT: 'col1'",
-     "SPEECH OUTPUT: 'column header'",
-     "SPEECH OUTPUT: 'col2'",
-     "SPEECH OUTPUT: 'column header'",
-     "SPEECH OUTPUT: 'col3'",
-     "SPEECH OUTPUT: 'column header'"]))
+     "SPEECH OUTPUT: 'col1 column header'",
+     "SPEECH OUTPUT: 'col2 column header'",
+     "SPEECH OUTPUT: 'col3 column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -111,12 +107,9 @@ sequence.append(utils.AssertPresentationAction(
     "11. Line Up to headers row",
     ["BRAILLE LINE:  'col1 col2 col3'",
      "     VISIBLE:  'col1 col2 col3', cursor=1",
-     "SPEECH OUTPUT: 'col1'",
-     "SPEECH OUTPUT: 'column header'",
-     "SPEECH OUTPUT: 'col2'",
-     "SPEECH OUTPUT: 'column header'",
-     "SPEECH OUTPUT: 'col3'",
-     "SPEECH OUTPUT: 'column header'"]))
+     "SPEECH OUTPUT: 'col1 column header'",
+     "SPEECH OUTPUT: 'col2 column header'",
+     "SPEECH OUTPUT: 'col3 column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -124,8 +117,7 @@ sequence.append(utils.AssertPresentationAction(
     "12. Line Up to the caption",
     ["BRAILLE LINE:  'this is a caption for this table caption'",
      "     VISIBLE:  'this is a caption for this table', cursor=1",
-     "SPEECH OUTPUT: 'this is a caption for this table'",
-     "SPEECH OUTPUT: 'caption'"]))
+     "SPEECH OUTPUT: 'this is a caption for this table caption'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

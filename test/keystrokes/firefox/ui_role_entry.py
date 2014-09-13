@@ -108,9 +108,7 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: The mnemonic seems to have gone missing",
      "BRAILLE LINE:  'Firefox application New Bookmark dialog Name: this s  $l'",
      "     VISIBLE:  'Name: this s  $l', cursor=12",
-     "SPEECH OUTPUT: 'Name:'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'this s '"]))
+     "SPEECH OUTPUT: 'Name: entry this s '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>d"))
@@ -118,8 +116,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Alt+D to Description",
     ["BRAILLE LINE:  'Description:  $l'",
      "     VISIBLE:  'Description:  $l', cursor=14",
-     "SPEECH OUTPUT: 'Description:'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Description: entry'"]))
 
 sequence.append(TypeAction("Here is the first line."))
 sequence.append(KeyComboAction("Return"))
@@ -147,9 +144,7 @@ sequence.append(utils.AssertPresentationAction(
     "13. Basic Where Am I",
     ["BRAILLE LINE:  'Description: Here is the second line. $l'",
      "     VISIBLE:  'ption: Here is the second line. ', cursor=32",
-     "SPEECH OUTPUT: 'Description:'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'Here is the second line.'"]))
+     "SPEECH OUTPUT: 'Description: entry Here is the second line.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

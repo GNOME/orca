@@ -17,8 +17,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Tab to grid",
     ["BRAILLE LINE:  'Selected Sort Sel column push button Msg '",
      "     VISIBLE:  'Selected Sort Sel column push bu', cursor=1",
-     "SPEECH OUTPUT: 'Selected Sort Sel column'",
-     "SPEECH OUTPUT: 'push button'"]))
+     "SPEECH OUTPUT: 'Selected Sort Sel column push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -26,8 +25,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. basic whereAmI",
     ["BRAILLE LINE:  'Selected Sort Sel column push button Msg '",
      "     VISIBLE:  'Selected Sort Sel column push bu', cursor=1",
-     "SPEECH OUTPUT: 'Selected Sort Sel column'",
-     "SPEECH OUTPUT: 'push button'"]))
+     "SPEECH OUTPUT: 'Selected Sort Sel column push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -71,8 +69,7 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: It appears we are not treating this as an ARIA widget",
      "BRAILLE LINE:  'Status Sort Status column push button '",
      "     VISIBLE:  'Status Sort Status column push b', cursor=1",
-     "SPEECH OUTPUT: 'Status Sort Status column'",
-     "SPEECH OUTPUT: 'push button'",
+     "SPEECH OUTPUT: 'Status Sort Status column push button'",
      "SPEECH OUTPUT: 'image clickable'"]))
 
 sequence.append(utils.AssertionSummaryAction())

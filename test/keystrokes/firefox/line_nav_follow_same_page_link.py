@@ -13,8 +13,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'Contents h1'",
      "     VISIBLE:  'Contents h1', cursor=1",
-     "SPEECH OUTPUT: 'Contents'",
-     "SPEECH OUTPUT: 'heading level 1'"]))
+     "SPEECH OUTPUT: 'Contents heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -24,8 +23,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '•First item', cursor=2",
      "BRAILLE LINE:  '•First item'",
      "     VISIBLE:  '•First item', cursor=2",
-     "SPEECH OUTPUT: 'First item'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'First item link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -35,8 +33,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '•Second item', cursor=2",
      "BRAILLE LINE:  '•Second item'",
      "     VISIBLE:  '•Second item', cursor=2",
-     "SPEECH OUTPUT: 'Second item'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'Second item link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
@@ -52,8 +49,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Down",
     ["BRAILLE LINE:  'Second h2'",
      "     VISIBLE:  'Second h2', cursor=1",
-     "SPEECH OUTPUT: 'Second'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Second heading level 2'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

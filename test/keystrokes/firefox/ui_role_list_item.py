@@ -37,9 +37,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Basic Where Am I",
     ["BRAILLE LINE:  'Firefox application Firefox Preferences dialog General list box General'",
      "     VISIBLE:  'General', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: 'General'",
-     "SPEECH OUTPUT: '1 of 8'"]))
+     "SPEECH OUTPUT: 'list item General 1 of 8'"]))
 
 sequence.append(KeyComboAction("Escape"))
 

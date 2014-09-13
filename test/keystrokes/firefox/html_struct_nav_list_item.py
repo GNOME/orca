@@ -35,14 +35,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "3. l to third list (3) landing on the first item (3.1)",
-    ["KNOWN ISSUE: We are presenting tree level for a non-tree",
-     "BRAILLE LINE:  'List with 2 items'",
+    ["BRAILLE LINE:  'List with 2 items'",
      "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  '•listing item'",
      "     VISIBLE:  '•listing item', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items' voice=system",
-     "SPEECH OUTPUT: '•listing item'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: '•listing item'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("i"))
@@ -112,11 +110,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("i"))
 sequence.append(utils.AssertPresentationAction(
     "12. i to next list item, moving out of the last two levels (3.2)",
-    ["KNOWN ISSUE: We are presenting tree level for a non-tree",
-     "BRAILLE LINE:  '▪Franz Liszt'",
+    ["BRAILLE LINE:  '▪Franz Liszt'",
      "     VISIBLE:  '▪Franz Liszt', cursor=1",
-     "SPEECH OUTPUT: '▪Franz Liszt'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: '▪Franz Liszt'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("i"))

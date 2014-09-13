@@ -31,8 +31,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  'Joanmarie h2'",
      "     VISIBLE:  'Joanmarie h2', cursor=1",
-     "SPEECH OUTPUT: 'Joanmarie'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Joanmarie heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -48,8 +47,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
     ["BRAILLE LINE:  'Joanmarie h2'",
      "     VISIBLE:  'Joanmarie h2', cursor=1",
-     "SPEECH OUTPUT: 'Joanmarie'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Joanmarie heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

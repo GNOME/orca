@@ -15,8 +15,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '[Line 2]', cursor=2",
      "BRAILLE LINE:  '[Line 2]'",
      "     VISIBLE:  '[Line 2]', cursor=2",
-     "SPEECH OUTPUT: 'Line 2'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'Line 2 link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

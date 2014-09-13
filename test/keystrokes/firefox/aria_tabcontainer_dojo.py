@@ -20,8 +20,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Focus mode', cursor=0",
      "BRAILLE LINE:  'Tab 2 page tab'",
      "     VISIBLE:  'Tab 2 page tab', cursor=1",
-     "SPEECH OUTPUT: 'Tab 2'",
-     "SPEECH OUTPUT: 'page tab'",
+     "SPEECH OUTPUT: 'Tab 2 page tab'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -32,8 +31,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Tab 3 page tab', cursor=1",
      "BRAILLE LINE:  'Tab 3 page tab'",
      "     VISIBLE:  'Tab 3 page tab', cursor=1",
-     "SPEECH OUTPUT: 'Tab 3'",
-     "SPEECH OUTPUT: 'page tab'"]))
+     "SPEECH OUTPUT: 'Tab 3 page tab'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -43,8 +41,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Inlined Sub TabContainer page ta', cursor=1",
      "BRAILLE LINE:  'Inlined Sub TabContainer page tab'",
      "     VISIBLE:  'Inlined Sub TabContainer page ta', cursor=1",
-     "SPEECH OUTPUT: 'Inlined Sub TabContainer'",
-     "SPEECH OUTPUT: 'page tab'"]))
+     "SPEECH OUTPUT: 'Inlined Sub TabContainer page tab'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -54,8 +51,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'SubTab 2 page tab', cursor=1",
      "BRAILLE LINE:  'SubTab 2 page tab'",
      "     VISIBLE:  'SubTab 2 page tab', cursor=1",
-     "SPEECH OUTPUT: 'SubTab 2'",
-     "SPEECH OUTPUT: 'page tab'"]))
+     "SPEECH OUTPUT: 'SubTab 2 page tab'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

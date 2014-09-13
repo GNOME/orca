@@ -7,8 +7,6 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(PauseAction(3000))
-
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Alt>m"))
 sequence.append(utils.AssertPresentationAction(
@@ -17,8 +15,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Edit menu', cursor=1",
      "BRAILLE LINE:  'Edit menu'",
      "     VISIBLE:  'Edit menu', cursor=1",
-     "SPEECH OUTPUT: 'Edit'",
-     "SPEECH OUTPUT: 'menu'"]))
+     "SPEECH OUTPUT: 'Edit menu'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -27,8 +24,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. basic whereAmI",
     ["BRAILLE LINE:  'Edit menu'",
      "     VISIBLE:  'Edit menu', cursor=1",
-     "SPEECH OUTPUT: 'Edit'",
-     "SPEECH OUTPUT: 'menu 1 of 1'"]))
+     "SPEECH OUTPUT: 'Edit menu 1 of 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -38,8 +34,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'View menu', cursor=1",
      "BRAILLE LINE:  'View menu'",
      "     VISIBLE:  'View menu', cursor=1",
-     "SPEECH OUTPUT: 'View'",
-     "SPEECH OUTPUT: 'menu'"]))
+     "SPEECH OUTPUT: 'View menu'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -49,8 +44,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Themes          > menu', cursor=1",
      "BRAILLE LINE:  'Themes          > menu'",
      "     VISIBLE:  'Themes          > menu', cursor=1",
-     "SPEECH OUTPUT: 'Themes          >'",
-     "SPEECH OUTPUT: 'menu'"]))
+     "SPEECH OUTPUT: 'Themes          > menu'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -90,8 +84,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'In the Pink grayed', cursor=1",
      "BRAILLE LINE:  'In the Pink grayed'",
      "     VISIBLE:  'In the Pink grayed', cursor=1",
-     "SPEECH OUTPUT: 'In the Pink'",
-     "SPEECH OUTPUT: 'grayed'"]))
+     "SPEECH OUTPUT: 'In the Pink grayed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -111,8 +104,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Themes          > menu', cursor=1",
      "BRAILLE LINE:  'Themes          > menu'",
      "     VISIBLE:  'Themes          > menu', cursor=1",
-     "SPEECH OUTPUT: 'Themes          >'",
-     "SPEECH OUTPUT: 'menu'"]))
+     "SPEECH OUTPUT: 'Themes          > menu'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -142,8 +134,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'More                > menu', cursor=1",
      "BRAILLE LINE:  'More                > menu'",
      "     VISIBLE:  'More                > menu', cursor=1",
-     "SPEECH OUTPUT: 'More                >'",
-     "SPEECH OUTPUT: 'menu'"]))
+     "SPEECH OUTPUT: 'More                > menu'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
