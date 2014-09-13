@@ -47,8 +47,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Line Up",
     ["BRAILLE LINE:  'Wide h3'",
      "     VISIBLE:  'Wide h3', cursor=1",
-     "SPEECH OUTPUT: 'Wide'",
-     "SPEECH OUTPUT: 'heading level 3'"]))
+     "SPEECH OUTPUT: 'Wide heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -56,8 +55,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Line Up",
     ["BRAILLE LINE:  'GNOME World  h3'",
      "     VISIBLE:  'GNOME World  h3', cursor=1",
-     "SPEECH OUTPUT: 'GNOME World'",
-     "SPEECH OUTPUT: 'heading level 3'"]))
+     "SPEECH OUTPUT: 'GNOME World heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -65,8 +63,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Line Up",
     ["BRAILLE LINE:  'More Actions: combo box'",
      "     VISIBLE:  'More Actions: combo box', cursor=0",
-     "SPEECH OUTPUT: 'More Actions:'",
-     "SPEECH OUTPUT: 'combo box'"]))
+     "SPEECH OUTPUT: 'More Actions: combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -100,8 +97,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Line Up",
     ["BRAILLE LINE:  'Page h3'",
      "     VISIBLE:  'Page h3', cursor=1",
-     "SPEECH OUTPUT: 'Page'",
-     "SPEECH OUTPUT: 'heading level 3'"]))
+     "SPEECH OUTPUT: 'Page heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -118,8 +114,7 @@ sequence.append(utils.AssertPresentationAction(
     "12. Line Up",
     ["BRAILLE LINE:  'User h3'",
      "     VISIBLE:  'User h3', cursor=1",
-     "SPEECH OUTPUT: 'User'",
-     "SPEECH OUTPUT: 'heading level 3'"]))
+     "SPEECH OUTPUT: 'User heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -269,8 +264,7 @@ sequence.append(utils.AssertPresentationAction(
     "27. Line Up",
     ["BRAILLE LINE:  'More Information h1'",
      "     VISIBLE:  'More Information h1', cursor=1",
-     "SPEECH OUTPUT: 'More Information'",
-     "SPEECH OUTPUT: 'heading level 1'"]))
+     "SPEECH OUTPUT: 'More Information heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -297,8 +291,7 @@ sequence.append(utils.AssertPresentationAction(
     "30. Line Up",
     ["BRAILLE LINE:  'How Can I Help? h1'",
      "     VISIBLE:  'How Can I Help? h1', cursor=1",
-     "SPEECH OUTPUT: 'How Can I Help?'",
-     "SPEECH OUTPUT: 'heading level 1'"]))
+     "SPEECH OUTPUT: 'How Can I Help? heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -422,8 +415,7 @@ sequence.append(utils.AssertPresentationAction(
     "44. Line Up",
     ["BRAILLE LINE:  'Accessible Applications h1'",
      "     VISIBLE:  'Accessible Applications h1', cursor=1",
-     "SPEECH OUTPUT: 'Accessible Applications'",
-     "SPEECH OUTPUT: 'heading level 1'"]))
+     "SPEECH OUTPUT: 'Accessible Applications heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -538,8 +530,7 @@ sequence.append(utils.AssertPresentationAction(
     "56. Line Up",
     ["BRAILLE LINE:  'Configuration/Use h1'",
      "     VISIBLE:  'Configuration/Use h1', cursor=1",
-     "SPEECH OUTPUT: 'Configuration/Use'",
-     "SPEECH OUTPUT: 'heading level 1'"]))
+     "SPEECH OUTPUT: 'Configuration/Use heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -595,8 +586,7 @@ sequence.append(utils.AssertPresentationAction(
     "62. Line Up",
     ["BRAILLE LINE:  'Download/Installation h1'",
      "     VISIBLE:  'Download/Installation h1', cursor=1",
-     "SPEECH OUTPUT: 'Download/Installation'",
-     "SPEECH OUTPUT: 'heading level 1'"]))
+     "SPEECH OUTPUT: 'Download/Installation heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -664,8 +654,7 @@ sequence.append(utils.AssertPresentationAction(
     "69. Line Up",
     ["BRAILLE LINE:  'Audio Guides h1'",
      "     VISIBLE:  'Audio Guides h1', cursor=1",
-     "SPEECH OUTPUT: 'Audio Guides'",
-     "SPEECH OUTPUT: 'heading level 1'"]))
+     "SPEECH OUTPUT: 'Audio Guides heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -806,8 +795,7 @@ sequence.append(utils.AssertPresentationAction(
     "84. Line Up",
     ["BRAILLE LINE:  'About h1'",
      "     VISIBLE:  'About h1', cursor=1",
-     "SPEECH OUTPUT: 'About'",
-     "SPEECH OUTPUT: 'heading level 1'"]))
+     "SPEECH OUTPUT: 'About heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -913,8 +901,7 @@ sequence.append(utils.AssertPresentationAction(
     "95. Line Up",
     ["BRAILLE LINE:  'Orca Logo'",
      "     VISIBLE:  'Orca Logo', cursor=1",
-     "SPEECH OUTPUT: 'Orca Logo'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'Orca Logo link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -922,8 +909,7 @@ sequence.append(utils.AssertPresentationAction(
     "96. Line Up",
     ["BRAILLE LINE:  'Welcome to Orca! h1'",
      "     VISIBLE:  'Welcome to Orca! h1', cursor=1",
-     "SPEECH OUTPUT: 'Welcome to Orca!'",
-     "SPEECH OUTPUT: 'heading level 1'"]))
+     "SPEECH OUTPUT: 'Welcome to Orca! heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -994,14 +980,10 @@ sequence.append(utils.AssertPresentationAction(
     "101. Line Up",
     ["BRAILLE LINE:  'live.gnome.org  h1 Search $l Titles push button Text push button'",
      "     VISIBLE:  'live.gnome.org  h1 Search $l Tit', cursor=1",
-     "SPEECH OUTPUT: 'live.gnome.org'",
-     "SPEECH OUTPUT: 'heading level 1'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'Search'",
-     "SPEECH OUTPUT: 'Titles'",
-     "SPEECH OUTPUT: 'push button grayed'",
-     "SPEECH OUTPUT: 'Text'",
-     "SPEECH OUTPUT: 'push button grayed'"]))
+     "SPEECH OUTPUT: 'live.gnome.org heading level 1'",
+     "SPEECH OUTPUT: 'entry Search'",
+     "SPEECH OUTPUT: 'Titles push button grayed'",
+     "SPEECH OUTPUT: 'Text push button grayed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

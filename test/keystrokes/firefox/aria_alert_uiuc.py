@@ -28,7 +28,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'dialog', cursor=1",
      "BRAILLE LINE:  'You must choose a number'",
      "     VISIBLE:  'You must choose a number', cursor=1",
-     "SPEECH OUTPUT: 'You must choose a number '"]))
+     "SPEECH OUTPUT: 'You must choose a number'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -48,10 +48,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Focus mode', cursor=0",
      "BRAILLE LINE:  'Guess a number between 1 and 10 12 $l'",
      "     VISIBLE:  'ss a number between 1 and 10 12 ', cursor=32",
-     "SPEECH OUTPUT: 'Guess a number between 1 and 10'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: '12'",
-     "SPEECH OUTPUT: 'selected'",
+     "SPEECH OUTPUT: 'Guess a number between 1 and 10 entry 12 selected'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.AssertionSummaryAction())

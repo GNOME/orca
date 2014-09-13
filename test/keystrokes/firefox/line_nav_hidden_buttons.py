@@ -22,8 +22,7 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: We're losing a space in the button name.",
      "BRAILLE LINE:  'Button1 push button'",
      "     VISIBLE:  'Button1 push button', cursor=1",
-     "SPEECH OUTPUT: 'Button1'",
-     "SPEECH OUTPUT: 'push button'"]))
+     "SPEECH OUTPUT: 'Button1 push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -31,8 +30,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  'Button 2 push button'",
      "     VISIBLE:  'Button 2 push button', cursor=1",
-     "SPEECH OUTPUT: 'Button 2'",
-     "SPEECH OUTPUT: 'push button'"]))
+     "SPEECH OUTPUT: 'Button 2 push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -48,8 +46,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Line Up",
     ["BRAILLE LINE:  'Button 2 push button'",
      "     VISIBLE:  'Button 2 push button', cursor=1",
-     "SPEECH OUTPUT: 'Button 2'",
-     "SPEECH OUTPUT: 'push button'"]))
+     "SPEECH OUTPUT: 'Button 2 push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -58,8 +55,7 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: We're losing a space in the button name.",
      "BRAILLE LINE:  'Button1 push button'",
      "     VISIBLE:  'Button1 push button', cursor=1",
-     "SPEECH OUTPUT: 'Button1'",
-     "SPEECH OUTPUT: 'push button'"]))
+     "SPEECH OUTPUT: 'Button1 push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

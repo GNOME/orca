@@ -20,10 +20,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '&=y Radio Maria radio button', cursor=1",
      "BRAILLE LINE:  '&=y Radio Maria radio button'",
      "     VISIBLE:  '&=y Radio Maria radio button', cursor=1",
-     "SPEECH OUTPUT: 'Lunch Options'",
-     "SPEECH OUTPUT: 'panel'",
-     "SPEECH OUTPUT: 'Radio Maria'",
-     "SPEECH OUTPUT: 'selected radio button'"]))
+     "SPEECH OUTPUT: 'Lunch Options panel'",
+     "SPEECH OUTPUT: 'Radio Maria selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -31,8 +29,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Basic whereamI",
     ["BRAILLE LINE:  '&=y Radio Maria radio button'",
      "     VISIBLE:  '&=y Radio Maria radio button', cursor=1",
-     "SPEECH OUTPUT: 'Lunch Options Radio Maria'",
-     "SPEECH OUTPUT: 'radio button selected'"]))
+     "SPEECH OUTPUT: 'Lunch Options Radio Maria radio button selected'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -41,8 +38,7 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: It looks like at the time we move to it, the state hasn't changed yet. This is something better handled by focus mode but users don't want that.",
      "BRAILLE LINE:  '& y Rainbow Gardens radio button'",
      "     VISIBLE:  '& y Rainbow Gardens radio button', cursor=1",
-     "SPEECH OUTPUT: 'Rainbow Gardens'",
-     "SPEECH OUTPUT: 'not selected radio button'"]))
+     "SPEECH OUTPUT: 'Rainbow Gardens not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -50,8 +46,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Basic whereamI",
     ["BRAILLE LINE:  '&=y Rainbow Gardens radio button'",
      "     VISIBLE:  '&=y Rainbow Gardens radio button', cursor=1",
-     "SPEECH OUTPUT: 'Lunch Options Rainbow Gardens'",
-     "SPEECH OUTPUT: 'radio button selected'"]))
+     "SPEECH OUTPUT: 'Lunch Options Rainbow Gardens radio button selected'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -59,8 +54,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Move to next line",
     ["BRAILLE LINE:  'Drink Options h3'",
      "     VISIBLE:  'Drink Options h3', cursor=1",
-     "SPEECH OUTPUT: 'Drink Options'",
-     "SPEECH OUTPUT: 'heading level 3'"]))
+     "SPEECH OUTPUT: 'Drink Options heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -70,10 +64,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '&=y Water radio button', cursor=1",
      "BRAILLE LINE:  '&=y Water radio button'",
      "     VISIBLE:  '&=y Water radio button', cursor=1",
-     "SPEECH OUTPUT: 'Drink Options'",
-     "SPEECH OUTPUT: 'panel'",
-     "SPEECH OUTPUT: 'Water'",
-     "SPEECH OUTPUT: 'selected radio button'"]))
+     "SPEECH OUTPUT: 'Drink Options panel'",
+     "SPEECH OUTPUT: 'Water selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -82,8 +74,7 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: It looks like at the time we move to it, the state hasn't changed yet. This is something better handled by focus mode but users don't want that.",
      "BRAILLE LINE:  '& y Tea radio button'",
      "     VISIBLE:  '& y Tea radio button', cursor=1",
-     "SPEECH OUTPUT: 'Tea'",
-     "SPEECH OUTPUT: 'not selected radio button'"]))
+     "SPEECH OUTPUT: 'Tea not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -92,8 +83,7 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: It looks like at the time we move to it, the state hasn't changed yet. This is something better handled by focus mode but users don't want that.",
      "BRAILLE LINE:  '& y Water radio button'",
      "     VISIBLE:  '& y Water radio button', cursor=1",
-     "SPEECH OUTPUT: 'Water'",
-     "SPEECH OUTPUT: 'not selected radio button'"]))
+     "SPEECH OUTPUT: 'Water not selected radio button'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

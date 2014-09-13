@@ -22,8 +22,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  'Battery h2'",
      "     VISIBLE:  'Battery h2', cursor=1",
-     "SPEECH OUTPUT: 'Battery'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Battery heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -85,8 +84,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Line Down",
     ["BRAILLE LINE:  'Battery h2'",
      "     VISIBLE:  'Battery h2', cursor=1",
-     "SPEECH OUTPUT: 'Battery'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Battery heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -182,8 +180,7 @@ sequence.append(utils.AssertPresentationAction(
     "21. Line Up",
     ["BRAILLE LINE:  'Battery h2'",
      "     VISIBLE:  'Battery h2', cursor=1",
-     "SPEECH OUTPUT: 'Battery'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Battery heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -245,8 +242,7 @@ sequence.append(utils.AssertPresentationAction(
     "28. Line Up",
     ["BRAILLE LINE:  'Battery h2'",
      "     VISIBLE:  'Battery h2', cursor=1",
-     "SPEECH OUTPUT: 'Battery'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Battery heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

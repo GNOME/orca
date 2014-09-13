@@ -18,8 +18,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Return to next result",
     ["BRAILLE LINE:  'Welcome to Orca! h1'",
      "     VISIBLE:  'Welcome to Orca! h1', cursor=12",
-     "SPEECH OUTPUT: 'Welcome to Orca!'",
-     "SPEECH OUTPUT: 'heading level 1'"]))
+     "SPEECH OUTPUT: 'Welcome to Orca! heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
@@ -53,8 +52,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Escape to return to page content",
     ["BRAILLE LINE:  'synthesis, braille, and magnification, Orca helps provide'",
      "     VISIBLE:  'raille, and magnification, Orca ', cursor=32",
-     "SPEECH OUTPUT: 'synthesis, braille, and magnification, Orca helps provide '",
-     "SPEECH OUTPUT: 'selected'"]))
+     "SPEECH OUTPUT: 'synthesis, braille, and magnification, Orca helps provide  selected'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

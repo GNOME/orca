@@ -22,8 +22,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Snapshot version', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.' voice=system",
      "SPEECH OUTPUT: 'table with 4 rows 3 columns' voice=system",
-     "SPEECH OUTPUT: 'Snapshot version'",
-     "SPEECH OUTPUT: 'column header'"]))
+     "SPEECH OUTPUT: 'Snapshot version column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Down"))
@@ -159,8 +158,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Snapshot version Date (UTC) Down', cursor=1",
      "BRAILLE LINE:  'Row 1, column 1.'",
      "     VISIBLE:  'Row 1, column 1.', cursor=0",
-     "SPEECH OUTPUT: 'Snapshot version'",
-     "SPEECH OUTPUT: 'column header'",
+     "SPEECH OUTPUT: 'Snapshot version column header'",
      "SPEECH OUTPUT: 'Row 1, column 1.' voice=system"]))
 
 sequence.append(utils.AssertionSummaryAction())

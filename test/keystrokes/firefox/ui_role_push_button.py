@@ -16,8 +16,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Shift+Tab to button",
     ["BRAILLE LINE:  'Firefox application Print dialog Print push button'",
      "     VISIBLE:  'Print push button', cursor=1",
-     "SPEECH OUTPUT: 'Print'",
-     "SPEECH OUTPUT: 'push button'"]))
+     "SPEECH OUTPUT: 'Print push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -25,8 +24,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Basic Where Am I",
     ["BRAILLE LINE:  'Firefox application Print dialog Print push button'",
      "     VISIBLE:  'Print push button', cursor=1",
-     "SPEECH OUTPUT: 'Print'",
-     "SPEECH OUTPUT: 'push button.'",
+     "SPEECH OUTPUT: 'Print push button.'",
      "SPEECH OUTPUT: 'Alt+P'"]))
 
 sequence.append(TypeAction("Escape"))

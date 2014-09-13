@@ -21,10 +21,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
      "     VISIBLE:  '(200% Courier font): California ', cursor=32",
      "SPEECH OUTPUT: 'collapsed'",
-     "SPEECH OUTPUT: 'US State test 1 (200% Courier font):'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'California'",
-     "SPEECH OUTPUT: 'selected'",
+     "SPEECH OUTPUT: 'US State test 1 (200% Courier font): entry California selected'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -51,10 +48,8 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
      "     VISIBLE:  'ate test 1 (200% Courier font): ', cursor=32",
      "SPEECH OUTPUT: 'California'",
-     "SPEECH OUTPUT: 'California'",
-     "SPEECH OUTPUT: 'panel'",
-     "SPEECH OUTPUT: 'California'",
-     "SPEECH OUTPUT: 'List with 3 items'",
+     "SPEECH OUTPUT: 'California panel'",
+     "SPEECH OUTPUT: 'California List with 3 items'",
      "SPEECH OUTPUT: 'California (CA)'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -123,9 +118,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Basic Where Am I - Combo box expanded",
     ["BRAILLE LINE:  'California (CA)'",
      "     VISIBLE:  'California (CA)', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: 'California (CA)'",
-     "SPEECH OUTPUT: '1 of 3'"]))
+     "SPEECH OUTPUT: 'list item California (CA)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
@@ -134,10 +127,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
      "     VISIBLE:  '(200% Courier font): California ', cursor=32",
      "SPEECH OUTPUT: 'collapsed'",
-     "SPEECH OUTPUT: 'US State test 1 (200% Courier font):'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'California'",
-     "SPEECH OUTPUT: 'selected'"]))
+     "SPEECH OUTPUT: 'US State test 1 (200% Courier font): entry California selected'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

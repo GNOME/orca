@@ -13,8 +13,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'Index Vakbarát Hírportál h1'",
      "     VISIBLE:  'Index Vakbarát Hírportál h1', cursor=1",
-     "SPEECH OUTPUT: 'Index Vakbarát Hírportál'",
-     "SPEECH OUTPUT: 'heading level 1'"]))
+     "SPEECH OUTPUT: 'Index Vakbarát Hírportál heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("h"))
@@ -22,8 +21,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. h",
     ["BRAILLE LINE:  'Legfrissebb hírek h2'",
      "     VISIBLE:  'Legfrissebb hírek h2', cursor=1",
-     "SPEECH OUTPUT: 'Legfrissebb hírek'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Legfrissebb hírek heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("h"))

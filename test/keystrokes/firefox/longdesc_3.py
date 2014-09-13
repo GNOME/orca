@@ -11,8 +11,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Where Am I on image",
     ["BRAILLE LINE:  'the image image'",
      "     VISIBLE:  'the image image', cursor=(0|1)",
-     "SPEECH OUTPUT: 'the image'",
-     "SPEECH OUTPUT: 'image has long description'"]))
+     "SPEECH OUTPUT: 'the image image has long description'"]))
 
 sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("KP_Multiply"))
@@ -27,8 +26,7 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: This test fails not because of longdesc, but because jumping to any anchor in a page is broken",
      "BRAILLE LINE:  'Fail if you land here h1'",
      "     VISIBLE:  'Fail if you land here h1', cursor=1",
-     "SPEECH OUTPUT: 'heading level 1'",
-     "SPEECH OUTPUT: 'Fail if you land here'"]))
+     "SPEECH OUTPUT: 'heading level 1 Fail if you land here'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

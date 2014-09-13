@@ -15,8 +15,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Line Down",
     ["BRAILLE LINE:  'About h4'",
      "     VISIBLE:  'About h4', cursor=1",
-     "SPEECH OUTPUT: 'About'",
-     "SPEECH OUTPUT: 'heading level 4'"]))
+     "SPEECH OUTPUT: 'About heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -24,8 +23,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  'Services h4'",
      "     VISIBLE:  'Services h4', cursor=1",
-     "SPEECH OUTPUT: 'Services'",
-     "SPEECH OUTPUT: 'heading level 4'"]))
+     "SPEECH OUTPUT: 'Services heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -75,8 +73,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
     ["BRAILLE LINE:  'Slashdot Login h4'",
      "     VISIBLE:  'Slashdot Login h4', cursor=1",
-     "SPEECH OUTPUT: 'Slashdot Login'",
-     "SPEECH OUTPUT: 'heading level 4'"]))
+     "SPEECH OUTPUT: 'Slashdot Login heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -88,8 +85,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'Password'",
      "SPEECH OUTPUT: 'password text'",
-     "SPEECH OUTPUT: 'Log in'",
-     "SPEECH OUTPUT: 'push button'"]))
+     "SPEECH OUTPUT: 'Log in push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -97,8 +93,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Line Down",
     ["BRAILLE LINE:  'Some Poll h4'",
      "     VISIBLE:  'Some Poll h4', cursor=1",
-     "SPEECH OUTPUT: 'Some Poll'",
-     "SPEECH OUTPUT: 'heading level 4'"]))
+     "SPEECH OUTPUT: 'Some Poll heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -150,8 +145,7 @@ sequence.append(utils.AssertPresentationAction(
     "15. Line Up",
     ["BRAILLE LINE:  'Some Poll h4'",
      "     VISIBLE:  'Some Poll h4', cursor=1",
-     "SPEECH OUTPUT: 'Some Poll'",
-     "SPEECH OUTPUT: 'heading level 4'"]))
+     "SPEECH OUTPUT: 'Some Poll heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -163,8 +157,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'Password'",
      "SPEECH OUTPUT: 'password text'",
-     "SPEECH OUTPUT: 'Log in'",
-     "SPEECH OUTPUT: 'push button'"]))
+     "SPEECH OUTPUT: 'Log in push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -172,8 +165,7 @@ sequence.append(utils.AssertPresentationAction(
     "17. Line Up",
     ["BRAILLE LINE:  'Slashdot Login h4'",
      "     VISIBLE:  'Slashdot Login h4', cursor=1",
-     "SPEECH OUTPUT: 'Slashdot Login'",
-     "SPEECH OUTPUT: 'heading level 4'"]))
+     "SPEECH OUTPUT: 'Slashdot Login heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -201,8 +193,7 @@ sequence.append(utils.AssertPresentationAction(
     "20. Line Up",
     ["BRAILLE LINE:  'Services h4'",
      "     VISIBLE:  'Services h4', cursor=1",
-     "SPEECH OUTPUT: 'Services'",
-     "SPEECH OUTPUT: 'heading level 4'"]))
+     "SPEECH OUTPUT: 'Services heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -210,8 +201,7 @@ sequence.append(utils.AssertPresentationAction(
     "21. Line Up",
     ["BRAILLE LINE:  'About h4'",
      "     VISIBLE:  'About h4', cursor=1",
-     "SPEECH OUTPUT: 'About'",
-     "SPEECH OUTPUT: 'heading level 4'"]))
+     "SPEECH OUTPUT: 'About heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -219,8 +209,7 @@ sequence.append(utils.AssertPresentationAction(
     "22. Line Up",
     ["BRAILLE LINE:  'Stories h4'",
      "     VISIBLE:  'Stories h4', cursor=1",
-     "SPEECH OUTPUT: 'Stories'",
-     "SPEECH OUTPUT: 'heading level 4'"]))
+     "SPEECH OUTPUT: 'Stories heading level 4'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

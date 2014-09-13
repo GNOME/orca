@@ -17,10 +17,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. Tab to combobox",
     ["BRAILLE LINE:  'Firefox application Firefox Preferences dialog Startup When Firefox starts: Show a blank page combo box'",
      "     VISIBLE:  'When Firefox starts: Show a blan', cursor=22",
-     "SPEECH OUTPUT: 'Startup'",
-     "SPEECH OUTPUT: 'panel'",
-     "SPEECH OUTPUT: 'When Firefox starts: Show a blank page'",
-     "SPEECH OUTPUT: 'combo box'"]))
+     "SPEECH OUTPUT: 'Startup panel'",
+     "SPEECH OUTPUT: 'When Firefox starts: Show a blank page combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -69,8 +67,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'When Firefox starts: Show a blan', cursor=22",
      "BRAILLE LINE:  'Firefox application Firefox Preferences dialog Startup When Firefox starts: Show a blank page combo box'",
      "     VISIBLE:  'When Firefox starts: Show a blan', cursor=22",
-     "SPEECH OUTPUT: 'When Firefox starts: Show a blank page'",
-     "SPEECH OUTPUT: 'combo box'",
+     "SPEECH OUTPUT: 'When Firefox starts: Show a blank page combo box'",
      "SPEECH OUTPUT: 'collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -97,13 +94,10 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Firefox application Firefox Preferences dialog Startup When Firefox starts: Show a blank page combo box'",
      "     VISIBLE:  'When Firefox starts: Show a blan', cursor=22",
      "SPEECH OUTPUT: 'Firefox Preferences'",
-     "SPEECH OUTPUT: 'Startup'",
-     "SPEECH OUTPUT: 'panel'",
+     "SPEECH OUTPUT: 'Startup panel'",
      "SPEECH OUTPUT: 'collapsed'",
-     "SPEECH OUTPUT: 'Show a blank page'",
-     "SPEECH OUTPUT: 'combo box'",
-     "SPEECH OUTPUT: 'Show a blank page'",
-     "SPEECH OUTPUT: '1 of 2'"]))
+     "SPEECH OUTPUT: 'Show a blank page combo box'",
+     "SPEECH OUTPUT: 'Show a blank page 1 of 2'"]))
 
 sequence.append(KeyComboAction("Escape"))
 

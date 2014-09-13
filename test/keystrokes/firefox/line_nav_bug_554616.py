@@ -15,12 +15,9 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of File",
     ["BRAILLE LINE:  'Snapshot version Date (UTC) Download'",
      "     VISIBLE:  'Snapshot version Date (UTC) Down', cursor=1",
-     "SPEECH OUTPUT: 'Snapshot version'",
-     "SPEECH OUTPUT: 'column header'",
-     "SPEECH OUTPUT: 'Date (UTC)'",
-     "SPEECH OUTPUT: 'column header'",
-     "SPEECH OUTPUT: 'Download'",
-     "SPEECH OUTPUT: 'column header'"]))
+     "SPEECH OUTPUT: 'Snapshot version column header'",
+     "SPEECH OUTPUT: 'Date (UTC) column header'",
+     "SPEECH OUTPUT: 'Download column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -95,7 +92,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "8. Line Up",
+    "9. Line Up",
     ["BRAILLE LINE:  'portable archive (9154 KB)'",
      "     VISIBLE:  'portable archive (9154 KB)', cursor=1",
      "SPEECH OUTPUT: 'portable archive'",
@@ -105,7 +102,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "9. Line Up",
+    "10. Line Up",
     ["BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)'",
      "     VISIBLE:  'r2477 Wed Nov 5 16:39:00 2008 in', cursor=1",
      "SPEECH OUTPUT: 'r2477'",
@@ -117,15 +114,12 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "10. Line Up",
+    "11. Line Up",
     ["BRAILLE LINE:  'Snapshot version Date (UTC) Download'",
      "     VISIBLE:  'Snapshot version Date (UTC) Down', cursor=1",
-     "SPEECH OUTPUT: 'Snapshot version'",
-     "SPEECH OUTPUT: 'column header'",
-     "SPEECH OUTPUT: 'Date (UTC)'",
-     "SPEECH OUTPUT: 'column header'",
-     "SPEECH OUTPUT: 'Download'",
-     "SPEECH OUTPUT: 'column header'"]))
+     "SPEECH OUTPUT: 'Snapshot version column header'",
+     "SPEECH OUTPUT: 'Date (UTC) column header'",
+     "SPEECH OUTPUT: 'Download column header'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

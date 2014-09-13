@@ -34,8 +34,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' $l', cursor=0",
      "BRAILLE LINE:  'editor0 tool bar'",
      "     VISIBLE:  'editor0 tool bar', cursor=0",
-     "SPEECH OUTPUT: 'editor0'",
-     "SPEECH OUTPUT: 'tool bar'"]))
+     "SPEECH OUTPUT: 'editor0 tool bar'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -43,8 +42,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Up Arrow in Browse Mode",
     ["BRAILLE LINE:  'No plugins, initially empty h2'",
      "     VISIBLE:  'No plugins, initially empty h2', cursor=1",
-     "SPEECH OUTPUT: 'No plugins, initially empty'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'No plugins, initially empty heading level 2'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

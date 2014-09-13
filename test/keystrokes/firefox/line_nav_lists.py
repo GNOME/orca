@@ -13,8 +13,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'Welcome to a List of Lists h1'",
      "     VISIBLE:  'Welcome to a List of Lists h1', cursor=1",
-     "SPEECH OUTPUT: 'Welcome to a List of Lists",
-     "SPEECH OUTPUT: 'heading level 1'"]))
+     "SPEECH OUTPUT: 'Welcome to a List of Lists heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -190,8 +189,7 @@ sequence.append(utils.AssertPresentationAction(
     "23. Line Up",
     ["BRAILLE LINE:  'Welcome to a List of Lists h1'",
      "     VISIBLE:  'Welcome to a List of Lists h1', cursor=1",
-     "SPEECH OUTPUT: 'Welcome to a List of Lists",
-     "SPEECH OUTPUT: 'heading level 1'"]))
+     "SPEECH OUTPUT: 'Welcome to a List of Lists heading level 1'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

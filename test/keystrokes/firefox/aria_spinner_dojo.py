@@ -19,8 +19,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Focus mode', cursor=0",
      "BRAILLE LINE:  'Spinbox #1:  900 $l'",
      "     VISIBLE:  'Spinbox #1:  900 $l', cursor=17",
-     "SPEECH OUTPUT: 'Spinbox #1:  900'",
-     "SPEECH OUTPUT: 'selected spin button'",
+     "SPEECH OUTPUT: 'Spinbox #1:  900 selected spin button'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -59,9 +58,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. basic whereAmI",
     ["BRAILLE LINE:  'Spinbox #1:  899 $l'",
      "     VISIBLE:  'Spinbox #1:  899 $l', cursor=17",
-     "SPEECH OUTPUT: 'Spinbox #1: '",
-     "SPEECH OUTPUT: 'spin button'",
-     "SPEECH OUTPUT: '899'"]))
+     "SPEECH OUTPUT: 'Spinbox #1:  spin button 899'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

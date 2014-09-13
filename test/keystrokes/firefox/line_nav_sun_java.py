@@ -20,10 +20,8 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '\xbb'",
      "SPEECH OUTPUT: 'search tips'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'Search'",
-     "SPEECH OUTPUT: 'Submit Search'",
-     "SPEECH OUTPUT: 'push button'"]))
+     "SPEECH OUTPUT: 'entry Search'",
+     "SPEECH OUTPUT: 'Submit Search push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -31,8 +29,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  'Home Page Sun Developer Network'",
      "     VISIBLE:  'Home Page Sun Developer Network', cursor=1",
-     "SPEECH OUTPUT: 'Home Page'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'Home Page link'",
      "SPEECH OUTPUT: 'Sun Developer Network'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -76,8 +73,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
     ["BRAILLE LINE:  'Linux Installation (32-bit) h1'",
      "     VISIBLE:  'Linux Installation (32-bit) h1', cursor=1",
-     "SPEECH OUTPUT: 'Linux Installation (32-bit)'",
-     "SPEECH OUTPUT: 'heading level 1'"]))
+     "SPEECH OUTPUT: 'Linux Installation (32-bit) heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -102,8 +98,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Line Down",
     ["BRAILLE LINE:  'Contents h2'",
      "     VISIBLE:  'Contents h2', cursor=1",
-     "SPEECH OUTPUT: 'Contents'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Contents heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -174,8 +169,7 @@ sequence.append(utils.AssertPresentationAction(
     "17. Line Down",
     ["BRAILLE LINE:  'System Requirements h2'",
      "     VISIBLE:  'System Requirements h2', cursor=1",
-     "SPEECH OUTPUT: 'System Requirements'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'System Requirements heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -205,8 +199,7 @@ sequence.append(utils.AssertPresentationAction(
     "20. Line Down",
     ["BRAILLE LINE:  'Installation Instructions h2'",
      "     VISIBLE:  'Installation Instructions h2', cursor=1",
-     "SPEECH OUTPUT: 'Installation Instructions'",
-     "SPEECH OUTPUT: 'heading level 2'"]))
+     "SPEECH OUTPUT: 'Installation Instructions heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -375,8 +368,7 @@ sequence.append(utils.AssertPresentationAction(
     "40. Line Down",
     ["BRAILLE LINE:  'Installation of Self-Extracting Binary h3'",
      "     VISIBLE:  'Installation of Self-Extracting ', cursor=1",
-     "SPEECH OUTPUT: 'Installation of Self-Extracting Binary'",
-     "SPEECH OUTPUT: 'heading level 3'"]))
+     "SPEECH OUTPUT: 'Installation of Self-Extracting Binary heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

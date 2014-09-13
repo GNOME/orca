@@ -27,8 +27,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'close'",
      "     VISIBLE:  'close', cursor=1",
      "SPEECH OUTPUT: 'This popup is created as a div in the HTML content, rather than being created in the DOM at the time of use. The display style is changed from \"none\" to \"block\" to hide and show it. close'",
-     "SPEECH OUTPUT: 'close'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'close link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -85,8 +84,7 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: You should not be able to arrow out of this alert.",
      "BRAILLE LINE:  'Show (via display style) and put focus inside alert (on link) push button'",
      "     VISIBLE:  'Show (via display style) and put', cursor=1",
-     "SPEECH OUTPUT: 'Show (via display style) and put focus inside alert (on link)'",
-     "SPEECH OUTPUT: 'push button'"]))
+     "SPEECH OUTPUT: 'Show (via display style) and put focus inside alert (on link) push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
