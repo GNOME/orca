@@ -1,0 +1,25 @@
+<html>
+<body>
+<p>Elements with titles and descriptions</p>
+<p>
+<a href="foo" title="Title of the Foo link.">Foo</a>,
+<a href="bar" title="Title of the Bar link." aria-describedby="description">Bar</a>, and
+<a href="baz" title="Title of the Baz link.">Baz</a>.
+</p>
+<p>Checkboxes without labels:<br />
+<input type="checkbox" name="color1" value="black" title="Title of the Black checkbox">Black
+<input type="checkbox" name="color1" value="white" title="Title of the White checkbox" aria-describedby="description">White
+<input type="checkbox" name="color1" value="grey" title="Title of the Grey checkbox">Grey
+</p>
+<p>Checkboxes with html labels:<br />
+<input type="checkbox" name="color2" value="black" id="black" "title="Title of the Black checkbox">
+<label for="black">Black</label>
+<input type="checkbox" name="color2" value="white" id="white" title="Title of the White checkbox" aria-describedby="description">
+<label for="white">White</label>
+<input type="checkbox" name="color2" value="grey" id="grey" title="Title of the Grey checkbox">
+<label for="grey">Grey</label>
+</p>
+<div id="description" aria-hidden="true">ARIA description text.</div>
+</body>
+</html>
+
