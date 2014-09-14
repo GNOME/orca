@@ -16,7 +16,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Foo, Bar, and Baz.'",
      "     VISIBLE:  'Foo, Bar, and Baz.', cursor=1",
      "SPEECH OUTPUT: 'Foo'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'link Title of the Foo link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("k"))
@@ -25,16 +25,16 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Foo, Bar, and Baz.'",
      "     VISIBLE:  'Foo, Bar, and Baz.', cursor=6",
      "SPEECH OUTPUT: 'Bar'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'link ARIA description text.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("k"))
 sequence.append(utils.AssertPresentationAction(
     "3. k for next link",
     ["BRAILLE LINE:  'Foo, Bar, and Baz.'",
-     "     VISIBLE:  'Foo, Bar, and Baz.', cursor=1",
+     "     VISIBLE:  'Foo, Bar, and Baz.', cursor=15",
      "SPEECH OUTPUT: 'Baz'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'link Title of the Baz link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("x"))
