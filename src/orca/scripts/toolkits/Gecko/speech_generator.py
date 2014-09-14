@@ -136,9 +136,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if that description is different from that of the name and
         label.
         """
-        start = args.get('startOffset')
-        end = args.get('endOffset')
-        if start != None and end != None:
+        if not obj == orca_state.locusOfFocus:
             return []
 
         formatType = args.get('formatType')

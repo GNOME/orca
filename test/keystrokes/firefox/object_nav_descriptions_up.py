@@ -32,7 +32,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Up",
     ["BRAILLE LINE:  '< > Grey check box'",
      "     VISIBLE:  '< > Grey check box', cursor=0",
-     "SPEECH OUTPUT: 'Grey check box not checked'"]))
+     "SPEECH OUTPUT: 'Grey check box not checked Title of the Grey checkbox'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -66,7 +66,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Up",
     ["BRAILLE LINE:  '< > White check box'",
      "     VISIBLE:  '< > White check box', cursor=0",
-     "SPEECH OUTPUT: 'White check box not checked'"]))
+     "SPEECH OUTPUT: 'White check box not checked ARIA description text.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -140,7 +140,7 @@ sequence.append(utils.AssertPresentationAction(
     "16. Line Up",
     ["BRAILLE LINE:  '< > Title of the White checkbox check box'",
      "     VISIBLE:  '< > Title of the White checkbox ', cursor=0",
-     "SPEECH OUTPUT: 'Title of the White checkbox check box not checked'"]))
+     "SPEECH OUTPUT: 'Title of the White checkbox check box not checked ARIA description text.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -180,7 +180,7 @@ sequence.append(utils.AssertPresentationAction(
     "21. Line Up",
     ["BRAILLE LINE:  'Baz'",
      "     VISIBLE:  'Baz', cursor=1",
-     "SPEECH OUTPUT: 'Baz link'"]))
+     "SPEECH OUTPUT: 'Baz link Title of the Baz link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -196,7 +196,7 @@ sequence.append(utils.AssertPresentationAction(
     "23. Line Up",
     ["BRAILLE LINE:  'Bar'",
      "     VISIBLE:  'Bar', cursor=1",
-     "SPEECH OUTPUT: 'Bar link'"]))
+     "SPEECH OUTPUT: 'Bar link ARIA description text.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -212,7 +212,7 @@ sequence.append(utils.AssertPresentationAction(
     "25. Line Up",
     ["BRAILLE LINE:  'Foo'",
      "     VISIBLE:  'Foo', cursor=1",
-     "SPEECH OUTPUT: 'Foo link'"]))
+     "SPEECH OUTPUT: 'Foo link Title of the Foo link.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()
