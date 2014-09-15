@@ -508,6 +508,7 @@ class Utilities(script_utilities.Utilities):
         if not obj or not contents:
             return -1
 
+        offset = max(0, offset)
         matches = [x for x in contents if self.isSameObject(x[0], obj)]
         match = [x for x in matches if x[1] <= offset < x[2]]
         if match and match[0] and match[0] in contents:
@@ -773,6 +774,8 @@ class Utilities(script_utilities.Utilities):
             objects.extend(onRight)
             lastObj, lastEnd = objects[-1][0], objects[-1][2]
             nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
+            if self._script.getCharacterAtOffset(nextObj, nOffset) == " ":
+                nextObj, nOffset = self._script.findNextCaretInOrder(nextObj, nOffset)
 
         return objects
 

@@ -167,7 +167,7 @@ do
       #
       mkdir -p ./tmp/$application
       cd ./tmp/$application
-      for testFile in `find $testDir -xtype f -name "*.py" | sort`; do
+      for testFile in `find $testDir -xtype f -name "html*.py" | sort`; do
         echo ========================================
         echo Running $testFile
         if [ "$found" -gt 0 ]

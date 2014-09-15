@@ -12,7 +12,7 @@ sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'nested-tables image'",
-     "     VISIBLE:  'nested-tables image', cursor=0",
+     "     VISIBLE:  'nested-tables image', cursor=1",
      "SPEECH OUTPUT: 'nested-tables'",
      "SPEECH OUTPUT: 'image link'"]))
 
@@ -104,7 +104,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "11. line Down",
     ["BRAILLE LINE:  'separator'",
-     "     VISIBLE:  'separator', cursor=0",
+     "     VISIBLE:  'separator', cursor=1",
      "SPEECH OUTPUT: 'separator'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -161,7 +161,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "18. line Down",
     ["BRAILLE LINE:  'separator'",
-     "     VISIBLE:  'separator', cursor=0",
+     "     VISIBLE:  'separator', cursor=1",
      "SPEECH OUTPUT: 'separator'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -226,7 +226,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "26. line Up",
     ["BRAILLE LINE:  'separator'",
-     "     VISIBLE:  'separator', cursor=0",
+     "     VISIBLE:  'separator', cursor=1",
      "SPEECH OUTPUT: 'separator'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -313,7 +313,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "27. line Up",
+    "37. line Up",
     ["BRAILLE LINE:  'Campus  .  Classroom  .  Communicate  .  Reports'",
      "     VISIBLE:  'Campus  .  Classroom  .  Communi', cursor=1",
      "SPEECH OUTPUT: 'Campus'",
@@ -331,9 +331,9 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "28. line Up",
+    "38. line Up",
     ["BRAILLE LINE:  'nested-tables image'",
-     "     VISIBLE:  'nested-tables image', cursor=0",
+     "     VISIBLE:  'nested-tables image', cursor=1",
      "SPEECH OUTPUT: 'nested-tables'",
      "SPEECH OUTPUT: 'image link'"]))
 

@@ -845,7 +845,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "84. Line Down",
     ["BRAILLE LINE:  'separator'",
-     "     VISIBLE:  'separator', cursor=0",
+     "     VISIBLE:  'separator', cursor=1",
      "SPEECH OUTPUT: 'separator'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -877,7 +877,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "88. Line Down",
     ["BRAILLE LINE:  'separator'",
-     "     VISIBLE:  'separator', cursor=0",
+     "     VISIBLE:  'separator', cursor=1",
      "SPEECH OUTPUT: 'separator'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -956,7 +956,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "97. Line Down",
     ["BRAILLE LINE:  'More Actions: combo box'",
-     "     VISIBLE:  'More Actions: combo box', cursor=0",
+     "     VISIBLE:  'More Actions: combo box', cursor=1",
      "SPEECH OUTPUT: 'More Actions: combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -980,7 +980,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "100. Line Down",
     ["BRAILLE LINE:  'GnomeWorldWide image'",
-     "     VISIBLE:  'GnomeWorldWide image', cursor=0",
+     "     VISIBLE:  'GnomeWorldWide image', cursor=1",
      "SPEECH OUTPUT: 'GnomeWorldWide'",
      "SPEECH OUTPUT: 'image link'"]))
 

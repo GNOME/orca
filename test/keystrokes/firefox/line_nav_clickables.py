@@ -24,7 +24,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  'Orca Logo'",
-     "     VISIBLE:  'Orca Logo', cursor=0",
+     "     VISIBLE:  'Orca Logo', cursor=1",
      "SPEECH OUTPUT: 'Orca Logo image clickable'"]))
 
 sequence.append(utils.StartRecordingAction())

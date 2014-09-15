@@ -33,7 +33,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=0",
      "BRAILLE LINE:  'editor0 tool bar'",
-     "     VISIBLE:  'editor0 tool bar', cursor=0",
+     "     VISIBLE:  'editor0 tool bar', cursor=1",
      "SPEECH OUTPUT: 'editor0 tool bar'"]))
 
 sequence.append(utils.StartRecordingAction())

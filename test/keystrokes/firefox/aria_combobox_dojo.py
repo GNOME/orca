@@ -15,7 +15,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to the first combo box",
     ["BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
-     "     VISIBLE:  'US State test 1 (200% Courier fo', cursor=0",
+     "     VISIBLE:  '(200% Courier font): California ', cursor=32",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",

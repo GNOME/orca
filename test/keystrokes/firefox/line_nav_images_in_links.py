@@ -24,7 +24,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  'Orca logo image'",
-     "     VISIBLE:  'Orca logo image', cursor=0",
+     "     VISIBLE:  'Orca logo image', cursor=1",
      "SPEECH OUTPUT: 'Orca logo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -40,7 +40,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
     ["BRAILLE LINE:  'Orca logo showing a whale holding a white cane image'",
-     "     VISIBLE:  'Orca logo showing a whale holdin', cursor=0",
+     "     VISIBLE:  'Orca logo showing a whale holdin', cursor=1",
      "SPEECH OUTPUT: 'Orca logo showing a whale holding a white cane image link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -56,8 +56,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
     ["BRAILLE LINE:  'Orca logo image'",
-     "     VISIBLE:  'Orca logo image', cursor=0",
-     "SPEECH OUTPUT: 'Orca logo image link'"]))
+     "     VISIBLE:  'Orca logo image', cursor=1",
+     "SPEECH OUTPUT: 'Orca logo image link Orca logo showing a whale holding a white cane'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -72,7 +72,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["BRAILLE LINE:  'foo image'",
-     "     VISIBLE:  'foo image', cursor=0",
+     "     VISIBLE:  'foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'"]))
 
@@ -89,7 +89,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "10. Line Down",
     ["BRAILLE LINE:  'foo image foo image'",
-     "     VISIBLE:  'foo image foo image', cursor=0",
+     "     VISIBLE:  'foo image foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'",
      "SPEECH OUTPUT: 'foo'",
@@ -108,7 +108,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "12. Line Down",
     ["BRAILLE LINE:  'foo image foo image'",
-     "     VISIBLE:  'foo image foo image', cursor=0",
+     "     VISIBLE:  'foo image foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'",
      "SPEECH OUTPUT: 'foo'",
@@ -127,7 +127,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "14. Line Down",
     ["BRAILLE LINE:  'Orca logo image foo image'",
-     "     VISIBLE:  'Orca logo image foo image', cursor=0",
+     "     VISIBLE:  'Orca logo image foo image', cursor=1",
      "SPEECH OUTPUT: 'Orca logo image link'",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'"]))
@@ -145,7 +145,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "16. Line Down",
     ["BRAILLE LINE:  'foo image'",
-     "     VISIBLE:  'foo image', cursor=0",
+     "     VISIBLE:  'foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'"]))
 
@@ -163,7 +163,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "18. Line Down",
     ["BRAILLE LINE:  'foo image'",
-     "     VISIBLE:  'foo image', cursor=0",
+     "     VISIBLE:  'foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'"]))
 
@@ -191,7 +191,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "21. Line Down",
     ["BRAILLE LINE:  'foo image foo image'",
-     "     VISIBLE:  'foo image foo image', cursor=0",
+     "     VISIBLE:  'foo image foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'",
      "SPEECH OUTPUT: 'foo'",
@@ -229,7 +229,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "25. Line Down",
     ["BRAILLE LINE:  'foo image'",
-     "     VISIBLE:  'foo image', cursor=0",
+     "     VISIBLE:  'foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'"]))
 
@@ -247,7 +247,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "27. Line Down",
     ["BRAILLE LINE:  'foo image'",
-     "     VISIBLE:  'foo image', cursor=0",
+     "     VISIBLE:  'foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'"]))
 
@@ -265,7 +265,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "29. Line Up",
     ["BRAILLE LINE:  'foo image'",
-     "     VISIBLE:  'foo image', cursor=0",
+     "     VISIBLE:  'foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'"]))
 
@@ -283,7 +283,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "31. Line Up",
     ["BRAILLE LINE:  'foo image'",
-     "     VISIBLE:  'foo image', cursor=0",
+     "     VISIBLE:  'foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'"]))
 
@@ -319,7 +319,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "35. Line Up",
     ["BRAILLE LINE:  'foo image foo image'",
-     "     VISIBLE:  'foo image foo image', cursor=0",
+     "     VISIBLE:  'foo image foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'",
      "SPEECH OUTPUT: 'foo'",
@@ -349,7 +349,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "38. Line Up",
     ["BRAILLE LINE:  'foo image'",
-     "     VISIBLE:  'foo image', cursor=0",
+     "     VISIBLE:  'foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'"]))
 
@@ -367,7 +367,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "40. Line Up",
     ["BRAILLE LINE:  'foo image'",
-     "     VISIBLE:  'foo image', cursor=0",
+     "     VISIBLE:  'foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'"]))
 
@@ -384,7 +384,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "42. Line Up",
     ["BRAILLE LINE:  'Orca logo image foo image'",
-     "     VISIBLE:  'Orca logo image foo image', cursor=0",
+     "     VISIBLE:  'Orca logo image foo image', cursor=1",
      "SPEECH OUTPUT: 'Orca logo image link'",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'"]))
@@ -402,7 +402,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "44. Line Up",
     ["BRAILLE LINE:  'foo image foo image'",
-     "     VISIBLE:  'foo image foo image', cursor=0",
+     "     VISIBLE:  'foo image foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'",
      "SPEECH OUTPUT: 'foo'",
@@ -421,7 +421,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "46. Line Up",
     ["BRAILLE LINE:  'foo image foo image'",
-     "     VISIBLE:  'foo image foo image', cursor=0",
+     "     VISIBLE:  'foo image foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'",
      "SPEECH OUTPUT: 'foo'",
@@ -440,7 +440,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "48. Line Up",
     ["BRAILLE LINE:  'foo image'",
-     "     VISIBLE:  'foo image', cursor=0",
+     "     VISIBLE:  'foo image', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'"]))
 
@@ -457,8 +457,8 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "50. Line Up",
     ["BRAILLE LINE:  'Orca logo image'",
-     "     VISIBLE:  'Orca logo image', cursor=0",
-     "SPEECH OUTPUT: 'Orca logo image link'"]))
+     "     VISIBLE:  'Orca logo image', cursor=1",
+     "SPEECH OUTPUT: 'Orca logo image link Orca logo showing a whale holding a white cane'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -473,7 +473,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "52. Line Up",
     ["BRAILLE LINE:  'Orca logo showing a whale holding a white cane image'",
-     "     VISIBLE:  'Orca logo showing a whale holdin', cursor=0",
+     "     VISIBLE:  'Orca logo showing a whale holdin', cursor=1",
      "SPEECH OUTPUT: 'Orca logo showing a whale holding a white cane image link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -489,7 +489,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "54. Line Up",
     ["BRAILLE LINE:  'Orca logo image'",
-     "     VISIBLE:  'Orca logo image', cursor=0",
+     "     VISIBLE:  'Orca logo image', cursor=1",
      "SPEECH OUTPUT: 'Orca logo image link'"]))
 
 sequence.append(utils.StartRecordingAction())

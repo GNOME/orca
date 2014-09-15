@@ -19,51 +19,32 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
-    ["BRAILLE LINE:  'classic image'",
-     "     VISIBLE:  'classic image', cursor=0",
-     "SPEECH OUTPUT: 'classic image'"]))
+    ["BRAILLE LINE:  'classic image Options image'",
+     "     VISIBLE:  'classic image Options image', cursor=1",
+     "SPEECH OUTPUT: 'classic image'",
+     "SPEECH OUTPUT: 'Options image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
-    ["KNOWN ISSUE: We're re-presenting the classic image",
-     "BRAILLE LINE:  'classic image'",
-     "     VISIBLE:  'classic image', cursor=0",
-     "SPEECH OUTPUT: 'classic image'",
-     "SPEECH OUTPUT: 'Options image'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "4. Line Down",
-    ["KNOWN ISSUE: We're stuck",
-     "BRAILLE LINE:  'classic image'",
-     "     VISIBLE:  'classic image', cursor=0",
-     "SPEECH OUTPUT: 'classic image'",
-     "SPEECH OUTPUT: 'Options image'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Control>End"))
-sequence.append(utils.AssertPresentationAction(
-    "5. Bottom of file",
     ["BRAILLE LINE:  'End'",
-     "     VISIBLE:  'End', cursor=3",
+     "     VISIBLE:  'End', cursor=1",
      "SPEECH OUTPUT: 'End'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "6. Line Up",
-    ["BRAILLE LINE:  'classic image'",
-     "     VISIBLE:  'classic image', cursor=0",
+    "4. Line Up",
+    ["BRAILLE LINE:  'classic image Options image'",
+     "     VISIBLE:  'classic image Options image', cursor=1",
      "SPEECH OUTPUT: 'classic image'",
      "SPEECH OUTPUT: 'Options image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "7. Line Up",
+    "5. Line Up",
     ["BRAILLE LINE:  'Start'",
      "     VISIBLE:  'Start', cursor=1",
      "SPEECH OUTPUT: 'Start'"]))

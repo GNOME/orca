@@ -37,7 +37,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Up",
     ["BRAILLE LINE:  'GnomeWorldWide image'",
-     "     VISIBLE:  'GnomeWorldWide image', cursor=0",
+     "     VISIBLE:  'GnomeWorldWide image', cursor=1",
      "SPEECH OUTPUT: 'GnomeWorldWide'",
      "SPEECH OUTPUT: 'image link'"]))
 
@@ -62,7 +62,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "6. Line Up",
     ["BRAILLE LINE:  'More Actions: combo box'",
-     "     VISIBLE:  'More Actions: combo box', cursor=0",
+     "     VISIBLE:  'More Actions: combo box', cursor=1",
      "SPEECH OUTPUT: 'More Actions: combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -141,7 +141,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "15. Line Up",
     ["BRAILLE LINE:  'separator'",
-     "     VISIBLE:  'separator', cursor=0",
+     "     VISIBLE:  'separator', cursor=1",
      "SPEECH OUTPUT: 'separator'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -173,7 +173,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "19. Line Up",
     ["BRAILLE LINE:  'separator'",
-     "     VISIBLE:  'separator', cursor=0",
+     "     VISIBLE:  'separator', cursor=1",
      "SPEECH OUTPUT: 'separator'"]))
 
 sequence.append(utils.StartRecordingAction())

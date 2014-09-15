@@ -20,7 +20,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  'foo image h2'",
-     "     VISIBLE:  'foo image h2', cursor=0",
+     "     VISIBLE:  'foo image h2', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'",
      "SPEECH OUTPUT: 'heading level 2'"]))
@@ -54,7 +54,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "6. Line Up",
     ["BRAILLE LINE:  'foo image h2'",
-     "     VISIBLE:  'foo image h2', cursor=0",
+     "     VISIBLE:  'foo image h2', cursor=1",
      "SPEECH OUTPUT: 'foo'",
      "SPEECH OUTPUT: 'image link'",
      "SPEECH OUTPUT: 'heading level 2'"]))

@@ -35,32 +35,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
-    ["KNOWN ISSUE: We're stuck here",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
-     "SPEECH OUTPUT: 'blank'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "5. Line Down",
-    ["KNOWN ISSUE: We're stuck here",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
-     "SPEECH OUTPUT: 'blank'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Control>End"))
-sequence.append(utils.AssertPresentationAction(
-    "6. Bottom of file",
     ["BRAILLE LINE:  'Line 3'",
-     "     VISIBLE:  'Line 3', cursor=6",
+     "     VISIBLE:  'Line 3', cursor=1",
      "SPEECH OUTPUT: 'Line 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "7. Line Up",
+    "5. Line Up",
     ["BRAILLE LINE:  ''",
      "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: 'blank'"]))
@@ -68,7 +50,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "8. Line Up",
+    "6. Line Up",
     ["BRAILLE LINE:  'Line 1'",
      "     VISIBLE:  'Line 1', cursor=1",
      "SPEECH OUTPUT: 'Line 1'"]))

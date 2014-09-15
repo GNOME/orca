@@ -21,7 +21,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["KNOWN ISSUE: It would be nice to not present the junk image",
      "BRAILLE LINE:  '< > I am a hidden label!   Check me! check box image'",
-     "     VISIBLE:  '< > I am a hidden label!   Check', cursor=0",
+     "     VISIBLE:  '< > I am a hidden label!   Check', cursor=1",
      "SPEECH OUTPUT: 'I am a hidden label!   Check me! check box not checked'",
      "SPEECH OUTPUT: 'image'"]))
 
@@ -45,8 +45,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "5. Line Up",
-    ["BRAILLE LINE:  '< > I am a hidden label!   Check me! check box image'",
-     "     VISIBLE:  '< > I am a hidden label!   Check', cursor=0",
+    ["BRAILLE LINE:  '< > I am a hidden label!   Check me! check box'",
+     "     VISIBLE:  '< > I am a hidden label!   Check', cursor=1",
      "SPEECH OUTPUT: 'I am a hidden label!   Check me! check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
