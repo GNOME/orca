@@ -2658,10 +2658,9 @@ class Script(default.Script):
 
         if not obj:
             [obj, characterOffset] = self.getBottomOfFile()
-        else:
-            self.speakCharacterAtOffset(obj, characterOffset)
 
         self.setCaretPosition(obj, characterOffset)
+        self.speakCharacterAtOffset(obj, characterOffset)
         self.updateBraille(obj)
 
     def goPreviousCharacter(self, inputEvent):
@@ -2677,10 +2676,9 @@ class Script(default.Script):
 
         if not obj:
             [obj, characterOffset] = self.getTopOfFile()
-        else:
-            self.speakCharacterAtOffset(obj, characterOffset)
 
         self.setCaretPosition(obj, characterOffset)
+        self.speakCharacterAtOffset(obj, characterOffset)
         self.updateBraille(obj)
 
     def goPreviousWord(self, inputEvent):
