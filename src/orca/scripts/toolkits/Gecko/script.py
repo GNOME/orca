@@ -1607,9 +1607,6 @@ class Script(default.Script):
         if keyboardEvent.modifiers & keybindings.SHIFT_MODIFIER_MASK:
             return False
 
-        if self._loadingDocumentContent:
-            return False
-
         if not orca_state.locusOfFocus:
             return False
 
@@ -1625,9 +1622,6 @@ class Script(default.Script):
             return False
 
         if not self.inDocumentContent():
-            return False
-
-        if self._loadingDocumentContent:
             return False
 
         return True
