@@ -39,7 +39,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'APIs Downloads Products Support Training Participate'",
      "     VISIBLE:  'APIs Downloads Products Support ', cursor=1",
      "SPEECH OUTPUT: 'APIs'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'link See All APIs'",
      "SPEECH OUTPUT: 'Downloads'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'Products'",
@@ -80,7 +80,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
     ["BRAILLE LINE:  'separator'",
-     "     VISIBLE:  'separator', cursor=0",
+     "     VISIBLE:  'separator', cursor=1",
      "SPEECH OUTPUT: 'separator'"]))
 
 sequence.append(utils.StartRecordingAction())

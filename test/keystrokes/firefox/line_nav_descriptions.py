@@ -32,7 +32,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  '< > Title of the Black checkbox check box Black < > Title of the White checkbox check box White < > Title of the Grey checkbox check box Grey'",
-     "     VISIBLE:  '< > Title of the Black checkbox ', cursor=0",
+     "     VISIBLE:  '< > Title of the Black checkbox ', cursor=1",
      "SPEECH OUTPUT: 'Title of the Black checkbox check box not checked'",
      "SPEECH OUTPUT: 'Black'",
      "SPEECH OUTPUT: 'Title of the White checkbox check box not checked'",
@@ -47,7 +47,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  '< > Black check box < > White check box < > Grey check box'",
-     "     VISIBLE:  '< > Black check box < > White ch', cursor=0",
+     "     VISIBLE:  '< > Black check box < > White ch', cursor=1",
      "SPEECH OUTPUT: 'Black check box not checked'",
      "SPEECH OUTPUT: 'White check box not checked'",
      "SPEECH OUTPUT: 'Grey check box not checked'"]))

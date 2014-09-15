@@ -43,7 +43,7 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "4. Close Alert",
     ["BRAILLE LINE:  'Guess a number between 1 and 10 12 $l'",
-     "     VISIBLE:  'Guess a number between 1 and 10 ', cursor=0",
+     "     VISIBLE:  'ss a number between 1 and 10 12 ', cursor=32",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "BRAILLE LINE:  'Guess a number between 1 and 10 12 $l'",

@@ -20,7 +20,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  'image'",
-     "     VISIBLE:  'image', cursor=0",
+     "     VISIBLE:  'image', cursor=1",
      "SPEECH OUTPUT: 'image'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -36,7 +36,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
     ["BRAILLE LINE:  'image'",
-     "     VISIBLE:  'image', cursor=0",
+     "     VISIBLE:  'image', cursor=1",
      "SPEECH OUTPUT: 'image'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -172,7 +172,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "21. Line Up",
     ["BRAILLE LINE:  'image'",
-     "     VISIBLE:  'image', cursor=0",
+     "     VISIBLE:  'image', cursor=1",
      "SPEECH OUTPUT: 'image'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -188,7 +188,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "23. Line Up",
     ["BRAILLE LINE:  'image'",
-     "     VISIBLE:  'image', cursor=0",
+     "     VISIBLE:  'image', cursor=1",
      "SPEECH OUTPUT: 'image'"]))
 
 sequence.append(utils.StartRecordingAction())

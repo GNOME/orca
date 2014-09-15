@@ -108,7 +108,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "11. Line Down",
     ["BRAILLE LINE:  '& y radio button Some polls'",
-     "     VISIBLE:  '& y radio button Some polls', cursor=0",
+     "     VISIBLE:  '& y radio button Some polls', cursor=1",
      "SPEECH OUTPUT: 'not selected radio button'",
      "SPEECH OUTPUT: 'Some polls'"]))
 
@@ -127,7 +127,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "13. Line Up",
     ["BRAILLE LINE:  '& y radio button Some polls'",
-     "     VISIBLE:  '& y radio button Some polls', cursor=0",
+     "     VISIBLE:  '& y radio button Some polls', cursor=1",
      "SPEECH OUTPUT: 'not selected radio button'",
      "SPEECH OUTPUT: 'Some polls'"]))
 

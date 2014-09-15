@@ -13,7 +13,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Tab to first slider",
     ["KNOWN ISSUE: Why are we not displaying the value after focus mode?",
      "BRAILLE LINE:  'slider 1 10 slider'",
-     "     VISIBLE:  'slider 1 10 slider', cursor=0",
+     "     VISIBLE:  'slider 1 10 slider', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'slider 1 slider 10'",
@@ -25,7 +25,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Increment first slider",
     ["KNOWN ISSUE: This is the value exposed to us so we're passing it along as-is.",
      "BRAILLE LINE:  'slider 1 10 slider'",
-     "     VISIBLE:  'slider 1 10 slider', cursor=0",
+     "     VISIBLE:  'slider 1 10 slider', cursor=1",
      "BRAILLE LINE:  'slider 1 10.238095238095237 slider'",
      "     VISIBLE:  'slider 1 10.238095238095237 slid', cursor=1",
      "SPEECH OUTPUT: '10.238095238095237'"]))
@@ -82,7 +82,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Disable previous slider push button'",
      "     VISIBLE:  'Disable previous slider push but', cursor=1",
      "BRAILLE LINE:  'slider 2 10 slider'",
-     "     VISIBLE:  'slider 2 10 slider', cursor=0",
+     "     VISIBLE:  'slider 2 10 slider', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'slider 2 slider 10'",
@@ -93,7 +93,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "9. Increment second slider",
     ["BRAILLE LINE:  'slider 2 10 slider'",
-     "     VISIBLE:  'slider 2 10 slider', cursor=0",
+     "     VISIBLE:  'slider 2 10 slider', cursor=1",
      "BRAILLE LINE:  'slider 2 20 slider'",
      "     VISIBLE:  'slider 2 20 slider', cursor=1",
      "SPEECH OUTPUT: '20'"]))

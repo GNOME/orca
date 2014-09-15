@@ -16,7 +16,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to tree",
     ["BRAILLE LINE:  'Fruits expanded list item'",
-     "     VISIBLE:  'Fruits expanded list item', cursor=1",
+     "     VISIBLE:  'Fruits expanded list item', cursor=0",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'Fruits expanded tree level 1'",
@@ -27,7 +27,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic whereAmI",
     ["BRAILLE LINE:  'Fruits expanded list item'",
-     "     VISIBLE:  'Fruits expanded list item', cursor=1",
+     "     VISIBLE:  'Fruits expanded list item', cursor=0",
      "BRAILLE LINE:  'Fruits expanded list item'",
      "     VISIBLE:  'Fruits expanded list item', cursor=1",
      "SPEECH OUTPUT: 'list item Fruits 1 of 2 expanded tree level 1'"]))

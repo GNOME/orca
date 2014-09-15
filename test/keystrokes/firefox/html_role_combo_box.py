@@ -14,7 +14,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to Severity combo box",
     ["BRAILLE LINE:  'Severity: Severity normal combo box'",
-     "     VISIBLE:  'Severity: Severity normal combo ', cursor=0",
+     "     VISIBLE:  'Severity normal combo box', cursor=10",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'Severity normal combo box'",
@@ -25,7 +25,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic Where Am I",
     ["BRAILLE LINE:  'Severity: Severity normal combo box'",
-     "     VISIBLE:  'Severity: Severity normal combo ', cursor=0",
+     "     VISIBLE:  'Severity normal combo box', cursor=10",
      "BRAILLE LINE:  'Severity normal combo box'",
      "     VISIBLE:  'Severity normal combo box', cursor=10",
      "SPEECH OUTPUT: 'Severity combo box normal'"]))
@@ -48,7 +48,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "4. Tab to Priority combo box",
     ["BRAILLE LINE:  'Priority: Normal combo box'",
-     "     VISIBLE:  'Priority: Normal combo box', cursor=0",
+     "     VISIBLE:  'Priority: Normal combo box', cursor=11",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'Priority: Normal combo box'",
@@ -59,7 +59,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "5. Tab to Resolution combo box",
     ["BRAILLE LINE:  'Priority: Normal combo box'",
-     "     VISIBLE:  'Priority: Normal combo box', cursor=0",
+     "     VISIBLE:  'Priority: Normal combo box', cursor=11",
      "BRAILLE LINE:  'FIXED combo box'",
      "     VISIBLE:  'FIXED combo box', cursor=1",
      "SPEECH OUTPUT: 'Resolution: FIXED combo box'"]))

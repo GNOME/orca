@@ -109,7 +109,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "12. line Down",
     ["BRAILLE LINE:  'Hockey list box'",
-     "     VISIBLE:  'Hockey list box', cursor=0",
+     "     VISIBLE:  'Hockey list box', cursor=1",
      "SPEECH OUTPUT: 'Hockey multi-select List with 4 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -117,7 +117,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "13. line Down",
     ["BRAILLE LINE:  'Dashing picture of Willie Walker image'",
-     "     VISIBLE:  'Dashing picture of Willie Walker', cursor=0",
+     "     VISIBLE:  'Dashing picture of Willie Walker', cursor=1",
      "SPEECH OUTPUT: 'Dashing picture of Willie Walker image'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -137,7 +137,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "15. line Up",
     ["BRAILLE LINE:  'Dashing picture of Willie Walker image'",
-     "     VISIBLE:  'Dashing picture of Willie Walker', cursor=0",
+     "     VISIBLE:  'Dashing picture of Willie Walker', cursor=1",
      "SPEECH OUTPUT: 'Dashing picture of Willie Walker image'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -145,7 +145,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "16. line Up",
     ["BRAILLE LINE:  'Hockey list box'",
-     "     VISIBLE:  'Hockey list box', cursor=0",
+     "     VISIBLE:  'Hockey list box', cursor=1",
      "SPEECH OUTPUT: 'Hockey multi-select List with 4 items'"]))
 
 sequence.append(utils.StartRecordingAction())
