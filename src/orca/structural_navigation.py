@@ -1907,7 +1907,9 @@ class StructuralNavigation:
         """
 
         if obj:
-            obj.queryComponent().grabFocus()
+            [obj, characterOffset] = self._getCaretPosition(obj)
+            self._setCaretPosition(obj, characterOffset)
+            self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_BUTTONS
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
@@ -1989,7 +1991,9 @@ class StructuralNavigation:
         """
 
         if obj:
-            obj.queryComponent().grabFocus()
+            [obj, characterOffset] = self._getCaretPosition(obj)
+            self._setCaretPosition(obj, characterOffset)
+            self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_CHECK_BOXES
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
@@ -2162,7 +2166,9 @@ class StructuralNavigation:
         """
 
         if obj:
-            obj.queryComponent().grabFocus()
+            [obj, characterOffset] = self._getCaretPosition(obj)
+            self._setCaretPosition(obj, characterOffset)
+            self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_COMBO_BOXES
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
@@ -2257,7 +2263,9 @@ class StructuralNavigation:
         """
 
         if obj:
-            obj.queryComponent().grabFocus()
+            [obj, characterOffset] = self._getCaretPosition(obj)
+            self._setCaretPosition(obj, characterOffset)
+            self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_ENTRIES
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
@@ -2347,7 +2355,9 @@ class StructuralNavigation:
         if obj:
             if obj.getRole() == pyatspi.ROLE_TEXT and obj.childCount:
                 obj = obj[0]
-            obj.queryComponent().grabFocus()
+            [obj, characterOffset] = self._getCaretPosition(obj)
+            self._setCaretPosition(obj, characterOffset)
+            self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_FORM_FIELDS
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
@@ -3087,7 +3097,9 @@ class StructuralNavigation:
         """
 
         if obj:
-            obj.queryComponent().grabFocus()
+            [obj, characterOffset] = self._getCaretPosition(obj)
+            self._setCaretPosition(obj, characterOffset)
+            self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_RADIO_BUTTONS
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
