@@ -761,6 +761,8 @@ class Utilities(script_utilities.Utilities):
             objects[0:0] = onLeft
             firstObj, firstStart = objects[0][0], objects[0][1]
             prevObj, pOffset = self._script.findPreviousCaretInOrder(firstObj, firstStart)
+            if self._script.getCharacterAtOffset(prevObj, pOffset) in [" ", "\xa0"]:
+                prevObj, pOffset = self._script.findPreviousCaretInOrder(prevObj, pOffset)
 
         # Check for things on the same line to the right of this object.
         lastObj, lastEnd = objects[-1][0], objects[-1][2]
@@ -774,7 +776,7 @@ class Utilities(script_utilities.Utilities):
             objects.extend(onRight)
             lastObj, lastEnd = objects[-1][0], objects[-1][2]
             nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
-            if self._script.getCharacterAtOffset(nextObj, nOffset) == " ":
+            if self._script.getCharacterAtOffset(nextObj, nOffset) in [" ", "\xa0"]:
                 nextObj, nOffset = self._script.findNextCaretInOrder(nextObj, nOffset)
 
         return objects
