@@ -883,6 +883,16 @@ class Utilities:
             if (obj1.name != obj2.name) or (obj1.getRole() != obj2.getRole()):
                 return False
             else:
+                # If one of the objects was destroyed, the last index may be -1.
+                # In addition, the extents likely will be zeroed out so the next
+                # tests will fail. But if the rest of the path is the same and
+                # the names are the same and the roles are the same, let's cross
+                # our fingers and call them the same.
+                path1 = pyatspi.utils.getPath(obj1)
+                path2 = pyatspi.utils.getPath(obj2)
+                if path1[0:-1] == path2[0:-1] and obj1.name == obj2.name != "":
+                    return True
+
                 # Comparing the extents of objects which claim to be different
                 # addresses both managed descendants and implementations which
                 # recreate accessibles for the same widget.

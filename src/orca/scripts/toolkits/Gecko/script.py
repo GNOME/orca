@@ -1082,6 +1082,14 @@ class Script(default.Script):
         if not event.type.startswith("object:children-changed:add"):
             return
 
+        # Certain Web Dev practices, such as a:focus{position:relative;}, cause
+        # Gecko to kill the accessible object that we just moved to and create
+        # a new object to replace it. If we don't catch this, navigation breaks
+        # because the proverbial rug has just been pulled out from under us. :(
+        obj, offset = self.getCaretContext()
+        if self.utilities.isSameObject(event.any_data, obj):
+            self.setCaretContext(event.any_data, offset)
+
         if self.handleAsLiveRegion(event):
             self.liveMngr.handleEvent(event)
             return
