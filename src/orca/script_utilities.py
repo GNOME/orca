@@ -873,6 +873,30 @@ class Utilities:
 
         return readOnly
 
+    def _hasSamePath(self, obj1, obj2):
+        path1 = pyatspi.utils.getPath(obj1)
+        path2 = pyatspi.utils.getPath(obj2)
+        if len(path1) != len(path2):
+            return False
+
+        # The first item in all paths, even valid ones, is -1.
+        path1 = path1[1:]
+        path2 = path2[1:]
+
+        # If both have invalid child indices, all bets are off.
+        if path1.count(-1) and path2.count(-1):
+            return False
+
+        try:
+            index = path1.index(-1)
+        except ValueError:
+            try:
+                index = path2.index(-1)
+            except ValueError:
+                index = len(path2)
+
+        return path1[0:index] == path2[0:index]
+
     def isSameObject(self, obj1, obj2):
         if (obj1 == obj2):
             return True
@@ -882,17 +906,9 @@ class Utilities:
         try:
             if (obj1.name != obj2.name) or (obj1.getRole() != obj2.getRole()):
                 return False
+            if self._hasSamePath(obj1, obj2):
+                return True
             else:
-                # If one of the objects was destroyed, the last index may be -1.
-                # In addition, the extents likely will be zeroed out so the next
-                # tests will fail. But if the rest of the path is the same and
-                # the names are the same and the roles are the same, let's cross
-                # our fingers and call them the same.
-                path1 = pyatspi.utils.getPath(obj1)
-                path2 = pyatspi.utils.getPath(obj2)
-                if path1[0:-1] == path2[0:-1] and obj1.name == obj2.name != "":
-                    return True
-
                 # Comparing the extents of objects which claim to be different
                 # addresses both managed descendants and implementations which
                 # recreate accessibles for the same widget.
