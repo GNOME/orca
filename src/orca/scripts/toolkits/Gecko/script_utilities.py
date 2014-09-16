@@ -1015,7 +1015,7 @@ class Utilities(script_utilities.Utilities):
         if not (root and obj):
             return None
 
-        isSame = lambda x: x and self.isSameObject(x, obj)
+        isSame = lambda x: x and self.isSameObject(x, obj, comparePaths=True)
         if isSame(root):
             replicant = root
         else:

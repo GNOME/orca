@@ -897,7 +897,7 @@ class Utilities:
 
         return path1[0:index] == path2[0:index]
 
-    def isSameObject(self, obj1, obj2):
+    def isSameObject(self, obj1, obj2, comparePaths=False):
         if (obj1 == obj2):
             return True
         elif (not obj1) or (not obj2):
@@ -906,7 +906,7 @@ class Utilities:
         try:
             if (obj1.name != obj2.name) or (obj1.getRole() != obj2.getRole()):
                 return False
-            if self._hasSamePath(obj1, obj2):
+            if comparePaths and self._hasSamePath(obj1, obj2):
                 return True
             else:
                 # Comparing the extents of objects which claim to be different
