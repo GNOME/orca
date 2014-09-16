@@ -1439,10 +1439,11 @@ class Script(default.Script):
 
         [focusedObj, focusedOffset] = self.getCaretContext()
         contents = self.getLineContentsAtOffset(focusedObj, focusedOffset)
+        contents = self.utilities.filterContentsForPresentation(contents)
         if not len(contents):
+            default.Script.updateBraille(self, obj, extraRegion)
             return
 
-        contents = self.utilities.filterContentsForPresentation(contents)
         index = self.utilities.findObjectInContents(focusedObj, focusedOffset, contents)
         focusedRegion = None
         lastObj = None
