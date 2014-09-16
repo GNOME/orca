@@ -368,6 +368,7 @@ class Script(Gecko.Script):
 
         [obj, offset] = self.findFirstCaretContext(documentFrame, 0)
         self.setCaretPosition(obj, offset)
+        self.updateBraille(obj)
         if not _settingsManager.getSetting('sayAllOnLoad'):
             self.presentLine(obj, offset)
         elif _settingsManager.getSetting('enableSpeech'):
