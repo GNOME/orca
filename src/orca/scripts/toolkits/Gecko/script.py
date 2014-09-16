@@ -1086,9 +1086,13 @@ class Script(default.Script):
         # Gecko to kill the accessible object that we just moved to and create
         # a new object to replace it. If we don't catch this, navigation breaks
         # because the proverbial rug has just been pulled out from under us. :(
+        # To make matters worse, the replacement object can be in the ancestry.
         obj, offset = self.getCaretContext()
-        if self.utilities.isSameObject(event.any_data, obj):
-            self.setCaretContext(event.any_data, offset)
+        if obj and self.utilities.isZombie(obj):
+            replicant = self.utilities.findReplicant(event.any_data, obj)
+            if replicant:
+                self.setCaretPosition(replicant, offset)
+                return
 
         if self.handleAsLiveRegion(event):
             self.liveMngr.handleEvent(event)

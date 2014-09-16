@@ -989,3 +989,37 @@ class Utilities(script_utilities.Utilities):
                 return True
 
         return False
+
+    def isZombie(self, obj):
+        try:
+            index = obj.getIndexInParent()
+            state = obj.getState()
+        except:
+            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is null or dead" % obj)
+            return True
+
+        if obj.getIndexInParent() == -1:
+            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s's index is -1" % obj)
+            return True
+        if state.contains(pyatspi.STATE_DEFUNCT):
+            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is defunct" % obj)
+            return True
+        if state.contains(pyatspi.STATE_INVALID):
+            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is invalid" % obj)
+            return True
+
+        return False
+
+    def findReplicant(self, root, obj):
+        if not (root and obj):
+            return None
+
+        isSame = lambda x: x and self.isSameObject(x, obj)
+        if isSame(root):
+            replicant = root
+        else:
+            replicant = pyatspi.utils.findDescendant(root, isSame)
+
+        msg = "HACK: Returning %s as replicant for Zombie %s" % (replicant, obj)
+        debug.println(debug.LEVEL_INFO, msg)
+        return replicant
