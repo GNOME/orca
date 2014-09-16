@@ -1441,7 +1441,8 @@ class Script(default.Script):
         contents = self.getLineContentsAtOffset(focusedObj, focusedOffset)
         contents = self.utilities.filterContentsForPresentation(contents)
         index = self.utilities.findObjectInContents(focusedObj, focusedOffset, contents)
-        if not len(contents) or index == -1:
+        if not len(contents) or \
+           (index == -1 and not self.utilities.isTextBlockElement(focusedObj)):
             default.Script.updateBraille(self, obj, extraRegion)
             return
 
