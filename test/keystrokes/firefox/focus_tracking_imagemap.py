@@ -59,8 +59,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "4. Tab",
-    ["BRAILLE LINE:  'wk09_frozenmovie image'",
-     "     VISIBLE:  'wk09_frozenmovie image', cursor=0",
+    ["BRAILLE LINE:  'wk09_frozenmovie'",
+     "     VISIBLE:  'wk09_frozenmovie', cursor=1",
      "SPEECH OUTPUT: 'wk09_frozenmovie' voice=hyperlink",
      "SPEECH OUTPUT: 'link image'"]))
 

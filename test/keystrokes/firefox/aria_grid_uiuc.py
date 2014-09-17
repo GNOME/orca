@@ -15,17 +15,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to grid",
-    ["KNOWN ISSUE: The braille is not correct here",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+    ["BRAILLE LINE:  'Selected Sort Sel column push button'",
+     "     VISIBLE:  'Selected Sort Sel column push bu', cursor=1",
      "SPEECH OUTPUT: 'Selected Sort Sel column push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. basic whereAmI",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+    ["BRAILLE LINE:  'Selected Sort Sel column push button'",
+     "     VISIBLE:  'Selected Sort Sel column push bu', cursor=1",
      "SPEECH OUTPUT: 'Selected Sort Sel column push button'"]))
 
 sequence.append(utils.StartRecordingAction())

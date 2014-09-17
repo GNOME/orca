@@ -16,8 +16,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "1. Space to press the Show TabContainer Dialog",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+    ["BRAILLE LINE:  'TabContainer Dialog dialog'",
+     "     VISIBLE:  'TabContainer Dialog dialog', cursor=1",
      "BRAILLE LINE:  'First tab page tab Second tab page tab'",
      "     VISIBLE:  'First tab page tab Second tab pa', cursor=1",
      "BRAILLE LINE:  'Focus mode'",

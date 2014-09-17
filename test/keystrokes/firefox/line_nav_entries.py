@@ -49,9 +49,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
-    ["BRAILLE LINE:  ' $l I'm a label'",
+    ["KNOWN ISSUE: We're guessing the label and also presenting its text",
+     "BRAILLE LINE:  ' $l I'm a label'",
      "     VISIBLE:  ' $l I'm a label', cursor=1",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'I'm a label entry'",
      "SPEECH OUTPUT: 'I'm a label'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -60,7 +61,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
     ["BRAILLE LINE:  ' $l Am I a label as well?'",
      "     VISIBLE:  ' $l Am I a label as well?', cursor=1",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'Am I a label as well? entry'",
      "SPEECH OUTPUT: 'Am I a label as well?'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -85,7 +86,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["BRAILLE LINE:  ' $l Too far away to be a label.'",
      "     VISIBLE:  ' $l Too far away to be a label.', cursor=1",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'Too far away to be a label. entry'",
      "SPEECH OUTPUT: 'Too far away to be a label.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -111,7 +112,7 @@ sequence.append(utils.AssertPresentationAction(
     "11. Line Down",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'First Name entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -127,7 +128,7 @@ sequence.append(utils.AssertPresentationAction(
     "13. Line Down",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'M.I. entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -143,7 +144,7 @@ sequence.append(utils.AssertPresentationAction(
     "15. Line Down",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Last Name entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -167,7 +168,7 @@ sequence.append(utils.AssertPresentationAction(
     "18. Line Down",
     ["BRAILLE LINE:  ' $l $l $l'",
      "     VISIBLE:  ' $l $l $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'First name entry'",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'entry'"]))
 
@@ -253,7 +254,7 @@ sequence.append(utils.AssertPresentationAction(
     "28. Line Down",
     ["BRAILLE LINE:  ' $l $l $l'",
      "     VISIBLE:  ' $l $l $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'First Name entry'",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'entry'"]))
 
@@ -288,7 +289,7 @@ sequence.append(utils.AssertPresentationAction(
     "32. Line Up",
     ["BRAILLE LINE:  ' $l $l $l'",
      "     VISIBLE:  ' $l $l $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'First Name entry'",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'entry'"]))
 
@@ -374,7 +375,7 @@ sequence.append(utils.AssertPresentationAction(
     "42. Line Up",
     ["BRAILLE LINE:  ' $l $l $l'",
      "     VISIBLE:  ' $l $l $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'First name entry'",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'entry'"]))
 
@@ -400,7 +401,7 @@ sequence.append(utils.AssertPresentationAction(
     "45. Line Up",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Last Name entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -416,7 +417,7 @@ sequence.append(utils.AssertPresentationAction(
     "47. Line Up",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'M.I. entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -432,7 +433,7 @@ sequence.append(utils.AssertPresentationAction(
     "49. Line Up",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'First Name entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -457,7 +458,7 @@ sequence.append(utils.AssertPresentationAction(
     "52. Line Up",
     ["BRAILLE LINE:  ' $l Too far away to be a label.'",
      "     VISIBLE:  ' $l Too far away to be a label.', cursor=1",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'Too far away to be a label. entry'",
      "SPEECH OUTPUT: 'Too far away to be a label.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -482,7 +483,7 @@ sequence.append(utils.AssertPresentationAction(
     "55. Line Up",
     ["BRAILLE LINE:  ' $l Am I a label as well?'",
      "     VISIBLE:  ' $l Am I a label as well?', cursor=1",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'Am I a label as well? entry'",
      "SPEECH OUTPUT: 'Am I a label as well?'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -491,7 +492,7 @@ sequence.append(utils.AssertPresentationAction(
     "56. Line Up",
     ["BRAILLE LINE:  ' $l I'm a label'",
      "     VISIBLE:  ' $l I'm a label', cursor=1",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'I'm a label entry'",
      "SPEECH OUTPUT: 'I'm a label'"]))
 
 sequence.append(utils.StartRecordingAction())

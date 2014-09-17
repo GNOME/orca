@@ -41,33 +41,32 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "5. Tab to first Create button",
-    ["KNOWN ISSUE: The braille is not correct here and in a few other tests which follow",
-     "BRAILLE LINE:  '<button> push button <input type='button'> push button Create View Create save options push button Edit! Color'",
-     "     VISIBLE:  '<button> push button <input type', cursor=0",
+    ["BRAILLE LINE:  'Create push button'",
+     "     VISIBLE:  'Create push button', cursor=1",
      "SPEECH OUTPUT: 'Create push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "6. Basic Where Am I on first Create button",
-    ["BRAILLE LINE:  '<button> push button <input type='button'> push button Create View Create save options push button Edit! Color'",
-     "     VISIBLE:  '<button> push button <input type', cursor=0",
+    ["BRAILLE LINE:  'Create push button'",
+     "     VISIBLE:  'Create push button', cursor=1",
      "SPEECH OUTPUT: 'Create push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "7. Tab to View push button",
-    ["BRAILLE LINE:  '<button> push button <input type='button'> push button Create Create save options push button Edit! Color'",
-     "     VISIBLE:  '<button> push button <input type', cursor=0",
+    ["BRAILLE LINE:  'View push button'",
+     "     VISIBLE:  'View push button', cursor=1",
      "SPEECH OUTPUT: 'View push button view title'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "8. Tab to second Create button",
-    ["BRAILLE LINE:  '<button> push button <input type='button'> push button Create View save options push button Edit! Color'",
-     "     VISIBLE:  '<button> push button <input type', cursor=0",
+    ["BRAILLE LINE:  'Create push button'",
+     "     VISIBLE:  'Create push button', cursor=1",
      "SPEECH OUTPUT: 'Create push button creative title'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -129,8 +128,8 @@ sequence.append(utils.AssertPresentationAction(
     "14. Open the Edit! menu",
     ["BRAILLE LINE:  'Edit! push button'",
      "     VISIBLE:  'Edit! push button', cursor=1",
-     "BRAILLE LINE:  '<button> push button save options collapsed push button Edit! Color'",
-     "     VISIBLE:  '<button> push button save option', cursor=0",
+     "BRAILLE LINE:  'Edit! push button'",
+     "     VISIBLE:  'Edit! push button', cursor=1",
      "BRAILLE LINE:  'Cut'",
      "     VISIBLE:  'Cut', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
@@ -240,10 +239,10 @@ sequence.append(utils.AssertPresentationAction(
     "24. Open the Color menu",
     ["BRAILLE LINE:  'Color push button'",
      "     VISIBLE:  'Color push button', cursor=1",
-     "BRAILLE LINE:  '<button> push button save options collapsed push button Edit! Color'",
-     "     VISIBLE:  '<button> push button save option', cursor=0",
-     "BRAILLE LINE:  'lime green blue'",
-     "     VISIBLE:  'lime green blue', cursor=0",
+     "BRAILLE LINE:  'Color push button'",
+     "     VISIBLE:  'Color push button', cursor=1",
+     "BRAILLE LINE:  'white table cell'",
+     "     VISIBLE:  'white table cell', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'Color panel'",
@@ -254,8 +253,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "25. Go to lime",
-    ["BRAILLE LINE:  'lime green blue'",
-     "     VISIBLE:  'lime green blue', cursor=0",
+    ["BRAILLE LINE:  'white table cell'",
+     "     VISIBLE:  'white table cell', cursor=1",
      "BRAILLE LINE:  'lime table cell'",
      "     VISIBLE:  'lime table cell', cursor=1",
      "SPEECH OUTPUT: 'lime'"]))
@@ -275,8 +274,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "27. Tab to the toggle me off button",
-    ["BRAILLE LINE:  'Toggle me off Toggle me'",
-     "     VISIBLE:  'Toggle me off Toggle me', cursor=0",
+    ["BRAILLE LINE:  '&=y Toggle me off toggle button'",
+     "     VISIBLE:  '&=y Toggle me off toggle button', cursor=1",
      "SPEECH OUTPUT: 'Toggle me off toggle button pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -284,32 +283,31 @@ sequence.append(KeyComboAction("space"))
 sequence.append(utils.AssertPresentationAction(
     "28. Toggle the state of the toggle me off button",
     ["KNOWN ISSUE: This seems an excessive amount of braille updating",
-     "BRAILLE LINE:  'toggle me on Toggle me'",
-     "     VISIBLE:  'toggle me on Toggle me', cursor=0",
-     "BRAILLE LINE:  'toggle me on Toggle me'",
-     "     VISIBLE:  'toggle me on Toggle me', cursor=0",
-     "BRAILLE LINE:  'toggle me on Toggle me'",
-     "     VISIBLE:  'toggle me on Toggle me', cursor=0",
+     "BRAILLE LINE:  '& y toggle me on toggle button'",
+     "     VISIBLE:  '& y toggle me on toggle button', cursor=1",
+     "BRAILLE LINE:  'toggle me on $l'",
+     "     VISIBLE:  'toggle me on $l', cursor=1",
+     "BRAILLE LINE:  'toggle me on $l'",
+     "     VISIBLE:  'toggle me on $l', cursor=1",
      "SPEECH OUTPUT: 'not pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("space"))
 sequence.append(utils.AssertPresentationAction(
     "29. Toggle the state of the toggle me off button",
-    ["BRAILLE LINE:  'toggle me off Toggle me'",
-     "     VISIBLE:  'toggle me off Toggle me', cursor=0",
-     "BRAILLE LINE:  'toggle me off Toggle me'",
-     "     VISIBLE:  'toggle me off Toggle me', cursor=0",
-     "BRAILLE LINE:  'toggle me off Toggle me'",
-     "     VISIBLE:  'toggle me off Toggle me', cursor=0",
-     "SPEECH OUTPUT: 'pressed'"]))
+    ["BRAILLE LINE:  '&=y toggle me off toggle button'",
+     "     VISIBLE:  '&=y toggle me off toggle button', cursor=1",
+     "BRAILLE LINE:  'toggle me off $l'",
+     "     VISIBLE:  'toggle me off $l', cursor=1",
+     "BRAILLE LINE:  'toggle me off $l'",
+     "     VISIBLE:  'toggle me off $l', cursor=1"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "30. Tab to the toggle me button",
-    ["BRAILLE LINE:  'toggle me off Toggle me'",
-     "     VISIBLE:  'toggle me off Toggle me', cursor=0",
+    ["BRAILLE LINE:  'Toggle me push button'",
+     "     VISIBLE:  'Toggle me push button', cursor=1",
      "SPEECH OUTPUT: 'Toggle me push button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -317,16 +315,16 @@ sequence.append(KeyComboAction("space"))
 sequence.append(utils.AssertPresentationAction(
     "31. Toggle the state of the toggle me button",
     ["KNOWN ISSUE: We seem to be missing the expected events and state changes. Dojo bug?",
-     "BRAILLE LINE:  'toggle me off Toggle me'",
-     "     VISIBLE:  'toggle me off Toggle me', cursor=0"]))
+     "BRAILLE LINE:  'Toggle me push button'",
+     "     VISIBLE:  'Toggle me push button', cursor=1"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("space"))
 sequence.append(utils.AssertPresentationAction(
     "32. Toggle the state of the toggle me button",
     ["KNOWN ISSUE: We seem to be missing the expected events and state changes. Dojo bug?",
-     "BRAILLE LINE:  'toggle me off Toggle me'",
-     "     VISIBLE:  'toggle me off Toggle me', cursor=0"]))
+     "BRAILLE LINE:  'Toggle me push button'",
+     "     VISIBLE:  'Toggle me push button', cursor=1"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

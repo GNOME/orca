@@ -167,17 +167,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                         pyatspi.ROLE_RADIO_BUTTON,
                         pyatspi.ROLE_TEXT] \
            and self._script.inDocumentContent():
-
-            # TODO: JD - isLabellingContents() needs smarts to identify labels
-            # we'll later infer. For now, this keeps us from double-presenting.
             start = args.get('startOffset')
-            end = args.get('endOffset')
-            if start != None and end != None:
+            if isinstance(start, int) and start > 0:
                 return []
 
-            # We're having to hack around yet another Mozilla bug:
-            # https://bugzilla.mozilla.org/show_bug.cgi?id=960241
-            focusedOnly = role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]
+            if role in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
+                # We're having to hack around yet another Mozilla bug:
+                # https://bugzilla.mozilla.org/show_bug.cgi?id=960241
+                focusedOnly = False
+            else:
+                # Because we cannot count on grabFocus updating the state.
+                focusedOnly = obj != orca_state.locusOfFocus
 
             label = self._script.labelInference.infer(obj, focusedOnly)
             if label:
@@ -214,6 +214,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         acss = self.voice(speech_generator.SYSTEM)
         role = args.get('role', obj.getRole())
         force = args.get('force', False)
+        start = args.get('startOffset')
+        if role == pyatspi.ROLE_ENTRY and isinstance(start, int) and start > 0:
+            return []
 
         # Saying "menu item" for a combo box can confuse users. Therefore,
         # speak the combo box role instead.  Also, only do it if the menu
