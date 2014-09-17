@@ -57,27 +57,27 @@ class LabelInference:
 
         debug.println(debug.LEVEL_FINE, "INFER label for: %s" % obj)
         if not obj:
-            return None
+            return None, []
 
         if focusedOnly and not obj.getState().contains(pyatspi.STATE_FOCUSED):
             debug.println(debug.LEVEL_FINE, "INFER - object not focused")
-            return None
+            return None, []
 
-        result = None
+        result, objects = None, []
         if not result:
-            result = self.inferFromTextLeft(obj)
+            result, objects = self.inferFromTextLeft(obj)
             debug.println(debug.LEVEL_FINE, "INFER - Text Left: %s" % result)
         if not result or self._preferRight(obj):
-            result = self.inferFromTextRight(obj) or result
+            result, objects = self.inferFromTextRight(obj) or result
             debug.println(debug.LEVEL_FINE, "INFER - Text Right: %s" % result)
         if not result:
-            result = self.inferFromTable(obj)
+            result, objects = self.inferFromTable(obj)
             debug.println(debug.LEVEL_FINE, "INFER - Table: %s" % result)
         if not result:
-            result = self.inferFromTextAbove(obj)
+            result, objects = self.inferFromTextAbove(obj)
             debug.println(debug.LEVEL_FINE, "INFER - Text Above: %s" % result)
         if not result:
-            result = self.inferFromTextBelow(obj)
+            result, objects = self.inferFromTextBelow(obj)
             debug.println(debug.LEVEL_FINE, "INFER - Text Below: %s" % result)
 
         # TODO - We probably do not wish to "infer" from these. Instead, we
@@ -85,16 +85,16 @@ class LabelInference:
         # (i.e. the label is something on screen. Widget name and description
         # are each something other than a label.)
         if not result:
-            result = obj.name
+            result, objects = obj.name, []
             debug.println(debug.LEVEL_FINE, "INFER - Name: %s" % result)
         if not result:
-            result = obj.description
+            result, objects = obj.description, []
             debug.println(debug.LEVEL_FINE, "INFER - Description: %s" % result)
         if result:
             result = result.strip()
 
         self.clearCache()
-        return result
+        return result, objects
 
     def clearCache(self):
         """Dumps whatever we've stored for performance purposes."""
@@ -313,20 +313,20 @@ class LabelInference:
                 break
 
         if not (onLeft and onLeft[0]):
-            return None
+            return None, []
 
         lObj, start, end, string = onLeft[-1]
         string = (string or lObj.name).strip()
         if not string:
-            return None
+            return None, []
 
         lExtents = self._getExtents(lObj, start, end)
         distance = extents[0] - (lExtents[0] + lExtents[2])
         if 0 <= distance <= proximity:
             strings = [content[3] or content[0].name for content in onLeft]
-            return ''.join(strings)
+            return ''.join(strings), [content[0] for content in onLeft]
 
-        return None
+        return None, []
 
     def inferFromTextRight(self, obj, proximity=25):
         """Attempt to infer the functional/displayed label of obj by
@@ -341,7 +341,7 @@ class LabelInference:
         """
 
         if self._preventRight(obj):
-            return None
+            return None, []
 
         extents = self._getExtents(obj)
         contents = self._getLineContents(obj)
@@ -355,25 +355,25 @@ class LabelInference:
         for i, item in enumerate(onRight):
             if self._isWidget(item[0]):
                 if not self._preferRight(obj):
-                    return None
+                    return None, []
                 onRight = onRight[0:i]
                 break
 
         if not (onRight and onRight[0]):
-            return None
+            return None, []
 
         rObj, start, end, string = onRight[0]
         string = (string or rObj.name).strip()
         if not string:
-            return None
+            return None, []
 
         rExtents = self._getExtents(rObj, start, end)
         distance = rExtents[0] - (extents[0] + extents[2])
         if distance <= proximity or self._preferRight(obj):
             strings = [content[3] or content[0].name for content in onRight]
-            return ''.join(strings)
+            return ''.join(strings), [content[0] for content in onRight]
 
-        return None
+        return None, []
 
     def inferFromTextAbove(self, obj, proximity=20):
         """Attempt to infer the functional/displayed label of obj by
@@ -389,7 +389,7 @@ class LabelInference:
 
         thisLine = self._getLineContents(obj)
         if not (thisLine and thisLine[0]):
-            return None
+            return None, []
 
         prevObj, start, end, string = thisLine[0]
         if obj == prevObj:
@@ -399,42 +399,42 @@ class LabelInference:
         try:
             text = prevObj.queryText()
         except (AttributeError, NotImplementedError):
-            return None
+            return None, []
 
         objX, objY, objWidth, objHeight = self._getExtents(obj)
         if not (objWidth and objHeight):
-            return None
+            return None, []
 
         start = max(start - 1, 0)
         prevLine = self._script.utilities.getLineContentsAtOffset(prevObj, start)
         if not (prevLine and prevLine[0]):
-            return None
+            return None, []
 
         prevObj, start, end, string = prevLine[0]
         if string.strip():
             x, y, width, height = self._getExtents(prevObj, start, end)
             distance = objY - (y + height)
             if distance <= proximity:
-                return string
+                return string, [prevObj]
 
         while prevObj:
             prevObj = self._getPreviousObject(prevObj)
             x, y, width, height = self._getExtents(prevObj)
             distance = objY - (y + height)
             if distance > proximity:
-                return None
+                return None, []
             if prevObj.getRole() == pyatspi.ROLE_TABLE_CELL \
                and not prevObj in [obj.parent, obj.parent.parent]:
-                return None
+                return None, []
             if distance < 0:
                 continue
             if x + 150 < objX:
                 continue
             string = self._createLabelFromContents(prevObj)
             if string:
-                return string
+                return string, [prevObj]
 
-        return None
+        return None, []
 
     def inferFromTextBelow(self, obj, proximity=20):
         """Attempt to infer the functional/displayed label of obj by
@@ -449,11 +449,11 @@ class LabelInference:
         """
 
         if self._preventBelow(obj):
-            return None
+            return None, []
 
         thisLine = self._getLineContents(obj)
         if not (thisLine and thisLine[0]):
-            return None
+            return None, []
 
         lastObj, start, end, string = thisLine[-1]
         if obj == lastObj:
@@ -462,20 +462,20 @@ class LabelInference:
 
         objX, objY, objWidth, objHeight = self._getExtents(obj)
         if not (objWidth and objHeight):
-            return None
+            return None, []
 
         nextLine = self._script.utilities.getLineContentsAtOffset(lastObj, end)
         if not (nextLine and nextLine[0]):
-            return None
+            return None, []
 
         nextObj, start, end, string = nextLine[0]
         if string.strip():
             x, y, width, height = self._getExtents(nextObj, start, end)
             distance = y - (objY + objHeight)
             if distance <= proximity:
-                return string
+                return string, [nextObj]
 
-        return None
+        return None, []
 
     def inferFromTable(self, obj):
         """Attempt to infer the functional/displayed label of obj by looking
@@ -492,20 +492,20 @@ class LabelInference:
         pred = lambda x: x.getRole() == pyatspi.ROLE_TABLE_CELL
         cell = pyatspi.utils.findAncestor(obj, pred)
         if not self._isSimpleObject(cell):
-            return None
+            return None, []
 
         if not cell in [obj.parent, obj.parent.parent]:
-            return None
+            return None, []
 
         pred = lambda x: x.getRole() == pyatspi.ROLE_TABLE
         grid = pyatspi.utils.findAncestor(cell, pred)
         if not grid:
-            return None
+            return None, []
 
         try:
             table = grid.queryTable()
         except NotImplementedError:
-            return None
+            return None, []
 
         index = self._script.utilities.cellIndex(cell)
         row = table.getRowAtIndex(index)
@@ -515,20 +515,20 @@ class LabelInference:
             candidate = table.getAccessibleAt(row, col - 1)
             label = self._createLabelFromContents(candidate)
             if label:
-                return label
+                return label, [candidate]
 
         if col < table.nColumns and not self._preventRight(obj):
             candidate = table.getAccessibleAt(row, col + 1)
             label = self._createLabelFromContents(candidate)
             if label:
-                return label
+                return label, [candidate]
 
         cellAbove = cellBelow = labelAbove = labelBelow = None
         if row > 0:
             cellAbove = table.getAccessibleAt(row - 1, col)
             labelAbove = self._createLabelFromContents(cellAbove)
             if labelAbove and self._preferTop(obj):
-                return labelAbove
+                return labelAbove, [cellAbove]
 
         if row < table.nRows and not self._preventBelow(obj):
             cellBelow = table.getAccessibleAt(row + 1, col)
@@ -541,28 +541,28 @@ class LabelInference:
             dAbove = objY - (aboveY + aboveHeight)
             dBelow = belowY - (objY + objHeight)
             if dAbove <= dBelow:
-                return labelAbove
-            return labelBelow
+                return labelAbove, [cellAbove]
+            return labelBelow, [cellBelow]
 
         if labelAbove:
-            return labelAbove
+            return labelAbove, [cellAbove]
         if labelBelow:
-            return labelBelow
+            return labelBelow, [cellBelow]
 
         # None of the cells immediately surrounding this cell seem to be serving
         # as a functional label. Therefore, see if this table looks like a grid
         # of widgets with the functional labels in the first row.
         firstRow = [table.getAccessibleAt(0, i) for i in range(table.nColumns)]
         if not firstRow or list(filter(self._isWidget, firstRow)):
-            return None
+            return None, []
 
         cells = [table.getAccessibleAt(i, col) for i in range(1, table.nRows)]
         cells = [x for x in cells if x != None]
         if [x for x in cells if x.childCount and x[0].getRole() != obj.getRole()]:
-            return None
+            return None, []
 
         label = self._createLabelFromContents(firstRow[col])
         if label:
-            return label
+            return label, [firstRow[col]]
 
-        return None
+        return None, []
