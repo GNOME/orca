@@ -72,7 +72,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not role in inferRoles:
             return result
 
-        label = self._script.labelInference.infer(obj)
+        label, objects = self._script.labelInference.infer(obj)
         if label:
             result.append(label)
             result.extend(self.voice(speech_generator.DEFAULT))

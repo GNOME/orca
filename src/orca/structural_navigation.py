@@ -1681,7 +1681,8 @@ class StructuralNavigation:
         # object presentation is refactored.
         label = self._script.utilities.displayedLabel(obj)
         if not label:
-            label = self._script.labelInference.infer(obj, focusedOnly=False)
+            label, objects = self._script.labelInference.infer(
+                obj, focusedOnly=False)
 
         return label
 

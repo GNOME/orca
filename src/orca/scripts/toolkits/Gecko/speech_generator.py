@@ -179,7 +179,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 # Because we cannot count on grabFocus updating the state.
                 focusedOnly = obj != orca_state.locusOfFocus
 
-            label = self._script.labelInference.infer(obj, focusedOnly)
+            label, objects = self._script.labelInference.infer(obj, focusedOnly)
             if label:
                 result.append(label)
                 result.extend(acss)
