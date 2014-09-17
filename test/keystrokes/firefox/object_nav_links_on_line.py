@@ -13,7 +13,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'Home'",
      "     VISIBLE:  'Home', cursor=1",
-     "SPEECH OUTPUT: 'Home link'"]))
+     "SPEECH OUTPUT: 'Home link Back to the Gnome Bugzilla home page'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -235,8 +235,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "29. line Up",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+    ["BRAILLE LINE:  '  $l'",
+     "     VISIBLE:  '  $l', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -245,7 +245,7 @@ sequence.append(utils.AssertPresentationAction(
     "30. line Up",
     ["BRAILLE LINE:  'Home'",
      "     VISIBLE:  'Home', cursor=1",
-     "SPEECH OUTPUT: 'Home link'"]))
+     "SPEECH OUTPUT: 'Home link Back to the Gnome Bugzilla home page'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

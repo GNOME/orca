@@ -22,8 +22,8 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Up",
     ["KNOWN ISSUE: We hit blank lines on the way up",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+     "BRAILLE LINE:  '  $l'",
+     "     VISIBLE:  '  $l', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -31,7 +31,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Up",
     ["BRAILLE LINE:  '< > Grey check box'",
-     "     VISIBLE:  '< > Grey check box', cursor=0",
+     "     VISIBLE:  '< > Grey check box', cursor=1",
      "SPEECH OUTPUT: 'Grey check box not checked Title of the Grey checkbox'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -39,8 +39,8 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Up",
     ["KNOWN ISSUE: We hit blank lines on the way up",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+     "BRAILLE LINE:  '  $l'",
+     "     VISIBLE:  '  $l', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -56,8 +56,8 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "6. Line Up",
     ["KNOWN ISSUE: We hit blank lines on the way up",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+     "BRAILLE LINE:  '  $l'",
+     "     VISIBLE:  '  $l', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -65,7 +65,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Up",
     ["BRAILLE LINE:  '< > White check box'",
-     "     VISIBLE:  '< > White check box', cursor=0",
+     "     VISIBLE:  '< > White check box', cursor=1",
      "SPEECH OUTPUT: 'White check box not checked ARIA description text.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -73,8 +73,8 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "8. Line Up",
     ["KNOWN ISSUE: We hit blank lines on the way up",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+     "BRAILLE LINE:  '  $l'",
+     "     VISIBLE:  '  $l', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -90,8 +90,8 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "10. Line Up",
     ["KNOWN ISSUE: We hit blank lines on the way up",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+     "BRAILLE LINE:  '  $l'",
+     "     VISIBLE:  '  $l', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -99,7 +99,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "11. Line Up",
     ["BRAILLE LINE:  '< > Black check box'",
-     "     VISIBLE:  '< > Black check box', cursor=0",
+     "     VISIBLE:  '< > Black check box', cursor=1",
      "SPEECH OUTPUT: 'Black check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -123,7 +123,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "14. Line Up",
     ["BRAILLE LINE:  '< > Title of the Grey checkbox check box'",
-     "     VISIBLE:  '< > Title of the Grey checkbox c', cursor=0",
+     "     VISIBLE:  '< > Title of the Grey checkbox c', cursor=1",
      "SPEECH OUTPUT: 'Title of the Grey checkbox check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -139,7 +139,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "16. Line Up",
     ["BRAILLE LINE:  '< > Title of the White checkbox check box'",
-     "     VISIBLE:  '< > Title of the White checkbox ', cursor=0",
+     "     VISIBLE:  '< > Title of the White checkbox ', cursor=1",
      "SPEECH OUTPUT: 'Title of the White checkbox check box not checked ARIA description text.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -155,7 +155,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "18. Line Up",
     ["BRAILLE LINE:  '< > Title of the Black checkbox check box'",
-     "     VISIBLE:  '< > Title of the Black checkbox ', cursor=0",
+     "     VISIBLE:  '< > Title of the Black checkbox ', cursor=1",
      "SPEECH OUTPUT: 'Title of the Black checkbox check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -178,9 +178,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "21. Line Up",
-    ["BRAILLE LINE:  'Baz'",
-     "     VISIBLE:  'Baz', cursor=1",
-     "SPEECH OUTPUT: 'Baz link Title of the Baz link.'"]))
+    ["BRAILLE LINE:  'Baz.'",
+     "     VISIBLE:  'Baz.', cursor=1",
+     "SPEECH OUTPUT: 'Baz link Title of the Baz link.'",
+     "SPEECH OUTPUT: '.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -194,9 +195,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "23. Line Up",
-    ["BRAILLE LINE:  'Bar'",
-     "     VISIBLE:  'Bar', cursor=1",
-     "SPEECH OUTPUT: 'Bar link ARIA description text.'"]))
+    ["BRAILLE LINE:  'Bar,'",
+     "     VISIBLE:  'Bar,', cursor=1",
+     "SPEECH OUTPUT: 'Bar link ARIA description text.'",
+     "SPEECH OUTPUT: ','"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -210,9 +212,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "25. Line Up",
-    ["BRAILLE LINE:  'Foo'",
-     "     VISIBLE:  'Foo', cursor=1",
-     "SPEECH OUTPUT: 'Foo link Title of the Foo link.'"]))
+    ["BRAILLE LINE:  'Foo,'",
+     "     VISIBLE:  'Foo,', cursor=1",
+     "SPEECH OUTPUT: 'Foo link Title of the Foo link.'",
+     "SPEECH OUTPUT: ','"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

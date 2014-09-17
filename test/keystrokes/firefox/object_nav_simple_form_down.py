@@ -20,7 +20,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. line Down",
     ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=0",
+     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'entry"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -54,7 +54,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. line Down",
     ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=0",
+     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'password text"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -119,7 +119,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "14. line Down",
     ["BRAILLE LINE:  '< > Red check box'",
-     "     VISIBLE:  '< > Red check box', cursor=0",
+     "     VISIBLE:  '< > Red check box', cursor=1",
      "SPEECH OUTPUT: 'Red check box not checked"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -135,7 +135,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "16. line Down",
     ["BRAILLE LINE:  '< > Blue check box'",
-     "     VISIBLE:  '< > Blue check box', cursor=0",
+     "     VISIBLE:  '< > Blue check box', cursor=1",
      "SPEECH OUTPUT: 'Blue check box not checked"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -151,7 +151,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "18. line Down",
     ["BRAILLE LINE:  '< > Green check box'",
-     "     VISIBLE:  '< > Green check box', cursor=0",
+     "     VISIBLE:  '< > Green check box', cursor=1",
      "SPEECH OUTPUT: 'Green check box not checked"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -175,7 +175,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "21. line Down",
     ["BRAILLE LINE:  'Water combo box'",
-     "     VISIBLE:  'Water combo box', cursor=0",
+     "     VISIBLE:  'Water combo box', cursor=1",
      "SPEECH OUTPUT: 'Water combo box"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -191,7 +191,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "23. line Down",
     ["BRAILLE LINE:  'Hockey list box'",
-     "     VISIBLE:  'Hockey list box', cursor=0",
+     "     VISIBLE:  'Hockey list box', cursor=1",
      "SPEECH OUTPUT: 'Hockey multi-select List with 4 items"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -199,7 +199,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "24. line Down",
     ["BRAILLE LINE:  'Dashing picture of Willie Walker image'",
-     "     VISIBLE:  'Dashing picture of Willie Walker', cursor=0",
+     "     VISIBLE:  'Dashing picture of Willie Walker', cursor=1",
      "SPEECH OUTPUT: 'Dashing picture of Willie Walker image"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -215,7 +215,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "26. line Down",
     ["BRAILLE LINE:  '& y radio button'",
-     "     VISIBLE:  '& y radio button', cursor=0",
+     "     VISIBLE:  '& y radio button', cursor=1",
      "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -231,7 +231,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "28. line Down",
     ["BRAILLE LINE:  '& y radio button'",
-     "     VISIBLE:  '& y radio button', cursor=0",
+     "     VISIBLE:  '& y radio button', cursor=1",
      "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
