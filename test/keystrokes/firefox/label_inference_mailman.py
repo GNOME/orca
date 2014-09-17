@@ -135,8 +135,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "13. Next form field",
-    ["KNOWN ISSUE: We are failing to infer the label",
-     "BRAILLE LINE:  ' $l Unsubscribe or edit options push button'",
+    ["BRAILLE LINE:  ' $l Unsubscribe or edit options push button'",
      "     VISIBLE:  ' $l Unsubscribe or edit options ', cursor=1",
      "SPEECH OUTPUT: 'entry'"]))
 

@@ -212,7 +212,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'OS'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: ':'",
-     "SPEECH OUTPUT: 'Linux combo box'"]))
+     "SPEECH OUTPUT: 'OS: Linux combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -223,7 +223,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Severity'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: ':'",
-     "SPEECH OUTPUT: 'normal combo box'"]))
+     "SPEECH OUTPUT: 'Severity: normal combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -239,8 +239,7 @@ sequence.append(utils.AssertPresentationAction(
     "23. Line Down",
     ["BRAILLE LINE:  'Summary: $l'",
      "     VISIBLE:  'Summary: $l', cursor=1",
-     "SPEECH OUTPUT: 'Summary:'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Summary: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -280,8 +279,7 @@ sequence.append(utils.AssertPresentationAction(
     "28. Line Down",
     ["BRAILLE LINE:  'Cc: $l'",
      "     VISIBLE:  'Cc: $l', cursor=1",
-     "SPEECH OUTPUT: 'Cc:'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Cc: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -317,8 +315,7 @@ sequence.append(utils.AssertPresentationAction(
     "32. Line Up",
     ["BRAILLE LINE:  'Cc: $l'",
      "     VISIBLE:  'Cc: $l', cursor=1",
-     "SPEECH OUTPUT: 'Cc:'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Cc: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -358,8 +355,7 @@ sequence.append(utils.AssertPresentationAction(
     "37. Line Up",
     ["BRAILLE LINE:  'Summary: $l'",
      "     VISIBLE:  'Summary: $l', cursor=1",
-     "SPEECH OUTPUT: 'Summary:'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Summary: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -378,7 +374,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Severity'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: ':'",
-     "SPEECH OUTPUT: 'normal combo box'"]))
+     "SPEECH OUTPUT: 'Severity: normal combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -389,7 +385,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'OS'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: ':'",
-     "SPEECH OUTPUT: 'Linux combo box'"]))
+     "SPEECH OUTPUT: 'OS: Linux combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
