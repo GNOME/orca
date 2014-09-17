@@ -1,3 +1,61 @@
+3.13.92 - 17 September 2014
+
+Gecko:
+
+  * Implement support for "layout" mode and "object" mode, the latter
+    being what is traditionally found in Windows screen readers and
+    which will hopefully make the switch to GNU/Linux easier.
+
+  * Continued reworking of caret navigation by line to improve accuracy
+    and responsiveness and to eliminate getting stuck and looping
+
+  * Fix several issues of structural navigation looping
+
+  * Allow Orca's navigation commands to work even when content is being
+    loaded, which solves bugs like inability to navigate during a file
+    download
+
+  * Fix many bugs related to label inference
+
+  * Use the speech and braille generators rather than manually creating
+    the strings in the script
+
+  * Present the accessible description for elements given focus via
+    caret navigation and structural navigation
+
+  * Do not announce clickables if verbosity level is set to brief
+
+  * Add a command to toggle speech verbosity levels on the fly
+
+  * Fix a bogus tutorial message being presented for non-editable text
+
+Other:
+
+  * Enable autostart for MATE and Cinnamon
+
+  * Fix the "bad content sent to speech.speak" bug
+
+  * Fix bug preventing binding and rebinding of commands in laptop layout
+
+  * Include foreground and background colors in the default spoken text
+    attributes (Note that this only impacts new configurations.)
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca            Catalan                     Gil Forcada
+    ca            Catalan (Valencian)         Carles Ferrando
+    da            Danish                      Kenneth Nielsen
+    fi            Finnish                     Jiri Grönroos
+    fr            French                      Claude Paroz
+    gl            Galician                    Fran Diéguez
+    id            Indonesian                  Andika Triwidada
+    lt            Lithuanian                  Aurimas Černius
+    pt_BR         Brazilian Portuguese        Rafael Ferreira
+    ru            Russian                     Yuri Myasoedov
+    sk            Slovak                      Peter Vágner
+
+=========
+
 3.13.91 - 2 September 2014
 
 Gecko:
