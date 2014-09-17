@@ -85,9 +85,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "9. Line Down",
-    ["BRAILLE LINE:  '& y radio button Some polls'",
+    ["KNOWN ISSUE: We're guessing the label and also presenting its text",
+     "BRAILLE LINE:  '& y radio button Some polls'",
      "     VISIBLE:  '& y radio button Some polls', cursor=1",
-     "SPEECH OUTPUT: 'not selected radio button'",
+     "SPEECH OUTPUT: 'Some polls not selected radio button'",
      "SPEECH OUTPUT: 'Some polls'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -106,7 +107,7 @@ sequence.append(utils.AssertPresentationAction(
     "11. Line Up",
     ["BRAILLE LINE:  '& y radio button Some polls'",
      "     VISIBLE:  '& y radio button Some polls', cursor=1",
-     "SPEECH OUTPUT: 'not selected radio button'",
+     "SPEECH OUTPUT: 'Some polls not selected radio button'",
      "SPEECH OUTPUT: 'Some polls'"]))
 
 sequence.append(utils.StartRecordingAction())

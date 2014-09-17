@@ -139,9 +139,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "15. Line Down",
-    ["BRAILLE LINE:  '< > check box bird'",
+    ["KNOWN ISSUE: We are guessing the label and presenting it because it's text on this line",
+     "BRAILLE LINE:  '< > check box bird'",
      "     VISIBLE:  '< > check box bird', cursor=1",
-     "SPEECH OUTPUT: 'check box not checked'",
+     "SPEECH OUTPUT: 'bird check box not checked'",
      "SPEECH OUTPUT: 'bird'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -150,7 +151,7 @@ sequence.append(utils.AssertPresentationAction(
     "16. Line Down",
     ["BRAILLE LINE:  '< > check box fish'",
      "     VISIBLE:  '< > check box fish', cursor=1",
-     "SPEECH OUTPUT: 'check box not checked'",
+     "SPEECH OUTPUT: 'fish check box not checked'",
      "SPEECH OUTPUT: 'fish'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -159,7 +160,7 @@ sequence.append(utils.AssertPresentationAction(
     "17. Line Down",
     ["BRAILLE LINE:  '< > check box wild animal'",
      "     VISIBLE:  '< > check box wild animal', cursor=1",
-     "SPEECH OUTPUT: 'check box not checked'",
+     "SPEECH OUTPUT: 'wild animal check box not checked'",
      "SPEECH OUTPUT: 'wild animal'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -190,9 +191,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "21. Line Down",
-    ["BRAILLE LINE:  '&=y radio button cabernet sauvignon'",
+    ["KNOWN ISSUE: We are guessing the label and presenting it because it's text on this line",
+     "BRAILLE LINE:  '&=y radio button cabernet sauvignon'",
      "     VISIBLE:  '&=y radio button cabernet sauvig', cursor=1",
-     "SPEECH OUTPUT: 'selected radio button'",
+     "SPEECH OUTPUT: 'cabernet sauvignon selected radio button'",
      "SPEECH OUTPUT: 'cabernet sauvignon'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -201,7 +203,7 @@ sequence.append(utils.AssertPresentationAction(
     "22. Line Down",
     ["BRAILLE LINE:  '& y radio button merlot'",
      "     VISIBLE:  '& y radio button merlot', cursor=1",
-     "SPEECH OUTPUT: 'not selected radio button'",
+     "SPEECH OUTPUT: 'merlot not selected radio button'",
      "SPEECH OUTPUT: 'merlot'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -210,7 +212,7 @@ sequence.append(utils.AssertPresentationAction(
     "23. Line Down",
     ["BRAILLE LINE:  '& y radio button nebbiolo'",
      "     VISIBLE:  '& y radio button nebbiolo', cursor=1",
-     "SPEECH OUTPUT: 'not selected radio button'",
+     "SPEECH OUTPUT: 'nebbiolo not selected radio button'",
      "SPEECH OUTPUT: 'nebbiolo'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -219,7 +221,7 @@ sequence.append(utils.AssertPresentationAction(
     "24. Line Down",
     ["BRAILLE LINE:  '& y radio button pinot noir'",
      "     VISIBLE:  '& y radio button pinot noir', cursor=1",
-     "SPEECH OUTPUT: 'not selected radio button'",
+     "SPEECH OUTPUT: 'pinot noir not selected radio button'",
      "SPEECH OUTPUT: 'pinot noir'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -228,7 +230,7 @@ sequence.append(utils.AssertPresentationAction(
     "25. Line Down",
     ["BRAILLE LINE:  '& y radio button don't drink wine'",
      "     VISIBLE:  '& y radio button don't drink win', cursor=1",
-     "SPEECH OUTPUT: 'not selected radio button'",
+     "SPEECH OUTPUT: 'don't drink wine not selected radio button'",
      "SPEECH OUTPUT: 'don't drink wine'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -237,7 +239,7 @@ sequence.append(utils.AssertPresentationAction(
     "26. Line Up",
     ["BRAILLE LINE:  '& y radio button pinot noir'",
      "     VISIBLE:  '& y radio button pinot noir', cursor=1",
-     "SPEECH OUTPUT: 'not selected radio button'",
+     "SPEECH OUTPUT: 'pinot noir not selected radio button'",
      "SPEECH OUTPUT: 'pinot noir'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -246,7 +248,7 @@ sequence.append(utils.AssertPresentationAction(
     "27. Line Up",
     ["BRAILLE LINE:  '& y radio button nebbiolo'",
      "     VISIBLE:  '& y radio button nebbiolo', cursor=1",
-     "SPEECH OUTPUT: 'not selected radio button'",
+     "SPEECH OUTPUT: 'nebbiolo not selected radio button'",
      "SPEECH OUTPUT: 'nebbiolo'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -255,7 +257,7 @@ sequence.append(utils.AssertPresentationAction(
     "28. Line Up",
     ["BRAILLE LINE:  '& y radio button merlot'",
      "     VISIBLE:  '& y radio button merlot', cursor=1",
-     "SPEECH OUTPUT: 'not selected radio button'",
+     "SPEECH OUTPUT: 'merlot not selected radio button'",
      "SPEECH OUTPUT: 'merlot'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -264,7 +266,7 @@ sequence.append(utils.AssertPresentationAction(
     "29. Line Up",
     ["BRAILLE LINE:  '&=y radio button cabernet sauvignon'",
      "     VISIBLE:  '&=y radio button cabernet sauvig', cursor=1",
-     "SPEECH OUTPUT: 'selected radio button'",
+     "SPEECH OUTPUT: 'cabernet sauvignon selected radio button'",
      "SPEECH OUTPUT: 'cabernet sauvignon'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -297,7 +299,7 @@ sequence.append(utils.AssertPresentationAction(
     "33. Line Up",
     ["BRAILLE LINE:  '< > check box wild animal'",
      "     VISIBLE:  '< > check box wild animal', cursor=1",
-     "SPEECH OUTPUT: 'check box not checked'",
+     "SPEECH OUTPUT: 'wild animal check box not checked'",
      "SPEECH OUTPUT: 'wild animal'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -306,7 +308,7 @@ sequence.append(utils.AssertPresentationAction(
     "34. Line Up",
     ["BRAILLE LINE:  '< > check box fish'",
      "     VISIBLE:  '< > check box fish', cursor=1",
-     "SPEECH OUTPUT: 'check box not checked'",
+     "SPEECH OUTPUT: 'fish check box not checked'",
      "SPEECH OUTPUT: 'fish'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -315,7 +317,7 @@ sequence.append(utils.AssertPresentationAction(
     "35. Line Up",
     ["BRAILLE LINE:  '< > check box bird'",
      "     VISIBLE:  '< > check box bird', cursor=1",
-     "SPEECH OUTPUT: 'check box not checked'",
+     "SPEECH OUTPUT: 'bird check box not checked'",
      "SPEECH OUTPUT: 'bird'"]))
 
 sequence.append(utils.StartRecordingAction())

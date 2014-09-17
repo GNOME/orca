@@ -955,9 +955,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "97. Line Down",
-    ["BRAILLE LINE:  'More Actions: combo box'",
+    ["KNOWN ISSUE: This is not correct",
+     "BRAILLE LINE:  'More Actions: combo box'",
      "     VISIBLE:  'More Actions: combo box', cursor=1",
-     "SPEECH OUTPUT: 'More Actions: combo box'"]))
+     "SPEECH OUTPUT: 'Attachments More Actions: combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
