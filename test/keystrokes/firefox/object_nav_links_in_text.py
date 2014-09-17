@@ -13,7 +13,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'Home'",
      "     VISIBLE:  'Home', cursor=1",
-     "SPEECH OUTPUT: 'Home link'"]))
+     "SPEECH OUTPUT: 'Home link Back to the Gnome Bugzilla home page'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("H"))
@@ -36,7 +36,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. line Down",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+     "     VISIBLE:  '', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -44,7 +44,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. line Down",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+     "     VISIBLE:  '', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -59,22 +59,15 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "7. line Down",
-    ["BRAILLE LINE:  'bug writing guidelines'",
-     "     VISIBLE:  'bug writing guidelines', cursor=1",
-     "SPEECH OUTPUT: 'bug writing guidelines link'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "8. line Down",
-    ["BRAILLE LINE:  ','",
-     "     VISIBLE:  ',', cursor=1",
+    ["BRAILLE LINE:  'bug writing guidelines,'",
+     "     VISIBLE:  'bug writing guidelines,', cursor=1",
+     "SPEECH OUTPUT: 'bug writing guidelines link'",
      "SPEECH OUTPUT: ','"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "9. line Down",
+    "8. line Down",
     ["BRAILLE LINE:  'please look at the list of'",
      "     VISIBLE:  'please look at the list of', cursor=1",
      "SPEECH OUTPUT: 'please look at the list of'"]))
@@ -82,15 +75,16 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "10. line Down",
-    ["BRAILLE LINE:  'most frequently reported bugs'",
-     "     VISIBLE:  'most frequently reported bugs', cursor=1",
-     "SPEECH OUTPUT: 'most frequently reported bugs link'"]))
+    "9. line Down",
+    ["BRAILLE LINE:  'most frequently reported bugs,'",
+     "     VISIBLE:  'most frequently reported bugs,', cursor=1",
+     "SPEECH OUTPUT: 'most frequently reported bugs link'",
+     "SPEECH OUTPUT: ','"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "11. line Down",
+    "10. line Down",
     ["BRAILLE LINE:  ', and please'",
      "     VISIBLE:  ', and please', cursor=1",
      "SPEECH OUTPUT: ', and please'"]))
@@ -98,7 +92,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "12. line Down",
+    "11. line Down",
     ["BRAILLE LINE:  'search'",
      "     VISIBLE:  'search', cursor=1",
      "SPEECH OUTPUT: 'search link'"]))
@@ -106,7 +100,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "13. line Down",
+    "12. line Down",
     ["BRAILLE LINE:  ' or'",
      "     VISIBLE:  ' or', cursor=1",
      "SPEECH OUTPUT: 'or'"]))
@@ -114,7 +108,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "14. line Down",
+    "13. line Down",
     ["BRAILLE LINE:  'browse'",
      "     VISIBLE:  'browse', cursor=1",
      "SPEECH OUTPUT: 'browse link'"]))
@@ -122,7 +116,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "15. line Down",
+    "14. line Down",
     ["BRAILLE LINE:  ' for the bug.'",
      "     VISIBLE:  ' for the bug.', cursor=1",
      "SPEECH OUTPUT: 'for the bug.'"]))
@@ -130,7 +124,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "16. line Up",
+    "15. line Up",
     ["BRAILLE LINE:  'browse'",
      "     VISIBLE:  'browse', cursor=1",
      "SPEECH OUTPUT: 'browse link'"]))
@@ -138,7 +132,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "17. line Up",
+    "16. line Up",
     ["BRAILLE LINE:  ' or'",
      "     VISIBLE:  ' or', cursor=1",
      "SPEECH OUTPUT: 'or'"]))
@@ -146,7 +140,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "18. line Up",
+    "17. line Up",
     ["BRAILLE LINE:  'search'",
      "     VISIBLE:  'search', cursor=1",
      "SPEECH OUTPUT: 'search link'"]))
@@ -154,7 +148,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "19. line Up",
+    "18. line Up",
     ["BRAILLE LINE:  ', and please'",
      "     VISIBLE:  ', and please', cursor=1",
      "SPEECH OUTPUT: ', and please'"]))
@@ -162,15 +156,16 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "20. line Up",
-    ["BRAILLE LINE:  'most frequently reported bugs'",
-     "     VISIBLE:  'most frequently reported bugs', cursor=1",
-     "SPEECH OUTPUT: 'most frequently reported bugs link'"]))
+    "19. line Up",
+    ["BRAILLE LINE:  'most frequently reported bugs,'",
+     "     VISIBLE:  'most frequently reported bugs,', cursor=1",
+     "SPEECH OUTPUT: 'most frequently reported bugs link'",
+     "SPEECH OUTPUT: ','"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "21. line Up",
+    "20. line Up",
     ["BRAILLE LINE:  'please look at the list of'",
      "     VISIBLE:  'please look at the list of', cursor=1",
      "SPEECH OUTPUT: 'please look at the list of'"]))
@@ -178,7 +173,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "22. line Up",
+    "21. line Up",
     ["BRAILLE LINE:  ','",
      "     VISIBLE:  ',', cursor=1",
      "SPEECH OUTPUT: ','"]))
@@ -186,15 +181,16 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "23. line Up",
-    ["BRAILLE LINE:  'bug writing guidelines'",
-     "     VISIBLE:  'bug writing guidelines', cursor=1",
-     "SPEECH OUTPUT: 'bug writing guidelines link'"]))
+    "22. line Up",
+    ["BRAILLE LINE:  'bug writing guidelines,'",
+     "     VISIBLE:  'bug writing guidelines,', cursor=1",
+     "SPEECH OUTPUT: 'bug writing guidelines link'",
+     "SPEECH OUTPUT: ','"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "24. line Up",
+    "23. line Up",
     ["BRAILLE LINE:  'Before reporting a bug, please read the'",
      "     VISIBLE:  'Before reporting a bug, please r', cursor=1",
      "SPEECH OUTPUT: 'Before reporting a bug, please read the'"]))
@@ -202,23 +198,23 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
+    "24. line Up",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=1",
+     "SPEECH OUTPUT: 'blank'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
     "25. line Up",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+     "     VISIBLE:  '', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "26. line Up",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
-     "SPEECH OUTPUT: 'blank'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "27. line Up",
     ["BRAILLE LINE:  'into Bugzilla. h1'",
      "     VISIBLE:  'into Bugzilla. h1', cursor=1",
      "SPEECH OUTPUT: 'into Bugzilla. heading level 1'"]))
@@ -226,7 +222,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "28. line Up",
+    "27. line Up",
     ["BRAILLE LINE:  'Enter Bug: orca \u2013 This page lets you enter a new bug  h1'",
      "     VISIBLE:  'Enter Bug: orca \u2013 This page lets', cursor=1",
      "SPEECH OUTPUT: 'Enter Bug: orca \u2013 This page lets you enter a new bug heading level 1'"]))

@@ -13,30 +13,24 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. Line Down",
-    ["BRAILLE LINE:  'Foo'",
-     "     VISIBLE:  'Foo', cursor=1",
-     "SPEECH OUTPUT: 'Foo link Title of the Foo link.'"]))
+    ["BRAILLE LINE:  'Foo,'",
+     "     VISIBLE:  'Foo,', cursor=1",
+     "SPEECH OUTPUT: 'Foo link Title of the Foo link.'",
+     "SPEECH OUTPUT: ','"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
-    ["BRAILLE LINE:  ','",
-     "     VISIBLE:  ',', cursor=1",
+    ["BRAILLE LINE:  'Bar,'",
+     "     VISIBLE:  'Bar,', cursor=1",
+     "SPEECH OUTPUT: 'Bar link ARIA description text.'",
      "SPEECH OUTPUT: ','"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
-    ["BRAILLE LINE:  'Bar'",
-     "     VISIBLE:  'Bar', cursor=1",
-     "SPEECH OUTPUT: 'Bar link ARIA description text.'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "4. Line Down",
     ["BRAILLE LINE:  ', and'",
      "     VISIBLE:  ', and', cursor=1",
      "SPEECH OUTPUT: ', and'"]))
@@ -44,23 +38,16 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "5. Line Down",
-    ["BRAILLE LINE:  'Baz'",
-     "     VISIBLE:  'Baz', cursor=1",
-     "SPEECH OUTPUT: 'Baz link Title of the Baz link.'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "6. Line Down",
-    ["BRAILLE LINE:  '.'",
-     "     VISIBLE:  '.', cursor=1",
+    "4. Line Down",
+    ["BRAILLE LINE:  'Baz.'",
+     "     VISIBLE:  'Baz.', cursor=1",
+     "SPEECH OUTPUT: 'Baz link Title of the Baz link.'",
      "SPEECH OUTPUT: '.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "7. Line Down",
+    "5. Line Down",
     ["BRAILLE LINE:  'Checkboxes without labels:'",
      "     VISIBLE:  'Checkboxes without labels:', cursor=1",
      "SPEECH OUTPUT: 'Checkboxes without labels:'"]))
@@ -68,15 +55,15 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "8. Line Down",
+    "6. Line Down",
     ["BRAILLE LINE:  '< > Title of the Black checkbox check box'",
-     "     VISIBLE:  '< > Title of the Black checkbox ', cursor=0",
+     "     VISIBLE:  '< > Title of the Black checkbox ', cursor=1",
      "SPEECH OUTPUT: 'Title of the Black checkbox check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "9. Line Down",
+    "7. Line Down",
     ["BRAILLE LINE:  'Black'",
      "     VISIBLE:  'Black', cursor=1",
      "SPEECH OUTPUT: 'Black'"]))
@@ -84,15 +71,15 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "10. Line Down",
+    "8. Line Down",
     ["BRAILLE LINE:  '< > Title of the White checkbox check box'",
-     "     VISIBLE:  '< > Title of the White checkbox ', cursor=0",
+     "     VISIBLE:  '< > Title of the White checkbox ', cursor=1",
      "SPEECH OUTPUT: 'Title of the White checkbox check box not checked ARIA description text.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "11. Line Down",
+    "9. Line Down",
     ["BRAILLE LINE:  'White'",
      "     VISIBLE:  'White', cursor=1",
      "SPEECH OUTPUT: 'White'"]))
@@ -100,15 +87,15 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "12. Line Down",
+    "10. Line Down",
     ["BRAILLE LINE:  '< > Title of the Grey checkbox check box'",
-     "     VISIBLE:  '< > Title of the Grey checkbox c', cursor=0",
+     "     VISIBLE:  '< > Title of the Grey checkbox c', cursor=1",
      "SPEECH OUTPUT: 'Title of the Grey checkbox check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "13. Line Down",
+    "11. Line Down",
     ["BRAILLE LINE:  'Grey'",
      "     VISIBLE:  'Grey', cursor=1",
      "SPEECH OUTPUT: 'Grey'"]))
@@ -116,7 +103,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "14. Line Down",
+    "12. Line Down",
     ["BRAILLE LINE:  'Checkboxes with html labels:'",
      "     VISIBLE:  'Checkboxes with html labels:', cursor=1",
      "SPEECH OUTPUT: 'Checkboxes with html labels:'"]))
@@ -124,15 +111,15 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "15. Line Down",
+    "13. Line Down",
     ["BRAILLE LINE:  '< > Black check box'",
-     "     VISIBLE:  '< > Black check box', cursor=0",
+     "     VISIBLE:  '< > Black check box', cursor=1",
      "SPEECH OUTPUT: 'Black check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "16. Line Down",
+    "14. Line Down",
     ["BRAILLE LINE:  'Black'",
      "     VISIBLE:  'Black', cursor=1",
      "SPEECH OUTPUT: 'Black'"]))
@@ -140,15 +127,15 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "17. Line Down",
+    "15. Line Down",
     ["BRAILLE LINE:  '< > White check box'",
-     "     VISIBLE:  '< > White check box', cursor=0",
+     "     VISIBLE:  '< > White check box', cursor=1",
      "SPEECH OUTPUT: 'White check box not checked ARIA description text.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "18. Line Down",
+    "16. Line Down",
     ["BRAILLE LINE:  'White'",
      "     VISIBLE:  'White', cursor=1",
      "SPEECH OUTPUT: 'White'"]))
@@ -156,15 +143,15 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "19. Line Down",
+    "17. Line Down",
     ["BRAILLE LINE:  '< > Grey check box'",
-     "     VISIBLE:  '< > Grey check box', cursor=0",
+     "     VISIBLE:  '< > Grey check box', cursor=1",
      "SPEECH OUTPUT: 'Grey check box not checked Title of the Grey checkbox'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "20. Line Down",
+    "18. Line Down",
     ["BRAILLE LINE:  'Grey'",
      "     VISIBLE:  'Grey', cursor=1",
      "SPEECH OUTPUT: 'Grey'"]))
@@ -172,7 +159,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "21. Line Down",
+    "19. Line Down",
     [""]))
 
 sequence.append(utils.AssertionSummaryAction())

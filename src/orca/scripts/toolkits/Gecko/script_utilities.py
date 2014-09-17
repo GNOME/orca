@@ -743,7 +743,14 @@ class Utilities(script_utilities.Utilities):
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
         objects = self._getContentsForObj(obj, offset, boundary)
+
+        lastObj, lastEnd = objects[-1][0], objects[-1][2]
+        nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
         if not layoutMode:
+            char = self._script.getCharacterAtOffset(nextObj, nOffset)
+            if re.match("[^\w\s]", char):
+                objects.append([nextObj, nOffset, nOffset + 1, char])
+
             return objects
 
         # Check for things on the same line to the left of this object.
@@ -765,8 +772,6 @@ class Utilities(script_utilities.Utilities):
                 prevObj, pOffset = self._script.findPreviousCaretInOrder(prevObj, pOffset)
 
         # Check for things on the same line to the right of this object.
-        lastObj, lastEnd = objects[-1][0], objects[-1][2]
-        nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
         while nextObj:
             onRight = self._getContentsForObj(nextObj, nOffset, boundary)
             onRight = list(filter(_include, onRight))
