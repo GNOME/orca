@@ -152,34 +152,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result = speech_generator.SpeechGenerator._generateLabel(self,
                                                                  obj,
                                                                  **args)
-        role = args.get('role', obj.getRole())
-        # We'll attempt to infer the label under some circumstances.
-        #
-        if not len(result) \
-           and not obj.name \
-           and role in [pyatspi.ROLE_CHECK_BOX,
-                        pyatspi.ROLE_COMBO_BOX,
-                        pyatspi.ROLE_ENTRY,
-                        pyatspi.ROLE_LIST,
-                        pyatspi.ROLE_LIST_BOX,
-                        pyatspi.ROLE_PARAGRAPH,
-                        pyatspi.ROLE_PASSWORD_TEXT,
-                        pyatspi.ROLE_RADIO_BUTTON,
-                        pyatspi.ROLE_TEXT] \
-           and self._script.inDocumentContent():
+
+        if self._script.utilities.shouldInferLabelFor(obj):
             start = args.get('startOffset')
             if isinstance(start, int) and start > 0:
                 return []
 
-            if role in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
-                # We're having to hack around yet another Mozilla bug:
-                # https://bugzilla.mozilla.org/show_bug.cgi?id=960241
-                focusedOnly = False
-            else:
-                # Because we cannot count on grabFocus updating the state.
-                focusedOnly = obj != orca_state.locusOfFocus
-
-            label, objects = self._script.labelInference.infer(obj, focusedOnly)
+            label, objects = self._script.labelInference.infer(obj, False)
             if label:
                 result.append(label)
                 result.extend(acss)
@@ -188,6 +167,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # relationship.  But, they will make their names be
         # the string of the thing labelling them.
         #
+        role = args.get('role', obj.getRole())
         if not len(result) \
            and role == pyatspi.ROLE_COMBO_BOX \
            and not self._script.inDocumentContent():

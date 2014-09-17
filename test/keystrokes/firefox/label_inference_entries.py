@@ -5,6 +5,8 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(3000))
+sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("<Control>Home"))
 
 sequence.append(utils.StartRecordingAction())
@@ -65,10 +67,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "6. Next form field",
-    ["KNOWN ISSUE: As the text suggests, we probably shouldn't be guessing this.",
-     "BRAILLE LINE:  ' $l Too far away to be a label.'",
+    ["BRAILLE LINE:  ' $l Too far away to be a label.'",
      "     VISIBLE:  ' $l Too far away to be a label.', cursor=1",
-     "SPEECH OUTPUT: 'Too far away to be a label. entry'"]))
+     "SPEECH OUTPUT: 'Looking at what follows visually, I'm not sure what I would type/i.e. what the labels are. entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -128,8 +129,7 @@ sequence.append(utils.AssertPresentationAction(
     "12. Next form field",
     ["BRAILLE LINE:  ' $l $l $l'",
      "     VISIBLE:  ' $l $l $l', cursor=4",
-     "SPEECH OUTPUT: 'Middle",
-     "initial entry'"]))
+     "SPEECH OUTPUT: 'Middle initial entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -159,8 +159,7 @@ sequence.append(utils.AssertPresentationAction(
     "15. Next form field",
     ["BRAILLE LINE:  ' $l $l $l'",
      "     VISIBLE:  ' $l $l $l', cursor=4",
-     "SPEECH OUTPUT: 'Middle",
-     "initial entry'"]))
+     "SPEECH OUTPUT: 'Middle initial entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -220,8 +219,7 @@ sequence.append(utils.AssertPresentationAction(
     "21. Next form field",
     ["BRAILLE LINE:  ' $l $l $l'",
      "     VISIBLE:  ' $l $l $l', cursor=4",
-     "SPEECH OUTPUT: 'Middle",
-     "initial entry'"]))
+     "SPEECH OUTPUT: 'Middle initial entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -251,8 +249,7 @@ sequence.append(utils.AssertPresentationAction(
     "24. Next form field",
     ["BRAILLE LINE:  ' $l $l $l $l'",
      "     VISIBLE:  ' $l $l $l $l', cursor=4",
-     "SPEECH OUTPUT: 'Middle",
-     "initial entry'"]))
+     "SPEECH OUTPUT: 'Middle initial entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -292,8 +289,7 @@ sequence.append(utils.AssertPresentationAction(
     "28. Next form field",
     ["BRAILLE LINE:  ' $l $l $l $l'",
      "     VISIBLE:  ' $l $l $l $l', cursor=4",
-     "SPEECH OUTPUT: 'Middle",
-     "initial entry'"]))
+     "SPEECH OUTPUT: 'Middle initial entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -333,8 +329,7 @@ sequence.append(utils.AssertPresentationAction(
     "32. Next form field",
     ["BRAILLE LINE:  ' $l $l $l $l'",
      "     VISIBLE:  ' $l $l $l $l', cursor=4",
-     "SPEECH OUTPUT: 'Middle",
-     "initial entry'"]))
+     "SPEECH OUTPUT: 'Middle initial entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

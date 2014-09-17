@@ -751,7 +751,8 @@ class Script(default.Script):
                 contents = self.getLineContentsAtOffset(obj, characterOffset)
             for content in contents:
                 obj, startOffset, endOffset, text = content
-                if self.isLabellingContents(obj, contents):
+                if self.utilities.isLabellingContents(content, contents) \
+                   or self.utilities.isInferredLabelForContents(content, contents):
                     continue
 
                 utterances = self.getUtterancesFromContents([content], True)
@@ -1677,31 +1678,6 @@ class Script(default.Script):
             index = hypertext.getLinkIndex(characterOffset)
 
         return index
-
-    def isLabellingContents(self, obj, contents):
-        """Given and obj and a list of [obj, startOffset, endOffset] tuples,
-        determine if obj is labelling anything in the tuples.
-
-        Returns the object being labelled, or None.
-        """
-
-        if obj.getRole() != pyatspi.ROLE_LABEL:
-            return None
-
-        relationSet = obj.getRelationSet()
-        if not relationSet:
-            return None
-
-        for relation in relationSet:
-            if relation.getRelationType() \
-                == pyatspi.RELATION_LABEL_FOR:
-                for i in range(0, relation.getNTargets()):
-                    target = relation.getTarget(i)
-                    for content in contents:
-                        if content[0] == target:
-                            return target
-
-        return None
  
     def getTopOfFile(self):
         """Returns the object and first caret offset at the top of the
@@ -2512,7 +2488,7 @@ class Script(default.Script):
             return []
 
         utterances = []
-        contents = self.utilities.filterContentsForPresentation(contents)
+        contents = self.utilities.filterContentsForPresentation(contents, True)
         lastObj = None
         for content in contents:
             [obj, startOffset, endOffset, string] = content

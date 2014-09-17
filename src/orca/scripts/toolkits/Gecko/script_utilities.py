@@ -812,15 +812,18 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def filterContentsForPresentation(self, contents):
+    def filterContentsForPresentation(self, contents, inferLabels=False):
         def _include(x):
             obj, start, end, string = x
             if not obj:
                 return False
 
             if (self.isTextBlockElement(obj) and not string.strip()) \
-               or self._script.isLabellingContents(obj, contents) \
+               or self.isLabellingContents(x, contents) \
                or self.isOffScreenLabel(obj, start):
+                return False
+
+            if inferLabels and self.isInferredLabelForContents(x, contents):
                 return False
 
             return True
@@ -952,6 +955,57 @@ class Utilities(script_utilities.Utilities):
                 return True
 
         return False
+
+    def shouldInferLabelFor(self, obj):
+        if self.displayedLabel(obj) or obj.name:
+            return False
+
+        roles =  [pyatspi.ROLE_CHECK_BOX,
+                  pyatspi.ROLE_COMBO_BOX,
+                  pyatspi.ROLE_ENTRY,
+                  pyatspi.ROLE_LIST_BOX,
+                  pyatspi.ROLE_PASSWORD_TEXT,
+                  pyatspi.ROLE_RADIO_BUTTON]
+        if not obj.getRole() in roles:
+            return False
+
+        if not self._script.inDocumentContent():
+            return False
+
+        return True
+
+    def isInferredLabelForContents(self, content, contents):
+        obj, start, end, string = content
+        objs = list(filter(self.shouldInferLabelFor, [x[0] for x in contents]))
+        if not objs:
+            return None
+
+        for o in objs:
+            label, sources = self._script.labelInference.infer(o, False)
+            if obj in sources and label.strip() == string.strip():
+                return o
+
+        return None
+
+    def isLabellingContents(self, content, contents):
+        obj, start, end, string = content
+        if obj.getRole() != pyatspi.ROLE_LABEL:
+            return None
+
+        relationSet = obj.getRelationSet()
+        if not relationSet:
+            return None
+
+        for relation in relationSet:
+            if relation.getRelationType() \
+                == pyatspi.RELATION_LABEL_FOR:
+                for i in range(0, relation.getNTargets()):
+                    target = relation.getTarget(i)
+                    for content in contents:
+                        if content[0] == target:
+                            return target
+
+        return None
 
     def isClickableElement(self, obj):
         if not self._script.inDocumentContent(obj):

@@ -92,6 +92,7 @@ class LabelInference:
             debug.println(debug.LEVEL_FINE, "INFER - Description: %s" % result)
         if result:
             result = result.strip()
+            result = result.replace("\n", " ")
 
         self.clearCache()
         return result, objects
@@ -167,6 +168,18 @@ class LabelInference:
 
         return True
 
+    def _cannotLabel(self, obj):
+        """Returns True if the given object should not be treated as a label."""
+
+        if not obj:
+            return True
+
+        nonLabelTextRoles = [pyatspi.ROLE_HEADING]
+        if obj.getRole() in nonLabelTextRoles:
+            return True
+
+        return self._isWidget(obj)
+
     def _isWidget(self, obj):
         """Returns True if the given object is a widget."""
 
@@ -182,17 +195,12 @@ class LabelInference:
                        pyatspi.ROLE_TOGGLE_BUTTON,
                        pyatspi.ROLE_COMBO_BOX,
                        pyatspi.ROLE_LIST,
+                       pyatspi.ROLE_LIST_BOX,
                        pyatspi.ROLE_MENU,
                        pyatspi.ROLE_MENU_ITEM,
                        pyatspi.ROLE_ENTRY,
                        pyatspi.ROLE_PASSWORD_TEXT,
                        pyatspi.ROLE_PUSH_BUTTON]
-
-        # Put new-to-pyatspi roles here.
-        try:
-            widgetRoles.append(pyatspi.ROLE_LIST_BOX)
-        except:
-            pass
 
         isWidget = obj.getRole() in widgetRoles
         self._isWidgetCache[hash(obj)] = isWidget
@@ -235,7 +243,7 @@ class LabelInference:
         if not self._isSimpleObject(obj):
             return ''
 
-        if self._isWidget(obj):
+        if self._cannotLabel(obj):
             return ''
 
         contents = self._script.utilities.getObjectsFromEOCs(obj)
@@ -307,24 +315,24 @@ class LabelInference:
             index = len(contents)
 
         onLeft = contents[0:index]
+        start = 0
         for i in range(len(onLeft) - 1, -1, -1):
-            if self._isWidget(onLeft[i][0]):
-                onLeft = onLeft[(i+1):]
+            if self._cannotLabel(onLeft[i][0]):
+                start = i + 1
                 break
 
+        onLeft = onLeft[start:]
         if not (onLeft and onLeft[0]):
             return None, []
 
         lObj, start, end, string = onLeft[-1]
-        string = (string or lObj.name).strip()
-        if not string:
-            return None, []
-
         lExtents = self._getExtents(lObj, start, end)
         distance = extents[0] - (lExtents[0] + lExtents[2])
         if 0 <= distance <= proximity:
             strings = [content[3] or content[0].name for content in onLeft]
-            return ''.join(strings), [content[0] for content in onLeft]
+            result = ''.join(strings)
+            if result.strip():
+                return result, [content[0] for content in onLeft]
 
         return None, []
 
@@ -352,26 +360,26 @@ class LabelInference:
             index = len(contents)
 
         onRight = contents[min(len(contents), index+1):]
+        end = len(onRight)
         for i, item in enumerate(onRight):
-            if self._isWidget(item[0]):
+            if self._cannotLabel(item[0]):
                 if not self._preferRight(obj):
                     return None, []
-                onRight = onRight[0:i]
+                end = i + 1
                 break
 
+        onRight = onRight[0:end]
         if not (onRight and onRight[0]):
             return None, []
 
         rObj, start, end, string = onRight[0]
-        string = (string or rObj.name).strip()
-        if not string:
-            return None, []
-
         rExtents = self._getExtents(rObj, start, end)
         distance = rExtents[0] - (extents[0] + extents[2])
         if distance <= proximity or self._preferRight(obj):
             strings = [content[3] or content[0].name for content in onRight]
-            return ''.join(strings), [content[0] for content in onRight]
+            result = ''.join(strings)
+            if result.strip():
+                return result, [content[0] for content in onRight]
 
         return None, []
 
@@ -411,10 +419,10 @@ class LabelInference:
             return None, []
 
         prevObj, start, end, string = prevLine[0]
-        if string.strip():
+        if string.strip() and not self._cannotLabel(prevObj):
             x, y, width, height = self._getExtents(prevObj, start, end)
             distance = objY - (y + height)
-            if distance <= proximity:
+            if 0 <= distance <= proximity:
                 return string, [prevObj]
 
         while prevObj:
@@ -469,15 +477,15 @@ class LabelInference:
             return None, []
 
         nextObj, start, end, string = nextLine[0]
-        if string.strip():
+        if string.strip() and not self._cannotLabel(nextObj):
             x, y, width, height = self._getExtents(nextObj, start, end)
             distance = y - (objY + objHeight)
-            if distance <= proximity:
+            if 0 <= distance <= proximity:
                 return string, [nextObj]
 
         return None, []
 
-    def inferFromTable(self, obj):
+    def inferFromTable(self, obj, proximityForRight=50):
         """Attempt to infer the functional/displayed label of obj by looking
         at the contents of the surrounding table cells. Note that this approach
         assumes a simple table in which the widget is the sole occupant of its
@@ -510,18 +518,22 @@ class LabelInference:
         index = self._script.utilities.cellIndex(cell)
         row = table.getRowAtIndex(index)
         col = table.getColumnAtIndex(index)
+        objX, objY, objWidth, objHeight = self._getExtents(obj)
 
         if col > 0 and not self._preferRight(obj):
             candidate = table.getAccessibleAt(row, col - 1)
             label = self._createLabelFromContents(candidate)
-            if label:
+            if label.strip():
                 return label, [candidate]
 
         if col < table.nColumns and not self._preventRight(obj):
             candidate = table.getAccessibleAt(row, col + 1)
-            label = self._createLabelFromContents(candidate)
-            if label:
-                return label, [candidate]
+            x, y, width, height = self._getExtents(candidate)
+            distance = x - (objX + objWidth)
+            if distance <= proximityForRight or self._preferRight(obj):
+                label = self._createLabelFromContents(candidate)
+                if label.strip():
+                    return label, [candidate]
 
         cellAbove = cellBelow = labelAbove = labelBelow = None
         if row > 0:
@@ -535,7 +547,6 @@ class LabelInference:
             labelBelow = self._createLabelFromContents(cellBelow)
 
         if labelAbove and labelBelow:
-            objX, objY, objWidth, objHeight = self._getExtents(obj)
             aboveX, aboveY, aboveWidth, aboveHeight = self._getExtents(cellAbove)
             belowX, belowY, belowWidth, belowHeight = self._getExtents(cellBelow)
             dAbove = objY - (aboveY + aboveHeight)

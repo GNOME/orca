@@ -8,7 +8,6 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(PauseAction(3000))
-sequence.append(KeyComboAction("Tab"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
@@ -22,7 +21,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
-    ["BRAILLE LINE:  'Type something rather amusing here:  $l'",
+    ["KNOWN ISSUE: We need to filter out the multiple objects",
+     "BRAILLE LINE:  'Type something rather amusing here:  $l'",
      "     VISIBLE:  'Type something rather amusing he', cursor=1",
      "SPEECH OUTPUT: 'Type'",
      "SPEECH OUTPUT: 'something'",
@@ -31,7 +31,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'amusing'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'here:'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Type something rather amusing here: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -39,21 +39,17 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  'Amusing numbers fall between  $l and  $l.'",
      "     VISIBLE:  'Amusing numbers fall between  $l', cursor=1",
-     "SPEECH OUTPUT: 'Amusing numbers fall between'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'and'",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'Amusing numbers fall between entry'",
+     "SPEECH OUTPUT: 'and entry'",
      "SPEECH OUTPUT: '.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
-    ["KNOWN ISSUE: We're guessing the label and also presenting its text",
-     "BRAILLE LINE:  ' $l I'm a label'",
+    ["BRAILLE LINE:  ' $l I'm a label'",
      "     VISIBLE:  ' $l I'm a label', cursor=1",
-     "SPEECH OUTPUT: 'I'm a label entry'",
-     "SPEECH OUTPUT: 'I'm a label'"]))
+     "SPEECH OUTPUT: 'I'm a label entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -61,8 +57,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
     ["BRAILLE LINE:  ' $l Am I a label as well?'",
      "     VISIBLE:  ' $l Am I a label as well?', cursor=1",
-     "SPEECH OUTPUT: 'Am I a label as well? entry'",
-     "SPEECH OUTPUT: 'Am I a label as well?'"]))
+     "SPEECH OUTPUT: 'Am I a label as well? entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -86,7 +81,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["BRAILLE LINE:  ' $l Too far away to be a label.'",
      "     VISIBLE:  ' $l Too far away to be a label.', cursor=1",
-     "SPEECH OUTPUT: 'Too far away to be a label. entry'",
+     "SPEECH OUTPUT: 'Looking at what follows visually, I'm not sure what I would type/i.e. what the labels are. entry'",
      "SPEECH OUTPUT: 'Too far away to be a label.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -95,8 +90,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Line Down",
     ["BRAILLE LINE:  'Distance doesn't count on the left $l'",
      "     VISIBLE:  'Distance doesn't count on the le', cursor=1",
-     "SPEECH OUTPUT: 'Distance doesn't count on the left'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Distance doesn't count on the left entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -169,8 +163,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  ' $l $l $l'",
      "     VISIBLE:  ' $l $l $l', cursor=1",
      "SPEECH OUTPUT: 'First name entry'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Middle initial entry'",
+     "SPEECH OUTPUT: 'Last name entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -255,8 +249,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  ' $l $l $l'",
      "     VISIBLE:  ' $l $l $l', cursor=1",
      "SPEECH OUTPUT: 'First Name entry'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Middle initial entry'",
+     "SPEECH OUTPUT: 'Last name entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -290,8 +284,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  ' $l $l $l'",
      "     VISIBLE:  ' $l $l $l', cursor=1",
      "SPEECH OUTPUT: 'First Name entry'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Middle initial entry'",
+     "SPEECH OUTPUT: 'Last name entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -376,8 +370,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  ' $l $l $l'",
      "     VISIBLE:  ' $l $l $l', cursor=1",
      "SPEECH OUTPUT: 'First name entry'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Middle initial entry'",
+     "SPEECH OUTPUT: 'Last name entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -449,8 +443,7 @@ sequence.append(utils.AssertPresentationAction(
     "51. Line Up",
     ["BRAILLE LINE:  'Distance doesn't count on the left $l'",
      "     VISIBLE:  'Distance doesn't count on the le', cursor=1",
-     "SPEECH OUTPUT: 'Distance doesn't count on the left'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Distance doesn't count on the left entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -458,7 +451,7 @@ sequence.append(utils.AssertPresentationAction(
     "52. Line Up",
     ["BRAILLE LINE:  ' $l Too far away to be a label.'",
      "     VISIBLE:  ' $l Too far away to be a label.', cursor=1",
-     "SPEECH OUTPUT: 'Too far away to be a label. entry'",
+     "SPEECH OUTPUT: 'Looking at what follows visually, I'm not sure what I would type/i.e. what the labels are. entry'",
      "SPEECH OUTPUT: 'Too far away to be a label.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -483,8 +476,7 @@ sequence.append(utils.AssertPresentationAction(
     "55. Line Up",
     ["BRAILLE LINE:  ' $l Am I a label as well?'",
      "     VISIBLE:  ' $l Am I a label as well?', cursor=1",
-     "SPEECH OUTPUT: 'Am I a label as well? entry'",
-     "SPEECH OUTPUT: 'Am I a label as well?'"]))
+     "SPEECH OUTPUT: 'Am I a label as well? entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -492,8 +484,7 @@ sequence.append(utils.AssertPresentationAction(
     "56. Line Up",
     ["BRAILLE LINE:  ' $l I'm a label'",
      "     VISIBLE:  ' $l I'm a label', cursor=1",
-     "SPEECH OUTPUT: 'I'm a label entry'",
-     "SPEECH OUTPUT: 'I'm a label'"]))
+     "SPEECH OUTPUT: 'I'm a label entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -501,17 +492,16 @@ sequence.append(utils.AssertPresentationAction(
     "57. Line Up",
     ["BRAILLE LINE:  'Amusing numbers fall between  $l and  $l.'",
      "     VISIBLE:  'Amusing numbers fall between  $l', cursor=1",
-     "SPEECH OUTPUT: 'Amusing numbers fall between'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'and'",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'Amusing numbers fall between entry'",
+     "SPEECH OUTPUT: 'and entry'",
      "SPEECH OUTPUT: '.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "58. Line Up",
-    ["BRAILLE LINE:  'Type something rather amusing here:  $l'",
+    ["KNOWN ISSUE: We need to filter out the multiple objects",
+     "BRAILLE LINE:  'Type something rather amusing here:  $l'",
      "     VISIBLE:  'Type something rather amusing he', cursor=1",
      "SPEECH OUTPUT: 'Type'",
      "SPEECH OUTPUT: 'something'",
@@ -520,7 +510,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'amusing'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'here:'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'Type something rather amusing here: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

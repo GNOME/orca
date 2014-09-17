@@ -59,10 +59,8 @@ sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
     ["BRAILLE LINE:  'Nickname $l Password $l Log in push button'",
      "     VISIBLE:  'Nickname $l Password $l Log in p', cursor=1",
-     "SPEECH OUTPUT: 'Nickname'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'Password'",
-     "SPEECH OUTPUT: 'password text'",
+     "SPEECH OUTPUT: 'Nickname entry'",
+     "SPEECH OUTPUT: 'Password password text'",
      "SPEECH OUTPUT: 'Log in push button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -85,11 +83,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "9. Line Down",
-    ["KNOWN ISSUE: We're guessing the label and also presenting its text",
-     "BRAILLE LINE:  '& y radio button Some polls'",
+    ["BRAILLE LINE:  '& y radio button Some polls'",
      "     VISIBLE:  '& y radio button Some polls', cursor=1",
-     "SPEECH OUTPUT: 'Some polls not selected radio button'",
-     "SPEECH OUTPUT: 'Some polls'"]))
+     "SPEECH OUTPUT: 'Some polls not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -107,8 +103,7 @@ sequence.append(utils.AssertPresentationAction(
     "11. Line Up",
     ["BRAILLE LINE:  '& y radio button Some polls'",
      "     VISIBLE:  '& y radio button Some polls', cursor=1",
-     "SPEECH OUTPUT: 'Some polls not selected radio button'",
-     "SPEECH OUTPUT: 'Some polls'"]))
+     "SPEECH OUTPUT: 'Some polls not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -132,10 +127,8 @@ sequence.append(utils.AssertPresentationAction(
     "14. Line Up",
     ["BRAILLE LINE:  'Nickname $l Password $l Log in push button'",
      "     VISIBLE:  'Nickname $l Password $l Log in p', cursor=1",
-     "SPEECH OUTPUT: 'Nickname'",
-     "SPEECH OUTPUT: 'entry'",
-     "SPEECH OUTPUT: 'Password'",
-     "SPEECH OUTPUT: 'password text'",
+     "SPEECH OUTPUT: 'Nickname entry'",
+     "SPEECH OUTPUT: 'Password password text'",
      "SPEECH OUTPUT: 'Log in push button'"]))
 
 sequence.append(utils.StartRecordingAction())
