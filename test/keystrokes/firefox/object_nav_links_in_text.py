@@ -174,14 +174,6 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "21. line Up",
-    ["BRAILLE LINE:  ','",
-     "     VISIBLE:  ',', cursor=1",
-     "SPEECH OUTPUT: ','"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "22. line Up",
     ["BRAILLE LINE:  'bug writing guidelines,'",
      "     VISIBLE:  'bug writing guidelines,', cursor=1",
      "SPEECH OUTPUT: 'bug writing guidelines link'",
@@ -190,10 +182,18 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "23. line Up",
+    "22. line Up",
     ["BRAILLE LINE:  'Before reporting a bug, please read the'",
      "     VISIBLE:  'Before reporting a bug, please r', cursor=1",
      "SPEECH OUTPUT: 'Before reporting a bug, please read the'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "23. line Up",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=1",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -207,14 +207,6 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "25. line Up",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
-     "SPEECH OUTPUT: 'blank'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "26. line Up",
     ["BRAILLE LINE:  'into Bugzilla. h1'",
      "     VISIBLE:  'into Bugzilla. h1', cursor=1",
      "SPEECH OUTPUT: 'into Bugzilla. heading level 1'"]))
@@ -222,7 +214,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "27. line Up",
+    "26. line Up",
     ["BRAILLE LINE:  'Enter Bug: orca \u2013 This page lets you enter a new bug  h1'",
      "     VISIBLE:  'Enter Bug: orca \u2013 This page lets', cursor=1",
      "SPEECH OUTPUT: 'Enter Bug: orca \u2013 This page lets you enter a new bug heading level 1'"]))

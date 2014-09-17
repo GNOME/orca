@@ -235,14 +235,6 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "29. line Up",
-    ["BRAILLE LINE:  '  $l'",
-     "     VISIBLE:  '  $l', cursor=1",
-     "SPEECH OUTPUT: 'blank'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "30. line Up",
     ["BRAILLE LINE:  'Home'",
      "     VISIBLE:  'Home', cursor=1",
      "SPEECH OUTPUT: 'Home link Back to the Gnome Bugzilla home page'"]))
