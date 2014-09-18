@@ -1326,10 +1326,6 @@ class Script(default.Script):
         except:
             return False
 
-        if not state.contains(pyatspi.STATE_FOCUSED) \
-           and not state.contains(pyatspi.STATE_SELECTED):
-            return False
-
         if state.contains(pyatspi.STATE_EDITABLE) \
            or state.contains(pyatspi.STATE_EXPANDABLE):
             return True
