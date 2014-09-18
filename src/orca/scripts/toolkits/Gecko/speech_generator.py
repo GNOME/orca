@@ -215,7 +215,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                           pyatspi.ROLE_MENU_ITEM,
                           pyatspi.ROLE_PARAGRAPH,
                           pyatspi.ROLE_SECTION,
-                          pyatspi.ROLE_TEXT,
                           pyatspi.ROLE_UNKNOWN]
         else:
             # We never ever want to speak 'unknown'
@@ -224,6 +223,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if not force and self._script.inDocumentContent(obj):
             doNotSpeak.append(pyatspi.ROLE_TABLE_CELL)
+            doNotSpeak.append(pyatspi.ROLE_TEXT)
             if args.get('formatType', 'unfocused') != 'basicWhereAmI':
                 doNotSpeak.append(pyatspi.ROLE_LIST_ITEM)
                 doNotSpeak.append(pyatspi.ROLE_LIST)
