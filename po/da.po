@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.gnome-2-22\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-13 15:32+0200\n"
-"PO-Revision-Date: 2014-09-13 15:30+0200\n"
+"POT-Creation-Date: 2014-09-20 17:33+0200\n"
+"PO-Revision-Date: 2014-09-20 17:32+0200\n"
 "Last-Translator: Kenneth Nielsen <k.nielsen81@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -2356,7 +2356,7 @@ msgstr "Slår lyden fra tale til eller fra."
 #. This string describes that command.
 #: ../src/orca/cmdnames.py:399
 msgid "Toggles speech verbosity level."
-msgstr ""
+msgstr "Skifter detaljeniveau for tale."
 
 #. Translators: this string is associated with the keyboard shortcut to quit
 #. Orca.
@@ -4528,7 +4528,7 @@ msgstr "_Læs samtalerumsnavn op"
 #. both for presentation and navigation.
 #: ../src/orca/guilabels.py:150
 msgid "Enable layout mode for content"
-msgstr ""
+msgstr "Aktivér layout-tilstand for indhold"
 
 #. Translators: Orca's keybindings support double and triple "clicks" or key
 #. presses, similar to using a mouse. This string appears in Orca's preferences
@@ -7709,7 +7709,7 @@ msgstr "lavere."
 #: ../src/orca/messages.py:1484
 msgctxt "Speech"
 msgid "Verbosity level: brief"
-msgstr ""
+msgstr "Detaljeniveau for tale: Kort"
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -7719,7 +7719,7 @@ msgstr ""
 #: ../src/orca/messages.py:1491
 msgctxt "Speech"
 msgid "Verbosity level: verbose"
-msgstr ""
+msgstr "Detaljeniveau for tale: Detaljeret"
 
 #. Translators: We replace the ellipses (both manual and UTF-8) with a spoken
 #. string. The extra space you see at the beginning is because we need the
