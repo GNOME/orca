@@ -792,6 +792,19 @@ class Utilities(script_utilities.Utilities):
 
         return objects
 
+    def justEnteredObject(self, obj, startOffset, endOffset):
+        lastKey, mods = self.lastKeyAndModifiers()
+        if lastKey == "Down" and not mods:
+            return startOffset == 0
+
+        if lastKey == "Up" and not mods:
+            text = self.queryNonEmptyText(obj)
+            if not text:
+                return True
+            return endOffset == text.characterCount
+
+        return True
+
     def isTextBlockElement(self, obj):
         if not self._script.inDocumentContent(obj):
             return False

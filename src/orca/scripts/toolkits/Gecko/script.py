@@ -2489,8 +2489,12 @@ class Script(default.Script):
         lastObj = None
         for content in contents:
             [obj, startOffset, endOffset, string] = content
+            if not self.utilities.justEnteredObject(obj, startOffset, endOffset):
+                formatType = 'focused'
+            else:
+                formatType = 'unfocused'
             utterance = self.speechGenerator.generateSpeech(
-                obj, startOffset=startOffset, endOffset=endOffset)
+                obj, startOffset=startOffset, endOffset=endOffset, formatType=formatType)
             if eliminatePauses:
                 utterance = list(filter(lambda x: not isinstance(x, Pause), utterance))
             if utterance and utterance[0]:

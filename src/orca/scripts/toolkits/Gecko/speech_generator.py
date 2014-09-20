@@ -148,16 +148,18 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             self, obj, **args)
 
     def _generateLabel(self, obj, **args):
+        start = args.get('startOffset')
+        end = args.get('endOffset')
+        if isinstance(start, int) and isinstance(end, int) \
+           and not self._script.utilities.justEnteredObject(obj, start, end):
+            return []
+
         acss = self.voice(speech_generator.DEFAULT)
         result = speech_generator.SpeechGenerator._generateLabel(self,
                                                                  obj,
                                                                  **args)
 
         if self._script.utilities.shouldInferLabelFor(obj):
-            start = args.get('startOffset')
-            if isinstance(start, int) and start > 0:
-                return []
-
             label, objects = self._script.labelInference.infer(obj, False)
             if label:
                 result.append(label)
@@ -180,6 +182,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
+        start = args.get('startOffset')
+        end = args.get('endOffset')
+        if isinstance(start, int) and isinstance(end, int) \
+           and not self._script.utilities.justEnteredObject(obj, start, end):
+            return []
+
         result = speech_generator.SpeechGenerator._generateLabelOrName(
             self, obj, **args)
 
@@ -195,7 +203,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         role = args.get('role', obj.getRole())
         force = args.get('force', False)
         start = args.get('startOffset')
-        if role == pyatspi.ROLE_ENTRY and isinstance(start, int) and start > 0:
+        end = args.get('endOffset')
+        if isinstance(start, int) and isinstance(end, int) \
+           and not self._script.utilities.justEnteredObject(obj, start, end):
             return []
 
         # Saying "menu item" for a combo box can confuse users. Therefore,
