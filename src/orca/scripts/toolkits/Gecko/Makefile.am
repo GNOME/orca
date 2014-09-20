@@ -7,7 +7,8 @@ orca_python_PYTHON = \
 	script.py \
 	script_utilities.py \
 	speech_generator.py \
-	structural_navigation.py
+	structural_navigation.py \
+	tutorial_generator.py
 
 orca_pythondir=$(pkgpythondir)/scripts/toolkits/Gecko
 

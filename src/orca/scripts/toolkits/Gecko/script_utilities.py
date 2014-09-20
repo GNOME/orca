@@ -805,6 +805,43 @@ class Utilities(script_utilities.Utilities):
 
         return True
 
+    def isFocusModeWidget(self, obj):
+        try:
+            role = obj.getRole()
+            state = obj.getState()
+        except:
+            return False
+
+        if state.contains(pyatspi.STATE_EDITABLE) \
+           or state.contains(pyatspi.STATE_EXPANDABLE):
+            return True
+
+        focusModeRoles = [pyatspi.ROLE_COMBO_BOX,
+                          pyatspi.ROLE_ENTRY,
+                          pyatspi.ROLE_LIST_BOX,
+                          pyatspi.ROLE_LIST_ITEM,
+                          pyatspi.ROLE_MENU,
+                          pyatspi.ROLE_MENU_ITEM,
+                          pyatspi.ROLE_CHECK_MENU_ITEM,
+                          pyatspi.ROLE_RADIO_MENU_ITEM,
+                          pyatspi.ROLE_PAGE_TAB,
+                          pyatspi.ROLE_PASSWORD_TEXT,
+                          pyatspi.ROLE_PROGRESS_BAR,
+                          pyatspi.ROLE_SLIDER,
+                          pyatspi.ROLE_SPIN_BUTTON,
+                          pyatspi.ROLE_TOOL_BAR,
+                          pyatspi.ROLE_TABLE_CELL,
+                          pyatspi.ROLE_TABLE_ROW,
+                          pyatspi.ROLE_TABLE,
+                          pyatspi.ROLE_TREE_TABLE,
+                          pyatspi.ROLE_TREE]
+
+        if role in focusModeRoles \
+           and not self.isTextBlockElement(obj):
+            return True
+
+        return False
+
     def isTextBlockElement(self, obj):
         if not self._script.inDocumentContent(obj):
             return False

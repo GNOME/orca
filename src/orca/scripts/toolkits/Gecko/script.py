@@ -68,6 +68,7 @@ from .formatting import Formatting
 from .bookmarks import GeckoBookmarks
 from .structural_navigation import GeckoStructuralNavigation
 from .script_utilities import Utilities
+from .tutorial_generator import TutorialGenerator
 
 from orca.orca_i18n import _
 from orca.speech_generator import Pause
@@ -261,6 +262,10 @@ class Script(default.Script):
         """Returns the speech generator for this script.
         """
         return SpeechGenerator(self)
+
+    def getTutorialGenerator(self):
+        """Returns the tutorial generator for this script."""
+        return TutorialGenerator(self)
 
     def getFormatting(self):
         """Returns the formatting strings for this script."""
@@ -1308,7 +1313,7 @@ class Script(default.Script):
         if not self.utilities.hasMatchingHierarchy(event.source, rolesList):
             default.Script.handleProgressBarUpdate(self, event, obj)
 
-    def _useFocusMode(self, obj):
+    def useFocusMode(self, obj):
         if self._focusModeIsSticky:
             return True
 
@@ -1320,41 +1325,7 @@ class Script(default.Script):
            and self._lastCommandWasCaretNav:
             return False
 
-        try:
-            role = obj.getRole()
-            state = obj.getState()
-        except:
-            return False
-
-        if state.contains(pyatspi.STATE_EDITABLE) \
-           or state.contains(pyatspi.STATE_EXPANDABLE):
-            return True
-
-        focusModeRoles = [pyatspi.ROLE_COMBO_BOX,
-                          pyatspi.ROLE_ENTRY,
-                          pyatspi.ROLE_LIST_BOX,
-                          pyatspi.ROLE_LIST_ITEM,
-                          pyatspi.ROLE_MENU,
-                          pyatspi.ROLE_MENU_ITEM,
-                          pyatspi.ROLE_CHECK_MENU_ITEM,
-                          pyatspi.ROLE_RADIO_MENU_ITEM,
-                          pyatspi.ROLE_PAGE_TAB,
-                          pyatspi.ROLE_PASSWORD_TEXT,
-                          pyatspi.ROLE_PROGRESS_BAR,
-                          pyatspi.ROLE_SLIDER,
-                          pyatspi.ROLE_SPIN_BUTTON,
-                          pyatspi.ROLE_TOOL_BAR,
-                          pyatspi.ROLE_TABLE_CELL,
-                          pyatspi.ROLE_TABLE_ROW,
-                          pyatspi.ROLE_TABLE,
-                          pyatspi.ROLE_TREE_TABLE,
-                          pyatspi.ROLE_TREE]
-
-        if role in focusModeRoles \
-           and not self.utilities.isTextBlockElement(obj):
-            return True
-
-        return False
+        return self.utilities.isFocusModeWidget(obj)
 
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
         """Called when the object with focus changes.
@@ -1391,7 +1362,7 @@ class Script(default.Script):
         if self._focusModeIsSticky:
             return
 
-        if self._useFocusMode(newFocus) != self._inFocusMode:
+        if self.useFocusMode(newFocus) != self._inFocusMode:
             self.togglePresentationMode(None)
 
     def _destroyLineCache(self):
@@ -2573,7 +2544,7 @@ class Script(default.Script):
         if text:
             text.setCaretOffset(characterOffset)
 
-        if self._useFocusMode(obj) != self._inFocusMode:
+        if self.useFocusMode(obj) != self._inFocusMode:
             self.togglePresentationMode(None)
 
     def moveToMouseOver(self, inputEvent):
