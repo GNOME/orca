@@ -1350,7 +1350,8 @@ class Script(default.Script):
                           pyatspi.ROLE_TREE_TABLE,
                           pyatspi.ROLE_TREE]
 
-        if role in focusModeRoles:
+        if role in focusModeRoles \
+           and not self.utilities.isTextBlockElement(obj):
             return True
 
         return False
