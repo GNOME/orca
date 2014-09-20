@@ -31,6 +31,7 @@ __license__   = "LGPL"
 
 import pyatspi
 from . import debug
+from . import orca_state
 from . import settings
 
 from .orca_i18n import _         # for gettext support
@@ -779,6 +780,9 @@ class TutorialGenerator:
         """
 
         if not settings.enableTutorialMessages:
+            return []
+
+        if not obj == orca_state.locusOfFocus:
             return []
 
         utterances = []
