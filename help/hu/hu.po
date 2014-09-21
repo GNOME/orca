@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca_help master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-07 22:58+0000\n"
+"POT-Creation-Date: 2014-09-21 14:10+0000\n"
 "PO-Revision-Date: 2014-04-14 01:46+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
@@ -60,7 +60,7 @@ msgstr "Objektumok könyvjelzőzése és lekérése"
 #: C/howto_setting_up_orca.page:12 C/howto_structural_navigation.page:12
 #: C/howto_tables.page:10 C/howto_text_attributes.page:10
 #: C/howto_text_setup.page:8 C/howto_the_orca_modifier.page:11
-#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:6
+#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:9
 #: C/introduction.page:10 C/preferences_braille.page:11
 #: C/preferences_chat.page:11 C/preferences_gecko.page:12
 #: C/preferences_general.page:11 C/preferences_introduction.page:8
@@ -90,7 +90,7 @@ msgstr "Joanmarie Diggs"
 #: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
 #: C/howto_tables.page:14 C/howto_text_attributes.page:14
 #: C/howto_text_setup.page:12 C/howto_the_orca_modifier.page:15
-#: C/howto_toggling_caps_lock.page:12 C/howto_whereami.page:14 C/index.page:10
+#: C/howto_toggling_caps_lock.page:12 C/howto_whereami.page:14 C/index.page:13
 #: C/introduction.page:14 C/preferences_braille.page:15
 #: C/preferences_chat.page:15 C/preferences_gecko.page:16
 #: C/preferences_general.page:15 C/preferences_introduction.page:12
@@ -400,8 +400,8 @@ msgid ""
 msgstr ""
 "Ha az <app>Orka</app> képernyőolvasót olyan asztali környezettel használja, "
 "amelyben nincs beépített billentyűparancs a képernyőolvasó be- és "
-"kikapcsolására, akkor hasznos lehet a kilépés a <app>Képernyőolvasóból</"
-"app> parancs. Ehhez a parancshoz nincs alapértelmezetten definiált "
+"kikapcsolására, akkor hasznos lehet a kilépés a <app>Képernyőolvasóból</app> "
+"parancs. Ehhez a parancshoz nincs alapértelmezetten definiált "
 "billentyűtársítás. Ha billentyűtársítást szeretne rendelni egy parancshoz, "
 "akkor olvassa el a <link xref=\"howto_key_bindings\">Billentyűtársítások "
 "módosítása</link> című fejezetet."
@@ -1341,7 +1341,7 @@ msgid "<app>Orca</app>'s Commands"
 msgstr "Az <app>Orka</app> billentyűparancsai"
 
 #. (itstool) path: section/title
-#: C/commands.page:17 C/index.page:33
+#: C/commands.page:17 C/index.page:36
 msgid "Getting Started"
 msgstr "Kezdeti lépések"
 
@@ -1356,7 +1356,7 @@ msgid "Reading Web Pages and Other Documents"
 msgstr "Weboldalak és más dokumentumok olvasása"
 
 #. (itstool) path: section/title
-#: C/commands.page:26 C/index.page:39
+#: C/commands.page:26 C/index.page:42
 msgid "Reviewing and Interacting with Screen Contents"
 msgstr "Képernyőtartalom áttekintése és kezelése"
 
@@ -5252,32 +5252,20 @@ msgstr ""
 "próbálni a hol vagyok műveleteket, nézze meg <link xref=\"commands_where_am_i"
 "\">A hol vagyok művelet billentyűparancsainak</link> listáját."
 
-#. (itstool) path: media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/index.page:19
-msgctxt "_"
-msgid ""
-"external ref='figures/orca-logo.png' md5='d8759cff4f184e7134cc5bcd6d32d839'"
-msgstr ""
-"external ref='figures/orca-logo.png' md5='d8759cff4f184e7134cc5bcd6d32d839'"
-
 #. (itstool) path: info/title
-#: C/index.page:3
+#: C/index.page:6
 msgctxt "text"
 msgid "Orca Screen Reader"
 msgstr "Orka képernyőolvasó"
 
 #. (itstool) path: info/title
-#: C/index.page:4
+#: C/index.page:7
 msgctxt "link"
 msgid "Introduction to the <app>Orca</app> Screen Reader"
 msgstr "Az <app>Orka</app> képernyőolvasó bemutatása"
 
 #. (itstool) path: info/desc
-#: C/index.page:13
+#: C/index.page:16
 msgid ""
 "Orca is a free, open source, flexible, and extensible screen reader that "
 "provides access to the graphical desktop via speech and refreshable braille."
@@ -5287,22 +5275,23 @@ msgstr ""
 "személyre szabható kombinációjának használatával teszi elérhetővé az asztali "
 "környezetet."
 
+#. (itstool) path: media/span
+#: C/index.page:23
+msgid "<app>Orca</app>'s logo"
+msgstr "<app>Orka</app> logó"
+
 #. (itstool) path: page/title
-#: C/index.page:18
-msgid ""
-"<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\"> "
-"<app>Orca</app>'s logo </media> <app>Orca</app> Screen Reader"
-msgstr ""
-"<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\"> "
-"<app>Orka</app> logó</media><app>Orka</app> képernyőolvasó"
+#: C/index.page:21
+msgid "<_:media-1/> <app>Orca</app> Screen Reader"
+msgstr "<_:media-1/> <app>Orka</app> képernyőolvasó"
 
 #. (itstool) path: note/title
-#: C/index.page:25
+#: C/index.page:28
 msgid "Before You Begin"
 msgstr "Mielőtt tovább lépne"
 
 #. (itstool) path: note/p
-#: C/index.page:26
+#: C/index.page:29
 msgid ""
 "If you are not yet familiar with the navigation commands provided by your "
 "desktop environment, you are encouraged to read that documentation first."
@@ -5312,13 +5301,13 @@ msgstr ""
 "erre vonatkozó dokumentációját."
 
 #. (itstool) path: section/title
-#: C/index.page:36
+#: C/index.page:39
 msgid "Reading Documents and Web Pages"
 msgstr "Dokumentumok és weblapok olvasása"
 
 # Megjegyzés: Megváltoztattam az eredeti fordítást, így a főoldalon is jól fog megjelenni
 #. (itstool) path: section/title
-#: C/index.page:42
+#: C/index.page:45
 msgid "Quick Reference"
 msgstr "Rövid referencia"
 
@@ -7292,11 +7281,10 @@ msgid ""
 "enhanced support has been provided, you will find several options which you "
 "can adjust to get the verbosity level that works best for you."
 msgstr ""
-"Az <app>Orka</app> megpróbál egyenletesen jó felhasználói élményt "
-"nyújtani az alkalmazások helyesírás-ellenőrzőjének használatakor. A "
-"támogatott alkalmazásokhoz számos beállítás elérhető, melyek segítségével az "
-"Ön által használt részletességi beállításnak megfelelően személyre szabhatja "
-"a "
+"Az <app>Orka</app> megpróbál egyenletesen jó felhasználói élményt nyújtani "
+"az alkalmazások helyesírás-ellenőrzőjének használatakor. A támogatott "
+"alkalmazásokhoz számos beállítás elérhető, melyek segítségével az Ön által "
+"használt részletességi beállításnak megfelelően személyre szabhatja a "
 "megjelenített információk mennyiségét."
 
 #. (itstool) path: note/title
@@ -7882,11 +7870,20 @@ msgstr ""
 msgid "Default value: <gui>Sentence</gui>"
 msgstr "Alapbeállítás: <gui>Mondat</gui>"
 
-#~ msgid "<app>Orca</app>'s logo"
-#~ msgstr "<app>Orka</app> logó"
+#~ msgctxt "_"
+#~ msgid ""
+#~ "external ref='figures/orca-logo.png' "
+#~ "md5='d8759cff4f184e7134cc5bcd6d32d839'"
+#~ msgstr ""
+#~ "external ref='figures/orca-logo.png' "
+#~ "md5='d8759cff4f184e7134cc5bcd6d32d839'"
 
-#~ msgid "<_:media-1/> <app>Orca</app> Screen Reader"
-#~ msgstr "<_:media-1/> <app>Orka</app> képernyőolvasó"
+#~ msgid ""
+#~ "<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\"> "
+#~ "<app>Orca</app>'s logo </media> <app>Orca</app> Screen Reader"
+#~ msgstr ""
+#~ "<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\"> "
+#~ "<app>Orka</app> logó</media><app>Orka</app> képernyőolvasó"
 
 #~ msgid ""
 #~ "Report information on the currently active script: <keyseq><key>Ctrl</"
