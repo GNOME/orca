@@ -206,7 +206,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         end = args.get('endOffset')
         if isinstance(start, int) and isinstance(end, int) \
            and not self._script.utilities.justEnteredObject(obj, start, end) \
-           and not self._script.utilities.isTextBlockElement(obj):
+           and not self._script.utilities.isTextBlockElement(obj) \
+           and not self._script.utilities.isLink(obj):
             return []
 
         # Saying "menu item" for a combo box can confuse users. Therefore,
