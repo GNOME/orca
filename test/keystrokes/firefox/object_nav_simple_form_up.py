@@ -61,7 +61,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. line Up",
     ["BRAILLE LINE:  'Hockey list box'",
      "     VISIBLE:  'Hockey list box', cursor=1",
-     "SPEECH OUTPUT: 'Which sports do you like? Hockey multi-select List with 4 items'"]))
+     "SPEECH OUTPUT: 'Which sports do you like? Hockey multi-select List with 4 items' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -149,7 +149,7 @@ sequence.append(utils.AssertPresentationAction(
     "18. line Up",
     ["BRAILLE LINE:  '      $l'",
      "     VISIBLE:  '      $l', cursor=1",
-     "SPEECH OUTPUT: '     '"]))
+     "SPEECH OUTPUT: 'Tell me a little more about yourself: entry      '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -182,7 +182,7 @@ sequence.append(utils.AssertPresentationAction(
     "22. line Up",
     ["BRAILLE LINE:  'I am a monkey with a long tail.  I like  $l'",
      "     VISIBLE:  'I am a monkey with a long tail. ', cursor=1",
-     "SPEECH OUTPUT: 'Tell me a little more about yourself: entry I am a monkey with a long tail.  I like "]))
+     "SPEECH OUTPUT: 'I am a monkey with a long tail.  I like "]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

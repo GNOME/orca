@@ -7,9 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(PauseAction(3000))
-sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

@@ -14,7 +14,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to tab list",
-    ["BRAILLE LINE:  '  push button  push button Tab 1 page tab Tab 2 page tab Tab 3 page tab Inlined Sub TabContainer page tab Sub TabContainer from href page tab SplitContainer from href page tab Embedded layout widgets page tab'",
+    ["BRAILLE LINE:  '  push button Tab 1 page tab Tab 2 page tab Tab 3 page tab Inlined Sub TabContainer page tab Sub TabContainer from href page tab SplitContainer from href page tab Embedded layout widgets page tab'",
      "     VISIBLE:  'Tab 2 page tab Tab 3 page tab In', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",

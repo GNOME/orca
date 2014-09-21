@@ -71,10 +71,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'shop.safeway.com'",
-     "SPEECH OUTPUT: 'image map link'",
-     "SPEECH OUTPUT: 'Rancher's Reserve'",
-     "SPEECH OUTPUT: 'image map link'",
+     "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: 'image'"]))
 
 sequence.append(utils.AssertionSummaryAction())
