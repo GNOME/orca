@@ -2460,7 +2460,8 @@ class Script(default.Script):
         lastObj = None
         for content in contents:
             [obj, startOffset, endOffset, string] = content
-            if not self.utilities.justEnteredObject(obj, startOffset, endOffset):
+            if not self.utilities.justEnteredObject(obj, startOffset, endOffset) \
+               and not self.utilities.isTextBlockElement(obj):
                 formatType = 'focused'
             else:
                 formatType = 'unfocused'
