@@ -48,8 +48,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "4. Next Word",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
+    ["BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'w'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'orld.'"]))

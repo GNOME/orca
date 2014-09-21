@@ -8,12 +8,19 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(PauseAction(3000))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(utils.AssertPresentationAction(
+    "1. Ctrl + Home",
+    ["BRAILLE LINE:  'Toolbar test h1'",
+     "     VISIBLE:  'Toolbar test h1', cursor=1",
+     "SPEECH OUTPUT: 'Toolbar test heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "1. Down Arrow",
+    "2. Down Arrow",
     ["BRAILLE LINE:  'Toolbar from markup h2'",
      "     VISIBLE:  'Toolbar from markup h2', cursor=1",
      "SPEECH OUTPUT: 'Toolbar from markup heading level 2'"]))
@@ -21,7 +28,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "2. Down Arrow",
+    "3. Down Arrow",
     ["BRAILLE LINE:  'input before toolbar1 $l'",
      "     VISIBLE:  'input before toolbar1 $l', cursor=1",
      "SPEECH OUTPUT: 'entry input before toolbar1'"]))
@@ -29,15 +36,13 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "3. Down Arrow",
-    ["KNOWN ISSUE: Whether or not this is the ideal presentation is questionable. But it is more correct that what we were doing.",
-     "BRAILLE LINE:  'Buttons: Copy Toggles: Italic tool bar Dropdowns: TooltipDialog ColorPalette Combos: Menu save options push button Menu2 push button save options2 push button '",
-     "     VISIBLE:  'Buttons: Copy Toggles: Italic to', cursor=1",
+    "4. Down Arrow",
+    ["BRAILLE LINE:  'Buttons: Copy Toggles: Italic Dropdowns: TooltipDialog ColorPalette Combos: Menu save options push button Menu2 push button save options2 push button '",
+     "     VISIBLE:  'Buttons: Copy Toggles: Italic Dr', cursor=1",
      "SPEECH OUTPUT: 'Buttons:'",
      "SPEECH OUTPUT: 'Copy'",
      "SPEECH OUTPUT: 'Toggles:'",
      "SPEECH OUTPUT: 'Italic'",
-     "SPEECH OUTPUT: 'tool bar'",
      "SPEECH OUTPUT: 'Dropdowns:'",
      "SPEECH OUTPUT: 'TooltipDialog'",
      "SPEECH OUTPUT: 'ColorPalette'",
@@ -50,7 +55,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "4. Down Arrow",
+    "5. Down Arrow",
     ["BRAILLE LINE:  'input after toolbar1 $l'",
      "     VISIBLE:  'input after toolbar1 $l', cursor=1",
      "SPEECH OUTPUT: 'entry input after toolbar1'"]))

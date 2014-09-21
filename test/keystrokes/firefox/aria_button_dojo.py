@@ -300,7 +300,8 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'toggle me off $l'",
      "     VISIBLE:  'toggle me off $l', cursor=1",
      "BRAILLE LINE:  'toggle me off $l'",
-     "     VISIBLE:  'toggle me off $l', cursor=1"]))
+     "     VISIBLE:  'toggle me off $l', cursor=1",
+     "SPEECH OUTPUT: 'pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

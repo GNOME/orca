@@ -342,6 +342,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'Attachments'",
      "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'Attachments'",
      "SPEECH OUTPUT: 'More Actions:'",
      "SPEECH OUTPUT: 'combo box'",
      "SPEECH OUTPUT: 'GNOME World Wide'",

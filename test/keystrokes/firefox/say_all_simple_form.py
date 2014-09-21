@@ -44,12 +44,12 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Dashing picture of Willie Walker'",
      "SPEECH OUTPUT: 'image'",
      "SPEECH OUTPUT: 'Ain't he handsome (please say yes)?'",
-     "SPEECH OUTPUT: 'not selected'",
-     "SPEECH OUTPUT: 'radio button'",
      "SPEECH OUTPUT: 'Yes'",
      "SPEECH OUTPUT: 'not selected'",
      "SPEECH OUTPUT: 'radio button'",
-     "SPEECH OUTPUT: 'No'"]))
+     "SPEECH OUTPUT: 'No'",
+     "SPEECH OUTPUT: 'not selected'",
+     "SPEECH OUTPUT: 'radio button'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()
