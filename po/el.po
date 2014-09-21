@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2014-08-27 10:19+0000\n"
-"PO-Revision-Date: 2014-08-27 17:19+0200\n"
+"POT-Creation-Date: 2014-09-21 10:10+0000\n"
+"PO-Revision-Date: 2014-09-21 17:08+0200\n"
 "Last-Translator: Tom Tryfonidis <tomtryf@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 1.6.9\n"
 "X-Project-Style: gnome\n"
 
 #: ../orca.desktop.in.h:1
@@ -2367,33 +2367,41 @@ msgstr "Αύξηση βήματος εκφώνησης."
 msgid "Toggles the silencing of speech."
 msgstr "Εναλλάσσει τη σίγαση της εκφώνησης."
 
+#. Translators: Orca's verbosity levels control how much (or how little)
+#. Orca will speak when presenting objects as the user navigates within
+#. applications and reads content. The levels can be toggled via command.
+#. This string describes that command.
+#: ../src/orca/cmdnames.py:399
+msgid "Toggles speech verbosity level."
+msgstr "Εναλλάσσει το επίπεδο περιφραστικότητας της ομιλίας"
+
 #. Translators: this string is associated with the keyboard shortcut to quit
 #. Orca.
-#: ../src/orca/cmdnames.py:397
+#: ../src/orca/cmdnames.py:403
 msgid "Quits the screen reader"
 msgstr "Έξοδος από τον αναγνώστη οθόνης"
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for Orca.
-#: ../src/orca/cmdnames.py:401
+#: ../src/orca/cmdnames.py:407
 msgid "Displays the preferences configuration dialog."
 msgstr "Εμφανίζει το διάλογο ρύθμισης των προτιμήσεων."
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for a specific application within Orca.
-#: ../src/orca/cmdnames.py:406
+#: ../src/orca/cmdnames.py:412
 msgid "Displays the application preferences configuration dialog."
 msgstr "Εμφανίζει το διάλογο ρύθμισης των προτιμήσεων των εφαρμογών."
 
 #. Translators: Orca allows the user to enable/disable speaking of indentation
 #. and justification.
-#: ../src/orca/cmdnames.py:411
+#: ../src/orca/cmdnames.py:417
 msgid "Toggles the speaking of indentation and justification."
 msgstr "Εναλλάσσει την εκφώνηση ή μη των εσοχών και της στοίχισης."
 
 #. Translators: Orca allows users to cycle through punctuation levels. None,
 #. some, most, or all, punctuation will be spoken.
-#: ../src/orca/cmdnames.py:415
+#: ../src/orca/cmdnames.py:421
 msgid "Cycles to the next speaking of punctuation level."
 msgstr "Προχωρά στο επόμενο επίπεδο εκφώνησης στίξης."
 
@@ -2403,7 +2411,7 @@ msgstr "Προχωρά στο επόμενο επίπεδο εκφώνησης �
 #. and selected when reading Spanish content. This string to be translated refers
 #. to an Orca command which makes it possible for users to quickly cycle amongst
 #. their saved profiles without having to get into a GUI.
-#: ../src/orca/cmdnames.py:423
+#: ../src/orca/cmdnames.py:429
 msgid "Cycles to the next settings profile."
 msgstr "Περιδιαβαίνει τo επόμενo προφίλ ρυθμίσεων."
 
@@ -2414,7 +2422,7 @@ msgstr "Περιδιαβαίνει τo επόμενo προφίλ ρυθμίσε
 #. 'icon'. This string to be translated refers to an Orca command which makes it
 #. possible for users to quickly cycle amongst these alternatives without having
 #. to get into a GUI.
-#: ../src/orca/cmdnames.py:432
+#: ../src/orca/cmdnames.py:438
 msgid "Cycles to the next capitalization style."
 msgstr "Προχωρά στο επόμενο στυλ κεφαλαίων."
 
@@ -2428,14 +2436,14 @@ msgstr "Προχωρά στο επόμενο στυλ κεφαλαίων."
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo. The following string refers to a command that allows the user to quickly
 #. choose which type of echo is being used.
-#: ../src/orca/cmdnames.py:444
+#: ../src/orca/cmdnames.py:450
 msgid "Cycles to the next key echo level."
 msgstr "Προχωρά στο επόμενο επίπεδο εκφώνησης πληκτρολόγησης."
 
 #. Translators: this is a debug message that Orca users will not normally see. It
 #. describes a debug routine that allows the user to adjust the level of debug
 #. information that Orca generates at run time.
-#: ../src/orca/cmdnames.py:449
+#: ../src/orca/cmdnames.py:455
 msgid "Cycles the debug level at run time."
 msgstr "Εναλλάσσει το επίπεδο αποσφαλμάτωσης κατά την εκτέλεση."
 
@@ -2443,7 +2451,7 @@ msgstr "Εναλλάσσει το επίπεδο αποσφαλμάτωσης κ
 #. the given bookmark to the current position. Note that in this context, the
 #. "bookmark" is storing the location of an accessible object, typically on a web
 #. page.
-#: ../src/orca/cmdnames.py:456
+#: ../src/orca/cmdnames.py:462
 msgid "Bookmark where am I with respect to current position."
 msgstr "Σελιδοδείκτης πού σε σχέση με την τρέχουσα τοποθεσία."
 
@@ -2451,14 +2459,14 @@ msgstr "Σελιδοδείκτης πού σε σχέση με την τρέχο
 #. takes the user to the previous bookmark location. Note that in this context,
 #. the "bookmark" is storing the location of an accessible object, typically on
 #. a web page.
-#: ../src/orca/cmdnames.py:462
+#: ../src/orca/cmdnames.py:468
 msgid "Go to previous bookmark location."
 msgstr "Μετάβαση στην προηγούμενη τοποθεσία σελιδοδείκτη."
 
 #. Translators: this command moves the user to the location stored at the bookmark.
 #. Note that in this context, the "bookmark" is storing the location of an
 #. accessible object, typically on a web page.
-#: ../src/orca/cmdnames.py:467
+#: ../src/orca/cmdnames.py:473
 msgid "Go to bookmark."
 msgstr "Μετάβαση στο σελιδοδείκτη."
 
@@ -2466,37 +2474,37 @@ msgstr "Μετάβαση στο σελιδοδείκτη."
 #. takes the user to the next bookmark location. Note that in this context, the
 #. "bookmark" is storing the location of an accessible object, typically on a web
 #. page.
-#: ../src/orca/cmdnames.py:473
+#: ../src/orca/cmdnames.py:479
 msgid "Go to next bookmark location."
 msgstr "Μετάβαση στην επόμενη τοποθεσία σελιδοδείκτη."
 
 #. Translators: this event handler binds an in-page accessible object location to
 #. the given input key command.
-#: ../src/orca/cmdnames.py:477
+#: ../src/orca/cmdnames.py:483
 msgid "Add bookmark."
 msgstr "Προσθήκη σελιδοδείκτη."
 
 #. Translators: this event handler saves all bookmarks for the current application
 #. to disk.
-#: ../src/orca/cmdnames.py:481
+#: ../src/orca/cmdnames.py:487
 msgid "Save bookmarks."
 msgstr "Αποθήκευση σελιδοδεικτών."
 
 #. Translators: Orca allows the item under the pointer to be spoken. This toggles
 #. the feature without the need to get into a GUI.
-#: ../src/orca/cmdnames.py:485
+#: ../src/orca/cmdnames.py:491
 msgid "Toggle mouse review mode."
 msgstr "Εναλλαγή της λειτουργίας προεπισκόπησης με το ποντίκι."
 
 #. Translators: Orca has a command to present the current time in speech and in
 #. braille.
-#: ../src/orca/cmdnames.py:489
+#: ../src/orca/cmdnames.py:495
 msgid "Present current time."
 msgstr "Παρουσίαση τρέχουσας ώρας."
 
 #. Translators: Orca has a command to present the current date in speech and in
 #. braille.
-#: ../src/orca/cmdnames.py:493
+#: ../src/orca/cmdnames.py:499
 msgid "Present current date."
 msgstr "Παρουσίαση τρέχουσας ημερομηνίας."
 
@@ -2504,14 +2512,14 @@ msgstr "Παρουσίαση τρέχουσας ημερομηνίας."
 #. them along to the current application when they are not Orca commands. This
 #. command causes the next command issued to be passed along to the current
 #. application, bypassing Orca's interception of it.
-#: ../src/orca/cmdnames.py:500
+#: ../src/orca/cmdnames.py:506
 msgid "Passes the next command on to the current application."
 msgstr "Στέλνει την επόμενη εντολή στην τρέχουσα εφαρμογή."
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. This string to be translated is associated with the
 #. keyboard commands used to review those previous messages.
-#: ../src/orca/cmdnames.py:505
+#: ../src/orca/cmdnames.py:511
 msgid "Speak and braille a previous chat room message."
 msgstr "Εκφώνηση και μπράιγ ενός προηγούμενου μηνύματος σε δωμάτιο συνομιλίας."
 
@@ -2520,7 +2528,7 @@ msgstr "Εκφώνηση και μπράιγ ενός προηγούμενου �
 #. to have this typing status announced by Orca; others find that announcment
 #. unpleasant. Therefore, it is a setting in Orca. This string to be translated
 #. is associated with the command to toggle typing status presentation on or off.
-#: ../src/orca/cmdnames.py:513
+#: ../src/orca/cmdnames.py:519
 msgid "Toggle whether we announce when our buddies are typing."
 msgstr "Επιλογή του αν θα ανακοινώνουμε ότι οι φίλοι μας πληκτρολογούν."
 
@@ -2531,7 +2539,7 @@ msgstr "Επιλογή του αν θα ανακοινώνουμε ότι οι �
 #. messages from #a11y). Therefore, this is a setting in Orca. This string to be
 #. translated is associated with the command to toggle specific room history on
 #. or off.
-#: ../src/orca/cmdnames.py:523
+#: ../src/orca/cmdnames.py:529
 msgid "Toggle whether we provide chat room specific message histories."
 msgstr ""
 "Επιλογή του αν θα παρέχουμε ξεχωριστό ιστορικό μηνυμάτων ανά δωμάτιο "
@@ -2544,7 +2552,7 @@ msgstr ""
 #. has an option to present the name of the room first ("#a11y <joanie> hello!"
 #. instead of "<joanie> hello!"). This string to be translated is associated with
 #. the command to toggle room name presentation on or off.
-#: ../src/orca/cmdnames.py:534
+#: ../src/orca/cmdnames.py:540
 msgid ""
 "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr ""
@@ -2554,63 +2562,63 @@ msgstr ""
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the left.
-#: ../src/orca/cmdnames.py:540
+#: ../src/orca/cmdnames.py:546
 msgid "Line Left"
 msgstr "Γραμμή αριστερά"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the right.
-#: ../src/orca/cmdnames.py:545
+#: ../src/orca/cmdnames.py:551
 msgid "Line Right"
 msgstr "Γραμμή δεξιά"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls up.
-#: ../src/orca/cmdnames.py:550
+#: ../src/orca/cmdnames.py:556
 msgid "Line Up"
 msgstr "Γραμμή πάνω"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls down.
-#: ../src/orca/cmdnames.py:555
+#: ../src/orca/cmdnames.py:561
 msgid "Line Down"
 msgstr "Γραμμή κάτω"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, it instructs the braille display to freeze.
-#: ../src/orca/cmdnames.py:560
+#: ../src/orca/cmdnames.py:566
 msgid "Freeze"
 msgstr "Πάγωμα"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the top left of the window.
-#: ../src/orca/cmdnames.py:565
+#: ../src/orca/cmdnames.py:571
 msgid "Top Left"
 msgstr "Αρχή αριστερά"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the bottom left of the window.
-#: ../src/orca/cmdnames.py:570
+#: ../src/orca/cmdnames.py:576
 msgid "Bottom Left"
 msgstr "Κάτω αριστερά"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to position containing the cursor.
-#: ../src/orca/cmdnames.py:575
+#: ../src/orca/cmdnames.py:581
 msgid "Cursor Position"
 msgstr "Τοποθεσία δρομέα"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display toggles between six-dot braille and eight-dot braille.
-#: ../src/orca/cmdnames.py:580
+#: ../src/orca/cmdnames.py:586
 msgid "Six Dots"
 msgstr "Έξι κουκίδες"
 
@@ -2619,7 +2627,7 @@ msgstr "Έξι κουκίδες"
 #. represents a whole set of buttons known as cursor routing keys and are a way
 #. for a user to move the application's caret to the position indicated on the
 #. display.
-#: ../src/orca/cmdnames.py:587
+#: ../src/orca/cmdnames.py:593
 msgid "Cursor Routing"
 msgstr "Μετακίνηση δρομέα"
 
@@ -2628,7 +2636,7 @@ msgstr "Μετακίνηση δρομέα"
 #. represents the start of a selection operation. It is called "Cut Begin" to map
 #. to what BrlTTY users are used to: in character cell mode operation on virtual
 #. consoles, the act of copying text is erroneously called a "cut" operation.
-#: ../src/orca/cmdnames.py:594
+#: ../src/orca/cmdnames.py:600
 msgid "Cut Begin"
 msgstr "Αρχή αποκοπής"
 
@@ -2637,91 +2645,91 @@ msgstr "Αρχή αποκοπής"
 #. represents marking the endpoint of a selection. It is called "Cut Line" to map
 #. to what BrlTTY users are used to: in character cell mode operation on virtual
 #. consoles, the act of copying text is erroneously called a "cut" operation.
-#: ../src/orca/cmdnames.py:601
+#: ../src/orca/cmdnames.py:607
 msgid "Cut Line"
 msgstr "Τέλος αποκοπής"
 
 #. Translators: this is a command which causes Orca to present the last received
 #. notification message.
-#: ../src/orca/cmdnames.py:605
+#: ../src/orca/cmdnames.py:611
 msgid "Present last notification message."
 msgstr "Παρουσίαση του τελευταίου μηνύματος ειδοποίησης."
 
 #. Translators: this is a command which causes Orca to present a list of all the
 #. notification messages received.
-#: ../src/orca/cmdnames.py:609
+#: ../src/orca/cmdnames.py:615
 msgid "Present notification messages list"
 msgstr "Παρουσίαση λίστας μηνυμάτων ειδοποίησης"
 
 #. Translators: this is a command which causes Orca to present the previous
 #. notification message.
-#: ../src/orca/cmdnames.py:613
+#: ../src/orca/cmdnames.py:619
 msgid "Present previous notification message."
 msgstr "Παρουσίαση προηγούμενου μηνύματος ειδοποίησης."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:616
+#: ../src/orca/cmdnames.py:622
 msgid "Goes to next character."
 msgstr "Μεταβαίνει στον επόμενο χαρακτήρα."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:619
+#: ../src/orca/cmdnames.py:625
 msgid "Goes to previous character."
 msgstr "Μεταβαίνει στον προηγούμενο χαρακτήρα."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:622
+#: ../src/orca/cmdnames.py:628
 msgid "Goes to next word."
 msgstr "Μεταβαίνει στην επόμενη λέξη."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:625
+#: ../src/orca/cmdnames.py:631
 msgid "Goes to previous word."
 msgstr "Μεταβαίνει στην προηγούμενη λέξη."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:628
+#: ../src/orca/cmdnames.py:634
 msgid "Goes to next line."
 msgstr "Μεταβαίνει στην επόμενη γραμμή."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:631
+#: ../src/orca/cmdnames.py:637
 msgid "Goes to previous line."
 msgstr "Μεταβαίνει στην προηγούμενη γραμμή."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:634
+#: ../src/orca/cmdnames.py:640
 msgid "Goes to the top of the file."
 msgstr "Μεταβαίνει στην αρχή του αρχείου."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:637
+#: ../src/orca/cmdnames.py:643
 msgid "Goes to the bottom of the file."
 msgstr "Μεταβαίνει στο τέλος του αρχείου."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:640
+#: ../src/orca/cmdnames.py:646
 msgid "Goes to the beginning of the line."
 msgstr "Μεταβαίνει στην αρχή της επόμενης γραμμής."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:643
+#: ../src/orca/cmdnames.py:649
 msgid "Goes to the end of the line."
 msgstr "Μεταβαίνει στο τέλος της γραμμής."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:646
+#: ../src/orca/cmdnames.py:652
 msgid "Goes to the next object."
 msgstr "Μεταβαίνει στο επόμενο αντικείμενο."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:649
+#: ../src/orca/cmdnames.py:655
 msgid "Goes to the previous object."
 msgstr "Μεταβαίνει στο προηγούμενο αντικείμενο."
 
 #. Translators: this is for causing a collapsed combo box which was reached
 #. by Orca's caret navigation to be expanded.
-#: ../src/orca/cmdnames.py:654
+#: ../src/orca/cmdnames.py:660
 msgid "Causes the current combo box to be expanded."
 msgstr "Προκαλεί την εμφάνιση όλων των πολλαπλών επιλογών του πλαισίου."
 
@@ -2729,7 +2737,7 @@ msgstr "Προκαλεί την εμφάνιση όλων των πολλαπλ�
 #. itself controls how the arrow keys move the caret around HTML content. It's
 #. often broken, so Orca needs to provide its own support. As such, Orca offers
 #. the user the ability to toggle which application is controlling the caret.
-#: ../src/orca/cmdnames.py:661
+#: ../src/orca/cmdnames.py:667
 msgid "Switches between native and screen-reader caret navigation."
 msgstr ""
 "Εναλλάσσει μεταξύ εγγενούς περιήγησης και περιήγησης δρομέα αναγνώστη οθόνης."
@@ -2741,7 +2749,7 @@ msgstr ""
 #. idle ("polite"), and when there is a change ("assertive"). Orca has several
 #. features to facilitate accessing live regions. This string refers to a command
 #. to cycle through the different "politeness" levels.
-#: ../src/orca/cmdnames.py:670
+#: ../src/orca/cmdnames.py:676
 msgid "Advance live region politeness setting."
 msgstr "Προχωρημένη ρύθμιση ευγενικότητας ενεργής περιοχής."
 
@@ -2752,7 +2760,7 @@ msgstr "Προχωρημένη ρύθμιση ευγενικότητας ενε�
 #. idle ("polite"), and when there is a change ("assertive"). Orca has several
 #. features to facilitate accessing live regions. This string refers to a command
 #. to turn off live regions by default.
-#: ../src/orca/cmdnames.py:680
+#: ../src/orca/cmdnames.py:686
 msgid "Set default live region politeness level to off."
 msgstr ""
 "Ρύθμιση προκαθορισμένου επιπέδου ευγενικότητας ενεργής περιοχής ως "
@@ -2762,7 +2770,7 @@ msgstr ""
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #. This string refers to a command for reviewing up to nine stored previous live
 #. messages.
-#: ../src/orca/cmdnames.py:686
+#: ../src/orca/cmdnames.py:692
 msgid "Review live region announcement."
 msgstr "Προεπισκόπηση αναγγελίας ζωντανών περιοχών."
 
@@ -2775,7 +2783,7 @@ msgstr "Προεπισκόπηση αναγγελίας ζωντανών περ�
 #. level of "off") and still manually review recent updates to live regions via
 #. Orca commands for doing so -- as long as the monitoring of live regions is
 #. enabled.
-#: ../src/orca/cmdnames.py:697
+#: ../src/orca/cmdnames.py:703
 msgid "Monitor live regions."
 msgstr "Ζωντανές περιοχές παρακολούθησης οθόνης."
 
@@ -2784,7 +2792,7 @@ msgstr "Ζωντανές περιοχές παρακολούθησης οθόν�
 #. to the object which just appeared as a result of the user hovering the mouse.
 #. If the user is already in the mouse over object, this command will hide the
 #. mouse over and return the user to the object he/she was in.
-#: ../src/orca/cmdnames.py:704
+#: ../src/orca/cmdnames.py:710
 msgid "Moves focus into and away from the current mouse over."
 msgstr ""
 "Εστίαση στο αναδυόμενο αντικείμενο ή επιστροφή εστίασης στο αρχικό "
@@ -2793,7 +2801,7 @@ msgstr ""
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This string refers to
 #. the command to set the row.
-#: ../src/orca/cmdnames.py:709
+#: ../src/orca/cmdnames.py:715
 msgid "Set the row to use as dynamic column headers."
 msgstr "Ρύθμιση της γραμμής για χρήση ως δυναμικής κεφαλίδας στήλης."
 
@@ -2801,14 +2809,14 @@ msgstr "Ρύθμιση της γραμμής για χρήση ως δυναμι
 #. or table should be treated as containing column headers. This string refers to
 #. the command to unset the row so it is no longer treated as if it contained
 #. column headers.
-#: ../src/orca/cmdnames.py:715
+#: ../src/orca/cmdnames.py:721
 msgid "Clears the dynamic column headers."
 msgstr "Καθαρίζει τις δυναμικές επικεφαλίδες στήλης."
 
 #. Translators: Orca allows you to dynamically define which column of a
 #. spreadsheet or table should be treated as containing row headers. This
 #. string refers to the command to set the column.
-#: ../src/orca/cmdnames.py:720
+#: ../src/orca/cmdnames.py:726
 msgid "Set the column to use as dynamic row headers."
 msgstr "Ρύθμιση της στήλης για χρήση ως δυναμικής κεφαλίδας γραμμής."
 
@@ -2816,13 +2824,13 @@ msgstr "Ρύθμιση της στήλης για χρήση ως δυναμικ
 #. spreadsheet or table should be treated as containing column headers. This
 #. string refers to the command to unset the column so it is no longer treated
 #. as if it contained row headers.
-#: ../src/orca/cmdnames.py:726
+#: ../src/orca/cmdnames.py:732
 msgid "Clears the dynamic row headers"
 msgstr "Καθαρισμός των δυναμικών επικεφαλίδων γραμμών"
 
 #. Translators: This string refers to an Orca command. The "input line" refers
 #. to the place where one enters formulas for a spreadsheet.
-#: ../src/orca/cmdnames.py:730
+#: ../src/orca/cmdnames.py:736
 msgid "Presents the contents of the input line."
 msgstr "Παρουσιάζει τα περιεχόμενα της γραμμής εισαγωγής."
 
@@ -2831,361 +2839,361 @@ msgstr "Παρουσιάζει τα περιεχόμενα της γραμμής
 #. heading, Shift H to the previous heading, T to the next table, and so on.
 #. This feature needs to be toggle-able so that it does not interfere with normal
 #. writing functions.
-#: ../src/orca/cmdnames.py:737
+#: ../src/orca/cmdnames.py:743
 msgid "Toggles structural navigation keys."
 msgstr "Κάνει εναλλαγή στα πλήκτρα δομικής πλοήγησης."
 
 #. Translators: this is for navigating among blockquotes in a document.
-#: ../src/orca/cmdnames.py:740
+#: ../src/orca/cmdnames.py:746
 msgid "Goes to previous blockquote."
 msgstr "Μεταβαίνει στην προηγούμενη ενότητα σε παράθεση."
 
 #. Translators: this is for navigating among blockquotes in a document.
-#: ../src/orca/cmdnames.py:743
+#: ../src/orca/cmdnames.py:749
 msgid "Goes to next blockquote."
 msgstr "Μεταβαίνει στην επόμενη ενότητα σε παράθεση."
 
 #. Translators: this is for navigating among blockquotes in a document.
-#: ../src/orca/cmdnames.py:746
+#: ../src/orca/cmdnames.py:752
 msgid "Displays a list of blockquotes."
 msgstr "Εμφανίζει μια λίστα μεγάλων παραθέσεων."
 
 #. Translators: this is for navigating among buttons in a document.
-#: ../src/orca/cmdnames.py:749
+#: ../src/orca/cmdnames.py:755
 msgid "Goes to previous button."
 msgstr "Μεταβαίνει στο προηγούμενο κουμπί."
 
 #. Translators: this is for navigating among buttons in a document.
-#: ../src/orca/cmdnames.py:752
+#: ../src/orca/cmdnames.py:758
 msgid "Goes to next button."
 msgstr "Μεταβαίνει στο επόμενο κουμπί."
 
 #. Translators: this is for navigating among buttons in a document.
-#: ../src/orca/cmdnames.py:755
+#: ../src/orca/cmdnames.py:761
 msgid "Displays a list of buttons."
 msgstr "Εμφανίζει μια λίστα κουμπιών."
 
 #. Translators: this is for navigating among check boxes in a document.
-#: ../src/orca/cmdnames.py:758
+#: ../src/orca/cmdnames.py:764
 msgid "Goes to previous check box."
 msgstr "Μεταβαίνει στο προηγούμενο πλαίσιο επιλογής."
 
 #. Translators: this is for navigating among check boxes in a document.
-#: ../src/orca/cmdnames.py:761
+#: ../src/orca/cmdnames.py:767
 msgid "Goes to next check box."
 msgstr "Μεταβαίνει στο επόμενο πλαίσιο επιλογής."
 
 #. Translators: this is for navigating among check boxes in a document.
-#: ../src/orca/cmdnames.py:764
+#: ../src/orca/cmdnames.py:770
 msgid "Displays a list of check boxes."
 msgstr "Εμφανίζει μια λίστα πλαισίων επιλογής."
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
-#: ../src/orca/cmdnames.py:768
+#: ../src/orca/cmdnames.py:774
 msgid "Goes to previous clickable."
 msgstr "Μεταβαίνει στο προηγούμενο επιλέξιμο."
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
-#: ../src/orca/cmdnames.py:772
+#: ../src/orca/cmdnames.py:778
 msgid "Goes to next clickable."
 msgstr "Μεταβαίνει στο επόμενο επιλέξιμο."
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
-#: ../src/orca/cmdnames.py:776
+#: ../src/orca/cmdnames.py:782
 msgid "Displays a list of clickables."
 msgstr "Εμφανίζει μια λίστα επιλέξιμων."
 
 #. Translators: this is for navigating among combo boxes in a document.
-#: ../src/orca/cmdnames.py:779
+#: ../src/orca/cmdnames.py:785
 msgid "Goes to previous combo box."
 msgstr "Μεταβαίνει στο προηγούμενο πλαίσιο πολλαπλών επιλογών."
 
 #. Translators: this is for navigating among combo boxes in a document.
-#: ../src/orca/cmdnames.py:782
+#: ../src/orca/cmdnames.py:788
 msgid "Goes to next combo box."
 msgstr "Μεταβαίνει στο επόμενο πλαίσιο πολλαπλών επιλογών."
 
 #. Translators: this is for navigating among combo boxes in a document.
-#: ../src/orca/cmdnames.py:785
+#: ../src/orca/cmdnames.py:791
 msgid "Displays a list of combo boxes."
 msgstr "Εμφανίζει μια λίστα πλαισίων πολλαπλών επιλογών."
 
 #. Translators: this is for navigating among entries in a document.
-#: ../src/orca/cmdnames.py:788
+#: ../src/orca/cmdnames.py:794
 msgid "Goes to previous entry."
 msgstr "Μεταβαίνει στην προηγούμενη καταχώριση."
 
 #. Translators: this is for navigating among entries in a document.
-#: ../src/orca/cmdnames.py:791
+#: ../src/orca/cmdnames.py:797
 msgid "Goes to next entry."
 msgstr "Μεταβαίνει στην επόμενη καταχώριση."
 
 #. Translators: this is for navigating among entries in a document.
-#: ../src/orca/cmdnames.py:794
+#: ../src/orca/cmdnames.py:800
 msgid "Displays a list of entries."
 msgstr "Εμφανίζει μια λίστα καταχωρίσεων."
 
 #. Translators: this is for navigating among form fields in a document.
-#: ../src/orca/cmdnames.py:797
+#: ../src/orca/cmdnames.py:803
 msgid "Goes to previous form field."
 msgstr "Μεταβαίνει στο προηγούμενο πεδίο μορφοποίησης."
 
 #. Translators: this is for navigating among form fields in a document.
-#: ../src/orca/cmdnames.py:800
+#: ../src/orca/cmdnames.py:806
 msgid "Goes to next form field."
 msgstr "Μεταβαίνει στο επόμενο πεδίο μορφοποίησης."
 
 #. Translators: this is for navigating among form fields in a document.
-#: ../src/orca/cmdnames.py:803
+#: ../src/orca/cmdnames.py:809
 msgid "Displays a list of form fields."
 msgstr "Εμφανίζει μια λίστα πεδίων φόρμας."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
-#: ../src/orca/cmdnames.py:806
+#: ../src/orca/cmdnames.py:812
 msgid "Goes to previous heading."
 msgstr "Μεταβαίνει στην προηγούμενη επικεφαλίδα."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
-#: ../src/orca/cmdnames.py:809
+#: ../src/orca/cmdnames.py:815
 msgid "Goes to next heading."
 msgstr "Μεταβαίνει στην επόμενη επικεφαλίδα."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
-#: ../src/orca/cmdnames.py:812
+#: ../src/orca/cmdnames.py:818
 msgid "Displays a list of headings."
 msgstr "Εμφανίζει μια λίστα κεφαλίδων."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
-#: ../src/orca/cmdnames.py:816
+#: ../src/orca/cmdnames.py:822
 #, python-format
 msgid "Goes to previous heading at level %d."
 msgstr "Μεταβαίνει στην προηγούμενη επικεφαλίδα στο επίπεδο %d."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
-#: ../src/orca/cmdnames.py:820
+#: ../src/orca/cmdnames.py:826
 #, python-format
 msgid "Goes to next heading at level %d."
 msgstr "Μεταβαίνει στην επόμενη επικεφαλίδα στο επίπεδο %d."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
-#: ../src/orca/cmdnames.py:824
+#: ../src/orca/cmdnames.py:830
 #, python-format
 msgid "Displays a list of headings at level %d."
 msgstr "Εμφανίζει μια λίστα κεφαλίδων στο επίπεδο %d."
 
 #. Translators: this is for navigating among images in a document.
-#: ../src/orca/cmdnames.py:827
+#: ../src/orca/cmdnames.py:833
 msgid "Goes to previous image."
 msgstr "Μεταβαίνει στην προηγούμενη εικόνα."
 
 #. Translators: this is for navigating among images in a document.
-#: ../src/orca/cmdnames.py:830
+#: ../src/orca/cmdnames.py:836
 msgid "Goes to next image."
 msgstr "Μεταβαίνει στην επόμενη εικόνα."
 
 #. Translators: this is for navigating among images in a document.
-#: ../src/orca/cmdnames.py:833
+#: ../src/orca/cmdnames.py:839
 msgid "Displays a list of images."
 msgstr "Εμφανίζει μια λίστα εικόνων."
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
-#: ../src/orca/cmdnames.py:838
+#: ../src/orca/cmdnames.py:844
 msgid "Goes to previous landmark."
 msgstr "Μεταβαίνει στο προηγούμενο ορόσημο."
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
-#: ../src/orca/cmdnames.py:843
+#: ../src/orca/cmdnames.py:849
 msgid "Goes to next landmark."
 msgstr "Μεταβαίνει στο επόμενο ορόσημο."
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
-#: ../src/orca/cmdnames.py:848
+#: ../src/orca/cmdnames.py:854
 msgid "Displays a list of landmarks."
 msgstr "Εμφανίζει μια λίστα οροσήμων."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/cmdnames.py:853
+#: ../src/orca/cmdnames.py:859
 msgid "Goes to previous large object."
 msgstr "Μεταβαίνει στο προηγούμενο μεγάλο αντικείμενο."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/cmdnames.py:858
+#: ../src/orca/cmdnames.py:864
 msgid "Goes to next large object."
 msgstr "Μεταβαίνει στο επόμενο μεγάλο αντικείμενο."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/cmdnames.py:863
+#: ../src/orca/cmdnames.py:869
 msgid "Displays a list of large objects."
 msgstr "Εμφανίζει μια λίστα με μεγάλα αντικείμενα."
 
 #. Translators: this is for navigating among links in a document.
-#: ../src/orca/cmdnames.py:866
+#: ../src/orca/cmdnames.py:872
 msgid "Goes to previous link."
 msgstr "Μεταβαίνει στον προηγούμενο σύνδεσμο."
 
 #. Translators: this is for navigating among links in a document.
-#: ../src/orca/cmdnames.py:869
+#: ../src/orca/cmdnames.py:875
 msgid "Goes to next link."
 msgstr "Μεταβαίνει στον επόμενο σύνδεσμο."
 
 #. Translators: this is for navigating among links in a document.
-#: ../src/orca/cmdnames.py:872
+#: ../src/orca/cmdnames.py:878
 msgid "Displays a list of links."
 msgstr "Εμφανίζει μια λίστα συνδέσμων."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:875
+#: ../src/orca/cmdnames.py:881
 msgid "Goes to previous list."
 msgstr "Μεταβαίνει στην προηγούμενη λίστα."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:878
+#: ../src/orca/cmdnames.py:884
 msgid "Goes to next list."
 msgstr "Μεταβαίνει στην επόμενη λίστα."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:881
+#: ../src/orca/cmdnames.py:887
 msgid "Displays a list of lists."
 msgstr "Εμφανίζει έναν κατάλογο από λίστες."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:884
+#: ../src/orca/cmdnames.py:890
 msgid "Goes to previous list item."
 msgstr "Μεταβαίνει στην προηγούμενη λίστα αντικειμένων."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:887
+#: ../src/orca/cmdnames.py:893
 msgid "Goes to next list item."
 msgstr "Μεταβαίνει στην επόμενη λίστα αντικειμένων."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:890
+#: ../src/orca/cmdnames.py:896
 msgid "Displays a list of list items."
 msgstr "Εμφανίζει έναν κατάλογο από στοιχεία λίστας."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:895
+#: ../src/orca/cmdnames.py:901
 msgid "Goes to previous live region."
 msgstr "Μεταβαίνει στην προηγούμενη ενεργή περιοχή."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:900
+#: ../src/orca/cmdnames.py:906
 msgid "Goes to next live region."
 msgstr "Μεταβαίνει στην επόμενη ενεργή περιοχή."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:905
+#: ../src/orca/cmdnames.py:911
 msgid "Goes to the last live region which made an announcement."
 msgstr "Μετάβαση στην τελευταία ενεργή περιοχή που έκανε μια ανακοίνωση."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:908
+#: ../src/orca/cmdnames.py:914
 msgid "Goes to previous paragraph."
 msgstr "Μεταβαίνει στην προηγούμενη παράγραφο."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:911
+#: ../src/orca/cmdnames.py:917
 msgid "Goes to next paragraph."
 msgstr "Μεταβαίνει στην επόμενη παράγραφο."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:914
+#: ../src/orca/cmdnames.py:920
 msgid "Displays a list of paragraphs."
 msgstr "Εμφανίζει μια λίστα παραγράφων."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:917
+#: ../src/orca/cmdnames.py:923
 msgid "Goes to previous radio button."
 msgstr "Μεταβαίνει στο προηγούμενο επιλέξιμο κουμπί."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:920
+#: ../src/orca/cmdnames.py:926
 msgid "Goes to next radio button."
 msgstr "Μεταβαίνει στο επόμεν επιλέξιμο κουμπί."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:923
+#: ../src/orca/cmdnames.py:929
 msgid "Displays a list of radio buttons."
 msgstr "Εμφανίζει μια λίστα ραδιοπλήκτρων."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:927
+#: ../src/orca/cmdnames.py:933
 msgid "Goes to previous separator."
 msgstr "Μεταβαίνει στον προηγούμενο οριοθέτη."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:931
+#: ../src/orca/cmdnames.py:937
 msgid "Goes to next separator."
 msgstr "Μεταβαίνει στον επόμενο οριοθέτη."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:934
+#: ../src/orca/cmdnames.py:940
 msgid "Goes to previous table."
 msgstr "Μεταβαίνει στον προηγούμενο πίνακα."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:937
+#: ../src/orca/cmdnames.py:943
 msgid "Goes to next table."
 msgstr "Μεταβαίνει στον επόμενο πίνακα."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:940
+#: ../src/orca/cmdnames.py:946
 msgid "Displays a list of tables."
 msgstr "Εμφανίζει μια λίστα πινάκων."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:943
+#: ../src/orca/cmdnames.py:949
 msgid "Goes down one cell."
 msgstr "Μεταβαίνει προς τα κάτω κατά ένα κελί."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:946
+#: ../src/orca/cmdnames.py:952
 msgid "Goes to the first cell in a table."
 msgstr "Μεταβαίνει στο πρώτο κελί του πίνακα."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:949
+#: ../src/orca/cmdnames.py:955
 msgid "Goes to the last cell in a table."
 msgstr "Μεταβαίνει στο τελευταίο κελί του πίνακα."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:952
+#: ../src/orca/cmdnames.py:958
 msgid "Goes left one cell."
 msgstr "Μεταβαίνει αριστερά κατά ένα κελί."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:955
+#: ../src/orca/cmdnames.py:961
 msgid "Goes right one cell."
 msgstr "Μεταβαίνει δεξιά κατά ένα κελί."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:958
+#: ../src/orca/cmdnames.py:964
 msgid "Goes up one cell."
 msgstr "Μεταβαίνει προς τα πάνω κατά ένα κελί."
 
@@ -3203,7 +3211,7 @@ msgstr "Μεταβαίνει προς τα πάνω κατά ένα κελί."
 #. key presses as something that should be handled by the focused widget.
 #. This string is associated with the Orca command to manually switch
 #. between these two modes.
-#: ../src/orca/cmdnames.py:974
+#: ../src/orca/cmdnames.py:980
 msgid "Switches between browse mode and focus mode."
 msgstr "Εναλλαγή μεταξύ λειτουργίας περιήγησης και λειτουργίας εστίασης."
 
@@ -3216,37 +3224,37 @@ msgstr "Εναλλαγή μεταξύ λειτουργίας περιήγηση�
 #. navigation and use interaction model. As a result, Orca has a command which
 #. enables setting a "sticky" focus mode which disables all automatic toggling.
 #. This string is associated with the Orca command to enable sticky focus mode.
-#: ../src/orca/cmdnames.py:985
+#: ../src/orca/cmdnames.py:991
 msgid "Enables sticky focus mode."
 msgstr "Ενεργοποιεί την κολλώδη λειτουργία εστίασης."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:988
+#: ../src/orca/cmdnames.py:994
 msgid "Goes to previous unvisited link."
 msgstr "Μεταβαίνει στον προηγούμενο σύνδεσμο που δεν έχει επισκεφθεί."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:991
+#: ../src/orca/cmdnames.py:997
 msgid "Goes to next unvisited link."
 msgstr "Μεταβαίνει στον επόμενο σύνδεσμο που δεν έχει επισκεφθεί."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:994
+#: ../src/orca/cmdnames.py:1000
 msgid "Displays a list of unvisited links."
 msgstr "Εμφανίζει μια λίστα με ανεπίσκεπτους συνδέσμους."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:997
+#: ../src/orca/cmdnames.py:1003
 msgid "Goes to previous visited link."
 msgstr "Μεταβαίνει στον προηγούμενο σύνδεσμο που έχει επισκεφθεί."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:1000
+#: ../src/orca/cmdnames.py:1006
 msgid "Goes to next visited link."
 msgstr "Μεταβαίνει στον επόμενο σύνδεσμο που έχει επισκεφθεί."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:1003
+#: ../src/orca/cmdnames.py:1009
 msgid "Displays a list of visited links."
 msgstr "Εμφανίζει μια λίστα με ανεπίσκεπτους συνδέσμους."
 
@@ -4368,8 +4376,8 @@ msgstr "κίτρινη οθόνη"
 #.
 #: ../src/orca/flat_review.py:1045 ../src/orca/generator.py:495
 #: ../src/orca/generator.py:761 ../src/orca/generator.py:803
-#: ../src/orca/generator.py:849 ../src/orca/tutorialgenerator.py:558
-#: ../src/orca/tutorialgenerator.py:598
+#: ../src/orca/generator.py:849 ../src/orca/tutorialgenerator.py:562
+#: ../src/orca/tutorialgenerator.py:602
 msgid "toggle"
 msgstr "εναλλαγή"
 
@@ -4400,7 +4408,6 @@ msgstr "Ε_νεργοποίηση"
 #. If this setting is not enabled, the second press of "e" would continue to be
 #. a navigation command to move amongst entries.
 #: ../src/orca/guilabels.py:58
-#| msgid "Enable _structural navigation"
 msgid "Automatic focus mode during structural navigation"
 msgstr "Αυτόματη λειτουργία εστίασης κατά τη δομική πλοήγηση"
 
@@ -4513,6 +4520,20 @@ msgstr "Ένα κανάλι μόνο αν το _παράθυρό του είνα
 msgid "_Speak Chat Room name"
 msgstr "_Εκφώνηση ονόματος δωματίου συνομιλίας"
 
+#. Translators: When presenting the content of a line on a web page, Orca by
+#. default presents the full line, including any links or form fields on that
+#. line, in order to reflect the on-screen layout as seen by sighted users.
+#. Not all users like this presentation, however, and prefer to have objects
+#. treated as if they were on individual lines, such as is done by Windows
+#. screen readers, so that unrelated objects (e.g. links in a navbar) are not
+#. all jumbled together. As a result, this is now configurable. If layout mode
+#. is enabled, Orca will present the full line as it appears on the screen; if
+#. it is disabled, Orca will treat each object as if it were on a separate line,
+#. both for presentation and navigation.
+#: ../src/orca/guilabels.py:150
+msgid "Enable layout mode for content"
+msgstr "Ενεργοποίηση λειτουργίας διάταξης για το περιεχόμενο"
+
 #. Translators: Orca's keybindings support double and triple "clicks" or key
 #. presses, similar to using a mouse. This string appears in Orca's preferences
 #. dialog after a keybinding which requires a double click.
@@ -4520,7 +4541,7 @@ msgstr "_Εκφώνηση ονόματος δωματίου συνομιλίας
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/guilabels.py:143 ../src/orca/keybindings.py:195
+#: ../src/orca/guilabels.py:155 ../src/orca/keybindings.py:195
 msgid "double click"
 msgstr "διπλό κλικ"
 
@@ -4531,7 +4552,7 @@ msgstr "διπλό κλικ"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/guilabels.py:148 ../src/orca/keybindings.py:201
+#: ../src/orca/guilabels.py:160 ../src/orca/keybindings.py:201
 msgid "triple click"
 msgstr "τριπλό κλικ"
 
@@ -4539,7 +4560,7 @@ msgstr "τριπλό κλικ"
 #. engines as a special item. It refers to the default engine configured within
 #. the speech subsystem. Apart from this item, the user will have a chance to
 #. select a particular speech engine by its real name (Festival, IBMTTS, etc.)
-#: ../src/orca/guilabels.py:154
+#: ../src/orca/guilabels.py:166
 msgid "Default Synthesizer"
 msgstr "Προκαθορισμένος συνθέτης"
 
@@ -4549,7 +4570,7 @@ msgstr "Προκαθορισμένος συνθέτης"
 #. word) or doesn't pronounce as the user desires (e.g. an acronym) by providing
 #. an alternative string. The "Actual String" here refers to the word to be
 #. corrected as it would actually appear in text being read. Example: "LOL".
-#: ../src/orca/guilabels.py:162
+#: ../src/orca/guilabels.py:174
 msgid "Actual String"
 msgstr "Ενεργή συμβολοσειρά"
 
@@ -4560,7 +4581,7 @@ msgstr "Ενεργή συμβολοσειρά"
 #. an alternative string. The "Replacement String" here refers to how the user
 #. would like the "Actual String" to be pronounced by the speech synthesizer.
 #. Example: "L O L" or "Laughing Out Loud" (for Actual String "LOL").
-#: ../src/orca/guilabels.py:171
+#: ../src/orca/guilabels.py:183
 msgid "Replacement String"
 msgstr "Συμβολοσειρά αντικατάστασης"
 
@@ -4569,7 +4590,7 @@ msgstr "Συμβολοσειρά αντικατάστασης"
 #. being pressed, "character echo" presents the character/string of length 1 that
 #. is inserted as a result of the keypress.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/guilabels.py:177 ../src/orca/orca-setup.ui.h:113
+#: ../src/orca/guilabels.py:189 ../src/orca/orca-setup.ui.h:113
 msgid "Enable echo by cha_racter"
 msgstr "Ενεργοποίηση ανακοίνωσης _χαρακτήρων"
 
@@ -4577,7 +4598,7 @@ msgstr "Ενεργοποίηση ανακοίνωσης _χαρακτήρων"
 #. by the user. This string refers to a "key echo" option. When this option is
 #. enabled, dead keys will be announced when pressed.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/guilabels.py:182 ../src/orca/orca-setup.ui.h:111
+#: ../src/orca/guilabels.py:194 ../src/orca/orca-setup.ui.h:111
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Ενεργοποίηση για συνδυαζόμενα _διακριτικά σημεία"
 
@@ -4585,20 +4606,20 @@ msgstr "Ενεργοποίηση για συνδυαζόμενα _διακριτ
 #. active application for on screen text and widgets. This label is associated
 #. with the setting to begin the search from the current location rather than
 #. from the top of the screen.
-#: ../src/orca/guilabels.py:188 ../src/orca/orca-find.ui.h:9
+#: ../src/orca/guilabels.py:200 ../src/orca/orca-find.ui.h:9
 msgid "C_urrent location"
 msgstr "_Τρέχουσα τοποθεσία"
 
 #. Translators: This is the label for a spinbutton. This option allows the user
 #. to specify the number of matched characters that must be present before Orca
 #. speaks the line that contains the results from an application's Find toolbar.
-#: ../src/orca/guilabels.py:193
+#: ../src/orca/guilabels.py:205
 msgid "Minimum length of matched text:"
 msgstr "Ελάχιστο μήκος κειμένου που ταιριάζει:"
 
 #. Translators: This is the label of a panel containing options for what Orca
 #. presents when the user is in the Find toolbar of an application, e.g. Firefox.
-#: ../src/orca/guilabels.py:197
+#: ../src/orca/guilabels.py:209
 msgid "Find Options"
 msgstr "Εύρεση επιλογών"
 
@@ -4606,7 +4627,7 @@ msgstr "Εύρεση επιλογών"
 #. the line that contains the match from an application's Find toolbar should
 #. always be spoken, or only spoken if it is a different line than the line
 #. which contained the last match.
-#: ../src/orca/guilabels.py:203
+#: ../src/orca/guilabels.py:215
 msgid "Onl_y speak changed lines during find"
 msgstr "Εκφώνηση _μόνο των διαφοροποιημένων γραμμών κατά την αναζήτηση"
 
@@ -4614,7 +4635,7 @@ msgstr "Εκφώνηση _μόνο των διαφοροποιημένων γρ�
 #. not Orca will automatically speak the line that contains the match while the
 #. user is performing a search from the Find toolbar of an application, e.g.
 #. Firefox.
-#: ../src/orca/guilabels.py:209
+#: ../src/orca/guilabels.py:221
 msgid "Speak results during _find"
 msgstr "Εκφώνηση αποτελεσμάτων κατά τη διάρκεια της _αναζήτησης"
 
@@ -4628,14 +4649,14 @@ msgstr "Εκφώνηση αποτελεσμάτων κατά τη διάρκει
 #. Translators: Function is a table column header where the cells in the column
 #. are a sentence that briefly describes what action Orca will take if and when
 #. the user invokes that keyboard command.
-#: ../src/orca/guilabels.py:214
+#: ../src/orca/guilabels.py:226
 msgid "Function"
 msgstr "Λειτουργία"
 
 #. Translators: Key Binding is a table column header where the cells in the
 #. column represent keyboard combinations the user can press to invoke Orca
 #. commands.
-#: ../src/orca/guilabels.py:219
+#: ../src/orca/guilabels.py:231
 msgid "Key Binding"
 msgstr "Συνδυασμός πλήκτρων"
 
@@ -4643,7 +4664,7 @@ msgstr "Συνδυασμός πλήκτρων"
 #. Translators: This string is a label for the group of Orca commands which
 #. can be used in any setting, task, or application. They are not specific
 #. to, for instance, web browsing.
-#: ../src/orca/guilabels.py:224
+#: ../src/orca/guilabels.py:236
 msgctxt "keybindings"
 msgid "Default"
 msgstr "Προεπιλογή"
@@ -4652,7 +4673,7 @@ msgstr "Προεπιλογή"
 #. user to create input gestures from the braille device. The braille bindings
 #. are what determine the actions Orca will take when the user presses these
 #. buttons.
-#: ../src/orca/guilabels.py:230
+#: ../src/orca/guilabels.py:242
 msgid "Braille Bindings"
 msgstr "Συνδυασμοί μπράιγ"
 
@@ -4662,7 +4683,7 @@ msgstr "Συνδυασμοί μπράιγ"
 # 48x48/emblems/emblem-sound.icon.in.h:1
 #. Translators: This string is a label for the group of Orca commands which
 #. do not currently have an associated key binding.
-#: ../src/orca/guilabels.py:234
+#: ../src/orca/guilabels.py:246
 msgid "Unbound"
 msgstr "Χωρίς συνδυασμό"
 
@@ -4670,13 +4691,13 @@ msgstr "Χωρίς συνδυασμό"
 #. This column contains a checkbox which indicates whether a key binding
 #. for an Orca command has been changed by the user to something other than its
 #. default value.
-#: ../src/orca/guilabels.py:240
+#: ../src/orca/guilabels.py:252
 msgctxt "keybindings"
 msgid "Modified"
 msgstr "Τροποποιημένο"
 
 #. Translators: This label refers to the keyboard layout (desktop or laptop).
-#: ../src/orca/guilabels.py:243 ../src/orca/orca-setup.ui.h:20
+#: ../src/orca/guilabels.py:255 ../src/orca/orca-setup.ui.h:20
 msgid "_Desktop"
 msgstr "_Επιφάνεια εργασίας"
 
@@ -4686,7 +4707,7 @@ msgstr "_Επιφάνεια εργασίας"
 #. title of Orca's application-specific preferences dialog for an application.
 #. The string substituted in is the accessible name of the application (e.g.
 #. "Gedit", "Firefox", etc.
-#: ../src/orca/guilabels.py:251
+#: ../src/orca/guilabels.py:263
 #, python-format
 msgid "Screen Reader Preferences for %s"
 msgstr "Προτιμήσεις του αναγνώστη οθόνης για το %s"
@@ -4696,7 +4717,7 @@ msgstr "Προτιμήσεις του αναγνώστη οθόνης για τ�
 #. or attribute by "marking" it in braille. "Marking" is not the same as writing
 #. out the word; instead marking refers to adding some other indicator, e.g.
 #. "underlining" with braille dots 7-8 a word that is bold.
-#: ../src/orca/guilabels.py:258
+#: ../src/orca/guilabels.py:270
 msgid "Mark in braille"
 msgstr "Σημείωση στο μπράιγ"
 
@@ -4710,7 +4731,7 @@ msgstr "Σημείωση στο μπράιγ"
 #. stating that he/she would like to have underlined text announced for all cases
 #. (single, double, low, etc.) except when the value of underline is none (i.e.
 #. when it's not underlined). "Present" here is being used as a verb.
-#: ../src/orca/guilabels.py:270
+#: ../src/orca/guilabels.py:282
 msgid "Present Unless"
 msgstr "Χρήση του τρέχοντος εκτός κι αν"
 
@@ -4719,7 +4740,7 @@ msgstr "Χρήση του τρέχοντος εκτός κι αν"
 #. item or attribute (e.g. saying "Bold" as part of the information presented
 #. when the user gives the Orca command to obtain the format and font details of
 #. the current text).
-#: ../src/orca/guilabels.py:277
+#: ../src/orca/guilabels.py:289
 msgid "Speak"
 msgstr "Εκφώνηση"
 
@@ -4728,7 +4749,7 @@ msgstr "Εκφώνηση"
 #. A "user profile" is a collection of settings which apply to a given task, such
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
-#: ../src/orca/guilabels.py:284
+#: ../src/orca/guilabels.py:296
 msgid "Save Profile As Conflict"
 msgstr "Αποθήκευση προφίλ ως διένεξη"
 
@@ -4737,7 +4758,7 @@ msgstr "Αποθήκευση προφίλ ως διένεξη"
 #. A "user profile" is a collection of settings which apply to a given task, such
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
-#: ../src/orca/guilabels.py:291
+#: ../src/orca/guilabels.py:303
 msgid "User Profile Conflict!"
 msgstr "Διένεξη προφίλ χρήστη!"
 
@@ -4746,7 +4767,7 @@ msgstr "Διένεξη προφίλ χρήστη!"
 #. A "user profile" is a collection of settings which apply to a given task, such
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
-#: ../src/orca/guilabels.py:298
+#: ../src/orca/guilabels.py:310
 #, python-format
 msgid ""
 "Profile %s already exists.\n"
@@ -4761,7 +4782,7 @@ msgstr ""
 #. collection of settings which apply to a given task such as a "Spanish" profile
 #. which would use Spanish text-to-speech and Spanish braille and selected when
 #. reading Spanish content.
-#: ../src/orca/guilabels.py:308
+#: ../src/orca/guilabels.py:320
 msgid "Load user profile"
 msgstr "Φόρτωση προφίλ χρήστη"
 
@@ -4771,7 +4792,7 @@ msgstr "Φόρτωση προφίλ χρήστη"
 #. collection of settings which apply to a given task such as a "Spanish" profile
 #. which would use Spanish text-to-speech and Spanish braille and selected when
 #. reading Spanish content.
-#: ../src/orca/guilabels.py:317
+#: ../src/orca/guilabels.py:329
 msgid ""
 "You are about to change the active profile. If you\n"
 "have just made changes in your preferences, they will\n"
@@ -4791,7 +4812,7 @@ msgstr ""
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text. The
 #. following string is the title of a dialog in which users can save a newly-
 #. defined profile.
-#: ../src/orca/guilabels.py:328
+#: ../src/orca/guilabels.py:340
 msgid "Save Profile As"
 msgstr "Αποθήκευση προφίλ ως"
 
@@ -4801,7 +4822,7 @@ msgstr "Αποθήκευση προφίλ ως"
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text. The
 #. following string is the label for a text entry in which the user enters the
 #. name of a new settings profile being saved via the 'Save Profile As' dialog.
-#: ../src/orca/guilabels.py:336
+#: ../src/orca/guilabels.py:348
 msgid "_Profile Name:"
 msgstr "Όνομα _προφίλ:"
 
@@ -4809,7 +4830,7 @@ msgstr "Όνομα _προφίλ:"
 #. should be announced. Choosing "All" means that Orca will present progress bar
 #. updates regardless of what application and window they happen to be in.
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: ../src/orca/guilabels.py:341 ../src/orca/orca-setup.ui.h:8
+#: ../src/orca/guilabels.py:353 ../src/orca/orca-setup.ui.h:8
 msgctxt "ProgressBar"
 msgid "All"
 msgstr "Όλα"
@@ -4818,7 +4839,7 @@ msgstr "Όλα"
 #. should be announced. Choosing "Application" means that Orca will present
 #. progress bar updates as long as the progress bar is in the active application
 #. (but not necessarily in the current window).
-#: ../src/orca/guilabels.py:347
+#: ../src/orca/guilabels.py:359
 msgctxt "ProgressBar"
 msgid "Application"
 msgstr "Εφαρμογή"
@@ -4826,7 +4847,7 @@ msgstr "Εφαρμογή"
 #. Translators: Orca has a setting which determines which progress bar updates
 #. should be announced. Choosing "Window" means that Orca will present progress
 #. bar updates as long as the progress bar is in the active window.
-#: ../src/orca/guilabels.py:352
+#: ../src/orca/guilabels.py:364
 msgctxt "ProgressBar"
 msgid "Window"
 msgstr "Παράθυρο"
@@ -4834,7 +4855,7 @@ msgstr "Παράθυρο"
 #. Translators: If this setting is chosen, no punctuation symbols will be spoken
 #. as a user reads a document.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
-#: ../src/orca/guilabels.py:356 ../src/orca/orca-setup.ui.h:66
+#: ../src/orca/guilabels.py:368 ../src/orca/orca-setup.ui.h:66
 msgctxt "punctuation level"
 msgid "_None"
 msgstr "_Κανένα"
@@ -4842,25 +4863,25 @@ msgstr "_Κανένα"
 #. Translators: If this setting is chosen, common punctuation symbols (like
 #. comma, period, question mark) will not be spoken as a user reads a document,
 #. but less common symbols (such as #, @, $) will.
-#: ../src/orca/guilabels.py:361 ../src/orca/orca-setup.ui.h:67
+#: ../src/orca/guilabels.py:373 ../src/orca/orca-setup.ui.h:67
 msgid "So_me"
 msgstr "_Κάποια"
 
 #. Translators: If this setting is chosen, the majority of punctuation symbols
 #. will be spoken as a user reads a document.
-#: ../src/orca/guilabels.py:365 ../src/orca/orca-setup.ui.h:68
+#: ../src/orca/guilabels.py:377 ../src/orca/orca-setup.ui.h:68
 msgid "M_ost"
 msgstr "_Περισσότερα"
 
 #. Translators: If this setting is chosen and the user is reading over an entire
 #. document, Orca will pause at the end of each line.
-#: ../src/orca/guilabels.py:369 ../src/orca/orca-setup.ui.h:5
+#: ../src/orca/guilabels.py:381 ../src/orca/orca-setup.ui.h:5
 msgid "Line"
 msgstr "Γραμμή"
 
 #. Translators: If this setting is chosen and the user is reading over an entire
 #. document, Orca will pause at the end of each sentence.
-#: ../src/orca/guilabels.py:373 ../src/orca/orca-setup.ui.h:6
+#: ../src/orca/guilabels.py:385 ../src/orca/orca-setup.ui.h:6
 msgid "Sentence"
 msgstr "Πρόταση"
 
@@ -4868,7 +4889,7 @@ msgstr "Πρόταση"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a blockquote.
-#: ../src/orca/guilabels.py:379
+#: ../src/orca/guilabels.py:391
 msgctxt "structural navigation"
 msgid "Blockquote"
 msgstr "Μεγάλη παράθεση"
@@ -4877,7 +4898,7 @@ msgstr "Μεγάλη παράθεση"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a button.
-#: ../src/orca/guilabels.py:385
+#: ../src/orca/guilabels.py:397
 msgctxt "structural navigation"
 msgid "Button"
 msgstr "Κουμπί"
@@ -4886,7 +4907,7 @@ msgstr "Κουμπί"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the caption of a table.
-#: ../src/orca/guilabels.py:391
+#: ../src/orca/guilabels.py:403
 msgctxt "structural navigation"
 msgid "Caption"
 msgstr "Λεζάντα"
@@ -4895,7 +4916,7 @@ msgstr "Λεζάντα"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a check box.
-#: ../src/orca/guilabels.py:397
+#: ../src/orca/guilabels.py:409
 msgctxt "structural navigation"
 msgid "Check Box"
 msgstr "Πλαίσιο επιλογής"
@@ -4904,7 +4925,7 @@ msgstr "Πλαίσιο επιλογής"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text displayed for a web element with an "onClick" handler.
-#: ../src/orca/guilabels.py:403
+#: ../src/orca/guilabels.py:415
 msgctxt "structural navigation"
 msgid "Clickable"
 msgstr "Επιλέξιμο"
@@ -4913,7 +4934,7 @@ msgstr "Επιλέξιμο"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the selected item in a combo box.
-#: ../src/orca/guilabels.py:409
+#: ../src/orca/guilabels.py:421
 msgctxt "structural navigation"
 msgid "Combo Box"
 msgstr "Πλαίσιο πολλαπλών επιλογών"
@@ -4922,7 +4943,7 @@ msgstr "Πλαίσιο πολλαπλών επιλογών"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the description of an element.
-#: ../src/orca/guilabels.py:415
+#: ../src/orca/guilabels.py:427
 msgctxt "structural navigation"
 msgid "Description"
 msgstr "Περιγραφή"
@@ -4931,7 +4952,7 @@ msgstr "Περιγραφή"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a heading.
-#: ../src/orca/guilabels.py:421
+#: ../src/orca/guilabels.py:433
 msgctxt "structural navigation"
 msgid "Heading"
 msgstr "Kεφαλίδα"
@@ -4940,7 +4961,7 @@ msgstr "Kεφαλίδα"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text (alt text, title, etc.) associated with an image.
-#: ../src/orca/guilabels.py:427
+#: ../src/orca/guilabels.py:439
 msgctxt "structural navigation"
 msgid "Image"
 msgstr "Εικόνα"
@@ -4949,7 +4970,7 @@ msgstr "Εικόνα"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a form field.
-#: ../src/orca/guilabels.py:433
+#: ../src/orca/guilabels.py:445
 msgctxt "structural navigation"
 msgid "Label"
 msgstr "Ετικέτα"
@@ -4960,7 +4981,7 @@ msgstr "Ετικέτα"
 #. contains the text of a landmark. ARIA role landmarks are the W3C defined HTML
 #. tag attribute 'role' used to identify important part of webpage like banners,
 #. main context, search etc.
-#: ../src/orca/guilabels.py:441
+#: ../src/orca/guilabels.py:453
 msgctxt "structural navigation"
 msgid "Landmark"
 msgstr "Ορόσημο"
@@ -4970,7 +4991,7 @@ msgstr "Ορόσημο"
 #. could with native keyboard navigation. This is the title of a column which
 #. contains the level of a heading. Level will be a "1" for <h1>, a "2" for <h2>,
 #. and so on.
-#: ../src/orca/guilabels.py:448
+#: ../src/orca/guilabels.py:460
 msgctxt "structural navigation"
 msgid "Level"
 msgstr "Επίπεδο"
@@ -4979,7 +5000,7 @@ msgstr "Επίπεδο"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a link.
-#: ../src/orca/guilabels.py:454
+#: ../src/orca/guilabels.py:466
 msgctxt "structural navigation"
 msgid "Link"
 msgstr "Σύνδεσμος"
@@ -4988,7 +5009,7 @@ msgstr "Σύνδεσμος"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list.
-#: ../src/orca/guilabels.py:460
+#: ../src/orca/guilabels.py:472
 msgctxt "structural navigation"
 msgid "List"
 msgstr "Λίστα"
@@ -4997,7 +5018,7 @@ msgstr "Λίστα"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list item.
-#: ../src/orca/guilabels.py:466
+#: ../src/orca/guilabels.py:478
 msgctxt "structural navigation"
 msgid "List Item"
 msgstr "Στοιχείο λίστας"
@@ -5006,7 +5027,7 @@ msgstr "Στοιχείο λίστας"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an object.
-#: ../src/orca/guilabels.py:472
+#: ../src/orca/guilabels.py:484
 msgctxt "structural navigation"
 msgid "Object"
 msgstr "Αντικείμενο"
@@ -5015,7 +5036,7 @@ msgstr "Αντικείμενο"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a paragraph.
-#: ../src/orca/guilabels.py:478
+#: ../src/orca/guilabels.py:490
 msgctxt "structural navigation"
 msgid "Paragraph"
 msgstr "Παράγραφος"
@@ -5024,7 +5045,7 @@ msgstr "Παράγραφος"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a radio button.
-#: ../src/orca/guilabels.py:484
+#: ../src/orca/guilabels.py:496
 msgctxt "structural navigation"
 msgid "Radio Button"
 msgstr "Ραδιοπλήκτρο"
@@ -5034,7 +5055,7 @@ msgstr "Ραδιοπλήκτρο"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the role of a widget. Examples include "heading", "paragraph",
 #. "table", "combo box", etc.
-#: ../src/orca/guilabels.py:491
+#: ../src/orca/guilabels.py:503
 msgctxt "structural navigation"
 msgid "Role"
 msgstr "Ρόλος"
@@ -5043,7 +5064,7 @@ msgstr "Ρόλος"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the selected item of a form field.
-#: ../src/orca/guilabels.py:497
+#: ../src/orca/guilabels.py:509
 msgctxt "structural navigation"
 msgid "Selected Item"
 msgstr "Επιλεγμένο στοιχείο"
@@ -5053,7 +5074,7 @@ msgstr "Επιλεγμένο στοιχείο"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the state of a widget. Examples include "checked"/"not checked",
 #. "selected"/"not selected", "visited/not visited", etc.
-#: ../src/orca/guilabels.py:504
+#: ../src/orca/guilabels.py:516
 msgctxt "structural navigation"
 msgid "State"
 msgstr "Κατάσταση"
@@ -5076,7 +5097,7 @@ msgstr "Κατάσταση"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an entry.
-#: ../src/orca/guilabels.py:510
+#: ../src/orca/guilabels.py:522
 msgctxt "structural navigation"
 msgid "Text"
 msgstr "Κείμενο"
@@ -5085,7 +5106,7 @@ msgstr "Κείμενο"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the URI of a link.
-#: ../src/orca/guilabels.py:516
+#: ../src/orca/guilabels.py:528
 msgctxt "structural navigation"
 msgid "URI"
 msgstr "URI"
@@ -5094,7 +5115,7 @@ msgstr "URI"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the value of a form field.
-#: ../src/orca/guilabels.py:522
+#: ../src/orca/guilabels.py:534
 msgctxt "structural navigation"
 msgid "Value"
 msgstr "Τιμή"
@@ -5102,7 +5123,7 @@ msgstr "Τιμή"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:527
+#: ../src/orca/guilabels.py:539
 msgctxt "structural navigation"
 msgid "Blockquotes"
 msgstr "Μεγάλες παραθέσεις"
@@ -5110,7 +5131,7 @@ msgstr "Μεγάλες παραθέσεις"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:532
+#: ../src/orca/guilabels.py:544
 msgctxt "structural navigation"
 msgid "Buttons"
 msgstr "Κουμπιά"
@@ -5118,7 +5139,7 @@ msgstr "Κουμπιά"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:537
+#: ../src/orca/guilabels.py:549
 msgctxt "structural navigation"
 msgid "Check Boxes"
 msgstr "Πλαίσια επιλογής"
@@ -5127,7 +5148,7 @@ msgstr "Πλαίσια επιλογής"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. "Clickables" are web elements which have an "onClick" handler.
-#: ../src/orca/guilabels.py:543
+#: ../src/orca/guilabels.py:555
 msgctxt "structural navigation"
 msgid "Clickables"
 msgstr "Επιλέξιμα"
@@ -5135,7 +5156,7 @@ msgstr "Επιλέξιμα"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:548
+#: ../src/orca/guilabels.py:560
 msgctxt "structural navigation"
 msgid "Combo Boxes"
 msgstr "Πλαίσια πολλαπλών επιλογών"
@@ -5143,7 +5164,7 @@ msgstr "Πλαίσια πολλαπλών επιλογών"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:553
+#: ../src/orca/guilabels.py:565
 msgctxt "structural navigation"
 msgid "Entries"
 msgstr "Καταχωρίσεις"
@@ -5151,7 +5172,7 @@ msgstr "Καταχωρίσεις"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:558
+#: ../src/orca/guilabels.py:570
 msgctxt "structural navigation"
 msgid "Form Fields"
 msgstr "Πεδία φόρμας"
@@ -5159,7 +5180,7 @@ msgstr "Πεδία φόρμας"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:563
+#: ../src/orca/guilabels.py:575
 msgctxt "structural navigation"
 msgid "Headings"
 msgstr "Kεφαλίδες"
@@ -5167,7 +5188,7 @@ msgstr "Kεφαλίδες"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:568
+#: ../src/orca/guilabels.py:580
 msgctxt "structural navigation"
 msgid "Images"
 msgstr "Εικόνες"
@@ -5176,7 +5197,7 @@ msgstr "Εικόνες"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. Level will be a "1" for <h1>, a "2" for <h2>, and so on.
-#: ../src/orca/guilabels.py:574
+#: ../src/orca/guilabels.py:586
 #, python-format
 msgctxt "structural navigation"
 msgid "Headings at Level %d"
@@ -5187,7 +5208,7 @@ msgstr "Κεφαλίδες στο επίπεδο %d"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
-#: ../src/orca/guilabels.py:581
+#: ../src/orca/guilabels.py:593
 msgctxt "structural navigation"
 msgid "Landmarks"
 msgstr "Ορόσημα"
@@ -5197,7 +5218,7 @@ msgstr "Ορόσημα"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/guilabels.py:588
+#: ../src/orca/guilabels.py:600
 msgctxt "structural navigation"
 msgid "Large Objects"
 msgstr "Μεγάλα αντικείμενα"
@@ -5205,7 +5226,7 @@ msgstr "Μεγάλα αντικείμενα"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:593
+#: ../src/orca/guilabels.py:605
 msgctxt "structural navigation"
 msgid "Links"
 msgstr "Σύνδεσμοι"
@@ -5213,7 +5234,7 @@ msgstr "Σύνδεσμοι"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:598
+#: ../src/orca/guilabels.py:610
 msgctxt "structural navigation"
 msgid "Lists"
 msgstr "Λίστες"
@@ -5221,7 +5242,7 @@ msgstr "Λίστες"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:603
+#: ../src/orca/guilabels.py:615
 msgctxt "structural navigation"
 msgid "List Items"
 msgstr "Στοιχεία λίστας"
@@ -5229,7 +5250,7 @@ msgstr "Στοιχεία λίστας"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:608
+#: ../src/orca/guilabels.py:620
 msgctxt "structural navigation"
 msgid "Paragraphs"
 msgstr "Παράγραφοι"
@@ -5237,7 +5258,7 @@ msgstr "Παράγραφοι"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:613
+#: ../src/orca/guilabels.py:625
 msgctxt "structural navigation"
 msgid "Radio Buttons"
 msgstr "Ραδιοπλήκτρα"
@@ -5245,7 +5266,7 @@ msgstr "Ραδιοπλήκτρα"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:618
+#: ../src/orca/guilabels.py:630
 msgctxt "structural navigation"
 msgid "Tables"
 msgstr "Πίνακες"
@@ -5253,7 +5274,7 @@ msgstr "Πίνακες"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:623
+#: ../src/orca/guilabels.py:635
 msgctxt "structural navigation"
 msgid "Unvisited Links"
 msgstr "Ανεπίσκεπτοι σύνδεσμοι"
@@ -5261,7 +5282,7 @@ msgstr "Ανεπίσκεπτοι σύνδεσμοι"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: ../src/orca/guilabels.py:628
+#: ../src/orca/guilabels.py:640
 msgctxt "structural navigation"
 msgid "Visited Links"
 msgstr "Αναγνωσμένοι σύνδεσμοι"
@@ -5269,14 +5290,14 @@ msgstr "Αναγνωσμένοι σύνδεσμοι"
 #. Translators: This is the title of a panel holding options for how to navigate
 #. HTML content (e.g., Orca caret navigation, positioning of caret, structural
 #. navigation, etc.).
-#: ../src/orca/guilabels.py:633
+#: ../src/orca/guilabels.py:645
 msgid "Page Navigation"
 msgstr "Πλοήγηση σελίδας"
 
 #. Translators: When the user loads a new web page, they can optionally have Orca
 #. automatically start reading the page from beginning to end. This is the label
 #. of a checkbox in which users can indicate their preference.
-#: ../src/orca/guilabels.py:639
+#: ../src/orca/guilabels.py:651
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "Αυτόματη εκκίνηση εκφώνησης μια σελίδας όταν αρχίζει η _φόρτωσή της"
 
@@ -5287,7 +5308,7 @@ msgstr "Αυτόματη εκκίνηση εκφώνησης μια σελίδα
 #. queued up and sent to the speech synthesis system once the entire set of
 #. utterances has been calculated.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: ../src/orca/guilabels.py:647 ../src/orca/orca-setup.ui.h:48
+#: ../src/orca/guilabels.py:659 ../src/orca/orca-setup.ui.h:48
 msgid "Break speech into ch_unks between pauses"
 msgstr "Χρήση παύσεων για κατάτμηση της ομιλίας σε _τμήματα"
 
@@ -5297,7 +5318,7 @@ msgstr "Χρήση παύσεων για κατάτμηση της ομιλία�
 #. to the default voice configured for given speech engine within the speech
 #. subsystem. Apart from this item, the list will contain the names of all
 #. available "real" voices provided by the speech engine.
-#: ../src/orca/guilabels.py:655
+#: ../src/orca/guilabels.py:667
 #, python-format
 msgid "%s default voice"
 msgstr "προκαθορισμένη φωνή %s"
@@ -5305,14 +5326,14 @@ msgstr "προκαθορισμένη φωνή %s"
 # #-#-#-#-#  gnome-system-tools.HEAD.el.po (el)  #-#-#-#-#
 #. Translators: This refers to the voice used by Orca when presenting the content
 #. of the screen and other messages.
-#: ../src/orca/guilabels.py:659
+#: ../src/orca/guilabels.py:671
 msgctxt "VoiceType"
 msgid "Default"
 msgstr "Προεπιλογή"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is part of a hyperlink.
-#: ../src/orca/guilabels.py:663
+#: ../src/orca/guilabels.py:675
 msgctxt "VoiceType"
 msgid "Hyperlink"
 msgstr "Σύνδεσμος"
@@ -5323,27 +5344,27 @@ msgstr "Σύνδεσμος"
 #. indicate the presence of the red squiggly line found under a spelling error;
 #. Orca might say "3 of 6" when a user Tabs into a list of six items and the
 #. third item is selected. And so on.
-#: ../src/orca/guilabels.py:671
+#: ../src/orca/guilabels.py:683
 msgctxt "VoiceType"
 msgid "System"
 msgstr "Σύστημα"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is written in uppercase.
-#: ../src/orca/guilabels.py:675
+#: ../src/orca/guilabels.py:687
 msgctxt "VoiceType"
 msgid "Uppercase"
 msgstr "Κεφαλαία"
 
 #. Translators this label refers to the name of particular speech synthesis
 #. system. (http://devel.freebsoft.org/speechd)
-#: ../src/orca/guilabels.py:679
+#: ../src/orca/guilabels.py:691
 msgid "Speech Dispatcher"
 msgstr "Speech Dispatcher"
 
 #. Translators: This is a label for a group of options related to Orca's behavior
 #. when presenting an application's spell check dialog.
-#: ../src/orca/guilabels.py:683
+#: ../src/orca/guilabels.py:695
 msgctxt "OptionGroup"
 msgid "Spell Check"
 msgstr "Ορθογραφικός έλεγχος"
@@ -5352,7 +5373,7 @@ msgstr "Ορθογραφικός έλεγχος"
 #. When this option is enabled, Orca will spell out the current error in addition
 #. to speaking it. For example, if the misspelled word is "foo," enabling this
 #. setting would cause Orca to speak "f o o" after speaking "foo".
-#: ../src/orca/guilabels.py:689
+#: ../src/orca/guilabels.py:701
 msgid "Spell _error"
 msgstr "Ορ_θογραφικός έλεγχος"
 
@@ -5361,39 +5382,39 @@ msgstr "Ορ_θογραφικός έλεγχος"
 #. addition to speaking it. For example, if the misspelled word is "foo," and
 #. the first suggestion is "for" enabling this setting would cause Orca to speak
 #. "f o r" after speaking "for".
-#: ../src/orca/guilabels.py:696
+#: ../src/orca/guilabels.py:708
 msgid "Spell _suggestion"
 msgstr "_Υποδείξεις ορθογραφίας"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will present the context (surrounding text,
 #. typically the sentence or line) in which the mistake occurred.
-#: ../src/orca/guilabels.py:701
+#: ../src/orca/guilabels.py:713
 msgid "Present _context of error"
 msgstr "Παρόν πε_ριεχόμενο σφάλματος"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spread sheet cell. Coordinates are
 #. the row and column position within the spread sheet (i.e. A1, B1, C2 ...)
-#: ../src/orca/guilabels.py:706
+#: ../src/orca/guilabels.py:718
 msgid "Speak spread sheet cell coordinates"
 msgstr "Εκφώνηση συντεταγμένων κελιών λογιστικού φύλλου"
 
 #. Translators: This is a label for an option for whether or not to speak the
 #. header of a table cell in document content.
-#: ../src/orca/guilabels.py:710
+#: ../src/orca/guilabels.py:722
 msgid "Announce cell _header"
 msgstr "Αναγγελία _επικεφαλίδας κελιού"
 
 #. Translators: This is the title of a panel containing options for specifying
 #. how to navigate tables in document content.
-#: ../src/orca/guilabels.py:714
+#: ../src/orca/guilabels.py:726
 msgid "Table Navigation"
 msgstr "Πλοήγηση πίνακα"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
-#: ../src/orca/guilabels.py:718
+#: ../src/orca/guilabels.py:730
 msgid "Skip _blank cells"
 msgstr "Αγνόηση των κε_νών κελιών"
 
@@ -5401,26 +5422,26 @@ msgstr "Αγνόηση των κε_νών κελιών"
 #. row of a table read; other times they want just the current cell presented to
 #. them. This label is associated with the default presentation to be used.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/guilabels.py:723 ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/guilabels.py:735 ../src/orca/orca-setup.ui.h:60
 msgid "Speak _cell"
 msgstr "Εκφώνηση _κελιού"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
-#: ../src/orca/guilabels.py:727
+#: ../src/orca/guilabels.py:739
 msgid "Speak _cell coordinates"
 msgstr "Εκφώνηση συντεταγμένων _κελιών"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many rows and columns
 #. a particular table cell spans in a table).
-#: ../src/orca/guilabels.py:732
+#: ../src/orca/guilabels.py:744
 msgid "Speak _multiple cell spans"
 msgstr "Εκφώνηση αναπτυγμάτων _πολλαπλών κελιών"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
-#: ../src/orca/guilabels.py:736
+#: ../src/orca/guilabels.py:748
 msgid "Attribute Name"
 msgstr "Όνομα γνωρίσματος"
 
@@ -5429,20 +5450,20 @@ msgstr "Όνομα γνωρίσματος"
 #. Orca needs to provide its own support. As such, Orca offers the user the
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:743
+#: ../src/orca/guilabels.py:755
 msgid "Control caret navigation"
 msgstr "Περιήγηση δρομέα ελέγχου"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
-#: ../src/orca/guilabels.py:748
+#: ../src/orca/guilabels.py:760
 msgid "Enable _structural navigation"
 msgstr "Ενεργοποίηση _δομικής περιήγησης"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: ../src/orca/guilabels.py:752 ../src/orca/orca-setup.ui.h:56
+#: ../src/orca/guilabels.py:764 ../src/orca/orca-setup.ui.h:56
 msgid "Brie_f"
 msgstr "_Σύντομη περιγραφή"
 
@@ -6554,7 +6575,7 @@ msgstr "έχει μαθηματικό τύπο"
 #. information and examples.
 #.
 #: ../src/orca/messages.py:624
-#: ../src/orca/scripts/toolkits/Gecko/braille_generator.py:157
+#: ../src/orca/scripts/toolkits/Gecko/braille_generator.py:184
 msgid "image map link"
 msgstr "σύνδεσμος χάρτη εικόνας"
 
@@ -7718,26 +7739,46 @@ msgstr "ψηλότερα."
 msgid "lower."
 msgstr "χαμηλότερα."
 
+#. Translators: Orca's verbosity levels control how much (or how little)
+#. Orca will speak when presenting objects as the user navigates within
+#. applications and reads content. The two levels are "brief" and "verbose".
+#. The following string is a message spoken to the user upon toggling
+#. this setting via command.
+#: ../src/orca/messages.py:1484
+msgctxt "Speech"
+msgid "Verbosity level: brief"
+msgstr "Επίπεδο περιφραστικότητας: σύντομο"
+
+#. Translators: Orca's verbosity levels control how much (or how little)
+#. Orca will speak when presenting objects as the user navigates within
+#. applications and reads content. The two levels are "brief" and "verbose".
+#. The following string is a message spoken to the user upon toggling
+#. this setting via command.
+#: ../src/orca/messages.py:1491
+msgctxt "Speech"
+msgid "Verbosity level: verbose"
+msgstr "Επίπεδο περιφραστικότητας: αναλυτικό"
+
 #. Translators: We replace the ellipses (both manual and UTF-8) with a spoken
 #. string. The extra space you see at the beginning is because we need the
 #. speech synthesis engine to speak the new string well. For example, "Open..."
 #. turns into "Open dot dot dot".
-#: ../src/orca/messages.py:1483
+#: ../src/orca/messages.py:1497
 msgid " dot dot dot"
 msgstr " κουκκίδα κουκκίδα κουκκίδα"
 
 #. Translators: This message is presented to the user when Orca is launched.
-#: ../src/orca/messages.py:1486
+#: ../src/orca/messages.py:1500
 msgid "Screen reader on."
 msgstr "Ο αναγνώστης οθόνης ανοικτός."
 
 #. Translators: This message is presented to the user when Orca is quit.
-#: ../src/orca/messages.py:1489
+#: ../src/orca/messages.py:1503
 msgid "Screen reader off."
 msgstr "Ο αναγνώστης οθόνης κλειστός."
 
 #. Translators: This message means speech synthesis is not installed or working.
-#: ../src/orca/messages.py:1492
+#: ../src/orca/messages.py:1506
 msgid "Speech is unavailable."
 msgstr "Η εκφώνηση δεν είναι διαθέσιμη."
 
@@ -7745,7 +7786,7 @@ msgstr "Η εκφώνηση δεν είναι διαθέσιμη."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1498 ../src/orca/scripts/default.py:3714
+#: ../src/orca/messages.py:1512 ../src/orca/scripts/default.py:3725
 msgid "string not found"
 msgstr "η συμβολοσειρά δεν βρέθηκε"
 
@@ -7755,7 +7796,7 @@ msgstr "η συμβολοσειρά δεν βρέθηκε"
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: ../src/orca/messages.py:1506
+#: ../src/orca/messages.py:1520
 msgid "Structural navigation keys off."
 msgstr "Απενεργοποιημένα τα πλήκτρα δομικής πλοήγησης."
 
@@ -7765,7 +7806,7 @@ msgstr "Απενεργοποιημένα τα πλήκτρα δομικής πλ
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: ../src/orca/messages.py:1514
+#: ../src/orca/messages.py:1528
 msgid "Structural navigation keys on."
 msgstr "Ενεργοποιημένα τα πλήκτρα δομικής πλοήγησης."
 
@@ -7775,79 +7816,79 @@ msgstr "Ενεργοποιημένα τα πλήκτρα δομικής πλοή
 #. type, such as from link to link, or from heading to heading, or from form
 #. field to form field. This is a brief message which will be presented to the
 #. user if the desired structural navigation object could not be found.
-#: ../src/orca/messages.py:1522
+#: ../src/orca/messages.py:1536
 msgctxt "structural navigation"
 msgid "Not found"
 msgstr "Δεν βρέθηκε"
 
 #. Translators: This message describes the (row, col) position of a table cell.
-#: ../src/orca/messages.py:1525
+#: ../src/orca/messages.py:1539
 #, python-format
 msgid "Row %(row)d, column %(column)d."
 msgstr "Γραμμή %(row)d, στήλη %(column)d."
 
 #. Translators: This message is presented to indicate the user is in the last
 #. cell of a table in a document.
-#: ../src/orca/messages.py:1529
+#: ../src/orca/messages.py:1543
 msgid "End of table"
 msgstr "Τέλος πίνακα"
 
 #. Translators: This message is presented when a user is navigating within a
 #. table and then navigates out of it.
-#: ../src/orca/messages.py:1533
+#: ../src/orca/messages.py:1547
 msgid "leaving table."
 msgstr "Έξοδος από τον πίνακα."
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: ../src/orca/messages.py:1538
+#: ../src/orca/messages.py:1552
 msgid "Speak cell"
 msgstr "Εκφώνηση κελιού"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: ../src/orca/messages.py:1543
+#: ../src/orca/messages.py:1557
 msgid "Speak row"
 msgstr "Εκφώνηση γραμμής"
 
 #. Translators: a uniform table is one in which each table cell occupies one row
 #. and one column (i.e. a perfect grid). In contrast, a non-uniform table is one
 #. in which at least one table cell occupies more than one row and/or column.
-#: ../src/orca/messages.py:1548
+#: ../src/orca/messages.py:1562
 msgid "Non-uniform"
 msgstr "Μη-ομοιόμορφος πίνακας"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. If the user gives a table navigation command but is not in a
 #. table, presents this message.
-#: ../src/orca/messages.py:1553
+#: ../src/orca/messages.py:1567
 msgid "Not in a table."
 msgstr "Όχι σε πίνακα."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
-#: ../src/orca/messages.py:1557
+#: ../src/orca/messages.py:1571
 msgid "Columns reordered"
 msgstr "Αναδιάταξη στηλών"
 
 #. Translators: This is a message presented to users when the rows in a table
 #. have been reordered.
-#: ../src/orca/messages.py:1561
+#: ../src/orca/messages.py:1575
 msgid "Rows reordered"
 msgstr "Αναδιάταξη γραμμών"
 
 #. Translators: this is in reference to a column in a table. The substitution
 #. is the index (e.g. the first column is "column 1").
-#: ../src/orca/messages.py:1565
+#: ../src/orca/messages.py:1579
 #, python-format
 msgid "column %d"
 msgstr "στήλη %d"
 
 #. Translators: this is in reference to a column in a table. If the user is in
 #. the first column of a table with five columns, the position is "column 1 of 5"
-#: ../src/orca/messages.py:1569
+#: ../src/orca/messages.py:1583
 #, python-format
 msgid "column %(index)d of %(total)d"
 msgstr "στήλη %(index)d από %(total)d"
@@ -7855,27 +7896,27 @@ msgstr "στήλη %(index)d από %(total)d"
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell below the current cell and is already in the last row.
-#: ../src/orca/messages.py:1574
+#: ../src/orca/messages.py:1588
 msgid "Bottom of column."
 msgstr "Τέλος της στήλης."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell above the current cell and is already in the first row.
-#: ../src/orca/messages.py:1579
+#: ../src/orca/messages.py:1593
 msgid "Top of column."
 msgstr "Αρχή της στήλης."
 
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
-#: ../src/orca/messages.py:1583
+#: ../src/orca/messages.py:1597
 #, python-format
 msgid "row %d"
 msgstr "γραμμή %d"
 
 #. Translators: this is in reference to a row in a table. If the user is in the
 #. the first row of a table with five rows, the position is "row 1 of 5"
-#: ../src/orca/messages.py:1587
+#: ../src/orca/messages.py:1601
 #, python-format
 msgid "row %(index)d of %(total)d"
 msgstr "γραμμή %(index)d από %(total)d"
@@ -7883,52 +7924,52 @@ msgstr "γραμμή %(index)d από %(total)d"
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the left of the current cell and is already in the first column.
-#: ../src/orca/messages.py:1592
+#: ../src/orca/messages.py:1606
 msgid "Beginning of row."
 msgstr "Αρχή γραμμής."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the right of the current cell and is already in the last column.
-#: ../src/orca/messages.py:1597
+#: ../src/orca/messages.py:1611
 msgid "End of row."
 msgstr "Τέλος γραμμής."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted a table row.
-#: ../src/orca/messages.py:1601
+#: ../src/orca/messages.py:1615
 msgid "Row deleted."
 msgstr "Διαγράφτηκε γραμμή."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted the last row of a table.
-#: ../src/orca/messages.py:1605
+#: ../src/orca/messages.py:1619
 msgid "Last row deleted."
 msgstr "Διαγράφηκε η τελευταία γραμμή."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row.
-#: ../src/orca/messages.py:1609
+#: ../src/orca/messages.py:1623
 msgid "Row inserted."
 msgstr "Γραμμή εισήχθη."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row at the end of the table. This typically happens when the
 #. user presses Tab from within the last cell of the table.
-#: ../src/orca/messages.py:1614
+#: ../src/orca/messages.py:1628
 msgid "Row inserted at the end of the table."
 msgstr "Γραμμή εισήχθη στο τέλος του πίνακα."
 
 #. Translators: when the user selects (highlights) text in a document, Orca lets
 #. them know.
-#: ../src/orca/messages.py:1618
+#: ../src/orca/messages.py:1632
 msgctxt "text"
 msgid "selected"
 msgstr "επιλεγμένο"
 
 #. Translators: when the user unselects (un-highlights) text in a document, Orca
 #. lets them know.
-#: ../src/orca/messages.py:1622
+#: ../src/orca/messages.py:1636
 msgctxt "text"
 msgid "unselected"
 msgstr "ανεπίλεκτο"
@@ -7936,33 +7977,33 @@ msgstr "ανεπίλεκτο"
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: ../src/orca/messages.py:1631
+#: ../src/orca/messages.py:1645
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%H ώρες, %M λεπτά και %S δευτερόλεπτα."
 
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: ../src/orca/messages.py:1636
+#: ../src/orca/messages.py:1650
 msgid "%H hours and %M minutes."
 msgstr "%H ώρες και %M λεπτά."
 
 #. Translators: this is information about a unicode character reported to the
 #. user.  The value is the unicode number value of this character in hex.
-#: ../src/orca/messages.py:1640
+#: ../src/orca/messages.py:1654
 #, python-format
 msgid "Unicode %s"
 msgstr "Unicode %s"
 
 #. Translators: This message presents the Orca version number.
-#: ../src/orca/messages.py:1643
+#: ../src/orca/messages.py:1657
 #, python-format
 msgid "Screen reader version %s."
 msgstr "Έκδοση αναγνώστη οθόνης %s."
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
-#: ../src/orca/messages.py:1647
+#: ../src/orca/messages.py:1661
 msgid "white space"
 msgstr "κενός χαρακτήρας"
 
@@ -7970,7 +8011,7 @@ msgstr "κενός χαρακτήρας"
 #. top of a page or list is reached without that object being found, we "wrap" to
 #. the bottom and continue looking upwards. We need to inform the user when this
 #. is taking place.
-#: ../src/orca/messages.py:1653
+#: ../src/orca/messages.py:1667
 msgid "Wrapping to bottom."
 msgstr "Αναδίπλωση προς τα κάτω."
 
@@ -7978,21 +8019,21 @@ msgstr "Αναδίπλωση προς τα κάτω."
 #. bottom of a page or list is reached without that object being found, we "wrap"
 #. to the top and continue looking downwards. We need to inform the user when
 #. this is taking place.
-#: ../src/orca/messages.py:1659
+#: ../src/orca/messages.py:1673
 msgid "Wrapping to top."
 msgstr "Αναδίπλωση προς τα πάνω."
 
 #. Translators, normally layered panes and tables have items in them. Thus it is
 #. noteworthy when this is not the case. This message is presented to the user to
 #. indicate the current layered pane or table contains zero items.
-#: ../src/orca/messages.py:1664
+#: ../src/orca/messages.py:1678
 msgid "0 items"
 msgstr "0 αντικείμενα λίστας"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: ../src/orca/messages.py:1672 ../src/orca/messages.py:1691
+#: ../src/orca/messages.py:1686 ../src/orca/messages.py:1705
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
@@ -8000,7 +8041,7 @@ msgstr[0] "Το κελί αναπτύσσεται σε %d γραμμή"
 msgstr[1] "Το κελί αναπτύσσεται σε %d γραμμές"
 
 #. Translators: this represents the number of columns in a table.
-#: ../src/orca/messages.py:1677
+#: ../src/orca/messages.py:1691
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
@@ -8010,7 +8051,7 @@ msgstr[1] " %d στήλες"
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: ../src/orca/messages.py:1684
+#: ../src/orca/messages.py:1698
 #, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
@@ -8020,7 +8061,7 @@ msgstr[1] "Το κελί αναπτύσσεται σε %d στήλες"
 #. Translators: People can enter a string of text that is too wide to be
 #. fully displayed in a spreadsheet cell. This message will be spoken if
 #. such a cell is encountered.
-#: ../src/orca/messages.py:1701
+#: ../src/orca/messages.py:1715
 #, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
@@ -8030,7 +8071,7 @@ msgstr[1] "%d χαρακτήρες περισσότεροι"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a braille message containing the app which just claimed focus.
-#: ../src/orca/messages.py:1709
+#: ../src/orca/messages.py:1723
 #, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
@@ -8040,7 +8081,7 @@ msgstr[1] "(%d διάλογοι)"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a spoken message containing the app which just claimed focus.
-#: ../src/orca/messages.py:1715
+#: ../src/orca/messages.py:1729
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -8048,7 +8089,7 @@ msgstr[0] "%d μη εστιασμένος διάλογος"
 msgstr[1] "%d μη εστιασμένοι διάλογοι"
 
 #. Translators: This is the size of a file in bytes
-#: ../src/orca/messages.py:1719
+#: ../src/orca/messages.py:1733
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -8057,7 +8098,7 @@ msgstr[1] "%d bytes"
 
 #. Translators: This message informs the user who many files were found as
 #. a result of a search.
-#: ../src/orca/messages.py:1724
+#: ../src/orca/messages.py:1738
 #, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
@@ -8065,7 +8106,7 @@ msgstr[0] "Βρέθηκαν το αρχείο %d"
 msgstr[1] "Βρέθηκαν %d αρχεία"
 
 #. Translators: This message presents the number of forms in a document.
-#: ../src/orca/messages.py:1728
+#: ../src/orca/messages.py:1742
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
@@ -8073,7 +8114,7 @@ msgstr[0] "%d φόρμα"
 msgstr[1] "%d φόρμες"
 
 #. Translators: This message presents the number of headings in a document.
-#: ../src/orca/messages.py:1732
+#: ../src/orca/messages.py:1746
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -8082,7 +8123,7 @@ msgstr[1] "επικεφαλίδες %d"
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
-#: ../src/orca/messages.py:1737
+#: ../src/orca/messages.py:1751
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -8092,7 +8133,7 @@ msgstr[1] "αντικείμενα %d"
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
 #. presented to the user to indicate how many matching items were found.
-#: ../src/orca/messages.py:1743
+#: ../src/orca/messages.py:1757
 #, python-format
 msgid "%d item found"
 msgid_plural "%d items found"
@@ -8100,7 +8141,7 @@ msgstr[0] "βρέθηκε %d στοιχείο"
 msgstr[1] "βρέθηκαν %d στοιχεία"
 
 #. Translators: This message describes a bulleted or numbered list.
-#: ../src/orca/messages.py:1747
+#: ../src/orca/messages.py:1761
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -8109,7 +8150,7 @@ msgstr[1] "Λίστα με %d ντικείμενα"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: ../src/orca/messages.py:1752
+#: ../src/orca/messages.py:1766
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -8118,7 +8159,7 @@ msgstr[1] "%d μηνύματα.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: ../src/orca/messages.py:1757
+#: ../src/orca/messages.py:1771
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -8128,7 +8169,7 @@ msgstr[1] "%d τοις εκατό."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: ../src/orca/messages.py:1763
+#: ../src/orca/messages.py:1777
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -8138,7 +8179,7 @@ msgstr[1] "Έχει αναγνωστεί το %d τοις εκατό του εγ
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
 #. %s is the spoken word for the character.
-#: ../src/orca/messages.py:1771
+#: ../src/orca/messages.py:1785
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -8147,7 +8188,7 @@ msgstr[1] "%(count)d %(repeatChar)s χαρακτήρες"
 
 #. Translators: This message is presented to indicate the number of selected
 #. objects (e.g. icons) and the total number of those objects.
-#: ../src/orca/messages.py:1778
+#: ../src/orca/messages.py:1792
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -8158,7 +8199,7 @@ msgstr[1] "%(index)d από %(total)d αντικείμενα έχουν επιλ
 #. shortcuts associated with Orca commands which are not specific to the
 #. current application. It appears as the title of the dialog containing
 #. the list.
-#: ../src/orca/messages.py:1787
+#: ../src/orca/messages.py:1801
 #, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
@@ -8168,7 +8209,7 @@ msgstr[1] "Βρέθηκαν %d προεπιλεγμένες συντομεύσε
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
 #. application. It appears as the title of the dialog containing the list.
-#: ../src/orca/messages.py:1795
+#: ../src/orca/messages.py:1809
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
@@ -8179,7 +8220,7 @@ msgstr[1] ""
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: ../src/orca/messages.py:1802
+#: ../src/orca/messages.py:1816
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -8188,7 +8229,7 @@ msgstr[1] "διαστήματα %d"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: ../src/orca/messages.py:1807
+#: ../src/orca/messages.py:1821
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -8196,7 +8237,7 @@ msgstr[0] "στηλοθέτης %d"
 msgstr[1] "στηλοθέτες %d"
 
 #. Translators: This message presents the number of tables in a document.
-#: ../src/orca/messages.py:1811
+#: ../src/orca/messages.py:1825
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -8204,7 +8245,7 @@ msgstr[0] "πίνακας %d"
 msgstr[1] "πίνακες %d"
 
 #. Translators: this represents the number of rows in a table.
-#: ../src/orca/messages.py:1815
+#: ../src/orca/messages.py:1829
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -8212,7 +8253,7 @@ msgstr[0] "πίνακας με %d γραμμή"
 msgstr[1] "πίνακας με %d γραμμές"
 
 #. Translators: this represents the number of columns in a table.
-#: ../src/orca/messages.py:1819
+#: ../src/orca/messages.py:1833
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -8221,7 +8262,7 @@ msgstr[1] "%d γραμμές"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: ../src/orca/messages.py:1828
+#: ../src/orca/messages.py:1842
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -8230,7 +8271,7 @@ msgstr[1] "%d μη αναγνωσμένοι δεσμοί"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: ../src/orca/messages.py:1833
+#: ../src/orca/messages.py:1847
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
@@ -8323,8 +8364,6 @@ msgstr "αναπτυγμένο"
 #. Translators: This is a state which applies to elements in document conent
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
 #: ../src/orca/object_properties.py:95
-#| msgctxt "structural navigation"
-#| msgid "Description"
 msgid "has long description"
 msgstr "έχει μεγάλη περιγραφή"
 
@@ -8967,7 +9006,7 @@ msgstr "Έλεγχος ορθογραφίας"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3326 ../src/orca/scripts/default.py:3338
+#: ../src/orca/scripts/default.py:3337 ../src/orca/scripts/default.py:3349
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -10006,7 +10045,7 @@ msgstr "Χρησιμοποιήστε τα βέλη πάνω και κάτω γι
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to collapse the node.
-#: ../src/orca/tutorialgenerator.py:353 ../src/orca/tutorialgenerator.py:529
+#: ../src/orca/tutorialgenerator.py:353 ../src/orca/tutorialgenerator.py:533
 msgid "To collapse, press shift plus left."
 msgstr "Για σύμπτυξη, πατήστε shift και αριστερά."
 
@@ -10014,7 +10053,7 @@ msgstr "Για σύμπτυξη, πατήστε shift και αριστερά."
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to expand the node.
-#: ../src/orca/tutorialgenerator.py:359 ../src/orca/tutorialgenerator.py:535
+#: ../src/orca/tutorialgenerator.py:359 ../src/orca/tutorialgenerator.py:539
 msgid "To expand, press shift plus right."
 msgstr "Για ανάπτυξη, πατήστε shift και δεξιά."
 
@@ -10025,26 +10064,26 @@ msgstr "Πατήστε Enter για να το ενεργοποιήσετε."
 
 #. Translators: This is the tutorial string for when landing
 #. on text fields.
-#: ../src/orca/tutorialgenerator.py:417
+#: ../src/orca/tutorialgenerator.py:421
 msgid "Type in text."
 msgstr "Πληκτρολογήστε κείμενο."
 
 #. Translators: this is the tutorial string for landing
 #. on a page tab, we are informing the
 #. user how to navigate these.
-#: ../src/orca/tutorialgenerator.py:445
+#: ../src/orca/tutorialgenerator.py:449
 msgid "Use left and right to view other tabs."
 msgstr ""
 "Χρησιμοποιήστε το αριστερά και δεξιά για να προβάλετε τις άλλες καρτέλες."
 
 #. Translators: this is the tutorial string for activating a push button.
-#: ../src/orca/tutorialgenerator.py:470
+#: ../src/orca/tutorialgenerator.py:474
 msgid "To activate press space."
 msgstr "Πατήστε διάστημα για να το ενεργοποιήσετε."
 
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
-#: ../src/orca/tutorialgenerator.py:498
+#: ../src/orca/tutorialgenerator.py:502
 msgid ""
 "Use up or down arrow to select value. Or type in the desired numerical value."
 msgstr ""
@@ -10052,12 +10091,12 @@ msgstr ""
 "πληκτρολογήστε την επιθυμητή αριθμητική τιμή."
 
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
-#: ../src/orca/tutorialgenerator.py:686
+#: ../src/orca/tutorialgenerator.py:690
 msgid "Use arrow keys to change."
 msgstr "Για αλλαγή, χρησιμοποιήστε τα βέλη."
 
 #. Translators: this is a tip for the user, how to navigate menues.
-#: ../src/orca/tutorialgenerator.py:711
+#: ../src/orca/tutorialgenerator.py:715
 msgid ""
 "To navigate, press left or right arrow. To move through items press up or "
 "down arrow."
@@ -10067,13 +10106,13 @@ msgstr ""
 
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menues.
-#: ../src/orca/tutorialgenerator.py:716
+#: ../src/orca/tutorialgenerator.py:720
 msgid "To enter sub menu, press right arrow."
 msgstr "Για να εισέλθετε στο υπομενού, πατήστε το δεξί βέλος."
 
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
-#: ../src/orca/tutorialgenerator.py:748
+#: ../src/orca/tutorialgenerator.py:752
 msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
