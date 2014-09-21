@@ -2064,99 +2064,21 @@ class Script(default.Script):
         return [None, -1]
 
     def findPreviousObject(self, obj, documentFrame):
-        """Finds the object prior to this one, where the tree we're
-        dealing with is a DOM and 'prior' means the previous object
-        in a linear presentation sense.
-
-        Arguments:
-        -obj: the object where to start.
-        """
-
-        previousObj = None
-        characterOffset = 0
-
-        # If the object is the document frame, the previous object is
-        # the one that follows us relative to our offset.
-        #
-        if self.utilities.isSameObject(obj, documentFrame):
-            [obj, characterOffset] = self.getCaretContext()
-
         if not obj:
             return None
 
+        for relation in obj.getRelationSet():
+            if relation.getRelationType() == pyatspi.RELATION_FLOWS_FROM:
+                return relation.getTarget(0)
+
         index = obj.getIndexInParent() - 1
-        if (index < 0):
-            if not self.utilities.isSameObject(obj, documentFrame):
-                previousObj = obj.parent
-            else:
-                # We're likely at the very end of the document
-                # frame.
-                previousObj = self.getLastObject(documentFrame)
-        else:
-            # [[[TODO: HACK - WDW defensive programming because Gecko
-            # ally hierarchies are not always working.  Objects say
-            # they have children, but these children don't exist when
-            # we go to get them.  So...we'll just keep going backwards
-            # until we find a real child that we can work with.]]]
-            #
-            while not isinstance(previousObj,
-                                 pyatspi.Accessibility.Accessible) \
-                and index >= 0:
-                previousObj = obj.parent[index]
-                index -= 1
+        if not 0 <= index < obj.parent.childCount:
+            obj = obj.parent
+            index = obj.getIndexInParent() - 1
 
-            # Now that we're at a child we can work with, we need to
-            # look at it further.  It could be the root of a hierarchy.
-            # In that case, the last child in this hierarchy is what
-            # we want.  So, we dive down the 'right hand side' of the
-            # tree to get there.
-            #
-            # [[[TODO: HACK - WDW we need to be defensive because of
-            # Gecko's broken a11y hierarchies, so we make this much
-            # more complex than it really has to be.]]]
-            #
-            if not previousObj:
-                if not self.utilities.isSameObject(obj, documentFrame):
-                    previousObj = obj.parent
-                else:
-                    previousObj = obj
-
-            role = previousObj.getRole()
-            if role == pyatspi.ROLE_MENU_ITEM:
-                return previousObj.parent.parent
-            elif role == pyatspi.ROLE_LIST_ITEM:
-                parent = previousObj.parent
-                if parent.getState().contains(pyatspi.STATE_FOCUSABLE):
-                    return parent
-
-            while previousObj.childCount:
-                role = previousObj.getRole()
-                state = previousObj.getState()
-                if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST_BOX, pyatspi.ROLE_MENU]:
-                    break
-                elif role == pyatspi.ROLE_LIST \
-                     and state.contains(pyatspi.STATE_FOCUSABLE):
-                    break
-                elif previousObj.childCount > 1000:
-                    break
-
-                index = previousObj.childCount - 1
-                while index >= 0:
-                    child = previousObj[index]
-                    childOffset = self.utilities.characterOffsetInParent(child)
-                    if isinstance(child, pyatspi.Accessibility.Accessible) \
-                       and not (self.utilities.isSameObject(
-                            previousObj, documentFrame) \
-                        and childOffset > characterOffset):
-                        previousObj = child
-                        break
-                    else:
-                        index -= 1
-                if index < 0:
-                    break
-
-        if self.utilities.isSameObject(previousObj, documentFrame):
-            previousObj = None
+        previousObj = obj.parent[index]
+        while previousObj and previousObj.childCount:
+            previousObj = previousObj[previousObj.childCount - 1]
 
         return previousObj
 
