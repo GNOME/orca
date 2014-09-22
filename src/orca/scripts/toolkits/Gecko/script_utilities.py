@@ -867,8 +867,11 @@ class Utilities(script_utilities.Utilities):
         if state.contains(pyatspi.STATE_EDITABLE):
             return False
 
+        if role == pyatspi.ROLE_DOCUMENT_FRAME:
+            return True
+
         if not state.contains(pyatspi.STATE_FOCUSABLE) \
-           or role == pyatspi.ROLE_DOCUMENT_FRAME:
+           and not state.contains(pyatspi.STATE_FOCUSED):
             return True
 
         return False

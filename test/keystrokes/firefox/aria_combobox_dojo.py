@@ -7,6 +7,7 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(5000))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
 
@@ -118,7 +119,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Basic Where Am I - Combo box expanded",
     ["BRAILLE LINE:  'California (CA)'",
      "     VISIBLE:  'California (CA)', cursor=1",
-     "SPEECH OUTPUT: 'list item California (CA)'"]))
+     "SPEECH OUTPUT: 'list item California (CA) 1 of 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
