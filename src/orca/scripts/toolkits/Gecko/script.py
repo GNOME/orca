@@ -2071,6 +2071,12 @@ class Script(default.Script):
             if relation.getRelationType() == pyatspi.RELATION_FLOWS_FROM:
                 return relation.getTarget(0)
 
+        if obj == documentFrame:
+            obj, offset = self.getCaretContext()
+            for child in documentFrame:
+                if self.utilities.characterOffsetInParent(child) < offset:
+                    return child
+
         index = obj.getIndexInParent() - 1
         if not 0 <= index < obj.parent.childCount:
             obj = obj.parent
@@ -2083,107 +2089,29 @@ class Script(default.Script):
         return previousObj
 
     def findNextObject(self, obj, documentFrame):
-        """Finds the object after to this one, where the tree we're
-        dealing with is a DOM and 'next' means the next object
-        in a linear presentation sense.
-
-        Arguments:
-        -obj: the object where to start.
-        """
-
-        nextObj = None
-        characterOffset = 0
-
-        # If the object is the document frame, the next object is
-        # the one that follows us relative to our offset.
-        #
-        if self.utilities.isSameObject(obj, documentFrame):
-            [obj, characterOffset] = self.getCaretContext()
-
         if not obj:
             return None
 
-        # If the object has children, we'll choose the first one,
-        # unless it's a combo box or a focusable HTML list.
-        #
-        # [[[TODO: HACK - WDW Gecko's broken hierarchies make this
-        # a bit of a challenge.]]]
-        #
-        role = obj.getRole()
-        if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST_BOX, pyatspi.ROLE_MENU]:
-            descend = False
-        elif role == pyatspi.ROLE_LIST \
-            and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-            descend = False
-        elif obj.childCount > 1000:
-            descend = False
-        else:
-            descend = True
+        for relation in obj.getRelationSet():
+            if relation.getRelationType() == pyatspi.RELATION_FLOWS_TO:
+                return relation.getTarget(0)
 
-        index = 0
-        while descend and index < obj.childCount:
-            child = obj[index]
-            # bandaid for Gecko broken hierarchy
-            if child is None:
-                index += 1
-                continue
-            childOffset = self.utilities.characterOffsetInParent(child)
-            if isinstance(child, pyatspi.Accessibility.Accessible) \
-               and not (self.utilities.isSameObject(obj, documentFrame) \
-                        and childOffset < characterOffset):
-                nextObj = child
-                break
-            else:
-                index += 1
+        if obj == documentFrame:
+            obj, offset = self.getCaretContext()
+            for child in documentFrame:
+                if self.utilities.characterOffsetInParent(child) > offset:
+                    return child
 
-        # Otherwise, we'll look to the next sibling.
-        #
-        # [[[TODO: HACK - WDW Gecko's broken hierarchies make this
-        # a bit of a challenge.]]]
-        #
-        if not nextObj and obj.getIndexInParent() != -1:
+        if obj and obj.childCount:
+            return obj[0]
+
+        nextObj = None
+        while obj and not nextObj:
             index = obj.getIndexInParent() + 1
-            while index < obj.parent.childCount:
-                child = obj.parent[index]
-                if isinstance(child, pyatspi.Accessibility.Accessible):
-                    nextObj = child
-                    break
-                else:
-                    index += 1
-
-        # If there is no next sibling, we'll move upwards.
-        #
-        candidate = obj
-        while not nextObj:
-            # Go up until we find a parent that might have a sibling to
-            # the right for us.
-            #
-            while candidate and candidate.parent \
-                  and candidate.getIndexInParent() >= \
-                      candidate.parent.childCount - 1 \
-                  and not self.utilities.isSameObject(candidate, documentFrame):
-                candidate = candidate.parent
-
-            # Now...let's get the sibling.
-            #
-            # [[[TODO: HACK - WDW Gecko's broken hierarchies make this
-            # a bit of a challenge.]]]
-            #
-            if not self.utilities.isSameObject(candidate, documentFrame):
-                index = candidate.getIndexInParent() + 1
-                while index < candidate.parent.childCount:
-                    child = candidate.parent[index]
-                    if isinstance(child, pyatspi.Accessibility.Accessible):
-                        nextObj = child
-                        break
-                    else:
-                        index += 1
-
-                # We've exhausted trying to get all the children, but
-                # Gecko's broken hierarchy has failed us for all of
-                # them.  So, we need to go higher.
-                #
-                candidate = candidate.parent
+            if 0 < index < obj.parent.childCount:
+                nextObj = obj.parent[index]
+            elif obj.parent != documentFrame:
+                obj = obj.parent
             else:
                 break
 
