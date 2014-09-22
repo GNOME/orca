@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2014-09-22 10:20+0000\n"
-"PO-Revision-Date: 2014-09-22 20:46+0200\n"
+"PO-Revision-Date: 2014-09-22 21:31+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -3260,7 +3260,7 @@ msgstr "béžová"
 #: ../src/orca/colornames.py:60
 msgctxt "color name"
 msgid "bisque"
-msgstr ""
+msgstr "hlinková"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3316,7 +3316,7 @@ msgstr "plavá"
 #: ../src/orca/colornames.py:95
 msgctxt "color name"
 msgid "cadet blue"
-msgstr ""
+msgstr "kadetská modrošedá"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3540,7 +3540,7 @@ msgstr "tmavá šedá"
 #: ../src/orca/colornames.py:235
 msgctxt "color name"
 msgid "dodger blue"
-msgstr ""
+msgstr "jasně modrá"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3838,7 +3838,7 @@ msgstr "limetkově zelená"
 #: ../src/orca/colornames.py:420
 msgctxt "color name"
 msgid "linen"
-msgstr ""
+msgstr "režná"
 
 #  fuchsia a magenta jsou synonyma pro stejnou barvu FFOOFF, pro nedostatek 
 #  českých výrazů jsou oba výrazy přeloženy stejně
