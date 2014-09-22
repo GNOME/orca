@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2014-09-22 10:20+0000\n"
-"PO-Revision-Date: 2014-09-22 21:59+0200\n"
+"PO-Revision-Date: 2014-09-22 22:13+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -3228,7 +3228,7 @@ msgstr "ledově modrá"
 #: ../src/orca/colornames.py:40
 msgctxt "color name"
 msgid "antique white"
-msgstr ""
+msgstr "antická bílá"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3556,7 +3556,7 @@ msgstr "cihlová"
 #: ../src/orca/colornames.py:245
 msgctxt "color name"
 msgid "floral white"
-msgstr ""
+msgstr "emailová bílá"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3590,7 +3590,7 @@ msgstr "našedlá"
 #: ../src/orca/colornames.py:265
 msgctxt "color name"
 msgid "ghost white"
-msgstr ""
+msgstr "mlhavá bílá"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3968,7 +3968,7 @@ msgstr "mokasínová"
 #: ../src/orca/colornames.py:500
 msgctxt "color name"
 msgid "navajo white"
-msgstr ""
+msgstr "bledě oranžová"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3984,7 +3984,7 @@ msgstr "námořnická modř"
 #: ../src/orca/colornames.py:510
 msgctxt "color name"
 msgid "old lace"
-msgstr ""
+msgstr "tělová"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
