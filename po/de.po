@@ -20,10 +20,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2014-09-20 22:16+0000\n"
-"PO-Revision-Date: 2014-09-21 09:46+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-09-22 20:57+0200\n"
+"PO-Revision-Date: 2014-09-22 20:55+0100\n"
 "Last-Translator: Benjamin Steinwender <b@stbe.at>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -31,7 +30,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Poedit 1.6.9\n"
 "X-Project-Style: gnome\n"
 
 #: ../orca.desktop.in.h:1
@@ -1884,9 +1883,8 @@ msgstr "Pfeilspitze nach rechts"
 #. * http://en.wikipedia.org/wiki/Specials_(Unicode_block)
 #.
 #: ../src/orca/chnames.py:874
-#, fuzzy
 msgid "object replacement character"
-msgstr "Zum nächsten Zeichen bewegen."
+msgstr "Objektersetzungszeichen"
 
 #. Translators: this command will move the mouse pointer to the current item
 #. without clicking on it.
@@ -2872,21 +2870,18 @@ msgstr "Zeigt eine Liste von Ankreuzfeldern an."
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: ../src/orca/cmdnames.py:774
-#, fuzzy
 msgid "Goes to previous clickable."
 msgstr "Zum vorherigen Klickelement bewegen."
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: ../src/orca/cmdnames.py:778
-#, fuzzy
 msgid "Goes to next clickable."
 msgstr "Zum nächsten Klickelement bewegen."
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: ../src/orca/cmdnames.py:782
-#, fuzzy
 msgid "Displays a list of clickables."
 msgstr "Zeigt eine Liste von Klick-Element an."
 
@@ -4393,9 +4388,8 @@ msgstr "_Aktivieren"
 #. If this setting is not enabled, the second press of "e" would continue to be
 #. a navigation command to move amongst entries.
 #: ../src/orca/guilabels.py:58
-#, fuzzy
 msgid "Automatic focus mode during structural navigation"
-msgstr "_Strukturierte Navigation verwenden"
+msgstr ""
 
 #. Translators: Orca has a number of commands that override the default behavior
 #. within an application. For instance, if you are at the bottom of an entry and
@@ -4900,10 +4894,9 @@ msgstr "Ankreuzfeld"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text displayed for a web element with an "onClick" handler.
 #: ../src/orca/guilabels.py:415
-#, fuzzy
 msgctxt "structural navigation"
 msgid "Clickable"
-msgstr "Klickelement"
+msgstr "Klickbares Element"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5110,10 +5103,9 @@ msgstr "Ankreuzfelder"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. "Clickables" are web elements which have an "onClick" handler.
 #: ../src/orca/guilabels.py:555
-#, fuzzy
 msgctxt "structural navigation"
 msgid "Clickables"
-msgstr "Klick-Elemente"
+msgstr "Klickbare Elemente"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -7246,9 +7238,8 @@ msgstr "Keine weiteren größeren Objekte."
 #. elements which have an "onClick" action. This is a detailed message which
 #. will be presented to the user if no more clickable elements can be found.
 #: ../src/orca/messages.py:1174
-#, fuzzy
 msgid "No more clickables."
-msgstr "Keine weiteren Klick-Elemente."
+msgstr "Keine weiteren Klickelemente."
 
 #. Translators: This is for navigating document content by moving from combo
 #. box to combo box. This is a detailed message which will be presented to the
