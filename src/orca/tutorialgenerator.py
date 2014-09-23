@@ -51,8 +51,6 @@ class TutorialGenerator:
         # storing the last spoken message.
         self.lastTutorial = ""
 
-        self.lastRole = None
-
         # Set up a dictionary that maps role names to functions
         # that generate tutorial strings for objects that implement that role.
         #
@@ -766,21 +764,6 @@ class TutorialGenerator:
 
         return utterances
 
-    def _getBindingsForHandler(self, handlerName):
-        handler = self._script.inputEventHandlers.get(handlerName)
-        if not handler:
-            return None
-
-        bindings = self._script.keyBindings.getBindingsForHandler(handler)
-        if not bindings:
-            return None
-
-        binding = bindings[0]
-        return binding.asString()
-
-    def _getModeTutorial(self, obj, alreadyFocused, forceTutorial):
-        return []
-
     def getTutorial(self, obj, alreadyFocused, forceTutorial=False):
         """Get the tutorial for an Accessible object.  This will look
         first to the specific tutorial generators and if this
@@ -804,23 +787,16 @@ class TutorialGenerator:
 
         utterances = []
         role = obj.getRole()
-        msg = self._getModeTutorial(obj, alreadyFocused, forceTutorial)
-        if not msg:
-            if role in self.tutorialGenerators:
-                generator = self.tutorialGenerators[role]
-            else:
-                generator = self._getDefaultTutorial
-            msg = generator(obj, alreadyFocused, forceTutorial)
-        elif msg == self.lastTutorial and role == self.lastRole \
-             and not forceTutorial:
-            msg = []
+        if role in self.tutorialGenerators:
+            generator = self.tutorialGenerators[role]
+        else:
+            generator = self._getDefaultTutorial
+        msg = generator(obj, alreadyFocused, forceTutorial)
         if msg:
             utterances = [" ".join(msg)]
             self.lastTutorial = msg
-            self.lastRole = role
         if forceTutorial:
             self.lastTutorial = ""
-            self.lastRole = None
 
         self._debugGenerator("getTutorial",
                              obj,

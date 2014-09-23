@@ -1105,25 +1105,6 @@ MODE_BROWSE = _("Browse mode")
 # This string is the message presented when Orca switches to focus mode.
 MODE_FOCUS = _("Focus mode")
 
-# Translators: Orca has a number of commands that override the default
-# behavior within an application. For instance, on a web page, "h" moves
-# you to the next heading. What should happen when you press an "h" in
-# an entry on a web page depends: If you want to resume reading content,
-# "h" should move to the next heading; if you want to enter text, "h"
-# should not not move you to the next heading. Similarly, if you are
-# at the bottom of an entry and press Down arrow, should you leave the
-# entry? Again, it depends on if you want to resume reading content or
-# if you are editing the text in the entry. Because Orca doesn't know
-# what you want to do, it has two modes: In browse mode, Orca treats
-# key presses as commands to read the content; in focus mode, Orca treats
-# key presses as something that should be handled by the focused widget.
-# This string is a tutorial message presented to the user who has just
-# navigated to a widget in browse mode to inform them of the keystroke
-# they must press to enable focus mode for the purposes of interacting
-# with the widget. The substituted string is a human-consumable keybinding
-# such as "Alt+Shift+A."
-MODE_FOCUS_TUTORIAL = _("To enable focus mode press %s.")
-
 # Translators: (Please see the previous, detailed translator notes about
 # Focus mode and Browse mode.) In order to minimize the amount of work Orca
 # users need to do to switch between focus mode and browse mode, Orca attempts
