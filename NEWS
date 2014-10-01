@@ -1,3 +1,37 @@
+3.12.3 - 1 October 2014
+
+General:
+
+  * Fix for bug 736237 - Enable autostart on additional desktop
+    environments
+
+  * Filter out non-standard modifiers when capturing keys for bindings
+
+  * Map 'marco' to 'metacity' in the script manager
+
+  * Speak cell coordinates for Writer tables
+
+  * Examine the new locusOfFocus (not the event.source) in
+    locusOfFocusChanged
+
+  * Remove a redundant (and occasionally crash-triggering) call to
+    getRole()
+
+  * Fix a hang that can occur when using structural navigation with
+    Evince forms
+
+  * Fix a traceback that occurred when Evince form field widgets
+    lost focus
+
+  * Handle yet another instance of Gtk+ failing to emit 
+    object:state-changed:focused events
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de            German                      Benjamin Steinwender
+
+=========
+
 3.12.2 - 13 May 2014
 
 General:
