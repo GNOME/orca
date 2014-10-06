@@ -320,7 +320,6 @@
                                 <property name="receives_default">False</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
-                                <property name="xalign">0</property>
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
                                 <signal name="toggled" handler="keyboardLayoutChanged" swapped="no"/>
@@ -341,7 +340,6 @@
                                 <property name="receives_default">False</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
-                                <property name="xalign">0</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">generalDesktopButton</property>
                                 <signal name="toggled" handler="keyboardLayoutChanged" swapped="no"/>
@@ -672,7 +670,6 @@
                                 <property name="receives_default">False</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
-                                <property name="xalign">0</property>
                                 <property name="draw_indicator">True</property>
                                 <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
                               </object>
@@ -692,7 +689,6 @@
                                 <property name="receives_default">False</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
-                                <property name="xalign">0</property>
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
                                 <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
@@ -1040,7 +1036,6 @@
                                 <property name="receives_default">False</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
-                                <property name="xalign">0</property>
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
                                 <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
@@ -1061,7 +1056,6 @@
                                 <property name="receives_default">False</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
-                                <property name="xalign">0</property>
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
                                 <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
@@ -1179,7 +1173,6 @@
                     <property name="receives_default">False</property>
                     <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
-                    <property name="xalign">0</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <signal name="toggled" handler="speechSupportChecked" swapped="no"/>
@@ -1228,7 +1221,6 @@
                                         <property name="receives_default">False</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
-                                        <property name="xalign">0</property>
                                         <property name="active">True</property>
                                         <property name="draw_indicator">True</property>
                                         <signal name="toggled" handler="speechVerbosityChanged" swapped="no"/>
@@ -1249,7 +1241,6 @@
                                         <property name="receives_default">False</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
-                                        <property name="xalign">0</property>
                                         <property name="draw_indicator">True</property>
                                         <property name="group">speechBriefButton</property>
                                         <signal name="toggled" handler="speechVerbosityChanged" swapped="no"/>
@@ -1307,7 +1298,6 @@
                                         <property name="receives_default">False</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
-                                        <property name="xalign">0</property>
                                         <property name="active">True</property>
                                         <property name="draw_indicator">True</property>
                                         <signal name="toggled" handler="tableSpeechChanged" swapped="no"/>
@@ -1328,7 +1318,6 @@
                                         <property name="receives_default">False</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
-                                        <property name="xalign">0</property>
                                         <property name="draw_indicator">True</property>
                                         <property name="group">cellSpeechButton</property>
                                         <signal name="toggled" handler="tableSpeechChanged" swapped="no"/>
@@ -1386,7 +1375,6 @@
                                         <property name="receives_default">False</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
-                                        <property name="xalign">0</property>
                                         <property name="active">True</property>
                                         <property name="draw_indicator">True</property>
                                         <signal name="toggled" handler="punctuationLevelChanged" swapped="no"/>
@@ -1407,7 +1395,6 @@
                                         <property name="receives_default">False</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
-                                        <property name="xalign">0</property>
                                         <property name="draw_indicator">True</property>
                                         <property name="group">noneButton</property>
                                         <signal name="toggled" handler="punctuationLevelChanged" swapped="no"/>
@@ -1428,7 +1415,6 @@
                                         <property name="receives_default">False</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
-                                        <property name="xalign">0</property>
                                         <property name="draw_indicator">True</property>
                                         <property name="group">noneButton</property>
                                         <signal name="toggled" handler="punctuationLevelChanged" swapped="no"/>
@@ -1449,7 +1435,6 @@
                                         <property name="receives_default">False</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
-                                        <property name="xalign">0</property>
                                         <property name="draw_indicator">True</property>
                                         <property name="group">noneButton</property>
                                         <signal name="toggled" handler="punctuationLevelChanged" swapped="no"/>
@@ -1521,7 +1506,6 @@
                                         <property name="receives_default">False</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
-                                        <property name="xalign">0</property>
                                         <property name="active">True</property>
                                         <property name="draw_indicator">True</property>
                                         <signal name="toggled" handler="onlySpeakDisplayedTextToggled" swapped="no"/>
@@ -1546,7 +1530,6 @@
                                             <property name="receives_default">False</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
-                                            <property name="xalign">0</property>
                                             <property name="active">True</property>
                                             <property name="draw_indicator">True</property>
                                             <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
@@ -1567,7 +1550,6 @@
                                             <property name="receives_default">False</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
-                                            <property name="xalign">0</property>
                                             <property name="draw_indicator">True</property>
                                             <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
                                           </object>
@@ -1587,7 +1569,6 @@
                                             <property name="receives_default">False</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
-                                            <property name="xalign">0</property>
                                             <property name="active">True</property>
                                             <property name="draw_indicator">True</property>
                                             <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
@@ -1608,7 +1589,6 @@
                                             <property name="receives_default">False</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
-                                            <property name="xalign">0</property>
                                             <property name="active">True</property>
                                             <property name="draw_indicator">True</property>
                                             <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
@@ -1629,7 +1609,6 @@
                                             <property name="receives_default">False</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="use_underline">True</property>
-                                            <property name="xalign">0</property>
                                             <property name="active">True</property>
                                             <property name="draw_indicator">True</property>
                                             <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
@@ -1681,7 +1660,6 @@
                               <object class="GtkAlignment" id="progressBarUpdatesAlignment">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="yalign">0</property>
                                 <property name="left_padding">12</property>
                                 <child>
                                   <object class="GtkGrid" id="progressBarUpdatesGrid">
@@ -1698,8 +1676,6 @@
                                         <property name="hexpand">True</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="use_underline">True</property>
-                                        <property name="xalign">0</property>
-                                        <property name="yalign">0</property>
                                         <property name="active">True</property>
                                         <property name="draw_indicator">True</property>
                                         <signal name="toggled" handler="speechProgressBarChecked" swapped="no"/>
@@ -1864,7 +1840,6 @@
                         <property name="receives_default">False</property>
                         <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
-                        <property name="xalign">0</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
@@ -1914,7 +1889,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="abbrevRolenamesChecked" swapped="no"/>
                                   </object>
@@ -1934,7 +1908,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
                                   </object>
@@ -1954,7 +1927,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="contractedBrailleToggled" swapped="no"/>
                                   </object>
@@ -2057,7 +2029,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="active">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="brailleVerbosityChanged" swapped="no"/>
@@ -2078,7 +2049,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                     <property name="group">brailleBriefButton</property>
                                     <signal name="toggled" handler="brailleVerbosityChanged" swapped="no"/>
@@ -2137,7 +2107,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="active">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="brailleSelectionChanged" swapped="no"/>
@@ -2158,7 +2127,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                     <property name="group">brailleSelectionNoneButton</property>
                                     <signal name="toggled" handler="brailleSelectionChanged" swapped="no"/>
@@ -2179,7 +2147,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                     <property name="group">brailleSelectionNoneButton</property>
                                     <signal name="toggled" handler="brailleSelectionChanged" swapped="no"/>
@@ -2200,7 +2167,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                     <property name="group">brailleSelectionNoneButton</property>
                                     <signal name="toggled" handler="brailleSelectionChanged" swapped="no"/>
@@ -2256,7 +2222,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="active">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="brailleLinkChanged" swapped="no"/>
@@ -2277,7 +2242,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                     <property name="group">brailleLinkNoneButton</property>
                                     <signal name="toggled" handler="brailleLinkChanged" swapped="no"/>
@@ -2298,7 +2262,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                     <property name="group">brailleLinkNoneButton</property>
                                     <signal name="toggled" handler="brailleLinkChanged" swapped="no"/>
@@ -2319,7 +2282,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                     <property name="group">brailleLinkNoneButton</property>
                                     <signal name="toggled" handler="brailleLinkChanged" swapped="no"/>
@@ -2391,7 +2353,6 @@
                     <property name="receives_default">False</property>
                     <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
-                    <property name="xalign">0</property>
                     <property name="draw_indicator">True</property>
                     <signal name="toggled" handler="keyEchoChecked" swapped="no"/>
                   </object>
@@ -2420,7 +2381,6 @@
                             <property name="receives_default">False</property>
                             <property name="use_action_appearance">False</property>
                             <property name="use_underline">True</property>
-                            <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
                           </object>
@@ -2440,7 +2400,6 @@
                             <property name="receives_default">False</property>
                             <property name="use_action_appearance">False</property>
                             <property name="use_underline">True</property>
-                            <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
                           </object>
@@ -2460,7 +2419,6 @@
                             <property name="receives_default">False</property>
                             <property name="use_action_appearance">False</property>
                             <property name="use_underline">True</property>
-                            <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
                           </object>
@@ -2480,7 +2438,6 @@
                             <property name="receives_default">False</property>
                             <property name="use_action_appearance">False</property>
                             <property name="use_underline">True</property>
-                            <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
                           </object>
@@ -2500,7 +2457,6 @@
                             <property name="receives_default">False</property>
                             <property name="use_action_appearance">False</property>
                             <property name="use_underline">True</property>
-                            <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
                           </object>
@@ -2520,7 +2476,6 @@
                             <property name="receives_default">False</property>
                             <property name="use_action_appearance">False</property>
                             <property name="use_underline">True</property>
-                            <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
                           </object>
@@ -2553,7 +2508,6 @@
                     <property name="receives_default">False</property>
                     <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
-                    <property name="xalign">0</property>
                     <property name="draw_indicator">True</property>
                     <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
                   </object>
@@ -2573,7 +2527,6 @@
                     <property name="receives_default">False</property>
                     <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
-                    <property name="xalign">0</property>
                     <property name="draw_indicator">True</property>
                     <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
                   </object>
@@ -2593,7 +2546,6 @@
                     <property name="receives_default">False</property>
                     <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
-                    <property name="xalign">0</property>
                     <property name="draw_indicator">True</property>
                     <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
                   </object>
@@ -2691,7 +2643,6 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="reorderable">True</property>
-                        <property name="rules_hint">True</property>
                         <child internal-child="selection">
                           <object class="GtkTreeSelection" id="treeview-selection"/>
                         </child>
@@ -3127,7 +3078,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="active">True</property>
                                     <property name="draw_indicator">True</property>
                                     <signal name="toggled" handler="brailleIndicatorChanged" swapped="no"/>
@@ -3148,7 +3098,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                     <property name="group">textBrailleNoneButton</property>
                                     <signal name="toggled" handler="brailleIndicatorChanged" swapped="no"/>
@@ -3169,7 +3118,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                     <property name="group">textBrailleNoneButton</property>
                                     <signal name="toggled" handler="brailleIndicatorChanged" swapped="no"/>
@@ -3190,7 +3138,6 @@
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                     <property name="group">textBrailleNoneButton</property>
                                     <signal name="toggled" handler="brailleIndicatorChanged" swapped="no"/>
