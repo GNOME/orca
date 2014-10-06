@@ -188,6 +188,8 @@ class SpeechServer(speechserver.SpeechServer):
                               "Trying to reconnect.")
                 self.reset()
                 return command(*args, **kwargs)
+            except:
+                pass
         else:
             # It is not possible tho catch the error with older SD versions. 
             return command(*args, **kwargs)
@@ -383,7 +385,10 @@ class SpeechServer(speechserver.SpeechServer):
         except AttributeError:
             pass
         else:
-            voices += self._send_command(list_synthesis_voices)
+            try:
+                voices += self._send_command(list_synthesis_voices)
+            except:
+                pass
         families = [speechserver.VoiceFamily({ \
               speechserver.VoiceFamily.NAME: name,
               #speechserver.VoiceFamily.GENDER: speechserver.VoiceFamily.MALE,

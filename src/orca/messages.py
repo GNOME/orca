@@ -272,6 +272,10 @@ CLI_DEBUG_FILE_NAME = _("FILE")
 # Orca will need to be run from a terminal window.
 CLI_SETUP = _("Set up user preferences (text version)")
 
+# Translators: This is the description of command line option '-s, --setup'
+# that will place the user in Orca's GUI preferences dialog.
+CLI_GUI_SETUP = _("Set up user preferences (GUI version)")
+
 # Translators: This text is the description displayed when Orca is launched
 # from the command line and the help text is displayed.
 CLI_EPILOG = _("Report bugs to orca-list@gnome.org.")

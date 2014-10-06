@@ -1679,7 +1679,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                                    modifierMask,
                                    0)
 
-        ts = orca_state.lastInputEvent.timestamp
+        try:
+            ts = orca_state.lastInputEvent.timestamp
+        except:
+            ts = 0
         if ts == 0:
             ts = Gtk.get_current_event_time()
         orcaSetupWindow.present_with_time(ts)

@@ -93,6 +93,8 @@ class Parser(argparse.ArgumentParser):
         self.add_argument(
             "-r", "--replace", action="store_true", help=messages.CLI_REPLACE)
         self.add_argument(
+            "-s", "--setup", action="store_true", help=messages.CLI_GUI_SETUP)
+        self.add_argument(
             "-t", "--text-setup", action="store_true", help=messages.CLI_SETUP)
         self.add_argument(
             "-l", "--list-apps", action=ListApps, nargs=0,
@@ -240,6 +242,10 @@ def main():
         except:
             print(messages.CLI_LOAD_PROFILE_ERROR % args.profile)
             manager.setProfile()
+
+    if args.setup:
+        cleanup(signal.SIGKILL)
+        orca.showPreferencesGUI()
 
     if otherOrcas():
         print(messages.CLI_OTHER_ORCAS_ERROR)
