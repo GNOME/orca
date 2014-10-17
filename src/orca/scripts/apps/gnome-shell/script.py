@@ -33,6 +33,7 @@ import orca.orca as orca
 import orca.scripts.toolkits.clutter as clutter
 
 from .formatting import Formatting
+from .script_utilities import Utilities
 
 class Script(clutter.Script):
 
@@ -44,6 +45,9 @@ class Script(clutter.Script):
     def getFormatting(self):
         """Returns the formatting strings for this script."""
         return Formatting(self)
+
+    def getUtilities(self):
+        return Utilities(self)
 
     def skipObjectEvent(self, event):
         """Determines whether or not this event should be skipped due to
