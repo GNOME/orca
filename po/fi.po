@@ -1,6 +1,6 @@
 # Finnish messages for orca.
 # Copyright (C) 2006-2009 Ilkka Tuohela, Timo Jyrinki.
-# Suomennos: http://gnome.fi/
+# Suomennos: https://l10n.gnome.org/teams/fi/
 #
 # Gnome 2012-03 Finnish translation sprint participants:
 #
