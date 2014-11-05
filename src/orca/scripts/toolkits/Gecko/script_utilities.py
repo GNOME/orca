@@ -1133,6 +1133,12 @@ class Utilities(script_utilities.Utilities):
         if not (root and obj):
             return None
 
+        # Given an broken table hierarchy, findDescendant can hang. And the
+        # reason we're here in the first place is to work around Gecko's
+        # killing the focused accessible. There's only so much we can do....
+        if root.getRole() == pyatspi.ROLE_TABLE:
+            return None
+
         isSame = lambda x: x and self.isSameObject(x, obj, comparePaths=True)
         if isSame(root):
             replicant = root
