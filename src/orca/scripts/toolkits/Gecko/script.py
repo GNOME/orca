@@ -234,6 +234,7 @@ class Script(default.Script):
 
         self._lastCommandWasCaretNav = False
         self._lastCommandWasStructNav = False
+        self._lastCommandWasMouseButton = False
 
         # See bug 665522 - comment 5
         app.setCacheMask(pyatspi.cache.DEFAULT ^ pyatspi.cache.CHILDREN)
@@ -674,32 +675,38 @@ class Script(default.Script):
                 consumes = self.useCaretNavigationModel(keyboardEvent)
                 self._lastCommandWasCaretNav = consumes
                 self._lastCommandWasStructNav = False
+                self._lastCommandWasMouseButton = False
             elif handler \
                  and (handler.function in self.structuralNavigation.functions \
                       or handler.function in self._liveRegionFunctions):
                 consumes = self.useStructuralNavigationModel()
                 self._lastCommandWasCaretNav = False
                 self._lastCommandWasStructNav = consumes
+                self._lastCommandWasMouseButton = False
             else:
                 consumes = handler != None
                 self._lastCommandWasCaretNav = False
                 self._lastCommandWasStructNav = False
+                self._lastCommandWasMouseButton = False
         if not consumes:
             handler = self.keyBindings.getInputHandler(keyboardEvent)
             if handler and handler.function in self._caretNavigationFunctions:
                 consumes = self.useCaretNavigationModel(keyboardEvent)
                 self._lastCommandWasCaretNav = consumes
                 self._lastCommandWasStructNav = False
+                self._lastCommandWasMouseButton = False
             elif handler \
                  and (handler.function in self.structuralNavigation.functions \
                       or handler.function in self._liveRegionFunctions):
                 consumes = self.useStructuralNavigationModel()
                 self._lastCommandWasCaretNav = False
                 self._lastCommandWasStructNav = consumes
+                self._lastCommandWasMouseButton = False
             else:
                 consumes = handler != None
                 self._lastCommandWasCaretNav = False
                 self._lastCommandWasStructNav = False
+                self._lastCommandWasMouseButton = False
         return consumes
 
     def textLines(self, obj):
@@ -872,6 +879,11 @@ class Script(default.Script):
         if self._lastCommandWasStructNav:
             msg = "INFO: Caret-moved event ignored: last command was struct nav"
             debug.println(debug.LEVEL_INFO, msg)
+            return
+
+        if self._lastCommandWasMouseButton:
+            orca.setLocusOfFocus(event, event.source)
+            self.setCaretContext(event.source, event.detail1)
             return
 
         text = self.utilities.queryNonEmptyText(event.source)
@@ -1259,6 +1271,14 @@ class Script(default.Script):
             return
 
         default.Script.onFocusedChanged(self, event)
+
+    def onMouseButton(self, event):
+        """Callback for mouse:button accessibility events."""
+
+        self._lastCommandWasCaretNav = False
+        self._lastCommandWasStructNav = False
+        self._lastCommandWasMouseButton = True
+        default.Script.onMouseButton(self, event)
 
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
