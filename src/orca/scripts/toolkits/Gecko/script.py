@@ -1050,7 +1050,7 @@ class Script(default.Script):
         if not finishedLoading:
             return
 
-        if self.useFocusMode(newFocus) != self._inFocusMode:
+        if self.useFocusMode(orca_state.locusOfFocus) != self._inFocusMode:
             self.togglePresentationMode(None)
 
         # Store the document frame otherwise the first time it gains focus (e.g.
