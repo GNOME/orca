@@ -1,6 +1,6 @@
 # Finnish messages for orca.
 # Copyright (C) 2006-2009 Ilkka Tuohela, Timo Jyrinki.
-# Suomennos: http://gnome.fi/
+# Suomennos: https://l10n.gnome.org/teams/fi/
 #
 # Gnome 2012-03 Finnish translation sprint participants:
 #
@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2014-09-14 22:51+0000\n"
+"POT-Creation-Date: 2014-11-07 11:20+0000\n"
 "PO-Revision-Date: 2014-09-15 10:12+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -2578,8 +2578,6 @@ msgstr "Vasemmalla ylhäällä"
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the bottom left of the window.
 #: ../src/orca/cmdnames.py:576
-#| msgctxt "notification"
-#| msgid "Bottom"
 msgid "Bottom Left"
 msgstr "Vasemmalla alhaalla"
 
@@ -2976,19 +2974,16 @@ msgstr "Näyttää luettelon tason %d otsikoista."
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:833
-#| msgid "Goes to previous line."
 msgid "Goes to previous image."
 msgstr "Siirtyy edelliseen kuvaan."
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:836
-#| msgid "Goes to next line."
 msgid "Goes to next image."
 msgstr "Siirtyy seuraavaan kuvaan."
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:839
-#| msgid "Displays a list of tables."
 msgid "Displays a list of images."
 msgstr "Näyttää luettelon kuvista."
 
@@ -3040,13 +3035,11 @@ msgstr "Ei lisää isoja kohteita."
 
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:872
-#| msgid "Goes to previous line."
 msgid "Goes to previous link."
 msgstr "Siirtyy edelliseen linkkiin."
 
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:875
-#| msgid "Goes to next line."
 msgid "Goes to next link."
 msgstr "Siirtyy seuraavaan linkkiin."
 
@@ -3308,8 +3301,6 @@ msgstr ""
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:65
-#| msgctxt "textattr"
-#| msgid "black"
 msgctxt "color name"
 msgid "black"
 msgstr "musta"
@@ -3660,7 +3651,6 @@ msgstr ""
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:280
-#| msgid "grayed"
 msgctxt "color name"
 msgid "gray"
 msgstr "harmaa"
@@ -3669,7 +3659,6 @@ msgstr "harmaa"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:285
-#| msgid "degrees"
 msgctxt "color name"
 msgid "green"
 msgstr "vihreä"
@@ -4190,7 +4179,6 @@ msgstr ""
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:595
-#| msgid "tre"
 msgctxt "color name"
 msgid "red"
 msgstr "punainen"
@@ -4379,7 +4367,6 @@ msgstr ""
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:710
-#| msgid "white space"
 msgctxt "color name"
 msgid "white"
 msgstr "valkoinen"
@@ -4416,8 +4403,8 @@ msgstr ""
 #.
 #: ../src/orca/flat_review.py:1045 ../src/orca/generator.py:495
 #: ../src/orca/generator.py:761 ../src/orca/generator.py:803
-#: ../src/orca/generator.py:849 ../src/orca/tutorialgenerator.py:562
-#: ../src/orca/tutorialgenerator.py:602
+#: ../src/orca/generator.py:849 ../src/orca/tutorialgenerator.py:563
+#: ../src/orca/tutorialgenerator.py:603
 msgid "toggle"
 msgstr "vipupainike"
 
@@ -6400,7 +6387,6 @@ msgstr "Puhetta ei käytetä.\n"
 #. Translators: This message is presented at the beginning of Orca's console-
 #. based setup.
 #: ../src/orca/messages.py:471
-#| msgid "Screen Reader"
 msgid "Screen reader setup."
 msgstr "Näytönlukijan määrittely."
 
@@ -7356,7 +7342,6 @@ msgstr "Ei lisää tason %d otsakkeita."
 #. to image. This is a detailed message which will be presented to the user
 #. if no more images can be found.
 #: ../src/orca/messages.py:1205
-#| msgid "No more tables."
 msgid "No more images."
 msgstr "Ei enempää kuvia."
 
@@ -10003,36 +9988,36 @@ msgid "spelling"
 msgstr "oikeinkirjoitus"
 
 #. Translators: this is a tip for the user on how to toggle a checkbox.
-#: ../src/orca/tutorialgenerator.py:158
+#: ../src/orca/tutorialgenerator.py:159
 msgid "Press space to toggle."
 msgstr "Paina välilyöntiä vaihtaaksesi asetusta."
 
 #. Translators: this is a tip for the user on how to interact
 #. with a combobox.
-#: ../src/orca/tutorialgenerator.py:185
+#: ../src/orca/tutorialgenerator.py:186
 msgid "Press space to expand, and use up and down to select an item."
 msgstr "Paina välilyöntiä laajentaaksesi, ja ylös/alas valitaksesi kohteen."
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
-#: ../src/orca/tutorialgenerator.py:216
+#: ../src/orca/tutorialgenerator.py:217
 msgid "Press alt+f6 to give focus to child windows."
 msgstr "Paina Alt+F6 siirtääksesi kohdistuksen lapsi-ikkunoille."
 
 #. Translators: this gives tips on how to navigate items in a
 #. layered pane.
-#: ../src/orca/tutorialgenerator.py:280
+#: ../src/orca/tutorialgenerator.py:281
 msgid "To move to items, use either the arrow keys or type ahead searching."
 msgstr "Siirrä kohteita nuolinäppäimillä tai jatka kirjoittamista."
 
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, describing how to access the system menus.
-#: ../src/orca/tutorialgenerator.py:286
+#: ../src/orca/tutorialgenerator.py:287
 msgid "To get to the system menus press the alt+f1 key."
 msgstr "Avaa järjestelmävalikot näppäinyhdistelmällä Alt+F1."
 
 #. Translators: this is the tutorial string when navigating lists.
-#: ../src/orca/tutorialgenerator.py:323
+#: ../src/orca/tutorialgenerator.py:324
 msgid "Use up and down to select an item."
 msgstr "Paina ylös tai alas valitaksesi kohteen."
 
@@ -10040,7 +10025,7 @@ msgstr "Paina ylös tai alas valitaksesi kohteen."
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to collapse the node.
-#: ../src/orca/tutorialgenerator.py:353 ../src/orca/tutorialgenerator.py:533
+#: ../src/orca/tutorialgenerator.py:354 ../src/orca/tutorialgenerator.py:534
 msgid "To collapse, press shift plus left."
 msgstr "Supistaaksesi paina vaihto + vasemmalle."
 
@@ -10048,36 +10033,36 @@ msgstr "Supistaaksesi paina vaihto + vasemmalle."
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to expand the node.
-#: ../src/orca/tutorialgenerator.py:359 ../src/orca/tutorialgenerator.py:539
+#: ../src/orca/tutorialgenerator.py:360 ../src/orca/tutorialgenerator.py:540
 msgid "To expand, press shift plus right."
 msgstr "Laajentaaksesi paina vaihto + oikealle."
 
 #. Translators: this is the tutorial string for activating a menu item
-#: ../src/orca/tutorialgenerator.py:391
+#: ../src/orca/tutorialgenerator.py:392
 msgid "To activate press return."
 msgstr "Paina Enter aktivoidaksesi."
 
 #. Translators: This is the tutorial string for when landing
 #. on text fields.
-#: ../src/orca/tutorialgenerator.py:421
+#: ../src/orca/tutorialgenerator.py:422
 msgid "Type in text."
 msgstr "Kirjoita tekstiä."
 
 #. Translators: this is the tutorial string for landing
 #. on a page tab, we are informing the
 #. user how to navigate these.
-#: ../src/orca/tutorialgenerator.py:449
+#: ../src/orca/tutorialgenerator.py:450
 msgid "Use left and right to view other tabs."
 msgstr "Paina vasen- tai oikea-nuolinäppäintä nähdäksesi muut välilehdet."
 
 #. Translators: this is the tutorial string for activating a push button.
-#: ../src/orca/tutorialgenerator.py:474
+#: ../src/orca/tutorialgenerator.py:475
 msgid "To activate press space."
 msgstr "Paina välilyöntiä aktivoidaksesi."
 
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
-#: ../src/orca/tutorialgenerator.py:502
+#: ../src/orca/tutorialgenerator.py:503
 msgid ""
 "Use up or down arrow to select value. Or type in the desired numerical value."
 msgstr ""
@@ -10085,12 +10070,12 @@ msgstr ""
 "numeerinen arvo."
 
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
-#: ../src/orca/tutorialgenerator.py:690
+#: ../src/orca/tutorialgenerator.py:691
 msgid "Use arrow keys to change."
 msgstr "Käytä nuolinäppäimiä muuttaaksesi."
 
 #. Translators: this is a tip for the user, how to navigate menues.
-#: ../src/orca/tutorialgenerator.py:715
+#: ../src/orca/tutorialgenerator.py:716
 msgid ""
 "To navigate, press left or right arrow. To move through items press up or "
 "down arrow."
@@ -10100,13 +10085,13 @@ msgstr ""
 
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menues.
-#: ../src/orca/tutorialgenerator.py:720
+#: ../src/orca/tutorialgenerator.py:721
 msgid "To enter sub menu, press right arrow."
 msgstr "Paina nuolinäppäintä oikealle siirtyäksesi alavalikkoon."
 
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
-#: ../src/orca/tutorialgenerator.py:752
+#: ../src/orca/tutorialgenerator.py:753
 msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
