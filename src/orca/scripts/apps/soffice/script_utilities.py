@@ -280,11 +280,19 @@ class Utilities(script_utilities.Utilities):
 
     def isSameObject(self, obj1, obj2):
         same = script_utilities.Utilities.isSameObject(self, obj1, obj2)
+        if not same or obj1 == obj2:
+            return same
+
+        # The document frame currently contains just the active page,
+        # resulting in false positives. So for paragraphs, rely upon
+        # the equality check.
+        if obj1.getRole() == obj2.getRole() == pyatspi.ROLE_PARAGRAPH:
+            return False
 
         # Handle the case of false positives in dialog boxes resulting
         # from getIndexInParent() returning a bogus value. bgo#618790.
         #
-        if same and (obj1 != obj2) and not obj1.name \
+        if not obj1.name \
            and obj1.getRole() == pyatspi.ROLE_TABLE_CELL \
            and obj1.getIndexInParent() == obj2.getIndexInParent() == -1:
             top = self.topLevelObject(obj1)
