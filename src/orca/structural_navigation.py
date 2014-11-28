@@ -3222,6 +3222,9 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
+        if self._script.utilities.isLayoutOnly(obj):
+            return False
+
         if obj and obj.childCount and obj.getRole() == pyatspi.ROLE_TABLE:
             try:
                 return obj.queryTable().nRows > 0
