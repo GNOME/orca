@@ -147,6 +147,9 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
     def _presentObject(self, obj, offset):
         """Presents the entire object to the user."""
 
+        if not obj:
+            return
+
         if obj.getRole() == pyatspi.ROLE_LINK:
             try:
                 obj.queryComponent().grabFocus()

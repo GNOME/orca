@@ -2577,7 +2577,7 @@ class Script(default.Script):
 
         [obj, characterOffset] = self.getCaretContext()
         thisLine = self.getLineContentsAtOffset(obj, characterOffset)
-        if not thisLine and thisLine[0]:
+        if not (thisLine and thisLine[0]):
             return False
 
         startObj, startOffset = thisLine[0][0], thisLine[0][1]
@@ -2607,7 +2607,7 @@ class Script(default.Script):
 
         [obj, characterOffset] = self.getCaretContext()
         thisLine = self.getLineContentsAtOffset(obj, characterOffset)
-        if not thisLine and thisLine[0]:
+        if not (thisLine and thisLine[0]):
             return False
 
         lastObj, lastOffset = thisLine[-1][0], thisLine[-1][2]
