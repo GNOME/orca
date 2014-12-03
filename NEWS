@@ -1,3 +1,23 @@
+3.14.3 - 03 December 2014
+
+Gecko:
+
+  * Fix several issues related to focus mode toggling on pages which
+    set focus upon page load
+
+  * Exclude layout-only/presentational tables in structural navigation
+
+LibreOffice:
+
+  * Handle a false positive in isSameObject() which prevented paragraph
+    presentation
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    uk            Ukranian               Daniel Korostil
+
+=========
+
 3.14.2 - 10 November 2014
 
 Gecko:
