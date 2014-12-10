@@ -1341,6 +1341,8 @@ class StructuralNavigation:
             return False
         else:
             for child in obj:
+                if child.getRole() in [pyatspi.ROLE_TABLE, pyatspi.ROLE_PANEL]:
+                    return False
                 text = self._script.utilities.displayedText(child)
                 if text and len(text.strip()) \
                    or child.getRole() == pyatspi.ROLE_LINK:
@@ -3258,9 +3260,9 @@ class StructuralNavigation:
             self._script.presentMessage(self._getTableDescription(obj))
             cell = obj.queryTable().getAccessibleAt(0, 0)
             self.lastTableCell = [0, 0]
+            self._presentObject(cell, 0)
             [cell, characterOffset] = self._getCaretPosition(cell)
             self._setCaretPosition(cell, characterOffset)
-            self._presentObject(cell, characterOffset)
         else:
             full = messages.NO_MORE_TABLES
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND

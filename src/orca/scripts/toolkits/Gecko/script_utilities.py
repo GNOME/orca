@@ -991,7 +991,7 @@ class Utilities(script_utilities.Utilities):
                 restOfText = unicodeText[offset:len(unicodeText)]
                 objects.append([obj, childOffset + 1, end, restOfText])
  
-        if obj.getRole() in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_TABLE]:
+        if obj.getRole() in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_TABLE, pyatspi.ROLE_TABLE_ROW]:
             # Imagemaps that don't have alternative text won't implement
             # the text interface, but they will have children (essentially
             # EOCs) that we need to get. The same is true for tables.
