@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2014-12-04 11:22+0000\n"
-"PO-Revision-Date: 2014-12-04 22:12+0200\n"
+"POT-Creation-Date: 2014-12-14 11:26+0000\n"
+"PO-Revision-Date: 2014-12-14 22:16+0200\n"
 "Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -1942,7 +1942,6 @@ msgstr "Başlık çubuğunu seslendir."
 #. window and then move focus to that text. For example, they may want to find
 #. the "OK" button.
 #: ../src/orca/cmdnames.py:83
-#| msgid "Opens the Orca Find dialog."
 msgid "Opens the Find dialog."
 msgstr "Arama iletişim penceresini açar."
 
@@ -2295,13 +2294,11 @@ msgstr "Bir imleç yönlendirme anahtarını işler."
 
 #. Translators: this is used to indicate the start point of a text selection.
 #: ../src/orca/cmdnames.py:363
-#| msgid "Goes to the beginning of the line."
 msgid "Marks the beginning of a text selection."
 msgstr "Bir metin seçiminin başlangıcını işaretler."
 
 #. Translators: this is used to indicate the end point of a text selection.
 #: ../src/orca/cmdnames.py:366
-#| msgid "Goes to the end of the line."
 msgid "Marks the end of a text selection."
 msgstr "Bir metin seçiminin bitimini işaretler."
 
@@ -2356,7 +2353,6 @@ msgstr ""
 #. Translators: this string is associated with the keyboard shortcut to quit
 #. Orca.
 #: ../src/orca/cmdnames.py:403
-#| msgid "Screen Reader"
 msgid "Quits the screen reader"
 msgstr "Ekran okuyucuyu kapatır"
 
@@ -2594,7 +2590,6 @@ msgstr "Sol Üst"
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the bottom left of the window.
 #: ../src/orca/cmdnames.py:576
-#| msgid "Bottom Half"
 msgid "Bottom Left"
 msgstr "Sol Alt"
 
@@ -2995,22 +2990,20 @@ msgstr "%d seviyesinde başka başlık yok."
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:833
-#, fuzzy
 #| msgid "Goes to previous line."
 msgid "Goes to previous image."
-msgstr "Önceki satıra gider."
+msgstr "Önceki resme gider."
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:836
-#, fuzzy
 #| msgid "Goes to next line."
 msgid "Goes to next image."
-msgstr "Sonraki satıra gider."
+msgstr "Sonraki resme gider."
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:839
 msgid "Displays a list of images."
-msgstr ""
+msgstr "Resimlerin listesini gösterir."
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
@@ -3031,7 +3024,7 @@ msgstr "Sonraki sınır işaretine gider."
 #. important part of webpage like banners, main context, search etc.
 #: ../src/orca/cmdnames.py:854
 msgid "Displays a list of landmarks."
-msgstr ""
+msgstr "Sınır işaretlerinin listesini gösterir."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
@@ -3051,29 +3044,26 @@ msgstr "Sonraki büyük nesneye gider."
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
 #: ../src/orca/cmdnames.py:869
-#, fuzzy
 #| msgid "No more large objects."
 msgid "Displays a list of large objects."
-msgstr "Başka büyük nesne yok."
+msgstr "Büyük nesnelerin listesini gösterir."
 
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:872
-#, fuzzy
 #| msgid "Goes to previous line."
 msgid "Goes to previous link."
-msgstr "Önceki satıra gider."
+msgstr "Önceki bağlantıya gider."
 
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:875
-#, fuzzy
 #| msgid "Goes to next line."
 msgid "Goes to next link."
-msgstr "Sonraki satıra gider."
+msgstr "Sonraki bağlantıya gider."
 
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:878
 msgid "Displays a list of links."
-msgstr ""
+msgstr "Bağlantıların listesini gösterir."
 
 #. Translators: this is for navigating among lists in a document.
 #: ../src/orca/cmdnames.py:881
@@ -3088,7 +3078,7 @@ msgstr "Sonraki listeye gider."
 #. Translators: this is for navigating among lists in a document.
 #: ../src/orca/cmdnames.py:887
 msgid "Displays a list of lists."
-msgstr ""
+msgstr "Listelerin listesini gösterir."
 
 #. Translators: this is for navigating among list items in a document.
 #: ../src/orca/cmdnames.py:890
@@ -3103,7 +3093,7 @@ msgstr "Sonraki liste ögesine gider."
 #. Translators: this is for navigating among list items in a document.
 #: ../src/orca/cmdnames.py:896
 msgid "Displays a list of list items."
-msgstr ""
+msgstr "Liste ögelerinin listesini gösterir."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
@@ -3141,7 +3131,7 @@ msgstr "Sonraki paragrafa gider."
 #. Translators: this is for navigating among paragraphs in a document.
 #: ../src/orca/cmdnames.py:920
 msgid "Displays a list of paragraphs."
-msgstr ""
+msgstr "Paragrafların listesini gösterir."
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: ../src/orca/cmdnames.py:923
@@ -3155,26 +3145,23 @@ msgstr "Sonraki radyo düğmesine gider."
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: ../src/orca/cmdnames.py:929
-#, fuzzy
 #| msgid "No more radio buttons."
 msgid "Displays a list of radio buttons."
-msgstr "Başka radyo düğmesi yok."
+msgstr "Radyo düğmelerinin listesini gösterir."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
 #: ../src/orca/cmdnames.py:933
-#, fuzzy
 #| msgid "Goes to previous character."
 msgid "Goes to previous separator."
-msgstr "Önceki karaktere gider."
+msgstr "Önceki ayraça gider."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
 #: ../src/orca/cmdnames.py:937
-#, fuzzy
 #| msgid "Goes to next character."
 msgid "Goes to next separator."
-msgstr "Sonraki karaktere gider."
+msgstr "Sonraki ayraça gider."
 
 #. Translators: this is for navigating among tables in a document.
 #: ../src/orca/cmdnames.py:940
@@ -3189,7 +3176,7 @@ msgstr "Sonraki tabloya gider."
 #. Translators: this is for navigating among tables in a document.
 #: ../src/orca/cmdnames.py:946
 msgid "Displays a list of tables."
-msgstr ""
+msgstr "Tabloların listesini gösterir."
 
 #. Translators: this is for navigating among table cells in a document.
 #: ../src/orca/cmdnames.py:949
@@ -3237,7 +3224,7 @@ msgstr "Bir hücre yukarı gider."
 #. between these two modes.
 #: ../src/orca/cmdnames.py:980
 msgid "Switches between browse mode and focus mode."
-msgstr ""
+msgstr "Gözatma kipiyle odaklanma kipi arasında geçiş yapar."
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -3250,7 +3237,7 @@ msgstr ""
 #. This string is associated with the Orca command to enable sticky focus mode.
 #: ../src/orca/cmdnames.py:991
 msgid "Enables sticky focus mode."
-msgstr ""
+msgstr "Yapışkan odaklanma kipini etkinleştirir."
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: ../src/orca/cmdnames.py:994
@@ -3264,10 +3251,9 @@ msgstr "Sonraki ziyaret edilmemiş bağlantıya gider."
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: ../src/orca/cmdnames.py:1000
-#, fuzzy
 #| msgid "No more unvisited links."
 msgid "Displays a list of unvisited links."
-msgstr "Başka ziyaret edilmemiş bağlantı yok."
+msgstr "Ziyaret edilmemiş bağlantıların listesini gösterir."
 
 #. Translators: this is for navigating among visited links in a document.
 #: ../src/orca/cmdnames.py:1003
@@ -3281,10 +3267,9 @@ msgstr "Sonraki ziyaret edilmiş bağlantıya gider."
 
 #. Translators: this is for navigating among visited links in a document.
 #: ../src/orca/cmdnames.py:1009
-#, fuzzy
 #| msgid "No more visited links."
 msgid "Displays a list of visited links."
-msgstr "Başka ziyaret edilmiş bağlantı yok."
+msgstr "Ziyaret edilmiş bağlantıların listesini gösterir."
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -5012,7 +4997,6 @@ msgstr "alıntı"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a button.
 #: ../src/orca/guilabels.py:397
-#| msgid "Button"
 msgctxt "structural navigation"
 msgid "Button"
 msgstr "Düğme"
@@ -5133,7 +5117,6 @@ msgstr "seviye %d"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a link.
 #: ../src/orca/guilabels.py:466
-#| msgid "Link"
 msgctxt "structural navigation"
 msgid "Link"
 msgstr "Bağlantı"
@@ -5143,7 +5126,6 @@ msgstr "Bağlantı"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list.
 #: ../src/orca/guilabels.py:472
-#| msgid "List"
 msgctxt "structural navigation"
 msgid "List"
 msgstr "Liste"
@@ -5153,7 +5135,6 @@ msgstr "Liste"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list item.
 #: ../src/orca/guilabels.py:478
-#| msgid "ListItem"
 msgctxt "structural navigation"
 msgid "List Item"
 msgstr "Liste Ögesi"
@@ -5172,7 +5153,6 @@ msgstr "Nesne"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a paragraph.
 #: ../src/orca/guilabels.py:490
-#| msgid "Paragraph"
 msgctxt "structural navigation"
 msgid "Paragraph"
 msgstr "Paragraf"
@@ -5182,7 +5162,6 @@ msgstr "Paragraf"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a radio button.
 #: ../src/orca/guilabels.py:496
-#| msgid "RadioButton"
 msgctxt "structural navigation"
 msgid "Radio Button"
 msgstr "Radyo Düğmesi"
@@ -5225,7 +5204,6 @@ msgstr "Durum"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an entry.
 #: ../src/orca/guilabels.py:522
-#| msgid "Text"
 msgctxt "structural navigation"
 msgid "Text"
 msgstr "Metin"
@@ -5262,7 +5240,6 @@ msgstr "Başka blok alıntı yok."
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:544
-#| msgid "Button"
 msgctxt "structural navigation"
 msgid "Buttons"
 msgstr "Düğmeler"
@@ -5271,7 +5248,6 @@ msgstr "Düğmeler"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:549
-#| msgid "CheckBox"
 msgctxt "structural navigation"
 msgid "Check Boxes"
 msgstr "Onay Kutuları"
@@ -5315,7 +5291,6 @@ msgstr "Form Alanları"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:575
-#| msgid "Heading"
 msgctxt "structural navigation"
 msgid "Headings"
 msgstr "Başlıklar"
@@ -5369,7 +5344,6 @@ msgstr "Başka büyük nesne yok."
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:605
-#| msgid "Link"
 msgctxt "structural navigation"
 msgid "Links"
 msgstr "Bağlantılar"
@@ -5378,7 +5352,6 @@ msgstr "Bağlantılar"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:610
-#| msgid "List"
 msgctxt "structural navigation"
 msgid "Lists"
 msgstr "Listeler"
@@ -5387,7 +5360,6 @@ msgstr "Listeler"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:615
-#| msgid "ListItem"
 msgctxt "structural navigation"
 msgid "List Items"
 msgstr "Liste Ögeleri"
@@ -5396,7 +5368,6 @@ msgstr "Liste Ögeleri"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:620
-#| msgid "Paragraph"
 msgctxt "structural navigation"
 msgid "Paragraphs"
 msgstr "Paragraflar"
@@ -5405,7 +5376,6 @@ msgstr "Paragraflar"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:625
-#| msgid "RadioButton"
 msgctxt "structural navigation"
 msgid "Radio Buttons"
 msgstr "Radyo Düğmeleri"
@@ -5414,7 +5384,6 @@ msgstr "Radyo Düğmeleri"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:630
-#| msgid "Table"
 msgctxt "structural navigation"
 msgid "Tables"
 msgstr "Tablolar"
@@ -5423,8 +5392,6 @@ msgstr "Tablolar"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:635
-#| msgid "%d unvisited link"
-#| msgid_plural "%d unvisited links"
 msgctxt "structural navigation"
 msgid "Unvisited Links"
 msgstr "Ziyaret Edilmemiş Bağlantılar"
@@ -5433,8 +5400,6 @@ msgstr "Ziyaret Edilmemiş Bağlantılar"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:640
-#| msgid "%d visited link"
-#| msgid_plural "%d visited links"
 msgctxt "structural navigation"
 msgid "Visited Links"
 msgstr "Ziyaret Edilmiş Bağlantılar"
@@ -9176,10 +9141,9 @@ msgid "_Reset"
 msgstr "Sıfı_rla"
 
 #: ../src/orca/orca-setup.ui.h:126
-#, fuzzy
 #| msgid "Text Attributes"
 msgid "Text attributes"
-msgstr "Metin Öznitelikleri"
+msgstr "Metin öznitelikleri"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: ../src/orca/orca-setup.ui.h:128
