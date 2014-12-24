@@ -8,6 +8,9 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(PauseAction(3000))
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
+sequence.append(KeyComboAction("a"))
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("<Control>End"))
 
 sequence.append(utils.StartRecordingAction())
@@ -124,7 +127,7 @@ sequence.append(utils.AssertPresentationAction(
     "14. Line Up",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'and the new value was: entry'"]))
+     "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -140,7 +143,7 @@ sequence.append(utils.AssertPresentationAction(
     "16. Line Up",
     ["BRAILLE LINE:  '[Bug creation] list box'",
      "     VISIBLE:  '[Bug creation] list box', cursor=1",
-     "SPEECH OUTPUT: 'where one or more of the following changed: [Bug creation] multi-select List with 26 items'"]))
+     "SPEECH OUTPUT: '[Bug creation] multi-select List with 26 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -164,7 +167,7 @@ sequence.append(utils.AssertPresentationAction(
     "19. Line Up",
     ["BRAILLE LINE:  ' $l and Now $l'",
      "     VISIBLE:  ' $l and Now $l', cursor=1",
-     "SPEECH OUTPUT: 'Only bugs changed between: entry'",
+     "SPEECH OUTPUT: '(YYYY-MM-DD or relative dates) entry'",
      "SPEECH OUTPUT: 'and entry Now'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -198,7 +201,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Only include combo box bugs numbered:  $l'",
      "     VISIBLE:  'Only include combo box bugs numb', cursor=1",
      "SPEECH OUTPUT: 'Only include combo box'",
-     "SPEECH OUTPUT: 'bugs numbered: entry'"]))
+     "SPEECH OUTPUT: 'bugs numbered:'",
+     "SPEECH OUTPUT: '(comma-separated list) entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

@@ -61,7 +61,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. line Up",
     ["BRAILLE LINE:  'Hockey list box'",
      "     VISIBLE:  'Hockey list box', cursor=1",
-     "SPEECH OUTPUT: 'Which sports do you like? Hockey multi-select List with 4 items' voice=system"]))
+     "SPEECH OUTPUT: 'Which sports do you like? Hockey multi-select List with 4 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

@@ -27,17 +27,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
-    ["BRAILLE LINE:  '1.remember what the heck we are doing each day'",
-     "     VISIBLE:  '1.remember what the heck we are ', cursor=1",
-     "SPEECH OUTPUT: '1.remember what the heck we are doing each day'"]))
+    ["BRAILLE LINE:  '1. remember what the heck we are doing each day'",
+     "     VISIBLE:  '1. remember what the heck we are', cursor=1",
+     "SPEECH OUTPUT: '1. remember what the heck we are doing each day'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
-    ["BRAILLE LINE:  '2.arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'",
-     "     VISIBLE:  '2.arrange long and arbitrary lin', cursor=1",
-     "SPEECH OUTPUT: '2.arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'"]))
+    ["BRAILLE LINE:  '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'",
+     "     VISIBLE:  '2. arrange long and arbitrary li', cursor=1",
+     "SPEECH OUTPUT: '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -51,17 +51,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
-    ["BRAILLE LINE:  '3.look really cool when we carry them around on yellow Post-Itstm.'",
-     "     VISIBLE:  '3.look really cool when we carry', cursor=1",
-     "SPEECH OUTPUT: '3.look really cool when we carry them around on yellow Post-Itstm.'"]))
+    ["BRAILLE LINE:  '3. look really cool when we carry them around on yellow Post-Itstm.'",
+     "     VISIBLE:  '3. look really cool when we carr', cursor=1",
+     "SPEECH OUTPUT: '3. look really cool when we carry them around on yellow Post-Itstm.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
-    ["BRAILLE LINE:  '4.and that other thing I keep forgetting.'",
-     "     VISIBLE:  '4.and that other thing I keep fo', cursor=1",
-     "SPEECH OUTPUT: '4.and that other thing I keep forgetting.'"]))
+    ["BRAILLE LINE:  '4. and that other thing I keep forgetting.'",
+     "     VISIBLE:  '4. and that other thing I keep f', cursor=1",
+     "SPEECH OUTPUT: '4. and that other thing I keep forgetting.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -75,57 +75,60 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "9. Line Down",
-    ["BRAILLE LINE:  'VI.And use roman numerals,'",
-     "     VISIBLE:  'VI.And use roman numerals,', cursor=1",
-     "SPEECH OUTPUT: 'VI.And use roman numerals,'"]))
+    ["KNOWN ISSUE: Gecko is not exposing this as a roman numeral.",
+     "BRAILLE LINE:  '6. And use roman numerals,'",
+     "     VISIBLE:  '6. And use roman numerals,', cursor=1",
+     "SPEECH OUTPUT: '6. And use roman numerals,'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "10. Line Down",
-    ["BRAILLE LINE:  'g.You might try using letters as well,'",
-     "     VISIBLE:  'g.You might try using letters as', cursor=1",
-     "SPEECH OUTPUT: 'g.You might try using letters as well,'"]))
+    ["BRAILLE LINE:  'g. You might try using letters as well,'",
+     "     VISIBLE:  'g. You might try using letters a', cursor=1",
+     "SPEECH OUTPUT: 'g. You might try using letters as well,'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "11. Line Down",
-    ["BRAILLE LINE:  'H.Maybe you prefer Big Letters,'",
-     "     VISIBLE:  'H.Maybe you prefer Big Letters,', cursor=1",
-     "SPEECH OUTPUT: 'H.Maybe you prefer Big Letters,'"]))
+    ["BRAILLE LINE:  'H. Maybe you prefer Big Letters,'",
+     "     VISIBLE:  'H. Maybe you prefer Big Letters,', cursor=1",
+     "SPEECH OUTPUT: 'H. Maybe you prefer Big Letters,'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "12. Line Down",
-    ["BRAILLE LINE:  'ix.or small roman numerals'",
-     "     VISIBLE:  'ix.or small roman numerals', cursor=1",
-     "SPEECH OUTPUT: 'ix.or small roman numerals'"]))
+    ["KNOWN ISSUE: Gecko is not exposing this as a roman numeral.",
+     "BRAILLE LINE:  '9. or small roman numerals'",
+     "     VISIBLE:  '9. or small roman numerals', cursor=1",
+     "SPEECH OUTPUT: '9. or small roman numerals'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "13. Line Up",
-    ["BRAILLE LINE:  'H.Maybe you prefer Big Letters,'",
-     "     VISIBLE:  'H.Maybe you prefer Big Letters,', cursor=1",
-     "SPEECH OUTPUT: 'H.Maybe you prefer Big Letters,'"]))
+    ["BRAILLE LINE:  'H. Maybe you prefer Big Letters,'",
+     "     VISIBLE:  'H. Maybe you prefer Big Letters,', cursor=1",
+     "SPEECH OUTPUT: 'H. Maybe you prefer Big Letters,'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "14. Line Up",
-    ["BRAILLE LINE:  'g.You might try using letters as well,'",
-     "     VISIBLE:  'g.You might try using letters as', cursor=1",
-     "SPEECH OUTPUT: 'g.You might try using letters as well,'"]))
+    ["BRAILLE LINE:  'g. You might try using letters as well,'",
+     "     VISIBLE:  'g. You might try using letters a', cursor=1",
+     "SPEECH OUTPUT: 'g. You might try using letters as well,'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "15. Line Up",
-    ["BRAILLE LINE:  'VI.And use roman numerals,'",
-     "     VISIBLE:  'VI.And use roman numerals,', cursor=1",
-     "SPEECH OUTPUT: 'VI.And use roman numerals,'"]))
+    ["KNOWN ISSUE: Gecko is not exposing this as a roman numeral.",
+     "BRAILLE LINE:  '6. And use roman numerals,'",
+     "     VISIBLE:  '6. And use roman numerals,', cursor=1",
+     "SPEECH OUTPUT: '6. And use roman numerals,'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -139,17 +142,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "17. Line Up",
-    ["BRAILLE LINE:  '4.and that other thing I keep forgetting.'",
-     "     VISIBLE:  '4.and that other thing I keep fo', cursor=1",
-     "SPEECH OUTPUT: '4.and that other thing I keep forgetting.'"]))
+    ["BRAILLE LINE:  '4. and that other thing I keep forgetting.'",
+     "     VISIBLE:  '4. and that other thing I keep f', cursor=1",
+     "SPEECH OUTPUT: '4. and that other thing I keep forgetting.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "18. Line Up",
-    ["BRAILLE LINE:  '3.look really cool when we carry them around on yellow Post-Itstm.'",
-     "     VISIBLE:  '3.look really cool when we carry', cursor=1",
-     "SPEECH OUTPUT: '3.look really cool when we carry them around on yellow Post-Itstm.'"]))
+    ["BRAILLE LINE:  '3. look really cool when we carry them around on yellow Post-Itstm.'",
+     "     VISIBLE:  '3. look really cool when we carr', cursor=1",
+     "SPEECH OUTPUT: '3. look really cool when we carry them around on yellow Post-Itstm.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -163,17 +166,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "20. Line Up",
-    ["BRAILLE LINE:  '2.arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'",
-     "     VISIBLE:  '2.arrange long and arbitrary lin', cursor=1",
-     "SPEECH OUTPUT: '2.arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'"]))
+    ["BRAILLE LINE:  '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'",
+     "     VISIBLE:  '2. arrange long and arbitrary li', cursor=1",
+     "SPEECH OUTPUT: '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "21. Line Up",
-    ["BRAILLE LINE:  '1.remember what the heck we are doing each day'",
-     "     VISIBLE:  '1.remember what the heck we are ', cursor=1",
-     "SPEECH OUTPUT: '1.remember what the heck we are doing each day'"]))
+    ["BRAILLE LINE:  '1. remember what the heck we are doing each day'",
+     "     VISIBLE:  '1. remember what the heck we are', cursor=1",
+     "SPEECH OUTPUT: '1. remember what the heck we are doing each day'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

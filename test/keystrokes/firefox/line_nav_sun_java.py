@@ -213,9 +213,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "22. Line Down",
-    ["BRAILLE LINE:  '\u2022Java Plugin Browser Registration Instructions'",
-     "     VISIBLE:  '\u2022Java Plugin Browser Registratio', cursor=1",
-     "SPEECH OUTPUT: '\u2022'",
+    ["BRAILLE LINE:  '• Java Plugin Browser Registration Instructions'",
+     "     VISIBLE:  '• Java Plugin Browser Registrati', cursor=1",
+     "SPEECH OUTPUT: '•'",
      "SPEECH OUTPUT: 'Java Plugin Browser Registration Instructions'",
      "SPEECH OUTPUT: 'link'"]))
 
@@ -223,9 +223,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "23. Line Down",
-    ["BRAILLE LINE:  '\u2022Java Web Start Installation Notes'",
-     "     VISIBLE:  '\u2022Java Web Start Installation Not', cursor=1",
-     "SPEECH OUTPUT: '\u2022'",
+    ["BRAILLE LINE:  '• Java Web Start Installation Notes'",
+     "     VISIBLE:  '• Java Web Start Installation No', cursor=1",
+     "SPEECH OUTPUT: '•'",
      "SPEECH OUTPUT: 'Java Web Start Installation Notes'",
      "SPEECH OUTPUT: 'link'"]))
 
@@ -241,9 +241,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "25. Line Down",
-    ["BRAILLE LINE:  '\u2022Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'",
-     "     VISIBLE:  '\u2022Self-extracting Binary File - T', cursor=1",
-     "SPEECH OUTPUT: '\u2022Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'"]))
+    ["BRAILLE LINE:  '• Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'",
+     "     VISIBLE:  '• Self-extracting Binary File - ', cursor=1",
+     "SPEECH OUTPUT: '• Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -267,9 +267,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "28. Line Down",
-    ["BRAILLE LINE:  '\u2022RPM Packages - A rpm.bin file containing RPM packages, installed with the rpm utility. Requires root access to install. RPM packages are the recommended method for'",
-     "     VISIBLE:  '\u2022RPM Packages - A rpm.bin file c', cursor=1",
-     "SPEECH OUTPUT: '\u2022RPM Packages - A rpm.bin file containing RPM packages, installed with the rpm utility. Requires root access to install. RPM packages are the recommended method for'"]))
+    ["BRAILLE LINE:  '• RPM Packages - A rpm.bin file containing RPM packages, installed with the rpm utility. Requires root access to install. RPM packages are the recommended method for'",
+     "     VISIBLE:  '• RPM Packages - A rpm.bin file ', cursor=1",
+     "SPEECH OUTPUT: '• RPM Packages - A rpm.bin file containing RPM packages, installed with the rpm utility. Requires root access to install. RPM packages are the recommended method for'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

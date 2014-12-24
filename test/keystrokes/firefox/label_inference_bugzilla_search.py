@@ -13,20 +13,15 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Shift Tab",
-    ["BRAILLE LINE:  'Summary: contains all of the words/strings combo box $l Search push button'",
+    ["BRAILLE LINE:  'contains all of the words/strings combo box'",
      "     VISIBLE:  'contains all of the words/string', cursor=1",
-     "BRAILLE LINE:  'Focus mode'",
-     "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'Summary: contains all of the words/strings combo box'",
-     "SPEECH OUTPUT: 'Focus mode' voice=system"]))
+     "SPEECH OUTPUT: 'Summary: contains all of the words/strings combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "2. Tab",
-    ["BRAILLE LINE:  'Summary: contains all of the words/strings combo box $l Search push button'",
-     "     VISIBLE:  'contains all of the words/string', cursor=1",
-     "BRAILLE LINE:  ' $l'",
+    ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'entry'"]))
 
@@ -367,18 +362,20 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "37. Tab",
-    ["BRAILLE LINE:  ' $l'",
+    ["KNOWN ISSUE: This could be improved",
+     "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'bugs numbered: entry'"]))
+     "SPEECH OUTPUT: '(comma-separated list) entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "38. Tab",
-    ["BRAILLE LINE:  ' $l'",
+    ["KNOWN ISSUE: This could be improved",
+     "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Bug Changes panel'",
-     "SPEECH OUTPUT: 'Only bugs changed between: entry'"]))
+     "SPEECH OUTPUT: '(YYYY-MM-DD or relative dates) entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -396,7 +393,7 @@ sequence.append(utils.AssertPresentationAction(
     "40. Tab",
     ["BRAILLE LINE:  '[Bug creation]'",
      "     VISIBLE:  '[Bug creation]', cursor=1",
-     "SPEECH OUTPUT: 'where one or more of the following changed: multi-select List with 26 items'",
+     "SPEECH OUTPUT: 'multi-select List with 26 items'",
      "SPEECH OUTPUT: '[Bug creation]'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -405,7 +402,7 @@ sequence.append(utils.AssertPresentationAction(
     "41. Tab",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'and the new value was: entry'"]))
+     "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

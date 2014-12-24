@@ -46,7 +46,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'ipsum dolor sit amet', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",
-     "BRAILLE LINE:  'Make it overflow. ipsum dolor sit amet, consectetuer adipiscing elit. Aenean'",
+     "BRAILLE LINE:  'Make it overflow. ipsum dolor sit amet, consectetuer adipiscing'",
      "     VISIBLE:  'ipsum dolor sit amet, consectetu', cursor=1",
      "SPEECH OUTPUT: 'ipsum dolor sit amet link'",
      "SPEECH OUTPUT: 'Browse mode' voice=system"]))
@@ -55,17 +55,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Down Arrow in Browse Mode",
-    ["BRAILLE LINE:  'semper sagittis velit. Cras in mi. Duis porta mauris ut ligula. Proin porta rutrum'",
-     "     VISIBLE:  'semper sagittis velit. Cras in m', cursor=1",
-     "SPEECH OUTPUT: 'semper sagittis velit. Cras in mi. Duis porta mauris ut ligula. Proin porta rutrum'"]))
+    ["BRAILLE LINE:  'elit. Aenean semper sagittis velit. Cras in mi. Duis porta mauris ut'",
+     "     VISIBLE:  'elit. Aenean semper sagittis vel', cursor=1",
+     "SPEECH OUTPUT: 'elit. Aenean semper sagittis velit. Cras in mi. Duis porta mauris ut'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Down Arrow in Browse Mode",
-    ["BRAILLE LINE:  'lacus. Etiam consequat scelerisque quam. Nulla facilisi. Maecenas luctus'",
-     "     VISIBLE:  'lacus. Etiam consequat scelerisq', cursor=1",
-     "SPEECH OUTPUT: 'lacus. Etiam consequat scelerisque quam. Nulla facilisi. Maecenas luctus'"]))
+    ["BRAILLE LINE:  'ligula. Proin porta rutrum lacus. Etiam consequat scelerisque'",
+     "     VISIBLE:  'ligula. Proin porta rutrum lacus', cursor=1",
+     "SPEECH OUTPUT: 'ligula. Proin porta rutrum lacus. Etiam consequat scelerisque'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

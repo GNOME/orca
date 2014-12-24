@@ -33,7 +33,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Basic Where Am I",
     ["BRAILLE LINE:  'Firefox application Print dialog Options page tab'",
      "     VISIBLE:  'Options page tab', cursor=1",
-     "SPEECH OUTPUT: 'page tab list Options page tab 3 of 5'"]))
+     "SPEECH OUTPUT: 'page tab list Options page tab [1-9] of [1-9]'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))

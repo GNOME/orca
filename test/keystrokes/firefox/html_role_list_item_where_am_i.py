@@ -11,17 +11,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
-    ["BRAILLE LINE:  '•Not in a paragraph'",
-     "     VISIBLE:  '•Not in a paragraph', cursor=1",
-     "SPEECH OUTPUT: '•Not in a paragraph'"]))
+    ["BRAILLE LINE:  '• Not in a paragraph'",
+     "     VISIBLE:  '• Not in a paragraph', cursor=1",
+     "SPEECH OUTPUT: '• Not in a paragraph'"]))
 
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic Where Am I next item",
-    ["BRAILLE LINE:  '•In a paragraph'",
-     "     VISIBLE:  '•In a paragraph', cursor=1",
+    ["BRAILLE LINE:  '• In a paragraph'",
+     "     VISIBLE:  '• In a paragraph', cursor=1",
      "SPEECH OUTPUT: 'list item • In a paragraph'"]))
 
 sequence.append(KeyComboAction("Down"))
@@ -29,8 +29,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "3. Basic Where Am I next item",
-    ["BRAILLE LINE:  '•In a section'",
-     "     VISIBLE:  '•In a section', cursor=1",
+    ["BRAILLE LINE:  '• In a section'",
+     "     VISIBLE:  '• In a section', cursor=1",
      "SPEECH OUTPUT: 'list item • In a section'"]))
 
 sequence.append(KeyComboAction("Down"))
@@ -38,9 +38,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "4. Basic Where Am I next item",
-    ["BRAILLE LINE:  '1.A nested list item, not in a paragraph'",
-     "     VISIBLE:  '1.A nested list item, not in a p', cursor=1",
-     "SPEECH OUTPUT: 'list item 1.A nested list item, not in a paragraph Nesting level 1'"]))
+    ["BRAILLE LINE:  '1. A nested list item, not in a paragraph'",
+     "     VISIBLE:  '1. A nested list item, not in a ', cursor=1",
+     "SPEECH OUTPUT: 'list item 1. A nested list item, not in a paragraph Nesting level 1'"]))
 
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.StartRecordingAction())
@@ -65,8 +65,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "7. Basic Where Am I next item",
-    ["BRAILLE LINE:  '•In a paragraph that's in a section'",
-     "     VISIBLE:  '•In a paragraph that's in a sect', cursor=1",
+    ["BRAILLE LINE:  '• In a paragraph that's in a section'",
+     "     VISIBLE:  '• In a paragraph that's in a sec', cursor=1",
      "SPEECH OUTPUT: 'list item • In a paragraph that's in a section'"]))
 
 sequence.append(utils.AssertionSummaryAction())

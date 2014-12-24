@@ -114,7 +114,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>d"))
 sequence.append(utils.AssertPresentationAction(
     "10. Alt+D to Description",
-    ["BRAILLE LINE:  'Description:  $l'",
+    ["BRAILLE LINE:  'Firefox application New Bookmark dialog Description:  $l'",
      "     VISIBLE:  'Description:  $l', cursor=14",
      "SPEECH OUTPUT: 'Description: entry'"]))
 
