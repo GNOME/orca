@@ -174,7 +174,7 @@ class LabelInference:
         if not obj:
             return True
 
-        nonLabelTextRoles = [pyatspi.ROLE_HEADING]
+        nonLabelTextRoles = [pyatspi.ROLE_HEADING, pyatspi.ROLE_LIST_ITEM]
         if obj.getRole() in nonLabelTextRoles:
             return True
 
@@ -317,7 +317,9 @@ class LabelInference:
         onLeft = contents[0:index]
         start = 0
         for i in range(len(onLeft) - 1, -1, -1):
-            if self._cannotLabel(onLeft[i][0]):
+            lObj, lStart, lEnd, lString = onLeft[i]
+            lExtents = self._getExtents(lObj)
+            if lExtents[0] > extents[0] or self._cannotLabel(lObj):
                 start = i + 1
                 break
 
