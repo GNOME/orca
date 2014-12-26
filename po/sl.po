@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2014-09-14 10:18+0000\n"
-"PO-Revision-Date: 2014-09-14 22:29+0100\n"
+"POT-Creation-Date: 2014-12-26 11:19+0000\n"
+"PO-Revision-Date: 2014-12-26 20:58+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -41,7 +41,7 @@ msgstr ""
 
 #: ../orca.desktop.in.h:4
 msgid "screen reader;speech;braille;"
-msgstr "govor;zaslonski bralnik;Braillova pisava;brajica;povečevalnik;"
+msgstr "govor;zaslonski bralnik;Braillova pisava;brajica;povečevalnik"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -1873,9 +1873,8 @@ msgstr "desno usmerjena puščica"
 #. * http://en.wikipedia.org/wiki/Specials_(Unicode_block)
 #.
 #: ../src/orca/chnames.py:874
-#, fuzzy
 msgid "object replacement character"
-msgstr "Neznan kodni nabor znakov"
+msgstr "znak vsebnik za zamenjavo predmeta"
 
 #. Translators: this command will move the mouse pointer to the current item
 #. without clicking on it.
@@ -3170,7 +3169,7 @@ msgstr "Skoči eno celico navzgor."
 #. between these two modes.
 #: ../src/orca/cmdnames.py:980
 msgid "Switches between browse mode and focus mode."
-msgstr ""
+msgstr "Preklopi med načinom iskanja in načinom žarišča."
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -3182,9 +3181,8 @@ msgstr ""
 #. enables setting a "sticky" focus mode which disables all automatic toggling.
 #. This string is associated with the Orca command to enable sticky focus mode.
 #: ../src/orca/cmdnames.py:991
-#, fuzzy
 msgid "Enables sticky focus mode."
-msgstr "Omogoči način varnega zasebnega brskanja"
+msgstr "Omogoči lepljiv način žarišča."
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: ../src/orca/cmdnames.py:994
@@ -3262,7 +3260,7 @@ msgstr "bež"
 #: ../src/orca/colornames.py:60
 msgctxt "color name"
 msgid "bisque"
-msgstr ""
+msgstr "kožno rjava"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3276,10 +3274,9 @@ msgstr "črna"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:70
-#, fuzzy
 msgctxt "color name"
 msgid "blanched almond"
-msgstr "črni karo"
+msgstr "marcipan"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3311,16 +3308,15 @@ msgstr "rjava"
 #: ../src/orca/colornames.py:90
 msgctxt "color name"
 msgid "burlywood"
-msgstr ""
+msgstr "svetlo lesena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:95
-#, fuzzy
 msgctxt "color name"
 msgid "cadet blue"
-msgstr "Nebesno modra"
+msgstr "kadetsko modra"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3350,10 +3346,9 @@ msgstr "koralna"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:115
-#, fuzzy
 msgctxt "color name"
 msgid "cornflower blue"
-msgstr "Nebesno modra"
+msgstr "cikorija"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3361,7 +3356,7 @@ msgstr "Nebesno modra"
 #: ../src/orca/colornames.py:120
 msgctxt "color name"
 msgid "cornsilk"
-msgstr ""
+msgstr "sivo rumena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3377,7 +3372,7 @@ msgstr "škrlatna"
 #: ../src/orca/colornames.py:130
 msgctxt "color name"
 msgid "cyan"
-msgstr "cijan"
+msgstr "sinja"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3431,19 +3426,17 @@ msgstr "temna kaki"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:165
-#, fuzzy
 msgctxt "color name"
 msgid "dark magenta"
-msgstr "_Škrlatno-zelena:"
+msgstr "temna magenta"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:170
-#, fuzzy
 msgctxt "color name"
 msgid "dark olive green"
-msgstr "Pokaži zeleno vodilo"
+msgstr "temno olivno zelena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3457,10 +3450,9 @@ msgstr "temno oranžna"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:180
-#, fuzzy
 msgctxt "color name"
 msgid "dark orchid"
-msgstr "temo vijolična"
+msgstr "škrlatna orhideja"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3483,10 +3475,9 @@ msgstr "Salmon Arm"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:195
-#, fuzzy
 msgctxt "color name"
 msgid "dark sea green"
-msgstr "Pokaži zeleno vodilo"
+msgstr "temno morsko zelena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3510,10 +3501,9 @@ msgstr "zelo temno siva"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:210
-#, fuzzy
 msgctxt "color name"
 msgid "dark turquoise"
-msgstr "temo vijolična"
+msgstr "temna turkizna"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3527,10 +3517,9 @@ msgstr "temno vijolična"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:220
-#, fuzzy
 msgctxt "color name"
 msgid "deep pink"
-msgstr "Rožnato blago"
+msgstr "globoka rožnata"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3562,10 +3551,9 @@ msgstr "Nebesno modra"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:240
-#, fuzzy
 msgctxt "color name"
 msgid "fire brick"
-msgstr "Sproži _bliskavico"
+msgstr "opečnato rdeča"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3580,10 +3568,9 @@ msgstr "_Presledni znak"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:250
-#, fuzzy
 msgctxt "color name"
 msgid "forest green"
-msgstr "Zelena"
+msgstr "gozdnato zelena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3599,16 +3586,15 @@ msgstr "fuksija"
 #: ../src/orca/colornames.py:260
 msgctxt "color name"
 msgid "gainsboro"
-msgstr ""
+msgstr "belo siva"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#HTML_color_names.
 #: ../src/orca/colornames.py:265
-#, fuzzy
 msgctxt "color name"
 msgid "ghost white"
-msgstr "_Presledni znak"
+msgstr "umazano bela"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3638,7 +3624,6 @@ msgstr "siva"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:285
-#, fuzzy
 msgctxt "color name"
 msgid "green"
 msgstr "zelena"
@@ -3647,10 +3632,9 @@ msgstr "zelena"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:290
-#, fuzzy
 msgctxt "color name"
 msgid "green yellow"
-msgstr "rumena knjiga"
+msgstr "rumeno zelena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3664,55 +3648,49 @@ msgstr ""
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:300
-#, fuzzy
 msgctxt "color name"
 msgid "hot pink"
-msgstr "Rožnato blago"
+msgstr "vroča rožnata"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:305
-#, fuzzy
 msgctxt "color name"
 msgid "indian red"
-msgstr "rdeči joker"
+msgstr "okra"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:310
-#, fuzzy
 msgctxt "color name"
 msgid "indigo"
-msgstr "vijoličasto moder"
+msgstr "indigo"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:315
-#, fuzzy
 msgctxt "color name"
 msgid "ivory"
-msgstr "slonokoščen"
+msgstr "slonokoščena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:320
-#, fuzzy
 msgctxt "color name"
 msgid "khaki"
-msgstr "Kakijeva"
+msgstr "kaki"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:325
-#, fuzzy
 msgctxt "color name"
 msgid "lavender"
-msgstr "svetlo vijoličasta"
+msgstr "sivka"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3720,16 +3698,15 @@ msgstr "svetlo vijoličasta"
 #: ../src/orca/colornames.py:330
 msgctxt "color name"
 msgid "lavender blush"
-msgstr ""
+msgstr "modrikasta sivka"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:335
-#, fuzzy
 msgctxt "color name"
 msgid "lawn green"
-msgstr "Zelena"
+msgstr "travniško zelena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3743,7 +3720,6 @@ msgstr ""
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:345
-#, fuzzy
 msgctxt "color name"
 msgid "light blue"
 msgstr "svetlo modra"
@@ -3761,7 +3737,6 @@ msgstr "Coral Harbour"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:355
-#, fuzzy
 msgctxt "color name"
 msgid "light cyan"
 msgstr "svetlo sinja"
@@ -3779,7 +3754,6 @@ msgstr "Črno na svetlo rumenem"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:365
-#, fuzzy
 msgctxt "color name"
 msgid "light gray"
 msgstr "svetlo siva"
@@ -3788,7 +3762,6 @@ msgstr "svetlo siva"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:370
-#, fuzzy
 msgctxt "color name"
 msgid "light green"
 msgstr "svetlo zelena"
@@ -3797,10 +3770,9 @@ msgstr "svetlo zelena"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:375
-#, fuzzy
 msgctxt "color name"
 msgid "light pink"
-msgstr "Rožnato blago"
+msgstr "svetla rožnata"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3815,16 +3787,14 @@ msgstr "Salmon Arm"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:385
-#, fuzzy
 msgctxt "color name"
 msgid "light sea green"
-msgstr "Količina zelene luči v barvi."
+msgstr "svetlo morsko zelena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:390
-#, fuzzy
 msgctxt "color name"
 msgid "light sky blue"
 msgstr "svetlo nebesno modra"
@@ -3842,16 +3812,14 @@ msgstr "zelo svetla siva"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:400
-#, fuzzy
 msgctxt "color name"
 msgid "light steel blue"
-msgstr "svetlo nebesno modra"
+msgstr "svetlo jekleno modra"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:405
-#, fuzzy
 msgctxt "color name"
 msgid "light yellow"
 msgstr "svetlo rumena"
@@ -3887,19 +3855,17 @@ msgstr "nova vrstica"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:425
-#, fuzzy
 msgctxt "color name"
 msgid "magenta"
-msgstr "škrlatna"
+msgstr "magenta"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:430
-#, fuzzy
 msgctxt "color name"
 msgid "maroon"
-msgstr "Kostanjeva"
+msgstr "kostanjeva"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3914,37 +3880,33 @@ msgstr "Izmetavanje nosilca"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:440
-#, fuzzy
 msgctxt "color name"
 msgid "medium blue"
-msgstr "Nebesno modra"
+msgstr "blaga modra"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:445
-#, fuzzy
 msgctxt "color name"
 msgid "medium orchid"
-msgstr "Izmetavanje nosilca"
+msgstr "blaga škrlatna orhideja"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:450
-#, fuzzy
 msgctxt "color name"
 msgid "medium purple"
-msgstr "temo vijolična"
+msgstr "blaga škrlatna"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:455
-#, fuzzy
 msgctxt "color name"
 msgid "medium sea green"
-msgstr "Pokaži zeleno vodilo"
+msgstr "blago morsko zelena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3959,28 +3921,25 @@ msgstr "Izbirno modro redčenje"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:465
-#, fuzzy
 msgctxt "color name"
 msgid "medium spring green"
-msgstr "Pokaži zeleno vodilo"
+msgstr "blaga spomladansko zelena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:470
-#, fuzzy
 msgctxt "color name"
 msgid "medium turquoise"
-msgstr "Izmetavanje nosilca"
+msgstr "blaga turkizna"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:475
-#, fuzzy
 msgctxt "color name"
 msgid "medium violet red"
-msgstr "Uporabniški vmesnik (obrezano)"
+msgstr "blaga vijolično rdeča"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4030,7 +3989,6 @@ msgstr "_Presledni znak"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:505
-#, fuzzy
 msgctxt "color name"
 msgid "navy"
 msgstr "mornarska"
@@ -4048,7 +4006,6 @@ msgstr "opozorilo:-staro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:515
-#, fuzzy
 msgctxt "color name"
 msgid "olive"
 msgstr "olivna"
@@ -4066,7 +4023,6 @@ msgstr "Olive Branch"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:525
-#, fuzzy
 msgctxt "color name"
 msgid "orange"
 msgstr "oranžna"
@@ -4075,7 +4031,6 @@ msgstr "oranžna"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:530
-#, fuzzy
 msgctxt "color name"
 msgid "orange red"
 msgstr "rdeče-oranžna"
@@ -4086,7 +4041,7 @@ msgstr "rdeče-oranžna"
 #: ../src/orca/colornames.py:535
 msgctxt "color name"
 msgid "orchid"
-msgstr ""
+msgstr "škrlatna orhideja"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4101,10 +4056,9 @@ msgstr "Temna zlata palica"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:545
-#, fuzzy
 msgctxt "color name"
 msgid "pale green"
-msgstr "Zelena"
+msgstr "bledo zelena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4118,10 +4072,9 @@ msgstr "bleda turkizna"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:555
-#, fuzzy
 msgctxt "color name"
 msgid "pale violet red"
-msgstr "Uporabniški vmesnik (obrezano)"
+msgstr "bledo vijolično rdeča"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4129,7 +4082,7 @@ msgstr "Uporabniški vmesnik (obrezano)"
 #: ../src/orca/colornames.py:560
 msgctxt "color name"
 msgid "papaya whip"
-msgstr ""
+msgstr "papaja"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4152,7 +4105,6 @@ msgstr "Peru (es_PE)"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:575
-#, fuzzy
 msgctxt "color name"
 msgid "pink"
 msgstr "roza"
@@ -4161,10 +4113,9 @@ msgstr "roza"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:580
-#, fuzzy
 msgctxt "color name"
 msgid "plum"
-msgstr "modra kot sliva"
+msgstr "slivova"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4179,7 +4130,6 @@ msgstr "Nebesno modra"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:590
-#, fuzzy
 msgctxt "color name"
 msgid "purple"
 msgstr "škrlatna"
@@ -4188,7 +4138,6 @@ msgstr "škrlatna"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:595
-#, fuzzy
 msgctxt "color name"
 msgid "red"
 msgstr "rdeča"
@@ -4233,19 +4182,17 @@ msgstr "losos"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:620
-#, fuzzy
 msgctxt "color name"
 msgid "sandy brown"
-msgstr "sivkasto rjava"
+msgstr "peščeno rjava"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:625
-#, fuzzy
 msgctxt "color name"
 msgid "sea green"
-msgstr "Zelena"
+msgstr "morsko zelena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4253,31 +4200,28 @@ msgstr "Zelena"
 #: ../src/orca/colornames.py:630
 msgctxt "color name"
 msgid "seashell"
-msgstr ""
+msgstr "školjčna"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:635
-#, fuzzy
 msgctxt "color name"
 msgid "sienna"
-msgstr "rjavo rdeča"
+msgstr "siena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:640
-#, fuzzy
 msgctxt "color name"
 msgid "silver"
-msgstr "Srebrna"
+msgstr "srebrna"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:645
-#, fuzzy
 msgctxt "color name"
 msgid "sky blue"
 msgstr "nebesno modra"
@@ -4304,37 +4248,33 @@ msgstr "Skrilavčno siva"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:660
-#, fuzzy
 msgctxt "color name"
 msgid "snow"
-msgstr "sneženje"
+msgstr "snežena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:665
-#, fuzzy
 msgctxt "color name"
 msgid "spring green"
-msgstr "Zelena"
+msgstr "spomladansko zelena"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:670
-#, fuzzy
 msgctxt "color name"
 msgid "steel blue"
-msgstr "Nebesno modra"
+msgstr "jekleno modra"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:675
-#, fuzzy
 msgctxt "color name"
 msgid "tan"
-msgstr "TAN:tangenta vrednosti @{x}"
+msgstr "zagorelo rjava"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4359,7 +4299,7 @@ msgstr "Osatna"
 #: ../src/orca/colornames.py:690
 msgctxt "color name"
 msgid "tomato"
-msgstr ""
+msgstr "paradižnikova"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4373,10 +4313,9 @@ msgstr "turkizna"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:700
-#, fuzzy
 msgctxt "color name"
 msgid "violet"
-msgstr "Vijolična"
+msgstr "vijolična"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4390,7 +4329,6 @@ msgstr "pšenična"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:710
-#, fuzzy
 msgctxt "color name"
 msgid "white"
 msgstr "bela"
@@ -4399,10 +4337,9 @@ msgstr "bela"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:715
-#, fuzzy
 msgctxt "color name"
 msgid "white smoke"
-msgstr "_Presledni znak"
+msgstr "dimno bela"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4426,8 +4363,8 @@ msgstr "rumenozelena"
 #.
 #: ../src/orca/flat_review.py:1045 ../src/orca/generator.py:495
 #: ../src/orca/generator.py:761 ../src/orca/generator.py:803
-#: ../src/orca/generator.py:849 ../src/orca/tutorialgenerator.py:562
-#: ../src/orca/tutorialgenerator.py:602
+#: ../src/orca/generator.py:849 ../src/orca/tutorialgenerator.py:563
+#: ../src/orca/tutorialgenerator.py:603
 msgid "toggle"
 msgstr "preklopi"
 
@@ -8412,9 +8349,8 @@ msgstr "Pult ikon"
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
 #: ../src/orca/object_properties.py:81
-#, fuzzy
 msgid "clickable"
-msgstr "Klikljivo"
+msgstr "klikljivo"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
@@ -8433,9 +8369,8 @@ msgstr "razširjeno"
 #. Translators: This is a state which applies to elements in document conent
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
 #: ../src/orca/object_properties.py:95
-#, fuzzy
 msgid "has long description"
-msgstr "Dolg opis povezave"
+msgstr "ima dolg opis"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
@@ -10052,13 +9987,13 @@ msgid "spelling"
 msgstr "črkovanje"
 
 #. Translators: this is a tip for the user on how to toggle a checkbox.
-#: ../src/orca/tutorialgenerator.py:158
+#: ../src/orca/tutorialgenerator.py:159
 msgid "Press space to toggle."
 msgstr "Za preklop pritisnite preslednico."
 
 #. Translators: this is a tip for the user on how to interact
 #. with a combobox.
-#: ../src/orca/tutorialgenerator.py:185
+#: ../src/orca/tutorialgenerator.py:186
 msgid "Press space to expand, and use up and down to select an item."
 msgstr ""
 "Za razširitev pritisnite preslednico, za izbor predmeta pa uporabite smerni "
@@ -10066,13 +10001,13 @@ msgstr ""
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
-#: ../src/orca/tutorialgenerator.py:216
+#: ../src/orca/tutorialgenerator.py:217
 msgid "Press alt+f6 to give focus to child windows."
 msgstr "Za izbor podrejenega okna v žarišče uporabite sočasno tipki alt+F6."
 
 #. Translators: this gives tips on how to navigate items in a
 #. layered pane.
-#: ../src/orca/tutorialgenerator.py:280
+#: ../src/orca/tutorialgenerator.py:281
 msgid "To move to items, use either the arrow keys or type ahead searching."
 msgstr ""
 "Za premik na predmete, uporabite smerne tipke ali pa vpišite besedo v "
@@ -10080,12 +10015,12 @@ msgstr ""
 
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, describing how to access the system menus.
-#: ../src/orca/tutorialgenerator.py:286
+#: ../src/orca/tutorialgenerator.py:287
 msgid "To get to the system menus press the alt+f1 key."
 msgstr "Za dostop do sistemskih menijev pritisnite tipki alt+F."
 
 #. Translators: this is the tutorial string when navigating lists.
-#: ../src/orca/tutorialgenerator.py:323
+#: ../src/orca/tutorialgenerator.py:324
 msgid "Use up and down to select an item."
 msgstr "Uporabite tipki gor in dol za izbiro predmeta."
 
@@ -10093,7 +10028,7 @@ msgstr "Uporabite tipki gor in dol za izbiro predmeta."
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to collapse the node.
-#: ../src/orca/tutorialgenerator.py:353 ../src/orca/tutorialgenerator.py:533
+#: ../src/orca/tutorialgenerator.py:354 ../src/orca/tutorialgenerator.py:534
 msgid "To collapse, press shift plus left."
 msgstr "Za zložitev sočasno pritisnite shift in levo smerno tipko."
 
@@ -10101,36 +10036,36 @@ msgstr "Za zložitev sočasno pritisnite shift in levo smerno tipko."
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to expand the node.
-#: ../src/orca/tutorialgenerator.py:359 ../src/orca/tutorialgenerator.py:539
+#: ../src/orca/tutorialgenerator.py:360 ../src/orca/tutorialgenerator.py:540
 msgid "To expand, press shift plus right."
 msgstr "Za razširitev sočasno pritisnite shift in desno smerno tipko."
 
 #. Translators: this is the tutorial string for activating a menu item
-#: ../src/orca/tutorialgenerator.py:391
+#: ../src/orca/tutorialgenerator.py:392
 msgid "To activate press return."
 msgstr "Za zagon je treba pritisniti vnašalko."
 
 #. Translators: This is the tutorial string for when landing
 #. on text fields.
-#: ../src/orca/tutorialgenerator.py:421
+#: ../src/orca/tutorialgenerator.py:422
 msgid "Type in text."
 msgstr "Vnosno polje besedila."
 
 #. Translators: this is the tutorial string for landing
 #. on a page tab, we are informing the
 #. user how to navigate these.
-#: ../src/orca/tutorialgenerator.py:449
+#: ../src/orca/tutorialgenerator.py:450
 msgid "Use left and right to view other tabs."
 msgstr "Uporabite tipki levo in desno za pregled ostalih zavihkov."
 
 #. Translators: this is the tutorial string for activating a push button.
-#: ../src/orca/tutorialgenerator.py:474
+#: ../src/orca/tutorialgenerator.py:475
 msgid "To activate press space."
 msgstr "Za zagon pritisnite preslednico."
 
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
-#: ../src/orca/tutorialgenerator.py:502
+#: ../src/orca/tutorialgenerator.py:503
 msgid ""
 "Use up or down arrow to select value. Or type in the desired numerical value."
 msgstr ""
@@ -10138,12 +10073,12 @@ msgstr ""
 "številčne vrednosti."
 
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
-#: ../src/orca/tutorialgenerator.py:690
+#: ../src/orca/tutorialgenerator.py:691
 msgid "Use arrow keys to change."
 msgstr "Za spreminjanje uporabite smerne tipke."
 
 #. Translators: this is a tip for the user, how to navigate menues.
-#: ../src/orca/tutorialgenerator.py:715
+#: ../src/orca/tutorialgenerator.py:716
 msgid ""
 "To navigate, press left or right arrow. To move through items press up or "
 "down arrow."
@@ -10153,13 +10088,13 @@ msgstr ""
 
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menues.
-#: ../src/orca/tutorialgenerator.py:720
+#: ../src/orca/tutorialgenerator.py:721
 msgid "To enter sub menu, press right arrow."
 msgstr "Za vstop v podrejeni meni pritisnite desno smerno tipko."
 
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
-#: ../src/orca/tutorialgenerator.py:752
+#: ../src/orca/tutorialgenerator.py:753
 msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
