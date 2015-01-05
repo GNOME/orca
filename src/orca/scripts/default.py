@@ -624,6 +624,13 @@ class Script(script.Script):
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)
 
+        try:
+            keyBindings = _settingsManager.overrideKeyBindings(self, keyBindings)
+        except:
+            debug.println(debug.LEVEL_WARNING,
+                          "WARNING: problem overriding keybindings:")
+            debug.printException(debug.LEVEL_WARNING)
+
         return keyBindings
 
     def getDefaultKeyBindings(self):
@@ -642,13 +649,6 @@ class Script(script.Script):
 
         import orca.common_keyboardmap as common_keyboardmap
         keyBindings.load(common_keyboardmap.keymap, self.inputEventHandlers)
-
-        try:
-            keyBindings = _settingsManager.overrideKeyBindings(self, keyBindings)
-        except:
-            debug.println(debug.LEVEL_WARNING,
-                          "WARNING: problem overriding keybindings:")
-            debug.printException(debug.LEVEL_WARNING)
 
         return keyBindings
 
