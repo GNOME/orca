@@ -13,6 +13,7 @@ src/orca/generator.py
 src/orca/guilabels.py
 src/orca/keynames.py
 src/orca/keybindings.py
+src/orca/mathsymbols.py
 src/orca/messages.py
 src/orca/notification_messages.py
 src/orca/object_properties.py

@@ -38,6 +38,7 @@ from . import debug
 from . import keynames
 from . import keybindings
 from . import input_event
+from . import mathsymbols
 from . import messages
 from . import mouse_review
 from . import orca_state
@@ -2315,6 +2316,8 @@ class Utilities:
 
         if settings.speakMultiCaseStringsAsWords:
             line = self._processMultiCaseString(line)
+
+        line = mathsymbols.adjustForSpeech(line)
 
         if not settings.usePronunciationDictionary:
             return line

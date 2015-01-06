@@ -27,6 +27,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+from . import mathsymbols
 from .orca_i18n import _
 
 # chnames is a dictionary where the keys represent a unicode character
@@ -882,5 +883,9 @@ def getCharacterName(character):
 
     Returns a string representing the name for the character
     """
+
+    mathName = mathsymbols.getCharacterName(character)
+    if mathName:
+        return mathName
 
     return chnames.get(character, character)
