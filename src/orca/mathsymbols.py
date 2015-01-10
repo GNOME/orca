@@ -26,8 +26,11 @@ __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
 import re
+import unicodedata
 
 from .orca_i18n import C_
+
+fallbackOnUnicodeData = True
 
 SPEAK_NEVER = 1
 SPEAK_ALWAYS = 2
@@ -36,7 +39,18 @@ speakStyle = SPEAK_ALWAYS
 
 _all = {}
 _alnum = {}
+_arrows = {}
 _operators = {}
+_shapes = {}
+
+# Note that the following are to help us identify what is likely a math symbol
+# (as opposed to one serving the function of an image in "This way up.")
+_arrows.update(dict.fromkeys(map(chr, range(0x2190, 0x2200))))
+_arrows.update(dict.fromkeys(map(chr, range(0x2750, 0x2800))))
+_arrows.update(dict.fromkeys(map(chr, range(0x2b30, 0x2b50))))
+_operators.update(dict.fromkeys(map(chr, range(0x2220, 0x2300))))
+_operators.update(dict.fromkeys(map(chr, range(0x2a00, 0x2b00))))
+_shapes.update(dict.fromkeys(map(chr, range(0x25a0, 0x2600))))
 
 # Unicode has a huge number of individual symbols to include styles, such as
 # bold, italic, double-struck, etc. These are so far not supported by speech
@@ -2003,7 +2017,9 @@ _operators['\u22fe'] = C_('math symbol', 'small contains with overbar')
 _operators['\u22ff'] = C_('math symbol', 'z notation bag membership')
 
 _all.update(_alnum)
+_all.update(_arrows)
 _all.update(_operators)
+_all.update(_shapes)
 _RE = re.compile('[%s]' % ''.join(list(_all.keys())), re.UNICODE)
 
 def _getStyleString(symbol):
@@ -2039,10 +2055,19 @@ def _getStyleString(symbol):
 
     return "%s"
 
+def updateSymbols(symbolDict):
+    global _all
+    _all.update(symbolDict)
+
 def _getSpokenName(symbol, includeStyle):
-    name = _all.get(symbol)
-    if not name:
+    if not symbol in _all:
         return ""
+
+    name = _all.get(symbol)
+    if not name and fallbackOnUnicodeData:
+        name = unicodedata.name(symbol).lower()
+        updateSymbols({symbol: name})
+        return name
 
     if includeStyle and symbol in _alnum:
         name = _getStyleString(symbol) % name
@@ -2054,8 +2079,10 @@ def getCharacterName(symbol):
 
 def adjustForSpeech(string):
     chars = set(re.findall(_RE, string))
+    includeStyle = speakStyle == SPEAK_ALWAYS
     for char in chars:
-        name = " %s " % _getSpokenName(char, speakStyle == SPEAK_ALWAYS)
-        string = re.sub(char, name, string)
+        name = _getSpokenName(char, includeStyle)
+        if name:
+            string = re.sub(char, " %s " % name, string)
 
     return string
