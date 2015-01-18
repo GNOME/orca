@@ -29,12 +29,18 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'Battery'",
      "SPEECH OUTPUT: 'heading level 2'",
-     "SPEECH OUTPUT: 'Q. What is a battery?",
-     "A. Look it up.'",
-     "SPEECH OUTPUT: 'Q. Which way is up?",
-     "A. That way.'",
-     "SPEECH OUTPUT: 'Q. Why did Orca used to get stuck on this page?",
-     "A. Empty anchors.'"]))
+     "SPEECH OUTPUT: 'Q.'",
+     "SPEECH OUTPUT: 'What is a battery?'",
+     "SPEECH OUTPUT: 'A'",
+     "SPEECH OUTPUT: '. Look it up.'",
+     "SPEECH OUTPUT: 'Q.'",
+     "SPEECH OUTPUT: 'Which way is up?'",
+     "SPEECH OUTPUT: 'A'",
+     "SPEECH OUTPUT: '. That way.'",
+     "SPEECH OUTPUT: 'Q.'",
+     "SPEECH OUTPUT: 'Why did Orca used to get stuck on this page?'",
+     "SPEECH OUTPUT: 'A'",
+     "SPEECH OUTPUT: '. Empty anchors.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

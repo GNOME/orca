@@ -544,6 +544,9 @@ class Utilities(script_utilities.Utilities):
         allText = text.getText(0, -1)
         extents = list(text.getRangeExtents(offset, offset + 1, 0))
 
+        def _inThisSentence(span):
+            return span[0] <= offset <= span[1]
+
         def _inThisWord(span):
             return span[0] <= offset <= span[1]
 
@@ -552,10 +555,14 @@ class Utilities(script_utilities.Utilities):
             return self.extentsAreOnSameLine(extents, rangeExtents)
 
         words = [m.span() for m in re.finditer("[^\s\ufffc]+", allText)]
+        sentences = [m.span() for m in re.finditer("\S[^\.\?\!]+((?<!\w)[\.\?\!]+(?!\w)|\S*)", allText)]
         if boundary == pyatspi.TEXT_BOUNDARY_LINE_START:
             segments = list(filter(_onThisLine, words))
         elif boundary == pyatspi.TEXT_BOUNDARY_WORD_START:
             segments = list(filter(_inThisWord, words))
+        elif boundary == pyatspi.TEXT_BOUNDARY_SENTENCE_START:
+            sentences = sentences or [(0, text.characterCount)]
+            segments = list(filter(_inThisSentence, sentences))
         else:
             return '', 0, 0
 
@@ -576,7 +583,13 @@ class Utilities(script_utilities.Utilities):
         if not text:
             return '', 0, 1
 
-        if self._treatTextObjectAsWhole(obj):
+        treatAsWhole = self._treatTextObjectAsWhole(obj)
+        if not treatAsWhole and boundary == pyatspi.TEXT_BOUNDARY_SENTENCE_START:
+            if obj.getRole() in [pyatspi.ROLE_LIST_ITEM, pyatspi.ROLE_HEADING] \
+               or not self.isTextBlockElement(obj):
+                treatAsWhole = True
+
+        if treatAsWhole:
             return text.getText(0, -1), 0, text.characterCount
 
         offset = max(0, offset)
@@ -657,6 +670,61 @@ class Utilities(script_utilities.Utilities):
             end = start + len(string)
 
         return [[obj, start, end, string]]
+
+    def getSentenceContentsAtOffset(self, obj, offset):
+        if not obj:
+            return []
+
+        boundary = pyatspi.TEXT_BOUNDARY_SENTENCE_START
+        objects = self._getContentsForObj(obj, offset, boundary)
+
+        def _treatAsSentenceEnd(x):
+            xObj, xStart, xEnd, xString = x
+            if not self.isTextBlockElement(xObj):
+                return False
+
+            text = self.queryNonEmptyText(xObj)
+            if text and 0 < text.characterCount <= xEnd:
+                return True
+
+            if 0 <= xStart <= 5:
+                xString = " ".join(xString.split()[1:])
+
+            match = re.search("\S[\.\!\?]+(\s|\Z)", xString)
+            return match != None
+
+        # Check for things in the same sentence before this object.
+        firstObj, firstStart, firstEnd, firstString = objects[0]
+        while firstObj and firstString:
+            if firstStart == 0 and self.isTextBlockElement(firstObj):
+                break
+
+            prevObj, pOffset = self._script.findPreviousCaretInOrder(firstObj, firstStart)
+            onLeft = self._getContentsForObj(prevObj, pOffset, boundary)
+            onLeft = list(filter(lambda x: x not in objects, onLeft))
+            endsOnLeft = list(filter(_treatAsSentenceEnd, onLeft))
+            if endsOnLeft:
+                i = onLeft.index(endsOnLeft[-1])
+                onLeft = onLeft[i+1:]
+
+            if not onLeft:
+                break
+
+            objects[0:0] = onLeft
+            firstObj, firstStart, firstEnd, firstString = objects[0]
+
+        # Check for things in the same sentence after this object.
+        while not _treatAsSentenceEnd(objects[-1]):
+            lastObj, lastStart, lastEnd, lastString = objects[-1]
+            nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
+            onRight = self._getContentsForObj(nextObj, nOffset, boundary)
+            onRight = list(filter(lambda x: x not in objects, onRight))
+            if not onRight:
+                break
+
+            objects.extend(onRight)
+
+        return objects
 
     def getWordContentsAtOffset(self, obj, offset):
         if not obj:
@@ -843,7 +911,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def isTextBlockElement(self, obj):
-        if not self._script.inDocumentContent(obj):
+        if not (obj and self._script.inDocumentContent(obj)):
             return False
 
         textBlockElements = [pyatspi.ROLE_COLUMN_HEADER,

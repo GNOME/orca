@@ -721,44 +721,14 @@ class Script(default.Script):
         spoken and acss is an ACSS instance for speaking the text.
         """
 
-        # Determine the correct "say all by" mode to use.
-        #
         sayAllStyle = _settingsManager.getSetting('sayAllStyle')
         sayAllBySentence = sayAllStyle == settings.SAYALL_STYLE_SENTENCE
-
         [obj, characterOffset] = self.getCaretContext()
-        if sayAllBySentence:
-            # Attempt to locate the start of the current sentence by
-            # searching to the left for a sentence terminator.  If we don't
-            # find one, or if the "say all by" mode is not sentence, we'll
-            # just start the sayAll from at the beginning of this line/object.
-            #
-            text = self.utilities.queryNonEmptyText(obj)
-            if text:
-                [line, startOffset, endOffset] = \
-                    text.getTextAtOffset(characterOffset,
-                                         pyatspi.TEXT_BOUNDARY_LINE_START)
-                beginAt = 0
-                if line.strip():
-                    terminators = ['. ', '? ', '! ']
-                    for terminator in terminators:
-                        try:
-                            index = line.rindex(terminator,
-                                                0,
-                                                characterOffset - startOffset)
-                            if index > beginAt:
-                                beginAt = index
-                        except:
-                            pass
-                    characterOffset = startOffset + beginAt
-                else:
-                    [obj, characterOffset] = \
-                        self.findNextCaretInOrder(obj, characterOffset)
 
         done = False
         while not done:
             if sayAllBySentence:
-                contents = self.getObjectContentsAtOffset(obj, characterOffset)
+                contents = self.utilities.getSentenceContentsAtOffset(obj, characterOffset)
             else:
                 contents = self.getLineContentsAtOffset(obj, characterOffset)
             for content in contents:
