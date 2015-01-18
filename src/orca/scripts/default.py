@@ -138,6 +138,8 @@ class Script(script.Script):
         self._lastWord = ""
         self._lastWordCheckedForSpelling = ""
 
+        self._inSayAll = False
+
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings."""
@@ -2952,6 +2954,8 @@ class Script(script.Script):
         text = obj.queryText()
 
         self.updateBrailleForNewCaretPosition(obj)
+        if self._inSayAll:
+            return
 
         if not orca_state.lastInputEvent:
             return
@@ -3022,6 +3026,7 @@ class Script(script.Script):
         if progressType == speechserver.SayAllContext.PROGRESS:
             return
         elif progressType == speechserver.SayAllContext.INTERRUPTED:
+            self._inSayAll = False
             text.setCaretOffset(context.currentOffset)
         elif progressType == speechserver.SayAllContext.COMPLETED:
             orca.setLocusOfFocus(None, context.obj, notifyScript=False)
@@ -3813,8 +3818,10 @@ class Script(script.Script):
         try:
             text = obj.queryText()
         except:
+            self._inSayAll = False
             return
 
+        self._inSayAll = True
         length = text.characterCount
         if offset == None:
             offset = text.caretOffset
@@ -3902,6 +3909,8 @@ class Script(script.Script):
                     break
             if not moreLines:
                 done = True
+
+        self._inSayAll = False
 
     def getTextLineAtCaret(self, obj, offset=None):
         """Gets the line of text where the caret is.

@@ -186,6 +186,9 @@ class Script(default.Script):
         - event: the Event
         """
 
+        if self._inSayAll:
+            return
+
         self._lastCaretContext = event.source, event.detail1
 
         lastKey, mods = self.utilities.lastKeyAndModifiers()
@@ -241,6 +244,9 @@ class Script(default.Script):
 
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
+
+        if self._inSayAll:
+            return
 
         obj = event.source
         role = obj.getRole()
@@ -560,6 +566,7 @@ class Script(default.Script):
         spoken and acss is an ACSS instance for speaking the text.
         """
 
+        self._inSayAll = False
         if not obj:
             return
 
@@ -583,6 +590,7 @@ class Script(default.Script):
         if sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
             boundary = pyatspi.TEXT_BOUNDARY_SENTENCE_START
 
+        self._inSayAll = True
         offset = textObjs[0].queryText().caretOffset
         for textObj in textObjs:
             textSegments = self.getTextSegments(textObj, boundary, offset)
@@ -597,6 +605,8 @@ class Script(default.Script):
 
             offset = 0
 
+        self._inSayAll = False
+
     def __sayAllProgressCallback(self, context, progressType):
         if progressType == speechserver.SayAllContext.PROGRESS:
             return
@@ -608,6 +618,7 @@ class Script(default.Script):
         text = obj.queryText()
 
         if progressType == speechserver.SayAllContext.INTERRUPTED:
+            self._inSayAll = False
             text.setCaretOffset(offset)
             return
 

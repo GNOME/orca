@@ -729,6 +729,7 @@ class Script(default.Script):
         else:
             characterOffset = offset
 
+        self._inSayAll = True
         done = False
         while not done:
             if sayAllBySentence:
@@ -761,6 +762,8 @@ class Script(default.Script):
             characterOffset = contents[-1][2]
             [obj, characterOffset] = self.findNextCaretInOrder(obj, characterOffset)
             done = (obj == None)
+
+        self._inSayAll = False
 
     def presentFindResults(self, obj, offset):
         """Updates the caret context to the match indicated by obj and
@@ -835,6 +838,9 @@ class Script(default.Script):
         if not self.inDocumentContent():
             default.Script.__sayAllProgressCallback(self, context, progressType)
             return
+
+        if progressType == speechserver.SayAllContext.INTERRUPTED:
+            self._inSayAll = False
 
         orca.setLocusOfFocus(None, context.obj, notifyScript=False)
         self.setCaretContext(context.obj, context.currentOffset)

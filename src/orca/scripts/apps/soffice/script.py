@@ -842,6 +842,9 @@ class Script(default.Script):
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
+        if self._inSayAll:
+            return
+
         if self.isStructuralNavigationCommand():
             return
 
