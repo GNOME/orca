@@ -1792,7 +1792,7 @@ class Script(script.Script):
 
         return True
 
-    def sayAll(self, inputEvent):
+    def sayAll(self, inputEvent, obj=None, offset=None):
         try:
             clickCount = inputEvent.getClickCount()
         except:
@@ -1822,18 +1822,19 @@ class Script(script.Script):
             speech.speak(utterances)
             return
 
+        obj = obj or orca_state.locusOfFocus
         try:
-            orca_state.locusOfFocus.queryText()
+            text = obj.queryText()
         except NotImplementedError:
-            utterances = self.speechGenerator.generateSpeech(
-                orca_state.locusOfFocus)
-            utterances.extend(self.tutorialGenerator.getTutorial(
-                orca_state.locusOfFocus, False))
+            utterances = self.speechGenerator.generateSpeech(obj)
+            utterances.extend(self.tutorialGenerator.getTutorial(obj, False))
             speech.speak(utterances)
         except AttributeError:
             pass
         else:
-            speech.sayAll(self.textLines(orca_state.locusOfFocus),
+            if offset == None:
+                offset = text.caretOffset
+            speech.sayAll(self.textLines(obj, offset),
                           self.__sayAllProgressCallback)
 
         return True
@@ -3797,7 +3798,7 @@ class Script(script.Script):
                 text = " ".join(utterances)
                 speech.speak(text)
 
-    def textLines(self, obj):
+    def textLines(self, obj, offset=None):
         """Creates a generator that can be used to iterate over each line
         of a text object, starting at the caret offset.
 
@@ -3815,7 +3816,8 @@ class Script(script.Script):
             return
 
         length = text.characterCount
-        offset = text.caretOffset
+        if offset == None:
+            offset = text.caretOffset
 
         # Determine the correct "say all by" mode to use.
         #

@@ -709,7 +709,7 @@ class Script(default.Script):
                 self._lastCommandWasMouseButton = False
         return consumes
 
-    def textLines(self, obj):
+    def textLines(self, obj, offset=None):
         """Creates a generator that can be used to iterate over each line
         of a text object, starting at the caret offset.
 
@@ -724,6 +724,10 @@ class Script(default.Script):
         sayAllStyle = _settingsManager.getSetting('sayAllStyle')
         sayAllBySentence = sayAllStyle == settings.SAYALL_STYLE_SENTENCE
         [obj, characterOffset] = self.getCaretContext()
+        if offset == None:
+            [obj, characterOffset] = self.getCaretContext()
+        else:
+            characterOffset = offset
 
         done = False
         while not done:
@@ -811,17 +815,18 @@ class Script(default.Script):
                 self.presentLine(obj, offset)
                 self.madeFindAnnouncement = True
 
-    def sayAll(self, inputEvent):
+    def sayAll(self, inputEvent, obj=None, offset=None):
         """Speaks the contents of the document beginning with the present
         location.  Overridden in this script because the sayAll could have
         been started on an object without text (such as an image).
         """
 
         if not self.inDocumentContent():
-            return default.Script.sayAll(self, inputEvent)
+            return default.Script.sayAll(self, inputEvent, obj, offset)
 
         else:
-            speech.sayAll(self.textLines(orca_state.locusOfFocus),
+            obj = obj or orca_state.locusOfFocus
+            speech.sayAll(self.textLines(obj, offset),
                           self.__sayAllProgressCallback)
 
         return True

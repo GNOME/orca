@@ -512,16 +512,17 @@ class Script(default.Script):
 
         return True
 
-    def sayAll(self, inputEvent):
+    def sayAll(self, inputEvent, obj=None, offset=None):
         """Speaks the contents of the document beginning with the present
         location.  Overridden in this script because the sayAll could have
         been started on an object without text (such as an image).
         """
 
-        if not self.utilities.isWebKitGtk(orca_state.locusOfFocus):
-            return default.Script.sayAll(self, inputEvent)
+        obj = obj or orca_state.locusOfFocus
+        if not self.utilities.isWebKitGtk(obj):
+            return default.Script.sayAll(self, inputEvent, obj, offset)
 
-        speech.sayAll(self.textLines(orca_state.locusOfFocus),
+        speech.sayAll(self.textLines(obj, offset),
                       self.__sayAllProgressCallback)
 
         return True
@@ -547,7 +548,7 @@ class Script(default.Script):
             string, start, end = text.getTextAtOffset(offset, boundary)
         return segments
 
-    def textLines(self, obj):
+    def textLines(self, obj, offset=None):
         """Creates a generator that can be used to iterate over each line
         of a text object, starting at the caret offset.
 
