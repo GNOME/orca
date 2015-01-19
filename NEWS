@@ -1,3 +1,97 @@
+3.15.4 - 19 January 2015
+
+General:
+
+  * Implement ability to "rewind" and "fast forward" during SayAll
+
+  * Add support for presentation of mathematical alphanumeric symbols and
+    operators
+
+  * Fix for bug 742293 - Application-specific shortcut rebinding doesn't
+    persist
+
+  * Eliminate some false positives in the label inference code
+
+  * Fix several bugs related to sayAll
+
+  * Improve support for presentation of nested tables during structural
+    navigation
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    el            Greek                       Dimitris Spingos
+    es            Spanish                     Daniel Mustieles
+    eu            Basque                      Inaki Larranaga Murgoitio
+    pt_BR         Brazilian Portuguese        Rafael Ferreira
+    sl            Slovenian                   Matej Urbančič
+    tr            Turkish                     Muhammet Kara
+
+=========
+
+3.14.3 - 03 December 2014
+
+Gecko:
+
+  * Fix several issues related to focus mode toggling on pages which
+    set focus upon page load
+
+  * Exclude layout-only/presentational tables in structural navigation
+
+LibreOffice:
+
+  * Handle a false positive in isSameObject() which prevented paragraph
+    presentation
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    uk            Ukranian               Daniel Korostil
+
+=========
+
+3.14.2 - 10 November 2014
+
+Gecko:
+
+  * Update the position and command state after a mouse click
+
+  * Don't descend tables in findReplicant() - fixes a hang
+
+  * More hack removal and reworking of find{Next,Previous}Object()
+
+  * Don't switch to focus mode if the object is a text block element
+
+  * Check for both focusable and focused states when determining text
+    block elements
+
+  * Only use focused format type for objects which are not text block
+    elements
+
+  * Generate the rolename for links even if they were not "just entered"
+
+  * Suppress tutorial messages for focus mode widgets when not in focus
+    mode
+
+  * Prevent repeating of labels and tutorial messages in entries
+
+  * Speak text role for Gecko apps when not in document content
+
+  * Remove FOCUSED and SELECTED states as requirements for focus mode
+
+General:
+
+  * Do not present tutorial messages if the object is not the locusOfFocus
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    it            Italian                     Milo Casagrande
+    ne            Nepali                      Pawan Chitrakar
+    nb            Norwegian bokmål            Åka Sikrom
+    pt_BR         Brazilian Portuguese        Rafael Ferreira
+    sr            Serbian                     Мирослав Николић
+    sr@latin      Serbian                     Miroslav Nikolić
+
+=========
+
 3.14.0 - 23 September 2014
 
 New and updated translations (THANKS EVERYONE!!!):
