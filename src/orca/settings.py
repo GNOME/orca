@@ -364,3 +364,7 @@ structNavTriggersFocusMode = False
 caretNavTriggersFocusMode = False
 
 layoutMode = True
+
+# NOTE: The following are experimental and may be changed or removed at
+# any time
+rewindAndFastForwardInSayAll = False

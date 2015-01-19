@@ -236,6 +236,8 @@ class Script(default.Script):
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = False
 
+        self._sayAllContents = []
+
         # See bug 665522 - comment 5
         app.setCacheMask(pyatspi.cache.DEFAULT ^ pyatspi.cache.CHILDREN)
 
@@ -735,6 +737,7 @@ class Script(default.Script):
                 contents = self.utilities.getSentenceContentsAtOffset(obj, characterOffset)
             else:
                 contents = self.getLineContentsAtOffset(obj, characterOffset)
+            self._sayAllContents = contents
             for content in contents:
                 obj, startOffset, endOffset, text = content
                 if self.utilities.isLabellingContents(content, contents) \
@@ -753,9 +756,10 @@ class Script(default.Script):
                     continue
 
                 for i, element in enumerate(elements):
-                    yield [speechserver.SayAllContext(obj, element,
-                                                      startOffset, endOffset),
-                           voices[i]]
+                    context = speechserver.SayAllContext(
+                        obj, element, startOffset, endOffset)
+                    self._sayAllContexts.append(context)
+                    yield [context, voices[i]]
 
             obj = contents[-1][0]
             characterOffset = contents[-1][2]
@@ -763,6 +767,8 @@ class Script(default.Script):
             done = (obj == None)
 
         self._inSayAll = False
+        self._sayAllContents = []
+        self._sayAllContexts = []
 
     def presentFindResults(self, obj, offset):
         """Updates the caret context to the match indicated by obj and
@@ -833,13 +839,52 @@ class Script(default.Script):
 
         return True
 
+    def _rewindSayAll(self, context, minCharCount=10):
+        if not self.inDocumentContent():
+            return default.Script._rewindSayAll(self, context, minCharCount)
+
+        if not _settingsManager.getSetting('rewindAndFastForwardInSayAll'):
+            return False
+
+        obj, start, end, string = self._sayAllContents[0]
+        orca.setLocusOfFocus(None, obj, notifyScript=False)
+        self.setCaretContext(obj, start)
+
+        prevObj, prevOffset = self.findPreviousCaretInOrder(obj, start)
+        self.sayAll(None, prevObj, prevOffset)
+        return True
+
+    def _fastForwardSayAll(self, context):
+        if not self.inDocumentContent():
+            return default.Script._fastForwardSayAll(self, context)
+
+        if not _settingsManager.getSetting('rewindAndFastForwardInSayAll'):
+            return False
+
+        obj, start, end, string = self._sayAllContents[-1]
+        orca.setLocusOfFocus(None, obj, notifyScript=False)
+        self.setCaretContext(obj, end)
+
+        nextObj, nextOffset = self.findNextCaretInOrder(obj, end)
+        self.sayAll(None, nextObj, nextOffset)
+        return True
+
     def __sayAllProgressCallback(self, context, progressType):
         if not self.inDocumentContent():
             default.Script.__sayAllProgressCallback(self, context, progressType)
             return
 
         if progressType == speechserver.SayAllContext.INTERRUPTED:
+            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+                lastKey = orca_state.lastInputEvent.event_string
+                if lastKey == "Down" and self._fastForwardSayAll(context):
+                    return
+                elif lastKey == "Up" and self._rewindSayAll(context):
+                    return
+
             self._inSayAll = False
+            self._sayAllContents = []
+            self._sayAllContexts = []
 
         orca.setLocusOfFocus(None, context.obj, notifyScript=False)
         self.setCaretContext(context.obj, context.currentOffset)
@@ -2555,6 +2600,10 @@ class Script(default.Script):
         Returns True if we actually moved.
         """
 
+        if self._inSayAll \
+           and _settingsManager.getSetting('rewindAndFastForwardInSayAll'):
+            return True
+
         [obj, characterOffset] = self.getCaretContext()
         thisLine = self.getLineContentsAtOffset(obj, characterOffset)
         if not (thisLine and thisLine[0]):
@@ -2584,6 +2633,10 @@ class Script(default.Script):
 
         Returns True if we actually moved.
         """
+
+        if self._inSayAll \
+           and _settingsManager.getSetting('rewindAndFastForwardInSayAll'):
+            return True
 
         [obj, characterOffset] = self.getCaretContext()
         thisLine = self.getLineContentsAtOffset(obj, characterOffset)

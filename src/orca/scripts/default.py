@@ -139,6 +139,7 @@ class Script(script.Script):
         self._lastWordCheckedForSpelling = ""
 
         self._inSayAll = False
+        self._sayAllContexts = []
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -3006,6 +3007,43 @@ class Script(script.Script):
             else:
                 self.sayCharacter(obj)
 
+    def _rewindSayAll(self, context, minCharCount=10):
+        if not _settingsManager.getSetting('rewindAndFastForwardInSayAll'):
+            return False
+
+        index = self._sayAllContexts.index(context)
+        self._sayAllContexts = self._sayAllContexts[0:index]
+        while self._sayAllContexts:
+            context = self._sayAllContexts.pop()
+            if context.endOffset - context.startOffset > minCharCount:
+                break
+
+        try:
+            text = context.obj.queryText()
+        except:
+            pass
+        else:
+            orca.setLocusOfFocus(None, context.obj, notifyScript=False)
+            text.setCaretOffset(context.startOffset)
+
+        self.sayAll(None, context.obj, context.startOffset)
+        return True
+
+    def _fastForwardSayAll(self, context):
+        if not _settingsManager.getSetting('rewindAndFastForwardInSayAll'):
+            return False
+
+        try:
+            text = context.obj.queryText()
+        except:
+            pass
+        else:
+            orca.setLocusOfFocus(None, context.obj, notifyScript=False)
+            text.setCaretOffset(context.endOffset)
+
+        self.sayAll(None, context.obj, context.endOffset)
+        return True
+
     def __sayAllProgressCallback(self, context, progressType):
         # [[[TODO: WDW - this needs work.  Need to be able to manage
         # the monitoring of progress and couple that with both updating
@@ -3026,7 +3064,15 @@ class Script(script.Script):
         if progressType == speechserver.SayAllContext.PROGRESS:
             return
         elif progressType == speechserver.SayAllContext.INTERRUPTED:
+            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+                lastKey = orca_state.lastInputEvent.event_string
+                if lastKey == "Down" and self._fastForwardSayAll(context):
+                    return
+                elif lastKey == "Up" and self._rewindSayAll(context):
+                    return
+
             self._inSayAll = False
+            self._sayAllContexts = []
             text.setCaretOffset(context.currentOffset)
         elif progressType == speechserver.SayAllContext.COMPLETED:
             orca.setLocusOfFocus(None, context.obj, notifyScript=False)
@@ -3819,6 +3865,7 @@ class Script(script.Script):
             text = obj.queryText()
         except:
             self._inSayAll = False
+            self._sayAllContexts = []
             return
 
         self._inSayAll = True
@@ -3887,9 +3934,10 @@ class Script(script.Script):
                 else:
                     voice = settings.voices[settings.DEFAULT_VOICE]
 
-                yield [speechserver.SayAllContext(obj, lineString,
-                                                  startOffset, endOffset),
-                       voice]
+                context = speechserver.SayAllContext(
+                    obj, lineString, startOffset, endOffset)
+                self._sayAllContexts.append(context)
+                yield [context, voice]
 
             moreLines = False
             relations = obj.getRelationSet()
@@ -3911,6 +3959,7 @@ class Script(script.Script):
                 done = True
 
         self._inSayAll = False
+        self._sayAllContexts = []
 
     def getTextLineAtCaret(self, obj, offset=None):
         """Gets the line of text where the caret is.

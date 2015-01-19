@@ -600,12 +600,14 @@ class Script(default.Script):
                 textSegments.append([roleName, 0, -1, voice])
 
             for (string, start, end, voice) in textSegments:
-                yield [speechserver.SayAllContext(textObj, string, start, end),
-                       voice]
+                context = speechserver.SayAllContext(textObj, string, start, end)
+                self._sayAllContexts.append(context)
+                yield [context, voice]
 
             offset = 0
 
         self._inSayAll = False
+        self._sayAllContexts = []
 
     def __sayAllProgressCallback(self, context, progressType):
         if progressType == speechserver.SayAllContext.PROGRESS:
@@ -618,7 +620,15 @@ class Script(default.Script):
         text = obj.queryText()
 
         if progressType == speechserver.SayAllContext.INTERRUPTED:
+            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+                lastKey = orca_state.lastInputEvent.event_string
+                if lastKey == "Down" and self._fastForwardSayAll(context):
+                    return
+                elif lastKey == "Up" and self._rewindSayAll(context):
+                    return
+
             self._inSayAll = False
+            self._sayAllContexts = []
             text.setCaretOffset(offset)
             return
 
