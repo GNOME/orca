@@ -607,56 +607,20 @@ class Generator:
         it exists.  Otherwise, an empty array is returned.
         """
         result = []
-
-        # Do not return yourself as a header.
-        #
-        role = args.get('role', obj.getRole())
-        if role in [pyatspi.ROLE_ROW_HEADER,
-                    pyatspi.ROLE_TABLE_ROW_HEADER]:
+        header = self._script.utilities.rowHeaderForCell(obj)
+        if not header:
             return result
 
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        try:
-            table = obj.parent.queryTable()
-        except:
-            pass
-        else:
-            index = self._script.utilities.cellIndex(obj)
-            try:
-                rowIndex = table.getRowAtIndex(index)
-            except:
-                rowIndex = -1
-            if rowIndex >= 0:
-                # Get the header information.  In Java Swing, the
-                # information is not exposed via the description
-                # but is instead a header object, so we fall back
-                # to that if it exists.
-                #
-                # [[[TODO: WDW - the more correct thing to do, I
-                # think, is to look at the row header object.
-                # We've been looking at the description for so
-                # long, though, that we'll give the description
-                # preference for now.]]]
-                #
-                desc = table.getRowDescription(rowIndex)
-                if not desc:
-                    header = table.getRowHeader(rowIndex)
-                    if header:
-                        desc = self._script.utilities.displayedText(header)
-                if desc and len(desc):
-                    text = desc
-                    if args['mode'] == 'speech':
-                        if settings.speechVerbosityLevel \
-                           == settings.VERBOSITY_LEVEL_VERBOSE \
-                           and not args.get('formatType', None) \
-                                   in ['basicWhereAmI', 'detailedWhereAmI']:
-                            text = desc + " " + self.getLocalizedRoleName(
-                                obj, pyatspi.ROLE_ROW_HEADER)
-                    elif args['mode'] == 'braille':
-                        text = desc + " " + self.getLocalizedRoleName(
-                            obj, pyatspi.ROLE_ROW_HEADER)
-                    result.append(text)
+        text = self._script.utilities.displayedText(header)
+        roleString =  self.getLocalizedRoleName(obj, pyatspi.ROLE_ROW_HEADER)
+        if args.get('mode') == 'speech':
+            if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
+               and not args.get('formatType') in ['basicWhereAmI', 'detailedWhereAmI']:
+                text = "%s %s" % (text, roleString)
+        elif args.get('mode') == 'braille':
+            text = "%s %s" % (text, roleString)
+
+        result.append(text)
         return result
 
     def _generateColumnHeader(self, obj, **args):
@@ -666,54 +630,20 @@ class Generator:
         is returned.
         """
         result = []
-
-        # Do not return yourself as a header.
-        #
-        try:
-            role = args.get('role', obj.getRole())
-        except:
-            role = None
-        if role in [pyatspi.ROLE_COLUMN_HEADER,
-                    pyatspi.ROLE_TABLE_COLUMN_HEADER]:
+        header = self._script.utilities.columnHeaderForCell(obj)
+        if not header:
             return result
 
-        try:
-            table = obj.parent.queryTable()
-        except:
-            pass
-        else:
-            index = self._script.utilities.cellIndex(obj)
-            columnIndex = table.getColumnAtIndex(index)
-            if columnIndex >= 0:
-                # Get the header information.  In Java Swing, the
-                # information is not exposed via the description
-                # but is instead a header object, so we fall back
-                # to that if it exists.
-                #
-                # [[[TODO: WDW - the more correct thing to do, I
-                # think, is to look at the column header object.
-                # We've been looking at the description for so
-                # long, though, that we'll give the description
-                # preference for now.]]]
-                #
-                desc = table.getColumnDescription(columnIndex)
-                if not desc:
-                    header = table.getColumnHeader(columnIndex)
-                    if header:
-                        desc = self._script.utilities.displayedText(header)
-                if desc and len(desc):
-                    text = desc
-                    if args['mode'] == 'speech':
-                        if settings.speechVerbosityLevel \
-                           == settings.VERBOSITY_LEVEL_VERBOSE \
-                           and not args.get('formatType', None) \
-                                   in ['basicWhereAmI', 'detailedWhereAmI']:
-                            text = desc + " " + self.getLocalizedRoleName(
-                                obj, pyatspi.ROLE_COLUMN_HEADER)
-                    elif args['mode'] == 'braille':
-                        text = desc + " " + self.getLocalizedRoleName(
-                            obj, pyatspi.ROLE_COLUMN_HEADER)
-                    result.append(text)
+        text = self._script.utilities.displayedText(header)
+        roleString =  self.getLocalizedRoleName(obj, pyatspi.ROLE_COLUMN_HEADER)
+        if args.get('mode') == 'speech':
+            if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
+               and not args.get('formatType') in ['basicWhereAmI', 'detailedWhereAmI']:
+                text = "%s %s" % (text, roleString)
+        elif args.get('mode') == 'braille':
+            text = "%s %s" % (text, roleString)
+
+        result.append(text)
         return result
 
     def _generateTableCell2ChildLabel(self, obj, **args):
@@ -792,23 +722,11 @@ class Generator:
             return []
 
         result = []
-        try:
-            parentTable = obj.parent.queryTable()
-        except:
-            return result
-        try:
-            action = obj.queryAction()
-            label = self._script.utilities.displayedText(
-                        self._script.utilities.realActiveDescendant(obj))
-        except NotImplementedError:
-            action = None
-            label = None
-        if action and (label == None or len(label) == 0):
-            index = self._script.utilities.cellIndex(obj)
-            column = parentTable.getColumnAtIndex(index)
-            if self._script.utilities.hasMeaningfulToggleAction(obj):
-                accHeader = parentTable.getColumnHeader(column)
-                result.append(accHeader.name)
+        descendant = self._script.utilities.realActiveDescendant(obj)
+        label = self._script.utilities.displayedText(descendant)
+        if not label and self._script.utilities.hasMeaningfulToggleAction(obj):
+            accHeader = self._script.utilities.columnHeaderForCell(obj)
+            result.append(accHeader.name)
         return result
 
     def _generateRealTableCell(self, obj, **args):

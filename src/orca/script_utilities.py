@@ -2798,3 +2798,33 @@ class Utilities:
                 return True
 
         return False
+
+    def columnHeaderForCell(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
+            return None
+
+        isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
+        parent = pyatspi.findAncestor(obj, isTable)
+        try:
+            table = parent.queryTable()
+        except:
+            return None
+
+        index = self.cellIndex(obj)
+        columnIndex = table.getColumnAtIndex(index)
+        return table.getColumnHeader(columnIndex)
+
+    def rowHeaderForCell(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
+            return None
+
+        isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
+        parent = pyatspi.findAncestor(obj, isTable)
+        try:
+            table = parent.queryTable()
+        except:
+            return None
+
+        index = self.cellIndex(obj)
+        rowIndex = table.getRowAtIndex(index)
+        return table.getRowHeader(rowIndex)
