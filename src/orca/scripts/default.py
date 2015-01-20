@@ -139,6 +139,7 @@ class Script(script.Script):
         self._lastWordCheckedForSpelling = ""
 
         self._inSayAll = False
+        self._sayAllIsInterrupted = False
         self._sayAllContexts = []
 
     def setupInputEventHandlers(self):
@@ -699,6 +700,8 @@ class Script(script.Script):
     def deactivate(self):
         """Called when this script is deactivated."""
 
+        self._inSayAll = False
+        self._sayAllIsInterrupted = False
         self.pointOfReference = {}
 
     def processKeyboardEvent(self, keyboardEvent):
@@ -3065,6 +3068,7 @@ class Script(script.Script):
             return
         elif progressType == speechserver.SayAllContext.INTERRUPTED:
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+                self._sayAllIsInterrupted = True
                 lastKey = orca_state.lastInputEvent.event_string
                 if lastKey == "Down" and self._fastForwardSayAll(context):
                     return
@@ -3082,6 +3086,9 @@ class Script(script.Script):
         #
         if text.getNSelections():
             text.setSelection(0, context.currentOffset, context.currentOffset)
+
+    def inSayAll(self):
+        return self._inSayAll or self._sayAllIsInterrupted
 
     def echoPreviousSentence(self, obj):
         """Speaks the sentence prior to the caret, as long as there is
@@ -3861,6 +3868,7 @@ class Script(script.Script):
         spoken and acss is an ACSS instance for speaking the text.
         """
 
+        self._sayAllIsInterrupted = False
         try:
             text = obj.queryText()
         except:
@@ -4197,6 +4205,9 @@ class Script(script.Script):
     def presentKeyboardEvent(self, event):
         """Convenience method to present the KeyboardEvent event. Returns True
         if we fully present the event; False otherwise."""
+
+        if not event.isPressedKey():
+            self._sayAllIsInterrupted = False
 
         if not orca_state.learnModeEnabled:
             if event.shouldEcho == False or event.isOrcaModified():

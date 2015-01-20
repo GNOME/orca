@@ -40,8 +40,10 @@ from . import orca
 from . import orca_gui_navlist
 from . import orca_state
 from . import settings
+from . import settings_manager
 from . import speech
 
+_settingsManager = settings_manager.getManager()
 #############################################################################
 #                                                                           #
 # MatchCriteria                                                             #
@@ -1627,6 +1629,9 @@ class StructuralNavigation:
         - offset: the character offset within obj.
         """
 
+        if self._presentWithSayAll(obj, offset):
+            return
+
         self._script.updateBraille(obj)
         self._script.sayLine(obj)
 
@@ -1638,6 +1643,9 @@ class StructuralNavigation:
         - offset: the character offset within obj.
         """
 
+        if self._presentWithSayAll(obj, offset):
+            return
+
         self._script.updateBraille(obj)
         voices = self._script.voices
         if obj.getRole() == pyatspi.ROLE_LINK:
@@ -1647,6 +1655,14 @@ class StructuralNavigation:
 
         utterances = self._script.speechGenerator.generateSpeech(obj)
         speech.speak(utterances, voice)
+
+    def _presentWithSayAll(self, obj, offset):
+        if self._script.inSayAll() \
+           and _settingsManager.getSetting('structNavInSayAll'):
+            self._script.sayAll(obj, offset)
+            return True
+
+        return False
 
     def _getRoleName(self, obj):
         # Another case where we'll do this for now, and clean it up when

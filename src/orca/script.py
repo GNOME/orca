@@ -121,6 +121,7 @@ class Script:
         self.flatReviewContextClass = flat_review.Context
 
         self.findCommandRun = False
+        self._lastCommandWasStructNav = False
 
         debug.println(debug.LEVEL_FINE, "NEW SCRIPT: %s" % self.name)
 
@@ -455,18 +456,23 @@ class Script:
             user_bindings = user_bindings_map["default"]
 
         consumes = False
+        self._lastCommandWasStructNav = False
         if user_bindings:
             handler = user_bindings.getInputHandler(keyboardEvent)
             if handler \
                  and handler.function in self.structuralNavigation.functions:
-                return self.useStructuralNavigationModel()
+                consumes = self.useStructuralNavigationModel()
+                if consumes:
+                    self._lastCommandWasStructNav = True
             else:
                 consumes = handler != None
         if not consumes:
             handler = self.keyBindings.getInputHandler(keyboardEvent)
             if handler \
                  and handler.function in self.structuralNavigation.functions:
-                return self.useStructuralNavigationModel()
+                consumes = self.useStructuralNavigationModel()
+                if consumes:
+                    self._lastCommandWasStructNav = True
             else:
                 consumes = handler != None
         return consumes

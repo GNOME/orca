@@ -244,6 +244,8 @@ class Script(default.Script):
     def deactivate(self):
         """Called when this script is deactivated."""
 
+        self._inSayAll = False
+        self._sayAllIsInterrupted = False
         self._loadingDocumentContent = False
         self._loadingDocumentTime = 0.0
 
@@ -723,6 +725,8 @@ class Script(default.Script):
         spoken and acss is an ACSS instance for speaking the text.
         """
 
+        self._sayAllIsInterrupted = False
+
         sayAllStyle = _settingsManager.getSetting('sayAllStyle')
         sayAllBySentence = sayAllStyle == settings.SAYALL_STYLE_SENTENCE
         if offset == None:
@@ -876,6 +880,7 @@ class Script(default.Script):
 
         if progressType == speechserver.SayAllContext.INTERRUPTED:
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+                self._sayAllIsInterrupted = True
                 lastKey = orca_state.lastInputEvent.event_string
                 if lastKey == "Down" and self._fastForwardSayAll(context):
                     return
@@ -886,8 +891,9 @@ class Script(default.Script):
             self._sayAllContents = []
             self._sayAllContexts = []
 
-        orca.setLocusOfFocus(None, context.obj, notifyScript=False)
-        self.setCaretContext(context.obj, context.currentOffset)
+        if not self._lastCommandWasStructNav:
+            orca.setLocusOfFocus(None, context.obj, notifyScript=False)
+            self.setCaretContext(context.obj, context.currentOffset)
 
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""

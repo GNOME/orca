@@ -566,6 +566,7 @@ class Script(default.Script):
         spoken and acss is an ACSS instance for speaking the text.
         """
 
+        self._sayAllIsInterrupted = False
         self._inSayAll = False
         if not obj:
             return
@@ -620,6 +621,7 @@ class Script(default.Script):
         text = obj.queryText()
 
         if progressType == speechserver.SayAllContext.INTERRUPTED:
+            self._sayAllIsInterrupted = True
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
                 lastKey = orca_state.lastInputEvent.event_string
                 if lastKey == "Down" and self._fastForwardSayAll(context):
@@ -629,7 +631,8 @@ class Script(default.Script):
 
             self._inSayAll = False
             self._sayAllContexts = []
-            text.setCaretOffset(offset)
+            if not self._lastCommandWasStructNav:
+                text.setCaretOffset(offset)
             return
 
         # SayAllContext.COMPLETED doesn't necessarily mean done with SayAll;

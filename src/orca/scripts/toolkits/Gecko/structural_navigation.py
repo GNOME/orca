@@ -142,12 +142,18 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
     def _presentLine(self, obj, offset):
         """Presents the first line of the object to the user."""
 
+        if self._presentWithSayAll(obj, offset):
+            return
+
         self._script.presentLine(obj, offset)
 
     def _presentObject(self, obj, offset):
         """Presents the entire object to the user."""
 
         if not obj:
+            return
+
+        if self._presentWithSayAll(obj, offset):
             return
 
         if obj.getRole() == pyatspi.ROLE_LINK:
