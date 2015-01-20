@@ -8,8 +8,6 @@ src/orca/brltablenames.py
 src/orca/chnames.py
 src/orca/cmdnames.py
 src/orca/colornames.py
-src/orca/flat_review.py
-src/orca/generator.py
 src/orca/guilabels.py
 src/orca/keynames.py
 src/orca/keybindings.py

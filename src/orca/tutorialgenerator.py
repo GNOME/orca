@@ -552,20 +552,9 @@ class TutorialGenerator:
             cellOrder = []
             hasToggle = [ False, False ]
             for i, child in enumerate(obj):
-                try:
-                    action = child.queryAction()
-                except NotImplementedError:
-                    continue
-                else:
-                    for j in range(0, action.nActions):
-                        # Translators: this is the action name for
-                        # the 'toggle' action. It must be the same
-                        # string used in the *.po file for gail.
-                        #
-                        if action.getName(j) in ["toggle", _("toggle")]:
-                            hasToggle[i] = True
-                            break
-
+                if self._script.utilities.hasMeaningfulToggleAction(child):
+                    hasToggle[i] = True
+                    break
             if hasToggle[0] and not hasToggle[1]:
                 cellOrder = [ 1, 0 ]
             elif not hasToggle[0] and hasToggle[1]:
@@ -588,24 +577,9 @@ class TutorialGenerator:
         # state, check the NODE_CHILD_OF relation, etc.  Logged as
         # bugzilla bug 319750.]]]
         #
-        try:
-            action = obj.queryAction()
-        except NotImplementedError:
-            action = None
-        if action:
-            for i in range(0, action.nActions):
-                debug.println(debug.LEVEL_FINEST,
-                    "tutorialgenerator._getTutorialForTableCell" \
-                    + "looking at action %d" % i)
-
-                # Translators: this is the action name for
-                # the 'toggle' action. It must be the same
-                # string used in the *.po file for gail.
-                #
-                if action.getName(i) in ["toggle", _("toggle")]:
-                    utterances = self._getTutorialForCheckBox(obj,
-                                  alreadyFocused, forceTutorial)
-                    break
+        if self._script.utilities.hasMeaningfulToggleAction(obj):
+            utterances = self._getTutorialForCheckBox(
+                obj, alreadyFocused, forceTutorial)
 
         state = obj.getState()
         if state.contains(pyatspi.STATE_EXPANDABLE):

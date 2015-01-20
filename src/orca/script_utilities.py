@@ -42,6 +42,7 @@ from . import mathsymbols
 from . import messages
 from . import mouse_review
 from . import orca_state
+from . import object_properties
 from . import pronunciation_dict
 from . import settings
 
@@ -2784,3 +2785,16 @@ class Utilities:
                     break
 
         return level
+
+    def hasMeaningfulToggleAction(self, obj):
+        try:
+            action = obj.queryAction()
+        except NotImplementedError:
+            return False
+
+        toggleActionNames = ["toggle", object_properties.ACTION_TOGGLE]
+        for i in range(action.nActions):
+            if action.getName(i) in toggleActionNames:
+                return True
+
+        return False

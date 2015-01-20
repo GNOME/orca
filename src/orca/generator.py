@@ -37,7 +37,6 @@ from . import messages
 from . import object_properties
 from . import settings
 
-from .orca_i18n import _         # for gettext support
 import collections
 
 def _formatExceptionInfo(maxTBlevel=5):
@@ -482,21 +481,11 @@ class Generator:
         returned if this is not a checkable cell.
         """
         result = []
-        try:
-            action = obj.queryAction()
-        except NotImplementedError:
-            action = None
-        if action:
-            for i in range(0, action.nActions):
-                # Translators: this is the action name for
-                # the 'toggle' action. It must be the same
-                # string used in the *.po file for gail.
-                #
-                if action.getName(i) in ["toggle", _("toggle")]:
-                    oldRole = self._overrideRole(pyatspi.ROLE_CHECK_BOX,
-                                            args)
-                    result.extend(self.generate(obj, **args))
-                    self._restoreRole(oldRole, args)
+        if self._script.utilities.hasMeaningfulToggleAction(obj):
+            oldRole = self._overrideRole(pyatspi.ROLE_CHECK_BOX, args)
+            result.extend(self.generate(obj, **args))
+            self._restoreRole(oldRole, args)
+
         return result
 
     def _generateCheckedState(self, obj, **args):
@@ -584,8 +573,6 @@ class Generator:
         args['stringType'] = 'checkbox'
         indicators = self._script.formatting.getString(**args)
         if obj.getState().contains(pyatspi.STATE_CHECKED):
-            # Translators: this represents the state of a checked menu item.
-            #
             result.append(indicators[1])
         return result
 
@@ -748,19 +735,9 @@ class Generator:
             cellOrder = []
             hasToggle = [False, False]
             for i, child in enumerate(obj):
-                try:
-                    action = child.queryAction()
-                except NotImplementedError:
-                    continue
-                else:
-                    for j in range(0, action.nActions):
-                        # Translators: this is the action name for
-                        # the 'toggle' action. It must be the same
-                        # string used in the *.po file for gail.
-                        #
-                        if action.getName(j) in ["toggle", _("toggle")]:
-                            hasToggle[i] = True
-                            break
+                if self._script.utilities.hasMeaningfulToggleAction(child):
+                    hasToggle[i] = True
+                    break
             if hasToggle[0] and not hasToggle[1]:
                 cellOrder = [ 1, 0 ]
             elif not hasToggle[0] and hasToggle[1]:
@@ -790,20 +767,9 @@ class Generator:
             cellOrder = []
             hasToggle = [False, False]
             for i, child in enumerate(obj):
-                try:
-                    action = child.queryAction()
-                except NotImplementedError:
-                    continue
-                else:
-                    for j in range(0, action.nActions):
-                        # Translators: this is the action name for
-                        # the 'toggle' action. It must be the same
-                        # string used in the *.po file for gail.
-                        #
-                        if action.getName(j) in ["toggle", _("toggle")]:
-                            hasToggle[i] = True
-                            break
-
+                if self._script.utilities.hasMeaningfulToggleAction(child):
+                    hasToggle[i] = True
+                    break
             if hasToggle[0] and not hasToggle[1]:
                 cellOrder = [ 1, 0 ]
             elif not hasToggle[0] and hasToggle[1]:
@@ -840,16 +806,9 @@ class Generator:
         if action and (label == None or len(label) == 0):
             index = self._script.utilities.cellIndex(obj)
             column = parentTable.getColumnAtIndex(index)
-            for j in range(0, action.nActions):
-                # Translators: this is the action name for
-                # the 'toggle' action. It must be the same
-                # string used in the *.po file for gail.
-                #
-                if action.getName(j) in ["toggle",
-                                         _("toggle")]:
-                    accHeader = \
-                        parentTable.getColumnHeader(column)
-                    result.append(accHeader.name)
+            if self._script.utilities.hasMeaningfulToggleAction(obj):
+                accHeader = parentTable.getColumnHeader(column)
+                result.append(accHeader.name)
         return result
 
     def _generateRealTableCell(self, obj, **args):

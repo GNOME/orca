@@ -31,6 +31,10 @@ __license__   = "LGPL"
 
 from .orca_i18n import _, C_
 
+# Translators: this is the action name for the 'toggle' action. It must be the
+# same string used in the *.po file for gail.
+ACTION_TOGGLE = _("toggle")
+
 # Translators: this is a indication of the focused icon and the count of the
 # total number of icons within an icon panel. An example of an icon panel is
 # the Nautilus folder view.

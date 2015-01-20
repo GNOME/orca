@@ -37,7 +37,6 @@ from . import orca_state
 from . import settings
 
 from .braille_generator import BrailleGenerator
-from .orca_i18n import _
 
 # [[[WDW - HACK Regular expression to split strings on whitespace
 # boundaries, which is what we'll use for word dividers instead of
@@ -1029,25 +1028,8 @@ class Context:
 
         elif role == pyatspi.ROLE_TABLE_CELL:
             # Handle table cells that act like check boxes.
-            #
-            try:
-                action = accessible.queryAction()
-            except NotImplementedError:
-                action = None
-                
-            if action:
-                hasToggle = False
-                for i in range(0, action.nActions):
-                    # Translators: this is the action name for
-                    # the 'toggle' action. It must be the same
-                    # string used in the *.po file for gail.
-                    #
-                    if action.getName(i) in ["toggle", _("toggle")]:
-                        hasToggle = True
-                        break
-                if hasToggle:
-                    self._insertStateZone(zones, accessible, 
-                                          pyatspi.ROLE_CHECK_BOX)
+            if self.script.utilities.hasMeaningfulToggleAction(accessible):
+                self._insertStateZone(zones, accessible, pyatspi.ROLE_CHECK_BOX)
 
         if zone:
             if stateOnLeft:
