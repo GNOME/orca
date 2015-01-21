@@ -29,6 +29,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.orca as orca
 import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.settings as settings
@@ -106,6 +107,13 @@ class Script(WebKitGtk.Script):
         """Callback for focus: accessibility events."""
 
         if self.utilities.isWebKitGtk(event.source):
+            return
+
+        # This is some mystery child of the 'Messages' panel which fails to show
+        # up in the hierarchy or emit object:state-changed:focused events.
+        if event.source.getRole() == pyatspi.ROLE_LAYERED_PANE:
+            obj = self.utilities.realActiveDescendant(event.source)
+            orca.setLocusOfFocus(event, obj)
             return
 
         gtk.Script.onFocus(self, event)

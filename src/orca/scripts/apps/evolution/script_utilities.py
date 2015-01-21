@@ -47,3 +47,15 @@ class Utilities(WebKitGtk.Utilities):
 
         header = self.columnHeaderForCell(obj)
         return header and header.name == obj.name
+
+    def realActiveDescendant(self, obj):
+        if self.isWebKitGtk(obj):
+            return super().realActiveDescendant(obj)
+
+        # This is some mystery child of the 'Messages' panel which fails to show
+        # up in the hierarchy or emit object:state-changed:focused events.
+        if obj.getRole() == pyatspi.ROLE_LAYERED_PANE:
+            isTreeTable = lambda x: x and x.getRole() == pyatspi.ROLE_TREE_TABLE
+            return pyatspi.utils.findDescendant(obj, isTreeTable) or obj
+
+        return gtk.Utilities.realActiveDescendant(self, obj)
