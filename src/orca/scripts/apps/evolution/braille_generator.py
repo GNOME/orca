@@ -55,7 +55,7 @@ class BrailleGenerator(WebKitGtk.BrailleGenerator):
         result, focusedRegion = super().generateBraille(obj, **args)
         self._cache = {}
 
-        if focusedRegion != result[0]:
+        if not result or focusedRegion != result[0]:
             return [result, focusedRegion]
 
         hasObj = lambda x: isinstance(x, (braille.Component, braille.Text))

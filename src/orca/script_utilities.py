@@ -295,6 +295,8 @@ class Utilities:
         #
         for i in range(row+1, table.nRows):
             cell = table.getAccessibleAt(i, col)
+            if not cell:
+                continue
             relations = cell.getRelationSet()
             for relation in relations:
                 if relation.getRelationType() \
@@ -2837,14 +2839,14 @@ class Utilities:
 
     def coordinatesForCell(self, obj):
         if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
-            return None
+            return -1, -1
 
         isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
         parent = pyatspi.findAncestor(obj, isTable)
         try:
             table = parent.queryTable()
         except:
-            return None
+            return -1, -1
 
         index = self.cellIndex(obj)
         return table.getRowAtIndex(index), table.getColumnHeader(index)
