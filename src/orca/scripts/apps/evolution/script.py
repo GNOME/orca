@@ -33,6 +33,10 @@ import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.settings as settings
 
+from .braille_generator import BrailleGenerator
+from .speech_generator import SpeechGenerator
+from .script_utilities import Utilities
+
 ########################################################################
 #                                                                      #
 # The Evolution script class.                                          #
@@ -50,6 +54,15 @@ class Script(WebKitGtk.Script):
 
         WebKitGtk.Script.__init__(self, app, False)
         self.presentIfInactive = False
+
+    def getBrailleGenerator(self):
+        return BrailleGenerator(self)
+
+    def getSpeechGenerator(self):
+        return SpeechGenerator(self)
+
+    def getUtilities(self):
+        return Utilities(self)
 
     def isActivatableEvent(self, event):
         """Returns True if the given event is one that should cause this

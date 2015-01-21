@@ -2828,3 +2828,17 @@ class Utilities:
         index = self.cellIndex(obj)
         rowIndex = table.getRowAtIndex(index)
         return table.getRowHeader(rowIndex)
+
+    def coordinatesForCell(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
+            return None
+
+        isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
+        parent = pyatspi.findAncestor(obj, isTable)
+        try:
+            table = parent.queryTable()
+        except:
+            return None
+
+        index = self.cellIndex(obj)
+        return table.getRowAtIndex(index), table.getColumnHeader(index)
