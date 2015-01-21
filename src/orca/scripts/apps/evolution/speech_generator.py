@@ -35,6 +35,16 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator):
         super().__init__(script)
         self._cache = {}
 
+    def _isTreeTableCell(self, obj):
+        cached = self._cache.get(hash(obj), {})
+        rv = cached.get("isTreeTableCell")
+        if rv == None:
+            rv = obj.parent and obj.parent.getRole() == pyatspi.ROLE_TREE_TABLE
+            cached["isTreeTableCell"] = rv
+            self._cache[hash(obj)] = cached
+
+        return rv
+
     def _isMessageListToggleCell(self, obj):
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isMessageListToggleCell")
@@ -116,6 +126,12 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator):
             return []
 
         return super()._generateRoleName(obj, **args)
+
+    def _generateUnselectedCell(self, obj, **args):
+        if self._isMessageListToggleCell(obj) or self._isTreeTableCell(obj):
+            return []
+
+        return super()._generateUnselectedCell(obj, **args)
 
     def generateSpeech(self, obj, **args):
         self._cache = {}
