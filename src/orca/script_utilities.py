@@ -2743,9 +2743,15 @@ class Utilities:
         except:
             return []
 
+        count = selection.nSelectedChildren
+        msg = "INFO: %s reports %i selected children" % (obj, count)
+        debug.println(debug.LEVEL_INFO, msg)
+
         children = []
-        for x in range(selection.nSelectedChildren):
-            children.append(selection.getSelectedChild(x))
+        for x in range(count):
+            child = selection.getSelectedChild(x)
+            if not self.isZombie(child):
+                children.append(child)
 
         return children
 
@@ -2842,3 +2848,23 @@ class Utilities:
 
         index = self.cellIndex(obj)
         return table.getRowAtIndex(index), table.getColumnHeader(index)
+
+    def isZombie(self, obj):
+        try:
+            index = obj.getIndexInParent()
+            state = obj.getState()
+        except:
+            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is null or dead" % obj)
+            return True
+
+        if obj.getIndexInParent() == -1:
+            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s's index is -1" % obj)
+            return True
+        if state.contains(pyatspi.STATE_DEFUNCT):
+            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is defunct" % obj)
+            return True
+        if state.contains(pyatspi.STATE_INVALID):
+            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is invalid" % obj)
+            return True
+
+        return False
