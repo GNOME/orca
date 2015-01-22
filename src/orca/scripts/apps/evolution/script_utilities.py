@@ -35,6 +35,39 @@ class Utilities(WebKitGtk.Utilities):
     def __init__(self, script):
         super().__init__(script)
 
+    def isComposeMessageBody(self, obj):
+        if not obj.getState().contains(pyatspi.STATE_EDITABLE):
+            return False
+
+        return self.isEmbeddedDocument(obj)
+
+    def isReceivedMessage(self, obj):
+        if obj.getState().contains(pyatspi.STATE_EDITABLE):
+            return False
+
+        return self.isEmbeddedDocument(obj)
+
+    def isReceivedMessageHeader(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE):
+            return False
+
+        return self.isReceivedMessage(obj.parent)
+
+    def isReceivedMessageContent(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_SECTION):
+            return False
+
+        return self.isReceivedMessage(obj.parent)
+
+    def findMessageBodyChild(self, root):
+        roles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
+        isDocument = lambda x: x and x.getRole() in roles
+        candidate = pyatspi.findDescendant(root, isDocument)
+        if self.isEmbeddedDocument(candidate):
+            return self.findMessageBodyChild(candidate)
+
+        return candidate
+
     def isMessageListToggleCell(self, obj):
         if self.isWebKitGtk(obj):
             return False
@@ -59,3 +92,23 @@ class Utilities(WebKitGtk.Utilities):
             return pyatspi.utils.findDescendant(obj, isTreeTable) or obj
 
         return gtk.Utilities.realActiveDescendant(self, obj)
+
+    def setCaretAtStart(self, obj):
+        if self.isReceivedMessageContent(obj):
+            obj = self.utilities.findMessageBodyChild(obj) or obj
+
+        child, index = super().setCaretAtStart(obj)
+        if child and index == -1:
+            child, index = super().setCaretAtStart(child)
+
+        return child, index
+
+    def treatAsBrowser(self, obj):
+        if not self.isEmbeddedDocument(obj):
+            return False
+
+        isSplitPane = lambda x: x and x.getRole() == pyatspi.ROLE_SPLIT_PANE
+        if pyatspi.utils.findAncestor(obj, isSplitPane):
+            return False
+
+        return True

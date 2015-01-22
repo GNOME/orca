@@ -53,7 +53,7 @@ class Script(WebKitGtk.Script):
         - app: the application to create a script for.
         """
 
-        WebKitGtk.Script.__init__(self, app, False)
+        super().__init__(app)
         self.presentIfInactive = False
 
     def getBrailleGenerator(self):

@@ -47,8 +47,7 @@ class Utilities(script_utilities.Utilities):
         Arguments:
         - script: the script with which this instance is associated.
         """
-
-        script_utilities.Utilities.__init__(self, script)
+        super().__init__(script)
 
     def isWebKitGtk(self, obj):
         """Returns True if this object is a WebKitGtk object."""
@@ -232,3 +231,45 @@ class Utilities(script_utilities.Utilities):
             return self.onSameLine(obj[0], obj[1])
 
         return False
+
+    def isEmbeddedDocument(self, obj):
+        if not self.isWebKitGtk(obj):
+            return False
+
+        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
+        if not (obj and obj.getRole() in docRoles):
+            return False
+
+        parent = obj.parent
+        if not (parent and self.isWebKitGtk(parent)):
+            return False
+
+        parent = parent.parent
+        if not (parent and not self.isWebKitGtk(parent)):
+            return False
+
+        return True
+
+    def setCaretAtStart(self, obj):
+        def implementsText(obj):
+            if obj.getRole() == pyatspi.ROLE_LIST:
+                return False
+            return 'Text' in pyatspi.utils.listInterfaces(obj)
+
+        child = obj
+        if not implementsText(obj):
+            child = pyatspi.utils.findDescendant(obj, implementsText)
+            if not child:
+                return None, -1
+
+        index = -1
+        text = child.queryText()
+        for i in range(text.characterCount):
+            if text.setCaretOffset(i):
+                index = i
+                break
+
+        return child, index
+
+    def treatAsBrowser(self, obj):
+        return self.isEmbeddedDocument(obj)

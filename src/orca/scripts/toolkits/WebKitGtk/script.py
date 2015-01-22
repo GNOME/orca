@@ -60,16 +60,15 @@ class Script(default.Script):
 
     CARET_NAVIGATION_KEYS = ['Left', 'Right', 'Up', 'Down', 'Home', 'End']
 
-    def __init__(self, app, isBrowser=True):
+    def __init__(self, app):
         """Creates a new script for WebKitGtk applications.
 
         Arguments:
         - app: the application to create a script for.
         """
 
-        default.Script.__init__(self, app)
+        super().__init__(app)
         self._loadingDocumentContent = False
-        self._isBrowser = isBrowser
         self._lastCaretContext = None, -1
         self.sayAllOnLoadCheckButton = None
 
@@ -209,25 +208,21 @@ class Script(default.Script):
     def onDocumentReload(self, event):
         """Callback for document:reload accessibility events."""
 
-        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
-        if event.source.getRole() in docRoles:
+        if self.utilities.treatAsBrowser(event.source):
             self._loadingDocumentContent = True
 
     def onDocumentLoadComplete(self, event):
         """Callback for document:load-complete accessibility events."""
 
-        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
-        if not event.source.getRole() in docRoles:
+        if not self.utilities.treatAsBrowser(event.source):
             return
 
         self._loadingDocumentContent = False
-        if not self._isBrowser:
-            return
 
         # TODO: We need to see what happens in Epiphany on pages where focus
         # is grabbed rather than set the caret at the start. But for simple
         # content in both Yelp and Epiphany this is alright for now.
-        obj, offset = self.setCaretAtStart(event.source)
+        obj, offset = self.utilities.setCaretAtStart(event.source)
         orca.setLocusOfFocus(event, obj, False)
 
         self.updateBraille(obj)
@@ -238,8 +233,7 @@ class Script(default.Script):
     def onDocumentLoadStopped(self, event):
         """Callback for document:load-stopped accessibility events."""
 
-        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
-        if event.source.getRole() in docRoles:
+        if self.utilities.treatAsBrowser(event.source):
             self._loadingDocumentContent = False
 
     def onFocusedChanged(self, event):
@@ -288,8 +282,7 @@ class Script(default.Script):
         except:
             return
 
-        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
-        if role not in docRoles or not self._isBrowser:
+        if not self.utilities.treatAsBrowser(obj):
             return
 
         if event.detail1:
@@ -438,39 +431,6 @@ class Script(default.Script):
                 return False
 
         return True
-
-    def setCaretAtStart(self, obj):
-        """Attempts to set the caret at the specified offset in obj. Because
-        this is not always possible, this method will attempt to locate the
-        first place inside of obj in which the caret can be positioned.
-
-        Arguments:
-        - obj: the accessible object in which the caret should be placed.
-
-        Returns the object and offset in which we were able to set the caret.
-        Otherwise, None if we could not find a text object, and -1 if we were
-        not able to set the caret.
-        """
-
-        def implementsText(obj):
-            if obj.getRole() == pyatspi.ROLE_LIST:
-                return False
-            return 'Text' in utils.listInterfaces(obj)
-
-        child = obj
-        if not implementsText(obj):
-            child = utils.findDescendant(obj, implementsText)
-            if not child:
-                return None, -1
-
-        index = -1
-        text = child.queryText()
-        for i in range(text.characterCount):
-            if text.setCaretOffset(i):
-                index = i
-                break
-
-        return child, index
 
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
         """In document content, we want to use the panning keys to browse the

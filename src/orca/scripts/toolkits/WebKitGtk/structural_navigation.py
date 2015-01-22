@@ -82,7 +82,7 @@ class StructuralNavigation(structural_navigation.StructuralNavigation):
         """
 
         if characterOffset == 0:
-            child, offset = self._script.setCaretAtStart(obj)
+            child, offset = self._script.utilities.setCaretAtStart(obj)
 
             if child and child.getRole() == pyatspi.ROLE_LIST_ITEM:
                 for c in child:
