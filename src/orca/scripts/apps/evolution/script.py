@@ -33,10 +33,13 @@ import orca.orca as orca
 import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 import orca.settings as settings
+import orca.settings_manager as settings_manager
 
 from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
+
+_settingsManager = settings_manager.getManager()
 
 ########################################################################
 #                                                                      #
@@ -52,6 +55,9 @@ class Script(WebKitGtk.Script):
         Arguments:
         - app: the application to create a script for.
         """
+
+        if _settingsManager.getSetting('sayAllOnLoad') == None:
+            _settingsManager.setSetting('sayAllOnLoad', False)
 
         super().__init__(app)
         self.presentIfInactive = False
