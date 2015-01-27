@@ -68,6 +68,13 @@ class Utilities(WebKitGtk.Utilities):
 
         return candidate
 
+    def isMessageListStatusCell(self, obj):
+        if not self.isMessageListToggleCell(obj):
+            return False
+
+        header = self.columnHeaderForCell(obj)
+        return header and header.name != obj.name
+
     def isMessageListToggleCell(self, obj):
         if self.isWebKitGtk(obj):
             return False
@@ -78,8 +85,7 @@ class Utilities(WebKitGtk.Utilities):
         if not obj.name:
             return False
 
-        header = self.columnHeaderForCell(obj)
-        return header and header.name == obj.name
+        return True
 
     def realActiveDescendant(self, obj):
         if self.isWebKitGtk(obj):

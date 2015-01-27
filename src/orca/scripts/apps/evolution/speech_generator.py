@@ -45,6 +45,16 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator):
 
         return rv
 
+    def _isMessageListStatusCell(self, obj):
+        cached = self._cache.get(hash(obj), {})
+        rv = cached.get("isMessageListStatusCell")
+        if rv == None:
+            rv = self._script.utilities.isMessageListStatusCell(obj)
+            cached["isMessageListStatusCell"] = rv
+            self._cache[hash(obj)] = cached
+
+        return rv
+
     def _isMessageListToggleCell(self, obj):
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isMessageListToggleCell")
@@ -88,6 +98,9 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator):
         return rv
 
     def _generateCellCheckedState(self, obj, **args):
+        if self._isMessageListStatusCell(obj):
+            return []
+
         if self._isMessageListToggleCell(obj):
             if self._isInNewRow(obj) or not self._isFocused(obj):
                 return []
@@ -101,19 +114,22 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator):
         return super()._generateLabel(obj, **args)
 
     def _generateName(self, obj, **args):
-        if self._isMessageListToggleCell(obj):
+        if self._isMessageListToggleCell(obj) \
+           and not self._isMessageListStatusCell(obj):
             return []
 
         return super()._generateName(obj, **args)
 
     def _generateLabelOrName(self, obj, **args):
-        if self._isMessageListToggleCell(obj):
+        if self._isMessageListToggleCell(obj) \
+           and not self._isMessageListStatusCell(obj):
             return []
 
         return super()._generateLabelOrName(obj, **args)
 
     def _generateRealActiveDescendantDisplayedText(self, obj, **args):
-        if self._isMessageListToggleCell(obj):
+        if self._isMessageListToggleCell(obj) \
+           and not self._isMessageListStatusCell(obj):
             if not self._isChecked(obj):
                 return []
             if self._isFocused(obj) and not self._isInNewRow(obj):
