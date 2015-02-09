@@ -2622,6 +2622,8 @@ class Script(script.Script):
             return
 
         ignoreRoles = [pyatspi.ROLE_LABEL,
+                       pyatspi.ROLE_MENU,
+                       pyatspi.ROLE_MENU_ITEM,
                        pyatspi.ROLE_SLIDER,
                        pyatspi.ROLE_SPIN_BUTTON]
         role = event.source.getRole()
