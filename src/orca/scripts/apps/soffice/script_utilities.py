@@ -69,7 +69,11 @@ class Utilities(script_utilities.Utilities):
         any text being shown.
         """
 
-        role = obj.getRole()
+        try:
+            role = obj.getRole()
+        except:
+            return ""
+
         if role == pyatspi.ROLE_PUSH_BUTTON and obj.name:
             return obj.name
 
