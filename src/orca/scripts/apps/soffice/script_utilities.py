@@ -83,7 +83,10 @@ class Utilities(script_utilities.Utilities):
             if text.strip():
                 return text
 
-        text = script_utilities.Utilities.displayedText(self, obj)
+        try:
+            text = script_utilities.Utilities.displayedText(self, obj)
+        except:
+            return ""
 
         # TODO - JD: This is needed because the default behavior is to fall
         # back on the name, which is bogus. Once that has been fixed, this
