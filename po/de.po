@@ -20,17 +20,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-22 20:57+0200\n"
-"PO-Revision-Date: 2014-09-22 20:55+0100\n"
-"Last-Translator: Benjamin Steinwender <b@stbe.at>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=orca&keywords=I18N+L10N&component=i18n\n"
+"POT-Creation-Date: 2015-02-09 17:44+0000\n"
+"PO-Revision-Date: 2015-01-29 09:24+0100\n"
+"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Project-Style: gnome\n"
 
 #: ../orca.desktop.in.h:1
@@ -3192,7 +3193,7 @@ msgstr "Eine Zelle nach oben bewegen."
 #. between these two modes.
 #: ../src/orca/cmdnames.py:980
 msgid "Switches between browse mode and focus mode."
-msgstr ""
+msgstr "Wechseln zwischen Stöbern-Modus und Fokus-Modus"
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -3205,7 +3206,7 @@ msgstr ""
 #. This string is associated with the Orca command to enable sticky focus mode.
 #: ../src/orca/cmdnames.py:991
 msgid "Enables sticky focus mode."
-msgstr ""
+msgstr "Dauerhaften Fokus-Modus aktivieren."
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: ../src/orca/cmdnames.py:994
@@ -4356,8 +4357,8 @@ msgstr "Gelbgrün"
 #.
 #: ../src/orca/flat_review.py:1045 ../src/orca/generator.py:495
 #: ../src/orca/generator.py:761 ../src/orca/generator.py:803
-#: ../src/orca/generator.py:849 ../src/orca/tutorialgenerator.py:562
-#: ../src/orca/tutorialgenerator.py:602
+#: ../src/orca/generator.py:849 ../src/orca/tutorialgenerator.py:563
+#: ../src/orca/tutorialgenerator.py:603
 msgid "toggle"
 msgstr "Umschalten"
 
@@ -4389,7 +4390,7 @@ msgstr "_Aktivieren"
 #. a navigation command to move amongst entries.
 #: ../src/orca/guilabels.py:58
 msgid "Automatic focus mode during structural navigation"
-msgstr ""
+msgstr "Automatischer Fokus-Modus während Strukturnavigation"
 
 #. Translators: Orca has a number of commands that override the default behavior
 #. within an application. For instance, if you are at the bottom of an entry and
@@ -4409,7 +4410,7 @@ msgstr ""
 #. of the entry.
 #: ../src/orca/guilabels.py:76
 msgid "Automatic focus mode during caret navigation"
-msgstr ""
+msgstr "Automatischer Fokus-Modus während Bildschirmleser-Navigation"
 
 #. Translators: A single braille cell on a refreshable braille display consists
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
@@ -7129,7 +7130,7 @@ msgstr "Kontext ist %s"
 #. This string is the message presented when Orca switches to browse mode.
 #: ../src/orca/messages.py:1091
 msgid "Browse mode"
-msgstr ""
+msgstr "Stöbern-Modus"
 
 #. Translators: Orca has a number of commands that override the default
 #. behavior within an application. For instance, on a web page, "h" moves
@@ -7159,7 +7160,7 @@ msgstr "Fokus-Modus"
 #. This string is the message presented when Orca switches to sticky focus mode.
 #: ../src/orca/messages.py:1117
 msgid "Focus mode is sticky."
-msgstr ""
+msgstr "Dauerhafter Fokus-Modus."
 
 #. Translators: Hovering the mouse over certain objects on a web page causes a
 #. new object to appear such as a pop-up menu. Orca has a command will move the
@@ -7728,7 +7729,7 @@ msgstr "Sprachausgabe steht nicht zur Verfügung."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1512 ../src/orca/scripts/default.py:3725
+#: ../src/orca/messages.py:1512 ../src/orca/scripts/default.py:3727
 msgid "string not found"
 msgstr "Zeichenkette nicht gefunden"
 
@@ -8944,7 +8945,7 @@ msgstr "Rechtschreibung überprüfen"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3337 ../src/orca/scripts/default.py:3349
+#: ../src/orca/scripts/default.py:3339 ../src/orca/scripts/default.py:3351
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -9924,13 +9925,13 @@ msgid "spelling"
 msgstr "Rechtschreibung"
 
 #. Translators: this is a tip for the user on how to toggle a checkbox.
-#: ../src/orca/tutorialgenerator.py:158
+#: ../src/orca/tutorialgenerator.py:159
 msgid "Press space to toggle."
 msgstr "Leertaste zum Umschalten betätigem"
 
 #. Translators: this is a tip for the user on how to interact
 #. with a combobox.
-#: ../src/orca/tutorialgenerator.py:185
+#: ../src/orca/tutorialgenerator.py:186
 msgid "Press space to expand, and use up and down to select an item."
 msgstr ""
 "Leertaste zum Ausklappen betätigen und mit Hoch- und Runter-Taste Element "
@@ -9938,13 +9939,13 @@ msgstr ""
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
-#: ../src/orca/tutorialgenerator.py:216
+#: ../src/orca/tutorialgenerator.py:217
 msgid "Press alt+f6 to give focus to child windows."
 msgstr "Alt+F6 betätigen, um untergeordnete Fenster zu fokussieren."
 
 #. Translators: this gives tips on how to navigate items in a
 #. layered pane.
-#: ../src/orca/tutorialgenerator.py:280
+#: ../src/orca/tutorialgenerator.py:281
 msgid "To move to items, use either the arrow keys or type ahead searching."
 msgstr ""
 "Um Objekte anzusteuern, können entweder die Pfeiltasten genutzt oder ein "
@@ -9952,12 +9953,12 @@ msgstr ""
 
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, describing how to access the system menus.
-#: ../src/orca/tutorialgenerator.py:286
+#: ../src/orca/tutorialgenerator.py:287
 msgid "To get to the system menus press the alt+f1 key."
 msgstr "Drücken Sie Alt+F1, um das Anwendungsmenü aufzurufen."
 
 #. Translators: this is the tutorial string when navigating lists.
-#: ../src/orca/tutorialgenerator.py:323
+#: ../src/orca/tutorialgenerator.py:324
 msgid "Use up and down to select an item."
 msgstr "Hoch- und Runter-Taste zum Auswählen eines Elementes nutzen."
 
@@ -9965,7 +9966,7 @@ msgstr "Hoch- und Runter-Taste zum Auswählen eines Elementes nutzen."
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to collapse the node.
-#: ../src/orca/tutorialgenerator.py:353 ../src/orca/tutorialgenerator.py:533
+#: ../src/orca/tutorialgenerator.py:354 ../src/orca/tutorialgenerator.py:534
 msgid "To collapse, press shift plus left."
 msgstr "Zum Einklappen die Umschalttaste zusammen mit Links-Taste betätigen."
 
@@ -9973,36 +9974,36 @@ msgstr "Zum Einklappen die Umschalttaste zusammen mit Links-Taste betätigen."
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to expand the node.
-#: ../src/orca/tutorialgenerator.py:359 ../src/orca/tutorialgenerator.py:539
+#: ../src/orca/tutorialgenerator.py:360 ../src/orca/tutorialgenerator.py:540
 msgid "To expand, press shift plus right."
 msgstr "Zum Ausklappen die Umschalttaste zusammen mit Rechts-Taste betätigen."
 
 #. Translators: this is the tutorial string for activating a menu item
-#: ../src/orca/tutorialgenerator.py:391
+#: ../src/orca/tutorialgenerator.py:392
 msgid "To activate press return."
 msgstr "Zum Aktivieren die Eingabetaste drücken."
 
 #. Translators: This is the tutorial string for when landing
 #. on text fields.
-#: ../src/orca/tutorialgenerator.py:421
+#: ../src/orca/tutorialgenerator.py:422
 msgid "Type in text."
 msgstr "Text eingeben."
 
 #. Translators: this is the tutorial string for landing
 #. on a page tab, we are informing the
 #. user how to navigate these.
-#: ../src/orca/tutorialgenerator.py:449
+#: ../src/orca/tutorialgenerator.py:450
 msgid "Use left and right to view other tabs."
 msgstr "Links- und Rechts-Taste zum Betrachten der anderen Reiter nutzen."
 
 #. Translators: this is the tutorial string for activating a push button.
-#: ../src/orca/tutorialgenerator.py:474
+#: ../src/orca/tutorialgenerator.py:475
 msgid "To activate press space."
 msgstr "Zum Aktivieren die Leertaste betätigen."
 
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
-#: ../src/orca/tutorialgenerator.py:502
+#: ../src/orca/tutorialgenerator.py:503
 msgid ""
 "Use up or down arrow to select value. Or type in the desired numerical value."
 msgstr ""
@@ -10010,12 +10011,12 @@ msgstr ""
 "gewünschten numerischen Wert eingeben."
 
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
-#: ../src/orca/tutorialgenerator.py:690
+#: ../src/orca/tutorialgenerator.py:691
 msgid "Use arrow keys to change."
 msgstr "Pfeiltasten zum Ändern verwenden."
 
 #. Translators: this is a tip for the user, how to navigate menues.
-#: ../src/orca/tutorialgenerator.py:715
+#: ../src/orca/tutorialgenerator.py:716
 msgid ""
 "To navigate, press left or right arrow. To move through items press up or "
 "down arrow."
@@ -10025,13 +10026,13 @@ msgstr ""
 
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menues.
-#: ../src/orca/tutorialgenerator.py:720
+#: ../src/orca/tutorialgenerator.py:721
 msgid "To enter sub menu, press right arrow."
 msgstr "Um ein Untermenü zu betreten, Rechts-Pfeiltaste betätigen."
 
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
-#: ../src/orca/tutorialgenerator.py:752
+#: ../src/orca/tutorialgenerator.py:753
 msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
@@ -10099,1248 +10100,3 @@ msgstr ""
 
 #~ msgid "Use Ctrl+L to move focus to the results."
 #~ msgstr "Verwenden Sie Strg+L, um die Ergebnisse zu fokussieren."
-
-# python-format
-#~ msgid "%s panel"
-#~ msgstr "%s Leiste"
-
-#~ msgid "Orca"
-#~ msgstr "Orca"
-
-#~ msgid "Quits Orca"
-#~ msgstr "Orca beenden"
-
-#~ msgid "Use Orca _Structural Navigation"
-#~ msgstr "Orca _Strukturennavigation verwenden."
-
-#~ msgid "ISO level 3 shift"
-#~ msgstr "Umschalttaste"
-
-#~ msgid "Welcome to Orca."
-#~ msgstr "Willkommen bei Orca."
-
-#~ msgid "Starting Orca Preferences."
-#~ msgstr "Orca-Einstellungen starten."
-
-#~ msgid "Starting Orca Preferences for %s."
-#~ msgstr "Orca-Einstellungen für %s starten"
-
-#~ msgid "Goodbye."
-#~ msgstr "Auf Wiedersehen."
-
-#~ msgid "Welcome to Orca setup."
-#~ msgstr "Willkommen bei den Orca-Einstellungen."
-
-#~ msgid "Enable Braille Monitor?  Enter y or n: "
-#~ msgstr ""
-#~ "Möchten Sie den Braillemonitor einschalten?  Geben Sie j oder n ein: "
-
-#~ msgid "Orca Find Dialog"
-#~ msgstr "Orca Suchdialog"
-
-#~ msgid "Accessibility support for GNOME has just been enabled."
-#~ msgstr "Die GNOME-Unterstützung für Barrierefreiheit wurde aktiviert. "
-
-#~ msgid "You need to log out and log back in for the change to take effect."
-#~ msgstr ""
-#~ "Sie müssen sich ab -und anmelden, damit die Änderungen übernommen werden. "
-
-#~ msgid "(double click)"
-#~ msgstr "(Doppelklick)"
-
-#~ msgid "(triple click)"
-#~ msgstr "(Dreifachklick)"
-
-#~ msgid "Orca Preferences"
-#~ msgstr "Orca-Einstellungen"
-
-#~ msgid "Enable Braille _monitor"
-#~ msgstr "Braille-_Monitor aktivieren"
-
-#~ msgid "Bottom Right"
-#~ msgstr "Unten Rechts"
-
-#~ msgid "Wrapping to Bottom"
-#~ msgstr "Bis zum Ende überspringen"
-
-#~ msgid "Wrapping to Top"
-#~ msgstr "Bis zum Anfang überspringen"
-
-#~ msgid "keypad "
-#~ msgstr "Tastatur"
-
-#~ msgid "F 11"
-#~ msgstr "F 11"
-
-#~ msgid "F 12"
-#~ msgstr "F 12"
-
-#~ msgid "Notification %s"
-#~ msgstr "Benachrichtigung %s"
-
-#~ msgid "Welcome to StarOffice"
-#~ msgstr "Willkommen bei StarOffice"
-
-#~ msgid "Available fields"
-#~ msgstr "Vorhandene Felder"
-
-#~ msgid "Note that the Scroll Down button has to be pressed numerous times."
-#~ msgstr ""
-#~ "Beachten Sie, dass der Knopf zum Runterrollen mehrmals gedrückt werden "
-#~ "muss."
-
-#~ msgid "License Agreement Accept button now has focus."
-#~ msgstr "Der Knopf zur Zustimmung des Lizenzvertrages hat jetzt den Fokus."
-
-#~ msgid "First name"
-#~ msgstr "Erster Name"
-
-#~ msgid "Move to cell"
-#~ msgstr "Zur Zelle bewegen"
-
-#~ msgid "Presentation Wizard"
-#~ msgstr "Präsentations-Assistent"
-
-#~ msgid "entered bookmark"
-#~ msgstr "Lesezeichen eingegeben"
-
-#~ msgid "%d percent"
-#~ msgid_plural "%d percent"
-#~ msgstr[0] "%d Prozent"
-#~ msgstr[1] "%d Prozent"
-
-#~ msgid "The Orca Team"
-#~ msgstr "Das Orca-Team"
-
-#~ msgid ""
-#~ "A free, open source scriptable screen reader, which provides access to "
-#~ "applications and toolkits that support AT-SPI (e.g., the GNOME desktop)."
-#~ msgstr ""
-#~ "Ein freier, quelloffener, durch Skripte erweiterbarer Bildschirmleser, "
-#~ "welcher Zugriff auf Anwendungen und Toolkits bietet, die AT-SPI "
-#~ "unterstützen (z. B. die GNOME-Arbeitsumgebung)."
-
-#~ msgid ""
-#~ "Copyright (c) 2010-2011 The Orca Team \n"
-#~ "Copyright (c) 2010-2011 Igalia, S.L. \n"
-#~ "Copyright (c) 2010 Consorcio Fernando de los Rios \n"
-#~ "Copyright (c) 2010 Informal Informatica LTDA. \n"
-#~ "Copyright (c) 2005-2010 Sun Microsystems Inc. \n"
-#~ "Copyright (c) 2005-2008 Google Inc. \n"
-#~ "Copyright (c) 2008, 2009 Eitan Isaacson \n"
-#~ "Copyright (c) 2006-2009 Brailcom, o.p.s. \n"
-#~ "Copyright (c) 2001, 2002 BAUM Retec, A.G."
-#~ msgstr ""
-#~ "Copyright (c) 2010-2011 Das Orca-Team \n"
-#~ "Copyright (c) 2010-2011 Igalia, S.L. \n"
-#~ "Copyright (c) 2010 Consorcio Fernando de los Rios \n"
-#~ "Copyright (c) 2010 Informal Informatica LTDA. \n"
-#~ "Copyright (c) 2005-2010 Sun Microsystems Inc. \n"
-#~ "Copyright (c) 2005-2008 Google Inc. \n"
-#~ "Copyright (c) 2008, 2009 Eitan Isaacson \n"
-#~ "Copyright (c) 2006-2009 Brailcom, o.p.s. \n"
-#~ "Copyright (c) 2001, 2002 BAUM Retec, A.G."
-
-#~ msgid "translator-credits"
-#~ msgstr ""
-#~ "Hendrik Brandt <heb@gnome-de.org>\n"
-#~ "Hendrik Richter <hendrikr@gnome.org>\n"
-#~ "Jochen Skulj <jochen@jochenskulj.de>\n"
-#~ "Simon Bienlein <simon@linux-fuer-blinde.de>\n"
-#~ "Christian Kirbach <Christian.Kirbach@googlemail.com>\n"
-#~ "Mario Blättermann <mario.blaettermann@gmail.com>"
-
-#~ msgid ""
-#~ "Orca is free software; you can redistribute it and/or\n"
-#~ "modify it under the terms of the GNU Lesser General\n"
-#~ "Public License as published by the Free Software Foundation;\n"
-#~ "either version 2.1 of the License, or (at your option) any\n"
-#~ "later version.\n"
-#~ "\n"
-#~ "Orca is distributed in the hope that it will be useful, but\n"
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See\n"
-#~ "the GNU Lesser General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU Lesser General\n"
-#~ "Public License along with Orca; if not, write to the\n"
-#~ "Free Software Foundation, Inc., Franklin Street, Fifth Floor,\n"
-#~ "Boston MA  02110-1301 USA."
-#~ msgstr ""
-#~ "Orca ist freie Software, Sie können sie weitergeben und/oder\n"
-#~ "verändern, solange Sie sich an die Regeln der GNU General Lesser License\n"
-#~ "halten, so wie sie von der Free Software Foundation festgelegt wurden;\n"
-#~ "entweder in Version 2.1 der Lizenz oder (nach Ihrem Ermessen) in jeder "
-#~ "folgenden Lizenz.\n"
-#~ "\n"
-#~ "Orca wurde mit dem Ziel veröffentlicht, dass Sie es nützlich finden,\n"
-#~ "jedoch OHNE JEDWEDE GARANTIE, sogar ohne eine implizite Garantie\n"
-#~ "der VERKAUFBARKEIT oder der NUTZBARKEIT FÜR EINEN SPEZIELLEN ZWECK.\n"
-#~ "Schauen Sie für weitere Informationen bitte in der GNU Lesser General "
-#~ "Public License nach.\n"
-#~ "\n"
-#~ "Mit diesem Programm sollten Sie außerdem eine Kopie der GNU General "
-#~ "Lesser License erhalten\n"
-#~ "haben. Wenn dem nicht so ist, so schreiben Sie bitte an die\n"
-#~ "Free Software Foundation, Inc.,\n"
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."
-
-#~ msgid "Quit Orca?"
-#~ msgstr "Orca beenden?"
-
-#~ msgid "This will stop all speech and braille output."
-#~ msgstr "Hierdurch werden Sprachausgabe und Braille-Ausgabe gestoppt."
-
-#~ msgid "No Orca shortcuts for %s found."
-#~ msgstr "Keine Orca-Tastenkombinationen für %s gefunden."
-
-#~ msgid ""
-#~ "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for "
-#~ "the current application. Press escape to exit."
-#~ msgstr ""
-#~ "Drücken Sie 1 für die Standard-Tastenkombinationen von Orca. Drücken Sie "
-#~ "2 für die Liste der Orca-Tastenkombinationen für die aktuelle Anwendung. "
-#~ "Drücken Sie Escape zum Verlassen."
-
-#~ msgid "Show Orca _main window"
-#~ msgstr "Orca _Hauptfenster anzeigen"
-
-#~ msgid "Quit Orca _without confirmation"
-#~ msgstr "Orca _ohne Bestätigung verlassen"
-
-#~ msgid "User Interface"
-#~ msgstr "Benutzeroberfläche"
-
-#~ msgid "row %(row)d, column %(column)d"
-#~ msgstr "Zeile %(row)d, Spalte %(column)d"
-
-#~ msgid "Toggle whether we present new mail if we are not the active script."
-#~ msgstr ""
-#~ "Legt fest, ob Nachrichten dargestellt werden, wenn das Skript nicht aktiv "
-#~ "ist."
-
-#~ msgid "present new mail if this script is not active."
-#~ msgstr "Neue Nachrichten darstellen, wenn dieses Skript nicht aktiv ist."
-
-#~ msgid "do not present new mail if this script is not active."
-#~ msgstr ""
-#~ "Neue Nachrichten nicht darstellen, wenn dieses Skript nicht aktiv ist."
-
-#~ msgid "Flagged"
-#~ msgstr "Markiert"
-
-#~ msgid "unread"
-#~ msgstr "ungelesen"
-
-#~ msgid "Attachment"
-#~ msgstr "Anlage"
-
-#~ msgid "No appointments"
-#~ msgstr "Keine Termine"
-
-#~ msgid "Directories button"
-#~ msgstr "Verzeichnis-Knopf"
-
-#~ msgid "Paints and prints the visible zones in the active window."
-#~ msgstr "Die sichtbaren Bereiche im aktiven Fenster zeichnen und ausgeben."
-
-#~ msgid "Reports information on current script."
-#~ msgstr "Informationen zum aktuellen Skript erhalten."
-
-#~ msgid ""
-#~ "Enters list shortcuts mode.  Press escape to exit list shortcuts mode."
-#~ msgstr ""
-#~ "Startet den Modus zum Auflisten der Tastenkombinationen. Drücken Sie zum "
-#~ "Verlassen die Escape-Taste."
-
-#~ msgid ""
-#~ "Prints a debug listing of all known applications to the console where "
-#~ "Orca is running."
-#~ msgstr ""
-#~ "Gibt auf dem Terminal eine Liste mit allen Anwendungen die aktuell Orca "
-#~ "nutzen."
-
-#~ msgid ""
-#~ "Prints debug information about the ancestry of the object with focus."
-#~ msgstr ""
-#~ "Gibt Fehlerüberprüfungsinformationen über das Elternobjekt des aktuell "
-#~ "fokussierten Objektes aus."
-
-#~ msgid "Prints debug information about the application with focus."
-#~ msgstr ""
-#~ "Gibt Fehlerüberprüfungsinformationen über die aktuelle fokussierte "
-#~ "Anwendung aus."
-
-#~ msgid ""
-#~ "Entering learn mode.  Press any key to hear its function.  To exit learn "
-#~ "mode, press the escape key."
-#~ msgstr ""
-#~ "Lernmodus wird eingeschaltet. Bitte drücken Sie eine beliebige Taste um "
-#~ "seine Funktion zu hören. Drücken Sie die Escape-Taste, um den Lernmodus "
-#~ "zu verlassen."
-
-#~ msgid "Exiting list shortcuts mode."
-#~ msgstr "Modus der Tastenkombinationen wird verlassen."
-
-#~ msgid "Emacspeak Speech Services"
-#~ msgstr "Emacspeak-Sprachausgaben"
-
-#~ msgid "Do you want to logout now?  Enter y or n: "
-#~ msgstr "Möchten Sie sich jetzt abmelden? Geben Sie »j« oder »n« ein: "
-
-#~ msgid "Setup complete. Logging out now."
-#~ msgstr "Einrichtung komplett. Es wird nun abgemeldet."
-
-#~ msgid "<b>Start from:</b>"
-#~ msgstr "<b>Beginnen bei:</b>"
-
-#~ msgid "<b>Load user profile info</b>"
-#~ msgstr "<b>Informationen zum Benutzerprofil laden</b>"
-
-#~ msgid "The following items can be enabled or disabled:"
-#~ msgstr "Die folgenden Funktionen können aktiviert oder deaktiviert werden:"
-
-#~ msgid ""
-#~ "If Orca has not been previously set up by the user, Orca\n"
-#~ "will automatically launch the preferences set up unless\n"
-#~ "the -n or --no-setup option is used.\n"
-#~ "\n"
-#~ "Report bugs to orca-list@gnome.org."
-#~ msgstr ""
-#~ "Falls Orca noch nicht zuvor vom Benutzer eingerichtet wurde,\n"
-#~ "wird es automatisch den Einstellungsdialog starten, außer\n"
-#~ "die Option -n bzw. --no-setup wird verwendet.\n"
-#~ "Melden Sie Fehler bitte an orca-list@gnome.org."
-
-#~ msgid "Show this help message"
-#~ msgstr "Diesen Hilfetext anzeigen"
-
-#~ msgid "Set up user preferences"
-#~ msgstr "Benutzereinstellungen einrichten"
-
-#~ msgid "Skip set up of user preferences"
-#~ msgstr "Das Einrichten der Benutzereinstellungen überspringen"
-
-#~ msgid "Import a profile from a given orca profile file"
-#~ msgstr "Ein Profil aus einem angegebenen Orca-Profil importieren"
-
-#~ msgid "Quits Orca (if shell script used)"
-#~ msgstr "Orca beenden (bei der Verwendung von Shell-Skripten)"
-
-#~ msgid "Forces orca to be terminated immediately."
-#~ msgstr "Erzwingt das unmittelbare Beenden von Orca."
-
-#~ msgid "Unable to import profile."
-#~ msgstr "Das Profil kann nicht importiert werden."
-
-#~ msgid "Profile import success."
-#~ msgstr "Profilimport war erfolgreich."
-
-#~ msgid "Import failed due to an unrecognized key: %s"
-#~ msgstr "Import schlug wegen eines unbekannten Schlüssels fehl: %s"
-
-#~ msgid "<b>Mouse</b>"
-#~ msgstr "<b>Maus</b>"
-
-#~ msgid "<b>Text attributes</b>"
-#~ msgstr "<b>Textattribute</b>"
-
-#~ msgid "Prints memory usage information."
-#~ msgstr "Informationen über Speicherverbrauch ausgeben."
-
-#~ msgid "Enable locking keys?  Enter y or n: "
-#~ msgstr ""
-#~ "Soll das Echo für die Sperrtasten aktiviert werden? Geben Sie »j« oder "
-#~ "»n« ein: "
-
-#~ msgid "Alternate"
-#~ msgstr "Alternative"
-
-#~ msgid "Usage: orca [OPTION...]"
-#~ msgstr "Verwendung: orca [OPTION...]"
-
-#~ msgid "Enable lockin_g keys"
-#~ msgstr "Tasten_sperre aktivieren"
-
-#~ msgid "Invalid"
-#~ msgstr "Ungültig"
-
-#~ msgid "invalid"
-#~ msgstr "ungültig"
-
-#~ msgid "acc"
-#~ msgstr "kürzel"
-
-#~ msgid "Accelerator"
-#~ msgstr "Tastenkürzel"
-
-#~ msgid "accelerator"
-#~ msgstr "Tastenkürzel"
-
-#~ msgid "Alert"
-#~ msgstr "Warnung"
-
-#~ msgid "alert"
-#~ msgstr "Warnung"
-
-#~ msgid "Animation"
-#~ msgstr "Animation"
-
-#~ msgid "animation"
-#~ msgstr "Animation"
-
-#~ msgid "Arrow"
-#~ msgstr "Pfeil"
-
-#~ msgid "arrow"
-#~ msgstr "Pfeil"
-
-#~ msgid "Calendar"
-#~ msgstr "Kalender"
-
-#~ msgid "calendar"
-#~ msgstr "Kalender"
-
-#~ msgid "Canvas"
-#~ msgstr "Leinwand"
-
-#~ msgid "canvas"
-#~ msgstr "Leinwand"
-
-#~ msgid "caption"
-#~ msgstr "Titelzeile"
-
-#~ msgid "check box"
-#~ msgstr "Ankreuzfeld"
-
-#~ msgid "CheckItem"
-#~ msgstr "Ankreuzeintrag"
-
-#~ msgid "check item"
-#~ msgstr "Ankreuzeintrag"
-
-#~ msgid "ColorChooser"
-#~ msgstr "Farbauswahl"
-
-#~ msgid "color chooser"
-#~ msgstr "Farbauswahl"
-
-#~ msgid "column header"
-#~ msgstr "Spaltenkopf"
-
-#~ msgid "Combo"
-#~ msgstr "Kombinierte Auswahl"
-
-#~ msgid "DateEditor"
-#~ msgstr "Datumseditor"
-
-#~ msgid "date editor"
-#~ msgstr "Datumseditor"
-
-#~ msgid "DesktopIcon"
-#~ msgstr "DesktopSymbol"
-
-#~ msgid "desktop icon"
-#~ msgstr "Desktopsymbol"
-
-#~ msgid "DesktopFrame"
-#~ msgstr "Desktoprahmen"
-
-#~ msgid "desktop frame"
-#~ msgstr "Desktopbereich"
-
-#~ msgid "Dial"
-#~ msgstr "Einwahl"
-
-#~ msgid "dial"
-#~ msgstr "Einwahl"
-
-#~ msgid "Dialog"
-#~ msgstr "Dialog"
-
-#~ msgid "dialog"
-#~ msgstr "Dialog"
-
-#~ msgid "DirectoryPane"
-#~ msgstr "Ordnerleiste"
-
-#~ msgid "directory pane"
-#~ msgstr "Ordnerleiste"
-
-#~ msgid "HtmlPane"
-#~ msgstr "HTMLLeiste"
-
-#~ msgid "html content"
-#~ msgstr "html Inhalt"
-
-#~ msgid "DrawingArea"
-#~ msgstr "Zeichenbereich"
-
-#~ msgid "drawing area"
-#~ msgstr "Zeichenbereich"
-
-#~ msgid "FileChooser"
-#~ msgstr "Dateiauswahl"
-
-#~ msgid "file chooser"
-#~ msgstr "Dateiauswahl"
-
-#~ msgid "Filler"
-#~ msgstr "Füllwerkzeug"
-
-#~ msgid "filler"
-#~ msgstr "Füllwerkzeug"
-
-#~ msgid "FontChooser"
-#~ msgstr "Schriftauswahl"
-
-#~ msgid "font chooser"
-#~ msgstr "Schriftauswahl"
-
-#~ msgid "Form"
-#~ msgstr "Formular"
-
-#~ msgid "form"
-#~ msgstr "Formular"
-
-#~ msgid "Frame"
-#~ msgstr "Rahmen"
-
-#~ msgid "frame"
-#~ msgstr "Fensterrahmen"
-
-#~ msgid "GlassPane"
-#~ msgstr "Transparente Leiste"
-
-#~ msgid "glass pane"
-#~ msgstr "transparente Leiste"
-
-#~ msgid "heading"
-#~ msgstr "Überschrift"
-
-#~ msgid "HtmlContainer"
-#~ msgstr "HTMLContainer"
-
-#~ msgid "h t m l container"
-#~ msgstr "html Container"
-
-#~ msgid "Icon"
-#~ msgstr "Symbol"
-
-#~ msgid "image"
-#~ msgstr "Bild"
-
-#~ msgid "InternalFrame"
-#~ msgstr "InternerRahmen"
-
-#~ msgid "internal frame"
-#~ msgstr "Interner Rahmen"
-
-#~ msgid "label"
-#~ msgstr "Bezeichnung"
-
-#~ msgid "LayeredPane"
-#~ msgstr "ÜberlagerteLeiste"
-
-#~ msgid "layered pane"
-#~ msgstr "überlagerter Leiste"
-
-#~ msgid "list"
-#~ msgstr "Liste"
-
-#~ msgid "list item"
-#~ msgstr "Listeneintrag"
-
-#~ msgid "Menu"
-#~ msgstr "Menü"
-
-#~ msgid "MenuBar"
-#~ msgstr "Menüleiste"
-
-#~ msgid "menu bar"
-#~ msgstr "Menüleiste"
-
-#~ msgid "MenuItem"
-#~ msgstr "Menüpunkt"
-
-#~ msgid "menu item"
-#~ msgstr "Menüpunkt"
-
-#~ msgid "OptionPane"
-#~ msgstr "Optionenleiste"
-
-#~ msgid "option pane"
-#~ msgstr "Optionenleiste"
-
-#~ msgid "Page"
-#~ msgstr "Seite"
-
-#~ msgid "page"
-#~ msgstr "seite"
-
-#~ msgid "TabList"
-#~ msgstr "Reiterliste"
-
-#~ msgid "tab list"
-#~ msgstr "Reiterliste"
-
-#~ msgid "Panel"
-#~ msgstr "Leiste"
-
-#~ msgid "panel"
-#~ msgstr "Leiste"
-
-#~ msgid "Password"
-#~ msgstr "Passwort"
-
-#~ msgid "password"
-#~ msgstr "Passwort"
-
-#~ msgid "PopupMenu"
-#~ msgstr "Aufklappmenü"
-
-#~ msgid "popup menu"
-#~ msgstr "Aufklappmenü"
-
-#~ msgid "Progress"
-#~ msgstr "Fortschritt"
-
-#~ msgid "progress bar"
-#~ msgstr "Fortschrittsanzeige"
-
-#~ msgid "button"
-#~ msgstr "Knopf"
-
-#~ msgid "radio button"
-#~ msgstr "Auswahlknopf"
-
-#~ msgid "RadioItem"
-#~ msgstr "Auswahleintrag"
-
-#~ msgid "radio menu item"
-#~ msgstr "Auswahlmenüeintrag"
-
-#~ msgid "RootPane"
-#~ msgstr "Hauptrahmen"
-
-#~ msgid "root pane"
-#~ msgstr "Hauptrahmen"
-
-#~ msgid "RowHeader"
-#~ msgstr "Zeilenkopf"
-
-#~ msgid "row header"
-#~ msgstr "Zeilenkopf"
-
-#~ msgid "ScrollBar"
-#~ msgstr "Bildlaufleiste"
-
-#~ msgid "scroll bar"
-#~ msgstr "Bildlaufleiste"
-
-#~ msgid "ScrollPane"
-#~ msgstr "Rollfeld"
-
-#~ msgid "scroll pane"
-#~ msgstr "Rollfeld"
-
-#~ msgid "Section"
-#~ msgstr "Abschnitt"
-
-#~ msgid "Separator"
-#~ msgstr "Trennzeichen"
-
-#~ msgid "separator"
-#~ msgstr "Trennzeichen"
-
-#~ msgid "Slider"
-#~ msgstr "Schieberegler"
-
-#~ msgid "slider"
-#~ msgstr "Schieberegler"
-
-#~ msgid "SplitPane"
-#~ msgstr "GeteilterBereich"
-
-#~ msgid "split pane"
-#~ msgstr "geteilter Bereich"
-
-#~ msgid "SpinButton"
-#~ msgstr "Drehknopf"
-
-#~ msgid "spin button"
-#~ msgstr "Drehknopf"
-
-#~ msgid "StatusBar"
-#~ msgstr "Statuszeile"
-
-#~ msgid "status bar"
-#~ msgstr "Statuszeile"
-
-#~ msgid "table"
-#~ msgstr "Tabelle"
-
-#~ msgid "Cell"
-#~ msgstr "Zelle"
-
-#~ msgid "cell"
-#~ msgstr "Zelle"
-
-#~ msgid "TearOffMenuItem"
-#~ msgstr "AbtrennbarerMenüeintrag"
-
-#~ msgid "tear off menu item"
-#~ msgstr "abtrennbarer Menüeintrag"
-
-#~ msgid "Terminal"
-#~ msgstr "Terminal"
-
-#~ msgid "terminal"
-#~ msgstr "Terminal"
-
-#~ msgid "text"
-#~ msgstr "Text"
-
-#~ msgid "ToggleButton"
-#~ msgstr "Umschalter"
-
-#~ msgid "toggle button"
-#~ msgstr "Umschalter"
-
-#~ msgid "ToolBar"
-#~ msgstr "Werkzeugleiste"
-
-#~ msgid "tool bar"
-#~ msgstr "Werkzeugleiste"
-
-#~ msgid "ToolTip"
-#~ msgstr "Minihilfe"
-
-#~ msgid "tool tip"
-#~ msgstr "Minihilfe"
-
-#~ msgid "Tree"
-#~ msgstr "Baum"
-
-#~ msgid "tree"
-#~ msgstr "baum"
-
-#~ msgid "TreeTable"
-#~ msgstr "Tabellenbaum"
-
-#~ msgid "tree table"
-#~ msgstr "Tabellenbaum"
-
-#~ msgid "Unknown"
-#~ msgstr "Unbekannt"
-
-#~ msgid "unknown"
-#~ msgstr "unbekannt"
-
-#~ msgid "Viewport"
-#~ msgstr "Darstellungsbereich"
-
-#~ msgid "viewport"
-#~ msgstr "Darstellungsbereich"
-
-#~ msgid "window"
-#~ msgstr "Fenster"
-
-#~ msgid "Header"
-#~ msgstr "Kopfzeile"
-
-#~ msgid "header"
-#~ msgstr "Kopfzeile"
-
-#~ msgid "Footer"
-#~ msgstr "Fußzeile"
-
-#~ msgid "footer"
-#~ msgstr "Fußzeile"
-
-#~ msgid "paragraph"
-#~ msgstr "Paragraph"
-
-#~ msgid "AutoComplete"
-#~ msgstr "Autovervollständigung"
-
-#~ msgid "autocomplete"
-#~ msgstr "Autovervollständigung"
-
-#~ msgid "EditBar"
-#~ msgstr "Bearbeitungsleiste"
-
-#~ msgid "edit bar"
-#~ msgstr "Bearbeitungsleiste"
-
-#~ msgid "EmbeddedComponent"
-#~ msgstr "EingebetteteKomponente"
-
-#~ msgid "embedded component"
-#~ msgstr "eingebettete Komponente"
-
-#~ msgid "doc"
-#~ msgstr "doc"
-
-#~ msgid "Document"
-#~ msgstr "Dokument"
-
-#~ msgid "document"
-#~ msgstr "Dokument"
-
-#~ msgid "calv"
-#~ msgstr "calv"
-
-#~ msgid "CalendarView"
-#~ msgstr "Kalenderansicht"
-
-#~ msgid "calendar view"
-#~ msgstr "Kalenderansicht"
-
-#~ msgid "cale"
-#~ msgstr "cale"
-
-#~ msgid "CalendarEvent"
-#~ msgstr "Kalendereintrag"
-
-#~ msgid "calendar event"
-#~ msgstr "Kalendereintrag"
-
-#~ msgid ""
-#~ "Present on-screen information as speech or braille, or magnify the screen"
-#~ msgstr ""
-#~ "Bildschirminhalte als Sprache oder in Braille wiedergeben, oder "
-#~ "Bildschirmausschnitte vergrößern."
-
-#~ msgid "GNOME Speech Services"
-#~ msgstr "GNOME-Sprachausgaben"
-
-#~ msgid "Magnifier enabled."
-#~ msgstr "Lupe eingeschaltet."
-
-#~ msgid "Magnifier disabled."
-#~ msgstr "Lupe ausgeschaltet."
-
-#~ msgid "Color enhancements disabled."
-#~ msgstr "Farben-Erweiterungen deaktiviert."
-
-#~ msgid "Color enhancements enabled."
-#~ msgstr "Farben-Erweiterungen aktiviert."
-
-#~ msgid "Mouse enhancements disabled."
-#~ msgstr "Maus-Erweiterungen aktiviert."
-
-#~ msgid "Mouse enhancements enabled."
-#~ msgstr "Maus-Erweiterungen aktiviert."
-
-#~ msgid "Full Screen mode unavailable"
-#~ msgstr "Vollbildmodus steht nicht zur Verfügung."
-
-#~ msgid "Top Half"
-#~ msgstr "Obere Hälfte"
-
-#~ msgid "Left Half"
-#~ msgstr "Linke Hälfte"
-
-#~ msgid "Right Half"
-#~ msgstr "Rechte Hälfte"
-
-#~ msgid "Custom"
-#~ msgstr "Benutzerdefiniert"
-
-#~ msgid "<b>Brightness</b>"
-#~ msgstr "<b>Helligkeit</b>"
-
-#~ msgid "<b>Multi-monitor Settings</b>"
-#~ msgstr "<b>Einstellungen für mehrere Monitore</b>"
-
-#~ msgid "Advanced Settings"
-#~ msgstr "Erweitetrte Einstellungen"
-
-#~ msgid "B_lue:"
-#~ msgstr "B_lau:"
-
-#~ msgid "Bilinear"
-#~ msgstr "Bilinear"
-
-#~ msgid "Desaturate red"
-#~ msgstr "Rot entsättigen"
-
-#~ msgid "Gree_n:"
-#~ msgstr "Grü_n:"
-
-#~ msgid "Negative hue shift"
-#~ msgstr "Auf Negativfarben umschalten"
-
-#~ msgid "None"
-#~ msgstr "Keine"
-
-#~ msgid "Positive hue shift"
-#~ msgstr "Auf Positivfarben umschalten"
-
-#~ msgid "R_ed:"
-#~ msgstr "R_ot:"
-
-#~ msgid "S_ource display:"
-#~ msgstr "_Quellanzeige:"
-
-#~ msgid "Target displa_y:"
-#~ msgstr "_Zielanzeige:"
-
-#~ msgid "_Blue:"
-#~ msgstr "_Blau:"
-
-#~ msgid "_Color Filtering:"
-#~ msgstr "_Farbfilterung:"
-
-#~ msgid "_Green:"
-#~ msgstr "_Grün:"
-
-#~ msgid "_Red:"
-#~ msgstr "_Rot:"
-
-#~ msgid "_Smoothing:"
-#~ msgstr "_Glättung:"
-
-#~ msgid "Automatically start orca when you log in?  Enter y or n: "
-#~ msgstr ""
-#~ "Soll Orca beim Anmelden automatisch gestartet werden? Geben Sie »j« oder "
-#~ "»n« ein:"
-
-#~ msgid "Centered"
-#~ msgstr "Zentriert"
-
-#~ msgid "Proportional"
-#~ msgstr "Proportional"
-
-#~ msgid "Push"
-#~ msgstr "Drücken"
-
-#~ msgid "Warning"
-#~ msgstr "Warnung"
-
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgid "<b>Tracking and Alignment</b>"
-#~ msgstr "<b>Verfolgung und Ausrichtung</b>"
-
-#~ msgid "Border color:"
-#~ msgstr "Rahmenfarbe:"
-
-#~ msgid "Border size:"
-#~ msgstr "Rahmengröße:"
-
-#~ msgid "Brightness:"
-#~ msgstr "Helligkeit:"
-
-#~ msgid "Contrast:"
-#~ msgstr "Kontrast:"
-
-#~ msgid "Cross-hair color:"
-#~ msgstr "Fadenkreuz-Farbe:"
-
-#~ msgid "Cross-hair si_ze:"
-#~ msgstr "Fadenkreuz-_Größe:"
-
-#~ msgid "Cursor color:"
-#~ msgstr "Cursor-Farbe:"
-
-#~ msgid "Cursor size:"
-#~ msgstr "Cursor-Größe:"
-
-#~ msgid "Custom siz_e"
-#~ msgstr "Eigene _Größe"
-
-#~ msgid "Disable gksu _keyboard grab"
-#~ msgstr "_Tastaturzugriff durch gksu verhindern"
-
-#~ msgid "Edge mar_gin:"
-#~ msgstr "Rand_bereich:"
-
-#~ msgid "Enable _magnifier"
-#~ msgstr "_Lupe aktivieren"
-
-#~ msgid "Enable bor_der"
-#~ msgstr "_Rand aktivieren"
-
-#~ msgid "Enable c_ursor"
-#~ msgstr "_Cursor aktivieren"
-
-#~ msgid "Enable cross-h_air"
-#~ msgstr "_Fadenkreuz aktivieren"
-
-#~ msgid "Enable cross-hair cl_ip"
-#~ msgstr "Fadenkreuz-_Clip aktivieren"
-
-#~ msgid "Hide s_ystem pointer"
-#~ msgstr "S_ystemzeiger verbergen"
-
-#~ msgid "In_vert colors"
-#~ msgstr "Farben _invertieren"
-
-#~ msgctxt "Magnification"
-#~ msgid "<b>Color</b>"
-#~ msgstr "<b>Farbe</b>"
-
-#~ msgctxt "Magnification"
-#~ msgid "<b>Cross-hair</b>"
-#~ msgstr "<b>Fadenkreuz</b>"
-
-#~ msgctxt "Magnification"
-#~ msgid "<b>Cursor</b>"
-#~ msgstr "<b>Cursor</b>"
-
-#~ msgctxt "Magnification"
-#~ msgid "<b>Zoomer</b>"
-#~ msgstr "<b>Zoomer</b>"
-
-#~ msgctxt "Magnification"
-#~ msgid "Advanced..."
-#~ msgstr "Erweitert …"
-
-#~ msgid "Magnifier"
-#~ msgstr "Lupe"
-
-#~ msgid "Mouse poi_nter:"
-#~ msgstr "Mauszei_ger:"
-
-#~ msgid "Pointer follows focus"
-#~ msgstr "Mauszeiger folgt Fokus"
-
-#~ msgid "Pointer follows zoomer"
-#~ msgstr "Mauszeiger folgt Zoomer"
-
-#~ msgid "Scale _factor:"
-#~ msgstr "M_aßstab:"
-
-#~ msgid "Start Orca when you lo_gin"
-#~ msgstr "Bei der Anmeldun_g Orca starten"
-
-#~ msgid "Te_xt cursor:"
-#~ msgstr "Te_xtcursor:"
-
-#~ msgid "_Bottom:"
-#~ msgstr "_Unten:"
-
-#~ msgid "_Control and menu item:"
-#~ msgstr "_Steuerung und Menüpunkt:"
-
-#~ msgid "_Left:"
-#~ msgstr "_Links:"
-
-#~ msgid "_Position:"
-#~ msgstr "_Position:"
-
-#~ msgid "_Right:"
-#~ msgstr "_Rechts:"
-
-#~ msgid "_Top:"
-#~ msgstr "_Oben:"
-
-#~ msgid "pixels"
-#~ msgstr "Pixel"
-
-#~ msgid "Toggles color enhancements."
-#~ msgstr "Farben-Erweiterungen ein-/ausschalten."
-
-#~ msgid "Toggles mouse enhancements."
-#~ msgstr "Maus-Erweiterungen ein-/ausschalten."
-
-#~ msgid "Increases the magnification level."
-#~ msgstr "Vergrößerungsstufe erhöhen."
-
-#~ msgid "Decreases the magnification level."
-#~ msgstr "Vergrößerungsstufe verringern."
-
-#~ msgid "Toggles the magnifier."
-#~ msgstr "Lupe ein-/ausschalten."
-
-#~ msgid "Cycles to the next magnifier position."
-#~ msgstr "Zur nächsten Lupenposition wechseln."
-
-#~ msgid "Open TTS"
-#~ msgstr "Open TTS"
-
-#~ msgid ""
-#~ "WARNING: suspending Orca, e.g. by pressing Control-Z, from\n"
-#~ "an AT-SPI enabled shell (such as gnome-terminal), can also\n"
-#~ "suspend the desktop until Orca is killed."
-#~ msgstr ""
-#~ "WARNUNG: Das Unterbrechen von Orca, etwa durch Strg-Z aus\n"
-#~ "einer Befehlseingabe mit AT-SPI-Unterstützung (z.B. gnome-Terminal)\n"
-#~ "kann auch den Desktop unterbrechen, bis der Orca-Prozess beendet ist."
-
-#~ msgid "[\\S\\s]*StarOffice[\\s\\S]*"
-#~ msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
-
-#~ msgid "soffice.bin"
-#~ msgstr "soffice.bin"
-
-#~ msgid "[Ee]volution"
-#~ msgstr "[Ee]volution"
-
-#~ msgid "Deer Park"
-#~ msgstr "Deer Park"
-
-#~ msgid "Bon Echo"
-#~ msgstr "Bon Echo"
-
-#~ msgid "Minefield"
-#~ msgstr "Minefield"
-
-#~ msgid "Mail/News"
-#~ msgstr "Mail/Nachrichten"
-
-#~ msgid "bug-buddy"
-#~ msgstr "Bug-Buddy"
-
-#~ msgid "vte"
-#~ msgstr "vte"
-
-#~ msgid "gaim"
-#~ msgstr "gaim"
-
-#~ msgid "All"
-#~ msgstr "Alle"
-
-#~ msgid ""
-#~ "Enable notification message list mode. Press Escape to exit or h for help"
-#~ msgstr ""
-#~ "Startet den Modus der Nachrichtenauflistung. Drücken Sie zum Verlassen "
-#~ "die Escape-Taste oder h für Hilfe"
-
-#~ msgid "%d row"
-#~ msgid_plural "%d rows"
-#~ msgstr[0] "%d Zeile"
-#~ msgstr[1] "%d Zeilen"
-
-#~ msgid "Cell spans %(rows)s and %(columns)s"
-#~ msgstr "Zelle erstreckt sich über %(rows)s Zeilen und %(columns)s Spalten."
-
-#~ msgid "table with %(rows)d rows and %(columns)d columns."
-#~ msgstr "Tabelle mit %(rows)d Zeilen und %(columns)d Spalten."
-
-#~ msgid "Speak current _cell"
-#~ msgstr "Aktuelle _Zelle vorlesen"
-
-#~ msgid "Orca Modifier Keys"
-#~ msgstr "Orca-Modustasten"
-
-#~ msgid "Goes to last live region."
-#~ msgstr "Zum letzten dynamischen Bereich bewegen."
-
-#~ msgid "Invalid choice. Selecting desktop keyboard layout.\n"
-#~ msgstr "Ungültige Auswahl. Auswahl des Desktop-Tastaturlayouts.\n"
-
-#~ msgid "Restrict progress bar updates to:"
-#~ msgstr "Aktualisierungen von Fortschrittsanzeigen beschränken auf:"
-
-#~ msgid "<b>Contracted Braille</b>"
-#~ msgstr "<b>Blindenkurzschrift</b>"
-
-#~ msgid "Key Binding List"
-#~ msgstr "Liste der Tastenkombinationen"
-
-#~ msgid "Speak current ro_w"
-#~ msgstr "Aktuelle _Zeile vorlesen"
-
-#~ msgid "every"
-#~ msgstr "alle"
-
-#~ msgid "seconds"
-#~ msgstr "Sekunden"
-
-#~ msgid "Please"
-#~ msgstr "Bitte"
-
-#~ msgid "Welcome"
-#~ msgstr "Willkommen"
-
-#~ msgid "Congratulations"
-#~ msgstr "Herzlichen Glückwunsch"
-
-#~ msgid "Assistant"
-#~ msgstr "Assistent"
-
-#~ msgid ""
-#~ "Centered\n"
-#~ "Proportional\n"
-#~ "Push\n"
-#~ "None"
-#~ msgstr ""
-#~ "Zentriert\n"
-#~ "Proportional\n"
-#~ "Drücken\n"
-#~ "Keiner"
-
-#~ msgid ""
-#~ "Centered\n"
-#~ "Push\n"
-#~ "None"
-#~ msgstr ""
-#~ "Zentriert\n"
-#~ "Drücken\n"
-#~ "Keiner"
-
-#~ msgid ""
-#~ "Default\n"
-#~ "Uppercase\n"
-#~ "Hyperlink"
-#~ msgstr ""
-#~ "Vorgabe\n"
-#~ "Großbuchstaben\n"
-#~ "Link"
-
-#~ msgid ""
-#~ "Full Screen\n"
-#~ "Top Half\n"
-#~ "Bottom Half\n"
-#~ "Left Half\n"
-#~ "Right Half\n"
-#~ "Custom"
-#~ msgstr ""
-#~ "Vollbild\n"
-#~ "Obere Hälfte\n"
-#~ "Untere Hälfte\n"
-#~ "Linke Hälfte\n"
-#~ "Rechte Hälfte\n"
-#~ "Benutzerdefiniert"
-
-#~ msgid ""
-#~ "Line\n"
-#~ "Sentence"
-#~ msgstr ""
-#~ "Zeile\n"
-#~ "Satz"
-
-#~ msgid ""
-#~ "None\n"
-#~ "Bilinear"
-#~ msgstr ""
-#~ "Keiner\n"
-#~ "Bilinear"
-
-#~ msgid ""
-#~ "None\n"
-#~ "Saturate red\n"
-#~ "Saturate green\n"
-#~ "Saturate blue\n"
-#~ "Desaturate red\n"
-#~ "Desaturate green\n"
-#~ "Desaturate blue\n"
-#~ "Positive hue shift\n"
-#~ "Negative hue shift"
-#~ msgstr ""
-#~ "keine\n"
-#~ "Rot sättigen\n"
-#~ "Grün sättigen\n"
-#~ "Blau sättigen\n"
-#~ "Rot entsättigen\n"
-#~ "Grün entsättigen\n"
-#~ "Blau entsättigen\n"
-#~ "Auf Positivfarben umschalten\n"
-#~ "Auf Negativfarben umschalten"
-
-#~ msgid "Shredder"
-#~ msgstr "Shredder"
