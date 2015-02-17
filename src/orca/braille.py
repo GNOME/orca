@@ -1719,11 +1719,20 @@ def init(callback=None, tty=7):
                 "Braille module has been initialized using WINDOWPATH=" \
                 + "%s" % windowPath)
         except:
-            _brlAPI.enterTtyMode(tty)
-            _brlAPIRunning = True
-            debug.println(\
-                debug.LEVEL_CONFIGURATION,
-                "Braille module has been initialized using tty=%d" % tty)
+            try:
+                vtnr = os.environ["XDG_VTNR"]
+                _brlAPI.enterTtyModeWithPath()
+                _brlAPIRunning = True
+                debug.println(
+                    debug.LEVEL_CONFIGURATION,
+                    "Braille module has been initialized using XDG_VTNR=" \
+                    + "%s" % vtnr)
+            except:
+                _brlAPI.enterTtyMode(tty)
+                _brlAPIRunning = True
+                debug.println(
+                    debug.LEVEL_CONFIGURATION,
+                    "Braille module has been initialized using tty=%d" % tty)
         _brlAPISourceId = GLib.io_add_watch(_brlAPI.fileDescriptor,
                                             GLib.PRIORITY_DEFAULT,
                                             GLib.IO_IN,
