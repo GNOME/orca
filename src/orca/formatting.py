@@ -185,7 +185,9 @@ formatting = {
             'unfocused': 'labelAndName + unrelatedLabels'
             },
         pyatspi.ROLE_LABEL: {
-            'basicWhereAmI': 'labelOrName + allTextSelection + roleName'
+            'focused': 'labelAndName + allTextSelection + roleName',
+            'unfocused': 'labelAndName + allTextSelection + roleName',
+            'basicWhereAmI': 'labelAndName + allTextSelection + roleName'
             },
         pyatspi.ROLE_LAYERED_PANE: {
             'focused': 'labelAndName + allTextSelection + roleName + availability + noShowingChildren',
