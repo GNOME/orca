@@ -252,9 +252,9 @@ sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "15. KP_7 to flat review toolbar",
     ["KNOWN ISSUE: gtk3-demo's toolbar widgets lack names that were present in the past",
-     "BRAILLE LINE:  'push button panel push button $l'",
-     "     VISIBLE:  'push button panel push button $l', cursor=1",
-     "SPEECH OUTPUT: 'push button panel push button'"]))
+     "BRAILLE LINE:  'push button push button panel push button $l'",
+     "     VISIBLE:  'push button push button panel pu', cursor=1",
+     "SPEECH OUTPUT: 'push button push button panel push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
@@ -286,8 +286,7 @@ sequence.append(KeyComboAction("KP_5"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "19. Insert+KP_5 to flat review 'Help' accessible",
-    ["SPEECH OUTPUT: 'Help'",
-     "SPEECH OUTPUT: 'menu'"]))
+    ["SPEECH OUTPUT: 'Help menu'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -295,8 +294,8 @@ sequence.append(KeyComboAction("KP_9"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "20. Insert+KP_9 to flat review end",
-    ["BRAILLE LINE:  'Cursor at row 1 column 0 - 60 chars in document $l'",
-     "     VISIBLE:  'Cursor at row 1 column 0 - 60 ch', cursor=1",
+    ["BRAILLE LINE:  ' Cursor at row 1 column 0 - 60 chars in document $l'",
+     "     VISIBLE:  ' Cursor at row 1 column 0 - 60 c', cursor=2",
      "SPEECH OUTPUT: 'Cursor at row 1 column 0 - 60 chars in document'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -315,8 +314,8 @@ sequence.append(KeyComboAction("KP_6"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "22. Insert+KP_6 to flat review below",
-    ["BRAILLE LINE:  'push button panel push button $l'",
-     "     VISIBLE:  'push button panel push button $l', cursor=1",
+    ["BRAILLE LINE:  'push button push button panel push button $l'",
+     "     VISIBLE:  'push button push button panel pu', cursor=1",
      "SPEECH OUTPUT: 'push button'"]))
 
 sequence.append(utils.StartRecordingAction())

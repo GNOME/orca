@@ -75,8 +75,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk3-demo application GtkListStore demo frame table Severity column header < > Fixed? 60482 Normal scrollable notebooks and hidden tabs  '",
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
      "SPEECH OUTPUT: 'table Severity table cell Normal column 3 of 6 row 1 of 14'",
-     "SPEECH OUTPUT: 'table Severity table cell Normal column 3 of 6 row 1 of 14 Fixed? check box not checked 60482 Normal'",
-     "SPEECH OUTPUT: 'scrollable notebooks and hidden tabs'"]))
+     "SPEECH OUTPUT: 'table Severity table cell Normal column 3 of 6 row 1 of 14 Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))

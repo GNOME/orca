@@ -28,8 +28,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Dialog Where Am I",
     ["BRAILLE LINE:  'gtk3-demo application GtkExpander dialog & y Details collapsed toggle button'",
      "     VISIBLE:  '& y Details collapsed toggle but', cursor=1",
-     "SPEECH OUTPUT: 'Details'",
-     "SPEECH OUTPUT: 'toggle button collapsed'"]))
+     "SPEECH OUTPUT: 'Details toggle button collapsed'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

@@ -44,9 +44,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Open triangle toggle button Where Am I",
     ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame & y Menu toggle button'",
      "     VISIBLE:  '& y Menu toggle button', cursor=1",
-     "SPEECH OUTPUT: 'tool bar'",
-     "SPEECH OUTPUT: 'Menu'",
-     "SPEECH OUTPUT: 'toggle button not pressed'"]))
+     "SPEECH OUTPUT: 'tool bar Menu toggle button not pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))

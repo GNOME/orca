@@ -28,10 +28,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies: 1 $l'",
      "     VISIBLE:  'Copies: 1 $l', cursor=10",
-     "SPEECH OUTPUT: 'Copies:'",
-     "SPEECH OUTPUT: 'spin button'",
-     "SPEECH OUTPUT: '1'",
-     "SPEECH OUTPUT: 'selected.'",
+     "SPEECH OUTPUT: 'Copies: spin button 1 selected.'",
      "SPEECH OUTPUT: 'Alt+S'"]))
 
 sequence.append(TypeAction("15"))

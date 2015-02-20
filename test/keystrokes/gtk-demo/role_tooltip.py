@@ -28,14 +28,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>F1"))
 sequence.append(utils.AssertPresentationAction(
     "2. Hide tooltip",
-    ["KNOWN ISSUE: Too much context",
-     "BRAILLE LINE:  'gtk-demo application Print dialog General page tab &=y Pages: radio button'",
+    ["BRAILLE LINE:  'gtk-demo application Print dialog General page tab &=y Pages: radio button'",
      "     VISIBLE:  '&=y Pages: radio button', cursor=1",
-     "SPEECH OUTPUT: 'Print Range Copies'",
-     "SPEECH OUTPUT: 'General'",
-     "SPEECH OUTPUT: 'page tab'",
-     "SPEECH OUTPUT: 'Pages:'",
-     "SPEECH OUTPUT: 'selected radio button'"]))
+     "SPEECH OUTPUT: 'Print'",
+     "SPEECH OUTPUT: 'General page tab'",
+     "SPEECH OUTPUT: 'Pages: selected radio button'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

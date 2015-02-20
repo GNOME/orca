@@ -29,12 +29,9 @@ sequence.append(utils.AssertPresentationAction(
     "2. Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Application Window frame Color menu'",
      "     VISIBLE:  'Color menu', cursor=1",
-     "SPEECH OUTPUT: 'Application Window'",
-     "SPEECH OUTPUT: 'frame'",
-     "SPEECH OUTPUT: 'Preferences'",
-     "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: 'Color'",
-     "SPEECH OUTPUT: 'menu 1 of 3.'",
+     "SPEECH OUTPUT: 'Application Window frame'",
+     "SPEECH OUTPUT: 'Preferences menu'",
+     "SPEECH OUTPUT: 'Color menu 1 of 3.'",
      "SPEECH OUTPUT: 'C'"]))
 
 sequence.append(KeyComboAction("Escape"))

@@ -28,8 +28,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Where Am I",
     ["BRAILLE LINE:  'gtk3-demo application Panes frame Horizontal panel < > Resize check box'",
      "     VISIBLE:  '< > Resize check box', cursor=1",
-     "SPEECH OUTPUT: 'Horizontal Resize'",
-     "SPEECH OUTPUT: 'check box not checked.'",
+     "SPEECH OUTPUT: 'Horizontal Resize check box not checked.'",
      "SPEECH OUTPUT: 'Alt+R'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -46,8 +45,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Where Am I",
     ["BRAILLE LINE:  'gtk3-demo application Panes frame Horizontal panel <x> Resize check box'",
      "     VISIBLE:  '<x> Resize check box', cursor=1",
-     "SPEECH OUTPUT: 'Horizontal Resize'",
-     "SPEECH OUTPUT: 'check box checked.'",
+     "SPEECH OUTPUT: 'Horizontal Resize check box checked.'",
      "SPEECH OUTPUT: 'Alt+R'"]))
 
 sequence.append(utils.StartRecordingAction())

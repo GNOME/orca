@@ -46,12 +46,9 @@ sequence.append(utils.AssertPresentationAction(
     "4. Where Am I",
     ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame Color menu'",
      "     VISIBLE:  'Color menu', cursor=1",
-     "SPEECH OUTPUT: 'Application Class'",
-     "SPEECH OUTPUT: 'frame'",
-     "SPEECH OUTPUT: 'Preferences'",
-     "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: 'Color'",
-     "SPEECH OUTPUT: 'menu 3 of 5.'",
+     "SPEECH OUTPUT: 'Application Class frame'",
+     "SPEECH OUTPUT: 'Preferences menu'",
+     "SPEECH OUTPUT: 'Color menu 3 of 5.'",
      "SPEECH OUTPUT: 'C'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -68,14 +65,10 @@ sequence.append(utils.AssertPresentationAction(
     "6. Where Am I",
     ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame Preferences menu &=y Red radio menu item(Ctrl+R)'",
      "     VISIBLE:  '&=y Red radio menu item(Ctrl+R)', cursor=1",
-     "SPEECH OUTPUT: 'Application Class'",
-     "SPEECH OUTPUT: 'frame'",
-     "SPEECH OUTPUT: 'Preferences'",
-     "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: 'Color'",
-     "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: 'Red'",
-     "SPEECH OUTPUT: 'radio menu item selected Ctrl+R 1 of 3.'",
+     "SPEECH OUTPUT: 'Application Class frame'",
+     "SPEECH OUTPUT: 'Preferences menu'",
+     "SPEECH OUTPUT: 'Color menu'",
+     "SPEECH OUTPUT: 'Red radio menu item selected Ctrl+R 1 of 3.'",
      "SPEECH OUTPUT: 'R'"]))
 
 sequence.append(utils.StartRecordingAction())

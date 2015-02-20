@@ -25,9 +25,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Page Setup page tab Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Print dialog Page Setup page tab'",
      "     VISIBLE:  'Page Setup page tab', cursor=1",
-     "SPEECH OUTPUT: 'page tab list'",
-     "SPEECH OUTPUT: 'Page Setup'",
-     "SPEECH OUTPUT: 'page tab 2 of [0-9]'"]))
+     "SPEECH OUTPUT: 'page tab list Page Setup page tab 2 of [0-9]'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

@@ -17,8 +17,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Toggle button Where Am I",
     ["BRAILLE LINE:  'gtk-demo application GtkExpander dialog & y Details collapsed toggle button'",
      "     VISIBLE:  '& y Details collapsed toggle but', cursor=1",
-     "SPEECH OUTPUT: 'Details'",
-     "SPEECH OUTPUT: 'toggle button collapsed'"]))
+     "SPEECH OUTPUT: 'Details toggle button collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
@@ -34,8 +33,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Toggle button pressed Where Am I",
     ["BRAILLE LINE:  'gtk-demo application GtkExpander dialog &=y Details expanded toggle button'",
      "     VISIBLE:  '&=y Details expanded toggle butt', cursor=1",
-     "SPEECH OUTPUT: 'Details'",
-     "SPEECH OUTPUT: 'toggle button expanded'"]))
+     "SPEECH OUTPUT: 'Details toggle button expanded'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))

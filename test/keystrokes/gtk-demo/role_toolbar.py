@@ -17,9 +17,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Application Window frame Open push button'",
      "     VISIBLE:  'Open push button', cursor=1",
-     "SPEECH OUTPUT: 'tool bar'",
-     "SPEECH OUTPUT: 'Open'",
-     "SPEECH OUTPUT: 'push button'"]))
+     "SPEECH OUTPUT: 'tool bar Open push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -48,12 +46,10 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
-    "6. Where Am I",
+    "5. Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Application Window frame Quit push button'",
      "     VISIBLE:  'Quit push button', cursor=1",
-     "SPEECH OUTPUT: 'tool bar'",
-     "SPEECH OUTPUT: 'Quit'",
-     "SPEECH OUTPUT: 'push button'"]))
+     "SPEECH OUTPUT: 'tool bar Quit push button'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

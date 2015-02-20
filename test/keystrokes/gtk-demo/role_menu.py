@@ -37,14 +37,10 @@ sequence.append(utils.AssertPresentationAction(
     "3. Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Application Window frame Preferences menu <x> Red check menu item(Ctrl+R)'",
      "     VISIBLE:  '<x> Red check menu item(Ctrl+R)', cursor=1",
-     "SPEECH OUTPUT: 'Application Window'",
-     "SPEECH OUTPUT: 'frame'",
-     "SPEECH OUTPUT: 'Preferences'",
-     "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: 'Color'",
-     "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: 'Red'",
-     "SPEECH OUTPUT: 'check menu item checked Ctrl+R 1 of 3.'",
+     "SPEECH OUTPUT: 'Application Window frame'",
+     "SPEECH OUTPUT: 'Preferences menu'",
+     "SPEECH OUTPUT: 'Color menu'",
+     "SPEECH OUTPUT: 'Red check menu item checked Ctrl+R 1 of 3.'",
      "SPEECH OUTPUT: 'R'"]))
 
 sequence.append(utils.StartRecordingAction())

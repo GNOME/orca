@@ -27,8 +27,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. All Pages radio button Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Print dialog General page tab &=y All Pages radio button'",
      "     VISIBLE:  '&=y All Pages radio button', cursor=1",
-     "SPEECH OUTPUT: 'All Pages'",
-     "SPEECH OUTPUT: 'radio button selected 1 of 3.'",
+     "SPEECH OUTPUT: 'All Pages radio button selected 1 of 3.'",
      "SPEECH OUTPUT: 'Alt+A'"]))
 
 sequence.append(KeyComboAction("Down"))
@@ -46,8 +45,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Range radio button Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Print dialog General page tab &=y Pages: radio button'",
      "     VISIBLE:  '&=y Pages: radio button', cursor=1",
-     "SPEECH OUTPUT: 'Pages:'",
-     "SPEECH OUTPUT: 'radio button selected 3 of 3.'",
+     "SPEECH OUTPUT: 'Pages: radio button selected 3 of 3.'",
      "SPEECH OUTPUT: 'Alt+E'",
      "SPEECH OUTPUT: 'Specify one or more page ranges,",
      " e.g. 1-3,7,11'"]))

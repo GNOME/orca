@@ -30,8 +30,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo application GtkIconView demo frame bin icon'",
      "     VISIBLE:  'bin icon', cursor=1",
      "SPEECH OUTPUT: 'Icon panel'",
-     "SPEECH OUTPUT: 'bin'",
-     "SPEECH OUTPUT: '1 of 20 items selected on 1 of 20'"]))
+     "SPEECH OUTPUT: 'bin 1 of 20 items selected on 1 of 20'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -56,8 +55,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo application GtkIconView demo frame bin icon'",
      "     VISIBLE:  'bin icon', cursor=1",
      "SPEECH OUTPUT: 'Icon panel'",
-     "SPEECH OUTPUT: 'bin'",
-     "SPEECH OUTPUT: '2 of 20 items selected on 1 of 20'"]))
+     "SPEECH OUTPUT: 'bin 2 of 20 items selected on 1 of 20'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

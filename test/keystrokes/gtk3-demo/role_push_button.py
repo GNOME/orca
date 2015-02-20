@@ -31,8 +31,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. OK push button Where Am I",
     ["BRAILLE LINE:  'gtk3-demo application Button Boxes frame Horizontal Button Boxes panel Spread panel OK push button'",
      "     VISIBLE:  'OK push button', cursor=1",
-     "SPEECH OUTPUT: 'OK'",
-     "SPEECH OUTPUT: 'push button"]))
+     "SPEECH OUTPUT: 'OK push button"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

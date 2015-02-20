@@ -35,8 +35,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'number of times:'",
      "     VISIBLE:  'number of times:', cursor=17",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
-     "number of times:'",
-     "SPEECH OUTPUT: 'selected label'"]))
+     "number of times: selected label'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -48,8 +47,9 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'number of times:'",
      "     VISIBLE:  'number of times:', cursor=17",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
-     "number of times:'",
-     "SPEECH OUTPUT: 'selected label'"]))
+     "number of times: selected label'",
+     "SPEECH OUTPUT: 'This message box has been popped up the following",
+     "number of times: selected label'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Home"))
@@ -88,8 +88,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk3-demo application Information alert This message box has been popped up the following'",
      "     VISIBLE:  'This message box has been popped', cursor=5",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
-     "number of times:'",
-     "SPEECH OUTPUT: 'selected label'"]))
+     "number of times: selected label'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -101,8 +100,9 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk3-demo application Information alert This message box has been popped up the following'",
      "     VISIBLE:  'This message box has been popped', cursor=5",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
-     "number of times:'",
-     "SPEECH OUTPUT: 'selected label'"]))
+     "number of times: selected label'",
+     "SPEECH OUTPUT: 'This message box has been popped up the following",
+     "number of times: selected label'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
