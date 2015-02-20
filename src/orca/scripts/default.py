@@ -2063,12 +2063,6 @@ class Script(script.Script):
 
         self.doWhereAmI(inputEvent, False)
 
-    def printAppsHandler(self, inputEvent=None):
-        """Prints a list of all applications to stdout."""
-
-        self.utilities.printApps()
-        return True
-
     def cycleDebugLevel(self, inputEvent=None):
         levels = [debug.LEVEL_ALL, "all",
                   debug.LEVEL_FINEST, "finest",
