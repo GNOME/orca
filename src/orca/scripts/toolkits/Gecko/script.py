@@ -238,8 +238,10 @@ class Script(default.Script):
 
         self._sayAllContents = []
 
-        # See bug 665522 - comment 5
-        app.setCacheMask(pyatspi.cache.DEFAULT ^ pyatspi.cache.CHILDREN)
+        # See bug 665522 - comment 5 regarding children. We're also seeing
+        # stale names in both Gecko and other toolkits.
+        app.setCacheMask(
+            pyatspi.cache.DEFAULT ^ pyatspi.cache.CHILDREN ^ pyatspi.cache.NAME)
 
     def deactivate(self):
         """Called when this script is deactivated."""

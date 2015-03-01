@@ -142,6 +142,9 @@ class Script(script.Script):
         self._sayAllIsInterrupted = False
         self._sayAllContexts = []
 
+        if app:
+            app.setCacheMask(pyatspi.cache.DEFAULT ^ pyatspi.cache.NAME)
+
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings."""
