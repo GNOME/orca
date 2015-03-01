@@ -17,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2015-02-24 11:39+0000\n"
-"PO-Revision-Date: 2015-02-24 09:18+0100\n"
+"PO-Revision-Date: 2015-03-01 08:31+0100\n"
 "Last-Translator: Julien Hardelin <jhardlin@orange.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -5313,7 +5313,7 @@ msgstr "Correction orthographique"
 #. setting would cause Orca to speak "f o o" after speaking "foo".
 #: ../src/orca/guilabels.py:701
 msgid "Spell _error"
-msgstr "_Faute d'orthographe"
+msgstr "Épeler l'_erreur"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will spell out the current suggestion in
@@ -5322,7 +5322,7 @@ msgstr "_Faute d'orthographe"
 #. "f o r" after speaking "for".
 #: ../src/orca/guilabels.py:708
 msgid "Spell _suggestion"
-msgstr "_Suggestion orthographique"
+msgstr "Épeler la _suggestion"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will present the context (surrounding text,
