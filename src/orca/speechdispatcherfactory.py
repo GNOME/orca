@@ -37,6 +37,7 @@ __license__   = "LGPL"
 
 from gi.repository import GLib
 import re
+import time
 
 from . import chnames
 from . import debug
@@ -159,6 +160,8 @@ class SpeechServer(speechserver.SpeechServer):
             debug.printException(debug.LEVEL_WARNING)
         else:
             SpeechServer._active_servers[serverId] = self
+
+        self._lastKeyEchoTime = None
 
     def _init(self):
         self._client = client = speechd.SSIPClient('Orca', component=self._id)
@@ -401,6 +404,13 @@ class SpeechServer(speechserver.SpeechServer):
         #if interrupt:
         #    self._cancel()
 
+        # "We will not interrupt a key echo in progress." (Said the comment in
+        # speech.py where these next two lines used to live. But the code here
+        # suggests we haven't been doing anything with the lastKeyEchoTime in
+        # years. TODO - JD: Dig into this and if it's truly useless, kill it.)
+        if self._lastKeyEchoTime:
+            interrupt = interrupt and (time.time() - self._lastKeyEchoTime) > 0.5
+
         if text:
             self._speak(text, acss)
 
@@ -444,6 +454,7 @@ class SpeechServer(speechserver.SpeechServer):
         lockingStateString = event.getLockingStateString()
         event_string = "%s %s" % (event_string, lockingStateString)
         self.speak(event_string, acss=acss)
+        self._lastKeyEchoTime = time.time()
 
     def increaseSpeechRate(self, step=5):
         self._change_default_speech_rate(step)

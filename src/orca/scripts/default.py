@@ -4243,7 +4243,6 @@ class Script(script.Script):
         elif not event.isPressedKey():
             return False
 
-        orca_state.lastKeyEchoTime = time.time()
         debug.println(debug.LEVEL_FINEST,
                       "Script.presentKeyboardEvent: %s" % event.event_string)
 

@@ -180,12 +180,6 @@ def speak(content, acss=None, interrupt=True):
         debug.println(debug.LEVEL_WARNING, error % content)
         return
 
-    # We will not interrupt a key echo in progress.
-    #
-    if orca_state.lastKeyEchoTime:
-        interrupt = interrupt \
-            and ((time.time() - orca_state.lastKeyEchoTime) > 0.5)
-
     if isinstance(content, str):
         _speak(content, acss, interrupt)
     elif isinstance(content, sound.Sound):

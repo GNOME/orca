@@ -67,10 +67,6 @@ lastInputEvent = None
 #
 bypassNextCommand = False
 
-# Records the last time a key was echoed.
-#
-lastKeyEchoTime = None
-
 # The last searchQuery
 #
 searchQuery = None
