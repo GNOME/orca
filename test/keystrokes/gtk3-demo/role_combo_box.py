@@ -36,7 +36,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. New combo box item",
-    ["BRAILLE LINE:  'gtk3-demo application Combo boxes frame Items with icons panel  combo boxNew New'",
+    ["BRAILLE LINE:  'gtk3-demo application Combo boxes frame Items with icons panel New combo box New'",
      "     VISIBLE:  'New', cursor=1",
      "SPEECH OUTPUT: 'New'"]))
 
@@ -44,12 +44,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "4. New combo box item Where Am I",
-    ["KNOWN ISSUE: The combo box role is missing and spacing is wrong in braille",
-     "BRAILLE LINE:  'gtk3-demo application Combo boxes frame Items with icons panel  combo boxNew New'",
+    ["BRAILLE LINE:  'gtk3-demo application Combo boxes frame Items with icons panel New combo box New'",
      "     VISIBLE:  'New', cursor=1",
      "SPEECH OUTPUT: 'Combo boxes frame'",
      "SPEECH OUTPUT: 'Items with icons panel'",
-     "SPEECH OUTPUT: 'New 3 of 5'"]))
+     "SPEECH OUTPUT: 'combo box New 3 of 5'"]))
 
 sequence.append(KeyComboAction("Tab"))
 
@@ -115,31 +114,29 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "11. Combo box with multiple levels",
-    ["KNOWN ISSUE: This is broken",
-     "BRAILLE LINE:  'gtk3-demo application Combo boxes frame Where are we ? panel A - B combo box'",
-     "     VISIBLE:  'A - B combo box', cursor=1",
+    ["BRAILLE LINE:  'gtk3-demo application Combo boxes frame Where are we ? panel Boston combo box'",
+     "     VISIBLE:  'Boston combo box', cursor=1",
      "SPEECH OUTPUT: 'Where are we ? panel'",
-     "SPEECH OUTPUT: 'A - B combo box'"]))
+     "SPEECH OUTPUT: 'Boston combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "12. Down arrow",
-    ["KNOWN ISSUE: This is broken",
-     "BRAILLE LINE:  'gtk3-demo application Combo boxes frame Where are we ? panel  combo boxC - D C - D menu'",
-     "     VISIBLE:  'C - D menu', cursor=1",
-     "SPEECH OUTPUT: 'C - D menu'"]))
+    ["BRAILLE LINE:  'gtk3-demo application Combo boxes frame Where are we ? panel Carson City combo box Carson City'",
+     "     VISIBLE:  'Carson City', cursor=1",
+     "SPEECH OUTPUT: 'Carson City'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
-    "12. Where Am I",
-    ["KNOWN ISSUE: This is broken",
-     "BRAILLE LINE:  'gtk3-demo application Combo boxes frame Where are we ? panel  combo boxC - D C - D menu'",
-     "     VISIBLE:  'C - D menu', cursor=1",
+    "13. Where Am I",
+    ["BRAILLE LINE:  'gtk3-demo application Combo boxes frame Where are we ? panel Carson City combo box Carson City'",
+     "     VISIBLE:  'Carson City', cursor=1",
      "SPEECH OUTPUT: 'Combo boxes frame'",
      "SPEECH OUTPUT: 'Where are we ? panel'",
-     "SPEECH OUTPUT: 'C - D menu 2 of 5'"]))
+     "SPEECH OUTPUT: 'C - D menu'",
+     "SPEECH OUTPUT: 'combo box Carson City 2 of 10'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

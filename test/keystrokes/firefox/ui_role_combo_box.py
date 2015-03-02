@@ -10,6 +10,8 @@ sequence = MacroSequence()
 sequence.append(KeyComboAction("<Alt>e"))
 sequence.append(KeyComboAction("Up"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Tab"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -17,7 +19,6 @@ sequence.append(utils.AssertPresentationAction(
     "1. Tab to combobox",
     ["BRAILLE LINE:  'Firefox application Firefox Preferences dialog Startup When Firefox starts: Show a blank page combo box'",
      "     VISIBLE:  'When Firefox starts: Show a blan', cursor=22",
-     "SPEECH OUTPUT: 'Startup panel'",
      "SPEECH OUTPUT: 'When Firefox starts: Show a blank page combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -40,14 +41,15 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Alt Down Arrow to expand combobox",
-    ["KNOWN ISSUE: We should present something here.",
-     ""]))
+    ["BRAILLE LINE:  'Firefox application Firefox Preferences dialog Startup When Firefox starts: Show a blank page combo box'",
+     "     VISIBLE:  'When Firefox starts: Show a blan', cursor=22",
+     "SPEECH OUTPUT: 'expanded'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Down Arrow in expanded combobox",
-    ["BRAILLE LINE:  'Firefox application Firefox Preferences dialog Startup  combo boxWhen Firefox starts: Show a blank page Show my windows and tabs from last time'",
+    ["BRAILLE LINE:  'Firefox application Firefox Preferences dialog Startup When Firefox starts: Show a blank page combo box Show my windows and tabs from last time'",
      "     VISIBLE:  'Show my windows and tabs from la', cursor=1",
      "SPEECH OUTPUT: 'Show my windows and tabs from last time'"]))
 
@@ -55,7 +57,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "6. Up Arrow in expanded combobox",
-    ["BRAILLE LINE:  'Firefox application Firefox Preferences dialog Startup  combo boxWhen Firefox starts: Show a blank page Show a blank page'",
+    ["BRAILLE LINE:  'Firefox application Firefox Preferences dialog Startup When Firefox starts: Show a blank page combo box Show a blank page'",
      "     VISIBLE:  'Show a blank page', cursor=1",
      "SPEECH OUTPUT: 'Show a blank page'"]))
 
@@ -90,14 +92,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "10. Basic Where Am I",
-    ["KNOWN ISSUE: Crazy chattines",
-     "BRAILLE LINE:  'Firefox application Firefox Preferences dialog Startup When Firefox starts: Show a blank page combo box'",
+    ["BRAILLE LINE:  'Firefox application Firefox Preferences dialog Startup When Firefox starts: Show a blank page combo box'",
      "     VISIBLE:  'When Firefox starts: Show a blan', cursor=22",
      "SPEECH OUTPUT: 'Firefox Preferences'",
      "SPEECH OUTPUT: 'Startup panel'",
      "SPEECH OUTPUT: 'collapsed'",
-     "SPEECH OUTPUT: 'Show a blank page combo box'",
-     "SPEECH OUTPUT: 'Show a blank page 1 of 2'"]))
+     "SPEECH OUTPUT: 'combo box Show a blank page 2 of 3'"]))
 
 sequence.append(KeyComboAction("Escape"))
 

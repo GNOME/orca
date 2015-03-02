@@ -71,42 +71,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result = []
         acss = self.voice(speech_generator.DEFAULT)
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_COMBO_BOX:
-            # With Gecko, a combo box has a menu as a child.  The text being
-            # displayed for the combo box can be obtained via the selected
-            # menu item.
-            #
-            menu = None
-            for child in obj:
-                if child.getRole() == pyatspi.ROLE_MENU:
-                    menu = child
-                    break
-            if menu:
-                child = None
-                try:
-                    # This should work...
-                    #
-                    child = menu.querySelection().getSelectedChild(0)
-                    if not child:
-                        # It's probably a Gtk combo box.
-                        #
-                        result = speech_generator.SpeechGenerator.\
-                            _generateDisplayedText(self, obj, **args)
-                except:
-                    # But just in case, we'll fall back on this.
-                    # [[[TODO - JD: Will we ever have a case where the first
-                    # fails, but this will succeed???]]]
-                    #
-                    for item in menu:
-                        if item.getState().contains(pyatspi.STATE_SELECTED):
-                            child = item
-                            break
-                if child and child.name:
-                    result.append(child.name)
-                    result.extend(acss)
-
-        else:
-            result.extend(speech_generator.SpeechGenerator._generateName(
+        result.extend(speech_generator.SpeechGenerator._generateName(
                               self, obj, **args))
         if not result and role == pyatspi.ROLE_LIST_ITEM:
             result.append(self._script.utilities.expandEOCs(obj))
@@ -209,17 +174,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and not self._script.utilities.isTextBlockElement(obj) \
            and not self._script.utilities.isLink(obj):
             return []
-
-        # Saying "menu item" for a combo box can confuse users. Therefore,
-        # speak the combo box role instead.  Also, only do it if the menu
-        # item is not focused (if the menu item is focused, it means we're
-        # navigating in the combo box)
-        #
-        if not obj.getState().contains(pyatspi.STATE_FOCUSED):
-            comboBox = self._script.utilities.ancestorWithRole(
-                obj, [pyatspi.ROLE_COMBO_BOX], [pyatspi.ROLE_DOCUMENT_FRAME])
-            if comboBox:
-                return self._generateRoleName(comboBox, **args)
 
         if not force:
             doNotSpeak = [pyatspi.ROLE_FORM,
@@ -420,33 +374,40 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             self, obj, **args)
 
     def _generatePositionInList(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText') \
+           or not (_settingsManager.getSetting('enablePositionSpeaking') \
+                   or args.get('forceList', False)):
+            return []
+
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
+        menuRoles = [pyatspi.ROLE_MENU_ITEM,
+                     pyatspi.ROLE_CHECK_MENU_ITEM,
+                     pyatspi.ROLE_RADIO_MENU_ITEM,
+                     pyatspi.ROLE_MENU,
+                     pyatspi.ROLE_COMBO_BOX]
+        if obj.getRole() in menuRoles:
+            return super()._generatePositionInList(obj, **args)
+
         position = self.getAttribute(obj, "posinset")
         total = self.getAttribute(obj, "setsize")
-        if position and total and not obj.getRole() in \
-                [pyatspi.ROLE_MENU_ITEM,
-                 pyatspi.ROLE_TEAROFF_MENU_ITEM,
-                 pyatspi.ROLE_CHECK_MENU_ITEM,
-                 pyatspi.ROLE_RADIO_MENU_ITEM,
-                 pyatspi.ROLE_MENU]:
-            position = int(position)
-            total = int(total)
-            result = []
-            if (_settingsManager.getSetting('enablePositionSpeaking') \
-                or args.get('forceList', False)) \
-                and position >= 0:
-                result.append(self._script.formatting.getString(
-                    mode='speech',
-                    stringType='groupindex') \
-                    % {"index" : position,
-                    "total" : total})
-                result.extend(self.voice(speech_generator.SYSTEM))
-            return result
-        else:
-            return speech_generator.SpeechGenerator._generatePositionInList(
-                self, obj, **args)
+        if position is None or total is None:
+            return super()._generatePositionInList(obj, **args)
+
+        position = int(position)
+        total = int(total)
+        if position < 0 or total < 0:
+            return []
+
+        result = []
+        result.append(self._script.formatting.getString(
+            mode='speech',
+            stringType='groupindex') \
+            % {"index" : position,
+               "total" : total})
+        result.extend(self.voice(speech_generator.SYSTEM))
+        return result
 
     def _generateNewRadioButtonGroup(self, obj, **args):
         # TODO - JD: Looking at the default speech generator's method, this

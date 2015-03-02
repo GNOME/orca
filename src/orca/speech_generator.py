@@ -304,8 +304,16 @@ class SpeechGenerator(generator.Generator):
                         pyatspi.ROLE_FILLER,
                         pyatspi.ROLE_EXTENDED]
 
+        try:
+            parentRole = obj.parent.getRole()
+        except:
+            parentRole = None
+
+        if role == pyatspi.ROLE_MENU and parentRole == pyatspi.ROLE_COMBO_BOX:
+            return self._generateRoleName(obj.parent)
+
         # egg-list-box, e.g. privacy panel in gnome-control-center
-        if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
+        if parentRole == pyatspi.ROLE_LIST_BOX:
             doNotPresent.append(obj.getRole())
 
         if _settingsManager.getSetting('speechVerbosityLevel') \
@@ -1599,7 +1607,7 @@ class SpeechGenerator(generator.Generator):
            and args.get('formatType', None) \
                in ['basicWhereAmI', 'detailedWhereAmI']:
             return [object_properties.ROLE_ICON_PANEL]
-        elif obj.parent.getRole() == pyatspi.ROLE_TABLE_CELL:
+        if obj.parent.getRole() in [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_MENU]:
             obj = obj.parent
         return self._generateRoleName(obj.parent)
 
@@ -1660,6 +1668,7 @@ class SpeechGenerator(generator.Generator):
         specifications) that represent the relative position of an
         object in a list.
         """
+
         if _settingsManager.getSetting('onlySpeakDisplayedText') \
            or not (_settingsManager.getSetting('enablePositionSpeaking') \
                    or args.get('forceList', False)):
@@ -1667,80 +1676,17 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         acss = self.voice(SYSTEM)
-        position = -1
-        index = 0
-        total = 0
-        name = self._generateName(obj)
-        # TODO - JD: There might be a better way to do this (e.g. pass
-        # roles in maybe?).
-        #
-        role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_COMBO_BOX:
-            obj = obj[0]
-        elif role in [pyatspi.ROLE_PAGE_TAB,
-                      pyatspi.ROLE_MENU,
-                      pyatspi.ROLE_MENU_ITEM,
-                      pyatspi.ROLE_CHECK_MENU_ITEM,
-                      pyatspi.ROLE_RADIO_MENU_ITEM]:
-            obj = obj.parent
-        elif role == pyatspi.ROLE_LIST_ITEM:
-            parent = obj.parent
-            for relation in obj.getRelationSet():
-                if relation.getRelationType() == \
-                        pyatspi.RELATION_NODE_CHILD_OF:
-                    # childNodes assumes that we have an accessible table
-                    # interface to work with. If we don't, it will fail. So
-                    # don't set the parent until verifying the interface we
-                    # expect actually exists.
-                    #
-                    target = relation.getTarget(0)
-                    try:
-                        target.parent.queryTable()
-                    except:
-                        pass
-                    else:
-                        parent = target
-                    break
-            obj = parent
-        else:
-            obj = obj.parent
+        position, total = self._script.utilities.getPositionAndSetSize(obj)
+        if position < 0 or total < 0:
+            return []
 
-        # We want to return the position relative to this hierarchical
-        # level and not the entire list.  If the object in question
-        # uses the NODE_CHILD_OF relationship, we need to use it instead
-        # of the childCount.
-        #
-        childNodes = self._script.utilities.childNodes(obj)
-        total = len(childNodes)
-        for i in range(0, total):
-            childName = self._generateName(childNodes[i])
-            if childName == name:
-                position = i+1
-                break
-
-        if not total:
-            for child in obj:
-                nextName = self._generateName(child)
-                state = child.getState()
-                if not nextName or nextName[0] in ["", "Empty", "separator"] \
-                   or not state.contains(pyatspi.STATE_VISIBLE):
-                    continue
-
-                index += 1
-                total += 1
-
-                if nextName == name:
-                    position = index
-
-        if (_settingsManager.getSetting('enablePositionSpeaking') \
-             or args.get('forceList', False)) \
-           and position >= 0:
-            result.append(self._script.formatting.getString(
+        position += 1
+        result.append(self._script.formatting.getString(
                               mode='speech',
                               stringType='groupindex') \
                           % {"index" : position,
                              "total" : total})
-            result.extend(acss)
+        result.extend(acss)
         return result
 
     def _generateDefaultButton(self, obj, **args):

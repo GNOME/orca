@@ -29,11 +29,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("C"))
 sequence.append(utils.AssertPresentationAction(
     "2. Replace existing text with a 'C'",
-    ["KNOWN ISSUE: It would be good to present the appearance of the popup so one knows there's something to Down arrow into.",
-     "BRAILLE LINE:  'US State test 1 (200% Courier font): C $l'",
+    ["BRAILLE LINE:  'US State test 1 (200% Courier font): C $l'",
      "     VISIBLE:  '(200% Courier font): C $l', cursor=23",
      "BRAILLE LINE:  'US State test 1 (200% Courier font): C $l'",
-     "     VISIBLE:  '(200% Courier font): C $l', cursor=23"]))
+     "     VISIBLE:  '(200% Courier font): C $l', cursor=23",
+     "BRAILLE LINE:  'US State test 1 (200% Courier font):'",
+     "     VISIBLE:  'US State test 1 (200% Courier fo', cursor=1",
+     "SPEECH OUTPUT: 'expanded'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -41,15 +43,14 @@ sequence.append(utils.AssertPresentationAction(
     "3. Down Arrow",
     ["KNOWN ISSUE: Too much braille updating",
      "BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
-     "     VISIBLE:  '(200% Courier font): California ', cursor=21",
+     "     VISIBLE:  'ate test 1 (200% Courier font): ', cursor=32",
      "BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
-     "     VISIBLE:  '(200% Courier font): California ', cursor=21",
+     "     VISIBLE:  'ate test 1 (200% Courier font): ', cursor=32",
      "BRAILLE LINE:  'California (CA)'",
      "     VISIBLE:  'California (CA)', cursor=1",
      "BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
      "     VISIBLE:  'ate test 1 (200% Courier font): ', cursor=32",
      "SPEECH OUTPUT: 'California'",
-     "SPEECH OUTPUT: 'California panel'",
      "SPEECH OUTPUT: 'California List with 3 items'",
      "SPEECH OUTPUT: 'California (CA)'"]))
 

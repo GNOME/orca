@@ -477,73 +477,6 @@ class Utilities:
         self._script.generatorCache[self.DISPLAYED_LABEL][obj] = labelString
         return self._script.generatorCache[self.DISPLAYED_LABEL][obj]
 
-    def _displayedTextInComboBox(self, combo):
-
-        """Returns the text being displayed in a combo box.  If nothing is
-        displayed, then None is returned.
-
-        Arguments:
-        - combo: the combo box
-
-        Returns the text in the combo box or an empty string if nothing is
-        displayed.
-        """
-
-        displayedText = None
-
-        # Find the text displayed in the combo box.  This is either:
-        #
-        # 1) The last text object that's a child of the combo box
-        # 2) The selected child of the combo box.
-        # 3) The contents of the text of the combo box itself when
-        #    treated as a text object.
-        #
-        # Preference is given to #1, if it exists.
-        #
-        # If the label of the combo box is the same as the utterance for
-        # the child object, then this utterance is only displayed once.
-        #
-        # [[[TODO: WDW - Combo boxes are complex beasts.  This algorithm
-        # needs serious work.  Logged as bugzilla bug 319745.]]]
-        #
-        textObj = None
-        for child in combo:
-            if child and child.getRole() == pyatspi.ROLE_TEXT:
-                textObj = child
-
-        if textObj:
-            [displayedText, caretOffset, startOffset] = \
-                self._script.getTextLineAtCaret(textObj)
-            #print "TEXTOBJ", displayedText
-        else:
-            try:
-                comboSelection = combo.querySelection()
-                selectedItem = comboSelection.getSelectedChild(0)
-            except:
-                selectedItem = None
-
-            if selectedItem:
-                displayedText = self.displayedText(selectedItem)
-                #print "SELECTEDITEM", displayedText
-                if displayedText:
-                    return displayedText
-            if combo.name and len(combo.name):
-                # We give preference to the name over the text because
-                # the text for combo boxes seems to never change in
-                # some cases.  The main one where we see this is in
-                # the gaim "Join Chat" window.
-                #
-                displayedText = combo.name
-                #print "NAME", displayedText
-            else:
-                [displayedText, caretOffset, startOffset] = \
-                    self._script.getTextLineAtCaret(combo)
-                # Set to None instead of empty string.
-                displayedText = displayedText or None
-                #print "TEXT", displayedText
-
-        return displayedText
-
     def displayedText(self, obj):
         """Returns the text being displayed for an object.
 
@@ -567,48 +500,14 @@ class Utilities:
         if role == pyatspi.ROLE_PUSH_BUTTON and obj.name:
             return obj.name
 
-        if role == pyatspi.ROLE_COMBO_BOX:
-            displayedText = self._displayedTextInComboBox(obj)
-            if self.DISPLAYED_TEXT not in self._script.generatorCache:
-                self._script.generatorCache[self.DISPLAYED_TEXT] = {}
-            self._script.generatorCache[self.DISPLAYED_TEXT][obj] = \
-                displayedText
-            return self._script.generatorCache[self.DISPLAYED_TEXT][obj]
-
-        # The accessible text of an object is used to represent what is
-        # drawn on the screen.
-        #
         try:
             text = obj.queryText()
-        except NotImplementedError:
+            displayedText = text.getText(0, text.characterCount)
+        except:
             pass
         else:
-            displayedText = text.getText(0, text.characterCount)
-
-            # [[[WDW - HACK to account for things such as Gecko that want
-            # to use the EMBEDDED_OBJECT_CHARACTER on a label to hold the
-            # object that has the real accessible text for the label.  We
-            # detect this by the specfic case where the text for the
-            # current object is a single EMBEDDED_OBJECT_CHARACTER.  In
-            # this case, we look to the child for the real text.]]]
-            #
-            if len(displayedText) == 1 \
-               and displayedText[0] == self.EMBEDDED_OBJECT_CHARACTER \
-               and obj.childCount > 0:
-                try:
-                    displayedText = self.displayedText(obj[0])
-                except:
-                    debug.printException(debug.LEVEL_WARNING)
-            else:
-                # [[[TODO: HACK - Welll.....we'll just plain ignore any
-                # text with EMBEDDED_OBJECT_CHARACTERs here.  We still need a
-                # general case to handle this stuff and expand objects
-                # with EMBEDDED_OBJECT_CHARACTERs.]]]
-                #
-                for i in range(len(displayedText)):
-                    if displayedText[i] == self.EMBEDDED_OBJECT_CHARACTER:
-                        displayedText = None
-                        break
+            if self.EMBEDDED_OBJECT_CHARACTER in displayedText:
+                displayedText = None
 
         if not displayedText:
             # TODO - JD: This should probably get nuked. But all sorts of
@@ -706,6 +605,10 @@ class Utilities:
         to routing the cursor.
         """
 
+        if obj and obj.getRole() == pyatspi.ROLE_COMBO_BOX \
+           and not self.isSameObject(obj, orca_state.locusOfFocus):
+            return True
+
         return False
 
     def hasMatchingHierarchy(self, obj, rolesList):
@@ -782,29 +685,44 @@ class Utilities:
         """Returns True if the given object is a container which has
         no presentable information (label, name, displayed text, etc.)."""
 
-        if self.isHidden(obj):
-            return True
-
         layoutOnly = False
 
+        if obj and self.isZombie(obj):
+            return True
+
         try:
-            attributes = obj.getAttributes()
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
         except:
-            attributes = {}
+            attrs = {}
         try:
             role = obj.getRole()
+            parentRole = obj.parent.getRole()
         except:
             role = None
+            parentRole = None
+
+        topLevelRoles = [pyatspi.ROLE_ALERT,
+                         pyatspi.ROLE_FRAME,
+                         pyatspi.ROLE_DIALOG,
+                         pyatspi.ROLE_WINDOW]
+        ignorePanelParent = [pyatspi.ROLE_MENU,
+                             pyatspi.ROLE_MENU_ITEM,
+                             pyatspi.ROLE_LIST_ITEM,
+                             pyatspi.ROLE_TREE_ITEM]
 
         if role == pyatspi.ROLE_TABLE:
-            for attribute in attributes:
-                if attribute == "layout-guess:true":
+            layoutOnly = attrs.get('layout-guess') == 'true'
+            if not layoutOnly:
+                try:
+                    table = obj.queryTable()
+                except:
                     layoutOnly = True
-                    break
+                else:
+                    layoutOnly = table.nRows <= 1 or table.nColumns <= 1
         elif role == pyatspi.ROLE_TABLE_CELL and obj.childCount:
             if obj[0].getRole() == pyatspi.ROLE_TABLE_CELL:
                 layoutOnly = True
-            elif obj.parent.getRole() == pyatspi.ROLE_TABLE:
+            elif parentRole == pyatspi.ROLE_TABLE:
                 layoutOnly = self.isLayoutOnly(obj.parent)
         elif role == pyatspi.ROLE_SECTION:
             layoutOnly = True
@@ -814,14 +732,25 @@ class Utilities:
             layoutOnly = True
         elif role == pyatspi.ROLE_AUTOCOMPLETE:
             layoutOnly = True
+        elif role in [pyatspi.ROLE_TEAROFF_MENU_ITEM, pyatspi.ROLE_SEPARATOR]:
+            layoutOnly = True
         elif role in [pyatspi.ROLE_LIST_BOX, pyatspi.ROLE_TREE_TABLE]:
             layoutOnly = False
-        elif role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_WINDOW]:
+        elif role in topLevelRoles:
             layoutOnly = False
+        elif role == pyatspi.ROLE_MENU and parentRole == pyatspi.ROLE_COMBO_BOX:
+            layoutOnly = True
         elif role == pyatspi.ROLE_LIST or self.isTableRow(obj):
             state = obj.getState()
             layoutOnly = not (state.contains(pyatspi.STATE_FOCUSABLE) \
                               or state.contains(pyatspi.STATE_SELECTABLE))
+        elif role == pyatspi.ROLE_PANEL and obj.childCount \
+             and (obj.childCount == 1 or obj[0].getRole() in ignorePanelParent):
+            layoutOnly = True
+        elif obj.childCount == 1 and obj.name == obj[0].name:
+            layoutOnly = True
+        elif self.isHidden(obj):
+            layoutOnly = True
         else:
             if not (self.displayedText(obj) or self.displayedLabel(obj)):
                 layoutOnly = True
@@ -901,14 +830,16 @@ class Utilities:
 
         return path1[0:index] == path2[0:index]
 
-    def isSameObject(self, obj1, obj2, comparePaths=False):
+    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False):
         if (obj1 == obj2):
             return True
         elif (not obj1) or (not obj2):
             return False
 
         try:
-            if (obj1.name != obj2.name) or (obj1.getRole() != obj2.getRole()):
+            if obj1.getRole() != obj2.getRole():
+                return False
+            if obj1.name != obj2.name and not ignoreNames:
                 return False
             if comparePaths and self._hasSamePath(obj1, obj2):
                 return True
@@ -2634,6 +2565,18 @@ class Utilities:
             if not self.isZombie(child):
                 children.append(child)
 
+        role = obj.getRole()
+        if role == pyatspi.ROLE_MENU and not children:
+            pred = lambda x: x and x.getState().contains(pyatspi.STATE_SELECTED)
+            children = pyatspi.findAllDescendants(obj, pred)
+
+        if role == pyatspi.ROLE_COMBO_BOX \
+           and children and children[0].getRole() == pyatspi.ROLE_MENU:
+            children = self.selectedChildren(children[0])
+            if not children and obj.name:
+                pred = lambda x: x and x.name == obj.name
+                children = pyatspi.findAllDescendants(obj, pred)
+
         return children
 
     def focusedChild(self, obj):
@@ -2734,11 +2677,15 @@ class Utilities:
         try:
             index = obj.getIndexInParent()
             state = obj.getState()
+            role = obj.getRole()
         except:
             debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is null or dead" % obj)
             return True
 
-        if obj.getIndexInParent() == -1:
+        topLevelRoles = [pyatspi.ROLE_APPLICATION,
+                         pyatspi.ROLE_WINDOW,
+                         pyatspi.ROLE_FRAME]
+        if obj.getIndexInParent() == -1 and role not in topLevelRoles:
             debug.println(debug.LEVEL_INFO, "ZOMBIE: %s's index is -1" % obj)
             return True
         if state.contains(pyatspi.STATE_DEFUNCT):
@@ -2749,3 +2696,67 @@ class Utilities:
             return True
 
         return False
+
+    def findReplicant(self, root, obj):
+        if not (root and obj):
+            return None
+
+        # Given an broken table hierarchy, findDescendant can hang. And the
+        # reason we're here in the first place is to work around the app or
+        # toolkit killing accessibles. There's only so much we can do....
+        if root.getRole() == pyatspi.ROLE_TABLE:
+            return None
+
+        isSame = lambda x: x and self.isSameObject(
+            x, obj, comparePaths=True, ignoreNames=True)
+        if isSame(root):
+            replicant = root
+        else:
+            replicant = pyatspi.findDescendant(root, isSame)
+
+        msg = "HACK: Returning %s as replicant for Zombie %s" % (replicant, obj)
+        debug.println(debug.LEVEL_INFO, msg)
+        return replicant
+
+    def getFunctionalChildren(self, obj):
+        if not obj:
+            return None
+
+        result = []
+        pred = lambda r: r.getRelationType() == pyatspi.RELATION_NODE_PARENT_OF
+        relations = list(filter(pred, obj.getRelationSet()))
+        if relations:
+            result = [r.getTarget(i) for i in range(relations[0].getNTargets())]
+
+        return result or [child for child in obj]
+
+    def getFunctionalParent(self, obj):
+        if not obj:
+            return None
+
+        result = None
+        pred = lambda r: r.getRelationType() == pyatspi.RELATION_NODE_CHILD_OF
+        relations = list(filter(pred, obj.getRelationSet()))
+        if relations:
+            result = relations[0].getTarget(0)
+
+        return result or obj.parent
+
+    def getPositionAndSetSize(self, obj):
+        if not obj:
+            return -1, -1
+
+        if obj.getRole() == pyatspi.ROLE_COMBO_BOX:
+            selected = self.selectedChildren(obj)
+            if selected:
+                obj = selected[0]
+
+        parent = self.getFunctionalParent(obj)
+        siblings = self.getFunctionalChildren(parent)
+        siblings = list(filter(lambda x: not self.isLayoutOnly(x), siblings))
+        if not (siblings and obj in siblings):
+            return -1, -1
+
+        position = siblings.index(obj)
+        setSize = len(siblings)
+        return position, setSize

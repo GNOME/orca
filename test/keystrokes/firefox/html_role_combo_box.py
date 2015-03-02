@@ -28,7 +28,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Severity normal combo box', cursor=10",
      "BRAILLE LINE:  'Severity normal combo box'",
      "     VISIBLE:  'Severity normal combo box', cursor=10",
-     "SPEECH OUTPUT: 'Severity combo box normal'"]))
+     "SPEECH OUTPUT: 'Severity combo box normal 4 of 7'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

@@ -1140,7 +1140,7 @@ class Script(default.Script):
         # To make matters worse, the replacement object can be in the ancestry.
         obj, offset = self.getCaretContext()
         if obj and self.utilities.isZombie(obj):
-            replicant = self.utilities.findReplicant(event.any_data, obj)
+            replicant = self.utilities.findReplicant(event.source, obj)
             if replicant:
                 self.setCaretPosition(replicant, offset)
                 return

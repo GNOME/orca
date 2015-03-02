@@ -36,7 +36,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Firefox application Mozilla Firefox frame Menu Bar tool bar Application menu bar New Tab(Ctrl+T)'",
      "     VISIBLE:  'New Tab(Ctrl+T)', cursor=1",
      "SPEECH OUTPUT: 'File menu'",
-     "SPEECH OUTPUT: 'Menu Bar tool bar New Tab Ctrl+T 1 of 12.'",
+     "SPEECH OUTPUT: 'Menu Bar tool bar menu bar New Tab Ctrl+T 1 of 12.'",
      "SPEECH OUTPUT: 'T'"]))
 
 sequence.append(KeyComboAction("Escape"))

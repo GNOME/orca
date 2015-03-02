@@ -17,6 +17,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Tab to grid",
     ["BRAILLE LINE:  'Selected Sort Sel column push button'",
      "     VISIBLE:  'Selected Sort Sel column push bu', cursor=1",
+     "SPEECH OUTPUT: 'Inbox table with 6 rows 9 columns'",
      "SPEECH OUTPUT: 'Selected Sort Sel column push button'"]))
 
 sequence.append(utils.StartRecordingAction())

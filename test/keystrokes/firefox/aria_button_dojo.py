@@ -87,7 +87,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Create blank', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'createMenu panel'",
      "SPEECH OUTPUT: 'Create blank'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
@@ -132,7 +131,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Cut', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'Edit! edit title panel'",
      "SPEECH OUTPUT: 'Edit! menu'",
      "SPEECH OUTPUT: 'Cut'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
@@ -169,7 +167,6 @@ sequence.append(utils.AssertPresentationAction(
     "18. Open Submenu",
     ["BRAILLE LINE:  'Submenu Item One'",
      "     VISIBLE:  'Submenu Item One', cursor=1",
-     "SPEECH OUTPUT: 'Submenu panel'",
      "SPEECH OUTPUT: 'Submenu menu'",
      "SPEECH OUTPUT: 'Submenu Item One'"]))
 
@@ -193,11 +190,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
 sequence.append(utils.AssertPresentationAction(
     "21. Close the Submenu",
-    ["KNOWN ISSUE: Too much speech context",
-     "BRAILLE LINE:  'Submenu Submenu menu'",
-     "     VISIBLE:  'Submenu Submenu menu', cursor=9",
-     "BRAILLE LINE:  'Focus mode'",
-     "     VISIBLE:  'Focus mode', cursor=0",
+    ["BRAILLE LINE:  'Submenu menu'",
+     "     VISIBLE:  'Submenu menu', cursor=1",
      "SPEECH OUTPUT: 'Edit! edit title panel'",
      "SPEECH OUTPUT: 'Edit! menu'",
      "SPEECH OUTPUT: 'Submenu menu'",
@@ -236,7 +230,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'white table cell', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'Color panel'",
      "SPEECH OUTPUT: 'white'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 

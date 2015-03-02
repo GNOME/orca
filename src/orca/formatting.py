@@ -107,7 +107,7 @@ formatting = {
             'detailedWhereAmI' : '[]'
             },
         pyatspi.ROLE_ALERT: {
-            'unfocused': 'labelOrName + unrelatedLabels'
+            'unfocused': 'expandedEOCs or (labelOrName + unrelatedLabels)'
             },
         pyatspi.ROLE_ANIMATION: {
             'unfocused': 'labelAndName'
@@ -145,7 +145,7 @@ formatting = {
             },
         pyatspi.ROLE_DIALOG: {
             'focused': 'labelOrName',
-            'unfocused': 'labelOrName + unrelatedLabels'
+            'unfocused': 'expandedEOCs or (labelOrName + unrelatedLabels)'
             },
         pyatspi.ROLE_DOCUMENT_FRAME: {
             'unfocused': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
@@ -220,7 +220,7 @@ formatting = {
         pyatspi.ROLE_MENU_ITEM: {
             'focused': 'expandableState',
             'unfocused': 'labelOrName + menuItemCheckedState + expandableState + availability + ' + MNEMONIC + ' + accelerator + positionInList',
-            'basicWhereAmI': 'ancestors + labelOrName + accelerator + positionInList + ' + MNEMONIC
+            'basicWhereAmI': 'ancestors + parentRoleName + labelOrName + accelerator + positionInList + ' + MNEMONIC
             },
         pyatspi.ROLE_NOTIFICATION: {
             'unfocused': 'roleName + unrelatedLabels'
@@ -425,9 +425,9 @@ formatting = {
             # We could then use the cursorOffset field to indicate where the
             # combobox starts.]]]
             #
-            'unfocused': '((comboBoxTextObj and [Text(comboBoxTextObj[0], asString(label), asString(eol))])\
-                           or [Component(obj, asString(label + name), label and (len(asString(label)) + 1) or 0)])\
-                          + [Region(" " + asString(roleName))]'
+            'unfocused': '((comboBoxTextObj and ([Text(comboBoxTextObj[0], asString(label), asString(eol))] \
+                                               + [Region(" " + asString(roleName))])) \
+                           or [Component(obj, asString(label + name + roleName), label and (len(asString(label)) + 1) or 0)])'
             },
         #pyatspi.ROLE_DESKTOP_ICON: 'default'
         pyatspi.ROLE_DIAL: {

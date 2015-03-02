@@ -112,40 +112,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
     def _generateName(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_COMBO_BOX:
-            # With Gecko, a combo box has a menu as a child.  The text being
-            # displayed for the combo box can be obtained via the selected
-            # menu item.
-            #
-            menu = None
-            for child in obj:
-                if child.getRole() == pyatspi.ROLE_MENU:
-                    menu = child
-                    break
-            if menu:
-                child = None
-                try:
-                    # This should work...
-                    #
-                    child = menu.querySelection().getSelectedChild(0)
-                    if not child:
-                        # It's probably a Gtk combo box.
-                        #
-                        result = braille_generator.BrailleGenerator.\
-                            _generateDisplayedText(self, obj, **args)
-                except:
-                    # But just in case, we'll fall back on this.
-                    # [[[TODO - JD: Will we ever have a case where the first
-                    # fails, but this will succeed???]]]
-                    #
-                    for item in menu:
-                        if item.getState().contains(pyatspi.STATE_SELECTED):
-                            child = item
-                            break
-                if child and child.name:
-                    result.append(child.name)
-        else:
-            result.extend(braille_generator.BrailleGenerator._generateName(
+        result.extend(braille_generator.BrailleGenerator._generateName(
                               self, obj, **args))
         if not result and role == pyatspi.ROLE_LIST_ITEM:
             result.append(self._script.utilities.expandEOCs(obj))

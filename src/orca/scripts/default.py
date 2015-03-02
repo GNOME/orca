@@ -2236,7 +2236,9 @@ class Script(script.Script):
         """Callback for object:state-changed:expanded accessibility events."""
 
         obj = event.source
-        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
+        role = obj.getRole()
+        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus) \
+           and not (role == pyatspi.ROLE_COMBO_BOX and event.detail1):
             return
 
         oldObj, oldState = self.pointOfReference.get('expandedChange', (None, 0))

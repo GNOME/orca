@@ -25,12 +25,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Down arrow to Africa",
-    ["KNOWN ISSUE: We shouldn't be speaking the panel here",
-     "BRAILLE LINE:  'Africa collapsed list item'",
+    ["BRAILLE LINE:  'Africa collapsed list item'",
      "     VISIBLE:  'Africa collapsed list item', cursor=1",
      "BRAILLE LINE:  'Africa collapsed list item'",
      "     VISIBLE:  'Africa collapsed list item', cursor=1",
-     "SPEECH OUTPUT: 'Continents panel'",
      "SPEECH OUTPUT: 'Africa collapsed tree level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -53,12 +51,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Down arrow to Egypt",
-    ["KNOWN ISSUE: We shouldn't be speaking the panel here",
-     "BRAILLE LINE:  'Egypt list item'",
+    ["BRAILLE LINE:  'Egypt list item'",
      "     VISIBLE:  'Egypt list item', cursor=1",
      "BRAILLE LINE:  'Egypt list item'",
      "     VISIBLE:  'Egypt list item', cursor=1",
-     "SPEECH OUTPUT: 'Africa panel'",
      "SPEECH OUTPUT: 'Egypt tree level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -119,12 +115,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "12. Down arrow to China",
-    ["KNOWN ISSUE: We shouldn't be speaking the panel here",
-     "BRAILLE LINE:  'China list item'",
+    ["BRAILLE LINE:  'China list item'",
      "     VISIBLE:  'China list item', cursor=1",
      "BRAILLE LINE:  'China list item'",
      "     VISIBLE:  'China list item', cursor=1",
-     "SPEECH OUTPUT: 'Asia panel'",
      "SPEECH OUTPUT: 'China tree level 3'"]))
 
 sequence.append(utils.StartRecordingAction())

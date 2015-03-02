@@ -46,21 +46,6 @@ formatting = {
             'basicWhereAmI': 'labelAndName + roleName',
             'detailedWhereAmI' : 'pageSummary'
             },
-        pyatspi.ROLE_ALERT: {
-            'unfocused': 'expandedEOCs or (labelOrName + unrelatedLabels)'
-            },
-        pyatspi.ROLE_DIALOG: {
-            'unfocused': 'expandedEOCs or (labelOrName + unrelatedLabels)'
-            },
-        # [[[TODO: JD - We should decide if we want to provide
-        # information about the table dimensions, whether or not
-        # this is a layout table versus a data table, etc.  For now,
-        # however, if it's in HTML content let's ignore it so that
-        # SayAll by sentence works. :-) ]]]
-        #
-        pyatspi.ROLE_TABLE: {
-            'unfocused': '[]'
-            },
     },
 }
 

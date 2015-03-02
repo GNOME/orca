@@ -19,7 +19,7 @@ sequence.append(KeyComboAction("<Alt>o"))
 sequence.append(utils.AssertPresentationAction(
     "1. Combo box",
     ["BRAILLE LINE:  'gtk-demo application Print dialog Page Setup page tab Only print: All sheets combo box'",
-     "     VISIBLE:  'Only print: All sheets combo box', cursor=13",
+     "     VISIBLE:  'Only print: All sheets combo box', cursor=1",
      "SPEECH OUTPUT: 'Only print: All sheets combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -27,7 +27,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Print dialog Page Setup page tab Only print: All sheets combo box'",
-     "     VISIBLE:  'Only print: All sheets combo box', cursor=13",
+     "     VISIBLE:  'Only print: All sheets combo box', cursor=1",
      "SPEECH OUTPUT: 'Only print: combo box All sheets 1 of 3.'",
      "SPEECH OUTPUT: 'Alt+O'"]))
 
@@ -35,7 +35,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Change selection",
-    ["BRAILLE LINE:  'gtk-demo application Print dialog Page Setup page tab  combo boxOnly print: Even sheets Even sheets'",
+    ["BRAILLE LINE:  'gtk-demo application Print dialog Page Setup page tab Only print: Even sheets combo box Even sheets'",
      "     VISIBLE:  'Even sheets', cursor=1",
      "SPEECH OUTPUT: 'Even sheets'"]))
 
@@ -43,12 +43,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "4. Where Am I",
-    ["KNOWN ISSUE: The combo box role is missing and spacing is wrong in braille",
-     "BRAILLE LINE:  'gtk-demo application Print dialog Page Setup page tab  combo boxOnly print: Even sheets Even sheets'",
+    ["BRAILLE LINE:  'gtk-demo application Print dialog Page Setup page tab Only print: Even sheets combo box Even sheets'",
      "     VISIBLE:  'Even sheets', cursor=1",
      "SPEECH OUTPUT: 'Print'",
      "SPEECH OUTPUT: 'Page Setup page tab'",
-     "SPEECH OUTPUT: 'Even sheets 2 of 3'"]))
+     "SPEECH OUTPUT: 'combo box Even sheets 2 of 3'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

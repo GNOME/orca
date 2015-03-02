@@ -301,6 +301,17 @@ class Generator:
         """
         result = []
         name = self._script.utilities.displayedText(obj)
+        if obj.getRole() == pyatspi.ROLE_COMBO_BOX:
+            children = self._script.utilities.selectedChildren(obj)
+            if not children and obj.childCount:
+                children = self._script.utilities.selectedChildren(obj[0])
+            children = children or [child for child in obj]
+            names = map(self._script.utilities.displayedText, children)
+            names = list(filter(lambda x: x, names))
+            if len(names) == 1:
+                name = names[0].strip()
+            elif len(children) == 1 and children[0].name:
+                name = children[0].name.strip()
         if name:
             result.append(name)
         else:
@@ -825,6 +836,10 @@ class Generator:
     #                                                                   #
     #####################################################################
 
+    def _generateExpandedEOCs(self, obj, **args):
+        """Returns the expanded embedded object characters for an object."""
+        return []
+
     def _generateSubstring(self, obj, **args):
         start = args.get('startOffset')
         end = args.get('endOffset')
@@ -833,7 +848,7 @@ class Generator:
 
         substring = self._script.utilities.substring(obj, start, end)
         if substring and substring.strip() != obj.name \
-           and substring.find(self._script.EMBEDDED_OBJECT_CHARACTER) == -1:
+           and not self._script.EMBEDDED_OBJECT_CHARACTER in substring:
             return [substring]
 
         return []
@@ -855,7 +870,10 @@ class Generator:
             return result
 
         [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
-        return [text]
+        if text and not self._script.EMBEDDED_OBJECT_CHARACTER in text:
+            return [text]
+
+        return []
 
     def _generateDisplayedText(self, obj, **args ):
         """Returns an array of strings for use by speech and braille that

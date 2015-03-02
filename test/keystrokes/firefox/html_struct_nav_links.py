@@ -67,14 +67,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("u"))
 sequence.append(utils.AssertPresentationAction(
     "6. u to textattributes.html link",
-    ["BRAILLE LINE:  'Finished loading Links to test files.'",
-     "     VISIBLE:  'Finished loading Links to test f', cursor=0",
-     "BRAILLE LINE:  '• tables.html'",
-     "     VISIBLE:  '• tables.html', cursor=3",
-     "BRAILLE LINE:  '• textattributes.html'",
+    ["BRAILLE LINE:  '• textattributes.html'",
      "     VISIBLE:  '• textattributes.html', cursor=3",
-     "SPEECH OUTPUT: 'Finished loading Links to test files.' voice=system",
-     "SPEECH OUTPUT: 'tables.html link'",
      "SPEECH OUTPUT: 'textattributes.html'",
      "SPEECH OUTPUT: 'link'"]))
 
