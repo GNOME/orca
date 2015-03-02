@@ -985,20 +985,8 @@ class Script(default.Script):
         # Useless signals are useless.
         pass
 
-    def getTextLineAtCaret(self, obj, offset=None):
-        """Gets the line of text where the caret is. Overridden here to
-        handle combo boxes who have a text object with a caret offset
-        of -1 as a child.
-
-        Argument:
-        - obj: an Accessible object that implements the AccessibleText
-          interface
-        - offset: an optional caret offset to use. (Not used here at the
-          moment, but needed in the Gecko script)
-
-        Returns the [string, caretOffset, startOffset] for the line of text
-        where the caret is.
-        """
+    def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
+        """To-be-removed. Returns the string, caretOffset, startOffset."""
 
         if obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
             try:
@@ -1017,7 +1005,7 @@ class Script(default.Script):
 
                 return [lineString, 0, startOffset]
 
-        textLine = default.Script.getTextLineAtCaret(self, obj, offset)
+        textLine = super().getTextLineAtCaret(obj, offset, startOffset, endOffset)
         if not obj.getState().contains(pyatspi.STATE_FOCUSED):
             textLine[0] = self.utilities.displayedText(obj)
 

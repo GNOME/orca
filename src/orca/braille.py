@@ -528,8 +528,8 @@ class Text(Region):
         self.accessible = accessible
         if orca_state.activeScript and self.accessible:
             [string, self.caretOffset, self.lineOffset] = \
-                 orca_state.activeScript.getTextLineAtCaret(self.accessible,
-                                                            startOffset)
+                 orca_state.activeScript.getTextLineAtCaret(
+                     self.accessible, startOffset=startOffset, endOffset=endOffset)
         else:
             string = ""
             self.caretOffset = 0

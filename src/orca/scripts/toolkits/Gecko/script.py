@@ -1473,7 +1473,7 @@ class Script(default.Script):
         for i, content in enumerate(contents):
             [obj, startOffset, endOffset, string] = content
             [regions, fRegion] = self.brailleGenerator.generateBraille(
-                obj, startOffset=startOffset, endOffset=endOffset)
+                obj, startOffset=startOffset, endOffset=endOffset, string=string)
             if i == index:
                 focusedRegion = fRegion
 
@@ -2202,34 +2202,26 @@ class Script(default.Script):
         self._documentFrameCaretContext[hash(documentFrame)] = \
             [obj, characterOffset]
 
-    def getTextLineAtCaret(self, obj, offset=None):
-        """Gets the portion of the line of text where the caret (or optional
-        offset) is. This is an override to accomodate the intricities of our
-        caret navigation management and to deal with bogus line information
-        being returned by Gecko when using getTextAtOffset.
-
-        Argument:
-        - obj: an Accessible object that implements the AccessibleText
-          interface
-        - offset: an optional caret offset to use.
-
-        Returns the [string, caretOffset, startOffset] for the line of text
-        where the caret is.
-        """
+    def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
+        """To-be-removed. Returns the string, caretOffset, startOffset."""
 
         if self._inFocusMode or not self.inDocumentContent(obj) \
            or self.utilities.isEntry(obj) \
            or self.utilities.isPasswordText(obj):
-            return default.Script.getTextLineAtCaret(self, obj, offset)
+            return super().getTextLineAtCaret(obj, offset, startOffset, endOffset)
 
-        if offset == None:
+        text = self.utilities.queryNonEmptyText(obj)
+        if offset is None:
             try:
-                offset = max(0, obj.queryText().caretOffset)
+                offset = max(0, text.caretOffset)
             except:
                 offset = 0
 
+        if text and startOffset is not None and endOffset is not None:
+            return text.getText(startOffset, endOffset), offset, startOffset
+
         contextObj, contextOffset = self.getCaretContext()
-        if self.utilities.isSameObject(contextObj, obj):
+        if contextObj == obj:
             caretOffset = contextOffset
         else:
             caretOffset = offset
@@ -2243,7 +2235,7 @@ class Script(default.Script):
 
         if index > -1:
             candidate, startOffset, endOffset, string = contents[index]
-            if string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1:
+            if not self.EMBEDDED_OBJECT_CHARACTER in string:
                 return string, caretOffset, startOffset
 
         return '', 0, 0
@@ -2369,7 +2361,8 @@ class Script(default.Script):
             else:
                 formatType = 'unfocused'
             utterance = self.speechGenerator.generateSpeech(
-                obj, startOffset=startOffset, endOffset=endOffset, formatType=formatType)
+                obj, startOffset=startOffset, endOffset=endOffset, string=string,
+                formatType=formatType)
             if eliminatePauses:
                 utterance = list(filter(lambda x: not isinstance(x, Pause), utterance))
             if utterance and utterance[0]:

@@ -611,20 +611,10 @@ class Script(default.Script):
 
         text.setCaretOffset(offset)
 
-    def getTextLineAtCaret(self, obj, offset=None):
-        """Gets the line of text where the caret is.
+    def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
+        """To-be-removed. Returns the string, caretOffset, startOffset."""
 
-        Argument:
-        - obj: an Accessible object that implements the AccessibleText
-          interface
-        - offset: an optional caret offset to use. (Not used here at the
-          moment, but needed in the Gecko script)
-
-        Returns the [string, caretOffset, startOffset] for the line of text
-        where the caret is.
-        """
-
-        textLine = default.Script.getTextLineAtCaret(self, obj, offset)
+        textLine = super().getTextLineAtCaret(obj, offset, startOffset, endOffset)
         string = textLine[0]
         if string and string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1 \
            and obj.getState().contains(pyatspi.STATE_FOCUSED):

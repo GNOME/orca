@@ -11,7 +11,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Where Am I on image",
     ["KNOWN ISSUE: 'Empty images are exposed to us as text, without AtspiAction, and the Firefox right-click menu lacks View Description",
      "BRAILLE LINE:  'the image'",
-     "     VISIBLE:  'the image', cursor=0",
+     "     VISIBLE:  'the image', cursor=1",
      "SPEECH OUTPUT: 'the image'"]))
 
 #sequence.append(PauseAction(3000))

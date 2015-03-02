@@ -26,7 +26,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Pass h1'",
      "     VISIBLE:  'Pass h1', cursor=0",
      "BRAILLE LINE:  'Pass h1'",
-     "     VISIBLE:  'Pass h1', cursor=0",
+     "     VISIBLE:  'Pass h1', cursor=1",
      "SPEECH OUTPUT: 'heading level 1 Pass'"]))
 
 sequence.append(utils.AssertionSummaryAction())

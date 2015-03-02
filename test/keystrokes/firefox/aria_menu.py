@@ -11,7 +11,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Alt>m"))
 sequence.append(utils.AssertPresentationAction(
     "1. Move to the menu",
-    ["BRAILLE LINE:  'Edit menu'",
+    ["BRAILLE LINE:  'Entry # column header'",
+     "     VISIBLE:  'Entry # column header', cursor=1",
+     "BRAILLE LINE:  'Edit menu'",
      "     VISIBLE:  'Edit menu', cursor=1",
      "BRAILLE LINE:  'Edit menu'",
      "     VISIBLE:  'Edit menu', cursor=1",

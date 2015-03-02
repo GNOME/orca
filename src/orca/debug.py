@@ -205,6 +205,7 @@ def println(level, text = ""):
     """
 
     if level >= debugLevel:
+        text = text.replace("\ufffc", "[OBJ]")
         if debugFile:
             try:
                 debugFile.writelines([text, "\n"])

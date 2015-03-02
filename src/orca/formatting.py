@@ -399,7 +399,10 @@ formatting = {
             'unfocused': '[Component(obj,\
                                      asString(label + displayedText + value + roleName + required))]',
             },
-        #pyatspi.ROLE_ALERT: 'default'
+        pyatspi.ROLE_ALERT: {
+            'unfocused': '((substring and ' + BRAILLE_TEXT + ')\
+                          or ([Component(obj, asString(labelAndName + roleName))]))'
+            },
         pyatspi.ROLE_ANIMATION: {
             'unfocused': '[Component(obj,\
                                      asString(label + displayedText + roleName + (description and space(": ") + description)))]',
@@ -451,6 +454,10 @@ formatting = {
         pyatspi.ROLE_ENTRY: {
             'unfocused': BRAILLE_TEXT
             },
+        pyatspi.ROLE_FORM: {
+            'unfocused': '((substring and ' + BRAILLE_TEXT + ')\
+                          or ([Component(obj, asString(labelAndName + roleName))]))'
+            },
         pyatspi.ROLE_FRAME: {
             'focused':   '[Component(obj,\
                                      asString(((label + displayedText) or name) + value + roleName + alertAndDialogCount))]',
@@ -458,7 +465,8 @@ formatting = {
                                      asString(((label + displayedText) or name) + value + roleName + alertAndDialogCount))]'
             },
         pyatspi.ROLE_HEADING: {
-            'unfocused': '[Text(obj)] + [Region(" " + asString(roleName))]'
+            'unfocused': '[Text(obj, asString(placeholderText), "", startOffset, endOffset)]\
+                          + [Region(" " + asString(roleName))]'
             },
         #pyatspi.ROLE_HTML_CONTAINER: 'default'
         pyatspi.ROLE_ICON: {
@@ -477,7 +485,8 @@ formatting = {
         pyatspi.ROLE_LINK: {
             'unfocused': '[Link(obj, asString(currentLineText)\
                                      or asString(displayedText)\
-                                     or asString(name))]',
+                                     or asString(name))] \
+                        + (roleName and [Region(" " + asString(roleName))])',
         },
         pyatspi.ROLE_LIST: {
             'unfocused': '[Component(obj,\

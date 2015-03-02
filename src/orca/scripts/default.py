@@ -3970,21 +3970,9 @@ class Script(script.Script):
         self._inSayAll = False
         self._sayAllContexts = []
 
-    def getTextLineAtCaret(self, obj, offset=None):
-        """Gets the line of text where the caret is.
+    def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
+        """To-be-removed. Returns the string, caretOffset, startOffset."""
 
-        Argument:
-        - obj: an Accessible object that implements the AccessibleText
-          interface
-        - offset: an optional caret offset to use. (Not used here at the
-          moment, but needed in the Gecko script)
-
-        Returns the [string, caretOffset, startOffset] for the line of text
-        where the caret is.
-        """
-
-        # Get the the AccessibleText interrface
-        #
         try:
             text = obj.queryText()
         except NotImplementedError:

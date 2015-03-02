@@ -136,7 +136,8 @@ class BrailleGenerator(generator.Generator):
 
         doNotPresent = [pyatspi.ROLE_UNKNOWN,
                         pyatspi.ROLE_FILLER,
-                        pyatspi.ROLE_EXTENDED]
+                        pyatspi.ROLE_EXTENDED,
+                        pyatspi.ROLE_LINK]
 
         # egg-list-box, e.g. privacy panel in gnome-control-center
         if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:

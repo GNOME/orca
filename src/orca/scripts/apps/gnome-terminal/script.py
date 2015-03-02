@@ -83,19 +83,11 @@ class Script(gtk.Script):
         gtk.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
 
-    def getTextLineAtCaret(self, acc, offset=None):
-        """Gets the line of text where the caret is.
+    def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
+        """To-be-removed. Returns the string, caretOffset, startOffset."""
 
-        Argument:
-        - obj: an Accessible object that implements the AccessibleText
-          interface
-        - offset: an optional caret offset to use.
-
-        Returns the [string, caretOffset, startOffset] for the line of text
-        where the caret is.
-        """
         string, caretOffset, lineOffset = \
-                gtk.Script.getTextLineAtCaret(self, acc)
+            super().getTextLineAtCaret(obj, offset, startOffset, endOffset)
 
         # Sometimes, gnome-terminal will give us very odd values when
         # the user is editing using 'vi' and has positioned the caret
