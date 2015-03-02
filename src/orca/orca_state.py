@@ -44,11 +44,6 @@ activeWindow = None
 #
 activeScript = None
 
-# The "click" count. Used to determine if the user has double or triple
-# "clicked" a key.
-#
-clickCount = 0
-
 # Used to capture keys to redefine key bindings by the user.
 #
 capturingKeys   = False

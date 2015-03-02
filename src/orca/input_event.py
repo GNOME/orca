@@ -44,6 +44,8 @@ MOUSE_BUTTON_EVENT = "mouse:button"
 
 class InputEvent:
 
+    _clickCount = 0
+
     def __init__(self, eventType):
         """Creates a new input event of the given type.
 
@@ -59,7 +61,7 @@ class InputEvent:
         # TODO - JD: I relocated this out of script.py, because it seems
         # to belong there even less than here. Need to revisit how this
         # functionality is used and where.
-        return orca_state.clickCount
+        return InputEvent._clickCount
 
     def setClickCount(self):
         """Sets the count of the number of clicks a user has made to one
@@ -80,21 +82,21 @@ class InputEvent:
             return
 
         if not isinstance(self, KeyboardEvent):
-            orca_state.clickCount = 0
+            InputEvent._clickCount = 0
             return
 
         if not isinstance(lastInputEvent, KeyboardEvent):
-            orca_state.clickCount = 1
+            InputEvent._clickCount = 1
             return
 
         if self.time - lastInputEvent.time < settings.doubleClickTimeout \
             and lastInputEvent.event_string == self.event_string:
             # Cap the possible number of clicks at 3.
-            if orca_state.clickCount < 3:
-                orca_state.clickCount += 1
+            if InputEvent._clickCount < 3:
+                InputEvent._clickCount += 1
                 return
 
-        orca_state.clickCount = 1
+        InputEvent._clickCount = 1
 
 class KeyboardEvent(InputEvent):
 
