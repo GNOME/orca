@@ -1,3 +1,57 @@
+3.15.91 - 2 March 2015
+
+General:
+
+  * Add optional start and end offset arguments for getTextLineAtCaret()
+
+  * Fix multiple issues related to presentation of widgets and web content
+
+  * Don't rely on pyatspi's cache for names
+
+  * Add support for XDG_VTNR for braille
+
+  * Add formatting strings for ROLE_LABEL so that they get presented
+
+  * Work around two cases of dead LibreOffice accessible objects
+
+  * Ignore text insertions from menus and menu items
+
+  * Add support to identify and present Evolution's Status column header
+
+  * Set sayAllOnLoad's default value to False for Evolution
+
+  * Add utility methods to identify WebKitGtk content in Evolution
+
+  * Add some sanity checking to handle dead accessibles from Evolution
+
+  * Validate reportedly-selected children
+
+  * Suppress bogus "not selected" presentation in Evo's Messages tree
+
+  * Handle a missing event from a mystery object in the Evolution GUI
+
+  * Add support for Evolution's GUI
+
+  * Implement ability to use structural navigation commands during SayAll
+
+  * Remove clickCount from orca_state.py
+
+  * Move lastKeyEchoTime to speechdispatcherfactory.py
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de            German                            Christian Kirbach
+    es            Spanish                           Daniel Mustieles,
+                                                    Miguel Rodríguez Núñez
+    fr            French                            Julien Hardelin
+    gl            Galician                          Fran Diéguez
+    lt            Lithuanian                        Aurimas Černius
+    nb            Norwegian bokmål                  Kjartan Maraas
+    sl            Slovenian                         Matej Urbančič
+    zh_TW         Traditional Chinese (Taiwan)      Chao-Hsiung Liao
+
+=========
+
 3.15.4 - 19 January 2015
 
 General:
