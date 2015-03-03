@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the orca package.
 #
 # Matjaž Horvat <m@owca.info>, 2006.
-# Matej Urbančič <mateju@svn.gnome.org>, 2007-2014.
+# Matej Urbančič <mateju@svn.gnome.org>, 2007-2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2015-02-21 12:01+0000\n"
-"PO-Revision-Date: 2015-02-21 21:20+0100\n"
+"POT-Creation-Date: 2015-03-03 18:30+0000\n"
+"PO-Revision-Date: 2015-03-03 22:24+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -5705,10 +5705,10 @@ msgstr "Shift"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: ../src/orca/mathsymbols.py:1119
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "bold %s"
-msgstr "Krepko"
+msgstr "krepko %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -5719,10 +5719,10 @@ msgstr "Krepko"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: ../src/orca/mathsymbols.py:1129
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "italic %s"
-msgstr "Ležeče"
+msgstr "ležeče %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -5733,10 +5733,10 @@ msgstr "Ležeče"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: ../src/orca/mathsymbols.py:1139
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "bold italic %s"
-msgstr "Krepko poševno"
+msgstr "krepko ležeče %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -5817,10 +5817,10 @@ msgstr "Tabelno krepko"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: ../src/orca/mathsymbols.py:1199
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "sans-serif %s"
-msgstr "Sans Serif"
+msgstr "sans-serif %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -5831,10 +5831,10 @@ msgstr "Sans Serif"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: ../src/orca/mathsymbols.py:1209
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "sans-serif bold %s"
-msgstr "Pisava Sans serif:"
+msgstr "sans-serif krepko %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -5845,10 +5845,10 @@ msgstr "Pisava Sans serif:"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: ../src/orca/mathsymbols.py:1219
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "sans-serif italic %s"
-msgstr "Pisava Sans serif:"
+msgstr "sans-serif ležeče %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -5859,10 +5859,10 @@ msgstr "Pisava Sans serif:"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: ../src/orca/mathsymbols.py:1229
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "sans-serif bold italic %s"
-msgstr "Družina pisave Sans Serif"
+msgstr "sans-serif krepko ležeče %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -5943,24 +5943,21 @@ msgstr "Povečevanje X:"
 
 #. Translators: this is the spoken representation for the character '∇' (U+2207)
 #: ../src/orca/mathsymbols.py:1273
-#, fuzzy
 msgctxt "math symbol"
 msgid "nabla"
-msgstr "Omogočeno"
+msgstr "nabla"
 
 #. Translators: this is the spoken representation for the character '∈' (U+2208)
 #: ../src/orca/mathsymbols.py:1276
-#, fuzzy
 msgctxt "math symbol"
 msgid "element of"
-msgstr "Predmet"
+msgstr "je element"
 
 #. Translators: this is the spoken representation for the character '∉' (U+2209)
 #: ../src/orca/mathsymbols.py:1279
-#, fuzzy
 msgctxt "math symbol"
 msgid "not an element of"
-msgstr "Predmet <%s> ni dovoljen znotraj predmeta <%s>"
+msgstr "ni element"
 
 #. Translators: this is the spoken representation for the character '∊' (U+220a)
 #: ../src/orca/mathsymbols.py:1282
@@ -6017,17 +6014,15 @@ msgstr ""
 
 #. Translators: this is the spoken representation for the character '−' (U+2212)
 #: ../src/orca/mathsymbols.py:1306
-#, fuzzy
 msgctxt "math symbol"
 msgid "minus"
 msgstr "minus"
 
 #. Translators: this is the spoken representation for the character '∓' (U+2213)
 #: ../src/orca/mathsymbols.py:1309
-#, fuzzy
 msgctxt "math symbol"
 msgid "minus or plus"
-msgstr "znak plus-minus"
+msgstr "minus-plus"
 
 #. Translators: this is the spoken representation for the character '∔' (U+2214)
 #: ../src/orca/mathsymbols.py:1312
@@ -6038,17 +6033,15 @@ msgstr "nadpisani znak plus"
 
 #. Translators: this is the spoken representation for the character '∕' (U+2215)
 #: ../src/orca/mathsymbols.py:1315
-#, fuzzy
 msgctxt "math symbol"
 msgid "division slash"
-msgstr "Obrnjena poševnica"
+msgstr "deljenje"
 
 #. Translators: this is the spoken representation for the character '∖' (U+2216)
 #: ../src/orca/mathsymbols.py:1318
-#, fuzzy
 msgctxt "math symbol"
 msgid "set minus"
-msgstr "nadpisani znak minus"
+msgstr "komplement"
 
 #. Translators: this is the spoken representation for the character '∗' (U+2217)
 #: ../src/orca/mathsymbols.py:1321
@@ -6073,24 +6066,21 @@ msgstr "Operator ostanek"
 
 #. Translators: this is the spoken representation for the character '√' (U+221a)
 #: ../src/orca/mathsymbols.py:1330
-#, fuzzy
 msgctxt "math symbol"
 msgid "square root"
 msgstr "kvadratni koren"
 
 #. Translators: this is the spoken representation for the character '∛' (U+221b)
 #: ../src/orca/mathsymbols.py:1333
-#, fuzzy
 msgctxt "math symbol"
 msgid "cube root"
 msgstr "tretji koren"
 
 #. Translators: this is the spoken representation for the character '∜' (U+221c)
 #: ../src/orca/mathsymbols.py:1336
-#, fuzzy
 msgctxt "math symbol"
 msgid "fourth root"
-msgstr "korenski pladenj"
+msgstr "četrti koren"
 
 #. Translators: this is the spoken representation for the character '∝' (U+221d)
 #: ../src/orca/mathsymbols.py:1339
@@ -6115,10 +6105,9 @@ msgstr "desni francoski narekovaj"
 
 #. Translators: this is the spoken representation for the character '∠' (U+2220)
 #: ../src/orca/mathsymbols.py:1348
-#, fuzzy
 msgctxt "math symbol"
 msgid "angle"
-msgstr "Kot"
+msgstr "kot"
 
 #. Translators: this is the spoken representation for the character '∡' (U+2221)
 #: ../src/orca/mathsymbols.py:1351
@@ -6192,45 +6181,39 @@ msgstr "Unija"
 
 #. Translators: this is the spoken representation for the character '∫' (U+222b)
 #: ../src/orca/mathsymbols.py:1381
-#, fuzzy
 msgctxt "math symbol"
 msgid "integral"
-msgstr "Operator integral (prikaz)"
+msgstr "integral"
 
 #. Translators: this is the spoken representation for the character '∬' (U+222c)
 #: ../src/orca/mathsymbols.py:1384
-#, fuzzy
 msgctxt "math symbol"
 msgid "double integral"
-msgstr "Double Commander"
+msgstr "dvojni integral"
 
 #. Translators: this is the spoken representation for the character '∭' (U+222d)
 #: ../src/orca/mathsymbols.py:1387
-#, fuzzy
 msgctxt "math symbol"
 msgid "triple integral"
-msgstr "Triple Peaks"
+msgstr "trojni integral"
 
 #. Translators: this is the spoken representation for the character '∮' (U+222e)
 #: ../src/orca/mathsymbols.py:1390
-#, fuzzy
 msgctxt "math symbol"
 msgid "contour integral"
-msgstr "Obrisni diagram."
+msgstr "krivuljni integral"
 
 #. Translators: this is the spoken representation for the character '∯' (U+222f)
 #: ../src/orca/mathsymbols.py:1393
-#, fuzzy
 msgctxt "math symbol"
 msgid "surface integral"
-msgstr "Širina površine"
+msgstr "površinski integral"
 
 #. Translators: this is the spoken representation for the character '∰' (U+2230)
 #: ../src/orca/mathsymbols.py:1396
-#, fuzzy
 msgctxt "math symbol"
 msgid "volume integral"
-msgstr "Glasnost predvajalnika"
+msgstr "prostorninski integral"
 
 #. Translators: this is the spoken representation for the character '∱' (U+2231)
 #: ../src/orca/mathsymbols.py:1399
@@ -6308,17 +6291,15 @@ msgstr ""
 
 #. Translators: this is the spoken representation for the character '∼' (U+223c)
 #: ../src/orca/mathsymbols.py:1432
-#, fuzzy
 msgctxt "math symbol"
 msgid "tilde"
 msgstr "tilda"
 
 #. Translators: this is the spoken representation for the character '∽' (U+223d)
 #: ../src/orca/mathsymbols.py:1435
-#, fuzzy
 msgctxt "math symbol"
 msgid "reversed tilde"
-msgstr "_Obrnjen vrstni red"
+msgstr "obrnjena tilda"
 
 #. Translators: this is the spoken representation for the character '∾' (U+223e)
 #: ../src/orca/mathsymbols.py:1438
@@ -6329,10 +6310,9 @@ msgstr "Leni način"
 
 #. Translators: this is the spoken representation for the character '∿' (U+223f)
 #: ../src/orca/mathsymbols.py:1441
-#, fuzzy
 msgctxt "math symbol"
 msgid "sine wave"
-msgstr "Novi val"
+msgstr "sinusni val"
 
 #. Translators: this is the spoken representation for the character '≀' (U+2240)
 #: ../src/orca/mathsymbols.py:1444
@@ -6343,17 +6323,15 @@ msgstr "Ime proizvoda"
 
 #. Translators: this is the spoken representation for the character '≁' (U+2241)
 #: ../src/orca/mathsymbols.py:1447
-#, fuzzy
 msgctxt "math symbol"
 msgid "not tilde"
-msgstr "(ni del programa)"
+msgstr "ni tilda"
 
 #. Translators: this is the spoken representation for the character '≂' (U+2242)
 #: ../src/orca/mathsymbols.py:1450
-#, fuzzy
 msgctxt "math symbol"
 msgid "minus tilde"
-msgstr "nadpisani znak minus"
+msgstr "minus-tilda"
 
 #. Translators: this is the spoken representation for the character '≃' (U+2243)
 #: ../src/orca/mathsymbols.py:1453
@@ -6390,24 +6368,21 @@ msgstr ""
 
 #. Translators: this is the spoken representation for the character '≈' (U+2248)
 #: ../src/orca/mathsymbols.py:1468
-#, fuzzy
 msgctxt "math symbol"
 msgid "almost equal to"
-msgstr "skoraj enako kot"
+msgstr "približno enako"
 
 #. Translators: this is the spoken representation for the character '≉' (U+2249)
 #: ../src/orca/mathsymbols.py:1471
-#, fuzzy
 msgctxt "math symbol"
 msgid "not almost equal to"
-msgstr "vred == območje                  (je enako)"
+msgstr "ni približno enako"
 
 #. Translators: this is the spoken representation for the character '≊' (U+224a)
 #: ../src/orca/mathsymbols.py:1474
-#, fuzzy
 msgctxt "math symbol"
 msgid "almost equal or equal to"
-msgstr "vred == območje                  (je enako)"
+msgstr "približno enako ali enako"
 
 #. Translators: this is the spoken representation for the character '≋' (U+224b)
 #: ../src/orca/mathsymbols.py:1477
@@ -6418,10 +6393,9 @@ msgstr "Triple Peaks"
 
 #. Translators: this is the spoken representation for the character '≌' (U+224c)
 #: ../src/orca/mathsymbols.py:1480
-#, fuzzy
 msgctxt "math symbol"
 msgid "all equal to"
-msgstr "Odgovori _vsem ..."
+msgstr "je skladen z"
 
 #. Translators: this is the spoken representation for the character '≍' (U+224d)
 #: ../src/orca/mathsymbols.py:1483
@@ -6656,31 +6630,27 @@ msgstr "Ni enako %d"
 
 #. Translators: this is the spoken representation for the character '≮' (U+226e)
 #: ../src/orca/mathsymbols.py:1582
-#, fuzzy
 msgctxt "math symbol"
 msgid "not less than"
-msgstr "je manjše kot"
+msgstr "ni manjši kot"
 
 #. Translators: this is the spoken representation for the character '≯' (U+226f)
 #: ../src/orca/mathsymbols.py:1585
-#, fuzzy
 msgctxt "math symbol"
 msgid "not greater than"
-msgstr "je večje kot"
+msgstr "ni večji kot"
 
 #. Translators: this is the spoken representation for the character '≰' (U+2270)
 #: ../src/orca/mathsymbols.py:1588
-#, fuzzy
 msgctxt "math symbol"
 msgid "neither less than nor equal to"
-msgstr "Poišči največje celo število manjše ali enako n."
+msgstr "ni ne manjši ne enak kot"
 
 #. Translators: this is the spoken representation for the character '≱' (U+2271)
 #: ../src/orca/mathsymbols.py:1591
-#, fuzzy
 msgctxt "math symbol"
 msgid "neither greater than nor equal to"
-msgstr "Namestiti je treba različico GTK+ %s ali novejšo."
+msgstr "ni ne večji ne enak kot"
 
 #. Translators: this is the spoken representation for the character '≲' (U+2272)
 #: ../src/orca/mathsymbols.py:1594
@@ -7982,9 +7952,8 @@ msgstr "Nastavitve možnosti uporabnika (besedilna različica)"
 #. Translators: This is the description of command line option '-s, --setup'
 #. that will place the user in Orca's GUI preferences dialog.
 #: ../src/orca/messages.py:277
-#, fuzzy
 msgid "Set up user preferences (GUI version)"
-msgstr "Nastavitve možnosti uporabnika (besedilna različica)"
+msgstr "Nastavitve možnosti uporabnika (grafična različica)"
 
 #. Translators: This text is the description displayed when Orca is launched
 #. from the command line and the help text is displayed.
@@ -8442,7 +8411,7 @@ msgstr "s formulo"
 #. information and examples.
 #.
 #: ../src/orca/messages.py:628
-#: ../src/orca/scripts/toolkits/Gecko/braille_generator.py:184
+#: ../src/orca/scripts/toolkits/Gecko/braille_generator.py:151
 msgid "image map link"
 msgstr "povezava načrta slike"
 
@@ -9084,9 +9053,9 @@ msgstr "Način žariščenja oken"
 #. with the widget. The substituted string is a human-consumable keybinding
 #. such as "Alt+Shift+A."
 #: ../src/orca/messages.py:1129
-#, fuzzy, python-format
+#, python-format
 msgid "To enable focus mode press %s."
-msgstr "Izbira za prikaz v 3D načinu"
+msgstr "Na omogočenje načina žarišča pritisnite %s."
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -9666,7 +9635,7 @@ msgstr "Govor ni na voljo."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1535 ../src/orca/scripts/default.py:3780
+#: ../src/orca/messages.py:1535 ../src/orca/scripts/default.py:3785
 msgid "string not found"
 msgstr "niza ni mogoče najti"
 
@@ -10949,7 +10918,7 @@ msgstr "Preveri črkovanje"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3392 ../src/orca/scripts/default.py:3404
+#: ../src/orca/scripts/default.py:3397 ../src/orca/scripts/default.py:3409
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
