@@ -867,6 +867,11 @@ class Script(default.Script):
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
+        if self.utilities.isZombie(event.source):
+            msg = "ERROR: Event source is Zombie"
+            debug.println(debug.LEVEL_INFO, msg)
+            return
+
         if not self.inDocumentContent(event.source):
             default.Script.onCaretMoved(self, event)
             return
@@ -985,6 +990,11 @@ class Script(default.Script):
         if not self.inDocumentContent(orca_state.locusOfFocus) \
            and self.inDocumentContent(event.source):
             return
+
+        if self.utilities.isZombie(event.source):
+            msg = "ERROR: Event source is Zombie"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
 
         text = self.utilities.queryNonEmptyText(event.source)
         char, start, end = text.getTextAtOffset(text.caretOffset, pyatspi.TEXT_BOUNDARY_CHAR)
@@ -1222,6 +1232,11 @@ class Script(default.Script):
         """Callback for object:state-changed:focused accessibility events."""
 
         if not event.detail1:
+            return
+
+        if self.utilities.isZombie(event.source):
+            msg = "ERROR: Event source is Zombie"
+            debug.println(debug.LEVEL_INFO, msg)
             return
 
         if not _settingsManager.getSetting('caretNavigationEnabled'):
