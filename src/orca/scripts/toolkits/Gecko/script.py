@@ -1152,7 +1152,10 @@ class Script(default.Script):
         if obj and self.utilities.isZombie(obj):
             replicant = self.utilities.findReplicant(event.source, obj)
             if replicant:
-                self.setCaretPosition(replicant, offset)
+                # Refrain from actually touching the replicant by grabbing
+                # focus or setting the caret in it. Doing so will only serve
+                # to anger it.
+                orca.setLocusOfFocus(event, replicant, False)
                 return
 
         if self.handleAsLiveRegion(event):
