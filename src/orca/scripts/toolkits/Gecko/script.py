@@ -1156,6 +1156,7 @@ class Script(default.Script):
                 # focus or setting the caret in it. Doing so will only serve
                 # to anger it.
                 orca.setLocusOfFocus(event, replicant, False)
+                self.setCaretContext(replicant, offset)
                 return
 
         if self.handleAsLiveRegion(event):
