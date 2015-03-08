@@ -585,7 +585,11 @@ class Utilities(script_utilities.Utilities):
 
         treatAsWhole = self._treatTextObjectAsWhole(obj)
         if not treatAsWhole and boundary == pyatspi.TEXT_BOUNDARY_SENTENCE_START:
-            if obj.getRole() in [pyatspi.ROLE_LIST_ITEM, pyatspi.ROLE_HEADING] \
+            state = obj.getState()
+            if state.contains(pyatspi.STATE_EDITABLE) \
+               and state.contains(pyatspi.STATE_FOCUSED):
+                treatAsWhole = False
+            elif obj.getRole() in [pyatspi.ROLE_LIST_ITEM, pyatspi.ROLE_HEADING] \
                or not self.isTextBlockElement(obj):
                 treatAsWhole = True
 
@@ -677,6 +681,10 @@ class Utilities(script_utilities.Utilities):
 
         boundary = pyatspi.TEXT_BOUNDARY_SENTENCE_START
         objects = self._getContentsForObj(obj, offset, boundary)
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EDITABLE) \
+           and state.contains(pyatspi.STATE_FOCUSED):
+            return objects
 
         def _treatAsSentenceEnd(x):
             xObj, xStart, xEnd, xString = x
@@ -862,7 +870,7 @@ class Utilities(script_utilities.Utilities):
 
     def justEnteredObject(self, obj, startOffset, endOffset):
         lastKey, mods = self.lastKeyAndModifiers()
-        if lastKey == "Down" and not mods:
+        if (lastKey == "Down" and not mods) or self._script.inSayAll():
             return startOffset == 0
 
         if lastKey == "Up" and not mods:

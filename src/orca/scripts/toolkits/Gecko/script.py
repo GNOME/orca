@@ -876,7 +876,7 @@ class Script(default.Script):
         return True
 
     def __sayAllProgressCallback(self, context, progressType):
-        if not self.inDocumentContent():
+        if not self.inDocumentContent() or self._inFocusMode:
             default.Script.__sayAllProgressCallback(self, context, progressType)
             return
 
@@ -888,14 +888,17 @@ class Script(default.Script):
                     return
                 elif lastKey == "Up" and self._rewindSayAll(context):
                     return
+                elif not self._lastCommandWasStructNav:
+                    self.setCaretPosition(context.obj, context.currentOffset)
+                    self.updateBraille(context.obj)
 
             self._inSayAll = False
             self._sayAllContents = []
             self._sayAllContexts = []
+            return
 
-        if not self._lastCommandWasStructNav:
-            orca.setLocusOfFocus(None, context.obj, notifyScript=False)
-            self.setCaretContext(context.obj, context.currentOffset)
+        orca.setLocusOfFocus(None, context.obj, notifyScript=False)
+        self.setCaretContext(context.obj, context.currentOffset)
 
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
