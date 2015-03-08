@@ -908,7 +908,9 @@ class Script(default.Script):
         if self.utilities.isCellBeingEdited(event.source):
             orca.setLocusOfFocus(event, event.source.parent, False)
 
-        if not orca_state.locusOfFocus:
+        if not orca_state.locusOfFocus \
+           or self.utilities.isZombie(orca_state.locusOfFocus):
+            orca.setLocusOfFocus(event, event.source)
             default.Script.onCaretMoved(self, event)
             return
 
