@@ -909,6 +909,11 @@ class Script(default.Script):
             default.Script.onCaretMoved(self, event)
             return
 
+        try:
+            role = orca_state.locusOfFocus.getRole()
+        except:
+            orca.setLocusOfFocus(event, event.source)
+
         if orca_state.locusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
             default.Script.onCaretMoved(self, event)
             return
