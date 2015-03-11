@@ -1335,20 +1335,16 @@ class StructuralNavigation:
         - obj: the accessible table cell to examime
         """
 
-        if obj and obj.name:
+        if obj and (obj.name or obj.childCount):
             return False
 
-        text = self._script.utilities.displayedText(obj)
-        if text and len(text.strip()) and text != obj.name:
-            return False
+        try:
+            text = obj.queryText()
+        except:
+            pass
         else:
-            for child in obj:
-                if child.getRole() in [pyatspi.ROLE_TABLE, pyatspi.ROLE_PANEL]:
-                    return False
-                text = self._script.utilities.displayedText(child)
-                if text and len(text.strip()) \
-                   or child.getRole() == pyatspi.ROLE_LINK:
-                    return False
+            if text.getText(0, -1).strip():
+                return False
 
         return True
 
