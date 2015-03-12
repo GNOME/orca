@@ -1848,7 +1848,7 @@ _operators['\u22c6'] = C_('math symbol', 'star operator')
 # Translators: this is the spoken representation for the character '⋇' (U+22c7)
 _operators['\u22c7'] = C_('math symbol', 'division times')
 
-# Translators: this is the spoken representation for the character '⋇' (U+22c8)
+# Translators: this is the spoken representation for the character '⋈' (U+22c8)
 _operators['\u22c8'] = C_('math symbol', 'bowtie')
 
 # Translators: this is the spoken representation for the character '⋉' (U+22c9)
