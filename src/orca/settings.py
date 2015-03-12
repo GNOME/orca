@@ -267,24 +267,14 @@ wrappedStructuralNavigation = True
 inferLiveRegions            = True
 ariaLandmarks = [
     "application",
-    "article",
     "banner",
     "complementary",
     "contentinfo",
-    "definition",
-    "directory",
-    "document",
-    "grid",
-    "log",
+    "form",
     "main",
-    "menubar",
     "navigation",
-    "note",
     "region",
     "search",
-    "secondary",
-    "seealso",
-    "status",
 ]
 
 # Chat
