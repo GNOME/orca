@@ -389,23 +389,6 @@ class SpeechGenerator(generator.Generator):
             result.extend(acss)
         return result
 
-    def _generateEmbedded(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) used especially for handling embedded objects.
-        This either is the label or name of the object or the name of
-        the application for the object.
-        """
-        acss = self.voice(DEFAULT)
-        result = self._generateLabelOrName(obj, **args)
-        if not result:
-            try:
-                result.append(obj.getApplication().name)
-            except:
-                pass
-        if result:
-            result.extend(acss)
-        return result
-
     #####################################################################
     #                                                                   #
     # State information                                                 #

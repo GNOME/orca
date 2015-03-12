@@ -152,10 +152,6 @@ formatting = {
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
             'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
             },
-        pyatspi.ROLE_EMBEDDED: {
-            'focused': 'embedded',
-            'unfocused': 'embedded'
-            },
         pyatspi.ROLE_ENTRY: {
             'focused': 'labelOrName + placeholderText + readOnly + textRole + currentLineText + allTextSelection',
             'unfocused': 'labelOrName + placeholderText + readOnly + textRole + currentLineText + allTextSelection + ' + MNEMONIC,
@@ -446,10 +442,6 @@ formatting = {
                           + (required and [Region(" " + asString(required))])\
                           + (readOnly and [Region(" " + asString(readOnly))])',
             'unfocused': BRAILLE_TEXT
-            },
-        pyatspi.ROLE_EMBEDDED: {
-            'unfocused': '[Component(obj,\
-                                     asString(label + displayedText) or asString(applicationName))]'
             },
         pyatspi.ROLE_ENTRY: {
             'unfocused': BRAILLE_TEXT
