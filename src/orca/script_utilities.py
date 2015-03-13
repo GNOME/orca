@@ -2704,7 +2704,7 @@ class Utilities:
         # Given an broken table hierarchy, findDescendant can hang. And the
         # reason we're here in the first place is to work around the app or
         # toolkit killing accessibles. There's only so much we can do....
-        if root.getRole() == pyatspi.ROLE_TABLE:
+        if root.getRole() in [pyatspi.ROLE_TABLE, pyatspi.ROLE_EMBEDDED]:
             return None
 
         isSame = lambda x: x and self.isSameObject(
