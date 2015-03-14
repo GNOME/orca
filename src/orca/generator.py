@@ -623,6 +623,9 @@ class Generator:
             return result
 
         text = self._script.utilities.displayedText(header)
+        if not text:
+            return result
+
         roleString =  self.getLocalizedRoleName(obj, pyatspi.ROLE_ROW_HEADER)
         if args.get('mode') == 'speech':
             if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
@@ -646,6 +649,9 @@ class Generator:
             return result
 
         text = self._script.utilities.displayedText(header)
+        if not text:
+            return result
+
         roleString =  self.getLocalizedRoleName(obj, pyatspi.ROLE_COLUMN_HEADER)
         if args.get('mode') == 'speech':
             if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \

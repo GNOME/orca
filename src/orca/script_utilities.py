@@ -710,15 +710,17 @@ class Utilities:
                              pyatspi.ROLE_LIST_ITEM,
                              pyatspi.ROLE_TREE_ITEM]
 
-        if role == pyatspi.ROLE_TABLE:
-            layoutOnly = attrs.get('layout-guess') == 'true'
-            if not layoutOnly:
-                try:
-                    table = obj.queryTable()
-                except:
-                    layoutOnly = True
-                else:
-                    layoutOnly = table.nRows <= 1 or table.nColumns <= 1
+        if role == pyatspi.ROLE_TABLE and attrs.get('layout-guess') != 'true':
+            try:
+                table = obj.queryTable()
+            except:
+                layoutOnly = True
+            else:
+                if not (obj.name or self.displayedLabel(obj)):
+                    if not (table.nRows and table.nColumns):
+                        layoutOnly = True
+                    else:
+                        layoutOnly = not (table.getColumnHeader(0) or table.getRowHeader(0))
         elif role == pyatspi.ROLE_TABLE_CELL and obj.childCount:
             if obj[0].getRole() == pyatspi.ROLE_TABLE_CELL:
                 layoutOnly = True
