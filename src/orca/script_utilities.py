@@ -2755,7 +2755,9 @@ class Utilities:
 
         parent = self.getFunctionalParent(obj)
         siblings = self.getFunctionalChildren(parent)
-        siblings = list(filter(lambda x: not self.isLayoutOnly(x), siblings))
+        layoutRoles = [pyatspi.ROLE_SEPARATOR, pyatspi.ROLE_TEAROFF_MENU_ITEM]
+        isNotLayoutOnly = lambda x: x and not x.getRole() in layoutRoles
+        siblings = list(filter(isNotLayoutOnly, siblings))
         if not (siblings and obj in siblings):
             return -1, -1
 
