@@ -572,7 +572,11 @@ class StructuralNavigation:
                     pyatspi.ROLE_TABLE_CELL,
                     pyatspi.ROLE_TEXT,
                     pyatspi.ROLE_SECTION,
+                    pyatspi.ROLE_DOCUMENT_EMAIL,
                     pyatspi.ROLE_DOCUMENT_FRAME,
+                    pyatspi.ROLE_DOCUMENT_PRESENTATION,
+                    pyatspi.ROLE_DOCUMENT_SPREADSHEET,
+                    pyatspi.ROLE_DOCUMENT_TEXT,
                     pyatspi.ROLE_DOCUMENT_WEB]
 
     IMAGE_ROLES = [pyatspi.ROLE_IMAGE,
@@ -1204,7 +1208,12 @@ class StructuralNavigation:
         interest is contained.
         """
 
-        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
+        docRoles = [pyatspi.ROLE_DOCUMENT_EMAIL,
+                    pyatspi.ROLE_DOCUMENT_FRAME,
+                    pyatspi.ROLE_DOCUMENT_PRESENTATION,
+                    pyatspi.ROLE_DOCUMENT_SPREADSHEET,
+                    pyatspi.ROLE_DOCUMENT_TEXT,
+                    pyatspi.ROLE_DOCUMENT_WEB]
         stopRoles = [pyatspi.ROLE_FRAME, pyatspi.ROLE_SCROLL_PANE]
         document = self._script.utilities.ancestorWithRole(
             orca_state.locusOfFocus, docRoles, stopRoles)
