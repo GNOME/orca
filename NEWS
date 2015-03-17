@@ -1,3 +1,52 @@
+3.15.92 - 17 March 2015
+
+General:
+
+  * Refine the heuristic used to identify layout tables
+
+  * Do not speak table details when verbosity level is brief
+
+  * Check for the new(ish) accessible roles for documents in structural
+    navigation (needed for table navigation in recent versions of Writer)
+
+  * Check for Zombie accessibles in Writer's onCaretMoved() so that we
+    don't get tripped up by deleted paragraphs
+
+  * Be less aggressive weeding out layout-only siblings for position
+    and set size, because getting it 100% right is non-performant
+
+  * Don't look for zombie replicants in ROLE_EMBEDDED objects (fixes
+    hang with Firefox)
+
+  * Use the default object generation for ROLE_EMBEDDED (fixes bogus
+    information presentation with Firefox)
+
+  * Correct outdated links to documentation in translator comments, and
+    fix translator comment symbol for bowtie operator
+
+  * Present the line rather than all object contents when navigating by
+    landmark
+
+  * Update our landmark role list to bring it into alignment with the
+    ARIA spec
+
+  * Do not rely on displayedText() when determining if a table cell is
+    blank
+
+  * Update position in Gecko content when SayAll is interrupted
+
+  * Several fixes related to Gecko killing accessible objects
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bs            Bosnian                     Samir Ribic
+    cs            Czech                       Marek Černocký
+    da            Danish                      Kenneth Nielsen
+    pl            Polish                      Piotr Drąg
+    sl            Slovenian                   Matej Urbančič
+
+=========
+
 3.15.91 - 2 March 2015
 
 General:
