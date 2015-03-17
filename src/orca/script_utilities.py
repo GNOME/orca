@@ -92,53 +92,6 @@ class Utilities:
     #########################################################################
 
     @staticmethod
-    def __hasLabelForRelation(label):
-        """Check if label has a LABEL_FOR relation
-
-        Arguments:
-        - label: the label in question
-
-        Returns TRUE if label has a LABEL_FOR relation.
-        """
-        if (not label) or (label.getRole() != pyatspi.ROLE_LABEL):
-            return False
-
-        relations = label.getRelationSet()
-
-        for relation in relations:
-            if relation.getRelationType() == pyatspi.RELATION_LABEL_FOR:
-                return True
-
-        return False
-
-    @staticmethod
-    def __isLabeling(label, obj):
-        """Check if label is connected via  LABEL_FOR relation with object
-
-        Arguments:
-        - obj: the object in question
-        - labeled: the label in question
-
-        Returns TRUE if label has a relation LABEL_FOR for object.
-        """
-
-        if not obj or not label or label.getRole() != pyatspi.ROLE_LABEL:
-            return False
-
-        relations = label.getRelationSet()
-        if not relations:
-            return False
-
-        for relation in relations:
-            if relation.getRelationType() == pyatspi.RELATION_LABEL_FOR:
-                for i in range(0, relation.getNTargets()):
-                    target = relation.getTarget(i)
-                    if target == obj:
-                        return True
-
-        return False
-
-    @staticmethod
     def activeWindow():
         """Traverses the list of known apps looking for one who has an
         immediate child (i.e., a window) whose state includes the active
@@ -1729,71 +1682,6 @@ class Utilities:
             string = "".join(toBuild)
 
         return string
-
-    def hasTextSelections(self, obj):
-        """Return an indication of whether this object has selected text.
-        Note that it's possible that this object has no selection, but is part
-        of a selected text area. Because of this, we need to check the
-        objects on either side to see if they are none zero length and
-        have text selections.
-
-        Arguments:
-        - obj: the text object to start checking for selected text.
-
-        Returns: an indication of whether this object has selected text,
-        or adjacent text objects have selected text.
-        """
-
-        currentSelected = False
-        otherSelected = False
-        text = obj.queryText()
-        nSelections = text.getNSelections()
-        if nSelections:
-            currentSelected = True
-        else:
-            otherSelected = False
-            text = obj.queryText()
-            displayedText = text.getText(0, text.characterCount)
-            if (text.caretOffset == 0) or len(displayedText) == 0:
-                current = obj
-                morePossibleSelections = True
-                while morePossibleSelections:
-                    morePossibleSelections = False
-                    for relation in current.getRelationSet():
-                        if relation.getRelationType() == \
-                               pyatspi.RELATION_FLOWS_FROM:
-                            prevObj = relation.getTarget(0)
-                            prevObjText = prevObj.queryText()
-                            if prevObjText.getNSelections() > 0:
-                                otherSelected = True
-                            else:
-                                displayedText = prevObjText.getText(0,
-                                    prevObjText.characterCount)
-                                if len(displayedText) == 0:
-                                    current = prevObj
-                                    morePossibleSelections = True
-                            break
-
-                current = obj
-                morePossibleSelections = True
-                while morePossibleSelections:
-                    morePossibleSelections = False
-                    for relation in current.getRelationSet():
-                        if relation.getRelationType() == \
-                               pyatspi.RELATION_FLOWS_TO:
-                            nextObj = relation.getTarget(0)
-                            nextObjText = nextObj.queryText()
-                            if nextObjText.getNSelections() > 0:
-                                otherSelected = True
-                            else:
-                                displayedText = nextObjText.getText(0,
-                                    nextObjText.characterCount)
-                                if len(displayedText) == 0:
-                                    current = nextObj
-                                    morePossibleSelections = True
-                            break
-
-        return [currentSelected, otherSelected]
 
     def isWordMisspelled(self, obj, offset):
         """Identifies if the current word is flagged as misspelled by the

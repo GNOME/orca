@@ -1054,17 +1054,11 @@ class SpeechGenerator(generator.Generator):
 
         textObj = obj.queryText()
         caretOffset = textObj.caretOffset
-        textContents = ""
-        selected = False
 
-        nSelections = textObj.getNSelections()
+        textContents, startOffset, endOffset = self._script.utilities.allSelectedText(obj)
+        selected = textContents != ""
 
-        [current, other] = self._script.utilities.hasTextSelections(obj)
-        if current or other:
-            selected = True
-            [textContents, startOffset, endOffset] = \
-                self._script.utilities.allSelectedText(obj)
-        else:
+        if not selected:
             # Get the line containing the caret
             #
             [line, startOffset, endOffset] = textObj.getTextAtOffset(
