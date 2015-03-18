@@ -113,42 +113,6 @@ class Utilities:
         return None
 
     @staticmethod
-    def allDescendants(root, onlyShowing=True):
-        """Returns a list of all objects under the given root.  Objects
-        are returned in no particular order - this function does a simple
-        tree traversal, ignoring the children of objects which report the
-        MANAGES_DESCENDANTS state.
-
-        Arguments:
-        - root: the Accessible object to traverse
-        - onlyShowing: examine only those objects that are SHOWING
-
-        Returns: a list of all objects under the specified object
-        """
-
-        if root and root.childCount <= 0:
-            return []
-
-        objlist = []
-        for i, child in enumerate(root):
-            debug.println(debug.LEVEL_FINEST,
-                          "Script.allDescendants looking at child %d" % i)
-            try:
-                state = child.getState()
-            except:
-                debug.println(debug.LEVEL_FINEST, "Error getting state")
-                continue
-
-            if not onlyShowing \
-               or (onlyShowing and state.contains(pyatspi.STATE_SHOWING)):
-                objlist.append(child)
-                if not state.contains(pyatspi.STATE_MANAGES_DESCENDANTS) \
-                   and child.childCount > 0:
-                    objlist.extend(Utilities.allDescendants(child, onlyShowing))
-
-        return objlist
-
-    @staticmethod
     def ancestorWithRole(obj, ancestorRoles, stopRoles):
         """Returns the object of the specified roles which contains the
         given object, or None if the given object is not contained within
@@ -386,22 +350,6 @@ class Utilities:
                 break
 
         return defaultButton
-
-    @staticmethod
-    def descendantsWithRole(root, role, onlyShowing=True):
-        """Returns a list of all objects of a specific role beneath the
-        given root.
-
-        Arguments:
-        - root: the Accessible object to traverse
-        - role: the string describing the Accessible role of the object
-        - onlyShowing: examine only those objects that are SHOWING
-
-        Returns a list of descendants of the root that are of the given role.
-        """
-
-        allObjs = Utilities.allDescendants(root, onlyShowing)
-        return [o for o in allObjs if o.getRole() == role]
 
     def displayedLabel(self, obj):
         """If there is an object labelling the given object, return the
@@ -1397,7 +1345,8 @@ class Utilities:
         Returns a list of unrelated labels under the given root.
         """
 
-        allLabels = self.descendantsWithRole(root, pyatspi.ROLE_LABEL, onlyShowing)
+        hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_LABEL
+        allLabels = pyatspi.findAllDescendants(root, hasRole)
         try:
             labels = [x for x in allLabels if not x.getRelationSet()]
             labels = [x for x in labels if x.parent and x.name != x.parent.name]

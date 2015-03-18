@@ -188,10 +188,8 @@ class Script(GAIL.Script):
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
         # missing.
-        #
-        allPageTabs = self.utilities.descendantsWithRole(
-            event.source, pyatspi.ROLE_PAGE_TAB)
-
+        hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_PAGE_TAB
+        allPageTabs = pyatspi.findAllDescendants(event.source, hasRole)
         GAIL.Script.onWindowActivated(self, event)
 
     def onExpandedChanged(self, event):

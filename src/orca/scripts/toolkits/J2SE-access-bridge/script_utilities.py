@@ -111,7 +111,10 @@ class Utilities(script_utilities.Utilities):
         -obj: the Accessible object
         """
 
-        newObj = self.validObj(self._script.lastDescendantChangedSource, obj)
+        newObj = obj
+        if newObj and self.isZombie(newObj):
+            newObj = self.findReplicant(self._script.lastDescendantChangedSource, obj)
+
         if not newObj:
             return script_utilities.Utilities.nodeLevel(self, obj)
 
@@ -127,43 +130,3 @@ class Utilities(script_utilities.Utilities):
                 break
 
         return count - 1
-
-    def validObj(self, rootObj, obj, onlyShowing=True):
-        """Attempts to convert an older copy of an accessible into the
-        current, active version. We need to do this in order to ascend
-        the hierarchy.
-
-        Arguments:
-        - rootObj: the top-most ancestor of interest
-        - obj: the old object we're attempting to replace
-        - onlyShowing: whether or not we should limit matches to those
-          which have STATE_SHOWING
-
-         Returns an accessible replacement for obj if one can be found;
-         otherwise, None.
-         """
-
-        if not (obj and rootObj):
-            return None
-
-        items = self.descendantsWithRole(rootObj, obj.getRole(), onlyShowing)
-        for item in items:
-            if item.name == obj.name \
-               and self.isSameObject(item, obj):
-                return item
-
-        return None
-
-    #########################################################################
-    #                                                                       #
-    # Utilities for working with the accessible text interface              #
-    #                                                                       #
-    #########################################################################
-
-
-
-    #########################################################################
-    #                                                                       #
-    # Miscellaneous Utilities                                               #
-    #                                                                       #
-    #########################################################################

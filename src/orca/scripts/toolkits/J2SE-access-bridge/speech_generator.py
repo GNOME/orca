@@ -111,8 +111,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         listObj = None
         if obj and obj.getRole() == pyatspi.ROLE_COMBO_BOX:
-            allLists = self._script.utilities.descendantsWithRole(
-                obj, pyatspi.ROLE_LIST, False)
+            hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_LIST
+            allLists = pyatspi.findAllDescendants(obj, hasRole)
             if len(allLists) == 1:
                 listObj = allLists[0]
 

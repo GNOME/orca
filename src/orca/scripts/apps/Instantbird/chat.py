@@ -72,8 +72,8 @@ class Chat(chat.Chat):
         #
         if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
             bubble = event.source[event.detail1]
-            paragraphs = self._script.utilities.descendantsWithRole(
-                bubble, pyatspi.ROLE_PARAGRAPH)
+            hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_PARAGRAPH
+            paragraphs = pyatspi.findAllDescendants(bubble, hasRole)
 
             # If the user opted the non-default, "simple" appearance, then this
             # might not be a bubble at all, but a paragraph.

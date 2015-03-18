@@ -522,8 +522,21 @@ class Script(default.Script):
         wind up reading the word or not).
         """
 
-        paragraph = self.utilities.descendantsWithRole(
-            pane, pyatspi.ROLE_PARAGRAPH)
+        def isMatch(obj):
+            if not (obj and obj.getRole() == pyatspi.ROLE_PARAGRAPH):
+                return False
+
+            if not obj.getState().contains(pyatspi.STATE_EDITABLE):
+                return False
+
+            try:
+                text = obj.queryText()
+            except:
+                return False
+
+            return text.characterCount > 0
+
+        paragraph = pyatspi.findAllDescendants(pane, isMatch)
 
         # If there is not exactly one paragraph, this isn't the spellcheck
         # dialog.
@@ -542,12 +555,6 @@ class Script(default.Script):
             textLength = text.characterCount
             if not textLength:
                 return False
-
-        # If the text here is not editable, this isn't the spellcheck
-        # dialog.
-        #
-        if not paragraph[0].getState().contains(pyatspi.STATE_EDITABLE):
-            return False
 
         # Determine which word is the misspelt word. This word will have
         # non-default text attributes associated with it.

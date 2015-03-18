@@ -43,7 +43,8 @@ class Script(default.Script):
     def onWindowCreated(self, event):
         """Callback for window:create accessibility events."""
 
-        a = self.utilities.descendantsWithRole(event.source, pyatspi.ROLE_LABEL)
-        texts = [self.utilities.displayedText(acc) for acc in a]
+        hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_LABEL
+        allLabels = pyatspi.findAllDescendants(event.source, hasRole)
+        texts = [self.utilities.displayedText(acc) for acc in allLabels]
         text = '%s %s' % (messages.NOTIFICATION, ' '.join(texts))
         speech.speak(text, None, True)

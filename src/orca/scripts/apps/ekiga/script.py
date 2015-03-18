@@ -89,8 +89,8 @@ class Script(default.Script):
         """
 
         if event.source.getRole() == pyatspi.ROLE_SPLIT_PANE:
-            textObjects = self.utilities.descendantsWithRole(
-                event.source, pyatspi.ROLE_TEXT)
+            hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_TEXT
+            textObjects = pyatspi.findAllDescendants(event.source, hasRole)
             return
 
         default.Script.onValueChanged(self, event)

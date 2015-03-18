@@ -143,8 +143,8 @@ class Script(default.Script):
         if orca_state.locusOfFocus.getRole() == \
                                         pyatspi.ROLE_TABLE_COLUMN_HEADER:
             table = event.source.parent
-            cells = self.utilities.descendantsWithRole(
-                table, pyatspi.ROLE_TABLE_CELL)
+            hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_CELL
+            cells = pyatspi.findAllDescendants(event.source, hasRole)
             eventsynthesizer.clickObject(cells[1], 1)
 
         default.Script.locusOfFocusChanged(self, event, 

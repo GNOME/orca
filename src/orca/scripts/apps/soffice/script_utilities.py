@@ -519,15 +519,7 @@ class Utilities(script_utilities.Utilities):
         """Attempts to locate the Impress drawing view, which is the
         area in which slide editing occurs."""
 
-        # TODO - JD: We should probably add this to the generatorCache.
-        #
-        docFrames = self.descendantsWithRole(
-            self.topLevelObject(obj), pyatspi.ROLE_DOCUMENT_FRAME)
-        docFrame = [o for o in docFrames if ":" in o.name and "/" in o.name]
-        if docFrame:
-            return docFrame[0]
-
-        return None
+        return pyatspi.findDescendant(self.topLevelObject(obj), self.isDrawingView)
 
     def isDrawingView(self, obj):
         """Returns True if obj is the Impress Drawing View."""
@@ -545,7 +537,8 @@ class Utilities(script_utilities.Utilities):
         #
         if obj:
             topLevel = self.topLevelObject(obj)
-            if topLevel and topLevel.name.endswith("Impress"):
+            if topLevel and not self.isZombie(topLevel) \
+               and topLevel.name.endswith("Impress"):
                 return True
 
         return False
@@ -563,12 +556,14 @@ class Utilities(script_utilities.Utilities):
         if not parent:
             return None, None
 
-        panes = self.descendantsWithRole(parent, pyatspi.ROLE_SPLIT_PANE)
+        hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_SPLIT_PANE
+        panes = pyatspi.findAllDescendants(parent, hasRole)
         if not panes:
             return None, None
 
         slidePane = taskPane = None
-        if self.descendantsWithRole(panes[0], pyatspi.ROLE_DOCUMENT_FRAME):
+        hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_DOCUMENT_FRAME
+        if pyatspi.findAllDescendants(panes[0], hasRole):
             slidePane = panes[0]
             if len(panes) == 2:
                 taskPane = panes[1]
