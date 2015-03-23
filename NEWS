@@ -1,3 +1,34 @@
+3.14.4 - 23 March 2015
+
+General:
+
+  * Check for the new(ish) accessible roles for documents in structural
+    navigation
+
+  * Fix several issues related to dead accessibles in Gecko content
+    and Writer content
+
+  * Add support for XDG_VTNR for braille
+
+  * Add formatting strings for ROLE_LABEL so that they get presented
+
+  * Ignore text insertions from menus and menu items
+
+  * Fix for bug 742293 - Application-specific shortcut rebinding doesn't
+    persist
+
+  * Fix for bug 738056 - The startup profile combo box is not properly
+    labelled
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bs            Bosnian                Samir Ribic
+    de            German                 Christian Kirbach
+    sl            Slovenian              Matej Urbančič
+    sv            Swedish                Anders Jonsson
+
+=========
+
 3.14.3 - 03 December 2014
 
 Gecko:
