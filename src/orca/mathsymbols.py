@@ -28,7 +28,7 @@ __license__   = "LGPL"
 import re
 import unicodedata
 
-from .orca_i18n import C_
+from .orca_i18n import _, C_
 
 fallbackOnUnicodeData = True
 
@@ -1248,6 +1248,18 @@ MONOSPACE = C_('math symbol', 'monospace %s')
 # at http://www.unicode.org/charts/PDF/U1D400.pdf.
 DOTLESS = C_('math symbol', 'dotless %s')
 
+# Translators: this is the spoken representation for the character '←' (U+2190)
+_arrows['\u2190'] = _("left arrow")
+
+# Translators: this is the spoken representation for the character '→' (U+2192)
+_arrows['\u2192'] = _("right arrow")
+
+# Translators: this is the spoken representation for the character '➔' (U+2794)
+_arrows['\u2794'] = _("right-pointing arrow")
+
+# Translators: this is the spoken representation for the character '➢' (U+27a2)
+_arrows['\u27a2'] = _("right-pointing arrowhead")
+
 # Translators: this is the spoken representation for the character '∀' (U+2200)
 _operators['\u2200'] = C_('math symbol', 'for all')
 
@@ -2015,6 +2027,24 @@ _operators['\u22fe'] = C_('math symbol', 'small contains with overbar')
 
 # Translators: this is the spoken representation for the character '⋿' (U+22ff)
 _operators['\u22ff'] = C_('math symbol', 'z notation bag membership')
+
+# Translators: this is the spoken representation for the character '■' (U+25a0)
+_shapes['\u25a0'] = _("black square")
+
+# Translators: this is the spoken representation for the character '□' (U+25a1)
+_shapes['\u25a1'] = _("white square")
+
+# Translators: this is the spoken representation for the character '◆' (U+25c6)
+_shapes['\u25c6'] = _("black diamond")
+
+# Translators: this is the spoken representation for the character '○' (U+25cb)
+_shapes['\u25cb'] = _("white circle")
+
+# Translators: this is the spoken representation for the character '●' (U+25cf)
+_shapes['\u25cf'] = _("black circle")
+
+# Translators: this is the spoken representation for the character '◦' (U+25e6)
+_shapes['\u25e6'] = _("white bullet")
 
 _all.update(_alnum)
 _all.update(_arrows)

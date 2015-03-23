@@ -638,71 +638,6 @@ chnames['\u20ac'] = _("euro")
 #
 chnames['\u2122'] = _("trademark")
 
-# Translators: this is the spoken word for the character '←' (U+2190)
-#
-chnames['\u2190'] = _("left arrow")
-
-# Translators: this is the spoken word for the character '→' (U+2192)
-#
-chnames['\u2192'] = _("right arrow")
-
-# Translators: this is the spoken word for the character '≈' (U+2248)
-#
-chnames['\u2248'] = _("almost equal to")
-
-# Translators: this is the spoken word for the character '≠' (U+2260)
-#
-chnames['\u2260'] = _("not equal to")
-
-# Translators: this is the spoken word for the character '≤' (U+2264)
-#
-chnames['\u2264'] = _("less than or equal to")
-
-# Translators: this is the spoken word for the character '≥' (U+2265)
-#
-chnames['\u2265'] = _("greater than or equal to")
-
-# Translators: this is the spoken word for the character '√' (U+221a)
-#
-chnames['\u221a'] = _("square root")
-
-# Translators: this is the spoken word for the character '∛' (U+221b)
-#
-chnames['\u221b'] = _("cube root")
-
-# Translators: this is the spoken word for the character '∞' (U+221e)
-#
-chnames['\u221e'] = _("infinity")
-
-# Translators: this is the spoken word for the character '■' (U+25a0)
-# It can be used as a bullet in a list.
-#
-chnames['\u25a0'] = _("black square")
-
-# Translators: this is the spoken word for the character '□' (U+25a1)
-# It can be used as a bullet in a list.
-#
-chnames['\u25a1'] = _("white square")
-
-# Translators: this is the spoken word for the character '◆' (U+25c6)
-# It can be used as a bullet in a list.
-#
-chnames['\u25c6'] = _("black diamond")
-
-# Translators: this is the spoken word for the character '○' (U+25cb)
-# It can be used as a bullet in a list.
-#
-chnames['\u25cb'] = _("white circle")
-
-# Translators: this is the spoken word for the character '●' (U+25cf)
-# It can be used as a bullet in a list.
-#
-chnames['\u25cf'] = _("black circle")
-
-# Translators: this is the spoken word for the character '◦' (U+25e6)
-#
-chnames['\u25e6'] = _("white bullet")
-
 # Translators: this is the spoken word for the character '✓' (U+2713)
 # It can be used as a bullet in a list.
 #
@@ -721,13 +656,6 @@ chnames['\u2714'] = _("heavy check mark")
 # use of "x-shaped bullet".
 #
 chnames['\u2717'] = _("x-shaped bullet")
-
-# Translators: this is the spoken word for the character '➔' (U+2794)
-# This symbol is included here because it can be used as a bullet in 
-# an OOo list. The goal is to inform the user of the appearance of 
-# the bullet without too much verbiage, hence simply "right-pointing arrow".
-#
-chnames['\u2794'] = _("right-pointing arrow")
 
 # Translators: this is the spoken word for the character '⁰' (U+2070)
 #
@@ -840,13 +768,6 @@ chnames['\u208d'] = _("subscript left paren")
 # Translators: this is the spoken word for the character '₎' (U+208e)
 #
 chnames['\u208e'] = _("subscript right paren")
-
-# Translators: this is the spoken word for the character '➢' (U+27a2)
-# This symbol is included here because it can be used as a bullet in an 
-# OOo list. The goal is to inform the user of the appearance of the bullet 
-# without too much verbiage, hence simply "right-pointing arrowhead".
-#
-chnames['\u27a2'] = _("right-pointing arrowhead")
 
 # Translators:  StarOffice/OOo includes private-use unicode character U+E00A 
 # as a bullet which looks like the black square: ■ (U+25A0).  Therefore, 
