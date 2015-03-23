@@ -108,6 +108,11 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
+        # And with sliders.
+        if role == pyatspi.ROLE_SLIDER:
+            orca.setLocusOfFocus(event, event.source)
+            return
+
         # https://bugzilla.gnome.org/show_bug.cgi?id=720987
         if role == pyatspi.ROLE_TABLE_COLUMN_HEADER:
             orca.setLocusOfFocus(event, event.source)
