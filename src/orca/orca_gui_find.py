@@ -232,8 +232,7 @@ def showFindUI():
     global OS
 
     if not OS:
-        uiFile = os.path.join(orca_platform.prefix,
-                              orca_platform.datadirname,
+        uiFile = os.path.join(orca_platform.datadir,
                               orca_platform.package,
                               "ui",
                               "orca-find.ui")

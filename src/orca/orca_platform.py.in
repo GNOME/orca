@@ -38,9 +38,9 @@ prefix      = "@prefix@"
 #
 package     = "@PACKAGE@"
 
-# The name of the data directory (usually "share").
+# The location of the data directory (usually "share").
 #
-datadirname = "@DATADIRNAME@"
+datadir = "@datadir@".replace('${prefix}', '@prefix@')
 
 # The directory where we could find liblouis translation tables.
 #
