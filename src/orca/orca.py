@@ -505,8 +505,7 @@ def _showPreferencesUI(script, prefs):
         debug.printException(debug.LEVEL_SEVERE)
         return
 
-    uiFile = os.path.join(orca_platform.prefix,
-                          orca_platform.datadirname,
+    uiFile = os.path.join(orca_platform.datadir,
                           orca_platform.package,
                           "ui",
                           "orca-setup.ui")
