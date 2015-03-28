@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2015-03-03 18:30+0000\n"
-"PO-Revision-Date: 2015-03-03 22:24+0100\n"
+"PO-Revision-Date: 2015-03-25 20:36+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -648,7 +648,7 @@ msgstr "tabulator"
 #.
 #: ../src/orca/chnames.py:52
 msgid "exclaim"
-msgstr "klicaj"
+msgstr "fakulteta"
 
 #. Translators: this is the spoken word for the character '"' (U+0022)
 #.
@@ -954,7 +954,7 @@ msgstr "stopinje"
 #.
 #: ../src/orca/chnames.py:249
 msgid "plus or minus"
-msgstr "znak plus-minus"
+msgstr "plus-minus"
 
 #. Translators: this is the spoken word for the character '²' (U+00b2)
 #.
@@ -1490,7 +1490,7 @@ msgstr "levi spodnji dvojni narekovaj"
 #.
 #: ../src/orca/chnames.py:603
 msgid "dagger"
-msgstr "križec"
+msgstr "konjugirano transponirana"
 
 #. Translators: this is the spoken word for the character '‡' (U+2021)
 #.
@@ -5894,7 +5894,6 @@ msgstr "Vsebina je %s"
 
 #. Translators: this is the spoken representation for the character '∀' (U+2200)
 #: ../src/orca/mathsymbols.py:1252
-#, fuzzy
 msgctxt "math symbol"
 msgid "for all"
 msgstr "za vse"
@@ -5915,24 +5914,21 @@ msgstr "Uskladi delno"
 
 #. Translators: this is the spoken representation for the character '∃' (U+2203)
 #: ../src/orca/mathsymbols.py:1261
-#, fuzzy
 msgctxt "math symbol"
 msgid "there exists"
-msgstr "Mapa %s že obstaja!"
+msgstr "obstaja"
 
 #. Translators: this is the spoken representation for the character '∄' (U+2204)
 #: ../src/orca/mathsymbols.py:1264
-#, fuzzy
 msgctxt "math symbol"
 msgid "there does not exist"
-msgstr "Program '%s' ne obstaja"
+msgstr "ne obstaja"
 
 #. Translators: this is the spoken representation for the character '∅' (U+2205)
 #: ../src/orca/mathsymbols.py:1267
-#, fuzzy
 msgctxt "math symbol"
 msgid "empty set"
-msgstr "Prazen niz rezultatov"
+msgstr "prazna množica"
 
 #. Translators: this is the spoken representation for the character '∆' (U+2206)
 #: ../src/orca/mathsymbols.py:1270
@@ -5961,56 +5957,51 @@ msgstr "ni element"
 
 #. Translators: this is the spoken representation for the character '∊' (U+220a)
 #: ../src/orca/mathsymbols.py:1282
-#, fuzzy
 msgctxt "math symbol"
 msgid "small element of"
-msgstr "Nepričakovan element \"%s\""
+msgstr "je mali element"
 
 #. Translators: this is the spoken representation for the character '∋' (U+220b)
 #: ../src/orca/mathsymbols.py:1285
-#, fuzzy
 msgctxt "math symbol"
 msgid "contains as a member"
-msgstr "Funkcije/spremenljivke članov"
+msgstr "vsebuje predmet"
 
 #. Translators: this is the spoken representation for the character '∌' (U+220c)
 #: ../src/orca/mathsymbols.py:1288
-#, fuzzy
 msgctxt "math symbol"
 msgid "does not contain as a member"
-msgstr "Pogon %s ne vsebuje medija."
+msgstr "ne vsebuje predmeta"
 
 #. Translators: this is the spoken representation for the character '∍' (U+220d)
 #: ../src/orca/mathsymbols.py:1291
 msgctxt "math symbol"
 msgid "small contains as a member"
-msgstr ""
+msgstr "mali ne vsebuje predmeta"
 
 #. Translators: this is the spoken representation for the character '∎' (U+220e)
 #: ../src/orca/mathsymbols.py:1294
-#, fuzzy
 msgctxt "math symbol"
 msgid "end of proof"
-msgstr "Končni datum:"
+msgstr "konec dokaza"
 
 #. Translators: this is the spoken representation for the character '∏' (U+220f)
 #: ../src/orca/mathsymbols.py:1297
-#, fuzzy
 msgctxt "math symbol"
 msgid "n-ary product"
-msgstr "Ime proizvoda"
+msgstr "zmnožek števil"
 
 #. Translators: this is the spoken representation for the character '∐' (U+2210)
 #: ../src/orca/mathsymbols.py:1300
 msgctxt "math symbol"
 msgid "n-ary coproduct"
-msgstr ""
+msgstr "koprodukt števil"
 
 #. Translators: this is the spoken representation for the character '∑' (U+2211)
 #: ../src/orca/mathsymbols.py:1303
 msgctxt "math symbol"
 msgid "n-ary summation"
-msgstr ""
+msgstr "vsota števil"
 
 #. Translators: this is the spoken representation for the character '−' (U+2212)
 #: ../src/orca/mathsymbols.py:1306
@@ -6084,24 +6075,21 @@ msgstr "četrti koren"
 
 #. Translators: this is the spoken representation for the character '∝' (U+221d)
 #: ../src/orca/mathsymbols.py:1339
-#, fuzzy
 msgctxt "math symbol"
 msgid "proportional to"
-msgstr "_Pojdi na"
+msgstr "je sorazmeren z"
 
 #. Translators: this is the spoken representation for the character '∞' (U+221e)
 #: ../src/orca/mathsymbols.py:1342
-#, fuzzy
 msgctxt "math symbol"
 msgid "infinity"
 msgstr "neskončno"
 
 #. Translators: this is the spoken representation for the character '∟' (U+221f)
 #: ../src/orca/mathsymbols.py:1345
-#, fuzzy
 msgctxt "math symbol"
 msgid "right angle"
-msgstr "desni francoski narekovaj"
+msgstr "pravi kot"
 
 #. Translators: this is the spoken representation for the character '∠' (U+2220)
 #: ../src/orca/mathsymbols.py:1348
@@ -6111,73 +6099,63 @@ msgstr "kot"
 
 #. Translators: this is the spoken representation for the character '∡' (U+2221)
 #: ../src/orca/mathsymbols.py:1351
-#, fuzzy
 msgctxt "math symbol"
 msgid "measured angle"
-msgstr "Pokaži kot"
+msgstr "izmerjeni kot"
 
 #. Translators: this is the spoken representation for the character '∢' (U+2222)
 #: ../src/orca/mathsymbols.py:1354
-#, fuzzy
 msgctxt "math symbol"
 msgid "spherical angle"
-msgstr "Pokaži kot"
+msgstr "sferični kot"
 
 #. Translators: this is the spoken representation for the character '∣' (U+2223)
 #: ../src/orca/mathsymbols.py:1357
-#, fuzzy
 msgctxt "math symbol"
 msgid "divides"
-msgstr "deljeno z"
+msgstr "deli"
 
 #. Translators: this is the spoken representation for the character '∤' (U+2224)
 #: ../src/orca/mathsymbols.py:1360
-#, fuzzy
 msgctxt "math symbol"
 msgid "does not divide"
-msgstr "Vsebuje/_Ne vsebuje"
+msgstr "ne deli"
 
 #. Translators: this is the spoken representation for the character '∥' (U+2225)
 #: ../src/orca/mathsymbols.py:1363
-#, fuzzy
 msgctxt "math symbol"
 msgid "parallel to"
-msgstr "_Pojdi na"
+msgstr "vzporedno z"
 
 #. Translators: this is the spoken representation for the character '∦' (U+2226)
 #: ../src/orca/mathsymbols.py:1366
-#, fuzzy
 msgctxt "math symbol"
 msgid "not parallel to"
-msgstr "Ni enako %d"
+msgstr "ni vzporedno z"
 
 #. Translators: this is the spoken representation for the character '∧' (U+2227)
 #: ../src/orca/mathsymbols.py:1369
-#, fuzzy
 msgctxt "math symbol"
 msgid "logical and"
-msgstr "AND:logična konjunkcija (IN)"
+msgstr "logični in"
 
 #. Translators: this is the spoken representation for the character '∨' (U+2228)
 #: ../src/orca/mathsymbols.py:1372
-#, fuzzy
 msgctxt "math symbol"
 msgid "logical or"
-msgstr "OR:logična disjunkcija (ALI)"
+msgstr "logični ali"
 
 #. Translators: this is the spoken representation for the character '∩' (U+2229)
 #: ../src/orca/mathsymbols.py:1375
-#, fuzzy
 msgctxt "math symbol"
 msgid "intersection"
-msgstr "smer"
+msgstr "presek"
 
 #. Translators: this is the spoken representation for the character '∪' (U+222a)
 #: ../src/orca/mathsymbols.py:1378
-#, fuzzy
 msgctxt "math symbol"
 msgid "union"
-msgstr "Unija"
+msgstr "unija"
 
 #. Translators: this is the spoken representation for the character '∫' (U+222b)
 #: ../src/orca/mathsymbols.py:1381
@@ -6251,10 +6229,9 @@ msgstr "Zaradi \"{1}\"."
 
 #. Translators: this is the spoken representation for the character '∶' (U+2236)
 #: ../src/orca/mathsymbols.py:1414
-#, fuzzy
 msgctxt "math symbol"
 msgid "ratio"
-msgstr "Razmerje"
+msgstr "razmerje"
 
 #. Translators: this is the spoken representation for the character '∷' (U+2237)
 #: ../src/orca/mathsymbols.py:1417
@@ -6335,24 +6312,21 @@ msgstr "minus-tilda"
 
 #. Translators: this is the spoken representation for the character '≃' (U+2243)
 #: ../src/orca/mathsymbols.py:1453
-#, fuzzy
 msgctxt "math symbol"
 msgid "asymptotically equal to"
-msgstr "vred == območje                  (je enako)"
+msgstr "je asimptotično enako"
 
 #. Translators: this is the spoken representation for the character '≄' (U+2244)
 #: ../src/orca/mathsymbols.py:1456
-#, fuzzy
 msgctxt "math symbol"
 msgid "not asymptotically equal to"
-msgstr "vred == območje                  (je enako)"
+msgstr "ni asimptotično enako"
 
 #. Translators: this is the spoken representation for the character '≅' (U+2245)
 #: ../src/orca/mathsymbols.py:1459
-#, fuzzy
 msgctxt "math symbol"
 msgid "approximately equal to"
-msgstr "vred == območje                  (je enako)"
+msgstr "je skladen z"
 
 #. Translators: this is the spoken representation for the character '≆' (U+2246)
 #: ../src/orca/mathsymbols.py:1462
@@ -6532,24 +6506,21 @@ msgstr "vred == območje                  (je enako)"
 
 #. Translators: this is the spoken representation for the character '≠' (U+2260)
 #: ../src/orca/mathsymbols.py:1540
-#, fuzzy
 msgctxt "math symbol"
 msgid "not equal to"
-msgstr "ni enako kot"
+msgstr "ni enako"
 
 #. Translators: this is the spoken representation for the character '≡' (U+2261)
 #: ../src/orca/mathsymbols.py:1543
-#, fuzzy
 msgctxt "math symbol"
 msgid "identical to"
-msgstr "_Pojdi na"
+msgstr "je definirano kot"
 
 #. Translators: this is the spoken representation for the character '≢' (U+2262)
 #: ../src/orca/mathsymbols.py:1546
-#, fuzzy
 msgctxt "math symbol"
 msgid "not identical to"
-msgstr "Ni enako %d"
+msgstr "ni definirano kot"
 
 #. Translators: this is the spoken representation for the character '≣' (U+2263)
 #: ../src/orca/mathsymbols.py:1549
@@ -6764,73 +6735,63 @@ msgstr "Vsebuje/_Ne vsebuje"
 
 #. Translators: this is the spoken representation for the character '⊂' (U+2282)
 #: ../src/orca/mathsymbols.py:1642
-#, fuzzy
 msgctxt "math symbol"
 msgid "subset of"
-msgstr "Vgrajena podmnožica"
+msgstr "je podmnožica"
 
 #. Translators: this is the spoken representation for the character '⊃' (U+2283)
 #: ../src/orca/mathsymbols.py:1645
-#, fuzzy
 msgctxt "math symbol"
 msgid "superset of"
-msgstr "nadpisani a"
+msgstr "je nadmnožica"
 
 #. Translators: this is the spoken representation for the character '⊄' (U+2284)
 #: ../src/orca/mathsymbols.py:1648
-#, fuzzy
 msgctxt "math symbol"
 msgid "not a subset of"
-msgstr "Vgrajena podmnožica"
+msgstr "ni podmnožica"
 
 #. Translators: this is the spoken representation for the character '⊅' (U+2285)
 #: ../src/orca/mathsymbols.py:1651
-#, fuzzy
 msgctxt "math symbol"
 msgid "not a superset of"
-msgstr "(ni del programa)"
+msgstr "ni nadmnožica"
 
 #. Translators: this is the spoken representation for the character '⊆' (U+2286)
 #: ../src/orca/mathsymbols.py:1654
-#, fuzzy
 msgctxt "math symbol"
 msgid "subset of or equal to"
-msgstr "vred == območje                  (je enako)"
+msgstr "je podmnožica ali je enaka množica"
 
 #. Translators: this is the spoken representation for the character '⊇' (U+2287)
 #: ../src/orca/mathsymbols.py:1657
-#, fuzzy
 msgctxt "math symbol"
 msgid "superset of or equal to"
-msgstr "vred == območje                  (je enako)"
+msgstr "je nadmnožica ali enaka množica"
 
 #. Translators: this is the spoken representation for the character '⊈' (U+2288)
 #: ../src/orca/mathsymbols.py:1660
-#, fuzzy
 msgctxt "math symbol"
 msgid "neither a subset of nor equal to"
-msgstr "večje ali enako kot"
+msgstr "ni podmnožica niti ni enaka množica"
 
 #. Translators: this is the spoken representation for the character '⊉' (U+2289)
 #: ../src/orca/mathsymbols.py:1663
-#, fuzzy
 msgctxt "math symbol"
 msgid "neither a superset of nor equal to"
-msgstr "večje ali enako kot"
+msgstr "ni nadmnožica niti ni enaka množica"
 
 #. Translators: this is the spoken representation for the character '⊊' (U+228a)
 #: ../src/orca/mathsymbols.py:1666
-#, fuzzy
 msgctxt "math symbol"
 msgid "subset of with not equal to"
-msgstr "manj ali enako kot"
+msgstr "podmnožica, ki ni enaka kot"
 
 #. Translators: this is the spoken representation for the character '⊋' (U+228b)
 #: ../src/orca/mathsymbols.py:1669
-#, fuzzy
 msgctxt "math symbol"
 msgid "superset of with not equal to"
-msgstr "večje ali enako kot"
+msgstr "nadmnožica, ki ni enaka kot"
 
 #. Translators: this is the spoken representation for the character '⊌' (U+228c)
 #: ../src/orca/mathsymbols.py:1672
@@ -6910,10 +6871,9 @@ msgstr "nadpisani znak minus"
 
 #. Translators: this is the spoken representation for the character '⊗' (U+2297)
 #: ../src/orca/mathsymbols.py:1705
-#, fuzzy
 msgctxt "math symbol"
 msgid "circled times"
-msgstr "Odzivni časi"
+msgstr "tenzorski produkt"
 
 #. Translators: this is the spoken representation for the character '⊘' (U+2298)
 #: ../src/orca/mathsymbols.py:1708
@@ -7155,19 +7115,15 @@ msgstr ""
 
 #. Translators: this is the spoken representation for the character '⊻' (U+22bb)
 #: ../src/orca/mathsymbols.py:1813
-#, fuzzy
 msgctxt "math symbol"
 msgid "xor"
-msgstr "XOR"
+msgstr "xor"
 
 #. Translators: this is the spoken representation for the character '⊼' (U+22bc)
 #: ../src/orca/mathsymbols.py:1816
-#, fuzzy
 msgctxt "math symbol"
 msgid "nand"
 msgstr ""
-"Med {0} \n"
-"in {1}"
 
 #. Translators: this is the spoken representation for the character '⊽' (U+22bd)
 #: ../src/orca/mathsymbols.py:1819
@@ -7220,24 +7176,21 @@ msgstr "Union Square"
 
 #. Translators: this is the spoken representation for the character '⋄' (U+22c4)
 #: ../src/orca/mathsymbols.py:1840
-#, fuzzy
 msgctxt "math symbol"
 msgid "diamond operator"
-msgstr "Operator ostanek"
+msgstr "operator karo"
 
 #. Translators: this is the spoken representation for the character '⋅' (U+22c5)
 #: ../src/orca/mathsymbols.py:1843
-#, fuzzy
 msgctxt "math symbol"
 msgid "dot operator"
-msgstr "Operator ostanek"
+msgstr "operator sredinska pika"
 
 #. Translators: this is the spoken representation for the character '⋆' (U+22c6)
 #: ../src/orca/mathsymbols.py:1846
-#, fuzzy
 msgctxt "math symbol"
 msgid "star operator"
-msgstr "Operator ostanek"
+msgstr "operator zvezdica"
 
 #. Translators: this is the spoken representation for the character '⋇' (U+22c7)
 #: ../src/orca/mathsymbols.py:1849
@@ -7256,20 +7209,20 @@ msgstr ""
 #: ../src/orca/mathsymbols.py:1855
 msgctxt "math symbol"
 msgid "left normal factor semidirect product"
-msgstr ""
+msgstr "je levi polneposredni produkt za"
 
 #. Translators: this is the spoken representation for the character '⋊' (U+22ca)
 #: ../src/orca/mathsymbols.py:1858
 msgctxt "math symbol"
 msgid "right normal factor semidirect product"
-msgstr ""
+msgstr "je desni polneposredni produkt za"
 
 #. Translators: this is the spoken representation for the character '⋋' (U+22cb)
 #: ../src/orca/mathsymbols.py:1861
 #, fuzzy
 msgctxt "math symbol"
 msgid "left semidirect product"
-msgstr "PRODUCT:zmnožek podanih vrednosti"
+msgstr "je polneposredni produkt za"
 
 #. Translators: this is the spoken representation for the character '⋌' (U+22cc)
 #: ../src/orca/mathsymbols.py:1864
@@ -7342,31 +7295,27 @@ msgstr "vred == območje                  (je enako)"
 
 #. Translators: this is the spoken representation for the character '⋖' (U+22d6)
 #: ../src/orca/mathsymbols.py:1894
-#, fuzzy
 msgctxt "math symbol"
 msgid "less than with dot"
-msgstr "Opuščena tipka s piko "
+msgstr "je manj kot s piko "
 
 #. Translators: this is the spoken representation for the character '⋗' (U+22d7)
 #: ../src/orca/mathsymbols.py:1897
-#, fuzzy
 msgctxt "math symbol"
 msgid "greater than with dot"
-msgstr "Opuščena tipka s piko "
+msgstr "je več kot s piko "
 
 #. Translators: this is the spoken representation for the character '⋘' (U+22d8)
 #: ../src/orca/mathsymbols.py:1900
-#, fuzzy
 msgctxt "math symbol"
 msgid "very much less than"
-msgstr "Indeks matrike je manj kot 1"
+msgstr "je veliko manj kot"
 
 #. Translators: this is the spoken representation for the character '⋙' (U+22d9)
 #: ../src/orca/mathsymbols.py:1903
-#, fuzzy
 msgctxt "math symbol"
 msgid "very much greater than"
-msgstr "vred > območje                  (več kot)"
+msgstr "je veliko več kot"
 
 #. Translators: this is the spoken representation for the character '⋚' (U+22da)
 #: ../src/orca/mathsymbols.py:1906
@@ -7384,17 +7333,15 @@ msgstr "Poišči največje celo število manjše ali enako n."
 
 #. Translators: this is the spoken representation for the character '⋜' (U+22dc)
 #: ../src/orca/mathsymbols.py:1912
-#, fuzzy
 msgctxt "math symbol"
 msgid "equal to or less than"
-msgstr "manj ali enako kot"
+msgstr "je enako ali manjše kot"
 
 #. Translators: this is the spoken representation for the character '⋝' (U+22dd)
 #: ../src/orca/mathsymbols.py:1915
-#, fuzzy
 msgctxt "math symbol"
 msgid "equal to or greater than"
-msgstr "večje ali enako kot"
+msgstr "je enako ali večje kot"
 
 #. Translators: this is the spoken representation for the character '⋝' (U+22de)
 #: ../src/orca/mathsymbols.py:1918
@@ -7531,7 +7478,7 @@ msgstr ""
 #: ../src/orca/mathsymbols.py:1978
 msgctxt "math symbol"
 msgid "element of with long horizontal stroke"
-msgstr ""
+msgstr "je element z daljšo srednjo črto"
 
 #. Translators: this is the spoken representation for the character '⋳' (U+22f3)
 #: ../src/orca/mathsymbols.py:1981
@@ -7547,37 +7494,33 @@ msgstr ""
 
 #. Translators: this is the spoken representation for the character '⋵' (U+22f5)
 #: ../src/orca/mathsymbols.py:1987
-#, fuzzy
 msgctxt "math symbol"
 msgid "element of with dot above"
-msgstr "Opuščena tipka s piko "
+msgstr "je element s piko nad znakom"
 
 #. Translators: this is the spoken representation for the character '⋶' (U+22f6)
 #: ../src/orca/mathsymbols.py:1990
-#, fuzzy
 msgctxt "math symbol"
 msgid "element of with overbar"
-msgstr "Odpri _del z %s"
+msgstr "je element s črto zgoraj"
 
 #. Translators: this is the spoken representation for the character '⋷' (U+22f7)
 #: ../src/orca/mathsymbols.py:1993
-#, fuzzy
 msgctxt "math symbol"
 msgid "small element of with overbar"
-msgstr "Dokument se mora začeti z predmetom (na primer <book>)"
+msgstr "je mali element s črto zgoraj"
 
 #. Translators: this is the spoken representation for the character '⋸' (U+22f8)
 #: ../src/orca/mathsymbols.py:1996
-#, fuzzy
 msgctxt "math symbol"
 msgid "element of with underbar"
-msgstr "Odpri _del z %s"
+msgstr "je element s črto spodaj"
 
 #. Translators: this is the spoken representation for the character '⋹' (U+22f9)
 #: ../src/orca/mathsymbols.py:1999
 msgctxt "math symbol"
 msgid "element of with two horizontal strokes"
-msgstr ""
+msgstr "je element z dvema srednjima črtama"
 
 #. Translators: this is the spoken representation for the character '⋺' (U+22fa)
 #: ../src/orca/mathsymbols.py:2002
@@ -7595,7 +7538,7 @@ msgstr ""
 #: ../src/orca/mathsymbols.py:2008
 msgctxt "math symbol"
 msgid "small contains with vertical bar at end of horizontal stroke"
-msgstr ""
+msgstr "mali vsebuje z navpično črto na sredni črti"
 
 #. Translators: this is the spoken representation for the character '⋽' (U+22fd)
 #: ../src/orca/mathsymbols.py:2011
@@ -7606,17 +7549,15 @@ msgstr "Odpri _del z %s"
 
 #. Translators: this is the spoken representation for the character '⋾' (U+22fe)
 #: ../src/orca/mathsymbols.py:2014
-#, fuzzy
 msgctxt "math symbol"
 msgid "small contains with overbar"
-msgstr "Zamenjaj zelo majhno število z vrednostjo 0"
+msgstr "mali vsebuje s črto zgoraj"
 
 #. Translators: this is the spoken representation for the character '⋿' (U+22ff)
 #: ../src/orca/mathsymbols.py:2017
-#, fuzzy
 msgctxt "math symbol"
 msgid "z notation bag membership"
-msgstr "Stran članstva v fundaciji"
+msgstr ""
 
 #. Translators: Sometimes when we attempt to get the name of an accessible
 #. software application, we fail because the app or one of its elements is
