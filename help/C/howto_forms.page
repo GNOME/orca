@@ -60,7 +60,7 @@
       <item>
         <p>
           Use <key>Tab</key>/<keyseq><key>Shift</key><key>Tab</key></keyseq>
-          if you wish to leave the currenty-focused form field and move to the
+          if you wish to leave the currently-focused form field and move to the
           next/previous focusable object, regardless of what that object happens
           to be.
         </p>
