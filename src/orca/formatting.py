@@ -37,7 +37,7 @@ from . import settings
 TUTORIAL = '(tutorial and (pause + tutorial) or [])'
 MNEMONIC = '(mnemonic and (pause + mnemonic + lineBreak) or [])'
 
-BRAILLE_TEXT = '[Text(obj, asString(labelOrName + placeholderText), asString(eol), startOffset, endOffset)]\
+BRAILLE_TEXT = '[Text(obj, asString(labelOrName or placeholderText), asString(eol), startOffset, endOffset)]\
                 + (required and [Region(" " + asString(required))])\
                 + (readOnly and [Region(" " + asString(readOnly))])'
 
@@ -153,10 +153,10 @@ formatting = {
             'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
             },
         pyatspi.ROLE_ENTRY: {
-            'focused': 'labelOrName + placeholderText + readOnly + textRole + currentLineText + allTextSelection',
-            'unfocused': 'labelOrName + placeholderText + readOnly + textRole + currentLineText + allTextSelection + ' + MNEMONIC,
-            'basicWhereAmI': 'labelOrName + placeholderText + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
-            'detailedWhereAmI': 'labelOrName + placeholderText + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
+            'focused': 'labelOrName + readOnly + textRole + (currentLineText or placeholderText) + allTextSelection',
+            'unfocused': 'labelOrName + readOnly + textRole + (currentLineText or placeholderText) + allTextSelection + ' + MNEMONIC,
+            'basicWhereAmI': 'labelOrName + readOnly + textRole + (textContent or placeholderText) + anyTextSelection + ' + MNEMONIC,
+            'detailedWhereAmI': 'labelOrName + readOnly + textRole + (textContentWithAttributes or placeholderText) + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
             },
         pyatspi.ROLE_FORM: {
             'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
@@ -336,10 +336,10 @@ formatting = {
             'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
             },
         pyatspi.ROLE_TEXT: {
-            'focused': 'labelOrName + placeholderText + readOnly + textRole + textIndentation + currentLineText + allTextSelection',
-            'unfocused': 'labelOrName + placeholderText + readOnly + textRole + textIndentation + currentLineText + allTextSelection + ' + MNEMONIC,
-            'basicWhereAmI': 'label + placeholderText + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
-            'detailedWhereAmI': 'label + placeholderText + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
+            'focused': 'labelOrName + readOnly + textRole + textIndentation + (currentLineText or placeholderText) + allTextSelection',
+            'unfocused': 'labelOrName + readOnly + textRole + textIndentation + (currentLineText or placeholderText) + allTextSelection + ' + MNEMONIC,
+            'basicWhereAmI': 'labelOrName + readOnly + textRole + (textContent or placeholderText) + anyTextSelection + ' + MNEMONIC,
+            'detailedWhereAmI': 'labelOrName + readOnly + textRole + (textContentWithAttributes or placeholderText) + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
             },
         pyatspi.ROLE_TOGGLE_BUTTON: {
             'focused': 'expandableState or toggleState',
@@ -690,13 +690,13 @@ if settings.useExperimentalSpeechProsody:
     formatting['speech'][pyatspi.ROLE_TERMINAL]['detailedWhereAmI'] = \
         'label + readOnly + pause + textRole + pause + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
     formatting['speech'][pyatspi.ROLE_TEXT]['focused'] = \
-        'labelOrName + placeholderText + readOnly + textRole + pause + textIndentation + currentLineText + allTextSelection'
+        'labelOrName + readOnly + textRole + pause + textIndentation + (currentLineText or placeholderText) + allTextSelection'
     formatting['speech'][pyatspi.ROLE_TEXT]['unfocused'] = \
-        'labelOrName + placeholderText + readOnly + textRole + pause + textIndentation + currentLineText + allTextSelection + ' + MNEMONIC
+        'labelOrName + readOnly + textRole + pause + textIndentation + (currentLineText or placeholderText) + allTextSelection + ' + MNEMONIC
     formatting['speech'][pyatspi.ROLE_TEXT]['basicWhereAmI'] = \
-        'label + placeholderText + readOnly + textRole + pause + textContent + anyTextSelection + pause + ' + MNEMONIC
+        'labelOrName + readOnly + textRole + pause + (textContent or placeholderText) + anyTextSelection + pause + ' + MNEMONIC
     formatting['speech'][pyatspi.ROLE_TEXT]['detailedWhereAmI'] = \
-        'label + placeholderText + readOnly + textRole + pause + textContentWithAttributes + anyTextSelection + pause + ' + MNEMONIC + ' + ' + TUTORIAL
+        'labelOrName + readOnly + textRole + pause + (textContentWithAttributes or placeholderText) + anyTextSelection + pause + ' + MNEMONIC + ' + ' + TUTORIAL
 
 class Formatting(dict):
 
