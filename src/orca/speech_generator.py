@@ -1671,6 +1671,10 @@ class SpeechGenerator(generator.Generator):
                    or args.get('forceList', False)):
             return []
 
+        if obj.getRole() == pyatspi.ROLE_MENU \
+           and obj.parent == self._script.utilities.topLevelObject(obj):
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         position, total = self._script.utilities.getPositionAndSetSize(obj)
