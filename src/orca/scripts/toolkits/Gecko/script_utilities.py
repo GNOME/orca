@@ -97,7 +97,8 @@ class Utilities(script_utilities.Utilities):
         #
         documentFrame = None
         for child in self._script.app:
-            if child.getRole() == pyatspi.ROLE_FRAME:
+            if child.getRole() == pyatspi.ROLE_FRAME \
+               and child.getState().contains(pyatspi.STATE_ACTIVE):
                 relationSet = child.getRelationSet()
                 for relation in relationSet:
                     if relation.getRelationType()  \
@@ -118,6 +119,10 @@ class Utilities(script_utilities.Utilities):
                 orca_state.locusOfFocus,
                 [pyatspi.ROLE_DOCUMENT_FRAME],
                 [pyatspi.ROLE_FRAME])
+
+        if not documentFrame and orca_state.locusOfFocus \
+           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+            documentFrame = orca_state.locusOfFocus
 
         return documentFrame
 
