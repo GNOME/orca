@@ -250,9 +250,6 @@ class Script(default.Script):
         self._sayAllIsInterrupted = False
         self._loadingDocumentContent = False
         self._loadingDocumentTime = 0.0
-        self._lastCommandWasCaretNav = False
-        self._lastCommandWasStructNav = False
-        self._lastCommandWasMouseButton = False
 
     def getBookmarks(self):
         """Returns the "bookmarks" class for this script.
