@@ -1078,10 +1078,10 @@ class Script(default.Script):
         if focusRole == pyatspi.ROLE_LIST_ITEM \
            and not self.inDocumentContent(orca_state.locusOfFocus):
             return
- 
+
+        self._loadingDocumentContent = event.detail1
         finishedLoading = False
         if event.detail1:
-            self._loadingDocumentContent = True
             message = messages.PAGE_LOADING_START
         elif name:
             message = messages.PAGE_LOADING_END_NAMED % name
@@ -1152,7 +1152,7 @@ class Script(default.Script):
         # because the proverbial rug has just been pulled out from under us. :(
         # To make matters worse, the replacement object can be in the ancestry.
         obj, offset = self.getCaretContext()
-        if obj and self.utilities.isZombie(obj):
+        if obj and self.utilities.isZombie(obj) and not self._loadingDocumentContent:
             replicant = self.utilities.findReplicant(event.source, obj)
             if replicant:
                 # Refrain from actually touching the replicant by grabbing
