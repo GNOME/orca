@@ -1,3 +1,38 @@
+3.16.1 - 15 Apr 2015
+
+General:
+
+  * Don't search for replicants for Gecko zombies when pages are being
+    loaded because it can lead to a hang.
+
+  * Don't present position in list for the top-level menu of a context
+    menu
+
+  * Only present placeholder text if the entry lacks a value
+
+  * Use labelAndName instead of labelOrName with toggle buttons so
+    that we fallback on description when name has not been provided
+
+  * Work around yet another missing object:state-changed:focused event
+    from Gtk+
+
+  * Use datadir and localedir and not DATADIRNAME
+
+  * Fix for bug 746400 - Speak child position breaks Qt menu item
+    presentation
+
+  * Fix issue where translated symbols were being presented in English
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bg            Bulgarian                   Zahari Yurukov
+    is            Icelandic                   Sveinn í Felli
+    it            Italian                     Milo Casagrande
+    ru            Russian                     Stas Solovey
+    sl            Slovenian                   Matej Urbančič
+
+=========
+
 3.16.0
 
 New and updated translations (THANKS EVERYONE!!!):
