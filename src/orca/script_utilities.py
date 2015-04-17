@@ -2564,7 +2564,8 @@ class Utilities:
         pred = lambda r: r.getRelationType() == pyatspi.RELATION_NODE_PARENT_OF
         relations = list(filter(pred, obj.getRelationSet()))
         if relations:
-            result = [r.getTarget(i) for i in range(relations[0].getNTargets())]
+            r = relations[0]
+            result = [r.getTarget(i) for i in range(r.getNTargets())]
 
         return result or [child for child in obj]
 
