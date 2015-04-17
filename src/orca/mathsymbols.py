@@ -2046,6 +2046,9 @@ _shapes['\u25cf'] = _("black circle")
 # Translators: this is the spoken representation for the character '◦' (U+25e6)
 _shapes['\u25e6'] = _("white bullet")
 
+# Translators: this is the spoken representation for the character '◾' (U+25fe)
+_shapes['\u25fe'] = _("black medium small square")
+
 _all.update(_alnum)
 _all.update(_arrows)
 _all.update(_operators)
