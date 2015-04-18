@@ -513,6 +513,9 @@ formatting = {
                                      asString(labelOrName + expandableState + availability) + asString(accelerator),\
                                      indicator=asString(menuItemCheckedState))]'
             },
+        pyatspi.ROLE_PAGE: {
+            'unfocused': BRAILLE_TEXT
+            },
         #pyatspi.ROLE_OPTION_PANE: 'default'
         pyatspi.ROLE_PAGE_TAB: {
             'focused':   '[Component(obj,\
