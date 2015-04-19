@@ -30,7 +30,7 @@ import unicodedata
 
 from .orca_i18n import _, C_
 
-fallbackOnUnicodeData = True
+fallbackOnUnicodeData = False
 
 SPEAK_NEVER = 1
 SPEAK_ALWAYS = 2
