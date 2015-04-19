@@ -995,6 +995,7 @@ class Utilities:
                     basename = basename.split('.')[0]
                     basename = basename.split('?')[0]
                     basename = basename.split('#')[0]
+                    basename = basename.split('%')[0]
 
         return basename
 
