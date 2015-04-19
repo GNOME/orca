@@ -1033,6 +1033,11 @@ class Script(default.Script):
             return True
 
         text = self.utilities.queryNonEmptyText(event.source)
+        if not text:
+            msg = "INFO: Text-selection event ignored: There's no text"
+            debug.println(debug.LEVEL_INFO, msg)
+            return
+
         char, start, end = text.getTextAtOffset(text.caretOffset, pyatspi.TEXT_BOUNDARY_CHAR)
         if char == self.EMBEDDED_OBJECT_CHARACTER:
             msg = "INFO: Text-selection event ignored: Caret offset is at embedded object"
