@@ -4438,7 +4438,7 @@ msgstr "Nahradit řetězcem"
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
 #: ../src/orca/guilabels.py:189 ../src/orca/orca-setup.ui.h:113
 msgid "Enable echo by cha_racter"
-msgstr "Číst po _znacích"
+msgstr "Oznamovat po _znacích"
 
 #. Translators: Orca has an "echo" feature to present text as it is being written
 #. by the user. This string refers to a "key echo" option. When this option is
@@ -10483,15 +10483,15 @@ msgstr "Oznamovat _kurzorové klávesy"
 
 #: ../src/orca/orca-setup.ui.h:114
 msgid "Enable echo by _word"
-msgstr "Číst po _slovech"
+msgstr "Oznamovat po _slovech"
 
 #: ../src/orca/orca-setup.ui.h:115
 msgid "Enable echo by _sentence"
-msgstr "Číst po _větách"
+msgstr "Oznamovat po _větách"
 
 #: ../src/orca/orca-setup.ui.h:116
 msgid "Key Echo"
-msgstr "Odezva klávesnice"
+msgstr "Oznamovat klávesy"
 
 #: ../src/orca/orca-setup.ui.h:117
 msgid "Screen Reader _Modifier Key(s):"
