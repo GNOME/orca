@@ -4446,7 +4446,7 @@ msgstr "Číst po _znacích"
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
 #: ../src/orca/guilabels.py:194 ../src/orca/orca-setup.ui.h:111
 msgid "Enable non-spacing _diacritical keys"
-msgstr "Oznamovat znaky _diakritiky"
+msgstr "Oznamovat _diakritické klávesy"
 
 #. Translators: Orca has a "find" feature which allows the user to search the
 #. active application for on screen text and widgets. This label is associated
