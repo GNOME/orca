@@ -7855,7 +7855,7 @@ msgstr "Zapnout oznamování kláves? Zadejte A nebo N: "
 #. is part of Orca's console-based setup.
 #: ../src/orca/messages.py:394
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
-msgstr "Oznamovat alfanumerická a interpunkční znaménka? Zadejte A nebo N: "
+msgstr "Oznamovat alfanumerické a interpunkční klávesy? Zadejte A nebo N: "
 
 #. Translators: This is in reference to key echo for keys such as CTRL, ALT,
 #. Shift, Insert, etc. It is part of Orca's console-based setup.
@@ -10463,7 +10463,7 @@ msgstr "Oznamovat _klávesy"
 
 #: ../src/orca/orca-setup.ui.h:105
 msgid "Enable _alphanumeric and punctuation keys"
-msgstr "Oznamovat _alfanumerické a interpunkční znaky"
+msgstr "Oznamovat _alfanumerické a interpunkční klávesy"
 
 #: ../src/orca/orca-setup.ui.h:106
 msgid "Enable _modifier keys"
@@ -10479,7 +10479,7 @@ msgstr "Oznamova_t akční klávesy"
 
 #: ../src/orca/orca-setup.ui.h:109
 msgid "Enable _navigation keys"
-msgstr "Oznamovat _navigační klávesy"
+msgstr "Oznamovat _kurzorové klávesy"
 
 #: ../src/orca/orca-setup.ui.h:114
 msgid "Enable echo by _word"
