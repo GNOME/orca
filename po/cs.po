@@ -2356,7 +2356,7 @@ msgstr "Uložit záložky."
 #. the feature without the need to get into a GUI.
 #: ../src/orca/cmdnames.py:491
 msgid "Toggle mouse review mode."
-msgstr "Přepíná mezi režimy náhledu myši"
+msgstr "Přepíná mezi režimy zkoumání myší"
 
 #. Translators: Orca has a command to present the current time in speech and in
 #. braille.
@@ -2505,7 +2505,7 @@ msgstr "Začít kopírování"
 #. consoles, the act of copying text is erroneously called a "cut" operation.
 #: ../src/orca/cmdnames.py:607
 msgid "Cut Line"
-msgstr "Kopírovat řádek"
+msgstr "Dokončit kopírování"
 
 #. Translators: this is a command which causes Orca to present the last received
 #. notification message.
@@ -2608,7 +2608,7 @@ msgstr "Přepíná mezi kurzorovou navigací čtečky obrazovky a nativní."
 #. to cycle through the different "politeness" levels.
 #: ../src/orca/cmdnames.py:676
 msgid "Advance live region politeness setting."
-msgstr "Rozšířená nastavení chování aktivní oblasti."
+msgstr "Rozšířená nastavení chování živé oblasti."
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -2619,7 +2619,7 @@ msgstr "Rozšířená nastavení chování aktivní oblasti."
 #. to turn off live regions by default.
 #: ../src/orca/cmdnames.py:686
 msgid "Set default live region politeness level to off."
-msgstr "Nastavit výchozí chování aktivní oblasti na vypnuto."
+msgstr "Nastavit výchozí chování živé oblasti na vypnuto."
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -2627,7 +2627,7 @@ msgstr "Nastavit výchozí chování aktivní oblasti na vypnuto."
 #. messages.
 #: ../src/orca/cmdnames.py:692
 msgid "Review live region announcement."
-msgstr "Prohlížet oznámení aktivní oblasti."
+msgstr "Prohlížet oznámení živé oblasti."
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -2640,7 +2640,7 @@ msgstr "Prohlížet oznámení aktivní oblasti."
 #. enabled.
 #: ../src/orca/cmdnames.py:703
 msgid "Monitor live regions."
-msgstr "Sledovat aktivní oblasti."
+msgstr "Sledovat živé oblasti."
 
 #. Translators: hovering the mouse over certain objects on a web page causes a
 #. new object to appear such as a pop-up menu. This command will move the user
@@ -2947,21 +2947,21 @@ msgstr "Zobrazí seznam položek seznamů."
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: ../src/orca/cmdnames.py:901
 msgid "Goes to previous live region."
-msgstr "Přejde na předchozí aktivní oblast."
+msgstr "Přejde na předchozí živou oblast."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: ../src/orca/cmdnames.py:906
 msgid "Goes to next live region."
-msgstr "Přejde na následující aktivní oblast."
+msgstr "Přejde na následující živou oblast."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: ../src/orca/cmdnames.py:911
 msgid "Goes to the last live region which made an announcement."
-msgstr "Přejde na poslední aktivní oblast, která provedla oznámení."
+msgstr "Přejde na poslední živou oblast, která provedla oznámení."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: ../src/orca/cmdnames.py:914
@@ -4438,7 +4438,7 @@ msgstr "Nahradit řetězcem"
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
 #: ../src/orca/guilabels.py:189 ../src/orca/orca-setup.ui.h:113
 msgid "Enable echo by cha_racter"
-msgstr "Oznamovat po _znacích"
+msgstr "Odezva po _znacích"
 
 #. Translators: Orca has an "echo" feature to present text as it is being written
 #. by the user. This string refers to a "key echo" option. When this option is
@@ -7936,7 +7936,7 @@ msgstr "Zvolte řečový systém."
 #. Orca's console-based setup.
 #: ../src/orca/messages.py:453
 msgid "Select desired speech system:"
-msgstr "Zvolte řečový systém:"
+msgstr "Vyberte řečový systém:"
 
 #. Translators: This is prompting for a numerical value from a list of choices of
 #. speech synthesis voices (e.g., male, female, child). This message is part of
@@ -8580,7 +8580,7 @@ msgstr ""
 #. "off" for all of the live regions.
 #: ../src/orca/messages.py:947
 msgid "All live regions set to off"
-msgstr "Všechny aktivní oblasti jsou vypnuty"
+msgstr "Všechny živé oblasti jsou vypnuty"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -8592,7 +8592,7 @@ msgstr "Všechny aktivní oblasti jsou vypnuty"
 #. regions has been restored to their original values.
 #: ../src/orca/messages.py:957
 msgid "live regions politeness levels restored"
-msgstr "úroveň aktivních oblastí obnovena"
+msgstr "úroveň chování živých oblastí obnovena"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -8616,7 +8616,7 @@ msgstr "úroveň chování %s"
 #. the current live region.
 #: ../src/orca/messages.py:976
 msgid "setting live region to assertive"
-msgstr "nastavení aktivní oblast na pokročilou"
+msgstr "nastavení živé oblasti na důraznou"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -8628,7 +8628,7 @@ msgstr "nastavení aktivní oblast na pokročilou"
 #. the current live region.
 #: ../src/orca/messages.py:986
 msgid "setting live region to off"
-msgstr "nastavení aktivní oblast na vypnuto"
+msgstr "nastavení živé oblasti na vypnuto"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -8640,7 +8640,7 @@ msgstr "nastavení aktivní oblast na vypnuto"
 #. the current live region.
 #: ../src/orca/messages.py:996
 msgid "setting live region to polite"
-msgstr "nastavení aktivní oblast na uhlazenou"
+msgstr "nastavení živé oblasti na slušnou"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -8652,7 +8652,7 @@ msgstr "nastavení aktivní oblast na uhlazenou"
 #. the current live region.
 #: ../src/orca/messages.py:1006
 msgid "setting live region to rude"
-msgstr "nastavení aktivní oblast na primitivní"
+msgstr "nastavení živé oblast na hrubou"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -8665,7 +8665,7 @@ msgstr "nastavení aktivní oblast na primitivní"
 #. -- as long as the monitoring of live regions is enabled.
 #: ../src/orca/messages.py:1017
 msgid "Live regions monitoring off"
-msgstr "Sledování aktivních oblastí je vypnuto"
+msgstr "Sledování živých oblastí je vypnuto"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -8678,7 +8678,7 @@ msgstr "Sledování aktivních oblastí je vypnuto"
 #. -- as long as the monitoring of live regions is enabled.
 #: ../src/orca/messages.py:1028
 msgid "Live regions monitoring on"
-msgstr "Sledování aktivních oblastí je zapnuta"
+msgstr "Sledování živých oblastí je zapnuto"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -8696,7 +8696,7 @@ msgstr "žádné aktivní zprávy nebyly uloženy"
 #. turned off.
 #: ../src/orca/messages.py:1042
 msgid "Live region support is off"
-msgstr "Podpora aktivních oblastí je vypnuta"
+msgstr "Podpora živých oblastí je vypnuta"
 
 #. Translators: Orca has a command that allows the user to move the mouse pointer
 #. to the current object. This is a brief message which will be presented if for
@@ -8984,7 +8984,7 @@ msgstr "Žádné další položky seznamu."
 #. more info, see http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: ../src/orca/messages.py:1256
 msgid "No more live regions."
-msgstr "Žádné další aktivní oblasti."
+msgstr "Žádné další živé oblasti."
 
 #. Translators: This is for navigating document content by moving from paragraph
 #. to paragraph. This is a detailed message which will be presented to the user
@@ -10266,7 +10266,7 @@ msgstr "_Prezentovat vysvětlivky"
 
 #: ../src/orca/orca-setup.ui.h:34
 msgid "Speak object under mo_use"
-msgstr "Vyslovit objekt pod _ukazatelem"
+msgstr "Oznamovat objekt pod _ukazatelem"
 
 #: ../src/orca/orca-setup.ui.h:35
 msgid "Mouse"
@@ -10483,11 +10483,11 @@ msgstr "Oznamovat _kurzorové klávesy"
 
 #: ../src/orca/orca-setup.ui.h:114
 msgid "Enable echo by _word"
-msgstr "Oznamovat po _slovech"
+msgstr "Odezva po _slovech"
 
 #: ../src/orca/orca-setup.ui.h:115
 msgid "Enable echo by _sentence"
-msgstr "Oznamovat po _větách"
+msgstr "Odezva po _větách"
 
 #: ../src/orca/orca-setup.ui.h:116
 msgid "Key Echo"
@@ -10541,12 +10541,12 @@ msgstr "_Posunout úplně dolů"
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: ../src/orca/orca-setup.ui.h:130
 msgid "Move _down one"
-msgstr "Posunout o je_dno níže"
+msgstr "Posunout o je_dno níž"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: ../src/orca/orca-setup.ui.h:132
 msgid "Move _up one"
-msgstr "Pos_unout o jedno výše"
+msgstr "Pos_unout o jedno výš"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: ../src/orca/orca-setup.ui.h:134
