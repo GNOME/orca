@@ -59,4 +59,4 @@ HELP_FILES = \
 	preferences_text_attributes.page \
 	preferences_voice.page
 
-HELP_LINGUAS = de el es fr gl hu pt_BR sl
+HELP_LINGUAS = cs de el es fr gl hu pt_BR sl
