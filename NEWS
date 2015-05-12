@@ -1,3 +1,35 @@
+3.16.2 - 12 May 2015
+
+General:
+
+  * Fix traceback which can occur getting children via relationset
+
+  * Add explicit braille handling for ROLE_PAGE so we update the line in
+    Evince
+
+  * Change default value of fallbackOnUnicodeData to False
+
+  * Attempt to eliminate verbal spewage for links which lack meaningful
+    information
+
+  * Ignore text-selection-changed events from Gecko objects with no text
+
+  * Hack around yet another missing object:state-changed:focused event
+    for Gtk+
+
+  * Provide a symbolic variant of the app icon
+
+  * Work around a missing object:state-changed:focused event from
+    LibreOffice
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                       Marek Černocký
+    de            German                      Uwe Geercken
+    pt_BR         Brazilian Portuguese        Rafael Ferreira
+
+=========
+
 3.16.1 - 15 Apr 2015
 
 General:
