@@ -1,12 +1,13 @@
 hicolordir = $(datadir)/icons/hicolor
 app_icons = \
-	orca-16x16.png	\
-	orca-22x22.png	\
-	orca-24x24.png	\
-	orca-32x32.png	\
-	orca-48x48.png	\
-	orca-256x256.png\
-	orca-scalable.svg
+	orca-16x16.png		\
+	orca-22x22.png		\
+	orca-24x24.png		\
+	orca-32x32.png		\
+	orca-48x48.png		\
+	orca-256x256.png	\
+	orca-scalable.svg 	\
+	orca-symbolic.svg
 
 install-data-local:
 	@-$(mkinstalldirs) $(DESTDIR)$(hicolordir)/16x16/apps
