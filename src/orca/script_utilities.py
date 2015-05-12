@@ -1562,7 +1562,8 @@ class Utilities:
         try:
             hyperlink = obj.queryHyperlink()
         except NotImplementedError:
-            pass
+            msg = "INFO: %s does not implement the hyperlink interface" % obj
+            debug.println(debug.LEVEL_INFO, msg)
         else:
             # We need to make sure that this is an embedded object in
             # some accessible text (as opposed to an imagemap link).
@@ -1571,7 +1572,11 @@ class Utilities:
                 obj.parent.queryText()
                 offset = hyperlink.startIndex
             except:
-                pass
+                msg = "ERROR: Exception getting startIndex for %s in parent %s" % (obj, obj.parent)
+                debug.println(debug.LEVEL_INFO, msg)
+            else:
+                msg = "INFO: startIndex of %s is %i" % (obj, offset)
+                debug.println(debug.LEVEL_INFO, msg)
 
         return offset
 
