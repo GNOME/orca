@@ -174,7 +174,7 @@ class Script(default.Script):
         # we can speak and braille this information without having to call
         # getLineContentsAtOffset() twice.
         #
-        self.currentLineContents = None
+        self.currentLineContents = []
 
         # For really large objects, a call to getAttributes can take up to
         # two seconds! This is a Firefox bug. We'll try to improve things
@@ -1452,7 +1452,7 @@ class Script(default.Script):
     def _destroyLineCache(self):
         """Removes all of the stored lines."""
 
-        self.currentLineContents = None
+        self.currentLineContents = []
         self.currentAttrs = {}
 
     def presentLine(self, obj, offset):
