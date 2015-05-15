@@ -7,6 +7,10 @@ import utils
 
 sequence = MacroSequence()
 
+# Work around some new quirk in Gecko that causes this test to fail if
+# run via the test harness rather than manually.
+sequence.append(KeyComboAction("<Control>r"))
+
 sequence.append(KeyComboAction("<Control>Home"))
 
 sequence.append(utils.StartRecordingAction())
@@ -53,17 +57,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. line Down",
-    ["BRAILLE LINE:  'I've recently taken up typing and plan  $l'",
+    ["BRAILLE LINE:  'I've recently taken up typing and plan to  $l'",
      "     VISIBLE:  'I've recently taken up typing an', cursor=1",
-     "SPEECH OUTPUT: 'I've recently taken up typing and plan '"]))
+     "SPEECH OUTPUT: 'I've recently taken up typing and plan to '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "7. line Down",
-    ["BRAILLE LINE:  'to write my memoirs. $l'",
-     "     VISIBLE:  'to write my memoirs. $l', cursor=1",
-     "SPEECH OUTPUT: 'to write my memoirs.",
+    ["BRAILLE LINE:  'write my memoirs. $l'",
+     "     VISIBLE:  'write my memoirs. $l', cursor=1",
+     "SPEECH OUTPUT: 'write my memoirs.",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -182,18 +186,18 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "21. line Up",
-    ["BRAILLE LINE:  'to write my memoirs. $l'",
-     "     VISIBLE:  'to write my memoirs. $l', cursor=1",
-     "SPEECH OUTPUT: 'to write my memoirs.",
+    ["BRAILLE LINE:  'write my memoirs. $l'",
+     "     VISIBLE:  'write my memoirs. $l', cursor=1",
+     "SPEECH OUTPUT: 'write my memoirs.",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "22. line Up",
-    ["BRAILLE LINE:  'I've recently taken up typing and plan  $l'",
+    ["BRAILLE LINE:  'I've recently taken up typing and plan to  $l'",
      "     VISIBLE:  'I've recently taken up typing an', cursor=1",
-     "SPEECH OUTPUT: 'I've recently taken up typing and plan '"]))
+     "SPEECH OUTPUT: 'I've recently taken up typing and plan to '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

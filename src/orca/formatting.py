@@ -325,6 +325,9 @@ formatting = {
                               + (expandableState and (expandableState + numberOfChildren))\
                               + required)'
             },
+        pyatspi.ROLE_TABLE_ROW: {
+            'focused': 'expandableState',
+            },
         pyatspi.ROLE_TEAROFF_MENU_ITEM: {
             'focused': '[]',
             'unfocused': 'labelOrName + allTextSelection + roleName + availability '

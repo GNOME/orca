@@ -77,25 +77,3 @@ class Utilities(Gecko.Utilities):
                 obj = obj.parent
 
         return None
-
-    def isEntry(self, obj):
-        """Returns True if we should treat this object as an entry."""
-
-        return obj and obj.getRole() == pyatspi.ROLE_ENTRY
-
-    def isPasswordText(self, obj):
-        """Returns True if we should treat this object as password text."""
-
-        return obj and obj.getRole() == pyatspi.ROLE_PASSWORD_TEXT
-
-    #########################################################################
-    #                                                                       #
-    # Utilities for working with the accessible text interface              #
-    #                                                                       #
-    #########################################################################
-
-    #########################################################################
-    #                                                                       #
-    # Miscellaneous Utilities                                               #
-    #                                                                       #
-    #########################################################################

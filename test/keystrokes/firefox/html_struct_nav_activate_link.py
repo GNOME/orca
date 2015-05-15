@@ -15,6 +15,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. Press 3 to move to the heading at level 3",
     ["BRAILLE LINE:  '1. Anchors2.html h3'",
      "     VISIBLE:  '1. Anchors2.html h3', cursor=4",
+     "BRAILLE LINE:  '1. Anchors2.html h3'",
+     "     VISIBLE:  '1. Anchors2.html h3', cursor=4",
      "SPEECH OUTPUT: 'Anchors2.html'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'heading level 3'"]))

@@ -7,6 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(KeyComboAction("<Control>Home"))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Add"))
 sequence.append(utils.AssertPresentationAction(

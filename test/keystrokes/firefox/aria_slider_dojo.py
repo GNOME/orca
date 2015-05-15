@@ -11,8 +11,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to first slider",
-    ["KNOWN ISSUE: Why are we not displaying the value after focus mode?",
-     "BRAILLE LINE:  'slider 1 10 slider'",
+    ["BRAILLE LINE:  'slider 1 10 slider'",
      "     VISIBLE:  'slider 1 10 slider', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
@@ -26,33 +25,33 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: This is the value exposed to us so we're passing it along as-is.",
      "BRAILLE LINE:  'slider 1 10 slider'",
      "     VISIBLE:  'slider 1 10 slider', cursor=1",
-     "BRAILLE LINE:  'slider 1 10.238095238095237 slider'",
-     "     VISIBLE:  'slider 1 10.238095238095237 slid', cursor=1",
-     "SPEECH OUTPUT: '10.238095238095237'"]))
+     "BRAILLE LINE:  'slider 1 10.2[0-9]+ slider'",
+     "     VISIBLE:  'slider 1 10.2[0-9]+ slid', cursor=1",
+     "SPEECH OUTPUT: '10.2[0-9]+'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "3. Increment first slider",
-    ["BRAILLE LINE:  'slider 1 10.476190476190476 slider'",
-     "     VISIBLE:  'slider 1 10.476190476190476 slid', cursor=1",
-     "SPEECH OUTPUT: '10.476190476190476'"]))
+    ["BRAILLE LINE:  'slider 1 10.(4|5)[0-9]+ slider'",
+     "     VISIBLE:  'slider 1 10.(4|5)[0-9]+ slid', cursor=1",
+     "SPEECH OUTPUT: '10.(4|5)[0-9]+'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "4. Decrement first slider",
-    ["BRAILLE LINE:  'slider 1 10.238095238095237 slider'",
-     "     VISIBLE:  'slider 1 10.238095238095237 slid', cursor=1",
-     "SPEECH OUTPUT: '10.238095238095237'"]))
+    ["BRAILLE LINE:  'slider 1 10.2[0-9]+ slider'",
+     "     VISIBLE:  'slider 1 10.2[0-9]+ slid', cursor=1",
+     "SPEECH OUTPUT: '10.2[0-9]+'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "5. Decrement first slider",
-    ["BRAILLE LINE:  'slider 1 10 slider'",
-     "     VISIBLE:  'slider 1 10 slider', cursor=1",
-     "SPEECH OUTPUT: '10'"]))
+    ["BRAILLE LINE:  'slider 1 10.0[0-9]+ slider'",
+     "     VISIBLE:  'slider 1 10.0[0-9]+ slid', cursor=1",
+     "SPEECH OUTPUT: '10.0[0-9]+'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

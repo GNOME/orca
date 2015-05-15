@@ -112,6 +112,10 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
     def _generateName(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_DOCUMENT_FRAME \
+           and obj.getState().contains(pyatspi.STATE_EDITABLE):
+            return []
+
         result.extend(braille_generator.BrailleGenerator._generateName(
                               self, obj, **args))
         if not result and role == pyatspi.ROLE_LIST_ITEM:
@@ -169,10 +173,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         result = []
         args['includeContext'] = not self._script.inDocumentContent(obj)
         oldRole = None
-        if self._script.utilities.isEntry(obj):
-            oldRole = self._overrideRole(pyatspi.ROLE_ENTRY, args)
-        elif self._script.utilities.isClickableElement(obj) \
-             or self._script.utilities.isLink(obj):
+        if self._script.utilities.isClickableElement(obj) \
+           or self._script.utilities.isLink(obj):
             oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
 
         # Treat menu items in collapsed combo boxes as if the combo box

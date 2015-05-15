@@ -1,0 +1,400 @@
+<!DOCTYPE HTML>
+<html lang="en-us">
+<head>
+<style type="text/css">
+
+ul.buttons {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+ul.buttons li {
+  float: left;
+  text-align: center;
+  margin-right: .25em;
+  padding-left: .25em;
+  padding-right: .25em;
+  width: 1em;
+  font-weight: bold;
+  height: 100%;
+  border: 2px solid black;
+}
+
+ul.buttons li[aria-pressed="true"] {
+  border-top: black 3px solid;
+  border-left: black 3px solid;
+  border-bottom: black 1px solid;
+  border-right:  black 1px solid;
+  
+}
+
+ul.buttons li[aria-pressed="false"] {
+  border-top: black 1px solid;
+  border-left: black 1px solid;
+  border-bottom: black 3px solid;
+  border-right: black 3px solid;
+  
+}
+
+ul.buttons li[aria-pressed="true"]:focus,
+ul.buttons li[aria-pressed="true"]:active{
+  border-top: #CCCCCC 3px solid;
+  border-left: #CCCCCC 3px solid;
+  border-bottom: #CCCCCC 1px solid;
+  border-right:  #CCCCCC 1px solid;
+  color: white;
+  background-color: black;
+  
+}
+
+ul.buttons li[aria-pressed="false"]:focus,
+ul.buttons li[aria-pressed="false"]:active{
+  border-top: #CCCCCC 1px solid;
+  border-left: #CCCCCC 1px solid;
+  border-bottom: #CCCCCC 3px solid;
+  border-right: #CCCCCC 3px solid;
+  color: white;
+  background-color: black;
+  
+}
+
+.italic {
+  font-style: italic;
+} 
+
+.bold {
+  font-weight: bold;
+}
+
+ul.buttons{
+  font-weight: bold;
+}
+
+textarea.example {
+  clear: both;
+  padding: .25em;
+  width: 50%;
+  height: 200px;
+}
+
+.hide {
+position: absolute;
+top: -20em;
+left: -200em;
+} 
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head> 
+<body>
+<div role="application">
+<h3>Text Sample 1</h3>
+<ul class="buttons" title="Text Formating Controls 1">
+    <li id="larger1"  
+        role="button"
+        tabindex="0"
+        aria-pressed="false"
+        aria-controls="text1"
+        aria-labelledby="larger_label">+</li>           
+    <li id="smaller1"  
+        role="button"
+        tabindex="0"
+        aria-pressed="false"
+        aria-controls="text1"
+        aria-labelledby="smaller_label">-</li>
+    <li id="italic1"  
+        role="button"
+        class="toggleButton italic"
+        tabindex="0"
+        aria-pressed="true"
+        aria-controls="text1"
+        aria-labelledby="italic_label">i</li>
+    <li id="bold1"  
+        role="button"
+        class="toggleButton"
+        tabindex="0"
+        aria-pressed="false"
+        aria-controls="text1"
+        aria-labelledby="bold_label">B</li>
+</ul>
+
+<p style="clear: both; height: 1px">&nbsp;</p>
+
+<textarea id="text1" name="text1" class="example italic"> 
+Four score and seven years ago our fathers brought forth on this continent a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.
+
+Now we are engaged in a great civil war, testing whether that nation, or any nation, so conceived and so dedicated, can long endure. We are met on a great battle-field of that war. We have come to dedicate a portion of that field, as a final resting place for those who here gave their lives that that nation might live. It is altogether fitting and proper that we should do this.
+</textarea>        
+<p>&nbsp;</p>
+
+<h3>Text Sample 2</h3>
+
+<ul class="buttons" title="Text Formating Controls 2">
+
+    <li id="larger2"  
+        role="button"
+        tabindex="0"
+        aria-pressed="false"
+        aria-controls="text2"
+        aria-labelledby="larger_label">+</li>
+            
+    <li id="smaller2"  
+        role="button"
+        tabindex="0"
+        aria-pressed="false"
+        aria-controls="text2"
+        aria-labelledby="smaller_label">-</li>
+           
+    <li id="italic2"  
+        role="button"
+        class="toggleButton italic"
+        tabindex="0"
+        aria-pressed="false"
+        aria-controls="text2"
+        aria-labelledby="italic_label">i</li>
+        
+    <li id="bold2"  
+        role="button"
+        class="toggleButton"
+        tabindex="0"
+        aria-pressed="true"
+        aria-controls="text2"
+        aria-labelledby="bold_label">B</li>
+        
+</ul>
+
+<p style="clear: both; height: 1px">&nbsp;</p>
+
+<textarea id="text2" name="text2" class="example bold">
+But, in a larger sense, we can not dedicate - we can not consecrate - we can not hallow - this ground. The brave men, living and dead, who struggled here, have consecrated it, far above our poor power to add or detract. The world will little note, nor long remember what we say here, but it can never forget what they did here. It is for us the living, rather, to be dedicated here to the unfinished work which they who fought here have thus far so nobly advanced. It is rather for us to be here dedicated to the great task remaining before us - that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion - that we here highly resolve that these dead shall not have died in vain - that this nation, under God, shall have a new birth of freedom - and that government of the people, by the people, for the people, shall not perish from the earth. 
+</textarea>
+
+<p class="hide" id="bold_label">Bold</p>
+
+<p class="hide" id="italic_label">Italic</p>
+
+<p class="hide" id="larger_label">Font Larger</p>
+
+<p class="hide" id="smaller_label">Font Smaller</p>
+
+</div>
+<script type="text/javascript">
+var KEY_ENTER = 13;
+var KEY_SPACE = 32;
+
+$(document).ready(function() {
+
+	$('ul.buttons li').mousedown(function(event) {
+
+		var ariaControls = '#' + $(this).attr('aria-controls');
+
+		switch($(this).attr('aria-labelledby')) {
+			case 'italic_label': {
+				$(ariaControls).toggleClass('italic');
+				break;
+			}
+			case 'bold_label': {
+				$(ariaControls).toggleClass('bold');
+				break;
+			}
+			case 'larger_label': {
+				increaseFontSize(ariaControls);
+				break;
+			}
+			case 'smaller_label': {
+				decreaseFontSize(ariaControls);
+				break;
+			}
+		} // end switch
+
+		if ($(this).hasClass('toggleButton') == true) {
+
+				// This is a toggle button: toggle aria-pressed state
+				togglePressed(this);
+		}
+		else
+		{
+				// This is a momentary pushbutton: Set aria-pressed to true
+				$(this).attr('aria-pressed', 'true');
+		}
+
+		$(this).focus();
+
+		event.stopPropagation();
+		return false;
+	}); // end button click handler
+
+	// bind a mouseup handler to the buttons to enable momentary pushbuttons
+	// to return to unpressed state and toggle buttons to remain pressed
+	// 
+	$('ul.buttons li').mouseup(function(event) {
+
+		if ($(this).hasClass('toggleButton') == false) {
+
+			// Set aria-pressed to false
+			$(this).attr('aria-pressed', 'false');
+		}
+
+		event.stopPropagation();
+		return false;
+	}); // end mouseup handler
+
+	// keypress handler
+	//
+	// The Opera browser detects keystrokes to perform window manipulation during the keypress event,
+	// not keydown like IE, Firefox, and Safari. Relevant keypresses are consumed by this handler to
+	// make the browser behave properly when the user is manipulating the buttons.
+	//
+	$('ul.buttons li').keypress(function(event) {
+
+		switch (event.which) {
+			case KEY_ENTER:
+			case KEY_SPACE: {
+				event.stopPropagation;
+				return false;
+				break;
+			}
+		} //end switch
+		return true;
+	});
+
+	$('ul.buttons li').keydown(function(event) {
+
+		var ariaControls = '#' + $(this).attr('aria-controls');
+
+		switch (event.which) {
+			case KEY_ENTER:
+			case KEY_SPACE: {
+				switch($(this).attr('aria-labelledby')) {
+					case 'italic_label': {
+						$(ariaControls).toggleClass('italic');
+						break;
+					}
+					case 'bold_label': {
+						$(ariaControls).toggleClass('bold');
+						break;
+					}
+					case 'larger_label': {
+						increaseFontSize(ariaControls);
+						break;
+					}
+					case 'smaller_label': {
+						decreaseFontSize(ariaControls);
+						break;
+					}
+				} // end switch
+
+				if ($(this).hasClass('toggleButton') == true) {
+
+						// This is a toggle button: toggle aria-pressed state
+						togglePressed(this);
+				}
+				else
+				{
+						// This is a momentary pushbutton: Set aria-pressed to true
+						$(this).attr('aria-pressed', 'true');
+				}
+
+				event.stopPropagation();
+				return false;
+
+			} // end case
+		} // end switch
+
+		return true;
+	}); // end button click handler
+
+	// bind a keyup handler to the buttons to enable momentary pushbuttons
+	// to return to unpressed state and toggle buttons to remain pressed
+	// 
+	$('ul.buttons li').keyup(function(event) {
+		
+		id = this;
+
+		switch (event.which) {
+			case KEY_ENTER:
+			case KEY_SPACE: {
+				if ($(this).hasClass('toggleButton') == false) {
+				
+					// set aria-pressed to false
+					$(id).attr('aria-pressed', 'false');
+				}
+
+				event.stopPropagation();
+				return false;
+			} // end case
+		} // end switch
+
+		return true;
+	}); // end mouseup handler
+
+	/**
+	 * increaseFontSize() increases the font size for the controlled area
+	 *
+	 * @param (ariaControls) id of text area to modify
+	 *
+	 * @return N/A
+	 */
+	function increaseFontSize(ariaControls) {
+	
+		var $text = $(ariaControls);
+		var fontSize = parseFloat($text.css('fontSize'), 10);
+	
+		// increase the font size
+		fontSize *= 1.4;
+	
+		if (fontSize > 120) {
+			return;
+		}
+		// write the new value to the css property
+		// note: 'px' must be appended for valid css
+		$text.css('fontSize', fontSize+'px');
+	} // end increaseFontSize()
+	
+	/**
+	 * decreaseFontSize() decreases the font size for the controlled area
+	 *
+	 * @param (ariaControls) id of text area to modify
+	 *
+	 * @return N/A
+	 */
+	function decreaseFontSize(ariaControls) {
+	
+		var $text = $(ariaControls);
+		var fontSize = parseFloat($text.css('fontSize'), 10);
+	
+		// increase the font size
+		fontSize /= 1.4;
+	
+		if (fontSize < 4) {
+			return;
+		}
+	
+		// write the new value to the css property
+		// note: 'px' must be appended for valid css
+		$text.css('fontSize', fontSize+'px');
+	
+	} // end decreaseFontSize
+	
+	/**
+	 * togglePressed() toggles the aria-pressed atribute between true or false
+	 *
+	 * @param ( id object) button to be operated on
+	 *
+	 * @return N/A
+	 */
+	function togglePressed(id) {
+	
+		// reverse the aria-pressed state
+		if ($(id).attr('aria-pressed') == 'true') {
+			$(id).attr('aria-pressed', 'false');
+		}
+		else {
+			$(id).attr('aria-pressed', 'true');
+		}
+	}
+
+}); // end ready
+</script>
+</body>
+</html>

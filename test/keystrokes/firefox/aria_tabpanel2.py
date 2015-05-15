@@ -1,15 +1,13 @@
 #!/usr/bin/python
 
-"""Test of UIUC tab panel presentation."""
-
 from macaroon.playback import *
 import utils
 
 sequence = MacroSequence()
 
-sequence.append(KeyComboAction("Tab"))
-sequence.append(KeyComboAction("Tab"))
-sequence.append(KeyComboAction("Tab"))
+# Work around some new quirk in Gecko that causes this test to fail if
+# run via the test harness rather than manually.
+sequence.append(KeyComboAction("<Control>r"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -23,7 +21,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Page_Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Ctrl Page Down to second tab",
-    ["BRAILLE LINE:  'Crust page tab Veggies page tab Carnivore Delivery'",
+    ["BRAILLE LINE:  'Crust Veggies page tab Carnivore Delivery'",
      "     VISIBLE:  'Veggies page tab Carnivore Deliv', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",

@@ -47,31 +47,6 @@ class SpeechGenerator(Gecko.SpeechGenerator):
     def __init__(self, script):
         Gecko.SpeechGenerator.__init__(self, script)
 
-    def _generateName(self, obj, **args):
-        """Returns an array of strings for use by speech and braille that
-        represent the name of the object. Overridden here because we do
-        not always want to treat displayed text as the name."""
-
-        result = []
-        if not self._script.isEditableMessage(obj):
-            result.extend(Gecko.SpeechGenerator._generateName(
-                    self, obj, **args))
-
-        return result
-
-    def _generateRoleName(self, obj, **args):
-        """Prevents some roles from being spoken."""
-        result = []
-        role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_DOCUMENT_FRAME \
-           and obj.getState().contains(pyatspi.STATE_EDITABLE):
-            pass
-        else:
-            result.extend(Gecko.SpeechGenerator._generateRoleName(
-                              self, obj, **args))
-
-        return result
-
     def _generateColumnHeader(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the column header for an object

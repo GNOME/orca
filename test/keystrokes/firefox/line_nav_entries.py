@@ -7,7 +7,9 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(PauseAction(3000))
+# Work around some new quirk in Gecko that causes this test to fail if
+# run via the test harness rather than manually.
+sequence.append(KeyComboAction("<Control>r"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
@@ -57,7 +59,8 @@ sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
     ["BRAILLE LINE:  ' $l Am I a label as well?'",
      "     VISIBLE:  ' $l Am I a label as well?', cursor=1",
-     "SPEECH OUTPUT: 'Am I a label as well? entry'"]))
+     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'Am I a label as well?'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -476,7 +479,8 @@ sequence.append(utils.AssertPresentationAction(
     "55. Line Up",
     ["BRAILLE LINE:  ' $l Am I a label as well?'",
      "     VISIBLE:  ' $l Am I a label as well?', cursor=1",
-     "SPEECH OUTPUT: 'Am I a label as well? entry'"]))
+     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'Am I a label as well?'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

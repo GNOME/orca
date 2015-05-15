@@ -2,7 +2,7 @@
 #
 # Copyright 2005-2009 Sun Microsystems Inc.
 # Copyright 2010 Orca Team.
-# Copyright 2014 Igalia, S.L.
+# Copyright 2014-2015 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -35,7 +35,7 @@ __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2010 Orca Team." \
-                "Copyright (c) 2014 Igalia, S.L."
+                "Copyright (c) 2014-2015 Igalia, S.L."
 __license__   = "LGPL"
 
 from gi.repository import Gtk
@@ -141,7 +141,6 @@ class Script(default.Script):
         # loading a page.
         #
         self._loadingDocumentContent = False
-        self._loadingDocumentTime = 0.0
 
         # In tabbed content (i.e., Firefox's support for one tab per
         # URL), we also keep track of the caret context in each tab.
@@ -161,12 +160,6 @@ class Script(default.Script):
         #
         self.madeFindAnnouncement = False
 
-        # We don't want to prevent the user from arrowing into an
-        # autocomplete when it appears in a search form.  We need to
-        # keep track if one has appeared or disappeared.
-        #
-        self._autocompleteVisible = False
-
         # Create the live region manager and start the message manager
         self.liveMngr = liveregions.LiveRegionManager(self)
 
@@ -181,12 +174,6 @@ class Script(default.Script):
         # by storing attributes.
         #
         self.currentAttrs = {}
-
-        # Last focused frame. We are only interested in frame focused events
-        # when it is a different frame, so here we store the last frame
-        # that recieved state-changed:focused.
-        #
-        self._currentFrame = None
 
         # A dictionary of Gecko-style attribute names and their equivalent/
         # expected names. This is necessary so that we can present the
@@ -249,7 +236,6 @@ class Script(default.Script):
         self._inSayAll = False
         self._sayAllIsInterrupted = False
         self._loadingDocumentContent = False
-        self._loadingDocumentTime = 0.0
 
     def getBookmarks(self):
         """Returns the "bookmarks" class for this script.
@@ -904,151 +890,11 @@ class Script(default.Script):
         orca.setLocusOfFocus(None, context.obj, notifyScript=False)
         self.setCaretContext(context.obj, context.currentOffset)
 
-    def onCaretMoved(self, event):
-        """Callback for object:text-caret-moved accessibility events."""
-
-        if self.utilities.isZombie(event.source):
-            msg = "ERROR: Event source is Zombie"
-            debug.println(debug.LEVEL_INFO, msg)
-            return
-
-        if not self.inDocumentContent(event.source):
-            default.Script.onCaretMoved(self, event)
-            return
-
-        if self._lastCommandWasCaretNav:
-            msg = "INFO: Caret-moved event ignored: last command was caret nav"
-            debug.println(debug.LEVEL_INFO, msg)
-            return
-
-        if self._lastCommandWasStructNav:
-            msg = "INFO: Caret-moved event ignored: last command was struct nav"
-            debug.println(debug.LEVEL_INFO, msg)
-            return
-
-        if self._lastCommandWasMouseButton:
-            orca.setLocusOfFocus(event, event.source)
-            self.setCaretContext(event.source, event.detail1)
-            return
-
-        text = self.utilities.queryNonEmptyText(event.source)
-        if not text:
-            if event.source.getRole() == pyatspi.ROLE_LINK:
-                orca.setLocusOfFocus(event, event.source)
-                self.setCaretContext(event.source, event.detail1)
-            return
-
-        char, start, end = text.getTextAtOffset(event.detail1, pyatspi.TEXT_BOUNDARY_CHAR)
-        if char == self.EMBEDDED_OBJECT_CHARACTER:
-            msg = "INFO: Caret-moved event ignored: Caret moved to embedded object"
-            debug.println(debug.LEVEL_INFO, msg)
-            return
-
-        if not char:
-            msg = "INFO: Caret-moved event ignored: Caret moved to empty character"
-            debug.println(debug.LEVEL_INFO, msg)
-            return
-
-        contextObj, contextOffset = self.getCaretContext()
-        if event.detail1 == contextOffset and event.source == contextObj:
-            return
-
-        obj = event.source
-        state = obj.getState()
-
-        firstObj, firstOffset = self.findFirstCaretContext(obj, event.detail1)
-        if firstOffset == contextOffset and firstObj == contextObj:
-            return
-
-        if contextObj and contextObj.parent == firstObj \
-           and not state.contains(pyatspi.STATE_EDITABLE):
-            return
-
-        if self.utilities.inFindToolbar():
-            self.presentFindResults(obj, event.detail1)
-            return
-
-        self.setCaretContext(obj, event.detail1)
-        if not _settingsManager.getSetting('caretNavigationEnabled') \
-           or self._inFocusMode \
-           or state.contains(pyatspi.STATE_EDITABLE):
-            orca.setLocusOfFocus(event, obj, False)
-
-        default.Script.onCaretMoved(self, event)
-
-    def onTextDeleted(self, event):
-        """Called whenever text is from an an object.
-
-        Arguments:
-        - event: the Event
-        """
-
-        self._destroyLineCache()
-        if not event.source.getState().contains(pyatspi.STATE_EDITABLE):
-            if self.inMouseOverObject:
-                obj = self.lastMouseOverObject
-                while obj and (obj != obj.parent):
-                    if self.utilities.isSameObject(event.source, obj):
-                        self.restorePreMouseOverContext()
-                        break
-                    obj = obj.parent
-
-        default.Script.onTextDeleted(self, event)
-
-    def onTextInserted(self, event):
-        """Called whenever text is inserted into an object.
-
-        Arguments:
-        - event: the Event
-        """
-        self._destroyLineCache()
-
-        if self.handleAsLiveRegion(event):
-            self.liveMngr.handleEvent(event)
-            return
-
-        default.Script.onTextInserted(self, event)
-
     def _getCtrlShiftSelectionsStrings(self):
         return [messages.LINE_SELECTED_DOWN,
                 messages.LINE_UNSELECTED_DOWN,
                 messages.LINE_SELECTED_UP,
                 messages.LINE_UNSELECTED_UP]
-
-    def onTextSelectionChanged(self, event):
-        """Called when an object's text selection changes.
-
-        Arguments:
-        - event: the Event
-        """
-
-        if self.utilities.inFindToolbar():
-            self.presentFindResults(event.source, -1)
-            self._saveFocusedObjectInfo(orca_state.locusOfFocus)
-            return
-
-        if not self.inDocumentContent(orca_state.locusOfFocus) \
-           and self.inDocumentContent(event.source):
-            return
-
-        if self.utilities.isZombie(event.source):
-            msg = "ERROR: Event source is Zombie"
-            debug.println(debug.LEVEL_INFO, msg)
-            return True
-
-        text = self.utilities.queryNonEmptyText(event.source)
-        if not text:
-            msg = "INFO: Text-selection event ignored: There's no text"
-            debug.println(debug.LEVEL_INFO, msg)
-            return
-
-        char, start, end = text.getTextAtOffset(text.caretOffset, pyatspi.TEXT_BOUNDARY_CHAR)
-        if char == self.EMBEDDED_OBJECT_CHARACTER:
-            msg = "INFO: Text-selection event ignored: Caret offset is at embedded object"
-            debug.println(debug.LEVEL_INFO, msg)
-            return
-
-        default.Script.onTextSelectionChanged(self, event)
 
     def onActiveChanged(self, event):
         """Callback for object:state-changed:active accessibility events."""
@@ -1068,180 +914,281 @@ class Script(default.Script):
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
-        try:
-            obj = event.source
-            role = obj.getRole()
-            name = obj.name
-        except:
-            return
-        if role != pyatspi.ROLE_DOCUMENT_FRAME:
-             return
+        if not self.inDocumentContent(event.source):
+            msg = "INFO: Event source is not in document content"
+            debug.println(debug.LEVEL_INFO, msg)
+            super().onBusyChanged(event)
+            return False
 
-        try:
-            focusRole = orca_state.locusOfFocus.getRole()
-        except:
-            focusRole = None
-
-        # The event is for the changing contents of the help frame as the user
-        # navigates from topic to topic in the list on the left. Ignore this.
-        if focusRole == pyatspi.ROLE_LIST_ITEM \
-           and not self.inDocumentContent(orca_state.locusOfFocus):
-            return
+        if not self.inDocumentContent(orca_state.locusOfFocus):
+            msg = "INFO: Ignoring: Locus of focus is not in document content"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
 
         self._loadingDocumentContent = event.detail1
-        finishedLoading = False
-        if event.detail1:
-            message = messages.PAGE_LOADING_START
-        elif name:
-            message = messages.PAGE_LOADING_END_NAMED % name
-            finishedLoading = True
-        else:
-            message = messages.PAGE_LOADING_END
-            finishedLoading = True
- 
+
+        obj, offset = self.getCaretContext()
+        if not obj or self.utilities.isZombie(obj):
+            self.clearCaretContext()
+
         if not _settingsManager.getSetting('onlySpeakDisplayedText'):
-            self.presentMessage(message)
- 
-        if not finishedLoading:
-            return
+            if event.detail1:
+                msg = messages.PAGE_LOADING_START
+            elif event.source.name:
+                msg = messages.PAGE_LOADING_END_NAMED % event.source.name
+            else:
+                msg = messages.PAGE_LOADING_END
+            self.presentMessage(msg)
+
+        if event.detail1:
+            return True
 
         if self.useFocusMode(orca_state.locusOfFocus) != self._inFocusMode:
             self.togglePresentationMode(None)
 
-        # Store the document frame otherwise the first time it gains focus (e.g.
-        # the first time the user arrows off of a link into non-focusable text),
-        # onFocused will start chatting unnecessarily.
-        self._currentFrame = obj
- 
-        # First try to figure out where the caret is on the newly loaded page.
-        # If it is on an editable object (e.g., a text entry), then present just
-        # that object. Otherwise, force the caret to the top of the page and
-        # start a SayAll from that position.
-        [obj, characterOffset] = self.getCaretContext()
-        atTop = False
+        obj, offset = self.getCaretContext()
         if not obj:
-            self.clearCaretContext()
-            [obj, characterOffset] = self.getCaretContext()
-            atTop = True
-        if not obj:
-             return
-        if not atTop and not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-            self.clearCaretContext()
-            [obj, characterOffset] = self.getCaretContext()
-            if not obj:
-                return
- 
-        # For braille, we just show the current line containing the caret. For
-        # speech, however, we will start a Say All operation if the caret is in
-        # an unfocusable area (e.g., it's not in a text entry area such as
-        # Google's search text entry or a link that we just returned to by
-        # pressing the back button). Otherwise, we'll just speak the line that
-        # the caret is on.
+            msg = "INFO: Could not get caret context"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        if self.utilities.isFocusModeWidget(obj):
+            orca.setLocusOfFocus(event, obj)
+            return True
+
+        self.setCaretPosition(obj, offset)
+        contents = self.getLineContentsAtOffset(obj, offset)
         self.updateBraille(obj)
-        if obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-            speech.speak(self.speechGenerator.generateSpeech(obj))
-        elif not _settingsManager.getSetting('sayAllOnLoad'):
-            self.speakContents(
-                self.getLineContentsAtOffset(obj, characterOffset))
+        if not _settingsManager.getSetting('sayAllOnLoad'):
+            self.speakContents(contents)
         elif _settingsManager.getSetting('enableSpeech'):
             self.sayAll(None)
+
+        return True
+
+    def onCaretMoved(self, event):
+        """Callback for object:text-caret-moved accessibility events."""
+
+        if self.utilities.isZombie(event.source):
+            msg = "ERROR: Event source is Zombie"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        if not self.inDocumentContent(event.source):
+            msg = "INFO: Event source is not in document content"
+            debug.println(debug.LEVEL_INFO, msg)
+            super().onCaretMoved(event)
+            return False
+
+        if self._lastCommandWasCaretNav:
+            msg = "INFO: Event ignored: Last command was caret nav"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        if self._lastCommandWasStructNav:
+            msg = "INFO: Event ignored: Last command was struct nav"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        if self._lastCommandWasMouseButton:
+            msg = "INFO: Event handled: Last command was mouse button"
+            debug.println(debug.LEVEL_INFO, msg)
+            orca.setLocusOfFocus(event, event.source)
+            self.setCaretContext(event.source, event.detail1)
+            return True
+
+        if self.utilities.inFindToolbar() and not self.madeFindAnnouncement:
+            msg = "INFO: Event handled: Presenting find results"
+            debug.println(debug.LEVEL_INFO, msg)
+            self.presentFindResults(event.source, event.detail1)
+            return True
+
+        if self.utilities.eventIsAutocompleteNoise(event):
+            msg = "INFO: Event ignored: Autocomplete noise"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        if self.utilities.textEventIsForNonNavigableTextObject(event):
+            msg = "INFO: Event ignored: Event source is non-navigable text object"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        if self.utilities.textEventIsDueToInsertion(event):
+            msg = "INFO: Event handled: Updating position due to insertion"
+            debug.println(debug.LEVEL_INFO, msg)
+            self._saveLastCursorPosition(event.source, event.detail1)
+            return True
+
+        obj, offset = self.findFirstCaretContext(event.source, event.detail1)
+
+        if self.utilities.caretMovedToSamePageFragment(event):
+            msg = "INFO: Event handled: Caret moved to fragment"
+            debug.println(debug.LEVEL_INFO, msg)
+            orca.setLocusOfFocus(event, obj)
+            self.setCaretContext(obj, offset)
+            return True
+
+        text = self.utilities.queryNonEmptyText(event.source)
+        if not text:
+            if event.source.getRole() == pyatspi.ROLE_LINK:
+                msg = "INFO: Event handled: Was for non-text link"
+                debug.println(debug.LEVEL_INFO, msg)
+                orca.setLocusOfFocus(event, event.source)
+                self.setCaretContext(event.source, event.detail1)
+            else:
+                msg = "INFO: Event ignored: Was for non-text non-link"
+                debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        char = text.getText(event.detail1, event.detail1+1)
+        isEditable = obj.getState().contains(pyatspi.STATE_EDITABLE)
+        if not char and not isEditable:
+            msg = "INFO: Event ignored: Was for empty char in non-editable text"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        if char == self.EMBEDDED_OBJECT_CHARACTER:
+            if not self.utilities.isTextBlockElement(obj):
+                msg = "INFO: Event ignored: Was for embedded non-textblock"
+                debug.println(debug.LEVEL_INFO, msg)
+                return True
+
+            msg = "INFO: Setting locusOfFocus, context to: %s, %i" % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg)
+            orca.setLocusOfFocus(event, obj)
+            self.setCaretContext(obj, offset)
+            return True
+
+        if not _settingsManager.getSetting('caretNavigationEnabled') \
+           or self._inFocusMode or isEditable:
+            orca.setLocusOfFocus(event, event.source, False)
+            self.setCaretContext(event.source, event.detail1)
+            msg = "INFO: Setting locusOfFocus, context to: %s, %i" % \
+                  (event.source, event.detail1)
+            debug.println(debug.LEVEL_INFO, msg)
+            super().onCaretMoved(event)
+            return False
+
+        self.setCaretContext(obj, offset)
+        msg = "INFO: Setting context to: %s, %i" % (obj, offset)
+        debug.println(debug.LEVEL_INFO, msg)
+        super().onCaretMoved(event)
+        return False
+
+    def onCheckedChanged(self, event):
+        """Callback for object:state-changed:checked accessibility events."""
+
+        if not self.inDocumentContent(event.source):
+            msg = "INFO: Event source is not in document content"
+            debug.println(debug.LEVEL_INFO, msg)
+            super().onCheckedChanged(event)
+            return False
+
+        obj, offset = self.getCaretContext()
+        if obj != event.source:
+            msg = "INFO: Event source is not context object"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        oldObj, oldState = self.pointOfReference.get('checkedChange', (None, 0))
+        if hash(oldObj) == hash(obj) and oldState == event.detail1:
+            msg = "INFO: Ignoring event, state hasn't changed"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        role = obj.getRole()
+        if not (self._lastCommandWasCaretNav and role == pyatspi.ROLE_RADIO_BUTTON):
+            msg = "INFO: Event is something default can handle"
+            debug.println(debug.LEVEL_INFO, msg)
+            super().onCheckedChanged(event)
+            return False
+
+        self.updateBraille(obj)
+        speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+        self.pointOfReference['checkedChange'] = hash(obj), event.detail1
+        return True
 
     def onChildrenChanged(self, event):
         """Callback for object:children-changed accessibility events."""
 
-        if event.any_data is None:
-            return
+        if self.handleAsLiveRegion(event):
+            msg = "INFO: Event to be handled as live region"
+            debug.println(debug.LEVEL_INFO, msg)
+            self.liveMngr.handleEvent(event)
+            return True
 
-        if not event.type.startswith("object:children-changed:add"):
-            return
+        if self._loadingDocumentContent:
+            msg = "INFO: Ignoring because document content is being loaded."
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
 
-        # Certain Web Dev practices, such as a:focus{position:relative;}, cause
-        # Gecko to kill the accessible object that we just moved to and create
-        # a new object to replace it. If we don't catch this, navigation breaks
-        # because the proverbial rug has just been pulled out from under us. :(
-        # To make matters worse, the replacement object can be in the ancestry.
+        if not event.any_data or self.utilities.isZombie(event.any_data):
+            msg = "INFO: Ignoring because any data is null or zombified."
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        if not self.inDocumentContent(event.source):
+            msg = "INFO: Event source is not in document content"
+            debug.println(debug.LEVEL_INFO, msg)
+            super().onChildrenChanged(event)
+            return False
+
         obj, offset = self.getCaretContext()
-        if obj and self.utilities.isZombie(obj) and not self._loadingDocumentContent:
+        if obj and self.utilities.isZombie(obj):
             replicant = self.utilities.findReplicant(event.source, obj)
             if replicant:
                 # Refrain from actually touching the replicant by grabbing
                 # focus or setting the caret in it. Doing so will only serve
                 # to anger it.
+                msg = "INFO: Event handled by updating locusOfFocus and context"
+                debug.println(debug.LEVEL_INFO, msg)
                 orca.setLocusOfFocus(event, replicant, False)
                 self.setCaretContext(replicant, offset)
-                return
-
-        if self.handleAsLiveRegion(event):
-            self.liveMngr.handleEvent(event)
-            return
+                return True
 
         child = event.any_data
-        try:
-            childRole = child.getRole()
-        except:
-            return
-
-        if childRole == pyatspi.ROLE_ALERT:
+        if child.getRole() in [pyatspi.ROLE_ALERT, pyatspi.ROLE_DIALOG]:
+            msg = "INFO: Setting locusOfFocus to event.any_data"
+            debug.println(debug.LEVEL_INFO, msg)
             orca.setLocusOfFocus(event, child)
-            return
+            return True
 
-        if childRole == pyatspi.ROLE_DIALOG:
-            if self.inDocumentContent(event.source):
-                orca.setLocusOfFocus(event, child)
-            return
-
-        if self.lastMouseRoutingTime \
-           and 0 < time.time() - self.lastMouseRoutingTime < 1:
+        if self.lastMouseRoutingTime and 0 < time.time() - self.lastMouseRoutingTime < 1:
             utterances = []
             utterances.append(messages.NEW_ITEM_ADDED)
-            utterances.extend(
-                self.speechGenerator.generateSpeech(child, force=True))
+            utterances.extend(self.speechGenerator.generateSpeech(child, force=True))
             speech.speak(utterances)
             self.lastMouseOverObject = child
             self.preMouseOverContext = self.getCaretContext()
-            return
+            return True
 
-        default.Script.onChildrenChanged(self, event)
-
-    def onDocumentReload(self, event):
-        """Callback for document:reload accessibility events."""
-
-        # We care about the main document and we'll ignore document
-        # events from HTML iframes.
-        #
-        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
-            self._loadingDocumentContent = True
+        super().onChildrenChanged(event)
+        return False
 
     def onDocumentLoadComplete(self, event):
         """Callback for document:load-complete accessibility events."""
 
-        # We care about the main document and we'll ignore document
-        # events from HTML iframes.
-        #
-        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
-            # Reset the live region manager.
-            self.liveMngr.reset()
-            self._loadingDocumentContent = False
-            self._loadingDocumentTime = time.time()
+        msg = "INFO: Updating loading state and resetting live regions"
+        debug.println(debug.LEVEL_INFO, msg)
+        self._loadingDocumentContent = False
+        self.liveMngr.reset()
+        return True
 
     def onDocumentLoadStopped(self, event):
         """Callback for document:load-stopped accessibility events."""
 
-        # We care about the main document and we'll ignore document
-        # events from HTML iframes.
-        #
-        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
-            self._loadingDocumentContent = False
-            self._loadingDocumentTime = time.time()
+        msg = "INFO: Updating loading state"
+        debug.println(debug.LEVEL_INFO, msg)
+        self._loadingDocumentContent = False
+        return True
 
-    def onNameChanged(self, event):
-        """Called whenever a property on an object changes.
+    def onDocumentReload(self, event):
+        """Callback for document:reload accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
-        if event.source.getRole() == pyatspi.ROLE_FRAME:
-            self.liveMngr.flushMessages()
+        msg = "INFO: Updating loading state"
+        debug.println(debug.LEVEL_INFO, msg)
+        self._loadingDocumentContent = True
+        return True
 
     def onFocus(self, event):
         """Callback for focus: accessibility events."""
@@ -1281,60 +1228,73 @@ class Script(default.Script):
         """Callback for object:state-changed:focused accessibility events."""
 
         if not event.detail1:
-            return
+            msg = "INFO: Ignoring because event source lost focus"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
 
         if self.utilities.isZombie(event.source):
             msg = "ERROR: Event source is Zombie"
             debug.println(debug.LEVEL_INFO, msg)
-            return
+            return True
 
-        if not _settingsManager.getSetting('caretNavigationEnabled'):
-            default.Script.onFocusedChanged(self, event)
-            return
-
-        obj = event.source
-        if not self.inDocumentContent(obj):
-            default.Script.onFocusedChanged(self, event)
-            return
-
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_EDITABLE):
-            default.Script.onFocusedChanged(self, event)
-            return
-
-        role = obj.getRole()
-        if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]:
-            orca.setLocusOfFocus(event, event.source)
-            return
-
-        # As the caret moves into a non-focusable element, Gecko emits the
-        # signal on the first focusable element in the ancestry.
-        rolesToIgnore = pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_PANEL
-        if role in rolesToIgnore:
-            if self.inDocumentContent():
-                return
-
-            contextObj, contextOffset = self.getCaretContext()
-            if contextObj:
-                orca.setLocusOfFocus(event, contextObj)
-                return
-
-        # If we caused this event, we don't want to double-present it.
-        if self._lastCommandWasCaretNav:
-            msg = "INFO: Focus change event ignored: last command was caret nav"
+        if not self.inDocumentContent(event.source):
+            msg = "INFO: Event source is not in document content"
             debug.println(debug.LEVEL_INFO, msg)
-            return
+            super().onFocusedChanged(event)
+            return False
+
+        state = event.source.getState()
+        if state.contains(pyatspi.STATE_EDITABLE):
+            msg = "INFO: Event source is editable"
+            debug.println(debug.LEVEL_INFO, msg)
+            super().onFocusedChanged(event)
+            return False
+
+        role = event.source.getRole()
+        if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]:
+            msg = "INFO: Event handled: Setting locusOfFocus to event source"
+            debug.println(debug.LEVEL_INFO, msg)
+            orca.setLocusOfFocus(event, event.source)
+            return True
+
+        if self._lastCommandWasCaretNav:
+            msg = "INFO: Event ignored: Last command was caret nav"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
 
         if self._lastCommandWasStructNav:
-            msg = "INFO: Focus change event handled manually: last command was struct nav"
+            msg = "INFO: Event ignored: Last command was struct nav"
             debug.println(debug.LEVEL_INFO, msg)
-            if role != pyatspi.ROLE_LINK \
-               and obj.parent.getRole() != pyatspi.ROLE_LIST_BOX:
-                self.setCaretContext(event.source, 0)
-                orca.setLocusOfFocus(event, event.source)
-            return
+            return True
 
-        default.Script.onFocusedChanged(self, event)
+        if role in [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]:
+            if self.inDocumentContent(orca_state.locusOfFocus) \
+               and not self.utilities.isZombie(orca_state.locusOfFocus):
+                msg = "INFO: Event ignored: locusOfFocus already in document"
+                debug.println(debug.LEVEL_INFO, msg)
+                return True
+
+            obj, offset = self.getCaretContext(event.source)
+            if obj and self.utilities.isZombie(obj):
+                msg = "INFO: Clearing context - obj is zombie"
+                debug.println(debug.LEVEL_INFO, msg)
+                self.clearCaretContext()
+                obj, offset = self.getCaretContext(event.source)
+
+            if obj:
+                msg = "INFO: Event handled: Setting locusOfFocus to context"
+                debug.println(debug.LEVEL_INFO, msg)
+                orca.setLocusOfFocus(event, obj)
+                return True
+
+        if not state.contains(pyatspi.STATE_FOCUSABLE) \
+           and not state.contains(pyatspi.STATE_FOCUSED):
+            msg = "INFO: Event ignored: Source is not focusable or focused"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        super().onFocusedChanged(event)
+        return False
 
     def onMouseButton(self, event):
         """Callback for mouse:button accessibility events."""
@@ -1342,42 +1302,171 @@ class Script(default.Script):
         self._lastCommandWasCaretNav = False
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = True
-        default.Script.onMouseButton(self, event)
+        super().onMouseButton(event)
+        return False
+
+    def onNameChanged(self, event):
+        """Callback for object:property-change:accessible-name events."""
+
+        if event.source.getRole() == pyatspi.ROLE_FRAME:
+            msg = "INFO: Flusing messages from live region manager"
+            debug.println(debug.LEVEL_INFO, msg)
+            self.liveMngr.flushMessages()
+
+        return True
 
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
 
-        # TODO - JD: Once there are separate scripts for the Gecko toolkit
-        # and the Firefox browser, the stuff below belongs in the browser
-        # script and not in the toolkit script.
- 
-        try:
-            eventRole = event.source.getRole()
-            focusedRole = orca_state.locusOfFocus.getRole()
-        except:
-            default.Script.onShowingChanged(self, event)
-            return
+        if not self.inDocumentContent(event.source):
+            msg = "INFO: Event source is not in document content"
+            debug.println(debug.LEVEL_INFO, msg)
+            super().onShowingChanged(event)
+            return False
 
-        # If an autocomplete appears beneath an entry, we don't want
-        # to prevent the user from being able to arrow into it.
-        if eventRole == pyatspi.ROLE_WINDOW \
-           and focusedRole in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_LIST_ITEM]:
-            self._autocompleteVisible = event.detail1
-            # If the autocomplete has just appeared, we want to speak
-            # its appearance if the user's verbosity level is verbose
-            # or if the user forced it to appear with (Alt+)Down Arrow.
-            if self._autocompleteVisible:
-                level = _settingsManager.getSetting('speechVerbosityLevel')
-                speakIt = level == settings.VERBOSITY_LEVEL_VERBOSE
-                if not speakIt:
-                    eventString, mods = self.utilities.lastKeyAndModifiers()
-                    speakIt = eventString == "Down"
-                if speakIt:
-                    speech.speak(self.speechGenerator.getLocalizedRoleName(
-                        event.source, pyatspi.ROLE_AUTOCOMPLETE))
-                    return
+        return True
 
-        default.Script.onShowingChanged(self, event)
+    def onTextDeleted(self, event):
+        """Callback for object:text-changed:delete accessibility events."""
+
+        if not self.inDocumentContent(event.source):
+            msg = "INFO: Event source is not in document content"
+            debug.println(debug.LEVEL_INFO, msg)
+            super().onTextDeleted(event)
+            return False
+
+        if self.utilities.eventIsAutocompleteNoise(event):
+            msg = "INFO: Ignoring event believed to be autocomplete noise"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        if self.utilities.textEventIsDueToInsertion(event):
+            msg = "INFO: Ignoring event believed to be due to text insertion"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        msg = "INFO: Clearing content cache due to text deletion"
+        debug.println(debug.LEVEL_INFO, msg)
+        # self.utilities.clearContentCache()
+        self._destroyLineCache()
+
+        state = event.source.getState()
+        if not state.contains(pyatspi.STATE_EDITABLE):
+            if self.inMouseOverObject \
+               and self.utilities.isZombie(self.lastMouseOverObject):
+                msg = "INFO: Restoring pre-mouseover context"
+                debug.println(debug.LEVEL_INFO, msg)
+                self.restorePreMouseOverContext()
+
+            msg = "INFO: Done processing non-editable source"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        super().onTextDeleted(event)
+        return False
+
+    def onTextInserted(self, event):
+        """Callback for object:text-changed:insert accessibility events."""
+
+        if not self.inDocumentContent(event.source):
+            msg = "INFO: Event source is not in document content"
+            debug.println(debug.LEVEL_INFO, msg)
+            super().onTextInserted(event)
+            return False
+
+        if self.utilities.eventIsAutocompleteNoise(event):
+            msg = "INFO: Ignoring: Event believed to be autocomplete noise"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        msg = "INFO: Clearing content cache due to text insertion"
+        debug.println(debug.LEVEL_INFO, msg)
+        # self.utilities.clearContentCache()
+        self._destroyLineCache()
+
+        if self.handleAsLiveRegion(event):
+            msg = "INFO: Event to be handled as live region"
+            debug.println(debug.LEVEL_INFO, msg)
+            self.liveMngr.handleEvent(event)
+            return True
+
+        if self.utilities.eventIsEOCAdded(event):
+            msg = "INFO: Ignoring: Event was for embedded object char"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        text = self.utilities.queryNonEmptyText(event.source)
+        if not text:
+            msg = "INFO: Ignoring: Event source is not a text object"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        state = event.source.getState()
+        if not state.contains(pyatspi.STATE_EDITABLE) \
+           and event.source != orca_state.locusOfFocus:
+            msg = "INFO: Done processing non-editable, non-locusOfFocus source"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        super().onTextInserted(event)
+        return False
+
+    def onTextSelectionChanged(self, event):
+        """Callback for object:text-selection-changed accessibility events."""
+
+        if self.utilities.isZombie(event.source):
+            msg = "ERROR: Event source is Zombie"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        if not self.inDocumentContent(event.source):
+            msg = "INFO: Event source is not in document content"
+            debug.println(debug.LEVEL_INFO, msg)
+            super().onTextSelectionChanged(event)
+            return False
+
+        if self.utilities.inFindToolbar():
+            msg = "INFO: Event handled: Presenting find results"
+            debug.println(debug.LEVEL_INFO, msg)
+            self.presentFindResults(event.source, -1)
+            self._saveFocusedObjectInfo(orca_state.locusOfFocus)
+            return True
+
+        if not self.inDocumentContent(orca_state.locusOfFocus):
+            msg = "INFO: Ignoring: Event in document content; focus is not"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        if self.utilities.eventIsAutocompleteNoise(event):
+            msg = "INFO: Ignoring: Event believed to be autocomplete noise"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        if self.utilities.textEventIsForNonNavigableTextObject(event):
+            msg = "INFO: Ignoring event for non-navigable text object"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        text = self.utilities.queryNonEmptyText(event.source)
+        if not text:
+            msg = "INFO: Ignoring: Event source is not a text object"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        char = text.getText(event.detail1, event.detail1+1)
+        if char == self.EMBEDDED_OBJECT_CHARACTER:
+            msg = "INFO: Ignoring: Event offset is at embedded object"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        obj, offset = self.getCaretContext()
+        if obj and obj.parent and event.source in [obj.parent, obj.parent.parent]:
+            msg = "INFO: Ignoring: Source is context ancestor"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        super().onTextSelectionChanged(event)
+        return False
 
     def handleProgressBarUpdate(self, event, obj):
         """Determine whether this progress bar event should be spoken or not.
@@ -1412,25 +1501,20 @@ class Script(default.Script):
         return self.utilities.isFocusModeWidget(obj)
 
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
-        """Called when the object with focus changes.
+        """Handles changes of focus of interest to the script."""
 
-        Arguments:
-        - event: if not None, the Event that caused the change
-        - oldFocus: Accessible that is the old focus
-        - newFocus: Accessible that is the new focus
-        """
-
-        if not newFocus:
-            orca_state.noFocusTimeStamp = time.time()
-            return
-
-        if self.utilities.inFindToolbar(newFocus):
-            self.madeFindAnnouncement = False
+        if newFocus and self.utilities.isZombie(newFocus):
+            msg = "ERROR: New focus is Zombie" % newFocus
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
 
         if not self.inDocumentContent(newFocus):
-            default.Script.locusOfFocusChanged(self, event, oldFocus, newFocus)
+            msg = "INFO: Locus of focus changed to non-document obj"
+            self._madeFindAnnouncement = False
             self._inFocusMode = False
-            return
+            debug.println(debug.LEVEL_INFO, msg)
+            super().locusOfFocusChanged(event, oldFocus, newFocus)
+            return False
 
         caretOffset = -1
         if self.utilities.inFindToolbar(oldFocus):
@@ -1441,13 +1525,15 @@ class Script(default.Script):
             caretOffset = text.caretOffset
 
         self.setCaretContext(newFocus, caretOffset)
-        default.Script.locusOfFocusChanged(self, event, oldFocus, newFocus)
+        self.updateBraille(newFocus)
+        speech.speak(self.speechGenerator.generateSpeech(newFocus, priorObj=oldFocus))
+        self._saveFocusedObjectInfo(newFocus)
 
-        if self._focusModeIsSticky:
-            return
-
-        if self.useFocusMode(newFocus) != self._inFocusMode:
+        if not self._focusModeIsSticky \
+           and self.useFocusMode(newFocus) != self._inFocusMode:
             self.togglePresentationMode(None)
+
+        return True
 
     def _destroyLineCache(self):
         """Removes all of the stored lines."""
@@ -1549,7 +1635,7 @@ class Script(default.Script):
         # things, however, we can defer to the default scripts.
         #
 
-        if not self.inDocumentContent() or self.utilities.isEntry(obj):
+        if not self.inDocumentContent() or obj.getState().contains(pyatspi.STATE_EDITABLE):
             default.Script.sayCharacter(self, obj)
             return
 
@@ -1564,7 +1650,7 @@ class Script(default.Script):
         # EMBEDDED_OBJECT_CHARACTER model of Gecko.  For all other
         # things, however, we can defer to the default scripts.
         #
-        if not self.inDocumentContent() or self.utilities.isEntry(obj):
+        if not self.inDocumentContent() or obj.getState().contains(pyatspi.STATE_EDITABLE):
             default.Script.sayWord(self, obj)
             return
 
@@ -1582,7 +1668,7 @@ class Script(default.Script):
         # EMBEDDED_OBJECT_CHARACTER model of Gecko.  For all other
         # things, however, we can defer to the default scripts.
         #
-        if not self.inDocumentContent() or self.utilities.isEntry(obj):
+        if not self.inDocumentContent() or obj.getState().contains(pyatspi.STATE_EDITABLE):
             default.Script.sayLine(self, obj)
             return
 
@@ -2237,8 +2323,7 @@ class Script(default.Script):
         """To-be-removed. Returns the string, caretOffset, startOffset."""
 
         if self._inFocusMode or not self.inDocumentContent(obj) \
-           or self.utilities.isEntry(obj) \
-           or self.utilities.isPasswordText(obj):
+           or obj.getState().contains(pyatspi.STATE_EDITABLE):
             return super().getTextLineAtCaret(obj, offset, startOffset, endOffset)
 
         text = self.utilities.queryNonEmptyText(obj)
@@ -2430,7 +2515,7 @@ class Script(default.Script):
         if obj:
             if character and character != self.EMBEDDED_OBJECT_CHARACTER:
                 self.speakCharacter(character)
-            elif not self.utilities.isEntry(obj):
+            elif not obj.getState().contains(pyatspi.STATE_EDITABLE):
                 # We won't have a character if we move to the end of an
                 # entry (in which case we're not on a character and therefore
                 # have nothing to say), or when we hit a component with no
@@ -2474,6 +2559,9 @@ class Script(default.Script):
 
         if self.useFocusMode(obj) != self._inFocusMode:
             self.togglePresentationMode(None)
+
+        obj.clearCache()
+        self._saveFocusedObjectInfo(obj)
 
     def moveToMouseOver(self, inputEvent):
         """Positions the caret offset to the next character or object

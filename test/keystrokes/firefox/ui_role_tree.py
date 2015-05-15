@@ -110,7 +110,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "13. Tab back to tree table",
-    ["BRAILLE LINE:  'Firefox application Library frame tree table Tags column header Bookmarks Toolbar   table row TREE LEVEL 1'",
+    ["BRAILLE LINE:  'Firefox application Library frame tree table Bookmarks Toolbar   table row TREE LEVEL 1'",
      "     VISIBLE:  'Bookmarks Toolbar   table row TR', cursor=1",
      "SPEECH OUTPUT: 'Bookmarks Toolbar   table row'"]))
 

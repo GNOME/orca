@@ -71,6 +71,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result = []
         acss = self.voice(speech_generator.DEFAULT)
         role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_DOCUMENT_FRAME \
+           and obj.getState().contains(pyatspi.STATE_EDITABLE):
+            return []
+
         result.extend(speech_generator.SpeechGenerator._generateName(
                               self, obj, **args))
         if not result and role == pyatspi.ROLE_LIST_ITEM:
@@ -173,6 +177,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and not self._script.utilities.justEnteredObject(obj, start, end) \
            and not self._script.utilities.isTextBlockElement(obj) \
            and not self._script.utilities.isLink(obj):
+            return []
+        if role == pyatspi.ROLE_DOCUMENT_FRAME \
+           and obj.getState().contains(pyatspi.STATE_EDITABLE):
             return []
 
         if not force:
@@ -285,6 +292,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                                pyatspi.ROLE_TOOL_BAR]
         args['skipRoles'] = [pyatspi.ROLE_PARAGRAPH,
                              pyatspi.ROLE_LIST_ITEM,
+                             pyatspi.ROLE_TABLE_ROW,
                              pyatspi.ROLE_TEXT]
 
         return speech_generator.SpeechGenerator._generateAncestors(
@@ -342,11 +350,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if args.get('formatType', 'unfocused') == 'detailedWhereAmI' \
            and self._script.inDocumentContent(obj):
             oldRole = self._overrideRole('default', args)
-            result.extend(speech_generator.SpeechGenerator.\
-                                           generateSpeech(self, obj, **args))
-            self._restoreRole(oldRole, args)
-        elif self._script.utilities.isEntry(obj):
-            oldRole = self._overrideRole(pyatspi.ROLE_ENTRY, args)
             result.extend(speech_generator.SpeechGenerator.\
                                            generateSpeech(self, obj, **args))
             self._restoreRole(oldRole, args)
@@ -440,8 +443,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not string:
             return []
 
-        if not self._script.utilities.isEntry(obj) \
-           and not self._script.utilities.isPasswordText(obj):
+        if not obj.getState().contains(pyatspi.STATE_EDITABLE):
             string = string.strip()
 
         result = [string]

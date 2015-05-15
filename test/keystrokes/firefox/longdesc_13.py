@@ -31,10 +31,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "3. Having selected View Description, do a Where Am I for new location",
-    ["KNOWN ISSUE: Braille and eyeballs suggest we're in the right place. Speech does not. The test case states the image is broken.",
-     "BRAILLE LINE:  'Pass h1'",
+    ["BRAILLE LINE:  'Pass h1'",
      "     VISIBLE:  'Pass h1', cursor=1",
-     "SPEECH OUTPUT: 'the image invalid'"]))
+     "SPEECH OUTPUT: 'heading level 1 Pass'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -7,6 +7,10 @@ import utils
 
 sequence = MacroSequence()
 
+# Work around some new quirk in Gecko that causes this test to fail if
+# run via the test harness rather than manually.
+sequence.append(KeyComboAction("<Control>r"))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
@@ -61,7 +65,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Tab",
     ["BRAILLE LINE:  'wk09_frozenmovie'",
      "     VISIBLE:  'wk09_frozenmovie', cursor=1",
-     "SPEECH OUTPUT: 'wk09_frozenmovie' voice=hyperlink",
+     "SPEECH OUTPUT: 'wk09_frozenmovie'",
      "SPEECH OUTPUT: 'link image'"]))
 
 sequence.append(utils.AssertionSummaryAction())

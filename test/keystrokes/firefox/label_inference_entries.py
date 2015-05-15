@@ -8,6 +8,7 @@ sequence = MacroSequence()
 sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -59,7 +60,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Next form field",
     ["BRAILLE LINE:  ' $l Am I a label as well?'",
      "     VISIBLE:  ' $l Am I a label as well?', cursor=1",
-     "SPEECH OUTPUT: 'Am I a label as well? entry'"]))
+     "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

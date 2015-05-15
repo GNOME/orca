@@ -11,8 +11,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "1. Where Am I on image",
-    ["BRAILLE LINE:  'the image image'",
-     "     VISIBLE:  'the image image', cursor=(0|1)",
+    ["KNOWN ISSUE: We don't know the longdesc is there due to https://bugzilla.mozilla.org/show_bug.cgi?id=1165433",
+     "BRAILLE LINE:  'the image image'",
+     "     VISIBLE:  'the image image', cursor=1",
      "SPEECH OUTPUT: 'the image image has long description'"]))
 
 sequence.append(PauseAction(3000))

@@ -37,7 +37,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Down Arrow",
-    ["BRAILLE LINE:  'Buttons: Copy Toggles: Italic Dropdowns: TooltipDialog ColorPalette Combos: Menu save options push button Menu2 push button save options2 push button '",
+    ["BRAILLE LINE:  'Buttons: Copy Toggles: Italic Dropdowns: TooltipDialog ColorPalette  Combos: Menu save options push button Menu2 push button save options2 push button '",
      "     VISIBLE:  'Buttons: Copy Toggles: Italic Dr', cursor=1",
      "SPEECH OUTPUT: 'Buttons:'",
      "SPEECH OUTPUT: 'Copy'",

@@ -1,15 +1,13 @@
 #!/usr/bin/python
 
-"""Test of UIUC tree presentation."""
-
 from macaroon.playback import *
 import utils
 
 sequence = MacroSequence()
 
-sequence.append(KeyComboAction("Tab"))
-sequence.append(KeyComboAction("Tab"))
-sequence.append(KeyComboAction("Tab"))
+# Work around some new quirk in Gecko that causes this test to fail if
+# run via the test harness rather than manually.
+sequence.append(KeyComboAction("<Control>r"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -66,8 +64,6 @@ sequence.append(utils.AssertPresentationAction(
     "6. Expand apples",
     ["BRAILLE LINE:  'Apples expanded list item'",
      "     VISIBLE:  'Apples expanded list item', cursor=1",
-     "BRAILLE LINE:  'Apples expanded list item'",
-     "     VISIBLE:  'Apples expanded list item', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -93,8 +89,6 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "9. Expand granny smith",
     ["BRAILLE LINE:  'Granny Smith expanded list item'",
-     "     VISIBLE:  'Granny Smith expanded list item', cursor=1",
-     "BRAILLE LINE:  'Granny Smith expanded list item'",
      "     VISIBLE:  'Granny Smith expanded list item', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
@@ -171,8 +165,6 @@ sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "17. Collapse vegetables",
     ["BRAILLE LINE:  'Vegetables collapsed list item'",
-     "     VISIBLE:  'Vegetables collapsed list item', cursor=1",
-     "BRAILLE LINE:  'Vegetables collapsed list item'",
      "     VISIBLE:  'Vegetables collapsed list item', cursor=1",
      "SPEECH OUTPUT: 'collapsed'"]))
 

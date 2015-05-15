@@ -7,6 +7,10 @@ import utils
 
 sequence = MacroSequence()
 
+# Work around some new quirk in Gecko that causes this test to fail if
+# run via the test harness rather than manually.
+sequence.append(KeyComboAction("<Control>r"))
+
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(PauseAction(3000))
 
@@ -36,7 +40,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "3. Next form field",
-    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using'",
+    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using value'",
      "     VISIBLE:  ' $l 3. Enter your State:  $l 4. ', cursor=1",
      "SPEECH OUTPUT: '2. Enter your City: entry'"]))
 
@@ -46,7 +50,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "4. Next form field",
-    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using'",
+    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using value'",
      "     VISIBLE:  ' $l 4. Enter your Country: US $l', cursor=1",
      "SPEECH OUTPUT: '3. Enter your State: entry'"]))
 
@@ -56,8 +60,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "5. Next form field",
-    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using'",
-     "     VISIBLE:  'US $l image text field using', cursor=1",
+    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using value'",
+     "     VISIBLE:  'US $l image text field using val', cursor=1",
      "SPEECH OUTPUT: '4. Enter your Country: entry'",
      "SPEECH OUTPUT: 'US'"]))
 

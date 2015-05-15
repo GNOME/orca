@@ -257,10 +257,8 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
         """
 
         isMatch = False
-        if self._script.utilities.isEntry(obj) \
-           or self._script.utilities.isPasswordText(obj):
-            state = obj.getState()
-            isMatch = state.contains(pyatspi.STATE_FOCUSABLE) \
+        state = obj.getState()
+        isMatch = state.contains(pyatspi.STATE_FOCUSABLE) \
                   and state.contains(pyatspi.STATE_SENSITIVE) \
                   and state.contains(pyatspi.STATE_EDITABLE)
 

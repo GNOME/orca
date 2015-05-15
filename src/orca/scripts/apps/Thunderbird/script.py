@@ -38,7 +38,6 @@ import orca.speech as speech
 import orca.scripts.toolkits.Gecko as Gecko
 from orca.orca_i18n import _
 
-from .formatting import Formatting
 from .speech_generator import SpeechGenerator
 from .spellcheck import SpellCheck
 from .script_utilities import Utilities
@@ -78,10 +77,6 @@ class Script(Gecko.Script):
             input_event.InputEventHandler(
                 Script.togglePresentationMode,
                 cmdnames.TOGGLE_PRESENTATION_MODE)
-
-    def getFormatting(self):
-        """Returns the formatting strings for this script."""
-        return Formatting(self)
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script."""

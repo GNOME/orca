@@ -741,6 +741,7 @@ class Script(script.Script):
 
         try:
             role = obj.getRole()
+            state = obj.getState()
         except:
             return
 
@@ -781,6 +782,9 @@ class Script(script.Script):
         else:
             self.pointOfReference['lastColumn'] = -1
             self.pointOfReference['lastRow'] = -1
+
+        self.pointOfReference['checkedChange'] = \
+            hash(obj), state.contains(pyatspi.STATE_CHECKED)
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -2238,6 +2242,7 @@ class Script(script.Script):
         obj = event.source
         role = obj.getRole()
         if not self.utilities.isSameObject(obj, orca_state.locusOfFocus) \
+           and role != pyatspi.ROLE_TABLE_ROW \
            and not (role == pyatspi.ROLE_COMBO_BOX and event.detail1):
             return
 

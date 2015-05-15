@@ -15,9 +15,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "1. Right Arrow in list",
-    ["BRAILLE LINE:  'Firefox application Firefox Preferences dialog Tabs list box General'",
-     "     VISIBLE:  'General', cursor=1",
-     "BRAILLE LINE:  'Firefox application Firefox Preferences dialog Tabs list box Tabs'",
+    ["BRAILLE LINE:  'Firefox application Firefox Preferences dialog Tabs list box Tabs'",
      "     VISIBLE:  'Tabs', cursor=1",
      "SPEECH OUTPUT: 'Tabs'"]))
 
@@ -25,9 +23,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "2. Left Arrow in list",
-    ["BRAILLE LINE:  'Firefox application Firefox Preferences dialog General list box Tabs'",
-     "     VISIBLE:  'Tabs', cursor=1",
-     "BRAILLE LINE:  'Firefox application Firefox Preferences dialog General list box General'",
+    ["BRAILLE LINE:  'Firefox application Firefox Preferences dialog General list box General'",
      "     VISIBLE:  'General', cursor=1",
      "SPEECH OUTPUT: 'General'"]))
 
@@ -37,7 +33,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Basic Where Am I",
     ["BRAILLE LINE:  'Firefox application Firefox Preferences dialog General list box General'",
      "     VISIBLE:  'General', cursor=1",
-     "SPEECH OUTPUT: 'list item General 1 of 8'"]))
+     "SPEECH OUTPUT: 'list item General 1 of 9'"]))
 
 sequence.append(KeyComboAction("Escape"))
 

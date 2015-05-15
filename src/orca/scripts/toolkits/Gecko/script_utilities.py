@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright 2010 Joanmarie Diggs.
-# Copyright 2014 Igalia, S.L.
+# Copyright 2014-2015 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -27,13 +27,14 @@ __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs." \
-                "Copyright (c) 2014 Igalia, S.L."
+                "Copyright (c) 2014-2015 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
 import re
 
 import orca.debug as debug
+import orca.input_event as input_event
 import orca.orca_state as orca_state
 import orca.script_utilities as script_utilities
 
@@ -165,23 +166,6 @@ class Utilities(script_utilities.Utilities):
 
         return script_utilities.Utilities.inFindToolbar(obj)
 
-    def isEntry(self, obj):
-        """Returns True if we should treat this object as an entry."""
-
-        if not obj:
-            return False
-
-        if obj.getRole() == pyatspi.ROLE_ENTRY:
-            return True
-
-        if obj.getState().contains(pyatspi.STATE_EDITABLE) \
-           and obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
-                                 pyatspi.ROLE_PARAGRAPH,
-                                 pyatspi.ROLE_TEXT]:
-            return True
-
-        return False
-
     def isLink(self, obj):
         """Returns True if we should treat this object as a link."""
 
@@ -198,11 +182,6 @@ class Utilities(script_utilities.Utilities):
             return True
 
         return False
-
-    def isPasswordText(self, obj):
-        """Returns True if we should treat this object as password text."""
-
-        return obj and obj.getRole() == pyatspi.ROLE_PASSWORD_TEXT
 
     def isHidden(self, obj):
         attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
@@ -519,6 +498,7 @@ class Utilities(script_utilities.Utilities):
     def _treatTextObjectAsWhole(self, obj):
         roles = [pyatspi.ROLE_CHECK_BOX,
                  pyatspi.ROLE_CHECK_MENU_ITEM,
+                 pyatspi.ROLE_MENU,
                  pyatspi.ROLE_MENU_ITEM,
                  pyatspi.ROLE_RADIO_MENU_ITEM,
                  pyatspi.ROLE_RADIO_BUTTON,
@@ -527,6 +507,9 @@ class Utilities(script_utilities.Utilities):
 
         role = obj.getRole()
         if role in roles:
+            return True
+
+        if role == pyatspi.ROLE_TABLE_CELL and self.isFocusModeWidget(obj):
             return True
 
         return False
@@ -1182,5 +1165,67 @@ class Utilities(script_utilities.Utilities):
         for i in range(action.nActions):
             if action.getName(i) in ["showlongdesc"]:
                 return True
+
+        return False
+
+    def eventIsAutocompleteNoise(self, event):
+        if not self._script.inDocumentContent(event.source):
+            return False
+
+        isListBoxItem = lambda x: x and x.parent.getRole() == pyatspi.ROLE_LIST_BOX
+        isMenuItem = lambda x: x and x.parent.getRole() == pyatspi.ROLE_MENU
+        isComboBoxItem = lambda x: x and x.parent.getRole() == pyatspi.ROLE_COMBO_BOX
+
+        if event.source.getState().contains(pyatspi.STATE_EDITABLE) \
+           and event.type.startswith("object:text-"):
+            obj, offset = self._script.getCaretContext()
+            if isListBoxItem(obj) or isMenuItem(obj):
+                return True
+
+            if obj == event.source and isComboBoxItem(obj):
+                lastKey, mods = self.lastKeyAndModifiers()
+                if lastKey in ["Down", "Up"]:
+                    return True
+
+        return False
+
+    def textEventIsDueToInsertion(self, event):
+        if not event.type.startswith("object:text-"):
+            return False
+
+        if not self._script.inDocumentContent(event.source) \
+           or not event.source.getState().contains(pyatspi.STATE_EDITABLE) \
+           or not event.source == orca_state.locusOfFocus:
+            return False
+
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            inputEvent = orca_state.lastNonModifierKeyEvent
+            return inputEvent and inputEvent.isPrintableKey()
+
+        return False
+
+    def textEventIsForNonNavigableTextObject(self, event):
+        if not event.type.startswith("object:text-"):
+            return False
+
+        return self._treatTextObjectAsWhole(event.source)
+
+    def eventIsEOCAdded(self, event):
+        if not self._script.inDocumentContent(event.source):
+            return False
+
+        if event.type.startswith("object:text-changed:insert"):
+            return event.any_data == self.EMBEDDED_OBJECT_CHARACTER
+
+        return False
+
+    def caretMovedToSamePageFragment(self, event):
+        if not event.type.startswith("object:text-caret-moved"):
+            return False
+
+        linkURI = self.uri(orca_state.locusOfFocus)
+        docURI = self.documentFrameURI()
+        if linkURI == docURI:
+            return True
 
         return False

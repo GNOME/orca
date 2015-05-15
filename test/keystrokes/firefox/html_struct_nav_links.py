@@ -15,6 +15,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. u to anchors.html link",
     ["BRAILLE LINE:  '• anchors.html'",
      "     VISIBLE:  '• anchors.html', cursor=3",
+     "BRAILLE LINE:  '• anchors.html'",
+     "     VISIBLE:  '• anchors.html', cursor=3",
      "SPEECH OUTPUT: 'anchors.html'",
      "SPEECH OUTPUT: 'link'"]))
 

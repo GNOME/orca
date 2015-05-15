@@ -1,14 +1,13 @@
 #!/usr/bin/python
 
-"""Test of UIUC slider presentation."""
-
 from macaroon.playback import *
 import utils
 
 sequence = MacroSequence()
 
-sequence.append(KeyComboAction("Tab"))
-sequence.append(KeyComboAction("Tab"))
+# Work around some new quirk in Gecko that causes this test to fail if
+# run via the test harness rather than manually.
+sequence.append(KeyComboAction("<Control>r"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

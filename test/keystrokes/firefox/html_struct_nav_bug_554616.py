@@ -18,8 +18,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Wrapping to top.', cursor=0",
      "BRAILLE LINE:  'table with 4 rows 3 columns'",
      "     VISIBLE:  'table with 4 rows 3 columns', cursor=0",
-     "BRAILLE LINE:  'Snapshot version'",
-     "     VISIBLE:  'Snapshot version', cursor=1",
+     "BRAILLE LINE:  'Snapshot version Date (UTC) Download'",
+     "     VISIBLE:  'Snapshot version Date (UTC) Down', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.' voice=system",
      "SPEECH OUTPUT: 'table with 4 rows 3 columns' voice=system",
      "SPEECH OUTPUT: 'Snapshot version column header'"]))
@@ -57,7 +57,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Right"))
 sequence.append(utils.AssertPresentationAction(
     "4. Alt Shift Right",
-    ["BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008'",
+    ["KNOWN ISSUE: Excessive amount of updating here and in other assertions.",
+     "BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008'",
      "     VISIBLE:  'r2477 Wed Nov 5 16:39:00 2008', cursor=7",
      "BRAILLE LINE:  'installer (10190 KB)'",
      "     VISIBLE:  'installer (10190 KB)', cursor=1",
@@ -65,6 +66,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'installer (10190 KB)', cursor=1",
      "BRAILLE LINE:  'Row 2, column 3.'",
      "     VISIBLE:  'Row 2, column 3.', cursor=0",
+     "BRAILLE LINE:  'installer (10190 KB)'",
+     "     VISIBLE:  'installer (10190 KB)', cursor=1",
      "SPEECH OUTPUT: 'Download'",
      "SPEECH OUTPUT: 'installer'",
      "SPEECH OUTPUT: 'link'",
@@ -72,15 +75,14 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'portable archive'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: '(9154 KB)'",
-     "SPEECH OUTPUT: 'Row 2, column 3.' voice=system"]))
+     "SPEECH OUTPUT: 'Row 2, column 3.' voice=system",
+     "SPEECH OUTPUT: 'i'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Alt Shift Down",
-    ["BRAILLE LINE:  'installer (10190 KB)'",
-     "     VISIBLE:  'installer (10190 KB)', cursor=1",
-     "BRAILLE LINE:  'installer (10193 KB)'",
+    ["BRAILLE LINE:  'installer (10193 KB)'",
      "     VISIBLE:  'installer (10193 KB)', cursor=1",
      "BRAILLE LINE:  'installer (10193 KB)'",
      "     VISIBLE:  'installer (10193 KB)', cursor=1",

@@ -46,6 +46,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Admin', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Classification: multi-select List with 8 items'",
      "SPEECH OUTPUT: 'Admin '",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
@@ -58,6 +59,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Admin', cursor=1",
      "BRAILLE LINE:  'accerciser'",
      "     VISIBLE:  'accerciser', cursor=1",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Product: multi-select List with 379 items'",
      "SPEECH OUTPUT: 'accerciser'"]))
 
@@ -94,6 +96,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'abiscan', cursor=1",
      "BRAILLE LINE:  '0.0.1'",
      "     VISIBLE:  '0.0.1', cursor=1",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Version: multi-select List with 857 items'",
      "SPEECH OUTPUT: '0.0.1'"]))
 
@@ -103,6 +106,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Tab",
     ["BRAILLE LINE:  '---'",
      "     VISIBLE:  '---', cursor=1",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Target Milestone: multi-select List with 555 items'",
      "SPEECH OUTPUT: '---'"]))
 
@@ -178,6 +182,7 @@ sequence.append(utils.AssertPresentationAction(
     "17. Tab",
     ["BRAILLE LINE:  'UNCONFIRMED'",
      "     VISIBLE:  'UNCONFIRMED', cursor=1",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Status: multi-select List with 8 items'",
      "SPEECH OUTPUT: 'UNCONFIRMED'"]))
 
@@ -187,6 +192,7 @@ sequence.append(utils.AssertPresentationAction(
     "18. Tab",
     ["BRAILLE LINE:  'FIXED'",
      "     VISIBLE:  'FIXED', cursor=1",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Resolution: multi-select List with 12 items'",
      "SPEECH OUTPUT: 'FIXED'"]))
 
@@ -196,6 +202,7 @@ sequence.append(utils.AssertPresentationAction(
     "19. Tab",
     ["BRAILLE LINE:  'blocker'",
      "     VISIBLE:  'blocker', cursor=1",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Severity: multi-select List with 7 items'",
      "SPEECH OUTPUT: 'blocker'"]))
 
@@ -205,6 +212,7 @@ sequence.append(utils.AssertPresentationAction(
     "20. Tab",
     ["BRAILLE LINE:  'Immediate'",
      "     VISIBLE:  'Immediate', cursor=1",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Priority: multi-select List with 5 items'",
      "SPEECH OUTPUT: 'Immediate'"]))
 
@@ -214,6 +222,7 @@ sequence.append(utils.AssertPresentationAction(
     "21. Tab",
     ["BRAILLE LINE:  'All'",
      "     VISIBLE:  'All', cursor=1",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'OS: multi-select List with 21 items'",
      "SPEECH OUTPUT: 'All'"]))
 
@@ -410,6 +419,7 @@ sequence.append(utils.AssertPresentationAction(
     "42. Tab",
     ["BRAILLE LINE:  'Unspecified'",
      "     VISIBLE:  'Unspecified', cursor=1",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'GNOME version: multi-select List with 14 items'",
      "SPEECH OUTPUT: 'Unspecified'"]))
 
@@ -419,6 +429,7 @@ sequence.append(utils.AssertPresentationAction(
     "43. Tab",
     ["BRAILLE LINE:  'Unspecified'",
      "     VISIBLE:  'Unspecified', cursor=1",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'GNOME target: multi-select List with 12 items'",
      "SPEECH OUTPUT: 'Unspecified'"]))
 

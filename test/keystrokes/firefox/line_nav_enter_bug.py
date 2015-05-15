@@ -285,29 +285,31 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "29. Line Down",
-    ["BRAILLE LINE:  'Keywords:'",
-     "     VISIBLE:  'Keywords:', cursor=1",
+    ["BRAILLE LINE:  'Keywords:  $l'",
+     "     VISIBLE:  'Keywords:  $l', cursor=1",
      "SPEECH OUTPUT: 'Keywords'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ':'"]))
+     "SPEECH OUTPUT: ':'",
+     "SPEECH OUTPUT: 'Keywords: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "30. Line Down",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'Keywords: entry'"]))
+    ["BRAILLE LINE:  'Depends'",
+     "     VISIBLE:  'Depends', cursor=1",
+     "SPEECH OUTPUT: 'Depends'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "31. Line Up",
-    ["BRAILLE LINE:  'Keywords:'",
-     "     VISIBLE:  'Keywords:', cursor=1",
+    ["BRAILLE LINE:  'Keywords:  $l'",
+     "     VISIBLE:  'Keywords:  $l', cursor=1",
      "SPEECH OUTPUT: 'Keywords'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: ':'"]))
+     "SPEECH OUTPUT: ':'",
+     "SPEECH OUTPUT: 'Keywords: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

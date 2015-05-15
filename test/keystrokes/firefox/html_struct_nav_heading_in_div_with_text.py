@@ -15,6 +15,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. 2 for first heading",
     ["BRAILLE LINE:  'First Heading h2'",
      "     VISIBLE:  'First Heading h2', cursor=1",
+     "BRAILLE LINE:  'First Heading h2'",
+     "     VISIBLE:  'First Heading h2', cursor=1",
      "SPEECH OUTPUT: 'First Heading'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'heading level 2'"]))

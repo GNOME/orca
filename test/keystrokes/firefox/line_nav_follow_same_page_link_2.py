@@ -7,6 +7,9 @@ import utils
 
 sequence = MacroSequence()
 
+# Work around some new quirk in Gecko that causes this test to fail if
+# run via the test harness rather than manually.
+sequence.append(KeyComboAction("<Control>r"))
 sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Control>Home"))
 for i in range(25):
@@ -16,9 +19,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Return to activate the same-page link for the About heading",
-    ["KNOWN ISSUE: We are not speaking this.",
-     "BRAILLE LINE:  '2. About'",
-     "     VISIBLE:  '2. About', cursor=4"]))
+    ["BRAILLE LINE:  '2. About'",
+     "     VISIBLE:  '2. About', cursor=4",
+     "BRAILLE LINE:  'About h1'",
+     "     VISIBLE:  'About h1', cursor=1",
+     "SPEECH OUTPUT: 'About heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

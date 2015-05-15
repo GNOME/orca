@@ -303,7 +303,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "36. Right",
-    []))
+    ["BRAILLE LINE:  'Thiss is a tesst.  $l'",
+     "     VISIBLE:  'Thiss is a tesst.  $l', cursor=19",
+     "SPEECH OUTPUT: 'blank' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
