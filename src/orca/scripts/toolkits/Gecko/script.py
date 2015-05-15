@@ -732,7 +732,11 @@ class Script(default.Script):
         sayAllStyle = _settingsManager.getSetting('sayAllStyle')
         sayAllBySentence = sayAllStyle == settings.SAYALL_STYLE_SENTENCE
         if offset == None:
-            [obj, characterOffset] = self.getCaretContext()
+            contextObj, contextOffset = self.getCaretContext()
+            if contextObj:
+                [obj, characterOffset] = contextObj, contextOffset
+            else:
+                characterOffset = 0
         else:
             characterOffset = offset
 
