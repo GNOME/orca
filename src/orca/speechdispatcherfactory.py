@@ -368,6 +368,20 @@ class SpeechServer(speechserver.SpeechServer):
         self.speak(decrease and messages.SPEECH_LOWER \
                    or messages.SPEECH_HIGHER, acss=acss)
 
+    def _change_default_speech_volume(self, step, decrease=False):
+        acss = settings.voices[settings.DEFAULT_VOICE]
+        delta = step * (decrease and -1 or +1)
+        try:
+            volume = acss[ACSS.GAIN]
+        except KeyError:
+            volume = 5
+        acss[ACSS.GAIN] = max(0, min(9, volume + delta))
+        debug.println(debug.LEVEL_CONFIGURATION,
+                      "Speech volume is now %d" % volume)
+
+        self.speak(decrease and messages.SPEECH_LOWER \
+                   or messages.SPEECH_HIGHER, acss=acss)  # TODO create message.SPEECH_UP/DOWN
+
     def getInfo(self):
         return [self._SERVER_NAMES.get(self._id, self._id), self._id]
 
@@ -467,6 +481,12 @@ class SpeechServer(speechserver.SpeechServer):
 
     def decreaseSpeechPitch(self, step=0.5):
         self._change_default_speech_pitch(step, decrease=True)
+
+    def increaseSpeechVolume(self, step=0.5):
+        self._change_default_speech_volume(step)
+
+    def decreaseSpeechVolume(self, step=0.5):
+        self._change_default_speech_volume(step, decrease=True)
 
     def stop(self):
         self._cancel()

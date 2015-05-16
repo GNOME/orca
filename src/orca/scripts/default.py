@@ -401,6 +401,16 @@ class Script(script.Script):
                 speech.increaseSpeechPitch,
                 cmdnames.INCREASE_SPEECH_PITCH)
 
+        self.inputEventHandlers["decreaseSpeechVolumeHandler"] = \
+            input_event.InputEventHandler(
+                speech.decreaseSpeechVolume,
+                cmdnames.DECREASE_SPEECH_VOLUME)
+
+        self.inputEventHandlers["increaseSpeechVolumeHandler"] = \
+            input_event.InputEventHandler(
+                speech.increaseSpeechVolume,
+                cmdnames.INCREASE_SPEECH_VOLUME)
+
         self.inputEventHandlers["shutdownHandler"] = \
             input_event.InputEventHandler(
                 orca.quitOrca,

@@ -166,6 +166,12 @@ keymap = (
     "increaseSpeechPitchHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
+    "increaseSpeechVolumeHandler"),
+
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
+    "decreaseSpeechVolumeHandler"),
+
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
     "panBrailleLeftHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
