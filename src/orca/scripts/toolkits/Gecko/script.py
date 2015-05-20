@@ -952,7 +952,22 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
-        if self.utilities.isFocusModeWidget(obj) or self.utilities.isLink(obj):
+        if self.utilities.isFocusModeWidget(obj):
+            msg = "INFO: Setting locus of focus to focusModeWidget %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            orca.setLocusOfFocus(event, obj)
+            return True
+
+        if self.utilities.isLink(obj) \
+           and obj.getState().contains(pyatspi.STATE_FOCUSED):
+            msg = "INFO: Setting locus of focus to focused link %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            orca.setLocusOfFocus(event, obj)
+            return True
+
+        if offset > 0:
+            msg = "INFO: Setting locus of focus to context obj %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
             orca.setLocusOfFocus(event, obj)
             return True
 
