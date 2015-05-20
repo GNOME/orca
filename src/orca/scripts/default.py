@@ -760,7 +760,7 @@ class Script(script.Script):
         except:
             pass
         else:
-            self._saveLastCursorPosition(obj, text.caretOffset)
+            self._saveLastCursorPosition(obj, max(0, text.caretOffset))
             textSelections = self.pointOfReference.get('textSelections', {})
             textSelections[hash(obj)] = text.getSelection(0)
             self.pointOfReference['textSelections'] = textSelections

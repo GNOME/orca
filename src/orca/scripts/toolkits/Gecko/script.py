@@ -952,7 +952,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
-        if self.utilities.isFocusModeWidget(obj):
+        if self.utilities.isFocusModeWidget(obj) or self.utilities.isLink(obj):
             orca.setLocusOfFocus(event, obj)
             return True
 
@@ -1516,7 +1516,7 @@ class Script(default.Script):
             super().locusOfFocusChanged(event, oldFocus, newFocus)
             return False
 
-        caretOffset = -1
+        caretOffset = 0
         if self.utilities.inFindToolbar(oldFocus):
             newFocus, caretOffset = self.getCaretContext()
 
