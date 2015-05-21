@@ -6355,7 +6355,7 @@ msgstr "s'ha tret la selecció del document des de la posició del cursor"
 #. current location to the start of the document by pressing Ctrl+Shift+Home.
 #: ../src/orca/messages.py:532
 msgid "document selected to cursor position"
-msgstr "document seleccionat fins la posició del cursor"
+msgstr "document seleccionat fins a la posició del cursor"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -6363,7 +6363,7 @@ msgstr "document seleccionat fins la posició del cursor"
 #. selected text by pressing Ctrl+Shift+Home.
 #: ../src/orca/messages.py:538
 msgid "document unselected to cursor position"
-msgstr "s'ha tret la selecció del document fins la posició del cursor"
+msgstr "s'ha tret la selecció del document fins a la posició del cursor"
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This message is
