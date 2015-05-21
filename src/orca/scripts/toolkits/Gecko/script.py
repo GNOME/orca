@@ -958,8 +958,8 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, obj)
             return True
 
-        if self.utilities.isLink(obj) \
-           and obj.getState().contains(pyatspi.STATE_FOCUSED):
+        state = obj.getState()
+        if self.utilities.isLink(obj) and state.contains(pyatspi.STATE_FOCUSED):
             msg = "INFO: Setting locus of focus to focused link %s" % obj
             debug.println(debug.LEVEL_INFO, msg)
             orca.setLocusOfFocus(event, obj)
@@ -971,13 +971,22 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, obj)
             return True
 
-        self.setCaretPosition(obj, offset)
-        contents = self.getLineContentsAtOffset(obj, offset)
         self.updateBraille(obj)
-        if not _settingsManager.getSetting('sayAllOnLoad'):
-            self.speakContents(contents)
+        if state.contains(pyatspi.STATE_FOCUSABLE):
+            msg = "INFO: Not doing SayAll due to focusable context obj %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            speech.speak(self.speechGenerator.generateSpeech(obj))
+        elif not _settingsManager.getSetting('sayAllOnLoad'):
+            msg = "INFO: Not doing SayAll due to sayAllOnLoad being False"
+            debug.println(debug.LEVEL_INFO, msg)
+            self.speakContents(self.getLineContentsAtOffset(obj, offset))
         elif _settingsManager.getSetting('enableSpeech'):
+            msg = "INFO: Doing SayAll"
+            debug.println(debug.LEVEL_INFO, msg)
             self.sayAll(None)
+        else:
+            msg = "INFO: Not doing SayAll due to enableSpeech being False"
+            debug.println(debug.LEVEL_INFO, msg)
 
         return True
 
