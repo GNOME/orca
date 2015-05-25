@@ -159,6 +159,12 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
+        # Unfiled seems we're missing object:state-changed events for other
+        # Gtk+ menu items as well.
+        if role in [pyatspi.ROLE_CHECK_MENU_ITEM, pyatspi.ROLE_RADIO_MENU_ITEM]:
+            orca.setLocusOfFocus(event, event.source)
+            return
+
         # Unfiled. When a canvas item gets focus but is not selected, we
         # are only getting a focus event. This happens in Nautilus.
         if role == pyatspi.ROLE_CANVAS:
