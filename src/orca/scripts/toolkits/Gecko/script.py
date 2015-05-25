@@ -1295,12 +1295,6 @@ class Script(default.Script):
             return True
 
         if role in [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]:
-            if self.inDocumentContent(orca_state.locusOfFocus) \
-               and not self.utilities.isZombie(orca_state.locusOfFocus):
-                msg = "INFO: Event ignored: locusOfFocus already in document"
-                debug.println(debug.LEVEL_INFO, msg)
-                return True
-
             obj, offset = self.getCaretContext(event.source)
             if obj and self.utilities.isZombie(obj):
                 msg = "INFO: Clearing context - obj is zombie"
@@ -1309,10 +1303,14 @@ class Script(default.Script):
                 obj, offset = self.getCaretContext(event.source)
 
             if obj:
-                msg = "INFO: Event handled: Setting locusOfFocus to context"
-                debug.println(debug.LEVEL_INFO, msg)
-                orca.setLocusOfFocus(event, obj)
-                return True
+                wasFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
+                obj.clearCache()
+                isFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
+                if wasFocused == isFocused:
+                    msg = "INFO: Event handled: Setting locusOfFocus to context"
+                    debug.println(debug.LEVEL_INFO, msg)
+                    orca.setLocusOfFocus(event, obj)
+                    return True
 
         if not state.contains(pyatspi.STATE_FOCUSABLE) \
            and not state.contains(pyatspi.STATE_FOCUSED):
@@ -1542,6 +1540,9 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             super().locusOfFocusChanged(event, oldFocus, newFocus)
             return False
+
+        if oldFocus and self.utilities.isZombie(oldFocus):
+            oldFocus = None
 
         caretOffset = 0
         if self.utilities.inFindToolbar(oldFocus):

@@ -148,7 +148,7 @@ formatting = {
             'unfocused': 'expandedEOCs or (labelOrName + unrelatedLabels)'
             },
         pyatspi.ROLE_DOCUMENT_FRAME: {
-            'unfocused': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
+            'unfocused': 'label + readOnly + textRole + currentLineText + anyTextSelection + ' + MNEMONIC,
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
             'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
             },
