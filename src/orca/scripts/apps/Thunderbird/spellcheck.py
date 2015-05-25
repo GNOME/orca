@@ -71,6 +71,6 @@ class SpellCheck(spellcheck.SpellCheck):
         return pyatspi.findDescendant(root, isError)
 
     def _findSuggestionsList(self, root):
-        isList = lambda x: x and x.getRole() == pyatspi.ROLE_LIST \
+        isList = lambda x: x and x.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX] \
                   and 'Selection' in x.get_interfaces()
         return pyatspi.findDescendant(root, isList)

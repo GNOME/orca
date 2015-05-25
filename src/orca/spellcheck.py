@@ -206,7 +206,7 @@ class SpellCheck:
         if not entry:
             return False
 
-        label = self._script.utilities.displayedLabel(entry)
+        label = self._script.utilities.displayedLabel(entry) or entry.name
         string = self._script.utilities.substring(entry, 0, -1)
         voice = self._script.voices.get(settings.DEFAULT_VOICE)
         self._script.speakMessage("%s %s" % (label, string), voice=voice)
