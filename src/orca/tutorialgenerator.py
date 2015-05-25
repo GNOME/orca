@@ -785,7 +785,7 @@ class TutorialGenerator:
             else:
                 generator = self._getDefaultTutorial
             msg = generator(obj, alreadyFocused, forceTutorial)
-        elif msg == self.lastTutorial and role == self.lastRole \
+        if msg == self.lastTutorial and role == self.lastRole \
              and not forceTutorial:
             msg = []
         if msg:
