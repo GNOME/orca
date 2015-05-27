@@ -413,9 +413,11 @@ class Script:
 
         if skip:
             debug.println(debug.LEVEL_FINE,
-                          "script.skipObjectEvent: skipped due to %s" \
+                          "script.skipObjectEvent: skipped due to %s:" \
                           % reason)
-
+            debug.println(debug.LEVEL_FINE,
+                          "\tType: %s\n\tSource: %s\n\tDetail1: %s"
+                          % (cachedEvent.type, cachedEvent.source, cachedEvent.detail1))
         return skip
 
     def checkKeyboardEventData(self, keyboardEvent):
