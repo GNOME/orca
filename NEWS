@@ -1,3 +1,131 @@
+3.17.2 - 27 May 2015
+
+Gecko:
+
+  * Update spellchecking support to handle changes in recent releases
+    of Thunderbird
+
+  * Fix several SayAll issues
+
+  * Fix failure to present the last line in a text area
+
+  * Fix failure to move to newly-loaded page fragment
+
+  * Fix failure to present expanded state change in ARIA content
+
+  * Fix failure to present correct radio button state in ARIA content
+
+  * Stop double-presenting find results
+
+  * Stop re-generating braille when not needed
+
+  * Fix issue presenting focus changes between document frame and child
+    link
+
+  * Reset command state when Gecko script is deactivated in order to
+    ensure content is presented after Alt+Tabbing back into Firefox
+
+General:
+
+  * Fix several issues related to pyatspi cache not being updated
+
+  * Handle traceback when calling findAllDescendants in broken
+    implementation
+
+  * Stop repeating tutorial messages when navigating amongst items
+    of the same type
+
+  * Work around still more missing object:state-changed:focused events
+    from Gtk+
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca            Catalan                           Jordi Mas
+    es            Spanish                           Daniel Mustieles
+    nb            Norwegian bokmål                  Kjartan Maraas
+    oc            Occitan                           Cédric Valmary
+
+=========
+
+3.16.2 - 12 May 2015
+
+General:
+
+  * Fix traceback which can occur getting children via relationset
+
+  * Add explicit braille handling for ROLE_PAGE so we update the line in
+    Evince
+
+  * Change default value of fallbackOnUnicodeData to False
+
+  * Attempt to eliminate verbal spewage for links which lack meaningful
+    information
+
+  * Ignore text-selection-changed events from Gecko objects with no text
+
+  * Hack around yet another missing object:state-changed:focused event
+    for Gtk+
+
+  * Provide a symbolic variant of the app icon
+
+  * Work around a missing object:state-changed:focused event from
+    LibreOffice
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                       Marek Černocký
+    de            German                      Uwe Geercken
+    pt_BR         Brazilian Portuguese        Rafael Ferreira
+
+=========
+
+3.16.1 - 15 Apr 2015
+
+General:
+
+  * Don't search for replicants for Gecko zombies when pages are being
+    loaded because it can lead to a hang.
+
+  * Don't present position in list for the top-level menu of a context
+    menu
+
+  * Only present placeholder text if the entry lacks a value
+
+  * Use labelAndName instead of labelOrName with toggle buttons so
+    that we fallback on description when name has not been provided
+
+  * Work around yet another missing object:state-changed:focused event
+    from Gtk+
+
+  * Use datadir and localedir and not DATADIRNAME
+
+  * Fix for bug 746400 - Speak child position breaks Qt menu item
+    presentation
+
+  * Fix issue where translated symbols were being presented in English
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bg            Bulgarian                   Zahari Yurukov
+    is            Icelandic                   Sveinn í Felli
+    it            Italian                     Milo Casagrande
+    ru            Russian                     Stas Solovey
+    sl            Slovenian                   Matej Urbančič
+
+=========
+
+3.16.0
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    hu            Hungarian                   Gabor Kelemen
+    id            Indonesian                  Andika Triwidada
+    it            Italian                     Milo Casagrande
+    pt_BR         Brazilian Portuguese        Enrico Nicoletto
+    sv            Swedish                     Anders Jonsson
+
+=========
+
 3.15.92 - 17 March 2015
 
 General:
