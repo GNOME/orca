@@ -142,15 +142,15 @@ class EventManager:
         elif isinstance(e, input_event.BrailleEvent):
             data = "'%s'" % repr(e.event)
         elif not debug.eventDebugFilter or debug.eventDebugFilter.match(e.type):
-            data = ""
+            data = "%s" % (e.source)
         else:
             return
 
         eType = str(e.type).upper()
         if isEnqueue:
-            string = "----------> QUEUEING %s %s" % (eType, data)
+            string = "----------> QUEUEING %s %s" % (eType, data.upper())
         else:
-            string = "DEQUEUED %s %s <----------" % (eType, data)
+            string = "DEQUEUED %s %s <----------" % (eType, data.upper())
 
         debug.println(debug.LEVEL_ALL, string)
 
