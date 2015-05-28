@@ -142,7 +142,7 @@ class EventManager:
         elif isinstance(e, input_event.BrailleEvent):
             data = "'%s'" % repr(e.event)
         elif not debug.eventDebugFilter or debug.eventDebugFilter.match(e.type):
-            data = "%s" % (e.source)
+            data = "%s (%s,%s,%s)" % (e.source, e.detail1, e.detail2, e.any_data)
         else:
             return
 
