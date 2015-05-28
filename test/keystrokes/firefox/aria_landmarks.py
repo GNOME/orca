@@ -33,7 +33,8 @@ sequence.append(utils.AssertPresentationAction(
     "3. m to next landmark",
     ["BRAILLE LINE:  'application embedded'",
      "     VISIBLE:  'application embedded', cursor=1",
-     "SPEECH OUTPUT: 'application embedded'"]))
+     "SPEECH OUTPUT: 'application'",
+     "SPEECH OUTPUT: 'embedded'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("m"))
@@ -104,7 +105,8 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: We are skipping over complementary on the way back",
      "BRAILLE LINE:  'application embedded'",
      "     VISIBLE:  'application embedded', cursor=1",
-     "SPEECH OUTPUT: 'application embedded'"]))
+     "SPEECH OUTPUT: 'application'",
+     "SPEECH OUTPUT: 'embedded'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>m"))

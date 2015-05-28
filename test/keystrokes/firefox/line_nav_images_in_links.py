@@ -76,8 +76,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["BRAILLE LINE:  'foo image'",
      "     VISIBLE:  'foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -93,10 +92,8 @@ sequence.append(utils.AssertPresentationAction(
     "10. Line Down",
     ["BRAILLE LINE:  'foo image foo image'",
      "     VISIBLE:  'foo image foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image'",
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -112,10 +109,8 @@ sequence.append(utils.AssertPresentationAction(
     "12. Line Down",
     ["BRAILLE LINE:  'foo image foo image'",
      "     VISIBLE:  'foo image foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image'",
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -131,9 +126,8 @@ sequence.append(utils.AssertPresentationAction(
     "14. Line Down",
     ["BRAILLE LINE:  'Orca logo image foo image'",
      "     VISIBLE:  'Orca logo image foo image', cursor=1",
-     "SPEECH OUTPUT: 'Orca logo image link'",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'Orca logo image'",
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -149,8 +143,7 @@ sequence.append(utils.AssertPresentationAction(
     "16. Line Down",
     ["BRAILLE LINE:  'foo image'",
      "     VISIBLE:  'foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -158,8 +151,7 @@ sequence.append(utils.AssertPresentationAction(
     "17. Line Down",
     ["BRAILLE LINE:  'silly link'",
      "     VISIBLE:  'silly link', cursor=1",
-     "SPEECH OUTPUT: 'silly link'",
-     "SPEECH OUTPUT: 'link image'"]))
+     "SPEECH OUTPUT: 'silly link link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -167,8 +159,7 @@ sequence.append(utils.AssertPresentationAction(
     "18. Line Down",
     ["BRAILLE LINE:  'foo image'",
      "     VISIBLE:  'foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -195,10 +186,8 @@ sequence.append(utils.AssertPresentationAction(
     "21. Line Down",
     ["BRAILLE LINE:  'foo image foo image'",
      "     VISIBLE:  'foo image foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image'",
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -206,8 +195,7 @@ sequence.append(utils.AssertPresentationAction(
     "22. Line Down",
     ["BRAILLE LINE:  'After the paragraph'",
      "     VISIBLE:  'After the paragraph', cursor=1",
-     "SPEECH OUTPUT: 'After the paragraph'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'After the paragraph link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -224,8 +212,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'the paragraph: Before the paragraph'",
      "     VISIBLE:  'the paragraph: Before the paragr', cursor=1",
      "SPEECH OUTPUT: 'the paragraph:'",
-     "SPEECH OUTPUT: 'Before the paragraph'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'Before the paragraph link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -233,8 +220,7 @@ sequence.append(utils.AssertPresentationAction(
     "25. Line Down",
     ["BRAILLE LINE:  'foo image'",
      "     VISIBLE:  'foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -242,8 +228,7 @@ sequence.append(utils.AssertPresentationAction(
     "26. Line Down",
     ["BRAILLE LINE:  'silly link'",
      "     VISIBLE:  'silly link', cursor=1",
-     "SPEECH OUTPUT: 'silly link'",
-     "SPEECH OUTPUT: 'link image'"]))
+     "SPEECH OUTPUT: 'silly link link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -251,8 +236,7 @@ sequence.append(utils.AssertPresentationAction(
     "27. Line Down",
     ["BRAILLE LINE:  'foo image'",
      "     VISIBLE:  'foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -260,8 +244,7 @@ sequence.append(utils.AssertPresentationAction(
     "28. Line Down",
     ["BRAILLE LINE:  'After the paragraph'",
      "     VISIBLE:  'After the paragraph', cursor=1",
-     "SPEECH OUTPUT: 'After the paragraph'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'After the paragraph link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -269,8 +252,7 @@ sequence.append(utils.AssertPresentationAction(
     "29. Line Up",
     ["BRAILLE LINE:  'foo image'",
      "     VISIBLE:  'foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -278,8 +260,7 @@ sequence.append(utils.AssertPresentationAction(
     "30. Line Up",
     ["BRAILLE LINE:  'silly link'",
      "     VISIBLE:  'silly link', cursor=1",
-     "SPEECH OUTPUT: 'silly link'",
-     "SPEECH OUTPUT: 'link image'"]))
+     "SPEECH OUTPUT: 'silly link link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -287,8 +268,7 @@ sequence.append(utils.AssertPresentationAction(
     "31. Line Up",
     ["BRAILLE LINE:  'foo image'",
      "     VISIBLE:  'foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -297,8 +277,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'the paragraph: Before the paragraph'",
      "     VISIBLE:  'the paragraph: Before the paragr', cursor=1",
      "SPEECH OUTPUT: 'the paragraph:'",
-     "SPEECH OUTPUT: 'Before the paragraph'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'Before the paragraph link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -314,8 +293,7 @@ sequence.append(utils.AssertPresentationAction(
     "34. Line Up",
     ["BRAILLE LINE:  'After the paragraph'",
      "     VISIBLE:  'After the paragraph', cursor=1",
-     "SPEECH OUTPUT: 'After the paragraph'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'After the paragraph link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -323,10 +301,8 @@ sequence.append(utils.AssertPresentationAction(
     "35. Line Up",
     ["BRAILLE LINE:  'foo image foo image'",
      "     VISIBLE:  'foo image foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image'",
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -353,8 +329,7 @@ sequence.append(utils.AssertPresentationAction(
     "38. Line Up",
     ["BRAILLE LINE:  'foo image'",
      "     VISIBLE:  'foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -362,8 +337,7 @@ sequence.append(utils.AssertPresentationAction(
     "39. Line Up",
     ["BRAILLE LINE:  'silly link'",
      "     VISIBLE:  'silly link', cursor=1",
-     "SPEECH OUTPUT: 'silly link'",
-     "SPEECH OUTPUT: 'link image'"]))
+     "SPEECH OUTPUT: 'silly link link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -371,8 +345,7 @@ sequence.append(utils.AssertPresentationAction(
     "40. Line Up",
     ["BRAILLE LINE:  'foo image'",
      "     VISIBLE:  'foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -388,9 +361,8 @@ sequence.append(utils.AssertPresentationAction(
     "42. Line Up",
     ["BRAILLE LINE:  'Orca logo image foo image'",
      "     VISIBLE:  'Orca logo image foo image', cursor=1",
-     "SPEECH OUTPUT: 'Orca logo image link'",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'Orca logo image'",
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -406,10 +378,8 @@ sequence.append(utils.AssertPresentationAction(
     "44. Line Up",
     ["BRAILLE LINE:  'foo image foo image'",
      "     VISIBLE:  'foo image foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image'",
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -425,10 +395,8 @@ sequence.append(utils.AssertPresentationAction(
     "46. Line Up",
     ["BRAILLE LINE:  'foo image foo image'",
      "     VISIBLE:  'foo image foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image'",
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -444,8 +412,7 @@ sequence.append(utils.AssertPresentationAction(
     "48. Line Up",
     ["BRAILLE LINE:  'foo image'",
      "     VISIBLE:  'foo image', cursor=1",
-     "SPEECH OUTPUT: 'foo'",
-     "SPEECH OUTPUT: 'image link'"]))
+     "SPEECH OUTPUT: 'foo image link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

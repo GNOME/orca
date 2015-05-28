@@ -69,14 +69,12 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'installer (10190 KB)'",
      "     VISIBLE:  'installer (10190 KB)', cursor=1",
      "SPEECH OUTPUT: 'Download'",
-     "SPEECH OUTPUT: 'installer'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'installer link'",
      "SPEECH OUTPUT: '(10190 KB)'",
-     "SPEECH OUTPUT: 'portable archive'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'portable archive link'",
      "SPEECH OUTPUT: '(9154 KB)'",
      "SPEECH OUTPUT: 'Row 2, column 3.' voice=system",
-     "SPEECH OUTPUT: 'i'"]))
+     "SPEECH OUTPUT: 'blank' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Down"))
@@ -88,11 +86,9 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'installer (10193 KB)', cursor=1",
      "BRAILLE LINE:  'Row 3, column 3.'",
      "     VISIBLE:  'Row 3, column 3.', cursor=0",
-     "SPEECH OUTPUT: 'installer'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'installer link'",
      "SPEECH OUTPUT: '(10193 KB)'",
-     "SPEECH OUTPUT: 'portable archive'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'portable archive link'",
      "SPEECH OUTPUT: '(9149 KB)'",
      "SPEECH OUTPUT: 'Row 3, column 3.' voice=system"]))
 
@@ -140,11 +136,9 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Row 4, column 3.'",
      "     VISIBLE:  'Row 4, column 3.', cursor=0",
      "SPEECH OUTPUT: 'Download'",
-     "SPEECH OUTPUT: 'installer'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'installer link'",
      "SPEECH OUTPUT: '(10186 KB)'",
-     "SPEECH OUTPUT: 'portable archive'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'portable archive link'",
      "SPEECH OUTPUT: '(9146 KB)'",
      "SPEECH OUTPUT: 'Row 4, column 3.' voice=system"]))
 

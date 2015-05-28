@@ -2,7 +2,6 @@ orca_python_PYTHON = \
 	__init__.py \
 	bookmarks.py \
 	braille_generator.py \
-	formatting.py \
 	keymaps.py \
 	script.py \
 	script_utilities.py \

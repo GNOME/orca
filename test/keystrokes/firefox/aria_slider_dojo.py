@@ -57,10 +57,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "6. Move to entry",
-    ["BRAILLE LINE:  'Slider1 Value: 10.0% $l rdonly'",
-     "     VISIBLE:  'Slider1 Value: 10.0% $l rdonly', cursor=21",
-     "BRAILLE LINE:  'Slider1 Value: 10.0% $l rdonly'",
-     "     VISIBLE:  'Slider1 Value: 10.0% $l rdonly', cursor=21",
+    ["BRAILLE LINE:  'Slider1 Value: 10.0% rdonly'",
+     "     VISIBLE:  'Slider1 Value: 10.0% rdonly', cursor=21",
+     "BRAILLE LINE:  'Slider1 Value: 10.0% rdonly'",
+     "     VISIBLE:  'Slider1 Value: 10.0% rdonly', cursor=21",
      "SPEECH OUTPUT: 'Slider1 Value: read only entry 10.0% selected'"]))
 
 sequence.append(utils.StartRecordingAction())

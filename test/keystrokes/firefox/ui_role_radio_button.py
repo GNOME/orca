@@ -17,6 +17,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Firefox application Print dialog General page tab Range Range &=y All Pages radio button'",
      "     VISIBLE:  '&=y All Pages radio button', cursor=1",
      "SPEECH OUTPUT: 'General page tab'",
+     "SPEECH OUTPUT: 'Range panel'",
      "SPEECH OUTPUT: 'All Pages selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -25,7 +26,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Basic Where Am I",
     ["BRAILLE LINE:  'Firefox application Print dialog General page tab Range Range &=y All Pages radio button'",
      "     VISIBLE:  '&=y All Pages radio button', cursor=1",
-     "SPEECH OUTPUT: 'All Pages radio button selected 1 of 4.'",
+     "SPEECH OUTPUT: 'Range All Pages radio button selected 1 of 4.'",
      "SPEECH OUTPUT: 'Alt+A'"]))
 
 sequence.append(KeyComboAction("Escape"))

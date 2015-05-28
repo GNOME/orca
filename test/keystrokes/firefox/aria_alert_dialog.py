@@ -12,12 +12,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "1. Open Alert Box",
-    ["KNOWN ISSUE: We are missing spaces between the words in speech",
-     "BRAILLE LINE:  'dialog'",
+    ["BRAILLE LINE:  'dialog'",
      "     VISIBLE:  'dialog', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",
-     "SPEECH OUTPUT: 'Alert BoxYou must choose a number between 1 and 10!Close'",
+     "SPEECH OUTPUT: 'Alert Box You must choose a number between 1 and 10!'",
      "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -39,9 +38,17 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'between 1 and 10!'"]))
 
 sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "4. Down arrow to read next line of message",
+    ["BRAILLE LINE:  'Close push button'",
+     "     VISIBLE:  'Close push button', cursor=1",
+     "SPEECH OUTPUT: 'Close push button'"]))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
-    "4. Close Alert",
+    "5. Close Alert",
     ["BRAILLE LINE:  'Guess a number between 1 and 10 12 $l'",
      "     VISIBLE:  'ss a number between 1 and 10 12 ', cursor=32",
      "BRAILLE LINE:  'Focus mode'",

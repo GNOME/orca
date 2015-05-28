@@ -219,11 +219,8 @@ class LabelInference:
             return rv
 
         extents = 0, 0, 0, 0
-        try:
-            text = obj.queryText()
-        except NotImplementedError:
-            pass
-        else:
+        text = self._script.utilities.queryNonEmptyText(obj)
+        if text:
             skipTextExtents = [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PASSWORD_TEXT]
             if not obj.getRole() in skipTextExtents:
                 if endOffset == -1:
@@ -241,20 +238,20 @@ class LabelInference:
         """Gets the functional label text associated with the object obj."""
 
         if not self._isSimpleObject(obj):
-            return ''
+            return None, []
 
         if self._cannotLabel(obj):
-            return ''
+            return None, []
 
-        contents = self._script.utilities.getObjectsFromEOCs(obj)
+        contents = self._script.utilities.getObjectContentsAtOffset(obj, useCache=False)
         objects = [content[0] for content in contents]
         if list(filter(self._isWidget, objects)):
-            return ''
+            return None, []
 
-        strings = [content[3] or content[0].name for content in contents]
-        return ''.join(strings)
+        strings = [content[3] for content in contents]
+        return ''.join(strings), objects
 
-    def _getLineContents(self, obj):
+    def _getLineContents(self, obj, start=0):
         """Get the (obj, startOffset, endOffset, string) tuples for the line
         containing the object, obj."""
 
@@ -263,20 +260,11 @@ class LabelInference:
             return rv
 
         key = hash(obj)
-        start = None
         if self._isWidget(obj):
             start, end = self._script.utilities.getHyperlinkRange(obj)
             obj = obj.parent
 
-        try:
-            text = obj.queryText()
-        except:
-            start = 0
-        else:
-            if start == None:
-                start = max(0, text.caretOffset)
-
-        rv = self._script.utilities.getLineContentsAtOffset(obj, start)
+        rv = self._script.utilities.getLineContentsAtOffset(obj, start, True, False)
         self._lineCache[key] = rv
 
         return rv
@@ -331,9 +319,9 @@ class LabelInference:
         lExtents = self._getExtents(lObj, start, end)
         distance = extents[0] - (lExtents[0] + lExtents[2])
         if 0 <= distance <= proximity:
-            strings = [content[3] or content[0].name for content in onLeft]
-            result = ''.join(strings)
-            if result.strip():
+            strings = [content[3] for content in onLeft]
+            result = ''.join(strings).strip()
+            if result:
                 return result, [content[0] for content in onLeft]
 
         return None, []
@@ -378,9 +366,9 @@ class LabelInference:
         rExtents = self._getExtents(rObj, start, end)
         distance = rExtents[0] - (extents[0] + extents[2])
         if distance <= proximity or self._preferRight(obj):
-            strings = [content[3] or content[0].name for content in onRight]
-            result = ''.join(strings)
-            if result.strip():
+            strings = [content[3] for content in onRight]
+            result = ''.join(strings).strip()
+            if result:
                 return result, [content[0] for content in onRight]
 
         return None, []
@@ -398,51 +386,27 @@ class LabelInference:
         """
 
         thisLine = self._getLineContents(obj)
-        if not (thisLine and thisLine[0]):
-            return None, []
-
-        prevObj, start, end, string = thisLine[0]
-        if obj == prevObj:
-            start, end = self._script.utilities.getHyperlinkRange(prevObj)
-            prevObj = prevObj.parent
-
+        content = [o for o in thisLine if o[0] == obj]
         try:
-            text = prevObj.queryText()
-        except (AttributeError, NotImplementedError):
+            index = thisLine.index(content[0])
+        except IndexError:
+            return None, []
+        if index > 0:
             return None, []
 
-        objX, objY, objWidth, objHeight = self._getExtents(obj)
-        if not (objWidth and objHeight):
-            return None, []
-
-        start = max(start - 1, 0)
-        prevLine = self._script.utilities.getLineContentsAtOffset(prevObj, start)
-        if not (prevLine and prevLine[0]):
+        prevObj, prevOffset = self._script.utilities.previousContext(
+            thisLine[0][0], thisLine[0][1], True)
+        prevLine = self._getLineContents(prevObj, prevOffset)
+        if len(prevLine) != 1:
             return None, []
 
         prevObj, start, end, string = prevLine[0]
-        if string.strip() and not self._cannotLabel(prevObj):
+        if string.strip():
             x, y, width, height = self._getExtents(prevObj, start, end)
+            objX, objY, objWidth, objHeight = self._getExtents(obj)
             distance = objY - (y + height)
-            if 0 <= distance <= proximity:
-                return string, [prevObj]
-
-        while prevObj:
-            prevObj = self._getPreviousObject(prevObj)
-            x, y, width, height = self._getExtents(prevObj)
-            distance = objY - (y + height)
-            if distance > proximity:
-                return None, []
-            if prevObj.getRole() == pyatspi.ROLE_TABLE_CELL \
-               and not prevObj in [obj.parent, obj.parent.parent]:
-                return None, []
-            if distance < 0:
-                continue
-            if x + 150 < objX:
-                continue
-            string = self._createLabelFromContents(prevObj)
-            if string:
-                return string, [prevObj]
+            if 0 <= distance <= proximity and x <= objX:
+                return string.strip(), [prevObj]
 
         return None, []
 
@@ -462,28 +426,27 @@ class LabelInference:
             return None, []
 
         thisLine = self._getLineContents(obj)
-        if not (thisLine and thisLine[0]):
+        content = [o for o in thisLine if o[0] == obj]
+        try:
+            index = thisLine.index(content[0])
+        except IndexError:
+            return None, []
+        if index > 0:
             return None, []
 
-        lastObj, start, end, string = thisLine[-1]
-        if obj == lastObj:
-            start, end = self._script.utilities.getHyperlinkRange(obj)
-            lastObj = lastObj.parent
-
-        objX, objY, objWidth, objHeight = self._getExtents(obj)
-        if not (objWidth and objHeight):
-            return None, []
-
-        nextLine = self._script.utilities.getLineContentsAtOffset(lastObj, end)
-        if not (nextLine and nextLine[0]):
+        nextObj, nextOffset = self._script.utilities.nextContext(
+            thisLine[-1][0], thisLine[-1][2] - 1, True)
+        nextLine = self._getLineContents(nextObj, nextOffset)
+        if len(nextLine) != 1:
             return None, []
 
         nextObj, start, end, string = nextLine[0]
-        if string.strip() and not self._cannotLabel(nextObj):
+        if string.strip():
             x, y, width, height = self._getExtents(nextObj, start, end)
+            objX, objY, objWidth, objHeight = self._getExtents(obj)
             distance = y - (objY + objHeight)
             if 0 <= distance <= proximity:
-                return string, [nextObj]
+                return string.strip(), [nextObj]
 
         return None, []
 
@@ -524,29 +487,29 @@ class LabelInference:
 
         if col > 0 and not self._preferRight(obj):
             candidate = table.getAccessibleAt(row, col - 1)
-            label = self._createLabelFromContents(candidate)
-            if label.strip():
-                return label, [candidate]
+            label, sources = self._createLabelFromContents(candidate)
+            if label:
+                return label.strip(), sources
 
         if col < table.nColumns and not self._preventRight(obj):
             candidate = table.getAccessibleAt(row, col + 1)
             x, y, width, height = self._getExtents(candidate)
             distance = x - (objX + objWidth)
             if distance <= proximityForRight or self._preferRight(obj):
-                label = self._createLabelFromContents(candidate)
-                if label.strip():
-                    return label, [candidate]
+                label, sources = self._createLabelFromContents(candidate)
+                if label:
+                    return label.strip(), sources
 
         cellAbove = cellBelow = labelAbove = labelBelow = None
         if row > 0:
             cellAbove = table.getAccessibleAt(row - 1, col)
-            labelAbove = self._createLabelFromContents(cellAbove)
+            labelAbove, sourcesAbove = self._createLabelFromContents(cellAbove)
             if labelAbove and self._preferTop(obj):
-                return labelAbove, [cellAbove]
+                return labelAbove.strip(), sourcesAbove
 
         if row < table.nRows and not self._preventBelow(obj):
             cellBelow = table.getAccessibleAt(row + 1, col)
-            labelBelow = self._createLabelFromContents(cellBelow)
+            labelBelow, sourcesBelow = self._createLabelFromContents(cellBelow)
 
         if labelAbove and labelBelow:
             aboveX, aboveY, aboveWidth, aboveHeight = self._getExtents(cellAbove)
@@ -554,13 +517,13 @@ class LabelInference:
             dAbove = objY - (aboveY + aboveHeight)
             dBelow = belowY - (objY + objHeight)
             if dAbove <= dBelow:
-                return labelAbove, [cellAbove]
-            return labelBelow, [cellBelow]
+                return labelAbove.strip(), sourcesAbove
+            return labelBelow.strip(), sourcesBelow
 
         if labelAbove:
-            return labelAbove, [cellAbove]
+            return labelAbove.strip(), sourcesAbove
         if labelBelow:
-            return labelBelow, [cellBelow]
+            return labelBelow.strip(), sourcesBelow
 
         # None of the cells immediately surrounding this cell seem to be serving
         # as a functional label. Therefore, see if this table looks like a grid
@@ -574,8 +537,8 @@ class LabelInference:
         if [x for x in cells if x.childCount and x[0].getRole() != obj.getRole()]:
             return None, []
 
-        label = self._createLabelFromContents(firstRow[col])
+        label, sources = self._createLabelFromContents(firstRow[col])
         if label:
-            return label, [firstRow[col]]
+            return label.strip(), sources
 
         return None, []

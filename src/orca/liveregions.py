@@ -278,8 +278,8 @@ class LiveRegionManager:
         """Move the caret to the last announced live region and speak the 
         contents of that object"""
         if self.lastliveobj:
-            self._script.setCaretPosition(self.lastliveobj, 0)
-            self._script.speakContents(self._script.getObjectContentsAtOffset(\
+            self._script.utilities.setCaretPosition(self.lastliveobj, 0)
+            self._script.speakContents(self._script.utilities.getObjectContentsAtOffset(
                                        self.lastliveobj, 0))
 
     def reviewLiveAnnouncement(self, msgnum):

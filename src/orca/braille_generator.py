@@ -297,6 +297,9 @@ class BrailleGenerator(generator.Generator):
             if result and parentResult:
                 result.append(braille.Region(" "))
             result.extend(parentResult)
+            if role == pyatspi.ROLE_EMBEDDED:
+                break
+
             parent = parent.parent
         result.reverse()
         return result

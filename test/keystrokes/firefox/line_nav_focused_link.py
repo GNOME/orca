@@ -11,10 +11,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to link",
-    ["BRAILLE LINE:  '[Line 2]'",
-     "     VISIBLE:  '[Line 2]', cursor=2",
-     "BRAILLE LINE:  '[Line 2]'",
-     "     VISIBLE:  '[Line 2]', cursor=2",
+    ["BRAILLE LINE:  'Line 2'",
+     "     VISIBLE:  'Line 2', cursor=1",
+     "BRAILLE LINE:  'Line 2'",
+     "     VISIBLE:  'Line 2', cursor=1",
      "SPEECH OUTPUT: 'Line 2 link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -32,8 +32,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '[Line 2]'",
      "     VISIBLE:  '[Line 2]', cursor=1",
      "SPEECH OUTPUT: '['",
-     "SPEECH OUTPUT: 'Line 2'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'Line 2 link'",
      "SPEECH OUTPUT: ']'"]))
 
 sequence.append(utils.StartRecordingAction())

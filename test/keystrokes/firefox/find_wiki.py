@@ -27,14 +27,13 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Welcome to Orca!'",
      "     VISIBLE:  'Welcome to Orca!', cursor=1",
      "SPEECH OUTPUT: '1.'",
-     "SPEECH OUTPUT: 'Welcome to Orca!'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'Welcome to Orca! link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "3. Return to next result",
-    ["BRAILLE LINE:  'Orca is a free, open source, flexible, extensible, and  $l'",
+    ["BRAILLE LINE:  'Orca is a free, open source, flexible, extensible, and '",
      "     VISIBLE:  'Orca is a free, open source, fle', cursor=1",
      "SPEECH OUTPUT: 'Orca is a free, open source, flexible, extensible, and'"]))
 
@@ -42,7 +41,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "4. Return to next result",
-    ["BRAILLE LINE:  'synthesis, braille, and magnification, Orca helps provide  $l'",
+    ["BRAILLE LINE:  'synthesis, braille, and magnification, Orca helps provide '",
      "     VISIBLE:  's, braille, and magnification, O', cursor=32",
      "SPEECH OUTPUT: 'synthesis, braille, and magnification, Orca helps provide'"]))
 
@@ -50,7 +49,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
 sequence.append(utils.AssertPresentationAction(
     "5. Escape to return to page content",
-    ["BRAILLE LINE:  'synthesis, braille, and magnification, Orca helps provide'",
+    ["BRAILLE LINE:  'synthesis, braille, and magnification, Orca helps provide '",
      "     VISIBLE:  'raille, and magnification, Orca ', cursor=32",
      "SPEECH OUTPUT: 'synthesis, braille, and magnification, Orca helps provide  selected'"]))
 

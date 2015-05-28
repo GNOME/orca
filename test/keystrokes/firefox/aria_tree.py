@@ -36,8 +36,6 @@ sequence.append(utils.AssertPresentationAction(
     "3. Down arrow to oranges",
     ["BRAILLE LINE:  'Oranges list item'",
      "     VISIBLE:  'Oranges list item', cursor=1",
-     "BRAILLE LINE:  'Oranges list item'",
-     "     VISIBLE:  'Oranges list item', cursor=1",
      "SPEECH OUTPUT: 'Oranges tree level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -45,8 +43,6 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Down arrow to pineapples",
     ["BRAILLE LINE:  'Pineapples list item'",
-     "     VISIBLE:  'Pineapples list item', cursor=1",
-     "BRAILLE LINE:  'Pineapples list item'",
      "     VISIBLE:  'Pineapples list item', cursor=1",
      "SPEECH OUTPUT: 'Pineapples'"]))
 
@@ -72,8 +68,6 @@ sequence.append(utils.AssertPresentationAction(
     "7. Down arrow to macintosh",
     ["BRAILLE LINE:  'Macintosh list item'",
      "     VISIBLE:  'Macintosh list item', cursor=1",
-     "BRAILLE LINE:  'Macintosh list item'",
-     "     VISIBLE:  'Macintosh list item', cursor=1",
      "SPEECH OUTPUT: 'Macintosh tree level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -98,8 +92,6 @@ sequence.append(utils.AssertPresentationAction(
     "10. Down arrow to washington state",
     ["BRAILLE LINE:  'Washington State list item'",
      "     VISIBLE:  'Washington State list item', cursor=1",
-     "BRAILLE LINE:  'Washington State list item'",
-     "     VISIBLE:  'Washington State list item', cursor=1",
      "SPEECH OUTPUT: 'Washington State tree level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -107,8 +99,6 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "11. Down arrow to michigan",
     ["BRAILLE LINE:  'Michigan list item'",
-     "     VISIBLE:  'Michigan list item', cursor=1",
-     "BRAILLE LINE:  'Michigan list item'",
      "     VISIBLE:  'Michigan list item', cursor=1",
      "SPEECH OUTPUT: 'Michigan'"]))
 
@@ -118,8 +108,6 @@ sequence.append(utils.AssertPresentationAction(
     "12. Down arrow to new york",
     ["BRAILLE LINE:  'New York list item'",
      "     VISIBLE:  'New York list item', cursor=1",
-     "BRAILLE LINE:  'New York list item'",
-     "     VISIBLE:  'New York list item', cursor=1",
      "SPEECH OUTPUT: 'New York'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -127,8 +115,6 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "13. Down arrow to fuji",
     ["BRAILLE LINE:  'Fuji list item'",
-     "     VISIBLE:  'Fuji list item', cursor=1",
-     "BRAILLE LINE:  'Fuji list item'",
      "     VISIBLE:  'Fuji list item', cursor=1",
      "SPEECH OUTPUT: 'Fuji tree level 3'"]))
 
@@ -138,8 +124,6 @@ sequence.append(utils.AssertPresentationAction(
     "14. Down arrow to bananas",
     ["BRAILLE LINE:  'Bananas list item'",
      "     VISIBLE:  'Bananas list item', cursor=1",
-     "BRAILLE LINE:  'Bananas list item'",
-     "     VISIBLE:  'Bananas list item', cursor=1",
      "SPEECH OUTPUT: 'Bananas tree level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -147,8 +131,6 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "15. Down arrow to pears",
     ["BRAILLE LINE:  'Pears list item'",
-     "     VISIBLE:  'Pears list item', cursor=1",
-     "BRAILLE LINE:  'Pears list item'",
      "     VISIBLE:  'Pears list item', cursor=1",
      "SPEECH OUTPUT: 'Pears'"]))
 

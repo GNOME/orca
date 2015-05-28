@@ -52,7 +52,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         # form bookmark dictionary key
         index = (inputEvent.hw_code, self.getURIKey())
         # convert the current object to a path and bookmark it
-        obj, characterOffset = self._script.getCaretContext()
+        obj, characterOffset = self._script.utilities.getCaretContext()
         path = self._objToPath()
         self._bookmarks[index] = path, characterOffset
         self._script.presentMessage(messages.BOOKMARK_ENTERED)
@@ -71,10 +71,10 @@ class GeckoBookmarks(bookmarks.Bookmarks):
        
         if obj:
             # restore the location
-            self._script.setCaretPosition(obj, characterOffset)
+            self._script.utilities.setCaretPosition(obj, characterOffset)
             self._script.updateBraille(obj)
             self._script.speakContents( \
-                self._script.getObjectContentsAtOffset(obj, characterOffset))
+                self._script.utilities.getObjectContentsAtOffset(obj, characterOffset))
             # update the currentbookmark
             self._currentbookmarkindex[index[1]] = index[0]
         else:
@@ -91,7 +91,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
             self._script.systemBeep()
             return
             
-        [cur_obj, cur_characterOffset] = self._script.getCaretContext()
+        [cur_obj, cur_characterOffset] = self._script.utilities.getCaretContext()
         
         # Are they the same object?
         if self._script.utilities.isSameObject(cur_obj, obj):
@@ -220,7 +220,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         """Given an object, return it's path from the root accessible.  If obj 
         is not provided, the current caret context is used. """
         if not start_obj:
-            [start_obj, characterOffset] = self._script.getCaretContext()    
+            [start_obj, characterOffset] = self._script.utilities.getCaretContext()    
             
         if start_obj is None \
                      or start_obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:

@@ -140,7 +140,7 @@ class Script(Gecko.Script):
         accessible text specialization, the characterOffset value
         is meaningless (and typically -1)."""
 
-        if self.inDocumentContent(event.source):
+        if self.utilities.inDocumentContent(event.source):
             orca.setLocusOfFocus(event, event.source)
             Gecko.Script.onCaretMoved(self, event)
         else:
@@ -193,7 +193,7 @@ class Script(Gecko.Script):
                 orca.setLocusOfFocus(event, event.source)
                 return
 
-        if self.inDocumentContent(event.source):
+        if self.utilities.inDocumentContent(event.source):
             Gecko.Script.onFocusedChanged(self, event)
         else:
             default.Script.onFocusedChanged(self, event)

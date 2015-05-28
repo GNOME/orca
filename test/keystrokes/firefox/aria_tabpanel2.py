@@ -21,12 +21,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Page_Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Ctrl Page Down to second tab",
-    ["BRAILLE LINE:  'Crust Veggies page tab Carnivore Delivery'",
-     "     VISIBLE:  'Veggies page tab Carnivore Deliv', cursor=1",
+    ["BRAILLE LINE:  'Veggies page tab'",
+     "     VISIBLE:  'Veggies page tab', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "BRAILLE LINE:  'Veggies page tab'",
-     "     VISIBLE:  'Veggies page tab', cursor=1",
      "SPEECH OUTPUT: 'Veggies page tab'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
@@ -34,8 +32,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "3. Right arrow to third tab",
-    ["BRAILLE LINE:  'Carnivore page tab'",
-     "     VISIBLE:  'Carnivore page tab', cursor=1",
+    ["BRAILLE LINE:  'Veggies page tab'",
+     "     VISIBLE:  'Veggies page tab', cursor=1",
      "BRAILLE LINE:  'Carnivore page tab'",
      "     VISIBLE:  'Carnivore page tab', cursor=1",
      "SPEECH OUTPUT: 'Carnivore page tab'"]))
@@ -54,8 +52,6 @@ sequence.append(utils.AssertPresentationAction(
     "5. Right arrow to fourth tab",
     ["BRAILLE LINE:  'Delivery page tab'",
      "     VISIBLE:  'Delivery page tab', cursor=1",
-     "BRAILLE LINE:  'Delivery page tab'",
-     "     VISIBLE:  'Delivery page tab', cursor=1",
      "SPEECH OUTPUT: 'Delivery page tab'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -63,8 +59,6 @@ sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "6. Left arrow back to third tab",
     ["BRAILLE LINE:  'Carnivore page tab'",
-     "     VISIBLE:  'Carnivore page tab', cursor=1",
-     "BRAILLE LINE:  'Carnivore page tab'",
      "     VISIBLE:  'Carnivore page tab', cursor=1",
      "SPEECH OUTPUT: 'Carnivore page tab'"]))
 

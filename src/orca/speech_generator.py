@@ -93,6 +93,18 @@ class SpeechGenerator(generator.Generator):
     def __init__(self, script):
         generator.Generator.__init__(self, script, "speech")
 
+    def _getACSS(self, obj, string):
+        if obj.getRole() == pyatspi.ROLE_LINK:
+            acss = self.voice(HYPERLINK)
+        elif isinstance(string, str) \
+            and string.isupper() \
+            and string.strip().isalpha():
+            acss = self.voice(UPPERCASE)
+        else:
+            acss = self.voice(DEFAULT)
+
+        return acss
+
     def _addGlobals(self, globalsDict):
         """Other things to make available from the formatting string.
         """
@@ -964,6 +976,11 @@ class SpeechGenerator(generator.Generator):
         this is a text object.  [[[WDW - consider returning an empty
         array if this is not a text object.]]]
         """
+
+        result = self._generateSubstring(obj, **args)
+        if result:
+            return result
+
         acss = self.voice(DEFAULT)
         result = generator.Generator._generateCurrentLineText(self, obj, **args)
         if result:
@@ -973,6 +990,10 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateDisplayedText(self, obj, **args):
+        result = self._generateSubstring(obj, **args)
+        if result:
+            return result
+
         acss = self.voice(DEFAULT)
         result = generator.Generator._generateDisplayedText(self, obj, **args)
         if result:
@@ -1065,18 +1086,6 @@ class SpeechGenerator(generator.Generator):
                 textObj.caretOffset,
                 pyatspi.TEXT_BOUNDARY_LINE_START)
             if len(line):
-                # Check for embedded object characters. If we find any,
-                # expand the text. TODO - JD: This expansion doesn't
-                # include the role information; just the text. However,
-                # the handling of roles should probably be dealt with as
-                # a formatting string. We have not yet worked out how to
-                # do this with Gecko (primary user of embedded object
-                # characters). Until we do, this expansion is better than
-                # presenting the actual embedded object character.
-                #
-                if self._script.EMBEDDED_OBJECT_CHARACTER in line:
-                    line = self._script.utilities.expandEOCs(
-                        obj, startOffset, endOffset)
                 line = self._script.utilities.adjustForRepeats(line)
                 textContents = line
             else:
@@ -1096,6 +1105,11 @@ class SpeechGenerator(generator.Generator):
         specifications) containing the text content.  This requires
         _generateTextInformation to have been called prior to this method.
         """
+
+        result = self._generateSubstring(obj, **args)
+        if result:
+            return result
+
         try:
             text = obj.queryText()
         except NotImplementedError:
@@ -1209,6 +1223,17 @@ class SpeechGenerator(generator.Generator):
                 if startOffset == 0 and endOffset == len(string):
                     result = [messages.TEXT_SELECTED]
                     result.extend(acss)
+        return result
+
+    def _generateSubstring(self, obj, **args):
+        result = super()._generateSubstring(obj, **args)
+        if not (result and result[0]):
+            return []
+
+        if not obj.getState().contains(pyatspi.STATE_EDITABLE):
+            result[0] = result[0].strip()
+
+        result.extend(self._getACSS(obj, result[0]))
         return result
 
     def generateTextIndentation(self, obj, **args):
@@ -1578,6 +1603,14 @@ class SpeechGenerator(generator.Generator):
         'priorObj' is typically set by Orca to be the previous object
         with focus.
         """
+
+        # TODO - JD: This is not the right way to do this, but we can fix
+        # that as part of the removal of formatting strings.
+        start = args.get('startOffset')
+        end = args.get('endOffset')
+        if start is not None or end is not None:
+            return []
+
         result = []
         priorObj = args.get('priorObj')
         if obj.getRole() == pyatspi.ROLE_MENU_ITEM \
@@ -1840,6 +1873,8 @@ class SpeechGenerator(generator.Generator):
     #####################################################################
 
     def _generatePause(self, obj, **args):
+        if args.get('eliminatePauses', False):
+            return []
         return PAUSE
 
     def _generateLineBreak(self, obj, **args):

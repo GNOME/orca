@@ -20,8 +20,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "1. Next form field",
-    ["BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
-     "     VISIBLE:  ' $l text field using default typ', cursor=1",
+    ["BRAILLE LINE:  'Enter your Name:  $l'",
+     "     VISIBLE:  'Enter your Name:  $l', cursor=18",
      "SPEECH OUTPUT: 'Enter your Name: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -30,8 +30,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "2. Next form field",
-    ["BRAILLE LINE:  '1. Enter your Address:  $l text field using SIZE and'",
-     "     VISIBLE:  ' $l text field using SIZE and', cursor=1",
+    ["BRAILLE LINE:  '1. Enter your Address:  $l'",
+     "     VISIBLE:  '1. Enter your Address:  $l', cursor=24",
      "SPEECH OUTPUT: '1. Enter your Address: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -40,8 +40,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "3. Next form field",
-    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using value'",
-     "     VISIBLE:  ' $l 3. Enter your State:  $l 4. ', cursor=1",
+    ["BRAILLE LINE:  '2. Enter your City:  $l'",
+     "     VISIBLE:  '2. Enter your City:  $l', cursor=21",
      "SPEECH OUTPUT: '2. Enter your City: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -50,8 +50,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "4. Next form field",
-    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using value'",
-     "     VISIBLE:  ' $l 4. Enter your Country: US $l', cursor=1",
+    ["BRAILLE LINE:  '3. Enter your State:  $l'",
+     "     VISIBLE:  '3. Enter your State:  $l', cursor=22",
      "SPEECH OUTPUT: '3. Enter your State: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -60,8 +60,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "5. Next form field",
-    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using value'",
-     "     VISIBLE:  'US $l image text field using val', cursor=1",
+    ["BRAILLE LINE:  '4. Enter your Country: US $l'",
+     "     VISIBLE:  '4. Enter your Country: US $l', cursor=24",
      "SPEECH OUTPUT: '4. Enter your Country: entry'",
      "SPEECH OUTPUT: 'US'"]))
 
@@ -71,8 +71,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "6. Next form field",
-    ["BRAILLE LINE:  '5. Enter your Zip:  $l'",
-     "     VISIBLE:  '5. Enter your Zip:  $l', cursor=20",
+    ["BRAILLE LINE:  '5. Enter your Zip:  $l'",
+     "     VISIBLE:  '5. Enter your Zip:  $l', cursor=20",
      "SPEECH OUTPUT: '5. Enter your Zip: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -81,8 +81,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "7. Next form field",
-    ["BRAILLE LINE:  'character:  $l'",
-     "     VISIBLE:  'character:  $l', cursor=12",
+    ["BRAILLE LINE:  'character:  $l'",
+     "     VISIBLE:  'character:  $l', cursor=12",
      "SPEECH OUTPUT: 'character: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -91,8 +91,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "8. Next form field",
-    ["BRAILLE LINE:  '< > check box bird'",
-     "     VISIBLE:  '< > check box bird', cursor=1",
+    ["BRAILLE LINE:  '< > bird check box'",
+     "     VISIBLE:  '< > bird check box', cursor=1",
      "SPEECH OUTPUT: 'bird check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -101,8 +101,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "9. Next form field",
-    ["BRAILLE LINE:  '< > check box fish'",
-     "     VISIBLE:  '< > check box fish', cursor=1",
+    ["BRAILLE LINE:  '< > fish check box'",
+     "     VISIBLE:  '< > fish check box', cursor=1",
      "SPEECH OUTPUT: 'fish check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -111,8 +111,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "10. Next form field",
-    ["BRAILLE LINE:  '< > check box wild animal'",
-     "     VISIBLE:  '< > check box wild animal', cursor=1",
+    ["BRAILLE LINE:  '< > wild animal check box'",
+     "     VISIBLE:  '< > wild animal check box', cursor=1",
      "SPEECH OUTPUT: 'wild animal check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -121,8 +121,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "11. Next form field",
-    ["BRAILLE LINE:  '&=y radio button cabernet sauvignon'",
-     "     VISIBLE:  '&=y radio button cabernet sauvig', cursor=1",
+    ["BRAILLE LINE:  '&=y cabernet sauvignon radio button'",
+     "     VISIBLE:  '&=y cabernet sauvignon radio but', cursor=1",
      "SPEECH OUTPUT: 'cabernet sauvignon selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -131,8 +131,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "12. Next form field",
-    ["BRAILLE LINE:  '& y radio button merlot'",
-     "     VISIBLE:  '& y radio button merlot', cursor=1",
+    ["BRAILLE LINE:  '& y merlot radio button'",
+     "     VISIBLE:  '& y merlot radio button', cursor=1",
      "SPEECH OUTPUT: 'merlot not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -141,8 +141,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "13. Next form field",
-    ["BRAILLE LINE:  '& y radio button nebbiolo'",
-     "     VISIBLE:  '& y radio button nebbiolo', cursor=1",
+    ["BRAILLE LINE:  '& y nebbiolo radio button'",
+     "     VISIBLE:  '& y nebbiolo radio button', cursor=1",
      "SPEECH OUTPUT: 'nebbiolo not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -151,8 +151,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "14. Next form field",
-    ["BRAILLE LINE:  '& y radio button pinot noir'",
-     "     VISIBLE:  '& y radio button pinot noir', cursor=1",
+    ["BRAILLE LINE:  '& y pinot noir radio button'",
+     "     VISIBLE:  '& y pinot noir radio button', cursor=1",
      "SPEECH OUTPUT: 'pinot noir not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -161,8 +161,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "15. Next form field",
-    ["BRAILLE LINE:  '& y radio button don't drink wine'",
-     "     VISIBLE:  '& y radio button don't drink win', cursor=1",
+    ["BRAILLE LINE:  '& y don't drink wine radio button'",
+     "     VISIBLE:  '& y don't drink wine radio butto', cursor=1",
      "SPEECH OUTPUT: 'don't drink wine not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -173,8 +173,8 @@ sequence.append(utils.AssertPresentationAction(
     "16. Next form field",
     ["BRAILLE LINE:  'Wrapping to top.'",
      "     VISIBLE:  'Wrapping to top.', cursor=0",
-     "BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
-     "     VISIBLE:  ' $l text field using default typ', cursor=1",
+     "BRAILLE LINE:  'Enter your Name:  $l'",
+     "     VISIBLE:  'Enter your Name:  $l', cursor=18",
      "SPEECH OUTPUT: 'Wrapping to top.' voice=system",
      "SPEECH OUTPUT: 'Enter your Name: entry'"]))
 

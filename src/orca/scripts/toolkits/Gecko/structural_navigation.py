@@ -57,7 +57,7 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
         in the case of Gecko, that doesn't always work.
         """
 
-        [obj, offset] = self._script.getCaretContext()
+        [obj, offset] = self._script.utilities.getCaretContext()
         return obj
 
     def _findPreviousObject(self, obj, stopAncestor):
@@ -70,7 +70,7 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
         -stopAncestor: the ancestor at which the search should stop
         """
 
-        return self._script.findPreviousObject(obj, stopAncestor)
+        return self._script.utilities.getPreviousObjectInDocument(obj, stopAncestor)
 
     def _findNextObject(self, obj, stopAncestor):
         """Finds the object after to this one, where the tree we're
@@ -82,7 +82,7 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
         -stopAncestor: the ancestor at which the search should stop
         """
 
-        return self._script.findNextObject(obj, stopAncestor)
+        return self._script.utilities.getNextObjectInDocument(obj, stopAncestor)
 
     def _findLastObject(self, ancestor):
         """Returns the last object in ancestor.
@@ -92,7 +92,7 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
           is sought.
         """
 
-        return self._script.getLastObject(ancestor)
+        return self._script.utilities.getLastObjectInDocument(ancestor)
 
     def _getDocument(self):
         """Returns the document or other object in which the object of
@@ -104,34 +104,34 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
     def _isInDocument(self, obj):
         """Returns True of the object is inside of the document."""
 
-        return self._script.inDocumentContent(obj)
+        return self._script.utilities.inDocumentContent(obj)
 
     def _getCaretPosition(self, obj):
         """Returns the [obj, characterOffset] where the caret should be
         positioned.
         """
 
-        obj, offset = self._script.findFirstCaretContext(obj, 0)
+        obj, offset = self._script.utilities.findFirstCaretContext(obj, 0)
         if not obj:
             return obj, offset
 
         if obj.getRole() == pyatspi.ROLE_SECTION \
            and not self._script.utilities.queryNonEmptyText(obj):
-            obj, offset = self._script.findNextCaretInOrder(obj, offset)
+            obj, offset = self._script.utilities.findNextCaretInOrder(obj, offset)
 
         # If it's an anchor, look for the first object of use.
         # See bug #591592.
         #
         if obj.getRole() == pyatspi.ROLE_LINK \
            and not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-            obj, offset = self._script.findNextCaretInOrder(obj, offset)
+            obj, offset = self._script.utilities.findNextCaretInOrder(obj, offset)
 
         return obj, offset
 
     def _setCaretPosition(self, obj, characterOffset):
         """Sets the caret at the specified offset within obj."""
 
-        self._script.setCaretPosition(obj, characterOffset)
+        self._script.utilities.setCaretPosition(obj, characterOffset)
 
     #####################################################################
     #                                                                   #
@@ -163,7 +163,7 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
                 pass
 
         self._script.updateBraille(obj)
-        contents = self._script.getObjectContentsAtOffset(obj, offset)
+        contents = self._script.utilities.getObjectContentsAtOffset(obj, offset)
         self._script.speakContents(contents)
 
     #########################################################################

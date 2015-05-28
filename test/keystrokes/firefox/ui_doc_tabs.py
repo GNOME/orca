@@ -24,6 +24,8 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Orca - GNOME Live! page tab'",
      "SPEECH OUTPUT: 'Home link'"]))
 
+sequence.append(PauseAction(3000))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>1"))
 sequence.append(utils.AssertPresentationAction(
@@ -35,27 +37,29 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'HTML test page page tab'",
      "SPEECH OUTPUT: 'Test Formats link'"]))
 
+sequence.append(PauseAction(3000))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>3"))
 sequence.append(utils.AssertPresentationAction(
     "3. Switch to third page tab - Bugzilla",
     ["BRAILLE LINE:  'Firefox application GNOME Bug Tracking System - Mozilla Firefox frame Browser tabs tool bar GNOME Bug Tracking System page tab'",
      "     VISIBLE:  'GNOME Bug Tracking System page t', cursor=1",
-     "BRAILLE LINE:  ' $l Show push button [Help]'",
-     "     VISIBLE:  ' $l Show push button [Help]', cursor=1",
+     "BRAILLE LINE:  'Enter a bug # or some search terms:  $l'",
+     "     VISIBLE:  ' a bug # or some search terms:  ', cursor=32",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'GNOME Bug Tracking System page tab'",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'Enter a bug # or some search terms: entry'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
+
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Ctrl>w"))
 sequence.append(utils.AssertPresentationAction(
     "4. Close third page tab - land in second page",
-    ["BRAILLE LINE:  ' $l Show push button [Help]'",
-     "     VISIBLE:  ' $l Show push button [Help]', cursor=1",
-     "BRAILLE LINE:  'Firefox application Orca - GNOME Live! - Mozilla Firefox frame Browser tabs tool bar Orca - GNOME Live! page tab'",
+    ["BRAILLE LINE:  'Firefox application Orca - GNOME Live! - Mozilla Firefox frame Browser tabs tool bar Orca - GNOME Live! page tab'",
      "     VISIBLE:  'Orca - GNOME Live! page tab', cursor=1",
      "BRAILLE LINE:  'Home'",
      "     VISIBLE:  'Home', cursor=1",

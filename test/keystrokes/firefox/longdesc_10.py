@@ -23,10 +23,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Having selected View Description, do a Where Am I for new location",
-    ["KNOWN ISSUE: This test fails not because of longdesc, but because jumping to any anchor in a page is broken",
-     "BRAILLE LINE:  'Fail if you land here h1'",
-     "     VISIBLE:  'Fail if you land here h1', cursor=1",
-     "SPEECH OUTPUT: 'heading level 1 Fail if you land here'"]))
+    ["BRAILLE LINE:  'Pass h1'",
+     "     VISIBLE:  'Pass h1', cursor=1",
+     "SPEECH OUTPUT: 'heading level 1 Pass'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

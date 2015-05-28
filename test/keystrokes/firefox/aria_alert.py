@@ -20,8 +20,8 @@ sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "1. Press button",
     ["KNOWN ISSUE: Because the link has focus, we double-present it.",
-     "BRAILLE LINE:  'This popup is created as a div in the'",
-     "     VISIBLE:  'This popup is created as a div i', cursor=1",
+     "BRAILLE LINE:  'alert'",
+     "     VISIBLE:  'alert', cursor=1",
      "BRAILLE LINE:  'close'",
      "     VISIBLE:  'close', cursor=1",
      "BRAILLE LINE:  'close'",
@@ -140,8 +140,7 @@ sequence.append(utils.AssertPresentationAction(
     "15. Down Arrow",
     ["BRAILLE LINE:  'close'",
      "     VISIBLE:  'close', cursor=1",
-     "SPEECH OUTPUT: 'close'",
-     "SPEECH OUTPUT: 'link'"]))
+     "SPEECH OUTPUT: 'close link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -155,7 +154,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "18. Return on close link",
-    ["KNOWN ISSUE: We should present something here."
+    ["KNOWN ISSUE: We should present something here.",
      ""]))
 
 sequence.append(utils.AssertionSummaryAction())

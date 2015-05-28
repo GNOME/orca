@@ -23,6 +23,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Basic Where Am I",
     ["BRAILLE LINE:  'Firefox application Mozilla Firefox frame Menu Bar tool bar Application menu bar < > Full Screen check menu item'",
      "     VISIBLE:  '< > Full Screen check menu item', cursor=1",
+     "SPEECH OUTPUT: 'Mozilla Firefox frame'",
      "SPEECH OUTPUT: 'View menu'",
      "SPEECH OUTPUT: 'Menu Bar tool bar Full Screen check menu item not checked 6 of 6.'",
      "SPEECH OUTPUT: 'F'"]))

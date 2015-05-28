@@ -155,6 +155,9 @@ class Generator:
         else:
             del args['role']
 
+    def generateContents(self, contents, **args):
+        return []
+
     def generate(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the complete presentatin for the
@@ -321,6 +324,16 @@ class Generator:
                 return result
             if description:
                 result.append(description)
+            else:
+                link = None
+                if obj.getRole() == pyatspi.ROLE_LINK:
+                    link = obj
+                elif obj.parent.getRole() == pyatspi.ROLE_LINK:
+                    link = obj.parent
+                if link:
+                    basename = self._script.utilities.linkBasename(link)
+                    if basename:
+                        result.append(basename)
         # To make the unlabeled icons in gnome-panel more accessible.
         try:
             role = args.get('role', obj.getRole())
@@ -422,23 +435,9 @@ class Generator:
     #####################################################################
 
     def _generateClickable(self, obj, **args):
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'clickable'
-
-        if self._script.utilities.isClickableElement(obj):
-            return [self._script.formatting.getString(**args)]
-
         return []
 
     def _generateHasLongDesc(self, obj, **args):
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'haslongdesc'
-
-        if self._script.utilities.hasLongDesc(obj):
-            return [self._script.formatting.getString(**args)]
-
         return []
 
     def _generateAvailability(self, obj, **args):
@@ -764,10 +763,14 @@ class Generator:
         """Returns an array of strings for use by speech and braille to present
         the size of a table."""
 
+        if self._script.utilities.isLayoutOnly(obj):
+            return []
+
         try:
             table = obj.queryTable()
         except:
             return []
+
         return [messages.tableSize(table.nRows, table.nColumns)]       
 
     def _generateTableCellRow(self, obj, **args):
@@ -849,7 +852,7 @@ class Generator:
     def _generateSubstring(self, obj, **args):
         start = args.get('startOffset')
         end = args.get('endOffset')
-        if start == None or end == None:
+        if start is None or end is None:
             return []
 
         substring = self._script.utilities.substring(obj, start, end)
@@ -952,6 +955,11 @@ class Generator:
         """Returns an array of strings for use by speech and braille that
         represent the nesting level of an object in a list.
         """
+        start = args.get('startOffset')
+        end = args.get('endOffset')
+        if start is not None and end is not None:
+            return []
+
         result = []
         if not args.get('mode', None):
             args['mode'] = self._mode
@@ -1031,3 +1039,6 @@ class Generator:
                     break
             parent = parent.parent
         return result
+
+    def _generatePageSummary(self, obj, **args):
+        return []

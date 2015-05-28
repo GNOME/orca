@@ -40,7 +40,6 @@ from orca.orca_i18n import _
 
 from .speech_generator import SpeechGenerator
 from .spellcheck import SpellCheck
-from .script_utilities import Utilities
 
 _settingsManager = settings_manager.getManager()
 
@@ -87,11 +86,6 @@ class Script(Gecko.Script):
         """Returns the spellcheck support for this script."""
 
         return SpellCheck(self)
-
-    def getUtilities(self):
-        """Returns the utilites for this script."""
-
-        return Utilities(self)
 
     def getAppPreferencesGUI(self):
         """Return a GtkGrid containing the application unique configuration
@@ -167,7 +161,7 @@ class Script(Gecko.Script):
             self.spellcheck.presentSuggestionListItem()
             return
 
-        if not self.inDocumentContent(obj):
+        if not self.utilities.inDocumentContent(obj):
             default.Script.onFocusedChanged(self, event)
             return
 
@@ -175,23 +169,22 @@ class Script(Gecko.Script):
             default.Script.onFocusedChanged(self, event)
             return
 
-        role = obj.getRole()
-        if role != pyatspi.ROLE_DOCUMENT_FRAME:
-            Gecko.Script.onFocusedChanged(self, event)
-            return
-
-        contextObj, contextOffset = self.getCaretContext()
-        if contextObj:
-            return
-
-        orca.setLocusOfFocus(event, obj, notifyScript=False)
+        Gecko.Script.onFocusedChanged(self, event)
 
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
         obj = event.source
         if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME and not event.detail1:
-            if self.inDocumentContent():
+            try:
+                role = orca_state.locusOfFocus.getRole()
+            except:
+                pass
+            else:
+                if role in [pyatspi.ROLE_FRAME, pyatspi.ROLE_PAGE_TAB]:
+                    orca.setLocusOfFocus(event, event.source, False)
+
+            if self.utilities.inDocumentContent():
                 self.speakMessage(obj.name)
                 self._presentMessage(obj)
 
@@ -353,19 +346,20 @@ class Script(Gecko.Script):
             lastKey, mods = self.utilities.lastKeyAndModifiers()
             if lastKey == "Delete":
                 speech.speak(obj.name)
-                [obj, offset] = self.findFirstCaretContext(obj, 0)
-                self.setCaretPosition(obj, offset)
+                [obj, offset] = self.utilities.findFirstCaretContext(obj, 0)
+                self.utilities.setCaretPosition(obj, offset)
                 return
 
     def _presentMessage(self, documentFrame):
         """Presents the first line of the message, or the entire message,
         depending on the user's sayAllOnLoad setting."""
 
-        [obj, offset] = self.findFirstCaretContext(documentFrame, 0)
-        self.setCaretPosition(obj, offset)
+        [obj, offset] = self.utilities.findFirstCaretContext(documentFrame, 0)
+        self.utilities.setCaretPosition(obj, offset)
         self.updateBraille(obj)
         if not _settingsManager.getSetting('sayAllOnLoad'):
-            self.presentLine(obj, offset)
+            contents = self.utilities.getLineContentsAtOffset(obj, offset)
+            self.speakContents(contents)
         elif _settingsManager.getSetting('enableSpeech'):
             self.sayAll(None)
 
@@ -379,22 +373,6 @@ class Script(Gecko.Script):
                 return
 
         Gecko.Script.sayCharacter(self, obj)
-
-    def getBottomOfFile(self):
-        """Returns the object and last caret offset at the bottom of the
-        document frame. Overridden here to handle editable messages.
-        """
-
-        # Pylint thinks that obj is an instance of a list. It most
-        # certainly is not. Silly pylint.
-        #
-        # pylint: disable-msg=E1103
-        #
-        [obj, offset] = Gecko.Script.getBottomOfFile(self)
-        if obj and obj.getState().contains(pyatspi.STATE_EDITABLE):
-            offset += 1
-
-        return [obj, offset]
 
     def toggleFlatReviewMode(self, inputEvent=None):
         """Toggles between flat review mode and focus tracking mode."""

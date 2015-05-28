@@ -37,8 +37,8 @@ sequence.append(utils.AssertPresentationAction(
     "3. Basic whereamI",
     ["BRAILLE LINE:  'Check Now push button'",
      "     VISIBLE:  'Check Now push button', cursor=1",
-     "BRAILLE LINE:  'Check Now push button Check to see if your order has been'",
-     "     VISIBLE:  'Check Now push button Check to s', cursor=1",
+     "BRAILLE LINE:  'Check Now push button'",
+     "     VISIBLE:  'Check Now push button', cursor=1",
      "SPEECH OUTPUT: 'Check Now push button Check to see if your order has been shipped.'"]))
 
 sequence.append(utils.AssertionSummaryAction())

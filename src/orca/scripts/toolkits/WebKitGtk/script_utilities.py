@@ -98,6 +98,9 @@ class Utilities(script_utilities.Utilities):
         return self.getObjectsFromEOCs(
             obj, offset, pyatspi.TEXT_BOUNDARY_LINE_START)
 
+    def getObjectContentsAtOffset(self, obj, offset=0, useCache=True):
+        return self.getObjectsFromEOCs(obj, offset)
+
     def getObjectsFromEOCs(self, obj, offset=None, boundary=None):
         """Breaks the string containing a mixture of text and embedded object
         characters into a list of (obj, startOffset, endOffset, string) tuples.

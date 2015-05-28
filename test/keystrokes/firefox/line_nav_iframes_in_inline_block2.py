@@ -56,14 +56,6 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
-    ["BRAILLE LINE:  '  $l'",
-     "     VISIBLE:  '  $l', cursor=1",
-     "SPEECH OUTPUT: 'blank'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "7. Line Down",
     ["BRAILLE LINE:  'Line 3'",
      "     VISIBLE:  'Line 3', cursor=1",
      "SPEECH OUTPUT: 'Line 3'"]))
@@ -71,15 +63,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "8. Line Up",
-    ["BRAILLE LINE:  '  $l'",
-     "     VISIBLE:  '  $l', cursor=1",
-     "SPEECH OUTPUT: 'blank'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "9. Line Up",
+    "7. Line Up",
     ["BRAILLE LINE:  'No abbreviation here either.'",
      "     VISIBLE:  'No abbreviation here either.', cursor=1",
      "SPEECH OUTPUT: 'No abbreviation here either.'"]))
@@ -87,7 +71,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "10. Line Up",
+    "8. Line Up",
     ["BRAILLE LINE:  'HTML5 in 2004.'",
      "     VISIBLE:  'HTML5 in 2004.', cursor=1",
      "SPEECH OUTPUT: 'HTML5 in 2004.'"]))
@@ -95,7 +79,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "11. Line Up",
+    "9. Line Up",
     ["BRAILLE LINE:  'WHATWG started working on'",
      "     VISIBLE:  'WHATWG started working on', cursor=1",
      "SPEECH OUTPUT: 'WHATWG'",
@@ -104,7 +88,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "12. Line Up",
+    "10. Line Up",
     ["BRAILLE LINE:  'No abbreviation here.'",
      "     VISIBLE:  'No abbreviation here.', cursor=1",
      "SPEECH OUTPUT: 'No abbreviation here.'"]))
@@ -112,7 +96,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "13. Line Up",
+    "11. Line Up",
     ["BRAILLE LINE:  'Line 1'",
      "     VISIBLE:  'Line 1', cursor=1",
      "SPEECH OUTPUT: 'Line 1'"]))

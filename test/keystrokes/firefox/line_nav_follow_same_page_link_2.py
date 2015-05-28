@@ -19,8 +19,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Return to activate the same-page link for the About heading",
-    ["BRAILLE LINE:  '2. About'",
-     "     VISIBLE:  '2. About', cursor=4",
+    ["BRAILLE LINE:  'About h1'",
+     "     VISIBLE:  'About h1', cursor=1",
      "BRAILLE LINE:  'About h1'",
      "     VISIBLE:  'About h1', cursor=1",
      "SPEECH OUTPUT: 'About heading level 1'"]))

@@ -32,129 +32,261 @@ __license__   = "LGPL"
 
 import pyatspi
 import re
+import urllib
 
-import orca.debug as debug
-import orca.input_event as input_event
-import orca.orca_state as orca_state
-import orca.script_utilities as script_utilities
+from orca import debug
+from orca import input_event
+from orca import orca
+from orca import orca_state
+from orca import script_utilities
+from orca import settings
+from orca import settings_manager
 
-#############################################################################
-#                                                                           #
-# Utilities                                                                 #
-#                                                                           #
-#############################################################################
+_settingsManager = settings_manager.getManager()
+
 
 class Utilities(script_utilities.Utilities):
 
     def __init__(self, script):
-        """Creates an instance of the Utilities class.
+        super().__init__(script)
 
-        Arguments:
-        - script: the script with which this instance is associated.
-        """
+        self._currentAttrs = {}
+        self._caretContexts = {}
+        self._inDocumentContent = {}
+        self._isTextBlockElement = {}
+        self._isGridDescendant = {}
+        self._isOffScreenLabel = {}
+        self._hasNoSize = {}
+        self._hasLongDesc = {}
+        self._isClickableElement = {}
+        self._isAnchor = {}
+        self._isLandmark = {}
+        self._isLiveRegion = {}
+        self._isLink = {}
+        self._isNonEntryTextWidget = {}
+        self._inferredLabels = {}
+        self._text = {}
+        self._currentObjectContents = None
+        self._currentSentenceContents = None
+        self._currentLineContents = None
+        self._currentWordContents = None
+        self._currentCharacterContents = None
 
-        script_utilities.Utilities.__init__(self, script)
+    def _cleanupContexts(self):
+        toRemove = []
+        for key, [obj, offset] in self._caretContexts.items():
+            if self.isZombie(obj):
+                toRemove.append(key)
 
-    #########################################################################
-    #                                                                       #
-    # Utilities for finding, identifying, and comparing accessibles         #
-    #                                                                       #
-    #########################################################################
+        for key in toRemove:
+            self._caretContexts.pop(key, None)
 
-    def cellIndex(self, obj):
-        """Returns the index of the cell which should be used with the
-        table interface.  This is necessary because we cannot count on
-        the index we need being the same as the index in the parent.
-        See, for example, tables with captions and tables with rows
-        that have attributes."""
+    def clearCachedObjects(self):
+        debug.println(debug.LEVEL_INFO, "INFO: cleaning up cached objects")
+        self._inDocumentContent = {}
+        self._isTextBlockElement = {}
+        self._isGridDescendant = {}
+        self._isOffScreenLabel = {}
+        self._hasNoSize = {}
+        self._hasLongDesc = {}
+        self._isClickableElement = {}
+        self._isAnchor = {}
+        self._isLandmark = {}
+        self._isLiveRegion = {}
+        self._isLink = {}
+        self._isNonEntryTextWidget = {}
+        self._inferredLabels = {}
+        self._cleanupContexts()
 
-        index = -1
-        parent = self.ancestorWithRole(obj,
-                                       [pyatspi.ROLE_TABLE, 
-                                        pyatspi.ROLE_TREE_TABLE,
-                                        pyatspi.ROLE_TREE],
-                                       [pyatspi.ROLE_DOCUMENT_FRAME])
-        try:
-            table = parent.queryTable()
-        except:
-            pass
-        else:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-            index = attrs.get('table-cell-index')
-            if index:
-                index = int(index)
-            else:
-                index = obj.getIndexInParent()
+    def clearContentCache(self):
+        self._currentObjectContents = None
+        self._currentSentenceContents = None
+        self._currentLineContents = None
+        self._currentWordContents = None
+        self._currentCharacterContents = None
+        self._currentAttrs = {}
+        self._text = {}
 
-        return index
+    def inDocumentContent(self, obj=None):
+        if not obj:
+            obj = orca_state.locusOfFocus
 
-    def documentFrame(self):
-        """Returns the document frame that holds the content being shown."""
+        rv = self._inDocumentContent.get(hash(obj))
+        if rv is not None:
+            return rv
 
-        # [[[TODO: WDW - this is based upon the 12-Oct-2006 implementation
-        # that uses the EMBEDS relation on the top level frame as a means
-        # to find the document frame.  Future implementations will break
-        # this.]]]
-        #
-        documentFrame = None
-        for child in self._script.app:
-            if child.getRole() == pyatspi.ROLE_FRAME:
-                relationSet = child.getRelationSet()
-                for relation in relationSet:
-                    if relation.getRelationType()  \
-                        == pyatspi.RELATION_EMBEDS:
-                        documentFrame = relation.getTarget(0)
-                        if documentFrame.getState().contains(
-                            pyatspi.STATE_SHOWING):
-                            break
-                        else:
-                            documentFrame = None
+        document = self.getDocumentForObject(obj)
+        rv = document is not None
+        self._inDocumentContent[hash(obj)] = rv
+        return rv
 
-        # Certain add-ons can interfere with the above approach. But we
-        # should have a locusOfFocus. If so look up and try to find the
-        # document frame. See bug 537303.
-        #
-        if not documentFrame:
-            documentFrame = self.ancestorWithRole(
-                orca_state.locusOfFocus,
-                [pyatspi.ROLE_DOCUMENT_FRAME],
-                [pyatspi.ROLE_FRAME])
+    def getDocumentForObject(self, obj):
+        if not obj:
+            return None
 
-        return documentFrame
+        roles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
+        isDocument = lambda x: x and x.getRole() in roles
+        if isDocument(obj):
+            return obj
+
+        return pyatspi.findAncestor(obj, isDocument)
+
+    def _getDocumentsEmbeddedBy(self, frame):
+        isEmbeds = lambda r: r.getRelationType() == pyatspi.RELATION_EMBEDS
+        relations = list(filter(isEmbeds, frame.getRelationSet()))
+        if not relations:
+            return []
+
+        relation = relations[0]
+        targets = [relation.getTarget(i) for i in range(relation.getNTargets())]
+        if not targets:
+            return []
+
+        roles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
+        isDocument = lambda x: x and x.getRole() in roles
+        return list(filter(isDocument, targets))
+
+    def documentFrame(self, obj=None):
+        isShowing = lambda x: x and x.getState().contains(pyatspi.STATE_SHOWING)
+
+        windows = [child for child in self._script.app]
+        if orca_state.activeWindow in windows:
+            windows = [orca_state.activeWindow]
+
+        for window in windows:
+            documents = self._getDocumentsEmbeddedBy(window)
+            documents = list(filter(isShowing, documents))
+            if len(documents) == 1:
+                return documents[0]
+
+        return self.getDocumentForObject(obj or orca_state.locusOfFocus)
 
     def documentFrameURI(self):
-        """Returns the URI of the document frame that is active."""
-
         documentFrame = self.documentFrame()
-        if documentFrame:
-            # If the document frame belongs to a Thunderbird message which
-            # has just been deleted, getAttributes() will crash Thunderbird.
-            #
-            if not documentFrame.getState().contains(pyatspi.STATE_DEFUNCT):
-                attrs = documentFrame.queryDocument().getAttributes()
-                for attr in attrs:
-                    if attr.startswith('DocURL'):
-                        return attr[7:]
+        if documentFrame and not self.isZombie(documentFrame):
+            document = documentFrame.queryDocument()
+            return document.getAttributeValue('DocURL')
 
         return None
 
-    def grabFocusBeforeRouting(self, obj, offset):
-        """Whether or not we should perform a grabFocus before routing
-        the cursor via the braille cursor routing keys.
+    def setCaretPosition(self, obj, offset):
+        if self._script.flatReviewContext:
+            self._script.toggleFlatReviewMode()
 
-        Arguments:
-        - obj: the accessible object where the cursor should be routed
-        - offset: the offset to which it should be routed
+        obj, offset = self.findFirstCaretContext(obj, offset)
+        self.setCaretContext(obj, offset, documentFrame=None)
+        if self._script.focusModeIsSticky():
+            return
 
-        Returns True if we should do an explicit grabFocus on obj prior
-        to routing the cursor.
-        """
+        try:
+            state = obj.getState()
+        except:
+            return
 
-        if obj and obj.getRole() == pyatspi.ROLE_COMBO_BOX \
-           and not self.isSameObject(obj, orca_state.locusOfFocus):
-            return True
+        orca.setLocusOfFocus(None, obj, notifyScript=False)
+        if state.contains(pyatspi.STATE_FOCUSABLE):
+            try:
+                obj.queryComponent().grabFocus()
+            except:
+                return
 
-        return False
+        text = self.queryNonEmptyText(obj)
+        if text:
+            text.setCaretOffset(offset)
+
+        if self._script.useFocusMode(obj) != self._script.inFocusMode():
+            self._script.togglePresentationMode(None)
+
+        obj.clearCache()
+
+        # TODO - JD: This is private.
+        self._script._saveFocusedObjectInfo(obj)
+
+    def getNextObjectInDocument(self, obj, documentFrame):
+        if not obj:
+            return None
+
+        for relation in obj.getRelationSet():
+            if relation.getRelationType() == pyatspi.RELATION_FLOWS_TO:
+                return relation.getTarget(0)
+
+        if obj == documentFrame:
+            obj, offset = self.getCaretContext(documentFrame)
+            for child in documentFrame:
+                if self.characterOffsetInParent(child) > offset:
+                    return child
+
+        if obj and obj.childCount:
+            return obj[0]
+
+        nextObj = None
+        while obj and not nextObj:
+            index = obj.getIndexInParent() + 1
+            if 0 < index < obj.parent.childCount:
+                nextObj = obj.parent[index]
+            elif obj.parent != documentFrame:
+                obj = obj.parent
+            else:
+                break
+
+        return nextObj
+
+    def getPreviousObjectInDocument(self, obj, documentFrame):
+        if not obj:
+            return None
+
+        for relation in obj.getRelationSet():
+            if relation.getRelationType() == pyatspi.RELATION_FLOWS_FROM:
+                return relation.getTarget(0)
+
+        if obj == documentFrame:
+            obj, offset = self.getCaretContext(documentFrame)
+            for child in documentFrame:
+                if self.characterOffsetInParent(child) < offset:
+                    return child
+
+        index = obj.getIndexInParent() - 1
+        if not 0 <= index < obj.parent.childCount:
+            obj = obj.parent
+            index = obj.getIndexInParent() - 1
+
+        previousObj = obj.parent[index]
+        while previousObj and previousObj.childCount:
+            previousObj = previousObj[previousObj.childCount - 1]
+
+        return previousObj
+
+    def getTopOfFile(self):
+        return self.findFirstCaretContext(self.documentFrame(), 0)
+
+    def getBottomOfFile(self):
+        obj = self.getLastObjectInDocument(self.documentFrame())
+        offset = 0
+        text = self.queryNonEmptyText(obj)
+        if text:
+            offset = text.characterCount - 1
+
+        while obj:
+            lastobj, lastoffset = self.nextContext(obj, offset)
+            if not lastobj:
+                break
+            obj, offset = lastobj, lastoffset
+
+        return [obj, offset]
+
+    def getLastObjectInDocument(self, documentFrame):
+        try:
+            lastChild = documentFrame[documentFrame.childCount - 1]
+        except:
+            lastChild = documentFrame
+        while lastChild:
+            lastObj = self.getNextObjectInDocument(lastChild, documentFrame)
+            if lastObj and lastObj != lastChild:
+                lastChild = lastObj
+            else:
+                break
+
+        return lastChild
 
     def inFindToolbar(self, obj=None):
         if not obj:
@@ -164,44 +296,29 @@ class Utilities(script_utilities.Utilities):
            and obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
             return False
 
-        return script_utilities.Utilities.inFindToolbar(obj)
-
-    def isLink(self, obj):
-        """Returns True if we should treat this object as a link."""
-
-        if not obj:
-            return False
-
-        role = obj.getRole()
-        if role == pyatspi.ROLE_LINK:
-            return True
-
-        if role == pyatspi.ROLE_TEXT \
-           and obj.parent.getRole() == pyatspi.ROLE_LINK \
-           and obj.name and obj.name == obj.parent.name:
-            return True
-
-        return False
+        return super().inFindToolbar(obj)
 
     def isHidden(self, obj):
-        attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        isHidden = attrs.get('hidden', False)
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+        return attrs.get('hidden', False)
 
-        return isHidden
+    def isTextArea(self, obj):
+        if self.isLink(obj):
+            return False
+
+        return super().isTextArea(obj)
 
     def isReadOnlyTextArea(self, obj):
-        """Returns True if obj is a text entry area that is read only."""
-
-        if not obj.getRole() == pyatspi.ROLE_ENTRY:
+        # NOTE: This method is deliberately more conservative than isTextArea.
+        if obj.getRole() != pyatspi.ROLE_ENTRY:
             return False
 
         state = obj.getState()
         readOnly = state.contains(pyatspi.STATE_FOCUSABLE) \
                    and not state.contains(pyatspi.STATE_EDITABLE)
-        details = debug.getAccessibleDetails(debug.LEVEL_ALL, obj)
-        debug.println(debug.LEVEL_ALL,
-                      "Gecko - isReadOnlyTextArea=%s for %s" \
-                      % (readOnly, details))
 
         return readOnly
 
@@ -263,7 +380,7 @@ class Utilities(script_utilities.Utilities):
         if parent.getRole() != pyatspi.ROLE_TREE_TABLE \
            or parent.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS) \
            or parent.childCount <= 50:
-            return script_utilities.Utilities.showingDescendants(self, parent)
+            return super().showingDescendants(parent)
 
         try:
             table = parent.queryTable()
@@ -341,34 +458,6 @@ class Utilities(script_utilities.Utilities):
 
         return descendants
 
-    def uri(self, obj):
-        """Return the URI for a given link object.
-
-        Arguments:
-        - obj: the Accessible object.
-        """
-
-        # Getting a link's URI requires a little workaround due to
-        # https://bugzilla.mozilla.org/show_bug.cgi?id=379747.  You
-        # should be able to use getURI() directly on the link but
-        # instead must use ihypertext.getLink(0) on parent then use
-        # getURI on returned ihyperlink.
-        try:
-            ihyperlink = obj.parent.queryHypertext().getLink(0)
-        except:
-            return None
-        else:
-            try:
-                return ihyperlink.getURI(0)
-            except:
-                return None
-
-    #########################################################################
-    #                                                                       #
-    # Utilities for working with the accessible text interface              #
-    #                                                                       #
-    #########################################################################
-
     def isWordMisspelled(self, obj, offset):
         """Identifies if the current word is flagged as misspelled by the
         application.
@@ -387,57 +476,53 @@ class Utilities(script_utilities.Utilities):
         return error == "spelling"
 
     def setCaretOffset(self, obj, characterOffset):
-        self._script.setCaretPosition(obj, characterOffset)
+        self.setCaretPosition(obj, characterOffset)
         self._script.updateBraille(obj)
 
-    def textAttributes(self, acc, offset, get_defaults=False):
-        """Get the text attributes run for a given offset in a given accessible
+    def nextContext(self, obj=None, offset=-1, skipSpace=False):
+        if not obj:
+            obj, offset = self.getCaretContext()
 
-        Arguments:
-        - acc: An accessible.
-        - offset: Offset in the accessible's text for which to retrieve the
-        attributes.
-        - get_defaults: Get the default attributes as well as the unique ones.
-        Default is True
+        nextobj, nextoffset = self.findNextCaretInOrder(obj, offset)
+        if (obj, offset) == (nextobj, nextoffset):
+            nextobj, nextoffset = self.findNextCaretInOrder(nextobj, nextoffset)
 
-        Returns a dictionary of attributes, a start offset where the attributes
-        begin, and an end offset. Returns ({}, 0, 0) if the accessible does not
-        supprt the text attribute.
-        """
+        if skipSpace:
+            text = self.queryNonEmptyText(nextobj)
+            while text and text.getText(nextoffset, nextoffset + 1).isspace():
+                nextobj, nextoffset = self.findNextCaretInOrder(nextobj, nextoffset)
+                text = self.queryNonEmptyText(nextobj)
 
-        # For really large objects, a call to getAttributes can take up to
-        # two seconds! This is a Gecko bug. We'll try to improve things
-        # by storing attributes.
-        #
-        attrsForObj = self._script.currentAttrs.get(hash(acc)) or {}
-        if offset in attrsForObj:
-            return attrsForObj.get(offset)
+        return nextobj, nextoffset
 
-        attrs = script_utilities.Utilities.textAttributes(
-            self, acc, offset, get_defaults)
-        self._script.currentAttrs[hash(acc)] = {offset:attrs}
+    def previousContext(self, obj=None, offset=-1, skipSpace=False):
+        if not obj:
+            obj, offset = self.getCaretContext()
 
-        return attrs
+        prevobj, prevoffset = self.findPreviousCaretInOrder(obj, offset)
+        if (obj, offset) == (prevobj, prevoffset):
+            prevobj, prevoffset = self.findPreviousCaretInOrder(prevobj, prevoffset)
 
-    #########################################################################
-    #                                                                       #
-    # Miscellaneous Utilities                                               #
-    #                                                                       #
-    #########################################################################
+        if skipSpace:
+            text = self.queryNonEmptyText(prevobj)
+            while text and text.getText(prevoffset, prevoffset + 1).isspace():
+                prevobj, prevoffset = self.findPreviousCaretInOrder(prevobj, prevoffset)
+                text = self.queryNonEmptyText(prevobj)
 
-    # TODO - JD: Ultimately "utilities" need to be properly organized into
-    # functionality-based modules. But they belong even less in the script.
+        return prevobj, prevoffset
 
-    def extentsAreOnSameLine(self, a, b, pixelDelta=5):
-        """Determine if extents a and b are on the same line.
+    def contextsAreOnSameLine(self, a, b):
+        if a == b:
+            return True
 
-        Arguments:
-        -a: [x, y, width, height]
-        -b: [x, y, width, height]
+        aObj, aOffset = a
+        bObj, bOffset = b
+        aExtents = self.getExtents(aObj, aOffset, aOffset + 1)
+        bExtents = self.getExtents(bObj, bOffset, bOffset + 1)
+        return self.extentsAreOnSameLine(aExtents, bExtents)
 
-        Returns True if a and b are on the same line.
-        """
-
+    @staticmethod
+    def extentsAreOnSameLine(a, b, pixelDelta=5):
         if a == b:
             return True
 
@@ -461,39 +546,154 @@ class Utilities(script_utilities.Utilities):
 
         return True
 
-    def getExtents(self, obj, startOffset, endOffset):
-        """Returns [x, y, width, height] of the text at the given offsets
-        if the object implements accessible text, or just the extents of
-        the object if it doesn't implement accessible text.
-        """
+    @staticmethod
+    def getExtents(obj, startOffset, endOffset):
         if not obj:
             return [0, 0, 0, 0]
 
-        role = obj.getRole()
-        text = self.queryNonEmptyText(obj)
-        if text and not self._treatTextObjectAsWhole(obj):
-            return list(text.getRangeExtents(startOffset, endOffset, 0))
+        try:
+            text = obj.queryText()
+            if text.characterCount:
+                return list(text.getRangeExtents(startOffset, endOffset, 0))
+        except NotImplementedError:
+            pass
+        except:
+            return [0, 0, 0, 0]
 
+        role = obj.getRole()
         parentRole = obj.parent.getRole()
         if role in [pyatspi.ROLE_MENU, pyatspi.ROLE_LIST_ITEM] \
            and parentRole in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST_BOX]:
-            ext = obj.parent.queryComponent().getExtents(0)
+            try:
+                ext = obj.parent.queryComponent().getExtents(0)
+            except:
+                return [0, 0, 0, 0]
         else:
-            ext = obj.queryComponent().getExtents(0)
+            try:
+                ext = obj.queryComponent().getExtents(0)
+            except:
+                return [0, 0, 0, 0]
 
         return [ext.x, ext.y, ext.width, ext.height]
+
+    def expandEOCs(self, obj, startOffset=0, endOffset=-1):
+        if not self.inDocumentContent(obj):
+            return ""
+
+        text = self.queryNonEmptyText(obj)
+        if not text:
+            return ""
+
+        string = text.getText(startOffset, endOffset)
+
+        if self.EMBEDDED_OBJECT_CHARACTER in string:
+            # If we're not getting the full text of this object, but
+            # rather a substring, we need to figure out the offset of
+            # the first child within this substring.
+            childOffset = 0
+            for child in obj:
+                if self.characterOffsetInParent(child) >= startOffset:
+                    break
+                childOffset += 1
+
+            toBuild = list(string)
+            count = toBuild.count(self.EMBEDDED_OBJECT_CHARACTER)
+            for i in range(count):
+                index = toBuild.index(self.EMBEDDED_OBJECT_CHARACTER)
+                try:
+                    child = obj[i + childOffset]
+                except:
+                    continue
+                childText = self.expandEOCs(child)
+                if not childText:
+                    childText = ""
+                toBuild[index] = "%s " % childText
+
+            string = "".join(toBuild).strip()
+
+        return string
+
+    def substring(self, obj, startOffset, endOffset):
+        if not self.inDocumentContent(obj):
+            return super().substring(obj, startOffset, endOffset)
+
+        text = self.queryNonEmptyText(obj)
+        if text:
+            return text.getText(startOffset, endOffset)
+
+        return ""
+
+    def textAttributes(self, acc, offset, get_defaults=False):
+        attrsForObj = self._currentAttrs.get(hash(acc)) or {}
+        if offset in attrsForObj:
+            return attrsForObj.get(offset)
+
+        attrs = super().textAttributes(acc, offset, get_defaults)
+        self._currentAttrs[hash(acc)] = {offset:attrs}
+
+        return attrs
 
     def findObjectInContents(self, obj, offset, contents):
         if not obj or not contents:
             return -1
 
         offset = max(0, offset)
-        matches = [x for x in contents if self.isSameObject(x[0], obj)]
+        matches = [x for x in contents if x[0] == obj]
         match = [x for x in matches if x[1] <= offset < x[2]]
         if match and match[0] and match[0] in contents:
             return contents.index(match[0])
 
         return -1
+
+    def isNonEntryTextWidget(self, obj):
+        rv = self._isNonEntryTextWidget.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        roles = [pyatspi.ROLE_CHECK_BOX,
+                 pyatspi.ROLE_CHECK_MENU_ITEM,
+                 pyatspi.ROLE_MENU,
+                 pyatspi.ROLE_MENU_ITEM,
+                 pyatspi.ROLE_PAGE_TAB,
+                 pyatspi.ROLE_RADIO_MENU_ITEM,
+                 pyatspi.ROLE_RADIO_BUTTON,
+                 pyatspi.ROLE_PUSH_BUTTON,
+                 pyatspi.ROLE_TOGGLE_BUTTON]
+
+        role = obj.getRole()
+        if role in roles:
+            rv = True
+        elif role in [pyatspi.ROLE_LIST_ITEM, pyatspi.ROLE_TABLE_CELL]:
+            rv = not self.isTextBlockElement(obj)
+
+        self._isNonEntryTextWidget[hash(obj)] = rv
+        return rv
+
+    def queryNonEmptyText(self, obj, excludeNonEntryTextWidgets=True):
+        if hash(obj) in self._text:
+            return self._text.get(hash(obj))
+
+        try:
+            rv = obj.queryText()
+            characterCount = rv.characterCount
+        except:
+            rv = None
+        else:
+            if not characterCount:
+                rv = None
+
+        doNotQuery = [pyatspi.ROLE_LIST,
+                      pyatspi.ROLE_TABLE_ROW,
+                      pyatspi.ROLE_TOOL_BAR]
+        if rv and obj.getRole() in doNotQuery:
+            rv = None
+        if rv and excludeNonEntryTextWidgets and self.isNonEntryTextWidget(obj):
+            rv = None
+        if rv and (self.isHidden(obj) or self.isOffScreenLabel(obj)):
+            rv = None
+
+        self._text[hash(obj)] = rv
+        return rv
 
     def _treatTextObjectAsWhole(self, obj):
         roles = [pyatspi.ROLE_CHECK_BOX,
@@ -514,49 +714,50 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def __findRange(self, obj, offset, boundary):
+    def __findRange(self, text, offset, start, end, boundary):
         # We should not have to do any of this. Seriously. This is why
         # We can't have nice things.
-        if not obj:
-            return '', 0, 0
-
-        text = self.queryNonEmptyText(obj)
-        if not text:
-            return '', 0, 1
 
         allText = text.getText(0, -1)
         extents = list(text.getRangeExtents(offset, offset + 1, 0))
 
-        def _inThisSentence(span):
-            return span[0] <= offset <= span[1]
-
-        def _inThisWord(span):
+        def _inThisSpan(span):
             return span[0] <= offset <= span[1]
 
         def _onThisLine(span):
             rangeExtents = list(text.getRangeExtents(span[0], span[0] + 1, 0))
             return self.extentsAreOnSameLine(extents, rangeExtents)
 
-        words = [m.span() for m in re.finditer("[^\s\ufffc]+", allText)]
-        sentences = [m.span() for m in re.finditer("\S[^\.\?\!]+((?<!\w)[\.\?\!]+(?!\w)|\S*)", allText)]
+        spans = []
+        charCount = text.characterCount
+        if boundary == pyatspi.TEXT_BOUNDARY_SENTENCE_START:
+            spans = [m.span() for m in re.finditer("\S*[^\.\?\!]+((?<!\w)[\.\?\!]+(?!\w)|\S*)", allText)]
+        elif boundary is not None:
+            spans = [m.span() for m in re.finditer("[^\n\r]+", allText)]
+        if not spans:
+            spans = [(0, charCount)]
+
+        rangeStart, rangeEnd = 0, charCount
+        for span in spans:
+            if _inThisSpan(span):
+                rangeStart, rangeEnd = span[0], span[1] + 1
+                break
+
+        string = allText[rangeStart:rangeEnd]
+        if string and boundary in [pyatspi.TEXT_BOUNDARY_SENTENCE_START, None]:
+            return string, rangeStart, rangeEnd
+
+        words = [m.span() for m in re.finditer("[^\s\ufffc]+", string)]
+        words = list(map(lambda x: (x[0] + rangeStart, x[1] + rangeStart), words))
+        if boundary == pyatspi.TEXT_BOUNDARY_WORD_START:
+            spans = list(filter(_inThisSpan, words))
         if boundary == pyatspi.TEXT_BOUNDARY_LINE_START:
-            segments = list(filter(_onThisLine, words))
-        elif boundary == pyatspi.TEXT_BOUNDARY_WORD_START:
-            segments = list(filter(_inThisWord, words))
-        elif boundary == pyatspi.TEXT_BOUNDARY_SENTENCE_START:
-            sentences = sentences or [(0, text.characterCount)]
-            segments = list(filter(_inThisSentence, sentences))
-        else:
-            return '', 0, 0
+            spans = list(filter(_onThisLine, words))
+        if spans:
+            rangeStart, rangeEnd = spans[0][0], spans[-1][1] + 1
+            string = allText[rangeStart:rangeEnd]
 
-        if segments and segments[0]:
-            start = segments[0][0]
-            end = segments[-1][1] + 1
-            if start <= offset < end:
-                string = allText[start:end]
-                return string, start, end
-
-        return allText[offset:offset+1], offset, offset + 1
+        return string, rangeStart, rangeEnd
 
     def _getTextAtOffset(self, obj, offset, boundary):
         if not obj:
@@ -566,23 +767,24 @@ class Utilities(script_utilities.Utilities):
         if not text:
             return '', 0, 1
 
-        treatAsWhole = self._treatTextObjectAsWhole(obj)
-        if not treatAsWhole and boundary == pyatspi.TEXT_BOUNDARY_SENTENCE_START:
-            state = obj.getState()
-            if state.contains(pyatspi.STATE_EDITABLE) \
-               and state.contains(pyatspi.STATE_FOCUSED):
-                treatAsWhole = False
-            elif obj.getRole() in [pyatspi.ROLE_LIST_ITEM, pyatspi.ROLE_HEADING] \
-               or not self.isTextBlockElement(obj):
-                treatAsWhole = True
+        if boundary == pyatspi.TEXT_BOUNDARY_CHAR:
+            return text.getText(offset, offset + 1), offset, offset + 1
 
-        if treatAsWhole:
-            return text.getText(0, -1), 0, text.characterCount
+        if not boundary:
+            return text.getText(offset, -1), offset, text.characterCount
+
+        if boundary == pyatspi.TEXT_BOUNDARY_SENTENCE_START \
+            and not obj.getState().contains(pyatspi.STATE_EDITABLE):
+            allText = text.getText(0, -1)
+            if obj.getRole() in [pyatspi.ROLE_LIST_ITEM, pyatspi.ROLE_HEADING] \
+               or not (re.search("\w", allText) and self.isTextBlockElement(obj)):
+                return allText, 0, text.characterCount
 
         offset = max(0, offset)
         string, start, end = text.getTextAtOffset(offset, boundary)
 
         # The above should be all that we need to do, but....
+
         needSadHack = False
         testString, testStart, testEnd = text.getTextAtOffset(start, boundary)
         if (string, start, end) != (testString, testStart, testEnd):
@@ -592,7 +794,7 @@ class Utilities(script_utilities.Utilities):
                   "      For offset %i - String: '%s', Start: %i, End: %i.\n" \
                   "      For offset %i - String: '%s', Start: %i, End: %i.\n" \
                   "      The bug is the above results should be the same.\n" \
-                  "      This very likely needs to be fixed by Mozilla." \
+                  "      This very likely needs to be fixed by the toolkit." \
                   % (obj, boundary, offset, s1.replace("\n", "\\n"), start, end,
                      start, s2.replace("\n", "\\n"), testStart, testEnd)
             debug.println(debug.LEVEL_INFO, msg)
@@ -604,7 +806,7 @@ class Utilities(script_utilities.Utilities):
                   "      String: '%s', Start: %i, End: %i.\n" \
                   "      The bug is no text reported for a valid offset.\n" \
                   "      Character count: %i, Full text: '%s'.\n" \
-                  "      This very likely needs to be fixed by Mozilla." \
+                  "      This very likely needs to be fixed by the toolkit." \
                   % (offset, obj, boundary, s1.replace("\n", "\\n"), start, end,
                      text.characterCount, s2.replace("\n", "\\n"))
             debug.println(debug.LEVEL_INFO, msg)
@@ -614,13 +816,13 @@ class Utilities(script_utilities.Utilities):
             msg = "FAIL: Bad results for text at offset %i for %s using %s:\n" \
                   "      String: '%s', Start: %i, End: %i.\n" \
                   "      The bug is the range returned is outside of the offset.\n" \
-                  "      This very likely needs to be fixed by Mozilla." \
+                  "      This very likely needs to be fixed by the toolkit." \
                   % (offset, obj, boundary, s1.replace("\n", "\\n"), start, end)
             debug.println(debug.LEVEL_INFO, msg)
             needSadHack = True
 
         if needSadHack:
-            sadString, sadStart, sadEnd = self.__findRange(obj, offset, boundary)
+            sadString, sadStart, sadEnd = self.__findRange(text, offset, start, end, boundary)
             s = sadString.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]")
             msg = "HACK: Attempting to recover from above failure.\n" \
                   "      Returning: '%s' (%i, %i) " % (s, sadStart, sadEnd)
@@ -644,9 +846,13 @@ class Utilities(script_utilities.Utilities):
             pass
         else:
             if char == self.EMBEDDED_OBJECT_CHARACTER:
-                childIndex = self._script.getChildIndex(obj, offset)
-                child = obj[childIndex]
-                return [[child, 0, 1, ""]]
+                childIndex = self.getChildIndex(obj, offset)
+                try:
+                    child = obj[childIndex]
+                except:
+                    pass
+                else:
+                    return self._getContentsForObj(child, 0, boundary)
 
         ranges = [m.span() for m in re.finditer("[^\ufffc]+", string)]
         strings = list(filter(lambda x: x[0] <= stringOffset <= x[1], ranges))
@@ -658,9 +864,15 @@ class Utilities(script_utilities.Utilities):
 
         return [[obj, start, end, string]]
 
-    def getSentenceContentsAtOffset(self, obj, offset):
+    def getSentenceContentsAtOffset(self, obj, offset, useCache=True):
         if not obj:
             return []
+
+        offset = max(0, offset)
+
+        if useCache:
+            if self.findObjectInContents(obj, offset, self._currentSentenceContents) != -1:
+                return self._currentSentenceContents
 
         boundary = pyatspi.TEXT_BOUNDARY_SENTENCE_START
         objects = self._getContentsForObj(obj, offset, boundary)
@@ -682,7 +894,7 @@ class Utilities(script_utilities.Utilities):
                 xString = " ".join(xString.split()[1:])
 
             match = re.search("\S[\.\!\?]+(\s|\Z)", xString)
-            return match != None
+            return match is not None
 
         # Check for things in the same sentence before this object.
         firstObj, firstStart, firstEnd, firstString = objects[0]
@@ -690,7 +902,7 @@ class Utilities(script_utilities.Utilities):
             if firstStart == 0 and self.isTextBlockElement(firstObj):
                 break
 
-            prevObj, pOffset = self._script.findPreviousCaretInOrder(firstObj, firstStart)
+            prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
             onLeft = self._getContentsForObj(prevObj, pOffset, boundary)
             onLeft = list(filter(lambda x: x not in objects, onLeft))
             endsOnLeft = list(filter(_treatAsSentenceEnd, onLeft))
@@ -707,7 +919,7 @@ class Utilities(script_utilities.Utilities):
         # Check for things in the same sentence after this object.
         while not _treatAsSentenceEnd(objects[-1]):
             lastObj, lastStart, lastEnd, lastString = objects[-1]
-            nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
+            nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
             onRight = self._getContentsForObj(nextObj, nOffset, boundary)
             onRight = list(filter(lambda x: x not in objects, onRight))
             if not onRight:
@@ -715,11 +927,44 @@ class Utilities(script_utilities.Utilities):
 
             objects.extend(onRight)
 
+        if useCache:
+            self._currentSentenceContents = objects
+
         return objects
 
-    def getWordContentsAtOffset(self, obj, offset):
+    def getCharacterAtOffset(self, obj, offset):
+        text = self.queryNonEmptyText(obj)
+        if text:
+            return text.getText(offset, offset + 1)
+
+        return ""
+
+    def getCharacterContentsAtOffset(self, obj, offset, useCache=True):
         if not obj:
             return []
+
+        offset = max(0, offset)
+
+        if useCache:
+            if self.findObjectInContents(obj, offset, self._currentCharacterContents) != -1:
+                return self._currentCharacterContents
+
+        boundary = pyatspi.TEXT_BOUNDARY_CHAR
+        objects = self._getContentsForObj(obj, offset, boundary)
+        if useCache:
+            self._currentCharacterContents = objects
+
+        return objects
+
+    def getWordContentsAtOffset(self, obj, offset, useCache=True):
+        if not obj:
+            return []
+
+        offset = max(0, offset)
+
+        if useCache:
+            if self.findObjectInContents(obj, offset, self._currentWordContents) != -1:
+                return self._currentWordContents
 
         boundary = pyatspi.TEXT_BOUNDARY_WORD_START
         objects = self._getContentsForObj(obj, offset, boundary)
@@ -738,7 +983,7 @@ class Utilities(script_utilities.Utilities):
 
         # Check for things in the same word to the left of this object.
         firstObj, firstStart, firstEnd, firstString = objects[0]
-        prevObj, pOffset = self._script.findPreviousCaretInOrder(firstObj, firstStart)
+        prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
         while prevObj and firstString:
             text = self.queryNonEmptyText(prevObj)
             if not text or text.getText(pOffset, pOffset + 1).isspace():
@@ -751,12 +996,12 @@ class Utilities(script_utilities.Utilities):
 
             objects[0:0] = onLeft
             firstObj, firstStart, firstEnd, firstString = objects[0]
-            prevObj, pOffset = self._script.findPreviousCaretInOrder(firstObj, firstStart)
+            prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
 
         # Check for things in the same word to the right of this object.
         lastObj, lastStart, lastEnd, lastString = objects[-1]
         while lastObj and lastString and not lastString[-1].isspace():
-            nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
+            nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
             onRight = self._getContentsForObj(nextObj, nOffset, boundary)
             onRight = list(filter(_include, onRight))
             if not onRight:
@@ -770,6 +1015,59 @@ class Utilities(script_utilities.Utilities):
         if firstStart == 0 and firstObj.getRole() == pyatspi.ROLE_LIST_ITEM:
             objects = [objects[0]]
 
+        if useCache:
+            self._currentWordContents = objects
+
+        return objects
+
+    def getObjectContentsAtOffset(self, obj, offset=0, useCache=True):
+        if not obj:
+            return []
+
+        offset = max(0, offset)
+
+        if useCache:
+            if self.findObjectInContents(obj, offset, self._currentObjectContents) != -1:
+                return self._currentObjectContents
+
+        objIsLandmark = self.isLandmark(obj)
+
+        def _isInObject(x):
+            if not x:
+                return False
+            if x == obj:
+                return True
+            return _isInObject(x.parent)
+
+        def _include(x):
+            if x in objects:
+                return False
+
+            xObj, xStart, xEnd, xString = x
+            if xStart == xEnd:
+                return False
+
+            if objIsLandmark and self.isLandmark(xObj) and obj != xObj:
+                return False
+
+            return _isInObject(xObj)
+
+        objects = self._getContentsForObj(obj, offset, None)
+        lastObj, lastStart, lastEnd, lastString = objects[-1]
+        nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
+        while nextObj:
+            onRight = self._getContentsForObj(nextObj, nOffset, None)
+            onRight = list(filter(_include, onRight))
+            if not onRight:
+                break
+
+            objects.extend(onRight)
+            lastObj, lastEnd = objects[-1][0], objects[-1][2]
+            nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
+
+        if useCache:
+            self._currentObjectContents = objects
+
         return objects
 
     def _contentIsSubsetOf(self, contentA, contentB):
@@ -782,9 +1080,21 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def getLineContentsAtOffset(self, obj, offset, layoutMode=True):
+    def getLineContentsAtOffset(self, obj, offset, layoutMode=None, useCache=True):
         if not obj:
             return []
+
+        text = self.queryNonEmptyText(obj)
+        if text and offset == text.characterCount:
+            offset -= 1
+        offset = max(0, offset)
+
+        if useCache:
+            if self.findObjectInContents(obj, offset, self._currentLineContents) != -1:
+                return self._currentLineContents
+
+        if layoutMode == None:
+            layoutMode = _settingsManager.getSetting('layoutMode')
 
         objects = []
         extents = self.getExtents(obj, offset, offset + 1)
@@ -804,9 +1114,12 @@ class Utilities(script_utilities.Utilities):
         objects = self._getContentsForObj(obj, offset, boundary)
 
         firstObj, firstStart, firstEnd, firstString = objects[0]
+        if extents[2] == 0 and extents[3] == 0:
+            extents = self.getExtents(obj, firstStart, firstEnd)
+
         lastObj, lastStart, lastEnd, lastString = objects[-1]
-        prevObj, pOffset = self._script.findPreviousCaretInOrder(firstObj, firstStart)
-        nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
+        prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
+        nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
         if not layoutMode:
             if firstString and not re.search("\w", firstString) \
                and (re.match("[^\w\s]", firstString[0]) or not firstString.strip()):
@@ -814,14 +1127,23 @@ class Utilities(script_utilities.Utilities):
                 onLeft = list(filter(_include, onLeft))
                 objects[0:0] = onLeft
 
-            char = self._script.getCharacterAtOffset(nextObj, nOffset)
-            if re.match("[^\w\s]", char):
-                objects.append([nextObj, nOffset, nOffset + 1, char])
+            text = self.queryNonEmptyText(nextObj)
+            if text:
+                char = text.getText(nOffset, nOffset + 1)
+                if re.match("[^\w\s]", char):
+                    objects.append([nextObj, nOffset, nOffset + 1, char])
+
+            if useCache:
+                self._currentLineContents = objects
 
             return objects
 
         # Check for things on the same line to the left of this object.
         while prevObj:
+            text = self.queryNonEmptyText(prevObj)
+            if text and text.getText(pOffset, pOffset + 1) in [" ", "\xa0"]:
+                prevObj, pOffset = self.findPreviousCaretInOrder(prevObj, pOffset)
+
             onLeft = self._getContentsForObj(prevObj, pOffset, boundary)
             onLeft = list(filter(_include, onLeft))
             if not onLeft:
@@ -832,12 +1154,14 @@ class Utilities(script_utilities.Utilities):
 
             objects[0:0] = onLeft
             firstObj, firstStart = objects[0][0], objects[0][1]
-            prevObj, pOffset = self._script.findPreviousCaretInOrder(firstObj, firstStart)
-            if self._script.getCharacterAtOffset(prevObj, pOffset) in [" ", "\xa0"]:
-                prevObj, pOffset = self._script.findPreviousCaretInOrder(prevObj, pOffset)
+            prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
 
         # Check for things on the same line to the right of this object.
         while nextObj:
+            text = self.queryNonEmptyText(nextObj)
+            if text and text.getText(nOffset, nOffset + 1) in [" ", "\xa0"]:
+                nextObj, nOffset = self.findNextCaretInOrder(nextObj, nOffset)
+
             onRight = self._getContentsForObj(nextObj, nOffset, boundary)
             onRight = list(filter(_include, onRight))
             if not onRight:
@@ -845,9 +1169,10 @@ class Utilities(script_utilities.Utilities):
 
             objects.extend(onRight)
             lastObj, lastEnd = objects[-1][0], objects[-1][2]
-            nextObj, nOffset = self._script.findNextCaretInOrder(lastObj, lastEnd - 1)
-            if self._script.getCharacterAtOffset(nextObj, nOffset) in [" ", "\xa0"]:
-                nextObj, nOffset = self._script.findNextCaretInOrder(nextObj, nOffset)
+            nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
+
+        if useCache:
+            self._currentLineContents = objects
 
         return objects
 
@@ -899,17 +1224,32 @@ class Utilities(script_utilities.Utilities):
            and not self.isTextBlockElement(obj):
             return True
 
+        if self.isGridDescendant(obj):
+            return True
+
         return False
 
     def isTextBlockElement(self, obj):
-        if not (obj and self._script.inDocumentContent(obj)):
+        if not obj:
             return False
 
-        textBlockElements = [pyatspi.ROLE_COLUMN_HEADER,
+        rv = self._isTextBlockElement.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        role = obj.getRole()
+        state = obj.getState()
+
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        textBlockElements = [pyatspi.ROLE_CAPTION,
+                             pyatspi.ROLE_COLUMN_HEADER,
                              pyatspi.ROLE_DOCUMENT_FRAME,
+                             pyatspi.ROLE_DOCUMENT_WEB,
                              pyatspi.ROLE_FORM,
                              pyatspi.ROLE_HEADING,
-                             pyatspi.ROLE_LIST,
+                             pyatspi.ROLE_LABEL,
                              pyatspi.ROLE_LIST_ITEM,
                              pyatspi.ROLE_PANEL,
                              pyatspi.ROLE_PARAGRAPH,
@@ -918,22 +1258,21 @@ class Utilities(script_utilities.Utilities):
                              pyatspi.ROLE_TEXT,
                              pyatspi.ROLE_TABLE_CELL]
 
-        role = obj.getRole()
-        if not role in textBlockElements:
-            return False
+        if not self.inDocumentContent(obj):
+            rv = False
+        elif not role in textBlockElements:
+            rv = False
+        elif state.contains(pyatspi.STATE_EDITABLE):
+            rv = False
+        elif role in [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]:
+            rv = True
+        elif not state.contains(pyatspi.STATE_FOCUSABLE) and not state.contains(pyatspi.STATE_FOCUSED):
+            rv = True
+        else:
+            rv = False
 
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_EDITABLE):
-            return False
-
-        if role == pyatspi.ROLE_DOCUMENT_FRAME:
-            return True
-
-        if not state.contains(pyatspi.STATE_FOCUSABLE) \
-           and not state.contains(pyatspi.STATE_FOCUSED):
-            return True
-
-        return False
+        self._isTextBlockElement[hash(obj)] = rv
+        return rv
 
     def filterContentsForPresentation(self, contents, inferLabels=False):
         def _include(x):
@@ -942,11 +1281,15 @@ class Utilities(script_utilities.Utilities):
                 return False
 
             if (self.isTextBlockElement(obj) and not string.strip()) \
-               or self.isLabellingContents(x, contents) \
-               or self.isOffScreenLabel(obj, start):
+               or self.isAnchor(obj) \
+               or self.hasNoSize(obj) \
+               or self.isOffScreenLabel(obj) \
+               or self.isLabellingContents(x, contents):
                 return False
 
-            if inferLabels and self.isInferredLabelForContents(x, contents):
+            widget = self.isInferredLabelForContents(x, contents)
+            alwaysFilter = [pyatspi.ROLE_RADIO_BUTTON, pyatspi.ROLE_CHECK_BOX]
+            if widget and (inferLabels or widget.getRole() in alwaysFilter):
                 return False
 
             return True
@@ -966,136 +1309,50 @@ class Utilities(script_utilities.Utilities):
 
         return lastChar.isalnum()
 
-    def getObjectsFromEOCs(self, obj, offset=None, boundary=None):
-        """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
-        with [obj, startOffset, endOffset, string] tuples.
+    def supportsSelectionAndTable(self, obj):
+        interfaces = pyatspi.listInterfaces(obj)
+        return 'Table' in interfaces and 'Selection' in interfaces
 
-        Arguments
-        - obj: the object whose EOCs we need to expand into tuples
-        - offset: the character offset after which
-        - boundary: the pyatspi text boundary type
-
-        Returns a list of object tuples.
-        """
-
-        if not obj:
-            return []
-
-        elif boundary and obj.getRole() == pyatspi.ROLE_TABLE:
-            if obj[0] and obj[0].getRole() in [pyatspi.ROLE_CAPTION,
-                                               pyatspi.ROLE_LIST]:
-                obj = obj[0]
-            else:
-                obj = obj.queryTable().getAccessibleAt(0, 0)
-
-            if not obj:
-                debug.printStack(debug.LEVEL_WARNING)
-                return []
-
-        objects = []
-        text = self.queryNonEmptyText(obj)
-        if text:
-            if offset == None:
-                offset = max(0, text.caretOffset)
-
-            if boundary:
-                [string, start, end] = self._getTextAtOffset(obj, offset, boundary)
-                if end == -1:
-                    end = text.characterCount
-            else:
-                start = offset
-                end = text.characterCount
-                string = text.getText(start, end)
-        else:
-            string = ""
-            start = 0
-            end = 1
-
-        unicodeText = string
-        objects.append([obj, start, end, unicodeText])
-
-        pattern = re.compile(self._script.EMBEDDED_OBJECT_CHARACTER)
-        matches = re.finditer(pattern, unicodeText)
-
-        offset = 0
-        for m in matches:
-            # Adjust the last object's endOffset to the last character
-            # before the EOC.
-            #
-            childOffset = m.start(0) + start
-            lastObj = objects[-1]
-            lastObj[2] = childOffset
-            if lastObj[1] == lastObj[2]:
-                # A zero-length object is an indication of something
-                # whose sole contents was an EOC.  Delete it from the
-                # list.
-                #
-                objects.pop()
-            else:
-                # Adjust the string to reflect just this segment.
-                #
-                lastObj[3] = unicodeText[offset:m.start(0)]
-
-            offset = m.start(0) + 1
- 
-            # Recursively tack on the child's objects.
-            #
-            childIndex = self._script.getChildIndex(obj, childOffset)
-            child = obj[childIndex]
-            objects.extend(self.getObjectsFromEOCs(child, 0, boundary))
-
-            # Tack on the remainder of the original object, if any.
-            #
-            if end > childOffset + 1:
-                restOfText = unicodeText[offset:len(unicodeText)]
-                objects.append([obj, childOffset + 1, end, restOfText])
- 
-        if obj.getRole() in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_TABLE, pyatspi.ROLE_TABLE_ROW]:
-            # Imagemaps that don't have alternative text won't implement
-            # the text interface, but they will have children (essentially
-            # EOCs) that we need to get. The same is true for tables.
-            #
-            toAdd = []
-            for child in obj:
-                toAdd.extend(self.getObjectsFromEOCs(child, 0, boundary))
-            if len(toAdd):
-                if self.isSameObject(objects[-1][0], obj):
-                    objects.pop()
-                objects.extend(toAdd)
-
-        return objects
-
-    def isOffScreenLabel(self, obj, offset=0):
+    def isGridDescendant(self, obj):
         if not obj:
             return False
 
+        rv = self._isGridDescendant.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = pyatspi.findAncestor(obj, self.supportsSelectionAndTable) is not None
+        self._isGridDescendant[hash(obj)] = rv
+        return rv
+
+    def isOffScreenLabel(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isOffScreenLabel.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = False
         isLabelFor = lambda x: x.getRelationType() == pyatspi.RELATION_LABEL_FOR
-        relations = list(filter(isLabelFor, obj.getRelationSet()))
-        if relations:
-            offset = max(offset, 0)
-            x, y, width, height = self.getExtents(obj, offset, offset + 1)
-            if x < 0 or y < 0:
-                return True
+        try:
+            relationSet = obj.getRelationSet()
+        except:
+            pass
+        else:
+            relations = list(filter(isLabelFor, relationSet))
+            if relations:
+                try:
+                    text = obj.queryText()
+                    end = text.characterCount
+                except:
+                    end = 1
+                x, y, width, height = self.getExtents(obj, 0, end)
+                if x < 0 or y < 0:
+                    rv = True
 
-        return False
-
-    def shouldInferLabelFor(self, obj):
-        if self.displayedLabel(obj) or obj.name:
-            return False
-
-        roles =  [pyatspi.ROLE_CHECK_BOX,
-                  pyatspi.ROLE_COMBO_BOX,
-                  pyatspi.ROLE_ENTRY,
-                  pyatspi.ROLE_LIST_BOX,
-                  pyatspi.ROLE_PASSWORD_TEXT,
-                  pyatspi.ROLE_RADIO_BUTTON]
-        if not obj.getRole() in roles:
-            return False
-
-        if not self._script.inDocumentContent():
-            return False
-
-        return True
+        self._isOffScreenLabel[hash(obj)] = rv
+        return rv
 
     def isInferredLabelForContents(self, content, contents):
         obj, start, end, string = content
@@ -1104,7 +1361,7 @@ class Utilities(script_utilities.Utilities):
             return None
 
         for o in objs:
-            label, sources = self._script.labelInference.infer(o, False)
+            label, sources = self.inferLabelFor(o)
             if obj in sources and label.strip() == string.strip():
                 return o
 
@@ -1130,55 +1387,172 @@ class Utilities(script_utilities.Utilities):
 
         return None
 
-    def isClickableElement(self, obj):
-        if not self._script.inDocumentContent(obj):
+    def isAnchor(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
             return False
 
-        # For Gecko, we want to identify things which are ONLY clickable.
-        # Things which are focusable, while technically "clickable", are
-        # easily discoverable (e.g. via role) and activatable (e.g. via
-        # pressing Space or Enter.
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_FOCUSABLE):
+        rv = self._isAnchor.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = False
+        if obj.getRole() == pyatspi.ROLE_LINK \
+           and not obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
+           and not 'Action' in pyatspi.listInterfaces(obj) \
+           and not self.queryNonEmptyText(obj):
+            rv = True
+
+        self._isAnchor[hash(obj)] = rv
+        return rv
+
+    def isClickableElement(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
             return False
+
+        rv = self._isClickableElement.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = False
+        if not obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
+           and not self.isFocusModeWidget(obj):
+            try:
+                action = obj.queryAction()
+                names = [action.getName(i) for i in range(action.nActions)]
+            except NotImplementedError:
+                rv = False
+            else:
+                rv = "click" in names
+
+        self._isClickableElement[hash(obj)] = rv
+        return rv
+
+    def isLandmark(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isLandmark.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        if obj.getRole() == pyatspi.ROLE_LANDMARK:
+            rv = True
+        else:
+            try:
+                attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+            except:
+                attrs = {}
+            rv = attrs.get('xml-roles') in settings.ariaLandmarks
+
+        self._isLandmark[hash(obj)] = rv
+        return rv
+
+    def isLiveRegion(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isLiveRegion.get(hash(obj))
+        if rv is not None:
+            return rv
 
         try:
-            action = obj.queryAction()
-        except NotImplementedError:
-            return False
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            attrs = {}
 
-        for i in range(action.nActions):
-            if action.getName(i) in ["click"]:
-                return True
+        rv = 'container-live' in attrs
+        self._isLiveRegion[hash(obj)] = rv
+        return rv
 
-        return False
+    def isLink(self, obj):
+        rv = self._isLink.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        role = obj.getRole()
+        if role == pyatspi.ROLE_LINK and not self.isAnchor(obj):
+            rv = True
+        elif role == pyatspi.ROLE_TEXT \
+           and obj.parent.getRole() == pyatspi.ROLE_LINK \
+           and obj.name and obj.name == obj.parent.name:
+            rv = True
+
+        self._isLink[hash(obj)] = rv
+        return rv
 
     def hasLongDesc(self, obj):
-        if not self._script.inDocumentContent(obj):
+        if not (obj and self.inDocumentContent(obj)):
             return False
+
+        rv = self._hasLongDesc.get(hash(obj))
+        if rv is not None:
+            return rv
 
         try:
             action = obj.queryAction()
         except NotImplementedError:
+            rv = False
+        else:
+            names = [action.getName(i) for i in range(action.nActions)]
+            rv = "showlongdesc" in names
+
+        self._hasLongDesc[hash(obj)] = rv
+        return rv
+
+    def inferLabelFor(self, obj):
+        if not self.shouldInferLabelFor(obj):
+            return None, []
+
+        rv = self._inferredLabels.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = self._script.labelInference.infer(obj, False)
+        self._inferredLabels[hash(obj)] = rv
+        return rv
+
+    def shouldInferLabelFor(self, obj):
+        if obj.name:
             return False
 
-        for i in range(action.nActions):
-            if action.getName(i) in ["showlongdesc"]:
-                return True
+        if self._script.inSayAll():
+            return False
 
-        return False
+        if not self.inDocumentContent():
+            return False
+
+        role = obj.getRole()
+
+        # TODO - JD: This is private.
+        if self._script._lastCommandWasCaretNav \
+           and role not in [pyatspi.ROLE_RADIO_BUTTON, pyatspi.ROLE_CHECK_BOX]:
+            return False
+
+        roles =  [pyatspi.ROLE_CHECK_BOX,
+                  pyatspi.ROLE_COMBO_BOX,
+                  pyatspi.ROLE_ENTRY,
+                  pyatspi.ROLE_LIST_BOX,
+                  pyatspi.ROLE_PASSWORD_TEXT,
+                  pyatspi.ROLE_RADIO_BUTTON]
+        if role not in roles:
+            return False
+
+        if self.displayedLabel(obj):
+            return False
+
+        return True
 
     def eventIsAutocompleteNoise(self, event):
-        if not self._script.inDocumentContent(event.source):
+        if not self.inDocumentContent(event.source):
             return False
 
-        isListBoxItem = lambda x: x and x.parent.getRole() == pyatspi.ROLE_LIST_BOX
-        isMenuItem = lambda x: x and x.parent.getRole() == pyatspi.ROLE_MENU
-        isComboBoxItem = lambda x: x and x.parent.getRole() == pyatspi.ROLE_COMBO_BOX
+        isListBoxItem = lambda x: x and x.parent and x.parent.getRole() == pyatspi.ROLE_LIST_BOX
+        isMenuItem = lambda x: x and x.parent and x.parent.getRole() == pyatspi.ROLE_MENU
+        isComboBoxItem = lambda x: x and x.parent and x.parent.getRole() == pyatspi.ROLE_COMBO_BOX
 
         if event.source.getState().contains(pyatspi.STATE_EDITABLE) \
            and event.type.startswith("object:text-"):
-            obj, offset = self._script.getCaretContext()
+            obj, offset = self.getCaretContext()
             if isListBoxItem(obj) or isMenuItem(obj):
                 return True
 
@@ -1193,7 +1567,7 @@ class Utilities(script_utilities.Utilities):
         if not event.type.startswith("object:text-"):
             return False
 
-        if not self._script.inDocumentContent(event.source) \
+        if not self.inDocumentContent(event.source) \
            or not event.source.getState().contains(pyatspi.STATE_EDITABLE) \
            or not event.source == orca_state.locusOfFocus:
             return False
@@ -1211,7 +1585,7 @@ class Utilities(script_utilities.Utilities):
         return self._treatTextObjectAsWhole(event.source)
 
     def eventIsEOCAdded(self, event):
-        if not self._script.inDocumentContent(event.source):
+        if not self.inDocumentContent(event.source):
             return False
 
         if event.type.startswith("object:text-changed:insert"):
@@ -1229,3 +1603,302 @@ class Utilities(script_utilities.Utilities):
             return True
 
         return False
+
+    @staticmethod
+    def getHyperlinkRange(obj):
+        try:
+            hyperlink = obj.queryHyperlink()
+            start, end = hyperlink.startIndex, hyperlink.endIndex
+        except:
+            return -1, -1
+
+        return start, end
+
+    def characterOffsetInParent(self, obj):
+        start, end, length = self._rangeInParentWithLength(obj)
+        return start
+
+    def _rangeInParentWithLength(self, obj):
+        if not obj:
+            return -1, -1, 0
+
+        text = self.queryNonEmptyText(obj.parent)
+        if not text:
+            return -1, -1, 0
+
+        start, end = self.getHyperlinkRange(obj)
+        return start, end, text.characterCount
+
+    @staticmethod
+    def getChildIndex(obj, offset):
+        try:
+            hypertext = obj.queryHypertext()
+        except:
+            return -1
+
+        return hypertext.getLinkIndex(offset)
+
+    def getChildAtOffset(self, obj, offset):
+        index = self.getChildIndex(obj, offset)
+        if index == -1:
+            return None
+
+        try:
+            child = obj[index]
+        except:
+            return None
+
+        return child
+
+    def hasNoSize(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._hasNoSize.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            extents = obj.queryComponent().getExtents(0)
+        except:
+            rv = True
+        else:
+            rv = not (extents.width and extents.height)
+
+        self._hasNoSize[hash(obj)] = rv
+        return rv
+
+    def doNotDescendForCaret(self, obj):
+        if not obj or self.isZombie(obj):
+            return True
+
+        if self.isHidden(obj) or self.isOffScreenLabel(obj):
+            return True
+
+        if self.isTextBlockElement(obj):
+            return False
+
+        doNotDescend = [pyatspi.ROLE_COMBO_BOX,
+                        pyatspi.ROLE_LIST_BOX,
+                        pyatspi.ROLE_MENU_BAR,
+                        pyatspi.ROLE_MENU,
+                        pyatspi.ROLE_MENU_ITEM,
+                        pyatspi.ROLE_PUSH_BUTTON,
+                        pyatspi.ROLE_TOGGLE_BUTTON,
+                        pyatspi.ROLE_TOOL_BAR,
+                        pyatspi.ROLE_TREE,
+                        pyatspi.ROLE_TREE_TABLE]
+        return obj.getRole() in doNotDescend
+
+    def _searchForCaretContext(self, obj):
+        context = [None, -1]
+        while obj:
+            try:
+                offset = obj.queryText().caretOffset
+            except:
+                obj = None
+            else:
+                context = [obj, offset]
+                childIndex = self.getChildIndex(obj, offset)
+                if childIndex >= 0 and obj.childCount:
+                    obj = obj[childIndex]
+                else:
+                    break
+
+        return context
+
+    def _getCaretContextViaLocusOfFocus(self):
+        obj = orca_state.locusOfFocus
+        try:
+            offset = obj.queryText().caretOffset
+        except NotImplementedError:
+            offset = 0
+        except:
+            offset = -1
+
+        return obj, offset
+
+    def getCaretContext(self, documentFrame=None):
+        documentFrame = documentFrame or self.documentFrame()
+        if not documentFrame:
+            return self._getCaretContextViaLocusOfFocus()
+
+        context = self._caretContexts.get(hash(documentFrame.parent))
+        if context:
+            return context
+
+        obj, offset = self._searchForCaretContext(documentFrame)
+        obj, offset = self.findNextCaretInOrder(obj, max(-1, offset - 1))
+        self.setCaretContext(obj, offset, documentFrame)
+
+        return obj, offset
+
+    def clearCaretContext(self, documentFrame=None):
+        self.clearContentCache()
+        documentFrame = documentFrame or self.documentFrame()
+        if not documentFrame:
+            return
+
+        parent = documentFrame.parent
+        self._caretContexts.pop(hash(parent), None)
+
+    def setCaretContext(self, obj=None, offset=-1, documentFrame=None):
+        documentFrame = documentFrame or self.documentFrame()
+        if not documentFrame:
+            return
+
+        parent = documentFrame.parent
+        self._caretContexts[hash(parent)] = obj, offset
+
+    def findFirstCaretContext(self, obj, offset):
+        try:
+            role = obj.getRole()
+        except:
+            return None, -1
+
+        lookInChild = [pyatspi.ROLE_LIST,
+                       pyatspi.ROLE_TABLE,
+                       pyatspi.ROLE_TABLE_ROW]
+        if role in lookInChild and obj.childCount:
+            return self.findFirstCaretContext(obj[0], 0)
+
+        text = self.queryNonEmptyText(obj)
+        if not text:
+            return obj, 0
+
+        if offset >= text.characterCount:
+            return obj, text.characterCount
+
+        allText = text.getText(0, -1)
+        offset = max (0, offset)
+        if allText[offset] != self.EMBEDDED_OBJECT_CHARACTER:
+            return obj, offset
+
+        child = self.getChildAtOffset(obj, offset)
+        if not child:
+            return None, -1
+
+        return self.findFirstCaretContext(child, 0)
+
+    def findNextCaretInOrder(self, obj=None, offset=-1):
+        if not obj:
+            obj, offset = self.getCaretContext()
+
+        if not obj or not self.inDocumentContent(obj):
+            return None, -1
+
+        if not (self.isHidden(obj) or self.isOffScreenLabel(obj)):
+            text = self.queryNonEmptyText(obj)
+            if text:
+                allText = text.getText(0, -1)
+                for i in range(offset + 1, len(allText)):
+                    child = self.getChildAtOffset(obj, i)
+                    if child:
+                        return self.findNextCaretInOrder(child, -1)
+                    if allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
+                        return obj, i
+            elif obj.childCount and not self.doNotDescendForCaret(obj):
+                return self.findNextCaretInOrder(obj[0], -1)
+            elif offset < 0 and not self.isTextBlockElement(obj) and not self.hasNoSize(obj):
+                return obj, 0
+
+        # If we're here, start looking up the the tree, up to the document.
+        documentFrame = self.documentFrame()
+        if self.isSameObject(obj, documentFrame):
+            return None, -1
+
+        while obj.parent and obj != obj.parent:
+            start, end, length = self._rangeInParentWithLength(obj)
+            if start + 1 == end and 0 <= start < end <= length:
+                return self.findNextCaretInOrder(obj.parent, start)
+
+            index = obj.getIndexInParent() + 1
+            if 0 <= index < obj.parent.childCount:
+                return self.findNextCaretInOrder(obj.parent[index], -1)
+            obj = obj.parent
+
+        return None, -1
+
+    def findPreviousCaretInOrder(self, obj=None, offset=-1):
+        if not obj:
+            obj, offset = self.getCaretContext()
+
+        if not obj or not self.inDocumentContent(obj):
+            return None, -1
+
+        if not (self.isHidden(obj) or self.isOffScreenLabel(obj)):
+            text = self.queryNonEmptyText(obj)
+            if text:
+                allText = text.getText(0, -1)
+                if offset == -1 or offset > len(allText):
+                    offset = len(allText)
+                for i in range(offset - 1, -1, -1):
+                    child = self.getChildAtOffset(obj, i)
+                    if child:
+                        return self.findPreviousCaretInOrder(child, -1)
+                    if allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
+                        return obj, i
+            elif obj.childCount and not self.doNotDescendForCaret(obj):
+                return self.findPreviousCaretInOrder(obj[obj.childCount - 1], -1)
+            elif offset < 0 and not self.isTextBlockElement(obj) and not self.hasNoSize(obj):
+                return obj, 0
+
+        # If we're here, start looking up the the tree, up to the document.
+        documentFrame = self.documentFrame()
+        if self.isSameObject(obj, documentFrame):
+            return None, -1
+
+        while obj.parent and obj != obj.parent:
+            start, end, length = self._rangeInParentWithLength(obj)
+            if start + 1 == end and 0 <= start < end <= length:
+                return self.findPreviousCaretInOrder(obj.parent, start)
+
+            index = obj.getIndexInParent() - 1
+            if 0 <= index < obj.parent.childCount:
+                return self.findPreviousCaretInOrder(obj.parent[index], -1)
+            obj = obj.parent
+
+        return None, -1
+
+    def handleAsLiveRegion(self, event):
+        if not _settingsManager.getSetting('inferLiveRegions'):
+            return False
+
+        return self.isLiveRegion(event.source)
+
+    def getPageSummary(self, obj):
+        docframe = self.documentFrame(obj)
+        col = docframe.queryCollection()
+        headings = 0
+        forms = 0
+        tables = 0
+        vlinks = 0
+        uvlinks = 0
+        percentRead = None
+
+        stateset = pyatspi.StateSet()
+        roles = [pyatspi.ROLE_HEADING, pyatspi.ROLE_LINK, pyatspi.ROLE_TABLE,
+                 pyatspi.ROLE_FORM]
+        rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
+                                   "", col.MATCH_NONE,
+                                   roles, col.MATCH_ANY,
+                                   "", col.MATCH_NONE,
+                                   False)
+
+        matches = col.getMatches(rule, col.SORT_ORDER_CANONICAL, 0, True)
+        col.freeMatchRule(rule)
+        for obj in matches:
+            role = obj.getRole()
+            if role == pyatspi.ROLE_HEADING:
+                headings += 1
+            elif role == pyatspi.ROLE_FORM:
+                forms += 1
+            elif role == pyatspi.ROLE_TABLE and not self.isLayoutOnly(obj):
+                tables += 1
+            elif role == pyatspi.ROLE_LINK:
+                if obj.getState().contains(pyatspi.STATE_VISITED):
+                    vlinks += 1
+                else:
+                    uvlinks += 1
+
+        return [headings, forms, tables, vlinks, uvlinks, percentRead]

@@ -2243,8 +2243,7 @@ class Script(script.Script):
         obj = event.source
         role = obj.getRole()
         if not self.utilities.isSameObject(obj, orca_state.locusOfFocus) \
-           and role != pyatspi.ROLE_TABLE_ROW \
-           and not (role == pyatspi.ROLE_COMBO_BOX and event.detail1):
+           and not role in [pyatspi.ROLE_TABLE_ROW, pyatspi.ROLE_COMBO_BOX]:
             return
 
         oldObj, oldState = self.pointOfReference.get('expandedChange', (None, 0))

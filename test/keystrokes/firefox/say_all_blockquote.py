@@ -35,8 +35,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Three last chances.'",
      "SPEECH OUTPUT: 'You have three last chances, the nature of which I have divulged in my previous utterance.'",
      "SPEECH OUTPUT: 'On castle decor:'",
-     "SPEECH OUTPUT: 'Hm!'",
-     "SPEECH OUTPUT: 'She is made of harder stuff!'",
+     "SPEECH OUTPUT: 'Hm! She is made of harder stuff!'",
      "SPEECH OUTPUT: 'Cardinal Fang!'",
      "SPEECH OUTPUT: 'Fetch the COMFY CHAIR!'"]))
 

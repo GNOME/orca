@@ -1,6 +1,8 @@
 # Orca
 #
 # Copyright 2005-2009 Sun Microsystems Inc.
+# Copyright 2010-2011 Orca Team
+# Copyright 2011-2015 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -17,59 +19,26 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Custom script for Gecko toolkit.
-Please refer to the following URL for more information on the AT-SPI
-implementation in Gecko:
-http://developer.mozilla.org/en/docs/Accessibility/ATSPI_Support
-"""
-
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
+                "Copyright (c) 2010-2011 Orca Team" \
+                "Copyright (c) 2011-2015 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
 
-import orca.braille_generator as braille_generator
-import orca.object_properties as object_properties
-
-from orca.orca_i18n import _ # for gettext support
-
-########################################################################
-#                                                                      #
-# Custom BrailleGenerator                                              #
-#                                                                      #
-########################################################################
+from orca import braille
+from orca import braille_generator
+from orca import messages
+from orca import object_properties
+from orca import orca_state
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
-    """Provides a braille generator specific to Gecko.
-    """
 
     def __init__(self, script):
-        braille_generator.BrailleGenerator.__init__(self, script)
-
-    def _generateInDocumentContent(self, obj, **args):
-        """Returns True if this object is in HTML document content.
-        """
-        return self._script.inDocumentContent(obj)
-
-    def _generateImageLink(self, obj, **args):
-        """Returns the link (if any) for this image.
-        """
-        imageLink = None
-        role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_IMAGE:
-            imageLink = self._script.utilities.ancestorWithRole(
-                obj, [pyatspi.ROLE_LINK], [pyatspi.ROLE_DOCUMENT_FRAME])
-        return imageLink
-
-    def __generateHeadingRole(self, obj):
-        result = []
-        level = self._script.utilities.headingLevel(obj)
-        result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
-
-        return result
+        super().__init__(script)
 
     def _generateRoleName(self, obj, **args):
         """Prevents some roles from being displayed."""
@@ -79,7 +48,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                         pyatspi.ROLE_PARAGRAPH,
                         pyatspi.ROLE_UNKNOWN]
 
-        if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+        state = obj.getState()
+        if not state.contains(pyatspi.STATE_FOCUSABLE):
             doNotDisplay.extend([pyatspi.ROLE_LIST,
                                  pyatspi.ROLE_LIST_ITEM,
                                  pyatspi.ROLE_COLUMN_HEADER,
@@ -90,15 +60,28 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if args.get('startOffset') != None and args.get('endOffset') != None:
             doNotDisplay.append(pyatspi.ROLE_ALERT)
 
+        result = []
         role = args.get('role', obj.getRole())
-        if role in doNotDisplay:
-            return []
 
         if role == pyatspi.ROLE_HEADING:
-            return self.__generateHeadingRole(obj)
+            level = self._script.utilities.headingLevel(obj)
+            result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
 
-        result = braille_generator.BrailleGenerator._generateRoleName(
-            self, obj, **args)
+        elif role == pyatspi.ROLE_LINK and obj == orca_state.locusOfFocus:
+            if obj.parent.getRole() == pyatspi.ROLE_IMAGE:
+                result.append(messages.IMAGE_MAP_LINK)
+
+        elif role not in doNotDisplay:
+            result = super()._generateRoleName(obj, **args)
+
+        index = args.get('index', 0)
+        total = args.get('total', 1)
+        if index == total - 1 and role != pyatspi.ROLE_HEADING \
+           and (role == pyatspi.ROLE_IMAGE or self._script.utilities.queryNonEmptyText(obj)):
+            isHeading = lambda x: x and x.getRole() == pyatspi.ROLE_HEADING
+            heading = pyatspi.findAncestor(obj, isHeading)
+            if heading:
+                result.extend(self._generateRoleName(heading))
 
         return result
 
@@ -106,57 +89,14 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
-        return braille_generator.BrailleGenerator._generateLabelOrName(
-            self, obj, **args)
+        return super()._generateLabelOrName(obj, **args)
 
-    def _generateName(self, obj, **args):
-        result = []
-        role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_DOCUMENT_FRAME \
-           and obj.getState().contains(pyatspi.STATE_EDITABLE):
-            return []
+    def _generateLabel(self, obj, **args):
+        label, objects = self._script.utilities.inferLabelFor(obj)
+        if label:
+            return [label]
 
-        result.extend(braille_generator.BrailleGenerator._generateName(
-                              self, obj, **args))
-        if not result and role == pyatspi.ROLE_LIST_ITEM:
-            result.append(self._script.utilities.expandEOCs(obj))
-
-        link = None
-        if role == pyatspi.ROLE_LINK:
-            link = obj
-        elif role == pyatspi.ROLE_IMAGE and not result:
-            link = self._generateImageLink(obj, **args)
-        if link and (not result or len(result[0].strip()) == 0):
-            # If there's no text for the link, expose part of the
-            # URI to the user.
-            #
-            basename = self._script.utilities.linkBasename(link)
-            if basename:
-                result.append(basename)
-
-        return result
-
-    def _generateDescription(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the description of the object,
-        if that description is different from that of the name and
-        label.
-        """
-        if args.get('role', obj.getRole()) == pyatspi.ROLE_LINK \
-           and obj.parent.getRole() == pyatspi.ROLE_IMAGE:
-            result = self._generateName(obj, **args)
-            # Translators: The following string is spoken to let the user
-            # know that he/she is on a link within an image map. An image
-            # map is an image/graphic which has been divided into regions.
-            # Each region can be clicked on and has an associated link.
-            # Please see http://en.wikipedia.org/wiki/Imagemap for more
-            # information and examples.
-            #
-            result.append(_("image map link"))
-        else:
-            result = braille_generator.BrailleGenerator.\
-                           _generateDescription(self, obj, **args)
-        return result
+        return super()._generateLabel(obj, **args)
 
     def _generateExpandedEOCs(self, obj, **args):
         """Returns the expanded embedded object characters for an object."""
@@ -171,7 +111,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
     def generateBraille(self, obj, **args):
         result = []
-        args['includeContext'] = not self._script.inDocumentContent(obj)
+
+        args['includeContext'] = not self._script.utilities.inDocumentContent(obj)
         oldRole = None
         if self._script.utilities.isClickableElement(obj) \
            or self._script.utilities.isLink(obj):
@@ -187,26 +128,55 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             if comboBox \
                and not comboBox.getState().contains(pyatspi.STATE_EXPANDED):
                 obj = comboBox
-        result.extend(braille_generator.BrailleGenerator.\
-                          generateBraille(self, obj, **args))
+        result.extend(super().generateBraille(obj, **args))
         del args['includeContext']
         if oldRole:
             self._restoreRole(oldRole, args)
         return result
 
     def _generateEol(self, obj, **args):
-        end = args.get('endOffset')
-        if end == None or obj.getState().contains(pyatspi.STATE_EDITABLE) \
-           or not self._script.inDocumentContent(obj):
-            return braille_generator.BrailleGenerator._generateEol(self, obj, **args)
+        if obj.getState().contains(pyatspi.STATE_EDITABLE) \
+           or not self._script.utilities.inDocumentContent(obj):
+            return super()._generateEol(obj, **args)
 
         return []
 
-    def _generateNestingLevel(self, obj, **args):
-        start = args.get('startOffset')
-        end = args.get('endOffset')
-        if start != None and end != None:
+    def generateContents(self, contents, **args):
+        if not len(contents):
             return []
 
-        return braille_generator.BrailleGenerator._generateNestingLevel(
-            self, obj, **args)
+        result = []
+        contents = self._script.utilities.filterContentsForPresentation(contents, False)
+
+        obj, offset = self._script.utilities.getCaretContext(documentFrame=None)
+        index = self._script.utilities.findObjectInContents(obj, offset, contents)
+
+        lastRegion = None
+        focusedRegion = None
+        for i, content in enumerate(contents):
+            acc, start, end, string = content
+            regions, fRegion = self.generateBraille(
+                acc, startOffset=start, endOffset=end, string=string,
+                index=i, total=len(contents))
+            if not regions:
+                continue
+
+            if i == index:
+                focusedRegion = fRegion
+
+            if lastRegion and regions:
+                if lastRegion.string:
+                    lastChar = lastRegion.string[-1]
+                else:
+                    lastChar = ""
+                if regions[0].string:
+                    nextChar = regions[0].string[0]
+                else:
+                    nextChar = ""
+                if self._script.utilities.needsSeparator(lastChar, nextChar):
+                    regions.insert(0, braille.Region(" "))
+
+            lastRegion = regions[-1]
+            result.append(regions)
+
+        return result, focusedRegion

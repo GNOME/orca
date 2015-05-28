@@ -13,7 +13,7 @@ sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "1. Top of file",
+    "1. Line Down",
     ["BRAILLE LINE:  'Line 1'",
      "     VISIBLE:  'Line 1', cursor=1",
      "SPEECH OUTPUT: 'Line 1'"]))
@@ -22,9 +22,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
-    ["BRAILLE LINE:  '  Line 2  '",
-     "     VISIBLE:  '  Line 2  ', cursor=1",
-     "SPEECH OUTPUT: 'Line 2'"]))
+    ["BRAILLE LINE:  '  Line 2   push button'",
+     "     VISIBLE:  '  Line 2   push button', cursor=1",
+     "SPEECH OUTPUT: '  Line 2   push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -38,9 +38,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Up",
-    ["BRAILLE LINE:  '  Line 2  '",
-     "     VISIBLE:  '  Line 2  ', cursor=1",
-     "SPEECH OUTPUT: 'Line 2'"]))
+    ["BRAILLE LINE:  '  Line 2   push button'",
+     "     VISIBLE:  '  Line 2   push button', cursor=1",
+     "SPEECH OUTPUT: '  Line 2   push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

@@ -160,6 +160,15 @@ class Utilities:
         -obj: the table cell whose index we need.
         """
 
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            attrs = {}
+
+        index = attrs.get('table-cell-index')
+        if index:
+            return int(index)
+
         return obj.getIndexInParent()
 
     def childNodes(self, obj):
@@ -1654,8 +1663,7 @@ class Utilities:
 
         return False
 
-    @staticmethod
-    def queryNonEmptyText(obj):
+    def queryNonEmptyText(self, obj):
         """Get the text interface associated with an object, if it is
         non-empty.
 
@@ -1768,19 +1776,6 @@ class Utilities:
         rv.update(stringAndDict[1])
 
         return rv, start, end
-
-    def unicodeText(self, obj):
-        """Returns the unicode text for an object or None if the object
-        doesn't implement the accessible text specialization.
-        """
-
-        # TODO: eliminate calls to this now-redundant method
-
-        text = self.queryNonEmptyText(obj)
-        if text:
-            return text.getText(0, -1)
-
-        return None
 
     def willEchoCharacter(self, event):
         """Given a keyboard event containing an alphanumeric key,
@@ -2362,23 +2357,10 @@ class Utilities:
             debug.printException(debug.LEVEL_WARNING)
             return ""
 
-    def getLineContentsAtOffset(self, obj, offset, layoutMode=True):
+    def getLineContentsAtOffset(self, obj, offset, layoutMode=True, useCache=True):
         return []
 
-    def getObjectsFromEOCs(self, obj, offset=None, boundary=None):
-        """Breaks the string containing a mixture of text and embedded object
-        characters into a list of (obj, startOffset, endOffset, string) tuples.
-
-        Arguments
-        - obj: the object whose EOCs we need to expand into tuples
-        - offset: the character offset. If None, use the current offset.
-        - boundary: the pyatspi text boundary type. If None, get all text.
-
-        Returns a list of (obj, startOffset, endOffset, string) tuples.
-        """
-
-        # For now, each script should implement this functionality itself.
-
+    def getObjectContentsAtOffset(self, obj, offset=0, useCache=True):
         return []
 
     @staticmethod
@@ -2452,21 +2434,14 @@ class Utilities:
         return False
 
     def headingLevel(self, obj):
-        level = 0
+        if not (obj and obj.getRole() == pyatspi.ROLE_HEADING):
+            return 0
 
-        if obj is None:
-            return level
-
-        if obj.getRole() == pyatspi.ROLE_HEADING:
-            attributes = obj.getAttributes()
-            if attributes is None:
-                return level
-            for attribute in attributes:
-                if attribute.startswith("level:"):
-                    level = int(attribute.split(":")[1])
-                    break
-
-        return level
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return 0
+        return int(attrs.get('level', '0'))
 
     def hasMeaningfulToggleAction(self, obj):
         try:

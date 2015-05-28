@@ -31,6 +31,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Basic Where Am I",
     ["BRAILLE LINE:  'Firefox application Mozilla Firefox frame Menu Bar tool bar Application menu bar New Private Window(Shift+Ctrl+P)'",
      "     VISIBLE:  'New Private Window(Shift+Ctrl+P)', cursor=1",
+     "SPEECH OUTPUT: 'Mozilla Firefox frame'",
      "SPEECH OUTPUT: 'File menu'",
      "SPEECH OUTPUT: 'Menu Bar tool bar menu bar New Private Window Shift+Ctrl+P 3 of 12.'",
      "SPEECH OUTPUT: 'W'"]))

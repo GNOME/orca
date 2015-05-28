@@ -16,7 +16,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Line Down",
     ["BRAILLE LINE:  '1. This is a short list item.'",
      "     VISIBLE:  '1. This is a short list item.', cursor=1",
-     "SPEECH OUTPUT: '1. This is a short list item.'"]))
+     "SPEECH OUTPUT: '1. This is a short list item. '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))

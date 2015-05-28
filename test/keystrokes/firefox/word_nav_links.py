@@ -28,14 +28,10 @@ sequence.append(utils.AssertPresentationAction(
     "2. Next Word",
     ["BRAILLE LINE:  'Hello W o r l d. Go odbye w orld.'",
      "     VISIBLE:  'd. Go odbye w orld.', cursor=3",
-     "SPEECH OUTPUT: 'W'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'o'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'r'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'l'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'W link'",
+     "SPEECH OUTPUT: 'o link'",
+     "SPEECH OUTPUT: 'r link'",
+     "SPEECH OUTPUT: 'l link'",
      "SPEECH OUTPUT: 'd.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -52,8 +48,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "4. Next Word",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+    ["BRAILLE LINE:  'Hello W o r l d. Go odbye w orld.'",
+     "     VISIBLE:  'Hello W o r l d. Go odbye w orld', cursor=0",
      "SPEECH OUTPUT: 'w'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: 'orld.'"]))
@@ -72,8 +68,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Next Word",
     ["BRAILLE LINE:  'More stuff! Yay!'",
      "     VISIBLE:  'More stuff! Yay!', cursor=12",
-     "SPEECH OUTPUT: 'stuff'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'stuff link'",
      "SPEECH OUTPUT: '!'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -82,8 +77,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Previous Word",
     ["BRAILLE LINE:  'More stuff! Yay!'",
      "     VISIBLE:  'More stuff! Yay!', cursor=6",
-     "SPEECH OUTPUT: 'stuff'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'stuff link'",
      "SPEECH OUTPUT: '!'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -120,14 +114,10 @@ sequence.append(utils.AssertPresentationAction(
     "11. Previous Word",
     ["BRAILLE LINE:  'Hello W o r l d. Go odbye w orld.'",
      "     VISIBLE:  'W o r l d. Go odbye w orld.', cursor=1",
-     "SPEECH OUTPUT: 'W'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'o'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'r'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'l'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'W link'",
+     "SPEECH OUTPUT: 'o link'",
+     "SPEECH OUTPUT: 'r link'",
+     "SPEECH OUTPUT: 'l link'",
      "SPEECH OUTPUT: 'd.'"]))
 
 sequence.append(utils.StartRecordingAction())

@@ -5,27 +5,29 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(3000))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to the <button> button",
-    ["BRAILLE LINE:  '<button> push button <input type='button'> push button Create View Create save options push button Edit! Color'",
-     "     VISIBLE:  '<button> push button <input type', cursor=1",
+    ["BRAILLE LINE:  '<button> push button'",
+     "     VISIBLE:  '<button> push button', cursor=1",
      "SPEECH OUTPUT: '<button> push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic Where Am I on <button>",
-    ["BRAILLE LINE:  '<button> push button <input type='button'> push button Create View Create save options push button Edit! Color'",
-     "     VISIBLE:  '<button> push button <input type', cursor=1",
+    ["BRAILLE LINE:  '<button> push button'",
+     "     VISIBLE:  '<button> push button', cursor=1",
      "SPEECH OUTPUT: '<button> push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "3. Tab to <input type='button'>",
-    ["BRAILLE LINE:  '<button> push button <input type='button'> push button Create View Create save options push button Edit! Color'",
+    ["BRAILLE LINE:  '<input type='button'> push button'",
      "     VISIBLE:  '<input type='button'> push butto', cursor=1",
      "SPEECH OUTPUT: '<input type='button'> push button'"]))
 
@@ -33,7 +35,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "4. Basic Where Am I on <input type='button'>",
-    ["BRAILLE LINE:  '<button> push button <input type='button'> push button Create View Create save options push button Edit! Color'",
+    ["BRAILLE LINE:  '<input type='button'> push button'",
      "     VISIBLE:  '<input type='button'> push butto', cursor=1",
      "SPEECH OUTPUT: '<input type='button'> push button'"]))
 
@@ -73,16 +75,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "9. Tab to drop down menu on Create -- whose tooltip and accessible name is 'save options'",
-    ["BRAILLE LINE:  '<button> push button <input type='button'> push button Create View Create save options push button Edit! Color'",
-     "     VISIBLE:  'save options push button Edit! C', cursor=1",
+    ["BRAILLE LINE:  'save options push button'",
+     "     VISIBLE:  'save options push button', cursor=1",
      "SPEECH OUTPUT: 'save options push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "10. Open drop down menu on Create",
-    ["BRAILLE LINE:  '<button> push button <input type='button'> push button Create View Create save options push button Edit! Color'",
-     "     VISIBLE:  'save options push button Edit! C', cursor=1",
+    ["BRAILLE LINE:  'save options push button'",
+     "     VISIBLE:  'save options push button', cursor=1",
      "BRAILLE LINE:  'Create blank'",
      "     VISIBLE:  'Create blank', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
@@ -192,7 +194,6 @@ sequence.append(utils.AssertPresentationAction(
     "21. Close the Submenu",
     ["BRAILLE LINE:  'Submenu menu'",
      "     VISIBLE:  'Submenu menu', cursor=1",
-     "SPEECH OUTPUT: 'Edit! menu'",
      "SPEECH OUTPUT: 'Submenu menu'"]))
 
 sequence.append(utils.StartRecordingAction())

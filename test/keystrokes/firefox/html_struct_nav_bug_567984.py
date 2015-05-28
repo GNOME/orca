@@ -27,14 +27,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("h"))
 sequence.append(utils.AssertPresentationAction(
     "3. h",
-    ["BRAILLE LINE:  'Izrael bejelentette az h3'",
-     "     VISIBLE:  'Izrael bejelentette az h3', cursor=1",
-     "BRAILLE LINE:  'Izrael bejelentette az h3'",
-     "     VISIBLE:  'Izrael bejelentette az h3', cursor=1",
+    ["BRAILLE LINE:  'Izrael bejelentette az  h3'",
+     "     VISIBLE:  'Izrael bejelentette az  h3', cursor=1",
+     "BRAILLE LINE:  'Izrael bejelentette az  h3'",
+     "     VISIBLE:  'Izrael bejelentette az  h3', cursor=1",
      "SPEECH OUTPUT: 'Izrael bejelentette az ",
      "egyoldalú tûzszünetet'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'heading level 3'"]))
+     "SPEECH OUTPUT: 'link heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("h"))
@@ -42,9 +41,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. h",
     ["BRAILLE LINE:  'Videók a Hudsonba zuhanó repülõrõl h3'",
      "     VISIBLE:  'Videók a Hudsonba zuhanó repülõr', cursor=1",
-     "SPEECH OUTPUT: 'Videók a Hudsonba zuhanó repülõrõl'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'heading level 3'"]))
+     "SPEECH OUTPUT: 'Videók a Hudsonba zuhanó repülõrõl link heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("h"))
@@ -52,9 +49,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. h",
     ["BRAILLE LINE:  'Újabb pénzügyi guru tûnt el, pénzzel együtt h3'",
      "     VISIBLE:  'Újabb pénzügyi guru tûnt el, pén', cursor=1",
-     "SPEECH OUTPUT: 'Újabb pénzügyi guru tûnt el, pénzzel együtt'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'heading level 3'"]))
+     "SPEECH OUTPUT: 'Újabb pénzügyi guru tûnt el, pénzzel együtt link heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -70,9 +65,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Down",
     ["BRAILLE LINE:  '1150 embert utcára tesz a pécsi Elcoteq h3'",
      "     VISIBLE:  '1150 embert utcára tesz a pécsi ', cursor=1",
-     "SPEECH OUTPUT: '1150 embert utcára tesz a pécsi Elcoteq'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'heading level 3'"]))
+     "SPEECH OUTPUT: '1150 embert utcára tesz a pécsi Elcoteq link heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("h"))
@@ -80,9 +73,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. h",
     ["BRAILLE LINE:  'Hamarosan újraindul a gázszállítás h3'",
      "     VISIBLE:  'Hamarosan újraindul a gázszállít', cursor=1",
-     "SPEECH OUTPUT: 'Hamarosan újraindul a gázszállítás'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'heading level 3'"]))
+     "SPEECH OUTPUT: 'Hamarosan újraindul a gázszállítás link heading level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -98,9 +89,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Shift+h",
     ["BRAILLE LINE:  'Hamarosan újraindul a gázszállítás h3'",
      "     VISIBLE:  'Hamarosan újraindul a gázszállít', cursor=1",
-     "SPEECH OUTPUT: 'Hamarosan újraindul a gázszállítás'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'heading level 3'"]))
+     "SPEECH OUTPUT: 'Hamarosan újraindul a gázszállítás link heading level 3'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -18,14 +18,11 @@ sequence.append(utils.AssertPresentationAction(
     "1. Line Down",
     ["BRAILLE LINE:  'Foo, Bar, and Baz.'",
      "     VISIBLE:  'Foo, Bar, and Baz.', cursor=1",
-     "SPEECH OUTPUT: 'Foo'",
-     "SPEECH OUTPUT: 'link Title of the Foo link.'",
+     "SPEECH OUTPUT: 'Foo link Title of the Foo link.'",
      "SPEECH OUTPUT: ','",
-     "SPEECH OUTPUT: 'Bar'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'Bar link'",
      "SPEECH OUTPUT: ', and'",
-     "SPEECH OUTPUT: 'Baz'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'Baz link'",
      "SPEECH OUTPUT: '.'"]))
 
 sequence.append(KeyComboAction("Down"))
