@@ -1398,8 +1398,14 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
-        result = []
         acss = self.voice(SYSTEM)
+        role = args.get('role', obj.getRole())
+        if role in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
+            result = [messages.listItemCount(obj.childCount)]
+            result.extend(acss)
+            return result
+
+        result = []
         childNodes = self._script.utilities.childNodes(obj)
         children = len(childNodes)
         if children:
