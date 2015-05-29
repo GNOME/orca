@@ -159,6 +159,19 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # out some of the noise....
         return []
 
+    def _generateNumberOfChildren(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        role = args.get('role', obj.getRole())
+        if role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX] \
+           or not self._script.utilities.inDocumentContent(obj):
+            return super()._generateNumberOfChildren(obj, **args)
+
+        result = [messages.listItemCount(obj.childCount)]
+        result.extend(self.voice(speech_generator.SYSTEM))
+        return result
+
     # TODO - JD: Yet another dumb generator method we should kill.
     def _generateTextRole(self, obj, **args):
         return self._generateRoleName(obj, **args)
