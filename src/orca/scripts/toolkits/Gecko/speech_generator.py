@@ -163,9 +163,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
+        # We handle things even for non-document content due to issues in
+        # other toolkits (e.g. exposing list items to us that are not
+        # exposed to sighted users)
         role = args.get('role', obj.getRole())
-        if role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX] \
-           or not self._script.utilities.inDocumentContent(obj):
+        if role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
             return super()._generateNumberOfChildren(obj, **args)
 
         result = [messages.listItemCount(obj.childCount)]
