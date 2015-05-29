@@ -122,8 +122,7 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
         # If it's an anchor, look for the first object of use.
         # See bug #591592.
         #
-        if obj.getRole() == pyatspi.ROLE_LINK \
-           and not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+        if self._script.utilities.isAnchor(obj):
             obj, offset = self._script.utilities.findNextCaretInOrder(obj, offset)
 
         return obj, offset
