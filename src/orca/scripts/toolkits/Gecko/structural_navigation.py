@@ -115,7 +115,7 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
         if not obj:
             return obj, offset
 
-        if obj.getRole() == pyatspi.ROLE_SECTION \
+        if self._script.utilities.isTextBlockElement(obj) \
            and not self._script.utilities.queryNonEmptyText(obj):
             obj, offset = self._script.utilities.findNextCaretInOrder(obj, offset)
 

@@ -314,6 +314,12 @@ formatting = {
             'unfocused': 'labelAndName + roleName + value + availability + ' + MNEMONIC,
             'basicWhereAmI' : 'labelAndName + roleName + value'
             },
+        # TODO - JD: There is now an actual ROLE_STATIC in ATK and AT-SPI2. Next
+        # time we need to bump dependencies for more significant things, we need
+        # to remove this fake role and use it instead.
+        'ROLE_STATIC': {
+            'unfocused': '(displayedText or name) + roleName',
+        },
         pyatspi.ROLE_TABLE: {
             'focused': 'labelAndName + table',
             'unfocused': 'labelAndName + table',

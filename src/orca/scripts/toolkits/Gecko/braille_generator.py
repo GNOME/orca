@@ -46,6 +46,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         doNotDisplay = [pyatspi.ROLE_FORM,
                         pyatspi.ROLE_SECTION,
                         pyatspi.ROLE_PARAGRAPH,
+                        'ROLE_STATIC',
                         pyatspi.ROLE_UNKNOWN]
 
         state = obj.getState()
@@ -117,6 +118,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.isClickableElement(obj) \
            or self._script.utilities.isLink(obj):
             oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
+        elif self._script.utilities.isStatic(obj):
+            oldRole = self._overrideRole('ROLE_STATIC', args)
 
         # Treat menu items in collapsed combo boxes as if the combo box
         # had focus. This will make things more consistent with how we

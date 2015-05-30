@@ -203,6 +203,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not force:
             doNotSpeak.append(pyatspi.ROLE_TABLE_CELL)
             doNotSpeak.append(pyatspi.ROLE_TEXT)
+            doNotSpeak.append('ROLE_STATIC')
             if args.get('formatType', 'unfocused') != 'basicWhereAmI':
                 doNotSpeak.append(pyatspi.ROLE_LIST_ITEM)
                 doNotSpeak.append(pyatspi.ROLE_LIST)
@@ -387,6 +388,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             oldRole = self._overrideRole('default', args)
         elif self._script.utilities.isLink(obj):
             oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
+        elif self._script.utilities.isStatic(obj):
+            oldRole = self._overrideRole('ROLE_STATIC', args)
         else:
             oldRole = self._overrideRole(obj.getRole(), args)
 

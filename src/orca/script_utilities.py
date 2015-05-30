@@ -591,6 +591,17 @@ class Utilities:
     def isHidden(self, obj):
         return False
 
+    def isStatic(self, obj):
+        role = obj.getRole()
+        try:
+            isStatic = role == pyatspi.ROLE_STATIC
+        except:
+            isStatic = False
+
+        if not isStatic and role == pyatspi.ROLE_TEXT:
+            isStatic = not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
+        return isStatic
+
     def isLayoutOnly(self, obj):
         """Returns True if the given object is a container which has
         no presentable information (label, name, displayed text, etc.)."""
