@@ -170,7 +170,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
             return super()._generateNumberOfChildren(obj, **args)
 
-        result = [messages.listItemCount(obj.childCount)]
+        children = [x for x in obj if x.getRole() == pyatspi.ROLE_LIST_ITEM]
+        result = [messages.listItemCount(len(children))]
         result.extend(self.voice(speech_generator.SYSTEM))
         return result
 

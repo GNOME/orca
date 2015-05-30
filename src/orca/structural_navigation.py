@@ -1854,11 +1854,7 @@ class StructuralNavigation:
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(obj, characterOffset)
-            # TODO: We currently present the line, so that's kept here.
-            # But we should probably present the object, which would
-            # be consistent with the change made recently for headings.
-            #
-            self._presentLine(obj, characterOffset)
+            self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_BLOCKQUOTES
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
@@ -2775,23 +2771,7 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        # TODO: Ultimately it should be the job of the speech (and braille)
-        # generator to present things like this.
-        #
         if obj:
-            nItems = 0
-            for child in obj:
-                if child.getRole() == pyatspi.ROLE_LIST_ITEM:
-                    nItems += 1
-            self._script.presentMessage(messages.listItemCount(nItems))
-            nestingLevel = 0
-            parent = obj.parent
-            while parent.getRole() == pyatspi.ROLE_LIST:
-                nestingLevel += 1
-                parent = parent.parent
-            if nestingLevel:
-                self._script.presentMessage(
-                    messages.NESTING_LEVEL % nestingLevel)
             [obj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(obj, characterOffset)
             self._presentLine(obj, characterOffset)
@@ -3254,14 +3234,20 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        if self._script.utilities.isLayoutOnly(obj):
+        if not (obj and obj.childCount and obj.getRole() == pyatspi.ROLE_TABLE):
             return False
 
-        if obj and obj.childCount and obj.getRole() == pyatspi.ROLE_TABLE:
-            try:
-                return obj.queryTable().nRows > 0
-            except:
-                pass
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+        if attrs.get('layout-guess') == 'true':
+            return False
+
+        try:
+            return obj.queryTable().nRows > 0
+        except:
+            pass
 
         return False
 

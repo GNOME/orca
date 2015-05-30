@@ -1556,13 +1556,6 @@ class Script(default.Script):
             super().updateBraille(obj, extraRegion)
             return
 
-        # TODO - JD: This should be removed once struct nav uses the new
-        # method to display contents.
-        if self._lastCommandWasStructNav \
-           and not (self.utilities.isLink(obj) or self.utilities.isTextBlockElement(obj)):
-            super().updateBraille(obj, extraRegion)
-            return
-
         obj, offset = self.utilities.getCaretContext(documentFrame=None)
         contents = self.utilities.getLineContentsAtOffset(obj, offset)
         self.displayContents(contents)

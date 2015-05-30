@@ -27,8 +27,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("h"))
 sequence.append(utils.AssertPresentationAction(
     "3. h",
-    ["BRAILLE LINE:  'Izrael bejelentette az  h3'",
-     "     VISIBLE:  'Izrael bejelentette az  h3', cursor=1",
+    ["BRAILLE LINE:  'Izrael bejelentette az ",
+     "egyoldal\xfa t\xfbzsz\xfcnetet h3'",
+     "     VISIBLE:  'Izrael bejelentette az ",
+     "egyoldal', cursor=1",
      "BRAILLE LINE:  'Izrael bejelentette az  h3'",
      "     VISIBLE:  'Izrael bejelentette az  h3', cursor=1",
      "SPEECH OUTPUT: 'Izrael bejelentette az ",

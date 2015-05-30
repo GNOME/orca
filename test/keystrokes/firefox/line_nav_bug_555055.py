@@ -8,10 +8,9 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(PauseAction(3000))
-sequence.append(KeyComboAction("<Control>Home"))
 
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. Line Down",
     ["BRAILLE LINE:  'Hello world!'",

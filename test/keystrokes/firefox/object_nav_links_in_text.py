@@ -19,7 +19,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("H"))
 sequence.append(utils.AssertPresentationAction(
     "2. H for heading",
-    ["BRAILLE LINE:  'Enter Bug: orca \u2013 This page lets you enter a new bug  h1'",
+    ["BRAILLE LINE:  'Enter Bug: orca \u2013 This page lets you enter a new bug into Bugzilla. h1'",
      "     VISIBLE:  'Enter Bug: orca \u2013 This page lets', cursor=1",
      "SPEECH OUTPUT: 'Enter Bug: orca \u2013 This page lets you enter a new bug into Bugzilla. heading level 1'"]))
 

@@ -39,17 +39,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "4. Return",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
-     "SPEECH OUTPUT: 'link'"]))
+    ["BRAILLE LINE:  'Second h2'",
+     "     VISIBLE:  'Second h2', cursor=1",
+     "SPEECH OUTPUT: 'Second heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Down",
-    ["BRAILLE LINE:  'Second h2'",
-     "     VISIBLE:  'Second h2', cursor=1",
-     "SPEECH OUTPUT: 'Second heading level 2'"]))
+    ["BRAILLE LINE:  'Orca are versatile and opportunistic predators. Some populations feed mostly on fish, and other populations'",
+     "     VISIBLE:  'Orca are versatile and opportuni', cursor=1",
+     "SPEECH OUTPUT: 'Orca are versatile and opportunistic predators. Some populations feed mostly on fish, and other populations'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -1754,28 +1754,47 @@ class Utilities(script_utilities.Utilities):
         try:
             role = obj.getRole()
         except:
+            msg = "ERROR: Exception getting first caret context for %s %i" % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg)
             return None, -1
 
         lookInChild = [pyatspi.ROLE_LIST,
                        pyatspi.ROLE_TABLE,
                        pyatspi.ROLE_TABLE_ROW]
         if role in lookInChild and obj.childCount:
+            msg = "INFO: First caret context for %s, %i will look in child %s" % (obj, offset, obj[0])
+            debug.println(debug.LEVEL_INFO, msg)
             return self.findFirstCaretContext(obj[0], 0)
 
         text = self.queryNonEmptyText(obj)
         if not text:
+            if self.isTextBlockElement(obj) or self.isAnchor(obj):
+                nextObj, nextOffset = self.nextContext(obj, offset)
+                if nextObj:
+                    msg = "INFO: First caret context for %s, %i is %s, %i" % (obj, offset, nextObj, nextOffset)
+                    debug.println(debug.LEVEL_INFO, msg)
+                    return nextObj, nextOffset
+
+            msg = "INFO: First caret context for %s, %i is %s, %i" % (obj, offset, obj, 0)
+            debug.println(debug.LEVEL_INFO, msg)
             return obj, 0
 
         if offset >= text.characterCount:
+            msg = "INFO: First caret context for %s, %i is %s, %i" % (obj, offset, obj, text.characterCount)
+            debug.println(debug.LEVEL_INFO, msg)
             return obj, text.characterCount
 
         allText = text.getText(0, -1)
         offset = max (0, offset)
         if allText[offset] != self.EMBEDDED_OBJECT_CHARACTER:
+            msg = "INFO: First caret context for %s, %i is %s, %i" % (obj, offset, obj, offset)
+            debug.println(debug.LEVEL_INFO, msg)
             return obj, offset
 
         child = self.getChildAtOffset(obj, offset)
         if not child:
+            msg = "INFO: First caret context for %s, %i is %s, %i" % (obj, offset, None, -1)
+            debug.println(debug.LEVEL_INFO, msg)
             return None, -1
 
         return self.findFirstCaretContext(child, 0)

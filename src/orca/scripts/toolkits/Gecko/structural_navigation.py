@@ -106,27 +106,6 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
 
         return self._script.utilities.inDocumentContent(obj)
 
-    def _getCaretPosition(self, obj):
-        """Returns the [obj, characterOffset] where the caret should be
-        positioned.
-        """
-
-        obj, offset = self._script.utilities.findFirstCaretContext(obj, 0)
-        if not obj:
-            return obj, offset
-
-        if self._script.utilities.isTextBlockElement(obj) \
-           and not self._script.utilities.queryNonEmptyText(obj):
-            obj, offset = self._script.utilities.findNextCaretInOrder(obj, offset)
-
-        # If it's an anchor, look for the first object of use.
-        # See bug #591592.
-        #
-        if self._script.utilities.isAnchor(obj):
-            obj, offset = self._script.utilities.findNextCaretInOrder(obj, offset)
-
-        return obj, offset
-
     def _setCaretPosition(self, obj, characterOffset):
         """Sets the caret at the specified offset within obj."""
 
@@ -155,15 +134,9 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
         if self._presentWithSayAll(obj, offset):
             return
 
-        if obj.getRole() == pyatspi.ROLE_LINK:
-            try:
-                obj.queryComponent().grabFocus()
-            except:
-                pass
-
-        self._script.updateBraille(obj)
         contents = self._script.utilities.getObjectContentsAtOffset(obj, offset)
         self._script.speakContents(contents)
+        self._script.displayContents(contents)
 
     #########################################################################
     #                                                                       #
