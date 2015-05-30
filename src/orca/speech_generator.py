@@ -194,6 +194,9 @@ class SpeechGenerator(generator.Generator):
             if obj.name and (len(obj.name)):
                 result.append(obj.name)
                 result.extend(acss)
+        if not result and obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
+            result = self._generateLabelOrName(obj.parent, **args)
+
         return result
 
     def _generatePlaceholderText(self, obj, **args):
