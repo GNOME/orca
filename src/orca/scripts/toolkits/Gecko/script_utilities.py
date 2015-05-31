@@ -63,6 +63,7 @@ class Utilities(script_utilities.Utilities):
         self._isLandmark = {}
         self._isLiveRegion = {}
         self._isLink = {}
+        self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
         self._inferredLabels = {}
         self._text = {}
@@ -94,6 +95,7 @@ class Utilities(script_utilities.Utilities):
         self._isLandmark = {}
         self._isLiveRegion = {}
         self._isLink = {}
+        self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
         self._inferredLabels = {}
         self._cleanupContexts()
@@ -1480,6 +1482,21 @@ class Utilities(script_utilities.Utilities):
         self._isLink[hash(obj)] = rv
         return rv
 
+    def isNonNavigablePopup(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isNonNavigablePopup.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        role = obj.getRole()
+        if role == pyatspi.ROLE_TOOL_TIP:
+            rv = True
+
+        self._isNonNavigablePopup[hash(obj)] = rv
+        return rv
+
     def hasLongDesc(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -1686,6 +1703,7 @@ class Utilities(script_utilities.Utilities):
                         pyatspi.ROLE_PUSH_BUTTON,
                         pyatspi.ROLE_TOGGLE_BUTTON,
                         pyatspi.ROLE_TOOL_BAR,
+                        pyatspi.ROLE_TOOL_TIP,
                         pyatspi.ROLE_TREE,
                         pyatspi.ROLE_TREE_TABLE]
         return obj.getRole() in doNotDescend
@@ -1806,13 +1824,13 @@ class Utilities(script_utilities.Utilities):
         if not obj or not self.inDocumentContent(obj):
             return None, -1
 
-        if not (self.isHidden(obj) or self.isOffScreenLabel(obj)):
+        if not (self.isHidden(obj) or self.isOffScreenLabel(obj) or self.isNonNavigablePopup(obj)):
             text = self.queryNonEmptyText(obj)
             if text:
                 allText = text.getText(0, -1)
                 for i in range(offset + 1, len(allText)):
                     child = self.getChildAtOffset(obj, i)
-                    if child:
+                    if child and not self.isZombie(child):
                         return self.findNextCaretInOrder(child, -1)
                     if allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
                         return obj, i
@@ -1845,7 +1863,7 @@ class Utilities(script_utilities.Utilities):
         if not obj or not self.inDocumentContent(obj):
             return None, -1
 
-        if not (self.isHidden(obj) or self.isOffScreenLabel(obj)):
+        if not (self.isHidden(obj) or self.isOffScreenLabel(obj) or self.isNonNavigablePopup(obj)):
             text = self.queryNonEmptyText(obj)
             if text:
                 allText = text.getText(0, -1)
@@ -1853,7 +1871,7 @@ class Utilities(script_utilities.Utilities):
                     offset = len(allText)
                 for i in range(offset - 1, -1, -1):
                     child = self.getChildAtOffset(obj, i)
-                    if child:
+                    if child and not self.isZombie(child):
                         return self.findPreviousCaretInOrder(child, -1)
                     if allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
                         return obj, i
