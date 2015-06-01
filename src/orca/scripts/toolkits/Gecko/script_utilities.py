@@ -846,7 +846,7 @@ class Utilities(script_utilities.Utilities):
             sadString, sadStart, sadEnd = self.__findRange(text, offset, start, end, boundary)
             s = sadString.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
             msg = "HACK: Attempting to recover from above failure.\n" \
-                  "      String: '%s', Start: %i, End: %i." % (s, start, end)
+                  "      String: '%s', Start: %i, End: %i." % (s, sadStart, sadEnd)
             debug.println(debug.LEVEL_INFO, msg)
             return sadString, sadStart, sadEnd
 
