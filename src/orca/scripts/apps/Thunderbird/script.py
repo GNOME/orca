@@ -36,7 +36,6 @@ import orca.settings_manager as settings_manager
 import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.scripts.toolkits.Gecko as Gecko
-from orca.orca_i18n import _
 
 from .speech_generator import SpeechGenerator
 from .spellcheck import SpellCheck

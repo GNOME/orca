@@ -23,10 +23,7 @@ src/orca/scripts/apps/liferea/script.py
 src/orca/scripts/apps/metacity/script.py
 src/orca/scripts/apps/planner/braille_generator.py
 src/orca/scripts/apps/planner/speech_generator.py
-src/orca/scripts/apps/Thunderbird/script.py
 src/orca/scripts/apps/Thunderbird/speech_generator.py
 src/orca/scripts/default.py
-src/orca/scripts/toolkits/Gecko/braille_generator.py
-src/orca/scripts/toolkits/Gecko/script.py
 src/orca/text_attribute_names.py
 src/orca/tutorialgenerator.py
