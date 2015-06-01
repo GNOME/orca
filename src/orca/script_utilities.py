@@ -1724,6 +1724,17 @@ class Utilities:
 
         return [textContents, startOffset, endOffset]
 
+    def getCaretContext(self):
+        obj = orca_state.locusOfFocus
+        try:
+            offset = obj.queryText().caretOffset
+        except NotImplementedError:
+            offset = 0
+        except:
+            offset = -1
+
+        return obj, offset
+
     def setCaretOffset(self, obj, offset):
         """Set the caret offset on a given accessible. Similar to
         Accessible.setCaretOffset()

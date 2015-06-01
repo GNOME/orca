@@ -964,7 +964,7 @@ class StructuralNavigation:
         whether wrapping took place.
         """
 
-        [currentObj, offset] = self._script.getCaretContext()
+        [currentObj, offset] = self._script.utilities.getCaretContext()
         document = self._getDocument()
 
         # If the current object is the document itself, find an actual
@@ -1085,7 +1085,7 @@ class StructuralNavigation:
         """
 
         ancestors = []
-        [currentObj, offset] = self._script.getCaretContext()
+        [currentObj, offset] = self._script.utilities.getCaretContext()
         obj = currentObj.parent
         while obj:
             ancestors.append(obj)

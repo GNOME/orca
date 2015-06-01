@@ -719,17 +719,6 @@ class Script(script.Script):
 
         return script.Script.processKeyboardEvent(self, keyboardEvent)
 
-    def getCaretContext(self):
-        obj = orca_state.locusOfFocus
-        try:
-            offset = obj.queryText().caretOffset
-        except NotImplementedError:
-            offset = 0
-        except:
-            offset = -1
-
-        return obj, offset
-
     def _saveFocusedObjectInfo(self, obj):
         """Saves some basic information about obj. Note that this method is
         intended to be called primarily (if not only) by locusOfFocusChanged().
