@@ -763,24 +763,45 @@ class Utilities(script_utilities.Utilities):
 
     def _getTextAtOffset(self, obj, offset, boundary):
         if not obj:
+            msg = "INFO: Results for text at offset %i for %s using %s:\n" \
+                  "      String: '', Start: 0, End: 0. (obj is None)"
+            debug.println(debug.LEVEL_INFO, msg)
             return '', 0, 0
 
         text = self.queryNonEmptyText(obj)
         if not text:
+            msg = "INFO: Results for text at offset %i for %s using %s:\n" \
+                  "      String: '', Start: 0, End: 1. (queryNonEmptyText() returned None)"
+            debug.println(debug.LEVEL_INFO, msg)
             return '', 0, 1
 
         if boundary == pyatspi.TEXT_BOUNDARY_CHAR:
-            return text.getText(offset, offset + 1), offset, offset + 1
+            string, start, end = text.getText(offset, offset + 1), offset, offset + 1
+            s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+            msg = "INFO: Results for text at offset %i for %s using %s:\n" \
+                  "      String: '%s', Start: %i, End: %i." % (offset, obj, boundary, s, start, end)
+            debug.println(debug.LEVEL_INFO, msg)
+            return string, start, end
 
         if not boundary:
-            return text.getText(offset, -1), offset, text.characterCount
+            string, start, end = text.getText(offset, -1), offset, text.characterCount
+            s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+            msg = "INFO: Results for text at offset %i for %s using %s:\n" \
+                  "      String: '%s', Start: %i, End: %i." % (offset, obj, boundary, s, start, end)
+            debug.println(debug.LEVEL_INFO, msg)
+            return string, start, end
 
         if boundary == pyatspi.TEXT_BOUNDARY_SENTENCE_START \
             and not obj.getState().contains(pyatspi.STATE_EDITABLE):
             allText = text.getText(0, -1)
             if obj.getRole() in [pyatspi.ROLE_LIST_ITEM, pyatspi.ROLE_HEADING] \
                or not (re.search("\w", allText) and self.isTextBlockElement(obj)):
-                return allText, 0, text.characterCount
+                string, start, end = allText, 0, text.characterCount
+                s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+                msg = "INFO: Results for text at offset %i for %s using %s:\n" \
+                      "      String: '%s', Start: %i, End: %i." % (offset, obj, boundary, s, start, end)
+                debug.println(debug.LEVEL_INFO, msg)
+                return string, start, end
 
         offset = max(0, offset)
         string, start, end = text.getTextAtOffset(offset, boundary)
@@ -790,48 +811,50 @@ class Utilities(script_utilities.Utilities):
         needSadHack = False
         testString, testStart, testEnd = text.getTextAtOffset(start, boundary)
         if (string, start, end) != (testString, testStart, testEnd):
-            s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]")
-            s2 = testString.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]")
+            s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+            s2 = testString.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
             msg = "FAIL: Bad results for text at offset for %s using %s.\n" \
                   "      For offset %i - String: '%s', Start: %i, End: %i.\n" \
                   "      For offset %i - String: '%s', Start: %i, End: %i.\n" \
                   "      The bug is the above results should be the same.\n" \
                   "      This very likely needs to be fixed by the toolkit." \
-                  % (obj, boundary, offset, s1.replace("\n", "\\n"), start, end,
-                     start, s2.replace("\n", "\\n"), testStart, testEnd)
+                  % (obj, boundary, offset, s1, start, end, start, s2, testStart, testEnd)
             debug.println(debug.LEVEL_INFO, msg)
             needSadHack = True
         elif not string and 0 <= offset < text.characterCount:
-            s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]")
-            s2 = text.getText(0, -1).replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]")
+            s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+            s2 = text.getText(0, -1).replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
             msg = "FAIL: Bad results for text at offset %i for %s using %s:\n" \
                   "      String: '%s', Start: %i, End: %i.\n" \
                   "      The bug is no text reported for a valid offset.\n" \
                   "      Character count: %i, Full text: '%s'.\n" \
                   "      This very likely needs to be fixed by the toolkit." \
-                  % (offset, obj, boundary, s1.replace("\n", "\\n"), start, end,
-                     text.characterCount, s2.replace("\n", "\\n"))
+                  % (offset, obj, boundary, s1, start, end, text.characterCount, s2)
             debug.println(debug.LEVEL_INFO, msg)
             needSadHack = True
         elif not (start <= offset < end):
-            s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]")
+            s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
             msg = "FAIL: Bad results for text at offset %i for %s using %s:\n" \
                   "      String: '%s', Start: %i, End: %i.\n" \
                   "      The bug is the range returned is outside of the offset.\n" \
                   "      This very likely needs to be fixed by the toolkit." \
-                  % (offset, obj, boundary, s1.replace("\n", "\\n"), start, end)
+                  % (offset, obj, boundary, s1, start, end)
             debug.println(debug.LEVEL_INFO, msg)
             needSadHack = True
 
         if needSadHack:
             sadString, sadStart, sadEnd = self.__findRange(text, offset, start, end, boundary)
-            s = sadString.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]")
+            s = sadString.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
             msg = "HACK: Attempting to recover from above failure.\n" \
-                  "      Returning: '%s' (%i, %i) " % (s, sadStart, sadEnd)
+                  "      String: '%s', Start: %i, End: %i." % (s, start, end)
             debug.println(debug.LEVEL_INFO, msg)
             return sadString, sadStart, sadEnd
 
-        return text.getText(start, end), start, end
+        s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+        msg = "INFO: Results for text at offset %i for %s using %s:\n" \
+              "      String: '%s', Start: %i, End: %i." % (offset, obj, boundary, s, start, end)
+        debug.println(debug.LEVEL_INFO, msg)
+        return string, start, end
 
     def _getContentsForObj(self, obj, offset, boundary):
         if not obj:
