@@ -382,7 +382,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def generateSpeech(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
+            msg = "\nINFO: %s is not in document content. Calling default speech generator." % obj
+            debug.println(debug.LEVEL_INFO, msg)
             return super().generateSpeech(obj, **args)
+
+        msg = "\nINFO: Generating speech for document object %s" % obj
+        debug.println(debug.LEVEL_INFO, msg)
 
         result = []
         if args.get('formatType') == 'detailedWhereAmI':
@@ -396,6 +401,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         result.extend(super().generateSpeech(obj, **args))
         self._restoreRole(oldRole, args)
+
+        msg = "\nINFO: Speech generation for document object %s complete:\n%s\n" % (obj, result)
+        debug.println(debug.LEVEL_INFO, msg)
         return result
 
     def generateContents(self, contents, **args):
@@ -404,8 +412,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         result = []
         contents = self._script.utilities.filterContentsForPresentation(contents, False)
+        msg = "INFO: Generating speech contents (length: %i)" % len(contents)
+        debug.println(debug.LEVEL_INFO, msg)
         for i, content in enumerate(contents):
             obj, start, end, string = content
+            msg = "ITEM %i: %s, start: %i, end: %i, string: '%s'" \
+                  % (i, obj, start, end, string)
+            debug.println(debug.LEVEL_INFO, msg)
             utterance = self.generateSpeech(
                 obj, startOffset=start, endOffset=end, string=string,
                 index=i, total=len(contents), **args)
