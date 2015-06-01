@@ -1928,13 +1928,23 @@ class Script(default.Script):
             return True
 
         obj, offset = self.utilities.getCaretContext()
+        msg = "INFO: Current context is: %s, %i" % (obj, offset)
+        debug.println(debug.LEVEL_INFO, msg)
+
         line = self.utilities.getLineContentsAtOffset(obj, offset)
         if not (line and line[0]):
+            msg = "INFO: Could not get line contents for %s, %i" % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg)
             return False
 
         obj, offset = self.utilities.previousContext(line[0][0], line[0][1], True)
+        msg = "INFO: Previous context is: %s, %i" % (obj, offset)
+        debug.println(debug.LEVEL_INFO, msg)
+
         contents = self.utilities.getLineContentsAtOffset(obj, offset)
         if not contents:
+            msg = "INFO: Could not get line contents for %s, %i" % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg)
             return False
 
         obj, start = contents[0][0], contents[0][1]
@@ -1956,13 +1966,23 @@ class Script(default.Script):
             return True
 
         obj, offset = self.utilities.getCaretContext()
+        msg = "INFO: Current context is: %s, %i" % (obj, offset)
+        debug.println(debug.LEVEL_INFO, msg)
+
         line = self.utilities.getLineContentsAtOffset(obj, offset)
         if not (line and line[0]):
+            msg = "INFO: Could not get line contents for %s, %i" % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg)
             return False
 
         obj, offset = self.utilities.nextContext(line[-1][0], line[-1][2] - 1, True)
+        msg = "INFO: Next context is: %s, %i" % (obj, offset)
+        debug.println(debug.LEVEL_INFO, msg)
+
         contents = self.utilities.getLineContentsAtOffset(obj, offset)
         if not contents:
+            msg = "INFO: Could not get line contents for %s, %i" % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg)
             return False
 
         obj, start = contents[0][0], contents[0][1]

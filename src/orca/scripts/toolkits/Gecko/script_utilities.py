@@ -1867,7 +1867,7 @@ class Utilities(script_utilities.Utilities):
         if self.isSameObject(obj, documentFrame):
             return None, -1
 
-        while obj.parent and obj != obj.parent:
+        while obj.parent and not self.isZombie(obj.parent):
             start, end, length = self._rangeInParentWithLength(obj)
             if start + 1 == end and 0 <= start < end <= length:
                 return self.findNextCaretInOrder(obj.parent, start)
@@ -1908,7 +1908,7 @@ class Utilities(script_utilities.Utilities):
         if self.isSameObject(obj, documentFrame):
             return None, -1
 
-        while obj.parent and obj != obj.parent:
+        while obj.parent and not self.isZombie(obj.parent):
             start, end, length = self._rangeInParentWithLength(obj)
             if start + 1 == end and 0 <= start < end <= length:
                 return self.findPreviousCaretInOrder(obj.parent, start)
