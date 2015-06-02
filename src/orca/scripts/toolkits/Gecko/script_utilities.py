@@ -126,7 +126,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return None
 
-        roles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
+        roles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB, pyatspi.ROLE_EMBEDDED]
         isDocument = lambda x: x and x.getRole() in roles
         if isDocument(obj):
             return obj
