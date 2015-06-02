@@ -1867,15 +1867,23 @@ class Utilities(script_utilities.Utilities):
         if self.isSameObject(obj, documentFrame):
             return None, -1
 
-        while obj.parent and not self.isZombie(obj.parent):
+        while obj.parent:
+            parent = obj.parent
+            if self.isZombie(parent):
+                replicant = self.findReplicant(self.documentFrame(), parent)
+                if replicant and not self.isZombie(replicant):
+                    parent = replicant
+                else:
+                    break
+
             start, end, length = self._rangeInParentWithLength(obj)
             if start + 1 == end and 0 <= start < end <= length:
-                return self.findNextCaretInOrder(obj.parent, start)
+                return self.findNextCaretInOrder(parent, start)
 
             index = obj.getIndexInParent() + 1
-            if 0 <= index < obj.parent.childCount:
-                return self.findNextCaretInOrder(obj.parent[index], -1)
-            obj = obj.parent
+            if 0 <= index < parent.childCount:
+                return self.findNextCaretInOrder(parent[index], -1)
+            obj = parent
 
         return None, -1
 
@@ -1908,15 +1916,23 @@ class Utilities(script_utilities.Utilities):
         if self.isSameObject(obj, documentFrame):
             return None, -1
 
-        while obj.parent and not self.isZombie(obj.parent):
+        while obj.parent:
+            parent = obj.parent
+            if self.isZombie(parent):
+                replicant = self.findReplicant(self.documentFrame(), parent)
+                if replicant and not self.isZombie(replicant):
+                    parent = replicant
+                else:
+                    break
+
             start, end, length = self._rangeInParentWithLength(obj)
             if start + 1 == end and 0 <= start < end <= length:
-                return self.findPreviousCaretInOrder(obj.parent, start)
+                return self.findPreviousCaretInOrder(parent, start)
 
             index = obj.getIndexInParent() - 1
-            if 0 <= index < obj.parent.childCount:
-                return self.findPreviousCaretInOrder(obj.parent[index], -1)
-            obj = obj.parent
+            if 0 <= index < parent.childCount:
+                return self.findPreviousCaretInOrder(parent[index], -1)
+            obj = parent
 
         return None, -1
 
