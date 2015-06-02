@@ -764,14 +764,15 @@ class Utilities(script_utilities.Utilities):
     def _getTextAtOffset(self, obj, offset, boundary):
         if not obj:
             msg = "INFO: Results for text at offset %i for %s using %s:\n" \
-                  "      String: '', Start: 0, End: 0. (obj is None)"
+                  "      String: '', Start: 0, End: 0. (obj is None)" % (offset, obj, boundary)
             debug.println(debug.LEVEL_INFO, msg)
             return '', 0, 0
 
         text = self.queryNonEmptyText(obj)
         if not text:
             msg = "INFO: Results for text at offset %i for %s using %s:\n" \
-                  "      String: '', Start: 0, End: 1. (queryNonEmptyText() returned None)"
+                  "      String: '', Start: 0, End: 1. (queryNonEmptyText() returned None)" \
+                  % (offset, obj, boundary)
             debug.println(debug.LEVEL_INFO, msg)
             return '', 0, 1
 
