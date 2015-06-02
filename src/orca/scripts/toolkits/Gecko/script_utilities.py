@@ -1874,6 +1874,9 @@ class Utilities(script_utilities.Utilities):
                 replicant = self.findReplicant(self.documentFrame(), parent)
                 if replicant and not self.isZombie(replicant):
                     parent = replicant
+                elif parent.parent:
+                    obj = parent
+                    continue
                 else:
                     break
 
@@ -1923,6 +1926,9 @@ class Utilities(script_utilities.Utilities):
                 replicant = self.findReplicant(self.documentFrame(), parent)
                 if replicant and not self.isZombie(replicant):
                     parent = replicant
+                elif parent.parent:
+                    obj = parent
+                    continue
                 else:
                     break
 
