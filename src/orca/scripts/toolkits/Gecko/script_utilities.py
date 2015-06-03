@@ -1584,6 +1584,16 @@ class Utilities(script_utilities.Utilities):
 
         return True
 
+    def eventIsStatusBarNoise(self, event):
+        if self.inDocumentContent(event.source):
+            return False
+
+        eType = event.type
+        if eType.startswith("object:text-") or eType.endswith("accessible-name"):
+            return event.source.getRole() == pyatspi.ROLE_STATUS_BAR
+
+        return False
+
     def eventIsAutocompleteNoise(self, event):
         if not self.inDocumentContent(event.source):
             return False

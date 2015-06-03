@@ -1268,6 +1268,11 @@ class Script(default.Script):
     def onNameChanged(self, event):
         """Callback for object:property-change:accessible-name events."""
 
+        if self.utilities.eventIsStatusBarNoise(event):
+            msg = "INFO: Ignoring event believed to be status bar noise"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
         if event.source.getRole() == pyatspi.ROLE_FRAME:
             msg = "INFO: Flusing messages from live region manager"
             debug.println(debug.LEVEL_INFO, msg)
@@ -1288,6 +1293,11 @@ class Script(default.Script):
 
     def onTextDeleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
+
+        if self.utilities.eventIsStatusBarNoise(event):
+            msg = "INFO: Ignoring event believed to be status bar noise"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "INFO: Event source is not in document content"
@@ -1326,6 +1336,11 @@ class Script(default.Script):
 
     def onTextInserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
+
+        if self.utilities.eventIsStatusBarNoise(event):
+            msg = "INFO: Ignoring event believed to be status bar noise"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "INFO: Event source is not in document content"
