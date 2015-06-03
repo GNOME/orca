@@ -684,15 +684,16 @@ class Utilities(script_utilities.Utilities):
             if not characterCount:
                 rv = None
 
-        doNotQuery = [pyatspi.ROLE_LIST,
-                      pyatspi.ROLE_TABLE_ROW,
-                      pyatspi.ROLE_TOOL_BAR]
-        if rv and obj.getRole() in doNotQuery:
-            rv = None
-        if rv and excludeNonEntryTextWidgets and self.isNonEntryTextWidget(obj):
-            rv = None
-        if rv and (self.isHidden(obj) or self.isOffScreenLabel(obj)):
-            rv = None
+        if not self.isLiveRegion(obj):
+            doNotQuery = [pyatspi.ROLE_LIST,
+                          pyatspi.ROLE_TABLE_ROW,
+                          pyatspi.ROLE_TOOL_BAR]
+            if rv and obj.getRole() in doNotQuery:
+                rv = None
+            if rv and excludeNonEntryTextWidgets and self.isNonEntryTextWidget(obj):
+                rv = None
+            if rv and (self.isHidden(obj) or self.isOffScreenLabel(obj)):
+                rv = None
 
         self._text[hash(obj)] = rv
         return rv
@@ -1630,7 +1631,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if event.type.startswith("object:text-changed:insert"):
-            return event.any_data == self.EMBEDDED_OBJECT_CHARACTER
+            return self.EMBEDDED_OBJECT_CHARACTER in event.any_data
 
         return False
 

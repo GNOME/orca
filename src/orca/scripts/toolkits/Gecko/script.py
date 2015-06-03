@@ -1338,6 +1338,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
+        if self.utilities.eventIsEOCAdded(event):
+            msg = "INFO: Ignoring: Event was for embedded object char"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
         msg = "INFO: Clearing content cache due to text insertion"
         debug.println(debug.LEVEL_INFO, msg)
         self.utilities.clearContentCache()
@@ -1346,11 +1351,6 @@ class Script(default.Script):
             msg = "INFO: Event to be handled as live region"
             debug.println(debug.LEVEL_INFO, msg)
             self.liveRegionManager.handleEvent(event)
-            return True
-
-        if self.utilities.eventIsEOCAdded(event):
-            msg = "INFO: Ignoring: Event was for embedded object char"
-            debug.println(debug.LEVEL_INFO, msg)
             return True
 
         text = self.utilities.queryNonEmptyText(event.source)

@@ -5,11 +5,11 @@ import time
 from gi.repository import GLib
 
 from . import cmdnames
+from . import chnames
 from . import keybindings
 from . import messages
 from . import input_event
 from . import orca_state
-from . import speech
 from . import settings_manager
 
 _settingsManager = settings_manager.getManager()
@@ -264,7 +264,6 @@ class LiveRegionManager:
             return
 
         obj = orca_state.locusOfFocus
-        utterances = []
         objectid = self._getObjectId(obj)
         uri = self._script.bookmarks.getURIKey()
 
@@ -279,18 +278,17 @@ class LiveRegionManager:
 
         if cur_priority == LIVE_OFF or cur_priority == LIVE_NONE:
             self._politenessOverrides[(uri, objectid)] = LIVE_POLITE
-            utterances.append(messages.LIVE_REGIONS_LEVEL_POLITE)
+            self._script.presentMessage(messages.LIVE_REGIONS_LEVEL_POLITE)
         elif cur_priority == LIVE_POLITE:
             self._politenessOverrides[(uri, objectid)] = LIVE_ASSERTIVE
-            utterances.append(messages.LIVE_REGIONS_LEVEL_ASSERTIVE)
+            self._script.presentMessage(messages.LIVE_REGIONS_LEVEL_ASSERTIVE)
         elif cur_priority == LIVE_ASSERTIVE:
             self._politenessOverrides[(uri, objectid)] = LIVE_RUDE
-            utterances.append(messages.LIVE_REGIONS_LEVEL_RUDE)
+            self._script.presentMessage(messages.LIVE_REGIONS_LEVEL_RUDE)
         elif cur_priority == LIVE_RUDE:
             self._politenessOverrides[(uri, objectid)] = LIVE_OFF
-            utterances.append(messages.LIVE_REGIONS_LEVEL_OFF)
+            self._script.presentMessage(messages.LIVE_REGIONS_LEVEL_OFF)
 
-        speech.speak(utterances)
 
     def goLastLiveRegion(self):
         """Move the caret to the last announced live region and speak the 
@@ -405,85 +403,48 @@ class LiveRegionManager:
     def _getMessage(self, event):
         """Gets the message associated with a given live event."""
         attrs = self._getAttrDictionary(event.source)
-        content = [] 
-        labels = []
+        content = ""
+        labels = ""
         
         # A message is divided into two parts: labels and content.  We
         # will first try to get the content.  If there is None, 
         # assume it is an invalid message and return None
         if event.type.startswith('object:children-changed:add'):
-            # Get the text based on the atomic property
-            try:
-                if attrs['container-atomic'] == 'true':
-                    # expand the source if atomic is true
-                    newcontent = \
-                        self._script.utilities.expandEOCs(event.source)
-                else:
-                    # expand the target if atomic is false
-                    newcontent = \
-                        self._script.utilities.expandEOCs(event.any_data)
-            except (KeyError, TypeError):
-                # expand the target if there is no ARIA markup
-                newcontent = \
-                    self._script.utilities.expandEOCs(event.any_data)
-
-            # add our content to the returned message or return None if no
-            # content
-            if newcontent:
-                content.append(newcontent)
+            if attrs.get('container-atomic') == 'true':
+                content = self._script.utilities.expandEOCs(event.source)
             else:
-                return None
+                content = self._script.utilities.expandEOCs(event.any_data)
 
-        else: #object:text-changed:insert
-            # Get a handle to the Text interface for the source.
-            # Serious problems if this fails.
-            #
-            try:
-                sourceitext = event.source.queryText()
-            except NotImplementedError:
-                return None
-
-            # We found an embed character.  We can expect a children-changed
-            # event, which we will act on, so just return.
-            try:
-                txt = sourceitext.getText(0, -1)
-            except:
-                return None
-            if txt.count(self._script.EMBEDDED_OBJECT_CHARACTER) > 0:
-                return None
-
-            # Get the text based on the atomic property
-            try:
-                if attrs['container-atomic'] == 'true':
-                    newcontent = txt
-                else:
-                    newcontent = txt[event.detail1:event.detail1+event.detail2]
-            except KeyError:
-                newcontent = txt[event.detail1:event.detail1+event.detail2]
-
-            # add our content to the returned message or return None if no
-            # content
-            if len(newcontent) > 0:
-                content.append(newcontent)
+        elif event.type.startswith('object:text-changed:insert'):
+            if attrs.get('container-atomic') != 'true':
+                content = event.any_data
             else:
-                return None
+                text = self._script.utilities.queryNonEmptyText(event.source)
+                if text:
+                    content = text.getText(0, -1)
+
+        if not content:
+            return None
+
+        content = content.strip()
+        if len(content) == 1:
+            content = chnames.getCharacterName(content)
 
         # Proper live regions typically come with proper aria labels. These
         # labels are typically exposed as names. Failing that, descriptions.
         # Looking for actual labels seems a non-performant waste of time.
-        labels = [event.source.name, event.source.description]
+        name = (event.source.name or event.source.description).strip()
+        if name and name != content:
+            labels = name
 
         # instantly send out notify messages
-        if 'channel' in attrs and attrs['channel'] == 'notify':
+        if attrs.get('channel') == 'notify':
             utts = labels + content
-            speech.stop()
-            # Note: we would like to use a different ACSS for alerts.  This work
-            # should be done as part of bug #412656. For now, however, we will
-            # also present the message in braille.
+            self._script.presentationInterrupt()
             self._script.presentMessage(utts)
             return None
-        else:
-            return {'content':content, 'labels':labels}
+
+        return {'content':[content], 'labels':[labels]}
 
     def flushMessages(self):
         self.msg_queue.clear()
