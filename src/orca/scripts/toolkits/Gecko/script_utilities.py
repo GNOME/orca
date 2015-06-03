@@ -1492,6 +1492,9 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isLink(self, obj):
+        if not obj:
+            return False
+
         rv = self._isLink.get(hash(obj))
         if rv is not None:
             return rv
