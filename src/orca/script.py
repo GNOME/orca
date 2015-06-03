@@ -416,6 +416,9 @@ class Script:
              and event.detail1 == cachedEvent.detail1:
             skip = True
             reason = "more recent event of the same type in a different object"
+        elif event.type.endswith("system") and event.source == cachedEvent.source:
+            skip = True
+            reason = "more recent system event in the same object"
 
         if skip:
             debug.println(debug.LEVEL_FINE,
