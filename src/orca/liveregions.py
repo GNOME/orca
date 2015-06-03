@@ -4,9 +4,15 @@ import pyatspi
 import time
 from gi.repository import GLib
 
+from . import cmdnames
+from . import keybindings
 from . import messages
+from . import input_event
 from . import orca_state
 from . import speech
+from . import settings_manager
+
+_settingsManager = settings_manager.getManager()
 
 # define 'live' property types
 LIVE_OFF       = -1
@@ -58,47 +64,6 @@ class PriorityQueue:
         myfilter = lambda item: item[0] > priority
         self.queue = list(filter(myfilter, self.queue))
 
-    def clumpContents(self):
-        """ Combines messages with the same 'label' by appending newer  
-        'content' and removing the newer message.  This operation is only
-        applied to the next dequeued message for performance reasons and is
-        often applied in conjunction with filterContents() """
-        if len(self.queue):
-            newqueue = []
-            newqueue.append(self.queue[0])
-            targetlabels = newqueue[0][2]['labels']
-            targetcontent = newqueue[0][2]['content']
-            for i in range(1, len(self.queue)):
-                if self.queue[i][2]['labels'] == targetlabels:
-                    newqueue[0][2]['content'].extend \
-                                   (self.queue[i][2]['content'])
-                else:
-                    newqueue.append(self.queue[i]) 
-
-            self.queue = newqueue
-
-    def filterContents(self):
-        """ Combines utterances by eliminating repeated utterances and
-        utterances that are part of other utterances. """
-        if len(self.queue[0][2]['content']) > 1:
-            oldcontent = self.queue[0][2]['content']
-            newcontent = [oldcontent[0]]
-
-            for i in range(1, len(oldcontent)):
-                found = False
-                for j in range(len(newcontent)):
-                    if oldcontent[i].find(newcontent[j]) != -1 \
-                        or newcontent[j].find(oldcontent[i]) != -1: 
-                        if len(oldcontent[i]) > len(newcontent[j]):
-                            newcontent[j] = oldcontent[i]
-                        found = True
-                        break
-
-                if not found:
-                    newcontent.append(oldcontent[i])
-
-            self.queue[0][2]['content'] = newcontent
- 
     def __len__(self):
         """ Return the length of the queue """
         return len(self.queue)
@@ -109,6 +74,9 @@ class LiveRegionManager:
         self._script = script
         # message priority queue
         self.msg_queue = PriorityQueue()
+
+        self.inputEventHandlers = self._getInputEventHandlers()
+        self.keyBindings = self._getKeyBindings()
 
         # Message cache.  Used to store up to 9 previous messages so user can
         # review if desired.
@@ -136,6 +104,65 @@ class LiveRegionManager:
         self.bookmarkLoadHandler()
         script.bookmarks.addSaveObserver(self.bookmarkSaveHandler)
         script.bookmarks.addLoadObserver(self.bookmarkLoadHandler)
+
+    def _getInputEventHandlers(self):
+        handlers = {}
+
+        handlers["advanceLivePoliteness"] = \
+            input_event.InputEventHandler(
+                self.advancePoliteness,
+                cmdnames.LIVE_REGIONS_ADVANCE_POLITENESS)
+
+        handlers["setLivePolitenessOff"] = \
+            input_event.InputEventHandler(
+                self.setLivePolitenessOff,
+                cmdnames.LIVE_REGIONS_SET_POLITENESS_OFF)
+
+        handlers["monitorLiveRegions"] = \
+            input_event.InputEventHandler(
+                self.toggleMonitoring,
+                cmdnames.LIVE_REGIONS_MONITOR)
+
+        handlers["reviewLiveAnnouncement"] = \
+            input_event.InputEventHandler(
+                self.reviewLiveAnnouncement,
+                cmdnames.LIVE_REGIONS_REVIEW)
+
+        return handlers
+
+    def _getKeyBindings(self):
+        keyBindings = keybindings.KeyBindings()
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "backslash",
+                keybindings.defaultModifierMask,
+                keybindings.NO_MODIFIER_MASK,
+                self.inputEventHandlers.get("advanceLivePoliteness")))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "backslash",
+                keybindings.defaultModifierMask,
+                keybindings.SHIFT_MODIFIER_MASK,
+                self.inputEventHandlers.get("setLivePolitenessOff")))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "backslash",
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_SHIFT_MODIFIER_MASK,
+                self.inputEventHandlers.get("monitorLiveRegions")))
+
+        for key in ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"]:
+            keyBindings.add(
+                keybindings.KeyBinding(
+                    key,
+                    keybindings.defaultModifierMask,
+                    keybindings.ORCA_MODIFIER_MASK,
+                    self.inputEventHandlers.get("reviewLiveAnnouncement")))
+
+        return keyBindings
 
     def reset(self):
         # First we will purge our politeness override dictionary of LIVE_NONE
@@ -190,24 +217,9 @@ class LiveRegionManager:
         purging the message queue and outputting any queued messages that
         were queued up in the handleEvent() method.
         """
-        # If there are messages in the queue, we are monitoring, and we are not
-        # currently speaking then speak queued message.
-        # Note: Do all additional work within if statement to prevent
-        # it from being done for each event loop callback
-        # Note: isSpeaking() returns False way too early.  A strategy using
-        # a message length (in secs) could be used but don't forget many 
-        # parameters such as rate,expanded text and others must be considered.
-        if len(self.msg_queue) > 0 \
-                  and not speech.isSpeaking() \
-                  and orca_state.lastInputEvent \
-                  and time.time() - orca_state.lastInputEvent.time > 1:
-            # House cleaning on the message queue.  
-            # First we will purge the queue of old messages
+
+        if len(self.msg_queue) > 0:
             self.msg_queue.purgeByKeepAlive()
-            # Next, we will filter the messages
-            self.msg_queue.clumpContents()
-            self.msg_queue.filterContents()
-            # Let's get our queued information
             politeness, timestamp, message, obj = self.msg_queue.dequeue()
             # Form output message.  No need to repeat labels and content.
             # TODO: really needs to be tested in real life cases.  Perhaps
@@ -244,8 +256,14 @@ class LiveRegionManager:
                 retval.append(self._script.bookmarks.pathToObj(objectid))
         return retval
 
-    def advancePoliteness(self, obj):
+    def advancePoliteness(self, script, inputEvent):
         """Advance the politeness level of the given object"""
+
+        if not _settingsManager.getSetting('inferLiveRegions'):
+            self._script.presentMessage(messages.LIVE_REGIONS_OFF)
+            return
+
+        obj = orca_state.locusOfFocus
         utterances = []
         objectid = self._getObjectId(obj)
         uri = self._script.bookmarks.getURIKey()
@@ -282,16 +300,27 @@ class LiveRegionManager:
             self._script.speakContents(self._script.utilities.getObjectContentsAtOffset(
                                        self.lastliveobj, 0))
 
-    def reviewLiveAnnouncement(self, msgnum):
+    def reviewLiveAnnouncement(self, script, inputEvent):
         """Speak the given number cached message"""
+
+        msgnum = int(inputEvent.event_string[1:])
+        if not _settingsManager.getSetting('inferLiveRegions'):
+            self._script.presentMessage(messages.LIVE_REGIONS_OFF)
+            return
+
         if msgnum > len(self.msg_cache):
             self._script.presentMessage(messages.LIVE_REGIONS_NO_MESSAGE)
         else:
             self._script.presentMessage(self.msg_cache[-msgnum])
 
-    def setLivePolitenessOff(self):
+    def setLivePolitenessOff(self, script, inputEvent):
         """User toggle to set all live regions to LIVE_OFF or back to their
         original politeness."""
+
+        if not _settingsManager.getSetting('inferLiveRegions'):
+            self._script.presentMessage(messages.LIVE_REGIONS_OFF)
+            return
+
         # start at the document frame
         docframe = self._script.utilities.documentFrame()
         # get the URI of the page.  It is used as a partial key.
@@ -439,8 +468,10 @@ class LiveRegionManager:
             else:
                 return None
 
-        # Get the labeling information now that we have good content.
-        labels = self._getLabelsAsUtterances(event.source)
+        # Proper live regions typically come with proper aria labels. These
+        # labels are typically exposed as names. Failing that, descriptions.
+        # Looking for actual labels seems a non-performant waste of time.
+        labels = [event.source.name, event.source.description]
 
         # instantly send out notify messages
         if 'channel' in attrs and attrs['channel'] == 'notify':
@@ -462,42 +493,6 @@ class LiveRegionManager:
         self.msg_cache.append(utts)
         if len(self.msg_cache) > CACHE_SIZE:
             self.msg_cache.pop(0)
-
-    def _getLabelsAsUtterances(self, obj):
-        """Get the labels for a given object"""
-        # try the Gecko label getter first
-        uttstring = self._script.utilities.displayedLabel(obj)
-        if uttstring:
-            return [uttstring.strip()]
-        # often we see a table cell.  I'll implement my own label getter
-        elif obj.getRole() == pyatspi.ROLE_TABLE_CELL \
-                           and obj.parent.childCount > 1:
-            # We will try the table interface first for it's parent
-            try:
-                itable = obj.parent.queryTable()
-                # I'm in a table, now what row are we in?  Look in the first 
-                # columm of that row.
-                #
-                # Note: getRowHeader() fails for most markup.  We will use the
-                # relation when the markup is good (when getRowHeader() works) 
-                # so we won't see this code in those cases.  
-                index = self._script.utilities.cellIndex(obj)
-                row = itable.getRowAtIndex(index)
-                header = itable.getAccessibleAt(row, 0)
-                # expand the header
-                return [self._script.utilities.expandEOCs(header).strip()]
-            except NotImplementedError:
-                pass
-
-            # Last ditch effort is to see if our parent is a table row <tr> 
-            # element.
-            parentattrs = self._getAttrDictionary(obj.parent) 
-            if 'tag' in parentattrs and parentattrs['tag'] == 'TR':
-                return [self._script.utilities.expandEOCs( \
-                                  obj.parent.getChildAtIndex(0)).strip()]
-
-        # Sorry, no valid labels found
-        return []
 
     def _getLiveType(self, obj):
         """Returns the live politeness setting for a given object. Also,
@@ -577,3 +572,12 @@ class LiveRegionManager:
             except Exception:
                 raise LookupError
             obj = obj.parent
+
+    def toggleMonitoring(self, script, inputEvent):
+        if not _settingsManager.getSetting('inferLiveRegions'):
+            _settingsManager.setSetting('inferLiveRegions', True)
+            self._script.presentMessage(messages.LIVE_REGIONS_MONITORING_ON)
+        else:
+            _settingsManager.setSetting('inferLiveRegions', False)
+            self.flushMessages()
+            self._script.presentMessage(messages.LIVE_REGIONS_MONITORING_OFF)

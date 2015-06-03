@@ -100,6 +100,9 @@ class Script:
         self.utilities = self.getUtilities()
         self.labelInference = self.getLabelInference()
         self.structuralNavigation = self.getStructuralNavigation()
+        self.bookmarks = self.getBookmarks()
+        self.liveRegionManager = self.getLiveRegionManager()
+
         self.chat = self.getChat()
         self.inputEventHandlers = {}
         self.pointOfReference = {}
@@ -113,7 +116,6 @@ class Script:
         self.generatorCache = {}
         self.eventCache = {}
         self.whereAmI = self.getWhereAmI()
-        self.bookmarks = self.getBookmarks()
         self.spellcheck = self.getSpellCheck()
         self.voices = settings.voices
         self.tutorialGenerator = self.getTutorialGenerator()
@@ -244,6 +246,10 @@ class Script:
         """
         types = self.getEnabledStructuralNavigationTypes()
         return structural_navigation.StructuralNavigation(self, types)
+
+    def getLiveRegionManager(self):
+        """Returns the live region support for this script."""
+        return None
 
     def useStructuralNavigationModel(self):
         """Returns True if we should use structural navigation. Most

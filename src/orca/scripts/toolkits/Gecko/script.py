@@ -121,12 +121,6 @@ class Script(default.Script):
              Script.goBeginningOfLine,
              Script.goEndOfLine]
 
-        self._liveRegionFunctions = \
-            [Script.setLivePolitenessOff,
-             Script.advanceLivePoliteness,
-             Script.monitorLiveRegions,
-             Script.reviewLiveAnnouncement]
-
         if _settingsManager.getSetting('caretNavigationEnabled') == None:
             _settingsManager.setSetting('caretNavigationEnabled', True)
         if _settingsManager.getSetting('sayAllOnLoad') == None:
@@ -154,9 +148,6 @@ class Script(default.Script):
         # means we need to know if that has already taken place.
         #
         self._madeFindAnnouncement = False
-
-        # Create the live region manager and start the message manager
-        self.liveMngr = liveregions.LiveRegionManager(self)
 
         # For really large objects, a call to getAttributes can take up to
         # two seconds! This is a Firefox bug. We'll try to improve things
@@ -293,6 +284,11 @@ class Script(default.Script):
 
         return enabledTypes
 
+    def getLiveRegionManager(self):
+        """Returns the live region support for this script."""
+
+        return liveregions.LiveRegionManager(self)
+
     def getStructuralNavigation(self):
         """Returns the 'structural navigation' class for this script.
         """
@@ -308,6 +304,8 @@ class Script(default.Script):
         default.Script.setupInputEventHandlers(self)
         self.inputEventHandlers.update(\
             self.structuralNavigation.inputEventHandlers)
+
+        self.inputEventHandlers.update(self.liveRegionManager.inputEventHandlers)
 
         self.inputEventHandlers["goNextCharacterHandler"] = \
             input_event.InputEventHandler(
@@ -358,26 +356,6 @@ class Script(default.Script):
             input_event.InputEventHandler(
                 Script.goEndOfLine,
                 cmdnames.CARET_NAVIGATION_LINE_END)
-
-        self.inputEventHandlers["advanceLivePoliteness"] = \
-            input_event.InputEventHandler(
-                Script.advanceLivePoliteness,
-                cmdnames.LIVE_REGIONS_ADVANCE_POLITENESS)
-
-        self.inputEventHandlers["setLivePolitenessOff"] = \
-            input_event.InputEventHandler(
-                Script.setLivePolitenessOff,
-                cmdnames.LIVE_REGIONS_SET_POLITENESS_OFF)
-
-        self.inputEventHandlers["monitorLiveRegions"] = \
-            input_event.InputEventHandler(
-                Script.monitorLiveRegions,
-                cmdnames.LIVE_REGIONS_MONITOR)
-
-        self.inputEventHandlers["reviewLiveAnnouncement"] = \
-            input_event.InputEventHandler(
-                Script.reviewLiveAnnouncement,
-                cmdnames.LIVE_REGIONS_REVIEW)
 
         self.inputEventHandlers["toggleCaretNavigationHandler"] = \
             input_event.InputEventHandler(
@@ -444,6 +422,10 @@ class Script(default.Script):
 
         bindings = self.structuralNavigation.keyBindings
         for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        liveRegionBindings = self.liveRegionManager.keyBindings
+        for keyBinding in liveRegionBindings.keyBindings:
             keyBindings.add(keyBinding)
 
         return keyBindings
@@ -662,9 +644,7 @@ class Script(default.Script):
                 self._lastCommandWasCaretNav = consumes
                 self._lastCommandWasStructNav = False
                 self._lastCommandWasMouseButton = False
-            elif handler \
-                 and (handler.function in self.structuralNavigation.functions \
-                      or handler.function in self._liveRegionFunctions):
+            elif handler and handler.function in self.structuralNavigation.functions:
                 consumes = self.useStructuralNavigationModel()
                 self._lastCommandWasCaretNav = False
                 self._lastCommandWasStructNav = consumes
@@ -681,9 +661,7 @@ class Script(default.Script):
                 self._lastCommandWasCaretNav = consumes
                 self._lastCommandWasStructNav = False
                 self._lastCommandWasMouseButton = False
-            elif handler \
-                 and (handler.function in self.structuralNavigation.functions \
-                      or handler.function in self._liveRegionFunctions):
+            elif handler and handler.function in self.structuralNavigation.functions:
                 consumes = self.useStructuralNavigationModel()
                 self._lastCommandWasCaretNav = False
                 self._lastCommandWasStructNav = consumes
@@ -1098,7 +1076,7 @@ class Script(default.Script):
         if self.utilities.handleAsLiveRegion(event):
             msg = "INFO: Event to be handled as live region"
             debug.println(debug.LEVEL_INFO, msg)
-            self.liveMngr.handleEvent(event)
+            self.liveRegionManager.handleEvent(event)
             return True
 
         if self._loadingDocumentContent:
@@ -1155,7 +1133,7 @@ class Script(default.Script):
         msg = "INFO: Updating loading state and resetting live regions"
         debug.println(debug.LEVEL_INFO, msg)
         self._loadingDocumentContent = False
-        self.liveMngr.reset()
+        self.liveRegionManager.reset()
         return True
 
     def onDocumentLoadStopped(self, event):
@@ -1293,7 +1271,7 @@ class Script(default.Script):
         if event.source.getRole() == pyatspi.ROLE_FRAME:
             msg = "INFO: Flusing messages from live region manager"
             debug.println(debug.LEVEL_INFO, msg)
-            self.liveMngr.flushMessages()
+            self.liveRegionManager.flushMessages()
 
         return True
 
@@ -1367,7 +1345,7 @@ class Script(default.Script):
         if self.utilities.handleAsLiveRegion(event):
             msg = "INFO: Event to be handled as live region"
             debug.println(debug.LEVEL_INFO, msg)
-            self.liveMngr.handleEvent(event)
+            self.liveRegionManager.handleEvent(event)
             return True
 
         if self.utilities.eventIsEOCAdded(event):
@@ -2048,35 +2026,6 @@ class Script(default.Script):
         [obj, characterOffset] = self.utilities.getBottomOfFile()
         self.utilities.setCaretPosition(obj, characterOffset)
         self.presentLine(obj, characterOffset)
-
-    def advanceLivePoliteness(self, inputEvent):
-        """Advances live region politeness level."""
-        if _settingsManager.getSetting('inferLiveRegions'):
-            self.liveMngr.advancePoliteness(orca_state.locusOfFocus)
-        else:
-            self.presentMessage(messages.LIVE_REGIONS_OFF)
-
-    def monitorLiveRegions(self, inputEvent):
-        if not _settingsManager.getSetting('inferLiveRegions'):
-            _settingsManager.setSetting('inferLiveRegions', True)
-            self.presentMessage(messages.LIVE_REGIONS_MONITORING_ON)
-        else:
-            _settingsManager.setSetting('inferLiveRegions', False)
-            self.liveMngr.flushMessages()
-            self.presentMessage(messages.LIVE_REGIONS_MONITORING_OFF)
-
-    def setLivePolitenessOff(self, inputEvent):
-        if _settingsManager.getSetting('inferLiveRegions'):
-            self.liveMngr.setLivePolitenessOff()
-        else:
-            self.presentMessage(messages.LIVE_REGIONS_OFF)
-
-    def reviewLiveAnnouncement(self, inputEvent):
-        if _settingsManager.getSetting('inferLiveRegions'):
-            self.liveMngr.reviewLiveAnnouncement( \
-                                    int(inputEvent.event_string[1:]))
-        else:
-            self.presentMessage(messages.LIVE_REGIONS_OFF)
 
     def enableStickyFocusMode(self, inputEvent):
         self._inFocusMode = True

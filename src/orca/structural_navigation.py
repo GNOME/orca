@@ -222,6 +222,8 @@ class StructuralNavigationObject:
                     modifiers,
                     self.inputEventHandlers[handlerName]))
 
+            self.functions.append(self.showList)
+
         # Set up the "at level" handlers (e.g. to navigate among headings
         # at the specified level).
         #
@@ -279,6 +281,8 @@ class StructuralNavigationObject:
                     keybindings.defaultModifierMask,
                     modifiers,
                     self.inputEventHandlers[handlerName]))
+
+            self.functions.append(handler)
 
         # Set up the "directional" handlers (e.g. for table cells. Live
         # region support has a handler to go to the last live region,
@@ -713,7 +717,7 @@ class StructuralNavigation:
     #                                                                       #
     #########################################################################
 
-    def toggleStructuralNavigation(self, script, inputEvent):
+    def toggleStructuralNavigation(self, script, inputEvent, presentMessage=True):
         """Toggles structural navigation keys."""
 
         self.enabled = not self.enabled
@@ -724,7 +728,8 @@ class StructuralNavigation:
             string = messages.STRUCTURAL_NAVIGATION_KEYS_OFF
 
         debug.println(debug.LEVEL_CONFIGURATION, string)
-        self._script.presentMessage(string)
+        if presentMessage:
+            self._script.presentMessage(string)
 
     #########################################################################
     #                                                                       #

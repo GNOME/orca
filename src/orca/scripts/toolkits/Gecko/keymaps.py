@@ -58,29 +58,6 @@ arrowKeymap = (
 )
 
 commonKeymap = (
-
-    # keybindings to provide chat room message history.
-    ("F1", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("F2", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("F3", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("F4", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("F5", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("F6", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("F7", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("F8", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-    ("F9", defaultModifierMask, ORCA_MODIFIER_MASK, "reviewLiveAnnouncement"),
-
-    # misc
-    
-    ("backslash", defaultModifierMask, SHIFT_MODIFIER_MASK,
-    "setLivePolitenessOff"),
-
-    ("backslash", defaultModifierMask, ORCA_SHIFT_MODIFIER_MASK,
-    "monitorLiveRegions"),
-
-    ("backslash", defaultModifierMask, NO_MODIFIER_MASK,
-    "advanceLivePoliteness"),
-
     ("F12", defaultModifierMask, ORCA_MODIFIER_MASK,
     "toggleCaretNavigationHandler"),
 
