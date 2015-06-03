@@ -649,6 +649,12 @@ class Script(default.Script):
                 self._lastCommandWasCaretNav = False
                 self._lastCommandWasStructNav = consumes
                 self._lastCommandWasMouseButton = False
+            elif handler and handler.function in self.liveRegionManager.functions:
+                # This is temporary.
+                consumes = self.useStructuralNavigationModel()
+                self._lastCommandWasCaretNav = False
+                self._lastCommandWasStructNav = consumes
+                self._lastCommandWasMouseButton = False
             else:
                 consumes = handler != None
                 self._lastCommandWasCaretNav = False
@@ -662,6 +668,12 @@ class Script(default.Script):
                 self._lastCommandWasStructNav = False
                 self._lastCommandWasMouseButton = False
             elif handler and handler.function in self.structuralNavigation.functions:
+                consumes = self.useStructuralNavigationModel()
+                self._lastCommandWasCaretNav = False
+                self._lastCommandWasStructNav = consumes
+                self._lastCommandWasMouseButton = False
+            elif handler and handler.function in self.liveRegionManager.functions:
+                # This is temporary.
                 consumes = self.useStructuralNavigationModel()
                 self._lastCommandWasCaretNav = False
                 self._lastCommandWasStructNav = consumes

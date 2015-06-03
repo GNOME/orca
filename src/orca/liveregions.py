@@ -78,6 +78,12 @@ class LiveRegionManager:
         self.inputEventHandlers = self._getInputEventHandlers()
         self.keyBindings = self._getKeyBindings()
 
+        # This is temporary.
+        self.functions = [self.advancePoliteness,
+                          self.setLivePolitenessOff,
+                          self.toggleMonitoring,
+                          self.reviewLiveAnnouncement]
+
         # Message cache.  Used to store up to 9 previous messages so user can
         # review if desired.
         self.msg_cache = []
