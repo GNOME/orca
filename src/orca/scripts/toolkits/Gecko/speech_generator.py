@@ -171,6 +171,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return super()._generateNumberOfChildren(obj, **args)
 
         children = [x for x in obj if x.getRole() == pyatspi.ROLE_LIST_ITEM]
+        if not children:
+            return []
+
         result = [messages.listItemCount(len(children))]
         result.extend(self.voice(speech_generator.SYSTEM))
         return result
