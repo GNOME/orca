@@ -1365,6 +1365,8 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
+        # TODO - JD: As an experiment, we're stopping these at the event manager.
+        # If that works, this can be removed.
         if self.utilities.eventIsEOCAdded(event):
             msg = "INFO: Ignoring: Event was for embedded object char"
             debug.println(debug.LEVEL_INFO, msg)

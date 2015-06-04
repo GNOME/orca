@@ -1639,6 +1639,8 @@ class Utilities(script_utilities.Utilities):
 
         return self._treatTextObjectAsWhole(event.source)
 
+    # TODO - JD: As an experiment, we're stopping these at the event manager.
+    # If that works, this can be removed.
     def eventIsEOCAdded(self, event):
         if not self.inDocumentContent(event.source):
             return False
