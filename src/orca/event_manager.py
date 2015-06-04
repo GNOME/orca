@@ -107,6 +107,18 @@ class EventManager:
            and event.source != self.registry.getDesktop(0):
             return True
 
+        try:
+            name = event.source.name
+            state = event.source.getState()
+        except:
+            msg = 'ERROR: %s from potentially-defunct obj' % event.type
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+        if state.contains(pyatspi.STATE_DEFUNCT):
+            msg = 'ERROR: %s from defunct obj' % event.type
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
         if event.type.startswith('object:children-changed:add'):
             if not event.any_data:
                 msg = 'ERROR: Children changed add event without child'
