@@ -1710,6 +1710,9 @@ class StructuralNavigation:
                 text = image.imageDescription or obj.description
             if not text and obj.parent.getRole() == pyatspi.ROLE_LINK:
                 text = self._script.utilities.linkBasename(obj.parent)
+        if not text and obj.getRole() == pyatspi.ROLE_LIST:
+            children = [x for x in obj if x.getRole() == pyatspi.ROLE_LIST_ITEM]
+            text = " ".join(list(map(self._getText, children)))
 
         return text
 
