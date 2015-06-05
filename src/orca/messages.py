@@ -1499,6 +1499,12 @@ SPEECH_HIGHER = _("higher.")
 # Translators: This string announces speech pitch change.
 SPEECH_LOWER  = _("lower.")
 
+# Translators: This string announces speech volume change.
+SPEECH_LOUDER = _("louder.")
+
+# Translators: This string announces speech volume change.
+SPEECH_SOFTER  = _("softer.")
+
 # Translators: Orca's verbosity levels control how much (or how little)
 # Orca will speak when presenting objects as the user navigates within
 # applications and reads content. The two levels are "brief" and "verbose".

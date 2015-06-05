@@ -324,6 +324,16 @@ def decreaseSpeechPitch(script=None, inputEvent=None):
 
     return True
 
+def increaseSpeechVolume(script=None, inputEvent=None):
+    if _speechserver:
+        _speechserver.increaseSpeechVolume()
+    return True
+
+def decreaseSpeechVolume(script=None, inputEvent=None):
+    if _speechserver:
+        _speechserver.decreaseSpeechVolume()
+    return True
+
 def shutdown():
     global _speechserver
     if _speechserver:

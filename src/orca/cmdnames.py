@@ -388,6 +388,14 @@ DECREASE_SPEECH_PITCH = _("Decreases the speech pitch.")
 # speech synthesis engine will generate speech.
 INCREASE_SPEECH_PITCH = _("Increases the speech pitch.")
 
+# Translators: the speech volume is how high or low in gain/volume the
+# speech synthesis engine will generate speech.
+INCREASE_SPEECH_VOLUME = _("Increases the speech volume.")
+
+# Translators: the speech volume is how high or low in gain/volume the
+# speech synthesis engine will generate speech.
+DECREASE_SPEECH_VOLUME = _("Decreases the speech volume.")
+
 # Translators: Orca allows the user to turn speech synthesis on or off.
 #  We call it 'silencing'.
 TOGGLE_SPEECH = _("Toggles the silencing of speech.")
