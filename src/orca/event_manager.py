@@ -606,7 +606,11 @@ class EventManager:
             app = event.host_application or event.source.getApplication()
             _scriptManager.setActiveScript(script, reason)
 
-        script.processObjectEvent(event)
+        try:
+            script.processObjectEvent(event)
+        except:
+            msg = 'ERROR: Could not process %s' % event.type
+            debug.println(debug.LEVEL_INFO, msg)
 
     def processKeyboardEvent(self, keyboardEvent):
         """Processes the given keyboard event based on the keybinding from the
