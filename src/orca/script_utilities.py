@@ -1672,6 +1672,14 @@ class Utilities:
         Returns True if the word is flagged as misspelled.
         """
 
+        attributes, start, end  = self.textAttributes(obj, offset, True)
+        if attributes.get("invalid") == "spelling":
+            return True
+        if attributes.get("text-spelling") == "misspelled":
+            return True
+        if attributes.get("underline") == "error":
+            return True
+
         return False
 
     def queryNonEmptyText(self, obj):

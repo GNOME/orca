@@ -460,23 +460,6 @@ class Utilities(script_utilities.Utilities):
 
         return descendants
 
-    def isWordMisspelled(self, obj, offset):
-        """Identifies if the current word is flagged as misspelled by the
-        application.
-
-        Arguments:
-        - obj: An accessible which implements the accessible text interface.
-        - offset: Offset in the accessible's text for which to retrieve the
-          attributes.
-
-        Returns True if the word is flagged as misspelled.
-        """
-
-        attributes, start, end  = self.textAttributes(obj, offset, True)
-        error = attributes.get("invalid")
-
-        return error == "spelling"
-
     def setCaretOffset(self, obj, characterOffset):
         self.setCaretPosition(obj, characterOffset)
         self._script.updateBraille(obj)
