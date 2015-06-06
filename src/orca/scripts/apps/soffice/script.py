@@ -985,20 +985,6 @@ class Script(default.Script):
         # We're seeing a crazy ton of these emitted bogusly.
         pass
 
-    def onTextAttributesChanged(self, event):
-        """Callback for object:text-attributes-changed accessibility events."""
-
-        # LibreOffice emits this signal nearly every time text is typed,
-        # even though the text attributes haven't changed:
-        # https://bugs.freedesktop.org/show_bug.cgi?id=71556
-
-        # LibreOffice fails to emit this signal the main time we are looking
-        # for it, namely to present that a misspelled word was typed:
-        # https://bugs.freedesktop.org/show_bug.cgi?id=71558
-
-        # Useless signals are useless.
-        pass
-
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
         """To-be-removed. Returns the string, caretOffset, startOffset."""
 

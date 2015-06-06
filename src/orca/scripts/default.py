@@ -2517,17 +2517,11 @@ class Script(script.Script):
             # check the previous word (most likely case) and the next
             # word with respect to the current position.
             #
-            prevWordAndOffsets = \
-                text.getTextAtOffset(text.caretOffset - 1,
-                                     pyatspi.TEXT_BOUNDARY_WORD_START)
-            nextWordAndOffsets = \
-                text.getTextAtOffset(text.caretOffset + 1,
-                                     pyatspi.TEXT_BOUNDARY_WORD_START)
-
-            if self.utilities.isWordMisspelled(
-                    event.source, prevWordAndOffsets[1] ) \
-               or self.utilities.isWordMisspelled(
-                    event.source, nextWordAndOffsets[1]):
+            offset = text.caretOffset
+            if not text.getText(offset, offset+1).isalnum():
+                offset -= 1
+            if self.utilities.isWordMisspelled(event.source, offset-1) \
+               or self.utilities.isWordMisspelled(event.source, offset+1):
                 self.speakMessage(messages.MISSPELLED)
 
     def onTextDeleted(self, event):
