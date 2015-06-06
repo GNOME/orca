@@ -490,7 +490,7 @@ class StructuralNavigationObject:
         def goLastLiveRegion(script, inputEvent):
             """Go to the last liveRegion."""
             if settings.inferLiveRegions:
-                script.liveMngr.goLastLiveRegion()
+                script.liveRegionManager.goLastLiveRegion()
             else:
                 script.presentMessage(messages.LIVE_REGIONS_OFF)
 
@@ -2934,8 +2934,8 @@ class StructuralNavigation:
 
         isMatch = False
 
-        regobjs = self._script.liveMngr.getLiveNoneObjects()
-        if self._script.liveMngr.matchLiveRegion(obj) or obj in regobjs:
+        regobjs = self._script.liveRegionManager.getLiveNoneObjects()
+        if self._script.liveRegionManager.matchLiveRegion(obj) or obj in regobjs:
             isMatch = True
 
         return isMatch

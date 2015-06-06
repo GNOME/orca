@@ -107,7 +107,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         formatType = args.get('formatType')
         if formatType == 'basicWhereAmI' and self._script.utilities.isLiveRegion(obj):
-            return self._script.liveMngr.generateLiveRegionDescription(obj, **args)
+            return self._script.liveRegionManager.generateLiveRegionDescription(obj, **args)
 
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_TEXT and formatType != 'basicWhereAmI':
