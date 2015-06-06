@@ -1274,6 +1274,7 @@ class Utilities(script_utilities.Utilities):
                              pyatspi.ROLE_COLUMN_HEADER,
                              pyatspi.ROLE_DOCUMENT_FRAME,
                              pyatspi.ROLE_DOCUMENT_WEB,
+                             pyatspi.ROLE_FOOTER,
                              pyatspi.ROLE_FORM,
                              pyatspi.ROLE_HEADING,
                              pyatspi.ROLE_LABEL,

@@ -168,6 +168,9 @@ formatting = {
             'basicWhereAmI': 'labelOrName + readOnly + textRole + (textContent or placeholderText) + anyTextSelection + ' + MNEMONIC,
             'detailedWhereAmI': 'labelOrName + readOnly + textRole + (textContentWithAttributes or placeholderText) + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
             },
+        pyatspi.ROLE_FOOTER: {
+            'unfocused': '(displayedText or name) + roleName',
+        },
         pyatspi.ROLE_FORM: {
             'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
             'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection + ' + MNEMONIC,

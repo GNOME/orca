@@ -195,7 +195,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         end = args.get('endOffset')
 
         if not force:
-            doNotSpeak = [pyatspi.ROLE_FORM,
+            doNotSpeak = [pyatspi.ROLE_FOOTER,
+                          pyatspi.ROLE_FORM,
                           pyatspi.ROLE_LABEL,
                           pyatspi.ROLE_MENU_ITEM,
                           pyatspi.ROLE_PARAGRAPH,
