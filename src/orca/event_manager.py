@@ -101,6 +101,9 @@ class EventManager:
         if list(filter(event.type.startswith, self._ignoredEvents)):
             return True
 
+        if event.type.startswith('window'):
+            return False
+
         # This should ultimately be changed as there are valid reasons
         # to handle these events at the application level.
         if event.type.startswith('object:children-changed:remove') \
