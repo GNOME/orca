@@ -126,28 +126,35 @@ class EventManager:
             name = event.source.name
             state = event.source.getState()
         except:
-            msg = 'ERROR: %s from potentially-defunct obj' % event.type
+            msg = 'ERROR: %s from potentially-defunct source %s in app %s (%s, %s, %s)' % \
+                  (event.type, event.source, event.host_application, event.detail1,
+                   event.detail2, event.any_data)
             debug.println(debug.LEVEL_INFO, msg)
             return True
         if state.contains(pyatspi.STATE_DEFUNCT):
-            msg = 'ERROR: %s from defunct obj' % event.type
+            msg = 'ERROR: %s from defunct source %s in app %s (%s, %s, %s)' % \
+                  (event.type, event.source, event.host_application, event.detail1,
+                   event.detail2, event.any_data)
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
         if event.type.startswith('object:children-changed:add'):
             if not event.any_data:
-                msg = 'ERROR: Children changed add event without child'
+                msg = 'ERROR: %s without child from source %s in app %s' % \
+                      (event.type, event.source, event.host_application)
                 debug.println(debug.LEVEL_INFO, msg)
                 return True
             try:
                 state = event.any_data.getState()
                 role = event.any_data.getRole()
             except:
-                msg = 'ERROR: Children changed add event with potentially-defunct child'
+                msg = 'ERROR: %s with potentially-defunct child %s from source %s in app %s' % \
+                      (event.type, event.any_data, event.source, event.host_application)
                 debug.println(debug.LEVEL_INFO, msg)
                 return True
             if state.contains(pyatspi.STATE_DEFUNCT):
-                msg = 'ERROR: Children changed add event with defunct child'
+                msg = 'ERROR: %s with defunct child %s from source %s in app %s' % \
+                      (event.type, event.any_data, event.source, event.host_application)
                 debug.println(debug.LEVEL_INFO, msg)
                 return True
 
@@ -157,7 +164,8 @@ class EventManager:
             # reason for ignoring it here rather than quickly processing it is the
             # potential for event floods like we're seeing from matrix.org.
             if role == pyatspi.ROLE_IMAGE:
-                msg = 'INFO: Children changed add event for child image. Who cares?'
+                msg = 'INFO: %s for child image %s from source %s in app %s. Who cares?' % \
+                      (event.type, event.any_data, event.source, event.host_application)
                 debug.println(debug.LEVEL_INFO, msg)
                 return True
 
