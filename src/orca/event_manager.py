@@ -123,7 +123,12 @@ class EventManager:
             return False
 
         try:
-            name = event.source.name
+            # TODO - JD: For now we won't ask for the name. Simply asking for the name should
+            # not break anything, and should be a reliable way to quickly identify defunct
+            # objects. But apparently the mere act of asking for the name causes Orca to stop
+            # presenting Eclipse (and possibly other) applications. This might be an AT-SPI2
+            # issue, but until we know for certain....
+            #name = event.source.name
             state = event.source.getState()
         except:
             msg = 'ERROR: %s from potentially-defunct source %s in app %s (%s, %s, %s)' % \
