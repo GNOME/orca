@@ -359,3 +359,7 @@ layoutMode = True
 # any time
 rewindAndFastForwardInSayAll = False
 structNavInSayAll = False
+
+# NOTE: The following are experimental and may be changed or removed at
+# any time
+disableDeadAccessibleFilter = False

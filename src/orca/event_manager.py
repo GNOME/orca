@@ -35,6 +35,7 @@ from . import input_event
 from . import messages
 from . import orca_state
 from . import script_manager
+from . import settings
 
 _scriptManager = script_manager.getManager()
 
@@ -110,6 +111,17 @@ class EventManager:
            and event.source != self.registry.getDesktop(0):
             return True
 
+        if event.type.startswith('object:text-changed') and event.type.endswith('system'):
+            # We should also get children-changed events telling us the same thing.
+            # Getting a bunch of both can result in a flood that grinds us to a halt.
+            if event.any_data == self.EMBEDDED_OBJECT_CHARACTER:
+                msg = 'INFO: Text changed event for embedded object. Who cares?'
+                debug.println(debug.LEVEL_INFO, msg)
+                return True
+
+        if settings.disableDeadAccessibleFilter:
+            return False
+
         try:
             name = event.source.name
             state = event.source.getState()
@@ -146,14 +158,6 @@ class EventManager:
             # potential for event floods like we're seeing from matrix.org.
             if role == pyatspi.ROLE_IMAGE:
                 msg = 'INFO: Children changed add event for child image. Who cares?'
-                debug.println(debug.LEVEL_INFO, msg)
-                return True
-
-        if event.type.startswith('object:text-changed') and event.type.endswith('system'):
-            # We should also get children-changed events telling us the same thing.
-            # Getting a bunch of both can result in a flood that grinds us to a halt.
-            if event.any_data == self.EMBEDDED_OBJECT_CHARACTER:
-                msg = 'INFO: Text changed event for embedded object. Who cares?'
                 debug.println(debug.LEVEL_INFO, msg)
                 return True
 
