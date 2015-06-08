@@ -191,8 +191,14 @@ class SpeechGenerator(generator.Generator):
         acss = self.voice(DEFAULT)
         result.extend(self._generateLabel(obj, **args))
         if not result:
-            if obj.name and (len(obj.name)):
-                result.append(obj.name)
+            try:
+                name = obj.name
+            except:
+                msg = 'ERROR: Could not get name for %s' % obj
+                debug.println(debug.LEVEL_INFO, msg)
+                return result
+            if name:
+                result.append(name)
                 result.extend(acss)
         if not result and obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
             result = self._generateLabelOrName(obj.parent, **args)
