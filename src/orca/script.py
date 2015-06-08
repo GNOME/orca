@@ -100,6 +100,7 @@ class Script:
         self.utilities = self.getUtilities()
         self.labelInference = self.getLabelInference()
         self.structuralNavigation = self.getStructuralNavigation()
+        self.caretNavigation = self.getCaretNavigation()
         self.bookmarks = self.getBookmarks()
         self.liveRegionManager = self.getLiveRegionManager()
 
@@ -224,6 +225,10 @@ class Script:
 
     def getSpellCheck(self):
         """Returns the spellcheck support for this script."""
+        return None
+
+    def getCaretNavigation(self):
+        """Returns the caret navigation support for this script."""
         return None
 
     def getUtilities(self):

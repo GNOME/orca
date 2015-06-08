@@ -14,6 +14,7 @@ orca_python_PYTHON = \
 	braille_rolenames.py \
 	brlmon.py \
 	brltablenames.py \
+	caret_navigation.py \
 	chat.py \
 	chnames.py \
 	cmdnames.py \

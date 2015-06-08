@@ -164,11 +164,12 @@ CAPITALIZATION_SPELL_BRIEF = C_("capitalization style", "spell")
 # to get into a GUI.
 CAPITALIZATION_SPELL_FULL = _("Capitalization style set to spell.")
 
-# Translators: Gecko native caret navigation is where Firefox (or Thunderbird)
-# itself controls how the arrow keys move the caret around HTML content. It's
-# often broken, so Orca needs to provide its own support. As such, Orca offers
-# the user the ability to toggle which application is controlling the caret.
-CARET_CONTROL_GECKO = _("Gecko is controlling the caret.")
+# Translators: Native application caret navigation does not always work as the
+# Orca user wants. As such, Orca offers the user the ability to toggle between
+# the application controlling the caret and Orca controlling it. This message
+# is presented to indicate that the application's native caret navigation is
+# active / not being overridden by Orca.
+CARET_CONTROL_APP = _("The application is controlling the caret.")
 
 # Translators: Gecko native caret navigation is where Firefox (or Thunderbird)
 # itself controls how the arrow keys move the caret around HTML content. It's

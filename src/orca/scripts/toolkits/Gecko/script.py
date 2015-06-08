@@ -43,6 +43,7 @@ import pyatspi
 import time
 
 import orca.braille as braille
+import orca.caret_navigation as caret_navigation
 import orca.cmdnames as cmdnames
 import orca.debug as debug
 import orca.scripts.default as default
@@ -59,7 +60,6 @@ import orca.settings_manager as settings_manager
 import orca.speech as speech
 import orca.speechserver as speechserver
 
-from . import keymaps
 from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
 from .bookmarks import GeckoBookmarks
@@ -105,21 +105,6 @@ class Script(default.Script):
         self.autoFocusModeStructNavCheckButton = None
         self.autoFocusModeCaretNavCheckButton = None
         self.layoutModeCheckButton = None
-
-        # _caretNavigationFunctions are functions that represent fundamental
-        # ways to move the caret (e.g., by the arrow keys).
-        #
-        self._caretNavigationFunctions = \
-            [Script.goNextCharacter,
-             Script.goPreviousCharacter,
-             Script.goNextWord,
-             Script.goPreviousWord,
-             Script.goNextLine,
-             Script.goPreviousLine,
-             Script.goTopOfFile,
-             Script.goBottomOfFile,
-             Script.goBeginningOfLine,
-             Script.goEndOfLine]
 
         if _settingsManager.getSetting('caretNavigationEnabled') == None:
             _settingsManager.setSetting('caretNavigationEnabled', True)
@@ -296,71 +281,23 @@ class Script(default.Script):
         enable = _settingsManager.getSetting('structuralNavigationEnabled')
         return GeckoStructuralNavigation(self, types, enable)
 
-    def setupInputEventHandlers(self):
-        """Defines InputEventHandler fields for this script that can be
-        called by the key and braille bindings.
-        """
+    def getCaretNavigation(self):
+        """Returns the caret navigation support for this script."""
 
-        default.Script.setupInputEventHandlers(self)
-        self.inputEventHandlers.update(\
+        return caret_navigation.CaretNavigation(self)
+
+    def setupInputEventHandlers(self):
+        """Defines InputEventHandlers for this script."""
+
+        super().setupInputEventHandlers()
+        self.inputEventHandlers.update(
             self.structuralNavigation.inputEventHandlers)
 
-        self.inputEventHandlers.update(self.liveRegionManager.inputEventHandlers)
+        self.inputEventHandlers.update(
+            self.caretNavigation.get_handlers())
 
-        self.inputEventHandlers["goNextCharacterHandler"] = \
-            input_event.InputEventHandler(
-                Script.goNextCharacter,
-                cmdnames.CARET_NAVIGATION_NEXT_CHAR)
-
-        self.inputEventHandlers["goPreviousCharacterHandler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousCharacter,
-                cmdnames.CARET_NAVIGATION_PREV_CHAR)
-
-        self.inputEventHandlers["goNextWordHandler"] = \
-            input_event.InputEventHandler(
-                Script.goNextWord,
-                cmdnames.CARET_NAVIGATION_NEXT_WORD)
-
-        self.inputEventHandlers["goPreviousWordHandler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousWord,
-                cmdnames.CARET_NAVIGATION_PREV_WORD)
-
-        self.inputEventHandlers["goNextLineHandler"] = \
-            input_event.InputEventHandler(
-                Script.goNextLine,
-                cmdnames.CARET_NAVIGATION_NEXT_LINE)
-
-        self.inputEventHandlers["goPreviousLineHandler"] = \
-            input_event.InputEventHandler(
-                Script.goPreviousLine,
-                cmdnames.CARET_NAVIGATION_PREV_LINE)
-
-        self.inputEventHandlers["goTopOfFileHandler"] = \
-            input_event.InputEventHandler(
-                Script.goTopOfFile,
-                cmdnames.CARET_NAVIGATION_FILE_START)
-
-        self.inputEventHandlers["goBottomOfFileHandler"] = \
-            input_event.InputEventHandler(
-                Script.goBottomOfFile,
-                cmdnames.CARET_NAVIGATION_FILE_END)
-
-        self.inputEventHandlers["goBeginningOfLineHandler"] = \
-            input_event.InputEventHandler(
-                Script.goBeginningOfLine,
-                cmdnames.CARET_NAVIGATION_LINE_START)
-
-        self.inputEventHandlers["goEndOfLineHandler"] = \
-            input_event.InputEventHandler(
-                Script.goEndOfLine,
-                cmdnames.CARET_NAVIGATION_LINE_END)
-
-        self.inputEventHandlers["toggleCaretNavigationHandler"] = \
-            input_event.InputEventHandler(
-                Script.toggleCaretNavigation,
-                cmdnames.CARET_NAVIGATION_TOGGLE)
+        self.inputEventHandlers.update(
+            self.liveRegionManager.inputEventHandlers)
 
         self.inputEventHandlers["sayAllHandler"] = \
             input_event.InputEventHandler(
@@ -394,28 +331,17 @@ class Script(default.Script):
                 Script.enableStickyFocusMode,
                 cmdnames.SET_FOCUS_MODE_STICKY)
 
-    def __getArrowBindings(self):
-        """Returns an instance of keybindings.KeyBindings that use the
-        arrow keys for navigating HTML content.
-        """
-
-        keyBindings = keybindings.KeyBindings()
-        keyBindings.load(keymaps.arrowKeymap, self.inputEventHandlers)
-        return keyBindings
-
     def getToolkitKeyBindings(self):
         """Returns the toolkit-specific keybindings for this script."""
 
         keyBindings = keybindings.KeyBindings()
 
-        keyBindings.load(keymaps.commonKeymap, self.inputEventHandlers)
+        structNavBindings = self.structuralNavigation.keyBindings
+        for keyBinding in structNavBindings.keyBindings:
+            keyBindings.add(keyBinding)
 
-        if _settingsManager.getSetting('caretNavigationEnabled'):
-            for keyBinding in self.__getArrowBindings().keyBindings:
-                keyBindings.add(keyBinding)
-
-        bindings = self.structuralNavigation.keyBindings
-        for keyBinding in bindings.keyBindings:
+        caretNavBindings = self.caretNavigation.get_bindings()
+        for keyBinding in caretNavBindings.keyBindings:
             keyBindings.add(keyBinding)
 
         liveRegionBindings = self.liveRegionManager.keyBindings
@@ -627,85 +553,41 @@ class Script(default.Script):
         }
 
     def consumesKeyboardEvent(self, keyboardEvent):
-        """Called when a key is pressed on the keyboard.
-
-        Arguments:
-        - keyboardEvent: an instance of input_event.KeyboardEvent
-
-        Returns True if the event is of interest.
-        """
+        """Returns True if the script will consume this keyboard event."""
 
         # We need to do this here. Orca caret and structural navigation
         # often result in the user being repositioned without our getting
         # a corresponding AT-SPI event. Without an AT-SPI event, script.py
         # won't know to dump the generator cache. See bgo#618827.
-        #
         self.generatorCache = {}
 
-        # The reason we override this method is that we only want
-        # to consume keystrokes under certain conditions.  For
-        # example, we only control the arrow keys when we're
-        # managing caret navigation and we're inside document content.
-        #
-        # [[[TODO: WDW - this might be broken when we're inside a
-        # text area that's inside document (or anything else that
-        # we want to allow to control its own destiny).]]]
+        handler = self.keyBindings.getInputHandler(keyboardEvent)
+        if handler and self.caretNavigation.handles_navigation(handler):
+            consumes = self.useCaretNavigationModel(keyboardEvent)
+            self._lastCommandWasCaretNav = consumes
+            self._lastCommandWasStructNav = False
+            self._lastCommandWasMouseButton = False
+            return consumes
 
-        user_bindings = None
-        user_bindings_map = _settingsManager.getSetting('keyBindingsMap')
-        if self.__module__ in user_bindings_map:
-            user_bindings = user_bindings_map[self.__module__]
-        elif "default" in user_bindings_map:
-            user_bindings = user_bindings_map["default"]
+        if handler and handler.function in self.structuralNavigation.functions:
+            consumes = self.useStructuralNavigationModel()
+            self._lastCommandWasCaretNav = False
+            self._lastCommandWasStructNav = consumes
+            self._lastCommandWasMouseButton = False
+            return consumes
 
-        consumes = False
-        if user_bindings:
-            handler = user_bindings.getInputHandler(keyboardEvent)
-            if handler and handler.function in self._caretNavigationFunctions:
-                consumes = self.useCaretNavigationModel(keyboardEvent)
-                self._lastCommandWasCaretNav = consumes
-                self._lastCommandWasStructNav = False
-                self._lastCommandWasMouseButton = False
-            elif handler and handler.function in self.structuralNavigation.functions:
-                consumes = self.useStructuralNavigationModel()
-                self._lastCommandWasCaretNav = False
-                self._lastCommandWasStructNav = consumes
-                self._lastCommandWasMouseButton = False
-            elif handler and handler.function in self.liveRegionManager.functions:
-                # This is temporary.
-                consumes = self.useStructuralNavigationModel()
-                self._lastCommandWasCaretNav = False
-                self._lastCommandWasStructNav = consumes
-                self._lastCommandWasMouseButton = False
-            else:
-                consumes = handler != None
-                self._lastCommandWasCaretNav = False
-                self._lastCommandWasStructNav = False
-                self._lastCommandWasMouseButton = False
-        if not consumes:
-            handler = self.keyBindings.getInputHandler(keyboardEvent)
-            if handler and handler.function in self._caretNavigationFunctions:
-                consumes = self.useCaretNavigationModel(keyboardEvent)
-                self._lastCommandWasCaretNav = consumes
-                self._lastCommandWasStructNav = False
-                self._lastCommandWasMouseButton = False
-            elif handler and handler.function in self.structuralNavigation.functions:
-                consumes = self.useStructuralNavigationModel()
-                self._lastCommandWasCaretNav = False
-                self._lastCommandWasStructNav = consumes
-                self._lastCommandWasMouseButton = False
-            elif handler and handler.function in self.liveRegionManager.functions:
-                # This is temporary.
-                consumes = self.useStructuralNavigationModel()
-                self._lastCommandWasCaretNav = False
-                self._lastCommandWasStructNav = consumes
-                self._lastCommandWasMouseButton = False
-            else:
-                consumes = handler != None
-                self._lastCommandWasCaretNav = False
-                self._lastCommandWasStructNav = False
-                self._lastCommandWasMouseButton = False
-        return consumes
+        if handler and handler.function in self.liveRegionManager.functions:
+            # This is temporary.
+            consumes = self.useStructuralNavigationModel()
+            self._lastCommandWasCaretNav = False
+            self._lastCommandWasStructNav = consumes
+            self._lastCommandWasMouseButton = False
+            return consumes
+
+        self._lastCommandWasCaretNav = False
+        self._lastCommandWasStructNav = False
+        self._lastCommandWasMouseButton = False
+        return handler != None
 
     # TODO - JD: This needs to be moved out of the scripts.
     def textLines(self, obj, offset=None):
@@ -1711,8 +1593,7 @@ class Script(default.Script):
         return True
 
     def useCaretNavigationModel(self, keyboardEvent):
-        """Returns True if we should do our own caret navigation.
-        """
+        """Returns True if we should do our own caret navigation."""
 
         if not _settingsManager.getSetting('caretNavigationEnabled') \
            or self._inFocusMode:
@@ -1721,13 +1602,7 @@ class Script(default.Script):
         if not self.utilities.inDocumentContent():
             return False
 
-        if keyboardEvent.event_string in ["Page_Up", "Page_Down"]:
-            return False
-
         if keyboardEvent.modifiers & keybindings.SHIFT_MODIFIER_MASK:
-            return False
-
-        if not orca_state.locusOfFocus:
             return False
 
         return True
@@ -1849,235 +1724,6 @@ class Script(default.Script):
         self.inMouseOverObject = False
         self.lastMouseOverObject = None
 
-    def goNextCharacter(self, inputEvent):
-        """Positions the caret offset to the next character or object
-        in the document window.
-        """
-        [obj, characterOffset] = self.utilities.getCaretContext()
-        while obj:
-            [obj, characterOffset] = self.utilities.findNextCaretInOrder(obj,
-                                                               characterOffset)
-            if obj and obj.getState().contains(pyatspi.STATE_VISIBLE):
-                break
-
-        if not obj:
-            [obj, characterOffset] = self.utilities.getBottomOfFile()
-
-        self.utilities.setCaretPosition(obj, characterOffset)
-        self.speakCharacterAtOffset(obj, characterOffset)
-        self.updateBraille(obj)
-
-    def goPreviousCharacter(self, inputEvent):
-        """Positions the caret offset to the previous character or object
-        in the document window.
-        """
-        [obj, characterOffset] = self.utilities.getCaretContext()
-        while obj:
-            [obj, characterOffset] = self.utilities.findPreviousCaretInOrder(
-                obj, characterOffset)
-            if obj and obj.getState().contains(pyatspi.STATE_VISIBLE):
-                break
-
-        if not obj:
-            [obj, characterOffset] = self.utilities.getTopOfFile()
-
-        self.utilities.setCaretPosition(obj, characterOffset)
-        self.speakCharacterAtOffset(obj, characterOffset)
-        self.updateBraille(obj)
-
-    def goPreviousWord(self, inputEvent):
-        """Positions the caret offset to beginning of the previous
-        word or object in the document window.
-        """
-
-        [obj, characterOffset] = self.utilities.getCaretContext()
-
-        # Make sure we have a word.
-        #
-        [obj, characterOffset] = \
-            self.utilities.findPreviousCaretInOrder(obj, characterOffset)
-
-        contents = self.utilities.getWordContentsAtOffset(obj, characterOffset)
-        if not len(contents):
-            return
-
-        [obj, startOffset, endOffset, string] = contents[0]
-        if len(contents) == 1 \
-           and endOffset - startOffset == 1 \
-           and self.utilities.getCharacterAtOffset(obj, startOffset) == " ":
-            # Our "word" is just a space. This can happen if the previous
-            # word was a mark of punctuation surrounded by whitespace (e.g.
-            # " | ").
-            #
-            [obj, characterOffset] = \
-                self.utilities.findPreviousCaretInOrder(obj, startOffset)
-            contents = self.utilities.getWordContentsAtOffset(obj, characterOffset)
-            if len(contents):
-                [obj, startOffset, endOffset, string] = contents[0]
-
-        self.utilities.setCaretPosition(obj, startOffset)
-        self.updateBraille(obj)
-        self.speakMisspelledIndicator(obj, startOffset)
-        self.speakContents(contents)
-
-    def goNextWord(self, inputEvent):
-        """Positions the caret offset to the end of next word or object
-        in the document window.
-        """
-
-        [obj, characterOffset] = self.utilities.getCaretContext()
-
-        # Make sure we have a word.
-        #
-        characterOffset = max(0, characterOffset)
-        [obj, characterOffset] = \
-            self.utilities.findNextCaretInOrder(obj, characterOffset)
-
-        contents = self.utilities.getWordContentsAtOffset(obj, characterOffset)
-        if not (len(contents) and contents[-1][2]):
-            return
-
-        [obj, startOffset, endOffset, string] = contents[-1]
-        if string and string[-1].isspace():
-            endOffset -= 1
-        self.utilities.setCaretPosition(obj, endOffset)
-        self.updateBraille(obj)
-        self.speakMisspelledIndicator(obj, startOffset)
-        self.speakContents(contents)
-
-    def goPreviousLine(self, inputEvent):
-        """Positions the caret offset at the previous line in the document
-        window, attempting to preserve horizontal caret position.
-
-        Returns True if we actually moved.
-        """
-
-        if self._inSayAll \
-           and _settingsManager.getSetting('rewindAndFastForwardInSayAll'):
-            msg = "INFO: inSayAll and rewindAndFastforwardInSayAll is enabled"
-            debug.println(debug.LEVEL_INFO, msg)
-            return True
-
-        obj, offset = self.utilities.getCaretContext()
-        msg = "INFO: Current context is: %s, %i" % (obj, offset)
-        debug.println(debug.LEVEL_INFO, msg)
-
-        if obj and self.utilities.isZombie(obj):
-            msg = "INFO: Current context obj %s is zombie" % obj
-            debug.println(debug.LEVEL_INFO, msg)
-
-        line = self.utilities.getLineContentsAtOffset(obj, offset)
-        msg = "INFO: Line contents for %s, %i: %s" % (obj, offset, line)
-        debug.println(debug.LEVEL_INFO, msg)
-
-        if not (line and line[0]):
-            return False
-
-        firstObj, firstOffset = line[0][0], line[0][1]
-        msg = "INFO: First context on line is: %s, %i" % (firstObj, firstOffset)
-        debug.println(debug.LEVEL_INFO, msg)
-
-        obj, offset = self.utilities.previousContext(firstObj, firstOffset, True)
-        msg = "INFO: Previous context is: %s, %i" % (obj, offset)
-        debug.println(debug.LEVEL_INFO, msg)
-
-        contents = self.utilities.getLineContentsAtOffset(obj, offset)
-        if not contents:
-            msg = "INFO: Could not get line contents for %s, %i" % (obj, offset)
-            debug.println(debug.LEVEL_INFO, msg)
-            return False
-
-        obj, start = contents[0][0], contents[0][1]
-        self.utilities.setCaretPosition(obj, start)
-        self.displayContents(contents)
-        self.speakContents(contents)
-
-        return True
-
-    def goNextLine(self, inputEvent):
-        """Positions the caret offset at the next line in the document
-        window, attempting to preserve horizontal caret position.
-
-        Returns True if we actually moved.
-        """
-
-        if self._inSayAll \
-           and _settingsManager.getSetting('rewindAndFastForwardInSayAll'):
-            msg = "INFO: inSayAll and rewindAndFastforwardInSayAll is enabled"
-            debug.println(debug.LEVEL_INFO, msg)
-            return True
-
-        obj, offset = self.utilities.getCaretContext()
-        msg = "INFO: Current context is: %s, %i" % (obj, offset)
-        debug.println(debug.LEVEL_INFO, msg)
-
-        if obj and self.utilities.isZombie(obj):
-            msg = "INFO: Current context obj %s is zombie" % obj
-            debug.println(debug.LEVEL_INFO, msg)
-
-        line = self.utilities.getLineContentsAtOffset(obj, offset)
-        msg = "INFO: Line contents for %s, %i: %s" % (obj, offset, line)
-        debug.println(debug.LEVEL_INFO, msg)
-
-        if not (line and line[0]):
-            return False
-
-        lastObj, lastOffset = line[-1][0], line[-1][2] - 1
-        msg = "INFO: Last context on line is: %s, %i" % (lastObj, lastOffset)
-        debug.println(debug.LEVEL_INFO, msg)
-
-        obj, offset = self.utilities.nextContext(lastObj, lastOffset, True)
-        msg = "INFO: Next context is: %s, %i" % (obj, offset)
-        debug.println(debug.LEVEL_INFO, msg)
-
-        contents = self.utilities.getLineContentsAtOffset(obj, offset)
-        if not contents:
-            msg = "INFO: Could not get line contents for %s, %i" % (obj, offset)
-            debug.println(debug.LEVEL_INFO, msg)
-            return False
-
-        obj, start = contents[0][0], contents[0][1]
-        self.utilities.setCaretPosition(obj, start)
-        self.speakContents(contents)
-        self.displayContents(contents)
-        return True
-
-    def goBeginningOfLine(self, inputEvent):
-        """Positions the caret offset at the beginning of the line."""
-
-        [obj, characterOffset] = self.utilities.getCaretContext()
-        line = self.utilities.getLineContentsAtOffset(obj, characterOffset)
-        obj, characterOffset = self.utilities.findFirstCaretContext(line[0][0], line[0][1])
-        self.utilities.setCaretPosition(obj, characterOffset)
-        if not isinstance(orca_state.lastInputEvent, input_event.BrailleEvent):
-            self.speakCharacterAtOffset(obj, characterOffset)
-        self.updateBraille(obj)
-
-    def goEndOfLine(self, inputEvent):
-        """Positions the caret offset at the end of the line."""
-
-        [obj, characterOffset] = self.utilities.getCaretContext()
-        line = self.utilities.getLineContentsAtOffset(obj, characterOffset)
-        obj, characterOffset = line[-1][0], line[-1][2] - 1
-        self.utilities.setCaretPosition(obj, characterOffset)
-        if not isinstance(orca_state.lastInputEvent, input_event.BrailleEvent):
-            self.speakCharacterAtOffset(obj, characterOffset)
-        self.updateBraille(obj)
-
-    def goTopOfFile(self, inputEvent):
-        """Positions the caret offset at the beginning of the document."""
-
-        [obj, characterOffset] = self.utilities.getTopOfFile()
-        self.utilities.setCaretPosition(obj, characterOffset)
-        self.presentLine(obj, characterOffset)
-
-    def goBottomOfFile(self, inputEvent):
-        """Positions the caret offset at the end of the document."""
-
-        [obj, characterOffset] = self.utilities.getBottomOfFile()
-        self.utilities.setCaretPosition(obj, characterOffset)
-        self.presentLine(obj, characterOffset)
-
     def enableStickyFocusMode(self, inputEvent):
         self._inFocusMode = True
         self._focusModeIsSticky = True
@@ -2100,23 +1746,6 @@ class Script(default.Script):
             self.presentMessage(messages.MODE_FOCUS)
         self._inFocusMode = not self._inFocusMode
         self._focusModeIsSticky = False
-
-    def toggleCaretNavigation(self, inputEvent):
-        """Toggles between Firefox native and Orca caret navigation."""
-
-        if _settingsManager.getSetting('caretNavigationEnabled'):
-            for keyBinding in self.__getArrowBindings().keyBindings:
-                self.keyBindings.removeByHandler(keyBinding.handler)
-            _settingsManager.setSetting('caretNavigationEnabled', False)
-            string = messages.CARET_CONTROL_GECKO
-        else:
-            _settingsManager.setSetting('caretNavigationEnabled', True)
-            for keyBinding in self.__getArrowBindings().keyBindings:
-                self.keyBindings.add(keyBinding)
-            string = messages.CARET_CONTROL_ORCA
-
-        debug.println(debug.LEVEL_CONFIGURATION, string)
-        self.presentMessage(string)
 
     def speakWordUnderMouse(self, acc):
         """Determine if the speak-word-under-mouse capability applies to
