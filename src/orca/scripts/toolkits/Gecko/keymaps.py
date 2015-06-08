@@ -58,18 +58,5 @@ arrowKeymap = (
 )
 
 commonKeymap = (
-    ("F12", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "toggleCaretNavigationHandler"),
-
-    ("a", defaultModifierMask, ORCA_MODIFIER_MASK, "togglePresentationModeHandler"),
-    ("a", defaultModifierMask, ORCA_MODIFIER_MASK, "enableStickyFocusModeHandler", 2),
-)
-
-desktopKeymap = (
-    ("KP_Multiply", defaultModifierMask, ORCA_MODIFIER_MASK, 
-    "moveToMouseOverHandler"),
-)
-
-laptopKeymap = (
-    ("0", defaultModifierMask, ORCA_MODIFIER_MASK, "moveToMouseOverHandler"),
+    ("F12", defaultModifierMask, ORCA_MODIFIER_MASK, "toggleCaretNavigationHandler"),
 )

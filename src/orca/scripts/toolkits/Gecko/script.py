@@ -410,12 +410,6 @@ class Script(default.Script):
 
         keyBindings.load(keymaps.commonKeymap, self.inputEventHandlers)
 
-        if _settingsManager.getSetting('keyboardLayout') == \
-                orca.settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
-            keyBindings.load(keymaps.desktopKeymap, self.inputEventHandlers)
-        else:
-            keyBindings.load(keymaps.laptopKeymap, self.inputEventHandlers)
-
         if _settingsManager.getSetting('caretNavigationEnabled'):
             for keyBinding in self.__getArrowBindings().keyBindings:
                 keyBindings.add(keyBinding)
@@ -427,6 +421,34 @@ class Script(default.Script):
         liveRegionBindings = self.liveRegionManager.keyBindings
         for keyBinding in liveRegionBindings.keyBindings:
             keyBindings.add(keyBinding)
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "a",
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers.get("togglePresentationModeHandler")))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "a",
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers.get("enableStickyFocusModeHandler"),
+                2))
+
+        layout = _settingsManager.getSetting('keyboardLayout')
+        if layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
+            key = "KP_Multiply"
+        else:
+            key = "0"
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                key,
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers.get("moveToMouseOverHandler")))
 
         return keyBindings
 
