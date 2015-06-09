@@ -52,14 +52,6 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
     #                                                                   #
     #####################################################################
 
-    def getCurrentObject(self):
-        """Returns the current object -- normally, the locusOfFocus. But
-        in the case of Gecko, that doesn't always work.
-        """
-
-        [obj, offset] = self._script.utilities.getCaretContext()
-        return obj
-
     def _findPreviousObject(self, obj, stopAncestor):
         """Finds the object prior to this one, where the tree we're
         dealing with is a DOM and 'prior' means the previous object
@@ -100,16 +92,6 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
         """
 
         return self._script.utilities.documentFrame()
-
-    def _isInDocument(self, obj):
-        """Returns True of the object is inside of the document."""
-
-        return self._script.utilities.inDocumentContent(obj)
-
-    def _setCaretPosition(self, obj, characterOffset):
-        """Sets the caret at the specified offset within obj."""
-
-        self._script.utilities.setCaretPosition(obj, characterOffset)
 
     #####################################################################
     #                                                                   #

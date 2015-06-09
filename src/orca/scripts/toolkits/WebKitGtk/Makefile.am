@@ -3,7 +3,6 @@ orca_python_PYTHON = \
 	braille_generator.py \
 	script.py \
 	speech_generator.py \
-	script_utilities.py \
-	structural_navigation.py
+	script_utilities.py
 
 orca_pythondir=$(pkgpythondir)/scripts/toolkits/WebKitGtk

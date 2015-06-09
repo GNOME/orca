@@ -32,6 +32,8 @@ import re
 
 import orca.script_utilities as script_utilities
 import orca.keybindings as keybindings
+import orca.orca as orca
+import orca.orca_state as orca_state
 
 #############################################################################
 #                                                                           #
@@ -60,6 +62,25 @@ class Utilities(script_utilities.Utilities):
         except:
             return False
         return attrs.get('toolkit', '') == 'WebKitGtk'
+
+    def getCaretContext(self):
+        # TODO - JD: This is private, but it's only here temporarily until we
+        # have the shared web content support.
+        obj, offset = self._script._lastCaretContext
+        if not obj and self.isWebKitGtk(orca_state.locusOfFocus):
+            obj, offset = super().getCaretContext()
+
+        return obj, offset
+
+    def setCaretContext(self, obj, offset):
+        # TODO - JD: This is private, but it's only here temporarily until we
+        # have the shared web content support.
+        self._script._lastCaretContext = obj, offset
+        orca.setLocusOfFocus(None, obj, notifyScript=False)
+
+    def setCaretPosition(self, obj, offset):
+        self.setCaretContext(obj, offset)
+        self.setCaretOffset(obj, offset)
 
     def isReadOnlyTextArea(self, obj):
         """Returns True if obj is a text entry area that is read only."""
@@ -276,3 +297,7 @@ class Utilities(script_utilities.Utilities):
 
     def treatAsBrowser(self, obj):
         return self.isEmbeddedDocument(obj)
+
+    def inDocumentContent(self, obj=None):
+        obj = obj or orca_state.locusOfFocus
+        return self.isWebKitGtk(obj)

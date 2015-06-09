@@ -370,7 +370,7 @@ class StructuralNavigationObject:
             script.presentMessage(title)
             return
 
-        currentObject = self.structuralNavigation.getCurrentObject()
+        currentObject, offset = script.utilities.getCaretContext()
         try:
             index = objects.index(currentObject)
         except:
@@ -432,7 +432,7 @@ class StructuralNavigationObject:
                 script.presentMessage(title)
                 return
 
-            currentObject = self.structuralNavigation.getCurrentObject()
+            currentObject, offset = script.utilities.getCaretContext()
             try:
                 index = objects.index(currentObject)
             except:
@@ -456,8 +456,8 @@ class StructuralNavigationObject:
         """
 
         def goCell(script, inputEvent):
-            thisCell = self.structuralNavigation.getCellForObj(\
-                self.structuralNavigation.getCurrentObject())
+            obj, offset = script.utilities.getCaretContext()
+            thisCell = self.structuralNavigation.getCellForObj(obj)
             currentCoordinates = \
                 self.structuralNavigation.getCellCoordinates(thisCell)
             if direction == "Left":
@@ -845,8 +845,8 @@ class StructuralNavigation:
           is needed and passed in as arg.
         """
 
-        obj = obj or self.getCurrentObject()
-
+        currentObject, offset = self._script.utilities.getCaretContext()
+        obj = obj or currentObject
         try:
             state = obj.getState()
         except:
@@ -923,13 +923,6 @@ class StructuralNavigation:
     # Utility Methods for Finding Objects                                   #
     #                                                                       #
     #########################################################################
-
-    def getCurrentObject(self):
-        """Returns the current object.  Normally, the locusOfFocus. But
-        in the case of Gecko, that doesn't always work.
-        """
-
-        return orca_state.locusOfFocus
 
     def isAfterDocumentOffset(self, obj, arg=None):
         """Returns True if obj is after the document's caret offset."""
@@ -1224,6 +1217,7 @@ class StructuralNavigation:
         interest is contained.
         """
 
+        obj, offset = self._script.utilities.getCaretContext()
         docRoles = [pyatspi.ROLE_DOCUMENT_EMAIL,
                     pyatspi.ROLE_DOCUMENT_FRAME,
                     pyatspi.ROLE_DOCUMENT_PRESENTATION,
@@ -1231,31 +1225,12 @@ class StructuralNavigation:
                     pyatspi.ROLE_DOCUMENT_TEXT,
                     pyatspi.ROLE_DOCUMENT_WEB]
         stopRoles = [pyatspi.ROLE_FRAME, pyatspi.ROLE_SCROLL_PANE]
-        document = self._script.utilities.ancestorWithRole(
-            orca_state.locusOfFocus, docRoles, stopRoles)
-
+        document = self._script.utilities.ancestorWithRole(obj, docRoles, stopRoles)
         if not document and orca_state.locusOfFocus:
             if orca_state.locusOfFocus.getRole() in docRoles:
                 return orca_state.locusOfFocus
 
         return document
-
-    def _isInDocument(self, obj):
-        """Returns True if the accessible object obj is inside of
-        the document.
-
-        Arguments:
-        -obj: the accessible object of interest.
-        """
-
-        document = self._getDocument()
-        while obj and obj.parent:
-            if self._script.utilities.isSameObject(obj.parent, document):
-                return True
-            else:
-                obj = obj.parent
-
-        return False
 
     #########################################################################
     #                                                                       #
@@ -1610,26 +1585,9 @@ class StructuralNavigation:
         return [obj, 0]
 
     def _setCaretPosition(self, obj, characterOffset):
-        """Sets the caret at the specified offset within obj.
+        """Sets the caret at the specified offset within obj."""
 
-        Arguments:
-        - obj: the accessible object in which the caret should be
-          positioned.
-        - characterOffset: the offset at which to position the caret.
-        """
-
-        try:
-            text = obj.queryText()
-            text.setCaretOffset(characterOffset)
-        except NotImplementedError:
-            try:
-                obj.queryComponent().grabFocus()
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-
-        orca.setLocusOfFocus(None, obj, notifyScript=False)
+        self._script.utilities.setCaretPosition(obj, characterOffset)
 
     def _presentLine(self, obj, offset):
         """Presents the first line of the object to the user.

@@ -41,7 +41,7 @@ class Script(WebKitGtk.Script):
 
         gtk.Script.onWindowActivated(self, event)
 
-        obj, offset = self._lastCaretContext
+        obj, offset = self.utilities.getCaretContext()
         if obj:
             orca.setLocusOfFocus(None, obj)
 

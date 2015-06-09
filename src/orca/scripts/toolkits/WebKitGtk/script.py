@@ -42,8 +42,8 @@ import orca.settings_manager as settings_manager
 import orca.speechserver as speechserver
 import orca.orca_state as orca_state
 import orca.speech as speech
+import orca.structural_navigation as structural_navigation
 
-from .structural_navigation import StructuralNavigation
 from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
@@ -57,8 +57,6 @@ _settingsManager = settings_manager.getManager()
 ########################################################################
 
 class Script(default.Script):
-
-    CARET_NAVIGATION_KEYS = ['Left', 'Right', 'Up', 'Down', 'Home', 'End']
 
     def __init__(self, app):
         """Creates a new script for WebKitGtk applications.
@@ -144,34 +142,34 @@ class Script(default.Script):
         """Returns the 'structural navigation' class for this script."""
 
         types = self.getEnabledStructuralNavigationTypes()
-        return StructuralNavigation(self, types, True)
+        return structural_navigation.StructuralNavigation(self, types, True)
 
     def getEnabledStructuralNavigationTypes(self):
         """Returns a list of the structural navigation object types
         enabled in this script."""
 
-        enabledTypes = [StructuralNavigation.BLOCKQUOTE,
-                        StructuralNavigation.BUTTON,
-                        StructuralNavigation.CHECK_BOX,
-                        StructuralNavigation.CHUNK,
-                        StructuralNavigation.COMBO_BOX,
-                        StructuralNavigation.ENTRY,
-                        StructuralNavigation.FORM_FIELD,
-                        StructuralNavigation.HEADING,
-                        StructuralNavigation.LANDMARK,
-                        StructuralNavigation.LINK,
-                        StructuralNavigation.LIST,
-                        StructuralNavigation.LIST_ITEM,
-                        StructuralNavigation.LIVE_REGION,
-                        StructuralNavigation.PARAGRAPH,
-                        StructuralNavigation.RADIO_BUTTON,
-                        StructuralNavigation.SEPARATOR,
-                        StructuralNavigation.TABLE,
-                        StructuralNavigation.TABLE_CELL,
-                        StructuralNavigation.UNVISITED_LINK,
-                        StructuralNavigation.VISITED_LINK]
-
-        return enabledTypes
+        return [structural_navigation.StructuralNavigation.BLOCKQUOTE,
+                structural_navigation.StructuralNavigation.BUTTON,
+                structural_navigation.StructuralNavigation.CHECK_BOX,
+                structural_navigation.StructuralNavigation.CHUNK,
+                structural_navigation.StructuralNavigation.CLICKABLE,
+                structural_navigation.StructuralNavigation.COMBO_BOX,
+                structural_navigation.StructuralNavigation.ENTRY,
+                structural_navigation.StructuralNavigation.FORM_FIELD,
+                structural_navigation.StructuralNavigation.HEADING,
+                structural_navigation.StructuralNavigation.IMAGE,
+                structural_navigation.StructuralNavigation.LANDMARK,
+                structural_navigation.StructuralNavigation.LINK,
+                structural_navigation.StructuralNavigation.LIST,
+                structural_navigation.StructuralNavigation.LIST_ITEM,
+                structural_navigation.StructuralNavigation.LIVE_REGION,
+                structural_navigation.StructuralNavigation.PARAGRAPH,
+                structural_navigation.StructuralNavigation.RADIO_BUTTON,
+                structural_navigation.StructuralNavigation.SEPARATOR,
+                structural_navigation.StructuralNavigation.TABLE,
+                structural_navigation.StructuralNavigation.TABLE_CELL,
+                structural_navigation.StructuralNavigation.UNVISITED_LINK,
+                structural_navigation.StructuralNavigation.VISITED_LINK]
 
     def getUtilities(self):
         """Returns the utilites for this script."""
@@ -179,16 +177,14 @@ class Script(default.Script):
         return Utilities(self)
 
     def onCaretMoved(self, event):
-        """Called whenever the caret moves.
-
-        Arguments:
-        - event: the Event
-        """
+        """Callback for object:text-caret-moved accessibility events."""
 
         if self._inSayAll:
             return
 
-        self._lastCaretContext = event.source, event.detail1
+        if not self.utilities.isWebKitGtk(event.source):
+            super().onCaretMoved(event)
+            return
 
         lastKey, mods = self.utilities.lastKeyAndModifiers()
         if lastKey in ['Tab', 'ISO_Left_Tab']:
@@ -201,9 +197,8 @@ class Script(default.Script):
             self.updateBraille(event.source)
             return
 
-        orca.setLocusOfFocus(event, event.source, False)
-
-        default.Script.onCaretMoved(self, event)
+        self.utilities.setCaretContext(event.source, event.detail1)
+        super().onCaretMoved(event)
 
     def onDocumentReload(self, event):
         """Callback for document:reload accessibility events."""
@@ -223,7 +218,7 @@ class Script(default.Script):
         # is grabbed rather than set the caret at the start. But for simple
         # content in both Yelp and Epiphany this is alright for now.
         obj, offset = self.utilities.setCaretAtStart(event.source)
-        orca.setLocusOfFocus(event, obj, False)
+        self.utilities.setCaretContext(obj, offset)
 
         self.updateBraille(obj)
         if _settingsManager.getSetting('sayAllOnLoad') \
@@ -239,38 +234,29 @@ class Script(default.Script):
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
-        if self._inSayAll:
+        if self._inSayAll or not event.detail1:
+            return
+
+        if not self.utilities.isWebKitGtk(event.source):
+            super().onFocusedChanged(event)
+            return
+
+        contextObj, offset = self.utilities.getCaretContext()
+        if event.source == contextObj:
             return
 
         obj = event.source
         role = obj.getRole()
-        self._lastCaretContext = obj, -1
-
-        if role == pyatspi.ROLE_LIST_ITEM and obj.childCount:
-            return
-
-        widgetRoles = [pyatspi.ROLE_MENU,
-                       pyatspi.ROLE_MENU_ITEM,
-                       pyatspi.ROLE_LIST_ITEM,
-                       pyatspi.ROLE_RADIO_BUTTON]
-        if role in widgetRoles:
-            default.Script.onFocusedChanged(self, event)
-            return
-
         textRoles = [pyatspi.ROLE_HEADING,
                      pyatspi.ROLE_PANEL,
                      pyatspi.ROLE_PARAGRAPH,
                      pyatspi.ROLE_SECTION,
                      pyatspi.ROLE_TABLE_CELL]
-        if role in textRoles:
+        if role in textRoles \
+           or (role == pyatspi.ROLE_LIST_ITEM and obj.childCount):
             return
 
-        if not (role == pyatspi.ROLE_LINK and obj.childCount):
-            lastKey, mods = self.utilities.lastKeyAndModifiers()
-            if lastKey in self.CARET_NAVIGATION_KEYS:
-                return
-
-        default.Script.onFocusedChanged(self, event)
+        super().onFocusedChanged(event)
 
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
