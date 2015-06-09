@@ -2095,16 +2095,9 @@ class StructuralNavigation:
         """
 
         isMatch = False
-
         if obj and obj.getRole() in self.OBJECT_ROLES:
-            try:
-                text = obj.queryText()
-                characterCount = text.characterCount
-            except:
-                characterCount = 0
-
-            if characterCount > settings.largeObjectTextLength:
-                isMatch = True
+            text = self._script.utilities.queryNonEmptyText(obj)
+            isMatch = text and text.characterCount > settings.largeObjectTextLength
 
         return isMatch
 
@@ -2372,11 +2365,19 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        isMatch = False
-        if obj and obj.getRole() in self.FORM_ROLES:
-            state = obj.getState()
-            isMatch = state.contains(pyatspi.STATE_FOCUSABLE) \
+        if not obj:
+            return False
+
+        role = obj.getRole()
+        if not role in self.FORM_ROLES:
+            return False
+
+        state = obj.getState()
+        isMatch = state.contains(pyatspi.STATE_FOCUSABLE) \
                   and state.contains(pyatspi.STATE_SENSITIVE)
+
+        if role == pyatspi.ROLE_DOCUMENT_FRAME:
+            isMatch = isMatch and state.contains(pyatspi.STATE_EDITABLE)
 
         return isMatch
 
