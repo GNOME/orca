@@ -623,8 +623,18 @@ class EventManager:
         debug.println(debug.LEVEL_FINEST, "Script for event: %s" % script.name)
         setNewActiveScript, reason = self._isActivatableEvent(event, script)
         if setNewActiveScript:
-            app = event.host_application or event.source.getApplication()
-            _scriptManager.setActiveScript(script, reason)
+            try:
+                app = event.host_application or event.source.getApplication()
+            except:
+                msg = 'ERROR: Could not get application for %s' % event.source
+                debug.println(debug.LEVEL_INFO, msg)
+                return
+            try:
+                _scriptManager.setActiveScript(script, reason)
+            except:
+                msg = 'ERROR: Could not set active script for %s' % event.source
+                debug.println(debug.LEVEL_INFO, msg)
+                return
 
         try:
             script.processObjectEvent(event)
