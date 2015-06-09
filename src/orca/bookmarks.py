@@ -20,7 +20,9 @@
 """Provides the default implementation for bookmarks in Orca."""
 
 import pickle
+import pyatspi
 import os
+import urllib.parse
 
 from . import messages
 from . import orca_state
@@ -225,3 +227,50 @@ class Bookmarks:
         context.setCurrent(bookmark['line'], bookmark['zone'], \
                            bookmark['word'], bookmark['char'])
         return context
+
+    def getURIKey(self):
+        """Returns the URI key for a given page as a URI stripped of
+        parameters?query#fragment as seen in urlparse."""
+        uri = self._script.utilities.documentFrameURI()
+        if uri:
+            parsed_uri = urllib.parse.urlparse(uri)
+            return ''.join(parsed_uri[0:3])
+        else:
+            return None
+
+    def pathToObj(self, path):
+        """Return the object with the given path (relative to the
+        document frame). """
+        returnobj = self._script.utilities.documentFrame()
+        for childnumber in path:
+            try:
+                returnobj = returnobj[childnumber]
+            except IndexError:
+                return None
+
+        return returnobj
+
+    def _objToPath(self, start_obj=None):
+        """Given an object, return it's path from the root accessible.  If obj
+        is not provided, the current caret context is used. """
+        if not start_obj:
+            [start_obj, characterOffset] = self._script.utilities.getCaretContext()
+
+        if not start_obj:
+            return []
+
+        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
+        if start_obj.getRole() in docRoles:
+            return []
+
+        path = []
+        path.append(start_obj.getIndexInParent())
+        p = start_obj.parent
+        while p:
+            if p.getRole() in docRoles:
+                path.reverse()
+                return path
+            path.append(p.getIndexInParent())
+            p = p.parent
+
+        return []

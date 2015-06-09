@@ -30,7 +30,6 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
-import urllib.parse
 
 import orca.bookmarks as bookmarks
 import orca.messages as messages
@@ -208,62 +207,3 @@ class GeckoBookmarks(bookmarks.Bookmarks):
                               index=(thispage_hwkeys[index-1], current_uri))
         except (ValueError, KeyError, IndexError):
             self.goToBookmark(None, index=(thispage_hwkeys[0], current_uri))    
-            
-    def _objToPickle(self, obj=None):
-        """Given an object, return it's saving (pickleable) format.  In this 
-        case, the obj path is determined relative to the document frame and is 
-        returned as a list.  If obj is not provided, the current caret context
-        is used.  """
-        return self._objToPath(start_obj=obj)
-                               
-    def _objToPath(self, start_obj=None):
-        """Given an object, return it's path from the root accessible.  If obj 
-        is not provided, the current caret context is used. """
-        if not start_obj:
-            [start_obj, characterOffset] = self._script.utilities.getCaretContext()    
-            
-        if start_obj is None \
-                     or start_obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
-            return []
-        else:
-            path = []
-            path.append(start_obj.getIndexInParent())
-            p = start_obj.parent
-            while p:
-                if p.getRole()  == pyatspi.ROLE_DOCUMENT_FRAME:
-                    path.reverse()
-                    return path
-                path.append(p.getIndexInParent())
-                p = p.parent
-            
-            return []
-            
-    def _pickleToObj(self, obj):
-        """Return the s with the given path (relative to the
-        document frame). """
-        
-        # could test for different obj types.  We'll just assume it is
-        # list that represents a path for now.
-        return self.pathToObj(obj)
-            
-    def pathToObj(self, path):
-        """Return the object with the given path (relative to the
-        document frame). """
-        returnobj = self._script.utilities.documentFrame()
-        for childnumber in path:
-            try:
-                returnobj = returnobj[childnumber]
-            except IndexError:
-                return None
-            
-        return returnobj
-            
-    def getURIKey(self):
-        """Returns the URI key for a given page as a URI stripped of 
-        parameters?query#fragment as seen in urlparse."""
-        uri = self._script.utilities.documentFrameURI()
-        if uri:
-            parsed_uri = urllib.parse.urlparse(uri)
-            return ''.join(parsed_uri[0:3])
-        else:
-            return None
