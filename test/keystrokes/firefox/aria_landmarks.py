@@ -13,18 +13,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("m"))
 sequence.append(utils.AssertPresentationAction(
     "1. m to next landmark",
-    ["BRAILLE LINE:  'navigation main'",
-     "     VISIBLE:  'navigation main', cursor=1",
-     "SPEECH OUTPUT: 'navigation'",
-     "SPEECH OUTPUT: 'main'"]))
+    ["BRAILLE LINE:  'navigation'",
+     "     VISIBLE:  'navigation', cursor=1",
+     "SPEECH OUTPUT: 'navigation'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("m"))
 sequence.append(utils.AssertPresentationAction(
     "2. m to next landmark",
-    ["BRAILLE LINE:  'navigation main'",
-     "     VISIBLE:  'navigation main', cursor=12",
-     "SPEECH OUTPUT: 'navigation'",
+    ["BRAILLE LINE:  'main'",
+     "     VISIBLE:  'main', cursor=1",
      "SPEECH OUTPUT: 'main'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -102,8 +100,23 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>m"))
 sequence.append(utils.AssertPresentationAction(
     "11. Shift+m to previous landmark",
-    ["KNOWN ISSUE: We are skipping over complementary on the way back",
-     "BRAILLE LINE:  'application embedded'",
+    ["BRAILLE LINE:  'form'",
+     "     VISIBLE:  'form', cursor=1",
+     "SPEECH OUTPUT: 'form'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Shift>m"))
+sequence.append(utils.AssertPresentationAction(
+    "12. Shift+m to previous landmark",
+    ["BRAILLE LINE:  'complementary'",
+     "     VISIBLE:  'complementary', cursor=1",
+     "SPEECH OUTPUT: 'complementary'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Shift>m"))
+sequence.append(utils.AssertPresentationAction(
+    "13. Shift+m to previous landmark",
+    ["BRAILLE LINE:  'application embedded'",
      "     VISIBLE:  'application embedded', cursor=1",
      "SPEECH OUTPUT: 'application'",
      "SPEECH OUTPUT: 'embedded'"]))
@@ -111,17 +124,23 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>m"))
 sequence.append(utils.AssertPresentationAction(
-    "12. Shift+m to previous landmark",
-    ["KNOWN ISSUE: We are skipping over navigation on the way back",
-     "BRAILLE LINE:  'navigation main'",
-     "     VISIBLE:  'navigation main', cursor=1",
-     "SPEECH OUTPUT: 'navigation'",
+    "14. Shift+m to previous landmark",
+    ["BRAILLE LINE:  'main'",
+     "     VISIBLE:  'main', cursor=1",
      "SPEECH OUTPUT: 'main'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>m"))
 sequence.append(utils.AssertPresentationAction(
-    "13. Shift+m to previous landmark",
+    "15. Shift+m to previous landmark",
+    ["BRAILLE LINE:  'navigation'",
+     "     VISIBLE:  'navigation', cursor=1",
+     "SPEECH OUTPUT: 'navigation'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Shift>m"))
+sequence.append(utils.AssertPresentationAction(
+    "16. Shift+m to previous landmark",
     ["BRAILLE LINE:  'banner'",
      "     VISIBLE:  'banner', cursor=1",
      "SPEECH OUTPUT: 'banner'"]))

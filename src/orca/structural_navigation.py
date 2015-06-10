@@ -358,10 +358,14 @@ class StructuralNavigationObject:
         """Show a list of all the items with this object type."""
 
         try:
-            objects = self.structuralNavigation._getAll(self)
+            objects, criteria = self.structuralNavigation._getAll(self)
         except:
             script.presentMessage(messages.NAVIGATION_DIALOG_ERROR)
             return
+
+        objects = list(filter(lambda x: not script.utilities.isHidden(x), objects))
+        if criteria.applyPredicate:
+            objects = list(filter(self.predicate, objects))
 
         title, columnHeaders, rowData = self._dialogData()
         count = len(objects)
@@ -420,10 +424,14 @@ class StructuralNavigationObject:
 
         def showListAtLevel(script, inputEvent):
             try:
-                objects = self.structuralNavigation._getAll(self, arg=level)
+                objects, criteria = self.structuralNavigation._getAll(self, arg=level)
             except:
                 script.presentMessage(messages.NAVIGATION_DIALOG_ERROR)
                 return
+
+            objects = list(filter(lambda x: not script.utilities.isHidden(x), objects))
+            if criteria.applyPredicate:
+                objects = list(filter(self.predicate, objects))
 
             title, columnHeaders, rowData = self._dialogData(arg=level)
             count = len(objects)
@@ -626,6 +634,14 @@ class StructuralNavigation:
         #
         self.lastTableCell = [-1, -1]
 
+        self._objectCache = {}
+
+    def clearCache(self, document=None):
+        if document:
+            self._objectCache[hash(document)] = {}
+        else:
+            self._objectCache = {}
+
     def structuralNavigationObjectCreator(self, name):
         """This convenience method creates a StructuralNavigationObject
         with the specified name and associated characterists. (See the
@@ -767,8 +783,8 @@ class StructuralNavigation:
         desiredRow, desiredCol = desiredCoordinates
         rowDiff = desiredRow - currentRow
         colDiff = desiredCol - currentCol
-        oldRowHeaders = self._getRowHeaders(thisCell)
-        oldColHeaders = self._getColumnHeaders(thisCell)
+        oldRowHeaders = self._script.utilities.rowHeadersForCell(thisCell)
+        oldColHeaders = self._script.utilities.columnHeadersForCell(thisCell)
         cell = thisCell
         while cell:
             cell = iTable.getAccessibleAt(desiredRow, desiredCol)
@@ -785,8 +801,7 @@ class StructuralNavigation:
                 elif desiredRow > iTable.nRows - 1:
                     self._script.presentMessage(messages.TABLE_COLUMN_BOTTOM)
                     desiredRow = iTable.nRows - 1
-            elif self._script.utilities.isSameObject(thisCell, cell) \
-                 or settings.skipBlankCells and self._isBlankCell(cell):
+            elif thisCell == cell or (settings.skipBlankCells and self._isBlankCell(cell)):
                 if colDiff < 0:
                     desiredCol -= 1
                 elif colDiff > 0:
@@ -806,9 +821,15 @@ class StructuralNavigation:
     def _getAll(self, structuralNavigationObject, arg=None):
         """Returns all the instances of structuralNavigationObject."""
         if not structuralNavigationObject.criteria:
-            return []
+            return [], None
 
-        document = self._getDocument()
+        document = self._script.utilities.documentFrame()
+        cache = self._objectCache.get(hash(document), {})
+        key = "%s:%s" % (structuralNavigationObject.objType, arg)
+        matches, criteria = cache.get(key, ([], None))
+        if matches:
+            return matches.copy(), criteria
+
         col = document.queryCollection()
         criteria = structuralNavigationObject.criteria(col, arg)
         rule = col.createMatchRule(criteria.states.raw(),
@@ -820,12 +841,12 @@ class StructuralNavigation:
                                    criteria.interfaces,
                                    criteria.matchInterfaces,
                                    criteria.invert)
-        rv = col.getMatches(rule, col.SORT_ORDER_CANONICAL, 0, True)
+        matches = col.getMatches(rule, col.SORT_ORDER_CANONICAL, 0, True)
         col.freeMatchRule(rule)
-        if criteria.applyPredicate:
-            rv = list(filter(structuralNavigationObject.predicate, rv))
-        rv = list(filter(lambda x: not self._script.utilities.isHidden(x), rv))
 
+        rv = matches.copy(), criteria
+        cache[key] = matches, criteria
+        self._objectCache[hash(document)] = cache
         return rv
 
     def goObject(self, structuralNavigationObject, isNext, obj=None, arg=None):
@@ -845,392 +866,69 @@ class StructuralNavigation:
           is needed and passed in as arg.
         """
 
-        currentObject, offset = self._script.utilities.getCaretContext()
-        obj = obj or currentObject
-        try:
-            state = obj.getState()
-        except:
-            return [None, False]
-        else:
-            if state.contains(pyatspi.STATE_DEFUNCT):
-                debug.printException(debug.LEVEL_SEVERE)
-                return [None, False]
-
-        wrap = settings.wrappedStructuralNavigation
-        document = self._getDocument()
-        if not document:
+        matches, criteria = list(self._getAll(structuralNavigationObject, arg))
+        if not matches:
+            structuralNavigationObject.present(None, arg)
             return
 
-        collection = document.queryCollection()
-        criteria = structuralNavigationObject.criteria(collection, arg)
+        if not isNext:
+            matches.reverse()
 
-        # If the document frame itself contains content and that is
-        # our current object, querying the collection interface will
-        # result in our starting at the top when looking for the next
-        # object rather than the current caret offset. See bug 567984.
-        #
-        if isNext and self._script.utilities.isSameObject(obj, document):
-            try:
-                document.queryText()
-            except NotImplementedError:
-                pass
+        def _isValidMatch(obj):
+            if self._script.utilities.isHidden(obj):
+                return False
+            if not criteria.applyPredicate:
+                return True
+            return structuralNavigationObject.predicate(obj)
+
+        def _getMatchingObjAndIndex(obj):
+            while obj:
+                if obj in matches:
+                    return obj, matches.index(obj)
+                obj = obj.parent
+
+            return None, -1
+
+        if not obj:
+            obj, offset = self._script.utilities.getCaretContext()
+        thisObj, index = _getMatchingObjAndIndex(obj or currentObject)
+        if thisObj:
+            matches = matches[index:]
+            obj = thisObj
+
+        currentPath = pyatspi.utils.getPath(obj)
+        for i, match in enumerate(matches):
+            if not _isValidMatch(match):
+                continue
+
+            if match.parent == obj:
+                comparison = self._script.utilities.characterOffsetInParent(match) - offset
             else:
-                pred = self.isAfterDocumentOffset
-                if criteria.applyPredicate:
-                    pred = pred and structuralNavigationObject.predicate
-                criteria.applyPredicate = True
-                structuralNavigationObject.predicate = pred
+                path = pyatspi.utils.getPath(match)
+                comparison = self._script.utilities.pathComparison(path, currentPath)
+            if (comparison > 0 and isNext) or (comparison < 0 and not isNext):
+                structuralNavigationObject.present(match, arg)
+                return
 
-        rule = collection.createMatchRule(criteria.states.raw(),
-                                          criteria.matchStates,
-                                          criteria.objAttrs,
-                                          criteria.matchObjAttrs,
-                                          criteria.roles,
-                                          criteria.matchRoles,
-                                          criteria.interfaces,
-                                          criteria.matchInterfaces,
-                                          criteria.invert)
-
-        if criteria.applyPredicate:
-            predicate = structuralNavigationObject.predicate
-        else:
-            predicate = None
+        if not settings.wrappedStructuralNavigation:
+            structuralNavigationObject.present(None, arg)
+            return
 
         if not isNext:
-            [obj, wrapped] = self._findPrevByMatchRule(collection,
-                                                       rule,
-                                                       wrap,
-                                                       obj,
-                                                       predicate)
+            self._script.presentMessage(messages.WRAPPING_TO_BOTTOM)
         else:
-            [obj, wrapped] = self._findNextByMatchRule(collection,
-                                                       rule,
-                                                       wrap,
-                                                       obj,
-                                                       predicate)
-            collection.freeMatchRule(rule)
+            self._script.presentMessage(messages.WRAPPING_TO_TOP)
 
-        if wrapped:
-            if not isNext:
-                self._script.presentMessage(messages.WRAPPING_TO_BOTTOM)
-            else:
-                self._script.presentMessage(messages.WRAPPING_TO_TOP)
+        matches, criteria = list(self._getAll(structuralNavigationObject, arg))
+        if not isNext:
+            matches.reverse()
 
-        structuralNavigationObject.present(obj, arg)
+        for match in matches:
+            if _isValidMatch(match):
+                structuralNavigationObject.present(match, arg)
+                return
 
-    #########################################################################
-    #                                                                       #
-    # Utility Methods for Finding Objects                                   #
-    #                                                                       #
-    #########################################################################
-
-    def isAfterDocumentOffset(self, obj, arg=None):
-        """Returns True if obj is after the document's caret offset."""
-        document = self._getDocument()
-        try:
-            offset = document.queryText().caretOffset
-        except:
-            return False
-
-        start, end = self._script.utilities.getHyperlinkRange(obj)
-        if start > offset:
-            return True
-
-        try:
-            hypertext = document.queryHypertext()
-            hyperlink = hypertext.getLink(hypertext.getNLinks() - 1)
-        except:
-            return False
-
-        return offset > hyperlink.startIndex
-
-    def _findPrevByMatchRule(self, collection, matchRule, wrap, currentObj,
-                             predicate=None):
-        """Finds the previous object using the given match rule as a
-        pattern to match or not match.
-
-        Arguments:
-        -collection: the accessible collection interface
-        -matchRule: the collections match rule to use
-        -wrap: if True and the bottom of the document is reached, move
-         to the top and keep looking.
-        -currentObj: the object from which the search should begin
-        -predicate: an optional predicate to further test if the item
-         found via collection is indeed a match.
-
-        Returns: [obj, wrapped] where wrapped is a boolean reflecting
-        whether wrapping took place.
-        """
-
-        [currentObj, offset] = self._script.utilities.getCaretContext()
-        document = self._getDocument()
-
-        # If the current object is the document itself, find an actual
-        # object to use as the starting point. Otherwise we're in
-        # danger of skipping over the objects in between our present
-        # location and top of the document.
-        #
-        if self._script.utilities.isSameObject(currentObj, document):
-            currentObj = self._findNextObject(currentObj, document)
-            offset = 0
-
-        # If the caret context is in a block element that contains children,
-        # the "next" match as far as the collection interface is concerned
-        # is actually the "previous" match as far as we're concerned.
-        nextMatch = collection.getMatchesFrom(
-            currentObj,
-            matchRule,
-            collection.SORT_ORDER_CANONICAL,
-            collection.TREE_INORDER,
-            1,
-            True)
-
-        if nextMatch and nextMatch[0].parent == currentObj:
-            o = self._script.utilities.characterOffsetInParent(nextMatch[0])
-            if 0 <= o < offset \
-               and not self._script.utilities.isHidden(nextMatch[0]) \
-               and (not predicate or predicate(nextMatch[0])):
-                return nextMatch[0], False
-
-        ancestors = []
-        obj = currentObj.parent
-        if obj.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_TABLE]:
-            ancestors.append(obj)
-        else:
-            while obj:
-                ancestors.append(obj)
-                obj = obj.parent
-
-        match, wrapped = None, False
-        results = collection.getMatchesTo(currentObj,
-                                          matchRule,
-                                          collection.SORT_ORDER_CANONICAL,
-                                          collection.TREE_INORDER,
-                                          True,
-                                          1,
-                                          True)
-        while not match:
-            if len(results) == 0:
-                if wrapped or not wrap:
-                    break
-                elif wrap:
-                    lastObj = self._findLastObject(document)
-                    if self._script.utilities.isSameObject(lastObj, document):
-                        wrapped = True
-                        continue
-
-                    # Collection does not do an inclusive search, meaning
-                    # that the start object is not part of the search.  So
-                    # we need to test the lastobj separately using the given
-                    # matchRule.  We don't have this problem for 'Next' because
-                    # the startobj is the doc frame.
-                    #
-                    secondLastObj = self._findPreviousObject(lastObj, document)
-                    results = collection.getMatchesFrom(\
-                        secondLastObj,
-                        matchRule,
-                        collection.SORT_ORDER_CANONICAL,
-                        collection.TREE_INORDER,
-                        1, 
-                        True)
-                    wrapped = True
-                    if len(results) > 0 \
-                       and not self._script.utilities.isHidden(results[0]) \
-                       and (not predicate or predicate(results[0])):
-                        match = results[0]
-                    else:
-                        results = collection.getMatchesTo(\
-                            lastObj,
-                            matchRule,
-                            collection.SORT_ORDER_CANONICAL,
-                            collection.TREE_INORDER, 
-                            True,
-                            1,
-                            True)
-            elif len(results) > 0:
-                if results[0] in ancestors \
-                   or self._script.utilities.isHidden(results[0]) \
-                   or (predicate and not predicate(results[0])):
-                    results = collection.getMatchesTo(\
-                        results[0],
-                        matchRule,
-                        collection.SORT_ORDER_CANONICAL,
-                        collection.TREE_INORDER,
-                        True,
-                        1,
-                        True)
-                else:
-                    match = results[0]
-
-        return [match, wrapped]
-
-    def _findNextByMatchRule(self, collection, matchRule, wrap, currentObj,
-                             predicate=None):
-        """Finds the next object using the given match rule as a pattern
-        to match or not match.
-
-        Arguments:
-        -collection:  the accessible collection interface
-        -matchRule: the collections match rule to use
-        -wrap: if True and the bottom of the document is reached, move
-         to the top and keep looking.
-        -currentObj: the object from which the search should begin
-        -predicate: an optional predicate to further test if the item
-         found via collection is indeed a match.
-
-        Returns: [obj, wrapped] where wrapped is a boolean reflecting
-        whether wrapping took place.
-        """
-
-        ancestors = []
-        [currentObj, offset] = self._script.utilities.getCaretContext()
-        obj = currentObj.parent
-        while obj:
-            ancestors.append(obj)
-            obj = obj.parent
-
-        match, wrapped = None, False
-        while not match:
-            results = collection.getMatchesFrom(\
-                currentObj,
-                matchRule,
-                collection.SORT_ORDER_CANONICAL,
-                collection.TREE_INORDER,
-                1,
-                True)
-            if len(results) > 0 and not results[0] in ancestors:
-                result = results[0]
-
-                # This can occur with anonymous blocks.
-                if result.parent == currentObj:
-                    o = self._script.utilities.characterOffsetInParent(result)
-                    isBefore = o < offset
-                else:
-                    isBefore = False
-
-                currentObj = result
-                if not (isBefore and not wrapped) \
-                   and not self._script.utilities.isHidden(currentObj) \
-                   and (not predicate or predicate(currentObj)):
-                    match = currentObj
-            elif wrap and not wrapped:
-                wrapped = True
-                ancestors = [currentObj]
-                currentObj = self._getDocument()
-            else:
-                break
-
-        return [match, wrapped]
-
-    def _findPreviousObject(self, obj, stopAncestor):
-        """Finds the object prior to this one, where the tree we're
-        dealing with is a DOM and 'prior' means the previous object
-        in a linear presentation sense.
-
-        Arguments:
-        -obj: the object where to start.
-        -stopAncestor: the ancestor at which the search should stop
-        """
-
-        # NOTE: This method is based on some intial experimentation
-        # with OOo structural navigation.  It might need refining
-        # or fixing and is being overridden by the Gecko method
-        # regardless, so this one can be modified as appropriate.
-        #
-        prevObj = None
-
-        index = obj.getIndexInParent() - 1
-        if index >= 0:
-            prevObj = obj.parent[index]
-            if not prevObj:
-                debug.println(debug.LEVEL_FINE, 'Error: Dead Accessible')
-            elif prevObj.childCount:
-                prevObj = prevObj[prevObj.childCount - 1]
-        elif not self._script.utilities.isSameObject(obj.parent, stopAncestor):
-            prevObj = obj.parent
-
-        return prevObj
-
-    def _findNextObject(self, obj, stopAncestor):
-        """Finds the object after to this one, where the tree we're
-        dealing with is a DOM and 'next' means the next object
-        in a linear presentation sense.
-
-        Arguments:
-        -obj: the object where to start.
-        -stopAncestor: the ancestor at which the search should stop
-        """
-
-        # NOTE: This method is based on some intial experimentation
-        # with OOo structural navigation.  It might need refining
-        # or fixing and is being overridden by the Gecko method
-        # regardless, so this one can be modified as appropriate.
-        #
-        nextObj = None
-
-        if obj and obj.childCount:
-            nextObj = obj[0]
-
-        while obj and obj.parent != obj and not nextObj:
-            index = obj.getIndexInParent() + 1
-            if 0 < index < obj.parent.childCount:
-                nextObj = obj.parent[index]
-                if not nextObj:
-                    debug.println(debug.LEVEL_FINE, 'Error: Dead Accessible')
-                    break
-            elif not self._script.utilities.isSameObject(
-                    obj.parent, stopAncestor):
-                obj = obj.parent
-            else:
-                break
-
-        return nextObj
-
-    def _findLastObject(self, ancestor):
-        """Returns the last object in ancestor.
-
-        Arguments:
-        - ancestor: the accessible object whose last (child) object
-          is sought.
-        """
-
-        # NOTE: This method is based on some intial experimentation
-        # with OOo structural navigation.  It might need refining
-        # or fixing and is being overridden by the Gecko method
-        # regardless, so this one can be modified as appropriate.
-        #
-        if not ancestor or not ancestor.childCount:
-            return ancestor
-
-        lastChild = ancestor[ancestor.childCount - 1]
-        while lastChild:
-            lastObj = self._findNextObject(lastChild, ancestor)
-            if lastObj:
-                lastChild = lastObj
-            else:
-                break
-
-        return lastChild
-
-    def _getDocument(self):
-        """Returns the document or other object in which the object of
-        interest is contained.
-        """
-
-        obj, offset = self._script.utilities.getCaretContext()
-        docRoles = [pyatspi.ROLE_DOCUMENT_EMAIL,
-                    pyatspi.ROLE_DOCUMENT_FRAME,
-                    pyatspi.ROLE_DOCUMENT_PRESENTATION,
-                    pyatspi.ROLE_DOCUMENT_SPREADSHEET,
-                    pyatspi.ROLE_DOCUMENT_TEXT,
-                    pyatspi.ROLE_DOCUMENT_WEB]
-        stopRoles = [pyatspi.ROLE_FRAME, pyatspi.ROLE_SCROLL_PANE]
-        document = self._script.utilities.ancestorWithRole(obj, docRoles, stopRoles)
-        if not document and orca_state.locusOfFocus:
-            if orca_state.locusOfFocus.getRole() in docRoles:
-                return orca_state.locusOfFocus
-
-        return document
+        structuralNavigationObject.present(None, arg)
 
     #########################################################################
     #                                                                       #
@@ -1258,34 +956,13 @@ class StructuralNavigation:
         """Returns a string which describes the table."""
 
         nonUniformString = ""
-        nonUniform = self._isNonUniformTable(obj)
+        nonUniform = self._script.utilities.isNonUniformTable(obj)
         if nonUniform:
             nonUniformString = messages.TABLE_NON_UNIFORM + " "
 
         table = obj.queryTable()
         sizeString = messages.tableSize(table.nRows, table.nColumns)
         return (nonUniformString + sizeString)
-
-    def _isNonUniformTable(self, obj):
-        """Returns True if the obj is a non-uniform table (i.e. a table
-        where at least one cell spans multiple rows and/or columns).
-
-        Arguments:
-        - obj: the table to examine
-        """
-
-        try:
-            table = obj.queryTable()
-        except:
-            pass
-        else:
-            for i in range(obj.childCount):
-                [isCell, row, col, rowExtents, colExtents, isSelected] = \
-                                       table.getRowColumnExtentsAtIndex(i)
-                if (rowExtents > 1) or (colExtents > 1):
-                    return True
-
-        return False
 
     def getCellForObj(self, obj):
         """Looks for a table cell in the ancestry of obj, if obj is not a
@@ -1298,10 +975,10 @@ class StructuralNavigation:
         cellRoles = [pyatspi.ROLE_TABLE_CELL,
                      pyatspi.ROLE_COLUMN_HEADER,
                      pyatspi.ROLE_ROW_HEADER]
-        if obj and not obj.getRole() in cellRoles:
-            document = self._getDocument()
-            obj = self._script.utilities.ancestorWithRole(
-                obj, cellRoles, [document.getRole()])
+        isCell = lambda x: x and x.getRole() in cellRoles
+        if obj and not isCell(obj):
+            obj = pyatspi.utils.findAncestor(obj, isCell)
+
         return obj
 
     def getTableForCell(self, obj):
@@ -1311,10 +988,10 @@ class StructuralNavigation:
         - obj: the accessible object of interest.
         """
 
-        if obj and obj.getRole() != pyatspi.ROLE_TABLE:
-            document = self._getDocument()
-            obj = self._script.utilities.ancestorWithRole(
-                obj, [pyatspi.ROLE_TABLE], [document.getRole()])
+        isTable = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE
+        if obj and not isTable(obj):
+            obj = pyatspi.utils.findAncestor(obj, isTable)
+
         return obj
 
     def _isBlankCell(self, obj):
@@ -1370,42 +1047,19 @@ class StructuralNavigation:
         if not (oldRowHeaders or oldColHeaders):
             return
 
-        if rowDiff and not self._isHeader(cell):
-            rowHeaders = self._getRowHeaders(cell)
+        if rowDiff:
+            rowHeaders = self._script.utilities.rowHeadersForCell(cell)
             for header in rowHeaders:
                 if not header in oldRowHeaders:
                     text = self._getCellText(header)
                     speech.speak(text)
 
-        if colDiff and not self._isHeader(cell):
-            colHeaders = self._getColumnHeaders(cell)
+        if colDiff:
+            colHeaders = self._script.utilities.columnHeadersForCell(cell)
             for header in colHeaders:
                 if not header in oldColHeaders:
                     text = self._getCellText(header)
                     speech.speak(text)
-
-    def _getCellSpanInfo(self, obj):
-        """Returns a string reflecting the number of rows and/or columns
-        spanned by a table cell when multiple rows and/or columns are
-        spanned.
-
-        Arguments:
-        - obj: the accessible table cell whose cell span we want.
-        """
-
-        if not obj or (obj.getRole() != pyatspi.ROLE_TABLE_CELL):
-            return
-
-        parentTable = self.getTableForCell(obj)
-        try:
-            table = parentTable.queryTable()
-        except:
-            return
-
-        [row, col] = self.getCellCoordinates(obj)
-        rowspan = table.getRowExtentAt(row, col)
-        colspan = table.getColumnExtentAt(row, col)
-        return messages.cellSpan(rowspan, colspan)
 
     def getCellCoordinates(self, obj):
         """Returns the [row, col] of a ROLE_TABLE_CELL or [-1, -1]
@@ -1415,162 +1069,22 @@ class StructuralNavigation:
         - obj: the accessible table cell whose coordinates we want.
         """
 
-        obj = self.getCellForObj(obj)
-        parent = self.getTableForCell(obj)
-        try:
-            table = parent.queryTable()
-        except:
-            pass
-        else:
-            # If we're in a cell that spans multiple rows and/or columns,
-            # thisRow and thisCol will refer to the upper left cell in
-            # the spanned range(s).  We're storing the lastTableCell that
-            # we're aware of in order to facilitate more linear movement.
-            # Therefore, if the lastTableCell and this table cell are the
-            # same cell, we'll go with the stored coordinates.
-            #
-            lastRow, lastCol = self.lastTableCell
-            lastKnownCell = table.getAccessibleAt(lastRow, lastCol)
-            if self._script.utilities.isSameObject(lastKnownCell, obj):
-                return [lastRow, lastCol]
-            else:
-                index = self._script.utilities.cellIndex(obj)
-                thisRow = table.getRowAtIndex(index)
-                thisCol = table.getColumnAtIndex(index)
-                return [thisRow, thisCol]
+        cell = self.getCellForObj(obj)
+        table = self.getTableForCell(cell)
+        thisRow, thisCol = self._script.utilities.coordinatesForCell(cell)
 
-        return [-1, -1]
+        # If we're in a cell that spans multiple rows and/or columns,
+        # thisRow and thisCol will refer to the upper left cell in
+        # the spanned range(s).  We're storing the lastTableCell that
+        # we're aware of in order to facilitate more linear movement.
+        # Therefore, if the lastTableCell and this table cell are the
+        # same cell, we'll go with the stored coordinates.
+        lastRow, lastCol = self.lastTableCell
+        lastCell = self._script.utilities.cellForCoordinates(table, lastRow, lastCol)
+        if lastCell == cell:
+            return lastRow, lastCol
 
-    def _getRowHeaders(self, obj):
-        """Returns a list of table cells that serve as a row header for
-        the specified TABLE_CELL.
-
-        Arguments:
-        - obj: the accessible table cell whose header(s) we want.
-        """
-
-        rowHeaders = []
-        if not obj:
-            return rowHeaders
-
-        parentTable = self.getTableForCell(obj)
-        try:
-            table = parentTable.queryTable()
-        except:
-            pass
-        else:
-            [row, col] = self.getCellCoordinates(obj)
-            # Theoretically, we should be able to quickly get the text
-            # of a {row, column}Header via get{Row,Column}Description().
-            # Gecko doesn't expose the information that way, however.
-            # get{Row,Column}Header seems to work sometimes.
-            #
-            header = table.getRowHeader(row)
-            if header:
-                rowHeaders.append(header)
-
-            # Headers that are strictly marked up with <th> do not seem
-            # to be exposed through get{Row, Column}Header.
-            #
-            else:
-                # If our cell spans multiple rows, we want to get all of
-                # the headers that apply.
-                #
-                rowspan = table.getRowExtentAt(row, col)
-                for r in range(row, row+rowspan):
-                    # We could have multiple headers for a given row, one
-                    # header per column.  Presumably all of the headers are
-                    # prior to our present location.
-                    #
-                    for c in range(0, col):
-                        cell = table.getAccessibleAt(r, c)
-                        if self._isHeader(cell) and not cell in rowHeaders:
-                            rowHeaders.append(cell)
-
-        return rowHeaders
-
-    def _getColumnHeaders(self, obj):
-        """Returns a list of table cells that serve as a column header for
-        the specified TABLE_CELL.
-
-        Arguments:
-        - obj: the accessible table cell whose header(s) we want.
-        """
-
-        columnHeaders = []
-        if not obj:
-            return columnHeaders
-
-        parentTable = self.getTableForCell(obj)
-        try:
-            table = parentTable.queryTable()
-        except:
-            pass
-        else:
-            [row, col] = self.getCellCoordinates(obj)
-            # Theoretically, we should be able to quickly get the text
-            # of a {row, column}Header via get{Row,Column}Description().
-            # Gecko doesn't expose the information that way, however.
-            # get{Row,Column}Header seems to work sometimes.
-            #
-            header = table.getColumnHeader(col)
-            if header:
-                columnHeaders.append(header)
-
-            # Headers that are strictly marked up with <th> do not seem
-            # to be exposed through get{Row, Column}Header.
-            #
-            else:
-                # If our cell spans multiple columns, we want to get all of
-                # the headers that apply.
-                #
-                colspan = table.getColumnExtentAt(row, col)
-                for c in range(col, col+colspan):
-                    # We could have multiple headers for a given column, one
-                    # header per row.  Presumably all of the headers are
-                    # prior to our present location.
-                    #
-                    for r in range(0, row):
-                        cell = table.getAccessibleAt(r, c)
-                        if self._isHeader(cell) and not cell in columnHeaders:
-                            columnHeaders.append(cell)
-
-        return columnHeaders
-
-    def _isHeader(self, obj):
-        """Returns True if the table cell is a header.
-
-        Arguments:
-        - obj: the accessible table cell to examine.
-        """
-
-        if not obj:
-            return False
-
-        elif obj.getRole() in [pyatspi.ROLE_TABLE_COLUMN_HEADER,
-                               pyatspi.ROLE_TABLE_ROW_HEADER,
-                               pyatspi.ROLE_COLUMN_HEADER,
-                               pyatspi.ROLE_ROW_HEADER]:
-            return True
-
-        else:
-            attributes = obj.getAttributes()
-            if attributes:
-                for attribute in attributes:
-                    if attribute == "tag:TH":
-                        return True
-
-        return False
-
-    def _getHeadingLevel(self, obj):
-        """Determines the heading level of the given object.  A value
-        of 0 means there is no heading level.
-
-        Arguments:
-        - obj: the accessible whose heading level we want.
-        """
-
-        return self._script.utilities.headingLevel(obj)
+        return thisRow, thisCol
 
     def _getCaretPosition(self, obj):
         """Returns the [obj, characterOffset] where the caret should be
@@ -1597,6 +1111,9 @@ class StructuralNavigation:
         - offset: the character offset within obj.
         """
 
+        if not obj:
+            return
+
         if self._presentWithSayAll(obj, offset):
             return
 
@@ -1611,18 +1128,13 @@ class StructuralNavigation:
         - offset: the character offset within obj.
         """
 
+        if not obj:
+            return
+
         if self._presentWithSayAll(obj, offset):
             return
 
-        self._script.updateBraille(obj)
-        voices = self._script.voices
-        if obj.getRole() == pyatspi.ROLE_LINK:
-            voice = voices[settings.HYPERLINK_VOICE]
-        else:
-            voice = voices[settings.DEFAULT_VOICE]
-
-        utterances = self._script.speechGenerator.generateSpeech(obj)
-        speech.speak(utterances, voice)
+        self._script.presentObject(obj, offset)
 
     def _presentWithSayAll(self, obj, offset):
         if self._script.inSayAll() \
@@ -2457,7 +1969,7 @@ class StructuralNavigation:
         isMatch = False
         if obj and obj.getRole() == pyatspi.ROLE_HEADING:
             if arg:
-                isMatch = (arg == self._getHeadingLevel(obj))
+                isMatch = arg == self._script.utilities.headingLevel(obj)
             else:
                 isMatch = True
 
@@ -2493,7 +2005,8 @@ class StructuralNavigation:
             columnHeaders.append(guilabels.SN_HEADER_LEVEL)
 
             def rowData(obj):
-                return [self._getText(obj), str(self._getHeadingLevel(obj))]
+                return [self._getText(obj),
+                        str(self._script.utilities.headingLevel(obj))]
 
         else:
             title = guilabels.SN_TITLE_HEADING_AT_LEVEL % arg
@@ -2657,7 +2170,7 @@ class StructuralNavigation:
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(obj, characterOffset)
-            self._presentLine(obj, characterOffset)
+            self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_LANDMARK_FOUND
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
@@ -2739,6 +2252,7 @@ class StructuralNavigation:
         """
 
         if obj:
+            speech.speak(self._script.speechGenerator.generateSpeech(obj))
             [obj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(obj, characterOffset)
             self._presentLine(obj, characterOffset)
@@ -2825,10 +2339,6 @@ class StructuralNavigation:
         if obj:
             [obj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(obj, characterOffset)
-            # TODO: We currently present the line, so that's kept here.
-            # But we should probably present the object, which would
-            # be consistent with the change made recently for headings.
-            #
             self._presentLine(obj, characterOffset)
         else:
             full = messages.NO_MORE_LIST_ITEMS
@@ -2909,13 +2419,7 @@ class StructuralNavigation:
         """
 
         if obj:
-            # TODO: We don't want to move to a list item.
-            # Is this the best place to handle this?
-            #
-            if obj.getRole() == pyatspi.ROLE_LIST:
-                characterOffset = 0
-            else:
-                [obj, characterOffset] = self._getCaretPosition(obj)
+            [obj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
@@ -3342,7 +2846,8 @@ class StructuralNavigation:
             self._script.presentMessage(messages.TABLE_CELL_COORDINATES \
                                         % {"row" : row + 1, "column" : col + 1})
 
-        spanString = self._getCellSpanInfo(cell)
+        rowspan, colspan = self._script.utilities.rowAndColumnSpan(cell)
+        spanString = messages.cellSpan(rowspan, colspan)
         if spanString and settings.speakCellSpan:
             self._script.presentMessage(spanString)
 

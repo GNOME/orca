@@ -247,10 +247,10 @@ class Script:
         return []
 
     def getStructuralNavigation(self):
-        """Returns the 'structural navigation' class for this script.
-        """
+        """Returns the 'structural navigation' class for this script."""
         types = self.getEnabledStructuralNavigationTypes()
-        return structural_navigation.StructuralNavigation(self, types)
+        enable = _settingsManager.getSetting('structuralNavigationEnabled')
+        return structural_navigation.StructuralNavigation(self, types, enable)
 
     def getLiveRegionManager(self):
         """Returns the live region support for this script."""

@@ -355,7 +355,15 @@ class SpeechGenerator(generator.Generator):
                 == settings.VERBOSITY_LEVEL_BRIEF:
             doNotPresent.extend([pyatspi.ROLE_ICON, pyatspi.ROLE_CANVAS])
 
-        if role not in doNotPresent:
+        if role == pyatspi.ROLE_HEADING:
+            level = self._script.utilities.headingLevel(obj)
+            if level:
+                result.append(object_properties.ROLE_HEADING_LEVEL_SPEECH % {
+                    'role': self.getLocalizedRoleName(obj, role),
+                    'level': level})
+                result.extend(acss)
+
+        if role not in doNotPresent and not result:
             result.append(self.getLocalizedRoleName(obj, role))
             result.extend(acss)
         return result

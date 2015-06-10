@@ -138,12 +138,6 @@ class Script(default.Script):
 
         return SpeechGenerator(self)
 
-    def getStructuralNavigation(self):
-        """Returns the 'structural navigation' class for this script."""
-
-        types = self.getEnabledStructuralNavigationTypes()
-        return structural_navigation.StructuralNavigation(self, types, True)
-
     def getEnabledStructuralNavigationTypes(self):
         """Returns a list of the structural navigation object types
         enabled in this script."""

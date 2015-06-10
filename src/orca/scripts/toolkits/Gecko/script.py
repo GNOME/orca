@@ -59,11 +59,11 @@ import orca.settings as settings
 import orca.settings_manager as settings_manager
 import orca.speech as speech
 import orca.speechserver as speechserver
+import orca.structural_navigation as structural_navigation
 
 from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
 from .bookmarks import GeckoBookmarks
-from .structural_navigation import GeckoStructuralNavigation
 from .script_utilities import Utilities
 from .tutorial_generator import TutorialGenerator
 
@@ -244,42 +244,33 @@ class Script(default.Script):
         enabled in this script.
         """
 
-        enabledTypes = [GeckoStructuralNavigation.BLOCKQUOTE,
-                        GeckoStructuralNavigation.BUTTON,
-                        GeckoStructuralNavigation.CHECK_BOX,
-                        GeckoStructuralNavigation.CHUNK,
-                        GeckoStructuralNavigation.CLICKABLE,
-                        GeckoStructuralNavigation.COMBO_BOX,
-                        GeckoStructuralNavigation.ENTRY,
-                        GeckoStructuralNavigation.FORM_FIELD,
-                        GeckoStructuralNavigation.HEADING,
-                        GeckoStructuralNavigation.IMAGE,
-                        GeckoStructuralNavigation.LANDMARK,
-                        GeckoStructuralNavigation.LINK,
-                        GeckoStructuralNavigation.LIST,
-                        GeckoStructuralNavigation.LIST_ITEM,
-                        GeckoStructuralNavigation.LIVE_REGION,
-                        GeckoStructuralNavigation.PARAGRAPH,
-                        GeckoStructuralNavigation.RADIO_BUTTON,
-                        GeckoStructuralNavigation.SEPARATOR,
-                        GeckoStructuralNavigation.TABLE,
-                        GeckoStructuralNavigation.TABLE_CELL,
-                        GeckoStructuralNavigation.UNVISITED_LINK,
-                        GeckoStructuralNavigation.VISITED_LINK]
-
-        return enabledTypes
+        return [structural_navigation.StructuralNavigation.BLOCKQUOTE,
+                structural_navigation.StructuralNavigation.BUTTON,
+                structural_navigation.StructuralNavigation.CHECK_BOX,
+                structural_navigation.StructuralNavigation.CHUNK,
+                structural_navigation.StructuralNavigation.CLICKABLE,
+                structural_navigation.StructuralNavigation.COMBO_BOX,
+                structural_navigation.StructuralNavigation.ENTRY,
+                structural_navigation.StructuralNavigation.FORM_FIELD,
+                structural_navigation.StructuralNavigation.HEADING,
+                structural_navigation.StructuralNavigation.IMAGE,
+                structural_navigation.StructuralNavigation.LANDMARK,
+                structural_navigation.StructuralNavigation.LINK,
+                structural_navigation.StructuralNavigation.LIST,
+                structural_navigation.StructuralNavigation.LIST_ITEM,
+                structural_navigation.StructuralNavigation.LIVE_REGION,
+                structural_navigation.StructuralNavigation.PARAGRAPH,
+                structural_navigation.StructuralNavigation.RADIO_BUTTON,
+                structural_navigation.StructuralNavigation.SEPARATOR,
+                structural_navigation.StructuralNavigation.TABLE,
+                structural_navigation.StructuralNavigation.TABLE_CELL,
+                structural_navigation.StructuralNavigation.UNVISITED_LINK,
+                structural_navigation.StructuralNavigation.VISITED_LINK]
 
     def getLiveRegionManager(self):
         """Returns the live region support for this script."""
 
         return liveregions.LiveRegionManager(self)
-
-    def getStructuralNavigation(self):
-        """Returns the 'structural navigation' class for this script.
-        """
-        types = self.getEnabledStructuralNavigationTypes()
-        enable = _settingsManager.getSetting('structuralNavigationEnabled')
-        return GeckoStructuralNavigation(self, types, enable)
 
     def getCaretNavigation(self):
         """Returns the caret navigation support for this script."""
@@ -1441,19 +1432,6 @@ class Script(default.Script):
 
         return True
 
-    def presentLine(self, obj, offset):
-        """Presents the current line in speech and in braille.
-
-        Arguments:
-        - obj: the Accessible at the caret
-        - offset: the offset within obj
-        """
-
-        contents = self.utilities.getLineContentsAtOffset(obj, offset)
-        if not isinstance(orca_state.lastInputEvent, input_event.BrailleEvent):
-            self.speakContents(self.utilities.getLineContentsAtOffset(obj, offset))
-        self.updateBraille(obj)
-
     def updateBraille(self, obj, extraRegion=None):
         """Updates the braille display to show the given object."""
 
@@ -1556,12 +1534,17 @@ class Script(default.Script):
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
 
-        if not self._lastCommandWasCaretNav:
+        if not (self._lastCommandWasCaretNav or self._lastCommandWasStructNav):
             super().sayLine(obj)
             return
 
         obj, offset = self.utilities.getCaretContext(documentFrame=None)
         self.speakContents(self.utilities.getLineContentsAtOffset(obj, offset))
+
+    def presentObject(self, obj, offset=0):
+        contents = self.utilities.getObjectContentsAtOffset(obj, offset)
+        self.displayContents(contents)
+        self.speakContents(contents)
 
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
         """In document content, we want to use the panning keys to browse the

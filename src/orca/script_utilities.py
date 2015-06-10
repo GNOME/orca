@@ -41,6 +41,7 @@ from . import input_event
 from . import mathsymbols
 from . import messages
 from . import mouse_review
+from . import orca
 from . import orca_state
 from . import object_properties
 from . import pronunciation_dict
@@ -446,11 +447,25 @@ class Utilities:
         self._script.generatorCache[self.DISPLAYED_TEXT][obj] = displayedText
         return self._script.generatorCache[self.DISPLAYED_TEXT][obj]
 
-    def documentFrame(self):
+    def documentFrame(self, obj=None):
         """Returns the document frame which is displaying the content.
         Note that this is intended primarily for web content."""
 
-        return None
+        if not obj:
+            obj, offset = self.getCaretContext()
+        docRoles = [pyatspi.ROLE_DOCUMENT_EMAIL,
+                    pyatspi.ROLE_DOCUMENT_FRAME,
+                    pyatspi.ROLE_DOCUMENT_PRESENTATION,
+                    pyatspi.ROLE_DOCUMENT_SPREADSHEET,
+                    pyatspi.ROLE_DOCUMENT_TEXT,
+                    pyatspi.ROLE_DOCUMENT_WEB]
+        stopRoles = [pyatspi.ROLE_FRAME, pyatspi.ROLE_SCROLL_PANE]
+        document = self.ancestorWithRole(obj, docRoles, stopRoles)
+        if not document and orca_state.locusOfFocus:
+            if orca_state.locusOfFocus.getRole() in docRoles:
+                return orca_state.locusOfFocus
+
+        return document
 
     def documentFrameURI(self):
         """Returns the URI of the document frame that is active."""
@@ -1322,6 +1337,26 @@ class Utilities:
         return abs(center1 - center2) <= delta
 
     @staticmethod
+    def pathComparison(path1, path2, treatDescendantAsSame=False):
+        """Compares the two paths and returns -1, 0, or 1 to indicate if path1
+        is before, the same, or after path2."""
+
+        if path1 == path2:
+            return 0
+
+        for x in range(min(len(path1), len(path2))):
+            if path1[x] < path2[x]:
+                return -1
+            if path1[x] > path2[x]:
+                return 1
+
+        if treatDescendantAsSame:
+            return 0
+
+        rv = len(path1) - len(path2)
+        return min(max(rv, -1), 1)
+
+    @staticmethod
     def spatialComparison(obj1, obj2):
         """Compares the physical locations of obj1 and obj2 and returns -1,
         0, or 1 to indicate if obj1 physically is before, is in the same
@@ -1742,6 +1777,10 @@ class Utilities:
             offset = -1
 
         return obj, offset
+
+    def setCaretPosition(self, obj, offset):
+        orca.setLocusOfFocus(None, obj, False)
+        self.setCaretOffset(obj, offset)
 
     def setCaretOffset(self, obj, offset):
         """Set the caret offset on a given accessible. Similar to
@@ -2486,6 +2525,48 @@ class Utilities:
 
         return False
 
+    def columnHeadersForCell(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
+            return []
+
+        isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
+        parent = pyatspi.findAncestor(obj, isTable)
+        try:
+            table = parent.queryTable()
+        except:
+            return []
+
+        index = self.cellIndex(obj)
+        row, col = table.getRowAtIndex(index), table.getColumnAtIndex(index)
+        colspan = table.getColumnExtentAt(row, col)
+
+        headers = []
+        for c in range(col, col+colspan):
+            headers.append(table.getColumnHeader(c))
+
+        return headers
+
+    def rowHeadersForCell(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
+            return []
+
+        isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
+        parent = pyatspi.findAncestor(obj, isTable)
+        try:
+            table = parent.queryTable()
+        except:
+            return []
+
+        index = self.cellIndex(obj)
+        row, col = table.getRowAtIndex(index), table.getColumnAtIndex(index)
+        rowspan = table.getRowExtentAt(row, col)
+
+        headers = []
+        for r in range(row, row+rowspan):
+            headers.append(table.getRowHeader(r))
+
+        return headers
+
     def columnHeaderForCell(self, obj):
         if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
             return None
@@ -2517,6 +2598,23 @@ class Utilities:
         return table.getRowHeader(rowIndex)
 
     def coordinatesForCell(self, obj):
+        roles = [pyatspi.ROLE_TABLE_CELL,
+                 pyatspi.ROLE_COLUMN_HEADER,
+                 pyatspi.ROLE_ROW_HEADER]
+        if not (obj and obj.getRole() in roles):
+            return -1, -1
+
+        isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
+        parent = pyatspi.findAncestor(obj, isTable)
+        try:
+            table = parent.queryTable()
+        except:
+            return -1, -1
+
+        index = self.cellIndex(obj)
+        return table.getRowAtIndex(index), table.getColumnAtIndex(index)
+
+    def rowAndColumnSpan(self, obj):
         if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
             return -1, -1
 
@@ -2528,7 +2626,30 @@ class Utilities:
             return -1, -1
 
         index = self.cellIndex(obj)
-        return table.getRowAtIndex(index), table.getColumnHeader(index)
+        row, col = table.getRowAtIndex(index), table.getColumnAtIndex(index)
+        return table.getRowExtentAt(row, col), table.getColumnExtentAt(row, col)
+
+    def cellForCoordinates(self, obj, row, column):
+        try:
+            table = obj.queryTable()
+        except:
+            return None
+
+        return table.getAccessibleAt(row, column)
+
+    def isNonUniformTable(self, obj):
+        try:
+            table = obj.queryTable()
+        except:
+            return False
+
+        for r in range(table.nRows):
+            for c in range(table.nColumns):
+                if table.getRowExtentAt(r, c) > 1 \
+                   or table.getColumnExtentAt(r, c) > 1:
+                    return True
+
+        return False
 
     def isZombie(self, obj):
         try:

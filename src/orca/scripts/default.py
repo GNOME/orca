@@ -3623,6 +3623,11 @@ class Script(script.Script):
         self._lastWord = word
         speech.speak(word, voice)
 
+    def presentObject(self, obj, offset=0):
+        self.updateBraille(obj)
+        utterances = self.speechGenerator.generateSpeech(obj)
+        speech.speak(utterances, voice)
+
     def stopSpeechOnActiveDescendantChanged(self, event):
         """Whether or not speech should be stopped prior to setting the
         locusOfFocus in onActiveDescendantChanged.

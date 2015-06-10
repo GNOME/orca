@@ -254,6 +254,20 @@ class Utilities(script_utilities.Utilities):
 
         return [startIndex, endIndex]
 
+    def rowHeadersForCell(self, obj):
+        rowHeader, colHeader = self.getDynamicHeadersForCell(obj)
+        if rowHeader:
+            return [rowHeader]
+
+        return super().rowHeadersForCell(obj)
+
+    def columnHeadersForCell(self, obj):
+        rowHeader, colHeader = self.getDynamicHeadersForCell(obj)
+        if colHeader:
+            return [colHeader]
+
+        return super().columnHeadersForCell(obj)
+
     def getDynamicHeadersForCell(self, obj, onlyIfNew=False):
         if not (self._script.dynamicRowHeaders or self._script.dynamicColumnHeaders):
             return None, None

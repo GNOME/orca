@@ -47,39 +47,6 @@ class StructuralNavigation(structural_navigation.StructuralNavigation):
                                                             enabledTypes,
                                                             enabled)
 
-    def _isHeader(self, obj):
-        """Returns True if the table cell is a header.
-
-        Arguments:
-        - obj: the accessible table cell to examine.
-        """
-
-        if not obj:
-            return False
-
-        if obj.getRole() in [pyatspi.ROLE_TABLE_COLUMN_HEADER,
-                             pyatspi.ROLE_TABLE_ROW_HEADER]:
-            return True
-
-        # Check for dynamic row and column headers.
-        #
-        try:
-            table = obj.parent.queryTable()
-        except:
-            return False
-
-        parent = hash(obj.parent)
-
-        # Make sure we're in the correct table first.
-        #
-        if not (parent in self._script.dynamicRowHeaders or
-                parent in self._script.dynamicColumnHeaders):
-            return False
-
-        [row, col] = self.getCellCoordinates(obj)
-        return (row == self._script.dynamicColumnHeaders.get(parent) \
-                or col == self._script.dynamicRowHeaders.get(parent))
-
     def _tableCellPresentation(self, cell, arg):
         """Presents the table cell or indicates that one was not found.
         Overridden here to avoid the double-speaking of the dynamic
@@ -118,6 +85,16 @@ class StructuralNavigation(structural_navigation.StructuralNavigation):
             self._script.presentMessage(messages.TABLE_CELL_COORDINATES \
                                        % {"row" : row + 1, "column" : col + 1})
 
-        spanString = self._getCellSpanInfo(cell)
+        rowspan, colspan = self._script.utilities.rowAndColumnSpan(cell)
+        spanString = messages.cellSpan(rowspan, colspan)
         if spanString and settings.speakCellSpan:
             self._script.presentMessage(spanString)
+
+    def _getCaretPosition(self, obj):
+        try:
+            text = obj.queryText()
+        except:
+            if obj and obj.childCount:
+                return self._getCaretPosition(obj[0])
+
+        return obj, 0

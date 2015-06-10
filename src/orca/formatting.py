@@ -180,7 +180,8 @@ formatting = {
             'unfocused': 'labelOrName + allTextSelection + roleName + unfocusedDialogCount + availability'
             },
         pyatspi.ROLE_HEADING: {
-            'unfocused': 'displayedText + roleName + expandableState + availability + ' + MNEMONIC,
+            'focused': 'displayedText + roleName + expandableState',
+            'unfocused': 'displayedText + roleName + expandableState',
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
             'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
             },
@@ -662,8 +663,8 @@ if settings.useExperimentalSpeechProsody:
     formatting['speech'][pyatspi.ROLE_COMBO_BOX]['unfocused'] = 'label + name + roleName + pause + positionInList + ' + MNEMONIC + ' + accelerator'
     formatting['speech'][pyatspi.ROLE_COMBO_BOX]['basicWhereAmI'] = \
         'label + roleName + pause + name + positionInList + ' + MNEMONIC + ' + accelerator'
-    formatting['speech'][pyatspi.ROLE_HEADING]['unfocused'] = \
-        'displayedText + roleName + expandableState + availability + ' + MNEMONIC
+    formatting['speech'][pyatspi.ROLE_HEADING]['focused'] = 'displayedText + roleName + expandableState'
+    formatting['speech'][pyatspi.ROLE_HEADING]['unfocused'] = 'displayedText + roleName + expandableState'
     formatting['speech'][pyatspi.ROLE_HEADING]['basicWhereAmI'] = \
         'label + readOnly + textRole + pause + textContent + anyTextSelection + ' + MNEMONIC
     formatting['speech'][pyatspi.ROLE_HEADING]['detailedWhereAmI'] = \

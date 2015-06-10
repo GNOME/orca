@@ -32,6 +32,7 @@ from . import braille
 from . import debug
 from . import generator
 from . import messages
+from . import object_properties
 from . import orca_state
 from . import settings
 from . import settings_manager
@@ -146,7 +147,11 @@ class BrailleGenerator(generator.Generator):
         if verbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
             doNotPresent.extend([pyatspi.ROLE_ICON, pyatspi.ROLE_CANVAS])
 
-        if verbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
+        if role == pyatspi.ROLE_HEADING:
+            level = self._script.utilities.headingLevel(obj)
+            result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
+
+        elif verbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
            and not args.get('readingRow', False) and role not in doNotPresent:
             result.append(self.getLocalizedRoleName(obj, role))
         return result
