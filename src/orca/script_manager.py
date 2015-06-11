@@ -146,28 +146,28 @@ class ScriptManager:
         script = None
         for package in self._scriptPackages:
             moduleName = '.'.join((package, name))
-            debug.println(debug.LEVEL_FINE, "Looking for %s.py" % moduleName)
+            debug.println(debug.LEVEL_FINE, "Looking for %s" % moduleName)
             try:
                 module = importlib.import_module(moduleName)
             except ImportError:
                 debug.println(
-                    debug.LEVEL_FINE, "Could not import %s.py" % moduleName)
+                    debug.LEVEL_FINE, "Could not import %s" % moduleName)
                 continue
             except OSError:
                 debug.examineProcesses()
 
-            debug.println(debug.LEVEL_FINE, "Found %s.py" % moduleName)
+            debug.println(debug.LEVEL_FINE, "Found %s" % moduleName)
             try:
                 if hasattr(module, 'getScript'):
                     script = module.getScript(app)
                 else:
                     script = module.Script(app)
-                debug.println(debug.LEVEL_FINE, "Loaded %s.py" % moduleName)
+                debug.println(debug.LEVEL_FINE, "Loaded %s" % moduleName)
                 break
             except:
                 debug.printException(debug.LEVEL_FINEST)
                 debug.println(
-                    debug.LEVEL_FINEST, "Could not load %s.py" % moduleName)
+                    debug.LEVEL_FINEST, "Could not load %s" % moduleName)
 
         return script
 

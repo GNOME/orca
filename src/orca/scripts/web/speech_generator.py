@@ -335,13 +335,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.append(text)
         return result
 
-    # TODO - JD: more crap to move to default and utilities....
-    def getAttribute(self, obj, attributeName):
-        attributes = obj.getAttributes()
-        for attribute in attributes:
-            if attribute.startswith(attributeName):
-                return attribute.split(":")[1]
-
     def _generatePositionInList(self, obj, **args):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
@@ -365,8 +358,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
-        position = self.getAttribute(obj, "posinset")
-        total = self.getAttribute(obj, "setsize")
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            attrs = {}
+
+        position = attrs.get("posinset")
+        total = attrs.get("setsize")
         if position is None or total is None:
             return super()._generatePositionInList(obj, **args)
 

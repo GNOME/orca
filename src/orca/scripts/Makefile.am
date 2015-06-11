@@ -1,4 +1,4 @@
-SUBDIRS = apps toolkits
+SUBDIRS = apps toolkits web
 
 orca_python_PYTHON = \
 	__init__.py \

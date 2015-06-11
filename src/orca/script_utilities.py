@@ -1599,8 +1599,7 @@ class Utilities:
 
         return rv
 
-    @staticmethod
-    def characterOffsetInParent(obj):
+    def characterOffsetInParent(self, obj):
         """Returns the character offset of the embedded object
         character for this object in its parent's accessible text.
 
