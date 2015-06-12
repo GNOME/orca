@@ -35,7 +35,6 @@ from orca import messages
 from orca import object_properties
 from orca import orca_state
 
-
 class BrailleGenerator(braille_generator.BrailleGenerator):
 
     def __init__(self, script):
@@ -109,7 +108,6 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         text = self._script.utilities.expandEOCs(obj, startOffset, endOffset)
         if text:
             result.append(text)
-
         return result
 
     def generateBraille(self, obj, **args):
@@ -123,16 +121,20 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         elif self._script.utilities.isStatic(obj):
             oldRole = self._overrideRole('ROLE_STATIC', args)
 
+        # Treat menu items in collapsed combo boxes as if the combo box
+        # had focus. This will make things more consistent with how we
+        # present combo boxes outside of Gecko.
+        #
         if obj.getRole() == pyatspi.ROLE_MENU_ITEM:
             comboBox = self._script.utilities.ancestorWithRole(
                 obj, [pyatspi.ROLE_COMBO_BOX], [pyatspi.ROLE_FRAME])
-            if comboBox and not comboBox.getState().contains(pyatspi.STATE_EXPANDED):
+            if comboBox \
+               and not comboBox.getState().contains(pyatspi.STATE_EXPANDED):
                 obj = comboBox
         result.extend(super().generateBraille(obj, **args))
         del args['includeContext']
         if oldRole:
             self._restoreRole(oldRole, args)
-
         return result
 
     def _generateEol(self, obj, **args):

@@ -23,13 +23,12 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2014 Orca Team."
 __license__   = "LGPL"
 
-from orca import messages
-from orca import tutorialgenerator
+import orca.messages as messages
+import orca.tutorialgenerator as tutorial_generator
 
-
-class TutorialGenerator(tutorialgenerator.TutorialGenerator):
+class TutorialGenerator(tutorial_generator.TutorialGenerator):
     def __init__(self, script):
-        super().__init__(script)
+        tutorial_generator.TutorialGenerator.__init__(self, script)
 
     def _getFocusModeTutorial(self, obj, alreadyFocused, forceTutorial):
         binding = self._getBindingsForHandler("togglePresentationModeHandler")
@@ -43,4 +42,5 @@ class TutorialGenerator(tutorialgenerator.TutorialGenerator):
            and not self._script.useFocusMode(obj):
             return self._getFocusModeTutorial(obj, alreadyFocused, forceTutorial)
 
-        return super()._getModeTutorial(obj, alreadyFocused, forceTutorial)
+        return tutorial_generator.TutorialGenerator._getModeTutorial(
+            self, obj, alreadyFocused, forceTutorial)
