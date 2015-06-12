@@ -17,8 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-""" Custom script for Thunderbird 3.
-"""
+"""Custom script for Thunderbird"""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -28,24 +27,14 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.scripts.toolkits.Gecko as Gecko
+from orca.scripts.web import speech_generator
 
-from orca.orca_i18n import _
 
-########################################################################
-#                                                                      #
-# Custom SpeechGenerator for Thunderbird                               #
-#                                                                      #
-########################################################################
-
-class SpeechGenerator(Gecko.SpeechGenerator):
-    """Provides a speech generator specific to Thunderbird.
-    """
-
-    # pylint: disable-msg=W0142
+class SpeechGenerator(speech_generator.SpeechGenerator):
+    """Provides a speech generator specific to Thunderbird."""
 
     def __init__(self, script):
-        Gecko.SpeechGenerator.__init__(self, script)
+        super().__init__(script)
 
     def _generateColumnHeader(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
@@ -53,31 +42,7 @@ class SpeechGenerator(Gecko.SpeechGenerator):
         that is in a table, if it exists.  Otherwise, an empty array
         is returned.
         """
-        result = []
 
         # Don't speak Thunderbird column headers, since
         # it's not possible to navigate across a row.
-        #
-        return result
-
-    def _generateUnrelatedLabels(self, obj, **args):
-        """Finds all labels not in a label for or labelled by relation.
-        If this is the spell checking dialog, then there are no
-        unrelated labels.  See bug #535192 for more details.
-        """
-        result = []
-
-        # Translators: this is what the name of the spell checking
-        # dialog in Thunderbird begins with. The translated form
-        # has to match what Thunderbird is using.  We hate keying
-        # off stuff like this, but we're forced to do so in this case.
-        #
-        if obj.name.startswith(_("Check Spelling")) \
-           and self._script.utilities.hasMatchingHierarchy(
-                   obj, [pyatspi.ROLE_DIALOG,
-                         pyatspi.ROLE_APPLICATION]):
-            pass
-        else:
-            result.extend(Gecko.SpeechGenerator._generateUnrelatedLabels(
-                              self, obj, **args))
-        return result
+        return []
