@@ -41,40 +41,11 @@ class Script(web.Script):
     def __init__(self, app):
         super().__init__(app)
 
-        # TODO - JD: This should also not be needed. In theory, they've
-        # converted to the new attribute styles.
-
-        # A dictionary of Gecko-style attribute names and their equivalent/
-        # expected names. This is necessary so that we can present the
-        # attributes to the user in a consistent fashion across apps and
-        # toolkits. Note that underlinesolid and line-throughsolid are
-        # temporary fixes: text_attribute_names.py assumes a one-to-one
-        # correspondence. This is not a problem when going from attribute
-        # name to localized name; in the reverse direction, we need more
-        # context (i.e. we can't safely make them both be "solid"). A
-        # similar issue exists with "start" which means no justification
-        # has explicitly been set. If we set that to "none", "none" will
-        # no longer have a single reverse translation.
-        #
+        # This can be removed once this Mozilla bug is fixed:
+        # https://bugzilla.mozilla.org/show_bug.cgi?id=1174204
         self.attributeNamesDict = {
-            "font-weight"             : "weight",
-            "font-family"             : "family-name",
-            "font-style"              : "style",
-            "text-align"              : "justification",
-            "text-indent"             : "indent",
-            "font-size"               : "size",
             "background-color"        : "bg-color",
-            "color"                   : "fg-color",
-            "text-line-through-style" : "strikethrough",
-            "text-underline-style"    : "underline",
-            "text-position"           : "vertical-align",
-            "writing-mode"            : "direction",
-            "-moz-left"               : "left",
-            "-moz-right"              : "right",
-            "-moz-center"             : "center",
-            "start"                   : "no justification",
-            "underlinesolid"          : "single",
-            "line-throughsolid"       : "solid"}
+            "color"                   : "fg-color"}
 
     def getUtilities(self):
         """Returns the utilites for this script."""
