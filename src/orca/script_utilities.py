@@ -2724,16 +2724,19 @@ class Utilities:
         if not obj:
             return -1, -1
 
-        if obj.getRole() == pyatspi.ROLE_COMBO_BOX:
+        isComboBox = obj.getRole() == pyatspi.ROLE_COMBO_BOX
+        if isComboBox:
             selected = self.selectedChildren(obj)
             if selected:
                 obj = selected[0]
 
         parent = self.getFunctionalParent(obj)
         siblings = self.getFunctionalChildren(parent)
-        layoutRoles = [pyatspi.ROLE_SEPARATOR, pyatspi.ROLE_TEAROFF_MENU_ITEM]
-        isNotLayoutOnly = lambda x: not (self.isZombie(x) or x.getRole() in layoutRoles)
-        siblings = list(filter(isNotLayoutOnly, siblings))
+        if not (isComboBox or pyatspi.utils.findAncestor(obj, isComboBox)) \
+           and len(siblings) < 100:
+            layoutRoles = [pyatspi.ROLE_SEPARATOR, pyatspi.ROLE_TEAROFF_MENU_ITEM]
+            isNotLayoutOnly = lambda x: not (self.isZombie(x) or x.getRole() in layoutRoles)
+            siblings = list(filter(isNotLayoutOnly, siblings))
         if not (siblings and obj in siblings):
             return -1, -1
 

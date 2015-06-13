@@ -183,6 +183,15 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, obj)
             return
 
+    def onSelectionChanged(self, event):
+        """Callback for object:selection-changed accessibility events."""
+
+        if event.source.getRole() == pyatspi.ROLE_COMBO_BOX \
+           and not event.source.getState().contains(pyatspi.STATE_FOCUSED):
+            return
+
+        default.Script.onSelectionChanged(self, event)
+
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
 

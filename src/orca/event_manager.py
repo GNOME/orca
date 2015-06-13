@@ -143,6 +143,17 @@ class EventManager:
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
+        if event.type.startswith('object:state-changed:showing'):
+            try:
+                role = event.source.getRole()
+            except:
+                role = None
+            if role == pyatspi.ROLE_MENU_ITEM:
+                msg = 'INFO: %s for %s in app %s. Who cares?' % \
+                      (event.type, event.source, event.host_application)
+                debug.println(debug.LEVEL_INFO, msg)
+                return True
+
         if event.type.startswith('object:children-changed:add'):
             if not event.any_data:
                 msg = 'ERROR: %s without child from source %s in app %s' % \
