@@ -16,7 +16,7 @@ sequence.append(KeyComboAction("<Control>End"))
 sequence.append(utils.AssertPresentationAction(
     "1. End of file",
     ["BRAILLE LINE:  'No'",
-     "     VISIBLE:  'No', cursor=3",
+     "     VISIBLE:  'No', cursor=0",
      "SPEECH OUTPUT: 'No'"]))
 
 sequence.append(utils.StartRecordingAction())

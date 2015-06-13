@@ -742,6 +742,7 @@ class Script(script.Script):
         try:
             role = obj.getRole()
             state = obj.getState()
+            name = obj.name
         except:
             return
 
@@ -749,7 +750,7 @@ class Script(script.Script):
         # changes after the focus or selection has changed, even though the
         # name has not.
         names = self.pointOfReference.get('names', {})
-        names[hash(obj)] = obj.name
+        names[hash(obj)] = name
         self.pointOfReference['names'] = names
 
         # We want to save the offset for text objects because some apps and

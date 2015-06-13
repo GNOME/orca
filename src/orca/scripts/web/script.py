@@ -1205,6 +1205,12 @@ class Script(default.Script):
     def onChildrenChanged(self, event):
         """Callback for object:children-changed accessibility events."""
 
+        document = self.utilities.getDocumentForObject(event.source)
+        if document:
+            msg = "WEB: Clearing structural navigation cache for %s" % document
+            debug.println(debug.LEVEL_INFO, msg)
+            self.structuralNavigation.clearCache(document)
+
         if self.utilities.handleAsLiveRegion(event):
             msg = "WEB: Event to be handled as live region"
             debug.println(debug.LEVEL_INFO, msg)

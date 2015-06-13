@@ -13,7 +13,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'Home'",
      "     VISIBLE:  'Home', cursor=1",
-     "SPEECH OUTPUT: 'Home link Back to the Gnome Bugzilla home page'"]))
+     "SPEECH OUTPUT: 'Home link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("H"))

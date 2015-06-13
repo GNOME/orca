@@ -389,9 +389,12 @@ class Generator:
         is different from that of the name and label.
         """
         result = []
-        label = self._script.utilities.displayedLabel(obj)
-        if obj.description and not obj.description in [obj.name, label]:
-            result.append(obj.description)
+        if obj.description:
+            label = self._script.utilities.displayedLabel(obj) or ""
+            name = obj.name or ""
+            desc = obj.description.lower()
+            if not (desc in name.lower() or desc in label.lower()):
+                result.append(obj.description)
         return result
 
     def _generateLabel(self, obj, **args):

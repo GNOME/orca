@@ -113,6 +113,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if role == pyatspi.ROLE_TEXT and formatType != 'basicWhereAmI':
             return []
 
+        # TODO - JD: This is private.
+        if role == pyatspi.ROLE_LINK and self._script._lastCommandWasCaretNav:
+            return []
+
         return super()._generateDescription(obj, **args)
 
     def _generateHasLongDesc(self, obj, **args):

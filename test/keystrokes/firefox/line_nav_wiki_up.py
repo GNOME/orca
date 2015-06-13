@@ -19,7 +19,7 @@ sequence.append(KeyComboAction("<Control>End"))
 sequence.append(utils.AssertPresentationAction(
     "1. Bottom of file",
     ["BRAILLE LINE:  'Hosted by Red Hat.'",
-     "     VISIBLE:  'Hosted by Red Hat.', cursor=19",
+     "     VISIBLE:  'Hosted by Red Hat.', cursor=0",
      "SPEECH OUTPUT: 'Hosted by'",
      "SPEECH OUTPUT: 'Red Hat link'",
      "SPEECH OUTPUT: '.'"]))

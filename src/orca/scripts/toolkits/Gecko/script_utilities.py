@@ -42,6 +42,9 @@ class Utilities(web.Utilities):
     def __init__(self, script):
         super().__init__(script)
 
+    def _attemptBrokenTextRecovery(self):
+        return True
+
     def inFindToolbar(self, obj=None):
         if not obj:
             obj = orca_state.locusOfFocus

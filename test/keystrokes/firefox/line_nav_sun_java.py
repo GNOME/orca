@@ -38,7 +38,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  'APIs Downloads Products Support Training Participate'",
      "     VISIBLE:  'APIs Downloads Products Support ', cursor=1",
-     "SPEECH OUTPUT: 'APIs link See All APIs'",
+     "SPEECH OUTPUT: 'APIs link'",
      "SPEECH OUTPUT: 'Downloads link'",
      "SPEECH OUTPUT: 'Products link'",
      "SPEECH OUTPUT: 'Support link'",

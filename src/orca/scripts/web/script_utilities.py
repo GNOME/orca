@@ -604,6 +604,9 @@ class Utilities(script_utilities.Utilities):
 
         return string, rangeStart, rangeEnd
 
+    def _attemptBrokenTextRecovery(self):
+        return False
+
     def _getTextAtOffset(self, obj, offset, boundary):
         if not obj:
             msg = "WEB: Results for text at offset %i for %s using %s:\n" \
@@ -651,6 +654,13 @@ class Utilities(script_utilities.Utilities):
         string, start, end = text.getTextAtOffset(offset, boundary)
 
         # The above should be all that we need to do, but....
+        if not self._attemptBrokenTextRecovery():
+            s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+            msg = "WEB: Results for text at offset %i for %s using %s:\n" \
+                  "     String: '%s', Start: %i, End: %i.\n" \
+                  "     Not checking for broken text." % (offset, obj, boundary, s, start, end)
+            debug.println(debug.LEVEL_INFO, msg)
+            return string, start, end
 
         needSadHack = False
         testString, testStart, testEnd = text.getTextAtOffset(start, boundary)
@@ -1045,19 +1055,6 @@ class Utilities(script_utilities.Utilities):
 
         return objects
 
-    def justEnteredObject(self, obj, startOffset, endOffset):
-        lastKey, mods = self.lastKeyAndModifiers()
-        if (lastKey == "Down" and not mods) or self._script.inSayAll():
-            return startOffset == 0
-
-        if lastKey == "Up" and not mods:
-            text = self.queryNonEmptyText(obj)
-            if not text:
-                return True
-            return endOffset == text.characterCount
-
-        return True
-
     def isFocusModeWidget(self, obj):
         try:
             role = obj.getRole()
@@ -1099,7 +1096,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def isTextBlockElement(self, obj):
-        if not obj:
+        if not (obj and self.inDocumentContent(obj)):
             return False
 
         rv = self._isTextBlockElement.get(hash(obj))
@@ -1108,10 +1105,6 @@ class Utilities(script_utilities.Utilities):
 
         role = obj.getRole()
         state = obj.getState()
-
-        if not (obj and self.inDocumentContent(obj)):
-            return False
-
         textBlockElements = [pyatspi.ROLE_CAPTION,
                              pyatspi.ROLE_COLUMN_HEADER,
                              pyatspi.ROLE_DOCUMENT_FRAME,
@@ -1128,9 +1121,7 @@ class Utilities(script_utilities.Utilities):
                              pyatspi.ROLE_TEXT,
                              pyatspi.ROLE_TABLE_CELL]
 
-        if not self.inDocumentContent(obj):
-            rv = False
-        elif not role in textBlockElements:
+        if not role in textBlockElements:
             rv = False
         elif state.contains(pyatspi.STATE_EDITABLE):
             rv = False
@@ -1597,21 +1588,24 @@ class Utilities(script_utilities.Utilities):
         return obj.getRole() in doNotDescend
 
     def _searchForCaretContext(self, obj):
-        context = [None, -1]
+        contextObj, contextOffset = None, -1
         while obj:
             try:
                 offset = obj.queryText().caretOffset
             except:
                 obj = None
             else:
-                context = [obj, offset]
+                contextObj, contextOffset = obj, offset
                 childIndex = self.getChildIndex(obj, offset)
                 if childIndex >= 0 and obj.childCount:
                     obj = obj[childIndex]
                 else:
                     break
 
-        return context
+        if contextObj:
+            return self.findNextCaretInOrder(contextObj, max(-1, contextOffset - 1))
+
+        return None, -1
 
     def _getCaretContextViaLocusOfFocus(self):
         obj = orca_state.locusOfFocus
@@ -1625,7 +1619,9 @@ class Utilities(script_utilities.Utilities):
         return obj, offset
 
     def getCaretContext(self, documentFrame=None):
-        documentFrame = documentFrame or self.documentFrame()
+        if not documentFrame or self.isZombie(documentFrame):
+            documentFrame = self.documentFrame()
+
         if not documentFrame:
             return self._getCaretContextViaLocusOfFocus()
 
@@ -1634,7 +1630,6 @@ class Utilities(script_utilities.Utilities):
             return context
 
         obj, offset = self._searchForCaretContext(documentFrame)
-        obj, offset = self.findNextCaretInOrder(obj, max(-1, offset - 1))
         self.setCaretContext(obj, offset, documentFrame)
 
         return obj, offset

@@ -15,7 +15,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'Home Bugzilla'",
      "     VISIBLE:  'Home Bugzilla', cursor=1",
-     "SPEECH OUTPUT: 'Home link Back to the Gnome Bugzilla home page'",
+     "SPEECH OUTPUT: 'Home link'",
      "SPEECH OUTPUT: 'Bugzilla'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -456,7 +456,7 @@ sequence.append(utils.AssertPresentationAction(
     "47. Line Up",
     ["BRAILLE LINE:  'Home Bugzilla'",
      "     VISIBLE:  'Home Bugzilla', cursor=1",
-     "SPEECH OUTPUT: 'Home link Back to the Gnome Bugzilla home page'",
+     "SPEECH OUTPUT: 'Home link'",
      "SPEECH OUTPUT: 'Bugzilla'"]))
 
 sequence.append(utils.AssertionSummaryAction())

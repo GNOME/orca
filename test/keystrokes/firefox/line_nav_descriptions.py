@@ -18,7 +18,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Line Down",
     ["BRAILLE LINE:  'Foo, Bar, and Baz.'",
      "     VISIBLE:  'Foo, Bar, and Baz.', cursor=1",
-     "SPEECH OUTPUT: 'Foo link Title of the Foo link.'",
+     "SPEECH OUTPUT: 'Foo link'",
      "SPEECH OUTPUT: ','",
      "SPEECH OUTPUT: 'Bar link'",
      "SPEECH OUTPUT: ', and'",
