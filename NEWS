@@ -1,3 +1,38 @@
+3.17.3 - 23 June 2015
+
+Gecko:
+
+  * Fix several issues in Orca's live region support to make Google Docs
+    usable with Orca
+
+  * Rewrite Orca's structural navigation support to fix bugs and improve
+    performance
+
+  * Create "web" script and use it for Gecko content
+
+  * Avoid navigating into tooltip-like popups in web apps
+
+  * Fix issues related to Gecko using ROLE_TEXT for static text elements
+
+General:
+
+  * Improve performance associated with event floods and dead accessibles
+
+  * Fix presentation of newly-misspelled words in LibreOffice Writer
+
+  * Present the text of ROLE_FOOTER objects
+
+  * Add unbound keybindings to increase and decrease speech volume
+
+  * Fall back on parent autocomplete if entry lacks label and name
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    el            Greek                       Dimitris Spingos
+    es            Spanish                     Miguel Rodríguez Núñez
+
+=========
+
 3.17.2 - 27 May 2015
 
 Gecko:
