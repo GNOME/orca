@@ -1055,6 +1055,74 @@ class Utilities(script_utilities.Utilities):
 
         return objects
 
+    def getPreviousLineContents(self, obj=None, offset=-1, layoutMode=None, useCache=True):
+        if obj is None:
+            obj, offset = self.getCaretContext()
+
+        msg = "INFO: Current context is: %s, %i" % (obj, offset)
+        debug.println(debug.LEVEL_INFO, msg)
+
+        if obj and self.isZombie(obj):
+            msg = "INFO: Current context obj %s is zombie" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+
+        line = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+        msg = "INFO: Line contents for %s, %i: %s" % (obj, offset, line)
+        debug.println(debug.LEVEL_INFO, msg)
+
+        if not (line and line[0]):
+            return []
+
+        firstObj, firstOffset = line[0][0], line[0][1]
+        msg = "INFO: First context on line is: %s, %i" % (firstObj, firstOffset)
+        debug.println(debug.LEVEL_INFO, msg)
+
+        obj, offset = self.previousContext(firstObj, firstOffset, True)
+        msg = "INFO: Previous context is: %s, %i" % (obj, offset)
+        debug.println(debug.LEVEL_INFO, msg)
+
+        contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+        if not contents:
+            msg = "INFO: Could not get line contents for %s, %i" % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg)
+            return []
+
+        return contents
+
+    def getNextLineContents(self, obj=None, offset=-1, layoutMode=None, useCache=True):
+        if obj is None:
+            obj, offset = self.getCaretContext()
+
+        msg = "INFO: Current context is: %s, %i" % (obj, offset)
+        debug.println(debug.LEVEL_INFO, msg)
+
+        if obj and self.isZombie(obj):
+            msg = "INFO: Current context obj %s is zombie" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+
+        line = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+        msg = "INFO: Line contents for %s, %i: %s" % (obj, offset, line)
+        debug.println(debug.LEVEL_INFO, msg)
+
+        if not (line and line[0]):
+            return []
+
+        lastObj, lastOffset = line[-1][0], line[-1][2] - 1
+        msg = "INFO: Last context on line is: %s, %i" % (lastObj, lastOffset)
+        debug.println(debug.LEVEL_INFO, msg)
+
+        obj, offset = self.nextContext(lastObj, lastOffset, True)
+        msg = "INFO: Next context is: %s, %i" % (obj, offset)
+        debug.println(debug.LEVEL_INFO, msg)
+
+        contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+        if not contents:
+            msg = "INFO: Could not get line contents for %s, %i" % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg)
+            return []
+
+        return contents
+
     def isFocusModeWidget(self, obj):
         try:
             role = obj.getRole()

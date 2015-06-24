@@ -791,6 +791,7 @@ class Script(default.Script):
 
         obj, start, end, string = contents[0]
         self.utilities.setCaretPosition(obj, start)
+        self.updateBraille(obj)
 
         # Hack: When panning to the left in a document, we want to start at
         # the right/bottom of each new object. For now, we'll pan there.
