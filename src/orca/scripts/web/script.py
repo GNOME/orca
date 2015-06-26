@@ -1534,3 +1534,13 @@ class Script(default.Script):
             return True
 
         return False
+
+    def onWindowDeactivated(self, event):
+        """Callback for window:deactivate accessibility events."""
+
+        msg = "WEB: Clearing command state"
+        debug.println(debug.LEVEL_INFO, msg)
+        self._lastCommandWasCaretNav = False
+        self._lastCommandWasStructNav = False
+        self._lastCommandWasMouseButton = False
+        return False

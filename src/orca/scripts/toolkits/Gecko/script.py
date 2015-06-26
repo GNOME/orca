@@ -251,6 +251,16 @@ class Script(web.Script):
         debug.println(debug.LEVEL_INFO, msg)
         default.Script.onTextSelectionChanged(self, event)
 
+    def onWindowDeactivated(self, event):
+        """Callback for window:deactivate accessibility events."""
+
+        if super().onWindowDeactivated(event):
+            return
+
+        msg = "GECKO: Passing along event to default script"
+        debug.println(debug.LEVEL_INFO, msg)
+        default.Script.onWindowDeactivated(self, event)
+
     def handleProgressBarUpdate(self, event, obj):
         """Determine whether this progress bar event should be spoken or not.
         For Firefox, we don't want to speak the small "page load" progress
