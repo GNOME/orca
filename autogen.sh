@@ -4,21 +4,46 @@
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 
-PKG_NAME="orca"
-
-(test -f $srcdir/configure.ac \
-  && test -f $srcdir/README \
-  && test -d $srcdir/src) || {
-    echo -n "**Error**: Directory "\`$srcdir\'" does not look like the"
-    echo " top-level $PKG_NAME directory"
-    exit 1
+(test -f $srcdir/configure.ac) || {
+        echo "**Error**: Directory "\`$srcdir\'" does not look like the top-level project directory"
+        exit 1
 }
 
-which gnome-autogen.sh || {
-    echo "You need to install gnome-common"
-    exit 1
+PKG_NAME=`autoconf --trace 'AC_INIT:$1' "$srcdir/configure.ac"`
+
+if [ "$#" = 0 -a "x$NOCONFIGURE" = "x" ]; then
+        echo "**Warning**: I am going to run \`configure' with no arguments." >&2
+        echo "If you wish to pass any to it, please specify them on the" >&2
+        echo \`$0\'" command line." >&2
+        echo "" >&2
+fi
+
+aclocal --install || {
+        echo "Try installing the 'automake' package."
+        exit 1
 }
 
-REQUIRED_AUTOMAKE_VERSION=1.9
+intltoolize --force --copy --automake || {
+        echo "Try installing the 'intltool' package."
+        exit 1
+}
 
-USE_GNOME2_MACROS=1 . gnome-autogen.sh
+autoreconf --verbose --force --install -Wno-portability  || {
+        echo "Try installing the 'autoconf' package."
+        exit 1
+}
+
+which yelp-build > /dev/null || {
+       echo "Try installing the 'yelp-tools' package."
+       exit 1
+}
+
+if [ "$NOCONFIGURE" = "" ]; then
+        $srcdir/configure "$@" || exit 1
+
+        if [ "$1" = "--help" ]; then exit 0 else
+                echo "Now type \`make\' to compile $PKG_NAME" || exit 1
+        fi
+else
+        echo "Skipping configure process."
+fi
