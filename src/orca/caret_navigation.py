@@ -323,6 +323,9 @@ class CaretNavigation:
                 return True
 
         contents = script.utilities.getNextLineContents()
+        if not contents:
+            return False
+
         obj, start = contents[0][0], contents[0][1]
         script.utilities.setCaretPosition(obj, start)
         script.speakContents(contents)
@@ -345,6 +348,9 @@ class CaretNavigation:
 
 
         contents = script.utilities.getPreviousLineContents()
+        if not contents:
+            return False
+
         obj, start = contents[0][0], contents[0][1]
         script.utilities.setCaretPosition(obj, start)
         script.speakContents(contents)
