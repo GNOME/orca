@@ -81,8 +81,10 @@ class HelpFormatter(argparse.HelpFormatter):
     def __init__(self, prog, indent_increment=2, max_help_position=32,
                  width=None):
 
-        super(HelpFormatter, self).__init__(
-            prog, indent_increment, max_help_position, width)
+        super().__init__(prog, indent_increment, max_help_position, width)
+
+    def add_usage(self, usage, actions, groups, prefix=None):
+        super().add_usage(usage, actions, groups, messages.CLI_USAGE)
 
 class Parser(argparse.ArgumentParser):
     def __init__(self, *args, **kwargs):
@@ -118,6 +120,8 @@ class Parser(argparse.ArgumentParser):
             help=messages.CLI_DEBUG_FILE, metavar=messages.CLI_DEBUG_FILE_NAME)
         self.add_argument(
             "--debug", action="store_true", help=messages.CLI_ENABLE_DEBUG)
+
+        self._optionals.title = messages.CLI_OPTIONAL_ARGUMENTS
 
     def parse_known_args(self, *args, **kwargs):
         opts, invalid = super(Parser, self).parse_known_args(*args, **kwargs)

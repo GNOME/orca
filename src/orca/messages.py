@@ -192,6 +192,15 @@ CLI_ENABLE_OPTION = _("Force use of option")
 # using the '-e, --enable' or '-d, --disable' command line options.
 CLI_OPTION = _("OPTION")
 
+# Translators: This string appears when using 'Orca -h' at the command line.
+# It serves as a sort of title and is followed by a detailed list of Orca's
+# optional command-line arguments.
+CLI_OPTIONAL_ARGUMENTS = _("Optional arguments")
+
+# Translators: This string appears when using 'Orca -h' at the command line.
+# It is followed by a brief list of Orca's optional command-line arguments.
+CLI_USAGE = _("Usage: ")
+
 # Translators: This message is displayed when the user starts Orca from the
 # command line and includes an invalid option or argument. After the message,
 # the list of invalid items, as typed by the user, is displayed.
