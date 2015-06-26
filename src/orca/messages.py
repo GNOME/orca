@@ -250,6 +250,10 @@ CLI_PREFS_DIR = _("DIR")
 # which tells Orca to replace any existing Orca process that might be running.
 CLI_REPLACE = _("Replace a currently running instance of this screen reader")
 
+# Translators: this is the description of command line option '-h, --help'
+# which lists all the available command line options.
+CLI_HELP = _("Show this help message and exit")
+
 # Translators: This is the description of command line option '--debug' which
 # causes debugging output for Orca to be sent to a file. The YYYY-MM-DD-HH:MM:SS
 # portion of the string indicates the file name will be formed from the current

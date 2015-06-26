@@ -87,7 +87,9 @@ class HelpFormatter(argparse.HelpFormatter):
 class Parser(argparse.ArgumentParser):
     def __init__(self, *args, **kwargs):
         super(Parser, self).__init__(
-            epilog=messages.CLI_EPILOG, formatter_class=HelpFormatter)
+            epilog=messages.CLI_EPILOG, formatter_class=HelpFormatter, add_help=False)
+        self.add_argument(
+            "-h", "--help", action="help", help=messages.CLI_HELP)
         self.add_argument(
             "-v", "--version", action="version", version=version, help=version)
         self.add_argument(
