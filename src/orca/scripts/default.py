@@ -1876,6 +1876,10 @@ class Script(script.Script):
         if _settingsManager.getSetting('silenceSpeech'):
             _settingsManager.setSetting('silenceSpeech', False)
             self.presentMessage(messages.SPEECH_ENABLED)
+        elif not _settingsManager.getSetting('enableSpeech'):
+            _settingsManager.setSetting('enableSpeech', True)
+            speech.init()
+            self.presentMessage(messages.SPEECH_ENABLED)
         else:
             self.presentMessage(messages.SPEECH_DISABLED)
             _settingsManager.setSetting('silenceSpeech', True)
