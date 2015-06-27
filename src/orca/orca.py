@@ -429,6 +429,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         _profile = _settingsManager.getSetting('activeProfile')[1]
         try:
             _userSettings = _settingsManager.getGeneralSettings(_profile)
+            _settingsManager.setProfile(_profile)
             reloaded = True
         except ImportError:
             debug.printException(debug.LEVEL_FINEST)
