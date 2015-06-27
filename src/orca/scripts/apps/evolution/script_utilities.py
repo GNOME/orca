@@ -101,7 +101,7 @@ class Utilities(WebKitGtk.Utilities):
 
     def setCaretAtStart(self, obj):
         if self.isReceivedMessageContent(obj):
-            obj = self.utilities.findMessageBodyChild(obj) or obj
+            obj = self.findMessageBodyChild(obj) or obj
 
         child, index = super().setCaretAtStart(obj)
         if child and index == -1:
