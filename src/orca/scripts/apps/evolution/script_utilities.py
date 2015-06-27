@@ -59,6 +59,16 @@ class Utilities(WebKitGtk.Utilities):
 
         return self.isReceivedMessage(obj.parent)
 
+    def isComposeAutocomplete(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE):
+            return False
+
+        if not obj.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS):
+            return False
+
+        topLevel = self.topLevelObject(obj)
+        return topLevel and topLevel.getRole() == pyatspi.ROLE_WINDOW
+
     def findMessageBodyChild(self, root):
         roles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
         isDocument = lambda x: x and x.getRole() in roles
