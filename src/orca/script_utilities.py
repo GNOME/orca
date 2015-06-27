@@ -2431,6 +2431,18 @@ class Utilities:
     def getObjectContentsAtOffset(self, obj, offset=0, useCache=True):
         return []
 
+    def previousContext(self, obj=None, offset=-1, skipSpace=False):
+        if not obj:
+            obj, offset = self.getCaretContext()
+
+        return obj, offset - 1
+
+    def nextContext(self, obj=None, offset=-1, skipSpace=False):
+        if not obj:
+            obj, offset = self.getCaretContext()
+
+        return obj, offset + 1
+
     @staticmethod
     def getHyperlinkRange(obj):
         """Returns the start and end indices associated with the embedded

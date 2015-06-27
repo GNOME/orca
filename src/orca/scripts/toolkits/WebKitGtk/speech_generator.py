@@ -57,9 +57,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return voice
 
     def _generateLabel(self, obj, **args):
-        result = \
-            speech_generator.SpeechGenerator._generateLabel(self, obj, **args)
-        if result:
+        result = super()._generateLabel(obj, **args)
+        if result or not self._script.utilities.isWebKitGtk(obj):
             return result
 
         role = args.get('role', obj.getRole())

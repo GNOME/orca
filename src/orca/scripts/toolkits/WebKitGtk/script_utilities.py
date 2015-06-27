@@ -115,7 +115,7 @@ class Utilities(script_utilities.Utilities):
 
         return text
 
-    def getLineContentsAtOffset(self, obj, offset, layoutMode=True):
+    def getLineContentsAtOffset(self, obj, offset, layoutMode=True, useCache=True):
         return self.getObjectsFromEOCs(
             obj, offset, pyatspi.TEXT_BOUNDARY_LINE_START)
 
