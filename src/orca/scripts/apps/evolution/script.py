@@ -105,6 +105,21 @@ class Script(WebKitGtk.Script):
     #                                                                      #
     ########################################################################
 
+    def onActiveDescendantChanged(self, event):
+        """Callback for object:active-descendant-changed accessibility events."""
+
+        if not event.any_data:
+            return
+
+        if self.utilities.isComposeAutocomplete(event.source):
+            if event.any_data.getState().contains(pyatspi.STATE_SELECTED):
+                orca.setLocusOfFocus(event, event.any_data)
+            else:
+                orca.setLocusOfFocus(event, event.source)
+            return
+
+        super().onActiveDescendantChanged(event)
+
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
         pass
