@@ -30,8 +30,6 @@ import orca.scripts.default as default
 import orca.speech as speech
 import pyatspi
 
-from orca.orca_i18n import _
-
 ########################################################################
 #                                                                      #
 # The Metacity script class.                                           #
@@ -71,15 +69,6 @@ class Script(default.Script):
             text = obj.name
         except:
             text = objName
-
-        # Translators: the "Workspace " and "Desk " strings are
-        # the prefix of what metacity shows when you press
-        # Ctrl+Alt and the left or right arrow keys to switch
-        # between workspaces.  The goal here is to find a match
-        # with that prefix.
-        #
-        if text.startswith(_("Workspace ")) or text.startswith(_("Desk ")):
-            pass
 
         self.displayBrailleMessage(text)
         speech.speak(text)

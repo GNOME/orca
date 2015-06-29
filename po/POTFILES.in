@@ -20,7 +20,6 @@ src/orca/object_properties.py
 src/orca/phonnames.py
 src/orca/scripts/apps/gnome-mud/script.py
 src/orca/scripts/apps/liferea/script.py
-src/orca/scripts/apps/metacity/script.py
 src/orca/scripts/apps/planner/braille_generator.py
 src/orca/scripts/apps/planner/speech_generator.py
 src/orca/scripts/default.py
