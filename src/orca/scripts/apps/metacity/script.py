@@ -67,29 +67,6 @@ class Script(default.Script):
             if objName[0] == "[" and objName[-1] == "]":
                 objName = objName[1:-1]
 
-        # Do we know about this window?  Traverse through our list of apps
-        # and go through the toplevel windows in each to see if we know
-        # about this one.  If we do, it's accessible.  If we don't, it is
-        # not.
-        #
-        found = False
-        for app in self.utilities.knownApplications():
-            i = 0
-            try:
-                childCount = app.childCount
-            except:
-                continue
-            while i < childCount:
-                try:
-                    win = app.getChildAtIndex(i)
-                except:
-                    win = None
-                if win is None:
-                    print("app error " + app.name)
-                elif win.name == objName:
-                    found = True
-                i = i + 1
-
         try:
             text = obj.name
         except:
@@ -103,8 +80,6 @@ class Script(default.Script):
         #
         if text.startswith(_("Workspace ")) or text.startswith(_("Desk ")):
             pass
-        elif not found:
-            text += ". " + messages.INACCESSIBLE
 
         self.displayBrailleMessage(text)
         speech.speak(text)
