@@ -1650,10 +1650,11 @@ class Utilities(script_utilities.Utilities):
 
     def getMathPostscripts(self, obj):
         separator = self._getMathPrePostScriptSeparator(obj)
-        if not separator:
-            return []
+        if separator:
+            index = separator.getIndexInParent()
+        else:
+            index = obj.childCount
 
-        index = separator.getIndexInParent()
         return [obj[i] for i in range(1, index)]
 
     def getMathEnclosures(self, obj):
