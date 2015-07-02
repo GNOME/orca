@@ -606,6 +606,105 @@ class Utilities:
     def isHidden(self, obj):
         return False
 
+    def isMath(self, obj):
+        return False
+
+    def isMathLayoutOnly(self, obj):
+        return False
+
+    def isMathMultiline(self, obj):
+        return False
+
+    def isMathEnclosed(self, obj):
+        return False
+
+    def isMathFenced(self, obj):
+        return False
+
+    def isMathFraction(self, obj):
+        return False
+
+    def isMathFractionWithoutBar(self, obj):
+        return False
+
+    def isMathPhantom(self, obj):
+        return False
+
+    def isMathRoot(self, obj):
+        return False
+
+    def isMathNthRoot(self, obj):
+        return False
+
+    def isMathMultiScript(self, obj):
+        return False
+
+    def isMathSubOrSuperScript(self, obj):
+        return False
+
+    def isMathUnderOrOverScript(self, obj):
+        return False
+
+    def isMathSquareRoot(self, obj):
+        return False
+
+    def isMathTable(self, obj):
+        return False
+
+    def isMathTableRow(self, obj):
+        return False
+
+    def isMathTableCell(self, obj):
+        return False
+
+    def isMathToken(self, obj):
+        return False
+
+    def isMathTopLevel(self, obj):
+        return False
+
+    def getMathDenominator(self, obj):
+        return None
+
+    def getMathNumerator(self, obj):
+        return None
+
+    def getMathRootBase(self, obj):
+        return None
+
+    def getMathRootIndex(self, obj):
+        return None
+
+    def getMathScriptBase(self, obj):
+        return None
+
+    def getMathScriptSubscript(self, obj):
+        return None
+
+    def getMathScriptSuperscript(self, obj):
+        return None
+
+    def getMathScriptUnderscript(self, obj):
+        return None
+
+    def getMathScriptOverscript(self, obj):
+        return None
+
+    def getMathPrescripts(self, obj):
+        return []
+
+    def getMathPostscripts(self, obj):
+        return []
+
+    def getMathEnclosures(self, obj):
+        return []
+
+    def getMathFencedSeparators(self, obj):
+        return ['']
+
+    def getMathFences(self, obj):
+        return ['', '']
+
     def isStatic(self, obj):
         role = obj.getRole()
         try:

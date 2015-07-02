@@ -50,6 +50,8 @@ class Utilities(script_utilities.Utilities):
         self._inDocumentContent = {}
         self._isTextBlockElement = {}
         self._isGridDescendant = {}
+        self._isLayoutOnly = {}
+        self._isMath = {}
         self._isOffScreenLabel = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
@@ -82,6 +84,8 @@ class Utilities(script_utilities.Utilities):
         self._inDocumentContent = {}
         self._isTextBlockElement = {}
         self._isGridDescendant = {}
+        self._isLayoutOnly = {}
+        self._isMath = {}
         self._isOffScreenLabel = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
@@ -1202,6 +1206,469 @@ class Utilities(script_utilities.Utilities):
 
         self._isTextBlockElement[hash(obj)] = rv
         return rv
+
+    def isMath(self, obj):
+        rv = self._isMath.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            rv = False
+        else:
+            rv = attrs.get('tag') in ['math',
+                                      'maction',
+                                      'maligngroup',
+                                      'malignmark',
+                                      'menclose',
+                                      'merror',
+                                      'mfenced',
+                                      'mfrac',
+                                      'mglyph',
+                                      'mi',
+                                      'mlabeledtr',
+                                      'mlongdiv',
+                                      'mmultiscripts',
+                                      'mn',
+                                      'mo',
+                                      'mover',
+                                      'mpadded',
+                                      'mphantom',
+                                      'mprescripts',
+                                      'mroot',
+                                      'mrow',
+                                      'ms',
+                                      'mscarries',
+                                      'mscarry',
+                                      'msgroup',
+                                      'msline',
+                                      'mspace',
+                                      'msqrt',
+                                      'msrow',
+                                      'mstack',
+                                      'mstyle',
+                                      'msub',
+                                      'msup',
+                                      'msubsup',
+                                      'mtable',
+                                      'mtd',
+                                      'mtext',
+                                      'mtr',
+                                      'munder',
+                                      'munderover']
+
+        self._isMath[hash(obj)] = rv
+        return rv
+
+    def isMathLayoutOnly(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') in ['mrow', 'mstyle', 'merror', 'mpadded']
+
+    def isMathMultiline(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') in ['mtable', 'mstack', 'mlongdiv']
+
+    def isMathEnclose(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'menclose'
+
+    def isMathFenced(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'mfenced'
+
+    def isMathFraction(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'mfrac'
+
+    def isMathFractionWithoutBar(self, obj):
+        if not self.isMathFraction(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        linethickness = attrs.get('linethickness')
+        if not linethickness:
+            return False
+
+        for char in linethickness:
+            if char.isnumeric() and char != '0':
+                return False
+
+        return True
+
+    def isMathPhantom(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'mphantom'
+
+    def isMathRoot(self, obj):
+        return self.isMathSquareRoot(obj) or self.isMathNthRoot(obj)
+
+    def isMathNthRoot(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'mroot'
+
+    def isMathMultiScript(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'mmultiscripts'
+
+    def _isMathPrePostScriptSeparator(self, obj):
+        # TODO - JD: This hack is Gecko-specific.
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'mprescripts'
+
+    def isMathSubOrSuperScript(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') in ['msub', 'msup', 'msubsup']
+
+    def isMathTable(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'mtable'
+
+    def isMathTableRow(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') in ['mtr', 'mlabeledtr']
+
+    def isMathTableCell(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'mtd'
+
+    def isMathUnderOrOverScript(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') in ['mover', 'munder', 'munderover']
+
+    def _isMathSubElement(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'msub'
+
+    def _isMathSupElement(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'msup'
+
+    def _isMathSubsupElement(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'msubsup'
+
+    def _isMathUnderElement(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'munder'
+
+    def _isMathOverElement(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'mover'
+
+    def _isMathUnderOverElement(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'munderover'
+
+    def isMathSquareRoot(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'msqrt'
+
+    def isMathToken(self, obj):
+        if not self.isMath(obj):
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') in ['mi', 'mn', 'mo', 'mtext', 'ms', 'mspace']
+
+    def isMathTopLevel(self, obj):
+        # TODO - JD: When we bump dependencies to 2.12 do the more performant
+        # role-based check.
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+        return attrs.get('tag') == 'math'
+
+    def getMathAncestor(self, obj):
+        if not self.isMath(obj):
+            return None
+
+        if self.isMathTopLevel(obj):
+            return obj
+
+        return pyatspi.findAncestor(obj, self.isMathTopLevel)
+
+    def getMathDenominator(self, obj):
+        if not self.isMathFraction(obj):
+            return None
+
+        return obj[1]
+
+    def getMathNumerator(self, obj):
+        if not self.isMathFraction(obj):
+            return None
+
+        return obj[0]
+
+    def getMathRootBase(self, obj):
+        if self.isMathNthRoot(obj):
+            return obj[0]
+
+        if self.isMathSquareRoot(obj):
+            return obj
+
+        return None
+
+    def getMathRootIndex(self, obj):
+        if not self.isMathNthRoot(obj):
+            return None
+
+        try:
+            return obj[1]
+        except:
+            pass
+
+        return None
+
+    def getMathScriptBase(self, obj):
+        if self.isMathSubOrSuperScript(obj) \
+           or self.isMathUnderOrOverScript(obj) \
+           or self.isMathMultiScript(obj):
+            return obj[0]
+
+        return None
+
+    def getMathScriptSubscript(self, obj):
+        if self._isMathSubElement(obj) or self._isMathSubsupElement(obj):
+            return obj[1]
+
+        return None
+
+    def getMathScriptSuperscript(self, obj):
+        if self._isMathSupElement(obj):
+            return obj[1]
+
+        if self._isMathSubsupElement(obj):
+            return obj[2]
+
+        return None
+
+    def getMathScriptUnderscript(self, obj):
+        if self._isMathUnderElement(obj) or self._isMathUnderOverElement(obj):
+            return obj[1]
+
+        return None
+
+    def getMathScriptOverscript(self, obj):
+        if self._isMathOverElement(obj):
+            return obj[1]
+
+        if self._isMathUnderOverElement(obj):
+            return obj[2]
+
+        return None
+
+    def _getMathPrePostScriptSeparator(self, obj):
+        for child in obj:
+            if self._isMathPrePostScriptSeparator(child):
+                return child
+
+        return None
+
+    def getMathPrescripts(self, obj):
+        separator = self._getMathPrePostScriptSeparator(obj)
+        if not separator:
+            return []
+
+        index = separator.getIndexInParent()
+        return [obj[i] for i in range(index+1, obj.childCount)]
+
+    def getMathPostscripts(self, obj):
+        separator = self._getMathPrePostScriptSeparator(obj)
+        if not separator:
+            return []
+
+        index = separator.getIndexInParent()
+        return [obj[i] for i in range(1, index)]
+
+    def getMathEnclosures(self, obj):
+        if not self.isMathEnclose(obj):
+            return []
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return []
+
+        return attrs.get('notation', '').split()
+
+    def getMathFencedSeparators(self, obj):
+        if not self.isMathFenced(obj):
+            return ['']
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return ['']
+
+        return list(attrs.get('separators', ','))
+
+    def getMathFences(self, obj):
+        if not self.isMathFenced(obj):
+            return ['', '']
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return ['', '']
+
+        return [attrs.get('open', '('), attrs.get('close', ')')]
 
     def filterContentsForPresentation(self, contents, inferLabels=False):
         def _include(x):
