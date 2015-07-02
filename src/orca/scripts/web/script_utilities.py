@@ -718,6 +718,13 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return []
 
+        if boundary == pyatspi.TEXT_BOUNDARY_LINE_START and self.isMath(obj):
+            if self.isMathTopLevel(obj):
+                math = obj
+            else:
+                math = self.getMathAncestor(obj)
+            return [[math, 0, 1, '']]
+
         string, start, end = self._getTextAtOffset(obj, offset, boundary)
         if not string:
             return [[obj, start, end, string]]
@@ -991,7 +998,11 @@ class Utilities(script_utilities.Utilities):
                 return False
 
             xExtents = self.getExtents(xObj, xStart, xStart + 1)
-            return self.extentsAreOnSameLine(extents, xExtents)
+            if self.isMathTopLevel(xObj):
+                onSameLine = self.extentsAreOnSameLine(extents, xExtents, extents[3])
+            else:
+                onSameLine = self.extentsAreOnSameLine(extents, xExtents)
+            return onSameLine
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
         objects = self._getContentsForObj(obj, offset, boundary)
