@@ -1721,6 +1721,22 @@ class Utilities(script_utilities.Utilities):
         self._isGridDescendant[hash(obj)] = rv
         return rv
 
+    def isLayoutOnly(self, obj):
+        if not obj:
+            return False
+
+        rv = self._isLayoutOnly.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        if self.isMath(obj):
+            rv = False
+        else:
+            rv = super().isLayoutOnly(obj)
+
+        self._isLayoutOnly[hash(obj)] = rv
+        return rv
+
     def isOffScreenLabel(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
