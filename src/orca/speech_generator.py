@@ -1999,6 +1999,9 @@ class SpeechGenerator(generator.Generator):
 
     def _generateFractionNumerator(self, obj, **args):
         numerator = self._script.utilities.getMathNumerator(obj)
+        if self._script.utilities.isMathLayoutOnly(numerator):
+            return self._generateMath(numerator)
+
         oldRole = self._getAlternativeRole(numerator)
         self._overrideRole(oldRole, args)
         result = self.generate(numerator, role=oldRole)
@@ -2007,6 +2010,9 @@ class SpeechGenerator(generator.Generator):
 
     def _generateFractionDenominator(self, obj, **args):
         denominator = self._script.utilities.getMathDenominator(obj)
+        if self._script.utilities.isMathLayoutOnly(denominator):
+            return self._generateMath(denominator)
+
         oldRole = self._getAlternativeRole(denominator)
         self._overrideRole(oldRole, args)
         result = self.generate(denominator, role=oldRole)
