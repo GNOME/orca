@@ -2138,6 +2138,8 @@ class SpeechGenerator(generator.Generator):
         result = []
         prescripts = self._script.utilities.getMathPrescripts(obj)
         for i, script in enumerate(prescripts):
+            if self._script.utilities.isNoneElement(script):
+                continue
             if i % 2:
                 rv = [messages.MATH_PRE_SUPERSCRIPT]
             else:
@@ -2152,6 +2154,8 @@ class SpeechGenerator(generator.Generator):
         result = []
         postscripts = self._script.utilities.getMathPostscripts(obj)
         for i, script in enumerate(postscripts):
+            if self._script.utilities.isNoneElement(script):
+                continue
             if i % 2:
                 rv = [messages.MATH_POST_SUPERSCRIPT]
             else:

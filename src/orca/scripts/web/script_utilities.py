@@ -1272,6 +1272,14 @@ class Utilities(script_utilities.Utilities):
         self._isMath[hash(obj)] = rv
         return rv
 
+    def isNoneElement(self, obj):
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return False
+
+        return attrs.get('tag') == 'none'
+
     def isMathLayoutOnly(self, obj):
         if not self.isMath(obj):
             return False
