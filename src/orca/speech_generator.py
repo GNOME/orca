@@ -1883,11 +1883,344 @@ class SpeechGenerator(generator.Generator):
             result.extend(acss)
         return result
 
+    # Math
+
+    def _generateMath(self, obj, **args):
+        result = []
+        children = [child for child in obj] or [obj]
+        for child in children:
+            if self._script.utilities.isMathLayoutOnly(child):
+                result.extend(self._generateMath(child))
+                continue
+
+            oldRole = self._getAlternativeRole(child)
+            self._overrideRole(oldRole, args)
+            result.extend(self.generate(child, role=oldRole))
+            self._restoreRole(oldRole, args)
+
+        return result
+
+    def _generateEnclosedBase(self, obj, **args):
+        return self._generateMath(obj, **args)
+
+    def _generateEnclosedEnclosures(self, obj, **args):
+        strings = []
+        enclosures = self._script.utilities.getMathEnclosures(obj)
+        if 'actuarial' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_ACTUARIAL)
+        if 'box' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_BOX)
+        if 'circle' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_CIRCLE)
+        if 'longdiv' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_LONGDIV)
+        if 'radical' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_RADICAL)
+        if 'roundedbox' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_ROUNDEDBOX)
+        if 'horizontalstrike' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_HORIZONTALSTRIKE)
+        if 'verticalstrike' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_VERTICALSTRIKE)
+        if 'downdiagonalstrike' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_DOWNDIAGONALSTRIKE)
+        if 'updiagonalstrike' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_UPDIAGONALSTRIKE)
+        if 'northeastarrow' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_NORTHEASTARROW)
+        if 'bottom' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_BOTTOM)
+        if 'left' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_LEFT)
+        if 'right' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_RIGHT)
+        if 'top' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_TOP)
+        if 'phasorangle' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_PHASOR_ANGLE)
+        if 'madruwb' in enclosures:
+            strings.append(messages.MATH_ENCLOSURE_MADRUWB)
+        if not strings:
+            msg = 'INFO: Could not get enclosure message for %s' % enclosures
+            debug.println(debug.LEVEL_INFO, msg)
+            return []
+
+        if len(strings) == 1:
+            result = [messages.MATH_ENCLOSURE_ENCLOSED_BY % strings[0]]
+        else:
+            strings.insert(-1, messages.MATH_ENCLOSURE_AND)
+            if len(strings) == 3:
+                result = [messages.MATH_ENCLOSURE_ENCLOSED_BY % " ".join(strings)]
+            else:
+                result = [messages.MATH_ENCLOSURE_ENCLOSED_BY % ", ".join(strings)]
+
+        result.extend(self.voice(SYSTEM))
+        return result
+
+    def _generateFencedStart(self, obj, **args):
+        fenceStart, fenceEnd = self._script.utilities.getMathFences(obj)
+        if fenceStart:
+            result = [fenceStart]
+            result.extend(self.voice(DEFAULT))
+            return result
+
+        return []
+
+    def _generateFencedContents(self, obj, **args):
+        result = []
+        separators = self._script.utilities.getMathFencedSeparators(obj)
+        for x in range(len(separators), obj.childCount-1):
+            separators.append(separators[-1])
+        separators.append('')
+
+        for i, child in enumerate(obj):
+            result.extend(self._generateMath(child, **args))
+            result.extend(separators[i])
+            result.extend(self.voice(DEFAULT))
+
+        return result
+
+    def _generateFencedEnd(self, obj, **args):
+        fenceStart, fenceEnd = self._script.utilities.getMathFences(obj)
+        if fenceEnd:
+            result = [fenceEnd]
+            result.extend(self.voice(DEFAULT))
+            return result
+
+        return []
+
+    def _generateFractionStart(self, obj, **args):
+        if self._script.utilities.isMathFractionWithoutBar(obj):
+            result = [messages.MATH_FRACTION_WITHOUT_BAR_START]
+        else:
+            result = [messages.MATH_FRACTION_START]
+        result.extend(self.voice(SYSTEM))
+        return result
+
+    def _generateFractionNumerator(self, obj, **args):
+        numerator = self._script.utilities.getMathNumerator(obj)
+        oldRole = self._getAlternativeRole(numerator)
+        self._overrideRole(oldRole, args)
+        result = self.generate(numerator, role=oldRole)
+        self._restoreRole(oldRole, args)
+        return result
+
+    def _generateFractionDenominator(self, obj, **args):
+        denominator = self._script.utilities.getMathDenominator(obj)
+        oldRole = self._getAlternativeRole(denominator)
+        self._overrideRole(oldRole, args)
+        result = self.generate(denominator, role=oldRole)
+        self._restoreRole(oldRole, args)
+        return result
+
+    def _generateFractionLine(self, obj, **args):
+        result = [messages.MATH_FRACTION_LINE]
+        result.extend(self.voice(SYSTEM))
+        return result
+
+    def _generateFractionEnd(self, obj, **args):
+        result = [messages.MATH_FRACTION_END]
+        result.extend(self.voice(SYSTEM))
+        return result
+
+    def _generateRootStart(self, obj, **args):
+        result = []
+        if self._script.utilities.isMathSquareRoot(obj):
+            result = [messages.MATH_SQUARE_ROOT_OF]
+        else:
+            index = self._script.utilities.getMathRootIndex(obj)
+            string = self._script.utilities.displayedText(index)
+            if string == "2":
+                result = [messages.MATH_SQUARE_ROOT_OF]
+            elif string == "3":
+                result = [messages.MATH_CUBE_ROOT_OF]
+            elif string:
+                result = [string]
+                result.extend([messages.MATH_ROOT_OF])
+            elif self._script.utilities.isMathLayoutOnly(index):
+                result = self._generateMath(index)
+                result.extend([messages.MATH_ROOT_OF])
+            else:
+                oldRole = self._getAlternativeRole(index)
+                self._overrideRole(oldRole, args)
+                result.extend(self.generate(index, role=oldRole))
+                self._restoreRole(oldRole, args)
+                result.extend([messages.MATH_ROOT_OF])
+
+        if result:
+            result.extend(self.voice(SYSTEM))
+
+        return result
+
+    def _generateRootBase(self, obj, **args):
+        base = self._script.utilities.getMathRootBase(obj)
+        if not base:
+            return []
+
+        if self._script.utilities.isMathSquareRoot(obj) \
+           or self._script.utilities.isMathToken(base) \
+           or self._script.utilities.isMathLayoutOnly(base):
+            return self._generateMath(base)
+
+        result = [self._generatePause(obj, **args)]
+        oldRole = self._getAlternativeRole(base)
+        self._overrideRole(oldRole, args)
+        result.extend(self.generate(base, role=oldRole))
+        self._restoreRole(oldRole, args)
+
+        return result
+
+    def _generateRootEnd(self, obj, **args):
+        result = [messages.MATH_ROOT_END]
+        result.extend(self.voice(SYSTEM))
+        return result
+
+    def _generateScriptBase(self, obj, **args):
+        base = self._script.utilities.getMathScriptBase(obj)
+        if not base:
+            return []
+
+        return self._generateMath(base)
+
+    def _generateScriptScript(self, obj, **args):
+        oldRole = self._getAlternativeRole(obj)
+        self._overrideRole(oldRole, args)
+        result = self.generate(obj, role=oldRole)
+        self._restoreRole(oldRole, args)
+
+        return result
+
+    def _generateScriptSubscript(self, obj, **args):
+        subscript = self._script.utilities.getMathScriptSubscript(obj)
+        if not subscript:
+            return []
+
+        result = [messages.MATH_SUBSCRIPT]
+        result.extend(self.voice(SYSTEM))
+        result.extend(self._generateScriptScript(subscript))
+
+        return result
+
+    def _generateScriptSuperscript(self, obj, **args):
+        superscript = self._script.utilities.getMathScriptSuperscript(obj)
+        if not superscript:
+            return []
+
+        result = [messages.MATH_SUPERSCRIPT]
+        result.extend(self.voice(SYSTEM))
+        result.extend(self._generateScriptScript(superscript))
+
+        return result
+
+    def _generateScriptUnderscript(self, obj, **args):
+        underscript = self._script.utilities.getMathScriptUnderscript(obj)
+        if not underscript:
+            return []
+
+        result = [messages.MATH_UNDERSCRIPT]
+        result.extend(self.voice(SYSTEM))
+        result.extend(self._generateScriptScript(underscript))
+
+        return result
+
+    def _generateScriptOverscript(self, obj, **args):
+        overscript = self._script.utilities.getMathScriptOverscript(obj)
+        if not overscript:
+            return []
+
+        result = [messages.MATH_OVERSCRIPT]
+        result.extend(self.voice(SYSTEM))
+        result.extend(self._generateScriptScript(overscript))
+
+        return result
+
+    def _generateScriptPrescripts(self, obj, **args):
+        result = []
+        prescripts = self._script.utilities.getMathPrescripts(obj)
+        for i, script in enumerate(prescripts):
+            if i % 2:
+                rv = [messages.MATH_PRE_SUPERSCRIPT]
+            else:
+                rv = [messages.MATH_PRE_SUBSCRIPT]
+            rv.extend(self.voice(SYSTEM))
+            rv.extend(self._generateScriptScript(script))
+            result.append(rv)
+
+        return result
+
+    def _generateScriptPostscripts(self, obj, **args):
+        result = []
+        postscripts = self._script.utilities.getMathPostscripts(obj)
+        for i, script in enumerate(postscripts):
+            if i % 2:
+                rv = [messages.MATH_POST_SUPERSCRIPT]
+            else:
+                rv = [messages.MATH_POST_SUBSCRIPT]
+            rv.extend(self.voice(SYSTEM))
+            rv.extend(self._generateScriptScript(script))
+            result.append(rv)
+
+        return result
+
+    def _generateMathTable(self, obj, **args):
+        try:
+            table = obj.queryTable()
+        except:
+            return []
+
+        result = []
+        if not _settingsManager.getSetting('onlySpeakDisplayedText'):
+            result.append(messages.mathTableSize(table.nRows, table.nColumns))
+            result.extend(self.voice(SYSTEM))
+
+        result.extend(self._generatePause(obj, **args))
+        result.extend(self._generateMathRow(obj[0]))
+        return result
+
+    def _generateMathRow(self, obj, **args):
+        result = []
+        if not _settingsManager.getSetting('onlySpeakDisplayedText'):
+            result.append(messages.TABLE_ROW % (obj.getIndexInParent() + 1))
+            result.extend(self.voice(SYSTEM))
+
+        for child in obj:
+            result.extend(self._generatePause(child, **args))
+            result.extend(self._generateMath(child))
+
+        return result
+
     #####################################################################
     #                                                                   #
     # Other things for prosody and voice selection                      #
     #                                                                   #
     #####################################################################
+
+    def _getAlternativeRole(self, obj, **args):
+        if self._script.utilities.isMath(obj):
+            if self._script.utilities.isMathTopLevel(obj):
+                return 'ROLE_MATH'
+            if self._script.utilities.isMathFraction(obj):
+                return 'ROLE_MATH_FRACTION'
+            if self._script.utilities.isMathRoot(obj):
+                return 'ROLE_MATH_ROOT'
+            if self._script.utilities.isMathSubOrSuperScript(obj):
+                return 'ROLE_MATH_SCRIPT_SUBSUPER'
+            if self._script.utilities.isMathUnderOrOverScript(obj):
+                return 'ROLE_MATH_SCRIPT_UNDEROVER'
+            if self._script.utilities.isMathMultiScript(obj):
+                return 'ROLE_MATH_MULTISCRIPT'
+            if self._script.utilities.isMathEnclose(obj):
+                return 'ROLE_MATH_ENCLOSED'
+            if self._script.utilities.isMathFenced(obj):
+                return 'ROLE_MATH_FENCED'
+            if self._script.utilities.isMathTable(obj):
+                return 'ROLE_MATH_TABLE'
+            if self._script.utilities.isMathTableRow(obj):
+                return 'ROLE_MATH_TABLE_ROW'
+        if self._script.utilities.isStatic(obj):
+            return 'ROLE_STATIC'
+
+        return args.get('role', obj.getRole())
 
     def _generatePause(self, obj, **args):
         if args.get('eliminatePauses', False):
