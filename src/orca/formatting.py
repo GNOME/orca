@@ -225,6 +225,47 @@ formatting = {
             'unfocused': 'label + displayedText + allTextSelection + expandableState + availability + positionInList + childWidget',
             'basicWhereAmI': 'label + roleName + name + positionInList + expandableState + (nodeLevel or nestingLevel)'
             },
+        # TODO - JD: When we bump dependencies to 2.12, remove this fake role and use the real one.
+        'ROLE_MATH': {
+            'unfocused': 'math',
+        },
+        # TODO - JD: When we bump dependencies to TBD, remove this fake role and use the real one.
+        'ROLE_MATH_ENCLOSED': {
+            'unfocused': 'enclosedBase + enclosedEnclosures',
+        },
+        # TODO - JD: When we bump dependencies to TBD, remove this fake role and use the real one.
+        'ROLE_MATH_FENCED': {
+            'unfocused': 'fencedStart + fencedContents + fencedEnd',
+        },
+        # TODO - JD: When we bump dependencies to 2.16, remove this fake role and use the real one.
+        'ROLE_MATH_FRACTION': {
+            'unfocused': 'fractionStart + fractionNumerator + fractionLine + fractionDenominator + fractionEnd',
+        },
+        # TODO - JD: When we bump dependencies to 2.16, remove this fake role and use the real one
+        # (assuming, of course, we've solved the square root/nth root identification problem too).
+        'ROLE_MATH_ROOT': {
+            'unfocused': 'rootStart + rootBase + rootEnd',
+        },
+        # TODO - JD: When we bump dependencies to TBD, remove this fake role and use the real one.
+        'ROLE_MATH_MULTISCRIPT': {
+            'unfocused': 'scriptBase + scriptPrescripts + scriptPostscripts',
+        },
+        # TODO - JD: When we bump dependencies to TBD, remove this fake role and use the real one.
+        'ROLE_MATH_SCRIPT_SUBSUPER': {
+            'unfocused': 'scriptBase + scriptSubscript + scriptSuperscript',
+        },
+        # TODO - JD: When we bump dependencies to TBD, remove this fake role and use the real one.
+        'ROLE_MATH_SCRIPT_UNDEROVER': {
+            'unfocused': 'scriptBase + scriptUnderscript + scriptOverscript',
+        },
+        # TODO - JD: When we bump dependencies to TBD, remove this fake role and use the real one.
+        'ROLE_MATH_TABLE': {
+            'unfocused': 'mathTable',
+        },
+        # TODO - JD: When we bump dependencies to TBD, remove this fake role and use the real one.
+        'ROLE_MATH_TABLE_ROW': {
+            'unfocused': 'mathRow',
+        },
         pyatspi.ROLE_MENU: {
             'focused': 'labelOrName + roleName',
             'unfocused': 'labelOrName + allTextSelection + roleName + availability + ' + MNEMONIC + ' + accelerator + positionInList',
@@ -691,6 +732,12 @@ if settings.useExperimentalSpeechProsody:
         'label + displayedText + allTextSelection + pause + expandableState + pause + availability + positionInList + pause + childWidget'
     formatting['speech'][pyatspi.ROLE_LIST_ITEM]['basicWhereAmI'] = \
         'label + roleName + pause + name + pause + positionInList + pause + expandableState + (nodeLevel or nestingLevel) + pause'
+    formatting['speech']['ROLE_MATH_ENCLOSED']['unfocused'] = 'enclosedBase + enclosedEnclosures'
+    formatting['speech']['ROLE_MATH_FRACTION']['unfocused'] = 'fractionStart + pause + fractionNumerator + fractionLine + fractionDenominator + pause + fractionEnd + pause'
+    formatting['speech']['ROLE_MATH_ROOT']['unfocused'] = 'rootStart + rootBase + pause + rootEnd + pause'
+    formatting['speech']['ROLE_MATH_MULTISCRIPT']['unfocused'] = 'scriptBase + pause + scriptPrescripts + pause + scriptPostscripts + pause'
+    formatting['speech']['ROLE_MATH_SCRIPT_SUBSUPER']['unfocused'] = 'scriptBase + pause + scriptSubscript + pause + scriptSuperscript + pause'
+    formatting['speech']['ROLE_MATH_SCRIPT_UNDEROVER']['unfocused'] = 'scriptBase + pause + scriptUnderscript + pause + scriptOverscript + pause'
     formatting['speech'][pyatspi.ROLE_MENU]['unfocused'] = 'labelOrName + allTextSelection + roleName + availability + ' + MNEMONIC + ' + accelerator + pause + positionInList'
     formatting['speech'][pyatspi.ROLE_MENU]['basicWhereAmI'] = \
         '(ancestors or parentRoleName) + pause + labelOrName + roleName + pause +  positionInList + ' + MNEMONIC
