@@ -2083,6 +2083,9 @@ class SpeechGenerator(generator.Generator):
         return self._generateMath(base)
 
     def _generateScriptScript(self, obj, **args):
+        if self._script.utilities.isMathLayoutOnly(obj):
+            return self._generateMath(obj)
+
         oldRole = self._getAlternativeRole(obj)
         self._overrideRole(oldRole, args)
         result = self.generate(obj, role=oldRole)
