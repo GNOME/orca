@@ -627,6 +627,10 @@ chnames['\u2032'] = _("prime")
 #
 chnames['\u2033'] = _("double prime")
 
+# Translators: this is the spoken word for the character '‴' (U+2034)
+#
+chnames['\u2034'] = _("triple prime")
+
 # Translators: this is the spoken word for the character '⁃' (U+2043)
 #
 chnames['\u2043'] = _("hyphen bullet")
