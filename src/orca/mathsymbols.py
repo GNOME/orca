@@ -1260,6 +1260,10 @@ _arrows['\u2794'] = _("right-pointing arrow")
 # Translators: this is the spoken representation for the character '➢' (U+27a2)
 _arrows['\u27a2'] = _("right-pointing arrowhead")
 
+# Translators: this is the spoken word for the character '-' (U+002d) when used
+# as a MathML operator.
+_operators["\u002d"] = C_('math symbol', 'minus')
+
 # Translators: this is the spoken representation for the character '∀' (U+2200)
 _operators['\u2200'] = C_('math symbol', 'for all')
 

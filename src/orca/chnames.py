@@ -28,6 +28,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 from . import mathsymbols
+from . import orca_state
 from .orca_i18n import _
 
 # chnames is a dictionary where the keys represent a unicode character
@@ -806,7 +807,14 @@ def getCharacterName(character):
     """
 
     mathName = mathsymbols.getCharacterName(character)
-    if mathName:
+    charName = chnames.get(character)
+    if not (charName or mathName):
+        return character
+    if mathName and not charName:
+        return mathName
+    if charName and not mathName:
+        return charName
+    if orca_state.activeScript and orca_state.activeScript.utilities.isInMath():
         return mathName
 
-    return chnames.get(character, character)
+    return charName
