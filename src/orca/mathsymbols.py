@@ -2061,7 +2061,14 @@ _all.update(_alnum)
 _all.update(_arrows)
 _all.update(_operators)
 _all.update(_shapes)
-_RE = re.compile('[%s]' % ''.join(list(_all.keys())), re.UNICODE)
+_RE = None
+
+def __compileRE():
+    global _RE
+    try:
+        _RE = re.compile('[%s]' % ''.join(list(_all.keys())), re.UNICODE)
+    except:
+        _RE = None
 
 def _getStyleString(symbol):
     o = ord(symbol)
@@ -2119,6 +2126,11 @@ def getCharacterName(symbol):
     return _getSpokenName(symbol, speakStyle != SPEAK_NEVER)
 
 def adjustForSpeech(string):
+    if _RE is None:
+        __compileRE()
+    if _RE is None:
+        return string
+
     chars = set(re.findall(_RE, string))
     includeStyle = speakStyle == SPEAK_ALWAYS
     for char in chars:
