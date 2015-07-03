@@ -1015,8 +1015,11 @@ class SpeechGenerator(generator.Generator):
         acss = self.voice(DEFAULT)
         result = generator.Generator._generateDisplayedText(self, obj, **args)
         if result:
-            if len(result[0]) == 1 and self._script.utilities.isMath(obj):
-                result[0] = chnames.getCharacterName(result[0])
+            string = result[0].strip()
+            if len(string) == 1 and self._script.utilities.isMath(obj):
+                charname = chnames.getCharacterName(string)
+                if charname != string:
+                    result[0] = charname
 
             result.extend(acss)
 
