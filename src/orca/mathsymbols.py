@@ -2036,6 +2036,12 @@ _operators['\u22fe'] = C_('math symbol', 'small contains with overbar')
 # Translators: this is the spoken representation for the character '⋿' (U+22ff)
 _operators['\u22ff'] = C_('math symbol', 'z notation bag membership')
 
+# Translators: this is the spoken representation for the character '⏞' (U+23de)
+_operators['\u23de'] = C_('math symbol', 'top brace')
+
+# Translators: this is the spoken representation for the character '⏟' (U+23df)
+_operators['\u23df'] = C_('math symbol', 'bottom brace')
+
 # Translators: this is the spoken representation for the character '■' (U+25a0)
 _shapes['\u25a0'] = _("black square")
 
