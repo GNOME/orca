@@ -1218,6 +1218,9 @@ class Utilities(script_utilities.Utilities):
         self._isTextBlockElement[hash(obj)] = rv
         return rv
 
+    def isInMath(self):
+        return self.isMath(orca_state.locusOfFocus)
+
     def isMath(self, obj):
         rv = self._isMath.get(hash(obj))
         if rv is not None:

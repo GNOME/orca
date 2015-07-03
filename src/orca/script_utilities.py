@@ -606,6 +606,9 @@ class Utilities:
     def isHidden(self, obj):
         return False
 
+    def isInMath(self):
+        return False
+
     def isMath(self, obj):
         return False
 
