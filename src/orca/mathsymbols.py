@@ -1268,6 +1268,13 @@ _operators["\u002d"] = C_('math symbol', 'minus')
 # as a MathML operator.
 _operators["\u003c"] = C_('math symbol', 'less than')
 
+# Translators: this is the spoken word for the character '>' (U+003e) when used
+# as a MathML operator.
+_operators["\u003e"] = C_('math symbol', 'greater than')
+
+# Translators: this is the spoken representation for the character '…' (U+2026)
+_operators['\u2026'] = C_('math symbol', 'horizontal ellipsis')
+
 # Translators: this is the spoken representation for the character '∀' (U+2200)
 _operators['\u2200'] = C_('math symbol', 'for all')
 
