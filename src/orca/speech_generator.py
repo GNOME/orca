@@ -29,6 +29,7 @@ import pyatspi
 import urllib.parse, urllib.request, urllib.error, urllib.parse
 from gi.repository import Atspi, Atk
 
+from . import chnames
 from . import debug
 from . import generator
 from . import messages
@@ -1014,6 +1015,9 @@ class SpeechGenerator(generator.Generator):
         acss = self.voice(DEFAULT)
         result = generator.Generator._generateDisplayedText(self, obj, **args)
         if result:
+            if len(result[0]) == 1 and self._script.utilities.isMath(obj):
+                result[0] = chnames.getCharacterName(result[0])
+
             result.extend(acss)
 
         return result
