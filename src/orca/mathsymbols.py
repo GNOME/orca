@@ -1264,6 +1264,10 @@ _arrows['\u27a2'] = _("right-pointing arrowhead")
 # as a MathML operator.
 _operators["\u002d"] = C_('math symbol', 'minus')
 
+# Translators: this is the spoken word for the character '<' (U+003c) when used
+# as a MathML operator.
+_operators["\u003c"] = C_('math symbol', 'less than')
+
 # Translators: this is the spoken representation for the character '∀' (U+2200)
 _operators['\u2200'] = C_('math symbol', 'for all')
 
