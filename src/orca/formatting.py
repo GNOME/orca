@@ -733,6 +733,7 @@ if settings.useExperimentalSpeechProsody:
     formatting['speech'][pyatspi.ROLE_LIST_ITEM]['basicWhereAmI'] = \
         'label + roleName + pause + name + pause + positionInList + pause + expandableState + (nodeLevel or nestingLevel) + pause'
     formatting['speech']['ROLE_MATH_ENCLOSED']['unfocused'] = 'enclosedBase + enclosedEnclosures'
+    formatting['speech']['ROLE_MATH_FENCED']['unfocused'] = 'fencedStart + pause + fencedContents + pause + fencedEnd'
     formatting['speech']['ROLE_MATH_FRACTION']['unfocused'] = 'fractionStart + pause + fractionNumerator + fractionLine + fractionDenominator + pause + fractionEnd + pause'
     formatting['speech']['ROLE_MATH_ROOT']['unfocused'] = 'rootStart + rootBase + pause + rootEnd + pause'
     formatting['speech']['ROLE_MATH_MULTISCRIPT']['unfocused'] = 'scriptBase + pause + scriptPrescripts + pause + scriptPostscripts + pause'

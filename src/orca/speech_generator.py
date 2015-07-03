@@ -1964,7 +1964,7 @@ class SpeechGenerator(generator.Generator):
     def _generateFencedStart(self, obj, **args):
         fenceStart, fenceEnd = self._script.utilities.getMathFences(obj)
         if fenceStart:
-            result = [fenceStart]
+            result = [chnames.getCharacterName(fenceStart)]
             result.extend(self.voice(DEFAULT))
             return result
 
@@ -1979,15 +1979,18 @@ class SpeechGenerator(generator.Generator):
 
         for i, child in enumerate(obj):
             result.extend(self._generateMath(child, **args))
-            result.extend(separators[i])
+            separatorName = chnames.getCharacterName(separators[i])
+            result.append(separatorName)
             result.extend(self.voice(DEFAULT))
+            if separatorName:
+                result.extend(self._generatePause(obj, **args))
 
         return result
 
     def _generateFencedEnd(self, obj, **args):
         fenceStart, fenceEnd = self._script.utilities.getMathFences(obj)
         if fenceEnd:
-            result = [fenceEnd]
+            result = [chnames.getCharacterName(fenceEnd)]
             result.extend(self.voice(DEFAULT))
             return result
 
