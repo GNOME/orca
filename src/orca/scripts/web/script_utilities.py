@@ -1669,7 +1669,7 @@ class Utilities(script_utilities.Utilities):
         except:
             return []
 
-        return attrs.get('notation', '').split()
+        return attrs.get('notation', 'longdiv').split()
 
     def getMathFencedSeparators(self, obj):
         if not self.isMathFenced(obj):
