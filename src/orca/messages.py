@@ -1304,6 +1304,16 @@ MATH_OVERSCRIPT = C_("math script generic", "overscript")
 # phrase is the end of a mathematical table.
 MATH_TABLE_END = C_("math table", "table end")
 
+# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
+# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
+# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
+# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
+# NOTIFIED WHEN STRINGS ARE FINALIZED.
+# Translators: This phrase is spoken to inform the user that the last spoken
+# phrase is the end of a mathematical table which is nested inside another
+# mathematical table.
+MATH_NESTED_TABLE_END = C_("math table", "nested table end")
+
 # Translators: Inaccessible means that the application cannot be read by Orca.
 # This usually means the application is not friendly to the assistive technology
 # infrastructure.
@@ -2285,7 +2295,7 @@ def mathTableSize(nRows, nColumns):
     # AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
     # CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
     # NOTIFIED WHEN STRINGS ARE FINALIZED.
-    # Translators: this represents the number of rows in a mathematic table.
+    # Translators: this represents the number of rows in a mathematical table.
     # See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
     rowString = ngettext("math table with %d row",
                          "math table with %d rows",
@@ -2296,6 +2306,32 @@ def mathTableSize(nRows, nColumns):
     # CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
     # NOTIFIED WHEN STRINGS ARE FINALIZED.
     # Translators: this represents the number of columns in a mathematical table.
+    # See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
+    colString = ngettext("%d column",
+                         "%d columns",
+                         nColumns) % nColumns
+
+    return rowString + " " + colString
+
+def mathNestedTableSize(nRows, nColumns):
+    # TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
+    # RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
+    # AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
+    # CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
+    # NOTIFIED WHEN STRINGS ARE FINALIZED.
+    # Translators: this represents the number of rows in a mathematical table
+    # which is nested inside another mathematical table.
+    # See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
+    rowString = ngettext("nested math table with %d row",
+                         "nested math table with %d rows",
+                         nRows) % nRows
+    # TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
+    # RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
+    # AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
+    # CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
+    # NOTIFIED WHEN STRINGS ARE FINALIZED.
+    # Translators: this represents the number of rows in a mathematic table
+    # which is nested inside another mathematical table.
     # See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
     colString = ngettext("%d column",
                          "%d columns",

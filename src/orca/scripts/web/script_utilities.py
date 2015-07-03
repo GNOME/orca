@@ -52,6 +52,7 @@ class Utilities(script_utilities.Utilities):
         self._isGridDescendant = {}
         self._isLayoutOnly = {}
         self._isMath = {}
+        self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
@@ -86,6 +87,7 @@ class Utilities(script_utilities.Utilities):
         self._isGridDescendant = {}
         self._isLayoutOnly = {}
         self._isMath = {}
+        self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
@@ -1692,6 +1694,24 @@ class Utilities(script_utilities.Utilities):
             return ['', '']
 
         return [attrs.get('open', '('), attrs.get('close', ')')]
+
+    def getMathNestingLevel(self, obj, test=None):
+        rv = self._mathNestingLevel.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        if not test:
+            role = obj.getRole()
+            test = lambda x: x and x.getRole() == role
+
+        rv = -1
+        ancestor = obj
+        while ancestor:
+            ancestor = pyatspi.findAncestor(ancestor, test)
+            rv += 1
+
+        self._mathNestingLevel[hash(obj)] = rv
+        return rv
 
     def filterContentsForPresentation(self, contents, inferLabels=False):
         def _include(x):

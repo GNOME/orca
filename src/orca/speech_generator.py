@@ -2191,7 +2191,11 @@ class SpeechGenerator(generator.Generator):
         except:
             return []
 
-        result = [messages.mathTableSize(table.nRows, table.nColumns)]
+        nestingLevel = self._script.utilities.getMathNestingLevel(obj)
+        if nestingLevel > 0:
+            result = [messages.mathNestedTableSize(table.nRows, table.nColumns)]
+        else:
+            result = [messages.mathTableSize(table.nRows, table.nColumns)]
         result.extend(self.voice(SYSTEM))
         return result
 
@@ -2219,7 +2223,11 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generateMathTableEnd(self, obj, **args):
-        result = [messages.MATH_TABLE_END]
+        nestingLevel = self._script.utilities.getMathNestingLevel(obj)
+        if nestingLevel > 0:
+            result = [messages.MATH_NESTED_TABLE_END]
+        else:
+            result = [messages.MATH_TABLE_END]
         result.extend(self.voice(SYSTEM))
         return result
 

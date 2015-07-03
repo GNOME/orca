@@ -708,6 +708,9 @@ class Utilities:
     def getMathFences(self, obj):
         return ['', '']
 
+    def getMathNestingLevel(self, obj, test=None):
+        return 0
+
     def isStatic(self, obj):
         role = obj.getRole()
         try:
