@@ -260,7 +260,7 @@ formatting = {
         },
         # TODO - JD: When we bump dependencies to TBD, remove this fake role and use the real one.
         'ROLE_MATH_TABLE': {
-            'unfocused': 'mathTable',
+            'unfocused': 'mathTableStart + mathTableRows + mathTableEnd',
         },
         # TODO - JD: When we bump dependencies to TBD, remove this fake role and use the real one.
         'ROLE_MATH_TABLE_ROW': {
@@ -739,6 +739,7 @@ if settings.useExperimentalSpeechProsody:
     formatting['speech']['ROLE_MATH_MULTISCRIPT']['unfocused'] = 'scriptBase + pause + scriptPrescripts + pause + scriptPostscripts + pause'
     formatting['speech']['ROLE_MATH_SCRIPT_SUBSUPER']['unfocused'] = 'scriptBase + pause + scriptSubscript + pause + scriptSuperscript + pause'
     formatting['speech']['ROLE_MATH_SCRIPT_UNDEROVER']['unfocused'] = 'scriptBase + pause + scriptUnderscript + pause + scriptOverscript + pause'
+    formatting['speech']['ROLE_MATH_TABLE']['unfocused'] = 'mathTableStart + pause + mathTableRows + pause + mathTableEnd + pause'
     formatting['speech'][pyatspi.ROLE_MENU]['unfocused'] = 'labelOrName + allTextSelection + roleName + availability + ' + MNEMONIC + ' + accelerator + pause + positionInList'
     formatting['speech'][pyatspi.ROLE_MENU]['basicWhereAmI'] = \
         '(ancestors or parentRoleName) + pause + labelOrName + roleName + pause +  positionInList + ' + MNEMONIC

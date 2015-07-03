@@ -1295,6 +1295,15 @@ MATH_UNDERSCRIPT = C_("math script generic", "underscript")
 # https://reference.wolfram.com/language/ref/Overscript.html
 MATH_OVERSCRIPT = C_("math script generic", "overscript")
 
+# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
+# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
+# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
+# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
+# NOTIFIED WHEN STRINGS ARE FINALIZED.
+# Translators: This phrase is spoken to inform the user that the last spoken
+# phrase is the end of a mathematical table.
+MATH_TABLE_END = C_("math table", "table end")
+
 # Translators: Inaccessible means that the application cannot be read by Orca.
 # This usually means the application is not friendly to the assistive technology
 # infrastructure.

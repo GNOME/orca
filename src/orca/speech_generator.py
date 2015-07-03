@@ -2185,31 +2185,42 @@ class SpeechGenerator(generator.Generator):
 
         return result
 
-    def _generateMathTable(self, obj, **args):
+    def _generateMathTableStart(self, obj, **args):
         try:
             table = obj.queryTable()
         except:
             return []
 
-        result = []
-        if not _settingsManager.getSetting('onlySpeakDisplayedText'):
-            result.append(messages.mathTableSize(table.nRows, table.nColumns))
-            result.extend(self.voice(SYSTEM))
+        result = [messages.mathTableSize(table.nRows, table.nColumns)]
+        result.extend(self.voice(SYSTEM))
+        return result
 
-        result.extend(self._generatePause(obj, **args))
-        result.extend(self._generateMathRow(obj[0]))
+    def _generateMathTableRows(self, obj, **args):
+        result = []
+        for row in obj:
+            oldRole = self._getAlternativeRole(row)
+            self._overrideRole(oldRole, args)
+            result.extend(self.generate(row, role=oldRole))
+            self._restoreRole(oldRole, args)
+
         return result
 
     def _generateMathRow(self, obj, **args):
         result = []
-        if not _settingsManager.getSetting('onlySpeakDisplayedText'):
-            result.append(messages.TABLE_ROW % (obj.getIndexInParent() + 1))
-            result.extend(self.voice(SYSTEM))
+
+        result.append(messages.TABLE_ROW % (obj.getIndexInParent() + 1))
+        result.extend(self.voice(SYSTEM))
+        result.extend(self._generatePause(obj, **args))
 
         for child in obj:
-            result.extend(self._generatePause(child, **args))
             result.extend(self._generateMath(child))
+            result.extend(self._generatePause(child, **args))
 
+        return result
+
+    def _generateMathTableEnd(self, obj, **args):
+        result = [messages.MATH_TABLE_END]
+        result.extend(self.voice(SYSTEM))
         return result
 
     #####################################################################
