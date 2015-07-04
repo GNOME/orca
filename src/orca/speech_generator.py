@@ -2176,9 +2176,9 @@ class SpeechGenerator(generator.Generator):
             if self._script.utilities.isNoneElement(script):
                 continue
             if i % 2:
-                rv = [messages.MATH_POST_SUPERSCRIPT]
+                rv = [messages.MATH_SUPERSCRIPT]
             else:
-                rv = [messages.MATH_POST_SUBSCRIPT]
+                rv = [messages.MATH_SUBSCRIPT]
             rv.extend(self.voice(SYSTEM))
             rv.extend(self._generateScriptScript(script))
             result.append(rv)

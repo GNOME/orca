@@ -1321,13 +1321,13 @@ _operators['\u220d'] = C_('math symbol', 'small contains as a member')
 _operators['\u220e'] = C_('math symbol', 'end of proof')
 
 # Translators: this is the spoken representation for the character '∏' (U+220f)
-_operators['\u220f'] = C_('math symbol', 'n-ary product')
+_operators['\u220f'] = C_('math symbol', 'product')
 
 # Translators: this is the spoken representation for the character '∐' (U+2210)
-_operators['\u2210'] = C_('math symbol', 'n-ary coproduct')
+_operators['\u2210'] = C_('math symbol', 'coproduct')
 
 # Translators: this is the spoken representation for the character '∑' (U+2211)
-_operators['\u2211'] = C_('math symbol', 'n-ary summation')
+_operators['\u2211'] = C_('math symbol', 'sum')
 
 # Translators: this is the spoken representation for the character '−' (U+2212)
 _operators['\u2212'] = C_('math symbol', 'minus')
@@ -1852,16 +1852,16 @@ _operators['\u22be'] = C_('math symbol', 'right angle with arc')
 _operators['\u22bf'] = C_('math symbol', 'right triangle')
 
 # Translators: this is the spoken representation for the character '⋀' (U+22c0)
-_operators['\u22c0'] = C_('math symbol', 'n-ary logical and')
+_operators['\u22c0'] = C_('math symbol', 'logical and')
 
 # Translators: this is the spoken representation for the character '⋁' (U+22c1)
-_operators['\u22c1'] = C_('math symbol', 'n-ary logical or')
+_operators['\u22c1'] = C_('math symbol', 'logical or')
 
 # Translators: this is the spoken representation for the character '⋂' (U+22c2)
-_operators['\u22c2'] = C_('math symbol', 'n-ary intersection')
+_operators['\u22c2'] = C_('math symbol', 'intersection')
 
 # Translators: this is the spoken representation for the character '⋃' (U+22c3)
-_operators['\u22c3'] = C_('math symbol', 'n-ary union')
+_operators['\u22c3'] = C_('math symbol', 'union')
 
 # Translators: this is the spoken representation for the character '⋄' (U+22c4)
 _operators['\u22c4'] = C_('math symbol', 'diamond operator')

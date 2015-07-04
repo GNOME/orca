@@ -1249,30 +1249,6 @@ MATH_PRE_SUPERSCRIPT = C_("math script", "pre-superscript")
 # CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
 # NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that what is about to
-# be spoken is subscripted text which follows the base in a mathematical
-# expression. See, for instance, the MathML mmultiscripts element:
-# http://www.w3.org/TR/MathML3/chapter3.html#presm.mmultiscripts
-# https://developer.mozilla.org/en-US/docs/Web/MathML/Element/mmultiscripts
-MATH_POST_SUBSCRIPT = C_("math script", "post-subscript")
-
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
-# Translators: This phrase is spoken to inform the user that what is about to
-# be spoken is superscripted text which follows the base in a mathematical
-# expression. See, for instance, the MathML mmultiscripts element:
-# http://www.w3.org/TR/MathML3/chapter3.html#presm.mmultiscripts
-# https://developer.mozilla.org/en-US/docs/Web/MathML/Element/mmultiscripts
-MATH_POST_SUPERSCRIPT = C_("math script", "post-superscript")
-
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
-# Translators: This phrase is spoken to inform the user that what is about to
 # be spoken is underscripted text in a mathematical expression. Note that the
 # underscript might be simple text or may itself be a mathematical expression,
 # and in this instance we have no additional context through which a more user-
