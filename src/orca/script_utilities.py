@@ -606,6 +606,10 @@ class Utilities:
     def isHidden(self, obj):
         return False
 
+    def speakMathSymbolNames(self, obj=None):
+        obj = obj or orca_state.locusOfFocus
+        return obj and obj.getState().contains(pyatspi.STATE_EDITABLE)
+
     def isInMath(self):
         return False
 
@@ -2142,7 +2146,8 @@ class Utilities:
         if settings.speakMultiCaseStringsAsWords:
             line = self._processMultiCaseString(line)
 
-        line = mathsymbols.adjustForSpeech(line)
+        if self.speakMathSymbolNames():
+            line = mathsymbols.adjustForSpeech(line)
 
         if not settings.usePronunciationDictionary:
             return line

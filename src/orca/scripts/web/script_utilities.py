@@ -1220,6 +1220,10 @@ class Utilities(script_utilities.Utilities):
         self._isTextBlockElement[hash(obj)] = rv
         return rv
 
+    def speakMathSymbolNames(self, obj=None):
+        obj = obj or orca_state.locusOfFocus
+        return self.isMath(obj)
+
     def isInMath(self):
         return self.isMath(orca_state.locusOfFocus)
 
