@@ -726,6 +726,16 @@ class Utilities:
             isStatic = not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
         return isStatic
 
+    def isStatusBarNotification(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_NOTIFICATION):
+            return False
+
+        isStatusBar = lambda x: x and x.getRole() == pyatspi.ROLE_STATUS_BAR
+        if pyatspi.findAncestor(obj, isStatusBar):
+            return True
+
+        return False
+
     def isLayoutOnly(self, obj):
         """Returns True if the given object is a container which has
         no presentable information (label, name, displayed text, etc.)."""

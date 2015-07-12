@@ -332,6 +332,9 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
+        if self._script.utilities.isStatusBarNotification(obj):
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         role = args.get('role', obj.getRole())
