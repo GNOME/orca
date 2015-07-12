@@ -1769,15 +1769,22 @@ class SpeechGenerator(generator.Generator):
         specifications) that represent the status bar of a window.
         This method should initially be called with a top-level window.
         """
-        result = []
+
         statusBar = self._script.utilities.statusBar(obj)
-        if statusBar:
-            name = self._generateName(statusBar)
-            if name:
-                result.extend(name)
-            else:
-                for child in statusBar:
-                    result.extend(self._generateName(child))
+        if not statusBar:
+            return []
+
+        result = self._generateName(statusBar)
+        if result:
+            return result
+
+        for child in statusBar:
+            childResult = self._generateName(child)
+            if not childResult and child.getRole() != pyatspi.ROLE_LABEL:
+                childResult = self.generate(child, includeContext=False)
+            if childResult:
+                result.extend(childResult)
+
         return result
 
     def generateStatusBar(self, obj, **args):
