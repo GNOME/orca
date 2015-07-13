@@ -1906,7 +1906,7 @@ class SpeechGenerator(generator.Generator):
         result = []
         children = [child for child in obj] or [obj]
         for child in children:
-            if self._script.utilities.isMathLayoutOnly(child):
+            if self._script.utilities.isMathLayoutOnly(child) and child.childCount:
                 result.extend(self._generateMath(child))
                 continue
 
