@@ -891,7 +891,7 @@ class StructuralNavigation:
 
         if not obj:
             obj, offset = self._script.utilities.getCaretContext()
-        thisObj, index = _getMatchingObjAndIndex(obj or currentObject)
+        thisObj, index = _getMatchingObjAndIndex(obj)
         if thisObj:
             matches = matches[index:]
             obj = thisObj
