@@ -2249,8 +2249,6 @@ class SpeechGenerator(generator.Generator):
 
     def _getAlternativeRole(self, obj, **args):
         if self._script.utilities.isMath(obj):
-            if self._script.utilities.isMathTopLevel(obj):
-                return 'ROLE_MATH'
             if self._script.utilities.isMathFraction(obj):
                 return 'ROLE_MATH_FRACTION'
             if self._script.utilities.isMathRoot(obj):

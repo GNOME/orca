@@ -225,8 +225,7 @@ formatting = {
             'unfocused': 'label + displayedText + allTextSelection + expandableState + availability + positionInList + childWidget',
             'basicWhereAmI': 'label + roleName + name + positionInList + expandableState + (nodeLevel or nestingLevel)'
             },
-        # TODO - JD: When we bump dependencies to 2.12, remove this fake role and use the real one.
-        'ROLE_MATH': {
+        pyatspi.ROLE_MATH: {
             'unfocused': 'math',
         },
         # TODO - JD: When we bump dependencies to TBD, remove this fake role and use the real one.

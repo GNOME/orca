@@ -1555,13 +1555,7 @@ class Utilities(script_utilities.Utilities):
         return attrs.get('tag') in ['mi', 'mn', 'mo', 'mtext', 'ms', 'mspace']
 
     def isMathTopLevel(self, obj):
-        # TODO - JD: When we bump dependencies to 2.12 do the more performant
-        # role-based check.
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            return False
-        return attrs.get('tag') == 'math'
+        return obj.getRole() == pyatspi.ROLE_MATH
 
     def getMathAncestor(self, obj):
         if not self.isMath(obj):
