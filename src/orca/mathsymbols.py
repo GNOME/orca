@@ -1249,13 +1249,13 @@ MONOSPACE = C_('math symbol', 'monospace %s')
 DOTLESS = C_('math symbol', 'dotless %s')
 
 # Translators: this is the spoken representation for the character '←' (U+2190)
-_arrows['\u2190'] = _("left arrow")
+_arrows['\u2190'] = C_('math symbol', 'left arrow')
 
 # Translators: this is the spoken representation for the character '↑' (U+2191)
 _arrows['\u2191'] = C_('math symbol', 'up arrow')
 
 # Translators: this is the spoken representation for the character '→' (U+2192)
-_arrows['\u2192'] = _("right arrow")
+_arrows['\u2192'] = C_('math symbol', 'right arrow')
 
 # Translators: this is the spoken representation for the character '↓' (U+2193)
 _arrows['\u2193'] = C_('math symbol', 'down arrow')
@@ -1318,10 +1318,10 @@ _arrows['\u21d8'] = C_('math symbol', 'south east double arrow')
 _arrows['\u21d9'] = C_('math symbol', 'south west double arrow')
 
 # Translators: this is the spoken representation for the character '➔' (U+2794)
-_arrows['\u2794'] = _("right-pointing arrow")
+_arrows['\u2794'] = C_('math symbol', 'right-pointing arrow')
 
 # Translators: this is the spoken representation for the character '➢' (U+27a2)
-_arrows['\u27a2'] = _("right-pointing arrowhead")
+_arrows['\u27a2'] = C_('math symbol', 'right-pointing arrowhead')
 
 # Translators: this is the spoken word for the character '-' (U+002d) when used
 # as a MathML operator.
@@ -2158,39 +2158,41 @@ _operators['\u2a01'] = C_('math symbol', 'circled plus')
 
 # Translators: this is the spoken representation for the character '⨂' (U+2a02)
 _operators['\u2a02'] = C_('math symbol', 'circled times')
-
 # Translators: this is the spoken representation for the character '⨃' (U+2a03)
 _operators['\u2a03'] = C_('math symbol', 'union with dot')
-
 # Translators: this is the spoken representation for the character '⨄' (U+2a04)
 _operators['\u2a04'] = C_('math symbol', 'union with plus')
-
 # Translators: this is the spoken representation for the character '⨄' (U+2a05)
 _operators['\u2a05'] = C_('math symbol', 'square intersection')
-
 # Translators: this is the spoken representation for the character '⨆' (U+2a06)
 _operators['\u2a06'] = C_('math symbol', 'square union')
 
 # Translators: this is the spoken representation for the character '■' (U+25a0)
-_shapes['\u25a0'] = _("black square")
+# when used as a geometric shape (i.e. as opposed to a bullet in a list).
+_shapes['\u25a0'] = C_('math symbol', 'black square')
 
 # Translators: this is the spoken representation for the character '□' (U+25a1)
-_shapes['\u25a1'] = _("white square")
+# when used as a geometric shape (i.e. as opposed to a bullet in a list).
+_shapes['\u25a1'] = C_('math symbol', 'white square')
 
 # Translators: this is the spoken representation for the character '◆' (U+25c6)
-_shapes['\u25c6'] = _("black diamond")
+# when used as a geometric shape (i.e. as opposed to a bullet in a list).
+_shapes['\u25c6'] = C_('math symbol', 'black diamond')
 
 # Translators: this is the spoken representation for the character '○' (U+25cb)
-_shapes['\u25cb'] = _("white circle")
+# when used as a geometric shape (i.e. as opposed to a bullet in a list).
+_shapes['\u25cb'] = C_('math symbol', 'white circle')
 
 # Translators: this is the spoken representation for the character '●' (U+25cf)
-_shapes['\u25cf'] = _("black circle")
+# when used as a geometric shape (i.e. as opposed to a bullet in a list).
+_shapes['\u25cf'] = C_('math symbol', 'black circle')
 
 # Translators: this is the spoken representation for the character '◦' (U+25e6)
-_shapes['\u25e6'] = _("white bullet")
+_shapes['\u25e6'] = C_('math symbol', 'white bullet')
 
 # Translators: this is the spoken representation for the character '◾' (U+25fe)
-_shapes['\u25fe'] = _("black medium small square")
+# when used as a geometric shape (i.e. as opposed to a bullet in a list).
+_shapes['\u25fe'] = C_('math symbol', 'black medium small square')
 
 _all.update(_alnum)
 _all.update(_arrows)
