@@ -1251,8 +1251,71 @@ DOTLESS = C_('math symbol', 'dotless %s')
 # Translators: this is the spoken representation for the character '←' (U+2190)
 _arrows['\u2190'] = _("left arrow")
 
+# Translators: this is the spoken representation for the character '↑' (U+2191)
+_arrows['\u2191'] = C_('math symbol', 'up arrow')
+
 # Translators: this is the spoken representation for the character '→' (U+2192)
 _arrows['\u2192'] = _("right arrow")
+
+# Translators: this is the spoken representation for the character '↓' (U+2193)
+_arrows['\u2193'] = C_('math symbol', 'down arrow')
+
+# Translators: this is the spoken representation for the character '↔' (U+2194)
+_arrows['\u2194'] = C_('math symbol', 'left right arrow')
+
+# Translators: this is the spoken representation for the character '↕' (U+2195)
+_arrows['\u2195'] = C_('math symbol', 'up down arrow')
+
+# Translators: this is the spoken representation for the character '↖' (U+2196)
+_arrows['\u2196'] = C_('math symbol', 'north west arrow')
+
+# Translators: this is the spoken representation for the character '↗' (U+2197)
+_arrows['\u2197'] = C_('math symbol', 'north east arrow')
+
+# Translators: this is the spoken representation for the character '↘' (U+2198)
+_arrows['\u2198'] = C_('math symbol', 'south east arrow')
+
+# Translators: this is the spoken representation for the character '↤' (U+21a4)
+_arrows['\u21a4'] = C_('math symbol', 'left arrow from bar')
+
+# Translators: this is the spoken representation for the character '↥' (U+21a5)
+_arrows['\u21a5'] = C_('math symbol', 'up arrow from bar')
+
+# Translators: this is the spoken representation for the character '↦' (U+21a6)
+_arrows['\u21a6'] = C_('math symbol', 'right arrow from bar')
+
+# Translators: this is the spoken representation for the character '↧' (U+21a7)
+_arrows['\u21a7'] = C_('math symbol', 'down arrow from bar')
+
+# Translators: this is the spoken representation for the character '⇐' (U+21d0)
+_arrows['\u21d0'] = C_('math symbol', 'left double arrow')
+
+# Translators: this is the spoken representation for the character '⇑' (U+21d1)
+_arrows['\u21d1'] = C_('math symbol', 'up double arrow')
+
+# Translators: this is the spoken representation for the character '⇒' (U+21d2)
+_arrows['\u21d2'] = C_('math symbol', 'right double arrow')
+
+# Translators: this is the spoken representation for the character '⇓' (U+21d3)
+_arrows['\u21d3'] = C_('math symbol', 'down double arrow')
+
+# Translators: this is the spoken representation for the character '⇔' (U+21d4)
+_arrows['\u21d4'] = C_('math symbol', 'left right double arrow')
+
+# Translators: this is the spoken representation for the character '⇕' (U+21d5)
+_arrows['\u21d5'] = C_('math symbol', 'up down double arrow')
+
+# Translators: this is the spoken representation for the character '⇖' (U+21d6)
+_arrows['\u21d6'] = C_('math symbol', 'north west double arrow')
+
+# Translators: this is the spoken representation for the character '⇗' (U+21d7)
+_arrows['\u21d7'] = C_('math symbol', 'north east double arrow')
+
+# Translators: this is the spoken representation for the character '⇘' (U+21d8)
+_arrows['\u21d8'] = C_('math symbol', 'south east double arrow')
+
+# Translators: this is the spoken representation for the character '⇙' (U+21d9)
+_arrows['\u21d9'] = C_('math symbol', 'south west double arrow')
 
 # Translators: this is the spoken representation for the character '➔' (U+2794)
 _arrows['\u2794'] = _("right-pointing arrow")
@@ -1271,6 +1334,26 @@ _operators["\u003c"] = C_('math symbol', 'less than')
 # Translators: this is the spoken word for the character '>' (U+003e) when used
 # as a MathML operator.
 _operators["\u003e"] = C_('math symbol', 'greater than')
+
+# Translators: this is the spoken word for the character '^' (U+005e) when used
+# as a MathML operator.
+_operators['\u005e'] = C_('math symbol', 'circumflex')
+
+# Translators: this is the spoken word for the character 'ˇ' (U+02c7) when used
+# as a MathML operator.
+_operators['\u02c7'] = C_('math symbol', 'háček')
+
+# Translators: this is the spoken word for the character '˘' (U+02d8) when used
+# as a MathML operator.
+_operators['\u02d8'] = C_('math symbol', 'breve')
+
+# Translators: this is the spoken word for the character '˙' (U+02d9) when used
+# as a MathML operator.
+_operators['\u02d9'] = C_('math symbol', 'dot')
+
+# Translators: this is the spoken word for the character '‖' (U+2016) when used
+# as a MathML operator.
+_operators['\u2016'] = C_('math symbol', 'double vertical line')
 
 # Translators: this is the spoken representation for the character '…' (U+2026)
 _operators['\u2026'] = C_('math symbol', 'horizontal ellipsis')
@@ -2043,11 +2126,50 @@ _operators['\u22fe'] = C_('math symbol', 'small contains with overbar')
 # Translators: this is the spoken representation for the character '⋿' (U+22ff)
 _operators['\u22ff'] = C_('math symbol', 'z notation bag membership')
 
+# Translators: this is the spoken representation for the character '⌈' (U+2308)
+_operators['\u2308'] = C_('math symbol', 'left ceiling')
+
+# Translators: this is the spoken representation for the character '⌉' (U+2309)
+_operators['\u2309'] = C_('math symbol', 'right ceiling')
+
+# Translators: this is the spoken representation for the character '⌈' (U+230a)
+_operators['\u230a'] = C_('math symbol', 'left floor')
+
+# Translators: this is the spoken representation for the character '⌉' (U+230b)
+_operators['\u230b'] = C_('math symbol', 'right floor')
+
 # Translators: this is the spoken representation for the character '⏞' (U+23de)
 _operators['\u23de'] = C_('math symbol', 'top brace')
 
 # Translators: this is the spoken representation for the character '⏟' (U+23df)
 _operators['\u23df'] = C_('math symbol', 'bottom brace')
+
+# Translators: this is the spoken representation for the character '⟨' (U+27e8)
+_operators['\u27e8'] = C_('math symbol', 'left angle bracket')
+
+# Translators: this is the spoken representation for the character '⟩' (U+27e9)
+_operators['\u27e9'] = C_('math symbol', 'right angle bracket')
+
+# Translators: this is the spoken representation for the character '⨀' (U+2a00)
+_operators['\u2a00'] = C_('math symbol', 'circled dot')
+
+# Translators: this is the spoken representation for the character '⨁' (U+2a01)
+_operators['\u2a01'] = C_('math symbol', 'circled plus')
+
+# Translators: this is the spoken representation for the character '⨂' (U+2a02)
+_operators['\u2a02'] = C_('math symbol', 'circled times')
+
+# Translators: this is the spoken representation for the character '⨃' (U+2a03)
+_operators['\u2a03'] = C_('math symbol', 'union with dot')
+
+# Translators: this is the spoken representation for the character '⨄' (U+2a04)
+_operators['\u2a04'] = C_('math symbol', 'union with plus')
+
+# Translators: this is the spoken representation for the character '⨄' (U+2a05)
+_operators['\u2a05'] = C_('math symbol', 'square intersection')
+
+# Translators: this is the spoken representation for the character '⨆' (U+2a06)
+_operators['\u2a06'] = C_('math symbol', 'square union')
 
 # Translators: this is the spoken representation for the character '■' (U+25a0)
 _shapes['\u25a0'] = _("black square")
