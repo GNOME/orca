@@ -1529,8 +1529,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         if not test:
-            role = obj.getRole()
-            test = lambda x: x and x.getRole() == role
+            test = lambda x: self._getTag(x) == self._getTag(obj)
 
         rv = -1
         ancestor = obj
