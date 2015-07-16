@@ -607,8 +607,7 @@ class Utilities:
         return False
 
     def speakMathSymbolNames(self, obj=None):
-        obj = obj or orca_state.locusOfFocus
-        return obj and obj.getState().contains(pyatspi.STATE_EDITABLE)
+        return False
 
     def isInMath(self):
         return False
