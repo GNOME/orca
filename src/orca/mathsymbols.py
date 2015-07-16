@@ -42,6 +42,7 @@ _alnum = {}
 _arrows = {}
 _operators = {}
 _shapes = {}
+_combining = {}
 
 # Note that the following are to help us identify what is likely a math symbol
 # (as opposed to one serving the function of an image in "This way up.")
@@ -2194,11 +2195,30 @@ _shapes['\u25e6'] = C_('math symbol', 'white bullet')
 # when used as a geometric shape (i.e. as opposed to a bullet in a list).
 _shapes['\u25fe'] = C_('math symbol', 'black medium small square')
 
+# Translators: this is the spoken representation for the character '̱' (U+0331)
+# which combines with the preceding character. '%s' is a placeholder for the
+# preceding character. Some examples of combined symbols can be seen in this
+# table: http://www.w3.org/TR/MathML3/appendixc.html#oper-dict.entries-table.
+_combining['\u0331'] = C_('math symbol', '%s with underline')
+
+# Translators: this is the spoken representation for the character '̸' (U+0338)
+# which combines with the preceding character. '%s' is a placeholder for the
+# preceding character. Some examples of combined symbols can be seen in this
+# table: http://www.w3.org/TR/MathML3/appendixc.html#oper-dict.entries-table.
+_combining['\u0338'] = C_('math symbol', '%s with slash')
+
+# Translators: this is the spoken representation for the character '⃒' (U+20D2)
+# which combines with the preceding character. '%s' is a placeholder for the
+# preceding character. Some examples of combined symbols can be seen in this
+# table: http://www.w3.org/TR/MathML3/appendixc.html#oper-dict.entries-table.
+_combining['\u20D2'] = C_('math symbol', '%s with vertical line')
+
 _all.update(_alnum)
 _all.update(_arrows)
 _all.update(_operators)
 _all.update(_shapes)
 _RE = None
+_RE_COMBINING = None
 
 def __compileRE():
     global _RE
@@ -2206,6 +2226,14 @@ def __compileRE():
         _RE = re.compile('[%s]' % ''.join(list(_all.keys())), re.UNICODE)
     except:
         _RE = None
+
+def __compileRE_COMBINING():
+    global _RE_COMBINING
+    try:
+        _RE_COMBINING = re.compile('.[%s]' % ''.join(list(_combining.keys())),
+                                   re.UNICODE)
+    except:
+        _RE_COMBINING = None
 
 def _getStyleString(symbol):
     o = ord(symbol)
@@ -2265,14 +2293,23 @@ def getCharacterName(symbol):
 def adjustForSpeech(string):
     if _RE is None:
         __compileRE()
-    if _RE is None:
-        return string
 
-    chars = set(re.findall(_RE, string))
-    includeStyle = speakStyle == SPEAK_ALWAYS
-    for char in chars:
-        name = _getSpokenName(char, includeStyle)
-        if name:
-            string = re.sub(char, " %s " % name, string)
+    if _RE_COMBINING is None:
+        __compileRE_COMBINING()
+
+    if _RE_COMBINING is not None:
+        combiningPairs = set(re.findall(_RE_COMBINING, string))
+        for pair in combiningPairs:
+            name = _combining.get(pair[1])
+            if name:
+                string = re.sub(pair, " %s " % (name % pair[0]), string)
+
+    if _RE is not None:
+        chars = set(re.findall(_RE, string))
+        includeStyle = speakStyle == SPEAK_ALWAYS
+        for char in chars:
+            name = _getSpokenName(char, includeStyle)
+            if name:
+                string = re.sub(char, " %s " % name, string)
 
     return string
