@@ -1001,6 +1001,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
+        if self.utilities.getDocumentForObject(event.source.parent):
+            msg = "WEB: Ignoring: Event source is nested document"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
         self._loadingDocumentContent = event.detail1
 
         obj, offset = self.utilities.getCaretContext()
