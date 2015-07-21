@@ -1347,7 +1347,8 @@ class Script(default.Script):
                 wasFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
                 obj.clearCache()
                 isFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
-                if wasFocused == isFocused:
+                if wasFocused == isFocused \
+                   and not (obj.getRole() == pyatspi.ROLE_LINK and not isFocused):
                     msg = "WEB: Event handled: Setting locusOfFocus to context"
                     debug.println(debug.LEVEL_INFO, msg)
                     orca.setLocusOfFocus(event, obj)
