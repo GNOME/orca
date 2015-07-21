@@ -492,7 +492,7 @@ class Script(default.Script):
         self._lastCommandWasCaretNav = False
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = False
-        return handler != None
+        return super().consumesKeyboardEvent(keyboardEvent)
 
     # TODO - JD: This needs to be moved out of the scripts.
     def textLines(self, obj, offset=None):
