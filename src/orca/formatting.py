@@ -179,6 +179,9 @@ formatting = {
             'focused': 'labelOrName + roleName',
             'unfocused': 'labelOrName + allTextSelection + roleName + unfocusedDialogCount + availability'
             },
+        pyatspi.ROLE_HEADER: {
+            'unfocused': '(displayedText or name) + roleName',
+        },
         pyatspi.ROLE_HEADING: {
             'focused': 'displayedText + roleName + expandableState',
             'unfocused': 'displayedText + roleName + expandableState',
