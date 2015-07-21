@@ -207,6 +207,8 @@ class Script(Gecko.Script):
             if event.detail1 == -1:
                 return
             self.spellcheck.setDocumentPosition(event.source, event.detail1)
+            if self.spellcheck.isActive():
+                return
 
         Gecko.Script.onCaretMoved(self, event)
 
@@ -330,7 +332,6 @@ class Script(Gecko.Script):
             text = obj.queryText()
             selStart, selEnd = text.getSelection(0)
             self.spellcheck.setDocumentPosition(obj, selStart)
-            self.spellcheck.presentErrorDetails()
             return
 
         default.Script.onTextSelectionChanged(self, event)
@@ -441,6 +442,7 @@ class Script(Gecko.Script):
 
         Gecko.Script.onWindowActivated(self, event)
         if not self.spellcheck.isCheckWindow(event.source):
+            self.spellcheck.deactivate()
             return
 
         self.spellcheck.presentErrorDetails()
