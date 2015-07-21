@@ -1024,6 +1024,7 @@ class Script(default.Script):
         if event.detail1:
             return True
 
+        self.utilities.clearCachedObjects()
         if self.useFocusMode(orca_state.locusOfFocus) != self._inFocusMode:
             self.togglePresentationMode(None)
 
