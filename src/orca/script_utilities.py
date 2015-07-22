@@ -755,6 +755,11 @@ class Utilities:
             role = None
             parentRole = None
 
+        try:
+            firstChild = obj[0]
+        except:
+            firstChild = None
+
         topLevelRoles = [pyatspi.ROLE_ALERT,
                          pyatspi.ROLE_FRAME,
                          pyatspi.ROLE_DIALOG,
@@ -775,7 +780,7 @@ class Utilities:
                 elif not (obj.name or self.displayedLabel(obj)):
                     layoutOnly = not (table.getColumnHeader(0) or table.getRowHeader(0))
         elif role == pyatspi.ROLE_TABLE_CELL and obj.childCount:
-            if obj[0].getRole() == pyatspi.ROLE_TABLE_CELL:
+            if firstChild.getRole() == pyatspi.ROLE_TABLE_CELL:
                 layoutOnly = True
             elif parentRole == pyatspi.ROLE_TABLE:
                 layoutOnly = self.isLayoutOnly(obj.parent)
@@ -800,9 +805,9 @@ class Utilities:
             layoutOnly = not (state.contains(pyatspi.STATE_FOCUSABLE) \
                               or state.contains(pyatspi.STATE_SELECTABLE))
         elif role == pyatspi.ROLE_PANEL and obj.childCount \
-             and (obj.childCount == 1 or obj[0].getRole() in ignorePanelParent):
+             and firstChild.getRole() in ignorePanelParent:
             layoutOnly = True
-        elif obj.childCount == 1 and obj.name == obj[0].name:
+        elif obj.childCount == 1 and obj.name and obj.name == firstChild.name:
             layoutOnly = True
         elif self.isHidden(obj):
             layoutOnly = True
