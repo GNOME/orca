@@ -1,3 +1,46 @@
+3.17.4 - 22 July 2015
+
+MathML:
+
+  * Implement speech support for MathML content in Gecko-based browsers
+
+Web:
+
+  * Fix several regressions introduced by the new "web" script
+
+  * Don't set the locusOfFocus to non-focused link upon document focus
+
+  * Ignore state-changed:busy events from nested web documents
+
+  * Create a utility method to get and cache an element's tag
+
+General:
+
+  * Handle some changes in the Thunderbird v.38 spellcheck dialog
+
+  * Add handling for ROLE_HEADER
+
+  * Add support for status bar notifications
+
+  * Remove the old "inacessible" metacity/marco hack
+
+  * Stop using gnome-autogen.sh
+
+  * Mark several command-line strings for translation
+
+  * Enable toggling of speech via keybinding when speech is disabled
+
+  * Add handling for Evo's "autocomplete" popups
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    el            Greek                       Dimitris Spingos
+    es            Spanish                     Daniel Mustieles
+    fr            French                      Claude Paroz
+    pt            Portuguese                  Pedro Albuquerque
+
+=========
+
 3.17.3 - 23 June 2015
 
 Gecko:
