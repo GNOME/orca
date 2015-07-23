@@ -36,7 +36,6 @@ from . import messages
 from . import object_properties
 from . import settings
 from . import settings_manager
-from . import sound
 from . import text_attribute_names
 from . import acss
 
@@ -111,23 +110,6 @@ class SpeechGenerator(generator.Generator):
         """
         generator.Generator._addGlobals(self, globalsDict)
         globalsDict['voice'] = self.voice
-        globalsDict['play'] = self.play
-
-    def play(self, key):
-        """Returns an array containing a sound.Sound instance.
-        The key can a value to be used to look up a filename in the
-        settings.py:sounds dictionary (e.g., a pyatspi.ROLE_* value)
-        or just the name of an audio file to use.
-        """
-        sounds = _settingsManager.getSetting('sounds')
-        try:
-            soundBite = sound.Sound(sounds[key])
-        except:
-            if isinstance(key, str):
-                soundBite = sound.Sound(key)
-            else:
-                soundBite = None
-        return [soundBite]
 
     def generateSpeech(self, obj, **args):
         return self.generate(obj, **args)
