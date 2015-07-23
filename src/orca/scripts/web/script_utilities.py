@@ -549,8 +549,7 @@ class Utilities(script_utilities.Utilities):
                 rv = None
 
         if not self.isLiveRegion(obj):
-            doNotQuery = [pyatspi.ROLE_LIST,
-                          pyatspi.ROLE_TABLE_ROW,
+            doNotQuery = [pyatspi.ROLE_TABLE_ROW,
                           pyatspi.ROLE_TOOL_BAR]
             if rv and obj.getRole() in doNotQuery:
                 rv = None
@@ -1214,6 +1213,7 @@ class Utilities(script_utilities.Utilities):
                              pyatspi.ROLE_FORM,
                              pyatspi.ROLE_HEADING,
                              pyatspi.ROLE_LABEL,
+                             pyatspi.ROLE_LIST,
                              pyatspi.ROLE_LIST_ITEM,
                              pyatspi.ROLE_PANEL,
                              pyatspi.ROLE_PARAGRAPH,
