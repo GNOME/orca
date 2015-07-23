@@ -45,16 +45,6 @@ class Utilities(web.Utilities):
     def _attemptBrokenTextRecovery(self):
         return True
 
-    def inFindToolbar(self, obj=None):
-        if not obj:
-            obj = orca_state.locusOfFocus
-
-        if obj and obj.parent \
-           and obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
-            return False
-
-        return super().inFindToolbar(obj)
-
     def nodeLevel(self, obj):
         """Determines the level of at which this object is at by using
         the object attribute 'level'.  To be consistent with the default

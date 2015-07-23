@@ -1085,6 +1085,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return False
 
+        if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
+            msg = "WEB: Ignoring event source is in document; locusOfFocus is not"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
         if self._lastCommandWasCaretNav:
             msg = "WEB: Event ignored: Last command was caret nav"
             debug.println(debug.LEVEL_INFO, msg)
@@ -1385,6 +1390,27 @@ class Script(default.Script):
             self.liveRegionManager.flushMessages()
 
         return True
+
+    def onSelectionChanged(self, event):
+        """Callback for object:selection-changed accessibility events."""
+
+        if not self.utilities.inDocumentContent(event.source):
+            msg = "WEB: Event source is not in document content"
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+
+        if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
+            msg = "WEB: Ignoring event source is in document; locusOfFocus is not"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        obj, offset = self.utilities.getCaretContext()
+        if obj and event.source not in [obj, obj.parent]:
+            msg = "WEB: Ignoring event source is not context obj or its parent"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        return False
 
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""

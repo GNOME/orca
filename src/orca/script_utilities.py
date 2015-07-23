@@ -587,7 +587,12 @@ class Utilities:
         if not obj:
             obj = orca_state.locusOfFocus
 
-        if not (obj and obj.getRole() == pyatspi.ROLE_ENTRY):
+        try:
+            role = obj.getRole()
+        except:
+            return False
+
+        if role != pyatspi.ROLE_ENTRY:
             return False
 
         isToolbar = lambda x: x and x.getRole() == pyatspi.ROLE_TOOL_BAR

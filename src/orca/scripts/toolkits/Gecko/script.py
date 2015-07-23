@@ -211,6 +211,16 @@ class Script(web.Script):
         debug.println(debug.LEVEL_INFO, msg)
         default.Script.onNameChanged(self, event)
 
+    def onSelectionChanged(self, event):
+        """Callback for object:selection-changed accessibility events."""
+
+        if super().onSelectionChanged(event):
+            return
+
+        msg = "GECKO: Passing along event to default script"
+        debug.println(debug.LEVEL_INFO, msg)
+        default.Script.onSelectionChanged(self, event)
+
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
 
