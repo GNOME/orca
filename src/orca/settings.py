@@ -342,10 +342,6 @@ enabledBrailledTextAttributes = \
 keyBindingsMap          = {}
 brailleBindingsMap      = {}
 
-# A dictionary where the keys are rolenames and the values are
-# filenames containing audio snippets.
-sounds = {}
-
 # TODO - JD: Is this still needed now that AT-SPI has its own timeout?
 timeoutTime             = 10   # a value of 0 means don't do hang checking
 timeoutCallback         = None # Set by orca.py:init to orca.timeout

@@ -33,7 +33,6 @@ from . import debug
 from . import logger
 from . import orca_state
 from . import settings
-from . import sound
 from . import speech_generator
 
 from .acss import ACSS
@@ -172,7 +171,7 @@ def speak(content, acss=None, interrupt=True):
     if settings.silenceSpeech:
         return
 
-    validTypes = (str, list, sound.Sound, speech_generator.Pause,
+    validTypes = (str, list, speech_generator.Pause,
                   speech_generator.LineBreak, ACSS)
     error = "bad content sent to speech.speak: '%s'"
     if not isinstance(content, validTypes):
@@ -182,8 +181,6 @@ def speak(content, acss=None, interrupt=True):
 
     if isinstance(content, str):
         _speak(content, acss, interrupt)
-    elif isinstance(content, sound.Sound):
-        content.play()
     if not isinstance(content, list):
         return
 
@@ -216,9 +213,6 @@ def speak(content, acss=None, interrupt=True):
                 _speak(string, activeVoice, interrupt)
             activeVoice = newVoice
             toSpeak = newItemsToSpeak
-
-        if isinstance(element, sound.Sound):
-            element.play()
 
     if toSpeak:
         string = " ".join(toSpeak)
