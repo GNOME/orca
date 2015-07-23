@@ -2134,7 +2134,7 @@ class Utilities(script_utilities.Utilities):
                 allText = text.getText(0, -1)
                 for i in range(offset + 1, len(allText)):
                     child = self.getChildAtOffset(obj, i)
-                    if child and not self.isZombie(child):
+                    if child and not self.isZombie(child) and not self.isAnchor(child):
                         return self.findNextCaretInOrder(child, -1)
                     if allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
                         return obj, i
@@ -2186,7 +2186,7 @@ class Utilities(script_utilities.Utilities):
                     offset = len(allText)
                 for i in range(offset - 1, -1, -1):
                     child = self.getChildAtOffset(obj, i)
-                    if child and not self.isZombie(child):
+                    if child and not self.isZombie(child) and not self.isAnchor(child):
                         return self.findPreviousCaretInOrder(child, -1)
                     if allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
                         return obj, i

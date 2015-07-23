@@ -13,11 +13,12 @@ sequence.append(KeyComboAction("<Control>r"))
 
 sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("<Control>Home"))
 
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "1. Top of file",
+    "1. Line Down",
     ["BRAILLE LINE:  'Home News Projects Art Support Development Community'",
      "     VISIBLE:  'Home News Projects Art Support D', cursor=1",
      "SPEECH OUTPUT: 'Home link'",

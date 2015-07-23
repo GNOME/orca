@@ -54,6 +54,7 @@ user_pref("spellchecker.dictionary", "en_US");
 user_pref("toolkit.telemetry.prompted", 2);
 user_pref("toolkit.telemetry.rejected", true);
 user_pref("toolkit.telemetry.enabled", false);
+user_pref("browser.reader.detectedFirstArticle", true);
 pref("datareporting.healthreport.service.enabled", false);
 pref("datareporting.healthreport.uploadEnabled", false);
 pref("datareporting.healthreport.service.firstRun", false);

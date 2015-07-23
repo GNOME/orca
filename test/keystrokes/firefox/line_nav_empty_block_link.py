@@ -21,19 +21,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
-    ["KNOWN ISSUE: This is broken",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'line 2'",
+     "     VISIBLE:  'line 2', cursor=1",
+     "SPEECH OUTPUT: 'line 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Up",
-    ["KNOWN ISSUE: This is broken",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'line 1'",
+     "     VISIBLE:  'line 1', cursor=1",
+     "SPEECH OUTPUT: 'line 1'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()
