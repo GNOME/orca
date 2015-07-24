@@ -1405,8 +1405,9 @@ class Script(default.Script):
             return True
 
         obj, offset = self.utilities.getCaretContext()
-        if obj and event.source not in [obj, obj.parent]:
-            msg = "WEB: Ignoring event source is not context obj or its parent"
+        ancestor = self.utilities.commonAncestor(obj, event.source)
+        if ancestor and self.utilities.isTextBlockElement(ancestor):
+            msg = "WEB: Ignoring: Common ancestor of context and event source is text block"
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
