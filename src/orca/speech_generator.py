@@ -800,8 +800,8 @@ class SpeechGenerator(generator.Generator):
                 parentRole = obj.parent.getRole()
 
         if objRole == pyatspi.ROLE_TABLE_CELL \
-           and (parentRole == pyatspi.ROLE_TREE_TABLE \
-                or parentRole == pyatspi.ROLE_TABLE):
+           and parentRole in [pyatspi.ROLE_TREE_TABLE, pyatspi.ROLE_TABLE] \
+           and not self._script.utilities.isLayoutOnly(obj.parent):
             checkIfSelected = True
 
         # If we met the last set of conditions, but we got here by
