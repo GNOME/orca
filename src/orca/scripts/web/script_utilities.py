@@ -317,6 +317,12 @@ class Utilities(script_utilities.Utilities):
 
         return super().inFindToolbar(obj)
 
+    def isEmpty(self, obj):
+        if not self.isTextBlockElement(obj):
+            return False
+
+        return self.queryNonEmptyText(obj, False) is None
+
     def isHidden(self, obj):
         try:
             attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])

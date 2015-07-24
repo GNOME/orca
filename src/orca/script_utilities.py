@@ -608,6 +608,9 @@ class Utilities:
 
         return False
 
+    def isEmpty(self, obj):
+        return False
+
     def isHidden(self, obj):
         return False
 

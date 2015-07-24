@@ -363,7 +363,10 @@ class StructuralNavigationObject:
             script.presentMessage(messages.NAVIGATION_DIALOG_ERROR)
             return
 
-        objects = list(filter(lambda x: not script.utilities.isHidden(x), objects))
+        def _isValidMatch(x):
+            return not (script.utilities.isHidden(x) or script.utilities.isEmpty(x))
+
+        objects = list(filter(_isValidMatch, objects))
         if criteria.applyPredicate:
             objects = list(filter(self.predicate, objects))
 
@@ -429,7 +432,10 @@ class StructuralNavigationObject:
                 script.presentMessage(messages.NAVIGATION_DIALOG_ERROR)
                 return
 
-            objects = list(filter(lambda x: not script.utilities.isHidden(x), objects))
+            def _isValidMatch(x):
+                return not (script.utilities.isHidden(x) or script.utilities.isEmpty(x))
+
+            objects = list(filter(_isValidMatch, objects))
             if criteria.applyPredicate:
                 objects = list(filter(self.predicate, objects))
 
@@ -875,7 +881,7 @@ class StructuralNavigation:
             matches.reverse()
 
         def _isValidMatch(obj):
-            if self._script.utilities.isHidden(obj):
+            if self._script.utilities.isHidden(obj) or self._script.utilities.isEmpty(obj):
                 return False
             if not criteria.applyPredicate:
                 return True
