@@ -1046,9 +1046,12 @@ class Utilities(script_utilities.Utilities):
 
             text = self.queryNonEmptyText(nextObj)
             if text:
-                char = text.getText(nOffset, nOffset + 1)
-                if re.match("[^\w\s]", char):
-                    objects.append([nextObj, nOffset, nOffset + 1, char])
+                nEnd = nOffset
+                while re.match("[^\w\s]", text.getText(nEnd, nEnd + 1)):
+                    nEnd += 1
+
+                onRight = [[nextObj, nOffset, nEnd, text.getText(nOffset, nEnd)]]
+                objects.extend(list(filter(_include, onRight)))
 
             if useCache:
                 self._currentLineContents = objects

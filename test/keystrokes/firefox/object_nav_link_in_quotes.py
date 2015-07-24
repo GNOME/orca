@@ -15,19 +15,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
-    ["KNOWN ISSUE: We're combining and repeating lines incorrectly throughout this test",
-     "BRAILLE LINE:  'line 1 \"'",
-     "     VISIBLE:  'line 1 \"', cursor=1",
-     "SPEECH OUTPUT: 'line 1'",
-     "SPEECH OUTPUT: '\"'"]))
+    ["BRAILLE LINE:  'line 1'",
+     "     VISIBLE:  'line 1', cursor=1",
+     "SPEECH OUTPUT: 'line 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
-    ["BRAILLE LINE:  'line 2 \"'",
-     "     VISIBLE:  'line 2 \"', cursor=1",
-     "SPEECH OUTPUT: 'line 2 link'",
+    ["BRAILLE LINE:  '\"'",
+     "     VISIBLE:  '\"', cursor=1",
      "SPEECH OUTPUT: '\"'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -68,10 +65,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Up",
-    ["BRAILLE LINE:  'line 1 \"'",
-     "     VISIBLE:  'line 1 \"', cursor=1",
-     "SPEECH OUTPUT: 'line 1'",
-     "SPEECH OUTPUT: '\"'"]))
+    ["BRAILLE LINE:  'line 1'",
+     "     VISIBLE:  'line 1', cursor=1",
+     "SPEECH OUTPUT: 'line 1'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()
