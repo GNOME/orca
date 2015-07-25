@@ -129,15 +129,22 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "15. Line Up",
-    ["BRAILLE LINE:  'Baz.'",
-     "     VISIBLE:  'Baz.', cursor=1",
-     "SPEECH OUTPUT: 'Baz link'",
+    ["BRAILLE LINE:  '.'",
+     "     VISIBLE:  '.', cursor=1",
      "SPEECH OUTPUT: '.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "16. Line Up",
+    ["BRAILLE LINE:  'Baz'",
+     "     VISIBLE:  'Baz', cursor=1",
+     "SPEECH OUTPUT: 'Baz link'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "17. Line Up",
     ["BRAILLE LINE:  ', and'",
      "     VISIBLE:  ', and', cursor=1",
      "SPEECH OUTPUT: ', and'"]))
@@ -145,20 +152,26 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "17. Line Up",
-    ["BRAILLE LINE:  'Bar,'",
-     "     VISIBLE:  'Bar,', cursor=1",
-     "SPEECH OUTPUT: 'Bar link'",
+    "18. Line Up",
+    ["BRAILLE LINE:  'Bar'",
+     "     VISIBLE:  'Bar', cursor=1",
+     "SPEECH OUTPUT: 'Bar link'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "19. Line Up",
+    ["BRAILLE LINE:  ','",
+     "     VISIBLE:  ',', cursor=1",
      "SPEECH OUTPUT: ','"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "18. Line Up",
-    ["BRAILLE LINE:  'Foo,'",
-     "     VISIBLE:  'Foo,', cursor=1",
-     "SPEECH OUTPUT: 'Foo link'",
-     "SPEECH OUTPUT: ','"]))
+    "20. Line Up",
+    ["BRAILLE LINE:  'Foo'",
+     "     VISIBLE:  'Foo', cursor=1",
+     "SPEECH OUTPUT: 'Foo link'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -1029,6 +1029,10 @@ class Utilities(script_utilities.Utilities):
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
         objects = self._getContentsForObj(obj, offset, boundary)
+        if not layoutMode:
+            if useCache:
+                self._currentLineContents = objects
+            return objects
 
         firstObj, firstStart, firstEnd, firstString = objects[0]
         if extents[2] == 0 and extents[3] == 0:
@@ -1037,26 +1041,6 @@ class Utilities(script_utilities.Utilities):
         lastObj, lastStart, lastEnd, lastString = objects[-1]
         prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
         nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
-        if not layoutMode:
-            if firstString and not re.search("\w", firstString) \
-               and (re.match("[^\w\s]", firstString[0]) or not firstString.strip()):
-                onLeft = self._getContentsForObj(prevObj, pOffset, boundary)
-                onLeft = list(filter(_include, onLeft))
-                objects[0:0] = onLeft
-
-            text = self.queryNonEmptyText(nextObj)
-            if text:
-                nEnd = nOffset
-                while re.match("[^\w\s]", text.getText(nEnd, nEnd + 1)):
-                    nEnd += 1
-
-                onRight = [[nextObj, nOffset, nEnd, text.getText(nOffset, nEnd)]]
-                objects.extend(list(filter(_include, onRight)))
-
-            if useCache:
-                self._currentLineContents = objects
-
-            return objects
 
         # Check for things on the same line to the left of this object.
         while prevObj:
