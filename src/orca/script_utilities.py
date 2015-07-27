@@ -29,11 +29,13 @@ __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
 import functools
+import locale
 import math
 import pyatspi
 import re
 
 from . import chnames
+from . import colornames
 from . import debug
 from . import keynames
 from . import keybindings
@@ -46,6 +48,7 @@ from . import orca_state
 from . import object_properties
 from . import pronunciation_dict
 from . import settings
+from . import text_attribute_names
 
 #############################################################################
 #                                                                           #
@@ -1944,7 +1947,39 @@ class Utilities:
 
         return text.getText(startOffset, endOffset)
 
-    def textAttributes(self, acc, offset, get_defaults=False):
+    def getAppNameForAttribute(self, attribName):
+        """Converts the given Atk attribute name into the application's
+        equivalent. This is necessary because an application or toolkit
+        (e.g. Gecko) might invent entirely new names for the same text
+        attributes.
+
+        Arguments:
+        - attribName: The name of the text attribute
+
+        Returns the application's equivalent name if found or attribName
+        otherwise.
+        """
+
+        for key, value in list(self._script.attributeNamesDict.items()):
+            if value == attribName:
+                return key
+
+        return attribName
+
+    def getAtkNameForAttribute(self, attribName):
+        """Converts the given attribute name into the Atk equivalent. This
+        is necessary because an application or toolkit (e.g. Gecko) might
+        invent entirely new names for the same attributes.
+
+        Arguments:
+        - attribName: The name of the text attribute
+
+        Returns the Atk equivalent name if found or attribName otherwise.
+        """
+
+        return self._script.attributeNamesDict.get(attribName, attribName)
+
+    def textAttributes(self, acc, offset=None, get_defaults=False):
         """Get the text attributes run for a given offset in a given accessible
 
         Arguments:
@@ -1966,15 +2001,48 @@ class Utilities:
             return rv, 0, 0
 
         if get_defaults:
-            stringAndDict = \
-                self.stringToKeysAndDict(text.getDefaultAttributes())
+            stringAndDict = self.stringToKeysAndDict(text.getDefaultAttributes())
             rv.update(stringAndDict[1])
+
+        if offset is None:
+            offset = text.caretOffset
 
         attrString, start, end = text.getAttributes(offset)
         stringAndDict = self.stringToKeysAndDict(attrString)
         rv.update(stringAndDict[1])
 
+        start = min(start, offset)
+        end = max(end, offset + 1)
+
         return rv, start, end
+
+    def localizeTextAttribute(self, key, value):
+        if key == "weight" and (value == "bold" or int(value) > 400):
+            return messages.BOLD
+
+        if key.endswith("spelling") or value == "spelling":
+            return messages.MISSPELLED
+
+        localizedKey = text_attribute_names.getTextAttributeName(key, self._script)
+
+        if key == "family-name":
+            localizedValue = value.split(",")[0].strip().strip('"')
+        elif value and value.endswith("px"):
+            value = value.split("px")[0]
+            if locale.localeconv()["decimal_point"] in value:
+                localizedValue = messages.pixelCount(float(value))
+            else:
+                localizedValue = messages.pixelCount(int(value))
+        elif key.endswith("color"):
+            r, g, b = self.rgbFromString(value)
+            if settings.useColorNames:
+                localizedValue = colornames.rgbToName(r, g, b)
+            else:
+                localizedValue = "%i %i %i" % (r, g, b)
+        else:
+            localizedValue = text_attribute_names.getTextAttributeName(value, self._script)
+
+        return "%s: %s" % (localizedKey, localizedValue)
 
     def willEchoCharacter(self, event):
         """Given a keyboard event containing an alphanumeric key,

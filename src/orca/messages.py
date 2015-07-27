@@ -2333,6 +2333,11 @@ def percentRead(value):
                      "%d percent of document read",
                      value) % value
 
+def pixelCount(nPixels):
+    # Translators: this represents a text attribute expressed in pixels, such as
+    # a margin, indentation, font size, etc.
+    return ngettext("%d pixel", "%d pixels", nPixels) % nPixels
+
 def repeatedCharCount(repeatChar, count):
     # Translators: Orca will tell you how many characters are repeated on a line
     # of text. For example: "22 space characters". The %d is the number and the

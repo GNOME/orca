@@ -626,47 +626,6 @@ class Utilities(script_utilities.Utilities):
 
     #########################################################################
     #                                                                       #
-    # Utilities for working with the accessible text interface              #
-    #                                                                       #
-    #########################################################################
-
-    def textAttributes(self, acc, offset, get_defaults=False):
-        """Get the text attributes run for a given offset in a given accessible
-
-        Arguments:
-        - acc: An accessible.
-        - offset: Offset in the accessible's text for which to retrieve the
-        attributes.
-        - get_defaults: Get the default attributes as well as the unique ones.
-        Default is True
-
-        Returns a dictionary of attributes, a start offset where the attributes
-        begin, and an end offset. Returns ({}, 0, 0) if the accessible does not
-        supprt the text attribute.
-        """
-        rv, start, end = script_utilities.Utilities.\
-            textAttributes(self, acc, offset, get_defaults)
-
-        # If there are no text attributes associated with the text at a
-        # given offset, we might get some seriously bogus offsets, in
-        # particular, an extremely large start offset and an extremely
-        # large, but negative end offset. As a result, any text attributes
-        # which are present on the line after the specified offset will
-        # not be indicated by braille.py's getAttributeMask. Therefore,
-        # we'll set the start offset to the character being examined,
-        # and the end offset to the next character.
-        #
-        start = min(start, offset)
-        if end < 0:
-            debug.println(debug.LEVEL_WARNING,
-                "soffice.script.py:getTextAttributes: detected a bogus " +
-                "end offset. Start offset: %s, end offset: %s" % (start, end))
-            end = offset + 1
-
-        return rv, start, end
-
-    #########################################################################
-    #                                                                       #
     # Miscellaneous Utilities                                               #
     #                                                                       #
     #########################################################################

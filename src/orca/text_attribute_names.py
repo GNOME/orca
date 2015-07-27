@@ -773,6 +773,6 @@ def getTextAttributeName(textAttr, script=None):
     # Normalize the name to an Atk name before attempting to look it up.
     #
     if script:
-        textAttr = script.getAtkNameForAttribute(textAttr)
+        textAttr = script.utilities.getAtkNameForAttribute(textAttr)
 
     return _textAttributeTable.get(textAttr, textAttr)

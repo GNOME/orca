@@ -932,7 +932,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         otherwise.
         """
 
-        return self.script.getAppNameForAttribute(attributeName)
+        return self.script.utilities.getAppNameForAttribute(attributeName)
 
     def _updateTextDictEntry(self):
         """The user has updated the text attribute list in some way. Update

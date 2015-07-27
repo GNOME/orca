@@ -30,7 +30,6 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
-import locale
 import time
 
 from gi.repository import Gtk, Gdk
@@ -38,7 +37,6 @@ from gi.repository import Gtk, Gdk
 import pyatspi
 import orca.braille as braille
 import orca.chnames as chnames
-import orca.colornames as colornames
 import orca.cmdnames as cmdnames
 import orca.debug as debug
 import orca.eventsynthesizer as eventsynthesizer
@@ -58,11 +56,7 @@ import orca.settings_manager as settings_manager
 import orca.speech as speech
 import orca.speechserver as speechserver
 import orca.mouse_review as mouse_review
-import orca.text_attribute_names as text_attribute_names
 import orca.notification_messages as notification_messages
-
-from orca.orca_i18n import _
-from orca.orca_i18n import ngettext
 
 _settingsManager = settings_manager.getManager()
 
@@ -1274,72 +1268,25 @@ class Script(script.Script):
         only speak the subset required.
         """
 
-        try:
-            text = orca_state.locusOfFocus.queryText()
-        except:
-            pass
-        else:
-            caretOffset = text.caretOffset
+        attrs, start, end = self.utilities.textAttributes(orca_state.locusOfFocus, None, True)
 
-            # Creates dictionaries of the default attributes, plus the set
-            # of attributes specific to the character at the caret offset.
-            # Combine these two dictionaries and then extract just the
-            # entries we are interested in.
-            #
-            defAttributes = text.getDefaultAttributes()
-            debug.println(debug.LEVEL_FINEST, \
-                "readCharAttributes: default text attributes: %s" % \
-                defAttributes)
-            [defUser, defDict] = \
-                self.utilities.stringToKeysAndDict(defAttributes)
-            allAttributes = defDict
+        # Get a dictionary of text attributes that the user cares about.
+        [userAttrList, userAttrDict] = self.utilities.stringToKeysAndDict(
+            _settingsManager.getSetting('enabledSpokenTextAttributes'))
 
-            charAttributes = text.getAttributes(caretOffset)
-            if charAttributes[0]:
-                [charList, charDict] = \
-                    self.utilities.stringToKeysAndDict(charAttributes[0])
+        # Because some implementors make up their own attribute names,
+        # we need to convert.
+        userAttrList = list(map(self.utilities.getAppNameForAttribute, userAttrList))
+        nullValues = ['0', '0mm', 'none', 'false']
 
-                # It looks like some applications like Evolution and Star
-                # Office don't implement getDefaultAttributes(). In that
-                # case, the best we can do is use the specific text
-                # attributes for this character returned by getAttributes().
-                #
-                if allAttributes:
-                    for key in list(charDict.keys()):
-                        allAttributes[key] = charDict[key]
-                else:
-                    allAttributes = charDict
+        for key in userAttrList:
+            value = attrs.get(key)
+            ignoreIfValue = userAttrDict.get(key)
+            if value in nullValues and ignoreIfValue in nullValues:
+                continue
 
-            # Get a dictionary of text attributes that the user cares about.
-            #
-            [userAttrList, userAttrDict] = self.utilities.stringToKeysAndDict(
-                _settingsManager.getSetting('enabledSpokenTextAttributes'))
-
-            # Because some implementors make up their own attribute names,
-            # we need to convert.
-            userAttrList = list(map(self.getAppNameForAttribute, userAttrList))
-
-            # Create a dictionary of just the items we are interested in.
-            # Always include size and family-name. For the others, if the
-            # value is the default, then ignore it.
-            #
-            nullValues = ['0', '0mm', 'none', 'false']
-            attributes = {}
-            for key in userAttrList:
-                if key in allAttributes:
-                    textAttr = allAttributes.get(key)
-                    userAttr = userAttrDict.get(key)
-                    if textAttr in nullValues and userAttr in nullValues:
-                        continue
-
-                    if textAttr != userAttr or len(userAttr) == 0:
-                        attributes[key] = textAttr
-
-            self.outputCharAttributes(userAttrList, attributes)
-
-            if self.utilities.linkIndex(
-                orca_state.locusOfFocus, caretOffset) >= 0:
-                speech.speak(messages.LINK)
+            if value and value != ignoreIfValue:
+                self.speakMessage(self.utilities.localizeTextAttribute(key, value))
 
         return True
 
@@ -3359,78 +3306,6 @@ class Script(script.Script):
                         self.lastProgressBarTime[obj] = currentTime
                         self.lastProgressBarValue[obj] = percentValue
 
-    def outputCharAttributes(self, keys, attributes):
-        """Speak each of the text attributes given dictionary.
-
-        Arguments:
-        - attributes: a dictionary of text attributes to speak.
-        """
-
-        for key in keys:
-            localizedKey = text_attribute_names.getTextAttributeName(key, self)
-            if key in attributes:
-                line = ""
-                attribute = attributes[key]
-                localizedValue = \
-                    text_attribute_names.getTextAttributeName(attribute, self)
-                if attribute:
-                    key = self.getAtkNameForAttribute(key)
-                    # If it's the 'weight' attribute and greater than 400, just
-                    # speak it as bold, otherwise speak the weight.
-                    #
-                    if key == "weight" \
-                       and (attribute == "bold" or int(attribute) > 400):
-                        line = messages.BOLD
-                    elif key in ["left-margin", "right-margin"]:
-                        # We need to test if we are getting a margin value
-                        # that includes unit information (OOo now provides
-                        # this). If not, then we will assume it's pixels.
-                        #
-                        numericPoint = locale.localeconv()["decimal_point"]
-                        lastChar = attribute[len(attribute) - 1]
-                        if lastChar == numericPoint or \
-                           lastChar in self.digits:
-                            # Translators: these represent the number of pixels
-                            # for the left or right margins in a document.  We
-                            # are hesitant to interpret the values -- they are
-                            # given to us in some unknown form by the
-                            # application, so we leave things in plural form
-                            # here.
-                            #
-                            line = ngettext("%(key)s %(value)s pixel",
-                                            "%(key)s %(value)s pixels",
-                                            int(attribute)) \
-                                   % {"key" : localizedKey,
-                                      "value": localizedValue}
-                    elif key in ["indent", "size"]:
-                        # In Gecko, we seem to get these values as a number
-                        # immediately followed by "px". But we'll hedge our
-                        # bet.
-                        #
-                        value = attribute.split("px")
-                        if len(value) > 1:
-                            line = ngettext("%(key)s %(value)s pixel",
-                                            "%(key)s %(value)s pixels",
-                                            float(value[0])) \
-                                   % {"key" : localizedKey,
-                                      "value" : value[0]}
-                    elif key == "family-name":
-                        # In Gecko, we get a huge list and we just want the
-                        # first one.  See:
-                        # http://www.w3.org/TR/CSS2/fonts.html#font-family-prop
-                        #
-                        localizedValue = \
-                            attribute.split(",")[0].strip().strip('"')
-                    elif key.endswith("color"):
-                        r, g, b = self.utilities.rgbFromString(localizedValue)
-                        if _settingsManager.getSetting('useColorNames'):
-                            localizedValue = colornames.rgbToName(r, g, b)
-                        else:
-                            localizedValue = "%i %i %i" % (r, g, b)
-
-                    line = line or (localizedKey + " " + localizedValue)
-                    self.speakMessage(line)
-
     def presentToolTip(self, obj):
         """
         Speaks the tooltip for the current object of interest.
@@ -3665,38 +3540,6 @@ class Script(script.Script):
 
         return True
 
-    def getAtkNameForAttribute(self, attribName):
-        """Converts the given attribute name into the Atk equivalent. This
-        is necessary because an application or toolkit (e.g. Gecko) might
-        invent entirely new names for the same attributes.
-
-        Arguments:
-        - attribName: The name of the text attribute
-
-        Returns the Atk equivalent name if found or attribName otherwise.
-        """
-
-        return self.attributeNamesDict.get(attribName, attribName)
-
-    def getAppNameForAttribute(self, attribName):
-        """Converts the given Atk attribute name into the application's
-        equivalent. This is necessary because an application or toolkit
-        (e.g. Gecko) might invent entirely new names for the same text
-        attributes.
-
-        Arguments:
-        - attribName: The name of the text attribute
-
-        Returns the application's equivalent name if found or attribName
-        otherwise.
-        """
-
-        for key, value in list(self.attributeNamesDict.items()):
-            if value == attribName:
-                return key
-
-        return attribName
-
     def getFlatReviewContext(self):
         """Returns the flat review context, creating one if necessary."""
 
@@ -3790,7 +3633,6 @@ class Script(script.Script):
             context = self.getFlatReviewContext()
             location = query.findQuery(context, self.justEnteredFlatReviewMode)
             if not location:
-                message = _("string not found")
                 self.presentMessage(messages.STRING_NOT_FOUND)
             else:
                 context.setCurrent(location.lineIndex, location.zoneIndex, \
