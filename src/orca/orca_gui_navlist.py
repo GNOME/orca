@@ -41,6 +41,7 @@ class OrcaNavListGUI:
         self._gui = self._createNavListDialog(columnHeaders, rows, selectedRow)
         self._gui.set_title(title)
         self._gui.set_modal(True)
+        self._script = orca_state.activeScript
         self.showGUI()
 
     def _createNavListDialog(self, columnHeaders, rows, selectedRow):
@@ -90,7 +91,6 @@ class OrcaNavListGUI:
         btn.grab_default()
         btn.connect('clicked', self._onJumpToClicked)
 
-
         self._activateButton = dialog.add_button(
             guilabels.ACTIVATE, Gtk.ResponseType.OK)
         self._activateButton.connect('clicked', self._onActivateClicked)
@@ -131,23 +131,7 @@ class OrcaNavListGUI:
     def _onJumpToClicked(self, widget):
         obj = self._getSelectedAccessible()
         self._gui.destroy()
-        try:
-            obj.queryComponent().grabFocus()
-        except:
-            debug.println(debug.LEVEL_FINE, 'Could not grab focus on %s' % obj)
-        try:
-            text = obj.queryText()
-            text.setCaretOffset(0)
-        except NotImplementedError:
-            while obj.childCount:
-                obj = obj[0]
-                try:
-                    text = obj.queryText()
-                    text.setCaretOffset(0)
-                except NotImplementedError:
-                    pass
-                else:
-                    break
+        self._script.utilities.setCaretPosition(obj, 0)
 
     def _onActivateClicked(self, widget):
         obj = self._getSelectedAccessible()
