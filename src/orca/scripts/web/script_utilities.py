@@ -1834,6 +1834,37 @@ class Utilities(script_utilities.Utilities):
 
         return True
 
+    def isSpinnerEntry(self, obj):
+        if not self.inDocumentContent(obj):
+            return False
+
+        # TODO - JD: Ideally, things that look and act like spinners (such number inputs)
+        # would look and act like platform native spinners. That's not true for Gecko. And
+        # the only thing that's funkier is what we get from WebKitGtk. Try to at least get
+        # the two engines into alignment before migrating Epiphany support to the web script.
+        if obj.getState().contains(pyatspi.STATE_EDITABLE) \
+           and obj.parent.getRole() == pyatspi.ROLE_SPIN_BUTTON:
+            return True
+
+        return False
+
+    def eventIsSpinnerNoise(self, event):
+        if event.type.startswith("object:text-changed") and self.isSpinnerEntry(event.source):
+            lastKey, mods = self.lastKeyAndModifiers()
+            if lastKey in ["Down", "Up"]:
+                return True
+
+        return False
+
+    def treatEventAsSpinnerValueChange(self, event):
+        if event.type.startswith("object:text-caret-moved") and self.isSpinnerEntry(event.source):
+            lastKey, mods = self.lastKeyAndModifiers()
+            if lastKey in ["Down", "Up"]:
+                obj, offset = self.getCaretContext()
+                return event.source == obj
+
+        return False
+
     def eventIsStatusBarNoise(self, event):
         if self.inDocumentContent(event.source):
             return False

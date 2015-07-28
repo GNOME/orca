@@ -1169,6 +1169,13 @@ class Script(default.Script):
             self.utilities.setCaretContext(obj, offset)
             return True
 
+        if self.utilities.treatEventAsSpinnerValueChange(event):
+            msg = "WEB: Event handled as the value-change event we wish we'd get"
+            debug.println(debug.LEVEL_INFO, msg)
+            self.updateBraille(event.source)
+            self._presentTextAtNewCaretPosition(event)
+            return True
+
         if not _settingsManager.getSetting('caretNavigationEnabled') \
            or self._inFocusMode or isEditable:
             orca.setLocusOfFocus(event, event.source, False)
@@ -1441,6 +1448,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
+        if self.utilities.eventIsSpinnerNoise(event):
+            msg = "WEB: Ignoring: Event believed to be spinner noise"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
         if self.utilities.textEventIsDueToInsertion(event):
             msg = "WEB: Ignoring event believed to be due to text insertion"
             debug.println(debug.LEVEL_INFO, msg)
@@ -1479,6 +1491,11 @@ class Script(default.Script):
 
         if self.utilities.eventIsAutocompleteNoise(event):
             msg = "WEB: Ignoring: Event believed to be autocomplete noise"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        if self.utilities.eventIsSpinnerNoise(event):
+            msg = "WEB: Ignoring: Event believed to be spinner noise"
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
