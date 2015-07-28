@@ -28,7 +28,7 @@ msgstr "Obezbjeđuje pristup grafičkom okruženju preko sintetizovanog govora i
 
 #: ../orca.desktop.in.h:4
 msgid "screen reader;speech;braille;"
-msgstr "čitač ekrana;govor;brailleovo pismo"
+msgstr "čitač ekrana;govor;brailleovo pismo;"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.

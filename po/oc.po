@@ -40,7 +40,7 @@ msgstr ""
 msgid "screen reader;speech;braille;"
 msgstr ""
 "lector d'ecran;oral;braille;votz;sintèsi vocala;sintesi vocala;lector "
-"ecran;tts"
+"ecran;tts;"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
