@@ -1006,6 +1006,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
+        if event.detail1 and self._loadingDocumentContent:
+            msg = "WEB: Ignoring: Already loading document content"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
         self._loadingDocumentContent = event.detail1
 
         obj, offset = self.utilities.getCaretContext()
