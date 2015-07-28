@@ -383,7 +383,7 @@ class StructuralNavigationObject:
         except:
             index = 0
 
-        rows = [[obj] + rowData(obj) for obj in objects]
+        rows = [[obj, -1] + rowData(obj) for obj in objects]
         orca_gui_navlist.showUI(title, columnHeaders, rows, index)
 
     def goPreviousAtLevelFactory(self, level):
@@ -452,7 +452,7 @@ class StructuralNavigationObject:
             except:
                 index = 0
 
-            rows = [[obj] + rowData(obj) for obj in objects]
+            rows = [[obj, -1] + rowData(obj) for obj in objects]
             orca_gui_navlist.showUI(title, columnHeaders, rows, index)
 
         return showListAtLevel

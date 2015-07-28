@@ -60,7 +60,7 @@ class OrcaNavListGUI:
         self._tree.set_vexpand(True)
         scrolledWindow.add(self._tree)
 
-        cols = [GObject.TYPE_OBJECT]
+        cols = [GObject.TYPE_OBJECT, GObject.TYPE_INT]
         cols.extend(len(columnHeaders) * [GObject.TYPE_STRING])
         model = Gtk.ListStore(*cols)
 
@@ -69,10 +69,15 @@ class OrcaNavListGUI:
         column.set_visible(False)
         self._tree.append_column(column)
 
+        cell = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn("offset", cell, text=1)
+        column.set_visible(False)
+        self._tree.append_column(column)
+
         for i, header in enumerate(columnHeaders):
             cell = Gtk.CellRendererText()
-            column = Gtk.TreeViewColumn(header, cell, text=i+1)
-            column.set_sort_column_id(i+1)
+            column = Gtk.TreeViewColumn(header, cell, text=i+2)
+            column.set_sort_column_id(i+2)
             self._tree.append_column(column)
 
         for row in rows:
@@ -108,7 +113,7 @@ class OrcaNavListGUI:
         self._gui.present_with_time(ts)
 
     def _onCursorChanged(self, widget):
-        obj = self._getSelectedAccessible()
+        obj, offset = self._getSelectedAccessibleAndOffset()
         try:
             action = obj.queryAction()
         except:
@@ -129,12 +134,12 @@ class OrcaNavListGUI:
         self._gui.destroy()
 
     def _onJumpToClicked(self, widget):
-        obj = self._getSelectedAccessible()
+        obj, offset = self._getSelectedAccessibleAndOffset()
         self._gui.destroy()
-        self._script.utilities.setCaretPosition(obj, 0)
+        self._script.utilities.setCaretPosition(obj, offset)
 
     def _onActivateClicked(self, widget):
-        obj = self._getSelectedAccessible()
+        obj, offset = self._getSelectedAccessibleAndOffset()
         self._gui.destroy()
         try:
             action = obj.queryAction()
@@ -144,7 +149,7 @@ class OrcaNavListGUI:
         else:
             action.doAction(0)
 
-    def _getSelectedAccessible(self):
+    def _getSelectedAccessibleAndOffset(self):
         if not self._tree:
             return None
 
@@ -156,7 +161,9 @@ class OrcaNavListGUI:
         if not paths:
             return None
 
-        return model.get_value(model.get_iter(paths[0]), 0)
+        obj = model.get_value(model.get_iter(paths[0]), 0)
+        offset = model.get_value(model.get_iter(paths[0]), 1)
+        return obj, max(0, offset)
 
 def showUI(title='', columnHeaders=[], rows=[()], selectedRow=0):
     gui = OrcaNavListGUI(title, columnHeaders, rows, selectedRow)
