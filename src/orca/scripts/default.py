@@ -2422,7 +2422,8 @@ class Script(script.Script):
         role = obj.getRole()
         if role == pyatspi.ROLE_NOTIFICATION:
             speech.speak(self.speechGenerator.generateSpeech(obj))
-            labels = self.utilities.unrelatedLabels(obj)
+            visibleOnly = not self.utilities.isStatusBarNotification(obj)
+            labels = self.utilities.unrelatedLabels(obj, visibleOnly)
             msg = ''.join(map(self.utilities.displayedText, labels))
             self.displayBrailleMessage(msg, flashTime=settings.brailleFlashTime)
             notification_messages.saveMessage(msg)

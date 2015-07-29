@@ -396,7 +396,8 @@ class SpeechGenerator(generator.Generator):
         """
         result = []
         acss = self.voice(DEFAULT)
-        labels = self._script.utilities.unrelatedLabels(obj)
+        visibleOnly = not self._script.utilities.isStatusBarNotification(obj)
+        labels = self._script.utilities.unrelatedLabels(obj, visibleOnly)
         for label in labels:
             name = self._generateName(label, **args)
             result.extend(name)
