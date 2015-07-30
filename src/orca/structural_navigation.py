@@ -1570,12 +1570,17 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        isMatch = False
         if obj and obj.getRole() in self.OBJECT_ROLES:
             text = self._script.utilities.queryNonEmptyText(obj)
-            isMatch = text and text.characterCount > settings.largeObjectTextLength
+            if not (text and text.characterCount > settings.largeObjectTextLength):
+                return False
 
-        return isMatch
+            string = text.getText(0, -1)
+            eocs = string.count(self._script.EMBEDDED_OBJECT_CHARACTER)
+            if eocs/text.characterCount < 0.05:
+                return True
+
+        return False
 
     def _chunkPresentation(self, obj, arg=None):
         """Presents the chunk or indicates that one was not found.
