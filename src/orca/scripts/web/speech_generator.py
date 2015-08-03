@@ -61,6 +61,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                                pyatspi.ROLE_EMBEDDED,
                                pyatspi.ROLE_INTERNAL_FRAME,
                                pyatspi.ROLE_FORM,
+                               pyatspi.ROLE_MATH,
                                pyatspi.ROLE_MENU_BAR,
                                pyatspi.ROLE_TOOL_BAR]
         args['skipRoles'] = [pyatspi.ROLE_PARAGRAPH,
