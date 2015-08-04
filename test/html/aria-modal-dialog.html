@@ -1,0 +1,83 @@
+<html>
+<head>
+<style>
+.box-hidden {
+	display: none;
+	position: absolute;
+	top: 19em; left:15em; width:20em; height:5em;
+	border: 2px solid black;
+	padding:0 1em 1em 1em;
+	background-color: #eee;
+	z-index:1002;
+	overflow: auto;
+	}		
+</style>
+
+<script>
+var dialogOpen = false, lastFocus, dialog, okbutton, pagebackground;
+
+function showDialog(el) {
+	lastFocus = el || document.activeElement;
+	toggleDialog('show');
+}
+function hideDialog(el) {
+	toggleDialog('hide');
+}
+
+function toggleDialog(sh) {
+	dialog = document.getElementById("box");
+	okbutton = document.getElementById("ok");
+	pagebackground = document.getElementById("bg");
+
+	if (sh == "show") {
+		dialogOpen = true;
+
+		// show the dialog 
+		dialog.style.display = 'block';
+		
+		// after displaying the dialog, focus an element inside it
+		okbutton.focus();
+		
+		// only hide the background *after* you've moved focus out of the content that will be "hidden"
+		pagebackground.setAttribute("aria-hidden","true");
+		
+	} else {
+		dialogOpen = false;
+		dialog.style.display = 'none';
+		pagebackground.setAttribute("aria-hidden","false");
+		lastFocus.focus(); 
+	}
+}
+
+
+document.addEventListener("focus", function(event) {
+
+    var d = document.getElementById("box");
+
+    if (dialogOpen && !d.contains(event.target)) {
+        event.stopPropagation();
+        d.focus();
+    }
+
+}, true);
+
+
+document.addEventListener("keydown", function(event) {
+    if (dialogOpen && event.keyCode == 27) {
+        toggleDialog('hide');
+    }
+}, true);
+</script>
+</head>
+<body>
+<p>This was taken from <a href="http://www.w3.org/WAI/GL/wiki/Using_ARIA_role%3Ddialog_to_implement_a_modal_dialog_box">The WCAG Wiki</a>.</p>
+<p><a onclick="toggleDialog('show');" href="#">Display a dialog</a></p>
+
+<div tabindex="-1" style="display: none;" role="dialog" aria-labelledby="myDialog" id="box" class="box-hidden">
+	<h3 id="myDialog">Just an example.</h3>
+	<button onclick="toggleDialog('hide');" class="close-button">OK</button>
+	<button onclick="toggleDialog('hide');" class="close-button">Cancel</button>		
+</div>
+<p>Another <a href="foo">link</a></p>
+</body>
+</html>
