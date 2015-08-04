@@ -2256,7 +2256,8 @@ class SpeechGenerator(generator.Generator):
         return args.get('role', obj.getRole())
 
     def _generatePause(self, obj, **args):
-        if args.get('eliminatePauses', False):
+        if not _settingsManager.getSetting('enablePauseBreaks') \
+           or args.get('eliminatePauses', False):
             return []
         return PAUSE
 

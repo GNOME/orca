@@ -51,10 +51,10 @@ formatting = {
             'basicWhereAmI': 'roleName + name + positionInList + expandableState + (nodeLevel or nestingLevel)'
             },
         pyatspi.ROLE_TABLE_CELL: {
-            'focused': 'endOfTableIndicator + tableCellRow',
-            'unfocused': 'endOfTableIndicator + tableCellRow',
-            'basicWhereAmI': 'parentRoleName + columnHeader + rowHeader + roleName + cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + columnAndRow + expandableState + nodeLevel',
-            'detailedWhereAmI': 'parentRoleName + columnHeader + rowHeader + roleName + cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + columnAndRow + tableCellRow + expandableState + nodeLevel'
+            'focused': 'endOfTableIndicator + pause + tableCellRow + pause',
+            'unfocused': 'endOfTableIndicator + pause + tableCellRow + pause',
+            'basicWhereAmI': 'parentRoleName + pause + columnHeader + pause + rowHeader + pause + roleName + pause + cellCheckedState + pause + (realActiveDescendantDisplayedText or imageDescription + image) + pause + columnAndRow + pause + expandableState + pause + nodeLevel + pause',
+            'detailedWhereAmI': 'parentRoleName + pause + columnHeader + pause + rowHeader + pause + roleName + pause + cellCheckedState + pause + (realActiveDescendantDisplayedText or imageDescription + image) + pause + columnAndRow + pause + tableCellRow + pause + expandableState + pause + nodeLevel + pause'
             },
         'REAL_ROLE_TABLE_CELL': {
             'focused': 'newRowHeader + newColumnHeader + realActiveDescendantDisplayedText',
@@ -64,7 +64,7 @@ formatting = {
             # We treat spreadsheet cells differently from other table cells in
             # whereAmI.
             #
-            'basicWhereAmI': 'roleName + column + columnHeader + row + rowHeader + (textContent or realTableCell) + anyTextSelection'
+            'basicWhereAmI': 'roleName + pause + column + pause + columnHeader + pause + row + pause + rowHeader + pause + (textContent or realTableCell) + pause + anyTextSelection + pause'
             },
     },
     'braille': {
@@ -79,18 +79,6 @@ formatting = {
         }
     }
 }
-
-if orca.settings.useExperimentalSpeechProsody:
-    formatting['speech']['ROLE_SPREADSHEET_CELL']['basicWhereAmI'] = \
-        'roleName + pause + column + pause + columnHeader + pause + row + pause + rowHeader + pause + (textContent or realTableCell) + pause + anyTextSelection + pause'
-    formatting['speech'][pyatspi.ROLE_TABLE_CELL]['focused'] = \
-        'endOfTableIndicator + pause + tableCellRow + pause'
-    formatting['speech'][pyatspi.ROLE_TABLE_CELL]['unfocused'] = \
-        'endOfTableIndicator + pause + tableCellRow + pause'
-    formatting['speech'][pyatspi.ROLE_TABLE_CELL]['basicWhereAmI'] = \
-        'parentRoleName + pause + columnHeader + pause + rowHeader + pause + roleName + pause + cellCheckedState + pause + (realActiveDescendantDisplayedText or imageDescription + image) + pause + columnAndRow + pause + expandableState + pause + nodeLevel + pause'
-    formatting['speech'][pyatspi.ROLE_TABLE_CELL]['detailedWhereAmI'] = \
-        'parentRoleName + pause + columnHeader + pause + rowHeader + pause + roleName + pause + cellCheckedState + pause + (realActiveDescendantDisplayedText or imageDescription + image) + pause + columnAndRow + pause + tableCellRow + pause + expandableState + pause + nodeLevel + pause'
 
 class Formatting(orca.formatting.Formatting):
     def __init__(self, script):

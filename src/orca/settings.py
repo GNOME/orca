@@ -209,7 +209,6 @@ capitalizationStyle          = CAPITALIZATION_STYLE_NONE
 verbalizePunctuationStyle    = PUNCTUATION_STYLE_MOST
 speechVerbosityLevel         = VERBOSITY_LEVEL_VERBOSE
 messageVerbosityLevel        = VERBOSITY_LEVEL_VERBOSE
-useExperimentalSpeechProsody = True
 enablePauseBreaks            = True
 
 # Braille

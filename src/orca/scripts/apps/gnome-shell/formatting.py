@@ -33,8 +33,8 @@ formatting = {
     'speech': {
         pyatspi.ROLE_MENU_ITEM: {
             'focused': 'expandableState',
-            'unfocused': 'labelAndName + unrelatedLabels + menuItemCheckedState + expandableState + availability + ' + orca.formatting.MNEMONIC + ' + accelerator + positionInList',
-            'basicWhereAmI': 'ancestors + labelAndName + unrelatedLabels + accelerator + positionInList + ' + orca.formatting.MNEMONIC
+            'unfocused': 'labelAndName + pause + unrelatedLabels + pause + menuItemCheckedState + expandableState + availability + ' + orca.formatting.MNEMONIC + ' + accelerator + pause + positionInList',
+            'basicWhereAmI': 'ancestors + pause + labelAndName + pause + unrelatedLabels + pause + accelerator + pause + positionInList + ' + orca.formatting.MNEMONIC
             },
     },
     'braille': {
@@ -45,11 +45,6 @@ formatting = {
             },
     }
 }
-
-if orca.settings.useExperimentalSpeechProsody:
-    formatting['speech'][pyatspi.ROLE_MENU_ITEM]['unfocused'] = 'labelAndName + pause + unrelatedLabels + pause + menuItemCheckedState + expandableState + availability + ' + orca.formatting.MNEMONIC + ' + accelerator + pause + positionInList'
-    formatting['speech'][pyatspi.ROLE_MENU_ITEM]['basicWhereAmI'] = \
-        'ancestors + pause + labelAndName + pause + unrelatedLabels + pause + accelerator + pause + positionInList + ' + orca.formatting.MNEMONIC
 
 class Formatting(orca.formatting.Formatting):
     def __init__(self, script):

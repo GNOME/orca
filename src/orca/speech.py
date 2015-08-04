@@ -200,8 +200,6 @@ def speak(content, acss=None, interrupt=True):
             if isinstance(element, speech_generator.Pause):
                 if not toSpeak[-1].endswith('.'):
                     toSpeak[-1] += '.'
-                if not settings.enablePauseBreaks:
-                    continue
             elif isinstance(element, ACSS):
                 newVoice.update(element)
                 if newVoice == activeVoice:
