@@ -299,8 +299,8 @@ class Utilities(script_utilities.Utilities):
 
         return rowHeader, colHeader
 
-    def isSameObject(self, obj1, obj2):
-        same = script_utilities.Utilities.isSameObject(self, obj1, obj2)
+    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False):
+        same = super().isSameObject(obj1, obj2, comparePaths, ignoreNames)
         if not same or obj1 == obj2:
             return same
 

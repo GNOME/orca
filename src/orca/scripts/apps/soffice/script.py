@@ -829,6 +829,9 @@ class Script(default.Script):
         # This callback remains just to handle bugs in applications and toolkits
         # during the remainder of the unstable (3.11) development cycle.
 
+        if self.utilities.isSameObject(orca_state.locusOfFocus, event.source):
+            return
+
         role = event.source.getRole()
 
         # This seems to be something we inherit from Gtk+
@@ -883,16 +886,16 @@ class Script(default.Script):
         if role == pyatspi.ROLE_MENU:
             return
 
-        obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
-        textSelections = self.pointOfReference.get('textSelections', {})
-        start, end = textSelections.get(hash(obj), (0, 0))
-        if start != end:
-            return
-
         if self.utilities._flowsFromOrToSelection(event.source):
             return
 
         if role == pyatspi.ROLE_PARAGRAPH:
+            obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
+            textSelections = self.pointOfReference.get('textSelections', {})
+            start, end = textSelections.get(hash(obj), (0, 0))
+            if start != end:
+                return
+
             keyString, mods = self.utilities.lastKeyAndModifiers()
             if keyString in ["Left", "Right"]:
                 orca.setLocusOfFocus(event, event.source, False)

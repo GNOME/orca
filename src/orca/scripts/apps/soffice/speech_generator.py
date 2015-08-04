@@ -77,6 +77,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generateTextRole(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_TEXT and obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
+            return []
+
         if role != pyatspi.ROLE_PARAGRAPH \
            or self.__overrideParagraph(obj, **args):
             result.extend(self._generateRoleName(obj, **args))
@@ -109,6 +112,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if nothing can be found.
         """
         role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_TEXT and obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
+            return []
+
         if role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_TOGGLE_BUTTON] \
            and self._script.utilities.ancestorWithRole(
                 obj, [pyatspi.ROLE_TOOL_BAR], [pyatspi.ROLE_FRAME]):
@@ -123,6 +129,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateLabelOrName(self, obj, **args):
         """Gets the label or the name if the label is not preset."""
+
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_TEXT and obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
+            return []
+
         result = []
         acss = self.voice(speech_generator.DEFAULT)
         override = self.__overrideParagraph(obj, **args)

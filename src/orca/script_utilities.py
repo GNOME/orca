@@ -2872,6 +2872,8 @@ class Utilities:
             return True
 
         topLevelRoles = [pyatspi.ROLE_APPLICATION,
+                         pyatspi.ROLE_ALERT,
+                         pyatspi.ROLE_DIALOG,
                          pyatspi.ROLE_WINDOW,
                          pyatspi.ROLE_FRAME]
         if obj.getIndexInParent() == -1 and role not in topLevelRoles:
