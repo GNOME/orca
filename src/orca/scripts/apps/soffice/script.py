@@ -903,7 +903,8 @@ class Script(default.Script):
 
         # We should present this in response to active-descendant-changed events
         if event.source.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS):
-            return
+            if role != pyatspi.ROLE_LIST:
+                return
 
         default.Script.onFocusedChanged(self, event)
 
