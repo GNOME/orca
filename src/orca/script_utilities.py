@@ -2909,6 +2909,18 @@ class Utilities:
         debug.println(debug.LEVEL_INFO, msg)
         return replicant
 
+    def getFunctionalChildCount(self, obj):
+        if not obj:
+            return None
+
+        result = []
+        pred = lambda r: r.getRelationType() == pyatspi.RELATION_NODE_PARENT_OF
+        relations = list(filter(pred, obj.getRelationSet()))
+        if relations:
+            return relations[0].getNTargets()
+
+        return obj.childCount
+
     def getFunctionalChildren(self, obj):
         if not obj:
             return None
@@ -2945,9 +2957,12 @@ class Utilities:
                 obj = selected[0]
 
         parent = self.getFunctionalParent(obj)
+        childCount = self.getFunctionalChildCount(parent)
+        if childCount > 100 and parent == obj.parent:
+            return obj.getIndexInParent(), childCount
+
         siblings = self.getFunctionalChildren(parent)
-        if not (isComboBox or pyatspi.utils.findAncestor(obj, isComboBox)) \
-           and len(siblings) < 100:
+        if len(siblings) < 100 and not pyatspi.utils.findAncestor(obj, isComboBox):
             layoutRoles = [pyatspi.ROLE_SEPARATOR, pyatspi.ROLE_TEAROFF_MENU_ITEM]
             isNotLayoutOnly = lambda x: not (self.isZombie(x) or x.getRole() in layoutRoles)
             siblings = list(filter(isNotLayoutOnly, siblings))
