@@ -786,41 +786,31 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
-        result = []
-        acss = self.voice(STATE)
-        # If this is an icon within an layered pane or a table cell
-        # within a table or a tree table and the item is focused but not
-        # selected, let the user know. See bug #486908 for more details.
-        #
-        checkIfSelected = False
-        objRole, parentRole, state = None, None, None
-        if obj:
-            objRole = obj.getRole()
-            state = obj.getState()
-            if obj.parent:
-                parentRole = obj.parent.getRole()
+        if not obj:
+            return []
 
-        if objRole == pyatspi.ROLE_TABLE_CELL \
-           and parentRole in [pyatspi.ROLE_TREE_TABLE, pyatspi.ROLE_TABLE] \
-           and not self._script.utilities.isLayoutOnly(obj.parent):
-            checkIfSelected = True
+        if not (obj.parent and 'Selection' in pyatspi.listInterfaces(obj.parent)):
+            return []
 
-        # If we met the last set of conditions, but we got here by
-        # moving left or right on the same row, then don't announce the
-        # selection state to the user. See bug #523235 for more details.
-        #
-        lastKey, mods = self._script.utilities.lastKeyAndModifiers()
-        if checkIfSelected and lastKey in ["Left", "Right"]:
-            checkIfSelected = False
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_SELECTED):
+            return []
 
-        if objRole == pyatspi.ROLE_ICON \
-           and parentRole == pyatspi.ROLE_LAYERED_PANE:
-            checkIfSelected = True
+        parentRole = obj.parent.getRole()
+        if parentRole in [pyatspi.ROLE_TREE_TABLE, pyatspi.ROLE_TABLE]:
+            lastKey, mods = self._script.utilities.lastKeyAndModifiers()
+            if lastKey in ["Left", "Right"]:
+                return []
+            if self._script.utilities.isLayoutOnly(obj.parent):
+                return []
+        elif parentRole == pyatspi.ROLE_LAYERED_PANE:
+            if obj in self._script.utilities.selectedChildren(obj.parent):
+                return []
+        else:
+            return []
 
-        if checkIfSelected \
-           and state and not state.contains(pyatspi.STATE_SELECTED):
-            result.append(object_properties.STATE_UNSELECTED_TABLE_CELL)
-            result.extend(acss)
+        result = [object_properties.STATE_UNSELECTED_TABLE_CELL]
+        result.extend(self.voice(STATE))
 
         return result
 
