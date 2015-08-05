@@ -98,7 +98,7 @@ formatting = {
             'focused': '[]',
             'unfocused': 'newNodeLevel + unselectedCell + clickable + hasLongDesc + ' + TUTORIAL + ' + description',
             'basicWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description',
-            'detailedWhereAmI' : '[]'
+            'detailedWhereAmI': TUTORIAL + ' + clickable + hasLongDesc + description'
             },
         'default': {
             'focused': '[]',
@@ -156,7 +156,7 @@ formatting = {
         pyatspi.ROLE_DOCUMENT_FRAME: {
             'unfocused': 'label + readOnly + textRole + currentLineText + anyTextSelection + ' + MNEMONIC,
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
-            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
+            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
             },
         pyatspi.ROLE_EMBEDDED: {
             'focused': 'labelOrName + roleName',
@@ -166,7 +166,7 @@ formatting = {
             'focused': 'labelOrName + readOnly + textRole + (currentLineText or placeholderText) + allTextSelection',
             'unfocused': 'labelOrName + readOnly + textRole + (currentLineText or placeholderText) + allTextSelection + ' + MNEMONIC,
             'basicWhereAmI': 'labelOrName + readOnly + textRole + (textContent or placeholderText) + anyTextSelection + ' + MNEMONIC,
-            'detailedWhereAmI': 'labelOrName + readOnly + textRole + (textContentWithAttributes or placeholderText) + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
+            'detailedWhereAmI': 'labelOrName + readOnly + textRole + (textContentWithAttributes or placeholderText) + anyTextSelection + ' + MNEMONIC,
             },
         pyatspi.ROLE_FOOTER: {
             'unfocused': '(displayedText or name) + roleName',
@@ -186,7 +186,7 @@ formatting = {
             'focused': 'displayedText + roleName + expandableState',
             'unfocused': 'displayedText + roleName + expandableState',
             'basicWhereAmI': 'label + readOnly + textRole + pause + textContent + anyTextSelection + ' + MNEMONIC,
-            'detailedWhereAmI': 'label + readOnly + textRole + pause + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
+            'detailedWhereAmI': 'label + readOnly + textRole + pause + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
             },
         pyatspi.ROLE_ICON: {
             'focused': 'labelAndName + imageDescription + roleName + pause + positionInList',
@@ -300,13 +300,13 @@ formatting = {
             'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
             'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection + ' + MNEMONIC,
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
-            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
+            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
             },
         pyatspi.ROLE_PASSWORD_TEXT: {
             'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
             'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection + ' + MNEMONIC,
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
-            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
+            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
             },
         pyatspi.ROLE_PROGRESS_BAR: {
             'focused': 'percentage',
@@ -404,13 +404,13 @@ formatting = {
             'focused': 'terminal',
             'unfocused': 'terminal',
             'basicWhereAmI': 'label + readOnly + pause + textRole + pause + textContent + anyTextSelection + ' + MNEMONIC,
-            'detailedWhereAmI': 'label + readOnly + pause + textRole + pause + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
+            'detailedWhereAmI': 'label + readOnly + pause + textRole + pause + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
             },
         pyatspi.ROLE_TEXT: {
             'focused': 'labelOrName + readOnly + textRole + pause + textIndentation + (currentLineText or placeholderText) + allTextSelection',
             'unfocused': 'labelOrName + readOnly + textRole + pause + textIndentation + (currentLineText or placeholderText) + allTextSelection + ' + MNEMONIC,
             'basicWhereAmI': 'labelOrName + readOnly + textRole + pause + (textContent or placeholderText) + anyTextSelection + pause + ' + MNEMONIC,
-            'detailedWhereAmI': 'labelOrName + readOnly + textRole + pause + (textContentWithAttributes or placeholderText) + anyTextSelection + pause + ' + MNEMONIC + ' + ' + TUTORIAL
+            'detailedWhereAmI': 'labelOrName + readOnly + textRole + pause + (textContentWithAttributes or placeholderText) + anyTextSelection + pause + ' + MNEMONIC
             },
         pyatspi.ROLE_TOGGLE_BUTTON: {
             'focused': 'expandableState or toggleState',
