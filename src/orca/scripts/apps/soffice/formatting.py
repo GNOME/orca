@@ -36,15 +36,6 @@ import orca.settings
 
 formatting = {
     'speech': {
-        # Get rid of unselectedCell because we don't run into that in OOo
-        # and we'd end up always speaking "not selected" for all table cells.
-        #
-        'suffix': {
-            'focused': '[]',
-            'unfocused': 'newNodeLevel + ' + orca.formatting.TUTORIAL,
-            'basicWhereAmI': orca.formatting.TUTORIAL + ' + description',
-            'detailedWhereAmI' : '[]'
-            },
         pyatspi.ROLE_LABEL: {
             'focused': 'expandableState + availability',
             'unfocused': 'name + allTextSelection + expandableState + availability + positionInList',
