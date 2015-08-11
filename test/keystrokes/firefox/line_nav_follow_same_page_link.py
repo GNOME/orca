@@ -23,7 +23,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'First item', cursor=1",
      "BRAILLE LINE:  'First item'",
      "     VISIBLE:  'First item', cursor=1",
-     "SPEECH OUTPUT: 'First item link'"]))
+     "SPEECH OUTPUT: 'First item link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -33,7 +33,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Second item', cursor=1",
      "BRAILLE LINE:  'Second item'",
      "     VISIBLE:  'Second item', cursor=1",
-     "SPEECH OUTPUT: 'Second item link'"]))
+     "SPEECH OUTPUT: 'Second item link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))

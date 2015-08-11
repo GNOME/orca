@@ -15,7 +15,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'Hello world, this is a test.'",
      "     VISIBLE:  'Hello world, this is a test.', cursor=1",
-     "SPEECH OUTPUT: 'Hello world link'",
+     "SPEECH OUTPUT: 'Hello world link.'",
      "SPEECH OUTPUT: ', this is a test.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -24,7 +24,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Down to the Foo link",
     ["BRAILLE LINE:  'Foo'",
      "     VISIBLE:  'Foo', cursor=1",
-     "SPEECH OUTPUT: 'Foo link'"]))
+     "SPEECH OUTPUT: 'Foo link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -34,7 +34,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Bar', cursor=1",
      "BRAILLE LINE:  'Bar'",
      "     VISIBLE:  'Bar', cursor=1",
-     "SPEECH OUTPUT: 'Bar link'"]))
+     "SPEECH OUTPUT: 'Bar link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
@@ -44,7 +44,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Foo', cursor=1",
      "BRAILLE LINE:  'Foo'",
      "     VISIBLE:  'Foo', cursor=1",
-     "SPEECH OUTPUT: 'Foo link'"]))
+     "SPEECH OUTPUT: 'Foo link.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -28,7 +28,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  '1'",
      "     VISIBLE:  '1', cursor=0",
      "SPEECH OUTPUT: 'table with 2 rows 3 columns' voice=system",
-     "SPEECH OUTPUT: '1'"]))
+     "SPEECH OUTPUT: '1.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("t"))
@@ -56,7 +56,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '1', cursor=0",
      "SPEECH OUTPUT: 'Wrapping to bottom.' voice=system",
      "SPEECH OUTPUT: 'table with 2 rows 3 columns' voice=system",
-     "SPEECH OUTPUT: '1'"]))
+     "SPEECH OUTPUT: '1.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>t"))
@@ -81,7 +81,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '1', cursor=0",
      "SPEECH OUTPUT: 'Wrapping to bottom.'",
      "SPEECH OUTPUT: 'table with 2 rows 3 columns'",
-     "SPEECH OUTPUT: '1'"]))
+     "SPEECH OUTPUT: '1.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

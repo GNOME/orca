@@ -17,7 +17,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Right Arrow to Page Setup",
     ["BRAILLE LINE:  'Firefox application Print dialog Page Setup page tab'",
      "     VISIBLE:  'Page Setup page tab', cursor=1",
-     "SPEECH OUTPUT: 'Page Setup page tab'"]))
+     "SPEECH OUTPUT: 'Page Setup page tab.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -25,7 +25,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Right Arrow to Options",
     ["BRAILLE LINE:  'Firefox application Print dialog Options page tab'",
      "     VISIBLE:  'Options page tab', cursor=1",
-     "SPEECH OUTPUT: 'Options page tab'"]))
+     "SPEECH OUTPUT: 'Options page tab.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

@@ -17,8 +17,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Edit menu', cursor=1",
      "BRAILLE LINE:  'Firefox application Mozilla Firefox frame Menu Bar tool bar Application menu bar Undo grayed(Ctrl+Z)'",
      "     VISIBLE:  'Undo grayed(Ctrl+Z)', cursor=1",
-     "SPEECH OUTPUT: 'Edit menu'",
-     "SPEECH OUTPUT: 'Undo grayed Ctrl+Z'"]))
+     "SPEECH OUTPUT: 'Edit menu.'",
+     "SPEECH OUTPUT: 'Undo grayed Ctrl+Z.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -27,7 +27,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Firefox application Mozilla Firefox frame Menu Bar tool bar Application menu bar New Tab(Ctrl+T)'",
      "     VISIBLE:  'New Tab(Ctrl+T)', cursor=1",
      "SPEECH OUTPUT: 'File menu'",
-     "SPEECH OUTPUT: 'New Tab Ctrl+T'"]))
+     "SPEECH OUTPUT: 'New Tab Ctrl+T.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -37,7 +37,10 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'New Tab(Ctrl+T)', cursor=1",
      "SPEECH OUTPUT: 'Mozilla Firefox frame'",
      "SPEECH OUTPUT: 'File menu'",
-     "SPEECH OUTPUT: 'Menu Bar tool bar menu bar New Tab Ctrl+T 1 of 12.'",
+     "SPEECH OUTPUT: 'Menu Bar tool bar.'",
+     "SPEECH OUTPUT: 'New Tab.'",
+     "SPEECH OUTPUT: 'Ctrl+T.'",
+     "SPEECH OUTPUT: '1 of 12.'",
      "SPEECH OUTPUT: 'T'"]))
 
 sequence.append(KeyComboAction("Escape"))

@@ -68,9 +68,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "6. Next form field",
-    ["BRAILLE LINE:  'Looking at what follows visually, I'm not sure what I would type/i.e. what the labels are.  $l'",
-     "     VISIBLE:  'type/i.e. what the labels are.  ', cursor=32",
-     "SPEECH OUTPUT: 'Looking at what follows visually, I'm not sure what I would type/i.e. what the labels are. entry'"]))
+    ["BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
+     "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -379,9 +379,10 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "37. Next form field",
-    ["BRAILLE LINE:  'Magic disappearing text trick:  $l'",
-     "     VISIBLE:  'Magic disappearing text trick:  ', cursor=32",
+    ["KNOWN ISSUE: We're double-displaying the placeholder text.",
      "BRAILLE LINE:  'Magic disappearing text trick:  $l'",
+     "     VISIBLE:  'Magic disappearing text trick:  ', cursor=0",
+     "BRAILLE LINE:  'Magic disappearing text trick: Magic disappearing text trick:  $l'",
      "     VISIBLE:  'Magic disappearing text trick:  ', cursor=32",
      "SPEECH OUTPUT: 'Magic disappearing text trick: entry'"]))
 

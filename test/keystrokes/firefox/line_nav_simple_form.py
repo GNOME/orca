@@ -90,7 +90,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Make a selection: Water combo box'",
      "     VISIBLE:  'Make a selection: Water combo bo', cursor=1",
      "SPEECH OUTPUT: 'Make a selection:'",
-     "SPEECH OUTPUT: 'Water combo box'"]))
+     "SPEECH OUTPUT: 'Water combo box.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -106,7 +106,8 @@ sequence.append(utils.AssertPresentationAction(
     "11. line Down",
     ["BRAILLE LINE:  'Hockey list box'",
      "     VISIBLE:  'Hockey list box', cursor=1",
-     "SPEECH OUTPUT: 'Hockey multi-select List with 4 items'"]))
+     "SPEECH OUTPUT: 'Hockey.'",
+     "SPEECH OUTPUT: 'multi-select List with 4 items.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -123,8 +124,10 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Ain't he handsome (please say yes)? & y Yes radio button & y No radio button'",
      "     VISIBLE:  'Ain't he handsome (please say ye', cursor=1",
      "SPEECH OUTPUT: 'Ain't he handsome (please say yes)?'",
-     "SPEECH OUTPUT: 'Yes not selected radio button'",
-     "SPEECH OUTPUT: 'No not selected radio button'"]))
+     "SPEECH OUTPUT: 'Yes.'",
+     "SPEECH OUTPUT: 'not selected radio button'",
+     "SPEECH OUTPUT: 'No.'",
+     "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -140,7 +143,8 @@ sequence.append(utils.AssertPresentationAction(
     "15. line Up",
     ["BRAILLE LINE:  'Hockey list box'",
      "     VISIBLE:  'Hockey list box', cursor=1",
-     "SPEECH OUTPUT: 'Hockey multi-select List with 4 items'"]))
+     "SPEECH OUTPUT: 'Hockey.'",
+     "SPEECH OUTPUT: 'multi-select List with 4 items.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -157,7 +161,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Make a selection: Water combo box'",
      "     VISIBLE:  'Make a selection: Water combo bo', cursor=1",
      "SPEECH OUTPUT: 'Make a selection:'",
-     "SPEECH OUTPUT: 'Water combo box'"]))
+     "SPEECH OUTPUT: 'Water combo box.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

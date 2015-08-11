@@ -7,7 +7,6 @@ import orca.debug
 orca.debug.debugLevel = orca.debug.LEVEL_ALL
 
 import orca.settings
-orca.settings.useExperimentalSpeechProsody = False
 orca.settings.enableRemoteLogging = True
 orca.settings.enableSpeech = True
 orca.settings.speechFactoryModules = []
@@ -15,8 +14,3 @@ orca.settings.speechServerFactory = None
 orca.settings.asyncMode = False
 orca.settings.enableProgressBarUpdates = True
 orca.settings.progressBarUpdateInterval = 0
-orca.settings.commFailureAttemptLimit = 0
-
-import orca.scripts.toolkits.Gecko
-orca.scripts.toolkits.Gecko.sayAllOnLoad = False
-orca.scripts.toolkits.Gecko.script_settings.grabFocusOnAncestor = False

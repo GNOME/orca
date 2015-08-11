@@ -20,7 +20,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' $l', cursor=1",
      "BRAILLE LINE:  'Summary: contains all of the words/strings combo box'",
      "     VISIBLE:  'Summary: contains all of the wor', cursor=10",
-     "SPEECH OUTPUT: 'Summary: contains all of the words/strings combo box'"]))
+     "SPEECH OUTPUT: 'Summary: contains all of the words/strings combo box.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -53,7 +53,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Classification: multi-select List with 8 items'",
-     "SPEECH OUTPUT: 'Admin '",
+     "SPEECH OUTPUT: 'Admin .'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -66,7 +66,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'accerciser', cursor=1",
      "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Product: multi-select List with 379 items'",
-     "SPEECH OUTPUT: 'accerciser'"]))
+     "SPEECH OUTPUT: 'accerciser.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -78,7 +78,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Browse mode', cursor=0",
      "BRAILLE LINE:  'Component'",
      "     VISIBLE:  'Component', cursor=1",
-     "SPEECH OUTPUT: 'Component link'",
+     "SPEECH OUTPUT: 'Component link.'",
      "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -90,7 +90,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'Component: multi-select List with 1248 items'",
-     "SPEECH OUTPUT: 'abiscan'",
+     "SPEECH OUTPUT: 'abiscan.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -103,7 +103,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '0.0.1', cursor=1",
      "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Version: multi-select List with 857 items'",
-     "SPEECH OUTPUT: '0.0.1'"]))
+     "SPEECH OUTPUT: '0.0.1.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -113,7 +113,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '---', cursor=1",
      "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Target Milestone: multi-select List with 555 items'",
-     "SPEECH OUTPUT: '---'"]))
+     "SPEECH OUTPUT: '---.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -121,7 +121,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Tab",
     ["BRAILLE LINE:  'A Comment: contains the string combo box'",
      "     VISIBLE:  'A Comment: contains the string c', cursor=12",
-     "SPEECH OUTPUT: 'A Comment: contains the string combo box'"]))
+     "SPEECH OUTPUT: 'A Comment: contains the string combo box.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -137,7 +137,7 @@ sequence.append(utils.AssertPresentationAction(
     "12. Tab",
     ["BRAILLE LINE:  'Whiteboard: contains all of the words/strings combo box'",
      "     VISIBLE:  'Whiteboard: contains all of the ', cursor=13",
-     "SPEECH OUTPUT: 'Whiteboard: contains all of the words/strings combo box'"]))
+     "SPEECH OUTPUT: 'Whiteboard: contains all of the words/strings combo box.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -157,7 +157,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Browse mode', cursor=0",
      "BRAILLE LINE:  'Keywords'",
      "     VISIBLE:  'Keywords', cursor=1",
-     "SPEECH OUTPUT: 'Keywords link'",
+     "SPEECH OUTPUT: 'Keywords link.'",
      "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -168,7 +168,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Keywords: contains all of the ke', cursor=11",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'Keywords: contains all of the keywords combo box'",
+     "SPEECH OUTPUT: 'Keywords: contains all of the keywords combo box.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -189,7 +189,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'UNCONFIRMED', cursor=1",
      "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Status: multi-select List with 8 items'",
-     "SPEECH OUTPUT: 'UNCONFIRMED'"]))
+     "SPEECH OUTPUT: 'UNCONFIRMED.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -199,7 +199,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'FIXED', cursor=1",
      "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Resolution: multi-select List with 12 items'",
-     "SPEECH OUTPUT: 'FIXED'"]))
+     "SPEECH OUTPUT: 'FIXED.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -209,7 +209,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'blocker', cursor=1",
      "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Severity: multi-select List with 7 items'",
-     "SPEECH OUTPUT: 'blocker'"]))
+     "SPEECH OUTPUT: 'blocker.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -219,7 +219,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Immediate', cursor=1",
      "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Priority: multi-select List with 5 items'",
-     "SPEECH OUTPUT: 'Immediate'"]))
+     "SPEECH OUTPUT: 'Immediate.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -229,7 +229,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'All', cursor=1",
      "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'OS: multi-select List with 21 items'",
-     "SPEECH OUTPUT: 'All'"]))
+     "SPEECH OUTPUT: 'All.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -285,7 +285,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'contains combo box', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'contains combo box'",
+     "SPEECH OUTPUT: 'contains combo box.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -351,7 +351,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'contains combo box', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'contains combo box'",
+     "SPEECH OUTPUT: 'contains combo box.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -370,7 +370,7 @@ sequence.append(utils.AssertPresentationAction(
     "36. Tab",
     ["BRAILLE LINE:  'Only include combo box'",
      "     VISIBLE:  'Only include combo box', cursor=1",
-     "SPEECH OUTPUT: 'Only include combo box'"]))
+     "SPEECH OUTPUT: 'Only include combo box.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -407,7 +407,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '[Bug creation]'",
      "     VISIBLE:  '[Bug creation]', cursor=1",
      "SPEECH OUTPUT: 'where one or more of the following changed: multi-select List with 26 items'",
-     "SPEECH OUTPUT: '[Bug creation]'"]))
+     "SPEECH OUTPUT: '[Bug creation].'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -425,7 +425,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Unspecified', cursor=1",
      "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'GNOME version: multi-select List with 14 items'",
-     "SPEECH OUTPUT: 'Unspecified'"]))
+     "SPEECH OUTPUT: 'Unspecified.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -435,7 +435,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Unspecified', cursor=1",
      "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'GNOME target: multi-select List with 12 items'",
-     "SPEECH OUTPUT: 'Unspecified'"]))
+     "SPEECH OUTPUT: 'Unspecified.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -443,7 +443,7 @@ sequence.append(utils.AssertPresentationAction(
     "44. Tab",
     ["BRAILLE LINE:  'Sort results by: Reuse same sort as last time combo box'",
      "     VISIBLE:  'Sort results by: Reuse same sort', cursor=18",
-     "SPEECH OUTPUT: 'Sort results by: Reuse same sort as last time combo box'"]))
+     "SPEECH OUTPUT: 'Sort results by: Reuse same sort as last time combo box.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -482,7 +482,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '--- combo box', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: '--- combo box'",
+     "SPEECH OUTPUT: '--- combo box.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -493,7 +493,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '--- combo box', cursor=1",
      "BRAILLE LINE:  '--- combo box'",
      "     VISIBLE:  '--- combo box', cursor=1",
-     "SPEECH OUTPUT: '--- combo box'"]))
+     "SPEECH OUTPUT: '--- combo box.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

@@ -15,7 +15,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. Give focus to a widget in the first Tab",
     ["BRAILLE LINE:  '&=y Thick and cheesy radio button'",
      "     VISIBLE:  '&=y Thick and cheesy radio butto', cursor=1",
-     "SPEECH OUTPUT: 'Thick and cheesy selected radio button'"]))
+     "SPEECH OUTPUT: 'Thick and cheesy.'",
+     "SPEECH OUTPUT: 'selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Page_Down"))
@@ -25,7 +26,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Veggies page tab', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'Veggies page tab'",
+     "SPEECH OUTPUT: 'Veggies page tab.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -36,7 +37,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Veggies page tab', cursor=1",
      "BRAILLE LINE:  'Carnivore page tab'",
      "     VISIBLE:  'Carnivore page tab', cursor=1",
-     "SPEECH OUTPUT: 'Carnivore page tab'"]))
+     "SPEECH OUTPUT: 'Carnivore page tab.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -44,7 +45,9 @@ sequence.append(utils.AssertPresentationAction(
     "4. basic whereAmI",
     ["BRAILLE LINE:  'Carnivore page tab'",
      "     VISIBLE:  'Carnivore page tab', cursor=1",
-     "SPEECH OUTPUT: 'page tab list Carnivore page tab 3 of 4'"]))
+     "SPEECH OUTPUT: 'page tab list.'",
+     "SPEECH OUTPUT: 'Carnivore page tab.'",
+     "SPEECH OUTPUT: '3 of 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -52,7 +55,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Right arrow to fourth tab",
     ["BRAILLE LINE:  'Delivery page tab'",
      "     VISIBLE:  'Delivery page tab', cursor=1",
-     "SPEECH OUTPUT: 'Delivery page tab'"]))
+     "SPEECH OUTPUT: 'Delivery page tab.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -60,7 +63,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Left arrow back to third tab",
     ["BRAILLE LINE:  'Carnivore page tab'",
      "     VISIBLE:  'Carnivore page tab', cursor=1",
-     "SPEECH OUTPUT: 'Carnivore page tab'"]))
+     "SPEECH OUTPUT: 'Carnivore page tab.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

@@ -19,10 +19,10 @@ sequence.append(utils.AssertPresentationAction(
     "1. Switch to second page tab - Orca wiki",
     ["BRAILLE LINE:  'Firefox application Orca - GNOME Live! - Mozilla Firefox frame Browser tabs tool bar Orca - GNOME Live! page tab'",
      "     VISIBLE:  'Orca - GNOME Live! page tab', cursor=1",
-     "BRAILLE LINE:  'Home'",
-     "     VISIBLE:  'Home', cursor=1",
-     "SPEECH OUTPUT: 'Orca - GNOME Live! page tab'",
-     "SPEECH OUTPUT: 'Home link'"]))
+     "BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=1",
+     "SPEECH OUTPUT: 'Orca - GNOME Live! page tab.'",
+     "SPEECH OUTPUT: 'document frame'"]))
 
 sequence.append(PauseAction(3000))
 
@@ -32,10 +32,10 @@ sequence.append(utils.AssertPresentationAction(
     "2. Switch to first page tab - Test page",
     ["BRAILLE LINE:  'Firefox application HTML test page - Mozilla Firefox frame Browser tabs tool bar HTML test page page tab'",
      "     VISIBLE:  'HTML test page page tab', cursor=1",
-     "BRAILLE LINE:  'Test Formats'",
-     "     VISIBLE:  'Test Formats', cursor=1",
-     "SPEECH OUTPUT: 'HTML test page page tab'",
-     "SPEECH OUTPUT: 'Test Formats link'"]))
+     "BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
+     "SPEECH OUTPUT: 'HTML test page page tab.'",
+     "SPEECH OUTPUT: 'document frame blank'"]))
 
 sequence.append(PauseAction(3000))
 
@@ -49,7 +49,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' a bug # or some search terms:  ', cursor=32",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'GNOME Bug Tracking System page tab'",
+     "SPEECH OUTPUT: 'GNOME Bug Tracking System page tab.'",
      "SPEECH OUTPUT: 'Enter a bug # or some search terms: entry'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
@@ -61,10 +61,10 @@ sequence.append(utils.AssertPresentationAction(
     "4. Close third page tab - land in second page",
     ["BRAILLE LINE:  'Firefox application Orca - GNOME Live! - Mozilla Firefox frame Browser tabs tool bar Orca - GNOME Live! page tab'",
      "     VISIBLE:  'Orca - GNOME Live! page tab', cursor=1",
-     "BRAILLE LINE:  'Home'",
-     "     VISIBLE:  'Home', cursor=1",
-     "SPEECH OUTPUT: 'Orca - GNOME Live! page tab'",
-     "SPEECH OUTPUT: 'Home link'"]))
+     "BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=1",
+     "SPEECH OUTPUT: 'Orca - GNOME Live! page tab.'",
+     "SPEECH OUTPUT: 'document frame'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -190,7 +190,8 @@ sequence.append(utils.AssertPresentationAction(
     "22. line Down",
     ["BRAILLE LINE:  'Hockey list box'",
      "     VISIBLE:  'Hockey list box', cursor=1",
-     "SPEECH OUTPUT: 'Hockey multi-select List with 4 items'"]))
+     "SPEECH OUTPUT: 'Hockey.'",
+     "SPEECH OUTPUT: 'multi-select List with 4 items.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -214,7 +215,8 @@ sequence.append(utils.AssertPresentationAction(
     "25. line Down",
     ["BRAILLE LINE:  '& y Yes radio button'",
      "     VISIBLE:  '& y Yes radio button', cursor=1",
-     "SPEECH OUTPUT: 'Yes not selected radio button'"]))
+     "SPEECH OUTPUT: 'Yes.'",
+     "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -230,7 +232,8 @@ sequence.append(utils.AssertPresentationAction(
     "27. line Down",
     ["BRAILLE LINE:  '& y No radio button'",
      "     VISIBLE:  '& y No radio button', cursor=1",
-     "SPEECH OUTPUT: 'No not selected radio button'"]))
+     "SPEECH OUTPUT: 'No.'",
+     "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

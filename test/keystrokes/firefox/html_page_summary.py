@@ -25,7 +25,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'This is a Heading 6. h6', cursor=1",
      "BRAILLE LINE:  'This is a Heading 6. h6'",
      "     VISIBLE:  'This is a Heading 6. h6', cursor=1",
-     "SPEECH OUTPUT: 'heading level 6 This is a Heading 6.'",
+     "SPEECH OUTPUT: 'heading level 6.'",
+     "SPEECH OUTPUT: 'This is a Heading 6.'",
      "SPEECH OUTPUT: '14 headings 3 forms 43 tables'",
      "SPEECH OUTPUT: '19 unvisited links'"]))
 

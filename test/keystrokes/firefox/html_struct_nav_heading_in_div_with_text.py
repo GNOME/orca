@@ -17,7 +17,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'First Heading  h2', cursor=1",
      "BRAILLE LINE:  'First Heading  h2'",
      "     VISIBLE:  'First Heading  h2', cursor=1",
-     "SPEECH OUTPUT: 'First Heading  link heading level 2'"]))
+     "SPEECH OUTPUT: 'First Heading  link heading level 2.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -33,7 +33,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. 2 to move to the next heading",
     ["BRAILLE LINE:  'Second Heading  h2'",
      "     VISIBLE:  'Second Heading  h2', cursor=1",
-     "SPEECH OUTPUT: 'Second Heading  link heading level 2'"]))
+     "SPEECH OUTPUT: 'Second Heading  link heading level 2.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -49,7 +49,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Shift+2 to move to the previous heading",
     ["BRAILLE LINE:  'Second Heading  h2'",
      "     VISIBLE:  'Second Heading  h2', cursor=1",
-     "SPEECH OUTPUT: 'Second Heading  link heading level 2'"]))
+     "SPEECH OUTPUT: 'Second Heading  link heading level 2.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -65,7 +65,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Shift+2 to move to the previous heading",
     ["BRAILLE LINE:  'First Heading  h2'",
      "     VISIBLE:  'First Heading  h2', cursor=1",
-     "SPEECH OUTPUT: 'First Heading  link heading level 2'"]))
+     "SPEECH OUTPUT: 'First Heading  link heading level 2.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>2"))
@@ -76,7 +76,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Second Heading  h2'",
      "     VISIBLE:  'Second Heading  h2', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to bottom.' voice=system",
-     "SPEECH OUTPUT: 'Second Heading  link heading level 2'"]))
+     "SPEECH OUTPUT: 'Second Heading  link heading level 2.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("2"))
@@ -87,7 +87,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'First Heading  h2'",
      "     VISIBLE:  'First Heading  h2', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.' voice=system",
-     "SPEECH OUTPUT: 'First Heading  link heading level 2'"]))
+     "SPEECH OUTPUT: 'First Heading  link heading level 2.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

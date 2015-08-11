@@ -25,13 +25,13 @@ sequence.append(utils.AssertPresentationAction(
     "2. line Down",
     ["BRAILLE LINE:  'Campus  .  Classroom  .  Communicate  .  Reports'",
      "     VISIBLE:  'Campus  .  Classroom  .  Communi', cursor=1",
-     "SPEECH OUTPUT: 'Campus link'",
+     "SPEECH OUTPUT: 'Campus link.'",
      "SPEECH OUTPUT: '.'",
-     "SPEECH OUTPUT: 'Classroom link'",
+     "SPEECH OUTPUT: 'Classroom link.'",
      "SPEECH OUTPUT: '.'",
-     "SPEECH OUTPUT: 'Communicate link'",
+     "SPEECH OUTPUT: 'Communicate link.'",
      "SPEECH OUTPUT: '.'",
-     "SPEECH OUTPUT: 'Reports link'"]))
+     "SPEECH OUTPUT: 'Reports link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -55,7 +55,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. line Down",
     ["BRAILLE LINE:  'UNIX 2007'",
      "     VISIBLE:  'UNIX 2007', cursor=1",
-     "SPEECH OUTPUT: 'UNIX 2007'"]))
+     "SPEECH OUTPUT: 'UNIX 2007.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -63,7 +63,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. line Down",
     ["BRAILLE LINE:  'Take Course'",
      "     VISIBLE:  'Take Course', cursor=1",
-     "SPEECH OUTPUT: 'Take Course link'"]))
+     "SPEECH OUTPUT: 'Take Course link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -87,7 +87,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. line Down",
     ["BRAILLE LINE:  'SQL Plus'",
      "     VISIBLE:  'SQL Plus', cursor=1",
-     "SPEECH OUTPUT: 'SQL Plus'"]))
+     "SPEECH OUTPUT: 'SQL Plus.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -95,7 +95,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. line Down",
     ["BRAILLE LINE:  'Take Course'",
      "     VISIBLE:  'Take Course', cursor=1",
-     "SPEECH OUTPUT: 'Take Course link'"]))
+     "SPEECH OUTPUT: 'Take Course link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -127,7 +127,7 @@ sequence.append(utils.AssertPresentationAction(
     "14. line Up",
     ["BRAILLE LINE:  'Take Course'",
      "     VISIBLE:  'Take Course', cursor=1",
-     "SPEECH OUTPUT: 'Take Course link'"]))
+     "SPEECH OUTPUT: 'Take Course link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -135,7 +135,7 @@ sequence.append(utils.AssertPresentationAction(
     "15. line Up",
     ["BRAILLE LINE:  'SQL Plus'",
      "     VISIBLE:  'SQL Plus', cursor=1",
-     "SPEECH OUTPUT: 'SQL Plus'"]))
+     "SPEECH OUTPUT: 'SQL Plus.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -159,7 +159,7 @@ sequence.append(utils.AssertPresentationAction(
     "18. line Up",
     ["BRAILLE LINE:  'Take Course'",
      "     VISIBLE:  'Take Course', cursor=1",
-     "SPEECH OUTPUT: 'Take Course link'"]))
+     "SPEECH OUTPUT: 'Take Course link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -167,7 +167,7 @@ sequence.append(utils.AssertPresentationAction(
     "19. line Up",
     ["BRAILLE LINE:  'UNIX 2007'",
      "     VISIBLE:  'UNIX 2007', cursor=1",
-     "SPEECH OUTPUT: 'UNIX 2007'"]))
+     "SPEECH OUTPUT: 'UNIX 2007.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -191,13 +191,13 @@ sequence.append(utils.AssertPresentationAction(
     "22. line Up",
     ["BRAILLE LINE:  'Campus  .  Classroom  .  Communicate  .  Reports'",
      "     VISIBLE:  'Campus  .  Classroom  .  Communi', cursor=1",
-     "SPEECH OUTPUT: 'Campus link'",
+     "SPEECH OUTPUT: 'Campus link.'",
      "SPEECH OUTPUT: '.'",
-     "SPEECH OUTPUT: 'Classroom link'",
+     "SPEECH OUTPUT: 'Classroom link.'",
      "SPEECH OUTPUT: '.'",
-     "SPEECH OUTPUT: 'Communicate link'",
+     "SPEECH OUTPUT: 'Communicate link.'",
      "SPEECH OUTPUT: '.'",
-     "SPEECH OUTPUT: 'Reports link'"]))
+     "SPEECH OUTPUT: 'Reports link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

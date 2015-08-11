@@ -77,7 +77,8 @@ sequence.append(utils.AssertPresentationAction(
     "7. Next form field",
     ["BRAILLE LINE:  '&=y No radio button'",
      "     VISIBLE:  '&=y No radio button', cursor=1",
-     "SPEECH OUTPUT: 'No selected radio button'"]))
+     "SPEECH OUTPUT: 'No.'",
+     "SPEECH OUTPUT: 'selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -87,7 +88,8 @@ sequence.append(utils.AssertPresentationAction(
     "8. Next form field",
     ["BRAILLE LINE:  '& y Yes radio button'",
      "     VISIBLE:  '& y Yes radio button', cursor=1",
-     "SPEECH OUTPUT: 'Yes not selected radio button'"]))
+     "SPEECH OUTPUT: 'Yes.'",
+     "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

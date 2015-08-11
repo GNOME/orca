@@ -25,7 +25,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  'HTML Tags'",
      "     VISIBLE:  'HTML Tags', cursor=1",
-     "SPEECH OUTPUT: 'HTML Tags'"]))
+     "SPEECH OUTPUT: 'HTML Tags.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -33,7 +33,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  '<!-->'",
      "     VISIBLE:  '<!-->', cursor=1",
-     "SPEECH OUTPUT: '<!--> link'"]))
+     "SPEECH OUTPUT: '<!--> link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -41,7 +41,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
     ["BRAILLE LINE:  '<!DOCTYPE>'",
      "     VISIBLE:  '<!DOCTYPE>', cursor=1",
-     "SPEECH OUTPUT: '<!DOCTYPE> link'"]))
+     "SPEECH OUTPUT: '<!DOCTYPE> link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -49,7 +49,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
     ["BRAILLE LINE:  '<a>'",
      "     VISIBLE:  '<a>', cursor=1",
-     "SPEECH OUTPUT: '<a> link'"]))
+     "SPEECH OUTPUT: '<a> link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -57,7 +57,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
     ["BRAILLE LINE:  '<abbr>'",
      "     VISIBLE:  '<abbr>', cursor=1",
-     "SPEECH OUTPUT: '<abbr> link'"]))
+     "SPEECH OUTPUT: '<abbr> link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -65,7 +65,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
     ["BRAILLE LINE:  '<acronym>'",
      "     VISIBLE:  '<acronym>', cursor=1",
-     "SPEECH OUTPUT: '<acronym> link'"]))
+     "SPEECH OUTPUT: '<acronym> link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -73,7 +73,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Up",
     ["BRAILLE LINE:  '<abbr>'",
      "     VISIBLE:  '<abbr>', cursor=1",
-     "SPEECH OUTPUT: '<abbr> link'"]))
+     "SPEECH OUTPUT: '<abbr> link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -81,7 +81,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Line Up",
     ["BRAILLE LINE:  '<a>'",
      "     VISIBLE:  '<a>', cursor=1",
-     "SPEECH OUTPUT: '<a> link'"]))
+     "SPEECH OUTPUT: '<a> link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -89,7 +89,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Line Up",
     ["BRAILLE LINE:  '<!DOCTYPE>'",
      "     VISIBLE:  '<!DOCTYPE>', cursor=1",
-     "SPEECH OUTPUT: '<!DOCTYPE> link'"]))
+     "SPEECH OUTPUT: '<!DOCTYPE> link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -97,7 +97,7 @@ sequence.append(utils.AssertPresentationAction(
     "11. Line Up",
     ["BRAILLE LINE:  '<!-->'",
      "     VISIBLE:  '<!-->', cursor=1",
-     "SPEECH OUTPUT: '<!--> link'"]))
+     "SPEECH OUTPUT: '<!--> link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -105,7 +105,7 @@ sequence.append(utils.AssertPresentationAction(
     "12. Line Up",
     ["BRAILLE LINE:  'HTML Tags'",
      "     VISIBLE:  'HTML Tags', cursor=1",
-     "SPEECH OUTPUT: 'HTML Tags'"]))
+     "SPEECH OUTPUT: 'HTML Tags.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

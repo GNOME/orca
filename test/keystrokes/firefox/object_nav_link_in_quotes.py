@@ -33,7 +33,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  'line 2'",
      "     VISIBLE:  'line 2', cursor=1",
-     "SPEECH OUTPUT: 'line 2 link'"]))
+     "SPEECH OUTPUT: 'line 2 link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -65,7 +65,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Up",
     ["BRAILLE LINE:  'line 2'",
      "     VISIBLE:  'line 2', cursor=1",
-     "SPEECH OUTPUT: 'line 2 link'"]))
+     "SPEECH OUTPUT: 'line 2 link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

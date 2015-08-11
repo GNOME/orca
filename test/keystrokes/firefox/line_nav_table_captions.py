@@ -39,9 +39,9 @@ sequence.append(utils.AssertPresentationAction(
     "4. Line Down to first data row",
     ["BRAILLE LINE:  '1 2 3'",
      "     VISIBLE:  '1 2 3', cursor=1",
-     "SPEECH OUTPUT: '1'",
-     "SPEECH OUTPUT: '2'",
-     "SPEECH OUTPUT: '3'"]))
+     "SPEECH OUTPUT: '1.'",
+     "SPEECH OUTPUT: '2.'",
+     "SPEECH OUTPUT: '3.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -49,9 +49,9 @@ sequence.append(utils.AssertPresentationAction(
     "5. Line Down to second data row",
     ["BRAILLE LINE:  '4 5 6'",
      "     VISIBLE:  '4 5 6', cursor=1",
-     "SPEECH OUTPUT: '4'",
-     "SPEECH OUTPUT: '5'",
-     "SPEECH OUTPUT: '6'"]))
+     "SPEECH OUTPUT: '4.'",
+     "SPEECH OUTPUT: '5.'",
+     "SPEECH OUTPUT: '6.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -59,9 +59,9 @@ sequence.append(utils.AssertPresentationAction(
     "6. Line Down to third data row",
     ["BRAILLE LINE:  '7 8 9'",
      "     VISIBLE:  '7 8 9', cursor=1",
-     "SPEECH OUTPUT: '7'",
-     "SPEECH OUTPUT: '8'",
-     "SPEECH OUTPUT: '9'"]))
+     "SPEECH OUTPUT: '7.'",
+     "SPEECH OUTPUT: '8.'",
+     "SPEECH OUTPUT: '9.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -77,9 +77,9 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Up into table's third data row",
     ["BRAILLE LINE:  '7 8 9'",
      "     VISIBLE:  '7 8 9', cursor=1",
-     "SPEECH OUTPUT: '7'",
-     "SPEECH OUTPUT: '8'",
-     "SPEECH OUTPUT: '9'"]))
+     "SPEECH OUTPUT: '7.'",
+     "SPEECH OUTPUT: '8.'",
+     "SPEECH OUTPUT: '9.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -87,9 +87,9 @@ sequence.append(utils.AssertPresentationAction(
     "9. Line Up to second data row",
     ["BRAILLE LINE:  '4 5 6'",
      "     VISIBLE:  '4 5 6', cursor=1",
-     "SPEECH OUTPUT: '4'",
-     "SPEECH OUTPUT: '5'",
-     "SPEECH OUTPUT: '6'"]))
+     "SPEECH OUTPUT: '4.'",
+     "SPEECH OUTPUT: '5.'",
+     "SPEECH OUTPUT: '6.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -97,9 +97,9 @@ sequence.append(utils.AssertPresentationAction(
     "10. Line Up to first data row",
     ["BRAILLE LINE:  '1 2 3'",
      "     VISIBLE:  '1 2 3', cursor=1",
-     "SPEECH OUTPUT: '1'",
-     "SPEECH OUTPUT: '2'",
-     "SPEECH OUTPUT: '3'"]))
+     "SPEECH OUTPUT: '1.'",
+     "SPEECH OUTPUT: '2.'",
+     "SPEECH OUTPUT: '3.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

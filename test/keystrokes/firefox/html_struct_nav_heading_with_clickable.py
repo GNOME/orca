@@ -15,7 +15,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. h for next heading",
     ["BRAILLE LINE:  'line 2 h1'",
      "     VISIBLE:  'line 2 h1', cursor=1",
-     "SPEECH OUTPUT: 'line 2 link heading level 1 clickable'"]))
+     "SPEECH OUTPUT: 'line 2 link heading level 1.'",
+     "SPEECH OUTPUT: 'clickable'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

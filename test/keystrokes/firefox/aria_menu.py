@@ -19,7 +19,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'table', cursor=1",
      "BRAILLE LINE:  'Edit menu'",
      "     VISIBLE:  'Edit menu', cursor=1",
-     "SPEECH OUTPUT: 'Edit menu'"]))
+     "SPEECH OUTPUT: 'Edit menu.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -28,7 +28,8 @@ sequence.append(utils.AssertPresentationAction(
     "2. basic whereAmI",
     ["BRAILLE LINE:  'Edit menu'",
      "     VISIBLE:  'Edit menu', cursor=1",
-     "SPEECH OUTPUT: 'Edit menu 1 of 1'"]))
+     "SPEECH OUTPUT: 'Edit menu.'",
+     "SPEECH OUTPUT: '1 of 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -36,7 +37,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Move to View",
     ["BRAILLE LINE:  'View menu'",
      "     VISIBLE:  'View menu', cursor=1",
-     "SPEECH OUTPUT: 'View menu'"]))
+     "SPEECH OUTPUT: 'View menu.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -44,7 +45,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Move to Themes",
     ["BRAILLE LINE:  'Themes          > menu'",
      "     VISIBLE:  'Themes          > menu', cursor=1",
-     "SPEECH OUTPUT: 'Themes          > menu'"]))
+     "SPEECH OUTPUT: 'Themes          > menu.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -52,7 +53,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Move to basic grey",
     ["BRAILLE LINE:  'Basic Grey'",
      "     VISIBLE:  'Basic Grey', cursor=1",
-     "SPEECH OUTPUT: 'Basic Grey'"]))
+     "SPEECH OUTPUT: 'Basic Grey.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -60,7 +61,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Move to the blues",
     ["BRAILLE LINE:  'The Blues'",
      "     VISIBLE:  'The Blues', cursor=1",
-     "SPEECH OUTPUT: 'The Blues'"]))
+     "SPEECH OUTPUT: 'The Blues.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -68,7 +69,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Move to garden",
     ["BRAILLE LINE:  'Garden'",
      "     VISIBLE:  'Garden', cursor=1",
-     "SPEECH OUTPUT: 'Garden'"]))
+     "SPEECH OUTPUT: 'Garden.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -76,7 +77,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Move to in the pink",
     ["BRAILLE LINE:  'In the Pink grayed'",
      "     VISIBLE:  'In the Pink grayed', cursor=1",
-     "SPEECH OUTPUT: 'In the Pink grayed'"]))
+     "SPEECH OUTPUT: 'In the Pink grayed.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -84,7 +85,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Move to rose",
     ["BRAILLE LINE:  'Rose'",
      "     VISIBLE:  'Rose', cursor=1",
-     "SPEECH OUTPUT: 'Rose'"]))
+     "SPEECH OUTPUT: 'Rose.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -92,7 +93,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Move back to Themes",
     ["BRAILLE LINE:  'Themes          > menu'",
      "     VISIBLE:  'Themes          > menu', cursor=1",
-     "SPEECH OUTPUT: 'Themes          > menu'"]))
+     "SPEECH OUTPUT: 'Themes          > menu.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -100,7 +101,7 @@ sequence.append(utils.AssertPresentationAction(
     "11. Move to hide",
     ["BRAILLE LINE:  'Hide'",
      "     VISIBLE:  'Hide', cursor=1",
-     "SPEECH OUTPUT: 'Hide'"]))
+     "SPEECH OUTPUT: 'Hide.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -108,7 +109,7 @@ sequence.append(utils.AssertPresentationAction(
     "12. Move to show",
     ["BRAILLE LINE:  'Show'",
      "     VISIBLE:  'Show', cursor=1",
-     "SPEECH OUTPUT: 'Show'"]))
+     "SPEECH OUTPUT: 'Show.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -116,7 +117,7 @@ sequence.append(utils.AssertPresentationAction(
     "13. Move to more",
     ["BRAILLE LINE:  'More                > menu'",
      "     VISIBLE:  'More                > menu', cursor=1",
-     "SPEECH OUTPUT: 'More                > menu'"]))
+     "SPEECH OUTPUT: 'More                > menu.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -124,7 +125,7 @@ sequence.append(utils.AssertPresentationAction(
     "14. Move to one",
     ["BRAILLE LINE:  'one'",
      "     VISIBLE:  'one', cursor=1",
-     "SPEECH OUTPUT: 'one'"]))
+     "SPEECH OUTPUT: 'one.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -132,7 +133,7 @@ sequence.append(utils.AssertPresentationAction(
     "15. Move to two",
     ["BRAILLE LINE:  'two'",
      "     VISIBLE:  'two', cursor=1",
-     "SPEECH OUTPUT: 'two'"]))
+     "SPEECH OUTPUT: 'two.'"]))
 
 sequence.append(KeyComboAction("Escape"))
 sequence.append(utils.AssertionSummaryAction())

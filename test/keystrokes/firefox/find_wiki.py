@@ -27,7 +27,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Welcome to Orca!'",
      "     VISIBLE:  'Welcome to Orca!', cursor=1",
      "SPEECH OUTPUT: '1.'",
-     "SPEECH OUTPUT: 'Welcome to Orca! link'"]))
+     "SPEECH OUTPUT: 'Welcome to Orca! link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))

@@ -184,7 +184,8 @@ sequence.append(utils.AssertPresentationAction(
     "20. Line Down",
     ["BRAILLE LINE:  '&=y cabernet sauvignon radio button'",
      "     VISIBLE:  '&=y cabernet sauvignon radio but', cursor=1",
-     "SPEECH OUTPUT: 'cabernet sauvignon selected radio button'"]))
+     "SPEECH OUTPUT: 'cabernet sauvignon.'",
+     "SPEECH OUTPUT: 'selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -192,7 +193,8 @@ sequence.append(utils.AssertPresentationAction(
     "21. Line Down",
     ["BRAILLE LINE:  '& y merlot radio button'",
      "     VISIBLE:  '& y merlot radio button', cursor=1",
-     "SPEECH OUTPUT: 'merlot not selected radio button'"]))
+     "SPEECH OUTPUT: 'merlot.'",
+     "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -200,7 +202,8 @@ sequence.append(utils.AssertPresentationAction(
     "22. Line Down",
     ["BRAILLE LINE:  '& y nebbiolo radio button'",
      "     VISIBLE:  '& y nebbiolo radio button', cursor=1",
-     "SPEECH OUTPUT: 'nebbiolo not selected radio button'"]))
+     "SPEECH OUTPUT: 'nebbiolo.'",
+     "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -208,7 +211,8 @@ sequence.append(utils.AssertPresentationAction(
     "23. Line Down",
     ["BRAILLE LINE:  '& y pinot noir radio button'",
      "     VISIBLE:  '& y pinot noir radio button', cursor=1",
-     "SPEECH OUTPUT: 'pinot noir not selected radio button'"]))
+     "SPEECH OUTPUT: 'pinot noir.'",
+     "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -216,7 +220,8 @@ sequence.append(utils.AssertPresentationAction(
     "24. Line Down",
     ["BRAILLE LINE:  '& y don't drink wine radio button'",
      "     VISIBLE:  '& y don't drink wine radio butto', cursor=1",
-     "SPEECH OUTPUT: 'don't drink wine not selected radio button'"]))
+     "SPEECH OUTPUT: 'don't drink wine.'",
+     "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -224,7 +229,8 @@ sequence.append(utils.AssertPresentationAction(
     "25. Line Up",
     ["BRAILLE LINE:  '& y pinot noir radio button'",
      "     VISIBLE:  '& y pinot noir radio button', cursor=1",
-     "SPEECH OUTPUT: 'pinot noir not selected radio button'"]))
+     "SPEECH OUTPUT: 'pinot noir.'",
+     "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -232,7 +238,8 @@ sequence.append(utils.AssertPresentationAction(
     "26. Line Up",
     ["BRAILLE LINE:  '& y nebbiolo radio button'",
      "     VISIBLE:  '& y nebbiolo radio button', cursor=1",
-     "SPEECH OUTPUT: 'nebbiolo not selected radio button'"]))
+     "SPEECH OUTPUT: 'nebbiolo.'",
+     "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -240,7 +247,8 @@ sequence.append(utils.AssertPresentationAction(
     "27. Line Up",
     ["BRAILLE LINE:  '& y merlot radio button'",
      "     VISIBLE:  '& y merlot radio button', cursor=1",
-     "SPEECH OUTPUT: 'merlot not selected radio button'"]))
+     "SPEECH OUTPUT: 'merlot.'",
+     "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -248,7 +256,8 @@ sequence.append(utils.AssertPresentationAction(
     "28. Line Up",
     ["BRAILLE LINE:  '&=y cabernet sauvignon radio button'",
      "     VISIBLE:  '&=y cabernet sauvignon radio but', cursor=1",
-     "SPEECH OUTPUT: 'cabernet sauvignon selected radio button'"]))
+     "SPEECH OUTPUT: 'cabernet sauvignon.'",
+     "SPEECH OUTPUT: 'selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

@@ -347,10 +347,8 @@ sequence.append(KeyComboAction("f"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "41. Insert+f",
-    ["SPEECH OUTPUT: 'size 9pt' voice=system",
-     "SPEECH OUTPUT: 'family name DejaVu Sans Mono' voice=system",
-     "SPEECH OUTPUT: 'weight 400' voice=system",
-     "SPEECH OUTPUT: 'style normal' voice=system"]))
+    ["SPEECH OUTPUT: 'size: 9' voice=system",
+     "SPEECH OUTPUT: 'family name: DejaVu Sans Mono' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
@@ -391,10 +389,8 @@ sequence.append(KeyComboAction("f"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "46. Insert+f",
-    ["SPEECH OUTPUT: 'size 9pt' voice=system",
-     "SPEECH OUTPUT: 'family name DejaVu Sans Mono' voice=system",
-     "SPEECH OUTPUT: 'weight 400' voice=system",
-     "SPEECH OUTPUT: 'style normal' voice=system"]))
+    ["SPEECH OUTPUT: 'size: 9' voice=system",
+     "SPEECH OUTPUT: 'family name: DejaVu Sans Mono' voice=system"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

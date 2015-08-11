@@ -21,7 +21,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  'up vote'",
      "     VISIBLE:  'up vote', cursor=1",
-     "SPEECH OUTPUT: 'up vote link'"]))
+     "SPEECH OUTPUT: 'up vote link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -37,7 +37,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
     ["BRAILLE LINE:  'down vote'",
      "     VISIBLE:  'down vote', cursor=1",
-     "SPEECH OUTPUT: 'down vote link'"]))
+     "SPEECH OUTPUT: 'down vote link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -69,7 +69,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Up",
     ["BRAILLE LINE:  'down vote'",
      "     VISIBLE:  'down vote', cursor=1",
-     "SPEECH OUTPUT: 'down vote link'"]))
+     "SPEECH OUTPUT: 'down vote link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -85,7 +85,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Line Up",
     ["BRAILLE LINE:  'up vote'",
      "     VISIBLE:  'up vote', cursor=1",
-     "SPEECH OUTPUT: 'up vote link'"]))
+     "SPEECH OUTPUT: 'up vote link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

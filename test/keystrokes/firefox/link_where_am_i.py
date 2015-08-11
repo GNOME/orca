@@ -15,7 +15,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. Where Am I on Product summary link", 
     ["BRAILLE LINE:  'Product summary'",
      "     VISIBLE:  'Product summary', cursor=1",
-     "SPEECH OUTPUT: 'http link Product summary different site'"]))
+     "SPEECH OUTPUT: 'http link Product summary.'",
+     "SPEECH OUTPUT: 'different site.'"]))
 
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(KeyComboAction("Tab"))
@@ -26,7 +27,8 @@ sequence.append(utils.AssertPresentationAction(
     "2. Where Am I on New bug link", 
     ["BRAILLE LINE:  'New bug'",
      "     VISIBLE:  'New bug', cursor=1",
-     "SPEECH OUTPUT: 'http link New bug different site'"]))
+     "SPEECH OUTPUT: 'http link New bug.'",
+     "SPEECH OUTPUT: 'different site.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

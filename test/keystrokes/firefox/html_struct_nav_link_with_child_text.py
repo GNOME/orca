@@ -15,7 +15,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'line 2', cursor=1",
      "BRAILLE LINE:  'line 2'",
      "     VISIBLE:  'line 2', cursor=1",
-     "SPEECH OUTPUT: 'line 2 link'"]))
+     "SPEECH OUTPUT: 'line 2 link.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

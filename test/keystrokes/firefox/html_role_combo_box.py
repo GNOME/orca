@@ -17,18 +17,20 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Severity normal combo box', cursor=10",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'Severity normal combo box'",
+     "SPEECH OUTPUT: 'Severity normal combo box.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic Where Am I",
-    ["BRAILLE LINE:  'Severity normal combo box'",
+    ["KNOWN ISSUE: The count is wrong.",
+     "BRAILLE LINE:  'Severity normal combo box'",
      "     VISIBLE:  'Severity normal combo box', cursor=10",
      "BRAILLE LINE:  'Severity normal combo box'",
      "     VISIBLE:  'Severity normal combo box', cursor=10",
-     "SPEECH OUTPUT: 'Severity combo box normal 4 of 7'"]))
+     "SPEECH OUTPUT: 'Severity combo box.'",
+     "SPEECH OUTPUT: 'normal 2 of 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -40,7 +42,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Browse mode', cursor=0",
      "BRAILLE LINE:  'Priority'",
      "     VISIBLE:  'Priority', cursor=1",
-     "SPEECH OUTPUT: 'Priority link'",
+     "SPEECH OUTPUT: 'Priority link.'",
      "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -51,7 +53,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Priority: Normal combo box', cursor=11",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'Priority: Normal combo box'",
+     "SPEECH OUTPUT: 'Priority: Normal combo box.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -62,15 +64,15 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Priority: Normal combo box', cursor=11",
      "BRAILLE LINE:  'Resolution: FIXED combo box'",
      "     VISIBLE:  'Resolution: FIXED combo box', cursor=13",
-     "SPEECH OUTPUT: 'Resolution: FIXED combo box'"]))
+     "SPEECH OUTPUT: 'Resolution: FIXED combo box.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. Change selection Down: WONTFIX",
     ["BRAILLE LINE:  'Resolution: WONTFIX combo box'",
-     "     VISIBLE:  'Resolution: WONTFIX combo box', cursor=1",
-     "SPEECH OUTPUT: 'WONTFIX'"]))
+     "     VISIBLE:  'Resolution: WONTFIX combo box', cursor=13",
+     "SPEECH OUTPUT: 'WONTFIX.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -78,7 +80,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Change selection Up: FIXED",
     ["BRAILLE LINE:  'Resolution: FIXED combo box'",
      "     VISIBLE:  'Resolution: FIXED combo box', cursor=13",
-     "SPEECH OUTPUT: 'FIXED'"]))
+     "SPEECH OUTPUT: 'FIXED.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>Down"))
@@ -93,7 +95,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Change selection Down: WONTFIX",
     ["BRAILLE LINE:  'Resolution: WONTFIX combo box'",
      "     VISIBLE:  'Resolution: WONTFIX combo box', cursor=13",
-     "SPEECH OUTPUT: 'WONTFIX'"]))
+     "SPEECH OUTPUT: 'WONTFIX.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
@@ -103,7 +105,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Resolution: WONTFIX combo box', cursor=13",
      "BRAILLE LINE:  'Resolution: WONTFIX combo box'",
      "     VISIBLE:  'Resolution: WONTFIX combo box', cursor=13",
-     "SPEECH OUTPUT: 'Resolution: WONTFIX combo box'",
+     "SPEECH OUTPUT: 'Resolution: WONTFIX combo box.'",
      "SPEECH OUTPUT: 'collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -112,7 +114,7 @@ sequence.append(utils.AssertPresentationAction(
     "11. Tab to Version combo box",
     ["BRAILLE LINE:  'Version 2.16 combo box'",
      "     VISIBLE:  'Version 2.16 combo box', cursor=9",
-     "SPEECH OUTPUT: 'Version 2.16 combo box'"]))
+     "SPEECH OUTPUT: 'Version 2.16 combo box.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -140,7 +142,7 @@ sequence.append(utils.AssertPresentationAction(
     "14. Line Down",
     ["BRAILLE LINE:  'Component'",
      "     VISIBLE:  'Component', cursor=1",
-     "SPEECH OUTPUT: 'Component'"]))
+     "SPEECH OUTPUT: 'Component.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

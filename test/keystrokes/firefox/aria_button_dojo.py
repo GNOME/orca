@@ -89,7 +89,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Create blank', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'Create blank'",
+     "SPEECH OUTPUT: 'Create blank.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -100,7 +100,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Create blank', cursor=1",
      "BRAILLE LINE:  'Create from template'",
      "     VISIBLE:  'Create from template', cursor=1",
-     "SPEECH OUTPUT: 'Create from template'"]))
+     "SPEECH OUTPUT: 'Create from template.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
@@ -134,7 +134,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'Edit! menu'",
-     "SPEECH OUTPUT: 'Cut'",
+     "SPEECH OUTPUT: 'Cut.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -145,7 +145,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Cut', cursor=1",
      "BRAILLE LINE:  'Copy'",
      "     VISIBLE:  'Copy', cursor=1",
-     "SPEECH OUTPUT: 'Copy'"]))
+     "SPEECH OUTPUT: 'Copy.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -153,7 +153,7 @@ sequence.append(utils.AssertPresentationAction(
     "16. Go to Paste",
     ["BRAILLE LINE:  'Paste'",
      "     VISIBLE:  'Paste', cursor=1",
-     "SPEECH OUTPUT: 'Paste'"]))
+     "SPEECH OUTPUT: 'Paste.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -161,7 +161,7 @@ sequence.append(utils.AssertPresentationAction(
     "17. Go to Submenu",
     ["BRAILLE LINE:  'Submenu menu'",
      "     VISIBLE:  'Submenu menu', cursor=1",
-     "SPEECH OUTPUT: 'Submenu menu'"]))
+     "SPEECH OUTPUT: 'Submenu menu.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("space"))
@@ -170,7 +170,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Submenu Item One'",
      "     VISIBLE:  'Submenu Item One', cursor=1",
      "SPEECH OUTPUT: 'Submenu menu'",
-     "SPEECH OUTPUT: 'Submenu Item One'"]))
+     "SPEECH OUTPUT: 'Submenu Item One.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -178,7 +178,7 @@ sequence.append(utils.AssertPresentationAction(
     "19. Down to Submenu Item Two",
     ["BRAILLE LINE:  'Submenu Item Two'",
      "     VISIBLE:  'Submenu Item Two', cursor=1",
-     "SPEECH OUTPUT: 'Submenu Item Two'"]))
+     "SPEECH OUTPUT: 'Submenu Item Two.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -186,7 +186,7 @@ sequence.append(utils.AssertPresentationAction(
     "20. Down to Deeper Submenu",
     ["BRAILLE LINE:  'Deeper Submenu menu'",
      "     VISIBLE:  'Deeper Submenu menu', cursor=1",
-     "SPEECH OUTPUT: 'Deeper Submenu menu'"]))
+     "SPEECH OUTPUT: 'Deeper Submenu menu.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
@@ -194,7 +194,7 @@ sequence.append(utils.AssertPresentationAction(
     "21. Close the Submenu",
     ["BRAILLE LINE:  'Submenu menu'",
      "     VISIBLE:  'Submenu menu', cursor=1",
-     "SPEECH OUTPUT: 'Submenu menu'"]))
+     "SPEECH OUTPUT: 'Submenu menu.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))
@@ -227,7 +227,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'white table cell', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'white'",
+     "SPEECH OUTPUT: 'colorPalette panel'",
+     "SPEECH OUTPUT: 'white.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -238,7 +239,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'white table cell', cursor=1",
      "BRAILLE LINE:  'lime table cell'",
      "     VISIBLE:  'lime table cell', cursor=1",
-     "SPEECH OUTPUT: 'lime'"]))
+     "SPEECH OUTPUT: 'lime.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))

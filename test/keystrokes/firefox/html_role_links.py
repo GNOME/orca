@@ -23,7 +23,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'anchors.html', cursor=1",
      "BRAILLE LINE:  'anchors.html'",
      "     VISIBLE:  'anchors.html', cursor=1",
-     "SPEECH OUTPUT: 'anchors.html link'"]))
+     "SPEECH OUTPUT: 'anchors.html link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -33,7 +33,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'blockquotes.html', cursor=1",
      "BRAILLE LINE:  'blockquotes.html'",
      "     VISIBLE:  'blockquotes.html', cursor=1",
-     "SPEECH OUTPUT: 'blockquotes.html link'"]))
+     "SPEECH OUTPUT: 'blockquotes.html link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -43,7 +43,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'bugzilla_top.html', cursor=1",
      "BRAILLE LINE:  'bugzilla_top.html'",
      "     VISIBLE:  'bugzilla_top.html', cursor=1",
-     "SPEECH OUTPUT: 'bugzilla_top.html link'"]))
+     "SPEECH OUTPUT: 'bugzilla_top.html link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
@@ -53,7 +53,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'blockquotes.html', cursor=1",
      "BRAILLE LINE:  'blockquotes.html'",
      "     VISIBLE:  'blockquotes.html', cursor=1",
-     "SPEECH OUTPUT: 'blockquotes.html link'"]))
+     "SPEECH OUTPUT: 'blockquotes.html link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -61,7 +61,9 @@ sequence.append(utils.AssertPresentationAction(
     "6. Basic Where Am I",
     ["BRAILLE LINE:  'blockquotes.html'",
      "     VISIBLE:  'blockquotes.html', cursor=1",
-     "SPEECH OUTPUT: 'file link to blockquotes.html same site 1188 bytes'"]))
+     "SPEECH OUTPUT: 'file link to blockquotes.html.'",
+     "SPEECH OUTPUT: 'same site.'",
+     "SPEECH OUTPUT: '1188 bytes.'"]))
 
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
@@ -75,8 +77,8 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Up to anchors.html",
     ["BRAILLE LINE:  '• anchors.html'",
      "     VISIBLE:  '• anchors.html', cursor=1",
-     "SPEECH OUTPUT: '•'",
-     "SPEECH OUTPUT: 'anchors.html link'"]))
+     "SPEECH OUTPUT: '•.'",
+     "SPEECH OUTPUT: 'anchors.html link.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

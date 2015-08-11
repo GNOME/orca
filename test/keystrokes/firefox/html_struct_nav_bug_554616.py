@@ -34,7 +34,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'r2477', cursor=1",
      "BRAILLE LINE:  'Row 2, column 1.'",
      "     VISIBLE:  'Row 2, column 1.', cursor=0",
-     "SPEECH OUTPUT: 'r2477'",
+     "SPEECH OUTPUT: 'r2477.'",
      "SPEECH OUTPUT: 'Row 2, column 1.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -50,7 +50,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Row 2, column 2.'",
      "     VISIBLE:  'Row 2, column 2.', cursor=0",
      "SPEECH OUTPUT: 'Date (UTC)'",
-     "SPEECH OUTPUT: 'Wed Nov 5 16:39:00 2008'",
+     "SPEECH OUTPUT: 'Wed Nov 5 16:39:00 2008.'",
      "SPEECH OUTPUT: 'Row 2, column 2.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -69,10 +69,10 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'installer'",
      "     VISIBLE:  'installer', cursor=1",
      "SPEECH OUTPUT: 'Download'",
-     "SPEECH OUTPUT: 'installer link'",
-     "SPEECH OUTPUT: '(10190 KB)'",
-     "SPEECH OUTPUT: 'portable archive link'",
-     "SPEECH OUTPUT: '(9154 KB)'",
+     "SPEECH OUTPUT: 'installer link.'",
+     "SPEECH OUTPUT: '(10190 KB).'",
+     "SPEECH OUTPUT: 'portable archive link.'",
+     "SPEECH OUTPUT: '(9154 KB).'",
      "SPEECH OUTPUT: 'Row 2, column 3.' voice=system",
      "SPEECH OUTPUT: 'blank' voice=system"]))
 
@@ -86,10 +86,10 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'installer (10193 KB) portable ar', cursor=1",
      "BRAILLE LINE:  'Row 3, column 3.'",
      "     VISIBLE:  'Row 3, column 3.', cursor=0",
-     "SPEECH OUTPUT: 'installer link'",
-     "SPEECH OUTPUT: '(10193 KB)'",
-     "SPEECH OUTPUT: 'portable archive link'",
-     "SPEECH OUTPUT: '(9149 KB)'",
+     "SPEECH OUTPUT: 'installer link.'",
+     "SPEECH OUTPUT: '(10193 KB).'",
+     "SPEECH OUTPUT: 'portable archive link.'",
+     "SPEECH OUTPUT: '(9149 KB).'",
      "SPEECH OUTPUT: 'Row 3, column 3.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -105,7 +105,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Row 3, column 2.'",
      "     VISIBLE:  'Row 3, column 2.', cursor=0",
      "SPEECH OUTPUT: 'Date (UTC)'",
-     "SPEECH OUTPUT: 'Tue Nov 4 16:39:02 2008'",
+     "SPEECH OUTPUT: 'Tue Nov 4 16:39:02 2008.'",
      "SPEECH OUTPUT: 'Row 3, column 2.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -120,7 +120,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Wed Nov 5 16:39:00 2008', cursor=1",
      "BRAILLE LINE:  'Row 2, column 2.'",
      "     VISIBLE:  'Row 2, column 2.', cursor=0",
-     "SPEECH OUTPUT: 'Wed Nov 5 16:39:00 2008'",
+     "SPEECH OUTPUT: 'Wed Nov 5 16:39:00 2008.'",
      "SPEECH OUTPUT: 'Row 2, column 2.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -136,10 +136,10 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Row 4, column 3.'",
      "     VISIBLE:  'Row 4, column 3.', cursor=0",
      "SPEECH OUTPUT: 'Download'",
-     "SPEECH OUTPUT: 'installer link'",
-     "SPEECH OUTPUT: '(10186 KB)'",
-     "SPEECH OUTPUT: 'portable archive link'",
-     "SPEECH OUTPUT: '(9146 KB)'",
+     "SPEECH OUTPUT: 'installer link.'",
+     "SPEECH OUTPUT: '(10186 KB).'",
+     "SPEECH OUTPUT: 'portable archive link.'",
+     "SPEECH OUTPUT: '(9146 KB).'",
      "SPEECH OUTPUT: 'Row 4, column 3.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())

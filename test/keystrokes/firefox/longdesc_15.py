@@ -25,7 +25,8 @@ sequence.append(utils.AssertPresentationAction(
     "2. Having selected View Description, do a Where Am I for new location",
     ["BRAILLE LINE:  'Pass h1'",
      "     VISIBLE:  'Pass h1', cursor=1",
-     "SPEECH OUTPUT: 'heading level 1 Pass'"]))
+          "SPEECH OUTPUT: 'heading level 1.'",
+     "SPEECH OUTPUT: 'Pass'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

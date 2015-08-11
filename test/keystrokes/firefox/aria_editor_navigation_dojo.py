@@ -13,7 +13,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow in Focus Mode - which should do nothing",
-    [""]))
+    ["BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

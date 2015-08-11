@@ -15,7 +15,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'Foo'",
      "     VISIBLE:  'Foo', cursor=1",
-     "SPEECH OUTPUT: 'Foo link'"]))
+     "SPEECH OUTPUT: 'Foo link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
@@ -33,7 +33,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Foo', cursor=1",
      "BRAILLE LINE:  'Foo'",
      "     VISIBLE:  'Foo', cursor=1",
-     "SPEECH OUTPUT: 'Foo link'"]))
+     "SPEECH OUTPUT: 'Foo link.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -34,7 +34,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  ' Before Line After'",
      "     VISIBLE:  ' Before Line After', cursor=1",
      "SPEECH OUTPUT: 'Before'",
-     "SPEECH OUTPUT: 'Line link'",
+     "SPEECH OUTPUT: 'Line link.'",
      "SPEECH OUTPUT: 'After'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -52,7 +52,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  ' Before Line After'",
      "     VISIBLE:  ' Before Line After', cursor=1",
      "SPEECH OUTPUT: 'Before'",
-     "SPEECH OUTPUT: 'Line link'",
+     "SPEECH OUTPUT: 'Line link.'",
      "SPEECH OUTPUT: 'After'"]))
 
 sequence.append(utils.StartRecordingAction())

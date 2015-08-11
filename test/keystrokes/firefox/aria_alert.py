@@ -27,7 +27,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'close'",
      "     VISIBLE:  'close', cursor=1",
      "SPEECH OUTPUT: 'This popup is created as a div in the HTML content, rather than being created in the DOM at the time of use. The display style is changed from \"none\" to \"block\" to hide and show it. close'",
-     "SPEECH OUTPUT: 'close link'"]))
+     "SPEECH OUTPUT: 'close link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -140,7 +140,7 @@ sequence.append(utils.AssertPresentationAction(
     "15. Down Arrow",
     ["BRAILLE LINE:  'close'",
      "     VISIBLE:  'close', cursor=1",
-     "SPEECH OUTPUT: 'close link'"]))
+     "SPEECH OUTPUT: 'close link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
