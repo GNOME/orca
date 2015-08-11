@@ -457,6 +457,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return speech_generator.SpeechGenerator._generateOldAncestors(
             self, obj, **args)
 
+    def _generateUnselectedCell(self, obj, **args):
+        if self._script.utilities.isSpreadSheetCell(obj):
+            return []
+
+        return super()._generateUnselectedCell(obj, **args)
+
     def generateSpeech(self, obj, **args):
         result = []
         if args.get('formatType', 'unfocused') == 'basicWhereAmI' \
