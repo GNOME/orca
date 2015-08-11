@@ -42,18 +42,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
-    ["KNOWN ISSUE: And we seem to be getting stuck here",
-     "BRAILLE LINE:  'math'",
-     "     VISIBLE:  'math', cursor=0",
-     "SPEECH OUTPUT: 'left paren x ≪̸ y right paren logical and left paren X ⊂⃒ Y right paren'"]))
-
-#sequence.append(utils.StartRecordingAction())
-#sequence.append(KeyComboAction("Down"))
-#sequence.append(utils.AssertPresentationAction(
-#    "5. Line Down",
-#    ["BRAILLE LINE:  'End of test'",
-#     "     VISIBLE:  'End of test', cursor=1",
-#     "SPEECH OUTPUT: 'End of test'"]))
+    ["BRAILLE LINE:  'End of test'",
+     "     VISIBLE:  'End of test', cursor=1",
+     "SPEECH OUTPUT: 'End of test'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

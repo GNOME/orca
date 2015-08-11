@@ -383,6 +383,24 @@ class Utilities(script_utilities.Utilities):
 
         return prevobj, prevoffset
 
+    def lastContext(self, root):
+        offset = 0
+        text = self.queryNonEmptyText(root)
+        if text:
+            offset = text.characterCount - 1
+
+        def _isInRoot(o):
+            return o == root or pyatspi.utils.findAncestor(o, lambda x: x == root)
+
+        obj = root
+        while obj:
+            lastobj, lastoffset = self.nextContext(obj, offset)
+            if not (lastobj and _isInRoot(lastobj)):
+                break
+            obj, offset = lastobj, lastoffset
+
+        return obj, offset
+
     def contextsAreOnSameLine(self, a, b):
         if a == b:
             return True
@@ -1132,7 +1150,11 @@ class Utilities(script_utilities.Utilities):
         if not (line and line[0]):
             return []
 
-        lastObj, lastOffset = line[-1][0], line[-1][2] - 1
+        math = self.getMathAncestor(obj)
+        if math:
+            lastObj, lastOffset = self.lastContext(math)
+        else:
+            lastObj, lastOffset = line[-1][0], line[-1][2] - 1
         msg = "INFO: Last context on line is: %s, %i" % (lastObj, lastOffset)
         debug.println(debug.LEVEL_INFO, msg)
 
