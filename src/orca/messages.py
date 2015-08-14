@@ -828,11 +828,6 @@ KEY_ECHO_WORD_AND_SENTENCE_BRIEF = C_("key echo", "word and sentence")
 # echo and can cycle through the various levels quickly via a command.
 KEY_ECHO_WORD_AND_SENTENCE_FULL = _("Key echo set to word and sentence.")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user of all of the MathML
 # enclosure notations associated with a given mathematical expression. For
 # instance, the expression x+y could be enclosed by a box, or enclosed by a
@@ -845,11 +840,6 @@ KEY_ECHO_WORD_AND_SENTENCE_FULL = _("Key echo set to word and sentence.")
 # http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_ENCLOSED_BY = C_("math enclosure", "Enclosed by: %s")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -858,11 +848,6 @@ MATH_ENCLOSURE_ENCLOSED_BY = C_("math enclosure", "Enclosed by: %s")
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_ACTUARIAL = C_("math enclosure", "an actuarial symbol")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -871,11 +856,6 @@ MATH_ENCLOSURE_ACTUARIAL = C_("math enclosure", "an actuarial symbol")
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_BOX = C_("math enclosure", "a box")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -884,11 +864,6 @@ MATH_ENCLOSURE_BOX = C_("math enclosure", "a box")
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_CIRCLE = C_("math enclosure", "a circle")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -897,11 +872,6 @@ MATH_ENCLOSURE_CIRCLE = C_("math enclosure", "a circle")
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_LONGDIV = C_("math enclosure", "a long division sign")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -910,11 +880,6 @@ MATH_ENCLOSURE_LONGDIV = C_("math enclosure", "a long division sign")
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_RADICAL = C_("math enclosure", "a radical")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -923,11 +888,6 @@ MATH_ENCLOSURE_RADICAL = C_("math enclosure", "a radical")
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_ROUNDEDBOX = C_("math enclosure", "a rounded box")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -936,11 +896,6 @@ MATH_ENCLOSURE_ROUNDEDBOX = C_("math enclosure", "a rounded box")
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_HORIZONTALSTRIKE = C_("math enclosure", "a horizontal strike")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -949,11 +904,6 @@ MATH_ENCLOSURE_HORIZONTALSTRIKE = C_("math enclosure", "a horizontal strike")
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_VERTICALSTRIKE = C_("math enclosure", "a vertical strike")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -962,11 +912,6 @@ MATH_ENCLOSURE_VERTICALSTRIKE = C_("math enclosure", "a vertical strike")
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_DOWNDIAGONALSTRIKE = C_("math enclosure", "a down diagonal strike")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -975,11 +920,6 @@ MATH_ENCLOSURE_DOWNDIAGONALSTRIKE = C_("math enclosure", "a down diagonal strike
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_UPDIAGONALSTRIKE = C_("math enclosure", "an up diagonal strike")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -988,11 +928,6 @@ MATH_ENCLOSURE_UPDIAGONALSTRIKE = C_("math enclosure", "an up diagonal strike")
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_NORTHEASTARROW = C_("math enclosure", "a northeast arrow")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -1001,11 +936,6 @@ MATH_ENCLOSURE_NORTHEASTARROW = C_("math enclosure", "a northeast arrow")
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_BOTTOM = C_("math enclosure", "a line at the bottom")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -1014,11 +944,6 @@ MATH_ENCLOSURE_BOTTOM = C_("math enclosure", "a line at the bottom")
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_LEFT = C_("math enclosure", "a line on the left")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -1027,11 +952,6 @@ MATH_ENCLOSURE_LEFT = C_("math enclosure", "a line on the left")
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_RIGHT = C_("math enclosure", "a line on the right")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -1040,11 +960,6 @@ MATH_ENCLOSURE_RIGHT = C_("math enclosure", "a line on the right")
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_TOP = C_("math enclosure", "a line at the top")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -1053,11 +968,6 @@ MATH_ENCLOSURE_TOP = C_("math enclosure", "a line at the top")
 # types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_PHASOR_ANGLE = C_("math enclosure", "a phasor angle")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to describe one MathML enclosure notation
 # associated with a mathematical expression. Because an expression, such as
 # x+y, can have one or many enclosure notations (box, circle, long division,
@@ -1067,11 +977,6 @@ MATH_ENCLOSURE_PHASOR_ANGLE = C_("math enclosure", "a phasor angle")
 # This particular string is for the "madruwb" notation type.
 MATH_ENCLOSURE_MADRUWB = C_("math enclosure", "an arabic factorial symbol")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user of all of the MathML
 # enclosure notations associated with a given mathematical expression. For
 # instance, the expression x+y could be enclosed by a box, or enclosed by a
@@ -1085,21 +990,11 @@ MATH_ENCLOSURE_MADRUWB = C_("math enclosure", "an arabic factorial symbol")
 # http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 MATH_ENCLOSURE_AND = C_("math enclosure", "and")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that what is about to
 # be said is part of a mathematical fraction. For instance, given x+1/y+2, Orca
 # would say "fraction start, x+1 over y+2, fraction end."
 MATH_FRACTION_START = _("fraction start")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that what is about to
 # be said is part of a mathematical fraction whose bar is not displayed. See
 # https://en.wikipedia.org/wiki/Combination for an example. Note that the
@@ -1111,31 +1006,16 @@ MATH_FRACTION_START = _("fraction start")
 # is installed.
 MATH_FRACTION_WITHOUT_BAR_START = _("fraction without bar, start")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This word refers to the line separating the numerator from the
 # denominator in a mathematical fraction. For instance, given x+1/y+2, Orca
 # would would say "fraction start, x+1 over y+2, fraction end."
 MATH_FRACTION_LINE = C_("math fraction", "over")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that the last spoken
 # phrase is the end of a mathematical fraction. For instance, given x+1/y+2,
 # Orca would would say "fraction start, x+1 over y+2, fraction end."
 MATH_FRACTION_END = _("fraction end")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that what is about to
 # be spoken is a square root. For instance, for √9 Orca would say "square root
 # of 9, root end" (assuming the user settings indicate that root endings should
@@ -1144,11 +1024,6 @@ MATH_FRACTION_END = _("fraction end")
 # expression such as a fraction.
 MATH_SQUARE_ROOT_OF = _("square root of")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that what is about to
 # be spoken is a cube root. For instance, for the cube root of 9 Orca would
 # say "cube root of 9, root end" (assuming the user settings indicate that root
@@ -1157,11 +1032,6 @@ MATH_SQUARE_ROOT_OF = _("square root of")
 # of another expression such as a fraction.
 MATH_CUBE_ROOT_OF = _("cube root of")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that what is about to
 # be spoken is an nth root. https://en.wikipedia.org/wiki/Nth_root. For instance,
 # for the fourth root of 9, Orca would say "fourth root of 9, root end" (assuming
@@ -1170,11 +1040,6 @@ MATH_CUBE_ROOT_OF = _("cube root of")
 # expression like "fourth"; the index might instead be a fraction.
 MATH_ROOT_OF = _("root of")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that what is about to
 # be said is part of a mathematical root (square root, cube root, nth root).
 # It is primarily intended to be spoken when the index of the root is not a
@@ -1184,22 +1049,12 @@ MATH_ROOT_OF = _("root of")
 # help the user better understand that x/4 is the index of the root.
 MATH_ROOT_START = _("root start")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that the last spoken
 # phrase is the end of a mathematical root (square root, cube root, nth root).
 # For instance, for the cube root of 9, Orca would say "cube root of 9, root
 # end" (assuming the user settings indicate that root endings should be spoken).
 MATH_ROOT_END = _("root end")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that what is about to
 # be spoken is subscripted text in a mathematical expression. Note that the
 # subscript might be simple text or may itself be a mathematical expression,
@@ -1207,11 +1062,6 @@ MATH_ROOT_END = _("root end")
 # friendly word or phrase can reliably be chosen.
 MATH_SUBSCRIPT = C_("math script generic", "subscript")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that what is about to
 # be spoken is superscripted text in a mathematical expression. Note that the
 # superscript might be simple text or may itself be a mathematical expression,
@@ -1219,11 +1069,6 @@ MATH_SUBSCRIPT = C_("math script generic", "subscript")
 # friendly word or phrase can reliably be chosen.
 MATH_SUPERSCRIPT = C_("math script generic", "superscript")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that what is about to
 # be spoken is subscripted text which precedes the base in a mathematical
 # expression. See, for instance, the MathML mmultiscripts element:
@@ -1231,11 +1076,6 @@ MATH_SUPERSCRIPT = C_("math script generic", "superscript")
 # https://developer.mozilla.org/en-US/docs/Web/MathML/Element/mmultiscripts
 MATH_PRE_SUBSCRIPT = C_("math script", "pre-subscript")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that what is about to
 # be spoken is superscripted text which precedes the base in a mathematical
 # expression. See, for instance, the MathML mmultiscripts element:
@@ -1243,11 +1083,6 @@ MATH_PRE_SUBSCRIPT = C_("math script", "pre-subscript")
 # https://developer.mozilla.org/en-US/docs/Web/MathML/Element/mmultiscripts
 MATH_PRE_SUPERSCRIPT = C_("math script", "pre-superscript")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that what is about to
 # be spoken is underscripted text in a mathematical expression. Note that the
 # underscript might be simple text or may itself be a mathematical expression,
@@ -1257,11 +1092,6 @@ MATH_PRE_SUPERSCRIPT = C_("math script", "pre-superscript")
 # https://reference.wolfram.com/language/ref/Underscript.html
 MATH_UNDERSCRIPT = C_("math script generic", "underscript")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that what is about to
 # be spoken is overscripted text in a mathematical expression. Note that the
 # overscript might be simple text or may itself be a mathematical expression,
@@ -1271,20 +1101,10 @@ MATH_UNDERSCRIPT = C_("math script generic", "underscript")
 # https://reference.wolfram.com/language/ref/Overscript.html
 MATH_OVERSCRIPT = C_("math script generic", "overscript")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that the last spoken
 # phrase is the end of a mathematical table.
 MATH_TABLE_END = C_("math table", "table end")
 
-# TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-# RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-# AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-# CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-# NOTIFIED WHEN STRINGS ARE FINALIZED.
 # Translators: This phrase is spoken to inform the user that the last spoken
 # phrase is the end of a mathematical table which is nested inside another
 # mathematical table.
@@ -2266,21 +2086,11 @@ def listItemCount(count):
     return ngettext("List with %d item", "List with %d items", count) % count
 
 def mathTableSize(nRows, nColumns):
-    # TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-    # RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-    # AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-    # CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-    # NOTIFIED WHEN STRINGS ARE FINALIZED.
     # Translators: this represents the number of rows in a mathematical table.
     # See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
     rowString = ngettext("math table with %d row",
                          "math table with %d rows",
                          nRows) % nRows
-    # TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-    # RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-    # AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-    # CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-    # NOTIFIED WHEN STRINGS ARE FINALIZED.
     # Translators: this represents the number of columns in a mathematical table.
     # See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
     colString = ngettext("%d column",
@@ -2290,22 +2100,12 @@ def mathTableSize(nRows, nColumns):
     return rowString + " " + colString
 
 def mathNestedTableSize(nRows, nColumns):
-    # TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-    # RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-    # AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-    # CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-    # NOTIFIED WHEN STRINGS ARE FINALIZED.
     # Translators: this represents the number of rows in a mathematical table
     # which is nested inside another mathematical table.
     # See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
     rowString = ngettext("nested math table with %d row",
                          "nested math table with %d rows",
                          nRows) % nRows
-    # TRANSLATORS: PLEASE NOTE THAT THIS STRING MAY BE CHANGED PRIOR TO THE 3.18
-    # RELEASE. IMPLEMENTING SUPPORT FOR SPOKEN MATH IS A CROSS-PLATFORM EFFORT
-    # AND CONSENSUS ABOUT EXACT PRESENTATION HAS NOT YET BEEN REACHED. YOU CAN
-    # CC YOURSELF TO https://bugzilla.gnome.org/show_bug.cgi?id=751816 TO BE
-    # NOTIFIED WHEN STRINGS ARE FINALIZED.
     # Translators: this represents the number of rows in a mathematic table
     # which is nested inside another mathematical table.
     # See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
