@@ -185,6 +185,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
+        if not args.get('formatType', '').endswith('WhereAmI'):
+            return []
+
         result = []
         acss = self.voice(speech_generator.SYSTEM)
         if obj.description:
