@@ -197,7 +197,7 @@ class SpellCheck:
 
     def presentSuggestion(self, detailed=False):
         if not self._hasChangeToEntry:
-            return self.presentSuggestionListItem(detailed)
+            return self.presentSuggestionListItem(detailed, includeLabel=True)
 
         if not self.isActive():
             return False
@@ -215,7 +215,7 @@ class SpellCheck:
 
         return True
 
-    def presentSuggestionListItem(self, detailed=False):
+    def presentSuggestionListItem(self, detailed=False, includeLabel=False):
         if not self.isActive():
             return False
 
@@ -227,9 +227,13 @@ class SpellCheck:
         if not len(items) == 1:
             return False
 
+        if includeLabel:
+            label = self._script.utilities.displayedLabel(suggestions) or suggestions.name
+        else:
+            label = ""
         string = items[0].name
         voice = self._script.voices.get(settings.DEFAULT_VOICE)
-        self._script.speakMessage(string, voice=voice)
+        self._script.speakMessage(("%s %s" % (label, string)).strip(), voice=voice)
         if detailed or _settingsManager.getSetting('spellcheckSpellSuggestion'):
             self._script.spellCurrentItem(string)
 

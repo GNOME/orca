@@ -43,11 +43,12 @@ import orca.speech as speech
 import orca.settings as settings
 import orca.settings_manager as settings_manager
 
-from .speech_generator import SpeechGenerator
 from .braille_generator import BrailleGenerator
 from .formatting import Formatting
-from .structural_navigation import StructuralNavigation
 from .script_utilities import Utilities
+from .spellcheck import SpellCheck
+from .speech_generator import SpeechGenerator
+from .structural_navigation import StructuralNavigation
 
 _settingsManager = settings_manager.getManager()
 
@@ -77,15 +78,6 @@ class Script(default.Script):
         self.dynamicColumnHeaders = {}
         self.dynamicRowHeaders = {}
 
-        # The following variables will be used to try to determine if we've
-        # already handled this misspelt word (see readMisspeltWord() for
-        # more details.
-
-        self.lastTextLength = -1
-        self.lastBadWord = ''
-        self.lastStartOff = -1
-        self.lastEndOff = -1
-
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
@@ -95,6 +87,11 @@ class Script(default.Script):
         """Returns the speech generator for this script.
         """
         return SpeechGenerator(self)
+
+    def getSpellCheck(self):
+        """Returns the spellcheck for this script."""
+
+        return SpellCheck(self)
 
     def getFormatting(self):
         """Returns the formatting strings for this script."""
@@ -273,6 +270,8 @@ class Script(default.Script):
         self.skipBlankCellsCheckButton.set_active(value)
         tableGrid.attach(self.skipBlankCellsCheckButton, 0, 3, 1, 1)
 
+        spellcheck = self.spellcheck.getAppPreferencesGUI()
+        grid.attach(spellcheck, 0, len(grid.get_children()), 1, 1)
         grid.show_all()
 
         return grid
@@ -280,13 +279,16 @@ class Script(default.Script):
     def getPreferencesFromGUI(self):
         """Returns a dictionary with the app-specific preferences."""
 
-        return {
+        prefs = {
             'speakCellSpan': self.speakCellSpanCheckButton.get_active(),
             'speakCellHeaders': self.speakCellHeadersCheckButton.get_active(),
             'skipBlankCells': self.skipBlankCellsCheckButton.get_active(),
             'speakCellCoordinates': self.speakCellCoordinatesCheckButton.get_active(),
             'speakSpreadsheetCoordinates': self.speakSpreadsheetCoordinatesCheckButton.get_active(),
         }
+
+        prefs.update(self.spellcheck.getPreferencesFromGUI())
+        return prefs
 
     def isStructuralNavigationCommand(self, inputEvent=None):
         """Checks to see if the inputEvent was a structural navigation
@@ -308,6 +310,15 @@ class Script(default.Script):
                 return True
 
         return False
+
+    def doWhereAmI(self, inputEvent, basicOnly):
+        """Performs the whereAmI operation."""
+
+        if self.spellcheck.isActive():
+            self.spellcheck.presentErrorDetails(not basicOnly)
+            return
+
+        super().doWhereAmI(inputEvent, basicOnly)
 
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
         """In document content, we want to use the panning keys to browse the
@@ -506,114 +517,6 @@ class Script(default.Script):
 
         return True
 
-    def readMisspeltWord(self, event, pane):
-        """Speak/braille the current misspelt word plus its context.
-           The spell check dialog contains a "paragraph" which shows the
-           context for the current spelling mistake. After speaking/brailling
-           the default action for this component, that a selection of the
-           surronding text from that paragraph with the misspelt word is also
-           spoken.
-
-        Arguments:
-        - event: the event.
-        - pane: the option pane in the spell check dialog.
-
-        Returns True if this is the spell check dialog (whether we actually
-        wind up reading the word or not).
-        """
-
-        def isMatch(obj):
-            if not (obj and obj.getRole() == pyatspi.ROLE_PARAGRAPH):
-                return False
-
-            if not obj.getState().contains(pyatspi.STATE_EDITABLE):
-                return False
-
-            try:
-                text = obj.queryText()
-            except:
-                return False
-
-            return text.characterCount > 0
-
-        paragraph = pyatspi.findAllDescendants(pane, isMatch)
-
-        # If there is not exactly one paragraph, this isn't the spellcheck
-        # dialog.
-        #
-        if len(paragraph) != 1:
-            return False
-
-        # If there's not any text displayed in the paragraph, this isn't
-        # the spellcheck dialog.
-        #
-        try:
-            text = paragraph[0].queryText()
-        except:
-            return False
-        else:
-            textLength = text.characterCount
-            if not textLength:
-                return False
-
-        # Determine which word is the misspelt word. This word will have
-        # non-default text attributes associated with it.
-        #
-        startFound = False
-        startOff = 0
-        endOff = textLength
-        for i in range(0, textLength):
-            attributes = text.getAttributes(i)
-            if len(attributes[0]) != 0:
-                if not startFound:
-                    startOff = i
-                    startFound = True
-            else:
-                if startFound:
-                    endOff = i
-                    break
-
-        if not startFound:
-            # If there are no text attributes in this paragraph, this isn't
-            # the spellcheck dialog.
-            #
-            return False
-
-        badWord = self.utilities.substring(paragraph[0], startOff, endOff - 1)
-
-        # Note that we often get two or more of these focus or property-change
-        # events each time there is a new misspelt word. We extract the
-        # length of the line of text, the misspelt word, the start and end
-        # offsets for that word and compare them against the values saved
-        # from the last time this routine was called. If they are the same
-        # then we ignore it.
-        #
-        debug.println(debug.LEVEL_INFO,
-            "StarOffice.readMisspeltWord: type=%s  word=%s(%d,%d)  len=%d" % \
-            (event.type, badWord, startOff, endOff, textLength))
-
-        if (textLength == self.lastTextLength) and \
-           (badWord == self.lastBadWord) and \
-           (startOff == self.lastStartOff) and \
-           (endOff == self.lastEndOff):
-            return True
-
-        # Create a list of all the words found in the misspelt paragraph.
-        #
-        text = self.utilities.substring(paragraph[0], 0, -1)
-        allTokens = text.split()
-        self.speakMisspeltWord(allTokens, badWord)
-
-        # Save misspelt word information for comparison purposes next
-        # time around.
-        #
-        self.lastTextLength = textLength
-        self.lastBadWord = badWord
-        self.lastStartOff = startOff
-        self.lastEndOff = endOff
-
-        return True
-
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
 
@@ -694,29 +597,6 @@ class Script(default.Script):
             self.pointOfReference['lastRow'] = row
             self.pointOfReference['lastColumn'] = column
 
-    def onWindowActivated(self, event):
-        """Called whenever a property on an object changes.
-
-        Arguments:
-        - event: the Event
-        """
-
-        self.lastTextLength = -1
-        self.lastBadWord = ''
-        self.lastStartOff = -1
-        self.lastEndOff = -1
-
-        default.Script.onWindowActivated(self, event)
-
-        # Maybe it's the spellcheck dialog. Might as well try and see.
-        # If it is, we want to speak the misspelled word and context
-        # after we've spoken the window name.
-        if event.source \
-           and event.source.getRole() == pyatspi.ROLE_DIALOG \
-           and event.source.childCount \
-           and event.source[0].getRole() == pyatspi.ROLE_OPTION_PANE:
-            self.readMisspeltWord(event, event.source)
-
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
 
@@ -724,19 +604,8 @@ class Script(default.Script):
         - event: the Event
         """
 
-        # Check to see if if we've had a property-change event for the
-        # accessible name for the option pane in the spell check dialog.
-        # This (hopefully) means that the user has just corrected a
-        # spelling mistake, in which case, speak/braille the current
-        # misspelt word plus its context.
-        #
-        rolesList = [pyatspi.ROLE_OPTION_PANE, \
-                     pyatspi.ROLE_DIALOG, \
-                     pyatspi.ROLE_APPLICATION]
-        if self.utilities.hasMatchingHierarchy(event.source, rolesList) \
-           and self.utilities.isSameObject(
-                event.source.parent, orca_state.activeWindow):
-            self.readMisspeltWord(event, event.source)
+        if self.spellcheck.isCheckWindow(event.source):
+            return
 
         # Impress slide navigation.
         #
@@ -771,6 +640,13 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+        if event.source == self.spellcheck.getSuggestionsList():
+            if self.spellcheck.isSuggestionsItem(orca_state.locusOfFocus):
+                self.spellcheck.presentSuggestionListItem()
+            else:
+                self.spellcheck.presentErrorDetails()
+            return
 
         if self.utilities.isSameObject(event.any_data, orca_state.locusOfFocus):
             return
@@ -1014,3 +890,18 @@ class Script(default.Script):
             textLine[0] = self.utilities.displayedText(obj)
 
         return textLine
+
+    def onWindowActivated(self, event):
+        """Callback for window:activate accessibility events."""
+
+        super().onWindowActivated(event)
+        if not self.spellcheck.isCheckWindow(event.source):
+            return
+
+        self.spellcheck.presentErrorDetails()
+
+    def onWindowDeactivated(self, event):
+        """Callback for window:deactivate accessibility events."""
+
+        super().onWindowDeactivated(event)
+        self.spellcheck.deactivate()

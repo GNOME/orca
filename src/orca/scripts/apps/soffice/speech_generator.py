@@ -432,6 +432,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not priorObj or priorObj.getRoleName() == 'text frame':
             return []
 
+        if self._script.spellcheck.isActive():
+            return []
+
         return speech_generator.SpeechGenerator._generateNewAncestors(
             self, obj, **args)
 
