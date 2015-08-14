@@ -25,9 +25,12 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2008 Eitan Isaacson"
 __license__   = "LGPL"
 
+import gi
+
 from . import debug
 
 try:
+    gi.require_version("Wnck", "3.0")
     from gi.repository import Wnck
     _mouseReviewCapable = True
 except:

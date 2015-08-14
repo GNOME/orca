@@ -29,6 +29,7 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2012 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
 import importlib
 import os
 import pyatspi
@@ -49,10 +50,15 @@ try:
     # for this is to allow "orca --text-setup" to work even if
     # the desktop is not running.
     #
+    gi.require_version("Gtk", "3.0")
     from gi.repository import Gtk
+
+    gi.require_version("Gdk", "3.0")
     from gi.repository import Gdk
+
     # Note: This last import is here due to bgo #673396.
     # See bgo#673397 for the rest of the story.
+    gi.require_version("GdkX11", "3.0")
     from gi.repository.GdkX11 import X11Screen
 except:
     pass
