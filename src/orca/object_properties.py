@@ -94,7 +94,7 @@ STATE_COLLAPSED = _("collapsed")
 # means the item's children are not showing; expanded means they are.
 STATE_EXPANDED = _("expanded")
 
-# Translators: This is a state which applies to elements in document conent
+# Translators: This is a state which applies to elements in document content
 # which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
 STATE_HAS_LONGDESC = _("has long description")
 

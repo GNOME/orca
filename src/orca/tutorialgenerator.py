@@ -688,12 +688,12 @@ class TutorialGenerator:
         """
 
         utterances = []
-        # Translators: this is a tip for the user, how to navigate menues.
+        # Translators: this is a tip for the user, how to navigate menus.
         mainMenuMsg = _("To navigate, press left or right arrow. " \
                        "To move through items press up or down arrow.")
 
         # Translators: this is a tip for the user, how to
-        # navigate into sub menues.
+        # navigate into sub menus.
         subMenuMsg = _("To enter sub menu, press right arrow.")
 
         # Checking if we are a submenu,

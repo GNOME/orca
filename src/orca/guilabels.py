@@ -125,7 +125,7 @@ CHAT_SPEAK_MESSAGES_ALL = _("All cha_nnels")
 
 # Translators: This is the label of a radio button. If it is selected, Orca will
 # speak all new chat messages as they appear if and only if the chat application
-# has focus. The string substituion is for the application name (e.g Pidgin).
+# has focus. The string substitution is for the application name (e.g Pidgin).
 CHAT_SPEAK_MESSAGES_ALL_IF_FOCUSED = _("All channels when an_y %s window is active")
 
 # Translators: This is the label of a radio button. If it is selected, Orca will
@@ -653,7 +653,7 @@ READ_PAGE_UPON_LOAD = \
 # Translators: Different speech systems and speech engines work differently when
 # it comes to handling pauses (e.g. sentence boundaries). This property allows
 # the user to specify whether speech should be sent to the speech synthesis
-# system immediately when a pause directive is enountered or if it should be
+# system immediately when a pause directive is encountered or if it should be
 # queued up and sent to the speech synthesis system once the entire set of
 # utterances has been calculated.
 SPEECH_BREAK_INTO_CHUNKS = _("Break speech into ch_unks between pauses")

@@ -296,19 +296,19 @@ CLI_EPILOG = _("Report bugs to orca-list@gnome.org.")
 
 # Translators: In chat applications, it is often possible to see that a "buddy"
 # is typing currently (e.g. via a keyboard icon or status text). Some users like
-# to have this typing status announced by Orca; others find that announcment
+# to have this typing status announced by Orca; others find that announcement
 # unpleasant. Therefore, it is a setting in Orca. This string to be translated
 # is presented when the value of the setting is toggled.
 CHAT_BUDDY_TYPING_OFF = _("Do not announce when your buddies are typing.")
 
 # Translators: In chat applications, it is often possible to see that a "buddy"
 # is typing currently (e.g. via a keyboard icon or status text). Some users like
-# to have this typing status announced by Orca; others find that announcment
+# to have this typing status announced by Orca; others find that announcement
 # unpleasant. Therefore, it is a setting in Orca. This string to be translated
 # is presented when the value of the setting is toggled.
 CHAT_BUDDY_TYPING_ON = _("announce when your buddies are typing.")
 
-# Translators: In chat applcations, Orca automatically presents incoming
+# Translators: In chat applications, Orca automatically presents incoming
 # messages in speech and braille. If a user is in multiple conversations or
 # channels at the same time, it can be confusing to know what room or channel
 # a given message came from just from hearing/reading it. This string to be
@@ -322,7 +322,7 @@ CHAT_MESSAGE_FROM_ROOM = _("Message from chat room %s")
 # label on the tab is the string substitution.
 CHAT_NEW_TAB = _("New chat tab %s")
 
-# Translators: In chat applcations, Orca automatically presents incoming
+# Translators: In chat applications, Orca automatically presents incoming
 # messages in speech and braille. If a user is in multiple conversations or
 # channels at the same time, it can be confusing to know what room or channel
 # a given message came from just from hearing/reading it. For this reason, Orca
@@ -331,7 +331,7 @@ CHAT_NEW_TAB = _("New chat tab %s")
 # the value of the setting is toggled.
 CHAT_ROOM_NAME_PREFIX_OFF = _("Do not speak chat room name.")
 
-# Translators: In chat applcations, Orca automatically presents incoming
+# Translators: In chat applications, Orca automatically presents incoming
 # messages in speech and braille. If a user is in multiple conversations or
 # channels at the same time, it can be confusing to know what room or channel
 # a given message came from just from hearing/reading it. For this reason, Orca
@@ -514,13 +514,13 @@ DATE_FORMAT_ABBREVIATED_YMD = "%Y. %b %-d, %a."
 DEFAULT_BUTTON_IS = _("Default button is %s")
 
 # Translators: This string is part of the presentation of an item that includes
-# one or several consequtive subscripted characters. For example, 'X' followed
+# one or several consecutive subscripted characters. For example, 'X' followed
 # by 'subscript 2' followed by 'subscript 3' should be presented to the user as
 # 'X subscript 23'.
 DIGITS_SUBSCRIPT =  _(" subscript %s")
 
 # Translators: This string is part of the presentation of an item that includes
-# one or several consequtive superscripted characters. For example, 'X' followed
+# one or several consecutive superscripted characters. For example, 'X' followed
 # by 'superscript 2' followed by 'superscript 3' should be presented to the user
 # as 'X superscript 23'.
 DIGITS_SUPERSCRIPT =  _(" superscript %s")
@@ -1717,49 +1717,49 @@ PROGRESS_BAR_NUMBER = _("Progress bar %d.")
 
 # Translators: This brief message will be presented as the user cycles
 # through the different levels of spoken punctuation. The options are:
-# All puntuation marks will be spoken, None will be spoken, Most will be
+# All punctuation marks will be spoken, None will be spoken, Most will be
 # spoken, or Some will be spoken.
 PUNCTUATION_ALL_BRIEF = C_("spoken punctuation", "All")
 
 # Translators: This detailed message will be presented as the user cycles
 # through the different levels of spoken punctuation. The options are:
-# All puntuation marks will be spoken, None will be spoken, Most will be
+# All punctuation marks will be spoken, None will be spoken, Most will be
 # spoken, or Some will be spoken.
 PUNCTUATION_ALL_FULL = _("Punctuation level set to all.")
 
 # Translators: This brief message will be presented as the user cycles
 # through the different levels of spoken punctuation. The options are:
-# All puntuation marks will be spoken, None will be spoken, Most will be
+# All punctuation marks will be spoken, None will be spoken, Most will be
 # spoken, or Some will be spoken.
 PUNCTUATION_MOST_BRIEF = C_("spoken punctuation", "Most")
 
 # Translators: This detailed message will be presented as the user cycles
 # through the different levels of spoken punctuation. The options are:
-# All puntuation marks will be spoken, None will be spoken, Most will be
+# All punctuation marks will be spoken, None will be spoken, Most will be
 # spoken, or Some will be spoken.
 PUNCTUATION_MOST_FULL = _("Punctuation level set to most.")
 
 # Translators: This brief message will be presented as the user cycles
 # through the different levels of spoken punctuation. The options are:
-# All puntuation marks will be spoken, None will be spoken, Most will be
+# All punctuation marks will be spoken, None will be spoken, Most will be
 # spoken, or Some will be spoken.
 PUNCTUATION_NONE_BRIEF = C_("spoken punctuation", "None")
 
 # Translators: This detailed message will be presented as the user cycles
 # through the different levels of spoken punctuation. The options are:
-# All puntuation marks will be spoken, None will be spoken, Most will be
+# All punctuation marks will be spoken, None will be spoken, Most will be
 # spoken, or Some will be spoken.
 PUNCTUATION_NONE_FULL = _("Punctuation level set to none.")
 
 # Translators: This brief message will be presented as the user cycles
 # through the different levels of spoken punctuation. The options are:
-# All puntuation marks will be spoken, None will be spoken, Most will be
+# All punctuation marks will be spoken, None will be spoken, Most will be
 # spoken, or Some will be spoken.
 PUNCTUATION_SOME_BRIEF = C_("spoken punctuation", "Some")
 
 # Translators: This detailed message will be presented as the user cycles
 # through the different levels of spoken punctuation. The options are:
-# All puntuation marks will be spoken, None will be spoken, Most will be
+# All punctuation marks will be spoken, None will be spoken, Most will be
 # spoken, or Some will be spoken.
 PUNCTUATION_SOME_FULL = _("Punctuation level set to some.")
 

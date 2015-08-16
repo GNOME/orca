@@ -1030,7 +1030,7 @@
                             <property name="can_focus">False</property>
                             <child>
                               <object class="GtkCheckButton" id="enablePauseBreaksCheckButton">
-                                <property name="label" translatable="yes" comments="Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.">Break speech into ch_unks between pauses</property>
+                                <property name="label" translatable="yes" comments="Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is encountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.">Break speech into ch_unks between pauses</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>

@@ -84,13 +84,13 @@ SHOW_FIND_GUI = _("Opens the Find dialog.")
 
 # Translators: the Orca "Find" dialog allows a user to search for text in a
 # window and then move focus to that text. For example, they may want to find
-# the "OK" button. This string is used for finding the next occurence of a
+# the "OK" button. This string is used for finding the next occurrence of a
 # string.
 FIND_NEXT = _("Searches for the next instance of a string.")
 
 # Translators: the Orca "Find" dialog allows a user to search for text in a
 # window and then move focus to that text. For example, they may want to find
-# the "OK" button. This string is used for finding the previous occurence of a
+# the "OK" button. This string is used for finding the previous occurrence of a
 # string.
 FIND_PREVIOUS = _("Searches for the previous instance of a string.")
 
@@ -520,7 +520,7 @@ CHAT_PREVIOUS_MESSAGE = _("Speak and braille a previous chat room message.")
 
 # Translators: In chat applications, it is often possible to see that a "buddy"
 # is typing currently (e.g. via a keyboard icon or status text). Some users like
-# to have this typing status announced by Orca; others find that announcment
+# to have this typing status announced by Orca; others find that announcement
 # unpleasant. Therefore, it is a setting in Orca. This string to be translated
 # is associated with the command to toggle typing status presentation on or off.
 CHAT_TOGGLE_BUDDY_TYPING = \
@@ -537,7 +537,7 @@ CHAT_TOGGLE_MESSAGE_HISTORIES = \
     _("Toggle whether we provide chat room specific message " \
       "histories.")
 
-# Translators: In chat applcations, Orca automatically presents incoming
+# Translators: In chat applications, Orca automatically presents incoming
 # messages in speech and braille. If a user is in multiple conversations or
 # channels at the same time, it can be confusing to know what room or channel
 # a given message came from just from hearing/reading it. For this reason, Orca
