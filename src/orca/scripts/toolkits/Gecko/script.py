@@ -47,6 +47,9 @@ class Script(web.Script):
             "background-color"        : "bg-color",
             "color"                   : "fg-color"}
 
+        # This one needs some more consideration for all toolkits.
+        self.attributeNamesDict["invalid"] = "text-spelling"
+
     def getUtilities(self):
         """Returns the utilites for this script."""
 
