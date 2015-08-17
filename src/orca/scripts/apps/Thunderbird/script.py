@@ -92,7 +92,7 @@ class Script(Gecko.Script):
 
         grid = Gecko.Script.getAppPreferencesGUI(self)
 
-        self.sayAllOnLoadCheckButton.set_active(
+        self._sayAllOnLoadCheckButton.set_active(
             _settingsManager.getSetting('sayAllOnLoad'))
 
         spellcheck = self.spellcheck.getAppPreferencesGUI()
@@ -105,7 +105,7 @@ class Script(Gecko.Script):
         """Returns a dictionary with the app-specific preferences."""
 
         prefs = Gecko.Script.getPreferencesFromGUI(self)
-        prefs['sayAllOnLoad'] = self.sayAllOnLoadCheckButton.get_active()
+        prefs['sayAllOnLoad'] = self._sayAllOnLoadCheckButton.get_active()
         prefs.update(self.spellcheck.getPreferencesFromGUI())
 
         return prefs
