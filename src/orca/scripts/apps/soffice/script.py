@@ -643,6 +643,8 @@ class Script(default.Script):
 
         if event.source == self.spellcheck.getSuggestionsList():
             if self.spellcheck.isSuggestionsItem(orca_state.locusOfFocus):
+                orca.setLocusOfFocus(event, event.any_data, False)
+                self.updateBraille(orca_state.locusOfFocus)
                 self.spellcheck.presentSuggestionListItem()
             else:
                 self.spellcheck.presentErrorDetails()
