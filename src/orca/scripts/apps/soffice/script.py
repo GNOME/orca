@@ -900,6 +900,9 @@ class Script(default.Script):
         if not self.spellcheck.isCheckWindow(event.source):
             return
 
+        if event.source[0].getRole() == pyatspi.ROLE_DIALOG:
+            orca.setLocusOfFocus(event, event.source[0], False)
+
         self.spellcheck.presentErrorDetails()
 
     def onWindowDeactivated(self, event):
