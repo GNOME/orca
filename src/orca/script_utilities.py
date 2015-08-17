@@ -1535,6 +1535,9 @@ class Utilities:
         Returns a list of unrelated labels under the given root.
         """
 
+        if self._script.spellcheck and self._script.spellcheck.isCheckWindow(root):
+            return []
+
         hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_LABEL
         allLabels = pyatspi.findAllDescendants(root, hasRole)
         try:
