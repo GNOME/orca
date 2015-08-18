@@ -71,6 +71,17 @@ class Script(gtk.Script):
 
         gtk.Script.doWhereAmI(self,inputEvent, basicOnly)
 
+    def locusOfFocusChanged(self, event, oldFocus, newFocus):
+        """Handles changes of focus of interest to the script."""
+
+        if self.spellcheck.isSuggestionsItem(newFocus):
+            includeLabel = not self.spellcheck.isSuggestionsItem(oldFocus)
+            self.updateBraille(newFocus)
+            self.spellcheck.presentSuggestionListItem(includeLabel=includeLabel)
+            return
+
+        super().locusOfFocusChanged(event, oldFocus, newFocus)
+
     def onActiveDescendantChanged(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
@@ -92,13 +103,6 @@ class Script(gtk.Script):
         """Callback for object:state-changed:focused accessibility events."""
 
         if not event.detail1:
-            return
-
-        if self.spellcheck.isSuggestionsItem(event.source) \
-           and self.spellcheck.isSuggestionsItem(orca_state.locusOfFocus):
-            orca.setLocusOfFocus(event, event.source, False)
-            self.updateBraille(orca_state.locusOfFocus)
-            self.spellcheck.presentSuggestionListItem()
             return
 
         gtk.Script.onFocusedChanged(self, event)

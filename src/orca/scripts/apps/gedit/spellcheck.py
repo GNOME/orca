@@ -64,3 +64,6 @@ class SpellCheck(spellcheck.SpellCheck):
         isTable = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE \
                   and 'Selection' in x.get_interfaces()
         return pyatspi.findDescendant(root, isTable)
+
+    def _getSuggestionIndexAndPosition(self, suggestion):
+        return self._script.utilities.getPositionAndSetSize(suggestion)

@@ -61,6 +61,10 @@ class SpellCheck(spellcheck.SpellCheck):
                   and x.parent.getRole() != pyatspi.ROLE_COMBO_BOX
         return pyatspi.findDescendant(root, isList)
 
+    def _getSuggestionIndexAndPosition(self, suggestion):
+        index, total = self._script.utilities.getPositionAndSetSize(suggestion)
+        return index + 1, total
+
     def getMisspelledWord(self):
         try:
             text = self._errorWidget.queryText()

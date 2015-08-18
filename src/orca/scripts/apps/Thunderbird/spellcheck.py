@@ -74,3 +74,16 @@ class SpellCheck(spellcheck.SpellCheck):
         isList = lambda x: x and x.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX] \
                   and 'Selection' in x.get_interfaces()
         return pyatspi.findDescendant(root, isList)
+
+    def _getSuggestionIndexAndPosition(self, suggestion):
+        try:
+            attrs = dict([attr.split(':', 1) for attr in suggestion.getAttributes()])
+        except:
+            attrs = {}
+
+        index = attrs.get("posinset")
+        total = attrs.get("setsize")
+        if index is None or total is None:
+            return super()._getSuggestionIndexAndPosition(suggestion)
+
+        return int(index), int(total)

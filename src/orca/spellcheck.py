@@ -32,6 +32,8 @@ import re
 
 from orca import guilabels
 from orca import messages
+from orca import object_properties
+from orca import orca_state
 from orca import settings
 from orca import settings_manager
 
@@ -237,6 +239,12 @@ class SpellCheck:
         if detailed or _settingsManager.getSetting('spellcheckSpellSuggestion'):
             self._script.spellCurrentItem(string)
 
+        if _settingsManager.getSetting('enablePositionSpeaking') \
+           and items[0] == orca_state.locusOfFocus:
+            index, total = self._getSuggestionIndexAndPosition(items[0])
+            msg = object_properties.GROUP_INDEX_SPEECH % {"index": index, "total": total}
+            self._script.speakMessage(msg)
+
         return True
 
     def _clearState(self):
@@ -257,6 +265,9 @@ class SpellCheck:
 
     def _findSuggestionsList(self, root):
         return None
+
+    def _getSuggestionIndexAndPosition(self, suggestion):
+        return -1, -1
 
     def getAppPreferencesGUI(self):
 

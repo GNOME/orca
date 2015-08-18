@@ -538,6 +538,12 @@ class Script(default.Script):
         if self.flatReviewContext:
             self.toggleFlatReviewMode()
 
+        if self.spellcheck.isSuggestionsItem(newLocusOfFocus) \
+           and not self.spellcheck.isSuggestionsItem(oldLocusOfFocus):
+            self.updateBraille(newLocusOfFocus)
+            self.spellcheck.presentSuggestionListItem(includeLabel=True)
+            return
+
         # TODO - JD: Sad hack that wouldn't be needed if LO were fixed.
         # If we are in the slide presentation scroll pane, also announce
         # the current page tab. See bug #538056 for more details.
@@ -641,16 +647,16 @@ class Script(default.Script):
         - event: the Event
         """
 
+        if self.utilities.isSameObject(event.any_data, orca_state.locusOfFocus):
+            return
+
         if event.source == self.spellcheck.getSuggestionsList():
-            if self.spellcheck.isSuggestionsItem(orca_state.locusOfFocus):
+            if event.source.getState().contains(pyatspi.STATE_FOCUSED):
                 orca.setLocusOfFocus(event, event.any_data, False)
                 self.updateBraille(orca_state.locusOfFocus)
                 self.spellcheck.presentSuggestionListItem()
             else:
                 self.spellcheck.presentErrorDetails()
-            return
-
-        if self.utilities.isSameObject(event.any_data, orca_state.locusOfFocus):
             return
 
         default.Script.onActiveDescendantChanged(self, event)

@@ -119,6 +119,17 @@ class Script(Gecko.Script):
 
         Gecko.Script.doWhereAmI(self,inputEvent, basicOnly)
 
+    def locusOfFocusChanged(self, event, oldFocus, newFocus):
+        """Handles changes of focus of interest to the script."""
+
+        if self.spellcheck.isSuggestionsItem(newFocus):
+            includeLabel = not self.spellcheck.isSuggestionsItem(oldFocus)
+            self.updateBraille(newFocus)
+            self.spellcheck.presentSuggestionListItem(includeLabel=includeLabel)
+            return
+
+        super().locusOfFocusChanged(event, oldFocus, newFocus)
+
     def _useFocusMode(self, obj):
         if self.isEditableMessage(obj):
             return True
@@ -152,13 +163,6 @@ class Script(Gecko.Script):
         if self.spellcheck.isAutoFocusEvent(event):
             orca.setLocusOfFocus(event, event.source, False)
             self.updateBraille(orca_state.locusOfFocus)
-
-        if self.spellcheck.isSuggestionsItem(event.source) \
-           and self.spellcheck.isSuggestionsItem(orca_state.locusOfFocus):
-            orca.setLocusOfFocus(event, event.source, False)
-            self.updateBraille(orca_state.locusOfFocus)
-            self.spellcheck.presentSuggestionListItem()
-            return
 
         if not self.utilities.inDocumentContent(obj):
             default.Script.onFocusedChanged(self, event)
