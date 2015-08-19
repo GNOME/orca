@@ -1,3 +1,81 @@
+3.17.90 - 19 August 2015
+
+Spellcheck:
+
+ * Use Orca's spellcheck support in the LibreOffice script
+
+ * Perform normal WhereAmI at the end of spellcheck WhereAmI
+
+ * Present child position according to user preference
+
+ * Fix several chattiness issues
+
+Gecko:
+
+ * Handle Gecko-specific text attribute name for misspelled
+
+ * Fix traceback getting into Thunderbird preferences
+
+ * Fix bug in line navigation of MathML content
+
+ * Don't generate ancestors beyond MathML math element
+
+ * Don't treat objects with tons of embedded objects as text "chunks"
+
+ * Don't repeat document-loading message given multiple "busy" events
+
+ * Handle input type="number" (which is not exposed like native version)
+
+ * Ensure object mode navigation presents only content from one object
+
+ * Refine heuristic for ignoring object:selection-changed events
+
+ * Don't include empty text block elements in structural navigation
+
+ * Skip over anchors when looking for next/previous caret context
+
+ * Treat lists as text block elements in web content
+
+ * Improve how Orca works with Etherpad in Firefox
+
+LibreOffice:
+
+ * Fix several issues in which focused widgets were not presented
+
+General:
+
+ * Use gi.require_version to address PyGIWarning
+
+ * Fix several bugs in _generateUnselectedCell()
+
+ * Don't sanity-check children if there are a huge number of them
+
+ * Don't generate availability for list items as it doesn't make sense
+
+ * Don't insist upon label visibility for status bar notifications
+
+ * Add support to navlist for specifying and jumping to a caret offset
+
+ * Begin cleaning up text-attribute-related code
+
+ * Eliminate some false positives in isLayoutOnly()
+
+ * Fix desktop file translations
+
+ * Fix typos in translator comments
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                       Marek Černocký
+    de            German                      Christian Kirbach
+    el            Greek                       Dimitris Spingos
+    es            Spanish                     Daniel Mustieles
+    lt            Lithuanian                  Aurimas Černius
+    nb            Norwegian bokmål            Kjartan Maraas
+    pt            Portuguese                  Pedro Albuquerque
+
+=========
+
 3.17.4 - 22 July 2015
 
 MathML:
