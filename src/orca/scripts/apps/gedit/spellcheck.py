@@ -66,4 +66,6 @@ class SpellCheck(spellcheck.SpellCheck):
         return pyatspi.findDescendant(root, isTable)
 
     def _getSuggestionIndexAndPosition(self, suggestion):
-        return self._script.utilities.getPositionAndSetSize(suggestion)
+        index, total = self._script.utilities.getPositionAndSetSize(suggestion)
+        total -= 1
+        return index, total
