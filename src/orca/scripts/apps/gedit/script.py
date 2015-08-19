@@ -67,9 +67,8 @@ class Script(gtk.Script):
 
         if self.spellcheck.isActive():
             self.spellcheck.presentErrorDetails(not basicOnly)
-            return
 
-        gtk.Script.doWhereAmI(self,inputEvent, basicOnly)
+        super().doWhereAmI(inputEvent, basicOnly)
 
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
         """Handles changes of focus of interest to the script."""

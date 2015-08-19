@@ -316,7 +316,6 @@ class Script(default.Script):
 
         if self.spellcheck.isActive():
             self.spellcheck.presentErrorDetails(not basicOnly)
-            return
 
         super().doWhereAmI(inputEvent, basicOnly)
 
