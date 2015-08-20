@@ -63,6 +63,7 @@ class Utilities(script_utilities.Utilities):
         self._isLink = {}
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
+        self._isUselessImage = {}
         self._inferredLabels = {}
         self._text = {}
         self._tag = {}
@@ -99,6 +100,7 @@ class Utilities(script_utilities.Utilities):
         self._isLink = {}
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
+        self._isUselessImage = {}
         self._inferredLabels = {}
         self._tag = {}
         self._cleanupContexts()
@@ -1237,6 +1239,12 @@ class Utilities(script_utilities.Utilities):
                              pyatspi.ROLE_TEXT,
                              pyatspi.ROLE_TABLE_CELL]
 
+        # TODO - JD: This protection won't be needed once we bump dependencies to 2.16.
+        try:
+            textBlockElements.append(pyatspi.ROLE_STATIC)
+        except:
+            pass
+
         if not role in textBlockElements:
             rv = False
         elif state.contains(pyatspi.STATE_EDITABLE):
@@ -1565,6 +1573,7 @@ class Utilities(script_utilities.Utilities):
                or self.isAnchor(obj) \
                or self.hasNoSize(obj) \
                or self.isOffScreenLabel(obj) \
+               or self.isUselessImage(obj) \
                or self.isLabellingContents(x, contents):
                 return False
 
@@ -1769,6 +1778,14 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         role = obj.getRole()
+
+        # TODO - JD: This protection won't be needed once we bump dependencies to 2.16.
+        try:
+            if role == pyatspi.ROLE_STATIC:
+                role = pyatspi.ROLE_TEXT
+        except:
+            pass
+
         if role == pyatspi.ROLE_LINK and not self.isAnchor(obj):
             rv = True
         elif role == pyatspi.ROLE_TEXT \
@@ -1792,6 +1809,37 @@ class Utilities(script_utilities.Utilities):
             rv = True
 
         self._isNonNavigablePopup[hash(obj)] = rv
+        return rv
+
+    def isUselessImage(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isUselessImage.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = True
+        if obj.getRole() != pyatspi.ROLE_IMAGE:
+            rv = False
+        if rv and (obj.name or obj.description or obj.childCount):
+            rv = False
+        if rv and (self.isClickableElement(obj) or self.hasLongDesc(obj)):
+            rv = False
+        if rv and obj.parent.getRole() == pyatspi.ROLE_LINK:
+            uri = self.uri(obj.parent)
+            if uri and not uri.startswith('javascript'):
+                rv = False
+        if rv and 'Image' in pyatspi.listInterfaces(obj):
+            image = obj.queryImage()
+            if image.imageDescription:
+                rv = False
+            else:
+                width, height = image.getImageSize()
+                if width > 25 and height > 25:
+                    rv = False
+
+        self._isUselessImage[hash(obj)] = rv
         return rv
 
     def hasLongDesc(self, obj):
@@ -2180,7 +2228,8 @@ class Utilities(script_utilities.Utilities):
                 allText = text.getText(0, -1)
                 for i in range(offset + 1, len(allText)):
                     child = self.getChildAtOffset(obj, i)
-                    if child and not self.isZombie(child) and not self.isAnchor(child):
+                    if child and not self.isZombie(child) and not self.isAnchor(child) \
+                       and not self.isUselessImage(child):
                         return self.findNextCaretInOrder(child, -1)
                     if allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
                         return obj, i
@@ -2232,7 +2281,8 @@ class Utilities(script_utilities.Utilities):
                     offset = len(allText)
                 for i in range(offset - 1, -1, -1):
                     child = self.getChildAtOffset(obj, i)
-                    if child and not self.isZombie(child) and not self.isAnchor(child):
+                    if child and not self.isZombie(child) and not self.isAnchor(child) \
+                       and not self.isUselessImage(child):
                         return self.findPreviousCaretInOrder(child, -1)
                     if allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
                         return obj, i
