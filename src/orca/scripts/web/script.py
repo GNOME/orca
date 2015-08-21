@@ -955,7 +955,7 @@ class Script(default.Script):
         """Handles changes of focus of interest to the script."""
 
         if newFocus and self.utilities.isZombie(newFocus):
-            msg = "WEB: New focus is Zombie" % newFocus
+            msg = "WEB: New focus is Zombie: %s" % newFocus
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
@@ -1066,7 +1066,7 @@ class Script(default.Script):
         elif not _settingsManager.getSetting('sayAllOnLoad'):
             msg = "WEB: Not doing SayAll due to sayAllOnLoad being False"
             debug.println(debug.LEVEL_INFO, msg)
-            self.speakContents(self.getLineContentsAtOffset(obj, offset))
+            self.speakContents(self.utilities.getLineContentsAtOffset(obj, offset))
         elif _settingsManager.getSetting('enableSpeech'):
             msg = "WEB: Doing SayAll"
             debug.println(debug.LEVEL_INFO, msg)
