@@ -1963,6 +1963,7 @@ TEXT_UNSELECTED = C_("text", "unselected")
 TIME_FORMAT_LOCALE = "%X"
 TIME_FORMAT_24_HMS = "%H:%M:%S"
 TIME_FORMAT_24_HM  = "%H:%M"
+TIME_FORMAT_12_HM  = "%I:%M %p"
 
 # Translators: Orca has a feature to speak the time when the user presses a
 # shortcut key. This is one of the alternative formats that the user may wish
