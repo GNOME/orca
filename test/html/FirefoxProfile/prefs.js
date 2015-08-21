@@ -10,6 +10,7 @@
  */
 
 user_pref("accessibility.browsewithcaret", true);
+user_pref("app.update.auto", false);
 user_pref("app.update.lastUpdateTime.addon-background-update-timer", 1189712565);
 user_pref("app.update.lastUpdateTime.background-update-timer", 1189712564);
 user_pref("app.update.lastUpdateTime.blocklist-background-update-timer", 1189712564);
@@ -21,6 +22,7 @@ user_pref("browser.formfill.enable", false);
 user_pref("browser.history_expire_days", 1);
 user_pref("browser.history_expire_days.mirror", 180);
 user_pref("browser.preferences.advanced.selectedTabIndex", 1);
+user_pref("browser.selfsupport.url", "");
 user_pref("browser.sessionstore.enabled", false);
 user_pref("browser.sessionstore.resume_from_crash", false);
 user_pref("browser.shell.checkDefaultBrowser", false);
@@ -40,13 +42,13 @@ user_pref("privacy.sanitize.promptOnSanitize", false);
 user_pref("privacy.sanitize.sanitizeOnShutdown", true);
 user_pref("signon.rememberSignons", false);
 user_pref("spellchecker.dictionary", "en-US");
+user_pref("font.size.variable.x-western", 16);
 user_pref("font.name.sans-serif.x-western", "DejaVu Sans");
 user_pref("font.name.serif.x-western", "DejaVu Serif");
 user_pref("xxx.legal.rights.seen", "0.0");
 user_pref("browser.rights.3.shown", true);
 user_pref("beagle.autoindex.active", false);
 user_pref("beagle.first.run", false);
-user_pref("intl.charset.default", "UTF-8");
 user_pref("intl.charset.default", "UTF-8");
 user_pref("intl.charsetmenu.browser.cache", "UTF-8");
 user_pref("intl.charsetmenu.browser.static", "UTF-8");
@@ -55,6 +57,7 @@ user_pref("toolkit.telemetry.prompted", 2);
 user_pref("toolkit.telemetry.rejected", true);
 user_pref("toolkit.telemetry.enabled", false);
 user_pref("browser.reader.detectedFirstArticle", true);
+user_pref("browser.tabs.remote.autostart.2", false);
 pref("datareporting.healthreport.service.enabled", false);
 pref("datareporting.healthreport.uploadEnabled", false);
 pref("datareporting.healthreport.service.firstRun", false);

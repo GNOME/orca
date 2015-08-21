@@ -49,7 +49,7 @@ sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "4. Next Word",
     ["BRAILLE LINE:  'Hello W o r l d. Go odbye w orld.'",
-     "     VISIBLE:  'orld', cursor=5",
+     "     VISIBLE:  'orld.', cursor=5",
      "SPEECH OUTPUT: 'w'",
      "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'orld.'"]))

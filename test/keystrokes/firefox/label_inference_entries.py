@@ -58,9 +58,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "5. Next form field",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'entry'"]))
+    ["BRAILLE LINE:  'Am I a label as well?  $l'",
+     "     VISIBLE:  'Am I a label as well?  $l', cursor=23",
+     "SPEECH OUTPUT: 'Am I a label as well? entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

@@ -16,9 +16,9 @@ sequence.append(KeyComboAction("KP_Divide"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "1. Route the pointer to the image",
-    ["BRAILLE LINE:  'Firefox application MouseOvers - Mozilla Firefox frame dialog'",
+    ["BRAILLE LINE:  'Firefox application MouseOvers - (Mozilla Firefox|Nightly) frame dialog'",
      "     VISIBLE:  'dialog', cursor=1",
-     "BRAILLE LINE:  'Firefox application MouseOvers - Mozilla Firefox frame dialog OK push button'",
+     "BRAILLE LINE:  'Firefox application MouseOvers - (Mozilla Firefox|Nightly) frame dialog OK push button'",
      "     VISIBLE:  'OK push button', cursor=1",
      "SPEECH OUTPUT: 'Welcome to mouseover-enabled Orca!'",
      "SPEECH OUTPUT: 'OK push button'"]))

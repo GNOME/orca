@@ -36,7 +36,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Wrapping to top.'",
      "     VISIBLE:  'Wrapping to top.', cursor=0",
      "BRAILLE LINE:  'line 1 h1'",
-     "     VISIBLE:  'line 1 h1', cursor=0",
+     "     VISIBLE:  'line 1 h1', cursor=(0|1)",
      "SPEECH OUTPUT: 'Wrapping to top.' voice=system",
      "SPEECH OUTPUT: 'line 1 heading level 1'"]))
 

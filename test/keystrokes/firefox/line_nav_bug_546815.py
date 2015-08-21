@@ -68,7 +68,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
-    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using value'",
+    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l text field using'",
      "     VISIBLE:  '2. Enter your City:  $l 3. Enter', cursor=1",
      "SPEECH OUTPUT: '2. Enter your City:'",
      "SPEECH OUTPUT: 'entry'",
@@ -77,8 +77,9 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '4. Enter your Country:'",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'US'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'text field using value'"]))
+     "SPEECH OUTPUT: 'text field using'"]))
+
+sequence.append(KeyComboAction("Down"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -357,11 +358,13 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '5. Enter your Zip:'",
      "SPEECH OUTPUT: 'entry'"]))
 
+sequence.append(KeyComboAction("Up"))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "41. Line Up",
-    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l image text field using value'",
+    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l text field using'",
      "     VISIBLE:  '2. Enter your City:  $l 3. Enter', cursor=1",
      "SPEECH OUTPUT: '2. Enter your City:'",
      "SPEECH OUTPUT: 'entry'",
@@ -370,8 +373,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '4. Enter your Country:'",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'US'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'text field using value'"]))
+     "SPEECH OUTPUT: 'text field using'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

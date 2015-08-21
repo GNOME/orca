@@ -15,6 +15,7 @@ sequence.append(KeyComboAction("<Control>Home"))
 for i in range(25):
     sequence.append(KeyComboAction("Tab"))
 
+sequence.append(PauseAction(5000))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(

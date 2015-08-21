@@ -74,7 +74,8 @@ sequence.append(utils.AssertPresentationAction(
     "7. Down Arrow in tree",
     ["BRAILLE LINE:  'Firefox application Library frame Recently Bookmarked list item TREE LEVEL 3'",
      "     VISIBLE:  'Recently Bookmarked list item TR', cursor=1",
-     "SPEECH OUTPUT: 'Recently Bookmarked tree level 3'"]))
+     "SPEECH OUTPUT: 'Recently Bookmarked.'",
+     "SPEECH OUTPUT: 'tree level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))

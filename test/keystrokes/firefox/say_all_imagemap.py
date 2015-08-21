@@ -71,10 +71,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'We should also be speaking and brailling it correctly now -- at least as best as we can given what they gave us.'",
      "SPEECH OUTPUT: 'wk09_frozenmovie'",
      "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'image'"]))
+     "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

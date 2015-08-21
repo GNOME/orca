@@ -25,6 +25,10 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("<Alt>o"))
 sequence.append(KeyComboAction("Return"))
 
+# This is to deal with a timing issue
+sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("<Shift>Tab"))
+
 sequence.append(KeyComboAction("<Control>a"))
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(TypeAction("this is a test"))

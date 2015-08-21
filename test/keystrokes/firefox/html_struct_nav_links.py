@@ -7,6 +7,7 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(2000))
 sequence.append(KeyComboAction("<Control>Home"))
 
 sequence.append(utils.StartRecordingAction())
@@ -56,9 +57,11 @@ sequence.append(utils.AssertPresentationAction(
 
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(2000))
 
 sequence.append(KeyComboAction("<Alt>Left"))
 sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(2000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("u"))
@@ -68,6 +71,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'tables.html', cursor=1",
      "BRAILLE LINE:  'textattributes.html'",
      "     VISIBLE:  'textattributes.html', cursor=1",
+     "BRAILLE LINE:  '• textattributes.html'",
+     "     VISIBLE:  '• textattributes.html', cursor=3",
      "SPEECH OUTPUT: 'textattributes.html link.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -83,17 +88,17 @@ sequence.append(utils.AssertPresentationAction(
 
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(2000))
 
 sequence.append(KeyComboAction("<Alt>Left"))
 sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(2000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("v"))
 sequence.append(utils.AssertPresentationAction(
     "8. v to tables.html link",
-    ["BRAILLE LINE:  'anchors.html'",
-     "     VISIBLE:  'anchors.html', cursor=1",
-     "BRAILLE LINE:  'tables.html'",
+    ["BRAILLE LINE:  'tables.html'",
      "     VISIBLE:  'tables.html', cursor=1",
      "SPEECH OUTPUT: 'tables.html link.'"]))
 

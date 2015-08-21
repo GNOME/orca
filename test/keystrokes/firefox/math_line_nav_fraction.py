@@ -27,10 +27,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
-    ["KNOWN ISSUE: When performed manually, the results are as expected; need to find out why it fails as an automated test.",
-     "BRAILLE LINE:  'math'",
+    ["BRAILLE LINE:  'math'",
      "     VISIBLE:  'math', cursor=0",
-     "SPEECH OUTPUT: 'blank'"]))
+     "SPEECH OUTPUT: 'fraction start.'",
+     "SPEECH OUTPUT: 'a over b.'",
+     "SPEECH OUTPUT: 'fraction end.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

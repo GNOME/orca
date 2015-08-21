@@ -37,8 +37,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "4. Push second button",
-    ["KNOWN ISSUE: We're presenting nothing here. Missing event.",
-     ""]))
+    ["KNOWN ISSUE: We're presenting two updates.",
+     "BRAILLE LINE:  '&=y Font Smaller toggle button'",
+     "     VISIBLE:  '&=y Font Smaller toggle button', cursor=1",
+     "BRAILLE LINE:  '& y Font Smaller toggle button'",
+     "     VISIBLE:  '& y Font Smaller toggle button', cursor=1",
+     "SPEECH OUTPUT: 'pressed'",
+     "SPEECH OUTPUT: 'not pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

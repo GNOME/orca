@@ -54,17 +54,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Down Arrow in Browse Mode",
-    ["BRAILLE LINE:  'elit. Aenean semper sagittis velit. Cras in mi. Duis porta mauris ut'",
-     "     VISIBLE:  'elit. Aenean semper sagittis vel', cursor=1",
-     "SPEECH OUTPUT: 'elit. Aenean semper sagittis velit. Cras in mi. Duis porta mauris ut'"]))
+    ["BRAILLE LINE:  'semper sagittis velit. Cras in mi. Duis porta mauris ut ligula. Proin porta rutrum'",
+     "     VISIBLE:  'semper sagittis velit. Cras in m', cursor=1",
+     "SPEECH OUTPUT: 'semper sagittis velit. Cras in mi. Duis porta mauris ut ligula. Proin porta rutrum'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Down Arrow in Browse Mode",
-    ["BRAILLE LINE:  'ligula. Proin porta rutrum lacus. Etiam consequat scelerisque'",
-     "     VISIBLE:  'ligula. Proin porta rutrum lacus', cursor=1",
-     "SPEECH OUTPUT: 'ligula. Proin porta rutrum lacus. Etiam consequat scelerisque'"]))
+    ["BRAILLE LINE:  'lacus. Etiam consequat scelerisque quam. Nulla facilisi. Maecenas luctus'",
+     "     VISIBLE:  'lacus. Etiam consequat scelerisq', cursor=1",
+     "SPEECH OUTPUT: 'lacus. Etiam consequat scelerisque quam. Nulla facilisi. Maecenas luctus'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

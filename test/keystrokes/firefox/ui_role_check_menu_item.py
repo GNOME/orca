@@ -13,7 +13,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow in View menu",
-    ["BRAILLE LINE:  'Firefox application Mozilla Firefox frame Menu Bar tool bar Application menu bar < > Full Screen check menu item'",
+    ["BRAILLE LINE:  'Firefox application (Mozilla Firefox|Nightly) frame Menu Bar tool bar Application menu bar < > Full Screen check menu item'",
      "     VISIBLE:  '< > Full Screen check menu item', cursor=1",
      "SPEECH OUTPUT: 'Full Screen check menu item not checked.'"]))
 
@@ -21,9 +21,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic Where Am I",
-    ["BRAILLE LINE:  'Firefox application Mozilla Firefox frame Menu Bar tool bar Application menu bar < > Full Screen check menu item'",
+    ["BRAILLE LINE:  'Firefox application (Mozilla Firefox|Nightly) frame Menu Bar tool bar Application menu bar < > Full Screen check menu item'",
      "     VISIBLE:  '< > Full Screen check menu item', cursor=1",
-     "SPEECH OUTPUT: 'Mozilla Firefox frame'",
+     "SPEECH OUTPUT: '(Mozilla Firefox|Nightly) frame'",
      "SPEECH OUTPUT: 'View menu'",
      "SPEECH OUTPUT: 'Menu Bar tool bar.'",
      "SPEECH OUTPUT: 'Full Screen check menu item not checked.'",

@@ -149,8 +149,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "17. Line Down",
-    ["BRAILLE LINE:  'silly link.'",
-     "     VISIBLE:  'silly link.', cursor=1",
+    ["BRAILLE LINE:  'silly link'",
+     "     VISIBLE:  'silly link', cursor=1",
      "SPEECH OUTPUT: 'silly link link.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -226,8 +226,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "26. Line Down",
-    ["BRAILLE LINE:  'silly link.'",
-     "     VISIBLE:  'silly link.', cursor=1",
+    ["BRAILLE LINE:  'silly link'",
+     "     VISIBLE:  'silly link', cursor=1",
      "SPEECH OUTPUT: 'silly link link.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -258,8 +258,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "30. Line Up",
-    ["BRAILLE LINE:  'silly link.'",
-     "     VISIBLE:  'silly link.', cursor=1",
+    ["BRAILLE LINE:  'silly link'",
+     "     VISIBLE:  'silly link', cursor=1",
      "SPEECH OUTPUT: 'silly link link.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -335,8 +335,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "39. Line Up",
-    ["BRAILLE LINE:  'silly link.'",
-     "     VISIBLE:  'silly link.', cursor=1",
+    ["BRAILLE LINE:  'silly link'",
+     "     VISIBLE:  'silly link', cursor=1",
      "SPEECH OUTPUT: 'silly link link.'"]))
 
 sequence.append(utils.StartRecordingAction())

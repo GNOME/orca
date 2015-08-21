@@ -376,10 +376,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "37. Tab",
-    ["KNOWN ISSUE: This could be improved",
-     "BRAILLE LINE:  '(comma-separated list)  $l'",
-     "     VISIBLE:  '(comma-separated list)  $l', cursor=24",
-     "SPEECH OUTPUT: '(comma-separated list) entry'"]))
+    ["BRAILLE LINE:  'bugs numbered:  $l'",
+     "     VISIBLE:  'bugs numbered:  $l', cursor=16",
+     "SPEECH OUTPUT: 'bugs numbered: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
