@@ -2,13 +2,13 @@
 # Traducción de Orca al Español
 # This file is distributed under the same license as the ORCA package.
 # Copyright (C) 2005 GNOME Foundation.
-# 
+#
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2006.
 # Maria Majadas <maria.majadas@hispalinux.es>, 2005.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2010, 2011.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2007, 2008, 2010, 2011, 2014.
 # Miguel Rodríguez Núñez <bokerones.fritos@gmail.com>, 2015.
-# 
+#
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015., 2015.
 #
 msgid ""
@@ -16,10 +16,10 @@ msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2015-08-17 23:26+0000\n"
-"PO-Revision-Date: 2015-08-18 13:44+0200\n"
+"POT-Creation-Date: 2015-08-24 23:32+0000\n"
+"PO-Revision-Date: 2015-08-25 \n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
+"Language-Team: Spanish <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -5293,14 +5293,14 @@ msgstr "Nombre del atributo"
 
 # Notas:
 # Añadir una nota
-# 
+#
 # Comentarios extraídos:
 # Translators: Gecko native caret navigation is where Firefox itself controls
 # how the arrow keys move the caret around HTML content. It's often broken, so
 # Orca needs to provide its own support. As such, Orca offers the user the
 # ability to switch between the Firefox mode and the Orca mode. This is the
 # label of a checkbox in which users can indicate their default preference.
-# 
+#
 #. Translators: Gecko native caret navigation is where Firefox itself controls
 #. how the arrow keys move the caret around HTML content. It's often broken, so
 #. Orca needs to provide its own support. As such, Orca offers the user the
@@ -5832,69 +5832,61 @@ msgstr "%s sin punto"
 
 #. Translators: this is the spoken representation for the character '←' (U+2190)
 #: ../src/orca/mathsymbols.py:1253
-#| msgid "left arrow"
 msgctxt "math symbol"
 msgid "left arrow"
 msgstr "flecha izquierda"
 
 #. Translators: this is the spoken representation for the character '↑' (U+2191)
 #: ../src/orca/mathsymbols.py:1256
-#| msgid "arrow"
 msgctxt "math symbol"
 msgid "up arrow"
 msgstr "flecha arriba"
 
 #. Translators: this is the spoken representation for the character '→' (U+2192)
 #: ../src/orca/mathsymbols.py:1259
-#| msgid "right arrow"
 msgctxt "math symbol"
 msgid "right arrow"
 msgstr "flecha derecha"
 
 #. Translators: this is the spoken representation for the character '↓' (U+2193)
 #: ../src/orca/mathsymbols.py:1262
-#| msgid "arrow"
 msgctxt "math symbol"
 msgid "down arrow"
 msgstr "flecha abajo"
 
 #. Translators: this is the spoken representation for the character '↔' (U+2194)
 #: ../src/orca/mathsymbols.py:1265
-#, fuzzy
 #| msgid "right arrow"
 msgctxt "math symbol"
 msgid "left right arrow"
-msgstr "flecha derecha"
+msgstr "flecha izquierda derecha"
 
 #. Translators: this is the spoken representation for the character '↕' (U+2195)
 #: ../src/orca/mathsymbols.py:1268
 msgctxt "math symbol"
 msgid "up down arrow"
-msgstr ""
+msgstr "flecha arriba abajo"
 
 #. Translators: this is the spoken representation for the character '↖' (U+2196)
 #: ../src/orca/mathsymbols.py:1271
-#, fuzzy
 #| msgid "right arrow"
 msgctxt "math symbol"
 msgid "north west arrow"
-msgstr "flecha derecha"
+msgstr "flecha noroeste"
 
 #. Translators: this is the spoken representation for the character '↗' (U+2197)
 #: ../src/orca/mathsymbols.py:1274
-#, fuzzy
 #| msgid "right arrow"
 msgctxt "math symbol"
 msgid "north east arrow"
-msgstr "flecha derecha"
+msgstr "flecha noreste"
 
 #. Translators: this is the spoken representation for the character '↘' (U+2198)
 #: ../src/orca/mathsymbols.py:1277
-#, fuzzy
 #| msgid "right arrow"
 msgctxt "math symbol"
 msgid "south east arrow"
-msgstr "flecha derecha"
+msgstr "flecha sureste"
 
 #. Translators: this is the spoken representation for the character '↤' (U+21a4)
 #: ../src/orca/mathsymbols.py:1280
@@ -5926,35 +5918,31 @@ msgstr ""
 
 #. Translators: this is the spoken representation for the character '⇐' (U+21d0)
 #: ../src/orca/mathsymbols.py:1292
-#, fuzzy
 #| msgid "left double quote"
 msgctxt "math symbol"
 msgid "left double arrow"
-msgstr "abre comilla doble"
+msgstr "flecha izquierda doble"
 
 #. Translators: this is the spoken representation for the character '⇑' (U+21d1)
 #: ../src/orca/mathsymbols.py:1295
-#, fuzzy
 #| msgid "double dagger"
 msgctxt "math symbol"
 msgid "up double arrow"
-msgstr "DOBLE CRUZ"
+msgstr "flecha arriba doble"
 
 #. Translators: this is the spoken representation for the character '⇒' (U+21d2)
 #: ../src/orca/mathsymbols.py:1298
-#, fuzzy
 #| msgid "right double quote"
 msgctxt "math symbol"
 msgid "right double arrow"
-msgstr "cierra comilla doble"
+msgstr "flecha derecha doble"
 
 #. Translators: this is the spoken representation for the character '⇓' (U+21d3)
 #: ../src/orca/mathsymbols.py:1301
-#, fuzzy
 #| msgid "double dagger"
 msgctxt "math symbol"
 msgid "down double arrow"
-msgstr "DOBLE CRUZ"
+msgstr "flecha abajo doble"
 
 #. Translators: this is the spoken representation for the character '⇔' (U+21d4)
 #: ../src/orca/mathsymbols.py:1304
@@ -5968,31 +5956,28 @@ msgstr "cierra comilla doble"
 #: ../src/orca/mathsymbols.py:1307
 msgctxt "math symbol"
 msgid "up down double arrow"
-msgstr ""
+msgstr "flecha doble arriba abajo"
 
 #. Translators: this is the spoken representation for the character '⇖' (U+21d6)
 #: ../src/orca/mathsymbols.py:1310
-#, fuzzy
 #| msgid "right arrow"
 msgctxt "math symbol"
 msgid "north west double arrow"
-msgstr "flecha derecha"
+msgstr "flecha noroeste doble"
 
 #. Translators: this is the spoken representation for the character '⇗' (U+21d7)
 #: ../src/orca/mathsymbols.py:1313
-#, fuzzy
 #| msgid "right arrow"
 msgctxt "math symbol"
 msgid "north east double arrow"
-msgstr "flecha derecha"
+msgstr "flecha noreste doble"
 
 #. Translators: this is the spoken representation for the character '⇘' (U+21d8)
 #: ../src/orca/mathsymbols.py:1316
-#, fuzzy
 #| msgid "right arrow"
 msgctxt "math symbol"
 msgid "south east double arrow"
-msgstr "flecha derecha"
+msgstr "flecha sureste doble"
 
 #. Translators: this is the spoken representation for the character '⇙' (U+21d9)
 #: ../src/orca/mathsymbols.py:1319
@@ -6041,7 +6026,6 @@ msgstr "mayor que"
 #. Translators: this is the spoken word for the character '^' (U+005e) when used
 #. as a MathML operator.
 #: ../src/orca/mathsymbols.py:1341
-#| msgid "circumflex"
 msgctxt "math symbol"
 msgid "circumflex"
 msgstr "circunflejo"
@@ -6063,7 +6047,6 @@ msgstr ""
 #. Translators: this is the spoken word for the character '˙' (U+02d9) when used
 #. as a MathML operator.
 #: ../src/orca/mathsymbols.py:1353
-#| msgid "dot"
 msgctxt "math symbol"
 msgid "dot"
 msgstr "punto"
@@ -6071,8 +6054,6 @@ msgstr "punto"
 #. Translators: this is the spoken word for the character '‖' (U+2016) when used
 #. as a MathML operator.
 #: ../src/orca/mathsymbols.py:1357
-#| msgctxt "textattr"
-#| msgid "vertical align"
 msgctxt "math symbol"
 msgid "double vertical line"
 msgstr "línea vertical doble"
@@ -6187,8 +6168,6 @@ msgstr "coproducto"
 
 #. Translators: this is the spoken representation for the character '∑' (U+2211)
 #: ../src/orca/mathsymbols.py:1414
-#| msgctxt "textattr"
-#| msgid "sub"
 msgctxt "math symbol"
 msgid "sum"
 msgstr "sumatorio"
@@ -7714,7 +7693,6 @@ msgstr "cuadrado boca arriba"
 #. Translators: this is the spoken representation for the character '■' (U+25a0)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: ../src/orca/mathsymbols.py:2173
-#| msgid "black square"
 msgctxt "math symbol"
 msgid "black square"
 msgstr "cuadrado negro"
@@ -7722,7 +7700,6 @@ msgstr "cuadrado negro"
 #. Translators: this is the spoken representation for the character '□' (U+25a1)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: ../src/orca/mathsymbols.py:2177
-#| msgid "white square"
 msgctxt "math symbol"
 msgid "white square"
 msgstr "cuadrado en blanco"
@@ -7730,7 +7707,6 @@ msgstr "cuadrado en blanco"
 #. Translators: this is the spoken representation for the character '◆' (U+25c6)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: ../src/orca/mathsymbols.py:2181
-#| msgid "black diamond"
 msgctxt "math symbol"
 msgid "black diamond"
 msgstr "rombo negro"
@@ -7738,7 +7714,6 @@ msgstr "rombo negro"
 #. Translators: this is the spoken representation for the character '○' (U+25cb)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: ../src/orca/mathsymbols.py:2185
-#| msgid "white circle"
 msgctxt "math symbol"
 msgid "white circle"
 msgstr "círculo en blanco"
@@ -7746,14 +7721,12 @@ msgstr "círculo en blanco"
 #. Translators: this is the spoken representation for the character '●' (U+25cf)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: ../src/orca/mathsymbols.py:2189
-#| msgid "black circle"
 msgctxt "math symbol"
 msgid "black circle"
 msgstr "círculo negro"
 
 #. Translators: this is the spoken representation for the character '◦' (U+25e6)
 #: ../src/orca/mathsymbols.py:2192
-#| msgid "white bullet"
 msgctxt "math symbol"
 msgid "white bullet"
 msgstr "viñeta blanca"
@@ -7786,7 +7759,7 @@ msgstr "subrayado"
 #, python-format
 msgctxt "math symbol"
 msgid "%s with slash"
-msgstr ""
+msgstr "%s con barra"
 
 #. Translators: this is the spoken representation for the character '⃒' (U+20D2)
 #. which combines with the preceding character. '%s' is a placeholder for the
@@ -9116,7 +9089,6 @@ msgstr "fin de fracción"
 #. might not even be a simple string; it might be the square root of another
 #. expression such as a fraction.
 #: ../src/orca/messages.py:1025
-#| msgid "square root"
 msgid "square root of"
 msgstr "raíz cuadrada de"
 
@@ -9127,7 +9099,6 @@ msgstr "raíz cuadrada de"
 #. is unknown and might not even be a simple string; it might be the cube root
 #. of another expression such as a fraction.
 #: ../src/orca/messages.py:1033
-#| msgid "cube root"
 msgid "cube root of"
 msgstr "raíz cúbica de"
 
@@ -9138,7 +9109,6 @@ msgstr "raíz cúbica de"
 #. index, which precedes this string, is unknown and might not even be a simple
 #. expression like "fourth"; the index might instead be a fraction.
 #: ../src/orca/messages.py:1041
-#| msgid "root pane"
 msgid "root of"
 msgstr "raíz de"
 
@@ -9171,7 +9141,6 @@ msgstr "panel raíz"
 #. and in this instance we have no additional context through which a more user-
 #. friendly word or phrase can reliably be chosen.
 #: ../src/orca/messages.py:1063
-#| msgid "subscript 0"
 msgctxt "math script generic"
 msgid "subscript"
 msgstr "subíndice"
@@ -9182,7 +9151,6 @@ msgstr "subíndice"
 #. and in this instance we have no additional context through which a more user-
 #. friendly word or phrase can reliably be chosen.
 #: ../src/orca/messages.py:1070
-#| msgid "superscript a"
 msgctxt "math script generic"
 msgid "superscript"
 msgstr "superíndice"
@@ -9242,7 +9210,6 @@ msgstr "a sobrescrita"
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical table.
 #: ../src/orca/messages.py:1106
-#| msgid "table"
 msgctxt "math table"
 msgid "table end"
 msgstr "fin de tabla"
@@ -9251,11 +9218,10 @@ msgstr "fin de tabla"
 #. phrase is the end of a mathematical table which is nested inside another
 #. mathematical table.
 #: ../src/orca/messages.py:1111
-#, fuzzy
 #| msgid "tree table"
 msgctxt "math table"
 msgid "nested table end"
-msgstr "tabla de árbol"
+msgstr "fin de tabla anidada"
 
 #. Translators: Inaccessible means that the application cannot be read by Orca.
 #. This usually means the application is not friendly to the assistive technology
@@ -10448,33 +10414,33 @@ msgstr "no seleccionado"
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: ../src/orca/messages.py:1970
+#: ../src/orca/messages.py:1971
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%H horas, %M minutos y %S segundos."
 
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: ../src/orca/messages.py:1975
+#: ../src/orca/messages.py:1976
 msgid "%H hours and %M minutes."
 msgstr "%H horas y %M minutos."
 
 #. Translators: this is information about a unicode character reported to the
 #. user.  The value is the unicode number value of this character in hex.
-#: ../src/orca/messages.py:1979
+#: ../src/orca/messages.py:1980
 #, python-format
 msgid "Unicode %s"
 msgstr "Unicode %s"
 
 #. Translators: This message presents the Orca version number.
-#: ../src/orca/messages.py:1982
+#: ../src/orca/messages.py:1983
 #, python-format
 msgid "Screen reader version %s."
 msgstr "Versión %s del lector de pantalla."
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
-#: ../src/orca/messages.py:1986
+#: ../src/orca/messages.py:1987
 msgid "white space"
 msgstr "espacio en blanco"
 
@@ -10482,7 +10448,7 @@ msgstr "espacio en blanco"
 #. top of a page or list is reached without that object being found, we "wrap" to
 #. the bottom and continue looking upwards. We need to inform the user when this
 #. is taking place.
-#: ../src/orca/messages.py:1992
+#: ../src/orca/messages.py:1993
 msgid "Wrapping to bottom."
 msgstr "Saltando al final."
 
@@ -10490,21 +10456,21 @@ msgstr "Saltando al final."
 #. bottom of a page or list is reached without that object being found, we "wrap"
 #. to the top and continue looking downwards. We need to inform the user when
 #. this is taking place.
-#: ../src/orca/messages.py:1998
+#: ../src/orca/messages.py:1999
 msgid "Wrapping to top."
 msgstr "Saltando al principio."
 
 #. Translators, normally layered panes and tables have items in them. Thus it is
 #. noteworthy when this is not the case. This message is presented to the user to
 #. indicate the current layered pane or table contains zero items.
-#: ../src/orca/messages.py:2003
+#: ../src/orca/messages.py:2004
 msgid "0 items"
 msgstr "0 elementos"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: ../src/orca/messages.py:2011 ../src/orca/messages.py:2030
+#: ../src/orca/messages.py:2012 ../src/orca/messages.py:2031
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
@@ -10512,7 +10478,7 @@ msgstr[0] "Celda abarca %d fila"
 msgstr[1] "Celda abarca %d filas"
 
 #. Translators: this represents the number of columns in a table.
-#: ../src/orca/messages.py:2016
+#: ../src/orca/messages.py:2017
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
@@ -10522,7 +10488,7 @@ msgstr[1] " %d columnas"
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: ../src/orca/messages.py:2023
+#: ../src/orca/messages.py:2024
 #, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
@@ -10532,7 +10498,7 @@ msgstr[1] "Celda abarca %d columnas"
 #. Translators: People can enter a string of text that is too wide to be
 #. fully displayed in a spreadsheet cell. This message will be spoken if
 #. such a cell is encountered.
-#: ../src/orca/messages.py:2040
+#: ../src/orca/messages.py:2041
 #, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
@@ -10542,7 +10508,7 @@ msgstr[1] "%d caracteres demasiado grandes"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a braille message containing the app which just claimed focus.
-#: ../src/orca/messages.py:2048
+#: ../src/orca/messages.py:2049
 #, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
@@ -10552,7 +10518,7 @@ msgstr[1] "(%d diálogos)"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a spoken message containing the app which just claimed focus.
-#: ../src/orca/messages.py:2054
+#: ../src/orca/messages.py:2055
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -10560,7 +10526,7 @@ msgstr[0] "%d diálogo sin foco"
 msgstr[1] "%d diálogos sin foco"
 
 #. Translators: This is the size of a file in bytes
-#: ../src/orca/messages.py:2058
+#: ../src/orca/messages.py:2059
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -10569,7 +10535,7 @@ msgstr[1] "%d bytes"
 
 #. Translators: This message informs the user who many files were found as
 #. a result of a search.
-#: ../src/orca/messages.py:2063
+#: ../src/orca/messages.py:2064
 #, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
@@ -10577,7 +10543,7 @@ msgstr[0] "%d archivo encontrado"
 msgstr[1] "%d archivos encontrados"
 
 #. Translators: This message presents the number of forms in a document.
-#: ../src/orca/messages.py:2067
+#: ../src/orca/messages.py:2068
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
@@ -10585,7 +10551,7 @@ msgstr[0] "%d formulario"
 msgstr[1] "%d formularios"
 
 #. Translators: This message presents the number of headings in a document.
-#: ../src/orca/messages.py:2071
+#: ../src/orca/messages.py:2072
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -10594,7 +10560,7 @@ msgstr[1] "%d encabezados"
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
-#: ../src/orca/messages.py:2076
+#: ../src/orca/messages.py:2077
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -10604,7 +10570,7 @@ msgstr[1] "%d elementos"
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
 #. presented to the user to indicate how many matching items were found.
-#: ../src/orca/messages.py:2082
+#: ../src/orca/messages.py:2083
 #, python-format
 msgid "%d item found"
 msgid_plural "%d items found"
@@ -10612,7 +10578,7 @@ msgstr[0] "%d elemento encontrado"
 msgstr[1] "%d elementos encontrados"
 
 #. Translators: This message describes a bulleted or numbered list.
-#: ../src/orca/messages.py:2086
+#: ../src/orca/messages.py:2087
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -10621,14 +10587,14 @@ msgstr[1] "Lista con %d elementos"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: ../src/orca/messages.py:2091
-#, fuzzy, python-format
+#: ../src/orca/messages.py:2092
+#, python-format
 #| msgid "table with %d row"
 #| msgid_plural "table with %d rows"
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
-msgstr[0] "tabla con %d fila"
-msgstr[1] "tabla con %d filas"
+msgstr[0] "tabla matemática con %d fila"
+msgstr[1] "tabla matemática con %d filas"
 
 #. Translators: this represents the number of columns in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
@@ -10636,8 +10602,8 @@ msgstr[1] "tabla con %d filas"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: ../src/orca/messages.py:2096 ../src/orca/messages.py:2112
-#: ../src/orca/messages.py:2193
+#: ../src/orca/messages.py:2097 ../src/orca/messages.py:2113
+#: ../src/orca/messages.py:2194
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -10647,18 +10613,18 @@ msgstr[1] "%d columnas"
 #. Translators: this represents the number of rows in a mathematical table
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: ../src/orca/messages.py:2106
-#, fuzzy, python-format
+#: ../src/orca/messages.py:2107
+#, python-format
 #| msgid "table with %d row"
 #| msgid_plural "table with %d rows"
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
-msgstr[0] "tabla con %d fila"
-msgstr[1] "tabla con %d filas"
+msgstr[0] "tabla matemática anidada con %d filas"
+msgstr[1] "tabla matemática anidada con %d filas"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: ../src/orca/messages.py:2121
+#: ../src/orca/messages.py:2122
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -10667,7 +10633,7 @@ msgstr[1] "%d mensajes.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: ../src/orca/messages.py:2126
+#: ../src/orca/messages.py:2127
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -10677,7 +10643,7 @@ msgstr[1] "%d porciento."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: ../src/orca/messages.py:2132
+#: ../src/orca/messages.py:2133
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -10686,9 +10652,8 @@ msgstr[1] "leído %d por ciento del documento"
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
-#: ../src/orca/messages.py:2139
+#: ../src/orca/messages.py:2140
 #, python-format
-#| msgid "pixels"
 msgid "%d pixel"
 msgid_plural "%d pixels"
 msgstr[0] "%d píxel"
@@ -10697,7 +10662,7 @@ msgstr[1] "%d píxeles"
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
 #. %s is the spoken word for the character.
-#: ../src/orca/messages.py:2145
+#: ../src/orca/messages.py:2146
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -10706,7 +10671,7 @@ msgstr[1] "%(count)d caracteres %(repeatChar)s"
 
 #. Translators: This message is presented to indicate the number of selected
 #. objects (e.g. icons) and the total number of those objects.
-#: ../src/orca/messages.py:2152
+#: ../src/orca/messages.py:2153
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -10717,7 +10682,7 @@ msgstr[1] "%(index)d de %(total)d elementos seleccionados"
 #. shortcuts associated with Orca commands which are not specific to the
 #. current application. It appears as the title of the dialog containing
 #. the list.
-#: ../src/orca/messages.py:2161
+#: ../src/orca/messages.py:2162
 #, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
@@ -10727,20 +10692,20 @@ msgstr[1] "Se encontraron %d atajos predeterminados del lector de pantalla."
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
 #. application. It appears as the title of the dialog containing the list.
-#: ../src/orca/messages.py:2169
+#: ../src/orca/messages.py:2170
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
 msgstr[0] ""
-"Se encontró %(count)d atajo del lector de pantalla para la aplicación "
-"%(application)s."
+"Se encontró %(count)d atajo del lector de pantalla para la aplicación %"
+"(application)s."
 msgstr[1] ""
-"Se encontraron %(count)d atajos del lector de pantalla para la aplicación "
-"%(application)s."
+"Se encontraron %(count)d atajos del lector de pantalla para la aplicación %"
+"(application)s."
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: ../src/orca/messages.py:2176
+#: ../src/orca/messages.py:2177
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -10749,7 +10714,7 @@ msgstr[1] "%d espacios"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: ../src/orca/messages.py:2181
+#: ../src/orca/messages.py:2182
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -10757,7 +10722,7 @@ msgstr[0] "%d tabulador"
 msgstr[1] "%d tabuladores"
 
 #. Translators: This message presents the number of tables in a document.
-#: ../src/orca/messages.py:2185
+#: ../src/orca/messages.py:2186
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -10765,7 +10730,7 @@ msgstr[0] "%d tabla"
 msgstr[1] "%d tablas"
 
 #. Translators: this represents the number of rows in a table.
-#: ../src/orca/messages.py:2189
+#: ../src/orca/messages.py:2190
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -10774,7 +10739,7 @@ msgstr[1] "tabla con %d filas"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: ../src/orca/messages.py:2202
+#: ../src/orca/messages.py:2203
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -10783,7 +10748,7 @@ msgstr[1] "%d enlaces no visitados"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: ../src/orca/messages.py:2207
+#: ../src/orca/messages.py:2208
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
