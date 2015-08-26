@@ -7,17 +7,19 @@
 # Maria Majadas <maria.majadas@hispalinux.es>, 2005.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2010, 2011.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2007, 2008, 2010, 2011, 2014.
-# Miguel Rodríguez Núñez <bokerones.fritos@gmail.com>, 2015.
 #
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015., 2015.
 #
+# Miguel Rodríguez Núñez <bokerones.fritos@gmail.com>, 2015., 2015.
+#
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2015-08-24 23:32+0000\n"
-"PO-Revision-Date: 2015-08-25 \n"
+"POT-Creation-Date: 2015-08-25 11:33+0000\n"
+"PO-Revision-Date: 2015-08-26 \n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -25,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Screen Reader"
@@ -5856,7 +5858,6 @@ msgstr "flecha abajo"
 
 #. Translators: this is the spoken representation for the character '↔' (U+2194)
 #: ../src/orca/mathsymbols.py:1265
-#| msgid "right arrow"
 msgctxt "math symbol"
 msgid "left right arrow"
 msgstr "flecha izquierda derecha"
@@ -5869,88 +5870,75 @@ msgstr "flecha arriba abajo"
 
 #. Translators: this is the spoken representation for the character '↖' (U+2196)
 #: ../src/orca/mathsymbols.py:1271
-#| msgid "right arrow"
 msgctxt "math symbol"
 msgid "north west arrow"
 msgstr "flecha noroeste"
 
 #. Translators: this is the spoken representation for the character '↗' (U+2197)
 #: ../src/orca/mathsymbols.py:1274
-#| msgid "right arrow"
 msgctxt "math symbol"
 msgid "north east arrow"
 msgstr "flecha noreste"
 
 #. Translators: this is the spoken representation for the character '↘' (U+2198)
 #: ../src/orca/mathsymbols.py:1277
-#| msgid "right arrow"
 msgctxt "math symbol"
 msgid "south east arrow"
 msgstr "flecha sureste"
 
 #. Translators: this is the spoken representation for the character '↤' (U+21a4)
 #: ../src/orca/mathsymbols.py:1280
-#, fuzzy
-#| msgid "left arrow"
 msgctxt "math symbol"
 msgid "left arrow from bar"
-msgstr "flecha izquierda"
+msgstr "flecha izquierda desde la barra"
 
 #. Translators: this is the spoken representation for the character '↥' (U+21a5)
 #: ../src/orca/mathsymbols.py:1283
 msgctxt "math symbol"
 msgid "up arrow from bar"
-msgstr ""
+msgstr "flecha hacia arriba desde la barra"
 
 #. Translators: this is the spoken representation for the character '↦' (U+21a6)
 #: ../src/orca/mathsymbols.py:1286
-#, fuzzy
-#| msgid "right arrow"
 msgctxt "math symbol"
 msgid "right arrow from bar"
-msgstr "flecha derecha"
+msgstr "flecha derecha desde la barra"
 
 #. Translators: this is the spoken representation for the character '↧' (U+21a7)
 #: ../src/orca/mathsymbols.py:1289
 msgctxt "math symbol"
 msgid "down arrow from bar"
-msgstr ""
+msgstr "flecha hacia abajo desde la barra"
 
 #. Translators: this is the spoken representation for the character '⇐' (U+21d0)
 #: ../src/orca/mathsymbols.py:1292
-#| msgid "left double quote"
 msgctxt "math symbol"
 msgid "left double arrow"
 msgstr "flecha izquierda doble"
 
 #. Translators: this is the spoken representation for the character '⇑' (U+21d1)
 #: ../src/orca/mathsymbols.py:1295
-#| msgid "double dagger"
 msgctxt "math symbol"
 msgid "up double arrow"
 msgstr "flecha arriba doble"
 
 #. Translators: this is the spoken representation for the character '⇒' (U+21d2)
 #: ../src/orca/mathsymbols.py:1298
-#| msgid "right double quote"
 msgctxt "math symbol"
 msgid "right double arrow"
 msgstr "flecha derecha doble"
 
 #. Translators: this is the spoken representation for the character '⇓' (U+21d3)
 #: ../src/orca/mathsymbols.py:1301
-#| msgid "double dagger"
 msgctxt "math symbol"
 msgid "down double arrow"
 msgstr "flecha abajo doble"
 
 #. Translators: this is the spoken representation for the character '⇔' (U+21d4)
 #: ../src/orca/mathsymbols.py:1304
-#, fuzzy
-#| msgid "right double quote"
 msgctxt "math symbol"
 msgid "left right double arrow"
-msgstr "cierra comilla doble"
+msgstr "flecha doble que apunta a la izquierda y derecha"
 
 #. Translators: this is the spoken representation for the character '⇕' (U+21d5)
 #: ../src/orca/mathsymbols.py:1307
@@ -5960,21 +5948,18 @@ msgstr "flecha doble arriba abajo"
 
 #. Translators: this is the spoken representation for the character '⇖' (U+21d6)
 #: ../src/orca/mathsymbols.py:1310
-#| msgid "right arrow"
 msgctxt "math symbol"
 msgid "north west double arrow"
 msgstr "flecha noroeste doble"
 
 #. Translators: this is the spoken representation for the character '⇗' (U+21d7)
 #: ../src/orca/mathsymbols.py:1313
-#| msgid "right arrow"
 msgctxt "math symbol"
 msgid "north east double arrow"
 msgstr "flecha noreste doble"
 
 #. Translators: this is the spoken representation for the character '⇘' (U+21d8)
 #: ../src/orca/mathsymbols.py:1316
-#| msgid "right arrow"
 msgctxt "math symbol"
 msgid "south east double arrow"
 msgstr "flecha sureste doble"
@@ -5983,20 +5968,16 @@ msgstr "flecha sureste doble"
 #: ../src/orca/mathsymbols.py:1319
 msgctxt "math symbol"
 msgid "south west double arrow"
-msgstr ""
+msgstr "flecha doble con orientación sudoeste"
 
 #. Translators: this is the spoken representation for the character '➔' (U+2794)
 #: ../src/orca/mathsymbols.py:1322
-#, fuzzy
-#| msgid "right-pointing arrow"
 msgctxt "math symbol"
 msgid "right-pointing arrow"
 msgstr "flecha apuntando a la derecha"
 
 #. Translators: this is the spoken representation for the character '➢' (U+27a2)
 #: ../src/orca/mathsymbols.py:1325
-#, fuzzy
-#| msgid "right-pointing arrowhead"
 msgctxt "math symbol"
 msgid "right-pointing arrowhead"
 msgstr "flecha apuntando hacia la derecha"
@@ -6035,14 +6016,14 @@ msgstr "circunflejo"
 #: ../src/orca/mathsymbols.py:1345
 msgctxt "math symbol"
 msgid "háček"
-msgstr ""
+msgstr "gancho"
 
 #. Translators: this is the spoken word for the character '˘' (U+02d8) when used
 #. as a MathML operator.
 #: ../src/orca/mathsymbols.py:1349
 msgctxt "math symbol"
 msgid "breve"
-msgstr ""
+msgstr "breve"
 
 #. Translators: this is the spoken word for the character '˙' (U+02d9) when used
 #. as a MathML operator.
@@ -6248,7 +6229,7 @@ msgstr "infinito"
 #: ../src/orca/mathsymbols.py:1456
 msgctxt "math symbol"
 msgid "right angle"
-msgstr "ángulo derecho derecho"
+msgstr "ángulo derecho"
 
 #. Translators: this is the spoken representation for the character '∠' (U+2220)
 #: ../src/orca/mathsymbols.py:1459
@@ -7582,113 +7563,81 @@ msgstr "notación z, miembro de bolsa"
 
 #. Translators: this is the spoken representation for the character '⌈' (U+2308)
 #: ../src/orca/mathsymbols.py:2131
-#, fuzzy
-#| msgid "left paren"
 msgctxt "math symbol"
 msgid "left ceiling"
-msgstr "abre paréntesis"
+msgstr "tope izquierdo"
 
 #. Translators: this is the spoken representation for the character '⌉' (U+2309)
 #: ../src/orca/mathsymbols.py:2134
-#, fuzzy
-#| msgid "right paren"
 msgctxt "math symbol"
 msgid "right ceiling"
-msgstr "cierra paréntesis"
+msgstr "tope derecho"
 
 #. Translators: this is the spoken representation for the character '⌊' (U+230a)
 #: ../src/orca/mathsymbols.py:2137
-#, fuzzy
-#| msgid "left alt"
 msgctxt "math symbol"
 msgid "left floor"
-msgstr "alt izquierdo"
+msgstr "piso izquierda"
 
 #. Translators: this is the spoken representation for the character '⌋' (U+230b)
 #: ../src/orca/mathsymbols.py:2140
-#, fuzzy
-#| msgid "right alt"
 msgctxt "math symbol"
 msgid "right floor"
-msgstr "alt derecho"
+msgstr "piso derecha"
 
 #. Translators: this is the spoken representation for the character '⏞' (U+23de)
 #: ../src/orca/mathsymbols.py:2143
-#, fuzzy
-#| msgid "left brace"
 msgctxt "math symbol"
 msgid "top brace"
-msgstr "abre llave"
+msgstr "llave superior"
 
 #. Translators: this is the spoken representation for the character '⏟' (U+23df)
 #: ../src/orca/mathsymbols.py:2146
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "bottom"
 msgctxt "math symbol"
 msgid "bottom brace"
-msgstr "inferior"
+msgstr "llave inferior"
 
 #. Translators: this is the spoken representation for the character '⟨' (U+27e8)
 #: ../src/orca/mathsymbols.py:2149
-#, fuzzy
-#| msgid "left double angle bracket"
 msgctxt "math symbol"
 msgid "left angle bracket"
-msgstr "abre comillas angulares"
+msgstr "abre corchete"
 
 #. Translators: this is the spoken representation for the character '⟩' (U+27e9)
 #: ../src/orca/mathsymbols.py:2152
-#, fuzzy
-#| msgid "right double angle bracket"
 msgctxt "math symbol"
 msgid "right angle bracket"
-msgstr "cierra comillas angulares"
+msgstr "cierra corchete"
 
 #. Translators: this is the spoken representation for the character '⨀' (U+2a00)
 #: ../src/orca/mathsymbols.py:2155
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "circled dash"
 msgctxt "math symbol"
 msgid "circled dot"
-msgstr "guión alto en un círculo"
+msgstr "punto en un círculo"
 
 #. Translators: this is the spoken representation for the character '⨃' (U+2a03)
 #: ../src/orca/mathsymbols.py:2163
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "less than with dot"
 msgctxt "math symbol"
 msgid "union with dot"
-msgstr "menor que con punto"
+msgstr "unión con punto"
 
 #. Translators: this is the spoken representation for the character '⨄' (U+2a04)
 #: ../src/orca/mathsymbols.py:2165
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "dot plus"
 msgctxt "math symbol"
 msgid "union with plus"
-msgstr "por más"
+msgstr "unión por símbolo de más"
 
 #. Translators: this is the spoken representation for the character '⨅' (U+2a05)
 #: ../src/orca/mathsymbols.py:2167
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "n-ary intersection"
 msgctxt "math symbol"
 msgid "square intersection"
-msgstr "intersección"
+msgstr "intersección cuadrado"
 
 #. Translators: this is the spoken representation for the character '⨆' (U+2a06)
 #: ../src/orca/mathsymbols.py:2169
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "square cup"
 msgctxt "math symbol"
 msgid "square union"
-msgstr "cuadrado boca arriba"
+msgstr "unión cuadrado"
 
 #. Translators: this is the spoken representation for the character '■' (U+25a0)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
@@ -7734,8 +7683,6 @@ msgstr "viñeta blanca"
 #. Translators: this is the spoken representation for the character '◾' (U+25fe)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: ../src/orca/mathsymbols.py:2196
-#, fuzzy
-#| msgid "black medium small square"
 msgctxt "math symbol"
 msgid "black medium small square"
 msgstr "cuadrado pequeño mediano negro"
@@ -7745,11 +7692,10 @@ msgstr "cuadrado pequeño mediano negro"
 #. preceding character. Some examples of combined symbols can be seen in this
 #. table: http://www.w3.org/TR/MathML3/appendixc.html#oper-dict.entries-table.
 #: ../src/orca/mathsymbols.py:2202
-#, fuzzy, python-format
-#| msgid "underline"
+#, python-format
 msgctxt "math symbol"
 msgid "%s with underline"
-msgstr "subrayado"
+msgstr "%s con subrayado"
 
 #. Translators: this is the spoken representation for the character '̸' (U+0338)
 #. which combines with the preceding character. '%s' is a placeholder for the
@@ -7766,12 +7712,10 @@ msgstr "%s con barra"
 #. preceding character. Some examples of combined symbols can be seen in this
 #. table: http://www.w3.org/TR/MathML3/appendixc.html#oper-dict.entries-table.
 #: ../src/orca/mathsymbols.py:2214
-#, fuzzy, python-format
-#| msgctxt "textattr"
-#| msgid "vertical align"
+#, python-format
 msgctxt "math symbol"
 msgid "%s with vertical line"
-msgstr "alineación vertical"
+msgstr "%s con alineación vertical"
 
 #. Translators: Sometimes when we attempt to get the name of an accessible
 #. software application, we fail because the app or one of its elements is
@@ -8821,7 +8765,7 @@ msgstr "Eco de teclado establecido a palabra y frase."
 #, python-format
 msgctxt "math enclosure"
 msgid "Enclosed by: %s"
-msgstr ""
+msgstr "Encerrado por: %s"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8832,7 +8776,7 @@ msgstr ""
 #: ../src/orca/messages.py:849
 msgctxt "math enclosure"
 msgid "an actuarial symbol"
-msgstr ""
+msgstr "un símbolo actuarial"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8863,11 +8807,9 @@ msgstr "un círculo"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:873
-#, fuzzy
-#| msgid "has long description"
 msgctxt "math enclosure"
 msgid "a long division sign"
-msgstr "tiene una descripción larga"
+msgstr "un signo de división larga"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8889,7 +8831,7 @@ msgstr "un radical"
 #: ../src/orca/messages.py:889
 msgctxt "math enclosure"
 msgid "a rounded box"
-msgstr ""
+msgstr "una caja redondeada"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8920,12 +8862,9 @@ msgstr "una barra vertical"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:913
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "down right diagonal ellipsis"
 msgctxt "math enclosure"
 msgid "a down diagonal strike"
-msgstr "puntos suspensivos en diagonal abajo derecha"
+msgstr "barra en diagonal abajo derecha"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8936,7 +8875,7 @@ msgstr "puntos suspensivos en diagonal abajo derecha"
 #: ../src/orca/messages.py:921
 msgctxt "math enclosure"
 msgid "an up diagonal strike"
-msgstr ""
+msgstr "barra diagonal hacia arriba"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8945,11 +8884,9 @@ msgstr ""
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:929
-#, fuzzy
-#| msgid "right arrow"
 msgctxt "math enclosure"
 msgid "a northeast arrow"
-msgstr "flecha derecha"
+msgstr "flecha nordeste"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8958,11 +8895,9 @@ msgstr "flecha derecha"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:937
-#, fuzzy
-#| msgid "Wrapping to bottom."
 msgctxt "math enclosure"
 msgid "a line at the bottom"
-msgstr "Saltando al final."
+msgstr "una línea al fondo"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8973,7 +8908,7 @@ msgstr "Saltando al final."
 #: ../src/orca/messages.py:945
 msgctxt "math enclosure"
 msgid "a line on the left"
-msgstr ""
+msgstr "una línea a la izquierda"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8982,12 +8917,9 @@ msgstr ""
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:953
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "line height"
 msgctxt "math enclosure"
 msgid "a line on the right"
-msgstr "altura de la línea"
+msgstr "una línea a la derecha"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8998,7 +8930,7 @@ msgstr "altura de la línea"
 #: ../src/orca/messages.py:961
 msgctxt "math enclosure"
 msgid "a line at the top"
-msgstr ""
+msgstr "una línea encima"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9007,12 +8939,9 @@ msgstr ""
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:969
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "measured angle"
 msgctxt "math enclosure"
 msgid "a phasor angle"
-msgstr "ángulo medido"
+msgstr "un ángulo fasor"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9024,7 +8953,7 @@ msgstr "ángulo medido"
 #: ../src/orca/messages.py:978
 msgctxt "math enclosure"
 msgid "an arabic factorial symbol"
-msgstr ""
+msgstr "un símbolo factorial arábico"
 
 #. Translators: This phrase is spoken to inform the user of all of the MathML
 #. enclosure notations associated with a given mathematical expression. For
@@ -9038,11 +8967,9 @@ msgstr ""
 #. element and its notation types, see:
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:991
-#, fuzzy
-#| msgid "and"
 msgctxt "math enclosure"
 msgid "and"
-msgstr "ampersand"
+msgstr "símbolo «y» lógico"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is part of a mathematical fraction. For instance, given x+1/y+2, Orca
@@ -9062,18 +8989,15 @@ msgstr "inicio de fracción"
 #. is installed.
 #: ../src/orca/messages.py:1007
 msgid "fraction without bar, start"
-msgstr ""
+msgstr "fracción sin barra, inicio"
 
 #. Translators: This word refers to the line separating the numerator from the
 #. denominator in a mathematical fraction. For instance, given x+1/y+2, Orca
 #. would would say "fraction start, x+1 over y+2, fraction end."
 #: ../src/orca/messages.py:1012
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "overline"
 msgctxt "math fraction"
 msgid "over"
-msgstr "suprarayado"
+msgstr "sobre"
 
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical fraction. For instance, given x+1/y+2,
@@ -9120,20 +9044,16 @@ msgstr "raíz de"
 #. 4, but instead the fraction x/4, beginning the phrase with "root start" can
 #. help the user better understand that x/4 is the index of the root.
 #: ../src/orca/messages.py:1050
-#, fuzzy
-#| msgid "root pane"
 msgid "root start"
-msgstr "panel raíz"
+msgstr "inicio raíz"
 
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical root (square root, cube root, nth root).
 #. For instance, for the cube root of 9, Orca would say "cube root of 9, root
 #. end" (assuming the user settings indicate that root endings should be spoken).
 #: ../src/orca/messages.py:1056
-#, fuzzy
-#| msgid "root pane"
 msgid "root end"
-msgstr "panel raíz"
+msgstr "fin raíz"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is subscripted text in a mathematical expression. Note that the
@@ -9161,11 +9081,9 @@ msgstr "superíndice"
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.mmultiscripts
 #. https://developer.mozilla.org/en-US/docs/Web/MathML/Element/mmultiscripts
 #: ../src/orca/messages.py:1077
-#, fuzzy
-#| msgid "subscript 0"
 msgctxt "math script"
 msgid "pre-subscript"
-msgstr "0 subíndice"
+msgstr "subíndice previo a la base"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is superscripted text which precedes the base in a mathematical
@@ -9173,11 +9091,9 @@ msgstr "0 subíndice"
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.mmultiscripts
 #. https://developer.mozilla.org/en-US/docs/Web/MathML/Element/mmultiscripts
 #: ../src/orca/messages.py:1084
-#, fuzzy
-#| msgid "superscript a"
 msgctxt "math script"
 msgid "pre-superscript"
-msgstr "a sobrescrita"
+msgstr "sobrescritura previa a la base"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is underscripted text in a mathematical expression. Note that the
@@ -9187,11 +9103,9 @@ msgstr "a sobrescrita"
 #. http://www.w3.org/TR/MathML/chapter3.html#presm.munder
 #. https://reference.wolfram.com/language/ref/Underscript.html
 #: ../src/orca/messages.py:1093
-#, fuzzy
-#| msgid "superscript a"
 msgctxt "math script generic"
 msgid "underscript"
-msgstr "a sobrescrita"
+msgstr "escritura inferior"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is overscripted text in a mathematical expression. Note that the
@@ -9201,11 +9115,9 @@ msgstr "a sobrescrita"
 #. http://www.w3.org/TR/MathML/chapter3.html#presm.mover
 #. https://reference.wolfram.com/language/ref/Overscript.html
 #: ../src/orca/messages.py:1102
-#, fuzzy
-#| msgid "superscript a"
 msgctxt "math script generic"
 msgid "overscript"
-msgstr "a sobrescrita"
+msgstr "sobrescritura de la base"
 
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical table.
@@ -9218,7 +9130,6 @@ msgstr "fin de tabla"
 #. phrase is the end of a mathematical table which is nested inside another
 #. mathematical table.
 #: ../src/orca/messages.py:1111
-#| msgid "tree table"
 msgctxt "math table"
 msgid "nested table end"
 msgstr "fin de tabla anidada"
@@ -10589,8 +10500,6 @@ msgstr[1] "Lista con %d elementos"
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #: ../src/orca/messages.py:2092
 #, python-format
-#| msgid "table with %d row"
-#| msgid_plural "table with %d rows"
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
 msgstr[0] "tabla matemática con %d fila"
@@ -10615,8 +10524,6 @@ msgstr[1] "%d columnas"
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #: ../src/orca/messages.py:2107
 #, python-format
-#| msgid "table with %d row"
-#| msgid_plural "table with %d rows"
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
 msgstr[0] "tabla matemática anidada con %d filas"
