@@ -312,6 +312,8 @@ class Generator:
                 name = names[0].strip()
             elif len(children) == 1 and children[0].name:
                 name = children[0].name.strip()
+            elif not names and obj.name:
+                name = obj.name
         if name:
             result.append(name)
         else:
