@@ -583,7 +583,7 @@ class Chat:
         # Only speak/braille the new message if it matches how the user
         # wants chat messages spoken.
         #
-        verbosity = self._script.getSettings().chatMessageVerbosity
+        verbosity = _settingsManager.getAppSetting(self._script.app, 'chatMessageVerbosity')
         if orca_state.activeScript.name != self._script.name \
            and verbosity == settings.CHAT_SPEAK_ALL_IF_FOCUSED:
             return

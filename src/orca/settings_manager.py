@@ -518,6 +518,21 @@ class SettingsManager(object):
 
         return self._backend.availableProfiles()
 
+    def getAppSetting(self, app, settingName, fallbackOnDefault=True):
+        if not app:
+            return None
+
+        appPrefs = self._backend.getAppSettings(app.name)
+        profiles = appPrefs.get('profiles', {})
+        profilePrefs = profiles.get(self.profile, {})
+        general = profilePrefs.get('general', {})
+        appSetting = general.get(settingName)
+        if appSetting is None and fallbackOnDefault:
+            general = self._backend.getGeneral(self.profile)
+            appSetting = general.get(settingName)
+
+        return appSetting
+
     def loadAppSettings(self, script):
         """Load the users application specific settings for an app.
 
