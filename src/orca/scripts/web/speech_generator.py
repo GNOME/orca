@@ -97,7 +97,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         args['stringType'] = 'clickable'
         if self._script.utilities.isClickableElement(obj):
-            return [self._script.formatting.getString(**args)]
+            result = [self._script.formatting.getString(**args)]
+            result.extend(self.voice(speech_generator.SYSTEM))
+            return result
 
         return []
 
@@ -129,7 +131,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         args['stringType'] = 'haslongdesc'
         if self._script.utilities.hasLongDesc(obj):
-            return [self._script.formatting.getString(**args)]
+            result = [self._script.formatting.getString(**args)]
+            result.extend(self.voice(speech_generator.SYSTEM))
+            return result
 
         return []
 
