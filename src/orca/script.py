@@ -39,8 +39,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import imp
-import importlib
 import pyatspi
 
 from . import braille_generator
