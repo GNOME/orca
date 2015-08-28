@@ -167,7 +167,7 @@ class Utilities(script_utilities.Utilities):
         try:
             windows = [child for child in self._script.app]
         except:
-            msg = "WEB: Exception getting children for %s" % self._script.app
+            msg = "WEB: Exception getting children for app %s" % self._script.app
             debug.println(debug.LEVEL_INFO, msg)
             windows = []
 
@@ -2330,8 +2330,14 @@ class Utilities(script_utilities.Utilities):
                 return self.findNextCaretInOrder(parent, start)
 
             index = obj.getIndexInParent() + 1
-            if 0 <= index < parent.childCount:
-                return self.findNextCaretInOrder(parent[index], -1)
+            try:
+                parentChildCount = parent.childCount
+            except:
+                msg = "WEB: Exception getting childCount for %s" % parent
+                debug.println(debug.LEVEL_INFO, msg)
+            else:
+                if 0 <= index < parentChildCount:
+                    return self.findNextCaretInOrder(parent[index], -1)
             obj = parent
 
         return None, -1
@@ -2383,8 +2389,14 @@ class Utilities(script_utilities.Utilities):
                 return self.findPreviousCaretInOrder(parent, start)
 
             index = obj.getIndexInParent() - 1
-            if 0 <= index < parent.childCount:
-                return self.findPreviousCaretInOrder(parent[index], -1)
+            try:
+                parentChildCount = parent.childCount
+            except:
+                msg = "WEB: Exception getting childCount for %s" % parent
+                debug.println(debug.LEVEL_INFO, msg)
+            else:
+                if 0 <= index < parentChildCount:
+                    return self.findPreviousCaretInOrder(parent[index], -1)
             obj = parent
 
         return None, -1

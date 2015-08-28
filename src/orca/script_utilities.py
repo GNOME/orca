@@ -2912,7 +2912,12 @@ class Utilities:
         if isSame(root):
             replicant = root
         else:
-            replicant = pyatspi.findDescendant(root, isSame)
+            try:
+                replicant = pyatspi.findDescendant(root, isSame)
+            except:
+                msg = "INFO: Exception from findDescendant for %s" % root
+                debug.println(debug.LEVEL_INFO, msg)
+                replicant = None
 
         msg = "HACK: Returning %s as replicant for Zombie %s" % (replicant, obj)
         debug.println(debug.LEVEL_INFO, msg)

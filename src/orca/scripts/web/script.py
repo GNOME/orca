@@ -1091,7 +1091,8 @@ class Script(default.Script):
             return False
 
         if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
-            msg = "WEB: Ignoring event source is in document; locusOfFocus is not"
+            msg = "WEB: Event ignored: locusOfFocus (%s) is not in document content" \
+                  % orca_state.locusOfFocus
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
@@ -1281,7 +1282,7 @@ class Script(default.Script):
             utterances.append(messages.NEW_ITEM_ADDED)
             utterances.extend(self.speechGenerator.generateSpeech(child, force=True))
             speech.speak(utterances)
-            self.lastMouseOverObject = child
+            self._lastMouseOverObject = child
             self.preMouseOverContext = self.utilities.getCaretContext()
             return True
 
@@ -1412,7 +1413,8 @@ class Script(default.Script):
             return False
 
         if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
-            msg = "WEB: Ignoring event source is in document; locusOfFocus is not"
+            msg = "WEB: Event ignored: locusOfFocus (%s) is not in document content" \
+                  % orca_state.locusOfFocus
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
@@ -1469,8 +1471,8 @@ class Script(default.Script):
 
         state = event.source.getState()
         if not state.contains(pyatspi.STATE_EDITABLE):
-            if self.inMouseOverObject \
-               and self.utilities.isZombie(self.lastMouseOverObject):
+            if self._inMouseOverObject \
+               and self.utilities.isZombie(self._lastMouseOverObject):
                 msg = "WEB: Restoring pre-mouseover context"
                 debug.println(debug.LEVEL_INFO, msg)
                 self.restorePreMouseOverContext()
@@ -1557,7 +1559,8 @@ class Script(default.Script):
             return True
 
         if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
-            msg = "WEB: Ignoring: Event in document content; focus is not"
+            msg = "WEB: Event ignored: locusOfFocus (%s) is not in document content" \
+                  % orca_state.locusOfFocus
             debug.println(debug.LEVEL_INFO, msg)
             return True
 

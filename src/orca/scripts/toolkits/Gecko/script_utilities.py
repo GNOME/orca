@@ -55,25 +55,10 @@ class Utilities(web.Utilities):
             return -1
 
         try:
-            state = obj.getState()
-        except:
-            return -1
-        else:
-            if state.contains(pyatspi.STATE_DEFUNCT):
-                # Yelp (or perhaps the work-in-progress a11y patch)
-                # seems to be guilty of this.
-                #
-                #print "nodeLevel - obj is defunct", obj
-                debug.println(debug.LEVEL_WARNING,
-                              "nodeLevel - obj is defunct")
-                debug.printStack(debug.LEVEL_WARNING)
-                return -1
-
-        try:
             attrs = obj.getAttributes()
         except:
-            attrs = None
-        if attrs is None:
+            msg = "GECKO: Exception getting attributes for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
             return -1
         for attr in attrs:
             if attr.startswith("level:"):
