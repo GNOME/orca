@@ -68,17 +68,12 @@ class Script(web.Script):
     def onActiveChanged(self, event):
         """Callback for object:state-changed:active accessibility events."""
 
-        if self.findCommandRun:
-            self.findCommandRun = False
-            self.find()
+        if super().onActiveChanged(event):
             return
 
-        if not event.detail1:
-            return
-
-        role = event.source.getRole()
-        if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]:
-            orca.setLocusOfFocus(event, event.source)
+        msg = "GECKO: Passing along event to default script"
+        debug.println(debug.LEVEL_INFO, msg)
+        default.Script.onActiveChanged(self, event)
 
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""

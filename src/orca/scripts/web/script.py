@@ -988,6 +988,28 @@ class Script(default.Script):
 
         return True
 
+    def onActiveChanged(self, event):
+        """Callback for object:state-changed:active accessibility events."""
+
+        if not self.utilities.inDocumentContent(event.source):
+            msg = "WEB: Event source is not in document content"
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+
+        if not event.detail1:
+            msg = "WEB: Ignoring because event source is now inactive"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        role = event.source.getRole()
+        if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]:
+            msg = "WEB: Event handled: Setting locusOfFocus to event source"
+            debug.println(debug.LEVEL_INFO, msg)
+            orca.setLocusOfFocus(event, event.source)
+            return True
+
+        return False
+
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
