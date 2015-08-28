@@ -1085,8 +1085,8 @@ class Utilities(script_utilities.Utilities):
             return objects
 
         firstObj, firstStart, firstEnd, firstString = objects[0]
-        if extents[2] == 0 and extents[3] == 0:
-            extents = self.getExtents(obj, firstStart, firstEnd)
+        if (extents[2] == 0 and extents[3] == 0) or self.isMath(firstObj):
+            extents = self.getExtents(firstObj, firstStart, firstEnd)
 
         lastObj, lastStart, lastEnd, lastString = objects[-1]
         prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
