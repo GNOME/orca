@@ -467,10 +467,8 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         acss = self.voice(STATE)
-        if obj.getState().contains(pyatspi.STATE_MULTISELECTABLE):
-            # Translators: "multi-select" refers to a web form list
-            # in which more than one item can be selected at a time.
-            #
+        if obj.getState().contains(pyatspi.STATE_MULTISELECTABLE) \
+           and obj.childCount:
             result.append(self._script.formatting.getString(
                 mode='speech',
                 stringType='multiselect'))
@@ -1465,6 +1463,9 @@ class SpeechGenerator(generator.Generator):
             items = [s.getSelectedChild(i) for i in range(s.nSelectedChildren)]
             if not items and obj.childCount:
                 items.append(obj[0])
+
+        if not (items and items[0]):
+            return result
 
         items = list(map(self._generateName, items))
         for item in items:

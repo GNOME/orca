@@ -326,6 +326,9 @@ class BrailleGenerator(generator.Generator):
             if not items and obj.childCount:
                 items.append(obj[0])
 
+        if not (items and items[0]):
+            return result
+
         items = list(map(self._generateName, items))
         for item in items:
             result.extend(item)
