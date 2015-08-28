@@ -164,7 +164,13 @@ class Utilities(script_utilities.Utilities):
     def documentFrame(self, obj=None):
         isShowing = lambda x: x and x.getState().contains(pyatspi.STATE_SHOWING)
 
-        windows = [child for child in self._script.app]
+        try:
+            windows = [child for child in self._script.app]
+        except:
+            msg = "WEB: Exception getting children for %s" % self._script.app
+            debug.println(debug.LEVEL_INFO, msg)
+            windows = []
+
         if orca_state.activeWindow in windows:
             windows = [orca_state.activeWindow]
 
@@ -1912,8 +1918,14 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def shouldInferLabelFor(self, obj):
-        if obj.name:
-            return False
+        try:
+            name = obj.name
+        except:
+            msg = "WEB: Exception getting name for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+        else:
+            if name:
+                return False
 
         if self._script.inSayAll():
             return False
@@ -1921,7 +1933,12 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent():
             return False
 
-        role = obj.getRole()
+        try:
+            role = obj.getRole()
+        except:
+            msg = "WEB: Exception getting role for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
 
         # TODO - JD: This is private.
         if self._script._lastCommandWasCaretNav \
@@ -2127,6 +2144,15 @@ class Utilities(script_utilities.Utilities):
         if not obj or self.isZombie(obj):
             return True
 
+        try:
+            childCount = obj.childCount
+        except:
+            msg = "WEB: Exception getting childCount for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+        if not childCount:
+            return True
+
         if self.isHidden(obj) or self.isOffScreenLabel(obj):
             return True
 
@@ -2277,7 +2303,7 @@ class Utilities(script_utilities.Utilities):
                         return self.findNextCaretInOrder(child, -1)
                     if allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
                         return obj, i
-            elif obj.childCount and not self.doNotDescendForCaret(obj):
+            elif not self.doNotDescendForCaret(obj) and obj.childCount:
                 return self.findNextCaretInOrder(obj[0], -1)
             elif offset < 0 and not self.isTextBlockElement(obj) and not self.hasNoSize(obj):
                 return obj, 0
@@ -2330,7 +2356,7 @@ class Utilities(script_utilities.Utilities):
                         return self.findPreviousCaretInOrder(child, -1)
                     if allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
                         return obj, i
-            elif obj.childCount and not self.doNotDescendForCaret(obj):
+            elif not self.doNotDescendForCaret(obj) and obj.childCount:
                 return self.findPreviousCaretInOrder(obj[obj.childCount - 1], -1)
             elif offset < 0 and not self.isTextBlockElement(obj) and not self.hasNoSize(obj):
                 return obj, 0

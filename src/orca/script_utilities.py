@@ -1231,7 +1231,13 @@ class Utilities:
     @staticmethod
     def isTableRow(obj):
         """Determines if obj is a table row -- real or functionally."""
-        if not (obj and obj.parent and obj.childCount):
+
+        try:
+            if not (obj and obj.parent and obj.childCount):
+                return False
+        except:
+            msg = "INFO: Exception getting parent and childCount for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
             return False
 
         role = obj.getRole()
