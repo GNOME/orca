@@ -38,6 +38,12 @@
     </item>
     <item>
       <p>
+        Toggle between verbose and brief verbosity levels:
+        <keyseq><key>Orca Modifier</key><key>V</key></keyseq>
+      </p>
+    </item>
+    <item>
+      <p>
         Enable/disable speaking of indentation and justification: (Unbound)
       </p>
     </item>
@@ -61,6 +67,12 @@
     </item>
     <item>
       <p>Increase the pitch: (Unbound)</p>
+    </item>
+    <item>
+      <p>Decrease the volume: (Unbound)</p>
+    </item>
+    <item>
+      <p>Increase the volume: (Unbound)</p>
     </item>
   </list>
 </page>
