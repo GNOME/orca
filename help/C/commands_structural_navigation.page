@@ -207,13 +207,6 @@
             <keyseq><key>Alt</key><key>Shift</key><key>X</key></keyseq>
           </p>
         </item> 
-        <item>
-          <p>
-            Next and previous object (to exit field):
-            <keyseq><key>Orca Modifier</key><key>Right</key></keyseq> and
-            <keyseq><key>Orca Modifier</key><key>Left</key></keyseq>
-          </p>
-        </item> 
       </list>
     </section>
     <section id="links">
