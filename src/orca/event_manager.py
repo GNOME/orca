@@ -119,9 +119,6 @@ class EventManager:
                 debug.println(debug.LEVEL_INFO, msg)
                 return True
 
-        if settings.disableDeadAccessibleFilter:
-            return False
-
         try:
             # TODO - JD: For now we won't ask for the name. Simply asking for the name should
             # not break anything, and should be a reliable way to quickly identify defunct
