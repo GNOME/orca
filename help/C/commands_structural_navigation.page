@@ -414,11 +414,30 @@
         </item> 
         <item>
           <p>
-            Next and previous anchor:
+            Next and previous "clickable":
             <keyseq><key>A</key></keyseq> and
             <keyseq><key>Shift</key><key>A</key></keyseq>
           </p>
         </item> 
+        <item>
+          <p>
+            Display a list of "clickables":
+            <keyseq><key>Alt</key><key>Shift</key><key>A</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            Next and previous image:
+            <keyseq><key>G</key></keyseq> and
+            <keyseq><key>Shift</key><key>G</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            Display a list of images:
+            <keyseq><key>Alt</key><key>Shift</key><key>G</key></keyseq>
+          </p>
+        </item>
       </list>
     </section>
 </page>
