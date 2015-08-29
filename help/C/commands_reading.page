@@ -8,7 +8,7 @@
     <title type="sort">1. Reading</title>
     <title type="link">Reading</title>
     <desc>
-      Commands for accessing document text
+      Commands for accessing document content
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -217,5 +217,26 @@
       </list>
     </item>
   </list>
-</section>
+  </section>
+  <section id="browse_and_focus_modes">
+    <title>Browse and Focus Modes</title>
+    <p>
+      <app>Orca</app>'s Browse and Focus modes let you switch between reading and
+      interacting with web content.
+    </p>
+    <list>
+      <item>
+        <p>
+          Switch between browse mode and focus mode:
+          <keyseq><key>Orca Modifier</key><key>A</key></keyseq>
+        </p>
+      </item>
+      <item>
+        <p>
+          Enable "sticky" focus mode:
+          <keyseq><key>Orca Modifier</key><key>A</key></keyseq> (double-clicked)
+        </p>
+      </item>
+    </list>
+  </section>
 </page>
