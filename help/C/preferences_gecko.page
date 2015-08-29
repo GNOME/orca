@@ -44,6 +44,30 @@
        </note>
     </section>
     <section>
+      <title>Automatic focus mode during caret navigation</title>
+      <p>
+        If this checkbox is checked, <app>Orca</app> will automatically turn on
+        focus mode when you use caret navigation commands to navigate to a form
+        field. For example, pressing <key>Down</key> would allow you to move
+        into an entry but once you had done so, Orca would switch to focus mode
+        and subsequent presses of <key>Down</key> would be controlled by the web
+        browser and not by Orca. If this checkbox is not checked, <app>Orca</app>
+        would continue to control what happens when you press <key>Down</key>,
+        thus making it possible to arrow out of the entry and continue reading.
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+      <note style="tip">
+        <title>Manually switching between browse mode and focus mode</title>
+        <p>
+          In order to start or stop interacting with the focused form field,
+          use <keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch
+          between browse mode and focus mode.
+        </p>
+       </note>
+    </section>
+    <section>
       <title>Enable structural navigation</title>
       <p>
         This checkbox toggles <app>Orca</app>'s
@@ -59,6 +83,29 @@
         <p>
           To toggle this setting on the fly without saving it, use
           <keyseq><key>Orca Modifier</key><key>Z</key></keyseq>.
+        </p>
+       </note>
+    </section>
+    <section>
+      <title>Automatic focus mode during structural navigation</title>
+      <p>
+        If this checkbox is checked, <app>Orca</app> will automatically turn on
+        focus mode when you use structural navigation commands to navigate to a
+        form field. For example, pressing <key>E</key> to move to the next entry
+        would move focus there and also turn focus mode on so that your next press
+        of <key>E</key> would type an "e" into that entry. If this checkbox is not
+        checked, then <app>Orca</app> will leave you in browse mode and your next
+        press of <key>E</key> would move you to the next entry on the page.
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+      <note style="tip">
+        <title>Manually switching between browse mode and focus mode</title>
+        <p>
+          In order to start or stop interacting with the focused form field,
+          use <keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch
+          between browse mode and focus mode.
         </p>
        </note>
     </section>
