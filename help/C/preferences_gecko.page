@@ -63,19 +63,6 @@
        </note>
     </section>
     <section>
-      <title>Position cursor at start of line when navigating vertically</title>
-      <p>
-        If this checkbox is checked, <app>Orca</app> will always move the caret
-        to the beginning of the line when <app>Orca</app> is controlling the
-        caret and you press Up or Down Arrow to read the previous or next line.
-        If this checkbox is not checked, <app>Orca</app> will attempt to keep
-        the caret in the same horizontal position as you navigate Up or Down.
-      </p>
-      <p>
-        Default value: checked
-      </p>
-    </section>
-    <section>
       <title>Automatically start speaking a page when it is first loaded</title>
       <p>
         If this checkbox is checked, <app>Orca</app> will perform a Say All on
