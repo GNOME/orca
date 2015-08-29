@@ -55,34 +55,6 @@ BOOKMARK_ENTERED = _("bookmark entered")
 # Translators: Orca has a feature in which users can store/save a particular
 # location in an application window and return to it later by pressing a
 # keystroke. These stored/saved locations are "bookmarks". This string is 
-# presented to the user to indicate the comparative locations of the current
-# object and the bookmarked object could not be determined.
-BOOKMARK_COMPARISON_UNKNOWN = _('comparison unknown')
-
-# Translators: Orca has a feature in which users can store/save a particular
-# location in an application window and return to it later by pressing a
-# keystroke. These stored/saved locations are "bookmarks". This string is 
-# presented to the user to indicate the current object is the same object
-# pointed to by a given bookmark.
-BOOKMARK_IS_CURRENT_OBJECT = _("bookmark is current object")
-
-# Translators: Orca has a feature in which users can store/save a particular
-# location in an application window and return to it later by pressing a
-# keystroke. These stored/saved locations are "bookmarks". This string is 
-# presented to the user to indicate the current object's parent and the
-# bookmarked object's parent are the same.
-BOOKMARK_PARENT_IS_SAME = _("bookmark and current object have same parent")
-
-# Translators: Orca has a feature in which users can store/save a particular
-# location in an application window and return to it later by pressing a
-# keystroke. These stored/saved locations are "bookmarks". This string is 
-# presented to the user to indicate the current object and the bookmarked
-# object share a common ancestor.
-BOOKMARK_SHARED_ANCESTOR = _("shared ancestor %s")
-
-# Translators: Orca has a feature in which users can store/save a particular
-# location in an application window and return to it later by pressing a
-# keystroke. These stored/saved locations are "bookmarks". This string is 
 # presented to the user when the active list of bookmarks have been saved to
 # disk.
 BOOKMARKS_SAVED = _("bookmarks saved")

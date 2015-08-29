@@ -46,12 +46,6 @@
         review item.
       </p>
     </item>
-    <item>
-      <p>
-        Finally, there is Where Am I information for bookmarks which lets you
-        know where the specified bookmark is relative to your current location.
-      </p>
-    </item>
   </list>
   <p>
     The specific keybindings associated with each of the above tasks can be

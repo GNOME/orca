@@ -462,11 +462,6 @@ class Script(script.Script):
                 Script.cycleDebugLevel,
                 cmdnames.CYCLE_DEBUG_LEVEL)
 
-        self.inputEventHandlers["bookmarkCurrentWhereAmI"] = \
-            input_event.InputEventHandler(
-                Script.bookmarkCurrentWhereAmI,
-                cmdnames.BOOKMARK_CURRENT_WHERE_AM_I)
-
         self.inputEventHandlers["goToPrevBookmark"] = \
             input_event.InputEventHandler(
                 Script.goToPrevBookmark,
@@ -988,13 +983,6 @@ class Script(script.Script):
         Delegates to Bookmark.addBookmark """
         bookmarks = self.getBookmarks()
         bookmarks.addBookmark(inputEvent)
-
-    def bookmarkCurrentWhereAmI(self, inputEvent):
-        """ Report "Where am I" information for this bookmark relative to the
-        current pointer location.  Delegates to
-        Bookmark.bookmarkCurrentWhereAmI"""
-        bookmarks = self.getBookmarks()
-        bookmarks.bookmarkCurrentWhereAmI(inputEvent)
 
     def goToBookmark(self, inputEvent):
         """ Go to the bookmark indexed by inputEvent.hw_code.  Delegates to

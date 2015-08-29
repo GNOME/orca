@@ -73,46 +73,6 @@ class Bookmarks:
         self._bookmarks[inputEvent.hw_code] = self._contextToBookmark(context)
         self._script.presentMessage(messages.BOOKMARK_ENTERED)
 
-    def bookmarkCurrentWhereAmI(self, inputEvent):
-        """ Report "Where am I" information for this bookmark relative to the 
-        current pointer location."""
-        try:
-            context = self._bookmarkToContext( \
-                          self._bookmarks[inputEvent.hw_code])
-        except KeyError:
-            self._script.systemBeep()
-            return   
-
-        obj = context.getCurrentAccessible()    
-        cur_obj = orca_state.locusOfFocus
-
-        # Are they the same object?
-        if self._script.utilities.isSameObject(cur_obj, obj):
-            self._script.presentMessage(messages.BOOKMARK_IS_CURRENT_OBJECT)
-            return
-        # Are their parents the same?
-        elif self._script.utilities.isSameObject(cur_obj.parent, obj.parent):
-            self._script.presentMessage(messages.BOOKMARK_PARENT_IS_SAME)
-            return
-
-        # Do they share a common ancestor?
-        # bookmark's ancestors
-        bookmark_ancestors = []
-        p = obj.parent
-        while p:
-            bookmark_ancestors.append(p)
-            p = p.parent
-        # look at current object's ancestors to compare to bookmark's ancestors
-        p = cur_obj.parent
-        while p:
-            if bookmark_ancestors.count(p) > 0:
-                msg = messages.BOOKMARK_SHARED_ANCESTOR % p.getLocalizedRoleName()
-                self._script.presentMessage(msg)
-                return
-            p = p.parent
-
-        self._script.presentMessage(messages.BOOKMARK_COMPARISON_UNKNOWN)
-
     def saveBookmarks(self, inputEvent):
         """ Save the bookmarks for this script. """        
         try:

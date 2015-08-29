@@ -118,22 +118,6 @@ keymap = (
     ("6", defaultModifierMask, ORCA_MODIFIER_MASK,
     "goToBookmark"),
 
-    # key binding for WhereAmI information with respect to root acc
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "bookmarkCurrentWhereAmI"),
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "bookmarkCurrentWhereAmI"),
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "bookmarkCurrentWhereAmI"),
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "bookmarkCurrentWhereAmI"),
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "bookmarkCurrentWhereAmI"),
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "bookmarkCurrentWhereAmI"),
-
-
     ("BackSpace", defaultModifierMask, ORCA_MODIFIER_MASK,
     "bypassNextCommandHandler"),
 
