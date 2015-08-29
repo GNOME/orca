@@ -72,6 +72,19 @@
         Default value: checked for Firefox; not checked for Thunderbird
       </p>
     </section>
+    <section>
+      <title>Enable layout mode for content</title>
+      <p>
+        If this checkbox is checked, <app>Orca</app>'s caret navigation will respect
+        the on-screen layout of the content and present the full line, including any
+        links or form fields on that line. If this checkbox is not checked, <app>Orca</app>
+        will treat objects such as links and form fields as if they were on separate
+        lines, both for presentation and navigation.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
   </section>
   <section id="table_options">
     <title>Table Options</title>
