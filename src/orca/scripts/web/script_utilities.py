@@ -1159,6 +1159,12 @@ class Utilities(script_utilities.Utilities):
         debug.println(debug.LEVEL_INFO, msg)
 
         obj, offset = self.previousContext(firstObj, firstOffset, True)
+        if not obj and firstObj:
+            msg = "WEB: Previous context is: %s, %i. Trying again." % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg)
+            self.clearCachedObjects()
+            obj, offset = self.previousContext(firstObj, firstOffset, True)
+
         msg = "WEB: Previous context is: %s, %i" % (obj, offset)
         debug.println(debug.LEVEL_INFO, msg)
 
@@ -1197,6 +1203,12 @@ class Utilities(script_utilities.Utilities):
         debug.println(debug.LEVEL_INFO, msg)
 
         obj, offset = self.nextContext(lastObj, lastOffset, True)
+        if not obj and lastObj:
+            msg = "WEB: Next context is: %s, %i. Trying again." % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg)
+            self.clearCachedObjects()
+            obj, offset = self.nextContext(lastObj, lastOffset, True)
+
         msg = "WEB: Next context is: %s, %i" % (obj, offset)
         debug.println(debug.LEVEL_INFO, msg)
 
