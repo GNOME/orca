@@ -3,21 +3,21 @@
 # Copyright (C) 2010 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2010, 2011.
-# 
-# 
-# 
+#
+#
+#
 # Gonzalo <gonzalo.sanhueza.r@gmail.com>, 2011.
 # Gonzalo Sanhueza <gonzalo.sanhueza.r@gmail.com>, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011., 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2012, 2013, 2014.
 #
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2012, 2013, 2014, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2014-04-09 14:54+0000\n"
-"PO-Revision-Date: 2014-04-09 16:55+0200\n"
+"POT-Creation-Date: 2015-08-30 23:26+0000\n"
+"PO-Revision-Date: 2015-09-01 \n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"Language-Team: Spanish <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgctxt "_"
 msgid "translator-credits"
 msgstr ""
-"Daniel Mustieles <daniel.mustieles@gmail.com>, 2012 - 2014\n"
+"Daniel Mustieles <daniel.mustieles@gmail.com>, 2012 - 2015\n"
 "Jorge González <jorgegonz@svn.gnome.org>, 2011"
 
 #. (itstool) path: info/title
@@ -116,22 +116,21 @@ msgstr "Comandos de marcadores"
 
 #. (itstool) path: page/p
 #: C/commands_bookmarks.page:20
+#| msgid ""
+#| "<app>Orca</app> provides several commands which can be used to \"bookmark"
+#| "\" a given object for the purpose of navigating back to it later. Most of "
+#| "these commands are \"bound\" to keystrokes. Please see <link xref="
+#| "\"howto_key_bindings\">Modifying Keybindings</link> for information on "
+#| "how to bind unbound commands."
 msgid ""
 "<app>Orca</app> provides several commands which can be used to \"bookmark\" "
-"a given object for the purpose of navigating back to it later. Most of these "
-"commands are \"bound\" to keystrokes. Please see <link xref="
-"\"howto_key_bindings\">Modifying Keybindings</link> for information on how "
-"to bind unbound commands."
+"a given object for the purpose of navigating back to it later."
 msgstr ""
 "<app>Orca</app> proporciona varios comandos que se pueden usar para guardar "
-"como «marcador» un objeto dado, con el propósito de volver a él más tarde. "
-"La mayoría de estos comandos están «asociados» a pulsaciones de teclas. "
-"Consulte cómo <link xref=\"howto_key_bindings\">Modificar asociaciones de "
-"teclas</link> para obtener más información sobre cómo asociar comandos no "
-"asociados."
+"como «marcador» un objeto dado, con el propósito de volver a él más tarde."
 
 #. (itstool) path: item/p
-#: C/commands_bookmarks.page:29
+#: C/commands_bookmarks.page:26
 msgid ""
 "Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</key> "
 "<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
@@ -140,7 +139,7 @@ msgstr ""
 "Orca</key><key>Alt</key><key>1</key></keyseq>-<key>6</key>"
 
 #. (itstool) path: item/p
-#: C/commands_bookmarks.page:35
+#: C/commands_bookmarks.page:32
 msgid ""
 "Save the defined bookmarks for the application or page: <keyseq><key>Orca "
 "Modifier</key><key>Alt</key><key>B</key></keyseq>"
@@ -149,7 +148,7 @@ msgstr ""
 "<keyseq><key>Modificador de Orca</key><key>Alt</key><key>B</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_bookmarks.page:41
+#: C/commands_bookmarks.page:38
 msgid ""
 "Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key> "
 "<key>1</key></keyseq>-<key>6</key>"
@@ -158,7 +157,7 @@ msgstr ""
 "key><key>1</key></keyseq>-<key>6</key>"
 
 #. (itstool) path: item/p
-#: C/commands_bookmarks.page:47
+#: C/commands_bookmarks.page:44
 msgid ""
 "Go to the previous bookmark for the application or page: <keyseq><key>Orca "
 "Modifier</key><key>Shift</key><key>B</key> </keyseq>"
@@ -167,22 +166,13 @@ msgstr ""
 "<keyseq><key>Modificador de Orca</key><key>Mayús</key><key>B</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_bookmarks.page:54
+#: C/commands_bookmarks.page:51
 msgid ""
 "Go to the next bookmark for the application or page: <keyseq><key>Orca "
 "Modifier</key><key>B</key></keyseq>"
 msgstr ""
 "Ir al siguiente marcador de la aplicación o de la página: "
 "<keyseq><key>Modificador de Orca</key><key>B</key></keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:60
-msgid ""
-"\"Where am I\" information for this bookmark relative to the current pointer "
-"location: (Unbound)"
-msgstr ""
-"Información «¿Dónde estoy?» para este marcador relativo a la ubicación del "
-"puntero actual: (sin asociar)"
 
 #. (itstool) path: info/title
 #: C/commands_braille.page:6
@@ -1384,8 +1374,9 @@ msgstr "Lectura"
 
 #. (itstool) path: info/desc
 #: C/commands_reading.page:10
-msgid "Commands for accessing document text"
-msgstr "Comandos para acceder a documentos de texto"
+#| msgid "Commands for accessing document text"
+msgid "Commands for accessing document content"
+msgstr "Comandos para acceder al contenido de documentos"
 
 #. (itstool) path: page/title
 #: C/commands_reading.page:21
@@ -1509,9 +1500,9 @@ msgid ""
 "<app>Orca</app> will announce the selected text."
 msgstr ""
 "Orca ha dedicado un comando para obtener los atributos del texto en la "
-"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de "
-"<app>Orca</app> desde un objeto de texto en el que se ha seleccionado texto, "
-"<app>Orca</app> hablará el texto seleccionado."
+"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de <app>Orca</"
+"app> desde un objeto de texto en el que se ha seleccionado texto, <app>Orca</"
+"app> hablará el texto seleccionado."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:183
@@ -1556,6 +1547,43 @@ msgid ""
 msgstr ""
 "Portátil: <keyseq><key>Modificador de Orca</key><key>Intro</key></keyseq> "
 "(doble pulsación)"
+
+#. (itstool) path: section/title
+#: C/commands_reading.page:222
+msgid "Browse and Focus Modes"
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/commands_reading.page:223
+msgid ""
+"<app>Orca</app>'s Browse and Focus modes let you switch between reading and "
+"interacting with web content."
+msgstr ""
+
+#. (itstool) path: item/p
+#: C/commands_reading.page:229
+#, fuzzy
+#| msgid ""
+#| "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
+msgid ""
+"Switch between browse mode and focus mode: <keyseq><key>Orca Modifier</"
+"key><key>A</key></keyseq>"
+msgstr ""
+"Entrar en modo de aprendizaje: <keyseq><key>Modificador de Orca</key><key>H</"
+"key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_reading.page:235
+#, fuzzy
+#| msgid ""
+#| "Enter list shortcuts mode: <keyseq><key>Orca Modifier</key><key>H</key></"
+#| "keyseq> (double-clicked)"
+msgid ""
+"Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
+"keyseq> (double-clicked)"
+msgstr ""
+"Entrar en modo de lista de atajos: <keyseq><key>Modificador de Orca</"
+"key><key>H</key></keyseq> (doble pulsación)"
 
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
@@ -1612,44 +1640,69 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:40
+#, fuzzy
+#| msgid ""
+#| "Toggle between cell and row reading in a table: <keyseq><key>Orca "
+#| "Modifier</key><key>F11</key></keyseq>"
+msgid ""
+"Toggle between verbose and brief verbosity levels: <keyseq><key>Orca "
+"Modifier</key><key>V</key></keyseq>"
+msgstr ""
+"Alternar entre lectura de celdas y lectura de filas en una tabla: "
+"<keyseq><key>Modificador de Orca</key><key>F11</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_speech_settings.page:46
 msgid "Enable/disable speaking of indentation and justification: (Unbound)"
 msgstr ""
 "Activar/desactivar la lectura del sangrado y la justificación: (sin asociar)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:45
+#: C/commands_speech_settings.page:51
 msgid "Cycle to the next spoken punctuation level: (Unbound)"
 msgstr "Cambiar al siguiente nivel de lectura de puntuación: (sin asociar)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:48
+#: C/commands_speech_settings.page:54
 msgid "Cycle to the next key echo level: (Unbound)"
 msgstr "Cambiar al siguiente nivel de eco de tecla: (sin asociar)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:51
+#: C/commands_speech_settings.page:57
 msgid "Cycle to the next capitalization style: (Unbound)"
 msgstr "Cambiar al siguiente estilo de capitalización: (sin asociar)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:54
+#: C/commands_speech_settings.page:60
 msgid "Decrease the rate: (Unbound)"
 msgstr "Reducir la velocidad: (sin asociar)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:57
+#: C/commands_speech_settings.page:63
 msgid "Increase the rate: (Unbound)"
 msgstr "Aumentar la velocidad: (sin asociar)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:60
+#: C/commands_speech_settings.page:66
 msgid "Decrease the pitch: (Unbound)"
 msgstr "Reducir el tono: (sin asociar)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:63
+#: C/commands_speech_settings.page:69
 msgid "Increase the pitch: (Unbound)"
 msgstr "Aumentar el tono: (sin asociar)"
+
+#. (itstool) path: item/p
+#: C/commands_speech_settings.page:72
+#| msgid "Decrease the rate: (Unbound)"
+msgid "Decrease the volume: (Unbound)"
+msgstr "Bajar el volumen: (sin asociar)"
+
+#. (itstool) path: item/p
+#: C/commands_speech_settings.page:75
+#| msgid "Increase the rate: (Unbound)"
+msgid "Increase the volume: (Unbound)"
+msgstr "Subir el volumen: (sin asociar)"
 
 #. (itstool) path: info/title
 #: C/commands_structural_navigation.page:6
@@ -1939,26 +1992,15 @@ msgstr ""
 "Mostrar una lista de casillas: <keyseq><key>Alt</key><key>Mayús</key><key>X</"
 "key></keyseq>"
 
-#. (itstool) path: item/p
-#: C/commands_structural_navigation.page:211
-msgid ""
-"Next and previous object (to exit field): <keyseq><key>Orca Modifier</"
-"key><key>Right</key></keyseq> and <keyseq><key>Orca Modifier</key><key>Left</"
-"key></keyseq>"
-msgstr ""
-"Objeto anterior y siguiente (salir del campo): <keyseq><key>Modificador de "
-"Orca</key><key>Derecha</key></keyseq> y <keyseq><key>Modificador de Orca</"
-"key><key>Izquierda</key></keyseq>"
-
 #. (itstool) path: section/title
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:220
+#: C/commands_structural_navigation.page:213
 #: C/howto_structural_navigation.page:28
 msgid "Links"
 msgstr "Enlaces"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:223
+#: C/commands_structural_navigation.page:216
 msgid ""
 "Next and previous link: <keyseq><key>K</key></keyseq> and "
 "<keyseq><key>Shift</key><key>K</key></keyseq>"
@@ -1967,7 +2009,7 @@ msgstr ""
 "<keyseq><key>Mayús</key><key>K</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:230
+#: C/commands_structural_navigation.page:223
 msgid ""
 "Display a list of links: <keyseq><key>Alt</key><key>Shift</key><key>K</key></"
 "keyseq>"
@@ -1976,7 +2018,7 @@ msgstr ""
 "key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:236
+#: C/commands_structural_navigation.page:229
 msgid ""
 "Next and previous unvisited link: <keyseq><key>U</key></keyseq> and "
 "<keyseq><key>Shift</key><key>U</key></keyseq>"
@@ -1985,7 +2027,7 @@ msgstr ""
 "<keyseq><key>Mayús</key><key>U</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:243
+#: C/commands_structural_navigation.page:236
 msgid ""
 "Display a list of unvisited links: <keyseq><key>Alt</key><key>Shift</"
 "key><key>U</key></keyseq>"
@@ -1994,7 +2036,7 @@ msgstr ""
 "key><key>U</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:249
+#: C/commands_structural_navigation.page:242
 msgid ""
 "Next and previous visited link: <keyseq><key>V</key></keyseq> and "
 "<keyseq><key>Shift</key><key>V</key></keyseq>"
@@ -2003,7 +2045,7 @@ msgstr ""
 "<keyseq><key>Mayús</key><key>V</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:256
+#: C/commands_structural_navigation.page:249
 msgid ""
 "Display a list of visited links: <keyseq><key>Alt</key><key>Shift</"
 "key><key>V</key></keyseq>"
@@ -2012,12 +2054,12 @@ msgstr ""
 "key><key>V</key></keyseq>"
 
 #. (itstool) path: section/title
-#: C/commands_structural_navigation.page:264
+#: C/commands_structural_navigation.page:257
 msgid "Lists"
 msgstr "Listas"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:267
+#: C/commands_structural_navigation.page:260
 msgid ""
 "Next and previous list: <keyseq><key>L</key></keyseq> and "
 "<keyseq><key>Shift</key><key>L</key></keyseq>"
@@ -2026,7 +2068,7 @@ msgstr ""
 "<keyseq><key>Mayús</key><key>L</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:274
+#: C/commands_structural_navigation.page:267
 msgid ""
 "Display a list of lists: <keyseq><key>Alt</key><key>Shift</key><key>L</key></"
 "keyseq>"
@@ -2035,7 +2077,7 @@ msgstr ""
 "key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:280
+#: C/commands_structural_navigation.page:273
 msgid ""
 "Next and previous list item: <keyseq><key>I</key></keyseq> and "
 "<keyseq><key>Shift</key><key>I</key></keyseq>"
@@ -2044,7 +2086,7 @@ msgstr ""
 "<keyseq><key>Mayús</key><key>I</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:287
+#: C/commands_structural_navigation.page:280
 msgid ""
 "Display a list of list items: <keyseq><key>Alt</key><key>Shift</key><key>I</"
 "key></keyseq>"
@@ -2054,12 +2096,12 @@ msgstr ""
 
 #. (itstool) path: section/title
 #. (itstool) path: page/title
-#: C/commands_structural_navigation.page:295 C/howto_tables.page:17
+#: C/commands_structural_navigation.page:288 C/howto_tables.page:17
 msgid "Tables"
 msgstr "Tablas"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:298
+#: C/commands_structural_navigation.page:291
 msgid ""
 "Next and previous table: <keyseq><key>T</key></keyseq> and "
 "<keyseq><key>Shift</key><key>T</key></keyseq>"
@@ -2068,7 +2110,7 @@ msgstr ""
 "<keyseq><key>Mayús</key><key>T</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:305
+#: C/commands_structural_navigation.page:298
 msgid ""
 "Display a list of tables: <keyseq><key>Alt</key><key>Shift</key><key>T</"
 "key></keyseq>"
@@ -2077,7 +2119,7 @@ msgstr ""
 "key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:311
+#: C/commands_structural_navigation.page:304
 msgid ""
 "Cell on left: <keyseq><key>Alt</key><key>Shift</key><key>Left</key></keyseq>"
 msgstr ""
@@ -2085,7 +2127,7 @@ msgstr ""
 "key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:317
+#: C/commands_structural_navigation.page:310
 msgid ""
 "Cell on right: <keyseq><key>Alt</key><key>Shift</key><key>Right</key></"
 "keyseq>"
@@ -2094,7 +2136,7 @@ msgstr ""
 "key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:323
+#: C/commands_structural_navigation.page:316
 msgid ""
 "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgstr ""
@@ -2102,7 +2144,7 @@ msgstr ""
 "keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:329
+#: C/commands_structural_navigation.page:322
 msgid ""
 "Cell below: <keyseq><key>Alt</key><key>Shift</key><key>Down</key></keyseq>"
 msgstr ""
@@ -2110,7 +2152,7 @@ msgstr ""
 "keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:335
+#: C/commands_structural_navigation.page:328
 msgid ""
 "First cell in table: <keyseq><key>Alt</key><key>Shift</key><key>Home</key></"
 "keyseq>"
@@ -2119,7 +2161,7 @@ msgstr ""
 "key><key>Inicio</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:341
+#: C/commands_structural_navigation.page:334
 msgid ""
 "Last cell in table: <keyseq><key>Alt</key><key>Shift</key><key>End</key></"
 "keyseq>"
@@ -2128,12 +2170,12 @@ msgstr ""
 "key></keyseq>"
 
 #. (itstool) path: section/title
-#: C/commands_structural_navigation.page:349
+#: C/commands_structural_navigation.page:342
 msgid "Text Blocks"
 msgstr "Bloques de texto"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:352
+#: C/commands_structural_navigation.page:345
 msgid ""
 "Next and previous paragraph: <keyseq><key>P</key></keyseq> and "
 "<keyseq><key>Shift</key><key>P</key></keyseq>"
@@ -2142,7 +2184,7 @@ msgstr ""
 "<keyseq><key>Mayús</key><key>P</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:359
+#: C/commands_structural_navigation.page:352
 msgid ""
 "Display a list of paragraphs: <keyseq><key>Alt</key><key>Shift</key><key>P</"
 "key></keyseq>"
@@ -2151,7 +2193,7 @@ msgstr ""
 "key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:365
+#: C/commands_structural_navigation.page:358
 msgid ""
 "Next and previous blockquote: <keyseq><key>Q</key></keyseq> and "
 "<keyseq><key>Shift</key><key>Q</key></keyseq>"
@@ -2160,7 +2202,7 @@ msgstr ""
 "<keyseq><key>Mayús</key><key>Q</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:372
+#: C/commands_structural_navigation.page:365
 msgid ""
 "Display a list of blockquotes: <keyseq><key>Alt</key><key>Shift</key><key>Q</"
 "key></keyseq>"
@@ -2169,7 +2211,7 @@ msgstr ""
 "key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:378
+#: C/commands_structural_navigation.page:371
 msgid ""
 "Next and previous \"large object\": <keyseq><key>O</key></keyseq> and "
 "<keyseq><key>Shift</key><key>O</key></keyseq>"
@@ -2178,7 +2220,7 @@ msgstr ""
 "<keyseq><key>Mayús</key><key>O</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:385
+#: C/commands_structural_navigation.page:378
 msgid ""
 "Display a list of \"large objects\": <keyseq><key>Alt</key><key>Shift</"
 "key><key>O</key></keyseq>"
@@ -2187,12 +2229,12 @@ msgstr ""
 "key><key>O</key></keyseq>"
 
 #. (itstool) path: section/title
-#: C/commands_structural_navigation.page:393
+#: C/commands_structural_navigation.page:386
 msgid "Other Elements"
 msgstr "Otros elementos"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:396
+#: C/commands_structural_navigation.page:389
 msgid ""
 "Next and previous landmark: <keyseq><key>M</key></keyseq> and "
 "<keyseq><key>Shift</key><key>M</key></keyseq>"
@@ -2201,7 +2243,7 @@ msgstr ""
 "<keyseq><key>Mayús</key><key>M</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:403
+#: C/commands_structural_navigation.page:396
 msgid ""
 "Display a list of landmarks: <keyseq><key>Alt</key><key>Shift</key><key>M</"
 "key></keyseq>"
@@ -2210,7 +2252,7 @@ msgstr ""
 "key><key>M</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:409
+#: C/commands_structural_navigation.page:402
 msgid ""
 "Next and previous separator: <keyseq><key>S</key></keyseq> and "
 "<keyseq><key>Shift</key><key>S</key></keyseq>"
@@ -2219,13 +2261,52 @@ msgstr ""
 "<keyseq><key>Mayús</key><key>S</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:416
+#: C/commands_structural_navigation.page:409
+#| msgid ""
+#| "Next and previous table: <keyseq><key>T</key></keyseq> and "
+#| "<keyseq><key>Shift</key><key>T</key></keyseq>"
 msgid ""
-"Next and previous anchor: <keyseq><key>A</key></keyseq> and "
+"Next and previous \"clickable\": <keyseq><key>A</key></keyseq> and "
 "<keyseq><key>Shift</key><key>A</key></keyseq>"
 msgstr ""
-"Ancla anterior y siguiente: <keyseq><key>A</key></keyseq> y "
-"<keyseq><key>Mayús</key><key>A</key></keyseq>"
+"Anterior y siguiente elemento que se puede pulsar: <keyseq><key>A</key></"
+"keyseq> y <keyseq><key>Mayús</key><key>A</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_structural_navigation.page:416
+#| msgid ""
+#| "Display a list of tables: <keyseq><key>Alt</key><key>Shift</key><key>T</"
+#| "key></keyseq>"
+msgid ""
+"Display a list of \"clickables\": <keyseq><key>Alt</key><key>Shift</"
+"key><key>A</key></keyseq>"
+msgstr ""
+"Mostrar una lista de elementos que se pueden pulsar: <keyseq><key>Alt</"
+"key><key>Mayús</key><key>A</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_structural_navigation.page:422
+#| msgid ""
+#| "Next and previous table: <keyseq><key>T</key></keyseq> and "
+#| "<keyseq><key>Shift</key><key>T</key></keyseq>"
+msgid ""
+"Next and previous image: <keyseq><key>G</key></keyseq> and "
+"<keyseq><key>Shift</key><key>G</key></keyseq>"
+msgstr ""
+"Imagen anterior y siguiente: <keyseq><key>T</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>G</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_structural_navigation.page:429
+#| msgid ""
+#| "Display a list of tables: <keyseq><key>Alt</key><key>Shift</key><key>T</"
+#| "key></keyseq>"
+msgid ""
+"Display a list of images: <keyseq><key>Alt</key><key>Shift</key><key>G</"
+"key></keyseq>"
+msgstr ""
+"Mostrar una lista de imágenes: <keyseq><key>Alt</key><key>Mayús</key><key>G</"
+"key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_table.page:6
@@ -2549,18 +2630,8 @@ msgstr ""
 "link> se activará con el marcador convirtiéndose en el actual elemento de "
 "revisión."
 
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:50
-msgid ""
-"Finally, there is Where Am I information for bookmarks which lets you know "
-"where the specified bookmark is relative to your current location."
-msgstr ""
-"Finalmente, está la información ¿Dónde estoy? para marcadores, que le "
-"permite saber dónde el marcador especificado es relativo a su ubicación "
-"actual."
-
 #. (itstool) path: page/p
-#: C/howto_bookmarks.page:56
+#: C/howto_bookmarks.page:50
 msgid ""
 "The specific keybindings associated with each of the above tasks can be "
 "found in <link xref=\"commands_bookmarks\">Bookmark Commands</link>."
@@ -2775,13 +2846,19 @@ msgstr "Rellenar formularios"
 
 #. (itstool) path: page/p
 #: C/howto_forms.page:18
+#, fuzzy
+#| msgid ""
+#| "When interacting with web pages and other documents using <app>Orca</"
+#| "app>, you are interacting with the document itself; not a buffered copy "
+#| "of that document. Thus there is no special mode to get into or out of "
+#| "when you wish to fill out a form. Instead, simply navigate to each field "
+#| "whose contents you wish to change, and interact with the widget as if it "
+#| "were in a dialog box."
 msgid ""
 "When interacting with web pages and other documents using <app>Orca</app>, "
 "you are interacting with the document itself; not a buffered copy of that "
-"document. Thus there is no special mode to get into or out of when you wish "
-"to fill out a form. Instead, simply navigate to each field whose contents "
-"you wish to change, and interact with the widget as if it were in a dialog "
-"box."
+"document. <app>Orca</app>'s browse and focus modes let you switch between "
+"reading and filling out forms."
 msgstr ""
 "Cuando interactúa con páginas web y otros documentos usando <app>Orca</app>, "
 "está interactuando con el documento en sí, no con una copia en el búfer de "
@@ -2791,26 +2868,29 @@ msgstr ""
 "fuera un cuadro de diálogo."
 
 #. (itstool) path: section/title
-#: C/howto_forms.page:27
+#: C/howto_forms.page:25
 msgid "Navigating Amongst Form Fields"
 msgstr "Navegar entre los campos de un formulario"
 
 #. (itstool) path: section/p
-#: C/howto_forms.page:28
+#: C/howto_forms.page:26
 msgid "To navigate amongst form fields, you have several options:"
 msgstr "Para navegar entre los campos de un formulario, tiene varias opciones:"
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:33
+#: C/howto_forms.page:31
+#| msgid ""
+#| "Use <key>Tab</key> and <keyseq><key>Shift</key><key>Tab</key></keyseq>, "
+#| "to navigate amongst focusable objects, regardless of type."
 msgid ""
-"Use <key>Tab</key> and <keyseq><key>Shift</key><key>Tab</key></keyseq>, to "
+"Use <key>Tab</key> and <keyseq><key>Shift</key><key>Tab</key></keyseq> to "
 "navigate amongst focusable objects, regardless of type."
 msgstr ""
 "Use <key>Tab</key> y <keyseq><key>Mayús</key><key>Tab</key></keyseq> para "
 "navegar entre objetos enfocables, sin importar el tipo."
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:39
+#: C/howto_forms.page:37
 msgid ""
 "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
 "structural navigation commands for forms</link>."
@@ -2819,7 +2899,7 @@ msgstr ""
 "navegación estructural para formularios</link> de <app>Orca</app>."
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:45
+#: C/howto_forms.page:43
 msgid ""
 "Depending on the form and the application, you may also be able to use the "
 "arrow keys to navigate to a given form field."
@@ -2827,67 +2907,72 @@ msgstr ""
 "Dependiendo del formulario y de la aplicación, es posible que pueda usar las "
 "teclas de flechas para navegar hasta un campo determinado."
 
+#. (itstool) path: note/p
+#: C/howto_forms.page:50
+msgid ""
+"In order to use <app>Orca</app>'s caret navigation or structural navigation "
+"commands to navigate to a form field, you must be in browse mode. If you are "
+"in focus mode, you can switch to browse mode by pressing <keyseq><key>Orca "
+"Modifier</key><key>A</key></keyseq>."
+msgstr ""
+
 #. (itstool) path: section/title
-#: C/howto_forms.page:53
+#: C/howto_forms.page:59
 msgid "Exiting Form Fields"
 msgstr "Salir de los campos de un formulario"
 
 #. (itstool) path: section/p
-#: C/howto_forms.page:54
-msgid ""
-"Because there is no special mode in <app>Orca</app> for interacting with "
-"forms, the most frequently-asked question is how to exit a focused form "
-"field. For this, too, you have several options:"
-msgstr ""
-"Puesto que en <app>Orca</app> no hay un modo especial para interactuar con "
-"los formularios, la pregunta más frecuente es cómo salir de un campo de "
-"formulario enfocado. Para esto también tiene varias opciones:"
+#: C/howto_forms.page:60
+#| msgid "To navigate amongst form fields, you have several options:"
+msgid "To exit a form field, you have several options:"
+msgstr "Para salir del campo de un formulario, tiene varias opciones:"
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:61
+#: C/howto_forms.page:65
+#| msgid ""
+#| "Use <key>Tab</key>/<keyseq><key>Shift</key><key>Tab</key></keyseq> if you "
+#| "wish to leave the currenty-focused form field and move to the next/"
+#| "previous focusable object, regardless of what that object happens to be."
 msgid ""
 "Use <key>Tab</key>/<keyseq><key>Shift</key><key>Tab</key></keyseq> if you "
-"wish to leave the currenty-focused form field and move to the next/previous "
-"focusable object, regardless of what that object happens to be."
+"wish to leave the currently-focused form field and move to the next/previous "
+"focusable object, regardless of type."
 msgstr ""
 "Use <key>Tab</key>/<keyseq><key>Mayús</key><key>Tab</key></keyseq> si quiere "
 "abandonar el campo de formulario actualmente enfocado e ir hacia el objeto "
-"enfocable siguiente/anterior, sin importar lo que ese objeto resulte ser."
+"enfocable siguiente/anterior, sin importar su tipo."
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:69
+#: C/howto_forms.page:72
+#, fuzzy
+#| msgid ""
+#| "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms"
+#| "\"> structural navigation commands for forms</link>."
 msgid ""
 "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
-"structural navigation</link> to move to the next/previous form field: "
-"<keyseq><key>Orca Modifier</key><key>Tab</key></keyseq>/<keyseq> <key>Orca "
-"Modifier</key><key>Shift</key><key>Tab</key></keyseq>."
+"structural navigation commands for forms</link> to move to the next or "
+"previous form field."
 msgstr ""
-"Use la <link xref=\"commands_structural_navigation#forms\">navegación "
-"estructural</link> de <app>Orca</app> para ir al campo de formulario "
-"siguiente/anterior: <keyseq><key>Modificador de Orca</key><key>Tab</key></"
-"keyseq>/<keyseq><key>Modificador de Orca</key><key>Mayús</key><key>Tab</"
-"key></keyseq>."
+"Use <link xref=\"commands_structural_navigation#forms\">los comandos de "
+"navegación estructural para formularios</link> de <app>Orca</app>."
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:77
-msgid ""
-"Use <app>Orca</app>'s commands for moving to the next/previous object or "
-"chunk of text: <keyseq><key>Orca Modifier</key><key>Right</key> </keyseq>/"
-"<keyseq><key>Orca Modifier</key><key>Left</key></keyseq>."
-msgstr ""
-"Use los comandos de <app>Orca</app> para ir al objeto o bloque de texto "
-"siguiente/anterior: <keyseq><key>Modificador de Orca</key><key>Derecha</"
-"key></keyseq>/<keyseq><key>Modificador de Orca</key><key>Izquierda</key></"
-"keyseq>."
-
-#. (itstool) path: item/p
-#: C/howto_forms.page:84
+#: C/howto_forms.page:79
 msgid ""
 "Depending on the form and the application, you may also be able to use the "
 "arrow keys to navigate out of a given form field."
 msgstr ""
 "Dependiendo del formulario y de la aplicación, es posible que pueda usar las "
 "teclas de flechas para salir de un campo determinado."
+
+#. (itstool) path: note/p
+#: C/howto_forms.page:86
+msgid ""
+"In order to use <app>Orca</app>'s caret navigation or structural navigation "
+"commands to exit a form field, you must be in browse mode. If you are in "
+"focus mode, you can switch to browse mode by pressing <keyseq><key>Orca "
+"Modifier</key><key>A</key></keyseq>."
+msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_key_bindings.page:5
@@ -3246,12 +3331,12 @@ msgid ""
 "within that region. Live regions can be \"off\", \"polite\", or \"aggressive"
 "\" to the point of being \"rude.\""
 msgstr ""
-"Las regiones activas tienen un nivel de «comportamiento» asociado "
-"establecido por el autor como un medio para transmitir la importancia de la "
-"información y para sugerir cuándo las tecnologías de asistencia deberían "
-"informar a los usuarios sobre las actualizaciones realizadas en esa región. "
-"Las regiones activas pueden ser «desactivada», «cortés» o «agresiva» hasta "
-"el punto de ser «grosera»."
+"Las regiones activas tienen un nivel de «comportamiento» asociado establecido "
+"por el autor como un medio para transmitir la importancia de la información "
+"y para sugerir cuándo las tecnologías de asistencia deberían informar a los "
+"usuarios sobre las actualizaciones realizadas en esa región. Las regiones "
+"activas pueden ser «desactivada», «cortés» o «agresiva» hasta el punto de ser "
+"«grosera»."
 
 #. (itstool) path: section/title
 #: C/howto_live_regions.page:37
@@ -3322,9 +3407,9 @@ msgid ""
 "with information to present, <app>Orca</app> will present that object and "
 "its information to you."
 msgstr ""
-"La característica «Revisión del ratón» de <app>Orca</app> hace que "
-"<app>Orca</app> muestre el objeto bajo el puntero del ratón. A diferencia de "
-"la característica <link xref=\"howto_flat_review\">revisión</link> de "
+"La característica «Revisión del ratón» de <app>Orca</app> hace que <app>Orca</"
+"app> muestre el objeto bajo el puntero del ratón. A diferencia de la "
+"característica <link xref=\"howto_flat_review\">revisión</link> de "
 "<app>Orca</app>, la revisión del ratón no se limita a la ventana activa; en "
 "lugar de eso, <app>Orca</app> tratará de identificar qué objeto accesible, "
 "si existe alguno, se encuentra visualmente bajo el puntero cuando mueve el "
@@ -3630,8 +3715,8 @@ msgid ""
 "Whether Find should look down and/or to the right for the next match or up "
 "and/or to the left."
 msgstr ""
-"Indica si «Buscar» debe buscar hacia abajo y/o a la derecha o arriba y/o a "
-"la izquierda para la siguiente coincidencia"
+"Indica si «Buscar» debe buscar hacia abajo y/o a la derecha o arriba y/o a la "
+"izquierda para la siguiente coincidencia"
 
 #. (itstool) path: item/p
 #: C/howto_orca_find.page:85
@@ -5085,14 +5170,11 @@ msgstr ""
 
 #. (itstool) path: media/span
 #: C/index.page:23
-#| msgid "<app>Orca</app>'s Find Dialog"
 msgid "<app>Orca</app>'s logo"
 msgstr "Logo de <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/index.page:21
-#| msgctxt "link"
-#| msgid "Introduction to the <app>Orca</app> Screen Reader"
 msgid "<_:media-1/> <app>Orca</app> Screen Reader"
 msgstr "<_:media-1/> Lector de pantalla <app>Orca</app>"
 
@@ -5362,7 +5444,8 @@ msgstr ""
 #: C/preferences_braille.page:27 C/preferences_braille.page:50
 #: C/preferences_braille.page:63 C/preferences_braille.page:73
 #: C/preferences_chat.page:31 C/preferences_chat.page:42
-#: C/preferences_chat.page:54 C/preferences_gecko.page:124
+#: C/preferences_chat.page:54 C/preferences_gecko.page:58
+#: C/preferences_gecko.page:100 C/preferences_gecko.page:171
 #: C/preferences_general.page:52 C/preferences_general.page:70
 #: C/preferences_key_echo.page:83 C/preferences_key_echo.page:93
 #: C/preferences_key_echo.page:128 C/preferences_key_echo.page:150
@@ -5685,8 +5768,8 @@ msgstr ""
 "nativa de Gecko está activa."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:35 C/preferences_gecko.page:54
-#: C/preferences_gecko.page:74 C/preferences_gecko.page:112
+#: C/preferences_gecko.page:35 C/preferences_gecko.page:78
+#: C/preferences_gecko.page:131 C/preferences_gecko.page:159
 #: C/preferences_key_echo.page:28 C/preferences_key_echo.page:38
 #: C/preferences_key_echo.page:48 C/preferences_key_echo.page:58
 #: C/preferences_key_echo.page:70 C/preferences_speech.page:26
@@ -5699,7 +5782,7 @@ msgid "Default value: checked"
 msgstr "Valor predeterminado: marcado"
 
 #. (itstool) path: note/title
-#: C/preferences_gecko.page:39 C/preferences_gecko.page:58
+#: C/preferences_gecko.page:39 C/preferences_gecko.page:82
 msgid "This setting can be toggled on the fly"
 msgstr "Esta configuración se puede cambiar al vuelo"
 
@@ -5714,11 +5797,42 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:47
+msgid "Automatic focus mode during caret navigation"
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/preferences_gecko.page:48
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use caret navigation commands to navigate to a form "
+"field. For example, pressing <key>Down</key> would allow you to move into an "
+"entry but once you had done so, Orca would switch to focus mode and "
+"subsequent presses of <key>Down</key> would be controlled by the web browser "
+"and not by Orca. If this checkbox is not checked, <app>Orca</app> would "
+"continue to control what happens when you press <key>Down</key>, thus making "
+"it possible to arrow out of the entry and continue reading."
+msgstr ""
+
+#. (itstool) path: note/title
+#: C/preferences_gecko.page:62 C/preferences_gecko.page:104
+msgid "Manually switching between browse mode and focus mode"
+msgstr ""
+
+#. (itstool) path: note/p
+#: C/preferences_gecko.page:63 C/preferences_gecko.page:105
+msgid ""
+"In order to start or stop interacting with the focused form field, use "
+"<keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch between "
+"browse mode and focus mode."
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/preferences_gecko.page:71
 msgid "Enable structural navigation"
 msgstr "Activar la navegación estructural"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:48
+#: C/preferences_gecko.page:72
 msgid ""
 "This checkbox toggles <app>Orca</app>'s <link xref="
 "\"howto_structural_navigation\">Structural Navigation</link> on and off. "
@@ -5731,7 +5845,7 @@ msgstr ""
 "campos de formularios."
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:59
+#: C/preferences_gecko.page:83
 msgid ""
 "To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
 "Modifier</key><key>Z</key></keyseq>."
@@ -5740,34 +5854,32 @@ msgstr ""
 "<keyseq><key>Modificador de Orca</key><key>Z</key></keyseq>."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:66
-msgid "Position cursor at start of line when navigating vertically"
-msgstr ""
-"Posicionar el cursor al principio de línea cuando se navega verticalmente"
+#: C/preferences_gecko.page:90
+#, fuzzy
+#| msgid "Configuring Structural Navigation"
+msgid "Automatic focus mode during structural navigation"
+msgstr "Configurar la navegación estructural"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:67
+#: C/preferences_gecko.page:91
 msgid ""
-"If this checkbox is checked, <app>Orca</app> will always move the caret to "
-"the beginning of the line when <app>Orca</app> is controlling the caret and "
-"you press Up or Down Arrow to read the previous or next line. If this "
-"checkbox is not checked, <app>Orca</app> will attempt to keep the caret in "
-"the same horizontal position as you navigate Up or Down."
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use structural navigation commands to navigate to a form "
+"field. For example, pressing <key>E</key> to move to the next entry would "
+"move focus there and also turn focus mode on so that your next press of "
+"<key>E</key> would type an \"e\" into that entry. If this checkbox is not "
+"checked, then <app>Orca</app> will leave you in browse mode and your next "
+"press of <key>E</key> would move you to the next entry on the page."
 msgstr ""
-"Si esta casilla está marcada, <app>Orca</app> moverá siempre el cursor al "
-"comienzo de la línea cuando <app>Orca</app> está controlando el cursor y "
-"pulse flecha arriba o flecha abajo para leer la línea anterior o siguiente. "
-"Si esta casilla no está marcada, <app>Orca</app> tratará de mantener el "
-"cursor en la misma posición horizontal mientras navega arriba o abajo."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:79
+#: C/preferences_gecko.page:113
 msgid "Automatically start speaking a page when it is first loaded"
 msgstr ""
 "Empezar a leer una página automáticamente cuando se carga por primera vez"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:80
+#: C/preferences_gecko.page:114
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
 "newly opened web page or email."
@@ -5776,18 +5888,45 @@ msgstr ""
 "correo-e completos."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:84
+#: C/preferences_gecko.page:118
 msgid "Default value: checked for Firefox; not checked for Thunderbird"
 msgstr ""
 "Valor predeterminado: activado para Firefox, desactivado para Thunderbird"
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:90
+#: C/preferences_gecko.page:123
+msgid "Enable layout mode for content"
+msgstr ""
+
+#. (itstool) path: section/p
+#: C/preferences_gecko.page:124
+#, fuzzy
+#| msgid ""
+#| "If this checkbox is checked, <app>Orca</app> will always move the caret "
+#| "to the beginning of the line when <app>Orca</app> is controlling the "
+#| "caret and you press Up or Down Arrow to read the previous or next line. "
+#| "If this checkbox is not checked, <app>Orca</app> will attempt to keep the "
+#| "caret in the same horizontal position as you navigate Up or Down."
+msgid ""
+"If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
+"the on-screen layout of the content and present the full line, including any "
+"links or form fields on that line. If this checkbox is not checked, "
+"<app>Orca</app> will treat objects such as links and form fields as if they "
+"were on separate lines, both for presentation and navigation."
+msgstr ""
+"Si esta casilla está marcada, <app>Orca</app> moverá siempre el cursor al "
+"comienzo de la línea cuando <app>Orca</app> está controlando el cursor y "
+"pulse flecha arriba o flecha abajo para leer la línea anterior o siguiente. "
+"Si esta casilla no está marcada, <app>Orca</app> tratará de mantener el "
+"cursor en la misma posición horizontal mientras navega arriba o abajo."
+
+#. (itstool) path: section/title
+#: C/preferences_gecko.page:137
 msgid "Table Options"
 msgstr "Opciones de tabla"
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:92
+#: C/preferences_gecko.page:139
 msgid ""
 "To learn more about <app>Orca's</app> options for navigating within tables, "
 "please see <link xref=\"preferences_table_navigation\">Table Navigation "
@@ -5798,12 +5937,12 @@ msgstr ""
 "\">Preferencias de navegación por tablas</link>."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:100
+#: C/preferences_gecko.page:147
 msgid "Find Options"
 msgstr "Opciones de búsqueda"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:101
+#: C/preferences_gecko.page:148
 msgid ""
 "The <gui>Find Options</gui> group of controls make it possible for you to "
 "customize how <app>Orca</app> presents the results of a search conducted "
@@ -5814,12 +5953,12 @@ msgstr ""
 "llevada a cabo usando la funcionalidad de búsqueda de la aplicación."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:107
+#: C/preferences_gecko.page:154
 msgid "Speak results during find"
 msgstr "Hablar resultados durante la búsqueda"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:108
+#: C/preferences_gecko.page:155
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will read the line which "
 "matches your current search query."
@@ -5828,12 +5967,12 @@ msgstr ""
 "con su búsqueda actual."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:117
+#: C/preferences_gecko.page:164
 msgid "Only speak changed lines during find"
 msgstr "Hablar solamente las líneas modificadas durante la búsqueda"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:118
+#: C/preferences_gecko.page:165
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will not present the matching "
 "line if it is the same line as the previous match. This option is designed "
@@ -5846,12 +5985,12 @@ msgstr ""
 "múltiples coincidencias de la cadena que está buscando."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:129
+#: C/preferences_gecko.page:176
 msgid "Minimum length of matched text"
 msgstr "Longitud mínima del texto coincidente"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:130
+#: C/preferences_gecko.page:177
 msgid ""
 "This editable spin button is where you can specify the number of characters "
 "which much match before <app>Orca</app> announces the matching line. This "
@@ -5860,12 +5999,12 @@ msgid ""
 msgstr ""
 "Este botón contador editable es donde puede especificar el número de "
 "caracteres que deben coincidir al menos antes que <app>Orca</app> anuncie la "
-"línea coincidente. Esta opción también está diseñada para prevenir «ruido» "
-"ya que al principio cuando comienza a teclear la cadena de búsqueda hay "
-"muchas coincidencias."
+"línea coincidente. Esta opción también está diseñada para prevenir «ruido» ya "
+"que al principio cuando comienza a teclear la cadena de búsqueda hay muchas "
+"coincidencias."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:137
+#: C/preferences_gecko.page:184
 msgid "Default value: 4"
 msgstr "Valor predeterminado: 4"
 
@@ -6758,8 +6897,8 @@ msgid ""
 msgstr ""
 "Seleccionar nivel de puntuación <gui>Alguna</gui> hace que se hablen todos "
 "los símbolos mencionados anteriormente. Por otro lado, <app>Orca</app> "
-"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», "
-"«/», «&amp;», «#»."
+"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», «/», "
+"«&amp;», «#»."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:93
@@ -7291,13 +7430,13 @@ msgid ""
 "<gui>Present unless</gui> column should be empty for underline. In addition, "
 "you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
-"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de "
-"«none». Esto hace que <app>Orca</app> le informe acerca del texto subrayado "
-"siempre y cuando el texto esté actualmente subrayado. Si quiere que este "
-"atributo se hable siempre independientemente de que el texto esté subrayado "
-"o no, entonces el atributo debería estar marcado y el valor de "
-"<gui>Presentar a menos que</gui> en blanco. Además, debería asegurarse de "
-"que la columna <gui>Hablar</gui> para el subrayado está marcada."
+"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de «none». "
+"Esto hace que <app>Orca</app> le informe acerca del texto subrayado siempre "
+"y cuando el texto esté actualmente subrayado. Si quiere que este atributo se "
+"hable siempre independientemente de que el texto esté subrayado o no, "
+"entonces el atributo debería estar marcado y el valor de <gui>Presentar a "
+"menos que</gui> en blanco. Además, debería asegurarse de que la columna "
+"<gui>Hablar</gui> para el subrayado está marcada."
 
 #. (itstool) path: section/title
 #: C/preferences_text_attributes.page:74
@@ -7516,12 +7655,11 @@ msgid ""
 "find in the <gui>Person</gui> combo box will depend on which speech "
 "synthesizers you have installed."
 msgstr ""
-"Este cuadro combinado le permite elegir qué «persona» o «hablante» se "
-"debería usar con la voz seleccionada. Por ejemplo, podría querer tener a "
-"David para hablar de manera predeterminada, pero tener a Alicia para hablar "
-"los hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro "
-"combinado <gui>Persona</gui> dependerá de qué sintetizador de voz tenga "
-"instalado."
+"Este cuadro combinado le permite elegir qué «persona» o «hablante» se debería "
+"usar con la voz seleccionada. Por ejemplo, podría querer tener a David para "
+"hablar de manera predeterminada, pero tener a Alicia para hablar los "
+"hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro combinado "
+"<gui>Persona</gui> dependerá de qué sintetizador de voz tenga instalado."
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:63
@@ -7586,8 +7724,7 @@ msgstr ""
 "mayúsculas y minúsculas. Al marcar la casilla <gui>Hablar cadenas con "
 "mayúsculas y minúsculas como palabras</gui> hará que <app>Orca</app> divida "
 "una palabra con capitalización múltiple en varias palabras separadas "
-"(«Cadena», «Multi» y «Capitalización») antes de enviarla al sintetizador de "
-"voz."
+"(«Cadena», «Multi» y «Capitalización») antes de enviarla al sintetizador de voz."
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:102
@@ -7609,6 +7746,72 @@ msgstr ""
 #: C/preferences_voice.page:108
 msgid "Default value: <gui>Sentence</gui>"
 msgstr "Valor predeterminado: <gui>Frase</gui>"
+
+#~ msgid ""
+#~ "\"Where am I\" information for this bookmark relative to the current "
+#~ "pointer location: (Unbound)"
+#~ msgstr ""
+#~ "Información «¿Dónde estoy?» para este marcador relativo a la ubicación del "
+#~ "puntero actual: (sin asociar)"
+
+#~ msgid ""
+#~ "Next and previous object (to exit field): <keyseq><key>Orca Modifier</"
+#~ "key><key>Right</key></keyseq> and <keyseq><key>Orca Modifier</"
+#~ "key><key>Left</key></keyseq>"
+#~ msgstr ""
+#~ "Objeto anterior y siguiente (salir del campo): <keyseq><key>Modificador "
+#~ "de Orca</key><key>Derecha</key></keyseq> y <keyseq><key>Modificador de "
+#~ "Orca</key><key>Izquierda</key></keyseq>"
+
+#~ msgid ""
+#~ "Next and previous anchor: <keyseq><key>A</key></keyseq> and "
+#~ "<keyseq><key>Shift</key><key>A</key></keyseq>"
+#~ msgstr ""
+#~ "Ancla anterior y siguiente: <keyseq><key>A</key></keyseq> y "
+#~ "<keyseq><key>Mayús</key><key>A</key></keyseq>"
+
+#~ msgid ""
+#~ "Finally, there is Where Am I information for bookmarks which lets you "
+#~ "know where the specified bookmark is relative to your current location."
+#~ msgstr ""
+#~ "Finalmente, está la información ¿Dónde estoy? para marcadores, que le "
+#~ "permite saber dónde el marcador especificado es relativo a su ubicación "
+#~ "actual."
+
+#~ msgid ""
+#~ "Because there is no special mode in <app>Orca</app> for interacting with "
+#~ "forms, the most frequently-asked question is how to exit a focused form "
+#~ "field. For this, too, you have several options:"
+#~ msgstr ""
+#~ "Puesto que en <app>Orca</app> no hay un modo especial para interactuar "
+#~ "con los formularios, la pregunta más frecuente es cómo salir de un campo "
+#~ "de formulario enfocado. Para esto también tiene varias opciones:"
+
+#~ msgid ""
+#~ "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms"
+#~ "\"> structural navigation</link> to move to the next/previous form field: "
+#~ "<keyseq><key>Orca Modifier</key><key>Tab</key></keyseq>/<keyseq> "
+#~ "<key>Orca Modifier</key><key>Shift</key><key>Tab</key></keyseq>."
+#~ msgstr ""
+#~ "Use la <link xref=\"commands_structural_navigation#forms\">navegación "
+#~ "estructural</link> de <app>Orca</app> para ir al campo de formulario "
+#~ "siguiente/anterior: <keyseq><key>Modificador de Orca</key><key>Tab</key></"
+#~ "keyseq>/<keyseq><key>Modificador de Orca</key><key>Mayús</key><key>Tab</"
+#~ "key></keyseq>."
+
+#~ msgid ""
+#~ "Use <app>Orca</app>'s commands for moving to the next/previous object or "
+#~ "chunk of text: <keyseq><key>Orca Modifier</key><key>Right</key> </keyseq>/"
+#~ "<keyseq><key>Orca Modifier</key><key>Left</key></keyseq>."
+#~ msgstr ""
+#~ "Use los comandos de <app>Orca</app> para ir al objeto o bloque de texto "
+#~ "siguiente/anterior: <keyseq><key>Modificador de Orca</key><key>Derecha</"
+#~ "key></keyseq>/<keyseq><key>Modificador de Orca</key><key>Izquierda</key></"
+#~ "keyseq>."
+
+#~ msgid "Position cursor at start of line when navigating vertically"
+#~ msgstr ""
+#~ "Posicionar el cursor al principio de línea cuando se navega verticalmente"
 
 #~ msgctxt "_"
 #~ msgid ""
@@ -7895,8 +8098,8 @@ msgstr "Valor predeterminado: <gui>Frase</gui>"
 #~ msgstr ""
 #~ "Los <gui>Atajos de teclado</gui> son la primera forma de invocar a la "
 #~ "función desde le teclado. Note que el atajo de teclado puede incluir la "
-#~ "palabra «Orca». Esto indica que la tecla <key>Modificador de Orca</key> "
-#~ "se debería mantener pulsada junto a las otras teclas. Puede modificar el "
+#~ "palabra «Orca». Esto indica que la tecla <key>Modificador de Orca</key> se "
+#~ "debería mantener pulsada junto a las otras teclas. Puede modificar el "
 #~ "valor de esta columna pulsando <key>Intro</key>, pulsando después las "
 #~ "teclas para el nuevo atajo, y pulsando <key>Intro</key> de nuevo."
 
@@ -8077,13 +8280,6 @@ msgstr "Valor predeterminado: <gui>Frase</gui>"
 
 #~ msgid "Braille indicator"
 #~ msgstr "Indicador braille"
-
-#~ msgid ""
-#~ "Enter list shortcuts mode: <keyseq><key>Orca Modifier</key><key>H</key></"
-#~ "keyseq> (double-clicked)"
-#~ msgstr ""
-#~ "Entrar en modo de lista de atajos: <keyseq><key>Modificador de Orca</"
-#~ "key><key>H</key></keyseq> (doble pulsación)"
 
 #~ msgid ""
 #~ "Get into List Shortcuts Mode by pressing <keyseq><key>Orca Modifier</key> "
@@ -8937,9 +9133,8 @@ msgstr "Valor predeterminado: <gui>Frase</gui>"
 #~ "gnome-mag."
 #~ msgstr ""
 #~ "<gui>Filtro del color</gui>: le permite usar uno de los filtros de "
-#~ "«colorblind» disponibles a través de «libcolorblind». Para beneficiarse "
-#~ "de esta característica deberá instalar «libcolorblind» reconstruir «gnome-"
-#~ "mag»."
+#~ "«colorblind» disponibles a través de «libcolorblind». Para beneficiarse de "
+#~ "esta característica deberá instalar «libcolorblind» reconstruir «gnome-mag»."
 
 #~ msgid ""
 #~ "<gui>Multi-Monitor Settings - Source Display</gui>: X Window System "
@@ -8957,8 +9152,8 @@ msgstr "Valor predeterminado: <gui>Frase</gui>"
 #~ msgstr ""
 #~ "<gui>Configuración multi-monitor - Pantalla destino</gui>: pantalla del "
 #~ "sistema de X Window donde se desea poner la ventana del ampliador. En la "
-#~ "forma de «:0.y» donde y es el número de pantalla donde debería aparecer "
-#~ "la pantalla del ampliador."
+#~ "forma de «:0.y» donde y es el número de pantalla donde debería aparecer la "
+#~ "pantalla del ampliador."
 
 #~ msgid ""
 #~ "@@image: 'figures/preferences_disable_gksu_keyboard_grab.png'; "
@@ -8988,12 +9183,12 @@ msgstr "Valor predeterminado: <gui>Frase</gui>"
 #~ "Cuando se ejecutan comandos desde el menú, muchas distribuciones usan una "
 #~ "aplicación conocida como «gksu» para autorizar al usuario para ejecutar "
 #~ "estos comandos; gksu es el IGU que le pregunta por su contraseña. Cuando "
-#~ "se ejecuta, gksu activa lo que se conoce como una «captura de teclado», "
-#~ "la cual es una característica que previene cualquier acción de teclado "
-#~ "vaya a cualquier otra aplicación del escritorio, incluyendo <app>Orca</"
-#~ "app>. El resultado de una captura de teclado es que <app>Orca</app> no "
-#~ "recibirá ningún evento de teclado, previniendo que <app>Orca</app> "
-#~ "funcione normalmente."
+#~ "se ejecuta, gksu activa lo que se conoce como una «captura de teclado», la "
+#~ "cual es una característica que previene cualquier acción de teclado vaya "
+#~ "a cualquier otra aplicación del escritorio, incluyendo <app>Orca</app>. "
+#~ "El resultado de una captura de teclado es que <app>Orca</app> no recibirá "
+#~ "ningún evento de teclado, previniendo que <app>Orca</app> funcione "
+#~ "normalmente."
 
 #~ msgid ""
 #~ "By checking the <gui>Disable gksu keyboard grab</gui> checkbox, you will "
