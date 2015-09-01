@@ -145,7 +145,7 @@ class EventManager:
                 role = event.source.getRole()
             except:
                 role = None
-            if role == pyatspi.ROLE_MENU_ITEM:
+            if role in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_MENU_ITEM, pyatspi.ROLE_PARAGRAPH]:
                 msg = 'INFO: %s for %s in app %s. Who cares?' % \
                       (event.type, event.source, event.host_application)
                 debug.println(debug.LEVEL_INFO, msg)
@@ -219,7 +219,8 @@ class EventManager:
         elif isinstance(e, input_event.BrailleEvent):
             data = "'%s'" % repr(e.event)
         elif not debug.eventDebugFilter or debug.eventDebugFilter.match(e.type):
-            data = "%s (%s,%s,%s)" % (e.source, e.detail1, e.detail2, e.any_data)
+            data = "%s (%s,%s,%s) from %s" % \
+                   (e.source, e.detail1, e.detail2, e.any_data, e.host_application)
         else:
             return
 
