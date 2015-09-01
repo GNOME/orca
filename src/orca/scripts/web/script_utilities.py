@@ -67,6 +67,7 @@ class Utilities(script_utilities.Utilities):
         self._inferredLabels = {}
         self._text = {}
         self._tag = {}
+        self._treatAsDiv = {}
         self._currentObjectContents = None
         self._currentSentenceContents = None
         self._currentLineContents = None
@@ -103,6 +104,7 @@ class Utilities(script_utilities.Utilities):
         self._isUselessImage = {}
         self._inferredLabels = {}
         self._tag = {}
+        self._treatAsDiv = {}
         self._cleanupContexts()
 
     def clearContentCache(self):
@@ -1313,6 +1315,26 @@ class Utilities(script_utilities.Utilities):
             rv = False
 
         self._isTextBlockElement[hash(obj)] = rv
+        return rv
+
+    def treatAsDiv(self, obj):
+        rv = self._treatAsDiv.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            role = obj.getRole()
+            childCount = obj.childCount
+        except:
+            msg = "WEB: Exception getting role and childCount for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+
+        rv = False
+        if role == pyatspi.ROLE_LIST:
+            rv = not (childCount and obj[0].getRole() == pyatspi.ROLE_LIST_ITEM)
+
+        self._treatAsDiv[hash(obj)] = rv
         return rv
 
     def speakMathSymbolNames(self, obj=None):

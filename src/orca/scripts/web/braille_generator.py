@@ -122,6 +122,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
         elif self._script.utilities.isStatic(obj):
             oldRole = self._overrideRole('ROLE_STATIC', args)
+        elif self._script.utilities.treatAsDiv(obj):
+            oldRole = self._overrideRole(pyatspi.ROLE_SECTION, args)
 
         if obj.getRole() == pyatspi.ROLE_MENU_ITEM:
             comboBox = self._script.utilities.ancestorWithRole(
