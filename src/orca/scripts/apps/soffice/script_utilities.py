@@ -326,8 +326,14 @@ class Utilities(script_utilities.Utilities):
         """Returns True if the given object is a container which has
         no presentable information (label, name, displayed text, etc.)."""
 
-        role = obj.getRole()
-        if role == pyatspi.ROLE_PANEL and obj.childCount == 1:
+        try:
+            role = obj.getRole()
+            childCount = obj.childCount
+        except:
+            role = None
+            childCount = 0
+
+        if role == pyatspi.ROLE_PANEL and childCount == 1:
             if obj.name and obj.name == obj[0].name:
                 return True
 
