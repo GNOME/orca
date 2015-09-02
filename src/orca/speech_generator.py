@@ -1858,10 +1858,12 @@ class SpeechGenerator(generator.Generator):
         acss = self.voice(SYSTEM)
         alreadyFocused = args.get('alreadyFocused', False)
         forceTutorial = args.get('forceTutorial', False)
+        role = args.get('role', obj.getRole())
         result.extend(self._script.tutorialGenerator.getTutorial(
                 obj,
                 alreadyFocused,
-                forceTutorial))
+                forceTutorial,
+                role))
         if args.get('role', obj.getRole()) == pyatspi.ROLE_ICON \
             and args.get('formatType', 'unfocused') == 'basicWhereAmI':
             frame, dialog = self._script.utilities.frameAndDialog(obj)

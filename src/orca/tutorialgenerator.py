@@ -755,7 +755,7 @@ class TutorialGenerator:
     def _getModeTutorial(self, obj, alreadyFocused, forceTutorial):
         return []
 
-    def getTutorial(self, obj, alreadyFocused, forceTutorial=False):
+    def getTutorial(self, obj, alreadyFocused, forceTutorial=False, role=None):
         """Get the tutorial for an Accessible object.  This will look
         first to the specific tutorial generators and if this
         does not exist then return the empty tutorial.
@@ -766,6 +766,7 @@ class TutorialGenerator:
         - obj: the object
         - alreadyFocused: False if object just received focus
         - forceTutorial: used for when whereAmI really needs the tutorial string
+        - role: Alternative role to use
 
         Returns a list of utterances to be spoken.
         """
@@ -777,7 +778,7 @@ class TutorialGenerator:
             return []
 
         utterances = []
-        role = obj.getRole()
+        role = role or obj.getRole()
         msg = self._getModeTutorial(obj, alreadyFocused, forceTutorial)
         if not msg:
             if role in self.tutorialGenerators:
