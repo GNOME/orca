@@ -1,3 +1,53 @@
+3.17.91 - 2 September 2015
+
+Web:
+
+ * Treat (un)ordered HTML lists without list items as if they were divs
+
+ * Clear the cache and try once more when the next/previous context
+   cannot be found
+
+ * Treat web documents as top-level roles for the purpose of Zombie
+   detection
+
+ * Fix MathML line navigation issue
+
+ * Fix issue causing Orca to skip certain web content during Say All
+
+ * Improve caret navigation around images lacking content, interaction,
+   and size
+
+General:
+
+ * Updated documentation
+
+ * Add ability to override object role when generating tutorial messages
+
+ * Handle more event floods from LibreOffice and gnome-shell
+
+ * Handle several "The process appears to be hung" AT-SPI2 errors from
+   Firefox and LibreOffice
+
+ * Work around broken custom comboboxes and listboxes which lack items
+
+ * Fix bug in presentation of chat messages from non-active applications
+
+ * Add option to speak 12-hour time without seconds
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca            Catalan                     Jordi Mas
+    el            Greek                       Tom Tryfonidis
+    es            Spanish                     Daniel Mustieles,
+                                              Miguel Rodríguez Núñez
+    gl            Galician                    Fran Diéguez
+    hu            Hungarian                   Gabor Kelemen
+    pl            Polish                      Piotr Drąg
+    sv            Swedish                     Anders Jonsson
+    zh_TW         Chinese (Taiwan)            Chao-Hsiung Liao
+
+=========
+
 3.17.90 - 19 August 2015
 
 Spellcheck:
