@@ -2279,6 +2279,7 @@ class Utilities(script_utilities.Utilities):
             return None, -1
 
         lookInChild = [pyatspi.ROLE_LIST,
+                       pyatspi.ROLE_INTERNAL_FRAME,
                        pyatspi.ROLE_TABLE,
                        pyatspi.ROLE_TABLE_ROW]
         if role in lookInChild and obj.childCount:

@@ -15,13 +15,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
-    ["BRAILLE LINE:  'Click here to publicly \+1 this. push button internal frame'",
+    ["BRAILLE LINE:  'Click here to publicly \+1 this. push button '",
      "     VISIBLE:  'Click here to publicly \+1 this. ', cursor=1",
      "BRAILLE LINE:  'Click here to publicly \+1 this. push button [0-9]+'",
      "     VISIBLE:  'Click here to publicly \+1 this. ', cursor=1",
      "SPEECH OUTPUT: 'Click here to publicly \+1 this. push button'",
-     "SPEECH OUTPUT: '[0-9]+'",
-     "SPEECH OUTPUT: 'internal frame'"]))
+     "SPEECH OUTPUT: '[0-9]+'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -35,22 +34,18 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "3. Top of file",
-    ["BRAILLE LINE:  'Click here to publicly \+1 this. push button [0-9]+ internal frame'",
+    ["BRAILLE LINE:  'Click here to publicly \+1 this. push button [0-9]+'",
      "     VISIBLE:  'Click here to publicly \+1 this. ', cursor=1",
      "SPEECH OUTPUT: 'Click here to publicly \+1 this. push button'",
-     "SPEECH OUTPUT: '[0-9]+'",
-     "SPEECH OUTPUT: 'internal frame'"]))
+     "SPEECH OUTPUT: '[0-9]+'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
-    ["KNOWN ISSUE: We are stuck on the internal iframe",
-     "BRAILLE LINE:  'Click here to publicly \+1 this. push button [0-9]+ internal frame'",
-     "     VISIBLE:  'Click here to publicly \+1 this. ', cursor=1",
-     "SPEECH OUTPUT: 'Click here to publicly \+1 this. push button'",
-     "SPEECH OUTPUT: '[0-9]+'",
-     "SPEECH OUTPUT: 'internal frame'"]))
+    ["BRAILLE LINE:  'After the iframe'",
+     "     VISIBLE:  'After the iframe', cursor=1",
+     "SPEECH OUTPUT: 'After the iframe'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()
