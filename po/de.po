@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2015-05-25 11:11+0000\n"
-"PO-Revision-Date: 2015-05-25 13:41+0100\n"
+"POT-Creation-Date: 2015-08-25 11:29+0000\n"
+"PO-Revision-Date: 2015-08-27 12:58+0200\n"
 "Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -30,7 +30,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.8.4\n"
 "X-Project-Style: gnome\n"
 
 #: ../orca.desktop.in.h:1
@@ -6506,19 +6506,19 @@ msgstr "nicht größer als"
 #: ../src/orca/mathsymbols.py:1600
 msgctxt "math symbol"
 msgid "neither less than nor equal to"
-msgstr ""
+msgstr "weder weniger noch gleich"
 
 #. Translators: this is the spoken representation for the character '≱' (U+2271)
 #: ../src/orca/mathsymbols.py:1603
 msgctxt "math symbol"
 msgid "neither greater than nor equal to"
-msgstr ""
+msgstr "weder größer noch gleich"
 
 #. Translators: this is the spoken representation for the character '≲' (U+2272)
 #: ../src/orca/mathsymbols.py:1606
 msgctxt "math symbol"
 msgid "less than or equivalent to"
-msgstr ""
+msgstr "kleiner oder gleich"
 
 #. Translators: this is the spoken representation for the character '≳' (U+2273)
 #: ../src/orca/mathsymbols.py:1609
@@ -6542,25 +6542,25 @@ msgstr "weder größer noch gleich"
 #: ../src/orca/mathsymbols.py:1618
 msgctxt "math symbol"
 msgid "less than or greater than"
-msgstr ""
+msgstr "weniger oder größer als"
 
 #. Translators: this is the spoken representation for the character '≷' (U+2277)
 #: ../src/orca/mathsymbols.py:1621
 msgctxt "math symbol"
 msgid "greater than or less than"
-msgstr ""
+msgstr "größer oder kleiner als"
 
 #. Translators: this is the spoken representation for the character '≸' (U+2278)
 #: ../src/orca/mathsymbols.py:1624
 msgctxt "math symbol"
 msgid "neither less than nor greater than"
-msgstr ""
+msgstr "weder weniger noch größer als"
 
 #. Translators: this is the spoken representation for the character '≹' (U+2279)
 #: ../src/orca/mathsymbols.py:1627
 msgctxt "math symbol"
 msgid "neither greater than nor less than"
-msgstr ""
+msgstr "weder größer noch kleiner als"
 
 #. Translators: this is the spoken representation for the character '≺' (U+227a)
 #: ../src/orca/mathsymbols.py:1630
@@ -6645,7 +6645,7 @@ msgstr "keine Teilmenge von"
 #: ../src/orca/mathsymbols.py:1663
 msgctxt "math symbol"
 msgid "not a superset of"
-msgstr ""
+msgstr "keine Obermenge von"
 
 #. Translators: this is the spoken representation for the character '⊆' (U+2286)
 #: ../src/orca/mathsymbols.py:1666
@@ -6888,11 +6888,9 @@ msgstr "senkrecht zu"
 
 #. Translators: this is the spoken representation for the character '⊦' (U+22a6)
 #: ../src/orca/mathsymbols.py:1762
-#, fuzzy
-#| msgid "section"
 msgctxt "math symbol"
 msgid "assertion"
-msgstr "Abschnitt"
+msgstr "Annahme"
 
 #. Translators: this is the spoken representation for the character '⊧' (U+22a7)
 #: ../src/orca/mathsymbols.py:1765
@@ -6928,7 +6926,7 @@ msgstr ""
 #: ../src/orca/mathsymbols.py:1780
 msgctxt "math symbol"
 msgid "does not prove"
-msgstr ""
+msgstr "beweist nicht"
 
 #. Translators: this is the spoken representation for the character '⊭' (U+22ad)
 #: ../src/orca/mathsymbols.py:1783
@@ -7091,13 +7089,13 @@ msgstr ""
 #: ../src/orca/mathsymbols.py:1855
 msgctxt "math symbol"
 msgid "dot operator"
-msgstr ""
+msgstr "Punkt Operator"
 
 #. Translators: this is the spoken representation for the character '⋆' (U+22c6)
 #: ../src/orca/mathsymbols.py:1858
 msgctxt "math symbol"
 msgid "star operator"
-msgstr ""
+msgstr "Stern Operator"
 
 #. Translators: this is the spoken representation for the character '⋇' (U+22c7)
 #: ../src/orca/mathsymbols.py:1861
@@ -7312,19 +7310,15 @@ msgstr ""
 
 #. Translators: this is the spoken representation for the character '⋦' (U+22e6)
 #: ../src/orca/mathsymbols.py:1954
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than but not equivalent to"
-msgstr "kleiner gleich"
+msgstr "kleiner aber nicht gleich"
 
 #. Translators: this is the spoken representation for the character '⋧' (U+22e7)
 #: ../src/orca/mathsymbols.py:1957
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than but not equivalent to"
-msgstr "größer gleich"
+msgstr "größer aber nicht gleich"
 
 #. Translators: this is the spoken representation for the character '⋨' (U+22e8)
 #: ../src/orca/mathsymbols.py:1960
@@ -9493,7 +9487,7 @@ msgstr "Sprachausgabe steht nicht zur Verfügung."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1535 ../src/orca/scripts/default.py:3785
+#: ../src/orca/messages.py:1535 ../src/orca/scripts/default.py:3789
 msgid "string not found"
 msgstr "Zeichenkette nicht gefunden"
 
@@ -10709,7 +10703,7 @@ msgstr "Rechtschreibung überprüfen"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3397 ../src/orca/scripts/default.py:3409
+#: ../src/orca/scripts/default.py:3401 ../src/orca/scripts/default.py:3413
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
