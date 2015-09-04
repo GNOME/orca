@@ -806,6 +806,9 @@ class Utilities(script_utilities.Utilities):
                 math = self.getMathAncestor(obj)
             return [[math, 0, 1, '']]
 
+        if obj.getRole() == pyatspi.ROLE_INTERNAL_FRAME and obj.childCount == 1:
+            return self._getContentsForObj(obj[0], 0, boundary)
+
         string, start, end = self._getTextAtOffset(obj, offset, boundary)
         if not string:
             return [[obj, start, end, string]]

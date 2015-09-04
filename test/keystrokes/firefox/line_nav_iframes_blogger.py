@@ -19,39 +19,15 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
-    ["KNOWN ISSUE: We're stuck on this line",
-     "BRAILLE LINE:  'Go to Blogger.com Search  $l Search this blog & y Click here to publicly +1 this. toggle button 15 More Next Blog»Create Blog Sign In internal frame'",
-     "     VISIBLE:  'Go to Blogger.com Search  $l Sea', cursor=1",
-     "SPEECH OUTPUT: 'Go to Blogger.com link.'",
-     "SPEECH OUTPUT: 'Search entry'",
-     "SPEECH OUTPUT: 'Search this blog link.'",
-     "SPEECH OUTPUT: 'clickable'",
-     "SPEECH OUTPUT: 'Click here to publicly +1 this. toggle button not pressed'",
-     "SPEECH OUTPUT: '15'",
-     "SPEECH OUTPUT: 'More link.'",
-     "SPEECH OUTPUT: 'Next Blog» link.'",
-     "SPEECH OUTPUT: 'Create Blog link.'",
-     "SPEECH OUTPUT: 'Sign In link.'",
-     "SPEECH OUTPUT: 'internal frame'"]))
+    ["BRAILLE LINE:  'After the iframe'",
+     "     VISIBLE:  'After the iframe', cursor=1",
+     "SPEECH OUTPUT: 'After the iframe'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "3. Line Down",
-    ["KNOWN ISSUE: We're stuck on this line",
-     "BRAILLE LINE:  'Go to Blogger.com Search  $l Search this blog & y Click here to publicly +1 this. toggle button 15 More Next Blog»Create Blog Sign In internal frame'",
-     "     VISIBLE:  'Go to Blogger.com Search  $l Sea', cursor=1",
-     "SPEECH OUTPUT: 'Go to Blogger.com link.'",
-     "SPEECH OUTPUT: 'Search entry'",
-     "SPEECH OUTPUT: 'Search this blog link.'",
-     "SPEECH OUTPUT: 'clickable'",
-     "SPEECH OUTPUT: 'Click here to publicly +1 this. toggle button not pressed'",
-     "SPEECH OUTPUT: '15'",
-     "SPEECH OUTPUT: 'More link.'",
-     "SPEECH OUTPUT: 'Next Blog» link.'",
-     "SPEECH OUTPUT: 'Create Blog link.'",
-     "SPEECH OUTPUT: 'Sign In link.'",
-     "SPEECH OUTPUT: 'internal frame'"]))
+    "3. Line Down from the last line",
+    [""]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()
