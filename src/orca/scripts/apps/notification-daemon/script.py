@@ -30,7 +30,7 @@ import pyatspi
 import orca.messages as messages
 import orca.scripts.default as default
 import orca.speech as speech
-
+import orca.notification_messages as notification_messages
 
 ########################################################################
 #                                                                      #
@@ -48,3 +48,4 @@ class Script(default.Script):
         texts = [self.utilities.displayedText(acc) for acc in allLabels]
         text = '%s %s' % (messages.NOTIFICATION, ' '.join(texts))
         speech.speak(text, None, True)
+        notification_messages.saveMessage(text)
