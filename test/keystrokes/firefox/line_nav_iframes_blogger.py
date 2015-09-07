@@ -44,45 +44,34 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
-    ["BRAILLE LINE:  'Go to Blogger.com Search  $l Search this blog image'",
-     "     VISIBLE:  'Go to Blogger.com Search  $l Sea', cursor=1",
-     "SPEECH OUTPUT: 'Go to Blogger.com link.'",
-     "SPEECH OUTPUT: 'Search entry'",
-     "SPEECH OUTPUT: 'Search this blog link.'",
-     "SPEECH OUTPUT: 'clickable'",
-     "SPEECH OUTPUT: 'image'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "6. Line Down",
-    ["KNOWN ISSUE: We are stuck in this iframe",
-     "BRAILLE LINE:  'Go to Blogger.com Search  $l Search this blog image'",
-     "     VISIBLE:  'Go to Blogger.com Search  $l Sea', cursor=1",
-     "SPEECH OUTPUT: 'Go to Blogger.com link.'",
-     "SPEECH OUTPUT: 'Search entry'",
-     "SPEECH OUTPUT: 'Search this blog link.'",
-     "SPEECH OUTPUT: 'clickable'",
-     "SPEECH OUTPUT: 'image'"]))
+    ["BRAILLE LINE:  'After the iframe'",
+     "     VISIBLE:  'After the iframe', cursor=1",
+     "SPEECH OUTPUT: 'After the iframe'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Up",
-    [""]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "8. Line Down",
-    ["KNOWN ISSUE: We are stuck in this iframe",
-     "BRAILLE LINE:  'Go to Blogger.com Search  $l Search this blog image'",
+    ["BRAILLE LINE:  'Go to Blogger.com Search  $l Search this blog & y Click here to publicly +1 this. toggle button 15 More Next Blog»Create Blog Sign In'",
      "     VISIBLE:  'Go to Blogger.com Search  $l Sea', cursor=1",
      "SPEECH OUTPUT: 'Go to Blogger.com link.'",
      "SPEECH OUTPUT: 'Search entry'",
      "SPEECH OUTPUT: 'Search this blog link.'",
      "SPEECH OUTPUT: 'clickable'",
-     "SPEECH OUTPUT: 'image'"]))
+     "SPEECH OUTPUT: 'Click here to publicly +1 this. toggle button not pressed'",
+     "SPEECH OUTPUT: '15'",
+     "SPEECH OUTPUT: 'More link.'",
+     "SPEECH OUTPUT: 'Next Blog» link.'",
+     "SPEECH OUTPUT: 'Create Blog link.'",
+     "SPEECH OUTPUT: 'Sign In link.'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "8. Line Down",
+    ["BRAILLE LINE:  'After the iframe'",
+     "     VISIBLE:  'After the iframe', cursor=1",
+     "SPEECH OUTPUT: 'After the iframe'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

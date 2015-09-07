@@ -2343,7 +2343,8 @@ class Utilities(script_utilities.Utilities):
                         return obj, i
             elif not self.doNotDescendForCaret(obj) and obj.childCount:
                 return self.findNextCaretInOrder(obj[0], -1)
-            elif offset < 0 and not self.isTextBlockElement(obj) and not self.hasNoSize(obj):
+            elif offset < 0 and not self.isTextBlockElement(obj) and not self.hasNoSize(obj) \
+                 and not self.isUselessImage(obj):
                 return obj, 0
 
         # If we're here, start looking up the the tree, up to the document.
@@ -2402,7 +2403,8 @@ class Utilities(script_utilities.Utilities):
                         return obj, i
             elif not self.doNotDescendForCaret(obj) and obj.childCount:
                 return self.findPreviousCaretInOrder(obj[obj.childCount - 1], -1)
-            elif offset < 0 and not self.isTextBlockElement(obj) and not self.hasNoSize(obj):
+            elif offset < 0 and not self.isTextBlockElement(obj) and not self.hasNoSize(obj) \
+                 and not self.isUselessImage(obj):
                 return obj, 0
 
         # If we're here, start looking up the the tree, up to the document.
