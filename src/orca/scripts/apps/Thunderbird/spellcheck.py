@@ -58,7 +58,14 @@ class SpellCheck(spellcheck.SpellCheck):
         return False
 
     def _isCandidateWindow(self, window):
-        return window and window.getRole() == pyatspi.ROLE_DIALOG
+        if not (window and window.getRole() == pyatspi.ROLE_DIALOG):
+            return False
+
+        isPageTabList = lambda x: x and x.getRole() == pyatspi.ROLE_PAGE_TAB_LIST
+        if pyatspi.findDescendant(window, isPageTabList):
+            return False
+
+        return True
 
     def _findChangeToEntry(self, root):
         isEntry = lambda x: x and x.getRole() == pyatspi.ROLE_ENTRY \
