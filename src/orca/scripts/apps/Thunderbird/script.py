@@ -180,10 +180,11 @@ class Script(Gecko.Script):
         if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME and not event.detail1:
             try:
                 role = orca_state.locusOfFocus.getRole()
+                name = orca_state.locusOfFocus.name
             except:
                 pass
             else:
-                if role in [pyatspi.ROLE_FRAME, pyatspi.ROLE_PAGE_TAB]:
+                if role in [pyatspi.ROLE_FRAME, pyatspi.ROLE_PAGE_TAB] and name:
                     orca.setLocusOfFocus(event, event.source, False)
 
             if self.utilities.inDocumentContent():
