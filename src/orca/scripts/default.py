@@ -3495,7 +3495,7 @@ class Script(script.Script):
     def presentObject(self, obj, offset=0):
         self.updateBraille(obj)
         utterances = self.speechGenerator.generateSpeech(obj)
-        speech.speak(utterances, voice)
+        speech.speak(utterances)
 
     def stopSpeechOnActiveDescendantChanged(self, event):
         """Whether or not speech should be stopped prior to setting the
