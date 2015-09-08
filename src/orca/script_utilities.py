@@ -1528,6 +1528,10 @@ class Utilities:
 
         return rv
 
+    def hasPageTabList(self, root):
+        isPageTabList = lambda x: x and x.getRole() == pyatspi.ROLE_PAGE_TAB_LIST
+        return pyatspi.findDescendant(root, isPageTabList) is not None
+
     def unrelatedLabels(self, root, onlyShowing=True):
         """Returns a list containing all the unrelated (i.e., have no
         relations to anything and are not a fundamental element of a
@@ -1542,6 +1546,9 @@ class Utilities:
         """
 
         if self._script.spellcheck and self._script.spellcheck.isCheckWindow(root):
+            return []
+
+        if self.hasPageTabList(root):
             return []
 
         hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_LABEL
