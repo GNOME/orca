@@ -1741,6 +1741,68 @@ class Utilities(script_utilities.Utilities):
         self._isOffScreenLabel[hash(obj)] = rv
         return rv
 
+    def isDetachedDocument(self, obj):
+        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
+        if (obj and obj.getRole() in docRoles):
+            if obj.parent is None:
+                msg = "WEB: %s is a detatched document" % obj
+                debug.println(debug.LEVEL_INFO, msg)
+                return True
+
+        return False
+
+    def iframeForDetachedDocument(self, obj, root=None):
+        root = root or self.documentFrame()
+        isIframe = lambda x: x and x.getRole() == pyatspi.ROLE_INTERNAL_FRAME
+        try:
+            iframes = pyatspi.findAllDescendants(root, isIframe)
+        except:
+            msg = "WEB: Exception getting descendant iframes of %s" % root
+            debug.println(debug.LEVEL_INFO, msg)
+            return None
+
+        for iframe in iframes:
+            if obj in iframe:
+                # We won't change behavior, but we do want to log all bogosity.
+                self._isBrokenChildParentTree(obj, iframe)
+
+                msg = "WEB: Returning %s as iframe parent of detached %s" % (iframe, obj)
+                debug.println(debug.LEVEL_INFO, msg)
+                return iframe
+
+        return None
+
+    def _isBrokenChildParentTree(self, child, parent):
+        if not (child and parent):
+            return False
+
+        try:
+            childIsChildOfParent = child in parent
+        except:
+            msg = "WEB: Exception checking if %s is in %s" % (child, parent)
+            debug.println(debug.LEVEL_INFO, msg)
+            childIsChildOfParent = False
+        else:
+            msg = "WEB: %s is child of %s: %s" % (child, parent, childIsChildOfParent)
+            debug.println(debug.LEVEL_INFO, msg)
+
+        try:
+            parentIsParentOfChild = child.parent == parent
+        except:
+            msg = "WEB: Exception getting parent of %s" % child
+            debug.println(debug.LEVEL_INFO, msg)
+            parentIsParentOfChild = False
+        else:
+            msg = "WEB: %s is parent of %s: %s" % (parent, child, parentIsParentOfChild)
+            debug.println(debug.LEVEL_INFO, msg)
+
+        if parentIsParentOfChild != childIsChildOfParent:
+            msg = "FAIL: The above is broken and likely needs to be fixed by the toolkit."
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        return False
+
     def isInferredLabelForContents(self, content, contents):
         obj, start, end, string = content
         objs = list(filter(self.shouldInferLabelFor, [x[0] for x in contents]))
@@ -2353,6 +2415,10 @@ class Utilities(script_utilities.Utilities):
             return None, -1
 
         while obj.parent:
+            if self.isDetachedDocument(obj.parent):
+                obj = self.iframeForDetachedDocument(obj.parent)
+                continue
+
             parent = obj.parent
             if self.isZombie(parent):
                 replicant = self.findReplicant(self.documentFrame(), parent)
@@ -2413,6 +2479,10 @@ class Utilities(script_utilities.Utilities):
             return None, -1
 
         while obj.parent:
+            if self.isDetachedDocument(obj.parent):
+                obj = self.iframeForDetachedDocument(obj.parent)
+                continue
+
             parent = obj.parent
             if self.isZombie(parent):
                 replicant = self.findReplicant(self.documentFrame(), parent)
