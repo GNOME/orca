@@ -1280,6 +1280,12 @@ class Script(default.Script):
         if role == pyatspi.ROLE_COMBO_BOX:
             orca.setLocusOfFocus(event, event.source)
 
+        if role == pyatspi.ROLE_PAGE_TAB:
+            orca.setLocusOfFocus(event, event.source)
+
+        if role == pyatspi.ROLE_RADIO_BUTTON:
+            orca.setLocusOfFocus(event, event.source)
+
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
