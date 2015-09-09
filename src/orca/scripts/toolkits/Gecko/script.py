@@ -179,6 +179,9 @@ class Script(web.Script):
         if role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_PASSWORD_TEXT]:
             orca.setLocusOfFocus(event, event.source)
 
+        if role == pyatspi.ROLE_COMBO_BOX:
+            orca.setLocusOfFocus(event, event.source)
+
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
