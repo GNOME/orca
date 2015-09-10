@@ -65,6 +65,7 @@ class Utilities(script_utilities.Utilities):
         self._isNonEntryTextWidget = {}
         self._isUselessImage = {}
         self._inferredLabels = {}
+        self._roleDescription = {}
         self._text = {}
         self._tag = {}
         self._treatAsDiv = {}
@@ -103,6 +104,7 @@ class Utilities(script_utilities.Utilities):
         self._isNonEntryTextWidget = {}
         self._isUselessImage = {}
         self._inferredLabels = {}
+        self._roleDescription = {}
         self._tag = {}
         self._treatAsDiv = {}
         self._cleanupContexts()
@@ -318,6 +320,20 @@ class Utilities(script_utilities.Utilities):
                 break
 
         return lastChild
+
+    def getRoleDescription(self, obj):
+        rv = self._roleDescription.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            attrs = {}
+
+        rv = attrs.get('roledescription', '')
+        self._roleDescription[hash(obj)] = rv
+        return rv
 
     def _getTag(self, obj):
         rv = self._tag.get(hash(obj))

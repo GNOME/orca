@@ -364,8 +364,7 @@ class SpeechGenerator(generator.Generator):
         """
         return self._generateRoleName(obj, **args)
 
-    @staticmethod
-    def getLocalizedRoleName(obj, role=None):
+    def getLocalizedRoleName(self, obj, role=None):
         """Returns the localized name of the given Accessible object; the name
         is suitable to be spoken.
 

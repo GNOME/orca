@@ -1,0 +1,30 @@
+<html>
+<head></head>
+<body>
+<div>Start</div>
+<div tabindex="0">Focus me 1</div>
+<div tabindex="0" aria-roledescription="kill switch">Focus me 2</div>
+<div tabindex="0" role="button">Focus me 3</div>
+<div tabindex="0" role="button" aria-roledescription="kill switch">Focus me 4</div>
+<button>Focus me 5</button>
+<button aria-roledescription="kill switch">Focus me 6</button>
+<div tabindex="0" role="group" aria-label="Presentation" aria-roledescription="slide set">
+  <p>Here are some slides</p>
+  <div tabindex="0" role="region" aria-roledescription="slide" id="slide1" aria-labelledby="slide1heading">
+    <h1 id="slide1heading">First Quarter 2015</h1>
+    <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+    </ul>
+  </div>
+  <div tabindex="0" aria-roledescription="slide" id="slide1" aria-labelledby="slide2heading">
+    <h1 id="slide2heading">Second Quarter 2015</h1>
+    <ul>
+        <li>Item 3</li>
+        <li>Item 4</li>
+    </ul>
+  </div>
+</div>
+<div>End</div>
+</body>
+</html>

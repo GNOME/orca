@@ -343,8 +343,8 @@ formatting = {
             'basicWhereAmI': 'labelOrName + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
             },
         pyatspi.ROLE_SECTION: {
-            'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
-            'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection + ' + MNEMONIC,
+            'focused': 'labelOrName + currentLineText + allTextSelection + roleName',
+            'unfocused': 'labelOrName + currentLineText + allTextSelection + roleName + ' + MNEMONIC,
             },
         pyatspi.ROLE_SLIDER: {
             'focused': 'value',
@@ -635,7 +635,9 @@ formatting = {
             'unfocused': 'asPageTabOrScrollPane'
             },
         pyatspi.ROLE_SECTION: {
-            'unfocused': BRAILLE_TEXT
+            'unfocused': '((substring and ' + BRAILLE_TEXT + ')\
+                          or ([Component(obj, asString(labelAndName + roleName))]\
+                             + (childWidget and ([Region(" ")] + childWidget))))'
             },
         #'REAL_ROLE_SCROLL_PANE': 'default'
         pyatspi.ROLE_SLIDER: {

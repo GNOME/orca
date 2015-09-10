@@ -191,12 +191,29 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generateTextRole(self, obj, **args):
         return self._generateRoleName(obj, **args)
 
+    def getLocalizedRoleName(self, obj, role=None):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super().getLocalizedRoleName(obj, role)
+
+        roledescription = self._script.utilities.getRoleDescription(obj)
+        if roledescription:
+            return roledescription
+
+        return super().getLocalizedRoleName(obj, role)
+
     def _generateRoleName(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateRoleName(obj, **args)
 
         result = []
         acss = self.voice(speech_generator.SYSTEM)
+
+        roledescription = self._script.utilities.getRoleDescription(obj)
+        if roledescription:
+            result = [roledescription]
+            result.extend(acss)
+            return result
+
         role = args.get('role', obj.getRole())
         force = args.get('force', False)
 
