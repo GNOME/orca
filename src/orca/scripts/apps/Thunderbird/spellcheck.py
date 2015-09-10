@@ -61,8 +61,9 @@ class SpellCheck(spellcheck.SpellCheck):
         if not (window and window.getRole() == pyatspi.ROLE_DIALOG):
             return False
 
-        isPageTabList = lambda x: x and x.getRole() == pyatspi.ROLE_PAGE_TAB_LIST
-        if pyatspi.findDescendant(window, isPageTabList):
+        roles = [pyatspi.ROLE_PAGE_TAB_LIST, pyatspi.ROLE_SPLIT_PANE]
+        isNonSpellCheckChild = lambda x: x and x.getRole() in roles
+        if pyatspi.findDescendant(window, isNonSpellCheckChild):
             return False
 
         return True
