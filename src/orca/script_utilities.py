@@ -1528,9 +1528,12 @@ class Utilities:
 
         return rv
 
-    def hasPageTabList(self, root):
-        isPageTabList = lambda x: x and x.getRole() == pyatspi.ROLE_PAGE_TAB_LIST
-        return pyatspi.findDescendant(root, isPageTabList) is not None
+    def _hasNonDescendableDescendant(self, root):
+        roles = [pyatspi.ROLE_PAGE_TAB_LIST,
+                 pyatspi.ROLE_SPLIT_PANE,
+                 pyatspi.ROLE_TABLE]
+        isMatch = lambda x: x and x.getRole() in roles
+        return pyatspi.findDescendant(root, isMatch) is not None
 
     def unrelatedLabels(self, root, onlyShowing=True):
         """Returns a list containing all the unrelated (i.e., have no
@@ -1545,10 +1548,10 @@ class Utilities:
         Returns a list of unrelated labels under the given root.
         """
 
-        if self._script.spellcheck and self._script.spellcheck.isCheckWindow(root):
+        if self._hasNonDescendableDescendant(root):
             return []
 
-        if self.hasPageTabList(root):
+        if self._script.spellcheck and self._script.spellcheck.isCheckWindow(root):
             return []
 
         hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_LABEL
