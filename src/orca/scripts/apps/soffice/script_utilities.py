@@ -227,8 +227,8 @@ class Utilities(script_utilities.Utilities):
         parent = obj.parent
         try:
             parentTable = parent.queryTable()
-        except NotImplementedError:
-            parentTable = None
+        except:
+            return [-1, -1]
 
         startIndex = 0
         endIndex = parentTable.nColumns

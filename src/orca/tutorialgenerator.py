@@ -613,7 +613,7 @@ class TutorialGenerator:
         if (not alreadyFocused):
             try:
                 parent_table = obj.parent.queryTable()
-            except NotImplementedError:
+            except:
                 parent_table = None
             if settings.readTableCellRow and parent_table \
                 and not self._script.utilities.isLayoutOnly(obj.parent):
@@ -774,7 +774,7 @@ class TutorialGenerator:
         if not settings.enableTutorialMessages:
             return []
 
-        if not obj == orca_state.locusOfFocus:
+        if not (obj and obj == orca_state.locusOfFocus):
             return []
 
         utterances = []

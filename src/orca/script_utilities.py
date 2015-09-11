@@ -815,7 +815,7 @@ class Utilities:
             state = obj.getState()
             layoutOnly = not (state.contains(pyatspi.STATE_FOCUSABLE) \
                               or state.contains(pyatspi.STATE_SELECTABLE))
-        elif role == pyatspi.ROLE_PANEL and obj.childCount \
+        elif role == pyatspi.ROLE_PANEL and obj.childCount and firstChild \
              and firstChild.getRole() in ignorePanelParent:
             layoutOnly = True
         elif obj.childCount == 1 and obj.name and obj.name == firstChild.name:
