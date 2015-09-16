@@ -1,3 +1,37 @@
+3.17.92 - 16 September 2015
+
+Web:
+
+ * Add support for aria-roledescription
+
+ * Work around missing object:state-changed:focused events from Gecko
+
+ * Fix several instances of Orca getting "stuck" in Gecko content
+
+ * Fix bug causing Orca to skip over nested iframe content during SayAll
+
+General:
+
+ * Handle tracebacks resulting from Calc crashing
+
+ * Explicitly deregister keystroke listeners before shutting down
+
+ * Ignore state-changed:busy events seen when printing in Thunderbird
+
+ * Eliminate false positive identifying Thunderbird spellcheck dialog
+
+ * Fix a performance issue associated with appearance of dialogs with
+   many widgets
+
+ * Save messages and add braille output to the notification-daemon script
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de            German                      Christian Kirbach
+    fr            French                      Claude Paroz
+
+=========
+
 3.17.91 - 2 September 2015
 
 Web:
