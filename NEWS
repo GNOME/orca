@@ -1,3 +1,21 @@
+3.18.0 - 21 September 2015
+
+General:
+
+ * Fix flatreview traceback
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    da            Danish                      Kenneth Nielsen
+    fr            French                      Julien Hardelin
+    hu            Hungarian                   Attila Hammer
+    id            Indonesian                  Andika Triwidada
+    nb            Norwegian bokmål            Kjartan Maraas
+    pt_BR         Brazilian Portuguese        Rafael Ferreira
+    tr            Turkish                     Muhammet Kara
+
+=========
+
 3.17.92 - 16 September 2015
 
 Web:
