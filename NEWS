@@ -1,3 +1,39 @@
+General:
+
+ * Updated documentation
+
+ * Add handling for Evo's "autocomplete" popups
+
+ * Work around missing object:state-changed:focused events from Gecko
+   and Gtk+
+
+ * Fix several issues related to Thunderbird's spellcheck dialog
+
+ * Work around broken custom comboboxes
+
+ * Add handling for ROLE_HEADER
+
+ * Handle error calling findAllDescendants in broken implementation
+
+ * Enable toggling of speech via keybinding when it's not silenced, but
+   disabled
+
+ * Set the profile when reloading settings
+
+ * Fix Say All bug for Gecko content
+
+ * Stop repeating tutorial messages when navigating amongst items of the
+   same type
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de            German                      Christian Kirbach
+    oc            Occitan                     Cédric Valmary
+    pl            Polish                      Piotr Drąg
+    pt            Portuguese                  Pedro Albuquerque
+
+=========
+
 3.16.2 - 12 May 2015
 
 General:
