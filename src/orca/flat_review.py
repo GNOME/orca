@@ -36,8 +36,6 @@ from . import object_properties
 from . import orca_state
 from . import settings
 
-from .braille_generator import BrailleGenerator
-
 # [[[WDW - HACK Regular expression to split strings on whitespace
 # boundaries, which is what we'll use for word dividers instead of
 # living at the whim of whomever decided to implement the AT-SPI
@@ -427,7 +425,8 @@ class ValueZone(Zone):
 
             speechValue = speechValue + " " + messages.percentage(percentValue)
 
-            rolename = BrailleGenerator.getLocalizedRoleName(self.accessible)
+            rolename = orca_state.activeScript.brailleGenerator.getLocalizedRoleName(
+                self.accessible)
             if orientation:
                 brailleValue = "%s %s %d%%" % (orientation,
                     rolename,
