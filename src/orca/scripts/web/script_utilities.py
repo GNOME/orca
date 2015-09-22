@@ -2248,9 +2248,14 @@ class Utilities(script_utilities.Utilities):
         try:
             extents = obj.queryComponent().getExtents(0)
         except:
+            msg = "WEB: Exception getting extents for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
             rv = True
         else:
             rv = not (extents.width and extents.height)
+            if rv:
+                msg = "WEB: %s has no size %s" % (obj, extents)
+                debug.println(debug.LEVEL_INFO, msg)
 
         self._hasNoSize[hash(obj)] = rv
         return rv
