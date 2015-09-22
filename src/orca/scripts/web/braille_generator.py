@@ -105,6 +105,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
+        if self._script.utilities.inDocumentContent(obj) and obj.name:
+            return self._generateName(obj, **args)
+
         return super()._generateLabelOrName(obj, **args)
 
     def _generateLabel(self, obj, **args):
