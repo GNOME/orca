@@ -7,6 +7,7 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(WaitForDocLoad())
 sequence.append(KeyComboAction("<Shift>Tab"))
 
 sequence.append(utils.StartRecordingAction())

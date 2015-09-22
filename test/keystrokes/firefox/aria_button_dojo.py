@@ -5,6 +5,7 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(WaitForDocLoad())
 sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
@@ -133,7 +134,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Cut', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'Edit! menu'",
+     "SPEECH OUTPUT: 'Edit! edit title menu'",
      "SPEECH OUTPUT: 'Cut.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
@@ -227,7 +228,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'white table cell', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'colorPalette panel'",
      "SPEECH OUTPUT: 'white.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
@@ -256,8 +256,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "27. Tab to the toggle me off button",
-    ["BRAILLE LINE:  '&=y Toggle me off  toggle button'",
-     "     VISIBLE:  '&=y Toggle me off  toggle button', cursor=1",
+    ["BRAILLE LINE:  '&=y Toggle me off toggle button'",
+     "     VISIBLE:  '&=y Toggle me off toggle button', cursor=1",
      "SPEECH OUTPUT: 'Toggle me off  toggle button pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -280,8 +280,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "30. Tab to the toggle me button",
-    ["BRAILLE LINE:  'Toggle me  push button'",
-     "     VISIBLE:  'Toggle me  push button', cursor=1",
+    ["BRAILLE LINE:  '&=y toggle button'",
+     "     VISIBLE:  '&=y toggle button', cursor=1",
      "SPEECH OUTPUT: 'Toggle me  push button'"]))
 
 sequence.append(utils.StartRecordingAction())

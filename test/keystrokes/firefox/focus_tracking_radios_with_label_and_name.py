@@ -5,6 +5,7 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(WaitForDocLoad())
 sequence.append(KeyComboAction("<Control>Home"))
 
 sequence.append(utils.StartRecordingAction())

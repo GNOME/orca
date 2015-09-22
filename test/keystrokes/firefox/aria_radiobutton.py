@@ -5,6 +5,8 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(WaitForDocLoad())
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(

@@ -7,6 +7,7 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(WaitForDocLoad())
 sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))

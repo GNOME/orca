@@ -7,6 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(WaitForDocLoad())
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(

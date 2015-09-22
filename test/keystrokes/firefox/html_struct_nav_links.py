@@ -7,6 +7,7 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(WaitForDocLoad())
 sequence.append(PauseAction(2000))
 sequence.append(KeyComboAction("<Control>Home"))
 

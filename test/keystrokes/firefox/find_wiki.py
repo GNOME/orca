@@ -7,6 +7,7 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(WaitForDocLoad())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(KeyComboAction("<Control>F"))
 sequence.append(TypeAction("orca"))

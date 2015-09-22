@@ -7,6 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(WaitForDocLoad())
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("e"))
 sequence.append(utils.AssertPresentationAction(
