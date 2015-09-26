@@ -2898,7 +2898,7 @@ class Utilities:
                          pyatspi.ROLE_EMBEDDED,
                          pyatspi.ROLE_WINDOW,
                          pyatspi.ROLE_FRAME]
-        if obj.getIndexInParent() == -1 and role not in topLevelRoles:
+        if index == -1 and role not in topLevelRoles:
             debug.println(debug.LEVEL_INFO, "ZOMBIE: %s's index is -1" % obj)
             return True
         if state.contains(pyatspi.STATE_DEFUNCT):

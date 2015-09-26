@@ -507,6 +507,7 @@ class EventManager:
             return orca_state.activeScript
 
         script = None
+        app = None
         try:
             app = event.host_application or event.source.getApplication()
             if app and app.getState().contains(pyatspi.STATE_DEFUNCT):
@@ -517,8 +518,12 @@ class EventManager:
             msg = 'WARNING: Exception when getting script for event.'
             debug.println(debug.LEVEL_WARNING, msg)
         else:
+            msg = 'INFO: Getting script for %s from %s' % (event.type, app)
+            debug.println(debug.LEVEL_INFO, msg)
             script = _scriptManager.getScript(app, event.source)
 
+        msg = 'INFO: Script for %s from %s is %s' % (event.type, app, script)
+        debug.println(debug.LEVEL_INFO, msg)
         return script
 
     def _isActivatableEvent(self, event, script=None):
@@ -634,9 +639,10 @@ class EventManager:
 
         script = self._getScriptForEvent(event)
         if not script:
+            msg = 'ERROR: Could not get script for %s' % event
+            debug.println(debug.LEVEL_INFO, msg)
             return
 
-        debug.println(debug.LEVEL_FINEST, "Script for event: %s" % script.name)
         setNewActiveScript, reason = self._isActivatableEvent(event, script)
         if setNewActiveScript:
             try:

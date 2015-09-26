@@ -967,6 +967,8 @@ class Script(default.Script):
             return False
 
         if oldFocus and self.utilities.isZombie(oldFocus):
+            msg = "WEB: Old focus is Zombie: %s. Clearing oldFocus." % oldFocus
+            debug.println(debug.LEVEL_INFO, msg)
             oldFocus = None
 
         caretOffset = 0
@@ -1257,6 +1259,10 @@ class Script(default.Script):
             msg = "WEB: Clearing structural navigation cache for %s" % document
             debug.println(debug.LEVEL_INFO, msg)
             self.structuralNavigation.clearCache(document)
+        else:
+            msg = "WEB: Event source is not in document content"
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
 
         if self.utilities.handleAsLiveRegion(event):
             msg = "WEB: Event to be handled as live region"
@@ -1462,6 +1468,11 @@ class Script(default.Script):
     def onTextDeleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
 
+        if self.utilities.isZombie(event.source):
+            msg = "WEB: Event source is Zombie"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
         if self.utilities.eventIsStatusBarNoise(event):
             msg = "WEB: Ignoring event believed to be status bar noise"
             debug.println(debug.LEVEL_INFO, msg)
@@ -1507,6 +1518,11 @@ class Script(default.Script):
 
     def onTextInserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
+
+        if self.utilities.isZombie(event.source):
+            msg = "WEB: Event source is Zombie"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
 
         if self.utilities.eventIsStatusBarNoise(event):
             msg = "WEB: Ignoring event believed to be status bar noise"
@@ -1613,6 +1629,11 @@ class Script(default.Script):
             msg = "WEB: Ignoring: Source is context ancestor"
             debug.println(debug.LEVEL_INFO, msg)
             return True
+
+        return False
+
+    def onWindowActivated(self, event):
+        """Callback for window:activate accessibility events."""
 
         return False
 

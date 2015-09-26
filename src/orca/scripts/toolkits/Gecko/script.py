@@ -268,6 +268,16 @@ class Script(web.Script):
         debug.println(debug.LEVEL_INFO, msg)
         default.Script.onTextSelectionChanged(self, event)
 
+    def onWindowActivated(self, event):
+        """Callback for window:activate accessibility events."""
+
+        if super().onWindowActivated(event):
+            return
+
+        msg = "GECKO: Passing along event to default script"
+        debug.println(debug.LEVEL_INFO, msg)
+        default.Script.onWindowActivated(self, event)
+
     def onWindowDeactivated(self, event):
         """Callback for window:deactivate accessibility events."""
 

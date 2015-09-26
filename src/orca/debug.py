@@ -312,14 +312,19 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
         return ""
 
     if includeApp:
-        app = acc.getApplication()
-        if app:
-            try:
-                string = indent + "app.name='%s' " % app.name
-            except (LookupError, RuntimeError):
-                string = indent + "app.name='<error getting name>' "
+        try:
+            app = acc.getApplication()
+        except:
+            string = indent + "app=(exception getting app) "
+            app = None
         else:
-            string = indent + "app=None "
+            if app:
+                try:
+                    string = indent + "app.name='%s' " % app.name
+                except (LookupError, RuntimeError):
+                    string = indent + "app.name='(exception getting name)' "
+            else:
+                string = indent + "app=None "
     else:
         string = indent
 

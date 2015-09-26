@@ -2111,7 +2111,13 @@ class Utilities(script_utilities.Utilities):
 
         eType = event.type
         if eType.startswith("object:text-") or eType.endswith("accessible-name"):
-            return event.source.getRole() == pyatspi.ROLE_STATUS_BAR
+            try:
+                role = event.source.getRole()
+            except:
+                msg = "WEB: Exception getting role for %s" % event.source
+                debug.println(debug.LEVEL_INFO, msg)
+            else:
+                return role == pyatspi.ROLE_STATUS_BAR
 
         return False
 
