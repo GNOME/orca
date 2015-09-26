@@ -248,7 +248,14 @@ class EventManager:
 
         inputEvents = (input_event.KeyboardEvent, input_event.BrailleEvent)
         isObjectEvent = not isinstance(e, inputEvents)
-        if isObjectEvent and self._ignore(e):
+
+        try:
+            ignore = isObjectEvent and self._ignore(e)
+        except:
+            msg = 'ERROR: Exception evaluating event: %s' % e
+            debug.println(debug.LEVEL_INFO, msg)
+            ignore = True
+        if ignore:
             if debug.debugEventQueue:
                 self._enqueueCount -= 1
             return
