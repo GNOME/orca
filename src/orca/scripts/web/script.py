@@ -1275,6 +1275,17 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
+        try:
+            docIsBusy = document.getState().contains(pyatspi.STATE_BUSY)
+        except:
+            docIsBusy = False
+            msg = "WEB: Exception getting state of %s" % document
+            debug.println(debug.LEVEL_INFO, msg)
+        if docIsBusy:
+            msg = "WEB: Ignoring because %s is busy." % document
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
         if not event.any_data or self.utilities.isZombie(event.any_data):
             msg = "WEB: Ignoring because any data is null or zombified."
             debug.println(debug.LEVEL_INFO, msg)
