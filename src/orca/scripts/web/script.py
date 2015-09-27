@@ -1275,6 +1275,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
+        if self.utilities.isZombie(document):
+            msg = "WEB: Ignoring because %s is zombified." % document
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
         try:
             docIsBusy = document.getState().contains(pyatspi.STATE_BUSY)
         except:
@@ -1291,13 +1296,9 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
-        if not self.utilities.inDocumentContent(event.source):
-            msg = "WEB: Event source is not in document content"
-            debug.println(debug.LEVEL_INFO, msg)
-            return False
-
         obj, offset = self.utilities.getCaretContext()
-        if obj and self.utilities.isZombie(obj):
+        contextDocument = self.utilities.getDocumentForObject(obj)
+        if obj and document == contextDocument and self.utilities.isZombie(obj):
             replicant = self.utilities.findReplicant(event.source, obj)
             if replicant:
                 # Refrain from actually touching the replicant by grabbing
