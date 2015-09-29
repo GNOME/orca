@@ -918,7 +918,7 @@ msgstr "a elevado"
 #.
 #: ../src/orca/chnames.py:225
 msgid "left double angle bracket"
-msgstr "menor duplo"
+msgstr "menor duplo esquerdo"
 
 #. Translators: this is the spoken word for the character '¬' (U+00ac)
 #.
@@ -1020,7 +1020,7 @@ msgstr "o elevado"
 #.
 #: ../src/orca/chnames.py:289
 msgid "right double angle bracket"
-msgstr "maior duplo"
+msgstr "maior duplo direito"
 
 #. Translators: this is the spoken word for the character '¼' (U+00bc)
 #.
@@ -2690,7 +2690,7 @@ msgstr "Limpa os cabeçalhos de linhas dinâmicas."
 #. to the place where one enters formulas for a spreadsheet.
 #: ../src/orca/cmdnames.py:736
 msgid "Presents the contents of the input line."
-msgstr "Apresenta o conteúdo da linha de entrada."
+msgstr "Mostra o conteúdo da linha de entrada."
 
 #. Translators: the structural navigation keys are designed to move the caret
 #. around the document content by object type. Thus H moves you to the next
@@ -9159,7 +9159,7 @@ msgstr "parágrafo selecionado abaixo da posição do cursor"
 #. current location to the start of the paragraph by pressing Ctrl+Shift+UP.
 #: ../src/orca/messages.py:1376
 msgid "paragraph selected up from cursor position"
-msgstr "prágrafo selecionado acima da posição do cursor"
+msgstr "parágrafo selecionado acima da posição do cursor"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
