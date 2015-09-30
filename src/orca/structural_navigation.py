@@ -2189,9 +2189,10 @@ class StructuralNavigation:
 
     def _landmarkDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_LANDMARK]
+        columnHeaders.append(guilabels.SN_HEADER_ROLE)
 
         def rowData(obj):
-            return [self._getText(obj)]
+            return [self._getText(obj), self._getRoleName(obj)]
 
         return guilabels.SN_TITLE_LANDMARK, columnHeaders, rowData
 
