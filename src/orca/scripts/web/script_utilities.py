@@ -64,6 +64,7 @@ class Utilities(script_utilities.Utilities):
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
         self._isUselessImage = {}
+        self._isParentOfNullChild = {}
         self._inferredLabels = {}
         self._roleDescription = {}
         self._text = {}
@@ -103,6 +104,7 @@ class Utilities(script_utilities.Utilities):
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
         self._isUselessImage = {}
+        self._isParentOfNullChild = {}
         self._inferredLabels = {}
         self._roleDescription = {}
         self._tag = {}
@@ -2001,6 +2003,29 @@ class Utilities(script_utilities.Utilities):
         self._isUselessImage[hash(obj)] = rv
         return rv
 
+    def isParentOfNullChild(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isParentOfNullChild.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = False
+        try:
+            childCount = obj.childCount
+        except:
+            msg = "WEB: Exception getting childCount for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            childCount = 0
+        if childCount and obj[0] is None:
+            msg = "ERROR: %s reports %i children, but obj[0] is None" % (obj, childCount)
+            debug.println(debug.LEVEL_INFO, msg)
+            rv = True
+
+        self._isParentOfNullChild[hash(obj)] = rv
+        return rv
+
     def hasLongDesc(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -2276,7 +2301,7 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: Exception getting childCount for %s" % obj
             debug.println(debug.LEVEL_INFO, msg)
             return True
-        if not childCount:
+        if not childCount or self.isParentOfNullChild(obj):
             return True
 
         if self.isHidden(obj) or self.isOffScreenLabel(obj):
@@ -2433,7 +2458,7 @@ class Utilities(script_utilities.Utilities):
             elif not self.doNotDescendForCaret(obj) and obj.childCount:
                 return self.findNextCaretInOrder(obj[0], -1)
             elif offset < 0 and not self.isTextBlockElement(obj) and not self.hasNoSize(obj) \
-                 and not self.isUselessImage(obj):
+                 and not self.isUselessImage(obj) and not self.isParentOfNullChild(obj):
                 return obj, 0
 
         # If we're here, start looking up the the tree, up to the document.
@@ -2497,7 +2522,7 @@ class Utilities(script_utilities.Utilities):
             elif not self.doNotDescendForCaret(obj) and obj.childCount:
                 return self.findPreviousCaretInOrder(obj[obj.childCount - 1], -1)
             elif offset < 0 and not self.isTextBlockElement(obj) and not self.hasNoSize(obj) \
-                 and not self.isUselessImage(obj):
+                 and not self.isUselessImage(obj) and not self.isParentOfNullChild(obj):
                 return obj, 0
 
         # If we're here, start looking up the the tree, up to the document.
