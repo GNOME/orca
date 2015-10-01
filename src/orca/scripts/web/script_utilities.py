@@ -824,11 +824,13 @@ class Utilities(script_utilities.Utilities):
                 math = self.getMathAncestor(obj)
             return [[math, 0, 1, '']]
 
-        if obj.getRole() == pyatspi.ROLE_INTERNAL_FRAME and obj.childCount == 1:
+        role = obj.getRole()
+        if role == pyatspi.ROLE_INTERNAL_FRAME and obj.childCount == 1:
             return self._getContentsForObj(obj[0], 0, boundary)
 
         string, start, end = self._getTextAtOffset(obj, offset, boundary)
-        if not string:
+        # Check for ROLE_SECTION due to https://bugzilla.mozilla.org/show_bug.cgi?id=1210630
+        if not string or (self.isLandmark(obj) and role != pyatspi.ROLE_SECTION):
             return [[obj, start, end, string]]
 
         stringOffset = offset - start
