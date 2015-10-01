@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2015-09-23 12:06+0000\n"
-"PO-Revision-Date: 2015-09-27 17:12+0200\n"
+"POT-Creation-Date: 2015-09-29 12:08+0000\n"
+"PO-Revision-Date: 2015-09-29 22:50+0200\n"
 "Last-Translator: Марко М. Костић (Marko M. Kostić) <marko.m.kostic@gmail."
 "com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
@@ -1775,10 +1775,8 @@ msgstr "црни ромб"
 #. * http://en.wikipedia.org/wiki/Specials_(Unicode_block)
 #.
 #: ../src/orca/chnames.py:801
-#, fuzzy
-#| msgid "Goes to next character."
 msgid "object replacement character"
-msgstr "Иде на следећи знак."
+msgstr "заменско слово објекта"
 
 #. Translators: this command will move the mouse pointer to the current item
 #. without clicking on it.
@@ -2898,10 +2896,8 @@ msgstr "Иде на следећи орјентир."
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: ../src/orca/cmdnames.py:862
-#, fuzzy
-#| msgid "Displays a list of links."
 msgid "Displays a list of landmarks."
-msgstr "Приказује списак веза."
+msgstr "Приказује списак знаменитих објеката на страници."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
@@ -4277,10 +4273,9 @@ msgstr "_Активирај"
 #. If this setting is not enabled, the second press of "e" would continue to be
 #. a navigation command to move amongst entries.
 #: ../src/orca/guilabels.py:58
-#, fuzzy
-#| msgid "Enable _structural navigation"
 msgid "Automatic focus mode during structural navigation"
-msgstr "Укључи _структурно кретање"
+msgstr ""
+"Омогући аутоматски режим усредсређивања приликом кретања кроз структуру."
 
 #. Translators: Orca has a number of commands that override the default behavior
 #. within an application. For instance, if you are at the bottom of an entry and
@@ -4300,7 +4295,7 @@ msgstr "Укључи _структурно кретање"
 #. of the entry.
 #: ../src/orca/guilabels.py:76
 msgid "Automatic focus mode during caret navigation"
-msgstr ""
+msgstr "Аутоматски режим усредсређивања приликом кретања знака за уметање"
 
 #. Translators: A single braille cell on a refreshable braille display consists
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
@@ -4403,7 +4398,7 @@ msgstr "_Изговори назив причаонице"
 #. both for presentation and navigation.
 #: ../src/orca/guilabels.py:150
 msgid "Enable layout mode for content"
-msgstr ""
+msgstr "Омогући режим простирања садржаја"
 
 #. Translators: Orca's keybindings support double and triple "clicks" or key
 #. presses, similar to using a mouse. This string appears in Orca's preferences
@@ -4787,7 +4782,7 @@ msgstr "Поље за потврду"
 #: ../src/orca/guilabels.py:415
 msgctxt "structural navigation"
 msgid "Clickable"
-msgstr ""
+msgstr "Може се кликнути"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -4823,7 +4818,7 @@ msgstr "Заглавље"
 #: ../src/orca/guilabels.py:439
 msgctxt "structural navigation"
 msgid "Image"
-msgstr ""
+msgstr "Слика"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -4841,11 +4836,9 @@ msgstr "Натпис"
 #. tag attribute 'role' used to identify important part of webpage like banners,
 #. main context, search etc.
 #: ../src/orca/guilabels.py:453
-#, fuzzy
-#| msgid "trademark"
 msgctxt "structural navigation"
 msgid "Landmark"
-msgstr "заштитни знак"
+msgstr "Знаменитост"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -4996,12 +4989,9 @@ msgstr "Поља за потврду"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. "Clickables" are web elements which have an "onClick" handler.
 #: ../src/orca/guilabels.py:555
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Tables"
 msgctxt "structural navigation"
 msgid "Clickables"
-msgstr "Табеле"
+msgstr "Објекти на које се може кликнути"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5041,7 +5031,7 @@ msgstr "Заглавља"
 #: ../src/orca/guilabels.py:580
 msgctxt "structural navigation"
 msgid "Images"
-msgstr ""
+msgstr "Слике"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5059,11 +5049,9 @@ msgstr "Заглавље на %d. нивоу"
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
 #: ../src/orca/guilabels.py:593
-#, fuzzy
-#| msgid "trademark"
 msgctxt "structural navigation"
 msgid "Landmarks"
-msgstr "заштитни знак"
+msgstr "Знаменитости"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5218,7 +5206,7 @@ msgstr "Диспечер говора"
 #: ../src/orca/guilabels.py:695
 msgctxt "OptionGroup"
 msgid "Spell Check"
-msgstr ""
+msgstr "Провера правописа"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will spell out the current error in addition
@@ -5226,7 +5214,7 @@ msgstr ""
 #. setting would cause Orca to speak "f o o" after speaking "foo".
 #: ../src/orca/guilabels.py:701
 msgid "Spell _error"
-msgstr ""
+msgstr "Правописна гр_ешка"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will spell out the current suggestion in
@@ -5235,14 +5223,14 @@ msgstr ""
 #. "f o r" after speaking "for".
 #: ../src/orca/guilabels.py:708
 msgid "Spell _suggestion"
-msgstr ""
+msgstr "Правописни _савет"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will present the context (surrounding text,
 #. typically the sentence or line) in which the mistake occurred.
 #: ../src/orca/guilabels.py:713
 msgid "Present _context of error"
-msgstr ""
+msgstr "Прикажи _смисао грешке"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spread sheet cell. Coordinates are
@@ -7398,7 +7386,7 @@ msgstr "редни број"
 #: ../src/orca/mathsymbols.py:1912
 msgctxt "math symbol"
 msgid "image of"
-msgstr ""
+msgstr "слика симбола"
 
 #. Translators: this is the spoken representation for the character '⊸' (U+22b8)
 #: ../src/orca/mathsymbols.py:1915
@@ -8228,13 +8216,13 @@ msgstr "ОПЦИЈА"
 #. optional command-line arguments.
 #: ../src/orca/messages.py:170
 msgid "Optional arguments"
-msgstr ""
+msgstr "Необавезни аргументи"
 
 #. Translators: This string appears when using 'Orca -h' at the command line.
 #. It is followed by a brief list of Orca's optional command-line arguments.
 #: ../src/orca/messages.py:174
 msgid "Usage: "
-msgstr ""
+msgstr "Начин коришћења:"
 
 #. Translators: This message is displayed when the user starts Orca from the
 #. command line and includes an invalid option or argument. After the message,
@@ -8323,7 +8311,7 @@ msgstr "Мења тренутно покренути примерак овог �
 #. which lists all the available command line options.
 #: ../src/orca/messages.py:236
 msgid "Show this help message and exit"
-msgstr ""
+msgstr "Прикажи ову помоћну поруку и изађи"
 
 #. Translators: This is the description of command line option '--debug' which
 #. causes debugging output for Orca to be sent to a file. The YYYY-MM-DD-HH:MM:SS
@@ -9517,13 +9505,6 @@ msgstr "Режим за учење.  Притисните „Напусти“ �
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
 #: ../src/orca/messages.py:1125
-#, fuzzy
-#| msgid ""
-#| "Entering learn mode.  Press any key to hear its function.  To get a list "
-#| "of the screen reader's default shortcuts, press 1. To get a list of the "
-#| "screen reader's shortcuts for the current application, press 2. To view "
-#| "the screen reader's documentation, press F1. To exit learn mode, press "
-#| "the escape key."
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the "
 "screen reader's documentation, press F1. To get a list of the screen "
@@ -9532,10 +9513,10 @@ msgid ""
 "the escape key."
 msgstr ""
 "Улазим у режим за учење.  Притисните било који тастер да чујете његову "
-"функцију.  Да добавите списак основних пречица читача екрана, притисните 1. "
-"Да добавите списак пречица читача екрана за текући програм, притисните 2. Да "
-"прегледате документацију читача екрана, притисните Ф1. Да изађете из режима "
-"за учење, притисните тастер „Напусти“."
+"функцију.  Да видите документацију читача екрана, притисните F1. Да добавите "
+"списак подразумеваних пречица читача екрана, притисните F2. Да добавите "
+"списак пречица читача екрана за тренутни програм, притисните F3. Да изађете "
+"из режима за учење, притисните тастер „Esc“."
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -9843,7 +9824,7 @@ msgstr "Садржај је %s"
 #. This string is the message presented when Orca switches to browse mode.
 #: ../src/orca/messages.py:1363
 msgid "Browse mode"
-msgstr ""
+msgstr "Режим читања"
 
 #. Translators: Orca has a number of commands that override the default
 #. behavior within an application. For instance, on a web page, "h" moves
@@ -9860,7 +9841,7 @@ msgstr ""
 #. This string is the message presented when Orca switches to focus mode.
 #: ../src/orca/messages.py:1378
 msgid "Focus mode"
-msgstr ""
+msgstr "Режим усредсређивања"
 
 #. Translators: Orca has a number of commands that override the default
 #. behavior within an application. For instance, on a web page, "h" moves
@@ -9882,7 +9863,7 @@ msgstr ""
 #: ../src/orca/messages.py:1397
 #, python-format
 msgid "To enable focus mode press %s."
-msgstr ""
+msgstr "За укључивање режима усредсређивања, притисните %s."
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -9895,7 +9876,7 @@ msgstr ""
 #. This string is the message presented when Orca switches to sticky focus mode.
 #: ../src/orca/messages.py:1408
 msgid "Focus mode is sticky."
-msgstr ""
+msgstr "Режим усредсређивања је сада лепљив."
 
 #. Translators: Hovering the mouse over certain objects on a web page causes a
 #. new object to appear such as a pop-up menu. Orca has a command will move the
@@ -9974,10 +9955,8 @@ msgstr "Нема више великих објеката."
 #. elements which have an "onClick" action. This is a detailed message which
 #. will be presented to the user if no more clickable elements can be found.
 #: ../src/orca/messages.py:1465
-#, fuzzy
-#| msgid "No more tables."
 msgid "No more clickables."
-msgstr "Нема више табела."
+msgstr "Нема више објеката на које се може кликнути."
 
 #. Translators: This is for navigating document content by moving from combo
 #. box to combo box. This is a detailed message which will be presented to the
@@ -10020,10 +9999,8 @@ msgstr "Нема више заглавља на нивоу %d."
 #. to image. This is a detailed message which will be presented to the user
 #. if no more images can be found.
 #: ../src/orca/messages.py:1496
-#, fuzzy
-#| msgid "No more tables."
 msgid "No more images."
-msgstr "Нема више табела."
+msgstr "Нема више слика."
 
 #. Translators: this is for navigating to the previous ARIA role landmark.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
@@ -10422,14 +10399,12 @@ msgstr "тише."
 #. Translators: This string announces speech volume change.
 #: ../src/orca/messages.py:1771
 msgid "louder."
-msgstr ""
+msgstr "гласније."
 
 #. Translators: This string announces speech volume change.
 #: ../src/orca/messages.py:1774
-#, fuzzy
-#| msgid "faster."
 msgid "softer."
-msgstr "брже."
+msgstr "спорије."
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -10439,7 +10414,7 @@ msgstr "брже."
 #: ../src/orca/messages.py:1781
 msgctxt "Speech"
 msgid "Verbosity level: brief"
-msgstr ""
+msgstr "Ниво причљивости:  низак"
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -10449,7 +10424,7 @@ msgstr ""
 #: ../src/orca/messages.py:1788
 msgctxt "Speech"
 msgid "Verbosity level: verbose"
-msgstr ""
+msgstr "Ниво причљивости: висок"
 
 #. Translators: We replace the ellipses (both manual and UTF-8) with a spoken
 #. string. The extra space you see at the beginning is because we need the
@@ -10869,15 +10844,13 @@ msgstr[3] "Списак са %d ставком"
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #: ../src/orca/messages.py:2064
-#, fuzzy, python-format
-#| msgid "table with %d row"
-#| msgid_plural "table with %d rows"
+#, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
-msgstr[0] "табела има %d ред"
-msgstr[1] "табела има %d реда"
-msgstr[2] "табела има %d редова"
-msgstr[3] "табела има %d ред"
+msgstr[0] "математичка табела са %d пољем"
+msgstr[1] "математичка табела са %d поља"
+msgstr[2] "математичка табела са %d поља"
+msgstr[3] "математичка табела са %d пољем"
 
 #. Translators: this represents the number of columns in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
@@ -10899,15 +10872,13 @@ msgstr[3] "%d колона"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #: ../src/orca/messages.py:2079
-#, fuzzy, python-format
-#| msgid "table with %d row"
-#| msgid_plural "table with %d rows"
+#, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
-msgstr[0] "табела има %d ред"
-msgstr[1] "табела има %d реда"
-msgstr[2] "табела има %d редова"
-msgstr[3] "табела има %d ред"
+msgstr[0] "угнежђена математичка табела са %d редом"
+msgstr[1] "угнежђена математичка табела са %d реда"
+msgstr[2] "угнежђена математичка табела са %d реда"
+msgstr[3] "угнежђена математичка табела са %d редом"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
@@ -10949,10 +10920,10 @@ msgstr[3] "%d проценат документа је прочитан"
 #, python-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%d пиксел"
+msgstr[1] "%d пиксела"
+msgstr[2] "%d пиксела"
+msgstr[3] "%d пиксел"
 
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
@@ -11139,7 +11110,7 @@ msgstr "Панел иконица"
 #. which have an "onClick" action.
 #: ../src/orca/object_properties.py:85
 msgid "clickable"
-msgstr ""
+msgstr "може се кликнути"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
@@ -11158,11 +11129,8 @@ msgstr "раширено"
 #. Translators: This is a state which applies to elements in document content
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
 #: ../src/orca/object_properties.py:99
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Description"
 msgid "has long description"
-msgstr "Опис"
+msgstr "има опширан опис"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
@@ -11178,40 +11146,30 @@ msgstr "усправно"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:110
-#, fuzzy
-#| msgid "checked"
 msgctxt "checkbox"
 msgid "checked"
 msgstr "означено"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:113
-#, fuzzy
-#| msgid "not checked"
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "није означено"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:116
-#, fuzzy
-#| msgid "partially checked"
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "делимично означено"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:119
-#, fuzzy
-#| msgid "pressed"
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "притиснуто"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:122
-#, fuzzy
-#| msgid "not pressed"
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "није притиснуто"
@@ -11869,7 +11827,7 @@ msgstr "истачкавање првог плана"
 #: ../src/orca/text_attribute_names.py:119
 msgctxt "textattr"
 msgid "font effect"
-msgstr "ефекат словног линка"
+msgstr "ефекат фонта"
 
 #. Translators: this attribute specifies the indentation of the text
 #. (in pixels).
