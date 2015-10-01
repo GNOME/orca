@@ -2677,7 +2677,13 @@ class Utilities:
     def selectedChildren(self, obj):
         try:
             selection = obj.querySelection()
+        except NotImplementedError:
+            msg = "INFO: %s does not implement the selection interface" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return []
         except:
+            msg = "ERROR: Exception querying selection interface for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
             return []
 
         count = selection.nSelectedChildren

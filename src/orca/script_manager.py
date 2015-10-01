@@ -128,8 +128,7 @@ class ScriptManager:
             try:
                 attributes = obj.getAttributes()
             except (LookupError, RuntimeError):
-                debug.println(debug.LEVEL_FINEST,
-                              "_toolkitForObject: %s no longer exists" % obj)
+                pass
             else:
                 attrs = dict([attr.split(':', 1) for attr in attributes])
                 name = attrs.get('toolkit', '')

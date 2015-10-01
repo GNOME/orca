@@ -231,7 +231,7 @@ class Generator:
             debug.println(debug.LEVEL_ALL, "\nPREPARATION TIME: %s" % duration)
             debug.println(
                 debug.LEVEL_ALL,
-                "generate %s for %s %s (args=%s) using '%s'" \
+                "generate %s for %s %s\n(args=%s)\nusing '%s'" \
                 % (self._mode,
                    args['formatType'], 
                    details,

@@ -359,9 +359,14 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
         rel_string = ''
 
     try:
-        string += "name='%s' role='%s' state='%s' relations='%s'" \
+        iface_string = " ".join(pyatspi.utils.listInterfaces(acc))
+    except:
+        iface_string = "(exception calling listInterfaces)"
+
+    try:
+        string += "name='%s' role='%s' state='%s' relations='%s' interfaces='%s'" \
                   % (acc.name or 'None', acc.getRoleName(),
-                     state_string, rel_string)
+                     state_string, rel_string, iface_string)
     except:
         string += "(exception fetching data)"
 
