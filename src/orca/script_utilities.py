@@ -1558,7 +1558,6 @@ class Utilities:
         allLabels = pyatspi.findAllDescendants(root, hasRole)
         try:
             labels = [x for x in allLabels if not x.getRelationSet()]
-            labels = [x for x in labels if x.parent and x.name != x.parent.name]
             if onlyShowing:
                 labels = [x for x in labels if x.getState().contains(pyatspi.STATE_SHOWING)]
         except:
@@ -1567,7 +1566,7 @@ class Utilities:
         # Eliminate duplicates
         d = {}
         for label in labels:
-            if label.name == root.name:
+            if label.name and label.name in [root.name, label.parent.name]:
                 continue
             d[label.name] = label
         labels = list(d.values())
