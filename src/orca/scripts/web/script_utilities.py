@@ -2495,7 +2495,7 @@ class Utilities(script_utilities.Utilities):
                 msg = "WEB: Exception getting childCount for %s" % parent
                 debug.println(debug.LEVEL_INFO, msg)
             else:
-                if 0 <= index < parentChildCount:
+                if 0 < index < parentChildCount:
                     return self.findNextCaretInOrder(parent[index], -1)
             obj = parent
 
