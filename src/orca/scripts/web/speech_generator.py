@@ -143,7 +143,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         if self._script.utilities.inDocumentContent(obj) and obj.name:
-            return self._generateName(obj, **args)
+            result = [obj.name]
+            result.extend(self.voice(speech_generator.DEFAULT))
+            return result
 
         return super()._generateLabelOrName(obj, **args)
 

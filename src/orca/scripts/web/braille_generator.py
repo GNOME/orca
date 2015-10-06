@@ -106,7 +106,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             return []
 
         if self._script.utilities.inDocumentContent(obj) and obj.name:
-            return self._generateName(obj, **args)
+            return [obj.name]
 
         return super()._generateLabelOrName(obj, **args)
 

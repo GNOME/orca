@@ -414,8 +414,8 @@ formatting = {
             },
         pyatspi.ROLE_TOGGLE_BUTTON: {
             'focused': 'expandableState or toggleState',
-            'unfocused': 'labelAndName + roleName + (expandableState or toggleState) + availability + ' + MNEMONIC + ' + accelerator',
-            'basicWhereAmI': 'labelAndName + roleName + (expandableState or toggleState)'
+            'unfocused': 'labelOrName + roleName + (expandableState or toggleState) + availability + ' + MNEMONIC + ' + accelerator',
+            'basicWhereAmI': 'labelOrName + roleName + (expandableState or toggleState)'
             },
         pyatspi.ROLE_TOOL_TIP: {
             'unfocused': 'labelAndName',
