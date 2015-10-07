@@ -94,6 +94,11 @@ class LabelInference:
             result = result.strip()
             result = result.replace("\n", " ")
 
+        # Desperate times call for desperate measures....
+        if not result:
+            result, objects = self.inferFromTextLeft(obj, proximity=200)
+            debug.println(debug.LEVEL_FINE, "INFER - Text Left with proximity of 200: %s" % result)
+
         self.clearCache()
         return result, objects
 
