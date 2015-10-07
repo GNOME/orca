@@ -2169,6 +2169,38 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
+    def eventIsChromeAutocompleteNoise(self, event):
+        if self.inDocumentContent(event.source):
+            return False
+
+        selection = ["object:selection-changed", "object:state-changed:selected"]
+        if not event.type in selection:
+            return False
+
+        try:
+            focusRole = orca_state.locusOfFocus.getRole()
+            focusState = orca_state.locusOfFocus.getState()
+        except:
+            msg = "WEB: Exception getting role and state for %s" % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+
+        try:
+            role = event.source.getRole()
+        except:
+            msg = "WEB: Exception getting role for %s" % event.source
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+
+        if role in [pyatspi.ROLE_MENU, pyatspi.ROLE_MENU_ITEM] \
+           and focusRole == pyatspi.ROLE_ENTRY \
+           and focusState.contains(pyatspi.STATE_FOCUSED):
+            lastKey, mods = self.lastKeyAndModifiers()
+            if lastKey not in ["Down", "Up"]:
+                return True
+
+        return False
+
     def textEventIsDueToInsertion(self, event):
         if not event.type.startswith("object:text-"):
             return False

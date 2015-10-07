@@ -1444,8 +1444,33 @@ class Script(default.Script):
 
         return True
 
+    def onSelectedChanged(self, event):
+        """Callback for object:state-changed:selected accessibility events."""
+
+        if self.utilities.eventIsChromeAutocompleteNoise(event):
+            msg = "WEB: Ignoring event believed to be chrome autocomplete noise"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        if not self.utilities.inDocumentContent(event.source):
+            msg = "WEB: Event source is not in document content"
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+
+        if orca_state.locusOfFocus != event.source:
+            msg = "WEB: Ignoring because event source is not locusOfFocus"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        return False
+
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
+
+        if self.utilities.eventIsChromeAutocompleteNoise(event):
+            msg = "WEB: Ignoring event believed to be chrome autocomplete noise"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
