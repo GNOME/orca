@@ -1873,6 +1873,21 @@ class Utilities(script_utilities.Utilities):
         self._isAnchor[hash(obj)] = rv
         return rv
 
+    def isChromeAlert(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_ALERT):
+            return False
+
+        if self.inDocumentContent(obj):
+            return False
+
+        return True
+
+    def isTopLevelChromeAlert(self, obj):
+        if not self.isChromeAlert(obj):
+            return False
+
+        return obj.parent.getRole() == pyatspi.ROLE_FRAME
+
     def isClickableElement(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
