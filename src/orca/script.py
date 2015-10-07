@@ -402,6 +402,12 @@ class Script:
         elif event.type.endswith("system") and event.source == cachedEvent.source:
             skip = True
             reason = "more recent system event in the same object"
+        elif event.type.startswith("object:state-changed") \
+             and event.type == cachedEvent.type \
+             and event.source == cachedEvent.source \
+             and event.detail1 == cachedEvent.detail1:
+            skip = True
+            reason = "appears to be duplicate state-changed event"
 
         if skip:
             debug.println(debug.LEVEL_FINE,
