@@ -258,7 +258,7 @@ sequence.append(utils.AssertPresentationAction(
     "27. Tab to the toggle me off button",
     ["BRAILLE LINE:  '&=y Toggle me off toggle button'",
      "     VISIBLE:  '&=y Toggle me off toggle button', cursor=1",
-     "SPEECH OUTPUT: 'Toggle me off  toggle button pressed'"]))
+     "SPEECH OUTPUT: 'Toggle me off toggle button pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("space"))
@@ -280,8 +280,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "30. Tab to the toggle me button",
-    ["BRAILLE LINE:  '&=y toggle button'",
-     "     VISIBLE:  '&=y toggle button', cursor=1",
+    ["BRAILLE LINE:  'Toggle me  push button'",
+     "     VISIBLE:  'Toggle me  push button', cursor=1",
      "SPEECH OUTPUT: 'Toggle me  push button'"]))
 
 sequence.append(utils.StartRecordingAction())

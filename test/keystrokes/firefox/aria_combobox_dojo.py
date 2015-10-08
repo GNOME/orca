@@ -43,7 +43,6 @@ sequence.append(utils.AssertPresentationAction(
     "3. Down Arrow",
     ["BRAILLE LINE:  'C alifornia (CA)'",
      "     VISIBLE:  'C alifornia (CA)', cursor=1",
-     "SPEECH OUTPUT: 'California menu'",
      "SPEECH OUTPUT: 'C alifornia (CA).'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -100,7 +99,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Basic Where Am I - Combo box expanded",
     ["BRAILLE LINE:  'C alifornia (CA)'",
      "     VISIBLE:  'C alifornia (CA)', cursor=1",
-     "SPEECH OUTPUT: 'California menu'",
+     "SPEECH OUTPUT: 'expanded'",
      "SPEECH OUTPUT: 'C alifornia (CA).'",
      "SPEECH OUTPUT: '1 of 3'"]))
 

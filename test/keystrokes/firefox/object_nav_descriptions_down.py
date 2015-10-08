@@ -14,6 +14,7 @@ sequence.append(WaitForDocLoad())
 sequence.append(KeyComboAction("<Control>r"))
 
 sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

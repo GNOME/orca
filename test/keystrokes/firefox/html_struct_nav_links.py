@@ -68,12 +68,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("u"))
 sequence.append(utils.AssertPresentationAction(
     "6. u to textattributes.html link",
-    ["BRAILLE LINE:  'tables.html'",
-     "     VISIBLE:  'tables.html', cursor=1",
-     "BRAILLE LINE:  'textattributes.html'",
+    ["BRAILLE LINE:  'textattributes.html'",
      "     VISIBLE:  'textattributes.html', cursor=1",
-     "BRAILLE LINE:  '• textattributes.html'",
-     "     VISIBLE:  '• textattributes.html', cursor=3",
      "SPEECH OUTPUT: 'textattributes.html link.'"]))
 
 sequence.append(utils.StartRecordingAction())

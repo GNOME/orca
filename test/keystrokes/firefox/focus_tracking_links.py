@@ -23,9 +23,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down to the Foo link",
-    ["BRAILLE LINE:  'Foo'",
+    ["KNOWN ISSUE: We're double-presenting this due to the caret-moved event",
+     "BRAILLE LINE:  'Foo'",
      "     VISIBLE:  'Foo', cursor=1",
-     "SPEECH OUTPUT: 'Foo link.'"]))
+     "BRAILLE LINE:  'Foo'",
+     "     VISIBLE:  'Foo', cursor=1",
+     "SPEECH OUTPUT: 'Foo link.'",
+     "SPEECH OUTPUT: 'Foo'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

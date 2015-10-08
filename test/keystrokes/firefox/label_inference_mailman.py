@@ -8,6 +8,7 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Control>Home"))
 
 sequence.append(utils.StartRecordingAction())
@@ -138,9 +139,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "13. Next form field",
-    ["BRAILLE LINE:  'your subscription email address:  $l'",
-     "     VISIBLE:  'ur subscription email address:  ', cursor=32",
-     "SPEECH OUTPUT: 'your subscription email address: entry'"]))
+    ["BRAILLE LINE:  'subscription email address:  $l'",
+     "     VISIBLE:  'subscription email address:  $l', cursor=29",
+     "SPEECH OUTPUT: 'subscription email address: entry'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

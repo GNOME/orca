@@ -51,9 +51,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "5. Decrement first slider",
-    ["BRAILLE LINE:  'slider 1 10.0[0-9]+ slider'",
-     "     VISIBLE:  'slider 1 10.0[0-9]+ slid', cursor=1",
-     "SPEECH OUTPUT: '10.0[0-9]+'"]))
+    ["BRAILLE LINE:  'slider 1 10 slider'",
+     "     VISIBLE:  'slider 1 10 slider', cursor=1",
+     "SPEECH OUTPUT: '10'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

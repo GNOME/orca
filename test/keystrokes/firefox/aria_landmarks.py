@@ -47,9 +47,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("m"))
 sequence.append(utils.AssertPresentationAction(
     "5. m to next landmark",
-    ["BRAILLE LINE:  'form'",
-     "     VISIBLE:  'form', cursor=1",
-     "SPEECH OUTPUT: 'form'"]))
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=1",
+     "SPEECH OUTPUT: 'form '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("m"))
@@ -101,9 +101,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>m"))
 sequence.append(utils.AssertPresentationAction(
     "11. Shift+m to previous landmark",
-    ["BRAILLE LINE:  'form'",
-     "     VISIBLE:  'form', cursor=1",
-     "SPEECH OUTPUT: 'form'"]))
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=1",
+     "SPEECH OUTPUT: 'form '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>m"))

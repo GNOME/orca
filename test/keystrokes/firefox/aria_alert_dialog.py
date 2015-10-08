@@ -50,13 +50,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "5. Close Alert",
-    ["BRAILLE LINE:  '12 12 $l'",
-     "     VISIBLE:  '12 12 $l', cursor=6",
+    ["BRAILLE LINE:  'Guess a number between 1 and 10 12 $l'",
+     "     VISIBLE:  'ss a number between 1 and 10 12 ', cursor=32",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "BRAILLE LINE:  '12 12 $l'",
-     "     VISIBLE:  '12 12 $l', cursor=6",
-     "SPEECH OUTPUT: '12 entry 12 selected'",
+     "BRAILLE LINE:  'Guess a number between 1 and 10 12 $l'",
+     "     VISIBLE:  'ss a number between 1 and 10 12 ', cursor=32",
+     "SPEECH OUTPUT: 'Guess a number between 1 and 10 entry 12 selected'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.AssertionSummaryAction())
