@@ -1114,12 +1114,6 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return False
 
-        if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
-            msg = "WEB: Event ignored: locusOfFocus (%s) is not in document content" \
-                  % orca_state.locusOfFocus
-            debug.println(debug.LEVEL_INFO, msg)
-            return True
-
         if self._lastCommandWasCaretNav:
             msg = "WEB: Event ignored: Last command was caret nav"
             debug.println(debug.LEVEL_INFO, msg)
