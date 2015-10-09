@@ -49,9 +49,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Down",
-    ["BRAILLE LINE:  'Orca are versatile and opportunistic predators. Some populations feed mostly on fish, and other populations'",
+    ["BRAILLE LINE:  'Orca are versatile and opportunistic predators. Some populations feed mostly on fish, and other populations hunt'",
      "     VISIBLE:  'Orca are versatile and opportuni', cursor=1",
-     "SPEECH OUTPUT: 'Orca are versatile and opportunistic predators. Some populations feed mostly on fish, and other populations'"]))
+     "SPEECH OUTPUT: 'Orca are versatile and opportunistic predators. Some populations feed mostly on fish, and other populations hunt'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

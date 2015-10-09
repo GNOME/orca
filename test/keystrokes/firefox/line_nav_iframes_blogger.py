@@ -9,12 +9,14 @@ sequence = MacroSequence()
 
 sequence.append(WaitForDocLoad())
 
+sequence.append(KeyComboAction("<Control>Home"))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("e"))
 sequence.append(utils.AssertPresentationAction(
     "1. E for next entry",
     ["BRAILLE LINE:  'Search  $l'",
-     "     VISIBLE:  'Search  $l', cursor=0",
+     "     VISIBLE:  'Search  $l', cursor=8",
      "SPEECH OUTPUT: 'Search entry'"]))
 
 sequence.append(utils.StartRecordingAction())

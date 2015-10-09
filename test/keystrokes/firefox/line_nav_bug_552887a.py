@@ -59,7 +59,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
     ["BRAILLE LINE:  'Can an Orca really'",
      "     VISIBLE:  'Can an Orca really', cursor=1",
-     "SPEECH OUTPUT: 'link Can an Orca really'"]))
+     "SPEECH OUTPUT: 'Can an Orca really link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -67,7 +67,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
     ["BRAILLE LINE:  'hold a white cane?'",
      "     VISIBLE:  'hold a white cane?', cursor=1",
-     "SPEECH OUTPUT: 'link hold a white cane?'"]))
+     "SPEECH OUTPUT: 'hold a white cane? link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -75,7 +75,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["BRAILLE LINE:  '\(And why aren't we'",
      "     VISIBLE:  '\(And why aren't we', cursor=1",
-     "SPEECH OUTPUT: 'link \(And why aren't we'"]))
+     "SPEECH OUTPUT: '\(And why aren't we link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -83,7 +83,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Line Down",
     ["BRAILLE LINE:  'speaking this text?'",
      "     VISIBLE:  'speaking this text?', cursor=1",
-     "SPEECH OUTPUT: 'link speaking this text?'"]))
+     "SPEECH OUTPUT: 'speaking this text? link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -179,7 +179,7 @@ sequence.append(utils.AssertPresentationAction(
     "21. Line Up",
     ["BRAILLE LINE:  'speaking this text?'",
      "     VISIBLE:  'speaking this text?', cursor=1",
-     "SPEECH OUTPUT: 'link speaking this text?'"]))
+     "SPEECH OUTPUT: 'speaking this text? link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -187,7 +187,7 @@ sequence.append(utils.AssertPresentationAction(
     "22. Line Up",
     ["BRAILLE LINE:  '\(And why aren't we'",
      "     VISIBLE:  '\(And why aren't we', cursor=1",
-     "SPEECH OUTPUT: 'link \(And why aren't we'"]))
+     "SPEECH OUTPUT: '\(And why aren't we link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -195,7 +195,7 @@ sequence.append(utils.AssertPresentationAction(
     "23. Line Up",
     ["BRAILLE LINE:  'hold a white cane?'",
      "     VISIBLE:  'hold a white cane?', cursor=1",
-     "SPEECH OUTPUT: 'link hold a white cane?'"]))
+     "SPEECH OUTPUT: 'hold a white cane? link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -203,7 +203,7 @@ sequence.append(utils.AssertPresentationAction(
     "24. Line Up",
     ["BRAILLE LINE:  'Can an Orca really'",
      "     VISIBLE:  'Can an Orca really', cursor=1",
-     "SPEECH OUTPUT: 'link Can an Orca really'"]))
+     "SPEECH OUTPUT: 'Can an Orca really link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

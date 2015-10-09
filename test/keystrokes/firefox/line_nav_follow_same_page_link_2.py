@@ -8,16 +8,13 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(WaitForDocLoad())
-
-# Work around some new quirk in Gecko that causes this test to fail if
-# run via the test harness rather than manually.
-sequence.append(KeyComboAction("<Control>r"))
-sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Control>Home"))
-for i in range(25):
+sequence.append(KeyComboAction("H"))
+sequence.append(KeyComboAction("H"))
+for i in range(5):
     sequence.append(KeyComboAction("Tab"))
+    sequence.append(PauseAction(1000))
 
-sequence.append(PauseAction(5000))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(

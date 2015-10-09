@@ -17,11 +17,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
-    ["BRAILLE LINE:  'Click here to publicly \+1 this. push button '",
-     "     VISIBLE:  'Click here to publicly \+1 this. ', cursor=1",
-     "BRAILLE LINE:  'Click here to publicly \+1 this. push button [0-9]+'",
-     "     VISIBLE:  'Click here to publicly \+1 this. ', cursor=1",
-     "SPEECH OUTPUT: 'Click here to publicly \+1 this. push button'",
+    ["BRAILLE LINE:  '\+1 push button [0-9]+'",
+     "     VISIBLE:  '\+1 push button [0-9]+', cursor=1",
+     "SPEECH OUTPUT: '\+1 push button'",
      "SPEECH OUTPUT: '[0-9]+'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -36,9 +34,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "3. Top of file",
-    ["BRAILLE LINE:  'Click here to publicly \+1 this. push button [0-9]+'",
-     "     VISIBLE:  'Click here to publicly \+1 this. ', cursor=1",
-     "SPEECH OUTPUT: 'Click here to publicly \+1 this. push button'",
+    ["BRAILLE LINE:  '\+1 push button [0-9]+'",
+     "     VISIBLE:  '\+1 push button [0-9]+', cursor=1",
+     "SPEECH OUTPUT: '\+1 push button'",
      "SPEECH OUTPUT: '[0-9]+'"]))
 
 sequence.append(utils.StartRecordingAction())

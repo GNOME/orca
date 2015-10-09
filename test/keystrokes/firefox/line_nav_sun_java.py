@@ -32,7 +32,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Home Page Sun Developer Network'",
      "     VISIBLE:  'Home Page Sun Developer Network', cursor=1",
      "SPEECH OUTPUT: 'Home Page link.'",
-     "SPEECH OUTPUT: 'link Sun Developer Network'"]))
+     "SPEECH OUTPUT: 'Sun Developer Network link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
