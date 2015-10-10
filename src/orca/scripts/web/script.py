@@ -1020,11 +1020,6 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return False
 
-        if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
-            msg = "WEB: Ignoring: Locus of focus is not in document content"
-            debug.println(debug.LEVEL_INFO, msg)
-            return True
-
         if self.utilities.getDocumentForObject(event.source.parent):
             msg = "WEB: Ignoring: Event source is nested document"
             debug.println(debug.LEVEL_INFO, msg)
