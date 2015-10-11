@@ -141,16 +141,21 @@ class Utilities(script_utilities.Utilities):
 
         def isDocument(x):
             try:
-                return x and x.getRole() in roles
+                return x.getRole() in roles
             except:
                 msg = "WEB: Exception getting role for %s" % x
                 debug.println(debug.LEVEL_INFO, msg)
                 return False
 
         if isDocument(obj):
+            msg = "WEB: %s is document" % obj
+            debug.println(debug.LEVEL_INFO, msg)
             return obj
 
-        return pyatspi.findAncestor(obj, isDocument)
+        document = pyatspi.findAncestor(obj, isDocument)
+        msg = "WEB: Document for %s is %s" % (obj, document)
+        debug.println(debug.LEVEL_INFO, msg)
+        return document
 
     def _getDocumentsEmbeddedBy(self, frame):
         isEmbeds = lambda r: r.getRelationType() == pyatspi.RELATION_EMBEDS

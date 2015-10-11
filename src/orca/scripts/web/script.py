@@ -1015,6 +1015,11 @@ class Script(default.Script):
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
+        if event.detail1 and self._loadingDocumentContent:
+            msg = "WEB: Ignoring: Already loading document content"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
             debug.println(debug.LEVEL_INFO, msg)
@@ -1022,11 +1027,6 @@ class Script(default.Script):
 
         if self.utilities.getDocumentForObject(event.source.parent):
             msg = "WEB: Ignoring: Event source is nested document"
-            debug.println(debug.LEVEL_INFO, msg)
-            return True
-
-        if event.detail1 and self._loadingDocumentContent:
-            msg = "WEB: Ignoring: Already loading document content"
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
