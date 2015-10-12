@@ -1695,6 +1695,9 @@ class Utilities(script_utilities.Utilities):
 
             return True
 
+        if len(contents) == 1:
+            return contents
+
         return list(filter(_include, contents))
 
     def needsSeparator(self, lastChar, nextChar):
