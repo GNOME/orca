@@ -2011,7 +2011,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = True
-        if obj.getRole() != pyatspi.ROLE_IMAGE:
+        if obj.getRole() not in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_CANVAS]:
             rv = False
         if rv and (obj.name or obj.description or obj.childCount):
             rv = False
@@ -2029,6 +2029,8 @@ class Utilities(script_utilities.Utilities):
                 width, height = image.getImageSize()
                 if width > 25 and height > 25:
                     rv = False
+        if rv and 'Text' in pyatspi.listInterfaces(obj):
+            rv = self.queryNonEmptyText(obj) is None
 
         self._isUselessImage[hash(obj)] = rv
         return rv
