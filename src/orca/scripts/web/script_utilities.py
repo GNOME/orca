@@ -120,9 +120,24 @@ class Utilities(script_utilities.Utilities):
         self._currentAttrs = {}
         self._text = {}
 
+    def isDocument(self, obj):
+        roles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB, pyatspi.ROLE_EMBEDDED]
+
+        try:
+            rv = obj.getRole() in roles
+        except:
+            msg = "WEB: Exception getting role for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            rv = False
+
+        return rv
+
     def inDocumentContent(self, obj=None):
         if not obj:
             obj = orca_state.locusOfFocus
+
+        if self.isDocument(obj):
+            return True
 
         rv = self._inDocumentContent.get(hash(obj))
         if rv is not None:
@@ -137,22 +152,12 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return None
 
-        roles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB, pyatspi.ROLE_EMBEDDED]
-
-        def isDocument(x):
-            try:
-                return x.getRole() in roles
-            except:
-                msg = "WEB: Exception getting role for %s" % x
-                debug.println(debug.LEVEL_INFO, msg)
-                return False
-
-        if isDocument(obj):
+        if self.isDocument(obj):
             msg = "WEB: %s is document" % obj
             debug.println(debug.LEVEL_INFO, msg)
             return obj
 
-        document = pyatspi.findAncestor(obj, isDocument)
+        document = pyatspi.findAncestor(obj, self.isDocument)
         msg = "WEB: Document for %s is %s" % (obj, document)
         debug.println(debug.LEVEL_INFO, msg)
         return document

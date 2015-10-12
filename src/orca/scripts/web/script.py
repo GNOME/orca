@@ -1249,7 +1249,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             self.structuralNavigation.clearCache(document)
         else:
-            msg = "WEB: Event source is not in document content"
+            msg = "WEB: Could not get document for event source"
             debug.println(debug.LEVEL_INFO, msg)
             return False
 
