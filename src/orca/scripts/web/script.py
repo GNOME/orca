@@ -1078,7 +1078,7 @@ class Script(default.Script):
             return True
 
         self.updateBraille(obj)
-        if state.contains(pyatspi.STATE_FOCUSABLE):
+        if state.contains(pyatspi.STATE_FOCUSABLE) and not self.utilities.isDocument(obj):
             msg = "WEB: Not doing SayAll due to focusable context obj %s" % obj
             debug.println(debug.LEVEL_INFO, msg)
             speech.speak(self.speechGenerator.generateSpeech(obj))
