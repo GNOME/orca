@@ -645,13 +645,14 @@ class Utilities(script_utilities.Utilities):
         if not self.isLiveRegion(obj):
             doNotQuery = [pyatspi.ROLE_TABLE_ROW,
                           pyatspi.ROLE_TOOL_BAR]
-            if rv and obj.getRole() in doNotQuery:
+            role = obj.getRole()
+            if rv and role in doNotQuery:
                 rv = None
             if rv and excludeNonEntryTextWidgets and self.isNonEntryTextWidget(obj):
                 rv = None
             if rv and (self.isHidden(obj) or self.isOffScreenLabel(obj)):
                 rv = None
-            if rv and self.isLink(obj) and self.hasUselessCanvasDescendant(obj):
+            if rv and role == pyatspi.ROLE_LINK and self.hasUselessCanvasDescendant(obj):
                 rv = None
 
         self._text[hash(obj)] = rv
@@ -2406,7 +2407,8 @@ class Utilities(script_utilities.Utilities):
         if self.isHidden(obj) or self.isOffScreenLabel(obj):
             return True
 
-        if self.isLink(obj) and self.hasUselessCanvasDescendant(obj):
+        role = obj.getRole()
+        if role == pyatspi.ROLE_LINK and self.hasUselessCanvasDescendant(obj):
             return True
 
         if self.isTextBlockElement(obj):
@@ -2423,7 +2425,7 @@ class Utilities(script_utilities.Utilities):
                         pyatspi.ROLE_TOOL_TIP,
                         pyatspi.ROLE_TREE,
                         pyatspi.ROLE_TREE_TABLE]
-        return obj.getRole() in doNotDescend
+        return role in doNotDescend
 
     def _searchForCaretContext(self, obj):
         contextObj, contextOffset = None, -1
