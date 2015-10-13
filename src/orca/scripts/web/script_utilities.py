@@ -630,6 +630,9 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def queryNonEmptyText(self, obj, excludeNonEntryTextWidgets=True):
+        if not obj:
+            return None
+
         if hash(obj) in self._text:
             return self._text.get(hash(obj))
 
