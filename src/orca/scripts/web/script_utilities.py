@@ -56,6 +56,7 @@ class Utilities(script_utilities.Utilities):
         self._isOffScreenLabel = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
+        self._hasUselessCanvasDescendant = {}
         self._isClickableElement = {}
         self._isAnchor = {}
         self._isLandmark = {}
@@ -96,6 +97,7 @@ class Utilities(script_utilities.Utilities):
         self._isOffScreenLabel = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
+        self._hasUselessCanvasDescendant = {}
         self._isClickableElement = {}
         self._isAnchor = {}
         self._isLandmark = {}
@@ -648,6 +650,8 @@ class Utilities(script_utilities.Utilities):
             if rv and excludeNonEntryTextWidgets and self.isNonEntryTextWidget(obj):
                 rv = None
             if rv and (self.isHidden(obj) or self.isOffScreenLabel(obj)):
+                rv = None
+            if rv and self.isLink(obj) and self.hasUselessCanvasDescendant(obj):
                 rv = None
 
         self._text[hash(obj)] = rv
@@ -2002,6 +2006,27 @@ class Utilities(script_utilities.Utilities):
         self._isNonNavigablePopup[hash(obj)] = rv
         return rv
 
+    def hasUselessCanvasDescendant(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._hasUselessCanvasDescendant.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        isCanvas = lambda x: x and x.getRole() == pyatspi.ROLE_CANVAS
+        try:
+            canvases = pyatspi.findAllDescendants(obj, isCanvas)
+        except:
+            msg = "WEB: Exception getting descendant canvases of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            rv = False
+        else:
+            rv = len(list(filter(self.isUselessImage, canvases))) > 0
+
+        self._hasUselessCanvasDescendant[hash(obj)] = rv
+        return rv
+
     def isUselessImage(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -2369,6 +2394,9 @@ class Utilities(script_utilities.Utilities):
             return True
 
         if self.isHidden(obj) or self.isOffScreenLabel(obj):
+            return True
+
+        if self.isLink(obj) and self.hasUselessCanvasDescendant(obj):
             return True
 
         if self.isTextBlockElement(obj):
