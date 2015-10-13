@@ -109,6 +109,7 @@ class Utilities(script_utilities.Utilities):
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
         self._roleDescription = {}
+        self._text = {}
         self._tag = {}
         self._treatAsDiv = {}
         self._cleanupContexts()
@@ -120,7 +121,6 @@ class Utilities(script_utilities.Utilities):
         self._currentWordContents = None
         self._currentCharacterContents = None
         self._currentAttrs = {}
-        self._text = {}
 
     def isDocument(self, obj):
         roles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB, pyatspi.ROLE_EMBEDDED]
