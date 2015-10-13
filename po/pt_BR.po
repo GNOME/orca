@@ -7,7 +7,7 @@
 # Leonardo Ferreira Fontenelle <leonardof@gnome.org>, 2007-2009.
 # Og Maciel <ogmaciel@gnome.org>, 2007, 2009.
 # Djavan Fagundes <djavanf@gnome.org>, 2007, 2010.
-# Tiago Melo Casal <tiagocasal@yahoo.com.br>, 2007-2009.
+# Tiago Melo Casal <tcasal@intervox.nce.ufrj.br>, 2007-2009, 2015.
 # Michel Recondo <mrecondo@gmail.com>, 2008.
 # André Gondim <In Memoriam> 2009.
 # Jonh Wendell <jwendell@gnome.org>, 2009.
@@ -25,10 +25,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2015-09-19 18:04+0000\n"
-"PO-Revision-Date: 2015-09-20 15:58-0300\n"
-"Last-Translator: Raniere Gaia <raniere@ime.unicamp.br>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=orca&keywords=I18N+L10N&component=i18n\n"
+"POT-Creation-Date: 2015-10-11 12:22+0000\n"
+"PO-Revision-Date: 2015-10-11 21:58-0300\n"
+"Last-Translator: Tiago Melo Casal <tcasal@intervox.nce.ufrj.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -46,8 +47,12 @@ msgid "Orca Screen Reader"
 msgstr "Leitor de tela Orca"
 
 #: ../orca.desktop.in.h:3
-msgid "Provide access to graphical desktop environments via synthesized speech and/or refreshable braille"
-msgstr "Proporciona o acesso a ambientes gráficos de área de trabalho através de voz sintetizada e/ou Braille atualizável"
+msgid ""
+"Provide access to graphical desktop environments via synthesized speech and/"
+"or refreshable braille"
+msgstr ""
+"Proporciona o acesso a ambientes gráficos de área de trabalho através de voz "
+"sintetizada e/ou Braille atualizável"
 
 #: ../orca.desktop.in.h:4
 msgid "screen reader;speech;braille;"
@@ -2430,7 +2435,8 @@ msgstr "Lê e mostra no Braille uma mensagem anterior de sala de bate-papo."
 #. is associated with the command to toggle typing status presentation on or off.
 #: ../src/orca/cmdnames.py:527
 msgid "Toggle whether we announce when our buddies are typing."
-msgstr "Alterna entre anunciarmos ou não quando nossos amigos estiverem digitando."
+msgstr ""
+"Alterna entre anunciarmos ou não quando nossos amigos estiverem digitando."
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. Some users prefer to have this message history combined
@@ -2441,7 +2447,9 @@ msgstr "Alterna entre anunciarmos ou não quando nossos amigos estiverem digitan
 #. or off.
 #: ../src/orca/cmdnames.py:537
 msgid "Toggle whether we provide chat room specific message histories."
-msgstr "Alterna entre fornecer ou não históricos de mensagens específicos para cada sala de bate-papo."
+msgstr ""
+"Alterna entre fornecer ou não históricos de mensagens específicos para cada "
+"sala de bate-papo."
 
 #. Translators: In chat applications, Orca automatically presents incoming
 #. messages in speech and braille. If a user is in multiple conversations or
@@ -2451,8 +2459,11 @@ msgstr "Alterna entre fornecer ou não históricos de mensagens específicos par
 #. instead of "<joanie> hello!"). This string to be translated is associated with
 #. the command to toggle room name presentation on or off.
 #: ../src/orca/cmdnames.py:548
-msgid "Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr "Alterna entre preceder ou não mensagens de sala de bate-papo com o nome da sala."
+msgid ""
+"Toggle whether we prefix chat room messages with the name of the chat room."
+msgstr ""
+"Alterna entre preceder ou não mensagens de sala de bate-papo com o nome da "
+"sala."
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
@@ -2634,7 +2645,8 @@ msgstr "Faz a caixa de combinação atual ser expandida."
 #. the user the ability to toggle which application is controlling the caret.
 #: ../src/orca/cmdnames.py:675
 msgid "Switches between native and screen-reader caret navigation."
-msgstr "Alterna entre a navegação por cursor nativa do Gecko e a do leitor de tela."
+msgstr ""
+"Alterna a navegação por cursor entre nativo e leitor de tela."
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -4362,7 +4374,8 @@ msgstr "Anunciar quanto _amigos estiverem digitando"
 #. contains the latest messages from all the chat rooms that they are in.
 #: ../src/orca/guilabels.py:112
 msgid "Provide chat room specific _message histories"
-msgstr "Fornecer _históricos de mensagens específicos para cada sala de bate-papo"
+msgstr ""
+"Fornecer _históricos de mensagens específicos para cada sala de bate-papo"
 
 #. Translators: This is the label of a panel holding options for how messages in
 #. this application's chat rooms should be spoken. The options are: Speak messages
@@ -5156,7 +5169,9 @@ msgstr "Navegação da página"
 #. of a checkbox in which users can indicate their preference.
 #: ../src/orca/guilabels.py:651
 msgid "Automatically start speaking a page when it is first _loaded"
-msgstr "Iniciar automaticamente a _ler a página quando ela for carregada pela primeira vez"
+msgstr ""
+"Iniciar automaticamente a _ler a página quando ela for carregada pela "
+"primeira vez"
 
 #. Translators: Different speech systems and speech engines work differently when
 #. it comes to handling pauses (e.g. sentence boundaries). This property allows
@@ -5412,13 +5427,15 @@ msgstr "scroll lock"
 
 #. Translators: this is how someone would speak the name of the page up key
 #.
-#: ../src/orca/keynames.py:98 ../src/orca/keynames.py:102 ../src/orca/keynames.py:106 ../src/orca/keynames.py:110
+#: ../src/orca/keynames.py:98 ../src/orca/keynames.py:102
+#: ../src/orca/keynames.py:106 ../src/orca/keynames.py:110
 msgid "page up"
 msgstr "page up"
 
 #. Translators: this is how someone would speak the name of the page down key
 #.
-#: ../src/orca/keynames.py:114 ../src/orca/keynames.py:118 ../src/orca/keynames.py:122 ../src/orca/keynames.py:126
+#: ../src/orca/keynames.py:114 ../src/orca/keynames.py:118
+#: ../src/orca/keynames.py:122 ../src/orca/keynames.py:126
 msgid "page down"
 msgstr "page down"
 
@@ -6008,12 +6025,13 @@ msgctxt "math symbol"
 msgid "circumflex"
 msgstr "circunflexo"
 
+# caron (ganchinho)
 #. Translators: this is the spoken word for the character 'ˇ' (U+02c7) when used
 #. as a MathML operator.
 #: ../src/orca/mathsymbols.py:1345
 msgctxt "math symbol"
 msgid "háček"
-msgstr "háček"
+msgstr "caron"
 
 #. Translators: this is the spoken word for the character '˘' (U+02d8) when used
 #. as a MathML operator.
@@ -6252,7 +6270,7 @@ msgstr "ângulo esférico"
 #: ../src/orca/mathsymbols.py:1468
 msgctxt "math symbol"
 msgid "divides"
-msgstr "dividide"
+msgstr "divide"
 
 #. Translators: this is the spoken representation for the character '∤' (U+2224)
 #: ../src/orca/mathsymbols.py:1471
@@ -6426,11 +6444,12 @@ msgctxt "math symbol"
 msgid "sine wave"
 msgstr "onda senóide"
 
+# produto coroa / produto orlado / produto anel / produto wreath
 #. Translators: this is the spoken representation for the character '≀' (U+2240)
 #: ../src/orca/mathsymbols.py:1555
 msgctxt "math symbol"
 msgid "wreath product"
-msgstr "Til vertical"
+msgstr "produto coroa"
 
 #. Translators: this is the spoken representation for the character '≁' (U+2241)
 #: ../src/orca/mathsymbols.py:1558
@@ -7044,7 +7063,7 @@ msgstr "tacha cima"
 #: ../src/orca/mathsymbols.py:1861
 msgctxt "math symbol"
 msgid "assertion"
-msgstr "assertação"
+msgstr "asserção"
 
 #. Translators: this is the spoken representation for the character '⊧' (U+22a7)
 #: ../src/orca/mathsymbols.py:1864
@@ -7254,7 +7273,7 @@ msgstr "produto semidireto direito"
 #: ../src/orca/mathsymbols.py:1978
 msgctxt "math symbol"
 msgid "reversed tilde equals"
-msgstr "equal til reverso"
+msgstr "igual til reverso"
 
 #. Translators: this is the spoken representation for the character '⋎' (U+22ce)
 #: ../src/orca/mathsymbols.py:1981
@@ -7578,7 +7597,7 @@ msgstr "piso esquerdo"
 #: ../src/orca/mathsymbols.py:2140
 msgctxt "math symbol"
 msgid "right floor"
-msgstr "piso direto"
+msgstr "piso direito"
 
 #. Translators: this is the spoken representation for the character '⏞' (U+23de)
 #: ../src/orca/mathsymbols.py:2143
@@ -7938,8 +7957,11 @@ msgstr "Não foi possível carregar o perfil: %s"
 #. Translators: This message is presented to the user who attempts to launch Orca
 #. from some other environment than the graphical desktop.
 #: ../src/orca/messages.py:203
-msgid "Cannot start the screen reader because it cannot connect to the Desktop."
-msgstr "Não foi possível iniciar o leitor de tela porque ele não pode conectar-se ao ambiente gráfico."
+msgid ""
+"Cannot start the screen reader because it cannot connect to the Desktop."
+msgstr ""
+"Não foi possível iniciar o leitor de tela porque ele não pode conectar-se ao "
+"ambiente gráfico."
 
 #. Translators: This message is presented to the user who attempts to launch Orca
 #. but the launch fails due to an error related to the settings manager.
@@ -7996,7 +8018,7 @@ msgstr "Mostra essa mensagem de ajuda e sai"
 #. start with 'debug' and end with '.out', regardless of the locale.).
 #: ../src/orca/messages.py:244
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
-msgstr "Envia informações de depuração para debug-YYYY-MM-DD-HH:MM:SS.out"
+msgstr "Envia informações de depuração para debug-AAAA-MM-DD-HH:MM:SS.out"
 
 #. Translators: This is the description of command line option '--debug-file'
 #. which allows the user to override the default date-based name of the debugging
@@ -8099,7 +8121,8 @@ msgstr "falar o nome da sala de bate-papo."
 #. translated is presented when the value of the setting is toggled.
 #: ../src/orca/messages.py:322
 msgid "Do not provide chat room specific message histories."
-msgstr "Não fornecer históricos de mensagens específicos para cada sala de bate-papo."
+msgstr ""
+"Não fornecer históricos de mensagens específicos para cada sala de bate-papo."
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. Some users prefer to have this message history combined
@@ -8109,7 +8132,8 @@ msgstr "Não fornecer históricos de mensagens específicos para cada sala de ba
 #. translated is presented when the value of the setting is toggled.
 #: ../src/orca/messages.py:330
 msgid "Provide chat room specific message histories."
-msgstr "Fornecer históricos de mensagens específicos para cada sala de bate-papo."
+msgstr ""
+"Fornecer históricos de mensagens específicos para cada sala de bate-papo."
 
 #. Translators: this is a regular expression that is intended to match
 #. a positive 'yes' response from a user at the command line.  The expression
@@ -9140,13 +9164,17 @@ msgstr "Modo de aprendizado.  Pressione ESC para sair."
 #. Mode.
 #: ../src/orca/messages.py:1125
 msgid ""
-"Entering learn mode.  Press any key to hear its function.  To view the screen reader's documentation, press F1. To get a list of the screen reader's "
-"default shortcuts, press F2. To get a list of the screen reader's shortcuts for the current application, press F3. To exit learn mode, press the "
-"escape key."
+"Entering learn mode.  Press any key to hear its function.  To view the "
+"screen reader's documentation, press F1. To get a list of the screen "
+"reader's default shortcuts, press F2. To get a list of the screen reader's "
+"shortcuts for the current application, press F3. To exit learn mode, press "
+"the escape key."
 msgstr ""
-"Entrando no modo de aprendizado. Pressione qualquer tecla para ouvir sua função. Para ver a documentação do leitor de tela, pressione F1. Para obter "
-"uma lista de atalhos padrão do leitor de tela, pressione F2. Para obter uma lista de atalhos do leitor de tela para o aplicativo atual, pressione "
-"F3. Para sair do modo de aprendizado, pressione a tecla ESC."
+"Entrando no modo de aprendizado. Pressione qualquer tecla para ouvir sua "
+"função. Para ver a documentação do leitor de tela, pressione F1. Para obter "
+"uma lista de atalhos padrão do leitor de tela, pressione F2. Para obter uma "
+"lista de atalhos do leitor de tela para o aplicativo atual, pressione F3. "
+"Para sair do modo de aprendizado, pressione a tecla ESC."
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -9250,7 +9278,7 @@ msgstr "link %s"
 #. when finished.
 #: ../src/orca/messages.py:1205
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
-msgstr "Use as setas cima, baixo para navegar na lista. Tecle ESC para sair."
+msgstr "Use as setas cima e baixo para navegar na lista. Tecle ESC para sair."
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -10057,13 +10085,14 @@ msgctxt "Speech"
 msgid "Verbosity level: verbose"
 msgstr "Nível de verbosidade: verboso"
 
+# reticências [o espaço no início é necessário.]
 #. Translators: We replace the ellipses (both manual and UTF-8) with a spoken
 #. string. The extra space you see at the beginning is because we need the
 #. speech synthesis engine to speak the new string well. For example, "Open..."
 #. turns into "Open dot dot dot".
 #: ../src/orca/messages.py:1794
 msgid " dot dot dot"
-msgstr "ponto ponto ponto"
+msgstr " ponto ponto ponto"
 
 #. Translators: This message is presented to the user when Orca is launched.
 #: ../src/orca/messages.py:1797
@@ -10461,7 +10490,8 @@ msgstr[1] "tabela matemática com %d linhas"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: ../src/orca/messages.py:2069 ../src/orca/messages.py:2085 ../src/orca/messages.py:2166
+#: ../src/orca/messages.py:2069 ../src/orca/messages.py:2085
+#: ../src/orca/messages.py:2166
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -10553,7 +10583,8 @@ msgstr[1] "%d atalhos padrões do leitor de tela localizados."
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
 msgstr[0] "%(count)d atalho do leitor de tela para %(application)s localizado."
-msgstr[1] "%(count)d atalhos do leitor de tela para %(application)s localizados."
+msgstr[1] ""
+"%(count)d atalhos do leitor de tela para %(application)s localizados."
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
@@ -11284,11 +11315,15 @@ msgstr "Atributos do texto"
 #.
 #: ../src/orca/phonnames.py:53
 msgid ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
-"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
+"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
+"golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
+"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
+"u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 msgstr ""
-"a : alfa, b : bravo, c : carlos, d : delta, e : eco, f : foxtrot, g : golf, h : hotel, i : índia, j : julieta, k : kilo, l : lima, m : mike, n : "
-"novembro, o : oscar, p : papa, q : quebec, r : romeo, s : serra, t : tango, u : uniforme, v : victor, w : whiskey, x : xray, y : yankee, z : zulú"
+"a : alfa, b : bravo, c : carlos, d : delta, e : eco, f : foxtrot, g : golf, "
+"h : hotel, i : índia, j : julieta, k : kilo, l : lima, m : mike, n : "
+"novembro, o : oscar, p : papa, q : quebec, r : romeo, s : serra, t : tango, "
+"u : uniforme, v : victor, w : whiskey, x : xray, y : yankee, z : zulú"
 
 #: ../src/orca/scripts/apps/gnome-mud/script.py:118
 msgid "Read the latest n messages in the incoming messages text area."
@@ -11298,7 +11333,8 @@ msgstr "Leia as últimas n mensagens na área de texto de mensagens recebidas."
 msgid "Work online / offline"
 msgstr "Trabalhar on-line / off-line"
 
-#: ../src/orca/scripts/apps/planner/braille_generator.py:67 ../src/orca/scripts/apps/planner/speech_generator.py:63
+#: ../src/orca/scripts/apps/planner/braille_generator.py:67
+#: ../src/orca/scripts/apps/planner/speech_generator.py:63
 msgid "Display more options"
 msgstr "Exibir mais opções"
 
@@ -12268,7 +12304,8 @@ msgstr "sólido"
 #. Translators: This is the text-spelling attribute. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:739 ../src/orca/text_attribute_names.py:744
+#: ../src/orca/text_attribute_names.py:739
+#: ../src/orca/text_attribute_names.py:744
 msgctxt "textattr"
 msgid "spelling"
 msgstr "ortografia"
@@ -12282,7 +12319,9 @@ msgstr "Pressione espaço para alternar."
 #. with a combobox.
 #: ../src/orca/tutorialgenerator.py:188
 msgid "Press space to expand, and use up and down to select an item."
-msgstr "Pressione espaço para expandir, e seta para cima ou para baixo para selecionar um item."
+msgstr ""
+"Pressione espaço para expandir, e seta para cima ou para baixo para "
+"selecionar um item."
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
@@ -12294,7 +12333,9 @@ msgstr "Pressione Alt+F6 para dar foco às janelas filhas."
 #. layered pane.
 #: ../src/orca/tutorialgenerator.py:283
 msgid "To move to items, use either the arrow keys or type ahead searching."
-msgstr "Para mover-se entre os itens, use as teclas de setas, ou a pesquisa-enquanto-digita."
+msgstr ""
+"Para mover-se entre os itens, use as teclas de setas, ou a pesquisa-enquanto-"
+"digita."
 
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, describing how to access the system menus.
@@ -12349,8 +12390,11 @@ msgstr "Para ativar, pressione espaço."
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
 #: ../src/orca/tutorialgenerator.py:505
-msgid "Use up or down arrow to select value. Or type in the desired numerical value."
-msgstr "Use a seta para cima ou para baixo para selecionar o valor. Ou digite o valor numérico desejado."
+msgid ""
+"Use up or down arrow to select value. Or type in the desired numerical value."
+msgstr ""
+"Use a seta para cima ou para baixo para selecionar o valor. Ou digite o "
+"valor numérico desejado."
 
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
 #: ../src/orca/tutorialgenerator.py:667
@@ -12359,8 +12403,12 @@ msgstr "Use as teclas de seta para alterar."
 
 #. Translators: this is a tip for the user, how to navigate menus.
 #: ../src/orca/tutorialgenerator.py:692
-msgid "To navigate, press left or right arrow. To move through items press up or down arrow."
-msgstr "Para navegar, pressione seta para a esquerda ou para a direita. Para mover-se entre itens, pressione seta para cima ou para baixo."
+msgid ""
+"To navigate, press left or right arrow. To move through items press up or "
+"down arrow."
+msgstr ""
+"Para navegar, pressione seta para a esquerda ou para a direita. Para mover-"
+"se entre itens, pressione seta para cima ou para baixo."
 
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menus.
@@ -12371,10 +12419,13 @@ msgstr "Para entrar em um submenu, pressione a seta para direita."
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
 #: ../src/orca/tutorialgenerator.py:729
-msgid "To decrease press left arrow, to increase press right arrow. To go to minimum press home, and for maximum press end."
+msgid ""
+"To decrease press left arrow, to increase press right arrow. To go to "
+"minimum press home, and for maximum press end."
 msgstr ""
-"Para diminuir, pressione a seta para a esquerda; para aumentar, pressione a seta para a direita. Para o valor mínimo pressione Home, e para o "
-"máximo, pressione End."
+"Para diminuir, pressione a seta para a esquerda; para aumentar, pressione a "
+"seta para a direita. Para o valor mínimo pressione Home, e para o máximo, "
+"pressione End."
 
 #~ msgctxt "math symbol"
 #~ msgid "n-ary summation"
@@ -12541,7 +12592,9 @@ msgstr ""
 #~ msgstr "O suporte a acessibilidade do GNOME acabou de ser habilitado."
 
 #~ msgid "You need to log out and log back in for the change to take effect."
-#~ msgstr "Você precisa reiniciar sua sessão GNOME para que as mudanças tenham efeito."
+#~ msgstr ""
+#~ "Você precisa reiniciar sua sessão GNOME para que as mudanças tenham "
+#~ "efeito."
 
 #~ msgid "(double click)"
 #~ msgstr "(clique duplo)"
