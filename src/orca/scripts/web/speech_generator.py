@@ -276,6 +276,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result.append(messages.IMAGE_MAP_LINK)
                 result.extend(acss)
             else:
+                if self._script.utilities.hasUselessCanvasDescendant(obj):
+                    result.append(self.getLocalizedRoleName(obj, pyatspi.ROLE_IMAGE))
+                    result.extend(acss)
                 result.append(self.getLocalizedRoleName(obj, role))
                 result.extend(acss)
 
