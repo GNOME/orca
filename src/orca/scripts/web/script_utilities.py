@@ -1183,7 +1183,12 @@ class Utilities(script_utilities.Utilities):
         debug.println(debug.LEVEL_INFO, msg)
 
         if obj and self.isZombie(obj):
-            msg = "WEB: Current context obj %s is zombie" % obj
+            msg = "WEB: Current context obj %s is zombie. Clearing cache." % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            self.clearCachedObjects()
+
+            obj, offset = self.getCaretContext()
+            msg = "WEB: Now Current context is: %s, %i" % (obj, offset)
             debug.println(debug.LEVEL_INFO, msg)
 
         line = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
@@ -1223,7 +1228,12 @@ class Utilities(script_utilities.Utilities):
         debug.println(debug.LEVEL_INFO, msg)
 
         if obj and self.isZombie(obj):
-            msg = "WEB: Current context obj %s is zombie" % obj
+            msg = "WEB: Current context obj %s is zombie. Clearing cache." % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            self.clearCachedObjects()
+
+            obj, offset = self.getCaretContext()
+            msg = "WEB: Now Current context is: %s, %i" % (obj, offset)
             debug.println(debug.LEVEL_INFO, msg)
 
         line = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
