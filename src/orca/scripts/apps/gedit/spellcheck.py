@@ -36,11 +36,17 @@ class SpellCheck(spellcheck.SpellCheck):
         super(SpellCheck, self).__init__(script)
 
     def _isCandidateWindow(self, window):
-        if not (window and window.getRole() == pyatspi.ROLE_FRAME):
+        if not window:
             return False
 
-        isMenuBar = lambda x: x and x.getRole() == pyatspi.ROLE_MENU_BAR
-        if pyatspi.findDescendant(window, isMenuBar):
+        role = window.getRole()
+        if role == pyatspi.ROLE_DIALOG:
+            return True
+        if role != pyatspi.ROLE_FRAME:
+            return False
+
+        isSplitPane = lambda x: x and x.getRole() == pyatspi.ROLE_SPLIT_PANE
+        if pyatspi.findDescendant(window, isSplitPane):
             return False
 
         return True
