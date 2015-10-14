@@ -1,3 +1,47 @@
+3.18.1 - 14 October 2015
+
+Web:
+
+ * Improve presentation of canvas elements which lack fallback content
+
+ * Fix for Orca filtering out text elements which have no size due to
+   authoring
+
+ * Fix for Orca not doing SayAll on load when the focused object is the
+   document frame
+
+ * Workaround several issues which was causing the caret to get "stuck"
+
+ * Add another fallback "guess" to the label inference code for fields
+   in poorly-authored forms
+
+ * Present Firefox "door hanger" alerts
+
+ * Filter out selection event spam from browser chrome autocompletes
+
+ * Prefer name over label when generating labelOrName (W3C compliance)
+
+ * Ensure we present aria-roledescription for non-focusable landmarks
+
+ * Include object role in the list of landmarks dialog
+
+ * Don't treat objects with ROLE_LABEL as an ancestor (causes double
+   presentation of widget name)
+
+ * Process DOM changes more efficiently for performance
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                       Marek Černocký
+    de            German                      Wolfgang Stöggl
+    el            Greek                       Dimitris Spingos
+    it            Italian                     Milo Casagrande
+    pt_BR         Brazilian Portuguese        Tiago Casal
+    sr            Serbian                     Марко Костић
+    sr@latin      Serbian                     Милош Поповић
+
+=========
+
 3.18.0 - 21 September 2015
 
 General:
