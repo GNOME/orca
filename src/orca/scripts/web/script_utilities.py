@@ -335,6 +335,9 @@ class Utilities(script_utilities.Utilities):
             else:
                 break
 
+        if lastChild and self.doNotDescendForCaret(lastChild):
+            lastChild = lastChild.parent
+
         return lastChild
 
     def getRoleDescription(self, obj):
