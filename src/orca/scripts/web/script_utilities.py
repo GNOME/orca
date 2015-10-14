@@ -54,6 +54,7 @@ class Utilities(script_utilities.Utilities):
         self._isMath = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
+        self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
         self._hasUselessCanvasDescendant = {}
@@ -95,6 +96,7 @@ class Utilities(script_utilities.Utilities):
         self._isMath = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
+        self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
         self._hasUselessCanvasDescendant = {}
@@ -655,7 +657,8 @@ class Utilities(script_utilities.Utilities):
                 rv = None
             if rv and (self.isHidden(obj) or self.isOffScreenLabel(obj)):
                 rv = None
-            if rv and role == pyatspi.ROLE_LINK and self.hasUselessCanvasDescendant(obj):
+            if rv and role == pyatspi.ROLE_LINK \
+               and (self.hasExplicitName(obj) or self.hasUselessCanvasDescendant(obj)):
                 rv = None
 
         self._text[hash(obj)] = rv
@@ -2097,6 +2100,23 @@ class Utilities(script_utilities.Utilities):
         self._isParentOfNullChild[hash(obj)] = rv
         return rv
 
+    def hasExplicitName(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._hasExplicitName.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            attrs = {}
+
+        rv = attrs.get('explicit-name') == 'true'
+        self._hasExplicitName[hash(obj)] = rv
+        return rv
+
     def hasLongDesc(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -2411,7 +2431,8 @@ class Utilities(script_utilities.Utilities):
             return True
 
         role = obj.getRole()
-        if role == pyatspi.ROLE_LINK and self.hasUselessCanvasDescendant(obj):
+        if role == pyatspi.ROLE_LINK \
+           and (self.hasExplicitName(obj) or self.hasUselessCanvasDescendant(obj)):
             return True
 
         if self.isTextBlockElement(obj):
