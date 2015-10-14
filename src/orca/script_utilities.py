@@ -746,6 +746,19 @@ class Utilities:
 
         return False
 
+    def isTreeDescendant(self, obj):
+        if not obj:
+            return False
+
+        if obj.getRole() == pyatspi.ROLE_TREE_ITEM:
+            return True
+
+        isTree = lambda x: x and x.getRole() in [pyatspi.ROLE_TREE, pyatspi.ROLE_TREE_TABLE]
+        if pyatspi.findAncestor(obj, isTree):
+            return True
+
+        return False
+
     def isLayoutOnly(self, obj):
         """Returns True if the given object is a container which has
         no presentable information (label, name, displayed text, etc.)."""
@@ -1137,7 +1150,7 @@ class Utilities:
         -obj: the Accessible object
         """
 
-        if not obj:
+        if not self.isTreeDescendant(obj):
             return -1
 
         try:
