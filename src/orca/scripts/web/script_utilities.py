@@ -78,6 +78,8 @@ class Utilities(script_utilities.Utilities):
         self._currentWordContents = None
         self._currentCharacterContents = None
 
+        self._validChildRoles = {pyatspi.ROLE_LIST: [pyatspi.ROLE_LIST_ITEM]}
+
     def _cleanupContexts(self):
         toRemove = []
         for key, [obj, offset] in self._caretContexts.items():
@@ -1375,6 +1377,9 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def treatAsDiv(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
         rv = self._treatAsDiv.get(hash(obj))
         if rv is not None:
             return rv
@@ -1388,8 +1393,18 @@ class Utilities(script_utilities.Utilities):
             return False
 
         rv = False
-        if role == pyatspi.ROLE_LIST:
-            rv = not (childCount and obj[0].getRole() == pyatspi.ROLE_LIST_ITEM)
+
+        validRoles = self._validChildRoles.get(role)
+        if validRoles:
+            if not childCount:
+                rv = True
+            else:
+                rv = bool([x for x in obj if x and x.getRole() not in validRoles])
+
+        if not rv:
+            validRoles = self._validChildRoles.get(obj.parent)
+            if validRoles:
+                rv = bool([x for x in obj.parent if x and x.getRole() not in validRoles])
 
         self._treatAsDiv[hash(obj)] = rv
         return rv
@@ -2530,7 +2545,7 @@ class Utilities(script_utilities.Utilities):
                        pyatspi.ROLE_INTERNAL_FRAME,
                        pyatspi.ROLE_TABLE,
                        pyatspi.ROLE_TABLE_ROW]
-        if role in lookInChild and obj.childCount:
+        if role in lookInChild and obj.childCount and not self.treatAsDiv(obj):
             msg = "WEB: First caret context for %s, %i will look in child %s" % (obj, offset, obj[0])
             debug.println(debug.LEVEL_INFO, msg)
             return self.findFirstCaretContext(obj[0], 0)
