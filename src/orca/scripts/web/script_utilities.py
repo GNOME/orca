@@ -1295,6 +1295,7 @@ class Utilities(script_utilities.Utilities):
             return True
 
         focusModeRoles = [pyatspi.ROLE_COMBO_BOX,
+                          pyatspi.ROLE_EMBEDDED,
                           pyatspi.ROLE_ENTRY,
                           pyatspi.ROLE_LIST_BOX,
                           pyatspi.ROLE_LIST_ITEM,
