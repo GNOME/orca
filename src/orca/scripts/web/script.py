@@ -929,9 +929,11 @@ class Script(default.Script):
         self._lastMouseOverObject = None
 
     def enableStickyFocusMode(self, inputEvent):
+        if not self._focusModeIsSticky:
+            self.presentMessage(messages.MODE_FOCUS_IS_STICKY)
+
         self._inFocusMode = True
         self._focusModeIsSticky = True
-        self.presentMessage(messages.MODE_FOCUS_IS_STICKY)
 
     def togglePresentationMode(self, inputEvent):
         if self._inFocusMode:
