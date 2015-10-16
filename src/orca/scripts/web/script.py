@@ -1357,10 +1357,17 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
-        if not self.utilities.inDocumentContent(event.source):
-            msg = "WEB: Event source is not in document content"
+        document = self.utilities.getDocumentForObject(event.source)
+        if not document:
+            msg = "WEB: Could not get document for event source"
             debug.println(debug.LEVEL_INFO, msg)
             return False
+
+        if document.getState().contains(pyatspi.STATE_BUSY):
+            msg = "WEB: Document is busy. Updating locusOfFocus quietly."
+            debug.println(debug.LEVEL_INFO, msg)
+            orca.setLocusOfFocus(event, event.source, False)
+            return True
 
         state = event.source.getState()
         if state.contains(pyatspi.STATE_EDITABLE):
