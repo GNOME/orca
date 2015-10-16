@@ -1452,17 +1452,8 @@ class SpeechGenerator(generator.Generator):
         if role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
             return result
 
-        try:
-            s = obj.querySelection()
-        except NotImplementedError:
-            isFocused = \
-                lambda x: x and x.getState().contains(pyatspi.STATE_FOCUSED)
-            items = pyatspi.utils.findAllDescendants(obj, isFocused)
-        else:
-            items = [s.getSelectedChild(i) for i in range(s.nSelectedChildren)]
-            if not items and obj.childCount:
-                items.append(obj[0])
-
+        items = self._script.utilities.selectedChildren(obj)
+        items = items or [self._script.utilities.focusedChild(obj)]
         if not (items and items[0]):
             return result
 
