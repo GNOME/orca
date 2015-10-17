@@ -31,6 +31,7 @@ import pyatspi
 
 from orca import debug
 from orca import orca
+from orca import orca_state
 from orca.scripts import default
 from orca.scripts import web
 from .script_utilities import Utilities
@@ -193,6 +194,12 @@ class Script(web.Script):
 
         if super().onFocusedChanged(event):
             return
+
+        if event.source.getRole() == pyatspi.ROLE_PANEL:
+            if orca_state.locusOfFocus == orca_state.activeWindow:
+                msg = "GECKO: Ignoring event believed to be noise."
+                debug.println(debug.LEVEL_INFO, msg)
+                return
 
         msg = "GECKO: Passing along event to default script"
         debug.println(debug.LEVEL_INFO, msg)
