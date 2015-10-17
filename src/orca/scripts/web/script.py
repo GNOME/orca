@@ -928,8 +928,8 @@ class Script(default.Script):
         self._inMouseOverObject = False
         self._lastMouseOverObject = None
 
-    def enableStickyFocusMode(self, inputEvent):
-        if not self._focusModeIsSticky:
+    def enableStickyFocusMode(self, inputEvent, forceMessage=False):
+        if not self._focusModeIsSticky or forceMessage:
             self.presentMessage(messages.MODE_FOCUS_IS_STICKY)
 
         self._inFocusMode = True
@@ -990,6 +990,11 @@ class Script(default.Script):
         self.updateBraille(newFocus)
         speech.speak(self.speechGenerator.generateSpeech(newFocus, priorObj=oldFocus))
         self._saveFocusedObjectInfo(newFocus)
+
+        if self.utilities.inTopLevelWebApp(newFocus):
+            announce = not self.utilities.inDocumentContent(oldFocus)
+            self.enableStickyFocusMode(None, announce)
+            return True
 
         if not self._focusModeIsSticky \
            and self.useFocusMode(newFocus) != self._inFocusMode:
@@ -1056,10 +1061,18 @@ class Script(default.Script):
             return True
 
         self.utilities.clearCachedObjects()
-        if self.useFocusMode(orca_state.locusOfFocus) != self._inFocusMode:
-            self.togglePresentationMode(None)
 
         obj, offset = self.utilities.getCaretContext()
+        if self.utilities.isTopLevelWebApp(event.source):
+            msg = "WEB: Setting locusOfFocus to %s with sticky focus mode" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            orca.setLocusOfFocus(event, obj)
+            self.enableStickyFocusMode(None, True)
+            return True
+
+        if self.useFocusMode(obj) != self._inFocusMode:
+            self.togglePresentationMode(None)
+
         if not obj:
             msg = "WEB: Could not get caret context"
             debug.println(debug.LEVEL_INFO, msg)
