@@ -1245,6 +1245,11 @@ class Script(default.Script):
     def onChildrenChanged(self, event):
         """Callback for object:children-changed accessibility events."""
 
+        if self.utilities.eventIsChromeNoise(event):
+            msg = "WEB: Ignoring event believed to be chrome noise"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
         document = self.utilities.getDocumentForObject(event.source)
         if document:
             msg = "WEB: Clearing structural navigation cache for %s" % document
@@ -1430,8 +1435,8 @@ class Script(default.Script):
     def onNameChanged(self, event):
         """Callback for object:property-change:accessible-name events."""
 
-        if self.utilities.eventIsStatusBarNoise(event):
-            msg = "WEB: Ignoring event believed to be status bar noise"
+        if self.utilities.eventIsChromeNoise(event):
+            msg = "WEB: Ignoring event believed to be chrome noise"
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
@@ -1508,8 +1513,8 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
-        if self.utilities.eventIsStatusBarNoise(event):
-            msg = "WEB: Ignoring event believed to be status bar noise"
+        if self.utilities.eventIsChromeNoise(event):
+            msg = "WEB: Ignoring event believed to be chrome noise"
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
@@ -1559,8 +1564,8 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
-        if self.utilities.eventIsStatusBarNoise(event):
-            msg = "WEB: Ignoring event believed to be status bar noise"
+        if self.utilities.eventIsChromeNoise(event):
+            msg = "WEB: Ignoring event believed to be chrome noise"
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
