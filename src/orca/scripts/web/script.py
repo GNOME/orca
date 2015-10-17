@@ -977,6 +977,11 @@ class Script(default.Script):
         if self.utilities.inFindToolbar(oldFocus):
             newFocus, caretOffset = self.utilities.getCaretContext()
 
+        if newFocus.getRole() == pyatspi.ROLE_UNKNOWN:
+            msg = "WEB: Event source has bogus role. Likely browser bug."
+            debug.println(debug.LEVEL_INFO, msg)
+            newFocus, offset = self.utilities.findFirstCaretContext(newFocus, 0)
+
         text = self.utilities.queryNonEmptyText(newFocus)
         if text and (0 <= text.caretOffset < text.characterCount):
             caretOffset = text.caretOffset
