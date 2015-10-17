@@ -1368,6 +1368,12 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return False
 
+        if self.utilities.inTopLevelWebApp(event.source):
+            msg = "WEB: Event handled: Setting locusOfFocus to event source"
+            debug.println(debug.LEVEL_INFO, msg)
+            orca.setLocusOfFocus(event, event.source)
+            return True
+
         if document.getState().contains(pyatspi.STATE_BUSY):
             msg = "WEB: Document is busy. Updating locusOfFocus quietly."
             debug.println(debug.LEVEL_INFO, msg)

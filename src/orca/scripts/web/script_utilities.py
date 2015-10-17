@@ -48,6 +48,7 @@ class Utilities(script_utilities.Utilities):
         self._currentAttrs = {}
         self._caretContexts = {}
         self._inDocumentContent = {}
+        self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
         self._isGridDescendant = {}
         self._isLayoutOnly = {}
@@ -92,6 +93,7 @@ class Utilities(script_utilities.Utilities):
     def clearCachedObjects(self):
         debug.println(debug.LEVEL_INFO, "WEB: cleaning up cached objects")
         self._inDocumentContent = {}
+        self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
         self._isGridDescendant = {}
         self._isLayoutOnly = {}
@@ -1281,6 +1283,37 @@ class Utilities(script_utilities.Utilities):
 
         return contents
 
+    def inTopLevelWebApp(self, obj=None):
+        if not obj:
+            obj = orca_state.locusOfFocus
+
+        rv = self._inTopLevelWebApp.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        document = self.getDocumentForObject(obj)
+        if not document and self.isDocument(obj):
+            document = obj
+
+        rv = self.isTopLevelWebApp(document)
+        self._inTopLevelWebApp[hash(obj)] = rv
+        return rv
+
+    def isTopLevelWebApp(self, obj):
+        try:
+            role = obj.getRole()
+        except:
+            msg = "WEB: Exception getting role for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+
+        if role == pyatspi.ROLE_EMBEDDED and not self.getDocumentForObject(obj.parent):
+            msg = "WEB: %s is top-level web application" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        return False
+
     def isFocusModeWidget(self, obj):
         try:
             role = obj.getRole()
@@ -2180,9 +2213,8 @@ class Utilities(script_utilities.Utilities):
         if self._script.inSayAll():
             return False
 
-        if not self.inDocumentContent():
+        if not self.inDocumentContent() or self.inTopLevelWebApp():
             return False
-
         try:
             role = obj.getRole()
         except:
