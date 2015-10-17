@@ -2732,7 +2732,13 @@ class Utilities:
 
     def focusedChild(self, obj):
         isFocused = lambda x: x and x.getState().contains(pyatspi.STATE_FOCUSED)
-        return pyatspi.findDescendant(obj, isFocused)
+        child = pyatspi.findDescendant(obj, isFocused)
+        if child == obj:
+            msg = "ERROR: focused child of %s is %s" % (obj, child)
+            debug.println(debug.LEVEL_INFO, msg)
+            return None
+
+        return child
 
     def _isNonModalPopOver(self, obj):
         return False
