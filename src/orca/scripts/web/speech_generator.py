@@ -56,6 +56,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.isLandmark(obj):
             return []
 
+        if self._script.utilities.isMath(obj):
+            return []
+
         args['stopAtRoles'] = [pyatspi.ROLE_DOCUMENT_FRAME,
                                pyatspi.ROLE_DOCUMENT_WEB,
                                pyatspi.ROLE_EMBEDDED,
@@ -437,6 +440,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             oldRole = self._overrideRole(self._getAlternativeRole(obj, **args), args)
 
         result.extend(super().generateSpeech(obj, **args))
+        result = list(filter(lambda x: x, result))
         self._restoreRole(oldRole, args)
 
         msg = "\nINFO: Speech generation for document object %s complete:\n%s\n" % (obj, result)
