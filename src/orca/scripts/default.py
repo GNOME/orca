@@ -2472,6 +2472,11 @@ class Script(script.Script):
         - event: the Event
         """
 
+        role = event.source.getRole()
+        state = event.source.getState()
+        if role == pyatspi.ROLE_PASSWORD_TEXT and state.contains(pyatspi.STATE_FOCUSED):
+            orca.setLocusOfFocus(event, event.source, False)
+
         # Ignore text deletions from non-focused objects, unless the
         # currently focused object is the parent of the object from which
         # text was deleted
@@ -2483,7 +2488,7 @@ class Script(script.Script):
         # We'll also ignore sliders because we get their output via
         # their values changing.
         #
-        if event.source.getRole() == pyatspi.ROLE_SLIDER:
+        if role == pyatspi.ROLE_SLIDER:
             return
 
         # [[[NOTE: WDW - if we handle events synchronously, we'll
@@ -2551,6 +2556,11 @@ class Script(script.Script):
         - event: the Event
         """
 
+        role = event.source.getRole()
+        state = event.source.getState()
+        if role == pyatspi.ROLE_PASSWORD_TEXT and state.contains(pyatspi.STATE_FOCUSED):
+            orca.setLocusOfFocus(event, event.source, False)
+
         # Ignore text insertions from non-focused objects, unless the
         # currently focused object is the parent of the object from which
         # text was inserted.
@@ -2564,11 +2574,9 @@ class Script(script.Script):
                        pyatspi.ROLE_MENU_ITEM,
                        pyatspi.ROLE_SLIDER,
                        pyatspi.ROLE_SPIN_BUTTON]
-        role = event.source.getRole()
         if role in ignoreRoles:
             return
 
-        state = event.source.getState()            
         if role == pyatspi.ROLE_TABLE_CELL \
            and not state.contains(pyatspi.STATE_FOCUSED) \
            and not state.contains(pyatspi.STATE_SELECTED):
