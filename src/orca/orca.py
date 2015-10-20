@@ -256,6 +256,8 @@ def _processKeyboardEvent(event):
         return False
 
     if isPressedEvent:
+        if not orca_state.activeWindow:
+            orca_state.activeWindow = script.utilities.activeWindow()
         script.presentationInterrupt()
     script.presentKeyboardEvent(keyboardEvent)
     if keyboardEvent.isModifierKey() and not isOrcaModifier:

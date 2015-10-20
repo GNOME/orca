@@ -4046,6 +4046,12 @@ class Script(script.Script):
         except:
             return False
 
+        if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_FRAME, pyatspi.ROLE_WINDOW]:
+            focusedObject = self.utilities.focusedObject(orca_state.activeWindow)
+            if focusedObject:
+                orca.setLocusOfFocus(None, focusedObject, False)
+                role = focusedObject.getRole()
+
         if role == pyatspi.ROLE_PASSWORD_TEXT:
             return False
 

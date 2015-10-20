@@ -492,6 +492,9 @@ class Utilities:
         the FOCUSED state can be found.
         """
 
+        if not root:
+            return None
+
         if root.getState().contains(pyatspi.STATE_FOCUSED):
             return root
 
