@@ -1,0 +1,16 @@
+<html>
+<head></head>
+<body>
+<script type="text/javascript">
+function changeText(e) {
+    if(e.textContent == "Hello")
+        e.textContent = "Goodbye cruel";
+    else
+        e.textContent = "Hello";
+    }
+</script>
+<div>Line 1</div>
+<div><span onclick="changeText(this)">Hello</span> world!</div>
+<div>Line 3</div>
+</body>
+</html>

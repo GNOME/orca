@@ -141,6 +141,7 @@ class OrcaNavListGUI:
     def _onActivateClicked(self, widget):
         obj, offset = self._getSelectedAccessibleAndOffset()
         self._gui.destroy()
+        self._script.utilities.setCaretPosition(obj, offset)
         try:
             action = obj.queryAction()
         except:

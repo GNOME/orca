@@ -1632,11 +1632,17 @@ class Script(default.Script):
             return True
 
         state = event.source.getState()
-        if not state.contains(pyatspi.STATE_EDITABLE) \
-           and event.source != orca_state.locusOfFocus:
-            msg = "WEB: Done processing non-editable, non-locusOfFocus source"
-            debug.println(debug.LEVEL_INFO, msg)
-            return True
+        if not state.contains(pyatspi.STATE_EDITABLE):
+            if event.source != orca_state.locusOfFocus:
+                msg = "WEB: Done processing non-editable, non-locusOfFocus source"
+                debug.println(debug.LEVEL_INFO, msg)
+                return True
+
+            if self.utilities.isClickableElement(event.source):
+                msg = "WEB: Event handled: Re-setting locusOfFocus to changed clickable"
+                debug.println(debug.LEVEL_INFO, msg)
+                orca.setLocusOfFocus(None, event.source, force=True)
+                return True
 
         return False
 
