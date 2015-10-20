@@ -2,17 +2,17 @@
 # Copyright © 2004, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 orca
 # This file is distributed under the same license as the orca package.
 # Rui Batista <ruiandrebatista@gmail.com>, 2009, 2010, 2011, 2012.
-# Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
 # Duarte Loreto <happyguy_pt@hotmail.com>, 2004, 2006, 2007, 2008, 2013, 2015.
+# Pedro Albuquerque <palbuquerque73o@gmail.com>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 3.10\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2015-10-19 00:13+0000\n"
-"PO-Revision-Date: 2015-10-19 13:36+0100\n"
-"Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"POT-Creation-Date: 2015-10-19 12:37+0000\n"
+"PO-Revision-Date: 2015-10-20 06:27+0100\n"
+"Last-Translator: Pedro Albuquerque <palbuquerque73o@gmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
@@ -747,7 +747,7 @@ msgstr "dois pontos"
 msgid "semicolon"
 msgstr "ponto e vírgula"
 
-#. Translators: this is the spoken word for the character '< ' (U+003c)
+#. Translators: this is the spoken word for the character '< ' (U+003c)
 #.
 #: ../src/orca/chnames.py:119
 msgid "less"
@@ -759,7 +759,7 @@ msgstr "menor"
 msgid "equals"
 msgstr "igual"
 
-#. Translators: this is the spoken word for the character '> ' (U+003e)
+#. Translators: this is the spoken word for the character '> ' (U+003e)
 #.
 #: ../src/orca/chnames.py:127
 msgid "greater"
@@ -1873,7 +1873,6 @@ msgstr "cabeça de seta à direita"
 #. * http://en.wikipedia.org/wiki/Specials_(Unicode_block)
 #.
 #: ../src/orca/chnames.py:874
-#| msgid "Goes to next character."
 msgid "object replacement character"
 msgstr "carácter de substituição"
 
@@ -2853,21 +2852,18 @@ msgstr "Mostra uma lista de caixas de seleção."
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: ../src/orca/cmdnames.py:774
-#| msgid "Goes to previous table."
 msgid "Goes to previous clickable."
 msgstr "Vai para o clicável anterior."
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: ../src/orca/cmdnames.py:778
-#| msgid "Goes to next table."
 msgid "Goes to next clickable."
 msgstr "Vai para o clicável seguinte."
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: ../src/orca/cmdnames.py:782
-#| msgid "Displays a list of tables."
 msgid "Displays a list of clickables."
 msgstr "Mostra uma lista de clicáveis."
 
@@ -2954,19 +2950,16 @@ msgstr "Mostra uma lista de títulos no nível %d."
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:833
-#| msgid "Goes to previous line."
 msgid "Goes to previous image."
 msgstr "Vai para a imagem anterior."
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:836
-#| msgid "Goes to next line."
 msgid "Goes to next image."
 msgstr "Vai para a imagem seguinte."
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:839
-#| msgid "Displays a list of tables."
 msgid "Displays a list of images."
 msgstr "Mostra uma lista de imagens."
 
@@ -2988,7 +2981,6 @@ msgstr "Vai para o marcador de zona seguinte."
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: ../src/orca/cmdnames.py:854
-#| msgid "Displays a list of links."
 msgid "Displays a list of landmarks."
 msgstr "Mostra uma lista de marcadores."
 
@@ -3015,13 +3007,11 @@ msgstr "Mostra uma lista de objetos grandes."
 
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:872
-#| msgid "Goes to previous line."
 msgid "Goes to previous link."
 msgstr "Vai para a ligação anterior."
 
 #. Translators: this is for navigating among links in a document.
 #: ../src/orca/cmdnames.py:875
-#| msgid "Goes to next line."
 msgid "Goes to next link."
 msgstr "Vai para a ligação seguinte."
 
@@ -3234,7 +3224,6 @@ msgstr "Mostra uma lista de ligações visitadas."
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:35
-#| msgid "Saturate blue"
 msgctxt "color name"
 msgid "alice blue"
 msgstr "azul alice"
@@ -3283,8 +3272,6 @@ msgstr "bisque"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:65
-#| msgctxt "textattr"
-#| msgid "black"
 msgctxt "color name"
 msgid "black"
 msgstr "preto"
@@ -3293,7 +3280,6 @@ msgstr "preto"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:70
-#| msgid "black diamond"
 msgctxt "color name"
 msgid "blanched almond"
 msgstr "bege claro"
@@ -3334,7 +3320,6 @@ msgstr "madeira clara"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:95
-#| msgid "Saturate blue"
 msgctxt "color name"
 msgid "cadet blue"
 msgstr "azul cadete"
@@ -3399,7 +3384,6 @@ msgstr "ciano"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:135
-#| msgid "Saturate blue"
 msgctxt "color name"
 msgid "dark blue"
 msgstr "azul escuro"
@@ -3424,7 +3408,6 @@ msgstr "dourado escuro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:150
-#| msgid "a grave"
 msgctxt "color name"
 msgid "dark gray"
 msgstr "cinzento escuro"
@@ -3433,7 +3416,6 @@ msgstr "cinzento escuro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:155
-#| msgid "Saturate green"
 msgctxt "color name"
 msgid "dark green"
 msgstr "verde escuro"
@@ -3458,7 +3440,6 @@ msgstr "magenta escuro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:170
-#| msgid "Saturate green"
 msgctxt "color name"
 msgid "dark olive green"
 msgstr "verde azeitona escuro"
@@ -3483,7 +3464,6 @@ msgstr "orquídea escuro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:185
-#| msgid "Saturate red"
 msgctxt "color name"
 msgid "dark red"
 msgstr "vermelho escuro"
@@ -3500,7 +3480,6 @@ msgstr "salmão escuro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:195
-#| msgid "Saturate green"
 msgctxt "color name"
 msgid "dark sea green"
 msgstr "verde mar escuro"
@@ -3509,7 +3488,6 @@ msgstr "verde mar escuro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:200
-#| msgid "Saturate blue"
 msgctxt "color name"
 msgid "dark slate blue"
 msgstr "azul dark slate"
@@ -3558,7 +3536,6 @@ msgstr "azul celeste profundo"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:230
-#| msgid "i grave"
 msgctxt "color name"
 msgid "dim gray"
 msgstr "cinzento esbatido"
@@ -3591,7 +3568,6 @@ msgstr "branco floral"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:250
-#| msgid "Desaturate green"
 msgctxt "color name"
 msgid "forest green"
 msgstr "verde floresta"
@@ -3640,7 +3616,6 @@ msgstr "dourado velho"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:280
-#| msgid "grayed"
 msgctxt "color name"
 msgid "gray"
 msgstr "cinzento"
@@ -3649,7 +3624,6 @@ msgstr "cinzento"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:285
-#| msgid "degrees"
 msgctxt "color name"
 msgid "green"
 msgstr "verde"
@@ -3682,7 +3656,6 @@ msgstr "rosa quente"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:305
-#| msgid "Hindi Grade 1"
 msgctxt "color name"
 msgid "indian red"
 msgstr "vermelho índio"
@@ -3747,7 +3720,6 @@ msgstr "chiffon limão"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:345
-#| msgid "right brace"
 msgctxt "color name"
 msgid "light blue"
 msgstr "azul claro"
@@ -3756,7 +3728,6 @@ msgstr "azul claro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:350
-#| msgid "right control"
 msgctxt "color name"
 msgid "light coral"
 msgstr "coral claro"
@@ -3765,7 +3736,6 @@ msgstr "coral claro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:355
-#| msgid "right paren"
 msgctxt "color name"
 msgid "light cyan"
 msgstr "ciano claro"
@@ -3782,7 +3752,6 @@ msgstr "amarelo dourado claro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:365
-#| msgid "right brace"
 msgctxt "color name"
 msgid "light gray"
 msgstr "cinzento claro"
@@ -3791,7 +3760,6 @@ msgstr "cinzento claro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:370
-#| msgid "right paren"
 msgctxt "color name"
 msgid "light green"
 msgstr "verde claro"
@@ -3800,7 +3768,6 @@ msgstr "verde claro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:375
-#| msgid "right paren"
 msgctxt "color name"
 msgid "light pink"
 msgstr "rosa claro"
@@ -3809,7 +3776,6 @@ msgstr "rosa claro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:380
-#| msgid "right alt"
 msgctxt "color name"
 msgid "light salmon"
 msgstr "salmão claro"
@@ -3818,7 +3784,6 @@ msgstr "salmão claro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:385
-#| msgid "right paren"
 msgctxt "color name"
 msgid "light sea green"
 msgstr "verde mar claro"
@@ -3827,7 +3792,6 @@ msgstr "verde mar claro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:390
-#| msgid "right super"
 msgctxt "color name"
 msgid "light sky blue"
 msgstr "azul celeste claro"
@@ -3852,7 +3816,6 @@ msgstr "azul aço claro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:405
-#| msgid "right arrow"
 msgctxt "color name"
 msgid "light yellow"
 msgstr "amarelo claro"
@@ -3877,7 +3840,6 @@ msgstr "verde lima"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:420
-#| msgid "newline"
 msgctxt "color name"
 msgid "linen"
 msgstr "linho"
@@ -3886,7 +3848,6 @@ msgstr "linho"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:425
-#| msgid "Image"
 msgctxt "color name"
 msgid "magenta"
 msgstr "magenta"
@@ -3943,7 +3904,6 @@ msgstr "verde mar médio"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:460
-#| msgid "Desaturate blue"
 msgctxt "color name"
 msgid "medium slate blue"
 msgstr "azul slate médio"
@@ -4056,7 +4016,6 @@ msgstr "laranja"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:530
-#| msgid "Saturate red"
 msgctxt "color name"
 msgid "orange red"
 msgstr "vermelho alaranjado"
@@ -4081,7 +4040,6 @@ msgstr "dourado pálido"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:545
-#| msgid "Saturate green"
 msgctxt "color name"
 msgid "pale green"
 msgstr "verde pálido"
@@ -4162,7 +4120,6 @@ msgstr "púrpura"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:595
-#| msgid "tre"
 msgctxt "color name"
 msgid "red"
 msgstr "vermelho"
@@ -4179,7 +4136,6 @@ msgstr "castanho rosado"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:605
-#| msgid "Saturate blue"
 msgctxt "color name"
 msgid "royal blue"
 msgstr "azul real"
@@ -4212,7 +4168,6 @@ msgstr "castanho areia"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:625
-#| msgid "%s screen"
 msgctxt "color name"
 msgid "sea green"
 msgstr "verde mar"
@@ -4253,7 +4208,6 @@ msgstr "azul celeste"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:650
-#| msgid "Desaturate blue"
 msgctxt "color name"
 msgid "slate blue"
 msgstr "azul slate"
@@ -4286,7 +4240,6 @@ msgstr "verde primavera"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:670
-#| msgid "Desaturate blue"
 msgctxt "color name"
 msgid "steel blue"
 msgstr "azul aço"
@@ -4295,7 +4248,6 @@ msgstr "azul aço"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:675
-#| msgid "btn"
 msgctxt "color name"
 msgid "tan"
 msgstr "bronzeado"
@@ -4352,7 +4304,6 @@ msgstr "erva"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:710
-#| msgid "white space"
 msgctxt "color name"
 msgid "white"
 msgstr "branco"
@@ -4361,7 +4312,6 @@ msgstr "branco"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:715
-#| msgid "white space"
 msgctxt "color name"
 msgid "white smoke"
 msgstr "branco fumo"
@@ -4378,7 +4328,6 @@ msgstr "amarelo"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:725
-#| msgid "Full Screen"
 msgctxt "color name"
 msgid "yellow green"
 msgstr "amarelo esverdeado"
@@ -4421,7 +4370,6 @@ msgstr "_Ativar"
 #. If this setting is not enabled, the second press of "e" would continue to be
 #. a navigation command to move amongst entries.
 #: ../src/orca/guilabels.py:58
-#| msgid "Enable _structural navigation"
 msgid "Automatic focus mode during structural navigation"
 msgstr "Modo de foco automático durante a navegação estruturada"
 
@@ -4967,7 +4915,6 @@ msgstr "Título"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text (alt text, title, etc.) associated with an image.
 #: ../src/orca/guilabels.py:439
-#| msgid "Image"
 msgctxt "structural navigation"
 msgid "Image"
 msgstr "Imagem"
@@ -4988,7 +4935,6 @@ msgstr "Etiqueta"
 #. tag attribute 'role' used to identify important part of webpage like banners,
 #. main context, search etc.
 #: ../src/orca/guilabels.py:453
-#| msgid "trademark"
 msgctxt "structural navigation"
 msgid "Landmark"
 msgstr "Marco"
@@ -5142,8 +5088,6 @@ msgstr "Caixas de verificação"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. "Clickables" are web elements which have an "onClick" handler.
 #: ../src/orca/guilabels.py:555
-#| msgctxt "structural navigation"
-#| msgid "Tables"
 msgctxt "structural navigation"
 msgid "Clickables"
 msgstr "Clicáveis"
@@ -5184,7 +5128,6 @@ msgstr "Títulos"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: ../src/orca/guilabels.py:580
-#| msgid "Image"
 msgctxt "structural navigation"
 msgid "Images"
 msgstr "Imagens"
@@ -5205,7 +5148,6 @@ msgstr "Títulos no nível %d"
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
 #: ../src/orca/guilabels.py:593
-#| msgid "trademark"
 msgctxt "structural navigation"
 msgid "Landmarks"
 msgstr "Marcos"
@@ -6842,12 +6784,6 @@ msgstr "Modo de aprendizagem.  Prima \"Esc\" para sair."
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
 #: ../src/orca/messages.py:853
-#| msgid ""
-#| "Entering learn mode.  Press any key to hear its function.  To get a list "
-#| "of the screen reader's default shortcuts, press 1. To get a list of the "
-#| "screen reader's shortcuts for the current application, press 2. To view "
-#| "the screen reader's documentation, press F1. To exit learn mode, press "
-#| "the escape key."
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the "
 "screen reader's documentation, press F1. To get a list of the screen "
@@ -7182,7 +7118,6 @@ msgstr "Modo de navegação"
 #. key presses as something that should be handled by the focused widget.
 #. This string is the message presented when Orca switches to focus mode.
 #: ../src/orca/messages.py:1106
-#| msgid "List shortcuts mode."
 msgid "Focus mode"
 msgstr "Modo de foco"
 
@@ -7276,7 +7211,6 @@ msgstr "Não existem mais objetos grandes."
 #. elements which have an "onClick" action. This is a detailed message which
 #. will be presented to the user if no more clickable elements can be found.
 #: ../src/orca/messages.py:1174
-#| msgid "No more tables."
 msgid "No more clickables."
 msgstr "Não existem mais clicáveis."
 
@@ -7321,7 +7255,6 @@ msgstr "Não existem mais títulos de nível %d."
 #. to image. This is a detailed message which will be presented to the user
 #. if no more images can be found.
 #: ../src/orca/messages.py:1205
-#| msgid "No more tables."
 msgid "No more images."
 msgstr "Não existem mais imagens."
 
@@ -8350,8 +8283,6 @@ msgstr "expandido"
 #. Translators: This is a state which applies to elements in document conent
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
 #: ../src/orca/object_properties.py:95
-#| msgctxt "structural navigation"
-#| msgid "Description"
 msgid "has long description"
 msgstr "tem descrição longa"
 
@@ -8369,35 +8300,30 @@ msgstr "vertical"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:106
-#| msgid "checked"
 msgctxt "checkbox"
 msgid "checked"
 msgstr "marcada"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:109
-#| msgid "not checked"
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "não marcada"
 
 #. Translators: This is a state which applies to a check box.
 #: ../src/orca/object_properties.py:112
-#| msgid "partially checked"
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "parcialmente marcada"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:115
-#| msgid "pressed"
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "clicado"
 
 #. Translators: This is a state which applies to a toggle button.
 #: ../src/orca/object_properties.py:118
-#| msgid "not pressed"
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "não clicado"
@@ -8982,6 +8908,31 @@ msgstr "Secretária "
 #: ../src/orca/scripts/apps/planner/speech_generator.py:63
 msgid "Display more options"
 msgstr "Mostrar mais opções"
+
+#. Translators: this is what the name of the spell checking
+#. dialog in Thunderbird begins with. The translated form
+#. has to match what Thunderbird is using.  We hate keying
+#. off stuff like this, but we're forced to do so in this case.
+#.
+#: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
+#| msgctxt "textattr"
+#| msgid "spelling"
+msgid "Check Spelling"
+msgstr "Verificar ortografia"
+
+#. Translators: these represent the number of pixels
+#. for the left or right margins in a document.  We
+#. are hesitant to interpret the values -- they are
+#. given to us in some unknown form by the
+#. application, so we leave things in plural form
+#. here.
+#.
+#: ../src/orca/scripts/default.py:3339 ../src/orca/scripts/default.py:3351
+#, python-format
+msgid "%(key)s %(value)s pixel"
+msgid_plural "%(key)s %(value)s pixels"
+msgstr[0] "%(key)s %(value)s pixel"
+msgstr[1] "%(key)s %(value)s pixels"
 
 #. Translators: this attribute specifies the background color of the text.
 #. The value is an RGB value of the format "u,u,u".
