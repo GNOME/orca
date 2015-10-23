@@ -1308,9 +1308,11 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if role == pyatspi.ROLE_EMBEDDED and not self.getDocumentForObject(obj.parent):
-            msg = "WEB: %s is top-level web application" % obj
-            debug.println(debug.LEVEL_INFO, msg)
-            return True
+            uri = self.documentFrameURI()
+            if uri:
+                msg = "WEB: %s is top-level web application. URI: %s" % (obj, uri)
+                debug.println(debug.LEVEL_INFO, msg)
+                return True
 
         return False
 
