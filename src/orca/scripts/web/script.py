@@ -1398,12 +1398,6 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return True
 
-        if document.getState().contains(pyatspi.STATE_BUSY):
-            msg = "WEB: Document is busy. Updating locusOfFocus quietly."
-            debug.println(debug.LEVEL_INFO, msg)
-            orca.setLocusOfFocus(event, event.source, False)
-            return True
-
         state = event.source.getState()
         if state.contains(pyatspi.STATE_EDITABLE):
             msg = "WEB: Event source is editable"
