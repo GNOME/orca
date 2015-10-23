@@ -181,9 +181,7 @@ class Utilities(script_utilities.Utilities):
         if not targets:
             return []
 
-        roles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
-        isDocument = lambda x: x and x.getRole() in roles
-        return list(filter(isDocument, targets))
+        return list(filter(self.isDocument, targets))
 
     def documentFrame(self, obj=None):
         isShowing = lambda x: x and x.getState().contains(pyatspi.STATE_SHOWING)
