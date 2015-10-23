@@ -1063,7 +1063,13 @@ class Script(default.Script):
         self.utilities.clearCachedObjects()
 
         obj, offset = self.utilities.getCaretContext()
-        if self.utilities.isTopLevelWebApp(event.source):
+
+        try:
+            sourceIsBusy = event.souce.getState().contains(pyatspi.STATE_BUSY)
+        except:
+            sourceIsBusy = False
+
+        if not sourceIsBusy and self.utilities.isTopLevelWebApp(event.source):
             msg = "WEB: Setting locusOfFocus to %s with sticky focus mode" % obj
             debug.println(debug.LEVEL_INFO, msg)
             orca.setLocusOfFocus(event, obj)
