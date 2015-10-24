@@ -2246,7 +2246,7 @@ msgstr "Sníží hlasitos řeči."
 #. We call it 'silencing'.
 #: ../src/orca/cmdnames.py:401
 msgid "Toggles the silencing of speech."
-msgstr "Zapne / vypne čtení."
+msgstr "Zapne/vypne čtení."
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -2254,7 +2254,7 @@ msgstr "Zapne / vypne čtení."
 #. This string describes that command.
 #: ../src/orca/cmdnames.py:407
 msgid "Toggles speech verbosity level."
-msgstr "Přepne úroveň hlasitosti čtení."
+msgstr "Přepne úroveň čtení podrobností."
 
 #. Translators: this string is associated with the keyboard shortcut to quit
 #. Orca.
