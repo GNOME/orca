@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca gnome-3-0\n"
-"POT-Creation-Date: 2015-05-02 23:14+0000\n"
-"PO-Revision-Date: 2015-05-03 12:58+0200\n"
+"POT-Creation-Date: 2015-10-24 01:03+0000\n"
+"PO-Revision-Date: 2015-10-24 13:47+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -110,19 +110,13 @@ msgstr "Příkazy pro záložky"
 #: C/commands_bookmarks.page:20
 msgid ""
 "<app>Orca</app> provides several commands which can be used to \"bookmark\" "
-"a given object for the purpose of navigating back to it later. Most of these "
-"commands are \"bound\" to keystrokes. Please see <link xref="
-"\"howto_key_bindings\">Modifying Keybindings</link> for information on how "
-"to bind unbound commands."
+"a given object for the purpose of navigating back to it later."
 msgstr ""
 "<app>Orca</app> nabízí několik příkazů, pomocí kterých lze pro zadaný objekt "
-"použít „záložku“ za účelem pozdějšího vrácení se k tomuto objektu. Většina "
-"těchto příkazů je navázána na klávesové zkratky. Jak navázat i zbývající "
-"příkazy zjistíte v kapitole <link xref=\"howto_key_bindings\">Změna "
-"klávesových zkratek</link>."
+"použít „záložku“, abyste se k tomuto objektu mohli později snadno vracet."
 
 #. (itstool) path: item/p
-#: C/commands_bookmarks.page:29
+#: C/commands_bookmarks.page:26
 msgid ""
 "Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</key> "
 "<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
@@ -131,7 +125,7 @@ msgstr ""
 "<key>Alt</key><key>1</key></keyseq> – <key>6</key>"
 
 #. (itstool) path: item/p
-#: C/commands_bookmarks.page:35
+#: C/commands_bookmarks.page:32
 msgid ""
 "Save the defined bookmarks for the application or page: <keyseq><key>Orca "
 "Modifier</key><key>Alt</key><key>B</key></keyseq>"
@@ -140,7 +134,7 @@ msgstr ""
 "<keyseq><key>Modifikátor Orca</key><key>Alt</key><key>B</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_bookmarks.page:41
+#: C/commands_bookmarks.page:38
 msgid ""
 "Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key> "
 "<key>1</key></keyseq>-<key>6</key>"
@@ -149,7 +143,7 @@ msgstr ""
 "key><key>1</key></keyseq> – <key>6</key>"
 
 #. (itstool) path: item/p
-#: C/commands_bookmarks.page:47
+#: C/commands_bookmarks.page:44
 msgid ""
 "Go to the previous bookmark for the application or page: <keyseq><key>Orca "
 "Modifier</key><key>Shift</key><key>B</key> </keyseq>"
@@ -158,22 +152,13 @@ msgstr ""
 "<keyseq><key>Modifikátor Orca</key><key>Shift</key><key>B</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_bookmarks.page:54
+#: C/commands_bookmarks.page:51
 msgid ""
 "Go to the next bookmark for the application or page: <keyseq><key>Orca "
 "Modifier</key><key>B</key></keyseq>"
 msgstr ""
 "Přejít na následující záložku pro aplikaci nebo stránku: "
 "<keyseq><key>Modifikátor Orca</key><key>B</key></keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:60
-msgid ""
-"\"Where am I\" information for this bookmark relative to the current pointer "
-"location: (Unbound)"
-msgstr ""
-"Informace „Kde se nacházím“ pro tuto záložku relativně vůči aktuální poloze "
-"ukazatele: (bez klávesové zkratky)"
 
 #. (itstool) path: info/title
 #: C/commands_braille.page:6
@@ -1434,8 +1419,8 @@ msgstr "Čtení"
 
 #. (itstool) path: info/desc
 #: C/commands_reading.page:10
-msgid "Commands for accessing document text"
-msgstr "Příkazy pro přístup k textu dokumentu"
+msgid "Commands for accessing document content"
+msgstr "Příkazy pro přístup k obsahu dokumentu"
 
 #. (itstool) path: page/title
 #: C/commands_reading.page:21
@@ -1611,6 +1596,38 @@ msgstr ""
 "Přenosný počítač: <keyseq><key>Modifikátor Orca</key> <key>Enter</key></"
 "keyseq> (dvojité zmáčknutí)"
 
+#. (itstool) path: section/title
+#: C/commands_reading.page:222
+msgid "Browse and Focus Modes"
+msgstr "Režimy procházení a zaměřování"
+
+#. (itstool) path: section/p
+#: C/commands_reading.page:223
+msgid ""
+"<app>Orca</app>'s Browse and Focus modes let you switch between reading and "
+"interacting with web content."
+msgstr ""
+"Režimy procházení a zaměřování v čtečce <app>Orca</app> umožňují přepínat se "
+"mezi čtením nebo interakcí s webovým obsahem."
+
+#. (itstool) path: item/p
+#: C/commands_reading.page:229
+msgid ""
+"Switch between browse mode and focus mode: <keyseq><key>Orca Modifier</"
+"key><key>A</key></keyseq>"
+msgstr ""
+"Přepnout mezi režimem procházení a zaměřování: <keyseq><key>Modifikátor "
+"Orca</key><key>A</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_reading.page:235
+msgid ""
+"Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
+"keyseq> (double-clicked)"
+msgstr ""
+"Zapnout „přichytávací“ režim zaměřování: <keyseq><key>Modifikátor Orca</"
+"key><key>A</key></keyseq> (dvojité zmáčknutí)"
+
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
 msgctxt "sort"
@@ -1665,49 +1682,68 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:40
+msgid ""
+"Toggle between verbose and brief verbosity levels: <keyseq><key>Orca "
+"Modifier</key><key>V</key></keyseq>"
+msgstr ""
+"Přepnout mezi vysokou a nízkou úrovní upovídanosti: <keyseq><key>Modifikátor "
+"Orca</key> <key>V</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_speech_settings.page:46
 msgid "Enable/disable speaking of indentation and justification: (Unbound)"
 msgstr ""
 "Povolit/zakázat oznamování odsazení a zarovnání: (bez klávesové zkratky)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:45
+#: C/commands_speech_settings.page:51
 msgid "Cycle to the next spoken punctuation level: (Unbound)"
 msgstr ""
 "Cyklicky přejít na následující úroveň vyslovování interpunkce: (bez "
 "klávesové zkratky)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:48
+#: C/commands_speech_settings.page:54
 msgid "Cycle to the next key echo level: (Unbound)"
 msgstr ""
 "Cyklicky přejít na následujcí úroveň oznamování kláves: (bez klávesové "
 "zkratky)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:51
+#: C/commands_speech_settings.page:57
 msgid "Cycle to the next capitalization style: (Unbound)"
 msgstr ""
 "Cyklicky přejít na následující styl velkých písmen: (bez klávesové zkratky)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:54
+#: C/commands_speech_settings.page:60
 msgid "Decrease the rate: (Unbound)"
 msgstr "Snížit tempo hlasu: (bez klávesové zkratky)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:57
+#: C/commands_speech_settings.page:63
 msgid "Increase the rate: (Unbound)"
 msgstr "Zvýšit tempo hlasu: (bez klávesové zkratky)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:60
+#: C/commands_speech_settings.page:66
 msgid "Decrease the pitch: (Unbound)"
 msgstr "Snížit výšku hlasu: (bez klávesové zkratky)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:63
+#: C/commands_speech_settings.page:69
 msgid "Increase the pitch: (Unbound)"
 msgstr "Zvýšit výšku hlasu: (bez klávesové zkratky)"
+
+#. (itstool) path: item/p
+#: C/commands_speech_settings.page:72
+msgid "Decrease the volume: (Unbound)"
+msgstr "Snížit hlasitost: (bez klávesové zkratky)"
+
+#. (itstool) path: item/p
+#: C/commands_speech_settings.page:75
+msgid "Increase the volume: (Unbound)"
+msgstr "Zvýšit hlasitost: (bez klávesové zkratky)"
 
 #. (itstool) path: info/title
 #: C/commands_structural_navigation.page:6
@@ -1997,26 +2033,15 @@ msgstr ""
 "Zobrazit seznam zaškrtávacích políček: <keyseq><key>Alt</key><key>Shift</"
 "key><key>X</key></keyseq>"
 
-#. (itstool) path: item/p
-#: C/commands_structural_navigation.page:211
-msgid ""
-"Next and previous object (to exit field): <keyseq><key>Orca Modifier</"
-"key><key>Right</key></keyseq> and <keyseq><key>Orca Modifier</key><key>Left</"
-"key></keyseq>"
-msgstr ""
-"Následující a předchozí objekt (pro opuštění pole): <keyseq><key>Modifikátor "
-"Orca</key><key>→</key></keyseq> a <keyseq><key>Modifikátor Orca</key><key>←</"
-"key></keyseq>"
-
 #. (itstool) path: section/title
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:220
+#: C/commands_structural_navigation.page:213
 #: C/howto_structural_navigation.page:28
 msgid "Links"
 msgstr "Odkazy"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:223
+#: C/commands_structural_navigation.page:216
 msgid ""
 "Next and previous link: <keyseq><key>K</key></keyseq> and "
 "<keyseq><key>Shift</key><key>K</key></keyseq>"
@@ -2025,7 +2050,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>K</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:230
+#: C/commands_structural_navigation.page:223
 msgid ""
 "Display a list of links: <keyseq><key>Alt</key><key>Shift</key><key>K</key></"
 "keyseq>"
@@ -2034,7 +2059,7 @@ msgstr ""
 "keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:236
+#: C/commands_structural_navigation.page:229
 msgid ""
 "Next and previous unvisited link: <keyseq><key>U</key></keyseq> and "
 "<keyseq><key>Shift</key><key>U</key></keyseq>"
@@ -2043,7 +2068,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>U</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:243
+#: C/commands_structural_navigation.page:236
 msgid ""
 "Display a list of unvisited links: <keyseq><key>Alt</key><key>Shift</"
 "key><key>U</key></keyseq>"
@@ -2052,7 +2077,7 @@ msgstr ""
 "key><key>U</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:249
+#: C/commands_structural_navigation.page:242
 msgid ""
 "Next and previous visited link: <keyseq><key>V</key></keyseq> and "
 "<keyseq><key>Shift</key><key>V</key></keyseq>"
@@ -2061,7 +2086,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>V</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:256
+#: C/commands_structural_navigation.page:249
 msgid ""
 "Display a list of visited links: <keyseq><key>Alt</key><key>Shift</"
 "key><key>V</key></keyseq>"
@@ -2070,12 +2095,12 @@ msgstr ""
 "key><key>V</key></keyseq>"
 
 #. (itstool) path: section/title
-#: C/commands_structural_navigation.page:264
+#: C/commands_structural_navigation.page:257
 msgid "Lists"
 msgstr "Seznamy"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:267
+#: C/commands_structural_navigation.page:260
 msgid ""
 "Next and previous list: <keyseq><key>L</key></keyseq> and "
 "<keyseq><key>Shift</key><key>L</key></keyseq>"
@@ -2084,7 +2109,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>L</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:274
+#: C/commands_structural_navigation.page:267
 msgid ""
 "Display a list of lists: <keyseq><key>Alt</key><key>Shift</key><key>L</key></"
 "keyseq>"
@@ -2093,7 +2118,7 @@ msgstr ""
 "keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:280
+#: C/commands_structural_navigation.page:273
 msgid ""
 "Next and previous list item: <keyseq><key>I</key></keyseq> and "
 "<keyseq><key>Shift</key><key>I</key></keyseq>"
@@ -2102,7 +2127,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>I</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:287
+#: C/commands_structural_navigation.page:280
 msgid ""
 "Display a list of list items: <keyseq><key>Alt</key><key>Shift</key><key>I</"
 "key></keyseq>"
@@ -2112,12 +2137,12 @@ msgstr ""
 
 #. (itstool) path: section/title
 #. (itstool) path: page/title
-#: C/commands_structural_navigation.page:295 C/howto_tables.page:17
+#: C/commands_structural_navigation.page:288 C/howto_tables.page:17
 msgid "Tables"
 msgstr "Tabulky"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:298
+#: C/commands_structural_navigation.page:291
 msgid ""
 "Next and previous table: <keyseq><key>T</key></keyseq> and "
 "<keyseq><key>Shift</key><key>T</key></keyseq>"
@@ -2126,7 +2151,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>T</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:305
+#: C/commands_structural_navigation.page:298
 msgid ""
 "Display a list of tables: <keyseq><key>Alt</key><key>Shift</key><key>T</"
 "key></keyseq>"
@@ -2135,14 +2160,14 @@ msgstr ""
 "keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:311
+#: C/commands_structural_navigation.page:304
 msgid ""
 "Cell on left: <keyseq><key>Alt</key><key>Shift</key><key>Left</key></keyseq>"
 msgstr ""
 "Buňka vlevo: <keyseq><key>Alt</key><key>Shift</key><key>←</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:317
+#: C/commands_structural_navigation.page:310
 msgid ""
 "Cell on right: <keyseq><key>Alt</key><key>Shift</key><key>Right</key></"
 "keyseq>"
@@ -2150,19 +2175,19 @@ msgstr ""
 "Buňka vpravo: <keyseq><key>Alt</key><key>Shift</key><key>→</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:323
+#: C/commands_structural_navigation.page:316
 msgid ""
 "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgstr "Buňka nad: <keyseq><key>Alt</key><key>Shift</key><key>↑</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:329
+#: C/commands_structural_navigation.page:322
 msgid ""
 "Cell below: <keyseq><key>Alt</key><key>Shift</key><key>Down</key></keyseq>"
 msgstr "Buňka pod: <keyseq><key>Alt</key><key>Shift</key><key>↓</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:335
+#: C/commands_structural_navigation.page:328
 msgid ""
 "First cell in table: <keyseq><key>Alt</key><key>Shift</key><key>Home</key></"
 "keyseq>"
@@ -2171,7 +2196,7 @@ msgstr ""
 "key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:341
+#: C/commands_structural_navigation.page:334
 msgid ""
 "Last cell in table: <keyseq><key>Alt</key><key>Shift</key><key>End</key></"
 "keyseq>"
@@ -2180,12 +2205,12 @@ msgstr ""
 "key></keyseq>"
 
 #. (itstool) path: section/title
-#: C/commands_structural_navigation.page:349
+#: C/commands_structural_navigation.page:342
 msgid "Text Blocks"
 msgstr "Textové bloky"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:352
+#: C/commands_structural_navigation.page:345
 msgid ""
 "Next and previous paragraph: <keyseq><key>P</key></keyseq> and "
 "<keyseq><key>Shift</key><key>P</key></keyseq>"
@@ -2194,7 +2219,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>P</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:359
+#: C/commands_structural_navigation.page:352
 msgid ""
 "Display a list of paragraphs: <keyseq><key>Alt</key><key>Shift</key><key>P</"
 "key></keyseq>"
@@ -2203,7 +2228,7 @@ msgstr ""
 "key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:365
+#: C/commands_structural_navigation.page:358
 msgid ""
 "Next and previous blockquote: <keyseq><key>Q</key></keyseq> and "
 "<keyseq><key>Shift</key><key>Q</key></keyseq>"
@@ -2212,7 +2237,7 @@ msgstr ""
 "<key>Q</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:372
+#: C/commands_structural_navigation.page:365
 msgid ""
 "Display a list of blockquotes: <keyseq><key>Alt</key><key>Shift</key><key>Q</"
 "key></keyseq>"
@@ -2221,7 +2246,7 @@ msgstr ""
 "key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:378
+#: C/commands_structural_navigation.page:371
 msgid ""
 "Next and previous \"large object\": <keyseq><key>O</key></keyseq> and "
 "<keyseq><key>Shift</key><key>O</key></keyseq>"
@@ -2230,7 +2255,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>O</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:385
+#: C/commands_structural_navigation.page:378
 msgid ""
 "Display a list of \"large objects\": <keyseq><key>Alt</key><key>Shift</"
 "key><key>O</key></keyseq>"
@@ -2239,12 +2264,12 @@ msgstr ""
 "key><key>O</key></keyseq>"
 
 #. (itstool) path: section/title
-#: C/commands_structural_navigation.page:393
+#: C/commands_structural_navigation.page:386
 msgid "Other Elements"
 msgstr "Ostatní prvky"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:396
+#: C/commands_structural_navigation.page:389
 msgid ""
 "Next and previous landmark: <keyseq><key>M</key></keyseq> and "
 "<keyseq><key>Shift</key><key>M</key></keyseq>"
@@ -2253,7 +2278,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>M</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:403
+#: C/commands_structural_navigation.page:396
 msgid ""
 "Display a list of landmarks: <keyseq><key>Alt</key><key>Shift</key><key>M</"
 "key></keyseq>"
@@ -2262,7 +2287,7 @@ msgstr ""
 "key><key>M</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:409
+#: C/commands_structural_navigation.page:402
 msgid ""
 "Next and previous separator: <keyseq><key>S</key></keyseq> and "
 "<keyseq><key>Shift</key><key>S</key></keyseq>"
@@ -2271,13 +2296,40 @@ msgstr ""
 "<keyseq><key>Shift</key><key>S</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:416
+#: C/commands_structural_navigation.page:409
 msgid ""
-"Next and previous anchor: <keyseq><key>A</key></keyseq> and "
+"Next and previous \"clickable\": <keyseq><key>A</key></keyseq> and "
 "<keyseq><key>Shift</key><key>A</key></keyseq>"
 msgstr ""
-"Následující a předchozí kotva: <keyseq><key>A</key></keyseq> a "
+"Následující a předchozí „kliknutelný“: <keyseq><key>A</key></keyseq> a "
 "<keyseq><key>Shift</key><key>A</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_structural_navigation.page:416
+msgid ""
+"Display a list of \"clickables\": <keyseq><key>Alt</key><key>Shift</"
+"key><key>A</key></keyseq>"
+msgstr ""
+"Zobrazit seznam „kliknutelných“: <keyseq><key>Alt</key><key>Shift</"
+"key><key>A</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_structural_navigation.page:422
+msgid ""
+"Next and previous image: <keyseq><key>G</key></keyseq> and "
+"<keyseq><key>Shift</key><key>G</key></keyseq>"
+msgstr ""
+"Následující a předchozí obrázek: <keyseq><key>G</key></keyseq> a "
+"<keyseq><key>Shift</key><key>G</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_structural_navigation.page:429
+msgid ""
+"Display a list of images: <keyseq><key>Alt</key><key>Shift</key><key>G</"
+"key></keyseq>"
+msgstr ""
+"Zobrazit seznam obrázků: <keyseq><key>Alt</key><key>Shift</key><key>G</key></"
+"keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_table.page:6
@@ -2600,17 +2652,8 @@ msgstr ""
 "můžete pokračovat ve čtení. Jinak se aktivuje <link xref=\"howto_flat_review"
 "\">plošný náhled</link>, ve kterém se záložka stane aktuální položkou."
 
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:50
-msgid ""
-"Finally, there is Where Am I information for bookmarks which lets you know "
-"where the specified bookmark is relative to your current location."
-msgstr ""
-"A nakonec zde jsou informace „Kde se nacházím“, které vám pro záložku sdělí, "
-"kde se záložka nachází relativně vůci aktuálnímu místu."
-
 #. (itstool) path: page/p
-#: C/howto_bookmarks.page:56
+#: C/howto_bookmarks.page:50
 msgid ""
 "The specific keybindings associated with each of the above tasks can be "
 "found in <link xref=\"commands_bookmarks\">Bookmark Commands</link>."
@@ -2823,39 +2866,35 @@ msgstr "Vyplňování formulářů"
 msgid ""
 "When interacting with web pages and other documents using <app>Orca</app>, "
 "you are interacting with the document itself; not a buffered copy of that "
-"document. Thus there is no special mode to get into or out of when you wish "
-"to fill out a form. Instead, simply navigate to each field whose contents "
-"you wish to change, and interact with the widget as if it were in a dialog "
-"box."
+"document. <app>Orca</app>'s browse and focus modes let you switch between "
+"reading and filling out forms."
 msgstr ""
 "Když pomocí čtečky <app>Orca</app> pracujete s webovými stránkami a jinými "
 "dokumenty, pracujete přímo s dokumentem a ne s kopií ve vyrovnávací paměti. "
-"Proto zde není žádný speciální režim pro vstoupení a opuštění, když chcete "
-"vyplňovat formulář. Místo toho se prostě pohybujte po jednotlivých polích, "
-"ve kterých můžete měnit obsah a používejte widgety, jako by byly v "
-"dialogových oknech."
+"Režimy procházení a zaměřování vám ve čtečce <app>Orca</app> umožňují "
+"přepínat se mezi čtením a vyplňováním formulářů."
 
 #. (itstool) path: section/title
-#: C/howto_forms.page:27
+#: C/howto_forms.page:25
 msgid "Navigating Amongst Form Fields"
 msgstr "Pohyb mezi poli formuláře"
 
 #. (itstool) path: section/p
-#: C/howto_forms.page:28
+#: C/howto_forms.page:26
 msgid "To navigate amongst form fields, you have several options:"
 msgstr "Za účelem pohybu mezi poli formuláře máte několik možností:"
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:33
+#: C/howto_forms.page:31
 msgid ""
-"Use <key>Tab</key> and <keyseq><key>Shift</key><key>Tab</key></keyseq>, to "
+"Use <key>Tab</key> and <keyseq><key>Shift</key><key>Tab</key></keyseq> to "
 "navigate amongst focusable objects, regardless of type."
 msgstr ""
 "Pro pohyb mezi zaměřitelnými objekty, bez ohledu na jejich typ, použijte "
 "<key>Tab</key> a <keyseq><key>Shift</key> <key>Tab</key></keyseq>."
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:39
+#: C/howto_forms.page:37
 msgid ""
 "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
 "structural navigation commands for forms</link>."
@@ -2864,7 +2903,7 @@ msgstr ""
 "strukturované navigace čtečky <app>Orca</app> pro formuláře</link>"
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:45
+#: C/howto_forms.page:43
 msgid ""
 "Depending on the form and the application, you may also be able to use the "
 "arrow keys to navigate to a given form field."
@@ -2872,66 +2911,74 @@ msgstr ""
 "V závislosti na formuláři a aplikaci můžete být schopni k pohybu na "
 "požadované formulářové pole použít i kurzorové klávesy."
 
+#. (itstool) path: note/p
+#: C/howto_forms.page:50
+msgid ""
+"In order to use <app>Orca</app>'s caret navigation or structural navigation "
+"commands to navigate to a form field, you must be in browse mode. If you are "
+"in focus mode, you can switch to browse mode by pressing <keyseq><key>Orca "
+"Modifier</key><key>A</key></keyseq>."
+msgstr ""
+"Abyste mohli ve čtečce <app>Orca</app> použít příkazy pro ovládání kurzoru "
+"nebo strukturovanou navigaci k přístupu do formulářových polí, musíte být v "
+"režimu procházení. Když jste v režimu zaměřování, můžete se přepnout do "
+"režimu procházení zmáčknutím <keyseq><key>Modifikátor Orca</key><key>A</"
+"key></keyseq>."
+
 #. (itstool) path: section/title
-#: C/howto_forms.page:53
+#: C/howto_forms.page:59
 msgid "Exiting Form Fields"
 msgstr "Opuštění polí formuláře"
 
 #. (itstool) path: section/p
-#: C/howto_forms.page:54
-msgid ""
-"Because there is no special mode in <app>Orca</app> for interacting with "
-"forms, the most frequently-asked question is how to exit a focused form "
-"field. For this, too, you have several options:"
-msgstr ""
-"Protože ve čtečce <app>Orca</app> neexistuje speciální režim pro práci s "
-"formuláři, je nejčastější otázkou, jak opustit zaměřené pole formuláře. Máte "
-"na výběr z několika možností:"
+#: C/howto_forms.page:60
+msgid "To exit a form field, you have several options:"
+msgstr "Když chcete opustit formulářové pole, máte několik možností:"
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:61
+#: C/howto_forms.page:65
 msgid ""
 "Use <key>Tab</key>/<keyseq><key>Shift</key><key>Tab</key></keyseq> if you "
-"wish to leave the currenty-focused form field and move to the next/previous "
-"focusable object, regardless of what that object happens to be."
+"wish to leave the currently-focused form field and move to the next/previous "
+"focusable object, regardless of type."
 msgstr ""
 "Použijte <key>Tab</key>/<keyseq><key>Shift</key> <key>Tab</key></keyseq>, "
 "pokud si přejete opustit právě zaměřené pole formuláře a přesunout se na "
-"následující/předchozí zaměřitelný objekt, bez ohledu na to, co je to za "
-"objekt."
+"následující/předchozí zaměřitelný objekt, bez ohledu na typ objektu."
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:69
+#: C/howto_forms.page:72
 msgid ""
 "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
-"structural navigation</link> to move to the next/previous form field: "
-"<keyseq><key>Orca Modifier</key><key>Tab</key></keyseq>/<keyseq> <key>Orca "
-"Modifier</key><key>Shift</key><key>Tab</key></keyseq>."
+"structural navigation commands for forms</link> to move to the next or "
+"previous form field."
 msgstr ""
-"Použijte <link xref=\"commands_structural_navigation#forms\">strukturovanou "
-"navigaci</link> <app>Orca</app> pro přesun na následující/předchozí pole "
-"formuláře: <keyseq><key>Modifikátor Orca</key> <key>Tab</key></keyseq>/"
-"<keyseq><key>Modifikátor Orca</key> <key>Shift</key> <key>Tab</key></keyseq>."
+"Použijte <link xref=\"commands_structural_navigation#forms\">příkazy "
+"strukturované navigace čtečky <app>Orca</app> pro formuláře</link>, abyste "
+"se přesunuli na následující nebo předchozí pole formuláře."
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:77
-msgid ""
-"Use <app>Orca</app>'s commands for moving to the next/previous object or "
-"chunk of text: <keyseq><key>Orca Modifier</key><key>Right</key> </keyseq>/"
-"<keyseq><key>Orca Modifier</key><key>Left</key></keyseq>."
-msgstr ""
-"Použijte příkazy čtečky <app>Orca</app> pro přesun na následující/předchozí "
-"objekt nebo úsek textu: <keyseq><key>Modifikátor Orca</key><key>→</key></"
-"keyseq>/<keyseq><key>Modifikátor Orca</key> <key>←</key></keyseq>."
-
-#. (itstool) path: item/p
-#: C/howto_forms.page:84
+#: C/howto_forms.page:79
 msgid ""
 "Depending on the form and the application, you may also be able to use the "
 "arrow keys to navigate out of a given form field."
 msgstr ""
 "V závislosti na formuláři a aplikaci můžete být schopni k opuštění "
 "formulářového pole použít i kurzorové klávesy."
+
+#. (itstool) path: note/p
+#: C/howto_forms.page:86
+msgid ""
+"In order to use <app>Orca</app>'s caret navigation or structural navigation "
+"commands to exit a form field, you must be in browse mode. If you are in "
+"focus mode, you can switch to browse mode by pressing <keyseq><key>Orca "
+"Modifier</key><key>A</key></keyseq>."
+msgstr ""
+"Abyste mohli ve čtečce <app>Orca</app> použít příkazy pro ovládání kurzoru "
+"nebo strukturovanou navigaci k opuštění formulářového pole, musíte být v "
+"režimu procházení. Když jste v režimu zaměřování, můžete se přepnout do "
+"režimu procházení zmáčknutím <keyseq><key>Modifikátor Orca</key><key>A</"
+"key></keyseq>."
 
 #. (itstool) path: info/title
 #: C/howto_key_bindings.page:5
@@ -5353,7 +5400,8 @@ msgstr ""
 #: C/preferences_braille.page:27 C/preferences_braille.page:50
 #: C/preferences_braille.page:63 C/preferences_braille.page:73
 #: C/preferences_chat.page:31 C/preferences_chat.page:42
-#: C/preferences_chat.page:54 C/preferences_gecko.page:124
+#: C/preferences_chat.page:54 C/preferences_gecko.page:58
+#: C/preferences_gecko.page:100 C/preferences_gecko.page:171
 #: C/preferences_general.page:52 C/preferences_general.page:70
 #: C/preferences_key_echo.page:83 C/preferences_key_echo.page:93
 #: C/preferences_key_echo.page:128 C/preferences_key_echo.page:150
@@ -5672,8 +5720,8 @@ msgstr ""
 "s kurzorem v jádře Gecko."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:35 C/preferences_gecko.page:54
-#: C/preferences_gecko.page:74 C/preferences_gecko.page:112
+#: C/preferences_gecko.page:35 C/preferences_gecko.page:78
+#: C/preferences_gecko.page:131 C/preferences_gecko.page:159
 #: C/preferences_key_echo.page:28 C/preferences_key_echo.page:38
 #: C/preferences_key_echo.page:48 C/preferences_key_echo.page:58
 #: C/preferences_key_echo.page:70 C/preferences_speech.page:26
@@ -5686,7 +5734,7 @@ msgid "Default value: checked"
 msgstr "Výchozí hodnota: zaškrtnuto"
 
 #. (itstool) path: note/title
-#: C/preferences_gecko.page:39 C/preferences_gecko.page:58
+#: C/preferences_gecko.page:39 C/preferences_gecko.page:82
 msgid "This setting can be toggled on the fly"
 msgstr "Toto nastavení je možné přepínat za běhu"
 
@@ -5701,11 +5749,54 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:47
+msgid "Automatic focus mode during caret navigation"
+msgstr "Režim automatického zaměřování během pohybu kurzoru"
+
+#. (itstool) path: section/p
+#: C/preferences_gecko.page:48
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use caret navigation commands to navigate to a form "
+"field. For example, pressing <key>Down</key> would allow you to move into an "
+"entry but once you had done so, Orca would switch to focus mode and "
+"subsequent presses of <key>Down</key> would be controlled by the web browser "
+"and not by Orca. If this checkbox is not checked, <app>Orca</app> would "
+"continue to control what happens when you press <key>Down</key>, thus making "
+"it possible to arrow out of the entry and continue reading."
+msgstr ""
+"Když je toto políčko zaškrtnuté, bude <app>Orca</app> automaticky zapínat "
+"režim zaměřování, když použijte příkazy pro ovládání kurzoru k najetí do "
+"formulářového pole. Například, zmáčknutí klávesy <key>↓</key> by vám "
+"umožnilo přesun do vstupního pole, ale jakmile byste to udělali, <app>Orca</"
+"app> by se přepnula do režimu zaměřování a další zmáčknutí <key>↓</key> by "
+"již zpracovával prohlížeč a ne čtečka <app>Orca</app>. Když políčko "
+"zaškrtnuté není, <app>Orca</app> by pokračovala v řízení toho, co se stane "
+"při následujícím zmáčknutí klávesy <key>↓</key>, takže byste mohli ze "
+"vstupního pole vyjet ven a pokračovat ve čtení."
+
+#. (itstool) path: note/title
+#: C/preferences_gecko.page:62 C/preferences_gecko.page:104
+msgid "Manually switching between browse mode and focus mode"
+msgstr "Ruční přepínání mezi režimy procházení a zaměřování"
+
+#. (itstool) path: note/p
+#: C/preferences_gecko.page:63 C/preferences_gecko.page:105
+msgid ""
+"In order to start or stop interacting with the focused form field, use "
+"<keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch between "
+"browse mode and focus mode."
+msgstr ""
+"Když chcete nebo naopak nechcete zaměřovat pole formuláře kvůli vyplňování, "
+"použijte <keyseq><key>Modifikátor Orca</key><key>A</key></keyseq> k přepnutí "
+"mezi režimem procházení a zaměřování."
+
+#. (itstool) path: section/title
+#: C/preferences_gecko.page:71
 msgid "Enable structural navigation"
 msgstr "Povolit strukturovanou navigaci"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:48
+#: C/preferences_gecko.page:72
 msgid ""
 "This checkbox toggles <app>Orca</app>'s <link xref="
 "\"howto_structural_navigation\">Structural Navigation</link> on and off. "
@@ -5718,7 +5809,7 @@ msgstr ""
 "jsou záhlaví, odkazy a pole formuláře."
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:59
+#: C/preferences_gecko.page:83
 msgid ""
 "To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
 "Modifier</key><key>Z</key></keyseq>."
@@ -5727,32 +5818,37 @@ msgstr ""
 "<keyseq><key>Modifikátor Orca</key> <key>Z</key></keyseq>."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:66
-msgid "Position cursor at start of line when navigating vertically"
-msgstr "Umístit kurzor na začátek řádku při svislém pohybu"
+#: C/preferences_gecko.page:90
+msgid "Automatic focus mode during structural navigation"
+msgstr "Režim automatického zaměřování během strukturované navigace"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:67
+#: C/preferences_gecko.page:91
 msgid ""
-"If this checkbox is checked, <app>Orca</app> will always move the caret to "
-"the beginning of the line when <app>Orca</app> is controlling the caret and "
-"you press Up or Down Arrow to read the previous or next line. If this "
-"checkbox is not checked, <app>Orca</app> will attempt to keep the caret in "
-"the same horizontal position as you navigate Up or Down."
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use structural navigation commands to navigate to a form "
+"field. For example, pressing <key>E</key> to move to the next entry would "
+"move focus there and also turn focus mode on so that your next press of "
+"<key>E</key> would type an \"e\" into that entry. If this checkbox is not "
+"checked, then <app>Orca</app> will leave you in browse mode and your next "
+"press of <key>E</key> would move you to the next entry on the page."
 msgstr ""
-"Když je toto políčko zaškrtnuté, <app>Orca</app> vždy přesune kurzor na "
-"začátek řádku, když jej ovládá a vy zmáčknete šipku nahoru nebo dolů, abyste "
-"si přečetli předchozí nebo následující řádek. Když zaškrtnuté není, bude se "
-"<app>Orca</app> snažit kurzor udržet při pohybu nahoru a dolů na stejné "
-"pozici, jako je."
+"Když je toto políčko zaškrtnuté, bude <app>Orca</app> automaticky zapínat "
+"režim zaměřování, když použijte příkazy strukturované navigace k najetí do "
+"formulářového pole. Například, zmáčknutí klávesy <key>E</key> pro přesun do "
+"následujícího vstupního pole by toto pole zaměřilo a zároveň zapnulo režim "
+"zaměřování, takže následující zmáčknutí <key>E</key> by napsalo „e“ do "
+"tohoto pole. Když políčko zaškrtnuté není, <app>Orca</app> ponechá režim "
+"procházení a následující zmáčknutí <key>E</key> by vás přesunulo do dalšího "
+"vstupního pole na stránce."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:79
+#: C/preferences_gecko.page:113
 msgid "Automatically start speaking a page when it is first loaded"
 msgstr "Automaticky číst stránku po jejím prvním načtení"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:80
+#: C/preferences_gecko.page:114
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
 "newly opened web page or email."
@@ -5761,17 +5857,38 @@ msgstr ""
 "otevřenou webovou stránku nebo e-mail."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:84
+#: C/preferences_gecko.page:118
 msgid "Default value: checked for Firefox; not checked for Thunderbird"
 msgstr "Výchozí hodnota: zaškrtnuto pro Firefox, nezaškrtnuto pro Thunderbird"
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:90
+#: C/preferences_gecko.page:123
+msgid "Enable layout mode for content"
+msgstr "Zapnout režim rozvržení pro obsah"
+
+#. (itstool) path: section/p
+#: C/preferences_gecko.page:124
+msgid ""
+"If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
+"the on-screen layout of the content and present the full line, including any "
+"links or form fields on that line. If this checkbox is not checked, "
+"<app>Orca</app> will treat objects such as links and form fields as if they "
+"were on separate lines, both for presentation and navigation."
+msgstr ""
+"Když je toto políčko zaškrtnuté, budo <app>Orca</app> při ovládání kurzoru "
+"vždy respektovat rozvržení obsahu na obrazovce a prezentovat celé řádky, "
+"včetně případných odkazů nebo formulářových polí na daném řádku. Když "
+"políčko není zaškrtnuté, bude <app>Orca</app> zacházet s objekty, jako jsou "
+"odkazy nebo formulářová pole, jak by to byly samostatné řádky, o to jak při "
+"prezentování, tak při navigaci."
+
+#. (itstool) path: section/title
+#: C/preferences_gecko.page:137
 msgid "Table Options"
 msgstr "Volby pro tabulky"
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:92
+#: C/preferences_gecko.page:139
 msgid ""
 "To learn more about <app>Orca's</app> options for navigating within tables, "
 "please see <link xref=\"preferences_table_navigation\">Table Navigation "
@@ -5782,12 +5899,12 @@ msgstr ""
 "pohyb v tabulkách</link>."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:100
+#: C/preferences_gecko.page:147
 msgid "Find Options"
 msgstr "Volby hledání"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:101
+#: C/preferences_gecko.page:148
 msgid ""
 "The <gui>Find Options</gui> group of controls make it possible for you to "
 "customize how <app>Orca</app> presents the results of a search conducted "
@@ -5798,12 +5915,12 @@ msgstr ""
 "vyhledávacích funkcí vestavěných v aplikaci."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:107
+#: C/preferences_gecko.page:154
 msgid "Speak results during find"
 msgstr "Číst výsledky v průběhu hledání"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:108
+#: C/preferences_gecko.page:155
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will read the line which "
 "matches your current search query."
@@ -5812,12 +5929,12 @@ msgstr ""
 "vyhovují vašemu aktuálnímu vyhledávacímu dotazu."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:117
+#: C/preferences_gecko.page:164
 msgid "Only speak changed lines during find"
 msgstr "V průběhu hledání číst jen změněné řádky"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:118
+#: C/preferences_gecko.page:165
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will not present the matching "
 "line if it is the same line as the previous match. This option is designed "
@@ -5830,12 +5947,12 @@ msgstr ""
 "hledáte."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:129
+#: C/preferences_gecko.page:176
 msgid "Minimum length of matched text"
 msgstr "Minimální délka nalezeného textu"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:130
+#: C/preferences_gecko.page:177
 msgid ""
 "This editable spin button is where you can specify the number of characters "
 "which much match before <app>Orca</app> announces the matching line. This "
@@ -5848,7 +5965,7 @@ msgstr ""
 "bývá výskytů opravdu hodně."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:137
+#: C/preferences_gecko.page:184
 msgid "Default value: 4"
 msgstr "Výchozí hodnota: 4"
 
@@ -7571,6 +7688,70 @@ msgstr ""
 #: C/preferences_voice.page:108
 msgid "Default value: <gui>Sentence</gui>"
 msgstr "Výchozí hodnota: <gui>Větách</gui>"
+
+#~ msgid ""
+#~ "\"Where am I\" information for this bookmark relative to the current "
+#~ "pointer location: (Unbound)"
+#~ msgstr ""
+#~ "Informace „Kde se nacházím“ pro tuto záložku relativně vůči aktuální "
+#~ "poloze ukazatele: (bez klávesové zkratky)"
+
+#~ msgid ""
+#~ "Next and previous object (to exit field): <keyseq><key>Orca Modifier</"
+#~ "key><key>Right</key></keyseq> and <keyseq><key>Orca Modifier</"
+#~ "key><key>Left</key></keyseq>"
+#~ msgstr ""
+#~ "Následující a předchozí objekt (pro opuštění pole): "
+#~ "<keyseq><key>Modifikátor Orca</key><key>→</key></keyseq> a "
+#~ "<keyseq><key>Modifikátor Orca</key><key>←</key></keyseq>"
+
+#~ msgid ""
+#~ "Next and previous anchor: <keyseq><key>A</key></keyseq> and "
+#~ "<keyseq><key>Shift</key><key>A</key></keyseq>"
+#~ msgstr ""
+#~ "Následující a předchozí kotva: <keyseq><key>A</key></keyseq> a "
+#~ "<keyseq><key>Shift</key><key>A</key></keyseq>"
+
+#~ msgid ""
+#~ "Finally, there is Where Am I information for bookmarks which lets you "
+#~ "know where the specified bookmark is relative to your current location."
+#~ msgstr ""
+#~ "A nakonec zde jsou informace „Kde se nacházím“, které vám pro záložku "
+#~ "sdělí, kde se záložka nachází relativně vůci aktuálnímu místu."
+
+#~ msgid ""
+#~ "Because there is no special mode in <app>Orca</app> for interacting with "
+#~ "forms, the most frequently-asked question is how to exit a focused form "
+#~ "field. For this, too, you have several options:"
+#~ msgstr ""
+#~ "Protože ve čtečce <app>Orca</app> neexistuje speciální režim pro práci s "
+#~ "formuláři, je nejčastější otázkou, jak opustit zaměřené pole formuláře. "
+#~ "Máte na výběr z několika možností:"
+
+#~ msgid ""
+#~ "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms"
+#~ "\"> structural navigation</link> to move to the next/previous form field: "
+#~ "<keyseq><key>Orca Modifier</key><key>Tab</key></keyseq>/<keyseq> "
+#~ "<key>Orca Modifier</key><key>Shift</key><key>Tab</key></keyseq>."
+#~ msgstr ""
+#~ "Použijte <link xref=\"commands_structural_navigation#forms"
+#~ "\">strukturovanou navigaci</link> <app>Orca</app> pro přesun na "
+#~ "následující/předchozí pole formuláře: <keyseq><key>Modifikátor Orca</key> "
+#~ "<key>Tab</key></keyseq>/<keyseq><key>Modifikátor Orca</key> <key>Shift</"
+#~ "key> <key>Tab</key></keyseq>."
+
+#~ msgid ""
+#~ "Use <app>Orca</app>'s commands for moving to the next/previous object or "
+#~ "chunk of text: <keyseq><key>Orca Modifier</key><key>Right</key> </keyseq>/"
+#~ "<keyseq><key>Orca Modifier</key><key>Left</key></keyseq>."
+#~ msgstr ""
+#~ "Použijte příkazy čtečky <app>Orca</app> pro přesun na následující/"
+#~ "předchozí objekt nebo úsek textu: <keyseq><key>Modifikátor Orca</"
+#~ "key><key>→</key></keyseq>/<keyseq><key>Modifikátor Orca</key> <key>←</"
+#~ "key></keyseq>."
+
+#~ msgid "Position cursor at start of line when navigating vertically"
+#~ msgstr "Umístit kurzor na začátek řádku při svislém pohybu"
 
 #~ msgid ""
 #~ "@@image: 'figures/preferences_text_attributes_table.png'; "
