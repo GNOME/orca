@@ -2254,7 +2254,7 @@ msgstr "Zapne/vypne čtení."
 #. This string describes that command.
 #: ../src/orca/cmdnames.py:407
 msgid "Toggles speech verbosity level."
-msgstr "Přepne úroveň čtení podrobností."
+msgstr "Přepne úroveň upovídanosti."
 
 #. Translators: this string is associated with the keyboard shortcut to quit
 #. Orca.
