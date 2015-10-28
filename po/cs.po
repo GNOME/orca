@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2015-09-22 00:06+0000\n"
-"PO-Revision-Date: 2015-09-22 16:04+0200\n"
+"POT-Creation-Date: 2015-10-28 02:00+0000\n"
+"PO-Revision-Date: 2015-10-28 10:27+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -1528,16 +1528,13 @@ msgstr "minuta nebo stopa"
 #.
 #: ../src/orca/chnames.py:628
 msgid "double prime"
-msgstr "vteřina nebo palec"
+msgstr "sekunda nebo palec"
 
 #. Translators: this is the spoken word for the character '‴' (U+2034)
 #.
 #: ../src/orca/chnames.py:632
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "triple tilde"
 msgid "triple prime"
-msgstr "trojitá vlnovka"
+msgstr "tercie"
 
 #. Translators: this is the spoken word for the character '⁃' (U+2043)
 #.
@@ -7545,35 +7542,27 @@ msgstr "z-notace"
 
 #. Translators: this is the spoken representation for the character '⌈' (U+2308)
 #: ../src/orca/mathsymbols.py:2131
-#, fuzzy
-#| msgid "left paren"
 msgctxt "math symbol"
 msgid "left ceiling"
-msgstr "závorka"
+msgstr "levý strop"
 
 #. Translators: this is the spoken representation for the character '⌉' (U+2309)
 #: ../src/orca/mathsymbols.py:2134
-#, fuzzy
-#| msgid "right paren"
 msgctxt "math symbol"
 msgid "right ceiling"
-msgstr "zavřít závorka"
+msgstr "pravý strop"
 
 #. Translators: this is the spoken representation for the character '⌊' (U+230a)
 #: ../src/orca/mathsymbols.py:2137
-#, fuzzy
-#| msgid "left alt"
 msgctxt "math symbol"
 msgid "left floor"
-msgstr "levý Alt"
+msgstr "levé dno"
 
 #. Translators: this is the spoken representation for the character '⌋' (U+230b)
 #: ../src/orca/mathsymbols.py:2140
-#, fuzzy
-#| msgid "right alt"
 msgctxt "math symbol"
 msgid "right floor"
-msgstr "pravý AltGR"
+msgstr "pravé dno"
 
 #. Translators: this is the spoken representation for the character '⏞' (U+23de)
 #: ../src/orca/mathsymbols.py:2143
@@ -7619,21 +7608,15 @@ msgstr "sjednocení s plus s"
 
 #. Translators: this is the spoken representation for the character '⨅' (U+2a05)
 #: ../src/orca/mathsymbols.py:2167
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "n-ary intersection"
 msgctxt "math symbol"
 msgid "square intersection"
-msgstr "průnik řady"
+msgstr "hranatý průnik"
 
 #. Translators: this is the spoken representation for the character '⨆' (U+2a06)
 #: ../src/orca/mathsymbols.py:2169
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "square cup"
 msgctxt "math symbol"
 msgid "square union"
-msgstr "čtvercový šálek"
+msgstr "hranaté sjednocení"
 
 #. Translators: this is the spoken representation for the character '■' (U+25a0)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
@@ -8765,11 +8748,9 @@ msgstr "kruhem"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:845
-#, fuzzy
-#| msgid "has long description"
 msgctxt "math enclosure"
 msgid "a long division sign"
-msgstr "má dlouhý popis"
+msgstr "symbolem dlouhého dělení"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -12437,21 +12418,3 @@ msgid ""
 msgstr ""
 "Šipka vlevo snižuje, šipka vpravo zvyšuje. Minimum nastaví klávesa Home a "
 "maximum klávesa End."
-
-#~ msgid "comparison unknown"
-#~ msgstr "není možno porovnat"
-
-#~ msgid "bookmark is current object"
-#~ msgstr "aktuální objekt je záložka"
-
-#~ msgid "bookmark and current object have same parent"
-#~ msgstr "záložka i potomek mají stejného předka"
-
-#~ msgid "shared ancestor %s"
-#~ msgstr "společný potomek je %s"
-
-#~ msgid "%(key)s %(value)s pixel"
-#~ msgid_plural "%(key)s %(value)s pixels"
-#~ msgstr[0] "%(key)s %(value)s pixel"
-#~ msgstr[1] "%(key)s %(value)s pixely"
-#~ msgstr[2] "%(key)s %(value)s pixelů"
