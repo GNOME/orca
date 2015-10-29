@@ -1392,7 +1392,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return False
 
-        if self.utilities.inTopLevelWebApp(event.source):
+        if self.utilities.isTopLevelWebApp(document):
             msg = "WEB: Event handled: Setting locusOfFocus to event source"
             debug.println(debug.LEVEL_INFO, msg)
             orca.setLocusOfFocus(event, event.source)
