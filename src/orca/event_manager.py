@@ -96,19 +96,30 @@ class EventManager:
     def _ignore(self, event):
         """Returns True if this event should be ignored."""
 
+        msg = '\nINFO: %s for %s in %s' % (event.type, event.source, event.host_application)
+        debug.println(debug.LEVEL_INFO, msg)
+
         if not self._active:
+            msg = 'INFO: Ignoring because event manager is not active'
+            debug.println(debug.LEVEL_INFO, msg)
             return True
 
         if list(filter(event.type.startswith, self._ignoredEvents)):
+            msg = 'INFO: Ignoring because event type is ignored'
+            debug.println(debug.LEVEL_INFO, msg)
             return True
 
         if event.type.startswith('window'):
+            msg = 'INFO: Not ignoring because event type is never ignored'
+            debug.println(debug.LEVEL_INFO, msg)
             return False
 
         # This should ultimately be changed as there are valid reasons
         # to handle these events at the application level.
         if event.type.startswith('object:children-changed:remove') \
            and event.source != self.registry.getDesktop(0):
+            msg = 'INFO: Ignoring because event type is ignored'
+            debug.println(debug.LEVEL_INFO, msg)
             return True
 
         if event.type.startswith('object:text-changed') and event.type.endswith('system'):
@@ -182,6 +193,8 @@ class EventManager:
                 debug.println(debug.LEVEL_INFO, msg)
                 return True
 
+        msg = 'INFO: Not ignoring due to lack of cause'
+        debug.println(debug.LEVEL_INFO, msg)
         return False
 
     def _addToQueue(self, event, asyncMode):
