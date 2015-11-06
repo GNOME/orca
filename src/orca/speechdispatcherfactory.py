@@ -227,7 +227,21 @@ class SpeechServer(speechserver.SpeechServer):
             name = acss_family.get(speechserver.VoiceFamily.NAME)
             if name != self._default_voice_name:
                 self._send_command(set_synthesis_voice, name)
-            
+
+    def _debug_sd_values(self, prefix=""):
+        if debug.debugLevel > debug.LEVEL_INFO:
+            return
+
+        current = self._current_voice_properties
+        msg = "SPEECH DISPATCHER: %sOrca rate %s, pitch %s; " \
+              "SD rate %s, pitch %s" % \
+              (prefix,
+               self._current_voice_properties.get(ACSS.RATE),
+               self._current_voice_properties.get(ACSS.AVERAGE_PITCH),
+               self._send_command(self._client.get_rate),
+               self._send_command(self._client.get_pitch))
+        debug.println(debug.LEVEL_INFO, msg)
+
     def _apply_acss(self, acss):
         if acss is None:
             acss = settings.voices[settings.DEFAULT_VOICE]
@@ -305,6 +319,7 @@ class SpeechServer(speechserver.SpeechServer):
         text = text.replace('\n.', '\n')
 
         self._apply_acss(acss)
+        self._debug_sd_values("Speaking '%s' " % text)
         self._send_command(self._client.speak, text, **kwargs)
 
     def _say_all(self, iterator, orca_callback):

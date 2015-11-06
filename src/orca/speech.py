@@ -152,7 +152,7 @@ def _speak(text, acss, interrupt):
                     extraDebug = " voice=%s" % key
                 break
 
-    debug.println(debug.LEVEL_INFO, logLine + extraDebug)
+    debug.println(debug.LEVEL_INFO, logLine + extraDebug + str(acss))
     log.info(logLine + extraDebug)
 
     if _speechserver:
@@ -250,7 +250,7 @@ def speakCharacter(character, acss=None):
     if settings.silenceSpeech:
         return
 
-    debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + character + "'")
+    debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + character + "' " + str(acss))
     log.info("SPEECH OUTPUT: '%s'" % character)
 
     if _speechserver:
