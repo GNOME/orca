@@ -232,14 +232,21 @@ class SpeechServer(speechserver.SpeechServer):
         if debug.debugLevel > debug.LEVEL_INFO:
             return
 
+        try:
+            sd_rate = self._send_command(self._client.get_rate)
+            sd_pitch = self._send_command(self._client.get_pitch)
+        except:
+            sd_rate = "(exception occurred)"
+            sd_pitch = "(exception occurred)"
+
         current = self._current_voice_properties
         msg = "SPEECH DISPATCHER: %sOrca rate %s, pitch %s; " \
               "SD rate %s, pitch %s" % \
               (prefix,
                self._current_voice_properties.get(ACSS.RATE),
                self._current_voice_properties.get(ACSS.AVERAGE_PITCH),
-               self._send_command(self._client.get_rate),
-               self._send_command(self._client.get_pitch))
+               sd_rate,
+               sd_pitch)
         debug.println(debug.LEVEL_INFO, msg)
 
     def _apply_acss(self, acss):
