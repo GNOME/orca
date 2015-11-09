@@ -102,6 +102,7 @@ class OrcaNavListGUI:
 
         self._tree.connect('key-release-event', self._onKeyRelease)
         self._tree.connect('cursor-changed', self._onCursorChanged)
+        self._tree.set_search_column(2)
 
         return dialog
 
