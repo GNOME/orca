@@ -1,3 +1,56 @@
+3.18.2 - 9 November 2015
+
+Web:
+
+ * Fix typeahead search regression in the list-of-elements dialogs
+
+ * Fix a couple of issues associated with presenting "busy" pages
+
+ * Switch to sticky focus mode in top-level web apps like Google Docs
+
+ * Attempt to work around Google Docs editor exposed as ROLE_UNKNOWN
+
+ * Don't infer labels for form fields in web apps
+
+ * Present text changes resulting from onclick handlers
+
+ * Don't generate ancestors for MathML elements and filter out empty
+   utterances (performance)
+
+ * Eliminate several instances of Gecko chattiness
+
+ * Filter out more browser chrome event spam (performance)
+
+ * Use Orca's web support to say word contents for editable messages in
+   Thunderbird (works around broken text interface implementation)
+
+ * Work around broken lists in web content
+
+ * Don't return the child of a "non-descendable" element as the last
+   document object
+
+ * Don't descend links with author-provided names
+
+General:
+
+ * Fix issue in which key presses were being echoed in a password field
+
+ * Add sanity check for broken accessibility trees when getting the
+   focused child
+
+ * Update Gedit spellcheck support for 3.18 and improve heuristic
+   performance
+
+ * Do not try to calculate node level for non-tree descendants
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                       Marek Černocký
+    de            German                      Christian Kirbach
+    hu            Hungarian                   Attila Hammer
+
+=========
+
 3.18.1 - 14 October 2015
 
 Web:
