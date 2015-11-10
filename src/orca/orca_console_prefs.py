@@ -274,7 +274,9 @@ def setupSpeech(prefsDict):
     keyEcho = prefsDict["enableKeyEcho"]
     if not keyEcho:
         prefsDict["enableKeyEcho"]       = False
-        prefsDict["enablePrintableKeys"] = False
+        prefsDict["enableAlphabeticKeys"] = False
+        prefsDict["enableNumericKeys"] = False
+        prefsDict["enablePunctuationKeys"] = False
         prefsDict["enableModifierKeys"]  = False
         prefsDict["enableFunctionKeys"]  = False
         prefsDict["enableActionKeys"]    = False
@@ -282,13 +284,43 @@ def setupSpeech(prefsDict):
     stop = True
     while keyEcho and True:
         answer = sayAndPrint(
-            messages.CONSOLE_SETUP_ENABLE_ECHO_PRINTABLE_KEYS,
+            messages.CONSOLE_SETUP_ENABLE_ECHO_ALPHABETIC_KEYS,
             stop,
             True,
             speechServerChoice,
             speechVoiceChoice)
         try:
-            prefsDict["enablePrintableKeys"] = checkYes(answer)
+            prefsDict["enableAlphabeticKeys"] = checkYes(answer)
+            break
+        except:
+            stop = False
+            sayAndPrint(messages.CONSOLE_SETUP_ENTER_Y_OR_N)
+
+    stop = True
+    while keyEcho and True:
+        answer = sayAndPrint(
+            messages.CONSOLE_SETUP_ENABLE_ECHO_NUMERIC_KEYS,
+            stop,
+            True,
+            speechServerChoice,
+            speechVoiceChoice)
+        try:
+            prefsDict["enableNumericKeys"] = checkYes(answer)
+            break
+        except:
+            stop = False
+            sayAndPrint(messages.CONSOLE_SETUP_ENTER_Y_OR_N)
+
+    stop = True
+    while keyEcho and True:
+        answer = sayAndPrint(
+            messages.CONSOLE_SETUP_ENABLE_ECHO_PUNCTUATION_KEYS,
+            stop,
+            True,
+            speechServerChoice,
+            speechVoiceChoice)
+        try:
+            prefsDict["enablePunctuationKeys"] = checkYes(answer)
             break
         except:
             stop = False

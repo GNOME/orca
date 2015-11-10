@@ -108,6 +108,9 @@ class KeyboardEvent(InputEvent):
     TYPE_ACTION           = "action"
     TYPE_NAVIGATION       = "navigation"
     TYPE_DIACRITICAL      = "diacritical"
+    TYPE_ALPHABETIC       = "alphabetic"
+    TYPE_NUMERIC          = "numeric"
+    TYPE_PUNCTUATION      = "punctuation"
 
     def __init__(self, event):
         """Creates a new InputEvent of type KEYBOARD_EVENT.
@@ -175,10 +178,15 @@ class KeyboardEvent(InputEvent):
             self.shouldEcho = settings.presentLockingKeys
             if self.shouldEcho == None:
                 self.shouldEcho = not settings.onlySpeakDisplayedText
-        elif self.isPrintableKey():
-            self.keyType = KeyboardEvent.TYPE_PRINTABLE
-            self.shouldEcho = \
-                settings.enablePrintableKeys or settings.enableEchoByCharacter
+        elif self.isAlphabeticKey():
+            self.keyType = KeyboardEvent.TYPE_ALPHABETIC
+            self.shouldEcho = settings.enableAlphabeticKeys or settings.enableEchoByCharacter
+        elif self.isNumericKey():
+            self.keyType = KeyboardEvent.TYPE_NUMERIC
+            self.shouldEcho = settings.enableNumericKeys or settings.enableEchoByCharacter
+        elif self.isPunctuationKey():
+            self.keyType = KeyboardEvent.TYPE_PUNCTUATION
+            self.shouldEcho = settings.enablePunctuationKeys or settings.enableEchoByCharacter
         else:
             self.keyType = KeyboardEvent.TYPE_UNKNOWN
             self.shouldEcho = False
@@ -227,7 +235,18 @@ class KeyboardEvent(InputEvent):
 
         return self.event_string in \
             ["Return", "Escape", "Tab", "BackSpace", "Delete",
-             "Page_Up", "Page_Down"]
+             "Page_Up", "Page_Down", "space", " "]
+
+    def isAlphabeticKey(self):
+        """Return True if this is an alphabetic key."""
+
+        if self.keyType:
+            return self.keyType == KeyboardEvent.TYPE_ALPHABETIC
+
+        if not len(self.event_string) == 1:
+            return False
+
+        return self.event_string.isalpha()
 
     def isDiacriticalKey(self):
         """Return True if this is a non-spacing diacritical key."""
@@ -276,6 +295,17 @@ class KeyboardEvent(InputEvent):
              'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R',
              'ISO_Level3_Shift']
 
+    def isNumericKey(self):
+        """Return True if this is a numeric key."""
+
+        if self.keyType:
+            return self.keyType == KeyboardEvent.TYPE_NUMERIC
+
+        if not len(self.event_string) == 1:
+            return False
+
+        return self.event_string.isnumeric()
+
     def isOrcaModifier(self):
         """Return True if this is the Orca modifier key."""
 
@@ -303,24 +333,32 @@ class KeyboardEvent(InputEvent):
     def isPrintableKey(self):
         """Return True if this is a printable key."""
 
-        if self.keyType:
-            return self.keyType == KeyboardEvent.TYPE_PRINTABLE
-
         if self.event_string in ["space", " "]:
             return True
 
         if not len(self.event_string) == 1:
             return False
 
-        if self.event_string.isalnum() or self.event_string.isspace():
-            return True
-
-        return unicodedata.category(self.event_string)[0] in ('P', 'S')
+        return self.event_string.isprintable()
 
     def isPressedKey(self):
         """Returns True if the key is pressed"""
 
         return self.type == pyatspi.KEY_PRESSED_EVENT
+
+    def isPunctuationKey(self):
+        """Return True if this is a punctuation key."""
+
+        if self.keyType:
+            return self.keyType == KeyboardEvent.TYPE_PUNCTUATION
+
+        if not len(self.event_string) == 1:
+            return False
+
+        if self.isAlphabeticKey() or self.isNumericKey():
+            return False
+
+        return self.event_string.isprintable() and not self.event_string.isspace()
 
     def isCharacterEchoable(self):
         """Returns True if the script will echo this event as part of

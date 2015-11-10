@@ -374,10 +374,20 @@ CONSOLE_SETUP_ENABLE_BRAILLE = _("Enable Braille?  Enter y or n: ")
 # classes of keys they want echoed.
 CONSOLE_SETUP_ENABLE_ECHO_KEY = _("Enable key echo?  Enter y or n: ")
 
-# Translators: This is in reference to key echo for normal text entry keys and
+# Translators: This is in reference to key echo for alphabetic keys and
 # is part of Orca's console-based setup.
-CONSOLE_SETUP_ENABLE_ECHO_PRINTABLE_KEYS = \
-    _("Enable alphanumeric and punctuation keys?  Enter y or n: ")
+CONSOLE_SETUP_ENABLE_ECHO_ALPHABETIC_KEYS = \
+    _("Enable alphabetic keys?  Enter y or n: ")
+
+# Translators: This is in reference to key echo for numeric keys and
+# is part of Orca's console-based setup.
+CONSOLE_SETUP_ENABLE_ECHO_NUMERIC_KEYS = \
+    _("Enable numeric keys?  Enter y or n: ")
+
+# Translators: This is in reference to key echo for punctuation keys and
+# is part of Orca's console-based setup.
+CONSOLE_SETUP_ENABLE_ECHO_PUNCTUATION_KEYS = \
+    _("Enable punctuation keys?  Enter y or n: ")
 
 # Translators: This is in reference to key echo for keys such as CTRL, ALT,
 # Shift, Insert, etc. It is part of Orca's console-based setup.

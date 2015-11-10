@@ -2625,8 +2625,7 @@ class Script(script.Script):
             elif wasCommand or wasAutoComplete:
                 speakThis = True
             elif role == pyatspi.ROLE_PASSWORD_TEXT \
-                 and _settingsManager.getSetting('enableKeyEcho') \
-                 and _settingsManager.getSetting('enablePrintableKeys'):
+                 and _settingsManager.getSetting('enableKeyEcho'):
                 # Echoing "star" is preferable to echoing the descriptive
                 # name of the bullet that has appeared (e.g. "black circle")
                 #

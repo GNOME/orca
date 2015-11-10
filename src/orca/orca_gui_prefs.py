@@ -1502,8 +1502,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         #
         self.get_widget("keyEchoCheckButton").set_active( \
                         prefs["enableKeyEcho"])
-        self.get_widget("enablePrintableKeysCheckButton").set_active( \
-                        prefs["enablePrintableKeys"])
+        self.get_widget("enableAlphabeticKeysCheckButton").set_active(
+                        prefs.get("enableAlphabeticKeys", settings.enableAlphabeticKeys))
+        self.get_widget("enableNumericKeysCheckButton").set_active(
+                        prefs.get("enableNumericKeys", settings.enableNumericKeys))
+        self.get_widget("enablePunctuationKeysCheckButton").set_active(
+                        prefs.get("enablePunctuationKeys", settings.enablePunctuationKeys))
         self.get_widget("enableModifierKeysCheckButton").set_active( \
                         prefs["enableModifierKeys"])
         self.get_widget("enableFunctionKeysCheckButton").set_active( \
@@ -1737,7 +1741,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         enable = self.get_widget("keyEchoCheckButton").get_active()
-        self.get_widget("enablePrintableKeysCheckButton").set_sensitive(enable)
+        self.get_widget("enableAlphabeticKeysCheckButton").set_sensitive(enable)
+        self.get_widget("enableNumericKeysCheckButton").set_sensitive(enable)
+        self.get_widget("enablePunctuationKeysCheckButton").set_sensitive(enable)
         self.get_widget("enableModifierKeysCheckButton").set_sensitive(enable)
         self.get_widget("enableFunctionKeysCheckButton").set_sensitive(enable)
         self.get_widget("enableActionKeysCheckButton").set_sensitive(enable)

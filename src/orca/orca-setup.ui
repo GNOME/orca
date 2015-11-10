@@ -2380,8 +2380,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <child>
-                          <object class="GtkCheckButton" id="enablePrintableKeysCheckButton">
-                            <property name="label" translatable="yes">Enable _alphanumeric and punctuation keys</property>
+                          <object class="GtkCheckButton" id="enableAlphabeticKeysCheckButton">
+                            <property name="label" translatable="yes">Enable _alphabetic keys</property>
                             <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -2394,6 +2394,44 @@
                           <packing>
                             <property name="left_attach">0</property>
                             <property name="top_attach">0</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="enableNumericKeysCheckButton">
+                            <property name="label" translatable="yes">Enable n_umeric keys</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="use_underline">True</property>
+                            <property name="draw_indicator">True</property>
+                            <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">1</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="enablePunctuationKeysCheckButton">
+                            <property name="label" translatable="yes">Enable _punctuation keys</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="use_underline">True</property>
+                            <property name="draw_indicator">True</property>
+                            <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">2</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
@@ -2412,7 +2450,7 @@
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
-                            <property name="top_attach">1</property>
+                            <property name="top_attach">3</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
@@ -2431,7 +2469,7 @@
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
-                            <property name="top_attach">3</property>
+                            <property name="top_attach">4</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
@@ -2450,7 +2488,7 @@
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
-                            <property name="top_attach">4</property>
+                            <property name="top_attach">5</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
@@ -2469,7 +2507,7 @@
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
-                            <property name="top_attach">5</property>
+                            <property name="top_attach">6</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>
@@ -2488,7 +2526,7 @@
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
-                            <property name="top_attach">6</property>
+                            <property name="top_attach">7</property>
                             <property name="width">1</property>
                             <property name="height">1</property>
                           </packing>

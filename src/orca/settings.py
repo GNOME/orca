@@ -46,7 +46,9 @@ userCustomizableSettings = [
     "enableEchoByWord",
     "enableEchoBySentence",
     "enableKeyEcho",
-    "enablePrintableKeys",
+    "enableAlphabeticKeys",
+    "enableNumericKeys",
+    "enablePunctuationKeys",
     "enableModifierKeys",
     "enableFunctionKeys",
     "enableActionKeys",
@@ -237,7 +239,9 @@ keyboardLayout               = GENERAL_KEYBOARD_LAYOUT_DESKTOP
 orcaModifierKeys             = DESKTOP_MODIFIER_KEYS
 doubleClickTimeout           = 0.5
 enableKeyEcho                = True
-enablePrintableKeys          = True
+enableAlphabeticKeys         = True
+enableNumericKeys            = True
+enablePunctuationKeys        = True
 enableModifierKeys           = True
 enableFunctionKeys           = True
 enableActionKeys             = True
