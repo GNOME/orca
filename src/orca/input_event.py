@@ -111,6 +111,7 @@ class KeyboardEvent(InputEvent):
     TYPE_ALPHABETIC       = "alphabetic"
     TYPE_NUMERIC          = "numeric"
     TYPE_PUNCTUATION      = "punctuation"
+    TYPE_SPACE            = "space"
 
     def __init__(self, event):
         """Creates a new InputEvent of type KEYBOARD_EVENT.
@@ -187,6 +188,9 @@ class KeyboardEvent(InputEvent):
         elif self.isPunctuationKey():
             self.keyType = KeyboardEvent.TYPE_PUNCTUATION
             self.shouldEcho = settings.enablePunctuationKeys or settings.enableEchoByCharacter
+        elif self.isSpace():
+            self.keyType = KeyboardEvent.TYPE_SPACE
+            self.shouldEcho = settings.enableSpace or settings.enableEchoByCharacter
         else:
             self.keyType = KeyboardEvent.TYPE_UNKNOWN
             self.shouldEcho = False
@@ -235,7 +239,7 @@ class KeyboardEvent(InputEvent):
 
         return self.event_string in \
             ["Return", "Escape", "Tab", "BackSpace", "Delete",
-             "Page_Up", "Page_Down", "space", " "]
+             "Page_Up", "Page_Down"]
 
     def isAlphabeticKey(self):
         """Return True if this is an alphabetic key."""
@@ -359,6 +363,14 @@ class KeyboardEvent(InputEvent):
             return False
 
         return self.event_string.isprintable() and not self.event_string.isspace()
+
+    def isSpace(self):
+        """Return True if this is the space key."""
+
+        if self.keyType:
+            return self.keyType == KeyboardEvent.TYPE_SPACE
+
+        return self.event_string in ["space", " "]
 
     def isCharacterEchoable(self):
         """Returns True if the script will echo this event as part of

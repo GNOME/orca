@@ -49,6 +49,7 @@ userCustomizableSettings = [
     "enableAlphabeticKeys",
     "enableNumericKeys",
     "enablePunctuationKeys",
+    "enableSpace",
     "enableModifierKeys",
     "enableFunctionKeys",
     "enableActionKeys",
@@ -242,6 +243,7 @@ enableKeyEcho                = True
 enableAlphabeticKeys         = True
 enableNumericKeys            = True
 enablePunctuationKeys        = True
+enableSpace                  = True
 enableModifierKeys           = True
 enableFunctionKeys           = True
 enableActionKeys             = True

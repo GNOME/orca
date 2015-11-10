@@ -389,6 +389,11 @@ CONSOLE_SETUP_ENABLE_ECHO_NUMERIC_KEYS = \
 CONSOLE_SETUP_ENABLE_ECHO_PUNCTUATION_KEYS = \
     _("Enable punctuation keys?  Enter y or n: ")
 
+# Translators: This is in reference to key echo for the space key and
+# is part of Orca's console-based setup.
+CONSOLE_SETUP_ENABLE_SPACE = \
+    _("Enable space?  Enter y or n: ")
+
 # Translators: This is in reference to key echo for keys such as CTRL, ALT,
 # Shift, Insert, etc. It is part of Orca's console-based setup.
 CONSOLE_SETUP_ENABLE_ECHO_MODIFIER_KEYS = \

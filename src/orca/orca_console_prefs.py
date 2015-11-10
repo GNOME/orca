@@ -277,6 +277,7 @@ def setupSpeech(prefsDict):
         prefsDict["enableAlphabeticKeys"] = False
         prefsDict["enableNumericKeys"] = False
         prefsDict["enablePunctuationKeys"] = False
+        prefsDict["enableSpace"]         = False
         prefsDict["enableModifierKeys"]  = False
         prefsDict["enableFunctionKeys"]  = False
         prefsDict["enableActionKeys"]    = False
@@ -321,6 +322,21 @@ def setupSpeech(prefsDict):
             speechVoiceChoice)
         try:
             prefsDict["enablePunctuationKeys"] = checkYes(answer)
+            break
+        except:
+            stop = False
+            sayAndPrint(messages.CONSOLE_SETUP_ENTER_Y_OR_N)
+
+    stop = True
+    while keyEcho and True:
+        answer = sayAndPrint(
+            messages.CONSOLE_SETUP_ENABLE_SPACE,
+            stop,
+            True,
+            speechServerChoice,
+            speechVoiceChoice)
+        try:
+            prefsDict["enableSpace"] = checkYes(answer)
             break
         except:
             stop = False
