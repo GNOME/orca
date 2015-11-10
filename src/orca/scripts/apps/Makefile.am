@@ -8,7 +8,6 @@ SUBDIRS = \
 	evolution \
 	gajim \
 	gcalctool \
-	gdm-simple-greeter \
 	gedit \
 	gnome-documents \
 	gnome-keyring-ask \
