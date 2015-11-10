@@ -93,8 +93,6 @@ userCustomizableSettings = [
     "largeObjectTextLength",
     "structuralNavigationEnabled",
     "wrappedStructuralNavigation",
-    "brailleRequiredStateString",
-    "speechRequiredStateString",
     "chatMessageVerbosity",
     "chatSpeakRoomName",
     "chatAnnounceBuddyTyping",
