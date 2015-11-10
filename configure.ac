@@ -97,7 +97,6 @@ src/orca/scripts/apps/evince/Makefile
 src/orca/scripts/apps/evolution/Makefile
 src/orca/scripts/apps/gajim/Makefile
 src/orca/scripts/apps/gcalctool/Makefile
-src/orca/scripts/apps/gdmlogin/Makefile
 src/orca/scripts/apps/gdm-simple-greeter/Makefile
 src/orca/scripts/apps/gedit/Makefile
 src/orca/scripts/apps/gnome-documents/Makefile

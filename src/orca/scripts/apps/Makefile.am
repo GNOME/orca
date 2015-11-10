@@ -8,7 +8,6 @@ SUBDIRS = \
 	evolution \
 	gajim \
 	gcalctool \
-	gdmlogin \
 	gdm-simple-greeter \
 	gedit \
 	gnome-documents \
