@@ -1599,6 +1599,34 @@ NOTIFICATION_LIST_TUTORIAL =  \
 # is empty.
 NOTIFICATION_NO_MESSAGES = _("No notification messages")
 
+# Translators: Orca has a setting through which users can control how a number is
+# spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
+# three"). There is an associated Orca command for quickly toggling between the
+# two options. This string to be translated is the brief message spoken when the
+# user has enabled speaking numbers as digits.
+NUMBER_STYLE_DIGITS_BRIEF = C_("number style", "digits")
+
+# Translators: Orca has a setting through which users can control how a number is
+# spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
+# three"). There is an associated Orca command for quickly toggling between the
+# two options. This string to be translated is the verbose message spoken when
+# the user has enabled speaking numbers as digits.
+NUMBER_STYLE_DIGITS_FULL = _("Speak numbers as digits.")
+
+# Translators: Orca has a setting through which users can control how a number is
+# spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
+# three"). There is an associated Orca command for quickly toggling between the
+# two options. This string to be translated is the brief message spoken when the
+# user has enabled speaking numbers as words.
+NUMBER_STYLE_WORDS_BRIEF = C_("number style", "words")
+
+# Translators: Orca has a setting through which users can control how a number is
+# spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
+# three"). There is an associated Orca command for quickly toggling between the
+# two options. This string to be translated is the verbose message spoken when
+# the user has enabled speaking numbers as words.
+NUMBER_STYLE_WORDS_FULL = _("Speak numbers as words.")
+
 # Translators: This brief message is presented to indicate the state of widgets
 # (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
 # with text formatting (bold, italics, underlining, justification, etc.).

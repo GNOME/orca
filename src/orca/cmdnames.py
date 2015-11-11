@@ -424,6 +424,12 @@ SHOW_APP_PREFERENCES_GUI = \
 TOGGLE_SPOKEN_INDENTATION_AND_JUSTIFICATION = \
     _("Toggles the speaking of indentation and justification.")
 
+# Translators: Orca has a setting through which users can control how a number is
+# spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
+# three"). This string to be translated refers to an Orca command for quickly
+# toggling between the two options.
+CHANGE_NUMBER_STYLE = _("Changes spoken number style.")
+
 # Translators: Orca allows users to cycle through punctuation levels. None,
 # some, most, or all, punctuation will be spoken.
 CYCLE_PUNCTUATION_LEVEL = _("Cycles to the next speaking of punctuation level.")

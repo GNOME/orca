@@ -174,6 +174,9 @@ keymap = (
     "cycleKeyEchoHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
+    "changeNumberStyleHandler"),
+
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
     "repeatLastNotificationMessageHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,

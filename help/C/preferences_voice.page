@@ -98,6 +98,17 @@
         Default value: not checked
       </p>
     </section>
+    <section id="numbers_as_digits">
+      <title>Speak numbers as digits</title>
+      <p>
+        Checking the <gui>Speak numbers as digits</gui> checkbox will cause
+        <app>Orca</app> to break a number like "123" into separate digits
+        ("1," "2," and "3") prior to passing it along to the speech synthesizer.
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+    </section>
     <section id="say_all_by">
       <title>Say All By</title>
       <p>

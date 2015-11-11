@@ -437,6 +437,12 @@ class Script(script.Script):
                 Script.toggleSpeakingIndentationJustification,
                 cmdnames.TOGGLE_SPOKEN_INDENTATION_AND_JUSTIFICATION)
 
+        self.inputEventHandlers[ \
+          "changeNumberStyleHandler"] = \
+            input_event.InputEventHandler(
+                Script.changeNumberStyle,
+                cmdnames.CHANGE_NUMBER_STYLE)
+
         self.inputEventHandlers["cycleSpeakingPunctuationLevelHandler"] = \
             input_event.InputEventHandler(
                 Script.cycleSpeakingPunctuationLevel,
@@ -1967,6 +1973,21 @@ class Script(script.Script):
         _settingsManager.setSetting('enableKeyEcho', newKey)
         _settingsManager.setSetting('enableEchoByWord', newWord)
         _settingsManager.setSetting('enableEchoBySentence', newSentence)
+        self.presentMessage(full, brief)
+        return True
+
+    def changeNumberStyle(self, inputEvent=None):
+        """Changes spoken number style between digits and words."""
+
+        speakDigits = _settingsManager.getSetting('speakNumbersAsDigits')
+        if speakDigits:
+            brief = messages.NUMBER_STYLE_WORDS_BRIEF
+            full = messages.NUMBER_STYLE_WORDS_FULL
+        else:
+            brief = messages.NUMBER_STYLE_DIGITS_BRIEF
+            full = messages.NUMBER_STYLE_DIGITS_FULL
+
+        _settingsManager.setSetting('speakNumbersAsDigits', not speakDigits)
         self.presentMessage(full, brief)
         return True
 

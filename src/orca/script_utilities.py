@@ -2256,6 +2256,13 @@ class Utilities:
     def _processMultiCaseString(string):
         return re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', string)
 
+    @staticmethod
+    def _convertWordToDigits(word):
+        if not word.isnumeric():
+            return word
+
+        return ' '.join(list(word))
+
     def adjustForPronunciation(self, line):
         """Adjust the line to replace words in the pronunciation dictionary,
         with what those words actually sound like.
@@ -2272,6 +2279,10 @@ class Utilities:
 
         if self.speakMathSymbolNames():
             line = mathsymbols.adjustForSpeech(line)
+
+        if settings.speakNumbersAsDigits:
+            words = self.WORDS_RE.split(line)
+            line = ''.join(map(self._convertWordToDigits, words))
 
         if not settings.usePronunciationDictionary:
             return line

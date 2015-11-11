@@ -1312,6 +1312,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             prefs["speakBlankLines"])
         self.get_widget("speakMultiCaseStringsAsWordsCheckButton").set_active(\
             prefs["speakMultiCaseStringsAsWords"])
+        self.get_widget("speakNumbersAsDigitsCheckButton").set_active(
+            prefs.get("speakNumbersAsDigits", settings.speakNumbersAsDigits))
         self.get_widget("enableTutorialMessagesCheckButton").set_active(\
             prefs["enableTutorialMessages"])
         self.get_widget("enablePauseBreaksCheckButton").set_active(\

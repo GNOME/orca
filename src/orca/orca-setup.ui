@@ -741,7 +741,7 @@
                 <property name="can_focus">False</property>
                 <property name="border_width">12</property>
                 <property name="row_spacing">10</property>
-                <property name="column_spacing">10</property>
+                <property name="column_spacing">40</property>
                 <child>
                   <object class="GtkFrame" id="voiceTypeSettingsFrame">
                     <property name="visible">True</property>
@@ -1069,6 +1069,26 @@
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkCheckButton" id="speakNumbersAsDigitsCheckButton">
+                                <property name="label" translatable="yes" comments="Translators: If this this setting is enabled, '123' will be spoken as the individual digits '1 2 3'; otherwise, it will be sent to the synthesizer and (likely) spoken as 'one hundred and twenty three'.">Speak _numbers as digits</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="use_underline">True</property>
+                                <property name="active">True</property>
+                                <property name="draw_indicator">True</property>
+                                <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">2</property>
+                                <property name="width">1</property>
+                                <property name="height">1</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkGrid" id="sayAllGrid">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
@@ -1115,7 +1135,7 @@
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
-                                <property name="top_attach">2</property>
+                                <property name="top_attach">3</property>
                                 <property name="width">1</property>
                                 <property name="height">1</property>
                               </packing>
@@ -1136,10 +1156,8 @@
                     </child>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">1</property>
-                    <property name="width">1</property>
-                    <property name="height">1</property>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">0</property>
                   </packing>
                 </child>
               </object>
