@@ -76,9 +76,9 @@ if louis and not tablesdir:
 
 # Must match the order that the timeFormatCombo is populated.
 #
-(TIME_FORMAT_LOCALE, TIME_FORMAT_12_HM, TIME_FORMAT_24_HMS,
+(TIME_FORMAT_LOCALE, TIME_FORMAT_12_HM, TIME_FORMAT_12_HMS, TIME_FORMAT_24_HMS,
  TIME_FORMAT_24_HMS_WITH_WORDS, TIME_FORMAT_24_HM,
- TIME_FORMAT_24_HM_WITH_WORDS) = list(range(6))
+ TIME_FORMAT_24_HM_WITH_WORDS) = list(range(7))
 
 # Must match the order that the dateFormatCombo is populated.
 #
@@ -1390,6 +1390,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.populateComboBox(combobox3,
           [sdtime(messages.TIME_FORMAT_LOCALE, ltime()),
            sdtime(messages.TIME_FORMAT_12_HM, ltime()),
+           sdtime(messages.TIME_FORMAT_12_HMS, ltime()),
            sdtime(messages.TIME_FORMAT_24_HMS, ltime()),
            sdtime(messages.TIME_FORMAT_24_HMS_WITH_WORDS, ltime()),
            sdtime(messages.TIME_FORMAT_24_HM, ltime()),
@@ -1400,6 +1401,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             indextime = TIME_FORMAT_LOCALE
         elif timeFormat == messages.TIME_FORMAT_12_HM:
             indextime = TIME_FORMAT_12_HM
+        elif timeFormat == messages.TIME_FORMAT_12_HMS:
+            indextime = TIME_FORMAT_12_HMS
         elif timeFormat == messages.TIME_FORMAT_24_HMS:
             indextime = TIME_FORMAT_24_HMS
         elif timeFormat == messages.TIME_FORMAT_24_HMS_WITH_WORDS:
@@ -2425,6 +2428,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             newFormat = messages.TIME_FORMAT_LOCALE
         elif timeFormatCombo == TIME_FORMAT_12_HM:
             newFormat = messages.TIME_FORMAT_12_HM
+        elif timeFormatCombo == TIME_FORMAT_12_HMS:
+            newFormat = messages.TIME_FORMAT_12_HMS
         elif timeFormatCombo == TIME_FORMAT_24_HMS:
             newFormat = messages.TIME_FORMAT_24_HMS
         elif timeFormatCombo == TIME_FORMAT_24_HMS_WITH_WORDS:
