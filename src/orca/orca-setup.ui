@@ -1639,6 +1639,24 @@
                                             <property name="height">1</property>
                                           </packing>
                                         </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="messagesAreDetailedCheckButton">
+                                            <property name="label" translatable="yes" comments="Translators: Orca's 'system' messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via speech, such as confirming the toggling of an Orca setting via command.  In instances where the message to be displayed is long/detailed, Orca provides a 'brief' alternative. Users who prefer that brief alternative can uncheck this checkbox.">_System messages are detailed</property>
+                                            <property name="use_action_appearance">False</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="use_underline">True</property>
+                                            <property name="xalign">0</property>
+                                            <property name="active">True</property>
+                                            <property name="draw_indicator">True</property>
+                                            <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">0</property>
+                                            <property name="top_attach">5</property>
+                                          </packing>
+                                        </child>
                                       </object>
                                       <packing>
                                         <property name="left_attach">0</property>
@@ -2339,6 +2357,145 @@
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
+                    </child>
+                    <child>
+                      <object class="GtkFrame" id="flashMessageSettingsFrame">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label_xalign">0</property>
+                        <property name="shadow_type">none</property>
+                        <child>
+                          <object class="GtkAlignment" id="flashMessageSettingsAlignment">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="left_padding">12</property>
+                            <child>
+                              <object class="GtkGrid" id="flashMessageSettingsGrid">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <object class="GtkCheckButton" id="enableFlashMessagesCheckButton">
+                                    <property name="label" translatable="yes" context="FlashMessages" comments="Translators: Braille 'flash' messages are similar in nature to notifications or announcements in that they are temporarily shown on the user's refreshable braille display. Upon removal of the message, the original contents of the braille display are restored. This checkbox allows the user to toggle this feature.">Enable flash _messages</property>
+                                    <property name="use_action_appearance">False</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="xalign">0</property>
+                                    <property name="active">True</property>
+                                    <property name="draw_indicator">True</property>
+                                    <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">0</property>
+                                    <property name="top_attach">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkGrid" id="flashMessageDurationGrid">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <child>
+                                      <object class="GtkLabel" id="flashMessageDurationLabel">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes" context="FlashMessages" comments="Translators: Braille 'flash' messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called 'flash' messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. This label is for the spin button through which a user can customize how long (in seconds) these temporary messages should be displayed.">Messa_ge duration (secs):</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="mnemonic_widget">brailleFlashTimeSpinButton</property>
+                                        <property name="xalign">0</property>
+                                      </object>
+                                      <packing>
+                                        <property name="left_attach">0</property>
+                                        <property name="top_attach">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkSpinButton" id="brailleFlashTimeSpinButton">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="invisible_char">●</property>
+                                        <property name="adjustment">adjustment4</property>
+                                        <property name="climb_rate">1</property>
+                                        <property name="numeric">True</property>
+                                        <property name="value">5</property>
+                                        <signal name="value-changed" handler="brailleFlashTimeValueChanged" swapped="no"/>
+                                      </object>
+                                      <packing>
+                                        <property name="left_attach">1</property>
+                                        <property name="top_attach">0</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">0</property>
+                                    <property name="top_attach">3</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkCheckButton" id="flashIsPersistentCheckButton">
+                                    <property name="label" translatable="yes" context="FlashMessages" comments="Translators: Braille 'flash' messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called 'flash' messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. Some users, however, would prefer to have the message remain displayed until they explicitly dismiss it. This can be accomplished by making flash messages 'persistent' by checking this checkbox.">Messages are _persistent</property>
+                                    <property name="use_action_appearance">False</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="xalign">0</property>
+                                    <property name="active">True</property>
+                                    <property name="draw_indicator">True</property>
+                                    <signal name="toggled" handler="flashPersistenceToggled" swapped="no"/>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">0</property>
+                                    <property name="top_attach">2</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkCheckButton" id="flashIsDetailedCheckButton">
+                                    <property name="label" translatable="yes" context="FlashMessages" comments="Translators: Braille 'flash' messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called 'flash' messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. In instances where the message to be displayed is long/detailed, Orca provides a 'brief' alternative. Users who prefer the brief alternative can uncheck this checkbox.">Messages are _detailed</property>
+                                    <property name="use_action_appearance">False</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="xalign">0</property>
+                                    <property name="active">True</property>
+                                    <property name="draw_indicator">True</property>
+                                    <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">0</property>
+                                    <property name="top_attach">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child type="label">
+                          <object class="GtkLabel" id="flashMessageSettingsLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes" context="FlashMessages" comments="Translators: Braille 'flash' messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called 'flash' messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored.">Flash Message Settings</property>
+                            <property name="ellipsize">end</property>
+                            <attributes>
+                              <attribute name="weight" value="bold"/>
+                            </attributes>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
                     </child>
                   </object>
                   <packing>

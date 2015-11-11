@@ -110,4 +110,62 @@
       </p>
     </note>
   </section>
+  <section id="flashMessageSettings">
+    <title>Flash Message Settings</title>
+    <p>
+        Flash messages are similar in nature to notifications or announcements:
+        They are shown on your refreshable braille display for a brief time,
+        after which the original contents of the braille display are restored.
+        <app>Orca</app> has several settings you can use to control flash message
+        presentation.
+    </p>
+    <section>
+      <title>Enable flash messages</title>
+      <p>
+        If <gui>Enable flash messages</gui> is checked, <app>Orca</app> will
+        present messages to you in braille. If you prefer to only have
+        <app>Orca</app>'s messages spoken, you should uncheck this checkbox.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
+    <section>
+      <title>Messages are detailed</title>
+      <p>
+        If <gui>Messages are detailed</gui> is checked, <app>Orca</app> will
+        present detailed messages to you in braille. For instance, if you
+        use <app>Orca</app>'s command to change key echo, <app>Orca</app> might
+        display "Key echo set to word." If you would prefer shorter messages,
+        such as simply "word," you should uncheck this checkbox.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
+    <section>
+      <title>Messages are persistent</title>
+      <p>
+        As stated above, flash messages are only shown for a brief period of time.
+        If you would prefer messages remain displayed until you perform an action
+        which causes your display to be updated, you should check the <gui>Messages
+        are persistent</gui> checkbox.
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+    </section>
+    <section>
+      <title>Message duration (secs)</title>
+      <p>
+        The amount of time <app>Orca</app> will wait before removing the message and
+        restoring the original contents of your display can be set in the <gui>
+        Message duration (secs)</gui> spin button. Note that the value of this
+        setting will be ignored if you have enabled persistent flash messages.
+      </p>
+      <p>
+        Default value: 5
+      </p>
+    </section>
+  </section>
 </page>

@@ -101,8 +101,8 @@ userCustomizableSettings = [
     "enableFlashMessages",
     "brailleFlashTime",
     "flashIsPersistent",
-    "flashVerbosityLevel",
-    "messageVerbosityLevel",
+    "flashIsDetailed",
+    "messagesAreDetailed",
     "presentDateFormat",
     "presentTimeFormat",
     "activeProfile",
@@ -211,7 +211,7 @@ sayAllStyle                  = SAYALL_STYLE_SENTENCE
 capitalizationStyle          = CAPITALIZATION_STYLE_NONE
 verbalizePunctuationStyle    = PUNCTUATION_STYLE_MOST
 speechVerbosityLevel         = VERBOSITY_LEVEL_VERBOSE
-messageVerbosityLevel        = VERBOSITY_LEVEL_VERBOSE
+messagesAreDetailed          = True
 enablePauseBreaks            = True
 
 # Braille
@@ -222,6 +222,7 @@ enableBrailleContext           = True
 enableFlashMessages            = True
 brailleFlashTime               = 5000
 flashIsPersistent              = False
+flashIsDetailed                = True
 enableContractedBraille        = False
 brailleContractionTable        = ''
 disableBrailleEOL              = False
@@ -230,7 +231,6 @@ brailleSelectorIndicator       = BRAILLE_UNDERLINE_BOTH
 brailleLinkIndicator           = BRAILLE_UNDERLINE_BOTH
 textAttributesBrailleIndicator = BRAILLE_UNDERLINE_NONE
 brailleVerbosityLevel          = VERBOSITY_LEVEL_VERBOSE
-flashVerbosityLevel            = VERBOSITY_LEVEL_VERBOSE
 brailleAlignmentStyle          = BRAILLE_ALIGN_BY_EDGE
 brailleAlignmentMargin         = 3
 brailleMaximumJump             = 8

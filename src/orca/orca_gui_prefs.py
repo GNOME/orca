@@ -974,6 +974,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         model = combobox.get_model()
         myIter = combobox.get_active_iter()
         self.prefsDict["brailleContractionTable"] = model[myIter][1]
+
+    def flashPersistenceToggled(self, checkbox):
+        grid = self.get_widget('flashMessageDurationGrid')
+        grid.set_sensitive(not checkbox.get_active())
+        self.prefsDict["flashIsPersistent"] = checkbox.get_active()
         
     def textAttributeSpokenToggled(self, cell, path, model):
         """The user has toggled the state of one of the text attribute
@@ -1323,6 +1328,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.get_widget("enableMnemonicSpeakingCheckButton").set_active(\
             prefs["enableMnemonicSpeaking"])
 
+        enable = prefs.get("messagesAreDetailed", settings.messagesAreDetailed)
+        self.get_widget("messagesAreDetailedCheckButton").set_active(enable)
+
         combobox = self.get_widget("sayAllStyle")
         self.populateComboBox(combobox, [guilabels.SAY_ALL_STYLE_LINE,
                                          guilabels.SAY_ALL_STYLE_SENTENCE])
@@ -1502,6 +1510,18 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.get_widget("brailleLinkBothButton").set_active(True)
         else:
             self.get_widget("brailleLinkNoneButton").set_active(True)
+
+        enable = prefs.get("enableFlashMessages", settings.enableFlashMessages)
+        self.get_widget("enableFlashMessagesCheckButton").set_active(enable)
+
+        enable = prefs.get("flashIsPersistent", settings.flashIsPersistent)
+        self.get_widget("flashIsPersistentCheckButton").set_active(enable)
+
+        enable = prefs.get("flashIsDetailed", settings.flashIsDetailed)
+        self.get_widget("flashIsDetailedCheckButton").set_active(enable)
+
+        duration = prefs["brailleFlashTime"]
+        self.get_widget("speakProgressBarSpinButton").set_value(duration / 1000)
 
         # Key Echo pane.
         #
@@ -2506,6 +2526,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         self.prefsDict["progressBarUpdateInterval"] = widget.get_value_as_int()
+
+    def brailleFlashTimeValueChanged(self, widget):
+        self.prefsDict["brailleFlashTime"] = widget.get_value_as_int() * 1000
 
     def abbrevRolenamesChecked(self, widget):
         """Signal handler for the "toggled" signal for the abbrevRolenames

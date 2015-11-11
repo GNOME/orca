@@ -4147,8 +4147,7 @@ class Script(script.Script):
                 'capitalizationStyle', settings.CAPITALIZATION_STYLE_NONE)
             speech.updateCapitalizationStyle()
 
-            if _settingsManager.getSetting('messageVerbosityLevel') \
-                    == settings.VERBOSITY_LEVEL_BRIEF:
+            if not _settingsManager.getSetting('messagesAreDetailed'):
                 message = briefMessage
             else:
                 message = fullMessage
@@ -4162,8 +4161,7 @@ class Script(script.Script):
         if (_settingsManager.getSetting('enableBraille') \
              or _settingsManager.getSetting('enableBrailleMonitor')) \
            and _settingsManager.getSetting('enableFlashMessages'):
-            if _settingsManager.getSetting('flashVerbosityLevel') \
-                    == settings.VERBOSITY_LEVEL_BRIEF:
+            if not _settingsManager.getSetting('flashIsDetailed'):
                 message = briefMessage
             else:
                 message = fullMessage

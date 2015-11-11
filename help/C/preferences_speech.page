@@ -190,6 +190,19 @@
         Default value: not checked
       </p>
     </section>
+    <section id="system_messages_are_detailed">
+      <title>System messages are detailed</title>
+      <p>
+        If <gui>System messages are detailed</gui> is checked, <app>Orca</app> will
+        present detailed messages to you in speech. For instance, if you use
+        <app>Orca</app>'s command to change key echo, <app>Orca</app> might
+        speak "Key echo set to word." If you would prefer shorter messages,
+        such as simply "word," you should uncheck this checkbox.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
   </section>
   <section id="progress_bar_updates">
     <title>Progress Bar Updates</title>
