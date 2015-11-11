@@ -206,6 +206,11 @@ class BrailleGenerator(generator.Generator):
         specifications) that represent the accelerator for the object,
         or an empty array if no accelerator can be found.
         """
+
+        verbosityLevel = _settingsManager.getSetting('brailleVerbosityLevel')
+        if verbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
+            return []
+
         result = []
         [mnemonic, shortcut, accelerator] = \
             self._script.utilities.mnemonicShortcutAccelerator(obj)
