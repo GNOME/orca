@@ -109,16 +109,5 @@
         Default value: not checked
       </p>
     </section>
-    <section id="say_all_by">
-      <title>Say All By</title>
-      <p>
-        The <gui>Say All By</gui> combo box allows you to specify whether
-        <app>Orca</app> speaks a sentence at a time or a line at a time when
-        doing a "Say All" of a document.
-      </p>
-      <p>
-        Default value: <gui>Sentence</gui>
-      </p>
-    </section>
   </section>
 </page>

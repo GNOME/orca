@@ -88,6 +88,55 @@
       Default value: use the system locale's format for each
     </p>
   </section>
+  <section id="navigation_in_say_all">
+    <info>
+      <desc>
+        Preferences dialog box options for enabling rewind, fast forward,
+	and structural navigation during Say All.
+      </desc>
+    </info>
+    <title>Navigation in Say All</title>
+    <p>
+        <app>Orca</app>'s Say All feature speaks document content from your
+        present location to the end of the document. By default, pressing any
+        key will interrupt Say All's presentation. However, if you check the
+        <gui>Enable rewind and fast forward in Say All</gui> checkbox,
+        <key>Up</key> and <key>Down</key> can be used during Say All to quickly
+        move within the document in order to re-hear something which was just
+        read or skip past text of no interest without having to restart Say All.
+    </p>
+    <p>
+       If you are reading a document within an application that has structural
+       navigation support, and you have checked the <gui>Enable structural navigation
+       in Say All</gui> checkbox, you can use the supported structural navigation
+       commands in a similar fashion: <key>H</key>/<keyseq><key>Shift</key>
+       <key>H</key></keyseq> continues reading from the next/previous heading,
+       <key>P</key>/<keyseq><key>Shift</key><key>P</key></keyseq> continues reading
+       from the next/previous paragraph, <key>T</key>/<keyseq><key>Shift</key>
+       <key>T</key></keyseq> continues reading from the next/previous table, and
+       so on.
+    </p>
+    <p>
+      Default value: not checked
+    </p>
+  </section>
+  <section id="say_all_by">
+   <info>
+      <desc>
+        Preferences dialog box option for customizing <app>Orca</app>'s
+	Say All presentation.
+      </desc>
+   </info>
+   <title>Say All By</title>
+   <p>
+      The <gui>Say All By</gui> combo box allows you to specify whether
+      <app>Orca</app> speaks a sentence at a time or a line at a time when
+      doing a "Say All" of a document.
+    </p>
+    <p>
+      Default value: <gui>Sentence</gui>
+    </p>
+  </section>
   <section id="profiles">
     <info>
       <desc>

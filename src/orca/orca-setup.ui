@@ -531,6 +531,76 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkFrame" id="mouseFrame">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label_xalign">0</property>
+                    <property name="shadow_type">none</property>
+                    <child>
+                      <object class="GtkAlignment" id="mouseAlignment">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="left_padding">12</property>
+                        <child>
+                          <object class="GtkGrid" id="mouseGrid">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <child>
+                              <object class="GtkCheckButton" id="presentToolTipsCheckButton">
+                                <property name="label" translatable="yes">_Present tooltips</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="use_underline">True</property>
+                                <property name="xalign">0</property>
+                                <property name="draw_indicator">True</property>
+                                <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="enableMouseReviewCheckButton">
+                                <property name="label" translatable="yes">Speak object under mo_use</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="use_underline">True</property>
+                                <property name="xalign">0</property>
+                                <property name="active">True</property>
+                                <property name="draw_indicator">True</property>
+                                <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child type="label">
+                      <object class="GtkLabel" id="mouseLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Mouse</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">1</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkFrame" id="timeAndDateFrame">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
@@ -642,29 +712,29 @@
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
-                    <property name="top_attach">3</property>
+                    <property name="top_attach">2</property>
                     <property name="width">1</property>
                     <property name="height">1</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkFrame" id="mouseFrame">
+                  <object class="GtkFrame" id="sayAllFrame">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label_xalign">0</property>
                     <property name="shadow_type">none</property>
                     <child>
-                      <object class="GtkAlignment" id="mouseAlignment">
+                      <object class="GtkAlignment" id="sayAllAlignment">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="left_padding">12</property>
                         <child>
-                          <object class="GtkGrid" id="mouseGrid">
+                          <object class="GtkGrid" id="sayAllGrid">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <object class="GtkCheckButton" id="presentToolTipsCheckButton">
-                                <property name="label" translatable="yes">_Present tooltips</property>
+                              <object class="GtkCheckButton" id="rewindAndFastForwardInSayAllCheckButton">
+                                <property name="label" translatable="yes" comments="Translators: Orca has a 'Say All' feature which speaks the entire document. Normally, pressing any key will interrupt Say All's presentation. However, if 'rewind and fast forward' is enabled, Up Arrow and Down Arrow can be used within Say All to quickly move within the document to re-hear something which was just read or skip past something of no interest.">Enable _rewind and fast forward in Say All</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -682,8 +752,8 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkCheckButton" id="enableMouseReviewCheckButton">
-                                <property name="label" translatable="yes">Speak object under mo_use</property>
+                              <object class="GtkCheckButton" id="structNavInSayAllCheckButton">
+                                <property name="label" translatable="yes" comments="Translators: Orca has a 'Say All' feature which speaks the entire document. Normally, pressing any key will interrupt Say All's presentation. However, if 'structural navigation' is enabled for Say All, users can use commands such as H/Shift+H to jump to the next/previous heading, P/Shift+P to jump to the next/previous paragraph, T/Shift+T to jump to the next/previous table, and so on. Thus this setting is like fast forward and rewind, but with semantic awareness for web documents and similar content.">Enable _structural navigation in Say All</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -701,15 +771,63 @@
                                 <property name="height">1</property>
                               </packing>
                             </child>
+                            <child>
+                              <object class="GtkGrid" id="sayAllStyleGrid">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="row_spacing">20</property>
+                                <property name="column_spacing">20</property>
+                                <child>
+                                  <object class="GtkLabel" id="sayAllStyleLabel">
+                                    <property name="name">-`</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes" comments="Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.">Say All B_y:</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="mnemonic_widget">sayAllStyle</property>
+                                    <property name="xalign">0</property>
+                                    <accessibility>
+                                      <relation type="label-for" target="sayAllStyle"/>
+                                    </accessibility>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">0</property>
+                                    <property name="top_attach">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkComboBox" id="sayAllStyle">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="model">model2</property>
+                                    <signal name="changed" handler="sayAllStyleChanged" swapped="no"/>
+                                    <child>
+                                      <object class="GtkCellRendererText" id="renderer2"/>
+                                      <attributes>
+                                        <attribute name="text">0</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">1</property>
+                                    <property name="top_attach">0</property>
+                                  </packing>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">2</property>
+                              </packing>
+                            </child>
                           </object>
                         </child>
                       </object>
                     </child>
                     <child type="label">
-                      <object class="GtkLabel" id="mouseLabel">
+                      <object class="GtkLabel" id="sayAllLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Mouse</property>
+                        <property name="label" translatable="yes">Say All</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
                         </attributes>
@@ -718,7 +836,7 @@
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
-                    <property name="top_attach">2</property>
+                    <property name="top_attach">3</property>
                     <property name="width">1</property>
                     <property name="height">1</property>
                   </packing>
@@ -1084,61 +1202,10 @@
                               <packing>
                                 <property name="left_attach">0</property>
                                 <property name="top_attach">2</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkGrid" id="sayAllGrid">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="row_spacing">12</property>
-                                <child>
-                                  <object class="GtkLabel" id="sayAllLabel">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
-                                    <property name="label" translatable="yes" comments="Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.">Say All B_y:</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="mnemonic_widget">sayAllStyle</property>
-                                    <accessibility>
-                                      <relation type="label-for" target="sayAllStyle"/>
-                                    </accessibility>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">0</property>
-                                    <property name="top_attach">0</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkComboBox" id="sayAllStyle">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="model">model2</property>
-                                    <signal name="changed" handler="sayAllStyleChanged" swapped="no"/>
-                                    <child>
-                                      <object class="GtkCellRendererText" id="renderer2"/>
-                                      <attributes>
-                                        <attribute name="text">0</attribute>
-                                      </attributes>
-                                    </child>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">1</property>
-                                    <property name="top_attach">0</property>
-                                    <property name="width">1</property>
-                                    <property name="height">1</property>
-                                  </packing>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="left_attach">0</property>
-                                <property name="top_attach">3</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
-                              </packing>
+                              <placeholder/>
                             </child>
                           </object>
                         </child>

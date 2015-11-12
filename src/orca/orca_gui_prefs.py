@@ -1334,11 +1334,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         enable = prefs.get("useColorNames", settings.useColorNames)
         self.get_widget("useColorNamesCheckButton").set_active(enable)
 
-        combobox = self.get_widget("sayAllStyle")
-        self.populateComboBox(combobox, [guilabels.SAY_ALL_STYLE_LINE,
-                                         guilabels.SAY_ALL_STYLE_SENTENCE])
-        combobox.set_active(prefs["sayAllStyle"])
-
         combobox2 = self.get_widget("dateFormatCombo")
         sdtime = time.strftime
         ltime = time.localtime
@@ -1583,6 +1578,15 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         else:
             self.get_widget("generalLaptopButton").set_active(True)
         
+        combobox = self.get_widget("sayAllStyle")
+        self.populateComboBox(combobox, [guilabels.SAY_ALL_STYLE_LINE,
+                                         guilabels.SAY_ALL_STYLE_SENTENCE])
+        combobox.set_active(prefs["sayAllStyle"])
+        self.get_widget("rewindAndFastForwardInSayAllCheckButton").set_active(
+            prefs.get("rewindAndFastForwardInSayAll", settings.rewindAndFastForwardInSayAll))
+        self.get_widget("structNavInSayAllCheckButton").set_active(
+            prefs.get("structNavInSayAll", settings.structNavInSayAll))
+
         # Orca User Profiles
         #
         self.profilesCombo = self.get_widget('availableProfilesComboBox1')

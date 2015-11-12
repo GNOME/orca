@@ -116,6 +116,8 @@ userCustomizableSettings = [
     "structNavTriggersFocusMode",
     "caretNavTriggersFocusMode",
     "layoutMode",
+    "rewindAndFastForwardInSayAll",
+    "structNavInSayAll"
 ]
 
 GENERAL_KEYBOARD_LAYOUT_DESKTOP = 1
@@ -356,7 +358,5 @@ caretNavTriggersFocusMode = False
 
 layoutMode = True
 
-# NOTE: The following are experimental and may be changed or removed at
-# any time
 rewindAndFastForwardInSayAll = False
 structNavInSayAll = False
