@@ -1331,6 +1331,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         enable = prefs.get("messagesAreDetailed", settings.messagesAreDetailed)
         self.get_widget("messagesAreDetailedCheckButton").set_active(enable)
 
+        enable = prefs.get("useColorNames", settings.useColorNames)
+        self.get_widget("useColorNamesCheckButton").set_active(enable)
+
         combobox = self.get_widget("sayAllStyle")
         self.populateComboBox(combobox, [guilabels.SAY_ALL_STYLE_LINE,
                                          guilabels.SAY_ALL_STYLE_SENTENCE])

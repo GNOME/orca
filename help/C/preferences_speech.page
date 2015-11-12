@@ -203,6 +203,18 @@
         Default value: checked
       </p>
     </section>
+    <section id="speak_colors_as_names">
+      <title>Speak colors as names</title>
+      <p>
+        If <gui>Speak colors as names</gui> is checked, <app>Orca</app> will
+        describe colors, looking for the closest approximate. For instance,
+        RGB 0, 27, 51 would be spoken as "midnight blue." If you would prefer
+        to hear the exact RGB value, you should uncheck this checkbox.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
   </section>
   <section id="progress_bar_updates">
     <title>Progress Bar Updates</title>
