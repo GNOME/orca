@@ -330,6 +330,23 @@ class BrailleGenerator(generator.Generator):
 
         return result
 
+    def _generateListBoxItemWidgets(self, obj, **args):
+        widgetRoles = [pyatspi.ROLE_CHECK_BOX,
+                       pyatspi.ROLE_COMBO_BOX,
+                       pyatspi.ROLE_PUSH_BUTTON,
+                       pyatspi.ROLE_RADIO_BUTTON,
+                       pyatspi.ROLE_SLIDER,
+                       pyatspi.ROLE_TOGGLE_BUTTON]
+        isWidget = lambda x: x and x.getRole() in widgetRoles
+        result = []
+        if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
+            widgets = pyatspi.findAllDescendants(obj, isWidget)
+            for widget in widgets:
+                result.extend(self.generate(widget, includeContext=False))
+                result.append(braille.Region(" "))
+
+        return result
+
     #####################################################################
     #                                                                   #
     # Unfortunate hacks.                                                #

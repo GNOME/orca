@@ -225,7 +225,7 @@ formatting = {
             },
         pyatspi.ROLE_LIST_ITEM: {
             'focused': 'expandableState',
-            'unfocused': 'label + displayedText + allTextSelection + pause + expandableState + pause + positionInList + pause + childWidget',
+            'unfocused': 'label + displayedText + allTextSelection + pause + expandableState + pause + positionInList + pause + listBoxItemWidgets',
             'basicWhereAmI': 'label + roleName + pause + name + pause + positionInList + pause + expandableState + (nodeLevel or nestingLevel) + pause'
             },
         pyatspi.ROLE_MATH: {
@@ -566,11 +566,11 @@ formatting = {
                           or ([Component(obj,\
                                      asString(label + displayedText + expandableState + roleName + availability) + asString(accelerator))]\
                           + (nestingLevel and [Region(" " + asString(nestingLevel))])\
-                          + (childWidget and ([Region(" ")] + childWidget))))',
+                          + (listBoxItemWidgets and ([Region(" ")] + listBoxItemWidgets))))',
             'unfocused': '((substring and ' + BRAILLE_TEXT + ')\
                           or ([Component(obj, asString(labelOrName + expandableState))]\
                               + (nestingLevel and [Region(" " + asString(nestingLevel))])\
-                              + (childWidget and ([Region(" ")] + childWidget))))',
+                              + (listBoxItemWidgets and ([Region(" ")] + listBoxItemWidgets))))',
             },
         pyatspi.ROLE_MENU: {
             'focused':   '[Component(obj,\
