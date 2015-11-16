@@ -183,6 +183,19 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, obj)
             return
 
+    def onSelectedChanged(self, event):
+        """Callback for object:state-changed:selected accessibility events."""
+
+        if self.utilities.isEntryCompletionPopupItem(event.source):
+            if event.detail1:
+                orca.setLocusOfFocus(event, event.source)
+                return
+            if orca_state.locusOfFocus == event.source:
+                orca.setLocusOfFocus(event, None)
+                return
+
+        super().onSelectedChanged(event)
+
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
 

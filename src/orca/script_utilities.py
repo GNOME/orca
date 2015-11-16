@@ -2754,6 +2754,9 @@ class Utilities:
 
         return child
 
+    def isEntryCompletionPopupItem(self, obj):
+        return False
+
     def _isNonModalPopOver(self, obj):
         return False
 

@@ -69,6 +69,15 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
+    def isEntryCompletionPopupItem(self, obj):
+        if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
+            isWindow = lambda x: x and x.getRole() == pyatspi.ROLE_WINDOW
+            window = pyatspi.findAncestor(obj, isWindow)
+            if window:
+                return True
+
+        return False
+
     def _isNonModalPopOver(self, obj):
         try:
             state = obj.getState()
