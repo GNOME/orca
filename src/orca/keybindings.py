@@ -294,9 +294,12 @@ class KeyBindings:
         """Removes the given KeyBinding instance from this set of keybindings.
         """
 
-        for i in range(0, len(self.keyBindings)):
-            if keyBinding == self.keyBindings[i]:
-                del self.keyBindings[i]
+        try:
+            i = self.keyBindings.index(keyBinding)
+        except:
+            pass
+        else:
+            del self.keyBindings[i]
 
     def removeByHandler(self, handler):
         """Removes the given KeyBinding instance from this set of keybindings.
