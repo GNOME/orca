@@ -255,7 +255,7 @@ class Utilities:
         debug.println(debug.LEVEL_FINEST,
                       "script_utilities.commonAncestor...")
 
-        if (not a) or (not b):
+        if (not a or self.isZombie(a)) or (not b or self.isZombie(b)):
             return None
 
         if a == b:

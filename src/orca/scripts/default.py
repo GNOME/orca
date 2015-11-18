@@ -746,6 +746,8 @@ class Script(script.Script):
         # name has not.
         names = self.pointOfReference.get('names', {})
         names[hash(obj)] = name
+        if orca_state.activeWindow:
+            names[hash(orca_state.activeWindow)] = orca_state.activeWindow.name
         self.pointOfReference['names'] = names
 
         # We want to save the offset for text objects because some apps and
@@ -2264,27 +2266,25 @@ class Script(script.Script):
         names = self.pointOfReference.get('names', {})
         oldName = names.get(hash(obj))
         if oldName == event.any_data:
+            msg = "DEFAULT: Old name (%s) is the same as new name" % oldName
+            debug.println(debug.LEVEL_INFO, msg)
             return
 
-        # We are ignoring name changes in comboboxes that have focus
-        # see bgo#617204
         role = obj.getRole()
-        if role == pyatspi.ROLE_COMBO_BOX:
+        if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_TABLE_CELL]:
+            msg = "DEFAULT: Event is redundant notification for this role"
+            debug.println(debug.LEVEL_INFO, msg)
             return
 
-        # Table cell accessibles in trees are often reused. When this occurs,
-        # we get name-changed events when the selection changes.
-        if role == pyatspi.ROLE_TABLE_CELL:
-            return
-
-        # Normally, we only care about name changes in the current object.
-        # But with the new GtkHeaderBar, we are seeing instances where the
-        # real frame remains the same, but the functional frame changes
-        # e.g. g-c-c going from all settings to a specific panel.
-        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
-            if role != pyatspi.ROLE_FRAME \
-               or not obj.getState().contains(pyatspi.STATE_ACTIVE):
+        if role == pyatspi.ROLE_FRAME:
+            if obj != orca_state.activeWindow:
+                msg = "DEFAULT: Event is for frame other than the active window"
+                debug.println(debug.LEVEL_INFO, msg)
                 return
+        elif obj != orca_state.locusOfFocus:
+            msg = "DEFAULT: Event is for object other than the locusOfFocus"
+            debug.println(debug.LEVEL_INFO, msg)
+            return
 
         names[hash(obj)] = event.any_data
         self.pointOfReference['names'] = names
