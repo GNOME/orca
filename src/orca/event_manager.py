@@ -158,7 +158,13 @@ class EventManager:
             return True
 
         if event.type.startswith('object:state-changed:showing'):
-            if role in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_MENU_ITEM, pyatspi.ROLE_PARAGRAPH]:
+            if role not in [pyatspi.ROLE_ALERT,
+                            pyatspi.ROLE_ANIMATION,
+                            pyatspi.ROLE_INFO_BAR,
+                            pyatspi.ROLE_NOTIFICATION,
+                            pyatspi.ROLE_PANEL,
+                            pyatspi.ROLE_STATUS_BAR,
+                            pyatspi.ROLE_TOOL_TIP]:
                 msg = 'INFO: %s for %s in app %s. Who cares?' % \
                       (event.type, event.source, event.host_application)
                 debug.println(debug.LEVEL_INFO, msg)
