@@ -273,7 +273,6 @@ largeObjectTextLength       = 75
 wrappedStructuralNavigation = True
 inferLiveRegions            = True
 ariaLandmarks = [
-    "application",
     "banner",
     "complementary",
     "contentinfo",
