@@ -2134,52 +2134,39 @@ class Script(script.Script):
         pass
 
     def onCaretMoved(self, event):
-        """Called whenever the caret moves.
-
-        Arguments:
-        - event: the Event
-        """
-
-        if not orca_state.locusOfFocus:
-            return
+        """Callback for object:text-caret-moved accessibility events."""
 
         obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
-        if offset == event.detail1 \
-           and self.utilities.isSameObject(obj, event.source):
+        if offset == event.detail1 and obj == event.source:
+            msg = "DEFAULT: Event is for last saved cursor position"
+            debug.println(debug.LEVEL_INFO, msg)
             return
 
-        # Should the event source be the locusOfFocus?
-        #
-        try:
-            role = orca_state.locusOfFocus.getRole()
-        except (LookupError, RuntimeError):
-            role = None
-        if role in [pyatspi.ROLE_FRAME, pyatspi.ROLE_DIALOG]:
-            frameApp = orca_state.locusOfFocus.getApplication()
-            eventApp = event.source.getApplication()
-            if frameApp == eventApp \
-               and event.source.getState().contains(pyatspi.STATE_FOCUSED):
-                orca.setLocusOfFocus(event, event.source, False)
+        if event.source != orca_state.locusOfFocus \
+           and event.source.getState().contains(pyatspi.STATE_FOCUSED):
+            msg = "DEFAULT: Updating locusOfFocus from %s to %s" % \
+                  (orca_state.locusOfFocus, event.source)
+            debug.println(debug.LEVEL_INFO, msg)
+            orca.setLocusOfFocus(event, event.source, False)
 
-        # Ignore caret movements from non-focused objects, unless the
-        # currently focused object is the parent of the object which
-        # has the caret.
-        #
-        if (event.source != orca_state.locusOfFocus) \
-            and (event.source.parent != orca_state.locusOfFocus):
+        if event.source != orca_state.locusOfFocus:
+            msg = "DEFAULT: Event source (%s) is not locusOfFocus (%s)" \
+                  % (event.source, orca_state.locusOfFocus)
+            debug.println(debug.LEVEL_INFO, msg)
             return
 
-        # We always automatically go back to focus tracking mode when
-        # the caret moves in the focused object.
-        #
         if self.flatReviewContext:
             self.toggleFlatReviewMode()
 
         text = event.source.queryText()
         self._saveLastCursorPosition(event.source, text.caretOffset)
         if text.getNSelections():
+            msg = "DEFAULT: Event source has text selections"
+            debug.println(debug.LEVEL_INFO, msg)
             return
 
+        msg = "DEFAULT: Presenting text at new caret position"
+        debug.println(debug.LEVEL_INFO, msg)
         self._presentTextAtNewCaretPosition(event)
 
     def onDocumentReload(self, event):

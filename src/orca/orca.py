@@ -139,66 +139,49 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
     """
 
     if not force and obj == orca_state.locusOfFocus:
+        msg = "INFO: Setting locusOfFocus to existing locusOfFocus"
+        debug.println(debug.LEVEL_INFO, msg)
         return
 
-    # If this event is not for the currently active script, then just return.
-    #
-    if event and event.source and \
-       event.host_application and orca_state.activeScript:
-        currentApp = orca_state.activeScript.app
-        try:
-            appList = [event.host_application, event.source.getApplication()]
-        except (LookupError, RuntimeError):
-            appList = []
-            debug.println(debug.LEVEL_SEVERE,
-                           "orca.setLocusOfFocus() application Error")
-        if not currentApp in appList:
-            return
+    if event and (orca_state.activeScript and not orca_state.activeScript.app):
+        script = _scriptManager.getScript(event.host_application, event.source)
+        _scriptManager.setActiveScript(script, "Setting locusOfFocus")
 
-    oldLocusOfFocus = orca_state.locusOfFocus
+    oldFocus = orca_state.locusOfFocus
     try:
-        # Just to see if we have a valid object.
-        oldLocusOfFocus.getRole()
+        oldFocus.getRole()
     except:
-        # Either it's None or it's an invalid remote object.
-        oldLocusOfFocus = None
+        msg = "INFO: Old locusOfFocus is null or defunct"
+        debug.println(debug.LEVEL_INFO, msg)
+        oldFocus = None
 
-    orca_state.locusOfFocus = obj
-    try:
-        app = orca_state.locusOfFocus.getApplication()
-    except:
+    if not obj:
+        msg = "INFO: New locusOfFocus is null (being cleared)"
+        debug.println(debug.LEVEL_INFO, msg)
         orca_state.locusOfFocus = None
-        if event:
-            debug.println(debug.LEVEL_FINE,
-                          "LOCUS OF FOCUS: None event='%s'" % event.type)
-        else:
-            debug.println(debug.LEVEL_FINE,
-                          "LOCUS OF FOCUS: None event=None")
-    else:
-        try:
-            appname = "'" + app.name + "'"
-        except:
-            appname = "None"
-        try:
-            name = orca_state.locusOfFocus.name
-            rolename = orca_state.locusOfFocus.getRoleName()
-        except:
-            name = "Error"
-            rolename = "Error"
-        debug.println(debug.LEVEL_FINE,
-                      "LOCUS OF FOCUS: app=%s name='%s' role='%s'" \
-                      % (appname, name, rolename))
+        return
 
-        if event:
-            debug.println(debug.LEVEL_FINE,
-                          "                event='%s'" % event.type)
-        else:
-            debug.println(debug.LEVEL_FINE,
-                          "                event=None")
+    try:
+        app = obj.getApplication()
+    except:
+        msg = "ERROR: Exception getting application for %s" % obj
+        debug.println(debug.LEVEL_INFO, msg)
+        orca_state.locusOfFocus = None
+        return
 
-    if notifyScript and orca_state.activeScript:
-        orca_state.activeScript.locusOfFocusChanged(
-            event, oldLocusOfFocus, orca_state.locusOfFocus)
+    msg = "INFO: Changing locusOfFocus from %s to %s" % (oldFocus, obj)
+    debug.println(debug.LEVEL_INFO, msg)
+    orca_state.locusOfFocus = obj
+
+    if not notifyScript:
+        return
+
+    if not orca_state.activeScript:
+        msg = "INFO: Cannot notify active script because there isn't one"
+        debug.println(debug.LEVEL_INFO, msg)
+        return
+
+    orca_state.activeScript.locusOfFocusChanged(event, oldFocus, orca_state.locusOfFocus)
 
 ########################################################################
 #                                                                      #
