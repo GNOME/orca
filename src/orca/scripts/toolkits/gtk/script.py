@@ -208,16 +208,17 @@ class Script(default.Script):
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
 
-        obj = event.source
-        if not self.utilities._isNonModalPopOver(obj):
-            default.Script.onShowingChanged(self, event)
+        if not event.detail1:
+            super().onShowingChanged(event)
             return
 
-        if event.detail1:
-            speech.speak(self.speechGenerator.generateSpeech(obj))
-            labels = self.utilities.unrelatedLabels(obj)
-            msg = ' '.join(map(self.utilities.displayedText, labels))
-            self.presentMessage(msg)
+        obj = event.source
+        if self.utilities._isNonModalPopOver(obj) \
+           or obj.getRole() in [pyatspi.ROLE_ALERT, pyatspi.ROLE_INFO_BAR]:
+            self.presentObject(event.source)
+            return
+
+        super().onShowingChanged(event)
 
     def onTextSelectionChanged(self, event):
         """Callback for object:text-selection-changed accessibility events."""

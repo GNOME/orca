@@ -33,7 +33,6 @@ import orca.keybindings as keybindings
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.toolkits.gtk as gtk
-import orca.settings as settings
 from orca.structural_navigation import StructuralNavigation
 
 ########################################################################
@@ -119,19 +118,6 @@ class Script(gtk.Script):
             orca.setLocusOfFocus(event, event.source, False)
 
         gtk.Script.onCaretMoved(self, event)
-
-    def onShowingChanged(self, event):
-        """Callback for object:state-changed:showing accessibility events."""
- 
-        obj = event.source
-        if obj.getRole() == pyatspi.ROLE_ALERT and event.detail1:
-            labels = self.utilities.unrelatedLabels(obj)
-            message = " ".join(map(self.utilities.displayedText, labels))
-            self.presentMessage(
-                message, voice=self.voices.get(settings.DEFAULT_VOICE))
-            return
- 
-        gtk.Script.onShowingChanged(self, event)
 
     def onTextSelectionChanged(self, event):
         """Callback for object:text-selection-changed accessibility events."""
