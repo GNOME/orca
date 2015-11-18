@@ -138,6 +138,7 @@ class EventManager:
             # issue, but until we know for certain....
             #name = event.source.name
             state = event.source.getState()
+            role = event.source.getRole()
         except:
             msg = 'ERROR: %s from potentially-defunct source %s in app %s (%s, %s, %s)' % \
                   (event.type, event.source, event.host_application, event.detail1,
@@ -151,11 +152,12 @@ class EventManager:
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
+        if role in [pyatspi.ROLE_FILLER]:
+            msg = 'INFO: Ignoring because events from this role are ignored'
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
         if event.type.startswith('object:state-changed:showing'):
-            try:
-                role = event.source.getRole()
-            except:
-                role = None
             if role in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_MENU_ITEM, pyatspi.ROLE_PARAGRAPH]:
                 msg = 'INFO: %s for %s in app %s. Who cares?' % \
                       (event.type, event.source, event.host_application)
