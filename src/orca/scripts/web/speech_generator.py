@@ -152,6 +152,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return super()._generateLabelOrName(obj, **args)
 
+    def _generateName(self, obj, **args):
+        if self._script.utilities.isTextBlockElement(obj):
+            return []
+
+        return super()._generateName(obj, **args)
+
     def _generateLabel(self, obj, **args):
         if self._script.utilities.isTextBlockElement(obj):
             return []
