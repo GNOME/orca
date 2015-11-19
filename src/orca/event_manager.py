@@ -684,6 +684,7 @@ class EventManager:
         except:
             msg = 'ERROR: Could not process %s' % event.type
             debug.println(debug.LEVEL_INFO, msg)
+            debug.printException(debug.LEVEL_INFO)
 
     def processKeyboardEvent(self, keyboardEvent):
         """Processes the given keyboard event based on the keybinding from the
