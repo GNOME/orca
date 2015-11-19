@@ -747,7 +747,12 @@ class Script(script.Script):
         names = self.pointOfReference.get('names', {})
         names[hash(obj)] = name
         if orca_state.activeWindow:
-            names[hash(orca_state.activeWindow)] = orca_state.activeWindow.name
+            try:
+                names[hash(orca_state.activeWindow)] = orca_state.activeWindow.name
+            except:
+                msg = "DEFAULT: Exception getting name for %s" % orca_state.activeWindow
+                debug.println(debug.LEVEL_INFO, msg)
+
         self.pointOfReference['names'] = names
 
         # We want to save the offset for text objects because some apps and
