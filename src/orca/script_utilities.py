@@ -255,8 +255,16 @@ class Utilities:
         debug.println(debug.LEVEL_FINEST,
                       "script_utilities.commonAncestor...")
 
-        if (not a or self.isZombie(a)) or (not b or self.isZombie(b)):
+        if not (a and b):
             return None
+
+        if self.isZombie(a) or self.isZombie(b):
+            try:
+                rolesAreSame = a.getRole() == b.getRole()
+            except:
+                rolesAreSame = False
+            if not rolesAreSame:
+                return None
 
         if a == b:
             return a
