@@ -2141,7 +2141,8 @@ class StructuralNavigation:
         # into for the landmark roles.
         #
         attrs = []
-        for landmark in settings.ariaLandmarks:
+        landmarkTypes = self._script.utilities.getLandmarkTypes()
+        for landmark in landmarkTypes:
             attrs.append('xml-roles:' + landmark)
 
         return MatchCriteria(collection, objAttrs=attrs)
@@ -2156,18 +2157,7 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        if obj is None:
-            return False
-
-        attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        try:
-            if set(attrs['xml-roles']).intersection(\
-                set(settings.ariaLandmarks)):
-                return True
-            else:
-                return False
-        except KeyError:
-            return False
+        return self._script.utilities.isLandmark(obj)
 
     def _landmarkPresentation(self, obj, arg=None):
         """Presents the landmark or indicates that one was not found.

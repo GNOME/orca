@@ -2011,7 +2011,7 @@ class Utilities(script_utilities.Utilities):
                 attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
             except:
                 attrs = {}
-            rv = attrs.get('xml-roles') in settings.ariaLandmarks
+            rv = attrs.get('xml-roles') in self.getLandmarkTypes()
 
         self._isLandmark[hash(obj)] = rv
         return rv

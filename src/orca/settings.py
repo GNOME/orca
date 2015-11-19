@@ -272,16 +272,6 @@ skipBlankCells              = False
 largeObjectTextLength       = 75
 wrappedStructuralNavigation = True
 inferLiveRegions            = True
-ariaLandmarks = [
-    "banner",
-    "complementary",
-    "contentinfo",
-    "form",
-    "main",
-    "navigation",
-    "region",
-    "search",
-]
 
 # Chat
 chatMessageVerbosity       = CHAT_SPEAK_ALL

@@ -620,6 +620,9 @@ class Utilities:
     def isHidden(self, obj):
         return False
 
+    def isLandmark(self, obj):
+        return False
+
     def speakMathSymbolNames(self, obj=None):
         return False
 
@@ -727,6 +730,16 @@ class Utilities:
 
     def getMathNestingLevel(self, obj, test=None):
         return 0
+
+    def getLandmarkTypes(self):
+        return ["banner",
+                "complementary",
+                "contentinfo",
+                "form",
+                "main",
+                "navigation",
+                "region",
+                "search"]
 
     def isStatic(self, obj):
         role = obj.getRole()
