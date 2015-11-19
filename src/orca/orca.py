@@ -161,13 +161,15 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
         orca_state.locusOfFocus = None
         return
 
-    try:
-        app = obj.getApplication()
-    except:
-        msg = "ERROR: Exception getting application for %s" % obj
-        debug.println(debug.LEVEL_INFO, msg)
-        orca_state.locusOfFocus = None
-        return
+    if orca_state.activeScript:
+        if orca_state.activeScript.utilities.isZombie(obj):
+            msg = "ERROR: New locusOfFocus (%s) is zombie. Not updating." % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return
+        if orca_state.activeScript.utilities.isDead(obj):
+            msg = "ERROR: New locusOfFocus (%s) is dead. Not updating." % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return
 
     msg = "INFO: Changing locusOfFocus from %s to %s" % (oldFocus, obj)
     debug.println(debug.LEVEL_INFO, msg)

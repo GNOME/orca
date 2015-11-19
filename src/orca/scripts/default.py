@@ -2166,6 +2166,13 @@ class Script(script.Script):
             self.toggleFlatReviewMode()
 
         text = event.source.queryText()
+        try:
+            caretOffset = text.caretOffset
+        except:
+            msg = "DEFAULT: Exception getting caretOffset for %s" % event.source
+            debug.println(debug.LEVEL_INFO, msg)
+            return
+
         self._saveLastCursorPosition(event.source, text.caretOffset)
         if text.getNSelections():
             msg = "DEFAULT: Event source has text selections"
@@ -2409,7 +2416,15 @@ class Script(script.Script):
             if iconified:
                 return
 
-        if obj and obj.childCount and obj.getRole() != pyatspi.ROLE_COMBO_BOX:
+        try:
+            childCount = obj.childCount
+            role = obj.getRole()
+        except:
+            msg = "DEFAULT: Exception getting childCount and role for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return
+
+        if childCount and role != pyatspi.ROLE_COMBO_BOX:
             selectedChildren = self.utilities.selectedChildren(obj)
             if selectedChildren:
                 obj = selectedChildren[0]

@@ -2943,6 +2943,15 @@ class Utilities:
 
         return False
 
+    def isDead(self, obj):
+        try:
+            name = obj.name
+        except:
+            debug.println(debug.LEVEL_INFO, "DEAD: %s" % obj)
+            return True
+
+        return False
+
     def isZombie(self, obj):
         try:
             index = obj.getIndexInParent()
