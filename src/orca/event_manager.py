@@ -170,7 +170,8 @@ class EventManager:
                 debug.println(debug.LEVEL_INFO, msg)
                 return True
 
-        if event.type.startswith('object:children-changed:add'):
+        if event.type.startswith('object:children-changed:add') \
+           or event.type.startswith('object:active-descendant-changed'):
             if not event.any_data:
                 msg = 'ERROR: %s without child from source %s in app %s' % \
                       (event.type, event.source, event.host_application)
