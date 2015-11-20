@@ -1,99 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <object class="GtkAdjustment" id="adjustment1">
-    <property name="upper">10</property>
-    <property name="value">5</property>
-    <property name="step_increment">0.10000000149</property>
-    <property name="page_increment">1</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment10">
-    <property name="upper">20</property>
-    <property name="value">1</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment11">
-    <property name="lower">-1</property>
-    <property name="upper">1</property>
-    <property name="step_increment">0.050000000745099998</property>
-    <property name="page_increment">0.25</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment12">
-    <property name="lower">-1</property>
-    <property name="upper">1</property>
-    <property name="step_increment">0.050000000745099998</property>
-    <property name="page_increment">0.25</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment13">
-    <property name="lower">24</property>
-    <property name="upper">256</property>
-    <property name="value">1</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment14">
-    <property name="lower">1</property>
-    <property name="upper">256</property>
-    <property name="value">1</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment15">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment2">
-    <property name="upper">100</property>
-    <property name="value">50</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment3">
-    <property name="upper">10</property>
-    <property name="value">10</property>
-    <property name="step_increment">0.10000000149</property>
-    <property name="page_increment">1</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment4">
+  <object class="GtkAdjustment" id="brailleFlashTimeAdjustment">
     <property name="upper">9999</property>
     <property name="value">10</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment5">
-    <property name="lower">1</property>
-    <property name="upper">16</property>
-    <property name="value">1</property>
-    <property name="step_increment">0.25</property>
-    <property name="page_increment">1</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment6">
-    <property name="lower">1</property>
-    <property name="upper">9999</property>
-    <property name="value">1</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment7">
-    <property name="lower">1</property>
-    <property name="upper">9999</property>
-    <property name="value">1</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment8">
-    <property name="lower">1</property>
-    <property name="upper">9999</property>
-    <property name="value">1</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment9">
-    <property name="lower">1</property>
-    <property name="upper">9999</property>
-    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
@@ -187,6 +97,30 @@
       <!-- column-name name -->
       <column type="gchararray"/>
     </columns>
+  </object>
+  <object class="GtkAdjustment" id="pitchAdjustment">
+    <property name="upper">10</property>
+    <property name="value">5</property>
+    <property name="step_increment">0.10000000149</property>
+    <property name="page_increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="progressBarUpdateIntervalAdjustment">
+    <property name="upper">9999</property>
+    <property name="value">10</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="rateAdjustment">
+    <property name="upper">100</property>
+    <property name="value">50</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="volumeAdjustment">
+    <property name="upper">10</property>
+    <property name="value">10</property>
+    <property name="step_increment">0.10000000149</property>
+    <property name="page_increment">1</property>
   </object>
   <object class="GtkDialog" id="orcaSetupWindow">
     <property name="can_focus">False</property>
@@ -734,7 +668,7 @@
                             <property name="can_focus">False</property>
                             <child>
                               <object class="GtkCheckButton" id="rewindAndFastForwardInSayAllCheckButton">
-                                <property name="label" translatable="yes" comments="Translators: Orca has a 'Say All' feature which speaks the entire document. Normally, pressing any key will interrupt Say All's presentation. However, if 'rewind and fast forward' is enabled, Up Arrow and Down Arrow can be used within Say All to quickly move within the document to re-hear something which was just read or skip past something of no interest.">Enable _rewind and fast forward in Say All</property>
+                                <property name="label" translatable="yes" comments="Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if rewind and fast forward is enabled, Up Arrow and Down Arrow can be used within Say All to quickly move within the document to re-hear something which was just read or skip past something of no interest.">Enable _rewind and fast forward in Say All</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -753,7 +687,7 @@
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="structNavInSayAllCheckButton">
-                                <property name="label" translatable="yes" comments="Translators: Orca has a 'Say All' feature which speaks the entire document. Normally, pressing any key will interrupt Say All's presentation. However, if 'structural navigation' is enabled for Say All, users can use commands such as H/Shift+H to jump to the next/previous heading, P/Shift+P to jump to the next/previous paragraph, T/Shift+T to jump to the next/previous table, and so on. Thus this setting is like fast forward and rewind, but with semantic awareness for web documents and similar content.">Enable _structural navigation in Say All</property>
+                                <property name="label" translatable="yes" comments="Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if structural navigation is enabled for Say All, users can use commands such as H/Shift+H to jump to the next/previous heading, P/Shift+P to jump to the next/previous paragraph, T/Shift+T to jump to the next/previous table, and so on. Thus this setting is like fast forward and rewind, but with semantic awareness for web documents and similar content.">Enable _structural navigation in Say All</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -782,7 +716,7 @@
                                     <property name="name">-`</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="label" translatable="yes" comments="Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.">Say All B_y:</property>
+                                    <property name="label" translatable="yes" comments="Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and say all by line.  If Orca were speaking a work of fiction, it would probably be best to do say all by sentence so it sounds more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.">Say All B_y:</property>
                                     <property name="use_underline">True</property>
                                     <property name="mnemonic_widget">sayAllStyle</property>
                                     <property name="xalign">0</property>
@@ -840,6 +774,185 @@
                     <property name="width">1</property>
                     <property name="height">1</property>
                   </packing>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="progressBarUpdatesFrame">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label_xalign">0</property>
+                    <property name="shadow_type">none</property>
+                    <child>
+                      <object class="GtkAlignment" id="progressBarUpdatesAlignment">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="left_padding">12</property>
+                        <child>
+                          <object class="GtkGrid" id="progressBarUpdatesGrid">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <child>
+                              <object class="GtkCheckButton" id="speakProgressBarUpdatesCheckButton">
+                                <property name="label" translatable="yes" comments="Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically speak the current percentage.">_Speak updates</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="valign">start</property>
+                                <property name="hexpand">True</property>
+                                <property name="use_underline">True</property>
+                                <property name="xalign">0</property>
+                                <property name="active">True</property>
+                                <property name="draw_indicator">True</property>
+                                <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="brailleProgressBarUpdatesCheckButton">
+                                <property name="label" translatable="yes" comments="Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically display the current percentage in braille.">_Braille updates</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="valign">start</property>
+                                <property name="hexpand">True</property>
+                                <property name="use_underline">True</property>
+                                <property name="xalign">0</property>
+                                <property name="active">True</property>
+                                <property name="draw_indicator">True</property>
+                                <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkGrid" id="progressBarUpdatesOptionsGrid">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="column_spacing">12</property>
+                                <child>
+                                  <object class="GtkSpinButton" id="progressBarUpdateIntervalSpinButton">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="invisible_char">●</property>
+                                    <property name="text" translatable="yes">10</property>
+                                    <property name="adjustment">progressBarUpdateIntervalAdjustment</property>
+                                    <property name="climb_rate">1</property>
+                                    <property name="numeric">True</property>
+                                    <property name="value">10</property>
+                                    <signal name="value-changed" handler="progressBarUpdateIntervalValueChanged" swapped="no"/>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">1</property>
+                                    <property name="top_attach">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="speakProgressBarLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes" context="ProgressBar" comments="Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.">Frequency (secs):</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="mnemonic_widget">progressBarUpdateIntervalSpinButton</property>
+                                    <property name="xalign">0</property>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">0</property>
+                                    <property name="top_attach">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="progressBarVerbosityLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes" comments="Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.">Restrict to:</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="mnemonic_widget">progressBarVerbosity</property>
+                                    <property name="xalign">0</property>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">0</property>
+                                    <property name="top_attach">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkComboBox" id="progressBarVerbosity">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="model">model7</property>
+                                    <signal name="changed" handler="progressBarVerbosityChanged" swapped="no"/>
+                                    <child>
+                                      <object class="GtkCellRendererText" id="renderer33"/>
+                                      <attributes>
+                                        <attribute name="text">0</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">1</property>
+                                    <property name="top_attach">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="beepProgressBarUpdatesCheckButton">
+                                <property name="label" translatable="yes" comments="Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically emit beeps which increase in pitch as the value of the progress bar increases.">Bee_p updates</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="valign">start</property>
+                                <property name="hexpand">True</property>
+                                <property name="use_underline">True</property>
+                                <property name="xalign">0</property>
+                                <property name="active">True</property>
+                                <property name="draw_indicator">True</property>
+                                <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">2</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child type="label">
+                      <object class="GtkLabel" id="progressBarUpdatesLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes" comments="Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.">Progress Bar Updates</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">0</property>
+                    <property name="height">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
               </object>
             </child>
@@ -900,7 +1013,7 @@
                               <object class="GtkScale" id="volumeScale">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="adjustment">adjustment3</property>
+                                <property name="adjustment">volumeAdjustment</property>
                                 <property name="round_digits">1</property>
                                 <property name="value_pos">right</property>
                                 <accelerator key="l" signal="grab_focus" modifiers="GDK_MOD1_MASK"/>
@@ -917,7 +1030,7 @@
                               <object class="GtkScale" id="pitchScale">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="adjustment">adjustment1</property>
+                                <property name="adjustment">pitchAdjustment</property>
                                 <property name="round_digits">1</property>
                                 <property name="value_pos">right</property>
                                 <accelerator key="t" signal="grab_focus" modifiers="GDK_MOD1_MASK"/>
@@ -951,7 +1064,7 @@
                               <object class="GtkScale" id="rateScale">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="adjustment">adjustment2</property>
+                                <property name="adjustment">rateAdjustment</property>
                                 <property name="round_digits">0</property>
                                 <property name="digits">0</property>
                                 <property name="value_pos">right</property>
@@ -1097,7 +1210,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="xalign">1</property>
-                                <property name="label" translatable="yes" comments="Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.">_Voice type:</property>
+                                <property name="label" translatable="yes" comments="Translators: Having multiple voice types in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available voice types in Orca include: default, uppercase, hyperlink, and system -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.">_Voice type:</property>
                                 <property name="use_underline">True</property>
                                 <property name="justify">right</property>
                                 <property name="mnemonic_widget">voiceTypesCombo</property>
@@ -1117,7 +1230,7 @@
                       <object class="GtkLabel" id="voiceTypeSettingsLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes" comments="Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.">Voice Type Settings</property>
+                        <property name="label" translatable="yes" comments="Translators: Having multiple voice types in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available voice types in Orca include: default, uppercase, hyperlink, and system -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.">Voice Type Settings</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
                         </attributes>
@@ -1188,7 +1301,7 @@
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="speakNumbersAsDigitsCheckButton">
-                                <property name="label" translatable="yes" comments="Translators: If this this setting is enabled, '123' will be spoken as the individual digits '1 2 3'; otherwise, it will be sent to the synthesizer and (likely) spoken as 'one hundred and twenty three'.">Speak _numbers as digits</property>
+                                <property name="label" translatable="yes" comments="Translators: If this setting is enabled, 123 will be spoken as the individual digits 1 2 3; otherwise, it will be sent to the synthesizer and (likely) spoken as one hundred and twenty three.">Speak _numbers as digits</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -1585,7 +1698,7 @@
                                     <property name="can_focus">False</property>
                                     <child>
                                       <object class="GtkCheckButton" id="onlySpeakDisplayedTextCheckButton">
-                                        <property name="label" translatable="yes" comments="Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. 'checkbox') or its state (e.g. 'not checked') or say 'mispelled' to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.">Only speak displayed text</property>
+                                        <property name="label" translatable="yes" comments="Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. checkbox) or its state (e.g. not checked) or say misspelled to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.">Only speak displayed text</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
@@ -1668,7 +1781,7 @@
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="enablePositionSpeakingCheckButton">
-                                            <property name="label" translatable="yes" comments="Translators: This checkbox toggles whether or not Orca says the child position (e.g., 'item 6 of 7').">Speak child p_osition</property>
+                                            <property name="label" translatable="yes" comments="Translators: This checkbox toggles whether or not Orca says the child position (e.g., item 6 of 7).">Speak child p_osition</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -1708,7 +1821,7 @@
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="messagesAreDetailedCheckButton">
-                                            <property name="label" translatable="yes" comments="Translators: Orca's 'system' messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via speech, such as confirming the toggling of an Orca setting via command.  In instances where the message to be displayed is long/detailed, Orca provides a 'brief' alternative. Users who prefer that brief alternative can uncheck this checkbox.">_System messages are detailed</property>
+                                            <property name="label" translatable="yes" comments="Translators: Orca has system messages which are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via speech, such as confirming the toggling of an Orca setting via command.  In instances where the message to be displayed is long/detailed, Orca provides a brief alternative. Users who prefer that brief alternative can uncheck this checkbox.">_System messages are detailed</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -1726,7 +1839,7 @@
                                         </child>
                                         <child>
                                           <object class="GtkCheckButton" id="useColorNamesCheckButton">
-                                            <property name="label" translatable="yes" comments="Translators: Orca has a command to present font and formatting information, including foreground and background color. The setting associated with this checkbox determines how Orca will speak colors: As rgb values or as names (e.g. 'light blue').">S_peak colors as names</property>
+                                            <property name="label" translatable="yes" comments="Translators: Orca has a command to present font and formatting information, including foreground and background color. The setting associated with this checkbox determines how Orca will speak colors: As rgb values or as names (e.g. light blue).">S_peak colors as names</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
@@ -1773,145 +1886,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkFrame" id="progressBarUpdatesFrame">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="label_xalign">0</property>
-                            <property name="shadow_type">none</property>
-                            <child>
-                              <object class="GtkAlignment" id="progressBarUpdatesAlignment">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="left_padding">12</property>
-                                <child>
-                                  <object class="GtkGrid" id="progressBarUpdatesGrid">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <child>
-                                      <object class="GtkCheckButton" id="speechProgressBarCheckButton">
-                                        <property name="label" translatable="yes" context="ProgressBarUpdates" comments="Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.">Enable_d</property>
-                                        <property name="use_action_appearance">False</property>
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="receives_default">False</property>
-                                        <property name="valign">start</property>
-                                        <property name="hexpand">True</property>
-                                        <property name="use_action_appearance">False</property>
-                                        <property name="use_underline">True</property>
-                                        <property name="active">True</property>
-                                        <property name="draw_indicator">True</property>
-                                        <signal name="toggled" handler="speechProgressBarChecked" swapped="no"/>
-                                      </object>
-                                      <packing>
-                                        <property name="left_attach">0</property>
-                                        <property name="top_attach">0</property>
-                                        <property name="width">1</property>
-                                        <property name="height">1</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkGrid" id="progressBarUpdatesOptionsGrid">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <child>
-                                          <object class="GtkLabel" id="speakProgressBarLabel">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="xalign">0</property>
-                                            <property name="label" translatable="yes" context="ProgressBar" comments="Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.">Frequency (secs):</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="mnemonic_widget">speakProgressBarSpinButton</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left_attach">0</property>
-                                            <property name="top_attach">0</property>
-                                            <property name="width">1</property>
-                                            <property name="height">1</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkLabel" id="progressBarVerbosityLabel">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="xalign">0</property>
-                                            <property name="label" translatable="yes" comments="Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.">Restrict to:</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="mnemonic_widget">progressBarVerbosity</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left_attach">0</property>
-                                            <property name="top_attach">1</property>
-                                            <property name="width">1</property>
-                                            <property name="height">1</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkComboBox" id="progressBarVerbosity">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="model">model7</property>
-                                            <signal name="changed" handler="progressBarVerbosityChanged" swapped="no"/>
-                                            <child>
-                                              <object class="GtkCellRendererText" id="renderer33"/>
-                                              <attributes>
-                                                <attribute name="text">0</attribute>
-                                              </attributes>
-                                            </child>
-                                          </object>
-                                          <packing>
-                                            <property name="left_attach">1</property>
-                                            <property name="top_attach">1</property>
-                                            <property name="width">1</property>
-                                            <property name="height">1</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkSpinButton" id="speakProgressBarSpinButton">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="invisible_char">●</property>
-                                            <property name="invisible_char_set">True</property>
-                                            <property name="adjustment">adjustment4</property>
-                                            <property name="climb_rate">1</property>
-                                            <property name="numeric">True</property>
-                                            <signal name="value-changed" handler="speakProgressBarValueChanged" swapped="no"/>
-                                          </object>
-                                          <packing>
-                                            <property name="left_attach">1</property>
-                                            <property name="top_attach">0</property>
-                                            <property name="width">1</property>
-                                            <property name="height">1</property>
-                                          </packing>
-                                        </child>
-                                      </object>
-                                      <packing>
-                                        <property name="left_attach">0</property>
-                                        <property name="top_attach">1</property>
-                                        <property name="width">1</property>
-                                        <property name="height">1</property>
-                                      </packing>
-                                    </child>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                            <child type="label">
-                              <object class="GtkLabel" id="progressBarUpdatesLabel">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes" comments="Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.">Progress Bar Updates</property>
-                                <attributes>
-                                  <attribute name="weight" value="bold"/>
-                                </attributes>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="left_attach">0</property>
-                            <property name="top_attach">1</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
-                          </packing>
+                          <placeholder/>
                         </child>
                       </object>
                       <packing>
@@ -2073,7 +2048,7 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="yalign">0.40999999642372131</property>
-                                        <property name="label" translatable="yes" comments="Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille 'contractions' get used. Contractions are shorter forms of commonly-used letter combinations and words. For instance in English there is a single braille symbol for 'ing' (dots 3-4-6), and the letter 'e' (dots 1-5) all by itself means 'every'. The list of rules which dictate what contractions should be used and whether or not they can be used in a particular context are stored in liblouis' tables.">Contraction _Table:</property>
+                                        <property name="label" translatable="yes" comments="Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille contractions get used. Contractions are shorter forms of commonly-used letter combinations and words. For instance in English there is a single braille symbol for ing (dots 3-4-6), and the letter e (dots 1-5) all by itself represents the word every. The list of rules which dictate what contractions should be used and whether or not they can be used in a particular context are stored in tables provided by liblouis.">Contraction _Table:</property>
                                         <property name="use_underline">True</property>
                                         <property name="mnemonic_widget">contractionTableCombo</property>
                                         <accessibility>
@@ -2225,7 +2200,7 @@
                                 <property name="column_spacing">20</property>
                                 <child>
                                   <object class="GtkRadioButton" id="brailleSelectionNoneButton">
-                                    <property name="label" translatable="yes" context="braille dots" comments="Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.">_None</property>
+                                    <property name="label" translatable="yes" context="braille dots" comments="Translators: This option refers to the dot or dots in braille which will be used to underline certain characters.">_None</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
@@ -2343,7 +2318,7 @@
                                 <property name="column_spacing">20</property>
                                 <child>
                                   <object class="GtkRadioButton" id="brailleLinkNoneButton">
-                                    <property name="label" translatable="yes" context="braille dots" comments="Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.">_None</property>
+                                    <property name="label" translatable="yes" context="braille dots" comments="Translators: This option refers to the dot or dots in braille which will be used to underline certain characters.">_None</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
@@ -2499,7 +2474,7 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="invisible_char">●</property>
-                                        <property name="adjustment">adjustment4</property>
+                                        <property name="adjustment">brailleFlashTimeAdjustment</property>
                                         <property name="climb_rate">1</property>
                                         <property name="numeric">True</property>
                                         <property name="value">5</property>
@@ -3395,7 +3370,7 @@
                                 <property name="can_focus">False</property>
                                 <child>
                                   <object class="GtkRadioButton" id="textBrailleNoneButton">
-                                    <property name="label" translatable="yes" context="braille dots" comments="Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.">_None</property>
+                                    <property name="label" translatable="yes" context="braille dots" comments="Translators: This option refers to the dot or dots in braille which will be used to underline certain characters.">_None</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>

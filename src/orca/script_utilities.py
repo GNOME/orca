@@ -33,6 +33,7 @@ import locale
 import math
 import pyatspi
 import re
+import time
 
 from . import chnames
 from . import colornames
@@ -48,7 +49,10 @@ from . import orca_state
 from . import object_properties
 from . import pronunciation_dict
 from . import settings
+from . import settings_manager
 from . import text_attribute_names
+
+_settingsManager = settings_manager.getManager()
 
 #############################################################################
 #                                                                           #
@@ -88,6 +92,7 @@ class Utilities:
         """
 
         self._script = script
+        self._activeProgressBars = {}
 
     #########################################################################
     #                                                                       #
@@ -748,6 +753,131 @@ class Utilities:
                 "navigation",
                 "region",
                 "search"]
+
+    def isProgressBar(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_PROGRESS_BAR):
+            return False
+
+        try:
+            value = obj.queryValue()
+        except NotImplementedError:
+            msg = "ERROR: %s doesn't implement AtspiValue" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+        except:
+            msg = "ERROR: Exception getting value for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+        else:
+            try:
+                if value.maximumValue == value.minimumValue:
+                    msg = "INFO: %s is busy indicator" % obj
+                    debug.println(debug.LEVEL_INFO, msg)
+                    return False
+            except:
+                msg = "INFO: %s is either busy indicator or broken" % obj
+                debug.println(debug.LEVEL_INFO, msg)
+                return False
+
+        return True
+
+    def isProgressBarUpdate(self, obj, event):
+        if not _settingsManager.getSetting('speakProgressBarUpdates') \
+           and not _settingsManager.getSetting('brailleProgressBarUpdates') \
+           and not _settingsManager.getSetting('beepProgressBarUpdates'):
+            return False, "Updates not enabled"
+
+        if not self.isProgressBar(obj):
+            return False, "Is not progress bar"
+
+        if self.hasNoSize(obj):
+            return False, "Has no size"
+
+        value = obj.queryValue()
+        percent = int((value.currentValue / (value.maximumValue - value.minimumValue)) * 100)
+        if percent == 100:
+            return True, "Percent is 100"
+
+        lastTime, lastValue = self.getProgressBarUpdateTimeAndValue(obj)
+        if percent == lastValue:
+            return False, "Value (%s) hasn't changed" % percent
+
+        interval = int(time.time() - lastTime)
+        if interval < int(_settingsManager.getSetting('progressBarUpdateInterval')):
+            return False, "Last update was only %is ago" % interval
+
+        isStatusBar = lambda x: x and x.getRole() == pyatspi.ROLE_STATUS_BAR
+        if pyatspi.findAncestor(obj, isStatusBar):
+            return False, "Is status bar descendant"
+
+        verbosity = _settingsManager.getSetting('progressBarVerbosity')
+        if verbosity == settings.PROGRESS_BAR_ALL:
+            return True, "Verbosity is all"
+
+        if verbosity == settings.PROGRESS_BAR_WINDOW:
+            topLevel = self.topLevelObject(obj)
+            if topLevel == orca_state.activeWindow:
+                return True, "Verbosity is window"
+            return False, "Window %s is not %s" % (topLevel, orca_state.activeWindow)
+
+        if verbosity == settings.PROGRESS_BAR_APPLICATION:
+            if event:
+                app = event.host_application
+            else:
+                app = obj.getApplication()
+            if app == orca_state.activeScript.app:
+                return True, "Verbosity is app"
+            return False, "App % is not %s" % (app, orca_state.activeScript.app)
+
+        return True, "Not handled by any other case"
+
+    def _cleanUpCachedProgressBars(self):
+        isValid = lambda x: not (self.isZombie(x) or self.isDead(x))
+        bars = list(filter(isValid, self._activeProgressBars))
+        self._activeProgressBars = {x:self._activeProgressBars.get(x) for x in bars}
+
+    def getProgressBarNumberAndCount(self, obj):
+        self._cleanUpCachedProgressBars()
+        if not obj in self._activeProgressBars:
+            self._activeProgressBars[obj] = 0.0, None
+
+        thisValue = self.getProgressBarUpdateTimeAndValue(obj)
+        index = list(self._activeProgressBars.values()).index(thisValue)
+        return index + 1, len(self._activeProgressBars)
+
+    def getMostRecentProgressBarUpdate(self):
+        self._cleanUpCachedProgressBars()
+        if not self._activeProgressBars.values():
+            return None, 0.0, None
+
+        sortedValues = sorted(self._activeProgressBars.values(), key=lambda x: x[0])
+        prevTime, prevValue = sortedValues[-1]
+        return list(self._activeProgressBars.keys())[-1], prevTime, prevValue
+
+    def getProgressBarUpdateTimeAndValue(self, obj):
+        if not obj in self._activeProgressBars:
+            self._activeProgressBars[obj] = 0.0, None
+        return self._activeProgressBars.get(obj)
+
+    def setProgressBarUpdateTimeAndValue(self, obj, lastTime=None, lastValue=None):
+        lastTime = lastTime or time.time()
+        lastValue = lastValue or self.getValueAsPercent(obj)
+        self._activeProgressBars[obj] = lastTime, lastValue
+
+    def getValueAsPercent(self, obj):
+        try:
+            value = obj.queryValue()
+            minval, val, maxval =  value.minimumValue, value.currentValue, value.maximumValue
+        except NotImplementedError:
+            msg = "ERROR: %s doesn't implement AtspiValue" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return None
+        except:
+            msg = "ERROR: Exception getting value for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return None
+
+        return int((val / (maxval - minval)) * 100)
 
     def isStatic(self, obj):
         role = obj.getRole()
@@ -1564,6 +1694,19 @@ class Utilities:
         rv = min(rv, 1)
 
         return rv
+
+    def hasNoSize(self, obj):
+        if not obj:
+            return False
+
+        try:
+            extents = obj.queryComponent().getExtents(0)
+        except:
+            msg = "ERROR: Exception getting extents for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        return not (extents.width and extents.height)
 
     def _hasNonDescendableDescendant(self, root):
         roles = [pyatspi.ROLE_PAGE_TAB_LIST,

@@ -102,10 +102,6 @@ class Script(script.Script):
         #
         self._unicodeCurrencySymbols = []
 
-        # Used to determine whether progress bar value changes presented.
-        self.lastProgressBarTime = {}
-        self.lastProgressBarValue = {}
-
         self.lastSelectedMenu = None
 
         # A dictionary of non-standardly-named text attributes and their
@@ -843,12 +839,11 @@ class Script(script.Script):
         braille.setupKeyRanges(list(self.brailleBindings.keys()))
         speech.updatePunctuationLevel()
 
-    def updateBraille(self, obj, extraRegion=None):
+    def updateBraille(self, obj, **args):
         """Updates the braille display to show the give object.
 
         Arguments:
         - obj: the Accessible
-        - extra: extra Region to add to the end
         """
 
         if not _settingsManager.getSetting('enableBraille') \
@@ -859,21 +854,21 @@ class Script(script.Script):
         if not obj:
             return
 
-        self.clearBraille()
+        result, focusedRegion = self.brailleGenerator.generateBraille(obj, **args)
+        if not result:
+            return
 
+        self.clearBraille()
         line = self.getNewBrailleLine()
         braille.addLine(line)
+        self.addBrailleRegionsToLine(result, line)
 
-        result = self.brailleGenerator.generateBraille(obj)
-        self.addBrailleRegionsToLine(result[0], line)
-
+        extraRegion = args.get('extraRegion')
         if extraRegion:
             self.addBrailleRegionToLine(extraRegion, line)
-
-        if extraRegion:
             self.setBrailleFocus(extraRegion)
         else:
-            self.setBrailleFocus(result[1])
+            self.setBrailleFocus(focusedRegion)
 
         self.refreshBraille(True)
 
@@ -2803,22 +2798,27 @@ class Script(script.Script):
 
         obj = event.source
         role = obj.getRole()
-
         value = obj.queryValue()
         if "oldValue" in self.pointOfReference \
            and (value.currentValue == self.pointOfReference["oldValue"]):
             return
 
-        if role == pyatspi.ROLE_PROGRESS_BAR:
-            self.handleProgressBarUpdate(event, obj)
+        isProgressBarUpdate, msg = self.utilities.isProgressBarUpdate(obj, event)
+        msg = "DEFAULT: Is progress bar update: %s, %s" % (isProgressBarUpdate, msg)
+        debug.println(debug.LEVEL_INFO, msg)
+
+        if not isProgressBarUpdate and obj != orca_state.locusOfFocus:
+            msg = "DEFAULT: Source != locusOfFocus (%s)" % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg)
             return
 
-        if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
-            return
+        if isProgressBarUpdate:
+            self.utilities.setProgressBarUpdateTimeAndValue(obj)
 
         self.pointOfReference["oldValue"] = value.currentValue
-        self.updateBraille(obj)
-        speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
+        self.updateBraille(obj, isProgressBarUpdate=isProgressBarUpdate)
+        speech.speak(self.speechGenerator.generateSpeech(
+            obj, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
 
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated.
@@ -3222,113 +3222,6 @@ class Script(script.Script):
 
         word = self.utilities.adjustForRepeats(word)
         speech.speak(word, voice)
-
-    def handleProgressBarUpdate(self, event, obj):
-        """Determine whether this progress bar event should be spoken or not.
-        It should be spoken if:
-        1/ settings.enableProgressBarUpdates is True.
-        2/ settings.progressBarVerbosity matches the current location of the
-           progress bar.
-        3/ The time of this event exceeds the
-           settings.progressBarUpdateInterval value.  This value
-           indicates the time (in seconds) between potential spoken
-           progress bar updates.
-        4/ The new value of the progress bar (converted to an integer),
-           is different from the last one or equals 100 (i.e complete).
-
-        Arguments:
-        - event: if not None, the Event that caused this to happen
-        - obj:  the Accessible progress bar object.
-        """
-
-        if _settingsManager.getSetting('enableProgressBarUpdates'):
-            makeAnnouncement = False
-            verbosity = _settingsManager.getSetting('progressBarVerbosity')
-            if verbosity == settings.PROGRESS_BAR_ALL:
-                makeAnnouncement = True
-            elif verbosity == settings.PROGRESS_BAR_WINDOW:
-                makeAnnouncement = self.utilities.isSameObject(
-                    self.utilities.topLevelObject(obj),
-                    self.utilities.activeWindow())
-            elif orca_state.locusOfFocus:
-                makeAnnouncement = self.utilities.isSameObject( \
-                    obj.getApplication(),
-                    orca_state.locusOfFocus.getApplication())
-
-            if makeAnnouncement:
-                currentTime = time.time()
-
-                # Check for defunct progress bars. Get rid of them if they
-                # are all defunct. Also find out which progress bar was
-                # the most recently updated.
-                #
-                defunctBars = 0
-                mostRecentUpdate = [obj, 0]
-                for key, value in list(self.lastProgressBarTime.items()):
-                    if value > mostRecentUpdate[1]:
-                        mostRecentUpdate = [key, value]
-                    try:
-                        isDefunct = \
-                            key.getState().contains(pyatspi.STATE_DEFUNCT)
-                    except:
-                        isDefunct = True
-                    if isDefunct:
-                        defunctBars += 1
-
-                if defunctBars == len(self.lastProgressBarTime):
-                    self.lastProgressBarTime = {}
-                    self.lastProgressBarValue = {}
-
-                # If this progress bar is not already known, create initial
-                # values for it.
-                #
-                if obj not in self.lastProgressBarTime:
-                    self.lastProgressBarTime[obj] = 0.0
-                if obj not in self.lastProgressBarValue:
-                    self.lastProgressBarValue[obj] = None
-
-                lastProgressBarTime = self.lastProgressBarTime[obj]
-                lastProgressBarValue = self.lastProgressBarValue[obj]
-                value = obj.queryValue()
-                try:
-                    if value.maximumValue == value.minimumValue:
-                        # This is a busy indicator and not a real progress bar.
-                        return
-                except:
-                    return
-                percentValue = int((value.currentValue / \
-                    (value.maximumValue - value.minimumValue)) * 100.0)
-
-                if (currentTime - lastProgressBarTime) > \
-                      _settingsManager.getSetting('progressBarUpdateInterval') \
-                   or percentValue == 100:
-                    if lastProgressBarValue != percentValue:
-                        utterances = []
-
-                        # There may be cases when more than one progress
-                        # bar is updating at the same time in a window.
-                        # If this is the case, then speak the index of this
-                        # progress bar in the dictionary of known progress
-                        # bars, as well as the value. But only speak the
-                        # index if this progress bar was not the most
-                        # recently updated to prevent chattiness.
-                        #
-                        if len(self.lastProgressBarTime) > 1:
-                            index = 0
-                            for key in list(self.lastProgressBarTime.keys()):
-                                if key == obj and key != mostRecentUpdate[0]:
-                                    label = messages.PROGRESS_BAR_NUMBER % (index + 1)
-                                    utterances.append(label)
-                                else:
-                                    index += 1
-
-                        utterances.extend(self.speechGenerator.generateSpeech(
-                            obj, alreadyFocused=True))
-
-                        speech.speak(utterances)
-
-                        self.lastProgressBarTime[obj] = currentTime
-                        self.lastProgressBarValue[obj] = percentValue
 
     def presentToolTip(self, obj):
         """

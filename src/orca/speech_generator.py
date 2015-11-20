@@ -1708,6 +1708,33 @@ class SpeechGenerator(generator.Generator):
         result.extend(acss)
         return result
 
+    def _generateProgressBarIndex(self, obj, **args):
+        if not args.get('isProgressBarUpdate') \
+           or not _settingsManager.getSetting('speakProgressBarUpdates'):
+            return []
+
+        result = []
+        acc, updateTime, updateValue = self._script.utilities.getMostRecentProgressBarUpdate()
+        if acc != obj:
+            number, count = self._script.utilities.getProgressBarNumberAndCount(obj)
+            result = [messages.PROGRESS_BAR_NUMBER % (number)]
+            result.extend(self.voice(SYSTEM))
+
+        return result
+
+    def _generateProgressBarValue(self, obj, **args):
+        if args.get('isProgressBarUpdate') \
+           and not _settingsManager.getSetting('speakProgressBarUpdates'):
+            return []
+
+        result = []
+        percent = self._script.utilities.getValueAsPercent(obj)
+        if percent is not None:
+            result.append(messages.percentage(percent))
+            result.extend(self.voice(SYSTEM))
+
+        return result
+
     def _generateDefaultButton(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the default button in a dialog.

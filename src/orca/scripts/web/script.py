@@ -740,7 +740,7 @@ class Script(default.Script):
         self.displayContents(contents)
         self.speakContents(contents)
 
-    def updateBraille(self, obj, extraRegion=None):
+    def updateBraille(self, obj, **args):
         """Updates the braille display to show the given object."""
 
         if not _settingsManager.getSetting('enableBraille') \
@@ -750,7 +750,7 @@ class Script(default.Script):
 
         if not (self._lastCommandWasCaretNav or self._lastCommandWasStructNav) \
            or self._inFocusMode or not self.utilities.inDocumentContent():
-            super().updateBraille(obj, extraRegion)
+            super().updateBraille(obj, **args)
             return
 
         obj, offset = self.utilities.getCaretContext(documentFrame=None)

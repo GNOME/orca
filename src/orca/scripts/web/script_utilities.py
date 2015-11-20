@@ -2447,25 +2447,13 @@ class Utilities(script_utilities.Utilities):
 
     def hasNoSize(self, obj):
         if not (obj and self.inDocumentContent(obj)):
-            return False
+            return super().hasNoSize(obj)
 
         rv = self._hasNoSize.get(hash(obj))
         if rv is not None:
             return rv
 
-        try:
-            extents = obj.queryComponent().getExtents(0)
-        except:
-            msg = "WEB: Exception getting extents for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
-            rv = True
-        else:
-            rv = not (extents.width and extents.height)
-            if rv:
-                msg = "WEB: %s has no size %s" % (obj, extents)
-                debug.println(debug.LEVEL_INFO, msg)
-
-        self._hasNoSize[hash(obj)] = rv
+        self._hasNoSize[hash(obj)] = super().hasNoSize(obj)
         return rv
 
     def doNotDescendForCaret(self, obj):

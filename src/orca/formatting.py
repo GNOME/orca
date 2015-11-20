@@ -309,8 +309,8 @@ formatting = {
             'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
             },
         pyatspi.ROLE_PROGRESS_BAR: {
-            'focused': 'percentage',
-            'unfocused': 'labelAndName + percentage'
+            'focused': 'progressBarIndex + progressBarValue',
+            'unfocused': 'progressBarIndex + labelAndName + progressBarValue'
             },
         pyatspi.ROLE_PUSH_BUTTON: {
             'focused': 'expandableState',
@@ -606,7 +606,11 @@ formatting = {
         pyatspi.ROLE_PASSWORD_TEXT: {
             'unfocused': BRAILLE_TEXT
             },
-        #pyatspi.ROLE_PROGRESS_BAR: 'default'
+        pyatspi.ROLE_PROGRESS_BAR: {
+            'unfocused': '(progressBarValue and \
+                           [Component(obj, asString(labelAndName + progressBarValue + roleName + progressBarIndex))]) \
+                           or []'
+            },
         pyatspi.ROLE_PUSH_BUTTON: {
             'unfocused': '[Component(obj,\
                                      asString((labelAndName or description) + expandableState + roleName))]'

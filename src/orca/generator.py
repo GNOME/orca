@@ -330,7 +330,7 @@ class Generator:
                 link = None
                 if obj.getRole() == pyatspi.ROLE_LINK:
                     link = obj
-                elif obj.parent.getRole() == pyatspi.ROLE_LINK:
+                elif obj.parent and obj.parent.getRole() == pyatspi.ROLE_LINK:
                     link = obj.parent
                 if link:
                     basename = self._script.utilities.linkBasename(link)
@@ -1046,4 +1046,10 @@ class Generator:
         return result
 
     def _generatePageSummary(self, obj, **args):
+        return []
+
+    def _generateProgressBarIndex(self, obj, **args):
+        return []
+
+    def _generateProgressBarValue(self, obj, **args):
         return []

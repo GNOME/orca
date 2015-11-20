@@ -131,6 +131,11 @@ class BrailleGenerator(generator.Generator):
         empty array.  Note that a 'role' attribute in args will
         override the accessible role of the obj.
         """
+
+        if args.get('isProgressBarUpdate') \
+           and not _settingsManager.getSetting('brailleProgressBarUpdates'):
+            return []
+
         result = []
         role = args.get('role', obj.getRole())
         verbosityLevel = _settingsManager.getSetting('brailleVerbosityLevel')
@@ -347,6 +352,29 @@ class BrailleGenerator(generator.Generator):
 
         return result
 
+    def _generateProgressBarIndex(self, obj, **args):
+        if not args.get('isProgressBarUpdate') \
+           or not _settingsManager.getSetting('brailleProgressBarUpdates'):
+            return []
+
+        acc, updateTime, updateValue = self._script.utilities.getMostRecentProgressBarUpdate()
+        if acc != obj:
+            number, count = self._script.utilities.getProgressBarNumberAndCount(obj)
+            return ['%s' % number]
+
+        return []
+
+    def _generateProgressBarValue(self, obj, **args):
+        if args.get('isProgressBarUpdate') \
+           and not _settingsManager.getSetting('brailleProgressBarUpdates'):
+            return []
+
+        percent = self._script.utilities.getValueAsPercent(obj)
+        if percent is not None:
+            return ['%s%%' % percent]
+
+        return []
+
     #####################################################################
     #                                                                   #
     # Unfortunate hacks.                                                #
@@ -402,6 +430,10 @@ class BrailleGenerator(generator.Generator):
         """Returns True or False to indicate whether context should be
         included or not.
         """
+
+        if args.get('isProgressBarUpdate'):
+            return False
+
         # For multiline text areas, we only show the context if we
         # are on the very first line.  Otherwise, we show only the
         # line.

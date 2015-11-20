@@ -1419,15 +1419,15 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             indextime = TIME_FORMAT_24_HM_WITH_WORDS
         combobox3.set_active (indextime)
 
-        # Set the sensitivity of the "Update Interval" items, depending
-        # upon whether the "Speak progress bar updates" checkbox is checked.
-        #
-        enable = prefs["enableProgressBarUpdates"]
-        self.get_widget("speechProgressBarCheckButton").set_active(enable)
-        self.get_widget("progressBarUpdatesOptionsGrid").set_sensitive(enable)
+        self.get_widget("speakProgressBarUpdatesCheckButton").set_active(
+            prefs.get("speakProgressBarUpdates", settings.speakProgressBarUpdates))
+        self.get_widget("brailleProgressBarUpdatesCheckButton").set_active(
+            prefs.get("brailleProgressBarUpdates", settings.brailleProgressBarUpdates))
+        self.get_widget("beepProgressBarUpdatesCheckButton").set_active(
+            prefs.get("beepProgressBarUpdates", settings.beepProgressBarUpdates))
 
         interval = prefs["progressBarUpdateInterval"]
-        self.get_widget("speakProgressBarSpinButton").set_value(interval)
+        self.get_widget("progressBarUpdateIntervalSpinButton").set_value(interval)
 
         comboBox = self.get_widget("progressBarVerbosity")
         levels = [guilabels.PROGRESS_BAR_ALL,
@@ -1519,7 +1519,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.get_widget("flashIsDetailedCheckButton").set_active(enable)
 
         duration = prefs["brailleFlashTime"]
-        self.get_widget("speakProgressBarSpinButton").set_value(duration / 1000)
+        self.get_widget("brailleFlashTimeSpinButton").set_value(duration / 1000)
 
         # Key Echo pane.
         #
@@ -2505,28 +2505,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             else:
                 self.prefsDict["readTableCellRow"] = True
 
-    def speechProgressBarChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           speechProgressBarCheckButton GtkCheckButton widget.
-           The user has [un]checked the "Speak progress bar updates" checkbox.
-           Set the 'enableProgressBarUpdates' preference to the new value.
-           Set the rest of the 'update interval' items [in]sensensitive
-           depending upon whether this checkbox is checked.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        enable = widget.get_active()
-        self.prefsDict["enableProgressBarUpdates"] = enable
-        self.get_widget("progressBarUpdatesOptionsGrid").set_sensitive(enable)
-
-    def speakProgressBarValueChanged(self, widget):
+    def progressBarUpdateIntervalValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
-           speakProgressBarSpinButton GtkSpinButton widget.
-           The user has changed the value of the "speak progress bar
-           updates" spin button. Set the 'progressBarUpdateInterval'
-           preference to the new integer value.
+           progressBarUpdateIntervalSpinButton GtkSpinButton widget.
 
         Arguments:
         - widget: the component that generated the signal.

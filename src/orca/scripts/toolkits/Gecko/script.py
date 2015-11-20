@@ -310,21 +310,3 @@ class Script(web.Script):
         msg = "GECKO: Passing along event to default script"
         debug.println(debug.LEVEL_INFO, msg)
         default.Script.onWindowDeactivated(self, event)
-
-    def handleProgressBarUpdate(self, event, obj):
-        """Determine whether this progress bar event should be spoken or not.
-        For Firefox, we don't want to speak the small "page load" progress
-        bar. All other Firefox progress bars get passed onto the parent
-        class for handling.
-
-        Arguments:
-        - event: if not None, the Event that caused this to happen
-        - obj:  the Accessible progress bar object.
-        """
-
-        rolesList = [pyatspi.ROLE_PROGRESS_BAR, \
-                     pyatspi.ROLE_STATUS_BAR, \
-                     pyatspi.ROLE_FRAME, \
-                     pyatspi.ROLE_APPLICATION]
-        if not self.utilities.hasMatchingHierarchy(event.source, rolesList):
-            default.Script.handleProgressBarUpdate(self, event, obj)

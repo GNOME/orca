@@ -177,4 +177,74 @@
       </item>
     </list>
   </section>
+  <section id="progress_bar_updates">
+    <title>Progress Bar Updates</title>
+    <section>
+      <title>Speak updates</title>
+      <p>
+        If the <gui>Speak updates</gui> checkbox is checked <app>Orca</app> will
+        periodically speak the status of progress bars.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
+    <section>
+      <title>Braille updates</title>
+      <p>
+        If the <gui>Braille updates</gui> checkbox is checked <app>Orca</app> will
+        periodically display the status of progress bars on your refreshable braille
+        display.
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+    </section>
+    <section>
+      <title>Beep updates</title>
+      <p>
+        If the <gui>Beep updates</gui> checkbox is checked <app>Orca</app> will
+        periodically emit beeps which increase in pitch as the value of the progress
+        bar increases.
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+    </section>
+    <section>
+      <title>Frequency (secs)</title>
+      <p>
+        This spin button determines how often updates are presented.
+      </p>
+      <p>
+        Default value: 10
+      </p>
+    </section>
+    <section>
+      <title>Restrict to</title>
+      <p>
+         This combo box allows you to control which progress bars should be
+         presented, assuming the presentation of progress bar updates has been
+         enabled. The choices are <gui>All</gui>, <gui>Application</gui>, and
+         <gui>Window</gui>.
+      </p>
+      <p>
+        Choosing <gui>All</gui> will result in <app>Orca</app> presenting
+        updates for all progress bars, regardless of where the progress bars
+        are located.
+      </p>
+      <p>
+        Choosing <gui>Application</gui> will result in <app>Orca</app>
+        presenting updates from progress bars in the active application, even
+        if they are not in the active window.
+      </p>
+      <p>
+         Choosing <gui>Window</gui> will result in <app>Orca</app> only
+         presenting updates for progress bars in the active window.
+      </p>
+      <p>
+        Default value: <gui>Application</gui>
+      </p>
+    </section>
+  </section>
 </page>

@@ -610,12 +610,11 @@ class Script(default.Script):
 
         return textLine
 
-    def updateBraille(self, obj, extraRegion=None):
+    def updateBraille(self, obj, **args):
         """Updates the braille display to show the given object.
 
         Arguments:
         - obj: the Accessible
-        - extra: extra Region to add to the end
         """
 
         if not _settingsManager.getSetting('enableBraille') \
@@ -629,7 +628,7 @@ class Script(default.Script):
         if not self.utilities.isWebKitGtk(obj) \
            or (not self.utilities.isInlineContainer(obj) \
                and not self.utilities.isTextListItem(obj)):
-            default.Script.updateBraille(self, obj, extraRegion)
+            default.Script.updateBraille(self, obj, **args)
             return
 
         brailleLine = self.getNewBrailleLine(clearBraille=True, addLine=True)
@@ -645,6 +644,7 @@ class Script(default.Script):
             self.addBrailleRegionsToLine(regions, brailleLine)
             self.setBrailleFocus(fRegion)
 
+        extraRegion = args.get('extraRegion')
         if extraRegion:
             self.addBrailleRegionToLine(extraRegion, brailleLine)
 

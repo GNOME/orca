@@ -78,8 +78,10 @@ userCustomizableSettings = [
     "enabledSpokenTextAttributes",
     "enabledBrailledTextAttributes",
     "textAttributesBrailleIndicator",
-    "enableProgressBarUpdates",
     "profile",
+    "speakProgressBarUpdates",
+    "brailleProgressBarUpdates",
+    "beepProgressBarUpdates",
     "progressBarUpdateInterval",
     "progressBarVerbosity",
     "enableContractedBraille",
@@ -262,7 +264,9 @@ mouseDwellDelay            = 0
 mouseDwellMaxDrift         = 3
 
 # Progressbars
-enableProgressBarUpdates   = True
+speakProgressBarUpdates    = True
+brailleProgressBarUpdates  = False
+beepProgressBarUpdates     = False
 progressBarUpdateInterval  = 10
 progressBarVerbosity       = PROGRESS_BAR_APPLICATION
 
