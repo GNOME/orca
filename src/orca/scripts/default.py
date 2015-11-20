@@ -97,11 +97,6 @@ class Script(script.Script):
         self.digits = '0123456789'
         self.whitespace = ' \t\n\r\v\f'
 
-        # Unicode currency symbols (populated by the
-        # getUnicodeCurrencySymbols() routine).
-        #
-        self._unicodeCurrencySymbols = []
-
         self.lastSelectedMenu = None
 
         # A dictionary of non-standardly-named text attributes and their
@@ -3556,43 +3551,6 @@ class Script(script.Script):
                                    location.wordIndex, location.charIndex)
                 self.reviewCurrentItem(None)
                 self.targetCursorCell = self.getBrailleCursorCell()
-
-    def getUnicodeCurrencySymbols(self):
-        """Return a list of the unicode currency symbols, populating the list
-        if this is the first time that this routine has been called.
-
-        Returns a list of unicode currency symbols.
-        """
-
-        if not self._unicodeCurrencySymbols:
-            self._unicodeCurrencySymbols = [ \
-                '\u0024',     # dollar sign
-                '\u00A2',     # cent sign
-                '\u00A3',     # pound sign
-                '\u00A4',     # currency sign
-                '\u00A5',     # yen sign
-                '\u0192',     # latin small letter f with hook
-                '\u060B',     # afghani sign
-                '\u09F2',     # bengali rupee mark
-                '\u09F3',     # bengali rupee sign
-                '\u0AF1',     # gujarati rupee sign
-                '\u0BF9',     # tamil rupee sign
-                '\u0E3F',     # thai currency symbol baht
-                '\u17DB',     # khmer currency symbol riel
-                '\u2133',     # script capital m
-                '\u5143',     # cjk unified ideograph-5143
-                '\u5186',     # cjk unified ideograph-5186
-                '\u5706',     # cjk unified ideograph-5706
-                '\u5713',     # cjk unified ideograph-5713
-                '\uFDFC',     # rial sign
-            ]
-
-            # Add 20A0 (EURO-CURRENCY SIGN) to 20B5 (CEDI SIGN)
-            #
-            for ordChar in range(ord('\u20A0'), ord('\u20B5') + 1):
-                self._unicodeCurrencySymbols.append(chr(ordChar))
-
-        return self._unicodeCurrencySymbols
 
     def speakMisspeltWord(self, allTokens, badWord):
         """Called by various spell checking routine to speak the misspelt word,
