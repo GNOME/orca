@@ -203,11 +203,6 @@ class Script(Gecko.Script):
 
         Gecko.Script.onCaretMoved(self, event)
 
-    def onChildrenChanged(self, event):
-        """Callback for object:children-changed accessibility events."""
-
-        default.Script.onChildrenChanged(self, event)
-
     def onSelectionChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
 
