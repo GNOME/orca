@@ -3070,7 +3070,19 @@ class Script(script.Script):
             text.setSelection(0, context.currentOffset, context.currentOffset)
 
     def inSayAll(self):
-        return self._inSayAll or self._sayAllIsInterrupted
+        if self._inSayAll:
+            msg = "DEFAULT: In SayAll"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        if self._sayAllIsInterrupted:
+            msg = "DEFAULT: SayAll is interrupted"
+            debug.println(debug.LEVEL_INFO, msg)
+            return True
+
+        msg = "DEFAULT: Not in SayAll"
+        debug.println(debug.LEVEL_INFO, msg)
+        return False
 
     def echoPreviousSentence(self, obj):
         """Speaks the sentence prior to the caret, as long as there is
@@ -3706,6 +3718,10 @@ class Script(script.Script):
 
         self._inSayAll = False
         self._sayAllContexts = []
+
+        msg = "DEFAULT: textLines complete. Verifying SayAll status"
+        debug.println(debug.LEVEL_INFO, msg)
+        self.inSayAll()
 
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
         """To-be-removed. Returns the string, caretOffset, startOffset."""

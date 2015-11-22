@@ -499,6 +499,8 @@ class Script(default.Script):
         """Creates a generator that can be used to iterate document content."""
 
         if not self.utilities.inDocumentContent():
+            msg = "WEB: textLines called for non-document content %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
             super().textLines(obj, offset)
             return
 
@@ -549,6 +551,10 @@ class Script(default.Script):
         self._sayAllContents = []
         self._sayAllContexts = []
 
+        msg = "WEB: textLines complete. Verifying SayAll status"
+        debug.println(debug.LEVEL_INFO, msg)
+        self.inSayAll()
+
     def presentFindResults(self, obj, offset):
         """Updates the context and presents the find results if appropriate."""
 
@@ -585,13 +591,14 @@ class Script(default.Script):
         """
 
         if not self.utilities.inDocumentContent():
+            msg = "WEB: SayAll called for non-document content %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
             return super().sayAll(inputEvent, obj, offset)
 
-        else:
-            obj = obj or orca_state.locusOfFocus
-            speech.sayAll(self.textLines(obj, offset),
-                          self.__sayAllProgressCallback)
-
+        obj = obj or orca_state.locusOfFocus
+        msg = "WEB: SayAll called for document content %s" % obj
+        debug.println(debug.LEVEL_INFO, msg)
+        speech.sayAll(self.textLines(obj, offset), self.__sayAllProgressCallback)
         return True
 
     def _rewindSayAll(self, context, minCharCount=10):
