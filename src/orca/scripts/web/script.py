@@ -1319,6 +1319,13 @@ class Script(default.Script):
         obj, offset = self.utilities.getCaretContext()
         contextDocument = self.utilities.getDocumentForObject(obj)
         if obj and document == contextDocument and self.utilities.isZombie(obj):
+            msg = "WEB: Context obj %s is Zombie." % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            if self._inFocusMode:
+                msg = "WEB: Not looking for replicant due to focus mode."
+                debug.println(debug.LEVEL_INFO, msg)
+                return False
+
             replicant = self.utilities.findReplicant(event.source, obj)
             if replicant:
                 # Refrain from actually touching the replicant by grabbing
