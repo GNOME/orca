@@ -787,18 +787,15 @@ class Utilities:
         if self.hasNoSize(obj):
             return False, "Has no size"
 
-        value = obj.queryValue()
-        percent = int((value.currentValue / (value.maximumValue - value.minimumValue)) * 100)
-        if percent == 100:
-            return True, "Percent is 100"
-
+        percent = self.getValueAsPercent(obj)
         lastTime, lastValue = self.getProgressBarUpdateTimeAndValue(obj)
         if percent == lastValue:
             return False, "Value (%s) hasn't changed" % percent
 
         interval = int(time.time() - lastTime)
         if interval < int(_settingsManager.getSetting('progressBarUpdateInterval')):
-            return False, "Last update was only %is ago" % interval
+            if percent != 100:
+                return False, "Last update was only %is ago" % interval
 
         isStatusBar = lambda x: x and x.getRole() == pyatspi.ROLE_STATUS_BAR
         if pyatspi.findAncestor(obj, isStatusBar):
