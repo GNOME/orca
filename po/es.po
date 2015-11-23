@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2015-11-16 02:00+0000\n"
-"PO-Revision-Date: 2015-11-17 09:31+0100\n"
+"POT-Creation-Date: 2015-11-23 02:06+0000\n"
+"PO-Revision-Date: 2015-11-23 10:28+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -4316,7 +4316,7 @@ msgstr "Modo de foco automático durante la navegación de cursor"
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
 #. this option, Dot 7 will be used to 'underline' text of interest, e.g. when
 #. "marking"/indicating that a given word is bold.
-#: ../src/orca/guilabels.py:82 ../src/orca/orca-setup.ui.h:109
+#: ../src/orca/guilabels.py:82 ../src/orca/orca-setup.ui.h:114
 msgid "Dot _7"
 msgstr "Punto _7"
 
@@ -4324,7 +4324,7 @@ msgstr "Punto _7"
 #. of 8 dots. Dot 8 is the dot in the bottom right corner. If the user selects
 #. this option, Dot 8 will be used to 'underline' text of interest,  e.g. when
 #. "marking"/indicating that a given word is bold.
-#: ../src/orca/guilabels.py:88 ../src/orca/orca-setup.ui.h:110
+#: ../src/orca/guilabels.py:88 ../src/orca/orca-setup.ui.h:115
 msgid "Dot _8"
 msgstr "Punto _8"
 
@@ -4332,7 +4332,7 @@ msgstr "Punto _8"
 #. of 8 dots. Dots 7-8 are the dots at the bottom. If the user selects this
 #. option, Dots 7-8 will be used to 'underline' text of interest,  e.g. when
 #. "marking"/indicating that a given word is bold.
-#: ../src/orca/guilabels.py:94 ../src/orca/orca-setup.ui.h:111
+#: ../src/orca/guilabels.py:94 ../src/orca/orca-setup.ui.h:116
 msgid "Dots 7 an_d 8"
 msgstr "Puntos 7 _y 8"
 
@@ -4471,7 +4471,7 @@ msgstr "Cadena de reemplazo"
 #. being pressed, "character echo" presents the character/string of length 1 that
 #. is inserted as a result of the keypress.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/guilabels.py:189 ../src/orca/orca-setup.ui.h:137
+#: ../src/orca/guilabels.py:189 ../src/orca/orca-setup.ui.h:142
 msgid "Enable echo by cha_racter"
 msgstr "Activar eco por _carácter"
 
@@ -4479,7 +4479,7 @@ msgstr "Activar eco por _carácter"
 #. by the user. This string refers to a "key echo" option. When this option is
 #. enabled, dead keys will be announced when pressed.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/guilabels.py:194 ../src/orca/orca-setup.ui.h:135
+#: ../src/orca/guilabels.py:194 ../src/orca/orca-setup.ui.h:140
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Activar teclas _diacríticas"
 
@@ -4724,7 +4724,7 @@ msgstr "Ventana"
 #. Translators: If this setting is chosen, no punctuation symbols will be spoken
 #. as a user reads a document.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
-#: ../src/orca/guilabels.py:368 ../src/orca/orca-setup.ui.h:73
+#: ../src/orca/guilabels.py:368 ../src/orca/orca-setup.ui.h:86
 msgctxt "punctuation level"
 msgid "_None"
 msgstr "_Ninguna"
@@ -4732,13 +4732,13 @@ msgstr "_Ninguna"
 #. Translators: If this setting is chosen, common punctuation symbols (like
 #. comma, period, question mark) will not be spoken as a user reads a document,
 #. but less common symbols (such as #, @, $) will.
-#: ../src/orca/guilabels.py:373 ../src/orca/orca-setup.ui.h:74
+#: ../src/orca/guilabels.py:373 ../src/orca/orca-setup.ui.h:87
 msgid "So_me"
 msgstr "_Alguna"
 
 #. Translators: If this setting is chosen, the majority of punctuation symbols
 #. will be spoken as a user reads a document.
-#: ../src/orca/guilabels.py:377 ../src/orca/orca-setup.ui.h:75
+#: ../src/orca/guilabels.py:377 ../src/orca/orca-setup.ui.h:88
 msgid "M_ost"
 msgstr "La _mayoría"
 
@@ -5165,7 +5165,7 @@ msgstr ""
 #. queued up and sent to the speech synthesis system once the entire set of
 #. utterances has been calculated.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is encountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: ../src/orca/guilabels.py:659 ../src/orca/orca-setup.ui.h:55
+#: ../src/orca/guilabels.py:659 ../src/orca/orca-setup.ui.h:68
 msgid "Break speech into ch_unks between pauses"
 msgstr "Partir la voz en trozos entre pausas"
 
@@ -5278,7 +5278,7 @@ msgstr "Saltar celdas en _blanco"
 #. row of a table read; other times they want just the current cell presented to
 #. them. This label is associated with the default presentation to be used.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/guilabels.py:735 ../src/orca/orca-setup.ui.h:67
+#: ../src/orca/guilabels.py:735 ../src/orca/orca-setup.ui.h:80
 msgid "Speak _cell"
 msgstr "Leer _celda"
 
@@ -5329,7 +5329,7 @@ msgstr "Activar la navegación e_structural"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: ../src/orca/guilabels.py:764 ../src/orca/orca-setup.ui.h:63
+#: ../src/orca/guilabels.py:764 ../src/orca/orca-setup.ui.h:76
 msgid "Brie_f"
 msgstr "_Breve"
 
@@ -8183,28 +8183,24 @@ msgstr "¿Activar eco de teclas? Introduzca s o n: "
 #. Translators: This is in reference to key echo for alphabetic keys and
 #. is part of Orca's console-based setup.
 #: ../src/orca/messages.py:380
-#| msgid "Enable action keys?  Enter y or n: "
 msgid "Enable alphabetic keys?  Enter y or n: "
 msgstr "¿Activar teclas alfabéticas? Introduzca s o n: "
 
 #. Translators: This is in reference to key echo for numeric keys and
 #. is part of Orca's console-based setup.
 #: ../src/orca/messages.py:385
-#| msgid "Enable modifier keys?  Enter y or n: "
 msgid "Enable numeric keys?  Enter y or n: "
 msgstr "¿Activar teclas numéricas? Introduzca s o n: "
 
 #. Translators: This is in reference to key echo for punctuation keys and
 #. is part of Orca's console-based setup.
 #: ../src/orca/messages.py:390
-#| msgid "Enable function keys?  Enter y or n: "
 msgid "Enable punctuation keys?  Enter y or n: "
 msgstr "¿Activar teclas de puntuación? Introduzca s o n: "
 
 #. Translators: This is in reference to key echo for the space key and
 #. is part of Orca's console-based setup.
 #: ../src/orca/messages.py:395
-#| msgid "Enable Braille?  Enter y or n: "
 msgid "Enable space?  Enter y or n: "
 msgstr "¿Activar espacio? Introduzca s o n: "
 
@@ -9832,8 +9828,6 @@ msgstr "Leer números como dígitos"
 #. two options. This string to be translated is the brief message spoken when the
 #. user has enabled speaking numbers as words.
 #: ../src/orca/messages.py:1621
-#| msgctxt "key echo"
-#| msgid "word"
 msgctxt "number style"
 msgid "words"
 msgstr "palabras"
@@ -9844,7 +9838,6 @@ msgstr "palabras"
 #. two options. This string to be translated is the verbose message spoken when
 #. the user has enabled speaking numbers as words.
 #: ../src/orca/messages.py:1628
-#| msgid "Speak multicase strings as wor_ds"
 msgid "Speak numbers as words."
 msgstr "Leer números como palabras."
 
@@ -11055,371 +11048,377 @@ msgstr "Formato de f_echa:"
 msgid "Time and Date"
 msgstr "Fecha y hora"
 
-#. Translators: Orca has a
+#. Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if rewind and fast forward is enabled, Up Arrow and Down Arrow can be used within Say All to quickly move within the document to re-hear something which was just read or skip past something of no interest.
 #: ../src/orca/orca-setup.ui.h:37
 msgid "Enable _rewind and fast forward in Say All"
 msgstr "Activar _ir hacia atrás y avance rápido en Leer todo"
 
-#. Translators: Orca has a
+#. Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if structural navigation is enabled for Say All, users can use commands such as H/Shift+H to jump to the next/previous heading, P/Shift+P to jump to the next/previous paragraph, T/Shift+T to jump to the next/previous table, and so on. Thus this setting is like fast forward and rewind, but with semantic awareness for web documents and similar content.
 #: ../src/orca/orca-setup.ui.h:39
-#| msgid "Enable _structural navigation"
 msgid "Enable _structural navigation in Say All"
 msgstr "Activar la navegación e_structural en Leer todo"
 
-#. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it
+#. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and say all by line.  If Orca were speaking a work of fiction, it would probably be best to do say all by sentence so it sounds more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: ../src/orca/orca-setup.ui.h:41
 msgid "Say All B_y:"
 msgstr "Leer todo _por:"
 
 #: ../src/orca/orca-setup.ui.h:42
-#| msgid "Say All B_y:"
 msgid "Say All"
 msgstr "Leer todo"
 
-#: ../src/orca/orca-setup.ui.h:43
-msgid "General"
-msgstr "General"
-
+#. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically speak the current percentage.
 #: ../src/orca/orca-setup.ui.h:44
-msgid "Vo_lume:"
-msgstr "_Volumen:"
+#| msgid "_Speak all"
+msgid "_Speak updates"
+msgstr "_Hablar actualizaciones"
 
-#: ../src/orca/orca-setup.ui.h:45
-msgid "Pi_tch:"
-msgstr "_Tono:"
-
+#. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically display the current percentage in braille.
 #: ../src/orca/orca-setup.ui.h:46
-msgid "_Rate:"
-msgstr "_Velocidad:"
+#| msgid "Braille Indicator"
+msgid "_Braille updates"
+msgstr "Actualizaciones en _Braille"
 
 #: ../src/orca/orca-setup.ui.h:47
-msgid "_Person:"
-msgstr "_Persona:"
-
-#: ../src/orca/orca-setup.ui.h:48
-msgid "Speech synthesi_zer:"
-msgstr "_Sintetizador de voz:"
-
-#: ../src/orca/orca-setup.ui.h:49
-msgid "Speech _system:"
-msgstr "Sistema de _voz:"
-
-#. Translators: Having multiple
-#: ../src/orca/orca-setup.ui.h:51
-msgid "_Voice type:"
-msgstr "Tipo de _voz:"
-
-#. Translators: Having multiple
-#: ../src/orca/orca-setup.ui.h:53
-msgid "Voice Type Settings"
-msgstr "Configuración del tipo de voz"
-
-#. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
-#: ../src/orca/orca-setup.ui.h:57
-msgid "Speak multicase strings as wor_ds"
-msgstr "Leer cadenas con mayúsculas y minúsculas como _palabras"
-
-#. Translators: If this this setting is enabled,
-#: ../src/orca/orca-setup.ui.h:59
-msgid "Speak _numbers as digits"
-msgstr "Leer núme_ros como dígitos"
-
-#: ../src/orca/orca-setup.ui.h:60
-msgid "Global Voice Settings"
-msgstr "Configuración global de voz"
-
-#: ../src/orca/orca-setup.ui.h:61
-msgid "Voice"
-msgstr "Voz"
-
-#: ../src/orca/orca-setup.ui.h:62
-msgid "_Enable speech"
-msgstr "_Activar Lee"
-
-#: ../src/orca/orca-setup.ui.h:64
-msgid "Ver_bose"
-msgstr "_Extendida"
-
-#: ../src/orca/orca-setup.ui.h:65
-msgid "Verbosity"
-msgstr "Cantidad de información"
-
-#. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak the entire row when the user arrows Up or Down in a table.
-#: ../src/orca/orca-setup.ui.h:69
-msgid "Speak ro_w"
-msgstr "Leer _fila"
-
-#. Translators: This is label in the Preferences dialog box. It refers to what Orca will speak when the user arrows Up or Down in a table. The choices are to speak just the new cell or to speak the entire row.
-#: ../src/orca/orca-setup.ui.h:71
-msgid "Table Rows"
-msgstr "Filas de tabla"
-
-#: ../src/orca/orca-setup.ui.h:76
-msgid "_All"
-msgstr "_Toda"
-
-#: ../src/orca/orca-setup.ui.h:77
-msgid "Punctuation Level"
-msgstr ">Nivel de puntuación"
-
-#. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g.
-#: ../src/orca/orca-setup.ui.h:79
-msgid "Only speak displayed text"
-msgstr "Leer solamente el texto mostrado"
-
-#: ../src/orca/orca-setup.ui.h:80
-msgid "Speak blank lines"
-msgstr "Indicar líneas en blanco"
-
-#: ../src/orca/orca-setup.ui.h:81
-msgid "Speak _indentation and justification"
-msgstr "Indicar _sangrado y justificación"
-
-#: ../src/orca/orca-setup.ui.h:82
-msgid "Spea_k object mnemonics"
-msgstr "Leer _las teclas de acceso del objeto"
-
-#. Translators: This checkbox toggles whether or not Orca says the child position (e.g.,
-#: ../src/orca/orca-setup.ui.h:84
-msgid "Speak child p_osition"
-msgstr "Indicar la p_osición del hijo"
-
-#: ../src/orca/orca-setup.ui.h:85
-msgid "Speak tutorial messages"
-msgstr "Leer mensajes de aprendizaje"
-
-#. Translators: Orca
-#: ../src/orca/orca-setup.ui.h:87
-msgid "_System messages are detailed"
-msgstr "Los mensajes del _sistema son detallados"
-
-#. Translators: Orca has a command to present font and formatting information, including foreground and background color. The setting associated with this checkbox determines how Orca will speak colors: As rgb values or as names (e.g.
-#: ../src/orca/orca-setup.ui.h:89
-#| msgid "Speak _cell coordinates"
-msgid "S_peak colors as names"
-msgstr "Ha_blar colores como nombres"
-
-#: ../src/orca/orca-setup.ui.h:90
-msgid "Spoken Context"
-msgstr "Contexto hablado"
-
-#. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
-#: ../src/orca/orca-setup.ui.h:92
-msgctxt "ProgressBarUpdates"
-msgid "Enable_d"
-msgstr "Activa_do"
+msgid "10"
+msgstr "10"
 
 #. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
-#: ../src/orca/orca-setup.ui.h:94
+#: ../src/orca/orca-setup.ui.h:49
 msgctxt "ProgressBar"
 msgid "Frequency (secs):"
 msgstr "Frecuencia (segs):"
 
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.
-#: ../src/orca/orca-setup.ui.h:96
+#: ../src/orca/orca-setup.ui.h:51
 msgid "Restrict to:"
 msgstr "Restringir a:"
 
+#. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically emit beeps which increase in pitch as the value of the progress bar increases.
+#: ../src/orca/orca-setup.ui.h:53
+msgid "Bee_p updates"
+msgstr "So_nar actualizaciones"
+
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
-#: ../src/orca/orca-setup.ui.h:98
+#: ../src/orca/orca-setup.ui.h:55
 msgid "Progress Bar Updates"
 msgstr "Actualizaciones de barras de progreso"
 
-#: ../src/orca/orca-setup.ui.h:99
+#: ../src/orca/orca-setup.ui.h:56
+msgid "General"
+msgstr "General"
+
+#: ../src/orca/orca-setup.ui.h:57
+msgid "Vo_lume:"
+msgstr "_Volumen:"
+
+#: ../src/orca/orca-setup.ui.h:58
+msgid "Pi_tch:"
+msgstr "_Tono:"
+
+#: ../src/orca/orca-setup.ui.h:59
+msgid "_Rate:"
+msgstr "_Velocidad:"
+
+#: ../src/orca/orca-setup.ui.h:60
+msgid "_Person:"
+msgstr "_Persona:"
+
+#: ../src/orca/orca-setup.ui.h:61
+msgid "Speech synthesi_zer:"
+msgstr "_Sintetizador de voz:"
+
+#: ../src/orca/orca-setup.ui.h:62
+msgid "Speech _system:"
+msgstr "Sistema de _voz:"
+
+#. Translators: Having multiple voice types in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available voice types in Orca include: default, uppercase, hyperlink, and system -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.
+#: ../src/orca/orca-setup.ui.h:64
+msgid "_Voice type:"
+msgstr "Tipo de _voz:"
+
+#. Translators: Having multiple voice types in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available voice types in Orca include: default, uppercase, hyperlink, and system -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.
+#: ../src/orca/orca-setup.ui.h:66
+msgid "Voice Type Settings"
+msgstr "Configuración del tipo de voz"
+
+#. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
+#: ../src/orca/orca-setup.ui.h:70
+msgid "Speak multicase strings as wor_ds"
+msgstr "Leer cadenas con mayúsculas y minúsculas como _palabras"
+
+#. Translators: If this setting is enabled, 123 will be spoken as the individual digits 1 2 3; otherwise, it will be sent to the synthesizer and (likely) spoken as one hundred and twenty three.
+#: ../src/orca/orca-setup.ui.h:72
+msgid "Speak _numbers as digits"
+msgstr "Leer núme_ros como dígitos"
+
+#: ../src/orca/orca-setup.ui.h:73
+msgid "Global Voice Settings"
+msgstr "Configuración global de voz"
+
+#: ../src/orca/orca-setup.ui.h:74
+msgid "Voice"
+msgstr "Voz"
+
+#: ../src/orca/orca-setup.ui.h:75
+msgid "_Enable speech"
+msgstr "_Activar Lee"
+
+#: ../src/orca/orca-setup.ui.h:77
+msgid "Ver_bose"
+msgstr "_Extendida"
+
+#: ../src/orca/orca-setup.ui.h:78
+msgid "Verbosity"
+msgstr "Cantidad de información"
+
+#. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak the entire row when the user arrows Up or Down in a table.
+#: ../src/orca/orca-setup.ui.h:82
+msgid "Speak ro_w"
+msgstr "Leer _fila"
+
+#. Translators: This is label in the Preferences dialog box. It refers to what Orca will speak when the user arrows Up or Down in a table. The choices are to speak just the new cell or to speak the entire row.
+#: ../src/orca/orca-setup.ui.h:84
+msgid "Table Rows"
+msgstr "Filas de tabla"
+
+#: ../src/orca/orca-setup.ui.h:89
+msgid "_All"
+msgstr "_Toda"
+
+#: ../src/orca/orca-setup.ui.h:90
+msgid "Punctuation Level"
+msgstr ">Nivel de puntuación"
+
+#. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. checkbox) or its state (e.g. not checked) or say misspelled to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
+#: ../src/orca/orca-setup.ui.h:92
+msgid "Only speak displayed text"
+msgstr "Leer solamente el texto mostrado"
+
+#: ../src/orca/orca-setup.ui.h:93
+msgid "Speak blank lines"
+msgstr "Indicar líneas en blanco"
+
+#: ../src/orca/orca-setup.ui.h:94
+msgid "Speak _indentation and justification"
+msgstr "Indicar _sangrado y justificación"
+
+#: ../src/orca/orca-setup.ui.h:95
+msgid "Spea_k object mnemonics"
+msgstr "Leer _las teclas de acceso del objeto"
+
+#. Translators: This checkbox toggles whether or not Orca says the child position (e.g., item 6 of 7).
+#: ../src/orca/orca-setup.ui.h:97
+msgid "Speak child p_osition"
+msgstr "Indicar la p_osición del hijo"
+
+#: ../src/orca/orca-setup.ui.h:98
+msgid "Speak tutorial messages"
+msgstr "Leer mensajes de aprendizaje"
+
+#. Translators: Orca has system messages which are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via speech, such as confirming the toggling of an Orca setting via command.  In instances where the message to be displayed is long/detailed, Orca provides a brief alternative. Users who prefer that brief alternative can uncheck this checkbox.
+#: ../src/orca/orca-setup.ui.h:100
+msgid "_System messages are detailed"
+msgstr "Los mensajes del _sistema son detallados"
+
+#. Translators: Orca has a command to present font and formatting information, including foreground and background color. The setting associated with this checkbox determines how Orca will speak colors: As rgb values or as names (e.g. light blue).
+#: ../src/orca/orca-setup.ui.h:102
+msgid "S_peak colors as names"
+msgstr "Ha_blar colores como nombres"
+
+#: ../src/orca/orca-setup.ui.h:103
+msgid "Spoken Context"
+msgstr "Contexto hablado"
+
+#: ../src/orca/orca-setup.ui.h:104
 msgid "Speech"
 msgstr "Lee"
 
-#: ../src/orca/orca-setup.ui.h:100
+#: ../src/orca/orca-setup.ui.h:105
 msgid "Enable Braille _support"
 msgstr "Activar _soporte Braille"
 
-#: ../src/orca/orca-setup.ui.h:101
+#: ../src/orca/orca-setup.ui.h:106
 msgid "_Abbreviated role names"
 msgstr "Nombre de roles _abreviados"
 
-#: ../src/orca/orca-setup.ui.h:102
+#: ../src/orca/orca-setup.ui.h:107
 msgid "Disable _end of line symbol"
 msgstr "Desactivar el símbolo de _fin de línea"
 
-#: ../src/orca/orca-setup.ui.h:103
+#: ../src/orca/orca-setup.ui.h:108
 msgid "_Enable Contracted Braille"
 msgstr "_Activar Braille contraído"
 
-#. Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille
-#: ../src/orca/orca-setup.ui.h:105
+#. Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille contractions get used. Contractions are shorter forms of commonly-used letter combinations and words. For instance in English there is a single braille symbol for ing (dots 3-4-6), and the letter e (dots 1-5) all by itself represents the word every. The list of rules which dictate what contractions should be used and whether or not they can be used in a particular context are stored in tables provided by liblouis.
+#: ../src/orca/orca-setup.ui.h:110
 msgid "Contraction _Table:"
 msgstr "_Tabla de contracción:"
 
-#: ../src/orca/orca-setup.ui.h:106
+#: ../src/orca/orca-setup.ui.h:111
 msgid "Display Settings"
 msgstr "Configuración de pantalla"
 
-#. Translators: This option refers to the dot or dots in braille which will be used to
-#: ../src/orca/orca-setup.ui.h:108
+#. Translators: This option refers to the dot or dots in braille which will be used to underline certain characters.
+#: ../src/orca/orca-setup.ui.h:113
 msgctxt "braille dots"
 msgid "_None"
 msgstr "_Ninguno"
 
-#: ../src/orca/orca-setup.ui.h:112
+#: ../src/orca/orca-setup.ui.h:117
 msgid "Selection Indicator"
 msgstr "Indicador de selección"
 
-#: ../src/orca/orca-setup.ui.h:113
+#: ../src/orca/orca-setup.ui.h:118
 msgid "Hyperlink Indicator"
 msgstr "Indicador de hiperenlace"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements in that they are temporarily shown on the refreshable braille display. Upon removal of the message, the original contents of the braille display are restored. This checkbox allows the user to toggle this feature.
-#: ../src/orca/orca-setup.ui.h:115
-#| msgid "Enable _magnifier"
+#: ../src/orca/orca-setup.ui.h:120
 msgid "Enable flash _messages"
 msgstr "Activar _mensajes temporales"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. This label is for the spin button through which a user can customize how long (in seconds) these temporary messages should be displayed.
-#: ../src/orca/orca-setup.ui.h:117
+#: ../src/orca/orca-setup.ui.h:122
 msgid "Messa_ge duration (secs):"
 msgstr "Duración del mensa_je (segs):"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. Some users, however, would prefer to have the message remain displayed until they explicitly dismiss it. This can be accomplished by making flash messages persistent by checking this checkbox.
-#: ../src/orca/orca-setup.ui.h:119
+#: ../src/orca/orca-setup.ui.h:124
 msgid "Messages are _persistent"
 msgstr "Los mensajes son _persistentes"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. In instances where the message to be displayed is long/detailed, Orca provides a brief alternative. Users who prefer the brief alternative can uncheck this checkbox.
-#: ../src/orca/orca-setup.ui.h:121
+#: ../src/orca/orca-setup.ui.h:126
 msgid "Messages are _detailed"
 msgstr "Los mensajes son _detallados"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored.
-#: ../src/orca/orca-setup.ui.h:123
-#| msgid "Global Voice Settings"
+#: ../src/orca/orca-setup.ui.h:128
 msgid "Flash Message Settings"
 msgstr "Configuración de mensajes temporales"
 
-#: ../src/orca/orca-setup.ui.h:124
+#: ../src/orca/orca-setup.ui.h:129
 msgid "Braille"
 msgstr "Braille"
 
-#: ../src/orca/orca-setup.ui.h:125
+#: ../src/orca/orca-setup.ui.h:130
 msgid "Enable _key echo"
 msgstr "Activar _eco de teclas"
 
-#: ../src/orca/orca-setup.ui.h:126
-#| msgid "Enable _navigation keys"
+#: ../src/orca/orca-setup.ui.h:131
 msgid "Enable _alphabetic keys"
 msgstr "Activar teclas de _alfabéticas"
 
-#: ../src/orca/orca-setup.ui.h:127
-#| msgid "Enable _modifier keys"
+#: ../src/orca/orca-setup.ui.h:132
 msgid "Enable n_umeric keys"
 msgstr "Activar teclas _numéricas"
 
-#: ../src/orca/orca-setup.ui.h:128
-#| msgid "Enable _function keys"
+#: ../src/orca/orca-setup.ui.h:133
 msgid "Enable _punctuation keys"
 msgstr "Activar teclas de p_untuación"
 
-#: ../src/orca/orca-setup.ui.h:129
-#| msgid "_Enable speech"
+#: ../src/orca/orca-setup.ui.h:134
 msgid "Enable _space"
 msgstr "Activar _espacio"
 
-#: ../src/orca/orca-setup.ui.h:130
+#: ../src/orca/orca-setup.ui.h:135
 msgid "Enable _modifier keys"
 msgstr "Activar teclas _modificadoras"
 
-#: ../src/orca/orca-setup.ui.h:131
+#: ../src/orca/orca-setup.ui.h:136
 msgid "Enable _function keys"
 msgstr "Activar teclas de _función"
 
-#: ../src/orca/orca-setup.ui.h:132
+#: ../src/orca/orca-setup.ui.h:137
 msgid "Enable ac_tion keys"
 msgstr "Activar teclas de _acción"
 
-#: ../src/orca/orca-setup.ui.h:133
+#: ../src/orca/orca-setup.ui.h:138
 msgid "Enable _navigation keys"
 msgstr "Activar teclas de _navegación"
 
-#: ../src/orca/orca-setup.ui.h:138
+#: ../src/orca/orca-setup.ui.h:143
 msgid "Enable echo by _word"
 msgstr "Activar eco por _palabras"
 
-#: ../src/orca/orca-setup.ui.h:139
+#: ../src/orca/orca-setup.ui.h:144
 msgid "Enable echo by _sentence"
 msgstr "Activar eco por _frases"
 
-#: ../src/orca/orca-setup.ui.h:140
+#: ../src/orca/orca-setup.ui.h:145
 msgid "Key Echo"
 msgstr "Eco de teclas"
 
-#: ../src/orca/orca-setup.ui.h:141
+#: ../src/orca/orca-setup.ui.h:146
 msgid "Screen Reader _Modifier Key(s):"
 msgstr "Teclas _modificadoras del lector de pantalla:"
 
-#: ../src/orca/orca-setup.ui.h:142
+#: ../src/orca/orca-setup.ui.h:147
 msgid "Key Bindings"
 msgstr "Atajos de teclado"
 
-#: ../src/orca/orca-setup.ui.h:143
+#: ../src/orca/orca-setup.ui.h:148
 msgid "Pronunciation Dictionary"
 msgstr "Diccionario de pronunciación"
 
-#: ../src/orca/orca-setup.ui.h:144
+#: ../src/orca/orca-setup.ui.h:149
 msgid "_New entry"
 msgstr "Entrada _nueva"
 
-#: ../src/orca/orca-setup.ui.h:145
+#: ../src/orca/orca-setup.ui.h:150
 msgid "_Delete"
 msgstr "_Eliminar"
 
-#: ../src/orca/orca-setup.ui.h:146
+#: ../src/orca/orca-setup.ui.h:151
 msgid "Pronunciation"
 msgstr "Pronunciación"
 
-#: ../src/orca/orca-setup.ui.h:147
+#: ../src/orca/orca-setup.ui.h:152
 msgid "_Speak all"
 msgstr "Leer _todo"
 
-#: ../src/orca/orca-setup.ui.h:148
+#: ../src/orca/orca-setup.ui.h:153
 msgid "Speak _none"
 msgstr "_No hablar nada"
 
-#: ../src/orca/orca-setup.ui.h:149
+#: ../src/orca/orca-setup.ui.h:154
 msgid "_Reset"
 msgstr "_Restablecer"
 
-#: ../src/orca/orca-setup.ui.h:150
+#: ../src/orca/orca-setup.ui.h:155
 msgid "Text attributes"
 msgstr "Atributos de texto"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:152
+#: ../src/orca/orca-setup.ui.h:157
 msgid "Move to _bottom"
 msgstr "Mover al _final"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:154
+#: ../src/orca/orca-setup.ui.h:159
 msgid "Move _down one"
 msgstr "Mover uno _abajo"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:156
+#: ../src/orca/orca-setup.ui.h:161
 msgid "Move _up one"
 msgstr "Mover uno a_rriba"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:158
+#: ../src/orca/orca-setup.ui.h:163
 msgid "Move to _top"
 msgstr "Mover al _principio"
 
-#: ../src/orca/orca-setup.ui.h:159
+#: ../src/orca/orca-setup.ui.h:164
 msgid "Adjust selected attributes"
 msgstr "Ajustar los atributos seleccionados"
 
-#: ../src/orca/orca-setup.ui.h:160
+#: ../src/orca/orca-setup.ui.h:165
 msgid "Braille Indicator"
 msgstr "Indicador Braille"
 
-#: ../src/orca/orca-setup.ui.h:161
+#: ../src/orca/orca-setup.ui.h:166
 msgid "Text Attributes"
 msgstr "Atributos de texto"
 
@@ -12552,6 +12551,10 @@ msgid ""
 msgstr ""
 "Para decrementar pulse flecha izquierda, para incrementar pulse flecha "
 "derecha, para el mínimo pulse inicio y para el máximo pulse fin."
+
+#~ msgctxt "ProgressBarUpdates"
+#~ msgid "Enable_d"
+#~ msgstr "Activa_do"
 
 #~ msgid "comparison unknown"
 #~ msgstr "comparación desconocida"
