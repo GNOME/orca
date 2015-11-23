@@ -1719,7 +1719,10 @@ class Script(default.Script):
     def onWindowActivated(self, event):
         """Callback for window:activate accessibility events."""
 
-        return False
+        msg = "WEB: Calling default onWindowActivated"
+        debug.println(debug.LEVEL_INFO, msg)
+        super().onWindowActivated(event)
+        return True
 
     def onWindowDeactivated(self, event):
         """Callback for window:deactivate accessibility events."""

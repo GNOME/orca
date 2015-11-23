@@ -100,26 +100,66 @@ class Utilities:
     #                                                                       #
     #########################################################################
 
-    @staticmethod
-    def activeWindow():
-        """Traverses the list of known apps looking for one who has an
-        immediate child (i.e., a window) whose state includes the active
-        state.
+    def _isActiveAndShowingAndNotIconified(self, obj):
+        try:
+            state = obj.getState()
+        except:
+            msg = "ERROR: Exception getting state of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
 
-        Returns the Python Accessible of the window that's active or None if
-        no windows are active.
-        """
+        if not state.contains(pyatspi.STATE_ACTIVE):
+            return False
 
-        apps = Utilities.knownApplications()
+        if state.contains(pyatspi.STATE_ICONIFIED):
+            return False
+
+        return state.contains(pyatspi.STATE_SHOWING)
+
+    def canBeActiveWindow(self, window):
+        if not window:
+            return False
+
+        window.clearCache()
+        if not self._isActiveAndShowingAndNotIconified(window):
+            msg = "INFO: %s is not active and showing, or is iconified" % window
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+
+        msg = "INFO: %s can be active window" % window
+        debug.println(debug.LEVEL_INFO, msg)
+        return True
+
+    def activeWindow(self, *apps):
+        """Tries to locate the active window; may or may not succeed."""
+
+        candidates = []
+        apps = apps or self.knownApplications()
         for app in apps:
-            for child in app:
-                try:
-                    if child.getState().contains(pyatspi.STATE_ACTIVE):
-                        return child
-                except:
-                    debug.printException(debug.LEVEL_FINEST)
+            candidates.extend([child for child in app if self.canBeActiveWindow(child)])
 
-        return None
+        if not candidates:
+            msg = "ERROR: Unable to find active window from %s" % list(map(str, apps))
+            debug.println(debug.LEVEL_INFO, msg)
+            return None
+
+        if len(candidates) == 1:
+            msg = "INFO: Active window is %s" % candidates[0]
+            debug.println(debug.LEVEL_INFO, msg)
+            return candidates[0]
+
+        # Sorting by size in a lame attempt to filter out the "desktop" frame of various
+        # desktop environments. App name won't work because we don't know it. Getting the
+        # screen/desktop size via Gdk risks a segfault depending on the user environment.
+        # Asking AT-SPI2 for the size seems to give us 1024x768 regardless of reality....
+        # This is why we can't have nice things.
+        candidates = sorted(candidates, key=functools.cmp_to_key(self.sizeComparison))
+        msg = "WARNING: These windows all claim to be active: %s" % list(map(str, candidates))
+        debug.println(debug.LEVEL_INFO, msg)
+
+        msg = "INFO: Active window is (hopefully) %s" % candidates[0]
+        debug.println(debug.LEVEL_INFO, msg)
+        return candidates[0]
 
     @staticmethod
     def ancestorWithRole(obj, ancestorRoles, stopRoles):
@@ -1653,6 +1693,22 @@ class Utilities:
 
         rv = len(path1) - len(path2)
         return min(max(rv, -1), 1)
+
+    @staticmethod
+    def sizeComparison(obj1, obj2):
+        try:
+            bbox = obj1.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+            width1, height1 = bbox.width, bbox.height
+        except:
+            width1, height1 = 0, 0
+
+        try:
+            bbox = obj2.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+            width2, height2 = bbox.width, bbox.height
+        except:
+            width2, height2 = 0, 0
+
+        return (width1 * height1) - (width2 * height2)
 
     @staticmethod
     def spatialComparison(obj1, obj2):
