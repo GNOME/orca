@@ -1761,6 +1761,7 @@ class Utilities(script_utilities.Utilities):
             if (self.isTextBlockElement(obj) and not string.strip()) \
                or self.isAnchor(obj) \
                or (self.hasNoSize(obj) and not string.strip()) \
+               or self.isHidden(obj) \
                or self.isOffScreenLabel(obj) \
                or self.isUselessImage(obj) \
                or self.isLabellingContents(x, contents):
