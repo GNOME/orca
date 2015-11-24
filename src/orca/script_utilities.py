@@ -1009,7 +1009,9 @@ class Utilities:
             layoutOnly = False
         elif role == pyatspi.ROLE_MENU and parentRole == pyatspi.ROLE_COMBO_BOX:
             layoutOnly = True
-        elif role == pyatspi.ROLE_LIST or self.isTableRow(obj):
+        elif role == pyatspi.ROLE_LIST:
+            layoutOnly = False
+        elif self.isTableRow(obj):
             state = obj.getState()
             layoutOnly = not (state.contains(pyatspi.STATE_FOCUSABLE) \
                               or state.contains(pyatspi.STATE_SELECTABLE))
