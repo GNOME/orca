@@ -781,7 +781,15 @@ class StructuralNavigation:
         table = self.getTableForCell(thisCell)
         try:
             iTable = table.queryTable()
+        except NotImplementedError:
+            msg = 'ERROR: Table %s does not implement table interface' % table
+            debug.println(debug.LEVEL_INFO, msg)
+            iTable = None
         except:
+            msg = 'ERROR: Exception querying table interface of %s' % table
+            debug.println(debug.LEVEL_INFO, msg)
+            iTable = None
+        if not iTable:
             self._script.presentMessage(messages.TABLE_NOT_IN_A)
             return None
 

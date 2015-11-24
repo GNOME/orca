@@ -981,7 +981,13 @@ class Utilities:
         if role == pyatspi.ROLE_TABLE and attrs.get('layout-guess') != 'true':
             try:
                 table = obj.queryTable()
+            except NotImplementedError:
+                msg = 'ERROR: Table %s does not implement table interface' % obj
+                debug.println(debug.LEVEL_INFO, msg)
+                layoutOnly = True
             except:
+                msg = 'ERROR: Exception querying table interface of %s' % obj
+                debug.println(debug.LEVEL_INFO, msg)
                 layoutOnly = True
             else:
                 if not (table.nRows and table.nColumns):
