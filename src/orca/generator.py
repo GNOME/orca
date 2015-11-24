@@ -861,8 +861,7 @@ class Generator:
             return []
 
         substring = self._script.utilities.substring(obj, start, end)
-        if substring and substring.strip() != obj.name \
-           and not self._script.EMBEDDED_OBJECT_CHARACTER in substring:
+        if substring and not self._script.EMBEDDED_OBJECT_CHARACTER in substring:
             return [substring]
 
         return []
