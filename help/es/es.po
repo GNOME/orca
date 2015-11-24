@@ -15,8 +15,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2015-11-16 02:02+0000\n"
-"PO-Revision-Date: 2015-11-19 12:08+0100\n"
+"POT-Creation-Date: 2015-11-24 02:08+0000\n"
+"PO-Revision-Date: 2015-11-24 11:14+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -4681,16 +4681,12 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_text_setup.page:88
-#| msgid "action keys"
 msgid "alphabetic keys"
 msgstr "teclas alfabéticas"
 
 #. (itstool) path: item/p
 #. (itstool) path: section/p
 #: C/howto_text_setup.page:89 C/preferences_key_echo.page:33
-#| msgid ""
-#| "This option controls whether or not <key>Shift</key>, <key>Ctrl</key>, "
-#| "<key>Alt</key> and <key>Meta</key> should be spoken when pressed."
 msgid ""
 "This option controls whether or not keys like <key>a</key>, <key>b</key>, "
 "and <key>c</key> should be spoken when pressed."
@@ -4700,16 +4696,12 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_text_setup.page:95
-#| msgid "modifier keys"
 msgid "numeric keys"
 msgstr "teclas numéricas"
 
 #. (itstool) path: item/p
 #. (itstool) path: section/p
 #: C/howto_text_setup.page:96 C/preferences_key_echo.page:43
-#| msgid ""
-#| "This option controls whether or not <key>Shift</key>, <key>Ctrl</key>, "
-#| "<key>Alt</key> and <key>Meta</key> should be spoken when pressed."
 msgid ""
 "This option controls whether or not keys like <key>1</key>, <key>2</key>, "
 "and <key>3</key> should be spoken when pressed."
@@ -4719,16 +4711,12 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_text_setup.page:102
-#| msgid "function keys"
 msgid "punctuation keys"
 msgstr "teclas de puntuación"
 
 #. (itstool) path: item/p
 #. (itstool) path: section/p
 #: C/howto_text_setup.page:103 C/preferences_key_echo.page:53
-#| msgid ""
-#| "This option controls whether or not <key>Shift</key>, <key>Ctrl</key>, "
-#| "<key>Alt</key> and <key>Meta</key> should be spoken when pressed."
 msgid ""
 "This option controls whether or not keys like <key>%</key>, <key>;</key>, "
 "and <key>?</key> should be spoken when pressed."
@@ -4744,9 +4732,6 @@ msgstr "espacio"
 #. (itstool) path: item/p
 #. (itstool) path: section/p
 #: C/howto_text_setup.page:110 C/preferences_key_echo.page:63
-#| msgid ""
-#| "This option controls whether or not <key>F1</key> through <key>F12</key> "
-#| "should be spoken when pressed."
 msgid ""
 "This option controls whether or not <key>space</key> should be spoken when "
 "pressed."
@@ -5486,6 +5471,7 @@ msgstr ""
 #: C/preferences_gecko.page:58 C/preferences_gecko.page:100
 #: C/preferences_gecko.page:171 C/preferences_general.page:52
 #: C/preferences_general.page:70 C/preferences_general.page:119
+#: C/preferences_general.page:199 C/preferences_general.page:210
 #: C/preferences_key_echo.page:112 C/preferences_key_echo.page:122
 #: C/preferences_key_echo.page:157 C/preferences_key_echo.page:179
 #: C/preferences_speech.page:124 C/preferences_speech.page:154
@@ -5638,10 +5624,9 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:114
-#, fuzzy
 #| msgid "3. Magnifier Settings"
 msgid "Flash Message Settings"
-msgstr "3. Configuración del magnificador"
+msgstr "Configuración de mensajes temporales"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:115
@@ -5655,7 +5640,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_braille.page:123
 msgid "Enable flash messages"
-msgstr ""
+msgstr "Activar mensajes temporales"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:124
@@ -5669,13 +5654,13 @@ msgstr ""
 #: C/preferences_braille.page:129 C/preferences_braille.page:142
 #: C/preferences_gecko.page:35 C/preferences_gecko.page:78
 #: C/preferences_gecko.page:131 C/preferences_gecko.page:159
-#: C/preferences_key_echo.page:28 C/preferences_key_echo.page:37
-#: C/preferences_key_echo.page:47 C/preferences_key_echo.page:57
-#: C/preferences_key_echo.page:67 C/preferences_key_echo.page:77
-#: C/preferences_key_echo.page:87 C/preferences_key_echo.page:99
-#: C/preferences_speech.page:26 C/preferences_speech.page:142
-#: C/preferences_speech.page:202 C/preferences_speech.page:214
-#: C/preferences_speech.page:227 C/preferences_spellcheck.page:41
+#: C/preferences_general.page:188 C/preferences_key_echo.page:28
+#: C/preferences_key_echo.page:37 C/preferences_key_echo.page:47
+#: C/preferences_key_echo.page:57 C/preferences_key_echo.page:67
+#: C/preferences_key_echo.page:77 C/preferences_key_echo.page:87
+#: C/preferences_key_echo.page:99 C/preferences_speech.page:26
+#: C/preferences_speech.page:142 C/preferences_speech.page:202
+#: C/preferences_speech.page:214 C/preferences_spellcheck.page:41
 #: C/preferences_spellcheck.page:51 C/preferences_spellcheck.page:61
 #: C/preferences_table_navigation.page:34
 #: C/preferences_table_navigation.page:44
@@ -5686,7 +5671,7 @@ msgstr "Valor predeterminado: marcado"
 #. (itstool) path: section/title
 #: C/preferences_braille.page:134
 msgid "Messages are detailed"
-msgstr ""
+msgstr "Los mensajes son detallados"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:135
@@ -5701,7 +5686,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_braille.page:147
 msgid "Messages are persistent"
-msgstr ""
+msgstr "Los mensajes son persistentes"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:148
@@ -5715,7 +5700,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_braille.page:159
 msgid "Message duration (secs)"
-msgstr ""
+msgstr "Duración del mensaje (segs)"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:160
@@ -5728,7 +5713,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:166
-#| msgid "Default value: 4"
 msgid "Default value: 5"
 msgstr "Valor predeterminado: 5"
 
@@ -6398,6 +6382,139 @@ msgstr ""
 "El cuadro combinado <gui>Perfil inicial</gui> le permite selección qué "
 "perfil se cargará automáticamente cada vez que ejecute <app>Orca</app>."
 
+#. (itstool) path: section/title
+#: C/preferences_general.page:181
+msgid "Progress Bar Updates"
+msgstr "Actualizaciones de barras de progreso"
+
+#. (itstool) path: section/title
+#: C/preferences_general.page:183
+#| msgid "Speak cell coordinates"
+msgid "Speak updates"
+msgstr "Hablar actualizaciones"
+
+#. (itstool) path: section/p
+#: C/preferences_general.page:184
+#, fuzzy
+#| msgid ""
+#| "If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
+#| "periodically present the status of progress bars."
+msgid ""
+"If the <gui>Speak updates</gui> checkbox is checked <app>Orca</app> will "
+"periodically speak the status of progress bars."
+msgstr ""
+"Si la casilla <gui>Activado</gui> está marcada <app>Orca</app> presentará "
+"periódicamente el estado de las barras de progreso."
+
+#. (itstool) path: section/title
+#: C/preferences_general.page:193
+#| msgid "Braille indicator"
+msgid "Braille updates"
+msgstr "Actualizaciones en Braille"
+
+#. (itstool) path: section/p
+#: C/preferences_general.page:194
+#, fuzzy
+#| msgid ""
+#| "If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
+#| "periodically present the status of progress bars."
+msgid ""
+"If the <gui>Braille updates</gui> checkbox is checked <app>Orca</app> will "
+"periodically display the status of progress bars on your refreshable braille "
+"display."
+msgstr ""
+"Si la casilla <gui>Activado</gui> está marcada <app>Orca</app> presentará "
+"periódicamente el estado de las barras de progreso."
+
+#. (itstool) path: section/title
+#: C/preferences_general.page:204
+msgid "Beep updates"
+msgstr "Sonar actualizaciones"
+
+#. (itstool) path: section/p
+#: C/preferences_general.page:205
+#, fuzzy
+#| msgid ""
+#| "If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
+#| "periodically present the status of progress bars."
+msgid ""
+"If the <gui>Beep updates</gui> checkbox is checked <app>Orca</app> will "
+"periodically emit beeps which increase in pitch as the value of the progress "
+"bar increases."
+msgstr ""
+"Si la casilla <gui>Activado</gui> está marcada <app>Orca</app> presentará "
+"periódicamente el estado de las barras de progreso."
+
+#. (itstool) path: section/title
+#: C/preferences_general.page:215
+msgid "Frequency (secs)"
+msgstr "Frecuencia (segs)"
+
+#. (itstool) path: section/p
+#: C/preferences_general.page:216
+#, fuzzy
+#| msgid "This spin button determines how often the announcement is made."
+msgid "This spin button determines how often updates are presented."
+msgstr "Este botón contador determina con qué frecuencia se hace el anuncio."
+
+#. (itstool) path: section/p
+#: C/preferences_general.page:219
+msgid "Default value: 10"
+msgstr "Valor predeterminado: 10"
+
+#. (itstool) path: section/title
+#: C/preferences_general.page:224
+msgid "Restrict to"
+msgstr "Restringir a"
+
+#. (itstool) path: section/p
+#: C/preferences_general.page:225
+msgid ""
+"This combo box allows you to control which progress bars should be "
+"presented, assuming the presentation of progress bar updates has been "
+"enabled. The choices are <gui>All</gui>, <gui>Application</gui>, and "
+"<gui>Window</gui>."
+msgstr ""
+"Este cuadro combinado le permite controlar qué barras de progreso se "
+"deberían presentar, asumiendo que la presentación de actualización de barras "
+"de progreso se ha activado. Las opciones son <gui>Todo</gui>, "
+"<gui>Aplicación</gui> y <gui>Ventana</gui>."
+
+#. (itstool) path: section/p
+#: C/preferences_general.page:231
+msgid ""
+"Choosing <gui>All</gui> will result in <app>Orca</app> presenting updates "
+"for all progress bars, regardless of where the progress bars are located."
+msgstr ""
+"Seleccionar <gui>Todo</gui> dará lugar a que <app>Orca</app> presente "
+"actualizaciones para todas las barras de progreso, con independencia de la "
+"ubicación en que se encuentren las mismas."
+
+#. (itstool) path: section/p
+#: C/preferences_general.page:236
+msgid ""
+"Choosing <gui>Application</gui> will result in <app>Orca</app> presenting "
+"updates from progress bars in the active application, even if they are not "
+"in the active window."
+msgstr ""
+"Seleccionar <gui>Aplicación</gui> dará lugar a que <app>Orca</app> presente "
+"actualizaciones de las barras de progreso para la aplicación activa, incluso "
+"si las mismas no están en la ventana activa."
+
+#. (itstool) path: section/p
+#: C/preferences_general.page:241
+msgid ""
+"Choosing <gui>Window</gui> will result in <app>Orca</app> only presenting "
+"updates for progress bars in the active window."
+msgstr ""
+"Seleccionar <gui>Ventana</gui> dará lugar a que <app>Orca</app> presente "
+"solamente actualizaciones de las barras de progreso en la ventana activa."
+
+#. (itstool) path: section/p
+#: C/preferences_general.page:245
+msgid "Default value: <gui>Application</gui>"
+msgstr "Valor predeterminado: <gui>Aplicación</gui>"
+
 #. (itstool) path: info/title
 #: C/preferences_introduction.page:3
 msgctxt "sort"
@@ -6659,25 +6776,21 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:32
-#| msgid "Enable action keys"
 msgid "Enable alphabetic keys"
 msgstr "Activar teclas alfabéticas"
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:42
-#| msgid "Enable modifier keys"
 msgid "Enable numeric keys"
 msgstr "Activar teclas numéricas"
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:52
-#| msgid "Enable function keys"
 msgid "Enable punctuation keys"
 msgstr "Activar teclas de puntuación"
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:62
-#| msgid "Enable speech"
 msgid "Enable space"
 msgstr "Activar espacio"
 
@@ -7284,7 +7397,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:194
 msgid "System messages are detailed"
-msgstr ""
+msgstr "Los mensajes del sistema son detallados"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:195
@@ -7298,7 +7411,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:207
-#| msgid "Speak cell coordinates"
 msgid "Speak colors as names"
 msgstr "Hablar colores como nombres"
 
@@ -7310,93 +7422,6 @@ msgid ""
 "27, 51 would be spoken as \"midnight blue.\" If you would prefer to hear the "
 "exact RGB value, you should uncheck this checkbox."
 msgstr ""
-
-#. (itstool) path: section/title
-#: C/preferences_speech.page:220
-msgid "Progress Bar Updates"
-msgstr "Actualizaciones de barras de progreso"
-
-#. (itstool) path: section/title
-#: C/preferences_speech.page:222
-msgid "Enabled"
-msgstr "Activado"
-
-#. (itstool) path: section/p
-#: C/preferences_speech.page:223
-msgid ""
-"If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
-"periodically present the status of progress bars."
-msgstr ""
-"Si la casilla <gui>Activado</gui> está marcada <app>Orca</app> presentará "
-"periódicamente el estado de las barras de progreso."
-
-#. (itstool) path: section/title
-#: C/preferences_speech.page:232
-msgid "Frequency (secs)"
-msgstr "Frecuencia (segs)"
-
-#. (itstool) path: section/p
-#: C/preferences_speech.page:233
-msgid "This spin button determines how often the announcement is made."
-msgstr "Este botón contador determina con qué frecuencia se hace el anuncio."
-
-#. (itstool) path: section/p
-#: C/preferences_speech.page:236
-msgid "Default value: 10"
-msgstr "Valor predeterminado: 10"
-
-#. (itstool) path: section/title
-#: C/preferences_speech.page:241
-msgid "Restrict to"
-msgstr "Restringir a"
-
-#. (itstool) path: section/p
-#: C/preferences_speech.page:242
-msgid ""
-"This combo box allows you to control which progress bars should be "
-"presented, assuming the presentation of progress bar updates has been "
-"enabled. The choices are <gui>All</gui>, <gui>Application</gui>, and "
-"<gui>Window</gui>."
-msgstr ""
-"Este cuadro combinado le permite controlar qué barras de progreso se "
-"deberían presentar, asumiendo que la presentación de actualización de barras "
-"de progreso se ha activado. Las opciones son <gui>Todo</gui>, "
-"<gui>Aplicación</gui> y <gui>Ventana</gui>."
-
-#. (itstool) path: section/p
-#: C/preferences_speech.page:248
-msgid ""
-"Choosing <gui>All</gui> will result in <app>Orca</app> presenting updates "
-"for all progress bars, regardless of where the progress bars are located."
-msgstr ""
-"Seleccionar <gui>Todo</gui> dará lugar a que <app>Orca</app> presente "
-"actualizaciones para todas las barras de progreso, con independencia de la "
-"ubicación en que se encuentren las mismas."
-
-#. (itstool) path: section/p
-#: C/preferences_speech.page:253
-msgid ""
-"Choosing <gui>Application</gui> will result in <app>Orca</app> presenting "
-"updates from progress bars in the active application, even if they are not "
-"in the active window."
-msgstr ""
-"Seleccionar <gui>Aplicación</gui> dará lugar a que <app>Orca</app> presente "
-"actualizaciones de las barras de progreso para la aplicación activa, incluso "
-"si las mismas no están en la ventana activa."
-
-#. (itstool) path: section/p
-#: C/preferences_speech.page:258
-msgid ""
-"Choosing <gui>Window</gui> will result in <app>Orca</app> only presenting "
-"updates for progress bars in the active window."
-msgstr ""
-"Seleccionar <gui>Ventana</gui> dará lugar a que <app>Orca</app> presente "
-"solamente actualizaciones de las barras de progreso en la ventana activa."
-
-#. (itstool) path: section/p
-#: C/preferences_speech.page:262
-msgid "Default value: <gui>Application</gui>"
-msgstr "Valor predeterminado: <gui>Aplicación</gui>"
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:4
@@ -7993,6 +8018,9 @@ msgid ""
 "\"2,\" and \"3\") prior to passing it along to the speech synthesizer."
 msgstr ""
 
+#~ msgid "Enabled"
+#~ msgstr "Activado"
+
 #~ msgid "alphanumeric and punctuation keys"
 #~ msgstr "teclas alfanuméricas y de puntuación"
 
@@ -8538,9 +8566,6 @@ msgstr ""
 
 #~ msgid "Options for Controlling the Order in Which Attributes Are Presented"
 #~ msgstr "Opciones para controlar el orden en que se presentan los atributos"
-
-#~ msgid "Braille indicator"
-#~ msgstr "Indicador braille"
 
 #~ msgid ""
 #~ "Get into List Shortcuts Mode by pressing <keyseq><key>Orca Modifier</key> "
