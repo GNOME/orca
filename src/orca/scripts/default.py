@@ -3896,7 +3896,11 @@ class Script(script.Script):
             else:
                 line = messages.DOCUMENT_SELECTED_UP
         elif (eventStr == "A") and isControlKey and selectedText:
-            line = messages.DOCUMENT_SELECTED_ALL
+            if not self.pointOfReference.get('entireDocumentSelected'):
+                self.pointOfReference['entireDocumentSelected'] = True
+                line = messages.DOCUMENT_SELECTED_ALL
+            else:
+                return True
 
         if line:
             speech.speak(line, None, False)
