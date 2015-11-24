@@ -226,7 +226,7 @@ formatting = {
         pyatspi.ROLE_LIST_ITEM: {
             'focused': 'expandableState',
             'unfocused': '(labelOrName or (displayedText + allTextSelection)) + pause + expandableState + pause + positionInList + pause + listBoxItemWidgets',
-            'basicWhereAmI': 'label + roleName + pause + name + pause + positionInList + pause + expandableState + (nodeLevel or nestingLevel) + pause'
+            'basicWhereAmI': 'label + roleName + pause + (name or displayedText) + pause + positionInList + pause + expandableState + (nodeLevel or nestingLevel) + pause'
             },
         pyatspi.ROLE_MATH: {
             'unfocused': 'math',
