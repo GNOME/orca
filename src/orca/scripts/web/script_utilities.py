@@ -1386,7 +1386,6 @@ class Utilities(script_utilities.Utilities):
                              pyatspi.ROLE_FOOTER,
                              pyatspi.ROLE_FORM,
                              pyatspi.ROLE_HEADING,
-                             pyatspi.ROLE_LABEL,
                              pyatspi.ROLE_LIST,
                              pyatspi.ROLE_LIST_ITEM,
                              pyatspi.ROLE_PARAGRAPH,
