@@ -59,6 +59,7 @@ class Utilities(script_utilities.Utilities):
         self._hasNoSize = {}
         self._hasLongDesc = {}
         self._hasUselessCanvasDescendant = {}
+        self._id = {}
         self._isClickableElement = {}
         self._isAnchor = {}
         self._isLandmark = {}
@@ -104,6 +105,7 @@ class Utilities(script_utilities.Utilities):
         self._hasNoSize = {}
         self._hasLongDesc = {}
         self._hasUselessCanvasDescendant = {}
+        self._id = {}
         self._isClickableElement = {}
         self._isAnchor = {}
         self._isLandmark = {}
@@ -360,6 +362,19 @@ class Utilities(script_utilities.Utilities):
 
         rv = attrs.get('roledescription', '')
         self._roleDescription[hash(obj)] = rv
+        return rv
+
+    def _getID(self, obj):
+        if hash(obj) in self._id:
+            return self._id.get(hash(obj))
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return None
+
+        rv = attrs.get('id')
+        self._id[hash(obj)] = rv
         return rv
 
     def _getTag(self, obj):
@@ -2390,7 +2405,20 @@ class Utilities(script_utilities.Utilities):
         if linkURI == docURI:
             return True
 
+        sourceID = self._getID(event.source)
+        if sourceID:
+            parseResult = urllib.parse.urlparse(docURI)
+            return parseResult.fragment == sourceID
+
         return False
+
+    def isChildOfCurrentFragment(self, obj):
+        parseResult = urllib.parse.urlparse(self.documentFrameURI())
+        if not parseResult.fragment:
+            return False
+
+        isSameFragment = lambda x: self._getID(x) == parseResult.fragment
+        return pyatspi.findAncestor(obj, isSameFragment) is not None
 
     @staticmethod
     def getHyperlinkRange(obj):

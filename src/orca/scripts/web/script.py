@@ -1435,32 +1435,48 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
-        if role in [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]:
-            obj, offset = self.utilities.getCaretContext(event.source)
-            if obj and self.utilities.isZombie(obj):
-                msg = "WEB: Clearing context - obj is zombie"
-                debug.println(debug.LEVEL_INFO, msg)
-                self.utilities.clearCaretContext()
-                obj, offset = self.utilities.getCaretContext(event.source)
-
-            if obj:
-                wasFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
-                obj.clearCache()
-                isFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
-                if wasFocused == isFocused \
-                   and not (self.utilities.isLink(obj) and not isFocused):
-                    msg = "WEB: Event handled: Setting locusOfFocus to context"
-                    debug.println(debug.LEVEL_INFO, msg)
-                    orca.setLocusOfFocus(event, obj)
-                    return True
-
         if not state.contains(pyatspi.STATE_FOCUSABLE) \
            and not state.contains(pyatspi.STATE_FOCUSED):
             msg = "WEB: Event ignored: Source is not focusable or focused"
             debug.println(debug.LEVEL_INFO, msg)
             return True
 
-        return False
+        if not role in [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]:
+            msg = "WEB: Deferring to other scripts for handling non-document source"
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+
+        obj, offset = self.utilities.getCaretContext(event.source)
+        if obj and self.utilities.isZombie(obj):
+            msg = "WEB: Clearing context - obj is zombie"
+            debug.println(debug.LEVEL_INFO, msg)
+            self.utilities.clearCaretContext()
+            obj, offset = self.utilities.getCaretContext(event.source)
+
+        if not obj:
+            msg = "WEB: Unable to get non-null, non-zombie context object"
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+
+        wasFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
+        obj.clearCache()
+        isFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
+        if wasFocused != isFocused:
+            msg = "WEB: Focused state of %s changed to %s" % (obj, isFocused)
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+
+        if not (self.utilities.isLink(obj) and not isFocused):
+            cause = "Context is not a non-focused link"
+        elif self.utilities.isChildOfCurrentFragment(obj):
+            cause = "Context is child of current fragment"
+        else:
+            return False
+
+        msg = "WEB: Event handled: Setting locusOfFocus to %s (%s)" % (obj, cause)
+        debug.println(debug.LEVEL_INFO, msg)
+        orca.setLocusOfFocus(event, obj)
+        return True
 
     def onMouseButton(self, event):
         """Callback for mouse:button accessibility events."""
