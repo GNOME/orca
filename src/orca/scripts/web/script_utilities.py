@@ -1389,7 +1389,6 @@ class Utilities(script_utilities.Utilities):
                              pyatspi.ROLE_LABEL,
                              pyatspi.ROLE_LIST,
                              pyatspi.ROLE_LIST_ITEM,
-                             pyatspi.ROLE_PANEL,
                              pyatspi.ROLE_PARAGRAPH,
                              pyatspi.ROLE_ROW_HEADER,
                              pyatspi.ROLE_SECTION,
