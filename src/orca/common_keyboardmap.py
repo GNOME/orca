@@ -193,4 +193,10 @@ keymap = (
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
     "shutdownHandler"),
+
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
+    "whereAmISelectedTextHandler"),
+
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
+    "whereAmILinkHandler"),
 )

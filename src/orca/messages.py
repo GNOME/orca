@@ -1213,6 +1213,10 @@ LINK_TO_FILE = _("%(uri)s link to %(file)s")
 # Translators: this message conveys the protocol of a link eg. http, mailto.
 LINK_WITH_PROTOCOL = _("%s link")
 
+# Translators: this message conveys the protocol of a link eg. http, mailto.
+# along with the visited state of that link.
+LINK_WITH_PROTOCOL_VISITED = _("visited %s link")
+
 # Translators: The following string instructs the user how to navigate amongst
 # the list of commands presented in learn mode, as well as how to exit the list
 # when finished.
@@ -1568,6 +1572,16 @@ NO_MORE_UNVISITED_LINKS = _("No more unvisited links.")
 # the user if no more visited links can be found.
 NO_MORE_VISITED_LINKS = _("No more visited links.")
 
+# Translators: Orca has a dedicated command to speak the currently-selected
+# text. This message is what Orca will present if the user performs this
+# command when no text is selected.
+NO_SELECTED_TEXT = _("No selected text.")
+
+# Translators: Orca has a dedicated command to speak detailed information
+# about the currently-focused link. This message is what Orca will present
+# if the user performs this command when not on a link.
+NOT_ON_A_LINK = _("Not on a link.")
+
 # Translators: This message alerts the user to the fact that what will be
 # presented next came from a notification.
 NOTIFICATION = _("Notification")
@@ -1789,6 +1803,11 @@ SEARCH_COMPLETE = _("Search complete.")
 # Translators: This message is presented to the user when Orca's preferences
 # have been reloaded.
 SETTINGS_RELOADED = _("Screen reader settings reloaded.")
+
+# Translators: Orca has a dedicated command to speak the currently-selected
+# text. This message is spoken by Orca before speaking the text which is
+# selected. The string substitution is for the selected text.
+SELECTED_TEXT_IS = _("Selected text is: %s")
 
 # Translators: This message is presented to the user when speech synthesis
 # has been temporarily turned off.

@@ -173,10 +173,14 @@
   <section id="attributes_and_selection">
     <title>Text Attributes and Selected Text</title>
     <p>
-      Orca has a dedicated command for obtaining the attributes of the
+      <app>Orca</app> has a dedicated command for obtaining the attributes of the
       text at the caret location. In addition, if you use <app>Orca</app>'s
       Where Am I commands from within a text object in which text has been
-      selected, <app>Orca</app> will announce the selected text.
+      selected, <app>Orca</app> will announce the selected text. If you would
+      instead prefer a dedicated command for this purpose, you can bind
+      <app>Orca</app>'s Speak Selected Text command to a keystroke. Please see
+      <link xref="howto_key_bindings">Modifying Keybindings</link> for information
+      on how to do so.
     </p>
     <list>
       <item>
@@ -216,7 +220,26 @@
         </item>
       </list>
     </item>
+    <item>
+      <p>Speak the selected text: (Unbound)</p>
+    </item>
   </list>
+  </section>
+  <section id="link_details">
+    <title>Link Details</title>
+    <p>
+      If you are on a link, <app>Orca</app>'s Basic Where Am I command can be
+      used to announce the details associated with the link such as the link type,
+      if the link is visited, the site description, and file size. If you would
+      instead prefer dedicated command for this purpose, you can bind <app>Orca</app>'s
+      Speak Link Details command to a keystroke. Please see <link xref="howto_key_bindings">
+      Modifying Keybindings</link> for information on how to do so.
+    </p>
+    <list>
+      <item>
+        <p>Speak the link details: (Unbound)</p>
+      </item>
+    </list>
   </section>
   <section id="browse_and_focus_modes">
     <title>Browse and Focus Modes</title>

@@ -70,6 +70,14 @@ WHERE_AM_I_BASIC = _("Performs the basic where am I operation.")
 # with focus as well as its mnemonic.
 WHERE_AM_I_DETAILED = _("Performs the detailed where am I operation.")
 
+# Translators: This is the description of a dedicated command to speak the
+# selected text (if any) in a document.
+WHERE_AM_I_SELECTED_TEXT = _("Speaks the selected text.")
+
+# Translators: This is the description of a dedicated command to speak details
+# about a link, such as the uri and type of link.
+WHERE_AM_I_LINK = _("Speaks link details.")
+
 # Translators: This command will cause the window's status bar contents to be
 # spoken.
 PRESENT_STATUS_BAR = _("Speaks the status bar.")

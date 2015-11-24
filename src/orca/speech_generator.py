@@ -510,6 +510,14 @@ class SpeechGenerator(generator.Generator):
     #                                                                   #
     #####################################################################
 
+    def generateLinkInfo(self, obj, **args):
+        result = self._generateLinkInfo(obj, **args)
+        result.extend(self._generatePause(obj, **args))
+        result.append(self._generateSiteDescription(obj, **args))
+        result.extend(self._generatePause(obj, **args))
+        result.append(self._generateFileSize(obj, **args))
+        return result
+
     def _generateLinkInfo(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the protocol of the URI of
@@ -543,6 +551,14 @@ class SpeechGenerator(generator.Generator):
             else:
                 linkOutput = messages.LINK_WITH_PROTOCOL % link_uri_info[0]
                 text = self._script.utilities.displayedText(obj)
+                try:
+                    isVisited = obj.getState().contains(pyatspi.STATE_VISITED)
+                except:
+                    isVisited = False
+                if not isVisited:
+                    linkOutput = messages.LINK_WITH_PROTOCOL % link_uri_info[0]
+                else:
+                    linkOutput = messages.LINK_WITH_PROTOCOL_VISITED % link_uri_info[0]
                 if not text:
                     # If there's no text for the link, expose part of the
                     # URI to the user.

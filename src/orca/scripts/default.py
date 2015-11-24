@@ -165,6 +165,16 @@ class Script(script.Script):
                 Script.whereAmIDetailed,
                 cmdnames.WHERE_AM_I_DETAILED)
 
+        self.inputEventHandlers["whereAmILinkHandler"] = \
+            input_event.InputEventHandler(
+                Script.whereAmILink,
+                cmdnames.WHERE_AM_I_LINK)
+
+        self.inputEventHandlers["whereAmISelectedTextHandler"] = \
+            input_event.InputEventHandler(
+                Script.whereAmISelectedText,
+                cmdnames.WHERE_AM_I_SELECTED_TEXT)
+
         self.inputEventHandlers["getTitleHandler"] = \
             input_event.InputEventHandler(
                 Script.presentTitle,
@@ -2052,6 +2062,24 @@ class Script(script.Script):
         fullMessage =  "Debug level %s." % briefMessage
         self.presentMessage(fullMessage, briefMessage)
 
+        return True
+
+    def whereAmILink(self, inputEvent=None, link=None):
+        link = link or orca_state.locusOfFocus
+        if not self.utilities.isLink(link):
+            self.presentMessage(messages.NOT_ON_A_LINK)
+        else:
+            speech.speak(self.speechGenerator.generateLinkInfo(link))
+        return True
+
+    def whereAmISelectedText(self, inputEvent=None, obj=None):
+        obj = obj or orca_state.locusOfFocus
+        text, startOffset, endOffset = self.utilities.allSelectedText(obj)
+        if not text:
+            msg = messages.NO_SELECTED_TEXT
+        else:
+            msg = messages.SELECTED_TEXT_IS % text
+        self.speakMessage(msg)
         return True
 
     ########################################################################
