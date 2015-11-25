@@ -792,50 +792,28 @@ class Script(default.Script):
         default.Script.onFocusedChanged(self, event)
 
     def onCaretMoved(self, event):
-        """Called whenever the caret moves.
+        """Callback for object:text-caret-moved accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
-
-        if self.isStructuralNavigationCommand():
-            return
 
         if event.detail1 == -1:
             return
 
-        if self.utilities.isCellBeingEdited(event.source):
-            orca.setLocusOfFocus(event, event.source.parent, False)
-
-        if not orca_state.locusOfFocus \
-           or self.utilities.isZombie(orca_state.locusOfFocus):
-            orca.setLocusOfFocus(event, event.source)
-            default.Script.onCaretMoved(self, event)
-            return
-
-        if orca_state.locusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
-            default.Script.onCaretMoved(self, event)
-            return
-
-        # The lists and combo boxes in the Formatting toolbar emit
-        # object:active-descendant-changed events which cause us
-        # to set the locusOfFocus to the list item. If the user then
-        # arrows within the text portion, we will not present it due
-        # to the event not being from the locusOfFocus. A similar
-        # issue is present in the Target entry of the Hyperlink dialog
-        # for OOo 3.2.
-        #
-        if event.source.getRole() == pyatspi.ROLE_TEXT \
-           and self.utilities.ancestorWithRole(
-               event.source,
-               [pyatspi.ROLE_TOOL_BAR, pyatspi.ROLE_DIALOG],
-               [pyatspi.ROLE_FRAME]):
-            orca.setLocusOfFocus(event, event.source, False)
-
         if self.utilities._flowsFromOrToSelection(event.source):
+           return
+
+        if self.isStructuralNavigationCommand():
             return
 
-        default.Script.onCaretMoved(self, event)
+        if self.utilities.isSpreadSheetCell(orca_state.locusOfFocus):
+            msg = "SOFFICE: locusOfFocus %s is spreadsheet cell" % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg)
+
+            if not self.utilities.isCellBeingEdited(event.source):
+                msg = "SOFFICE: Event ignored: Source is not cell being edited."
+                debug.println(debug.LEVEL_INFO, msg)
+                return
+
+        super().onCaretMoved(event)
 
     def onCheckedChanged(self, event):
         """Callback for object:state-changed:checked accessibility events."""
