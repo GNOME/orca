@@ -174,7 +174,14 @@ class SpeechServer(speechserver.SpeechServer):
 
     def updateCapitalizationStyle(self):
         """Updates the capitalization style used by the speech server."""
-        self._client.set_cap_let_recogn(settings.capitalizationStyle)
+
+        if settings.capitalizationStyle == settings.CAPITALIZATION_STYLE_ICON:
+            style = 'icon'
+        elif settings.capitalizationStyle == settings.CAPITALIZATION_STYLE_SPELL:
+            style = 'spell'
+        else:
+            style = 'none'
+        self._client.set_cap_let_recogn(style)
 
     def updatePunctuationLevel(self):
         """ Punctuation level changed, inform this speechServer. """

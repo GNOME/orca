@@ -1340,9 +1340,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                    guilabels.CAPITALIZATION_STYLE_ICON,
                    guilabels.CAPITALIZATION_STYLE_SPELL]
         self.populateComboBox(combobox, options)
-        if style not in options:
-            style = guilabels.CAPITALIZATION_STYLE_NONE
-        combobox.set_active(options.index(style))
+        if style == settings.CAPITALIZATION_STYLE_ICON:
+            value = guilabels.CAPITALIZATION_STYLE_ICON
+        elif style == settings.CAPITALIZATION_STYLE_SPELL:
+            value = guilabels.CAPITALIZATION_STYLE_SPELL
+        else:
+            value = guilabels.CAPITALIZATION_STYLE_NONE
+        combobox.set_active(options.index(value))
 
         combobox2 = self.get_widget("dateFormatCombo")
         sdtime = time.strftime
