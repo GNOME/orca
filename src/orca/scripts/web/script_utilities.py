@@ -1773,7 +1773,7 @@ class Utilities(script_utilities.Utilities):
                 return False
 
             if (self.isTextBlockElement(obj) and not string.strip()) \
-               or self.isAnchor(obj) \
+               or self.isEmptyAnchor(obj) \
                or (self.hasNoSize(obj) and not string.strip()) \
                or self.isHidden(obj) \
                or self.isOffScreenLabel(obj) \
@@ -1972,12 +1972,17 @@ class Utilities(script_utilities.Utilities):
         rv = False
         if obj.getRole() == pyatspi.ROLE_LINK \
            and not obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
-           and not 'Action' in pyatspi.listInterfaces(obj) \
-           and not self.queryNonEmptyText(obj):
+           and not 'Action' in pyatspi.listInterfaces(obj):
             rv = True
 
         self._isAnchor[hash(obj)] = rv
         return rv
+
+    def isEmptyAnchor(self, obj):
+        if not self.isAnchor(obj):
+            return False
+
+        return self.queryNonEmptyText(obj) is None
 
     def isChromeAlert(self, obj):
         if not (obj and obj.getRole() == pyatspi.ROLE_ALERT):

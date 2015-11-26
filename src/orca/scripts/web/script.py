@@ -1466,7 +1466,9 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg)
             return False
 
-        if not (self.utilities.isLink(obj) and not isFocused):
+        if self.utilities.isAnchor(obj):
+            cause = "Context is anchor"
+        elif not (self.utilities.isLink(obj) and not isFocused):
             cause = "Context is not a non-focused link"
         elif self.utilities.isChildOfCurrentFragment(obj):
             cause = "Context is child of current fragment"
