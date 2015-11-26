@@ -437,14 +437,16 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         except:
             debug.printException(debug.LEVEL_SEVERE)
 
+    if not script:
+        script = _scriptManager.getDefaultScript()
+
     _settingsManager.loadAppSettings(script)
 
     if _settingsManager.getSetting('enableSpeech'):
         try:
             speech.init()
             if reloaded and not skipReloadMessage:
-                speech.speak(messages.SETTINGS_RELOADED,
-                             settings.voices.get(settings.SYSTEM_VOICE))
+                script.speakMessage(messages.SETTINGS_RELOADED)
             debug.println(debug.LEVEL_CONFIGURATION,
                           "Speech module has been initialized.")
         except:
@@ -783,11 +785,8 @@ def main(cacheValues=True):
 
     try:
         message = messages.START_ORCA
-        if not _settingsManager.getSetting('onlySpeakDisplayedText'):
-            speech.speak(message, settings.voices.get(settings.SYSTEM_VOICE))
-        if _settingsManager.getSetting('enableBraille') \
-           or _settingsManager.getSetting('enableBrailleMonitor'):
-            braille.displayMessage(message)
+        script = _scriptManager.getDefaultScript()
+        script.presentMessage(message)
     except:
         debug.printException(debug.LEVEL_SEVERE)
 

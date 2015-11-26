@@ -4060,21 +4060,12 @@ class Script(script.Script):
             briefMessage = fullMessage
 
         if _settingsManager.getSetting('enableSpeech'):
-            currentCapStyle = _settingsManager.getSetting('capitalizationStyle')
-            _settingsManager.setSetting(
-                'capitalizationStyle', settings.CAPITALIZATION_STYLE_NONE)
-            speech.updateCapitalizationStyle()
-
             if not _settingsManager.getSetting('messagesAreDetailed'):
                 message = briefMessage
             else:
                 message = fullMessage
             if message:
-                voice = voice or self.voices.get(settings.SYSTEM_VOICE)
-                speech.speak(message, voice)
-
-            _settingsManager.setSetting('capitalizationStyle', currentCapStyle)
-            speech.updateCapitalizationStyle()
+                self.speakMessage(message, voice)
 
         if (_settingsManager.getSetting('enableBraille') \
              or _settingsManager.getSetting('enableBrailleMonitor')) \
@@ -4466,9 +4457,26 @@ class Script(script.Script):
           prior to speaking the new text.
         """
 
-        if _settingsManager.getSetting('enableSpeech'):
-            voice = voice or self.voices.get(settings.SYSTEM_VOICE)
-            speech.speak(string, voice, interrupt)
+        if not _settingsManager.getSetting('enableSpeech') \
+           or _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return
+
+        capStyle = _settingsManager.getSetting('capitalizationStyle')
+        _settingsManager.setSetting('capitalizationStyle', settings.CAPITALIZATION_STYLE_NONE)
+        speech.updateCapitalizationStyle()
+
+        punctStyle = _settingsManager.getSetting('verbalizePunctuationStyle')
+        _settingsManager.setSetting('verbalizePunctuationStyle', settings.PUNCTUATION_STYLE_NONE)
+        speech.updatePunctuationLevel()
+
+        voice = voice or self.voices.get(settings.SYSTEM_VOICE)
+        speech.speak(string, voice, interrupt)
+
+        _settingsManager.setSetting('capitalizationStyle', capStyle)
+        speech.updateCapitalizationStyle()
+
+        _settingsManager.setSetting('verbalizePunctuationStyle', punctStyle)
+        speech.updatePunctuationLevel()
 
     @staticmethod
     def presentItemsInSpeech(items):
