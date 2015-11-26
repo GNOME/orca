@@ -1,3 +1,85 @@
+3.19.2 - 25 November 2015
+
+New Settings and Commands:
+
+ * Add unbound commands to present selected text and link details
+
+ * Add GUI to enable rewind/fast-forward and structural navigation
+   in Say All
+
+ * Make the use of color names configurable via GUI
+
+ * Make speech and braille message settings configurable via GUI
+
+ * Add preference and unbound keybinding to have Orca speak numbers
+   as digits
+
+ * Add explicit time format option for 12-hour time with seconds
+
+ * Break up printable-keys keyecho into alpha, numeric, and punctuation
+
+Web:
+
+ * Improve presentation of Twitter timeline items
+
+ * Fix several bugs related to navigation to fragments
+
+ * Filter out hidden elements when presenting content
+
+ * Use Gecko's onChildrenChanged callback for Thunderbird instead of
+   the default (fixes issues related to cache management)
+
+ * Use isLink() rather than a role check to eliminate false positive
+   from anchors
+
+ * Don't look for replicant for zombie locusOfFocus when in focus mode
+
+ * Remove application from the list of ARIA landmark types (ARIA 1.1
+   compliance)
+
+Gtk:
+
+ * Present newly-shown GtkInfoBars
+
+ * Improve presentation of GtkEntryCompletion
+
+ * Generate all child widgets of GtkListBox items
+
+General:
+
+ * Work around several issues related to identifying and keeping track
+   of the active window
+
+ * Don't double/multi-present selection-state messages
+
+ * Fix bug in which text was not presented because object had a name
+
+ * Rewrite and fix several bugs in Orca's progress bar support
+
+ * Filter out some more useless/bogus events (for performance)
+
+ * Handle more instances of the undead (zombies); start handling the
+   dead (fixes various and sundry bugs resulting from objects going
+   defunct on us)
+
+ * Fix double-presentation and incorrect ordering of frame name changes
+
+ * Rewrite setLocusOfFocus and default script's onCaretMoved (improves
+   performance, eliminates instances of not presenting new location)
+
+ * Don't display shortcuts if braille verbosity is set to brief
+
+ * Add NotShowIn=GNOME; to the desktop file
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                       Marek Černocký
+    de            German                      Wolfgang Stöggl
+    es            Spanish                     Daniel Mustieles
+    pt            Portuguese                  Pedro Albuquerque
+
+=========
+
 3.18.2 - 9 November 2015
 
 Web:
