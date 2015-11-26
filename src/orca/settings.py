@@ -113,6 +113,7 @@ userCustomizableSettings = [
     "spellcheckSpellSuggestion",
     "spellcheckPresentContext",
     "useColorNames",
+    "capitalizationStyle",
     "findResultsVerbosity",
     "findResultsMinimumLength",
     "structNavTriggersFocusMode",

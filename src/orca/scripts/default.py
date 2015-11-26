@@ -843,6 +843,7 @@ class Script(script.Script):
         _settingsManager.loadAppSettings(self)
         braille.setupKeyRanges(list(self.brailleBindings.keys()))
         speech.updatePunctuationLevel()
+        speech.updateCapitalizationStyle()
 
     def updateBraille(self, obj, **args):
         """Updates the braille display to show the give object.

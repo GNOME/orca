@@ -102,6 +102,30 @@ BTN_JUMP_TO = _("_Jump to")
 # Translators: This is the label for a button in a dialog.
 BTN_OK = _("_OK")
 
+# Translators: Orca uses Speech Dispatcher to present content to users via
+# text-to-speech. Speech Dispatcher has a feature to control how capital
+# letters are presented: Do nothing at all, say the word 'capital' prior to
+# presenting a capital letter (which Speech Dispatcher refers to as 'spell'),
+# or play a tone (which Speech Dispatcher refers to as a sound 'icon'.) This
+# string to be translated appears as a combo box item in Orca's Preferences.
+CAPITALIZATION_STYLE_ICON = C_("capitalization style", "icon")
+
+# Translators: Orca uses Speech Dispatcher to present content to users via
+# text-to-speech. Speech Dispatcher has a feature to control how capital
+# letters are presented: Do nothing at all, say the word 'capital' prior to
+# presenting a capital letter (which Speech Dispatcher refers to as 'spell'),
+# or play a tone (which Speech Dispatcher refers to as a sound 'icon'.) This
+# string to be translated appears as a combo box item in Orca's Preferences.
+CAPITALIZATION_STYLE_NONE = C_("capitalization style", "none")
+
+# Translators: Orca uses Speech Dispatcher to present content to users via
+# text-to-speech. Speech Dispatcher has a feature to control how capital
+# letters are presented: Do nothing at all, say the word 'capital' prior to
+# presenting a capital letter (which Speech Dispatcher refers to as 'spell'),
+# or play a tone (which Speech Dispatcher refers to as a sound 'icon'.) This
+# string to be translated appears as a combo box item in Orca's Preferences.
+CAPITALIZATION_STYLE_SPELL = C_("capitalization style", "spell")
+
 # Translators: If this checkbox is checked, then Orca will tell you when one of
 # your buddies is typing a message.
 CHAT_ANNOUNCE_BUDDY_TYPING = _("Announce when your _buddies are typing")

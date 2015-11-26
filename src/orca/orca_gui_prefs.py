@@ -1334,6 +1334,16 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         enable = prefs.get("useColorNames", settings.useColorNames)
         self.get_widget("useColorNamesCheckButton").set_active(enable)
 
+        style = prefs.get("capitalizationStyle", settings.capitalizationStyle)
+        combobox = self.get_widget("capitalizationStyle")
+        options = [guilabels.CAPITALIZATION_STYLE_NONE,
+                   guilabels.CAPITALIZATION_STYLE_ICON,
+                   guilabels.CAPITALIZATION_STYLE_SPELL]
+        self.populateComboBox(combobox, options)
+        if style not in options:
+            style = guilabels.CAPITALIZATION_STYLE_NONE
+        combobox.set_active(options.index(style))
+
         combobox2 = self.get_widget("dateFormatCombo")
         sdtime = time.strftime
         ltime = time.localtime
@@ -2379,6 +2389,18 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         else:
             self.prefsDict["progressBarVerbosity"] = \
                 settings.PROGRESS_BAR_APPLICATION
+
+    def capitalizationStyleChanged(self, widget):
+        model = widget.get_model()
+        myIter = widget.get_active_iter()
+        capitalizationStyle = model[myIter][0]
+        if capitalizationStyle == guilabels.CAPITALIZATION_STYLE_ICON:
+            self.prefsDict["capitalizationStyle"] = settings.CAPITALIZATION_STYLE_ICON
+        elif capitalizationStyle == guilabels.CAPITALIZATION_STYLE_SPELL:
+            self.prefsDict["capitalizationStyle"] = settings.CAPITALIZATION_STYLE_SPELL
+        else:
+            self.prefsDict["capitalizationStyle"] = settings.CAPITALIZATION_STYLE_NONE
+        speech.updateCapitalizationStyle()
 
     def sayAllStyleChanged(self, widget):
         """Signal handler for the "changed" signal for the sayAllStyle

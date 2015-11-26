@@ -60,6 +60,31 @@
       </p>
     </section>
     <section>
+      <title>Capitalization style</title>
+      <p>
+       This combo box allows you to choose which Speech Dispatcher capitalization
+       indication styles you wish to use in addition to <app>Orca</app>'s
+       capitalization voice. The options, which are named using Speech Dispatcher's
+       terminology, are:
+     </p>
+     <list>
+       <item><p><gui>icon</gui>: Plays a tone</p></item>
+       <item><p><gui>spell</gui>: Speaks the word "capital"</p></item>
+       <item><p><gui>none</gui></p></item>
+    </list>
+    <note style="tip">
+      <title>This setting can be toggled on the fly</title>
+      <p>
+        <app>Orca</app> also has a command to cycle through the available
+        capitalization styles. See <link xref="commands_speech_settings">
+        Speech Settings Commands</link> for more information.
+      </p>
+    </note>
+    <p>
+      Default value: none
+    </p>
+    </section>
+    <section>
       <title>Rate, Pitch, and Volume</title>
       <p>
         These three left-right sliders allow you to further customize the sound

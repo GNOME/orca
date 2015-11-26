@@ -1004,7 +1004,7 @@
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
-                                <property name="top_attach">6</property>
+                                <property name="top_attach">7</property>
                                 <property name="width">1</property>
                                 <property name="height">1</property>
                               </packing>
@@ -1021,7 +1021,7 @@
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
-                                <property name="top_attach">6</property>
+                                <property name="top_attach">7</property>
                                 <property name="width">1</property>
                                 <property name="height">1</property>
                               </packing>
@@ -1038,7 +1038,7 @@
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
-                                <property name="top_attach">5</property>
+                                <property name="top_attach">6</property>
                                 <property name="width">1</property>
                                 <property name="height">1</property>
                               </packing>
@@ -1055,7 +1055,7 @@
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
-                                <property name="top_attach">5</property>
+                                <property name="top_attach">6</property>
                                 <property name="width">1</property>
                                 <property name="height">1</property>
                               </packing>
@@ -1073,7 +1073,7 @@
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
-                                <property name="top_attach">4</property>
+                                <property name="top_attach">5</property>
                                 <property name="width">1</property>
                                 <property name="height">1</property>
                               </packing>
@@ -1090,7 +1090,7 @@
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
-                                <property name="top_attach">4</property>
+                                <property name="top_attach">5</property>
                                 <property name="width">1</property>
                                 <property name="height">1</property>
                               </packing>
@@ -1220,6 +1220,38 @@
                                 <property name="top_attach">0</property>
                                 <property name="width">1</property>
                                 <property name="height">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="capitalizationStyleLabel">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes" comments="Translators: Orca uses Speech Dispatcher to present content to users via text-to-speech. Speech Dispatcher has a feature to control how capital letters are presented: Do nothing at all; say the word 'capital' prior to presenting a capital letter (which Speech Dispatcher refers to as 'spell'), or play a tone (which Speech Dispatcher refers to as a sound 'icon'). Orca refers to these things as 'capitalization style'. This string is the text of the label through which users can choose which of style they would prefer.">_Capitalization style:</property>
+                                <property name="use_underline">True</property>
+                                <property name="justify">right</property>
+                                <property name="mnemonic_widget">capitalizationStyle</property>
+                                <property name="xalign">1</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkComboBox" id="capitalizationStyle">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <signal name="changed" handler="capitalizationStyleChanged" swapped="no"/>
+                                <child>
+                                  <object class="GtkCellRendererText" id="renderer3"/>
+                                  <attributes>
+                                    <attribute name="text">0</attribute>
+                                  </attributes>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="top_attach">4</property>
                               </packing>
                             </child>
                           </object>
