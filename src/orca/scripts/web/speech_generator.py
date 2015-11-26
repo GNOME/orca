@@ -256,6 +256,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if (start or end):
                 doNotSpeak.append(pyatspi.ROLE_DOCUMENT_FRAME)
                 doNotSpeak.append(pyatspi.ROLE_ALERT)
+            if self._script.utilities.isAnchor(obj):
+                doNotSpeak.append(obj.getRole())
 
         if obj.getState().contains(pyatspi.STATE_EDITABLE):
             lastKey, mods = self._script.utilities.lastKeyAndModifiers()
@@ -280,7 +282,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result.append(self.getLocalizedRoleName(obj, role))
                 result.extend(acss)
 
-        elif role == pyatspi.ROLE_LINK:
+        elif self._script.utilities.isLink(obj):
             if obj.parent.getRole() == pyatspi.ROLE_IMAGE:
                 result.append(messages.IMAGE_MAP_LINK)
                 result.extend(acss)
@@ -440,6 +442,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             oldRole = self._overrideRole('default', args)
         elif self._script.utilities.isLink(obj):
             oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
+        elif self._script.utilities.isAnchor(obj):
+            oldRole = 'ROLE_STATIC'
         elif self._script.utilities.treatAsDiv(obj):
             oldRole = self._overrideRole(pyatspi.ROLE_SECTION, args)
         else:

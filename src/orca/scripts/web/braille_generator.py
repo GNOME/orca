@@ -83,7 +83,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             level = self._script.utilities.headingLevel(obj)
             result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
 
-        elif role == pyatspi.ROLE_LINK and obj == orca_state.locusOfFocus:
+        elif self._script.utilities.isLink(obj) and obj == orca_state.locusOfFocus:
             if obj.parent.getRole() == pyatspi.ROLE_IMAGE:
                 result.append(messages.IMAGE_MAP_LINK)
 
@@ -137,7 +137,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.isClickableElement(obj) \
            or self._script.utilities.isLink(obj):
             oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
-        elif self._script.utilities.isStatic(obj):
+        elif self._script.utilities.isStatic(obj) \
+             or self._script.utilities.isAnchor(obj):
             oldRole = self._overrideRole('ROLE_STATIC', args)
         elif self._script.utilities.treatAsDiv(obj):
             oldRole = self._overrideRole(pyatspi.ROLE_SECTION, args)

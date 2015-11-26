@@ -995,7 +995,14 @@ class Script(default.Script):
 
         self.utilities.setCaretContext(newFocus, caretOffset)
         self.updateBraille(newFocus)
-        speech.speak(self.speechGenerator.generateSpeech(newFocus, priorObj=oldFocus))
+
+        if self.utilities.isAnchor(newFocus):
+            contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
+            utterances = self.speechGenerator.generateContents(contents)
+        else:
+            utterances = self.speechGenerator.generateSpeech(newFocus, priorObj=oldFocus)
+
+        speech.speak(utterances)
         self._saveFocusedObjectInfo(newFocus)
 
         if self.utilities.inTopLevelWebApp(newFocus):

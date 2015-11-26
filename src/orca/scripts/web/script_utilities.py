@@ -2081,6 +2081,8 @@ class Utilities(script_utilities.Utilities):
            and obj.parent.getRole() == pyatspi.ROLE_LINK \
            and obj.name and obj.name == obj.parent.name:
             rv = True
+        else:
+            rv = False
 
         self._isLink[hash(obj)] = rv
         return rv
@@ -2096,6 +2098,8 @@ class Utilities(script_utilities.Utilities):
         role = obj.getRole()
         if role == pyatspi.ROLE_TOOL_TIP:
             rv = True
+        else:
+            rv = False
 
         self._isNonNavigablePopup[hash(obj)] = rv
         return rv
@@ -2614,7 +2618,7 @@ class Utilities(script_utilities.Utilities):
 
         text = self.queryNonEmptyText(obj)
         if not text:
-            if self.isTextBlockElement(obj) or self.isAnchor(obj):
+            if self.isTextBlockElement(obj) or self.isEmptyAnchor(obj):
                 nextObj, nextOffset = self.nextContext(obj, offset)
                 if nextObj:
                     msg = "WEB: First caret context for %s, %i is %s, %i" % (obj, offset, nextObj, nextOffset)
@@ -2658,7 +2662,7 @@ class Utilities(script_utilities.Utilities):
                 allText = text.getText(0, -1)
                 for i in range(offset + 1, len(allText)):
                     child = self.getChildAtOffset(obj, i)
-                    if child and not self.isZombie(child) and not self.isAnchor(child) \
+                    if child and not self.isZombie(child) and not self.isEmptyAnchor(child) \
                        and not self.isUselessImage(child):
                         return self.findNextCaretInOrder(child, -1)
                     if allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
@@ -2722,7 +2726,7 @@ class Utilities(script_utilities.Utilities):
                     offset = len(allText)
                 for i in range(offset - 1, -1, -1):
                     child = self.getChildAtOffset(obj, i)
-                    if child and not self.isZombie(child) and not self.isAnchor(child) \
+                    if child and not self.isZombie(child) and not self.isEmptyAnchor(child) \
                        and not self.isUselessImage(child):
                         return self.findPreviousCaretInOrder(child, -1)
                     if allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
