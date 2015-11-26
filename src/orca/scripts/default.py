@@ -2110,6 +2110,8 @@ class Script(script.Script):
             if event.detail1:
                 msg = "DEFAULT: Updating active window to event source."
                 debug.println(debug.LEVEL_INFO, msg)
+                self.windowActivateTime = time.time()
+                orca.setLocusOfFocus(event, event.source)
                 orca_state.activeWindow = event.source
 
         if self.findCommandRun:
