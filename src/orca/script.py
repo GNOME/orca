@@ -81,8 +81,8 @@ class Script:
             try:
                 self.name = self.app.name
             except (LookupError, RuntimeError):
-                msg = 'script.__init__: Error trying to get app.name'
-                debug.println(debug.LEVEL_FINE, msg)
+                msg = 'ERROR: Could not get name of script app %s'
+                debug.println(debug.LEVEL_INFO, msg, True)
                 self.name = "default"
         else:
             self.name = "default"
@@ -124,7 +124,8 @@ class Script:
         self.findCommandRun = False
         self._lastCommandWasStructNav = False
 
-        debug.println(debug.LEVEL_FINE, "NEW SCRIPT: %s" % self.name)
+        msg = 'SCRIPT: %s initialized' % self.name
+        debug.println(debug.LEVEL_INFO, msg, True)
 
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.
@@ -333,8 +334,8 @@ class Script:
         try:
             role = event.source.getRole()
         except (LookupError, RuntimeError):
-            msg = 'script.processObjectEvent: Error getting role'
-            debug.println(debug.LEVEL_FINE, msg)
+            msg = 'ERROR: Exception getting role for %s' % event.source
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         # Check to see if we really want to process this event.
@@ -410,12 +411,10 @@ class Script:
             reason = "appears to be duplicate state-changed event"
 
         if skip:
-            debug.println(debug.LEVEL_FINE,
-                          "script.skipObjectEvent: skipped due to %s:" \
-                          % reason)
-            debug.println(debug.LEVEL_FINE,
-                          "\tType: %s\n\tSource: %s\n\tDetail1: %s"
-                          % (cachedEvent.type, cachedEvent.source, cachedEvent.detail1))
+            eventDetails = '           %s' % str(cachedEvent).replace('\t', ' ' * 11)
+            msg = 'SCRIPT: Skipping object event due to %s\n%s' % (reason, eventDetails)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
         return skip
 
     def checkKeyboardEventData(self, keyboardEvent):
@@ -435,9 +434,8 @@ class Script:
             from gi.repository import Gdk
             keyboardEvent.keyval_name = Gdk.keyval_name(keyboardEvent.id)
         except:
-            debug.println(debug.LEVEL_FINE,
-                          "Could not obtain keyval_name for id: %d" \
-                          % keyboardEvent.id)
+            msg = 'ERROR: Exception getting keyval_name for id: %d' % keyboardEvent.id
+            debug.println(debug.LEVEL_INFO, msg, True)
 
     def consumesKeyboardEvent(self, keyboardEvent):
         """Called when a key is pressed on the keyboard.

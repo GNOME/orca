@@ -106,10 +106,6 @@ class Utilities(script_utilities.Utilities):
         state = obj.getState()
         readOnly = state.contains(pyatspi.STATE_FOCUSABLE) \
                    and not state.contains(pyatspi.STATE_EDITABLE)
-        details = debug.getAccessibleDetails(debug.LEVEL_ALL, obj)
-        debug.println(debug.LEVEL_ALL,
-                      "soffice - isReadOnlyTextArea=%s for %s" % \
-                      (readOnly, details))
 
         return readOnly
 
@@ -372,7 +368,8 @@ class Utilities(script_utilities.Utilities):
                 break
 
         if not toolbar:
-            debug.println(debug.LEVEL_INFO, "Calc inputline toolbar not found.")
+            msg = "ERROR: Calc inputline toolbar not found."
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         isParagraph = lambda x: x and x.getRole() == pyatspi.ROLE_PARAGRAPH

@@ -641,8 +641,8 @@ class Script(script.Script):
         try:
             keyBindings = _settingsManager.overrideKeyBindings(self, keyBindings)
         except:
-            debug.println(debug.LEVEL_WARNING,
-                          "WARNING: problem overriding keybindings:")
+            msg = 'ERROR: Exception when overriding keybindings in %s' % self
+            debug.println(debug.LEVEL_WARNING, msg, True)
             debug.printException(debug.LEVEL_WARNING)
 
         return keyBindings
@@ -699,11 +699,11 @@ class Script(script.Script):
             brailleBindings[braille.brlapi.KEY_CMD_CUTLINE] = \
                 self.inputEventHandlers["processBrailleCutLineHandler"]
         except AttributeError:
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "WARNING: braille bindings unavailable:")
+            msg = 'DEFAULT: Braille bindings unavailable in %s' % self
+            debug.println(debug.LEVEL_INFO, msg, True)
         except:
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "WARNING: braille bindings unavailable:")
+            msg = 'ERROR: Exception getting braille bindings in %s' % self
+            debug.println(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_CONFIGURATION)
         return brailleBindings
 
@@ -751,8 +751,8 @@ class Script(script.Script):
             try:
                 names[hash(orca_state.activeWindow)] = orca_state.activeWindow.name
             except:
-                msg = "DEFAULT: Exception getting name for %s" % orca_state.activeWindow
-                debug.println(debug.LEVEL_INFO, msg)
+                msg = "ERROR: Exception getting name for %s" % orca_state.activeWindow
+                debug.println(debug.LEVEL_INFO, msg, True)
 
         self.pointOfReference['names'] = names
 
@@ -854,7 +854,7 @@ class Script(script.Script):
 
         if not _settingsManager.getSetting('enableBraille') \
            and not _settingsManager.getSetting('enableBrailleMonitor'):
-            debug.println(debug.LEVEL_INFO, "BRAILLE: update disabled")
+            debug.println(debug.LEVEL_INFO, "BRAILLE: update disabled", True)
             return
 
         if not obj:
@@ -2103,13 +2103,13 @@ class Script(script.Script):
         if event.source.getRole() == pyatspi.ROLE_FRAME:
             if event.source == orca_state.activeWindow and not event.detail1:
                 msg = "DEFAULT: Event is for active window. Clearing state."
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 orca_state.activeWindow = None
                 return
 
             if event.detail1:
                 msg = "DEFAULT: Updating active window to event source."
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 self.windowActivateTime = time.time()
                 orca.setLocusOfFocus(event, event.source)
                 orca_state.activeWindow = event.source
@@ -2179,20 +2179,20 @@ class Script(script.Script):
         obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
         if offset == event.detail1 and obj == event.source:
             msg = "DEFAULT: Event is for last saved cursor position"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         if event.source != orca_state.locusOfFocus \
            and event.source.getState().contains(pyatspi.STATE_FOCUSED):
             msg = "DEFAULT: Updating locusOfFocus from %s to %s" % \
                   (orca_state.locusOfFocus, event.source)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, event.source, False)
 
         if event.source != orca_state.locusOfFocus:
             msg = "DEFAULT: Event source (%s) is not locusOfFocus (%s)" \
                   % (event.source, orca_state.locusOfFocus)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         if self.flatReviewContext:
@@ -2203,17 +2203,17 @@ class Script(script.Script):
             caretOffset = text.caretOffset
         except:
             msg = "DEFAULT: Exception getting caretOffset for %s" % event.source
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         self._saveLastCursorPosition(event.source, text.caretOffset)
         if text.getNSelections():
             msg = "DEFAULT: Event source has text selections"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         msg = "DEFAULT: Presenting text at new caret position"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         self._presentTextAtNewCaretPosition(event)
 
     def onDocumentReload(self, event):
@@ -2312,23 +2312,23 @@ class Script(script.Script):
         oldName = names.get(hash(obj))
         if oldName == event.any_data:
             msg = "DEFAULT: Old name (%s) is the same as new name" % oldName
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         role = obj.getRole()
         if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_TABLE_CELL]:
             msg = "DEFAULT: Event is redundant notification for this role"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         if role == pyatspi.ROLE_FRAME:
             if obj != orca_state.activeWindow:
                 msg = "DEFAULT: Event is for frame other than the active window"
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return
         elif obj != orca_state.locusOfFocus:
             msg = "DEFAULT: Event is for object other than the locusOfFocus"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         names[hash(obj)] = event.any_data
@@ -2454,7 +2454,7 @@ class Script(script.Script):
             role = obj.getRole()
         except:
             msg = "DEFAULT: Exception getting childCount and role for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         if childCount and role != pyatspi.ROLE_COMBO_BOX:
@@ -2843,11 +2843,11 @@ class Script(script.Script):
 
         isProgressBarUpdate, msg = self.utilities.isProgressBarUpdate(obj, event)
         msg = "DEFAULT: Is progress bar update: %s, %s" % (isProgressBarUpdate, msg)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         if not isProgressBarUpdate and obj != orca_state.locusOfFocus:
             msg = "DEFAULT: Source != locusOfFocus (%s)" % orca_state.locusOfFocus
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         if isProgressBarUpdate:
@@ -3103,16 +3103,16 @@ class Script(script.Script):
     def inSayAll(self):
         if self._inSayAll:
             msg = "DEFAULT: In SayAll"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self._sayAllIsInterrupted:
             msg = "DEFAULT: SayAll is interrupted"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         msg = "DEFAULT: Not in SayAll"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return False
 
     def echoPreviousSentence(self, obj):
@@ -3290,8 +3290,7 @@ class Script(script.Script):
             speechResult = self.whereAmI.getWhereAmI(obj, True)
             if speechResult:
                 brailleResult = speechResult[0]
-        debug.println(debug.LEVEL_FINEST,
-                      "presentToolTip: text='%s'" % speechResult)
+
         if speechResult:
             speech.speak(speechResult)
         if brailleResult:
@@ -3330,13 +3329,6 @@ class Script(script.Script):
             voice = self.voices[settings.DEFAULT_VOICE]
 
         speakBlankLines = _settingsManager.getSetting('speakBlankLines')
-        debug.println(debug.LEVEL_FINEST, \
-            "sayCharacter: char=<%s>, startOffset=%d, " % \
-            (character, startOffset))
-        debug.println(debug.LEVEL_FINEST, \
-            "caretOffset=%d, endOffset=%d, speakBlankLines=%s" % \
-            (offset, endOffset, speakBlankLines))
-
         if character == "\n":
             line = text.getTextAtOffset(max(0, offset),
                                         pyatspi.TEXT_BOUNDARY_LINE_START)
@@ -3369,13 +3361,6 @@ class Script(script.Script):
         # Get the AccessibleText interface of the provided object
         #
         [line, caretOffset, startOffset] = self.getTextLineAtCaret(obj)
-        debug.println(debug.LEVEL_FINEST, \
-            "sayLine: line=<%s>, len=%d, start=%d, " % \
-            (line, len(line), startOffset))
-        debug.println(debug.LEVEL_FINEST, \
-            "caret=%d, speakBlankLines=%s" % \
-            (caretOffset, _settingsManager.getSetting('speakBlankLines')))
-
         if len(line) and line != "\n":
             if line.isupper():
                 voice = self.voices[settings.UPPERCASE_VOICE]
@@ -3532,7 +3517,7 @@ class Script(script.Script):
 
         if not _settingsManager.getSetting('enableBraille') \
            and not _settingsManager.getSetting('enableBrailleMonitor'):
-            debug.println(debug.LEVEL_INFO, "BRAILLE: update review disabled")
+            debug.println(debug.LEVEL_INFO, "BRAILLE: update review disabled", True)
             return
 
         context = self.getFlatReviewContext()
@@ -3751,7 +3736,7 @@ class Script(script.Script):
         self._sayAllContexts = []
 
         msg = "DEFAULT: textLines complete. Verifying SayAll status"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         self.inSayAll()
 
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
@@ -4025,9 +4010,6 @@ class Script(script.Script):
         elif not event.isPressedKey():
             return False
 
-        debug.println(debug.LEVEL_FINEST,
-                      "Script.presentKeyboardEvent: %s" % event.event_string)
-
         braille.displayKeyEvent(event)
         orcaModifierPressed = event.isOrcaModifier() and event.isPressedKey()
         if event.isCharacterEchoable() and not orcaModifierPressed:
@@ -4171,7 +4153,7 @@ class Script(script.Script):
 
         if not _settingsManager.getSetting('enableBraille') \
            and not _settingsManager.getSetting('enableBrailleMonitor'):
-            debug.println(debug.LEVEL_INFO, "BRAILLE: display message disabled")
+            debug.println(debug.LEVEL_INFO, "BRAILLE: display message disabled", True)
             return
 
         braille.displayMessage(message, cursor, flashTime)
@@ -4195,7 +4177,7 @@ class Script(script.Script):
 
         if not _settingsManager.getSetting('enableBraille') \
            and not _settingsManager.getSetting('enableBrailleMonitor'):
-            debug.println(debug.LEVEL_INFO, "BRAILLE: display regions disabled")
+            debug.println(debug.LEVEL_INFO, "BRAILLE: display regions disabled", True)
             return
 
         braille.displayRegions(regionInfo, flashTime)
@@ -4358,7 +4340,7 @@ class Script(script.Script):
 
         if not _settingsManager.getSetting('enableBraille') \
            and not _settingsManager.getSetting('enableBrailleMonitor'):
-            debug.println(debug.LEVEL_INFO, "BRAILLE: update caret disabled")
+            debug.println(debug.LEVEL_INFO, "BRAILLE: update caret disabled", True)
             return
 
         brailleNeedsRepainting = True

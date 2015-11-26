@@ -92,7 +92,7 @@ class Utilities(script_utilities.Utilities):
             self._caretContexts.pop(key, None)
 
     def clearCachedObjects(self):
-        debug.println(debug.LEVEL_INFO, "WEB: cleaning up cached objects")
+        debug.println(debug.LEVEL_INFO, "WEB: cleaning up cached objects", True)
         self._inDocumentContent = {}
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
@@ -137,7 +137,7 @@ class Utilities(script_utilities.Utilities):
             rv = obj.getRole() in roles
         except:
             msg = "WEB: Exception getting role for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             rv = False
 
         return rv
@@ -164,12 +164,12 @@ class Utilities(script_utilities.Utilities):
 
         if self.isDocument(obj):
             msg = "WEB: %s is document" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return obj
 
         document = pyatspi.findAncestor(obj, self.isDocument)
         msg = "WEB: Document for %s is %s" % (obj, document)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return document
 
     def _getDocumentsEmbeddedBy(self, frame):
@@ -191,15 +191,15 @@ class Utilities(script_utilities.Utilities):
             window = orca_state.activeWindow
         else:
             msg = "WARNING: %s is not in %s" % (orca_state.activeWindow, app)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             window = self.activeWindow(app)
             try:
                 self._script.app = window.getApplication()
                 msg = "WEB: updating script's app to %s" % self._script.app
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
             except:
                 msg = "ERROR: Exception getting app for %s" % window
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 orca_state.activeWindow = window
 
@@ -233,7 +233,7 @@ class Utilities(script_utilities.Utilities):
             state = obj.getState()
         except:
             msg = "WEB: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         orca.setLocusOfFocus(None, obj, notifyScript=False)
@@ -242,11 +242,11 @@ class Utilities(script_utilities.Utilities):
                 obj.queryComponent().grabFocus()
             except NotImplementedError:
                 msg = "WEB: %s does not implement the component interface" % obj
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return
             except:
                 msg = "WEB: Exception grabbing focus on %s" % obj
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
         text = self.queryNonEmptyText(obj)
@@ -533,7 +533,7 @@ class Utilities(script_utilities.Utilities):
             pass
         except:
             msg = "WEB: Exception getting range extents for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return [0, 0, 0, 0]
 
         role = obj.getRole()
@@ -544,22 +544,22 @@ class Utilities(script_utilities.Utilities):
                 ext = obj.parent.queryComponent().getExtents(0)
             except NotImplementedError:
                 msg = "WEB: %s does not implement the component interface" % obj.parent
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return [0, 0, 0, 0]
             except:
                 msg = "WEB: Exception getting extents for %s" % obj.parent
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return [0, 0, 0, 0]
         else:
             try:
                 ext = obj.queryComponent().getExtents(0)
             except NotImplementedError:
                 msg = "WEB: %s does not implement the component interface" % obj
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return [0, 0, 0, 0]
             except:
                 msg = "WEB: Exception getting extents for %s" % obj
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return [0, 0, 0, 0]
 
         return [ext.x, ext.y, ext.width, ext.height]
@@ -761,7 +761,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             msg = "WEB: Results for text at offset %i for %s using %s:\n" \
                   "     String: '', Start: 0, End: 0. (obj is None)" % (offset, obj, boundary)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return '', 0, 0
 
         text = self.queryNonEmptyText(obj)
@@ -769,7 +769,7 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: Results for text at offset %i for %s using %s:\n" \
                   "     String: '', Start: 0, End: 1. (queryNonEmptyText() returned None)" \
                   % (offset, obj, boundary)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return '', 0, 1
 
         if boundary == pyatspi.TEXT_BOUNDARY_CHAR:
@@ -777,7 +777,7 @@ class Utilities(script_utilities.Utilities):
             s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
             msg = "WEB: Results for text at offset %i for %s using %s:\n" \
                   "     String: '%s', Start: %i, End: %i." % (offset, obj, boundary, s, start, end)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return string, start, end
 
         if not boundary:
@@ -785,7 +785,7 @@ class Utilities(script_utilities.Utilities):
             s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
             msg = "WEB: Results for text at offset %i for %s using %s:\n" \
                   "     String: '%s', Start: %i, End: %i." % (offset, obj, boundary, s, start, end)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return string, start, end
 
         if boundary == pyatspi.TEXT_BOUNDARY_SENTENCE_START \
@@ -797,7 +797,7 @@ class Utilities(script_utilities.Utilities):
                 s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
                 msg = "WEB: Results for text at offset %i for %s using %s:\n" \
                       "     String: '%s', Start: %i, End: %i." % (offset, obj, boundary, s, start, end)
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return string, start, end
 
         offset = max(0, offset)
@@ -809,7 +809,7 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: Results for text at offset %i for %s using %s:\n" \
                   "     String: '%s', Start: %i, End: %i.\n" \
                   "     Not checking for broken text." % (offset, obj, boundary, s, start, end)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return string, start, end
 
         needSadHack = False
@@ -823,7 +823,7 @@ class Utilities(script_utilities.Utilities):
                   "      The bug is the above results should be the same.\n" \
                   "      This very likely needs to be fixed by the toolkit." \
                   % (obj, boundary, offset, s1, start, end, start, s2, testStart, testEnd)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             needSadHack = True
         elif not string and 0 <= offset < text.characterCount:
             s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
@@ -834,7 +834,7 @@ class Utilities(script_utilities.Utilities):
                   "      Character count: %i, Full text: '%s'.\n" \
                   "      This very likely needs to be fixed by the toolkit." \
                   % (offset, obj, boundary, s1, start, end, text.characterCount, s2)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             needSadHack = True
         elif not (start <= offset < end):
             s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
@@ -843,7 +843,7 @@ class Utilities(script_utilities.Utilities):
                   "      The bug is the range returned is outside of the offset.\n" \
                   "      This very likely needs to be fixed by the toolkit." \
                   % (offset, obj, boundary, s1, start, end)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             needSadHack = True
 
         if needSadHack:
@@ -851,13 +851,13 @@ class Utilities(script_utilities.Utilities):
             s = sadString.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
             msg = "HACK: Attempting to recover from above failure.\n" \
                   "      String: '%s', Start: %i, End: %i." % (s, sadStart, sadEnd)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return sadString, sadStart, sadEnd
 
         s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
         msg = "WEB: Results for text at offset %i for %s using %s:\n" \
               "     String: '%s', Start: %i, End: %i." % (offset, obj, boundary, s, start, end)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return string, start, end
 
     def _getContentsForObj(self, obj, offset, boundary):
@@ -1213,42 +1213,42 @@ class Utilities(script_utilities.Utilities):
             obj, offset = self.getCaretContext()
 
         msg = "WEB: Current context is: %s, %i" % (obj, offset)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         if obj and self.isZombie(obj):
             msg = "WEB: Current context obj %s is zombie. Clearing cache." % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.clearCachedObjects()
 
             obj, offset = self.getCaretContext()
             msg = "WEB: Now Current context is: %s, %i" % (obj, offset)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         line = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
         msg = "WEB: Line contents for %s, %i: %s" % (obj, offset, line)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         if not (line and line[0]):
             return []
 
         firstObj, firstOffset = line[0][0], line[0][1]
         msg = "WEB: First context on line is: %s, %i" % (firstObj, firstOffset)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         obj, offset = self.previousContext(firstObj, firstOffset, True)
         if not obj and firstObj:
             msg = "WEB: Previous context is: %s, %i. Trying again." % (obj, offset)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.clearCachedObjects()
             obj, offset = self.previousContext(firstObj, firstOffset, True)
 
         msg = "WEB: Previous context is: %s, %i" % (obj, offset)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
         if not contents:
             msg = "WEB: Could not get line contents for %s, %i" % (obj, offset)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
         return contents
@@ -1258,20 +1258,20 @@ class Utilities(script_utilities.Utilities):
             obj, offset = self.getCaretContext()
 
         msg = "WEB: Current context is: %s, %i" % (obj, offset)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         if obj and self.isZombie(obj):
             msg = "WEB: Current context obj %s is zombie. Clearing cache." % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.clearCachedObjects()
 
             obj, offset = self.getCaretContext()
             msg = "WEB: Now Current context is: %s, %i" % (obj, offset)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         line = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
         msg = "WEB: Line contents for %s, %i: %s" % (obj, offset, line)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         if not (line and line[0]):
             return []
@@ -1282,22 +1282,22 @@ class Utilities(script_utilities.Utilities):
         else:
             lastObj, lastOffset = line[-1][0], line[-1][2] - 1
         msg = "WEB: Last context on line is: %s, %i" % (lastObj, lastOffset)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         obj, offset = self.nextContext(lastObj, lastOffset, True)
         if not obj and lastObj:
             msg = "WEB: Next context is: %s, %i. Trying again." % (obj, offset)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.clearCachedObjects()
             obj, offset = self.nextContext(lastObj, lastOffset, True)
 
         msg = "WEB: Next context is: %s, %i" % (obj, offset)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
         if not contents:
             msg = "WEB: Could not get line contents for %s, %i" % (obj, offset)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
         return contents
@@ -1323,14 +1323,14 @@ class Utilities(script_utilities.Utilities):
             role = obj.getRole()
         except:
             msg = "WEB: Exception getting role for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if role == pyatspi.ROLE_EMBEDDED and not self.getDocumentForObject(obj.parent):
             uri = self.documentFrameURI()
             rv = bool(uri and uri.startswith("http"))
             msg = "WEB: %s is top-level web application: %s (URI: %s)" % (obj, rv, uri)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return rv
 
         return False
@@ -1341,7 +1341,7 @@ class Utilities(script_utilities.Utilities):
             state = obj.getState()
         except:
             msg = "WEB: Exception getting role and state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if state.contains(pyatspi.STATE_EDITABLE) \
@@ -1391,7 +1391,7 @@ class Utilities(script_utilities.Utilities):
             state = obj.getState()
         except:
             msg = "WEB: Exception getting role and state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         textBlockElements = [pyatspi.ROLE_CAPTION,
@@ -1442,7 +1442,7 @@ class Utilities(script_utilities.Utilities):
             childCount = obj.childCount
         except:
             msg = "WEB: Exception getting role and childCount for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         rv = False
@@ -1872,7 +1872,7 @@ class Utilities(script_utilities.Utilities):
         if (obj and obj.getRole() in docRoles):
             if obj.parent is None:
                 msg = "WEB: %s is a detatched document" % obj
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
         return False
@@ -1884,7 +1884,7 @@ class Utilities(script_utilities.Utilities):
             iframes = pyatspi.findAllDescendants(root, isIframe)
         except:
             msg = "WEB: Exception getting descendant iframes of %s" % root
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
         for iframe in iframes:
@@ -1893,7 +1893,7 @@ class Utilities(script_utilities.Utilities):
                 self._isBrokenChildParentTree(obj, iframe)
 
                 msg = "WEB: Returning %s as iframe parent of detached %s" % (iframe, obj)
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return iframe
 
         return None
@@ -1906,25 +1906,25 @@ class Utilities(script_utilities.Utilities):
             childIsChildOfParent = child in parent
         except:
             msg = "WEB: Exception checking if %s is in %s" % (child, parent)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             childIsChildOfParent = False
         else:
             msg = "WEB: %s is child of %s: %s" % (child, parent, childIsChildOfParent)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         try:
             parentIsParentOfChild = child.parent == parent
         except:
             msg = "WEB: Exception getting parent of %s" % child
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             parentIsParentOfChild = False
         else:
             msg = "WEB: %s is parent of %s: %s" % (parent, child, parentIsParentOfChild)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         if parentIsParentOfChild != childIsChildOfParent:
             msg = "FAIL: The above is broken and likely needs to be fixed by the toolkit."
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -2117,7 +2117,7 @@ class Utilities(script_utilities.Utilities):
             canvases = pyatspi.findAllDescendants(obj, isCanvas)
         except:
             msg = "WEB: Exception getting descendant canvases of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             rv = False
         else:
             rv = len(list(filter(self.isUselessImage, canvases))) > 0
@@ -2171,11 +2171,11 @@ class Utilities(script_utilities.Utilities):
             childCount = obj.childCount
         except:
             msg = "WEB: Exception getting childCount for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             childCount = 0
         if childCount and obj[0] is None:
             msg = "ERROR: %s reports %i children, but obj[0] is None" % (obj, childCount)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             rv = True
 
         self._isParentOfNullChild[hash(obj)] = rv
@@ -2234,7 +2234,7 @@ class Utilities(script_utilities.Utilities):
             name = obj.name
         except:
             msg = "WEB: Exception getting name for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
         else:
             if name:
                 return False
@@ -2248,7 +2248,7 @@ class Utilities(script_utilities.Utilities):
             role = obj.getRole()
         except:
             msg = "WEB: Exception getting role for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         # TODO - JD: This is private.
@@ -2309,7 +2309,7 @@ class Utilities(script_utilities.Utilities):
             role = event.source.getRole()
         except:
             msg = "WEB: Exception getting role for %s" % event.source
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         eType = event.type
@@ -2354,14 +2354,14 @@ class Utilities(script_utilities.Utilities):
             focusState = orca_state.locusOfFocus.getState()
         except:
             msg = "WEB: Exception getting role and state for %s" % orca_state.locusOfFocus
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         try:
             role = event.source.getRole()
         except:
             msg = "WEB: Exception getting role for %s" % event.source
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if role in [pyatspi.ROLE_MENU, pyatspi.ROLE_MENU_ITEM] \
@@ -2436,11 +2436,11 @@ class Utilities(script_utilities.Utilities):
             start, end = hyperlink.startIndex, hyperlink.endIndex
         except NotImplementedError:
             msg = "WEB: %s does not implement the hyperlink interface" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1
         except:
             msg = "WEB: Exception getting hyperlink indices for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return -1, -1
 
         return start, end
@@ -2466,11 +2466,11 @@ class Utilities(script_utilities.Utilities):
             hypertext = obj.queryHypertext()
         except NotImplementedError:
             msg = "WEB: %s does not implement the hypertext interface" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return -1
         except:
             msg = "WEB: Exception querying hypertext interface for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return -1
 
         return hypertext.getLinkIndex(offset)
@@ -2506,7 +2506,7 @@ class Utilities(script_utilities.Utilities):
             childCount = obj.childCount
         except:
             msg = "WEB: Exception getting childCount for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
         if not childCount or self.isParentOfNullChild(obj):
             return True
@@ -2604,7 +2604,7 @@ class Utilities(script_utilities.Utilities):
             role = obj.getRole()
         except:
             msg = "WEB: Exception getting first caret context for %s %i" % (obj, offset)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return None, -1
 
         lookInChild = [pyatspi.ROLE_LIST,
@@ -2613,7 +2613,7 @@ class Utilities(script_utilities.Utilities):
                        pyatspi.ROLE_TABLE_ROW]
         if role in lookInChild and obj.childCount and not self.treatAsDiv(obj):
             msg = "WEB: First caret context for %s, %i will look in child %s" % (obj, offset, obj[0])
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return self.findFirstCaretContext(obj[0], 0)
 
         text = self.queryNonEmptyText(obj)
@@ -2622,29 +2622,29 @@ class Utilities(script_utilities.Utilities):
                 nextObj, nextOffset = self.nextContext(obj, offset)
                 if nextObj:
                     msg = "WEB: First caret context for %s, %i is %s, %i" % (obj, offset, nextObj, nextOffset)
-                    debug.println(debug.LEVEL_INFO, msg)
+                    debug.println(debug.LEVEL_INFO, msg, True)
                     return nextObj, nextOffset
 
             msg = "WEB: First caret context for %s, %i is %s, %i" % (obj, offset, obj, 0)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return obj, 0
 
         if offset >= text.characterCount:
             msg = "WEB: First caret context for %s, %i is %s, %i" % (obj, offset, obj, text.characterCount)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return obj, text.characterCount
 
         allText = text.getText(0, -1)
         offset = max (0, offset)
         if allText[offset] != self.EMBEDDED_OBJECT_CHARACTER:
             msg = "WEB: First caret context for %s, %i is %s, %i" % (obj, offset, obj, offset)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return obj, offset
 
         child = self.getChildAtOffset(obj, offset)
         if not child:
             msg = "WEB: First caret context for %s, %i is %s, %i" % (obj, offset, None, -1)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return None, -1
 
         return self.findFirstCaretContext(child, 0)
@@ -2703,7 +2703,7 @@ class Utilities(script_utilities.Utilities):
                 parentChildCount = parent.childCount
             except:
                 msg = "WEB: Exception getting childCount for %s" % parent
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 if 0 < index < parentChildCount:
                     return self.findNextCaretInOrder(parent[index], -1)
@@ -2767,7 +2767,7 @@ class Utilities(script_utilities.Utilities):
                 parentChildCount = parent.childCount
             except:
                 msg = "WEB: Exception getting childCount for %s" % parent
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 if 0 <= index < parentChildCount:
                     return self.findPreviousCaretInOrder(parent[index], -1)

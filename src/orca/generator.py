@@ -123,16 +123,9 @@ class Generator:
                             arg = arg.replace("' is not defined", "")
                             if arg not in self._methodsDict:
                                 debug.printException(debug.LEVEL_SEVERE)
-                                debug.println(
-                                    debug.LEVEL_SEVERE,
-                                    "Unable to find function for '%s'\n" % arg)
                             globalsDict[arg] = []
                         except:
                             debug.printException(debug.LEVEL_SEVERE)
-                            debug.println(
-                                debug.LEVEL_SEVERE,
-                                "While processing '%s' '%s' '%s' '%s'" \
-                                % (roleKey, key, evalString, globalsDict))
                             break
 
     def _overrideRole(self, newRole, args):
@@ -188,8 +181,8 @@ class Generator:
         try:
             globalsDict['role'] = args.get('role', obj.getRole())
         except:
-            msg = 'Cannot generate presentation for: %s. Aborting' % obj
-            debug.println(debug.LEVEL_FINEST, msg)
+            msg = 'ERROR: Cannot generate presentation for: %s. Aborting' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return result
         try:
             # We sometimes want to override the role.  We'll keep the
@@ -226,17 +219,8 @@ class Generator:
             else:
                 firstTimeCalled = False
 
-            details = debug.getAccessibleDetails(debug.LEVEL_ALL, obj)
-            duration = "%.4f" % (time.time() - startTime)
-            debug.println(debug.LEVEL_ALL, "\nPREPARATION TIME: %s" % duration)
-            debug.println(
-                debug.LEVEL_ALL,
-                "generate %s for %s %s\n(args=%s)\nusing '%s'" \
-                % (self._mode,
-                   args['formatType'], 
-                   details,
-                   repr(args),
-                   formatting))
+            msg = '%s GENERATOR: Starting generation for %s' % (self._mode.upper(), obj)
+            debug.println(debug.LEVEL_INFO, msg, True)
 
             assert(formatting)
             while True:
@@ -252,24 +236,22 @@ class Generator:
                     arg = arg.replace("' is not defined", "")
                     if arg not in self._methodsDict:
                         debug.printException(debug.LEVEL_SEVERE)
-                        debug.println(
-                            debug.LEVEL_SEVERE,
-                            "Unable to find function for '%s'\n" % arg)
                         break
                     globalsDict[arg] = self._methodsDict[arg](obj, **args)
                     duration = "%.4f" % (time.time() - currentTime)
                     debug.println(debug.LEVEL_ALL,
-                                  "GENERATION  TIME: %s  ---->  %s=%s" \
+                                  "           GENERATION TIME: %s  ---->  %s=%s" \
                                   % (duration, arg, repr(globalsDict[arg])))
+
         except:
             debug.printException(debug.LEVEL_SEVERE)
             result = []
 
         duration = "%.4f" % (time.time() - startTime)
-        debug.println(debug.LEVEL_ALL, "COMPLETION  TIME: %s" % duration)
-        debug.println(debug.LEVEL_ALL, "generate %s results:" % self._mode)
+        debug.println(debug.LEVEL_ALL, "           COMPLETION TIME: %s" % duration)
+        debug.println(debug.LEVEL_ALL, "%s GENERATOR: Results:" % self._mode.upper(), True)
         for element in result:
-            debug.println(debug.LEVEL_ALL, "  %s" % element)
+            debug.println(debug.LEVEL_ALL, "           %s" % element)
 
         return result
 

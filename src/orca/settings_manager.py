@@ -72,7 +72,7 @@ class SettingsManager(object):
         backend='json'
         """
 
-        debug.println(debug.LEVEL_FINEST, 'INFO: Initializing settings manager')
+        debug.println(debug.LEVEL_INFO, 'SETTINGS MANAGER: Initializing', True)
 
         self.backendModule = None
         self._backend = None
@@ -115,10 +115,10 @@ class SettingsManager(object):
         # For handling the currently-"classic" application settings
         self.settingsPackages = ["app-settings"]
 
-        debug.println(debug.LEVEL_FINEST, 'INFO: Settings manager initialized')
+        debug.println(debug.LEVEL_INFO, 'SETTINGS MANAGER: Initialized', True)
 
     def activate(self, prefsDir=None, customSettings={}):
-        debug.println(debug.LEVEL_FINEST, 'INFO: Activating settings manager')
+        debug.println(debug.LEVEL_INFO, 'SETTINGS MANAGER: Activating', True)
 
         self.customizedSettings.update(customSettings)
         self._prefsDir = prefsDir \
@@ -141,7 +141,7 @@ class SettingsManager(object):
         #
         self._createDefaults()
 
-        debug.println(debug.LEVEL_FINEST, 'INFO: Settings manager activated')
+        debug.println(debug.LEVEL_INFO, 'SETTINGS MANAGER: Activated', True)
 
         # Set the active profile and load its stored settings
         if self.profile is None:
@@ -242,7 +242,7 @@ class SettingsManager(object):
         success = False
         pathList = [self._prefsDir]
         try:
-            msg = "Attempt to load orca-customizations "
+            msg = "SETTINGS MANAGER: Attempt to load orca-customizations "
             (fileHnd, moduleName, desc) = \
                 imp.find_module("orca-customizations", pathList)
             msg += "from %s " % moduleName
@@ -256,7 +256,7 @@ class SettingsManager(object):
             msg += "succeeded."
             fileHnd.close()
             success = True
-        debug.println(debug.LEVEL_ALL, msg)
+        debug.println(debug.LEVEL_ALL, msg, True)
         return success
 
     def getPrefsDir(self):

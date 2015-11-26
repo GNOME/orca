@@ -500,7 +500,7 @@ class Script(default.Script):
 
         if not self.utilities.inDocumentContent():
             msg = "WEB: textLines called for non-document content %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             super().textLines(obj, offset)
             return
 
@@ -552,7 +552,7 @@ class Script(default.Script):
         self._sayAllContexts = []
 
         msg = "WEB: textLines complete. Verifying SayAll status"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         self.inSayAll()
 
     def presentFindResults(self, obj, offset):
@@ -592,12 +592,12 @@ class Script(default.Script):
 
         if not self.utilities.inDocumentContent():
             msg = "WEB: SayAll called for non-document content %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return super().sayAll(inputEvent, obj, offset)
 
         obj = obj or orca_state.locusOfFocus
         msg = "WEB: SayAll called for document content %s" % obj
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         speech.sayAll(self.textLines(obj, offset), self.__sayAllProgressCallback)
         return True
 
@@ -752,7 +752,7 @@ class Script(default.Script):
 
         if not _settingsManager.getSetting('enableBraille') \
            and not _settingsManager.getSetting('enableBrailleMonitor'):
-            debug.println(debug.LEVEL_INFO, "BRAILLE: disabled")
+            debug.println(debug.LEVEL_INFO, "BRAILLE: disabled", True)
             return
 
         if not (self._lastCommandWasCaretNav or self._lastCommandWasStructNav) \
@@ -769,7 +769,7 @@ class Script(default.Script):
 
         if not _settingsManager.getSetting('enableBraille') \
            and not _settingsManager.getSetting('enableBrailleMonitor'):
-            debug.println(debug.LEVEL_INFO, "BRAILLE: disabled")
+            debug.println(debug.LEVEL_INFO, "BRAILLE: disabled", True)
             return
 
         line = self.getNewBrailleLine(clearBraille=True, addLine=True)
@@ -965,19 +965,19 @@ class Script(default.Script):
 
         if newFocus and self.utilities.isZombie(newFocus):
             msg = "WEB: New focus is Zombie: %s" % newFocus
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.inDocumentContent(newFocus):
             msg = "WEB: Locus of focus changed to non-document obj"
             self._madeFindAnnouncement = False
             self._inFocusMode = False
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if oldFocus and self.utilities.isZombie(oldFocus):
             msg = "WEB: Old focus is Zombie: %s. Clearing oldFocus." % oldFocus
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             oldFocus = None
 
         caretOffset = 0
@@ -986,7 +986,7 @@ class Script(default.Script):
 
         if newFocus.getRole() == pyatspi.ROLE_UNKNOWN:
             msg = "WEB: Event source has bogus role. Likely browser bug."
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             newFocus, offset = self.utilities.findFirstCaretContext(newFocus, 0)
 
         text = self.utilities.queryNonEmptyText(newFocus)
@@ -997,12 +997,18 @@ class Script(default.Script):
         self.updateBraille(newFocus)
 
         if self.utilities.isAnchor(newFocus):
+            msg = "WEB: New focus %s is anchor. Generating line contents." % newFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
             utterances = self.speechGenerator.generateContents(contents)
         elif newFocus.getRole() == pyatspi.ROLE_HEADING:
+            msg = "WEB: New focus %s is heading. Generating object contents." % newFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getObjectContentsAtOffset(newFocus, 0)
             utterances = self.speechGenerator.generateContents(contents)
         else:
+            msg = "WEB: New focus %s is not a special case. Generating speech." % newFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
             utterances = self.speechGenerator.generateSpeech(newFocus, priorObj=oldFocus)
 
         speech.speak(utterances)
@@ -1024,18 +1030,18 @@ class Script(default.Script):
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if not event.detail1:
             msg = "WEB: Ignoring because event source is now inactive"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         role = event.source.getRole()
         if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]:
             msg = "WEB: Event handled: Setting locusOfFocus to event source"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, event.source)
             return True
 
@@ -1046,17 +1052,17 @@ class Script(default.Script):
 
         if event.detail1 and self._loadingDocumentContent:
             msg = "WEB: Ignoring: Already loading document content"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if self.utilities.getDocumentForObject(event.source.parent):
             msg = "WEB: Ignoring: Event source is nested document"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         self._loadingDocumentContent = event.detail1
@@ -1088,7 +1094,7 @@ class Script(default.Script):
 
         if not sourceIsBusy and self.utilities.isTopLevelWebApp(event.source):
             msg = "WEB: Setting locusOfFocus to %s with sticky focus mode" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, obj)
             self.enableStickyFocusMode(None, True)
             return True
@@ -1098,44 +1104,44 @@ class Script(default.Script):
 
         if not obj:
             msg = "WEB: Could not get caret context"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.isFocusModeWidget(obj):
             msg = "WEB: Setting locus of focus to focusModeWidget %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, obj)
             return True
 
         state = obj.getState()
         if self.utilities.isLink(obj) and state.contains(pyatspi.STATE_FOCUSED):
             msg = "WEB: Setting locus of focus to focused link %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, obj)
             return True
 
         if offset > 0:
             msg = "WEB: Setting locus of focus to context obj %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, obj)
             return True
 
         self.updateBraille(obj)
         if state.contains(pyatspi.STATE_FOCUSABLE) and not self.utilities.isDocument(obj):
             msg = "WEB: Not doing SayAll due to focusable context obj %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             speech.speak(self.speechGenerator.generateSpeech(obj))
         elif not _settingsManager.getSetting('sayAllOnLoad'):
             msg = "WEB: Not doing SayAll due to sayAllOnLoad being False"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.speakContents(self.utilities.getLineContentsAtOffset(obj, offset))
         elif _settingsManager.getSetting('enableSpeech'):
             msg = "WEB: Doing SayAll"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.sayAll(None)
         else:
             msg = "WEB: Not doing SayAll due to enableSpeech being False"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         return True
 
@@ -1144,50 +1150,50 @@ class Script(default.Script):
 
         if self.utilities.isZombie(event.source):
             msg = "WEB: Event source is Zombie"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if self._lastCommandWasCaretNav:
             msg = "WEB: Event ignored: Last command was caret nav"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self._lastCommandWasStructNav:
             msg = "WEB: Event ignored: Last command was struct nav"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self._lastCommandWasMouseButton:
             msg = "WEB: Event handled: Last command was mouse button"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, event.source)
             self.utilities.setCaretContext(event.source, event.detail1)
             return True
 
         if self.utilities.inFindToolbar() and not self._madeFindAnnouncement:
             msg = "WEB: Event handled: Presenting find results"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.presentFindResults(event.source, event.detail1)
             return True
 
         if self.utilities.eventIsAutocompleteNoise(event):
             msg = "WEB: Event ignored: Autocomplete noise"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.textEventIsForNonNavigableTextObject(event):
             msg = "WEB: Event ignored: Event source is non-navigable text object"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.textEventIsDueToInsertion(event):
             msg = "WEB: Event handled: Updating position due to insertion"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self._saveLastCursorPosition(event.source, event.detail1)
             return True
 
@@ -1195,7 +1201,7 @@ class Script(default.Script):
 
         if self.utilities.caretMovedToSamePageFragment(event):
             msg = "WEB: Event handled: Caret moved to fragment"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, obj)
             self.utilities.setCaretContext(obj, offset)
             return True
@@ -1204,36 +1210,36 @@ class Script(default.Script):
         if not text:
             if event.source.getRole() == pyatspi.ROLE_LINK:
                 msg = "WEB: Event handled: Was for non-text link"
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, event.source)
                 self.utilities.setCaretContext(event.source, event.detail1)
             else:
                 msg = "WEB: Event ignored: Was for non-text non-link"
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         char = text.getText(event.detail1, event.detail1+1)
         isEditable = obj.getState().contains(pyatspi.STATE_EDITABLE)
         if not char and not isEditable:
             msg = "WEB: Event ignored: Was for empty char in non-editable text"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if char == self.EMBEDDED_OBJECT_CHARACTER:
             if not self.utilities.isTextBlockElement(obj):
                 msg = "WEB: Event ignored: Was for embedded non-textblock"
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
             msg = "WEB: Setting locusOfFocus, context to: %s, %i" % (obj, offset)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, obj)
             self.utilities.setCaretContext(obj, offset)
             return True
 
         if self.utilities.treatEventAsSpinnerValueChange(event):
             msg = "WEB: Event handled as the value-change event we wish we'd get"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.updateBraille(event.source)
             self._presentTextAtNewCaretPosition(event)
             return True
@@ -1244,12 +1250,12 @@ class Script(default.Script):
             self.utilities.setCaretContext(event.source, event.detail1)
             msg = "WEB: Setting locusOfFocus, context to: %s, %i" % \
                   (event.source, event.detail1)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         self.utilities.setCaretContext(obj, offset)
         msg = "WEB: Setting context to: %s, %i" % (obj, offset)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return False
 
     def onCheckedChanged(self, event):
@@ -1257,25 +1263,25 @@ class Script(default.Script):
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         obj, offset = self.utilities.getCaretContext()
         if obj != event.source:
             msg = "WEB: Event source is not context object"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         oldObj, oldState = self.pointOfReference.get('checkedChange', (None, 0))
         if hash(oldObj) == hash(obj) and oldState == event.detail1:
             msg = "WEB: Ignoring event, state hasn't changed"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         role = obj.getRole()
         if not (self._lastCommandWasCaretNav and role == pyatspi.ROLE_RADIO_BUTTON):
             msg = "WEB: Event is something default can handle"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         self.updateBraille(obj)
@@ -1288,33 +1294,33 @@ class Script(default.Script):
 
         if self.utilities.eventIsChromeNoise(event):
             msg = "WEB: Ignoring event believed to be chrome noise"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         document = self.utilities.getDocumentForObject(event.source)
         if document:
             msg = "WEB: Clearing structural navigation cache for %s" % document
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.structuralNavigation.clearCache(document)
         else:
             msg = "WEB: Could not get document for event source"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if self.utilities.handleAsLiveRegion(event):
             msg = "WEB: Event to be handled as live region"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.liveRegionManager.handleEvent(event)
             return True
 
         if self._loadingDocumentContent:
             msg = "WEB: Ignoring because document content is being loaded."
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.isZombie(document):
             msg = "WEB: Ignoring because %s is zombified." % document
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         try:
@@ -1322,25 +1328,25 @@ class Script(default.Script):
         except:
             docIsBusy = False
             msg = "WEB: Exception getting state of %s" % document
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
         if docIsBusy:
             msg = "WEB: Ignoring because %s is busy." % document
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if not event.any_data or self.utilities.isZombie(event.any_data):
             msg = "WEB: Ignoring because any data is null or zombified."
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         obj, offset = self.utilities.getCaretContext()
         contextDocument = self.utilities.getDocumentForObject(obj)
         if obj and document == contextDocument and self.utilities.isZombie(obj):
             msg = "WEB: Context obj %s is Zombie." % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             if self._inFocusMode:
                 msg = "WEB: Not looking for replicant due to focus mode."
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return False
 
             replicant = self.utilities.findReplicant(event.source, obj)
@@ -1349,7 +1355,7 @@ class Script(default.Script):
                 # focus or setting the caret in it. Doing so will only serve
                 # to anger it.
                 msg = "WEB: Event handled by updating locusOfFocus and context"
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, replicant, False)
                 self.utilities.setCaretContext(replicant, offset)
                 return True
@@ -1357,7 +1363,7 @@ class Script(default.Script):
         child = event.any_data
         if child.getRole() in [pyatspi.ROLE_ALERT, pyatspi.ROLE_DIALOG]:
             msg = "WEB: Setting locusOfFocus to event.any_data"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, child)
             return True
 
@@ -1376,7 +1382,7 @@ class Script(default.Script):
         """Callback for document:load-complete accessibility events."""
 
         msg = "WEB: Updating loading state and resetting live regions"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         self._loadingDocumentContent = False
         self.liveRegionManager.reset()
         return True
@@ -1385,7 +1391,7 @@ class Script(default.Script):
         """Callback for document:load-stopped accessibility events."""
 
         msg = "WEB: Updating loading state"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         self._loadingDocumentContent = False
         return True
 
@@ -1393,7 +1399,7 @@ class Script(default.Script):
         """Callback for document:reload accessibility events."""
 
         msg = "WEB: Updating loading state"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         self._loadingDocumentContent = True
         return True
 
@@ -1402,70 +1408,70 @@ class Script(default.Script):
 
         if not event.detail1:
             msg = "WEB: Ignoring because event source lost focus"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.isZombie(event.source):
             msg = "WEB: Event source is Zombie"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         document = self.utilities.getDocumentForObject(event.source)
         if not document:
             msg = "WEB: Could not get document for event source"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if self.utilities.isTopLevelWebApp(document):
             msg = "WEB: Event handled: Setting locusOfFocus to event source"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, event.source)
             return True
 
         state = event.source.getState()
         if state.contains(pyatspi.STATE_EDITABLE):
             msg = "WEB: Event source is editable"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         role = event.source.getRole()
         if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]:
             msg = "WEB: Event handled: Setting locusOfFocus to event source"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, event.source)
             return True
 
         if self._lastCommandWasCaretNav:
             msg = "WEB: Event ignored: Last command was caret nav"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self._lastCommandWasStructNav:
             msg = "WEB: Event ignored: Last command was struct nav"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if not state.contains(pyatspi.STATE_FOCUSABLE) \
            and not state.contains(pyatspi.STATE_FOCUSED):
             msg = "WEB: Event ignored: Source is not focusable or focused"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if not role in [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]:
             msg = "WEB: Deferring to other scripts for handling non-document source"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         obj, offset = self.utilities.getCaretContext(event.source)
         if obj and self.utilities.isZombie(obj):
             msg = "WEB: Clearing context - obj is zombie"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.utilities.clearCaretContext()
             obj, offset = self.utilities.getCaretContext(event.source)
 
         if not obj:
             msg = "WEB: Unable to get non-null, non-zombie context object"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         wasFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
@@ -1473,7 +1479,7 @@ class Script(default.Script):
         isFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
         if wasFocused != isFocused:
             msg = "WEB: Focused state of %s changed to %s" % (obj, isFocused)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if self.utilities.isAnchor(obj):
@@ -1486,7 +1492,7 @@ class Script(default.Script):
             return False
 
         msg = "WEB: Event handled: Setting locusOfFocus to %s (%s)" % (obj, cause)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         orca.setLocusOfFocus(event, obj)
         return True
 
@@ -1503,12 +1509,12 @@ class Script(default.Script):
 
         if self.utilities.eventIsChromeNoise(event):
             msg = "WEB: Ignoring event believed to be chrome noise"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if event.source.getRole() == pyatspi.ROLE_FRAME:
             msg = "WEB: Flusing messages from live region manager"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.liveRegionManager.flushMessages()
 
         return True
@@ -1518,17 +1524,17 @@ class Script(default.Script):
 
         if self.utilities.eventIsChromeAutocompleteNoise(event):
             msg = "WEB: Ignoring event believed to be chrome autocomplete noise"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if orca_state.locusOfFocus != event.source:
             msg = "WEB: Ignoring because event source is not locusOfFocus"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -1538,25 +1544,25 @@ class Script(default.Script):
 
         if self.utilities.eventIsChromeAutocompleteNoise(event):
             msg = "WEB: Ignoring event believed to be chrome autocomplete noise"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
             msg = "WEB: Event ignored: locusOfFocus (%s) is not in document content" \
                   % orca_state.locusOfFocus
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         obj, offset = self.utilities.getCaretContext()
         ancestor = self.utilities.commonAncestor(obj, event.source)
         if ancestor and self.utilities.isTextBlockElement(ancestor):
             msg = "WEB: Ignoring: Common ancestor of context and event source is text block"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -1566,7 +1572,7 @@ class Script(default.Script):
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         return True
@@ -1576,36 +1582,36 @@ class Script(default.Script):
 
         if self.utilities.isZombie(event.source):
             msg = "WEB: Event source is Zombie"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsChromeNoise(event):
             msg = "WEB: Ignoring event believed to be chrome noise"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if self.utilities.eventIsAutocompleteNoise(event):
             msg = "WEB: Ignoring event believed to be autocomplete noise"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsSpinnerNoise(event):
             msg = "WEB: Ignoring: Event believed to be spinner noise"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.textEventIsDueToInsertion(event):
             msg = "WEB: Ignoring event believed to be due to text insertion"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         msg = "WEB: Clearing content cache due to text deletion"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         self.utilities.clearContentCache()
 
         state = event.source.getState()
@@ -1613,11 +1619,11 @@ class Script(default.Script):
             if self._inMouseOverObject \
                and self.utilities.isZombie(self._lastMouseOverObject):
                 msg = "WEB: Restoring pre-mouseover context"
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 self.restorePreMouseOverContext()
 
             msg = "WEB: Done processing non-editable source"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -1627,62 +1633,62 @@ class Script(default.Script):
 
         if self.utilities.isZombie(event.source):
             msg = "WEB: Event source is Zombie"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsChromeNoise(event):
             msg = "WEB: Ignoring event believed to be chrome noise"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if self.utilities.eventIsAutocompleteNoise(event):
             msg = "WEB: Ignoring: Event believed to be autocomplete noise"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsSpinnerNoise(event):
             msg = "WEB: Ignoring: Event believed to be spinner noise"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         # TODO - JD: As an experiment, we're stopping these at the event manager.
         # If that works, this can be removed.
         if self.utilities.eventIsEOCAdded(event):
             msg = "WEB: Ignoring: Event was for embedded object char"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         msg = "WEB: Clearing content cache due to text insertion"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         self.utilities.clearContentCache()
 
         if self.utilities.handleAsLiveRegion(event):
             msg = "WEB: Event to be handled as live region"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.liveRegionManager.handleEvent(event)
             return True
 
         text = self.utilities.queryNonEmptyText(event.source)
         if not text:
             msg = "WEB: Ignoring: Event source is not a text object"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         state = event.source.getState()
         if not state.contains(pyatspi.STATE_EDITABLE):
             if event.source != orca_state.locusOfFocus:
                 msg = "WEB: Done processing non-editable, non-locusOfFocus source"
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
             if self.utilities.isClickableElement(event.source):
                 msg = "WEB: Event handled: Re-setting locusOfFocus to changed clickable"
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(None, event.source, force=True)
                 return True
 
@@ -1693,17 +1699,17 @@ class Script(default.Script):
 
         if self.utilities.isZombie(event.source):
             msg = "WEB: Event source is Zombie"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if self.utilities.inFindToolbar():
             msg = "WEB: Event handled: Presenting find results"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.presentFindResults(event.source, -1)
             self._saveFocusedObjectInfo(orca_state.locusOfFocus)
             return True
@@ -1711,35 +1717,35 @@ class Script(default.Script):
         if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
             msg = "WEB: Event ignored: locusOfFocus (%s) is not in document content" \
                   % orca_state.locusOfFocus
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsAutocompleteNoise(event):
             msg = "WEB: Ignoring: Event believed to be autocomplete noise"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.textEventIsForNonNavigableTextObject(event):
             msg = "WEB: Ignoring event for non-navigable text object"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         text = self.utilities.queryNonEmptyText(event.source)
         if not text:
             msg = "WEB: Ignoring: Event source is not a text object"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         char = text.getText(event.detail1, event.detail1+1)
         if char == self.EMBEDDED_OBJECT_CHARACTER:
             msg = "WEB: Ignoring: Event offset is at embedded object"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         obj, offset = self.utilities.getCaretContext()
         if obj and obj.parent and event.source in [obj.parent, obj.parent.parent]:
             msg = "WEB: Ignoring: Source is context ancestor"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -1748,7 +1754,7 @@ class Script(default.Script):
         """Callback for window:activate accessibility events."""
 
         msg = "WEB: Calling default onWindowActivated"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         super().onWindowActivated(event)
         return True
 
@@ -1756,7 +1762,7 @@ class Script(default.Script):
         """Callback for window:deactivate accessibility events."""
 
         msg = "WEB: Clearing command state"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         self._lastCommandWasCaretNav = False
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = False

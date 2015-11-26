@@ -806,11 +806,11 @@ class Script(default.Script):
 
         if self.utilities.isSpreadSheetCell(orca_state.locusOfFocus):
             msg = "SOFFICE: locusOfFocus %s is spreadsheet cell" % orca_state.locusOfFocus
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
 
             if not self.utilities.isCellBeingEdited(event.source):
                 msg = "SOFFICE: Event ignored: Source is not cell being edited."
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
         super().onCaretMoved(event)

@@ -29,6 +29,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import inspect
+import time
 import traceback
 import os
 import pyatspi
@@ -193,7 +194,7 @@ def printStack(level):
         traceback.print_stack(None, 100, debugFile)
         println(level)
 
-def println(level, text = ""):
+def println(level, text="", timestamp=False):
     """Prints the text to stderr unless debug is enabled.
 
     If debug is enabled the text will be redirected to the
@@ -206,6 +207,8 @@ def println(level, text = ""):
 
     if level >= debugLevel:
         text = text.replace("\ufffc", "[OBJ]")
+        if timestamp:
+            text = "%s - %s" % (time.strftime("%H:%M:%S"), text)
         if debugFile:
             try:
                 debugFile.writelines([text, "\n"])
@@ -248,7 +251,7 @@ def printResult(level, result=None):
     string = '%s\n%s %s' % (callString, 'RESULT:', result)
     println(level, '%s' % string)
 
-def printObjectEvent(level, event, sourceInfo=None):
+def printObjectEvent(level, event, sourceInfo=None, timestamp=False):
     """Prints out an Python Event object.  The given level may be
     overridden if the eventDebugLevel is greater.  Furthermore, only
     events with event types matching the eventDebugFilter regular
@@ -265,14 +268,14 @@ def printObjectEvent(level, event, sourceInfo=None):
 
     level = max(level, eventDebugLevel)
 
-    text = "OBJECT EVENT: %-40s detail=(%d,%d,%s)" \
+    text = "OBJECT EVENT: %s (%d, %d, %s)" \
            % (event.type, event.detail1, event.detail2, event.any_data)
-    println(level, text)
+    println(level, text, timestamp)
 
     if sourceInfo:
-        println(level, "             %s" % sourceInfo)
+        println(level, "             %s" % sourceInfo, timestamp)
 
-def printInputEvent(level, string):
+def printInputEvent(level, string, timestamp=False):
     """Prints out an input event.  The given level may be overridden
     if the eventDebugLevel (see setEventDebugLevel) is greater.
 
@@ -281,9 +284,9 @@ def printInputEvent(level, string):
     - string: the string representing the input event
     """
 
-    println(max(level, eventDebugLevel), string)
+    println(max(level, eventDebugLevel), string, timestamp)
 
-def printDetails(level, indent, accessible, includeApp=True):
+def printDetails(level, indent, accessible, includeApp=True, timestamp=False):
     """Lists the details of the given accessible with the given
     indentation.
 
@@ -296,7 +299,8 @@ def printDetails(level, indent, accessible, includeApp=True):
 
     if level >= debugLevel and accessible:
         println(level,
-                getAccessibleDetails(level, accessible, indent, includeApp))
+                getAccessibleDetails(level, accessible, indent, includeApp),
+                timestamp)
 
 def getAccessibleDetails(level, acc, indent="", includeApp=True):
     """Returns a string, suitable for printing, that describes the
@@ -364,9 +368,9 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
         iface_string = "(exception calling listInterfaces)"
 
     try:
-        string += "name='%s' role='%s' state='%s' relations='%s' interfaces='%s'" \
+        string += "name='%s' role='%s' state='%s' \n%srelations='%s' interfaces='%s'" \
                   % (acc.name or 'None', acc.getRoleName(),
-                     state_string, rel_string, iface_string)
+                     state_string, indent, rel_string, iface_string)
     except:
         string += "(exception fetching data)"
 

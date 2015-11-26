@@ -77,8 +77,8 @@ class SpellCheck(spellcheck.SpellCheck):
                 string = text.getText(start, end)
                 break
         else:
-            msg = "INFO: No text attributes for word in %s." % self._errorWidget
-            debug.println(debug.LEVEL_INFO, msg)
+            msg = "SOFFICE: No text attributes for word in %s." % self._errorWidget
+            debug.println(debug.LEVEL_INFO, msg, True)
             string = text.getText(0, -1)
 
         return string

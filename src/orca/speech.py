@@ -69,9 +69,6 @@ def _initSpeechServer(moduleName, speechServerInfo):
     if not moduleName:
         return
 
-    debug.println(debug.LEVEL_CONFIGURATION,
-                  "Trying to use speech server factory: %s" % moduleName)
-
     factory = None
     try:
         factory = importlib.import_module('orca.%s' % moduleName)
@@ -90,15 +87,16 @@ def _initSpeechServer(moduleName, speechServerInfo):
     if not _speechserver:
         _speechserver = factory.SpeechServer.getSpeechServer()
         if speechServerInfo:
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "Invalid speechServerInfo: %s" % speechServerInfo)
+            msg = 'SPEECH: Invalid speechServerInfo: %s' % speechServerInfo
+            debug.println(debug.LEVEL_INFO, msg, True)
 
     if not _speechserver:
-        raise Exception("No speech server for factory: %s" % moduleName)
+        raise Exception("ERROR: No speech server for factory: %s" % moduleName)
 
 def init():
-
+    debug.println(debug.LEVEL_INFO, 'SPEECH: Initializing', True)
     if _speechserver:
+        debug.println(debug.LEVEL_INFO, 'SPEECH: Already initialized', True)
         return
 
     try:
@@ -117,10 +115,13 @@ def init():
                     debug.printException(debug.LEVEL_SEVERE)
 
     if _speechserver:
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "Using speech server factory: %s" % moduleName)
+        msg = 'SPEECH: Using speech server factory: %s' % moduleName
+        debug.println(debug.LEVEL_INFO, msg, True)
     else:
-        debug.println(debug.LEVEL_CONFIGURATION, "Speech not available.")
+        msg = 'SPEECH: Not available'
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+    debug.println(debug.LEVEL_INFO, 'SPEECH: Initialized', True)
 
 def __resolveACSS(acss=None):
     if acss:
@@ -137,7 +138,7 @@ def sayAll(utteranceIterator, progressCallback):
     else:
         for [context, acss] in utteranceIterator:
             logLine = "SPEECH OUTPUT: '" + context.utterance + "'"
-            debug.println(debug.LEVEL_INFO, logLine)
+            debug.println(debug.LEVEL_INFO, logLine, True)
             log.info(logLine)
 
 def _speak(text, acss, interrupt):
@@ -152,7 +153,7 @@ def _speak(text, acss, interrupt):
                     extraDebug = " voice=%s" % key
                 break
 
-    debug.println(debug.LEVEL_INFO, logLine + extraDebug + str(acss))
+    debug.println(debug.LEVEL_INFO, logLine + extraDebug + str(acss), True)
     log.info(logLine + extraDebug)
 
     if _speechserver:
@@ -173,10 +174,10 @@ def speak(content, acss=None, interrupt=True):
 
     validTypes = (str, list, speech_generator.Pause,
                   speech_generator.LineBreak, ACSS)
-    error = "bad content sent to speech.speak: '%s'"
+    error = "SPEECH: bad content sent to speak(): '%s'"
     if not isinstance(content, validTypes):
         debug.printStack(debug.LEVEL_WARNING)
-        debug.println(debug.LEVEL_WARNING, error % content)
+        debug.println(debug.LEVEL_WARNING, error % content, True)
         return
 
     if isinstance(content, str):
@@ -188,7 +189,7 @@ def speak(content, acss=None, interrupt=True):
     activeVoice = ACSS(acss)
     for element in content:
         if not isinstance(element, validTypes):
-            debug.println(debug.LEVEL_WARNING, error % element)
+            debug.println(debug.LEVEL_WARNING, error % element, True)
         elif isinstance(element, list):
             speak(element, acss, interrupt)
         elif isinstance(element, str):
@@ -230,7 +231,7 @@ def speakKeyEvent(event):
     lockingStateString = event.getLockingStateString()
     msg = "%s %s" % (keyname, lockingStateString)
     logLine = "SPEECH OUTPUT: '%s'" % msg
-    debug.println(debug.LEVEL_INFO, logLine)
+    debug.println(debug.LEVEL_INFO, logLine, True)
     log.info(logLine)
 
     if _speechserver:
@@ -250,7 +251,8 @@ def speakCharacter(character, acss=None):
     if settings.silenceSpeech:
         return
 
-    debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + character + "' " + str(acss))
+    msg = "SPEECH OUTPUT: '" + character + "' " + str(acss)
+    debug.println(debug.LEVEL_INFO, msg, True)
     log.info("SPEECH OUTPUT: '%s'" % character)
 
     if _speechserver:

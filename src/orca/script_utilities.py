@@ -105,7 +105,7 @@ class Utilities:
             state = obj.getState()
         except:
             msg = "ERROR: Exception getting state of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if not state.contains(pyatspi.STATE_ACTIVE):
@@ -123,11 +123,11 @@ class Utilities:
         window.clearCache()
         if not self._isActiveAndShowingAndNotIconified(window):
             msg = "INFO: %s is not active and showing, or is iconified" % window
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         msg = "INFO: %s can be active window" % window
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return True
 
     def activeWindow(self, *apps):
@@ -140,12 +140,12 @@ class Utilities:
 
         if not candidates:
             msg = "ERROR: Unable to find active window from %s" % list(map(str, apps))
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
         if len(candidates) == 1:
             msg = "INFO: Active window is %s" % candidates[0]
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return candidates[0]
 
         # Sorting by size in a lame attempt to filter out the "desktop" frame of various
@@ -155,10 +155,10 @@ class Utilities:
         # This is why we can't have nice things.
         candidates = sorted(candidates, key=functools.cmp_to_key(self.sizeComparison))
         msg = "WARNING: These windows all claim to be active: %s" % list(map(str, candidates))
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         msg = "INFO: Active window is (hopefully) %s" % candidates[0]
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return candidates[0]
 
     @staticmethod
@@ -297,8 +297,8 @@ class Utilities:
         - b: Accessible
         """
 
-        debug.println(debug.LEVEL_FINEST,
-                      "script_utilities.commonAncestor...")
+        msg = 'INFO: Looking for common ancestor of %s and %s' % (a, b)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         # Don't do any Zombie checks here, as tempting and logical as it
         # may seem as it can lead to chattiness.
@@ -339,9 +339,8 @@ class Utilities:
             else:
                 break
 
-        debug.println(debug.LEVEL_FINEST,
-                      "...script_utilities.commonAncestor")
-
+        msg = 'INFO: Common ancestor of %s and %s is %s' % (a, b, commonAncestor)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return commonAncestor
 
     def componentAtDesktopCoords(self, parent, x, y):
@@ -796,21 +795,21 @@ class Utilities:
             value = obj.queryValue()
         except NotImplementedError:
             msg = "ERROR: %s doesn't implement AtspiValue" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
         except:
             msg = "ERROR: Exception getting value for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
         else:
             try:
                 if value.maximumValue == value.minimumValue:
                     msg = "INFO: %s is busy indicator" % obj
-                    debug.println(debug.LEVEL_INFO, msg)
+                    debug.println(debug.LEVEL_INFO, msg, True)
                     return False
             except:
                 msg = "INFO: %s is either busy indicator or broken" % obj
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return False
 
         return True
@@ -901,11 +900,11 @@ class Utilities:
             minval, val, maxval =  value.minimumValue, value.currentValue, value.maximumValue
         except NotImplementedError:
             msg = "ERROR: %s doesn't implement AtspiValue" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return None
         except:
             msg = "ERROR: Exception getting value for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
         return int((val / (maxval - minval)) * 100)
@@ -983,11 +982,11 @@ class Utilities:
                 table = obj.queryTable()
             except NotImplementedError:
                 msg = 'ERROR: Table %s does not implement table interface' % obj
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 layoutOnly = True
             except:
                 msg = 'ERROR: Exception querying table interface of %s' % obj
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 layoutOnly = True
             else:
                 if not (table.nRows and table.nColumns):
@@ -1033,9 +1032,8 @@ class Utilities:
                 layoutOnly = True
 
         if layoutOnly:
-            debug.println(debug.LEVEL_FINEST,
-                          "Object deemed to be for layout purposes only: %s" \
-                          % obj)
+            msg = 'INFO: %s is deemed to be layout only' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         return layoutOnly
 
@@ -1062,7 +1060,8 @@ class Utilities:
         try:
             role = obj.getRole()
         except (LookupError, RuntimeError):
-            debug.println(debug.LEVEL_FINE, 'Error - isLink getting role')
+            msg = 'ERROR: Exception getting role for %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         return role == pyatspi.ROLE_LINK
@@ -1076,11 +1075,6 @@ class Utilities:
         state = obj.getState()
         readOnly = state.contains(pyatspi.STATE_FOCUSABLE) \
                    and not state.contains(pyatspi.STATE_EDITABLE)
-        details = debug.getAccessibleDetails(debug.LEVEL_ALL, obj)
-        debug.println(debug.LEVEL_ALL,
-                      "isReadOnlyTextArea=%s for %s" \
-                      % (readOnly, details))
-
         return readOnly
 
     def _hasSamePath(self, obj1, obj2):
@@ -1166,15 +1160,7 @@ class Utilities:
         as a list of Accessible objects.
         """
 
-        debug.println(debug.LEVEL_FINEST,
-                      "knownApplications...")
-
-        apps = [x for x in pyatspi.Registry.getDesktop(0) if x is not None]
-
-        debug.println(debug.LEVEL_FINEST,
-                      "...knownApplications")
-
-        return apps
+        return [x for x in pyatspi.Registry.getDesktop(0) if x is not None]
 
     def labelsForObject(self, obj):
         """Return a list of the objects that are labelling this object.
@@ -1192,14 +1178,13 @@ class Utilities:
         try:
             relations = obj.getRelationSet()
         except (LookupError, RuntimeError):
-            debug.println(debug.LEVEL_SEVERE,
-                          "labelsForObject() - Error getting RelationSet")
+            msg = 'ERROR: Exception getting relationset for %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return label
 
         allTargets = []
         for relation in relations:
-            if relation.getRelationType() \
-                   == pyatspi.RELATION_LABELLED_BY:
+            if relation.getRelationType() == pyatspi.RELATION_LABELLED_BY:
 
                 # The object can be labelled by more than one thing, so we just
                 # get all the labels (from unique objects) and append them
@@ -1359,8 +1344,8 @@ class Utilities:
             try:
                 relations = node.getRelationSet()
             except (LookupError, RuntimeError):
-                debug.println(debug.LEVEL_SEVERE,
-                              "nodeLevel() - Error getting RelationSet")
+                msg = 'ERROR: Exception getting relationset for %s' % node
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return -1
             node = None
             for relation in relations:
@@ -1372,15 +1357,16 @@ class Utilities:
             # We want to avoid situations where something gives us an
             # infinite cycle of nodes.  Bon Echo has been seen to do
             # this (see bug 351847).
-            #
-            if (len(nodes) > 100) or nodes.count(node):
-                debug.println(debug.LEVEL_WARNING,
-                              "nodeLevel detected a cycle!!!")
+            if nodes.count(node):
+                msg = 'ERROR: %s is already in the list of nodes for %s' % (node, obj)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                done = True
+            if len(nodes) > 100:
+                msg = 'INFO: More than 100 nodes found for %s' % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
                 done = True
             elif node:
                 nodes.append(node)
-                debug.println(debug.LEVEL_FINEST,
-                              "nodeLevel %d" % len(nodes))
             else:
                 done = True
 
@@ -1429,7 +1415,8 @@ class Utilities:
         try:
             state = obj.getState()
         except:
-            debug.printException(debug.LEVEL_WARNING)
+            msg = "ERROR: Exception getting state of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
         else:
             return state.contains(pyatspi.STATE_SHOWING)
@@ -1442,8 +1429,8 @@ class Utilities:
             if not (obj and obj.parent and obj.childCount):
                 return False
         except:
-            msg = "INFO: Exception getting parent and childCount for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            msg = "ERROR: Exception getting parent and childCount for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         role = obj.getRole()
@@ -1597,9 +1584,6 @@ class Utilities:
                     else:
                         newX = currentX + gridSize
                 else:
-                    debug.println(debug.LEVEL_FINEST,
-                            "script_utilities.showingDescendants failed. " \
-                            "Last valid child at index %d" % index)
                     break
                 if newX <= currentX:
                     currentX += gridSize
@@ -1758,7 +1742,7 @@ class Utilities:
             extents = obj.queryComponent().getExtents(0)
         except:
             msg = "ERROR: Exception getting extents for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         return not (extents.width and extents.height)
@@ -2004,7 +1988,7 @@ class Utilities:
             hyperlink = obj.queryHyperlink()
         except NotImplementedError:
             msg = "INFO: %s does not implement the hyperlink interface" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
         else:
             # We need to make sure that this is an embedded object in
             # some accessible text (as opposed to an imagemap link).
@@ -2014,10 +1998,10 @@ class Utilities:
                 offset = hyperlink.startIndex
             except:
                 msg = "ERROR: Exception getting startIndex for %s in parent %s" % (obj, obj.parent)
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
             else:
                 msg = "INFO: startIndex of %s is %i" % (obj, offset)
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
 
         return offset
 
@@ -2138,15 +2122,7 @@ class Utilities:
         nSelections = textObj.getNSelections()
         for i in range(0, nSelections):
             [startOffset, endOffset] = textObj.getSelection(i)
-
-            debug.println(debug.LEVEL_FINEST,
-                "getSelectedText: selection start=%d, end=%d" % \
-                (startOffset, endOffset))
-
             selectedText = textObj.getText(startOffset, endOffset)
-            debug.println(debug.LEVEL_FINEST,
-                "getSelectedText: selected text=<%s>" % selectedText)
-
             if i > 0:
                 textContents += " "
             textContents += selectedText
@@ -2776,9 +2752,6 @@ class Utilities:
         mnemonic = self.labelFromKeySequence(mnemonic)
         accelerator = self.labelFromKeySequence(accelerator)
 
-        debug.println(debug.LEVEL_FINEST, "script_utilities.getKeyBinding: " \
-                      + repr([mnemonic, fullShortcut, accelerator]))
-
         if self.KEY_BINDING not in self._script.generatorCache:
             self._script.generatorCache[self.KEY_BINDING] = {}
 
@@ -2843,27 +2816,26 @@ class Utilities:
             maxValue = value.maximumValue
         except (LookupError, RuntimeError):
             maxValue = 0.0
-            debug.println(debug.LEVEL_FINEST, "VALUE WARNING: " \
-                          "Error accessing maximumValue for %s" % obj)
+            msg = 'ERROR: Exception getting maximumValue for %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
         try:
             minValue = value.minimumValue
         except (LookupError, RuntimeError):
             minValue = 0.0
-            debug.println(debug.LEVEL_FINEST, "VALUE WARNING: " \
-                          "Error accessing minimumValue for %s" % obj)
+            msg = 'ERROR: Exception getting minimumValue for %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
         try:
             minIncrement = value.minimumIncrement
         except (LookupError, RuntimeError):
             minIncrement = (maxValue - minValue) / 100.0
-            debug.println(debug.LEVEL_FINEST, "VALUE WARNING: " \
-                          "Error accessing minimumIncrement for %s" % obj)
-
+            msg = 'ERROR: Exception getting minimumIncrement for %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
         if minIncrement != 0.0:
             try:
                 decimalPlaces = math.ceil(max(0, -math.log10(minIncrement)))
             except ValueError:
-                debug.println(debug.LEVEL_FINEST, "VALUE WARNING: " \
-                    "Error calculating decimal places for %s" % obj)
+                msg = 'ERROR: Exception calculating decimal places for %s' % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return ""
         elif abs(currentValue) < 1:
             decimalPlaces = 1
@@ -2924,16 +2896,16 @@ class Utilities:
             selection = obj.querySelection()
         except NotImplementedError:
             msg = "INFO: %s does not implement the selection interface" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return []
         except:
             msg = "ERROR: Exception querying selection interface for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
         count = selection.nSelectedChildren
         msg = "INFO: %s reports %i selected children" % (obj, count)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         children = []
         for x in range(count):
@@ -2948,7 +2920,7 @@ class Utilities:
                 children = pyatspi.findAllDescendants(obj, pred)
             except:
                 msg = "ERROR: Exception calling findAllDescendants on %s" % obj
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
 
         if role == pyatspi.ROLE_COMBO_BOX \
            and children and children[0].getRole() == pyatspi.ROLE_MENU:
@@ -2959,7 +2931,7 @@ class Utilities:
                     children = pyatspi.findAllDescendants(obj, pred)
                 except:
                     msg = "ERROR: Exception calling findAllDescendants on %s" % obj
-                    debug.println(debug.LEVEL_INFO, msg)
+                    debug.println(debug.LEVEL_INFO, msg, True)
 
         return children
 
@@ -2968,7 +2940,7 @@ class Utilities:
         child = pyatspi.findDescendant(obj, isFocused)
         if child == obj:
             msg = "ERROR: focused child of %s is %s" % (obj, child)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
         return child
@@ -3145,7 +3117,7 @@ class Utilities:
         try:
             name = obj.name
         except:
-            debug.println(debug.LEVEL_INFO, "DEAD: %s" % obj)
+            debug.println(debug.LEVEL_INFO, "DEAD: %s" % obj, True)
             return True
 
         return False
@@ -3156,7 +3128,7 @@ class Utilities:
             state = obj.getState()
             role = obj.getRole()
         except:
-            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is null or dead" % obj)
+            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is null or dead" % obj, True)
             return True
 
         topLevelRoles = [pyatspi.ROLE_APPLICATION,
@@ -3166,13 +3138,13 @@ class Utilities:
                          pyatspi.ROLE_WINDOW,
                          pyatspi.ROLE_FRAME]
         if index == -1 and role not in topLevelRoles:
-            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s's index is -1" % obj)
+            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s's index is -1" % obj, True)
             return True
         if state.contains(pyatspi.STATE_DEFUNCT):
-            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is defunct" % obj)
+            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is defunct" % obj, True)
             return True
         if state.contains(pyatspi.STATE_INVALID):
-            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is invalid" % obj)
+            debug.println(debug.LEVEL_INFO, "ZOMBIE: %s is invalid" % obj, True)
             return True
 
         return False
@@ -3196,11 +3168,11 @@ class Utilities:
                 replicant = pyatspi.findDescendant(root, isSame)
             except:
                 msg = "INFO: Exception from findDescendant for %s" % root
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 replicant = None
 
         msg = "HACK: Returning %s as replicant for Zombie %s" % (replicant, obj)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return replicant
 
     def getFunctionalChildCount(self, obj):

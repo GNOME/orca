@@ -63,7 +63,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.locusOfFocusChanged(self, event, oldFocus, newFocus)
 
     def onActiveChanged(self, event):
@@ -73,7 +73,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onActiveChanged(self, event)
 
     def onBusyChanged(self, event):
@@ -83,7 +83,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onBusyChanged(self, event)
 
     def onCaretMoved(self, event):
@@ -93,7 +93,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onCaretMoved(self, event)
 
     def onCheckedChanged(self, event):
@@ -103,7 +103,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onCheckedChanged(self, event)
 
     def onChildrenChanged(self, event):
@@ -113,7 +113,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onChildrenChanged(self, event)
 
     def onDocumentLoadComplete(self, event):
@@ -123,7 +123,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onDocumentLoadComplete(self, event)
 
     def onDocumentLoadStopped(self, event):
@@ -133,7 +133,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onDocumentLoadStopped(self, event)
 
     def onDocumentReload(self, event):
@@ -143,7 +143,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onDocumentReload(self, event)
 
     def onFocus(self, event):
@@ -198,11 +198,11 @@ class Script(web.Script):
         if event.source.getRole() == pyatspi.ROLE_PANEL:
             if orca_state.locusOfFocus == orca_state.activeWindow:
                 msg = "GECKO: Ignoring event believed to be noise."
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onFocusedChanged(self, event)
 
     def onMouseButton(self, event):
@@ -212,7 +212,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onMouseButton(self, event)
 
     def onNameChanged(self, event):
@@ -222,7 +222,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onNameChanged(self, event)
 
     def onSelectedChanged(self, event):
@@ -232,7 +232,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onSelectedChanged(self, event)
 
     def onSelectionChanged(self, event):
@@ -242,7 +242,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onSelectionChanged(self, event)
 
     def onShowingChanged(self, event):
@@ -253,12 +253,12 @@ class Script(web.Script):
 
         if event.detail1 and self.utilities.isTopLevelChromeAlert(event.source):
             msg = "GECKO: Event handled: Presenting event source"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.presentObject(event.source)
             return True
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onShowingChanged(self, event)
 
     def onTextDeleted(self, event):
@@ -268,7 +268,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onTextDeleted(self, event)
 
     def onTextInserted(self, event):
@@ -278,7 +278,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onTextInserted(self, event)
 
     def onTextSelectionChanged(self, event):
@@ -288,7 +288,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onTextSelectionChanged(self, event)
 
     def onWindowActivated(self, event):
@@ -298,7 +298,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onWindowActivated(self, event)
 
     def onWindowDeactivated(self, event):
@@ -308,5 +308,5 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onWindowDeactivated(self, event)

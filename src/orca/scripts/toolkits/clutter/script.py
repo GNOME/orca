@@ -126,13 +126,12 @@ class Script(default.Script):
                                                      modifiers,
                                                      group)
         except:
-            debug.println(debug.LEVEL_FINE,
-                          "Could not compute keyval with modifiers")
+            msg = 'ERROR: Exception computing keyval with modifiers'
+            debug.println(debug.LEVEL_INFO, msg, True)
 
-        string = "prev keyval=%d" % keyboardEvent.id
-        string = string + " post keyval=%d" % keyval
-
-        debug.println(debug.LEVEL_FINE, string)
+        msg = 'CLUTTER: Checked keyboard event data: ' \
+              'prev keyval=%d; post keyval=%d' % (keyboardEvent.id, keyval)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         keyboardEvent.id = keyval
 
@@ -142,13 +141,16 @@ class Script(default.Script):
         # guess-code here I will maintain that in this way
         #
         if (keyboardEvent.event_string == ""):
-            debug.println (debug.LEVEL_FINE, "Computing event_string")
+            msg = 'CLUTTER: Keyboard Event event_string is empty. Computing.'
+            debug.println(debug.LEVEL_INFO, msg, True)
             try:
                 keyboardEvent.event_string = Gdk.keyval_name(keyboardEvent.id)
+                msg = 'CLUTTER: New event string: %s' % keyboardEvent.event_string
+                debug.println(debug.LEVEL_INFO, msg, True)
             except:
-                debug.println(debug.LEVEL_FINE,
-                              "Could not obtain keyval_name for id: %d" \
-                                  % keyboardEvent.id)
+                msg = 'ERROR: Exception obtaining keyval_name for id: %d' \
+                      % keyboardEvent.id
+                debug.println(debug.LEVEL_INFO, msg, True)
 
             # at-spi uses event_string to compute is_text, so if it is
             # NULL we should compute again with the proper

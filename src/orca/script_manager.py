@@ -33,7 +33,7 @@ from .scripts import apps, toolkits
 class ScriptManager:
 
     def __init__(self):
-        debug.println(debug.LEVEL_FINEST, 'INFO: Initializing script manager')
+        debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Initializing', True)
         self.appScripts = {}
         self.toolkitScripts = {}
         self._appModules = apps.__all__
@@ -65,28 +65,28 @@ class ScriptManager:
              'gnome-terminal-server': 'gnome-terminal'}
 
         self.setActiveScript(None, "__init__")
-        debug.println(debug.LEVEL_FINEST, 'INFO: Script manager initialized')
+        debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Initialized', True)
 
     def activate(self):
         """Called when this script manager is activated."""
 
-        debug.println(debug.LEVEL_FINEST, 'INFO: Activating script manager')
+        debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Activating', True)
         self._defaultScript = self.getScript(None)
         self._defaultScript.registerEventListeners()
         self.setActiveScript(self._defaultScript, "activate")
-        debug.println(debug.LEVEL_FINEST, 'INFO: Script manager activated')
+        debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Activated', True)
 
     def deactivate(self):
         """Called when this script manager is deactivated."""
 
-        debug.println(debug.LEVEL_FINEST, 'INFO: Dectivating script manager')
+        debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Dectivating', True)
         if self._defaultScript:
             self._defaultScript.deregisterEventListeners()
         self._defaultScript = None
         self.setActiveScript(None, "deactivate")
         self.appScripts = {}
         self.toolkitScripts = {}
-        debug.println(debug.LEVEL_FINEST, 'INFO: Script manager deactivated')
+        debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Deactivated', True)
 
     def getModuleName(self, app):
         """Returns the module name of the script to use for application app."""
@@ -95,8 +95,8 @@ class ScriptManager:
             appAndNameExist = app != None and app.name != ''
         except (LookupError, RuntimeError):
             appAndNameExist = False
-            debug.println(debug.LEVEL_FINEST,
-                          "getModuleName: %s no longer exists" % app)
+            msg = 'ERROR: %s no longer exists' % app
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         if not appAndNameExist:
             return None
@@ -116,8 +116,8 @@ class ScriptManager:
                     name = names[0]
                     break
 
-        debug.println(debug.LEVEL_FINEST, "mapped %s to %s" % (app.name, name))
-
+        msg = 'SCRIPT MANAGER: mapped %s to %s' % (app.name, name)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return name
 
     def _toolkitForObject(self, obj):
@@ -145,28 +145,24 @@ class ScriptManager:
         script = None
         for package in self._scriptPackages:
             moduleName = '.'.join((package, name))
-            debug.println(debug.LEVEL_FINE, "Looking for %s" % moduleName)
             try:
                 module = importlib.import_module(moduleName)
             except ImportError:
-                debug.println(
-                    debug.LEVEL_FINE, "Could not import %s" % moduleName)
                 continue
             except OSError:
                 debug.examineProcesses()
 
-            debug.println(debug.LEVEL_FINE, "Found %s" % moduleName)
+            debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Found %s' % moduleName, True)
             try:
                 if hasattr(module, 'getScript'):
                     script = module.getScript(app)
                 else:
                     script = module.Script(app)
-                debug.println(debug.LEVEL_FINE, "Loaded %s" % moduleName)
                 break
             except:
-                debug.printException(debug.LEVEL_FINEST)
-                debug.println(
-                    debug.LEVEL_FINEST, "Could not load %s" % moduleName)
+                debug.printException(debug.LEVEL_INFO)
+                msg = 'ERROR: Could not load %s' % moduleName
+                debug.println(debug.LEVEL_INFO, msg, True)
 
         return script
 
@@ -186,15 +182,16 @@ class ScriptManager:
         try:
             toolkitName = getattr(app, "toolkitName", None)
         except (LookupError, RuntimeError):
-            msg = "Error getting toolkitName for: %s" % app
-            debug.println(debug.LEVEL_FINE, msg)
+            msg = 'ERROR: Exception getting toolkitName for: %s' % app
+            debug.println(debug.LEVEL_INFO, msg, True)
         else:
             if app and toolkitName:
                 script = self._newNamedScript(app, toolkitName)
 
         if not script:
             script = self.getDefaultScript(app)
-            debug.println(debug.LEVEL_FINE, "Default script created")
+            msg = 'SCRIPT MANAGER: Default script created'
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         return script
 
@@ -241,9 +238,9 @@ class ScriptManager:
                 appScript = self._createScript(app, None)
                 self.appScripts[app] = appScript
         except:
-            msg = "WARNING: Exception getting app script."
+            msg = 'WARNING: Exception getting app script.'
             debug.printException(debug.LEVEL_ALL)
-            debug.println(debug.LEVEL_WARNING, msg)
+            debug.println(debug.LEVEL_WARNING, msg, True)
             appScript = self.getDefaultScript()
 
         # Only defer to the toolkit script for this object if the app script
@@ -272,8 +269,9 @@ class ScriptManager:
             return
 
         newScript.activate()
-        debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: %s (reason=%s)" \
-                          % (newScript.name, reason))
+        msg = 'SCRIPT MANAGER: Setting active script: %s (reason=%s)' % \
+              (newScript.name, reason)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
     def reclaimScripts(self):
         """Compares the list of known scripts to the list of known apps,

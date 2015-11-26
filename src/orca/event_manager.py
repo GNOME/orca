@@ -44,8 +44,8 @@ class EventManager:
     EMBEDDED_OBJECT_CHARACTER = '\ufffc'
 
     def __init__(self, asyncMode=True):
-        debug.println(debug.LEVEL_FINEST, 'INFO: Initializing event manager')
-        debug.println(debug.LEVEL_FINEST, 'INFO: Async Mode is %s' % asyncMode)
+        debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Initializing', True)
+        debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Async Mode is %s' % asyncMode, True)
         self._asyncMode = asyncMode
         self._scriptListenerCounts = {}
         self.registry = pyatspi.Registry
@@ -60,28 +60,28 @@ class EventManager:
         self._ignoredEvents = ['object:bounds-changed',
                                'object:state-changed:defunct',
                                'object:property-change:accessible-parent']
-        debug.println(debug.LEVEL_FINEST, 'INFO: Event manager initialized')
+        debug.println(debug.LEVEL_INFO, 'Event manager initialized', True)
 
     def activate(self):
         """Called when this presentation manager is activated."""
 
-        debug.println(debug.LEVEL_FINEST, 'INFO: Activating event manager')
+        debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Activating', True)
         self._registerListener("window:activate")
         self._registerListener("window:deactivate")
         self._registerListener("object:children-changed")
         self._registerListener("mouse:button")
         self._active = True
-        debug.println(debug.LEVEL_FINEST, 'INFO: Event manager activated')
+        debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Activated', True)
 
     def deactivate(self):
         """Called when this event manager is deactivated."""
 
-        debug.println(debug.LEVEL_FINEST, 'INFO: Dectivating event manager')
+        debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Dectivating', True)
         self._active = False
         for eventType in list(self._scriptListenerCounts.keys()):
             self.registry.deregisterEventListener(self._enqueue, eventType)
         self._scriptListenerCounts = {}
-        debug.println(debug.LEVEL_FINEST, 'INFO: Event manager deactivated')
+        debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
 
     def ignoreEventTypes(self, eventTypeList):
         for eventType in eventTypeList:
@@ -96,38 +96,39 @@ class EventManager:
     def _ignore(self, event):
         """Returns True if this event should be ignored."""
 
-        msg = '\nINFO: %s for %s in %s' % (event.type, event.source, event.host_application)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, '')
+        msg = 'EVENT MANAGER: %s for %s in %s' % (event.type, event.source, event.host_application)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         if not self._active:
-            msg = 'INFO: Ignoring because event manager is not active'
-            debug.println(debug.LEVEL_INFO, msg)
+            msg = 'EVENT MANAGER: Ignoring because event manager is not active'
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if list(filter(event.type.startswith, self._ignoredEvents)):
-            msg = 'INFO: Ignoring because event type is ignored'
-            debug.println(debug.LEVEL_INFO, msg)
+            msg = 'EVENT MANAGER: Ignoring because event type is ignored'
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if event.type.startswith('window'):
-            msg = 'INFO: Not ignoring because event type is never ignored'
-            debug.println(debug.LEVEL_INFO, msg)
+            msg = 'EVENT MANAGER: Not ignoring because event type is never ignored'
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         # This should ultimately be changed as there are valid reasons
         # to handle these events at the application level.
         if event.type.startswith('object:children-changed:remove') \
            and event.source != self.registry.getDesktop(0):
-            msg = 'INFO: Ignoring because event type is ignored'
-            debug.println(debug.LEVEL_INFO, msg)
+            msg = 'EVENT MANAGER: Ignoring because event type is ignored'
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if event.type.startswith('object:text-changed') and event.type.endswith('system'):
             # We should also get children-changed events telling us the same thing.
             # Getting a bunch of both can result in a flood that grinds us to a halt.
             if event.any_data == self.EMBEDDED_OBJECT_CHARACTER:
-                msg = 'INFO: Text changed event for embedded object. Who cares?'
-                debug.println(debug.LEVEL_INFO, msg)
+                msg = 'EVENT MANAGER: Text changed event for embedded object. Who cares?'
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
         try:
@@ -143,18 +144,18 @@ class EventManager:
             msg = 'ERROR: %s from potentially-defunct source %s in app %s (%s, %s, %s)' % \
                   (event.type, event.source, event.host_application, event.detail1,
                    event.detail2, event.any_data)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
         if state.contains(pyatspi.STATE_DEFUNCT):
             msg = 'ERROR: %s from defunct source %s in app %s (%s, %s, %s)' % \
                   (event.type, event.source, event.host_application, event.detail1,
                    event.detail2, event.any_data)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if role in [pyatspi.ROLE_FILLER]:
-            msg = 'INFO: Ignoring because events from this role are ignored'
-            debug.println(debug.LEVEL_INFO, msg)
+            msg = 'EVENT MANAGER: Ignoring because events from this role are ignored'
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if event.type.startswith('object:state-changed:showing'):
@@ -165,9 +166,9 @@ class EventManager:
                             pyatspi.ROLE_PANEL,
                             pyatspi.ROLE_STATUS_BAR,
                             pyatspi.ROLE_TOOL_TIP]:
-                msg = 'INFO: %s for %s in app %s. Who cares?' % \
+                msg = 'EVENT MANAGER: %s for %s in app %s. Who cares?' % \
                       (event.type, event.source, event.host_application)
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
         if event.type.startswith('object:children-changed:add') \
@@ -175,7 +176,7 @@ class EventManager:
             if not event.any_data:
                 msg = 'ERROR: %s without child from source %s in app %s' % \
                       (event.type, event.source, event.host_application)
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return True
             try:
                 state = event.any_data.getState()
@@ -183,12 +184,12 @@ class EventManager:
             except:
                 msg = 'ERROR: %s with potentially-defunct child %s from source %s in app %s' % \
                       (event.type, event.any_data, event.source, event.host_application)
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return True
             if state.contains(pyatspi.STATE_DEFUNCT):
                 msg = 'ERROR: %s with defunct child %s from source %s in app %s' % \
                       (event.type, event.any_data, event.source, event.host_application)
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
             # This should be safe. We do not have a reason to present a newly-added,
@@ -197,13 +198,13 @@ class EventManager:
             # reason for ignoring it here rather than quickly processing it is the
             # potential for event floods like we're seeing from matrix.org.
             if role == pyatspi.ROLE_IMAGE:
-                msg = 'INFO: %s for child image %s from source %s in app %s. Who cares?' % \
+                msg = 'EVENT MANAGER: %s for child image %s from source %s in app %s. Who cares?' % \
                       (event.type, event.any_data, event.source, event.host_application)
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
-        msg = 'INFO: Not ignoring due to lack of cause'
-        debug.println(debug.LEVEL_INFO, msg)
+        msg = 'EVENT MANAGER: Not ignoring due to lack of cause'
+        debug.println(debug.LEVEL_INFO, msg, True)
         return False
 
     def _addToQueue(self, event, asyncMode):
@@ -246,13 +247,12 @@ class EventManager:
         else:
             return
 
-        eType = str(e.type).upper()
         if isEnqueue:
-            string = "----------> QUEUEING %s %s" % (eType, data.upper())
+            string = "EVENT MANAGER: Queueing %s %s" % (e.type, data)
         else:
-            string = "DEQUEUED %s %s <----------" % (eType, data.upper())
+            string = "EVENT MANAGER: Dequeued %s %s" % (e.type, data)
 
-        debug.println(debug.LEVEL_ALL, string)
+        debug.println(debug.LEVEL_INFO, string, True)
 
     def _enqueue(self, e):
         """Handles the enqueueing of all events destined for scripts.
@@ -263,9 +263,9 @@ class EventManager:
 
         if debug.debugEventQueue:
             if self._enqueueCount:
-                msg = "_enqueue entered before exiting (count = %d)" \
+                msg = "EVENT MANAGER: _enqueue entered before exiting (count = %d)" \
                     % self._enqueueCount
-                debug.println(debug.LEVEL_ALL, msg)
+                debug.println(debug.LEVEL_ALL, msg, True)
             self._enqueueCount += 1
 
         inputEvents = (input_event.KeyboardEvent, input_event.BrailleEvent)
@@ -275,7 +275,7 @@ class EventManager:
             ignore = isObjectEvent and self._ignore(e)
         except:
             msg = 'ERROR: Exception evaluating event: %s' % e
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             ignore = True
         if ignore:
             if debug.debugEventQueue:
@@ -310,8 +310,8 @@ class EventManager:
         rerun = True
 
         if debug.debugEventQueue:
-            debug.println(debug.LEVEL_ALL,
-                          "event_manager._dequeue %d" % self._dequeueCount)
+            msg = 'EVENT MANAGER: Dequeue %d' % self._dequeueCount
+            debug.println(debug.LEVEL_ALL, msg, True)
             self._dequeueCount += 1
 
         try:
@@ -361,8 +361,8 @@ class EventManager:
                 rerun = False # destroy and don't call again
             self._gidleLock.release()
         except queue.Empty:
-            debug.println(debug.LEVEL_SEVERE,
-                          "event_manager._dequeue: the event queue is empty!")
+            msg = 'EVENT MANAGER: Attempted dequeue, but the event queue is empty'
+            debug.println(debug.LEVEL_SEVERE, msg, True)
             self._gidleId = 0
             rerun = False # destroy and don't call again
         except:
@@ -370,8 +370,8 @@ class EventManager:
 
         if debug.debugEventQueue:
             self._dequeueCount -= 1
-            debug.println(debug.LEVEL_ALL,
-                          "Leaving _dequeue. Count: %d" % self._dequeueCount)
+            msg = 'EVENT MANAGER: Leaving _dequeue. Count: %d' % self._dequeueCount
+            debug.println(debug.LEVEL_ALL, msg, True)
 
         return rerun
 
@@ -382,9 +382,8 @@ class EventManager:
         - eventType: the event type.
         """
 
-        debug.println(debug.LEVEL_FINEST,
-                      'INFO: Event manager registering listener for: %s' \
-                       % eventType)
+        msg = 'EVENT MANAGER: registering listener for: %s' % eventType
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         if eventType in self._scriptListenerCounts:
             self._scriptListenerCounts[eventType] += 1
@@ -399,9 +398,8 @@ class EventManager:
         - eventType: the event type.
         """
 
-        debug.println(debug.LEVEL_FINEST,
-                      'INFO: Event manager deregistering listener for: %s' \
-                       % eventType)
+        msg = 'EVENT MANAGER: deregistering listener for: %s' % eventType
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         if not eventType in self._scriptListenerCounts:
             return
@@ -419,9 +417,8 @@ class EventManager:
         - script: the script.
         """
 
-        debug.println(debug.LEVEL_FINEST,
-                      'INFO: Event manager registering listeners for: %s' \
-                       % script)
+        msg = 'EVENT MANAGER: registering listeners for: %s' % script
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         for eventType in list(script.listeners.keys()):
             self._registerListener(eventType)
@@ -434,9 +431,8 @@ class EventManager:
         - script: the script.
         """
 
-        debug.println(debug.LEVEL_FINEST,
-                      'INFO: Event manager deregistering listeners for: %s' \
-                       % script)
+        msg = 'EVENT MANAGER: deregistering listeners for: %s' % script
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         for eventType in list(script.listeners.keys()):
             self._deregisterListener(eventType)
@@ -456,10 +452,8 @@ class EventManager:
     def registerKeystrokeListener(self, function, mask=None, kind=None):
         """Register the keystroke listener on behalf of the caller."""
 
-        debug.println(
-            debug.LEVEL_FINEST,
-            'INFO: Event manager registering keystroke listener function: %s' \
-             % function)
+        msg = 'EVENT MANAGER: registering keystroke listener function: %s' % function
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         if mask == None:
             mask = list(range(256))
@@ -472,10 +466,8 @@ class EventManager:
     def deregisterKeystrokeListener(self, function, mask=None, kind=None):
         """Deregister the keystroke listener on behalf of the caller."""
 
-        debug.println(
-            debug.LEVEL_FINEST,
-            'INFO: Event manager deregistering keystroke listener function: %s'\
-             % function)
+        msg = 'EVENT MANAGER: deregistering keystroke listener function: %s' % function
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         if mask == None:
             mask = list(range(256))
@@ -534,18 +526,18 @@ class EventManager:
             app = event.host_application or event.source.getApplication()
             if app and app.getState().contains(pyatspi.STATE_DEFUNCT):
                 msg = 'WARNING: App is defunct. Cannot get script for event.'
-                debug.println(debug.LEVEL_WARNING, msg)
+                debug.println(debug.LEVEL_WARNING, msg, True)
                 return None
         except:
             msg = 'WARNING: Exception when getting script for event.'
-            debug.println(debug.LEVEL_WARNING, msg)
+            debug.println(debug.LEVEL_WARNING, msg, True)
         else:
-            msg = 'INFO: Getting script for %s from %s' % (event.type, app)
-            debug.println(debug.LEVEL_INFO, msg)
+            msg = 'EVENT MANAGER: Getting script for %s' % app
+            debug.println(debug.LEVEL_INFO, msg, True)
             script = _scriptManager.getScript(app, event.source)
 
-        msg = 'INFO: Script for %s from %s is %s' % (event.type, app, script)
-        debug.println(debug.LEVEL_INFO, msg)
+        msg = 'EVENT MANAGER: Script is %s' % script
+        debug.println(debug.LEVEL_INFO, msg, True)
         return script
 
     def _isActivatableEvent(self, event, script=None):
@@ -607,7 +599,7 @@ class EventManager:
         - e: an at-spi event.
         """
 
-        debug.printObjectEvent(debug.LEVEL_FINEST, event)
+        debug.printObjectEvent(debug.LEVEL_INFO, event, timestamp=True)
         eType = event.type
 
         if eType.startswith("object:children-changed:remove"):
@@ -635,8 +627,8 @@ class EventManager:
         try:
             state = event.source.getState()
         except (LookupError, RuntimeError):
-            debug.println(debug.LEVEL_WARNING,
-                          "Error while processing event: %s" % eType)
+            msg = 'ERROR: Could not process event: %s' % eType
+            debug.println(debug.LEVEL_WARNING, msg, True)
             if eType.startswith("window:deactivate"):
                 orca_state.locusOfFocus = None
                 orca_state.activeWindow = None
@@ -645,24 +637,26 @@ class EventManager:
             return
 
         if state and state.contains(pyatspi.STATE_DEFUNCT):
-            debug.println(debug.LEVEL_FINEST, "IGNORING DEFUNCT OBJECT")
+            msg = 'EVENT MANAGER: Ignoring defunct object: %s' % event.source
+            debug.println(debug.LEVEL_INFO, msg, True)
             if eType.startswith("window:deactivate"):
                 orca_state.locusOfFocus = None
                 orca_state.activeWindow = None
             return
 
         if state and state.contains(pyatspi.STATE_ICONIFIED):
-            debug.println(debug.LEVEL_FINEST, "IGNORING ICONIFIED OBJECT")
+            msg = 'EVENT MANAGER: Ignoring iconified object: %s' % event.source
+            debug.println(debug.LEVEL_INFO, True)
             return
 
         if not debug.eventDebugFilter or debug.eventDebugFilter.match(eType) \
            and not eType.startswith("mouse:"):
-            debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
+            debug.printDetails(debug.LEVEL_INFO, ' ' * 11, event.source)
 
         script = self._getScriptForEvent(event)
         if not script:
             msg = 'ERROR: Could not get script for %s' % event
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         setNewActiveScript, reason = self._isActivatableEvent(event, script)
@@ -671,20 +665,20 @@ class EventManager:
                 app = event.host_application or event.source.getApplication()
             except:
                 msg = 'ERROR: Could not get application for %s' % event.source
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return
             try:
                 _scriptManager.setActiveScript(script, reason)
             except:
                 msg = 'ERROR: Could not set active script for %s' % event.source
-                debug.println(debug.LEVEL_INFO, msg)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
         try:
             script.processObjectEvent(event)
         except:
             msg = 'ERROR: Could not process %s' % event.type
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_INFO)
 
     def processKeyboardEvent(self, keyboardEvent):

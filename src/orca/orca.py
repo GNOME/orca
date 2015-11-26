@@ -139,8 +139,8 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
     """
 
     if not force and obj == orca_state.locusOfFocus:
-        msg = "INFO: Setting locusOfFocus to existing locusOfFocus"
-        debug.println(debug.LEVEL_INFO, msg)
+        msg = "ORCA: Setting locusOfFocus to existing locusOfFocus"
+        debug.println(debug.LEVEL_INFO, msg, True)
         return
 
     if event and (orca_state.activeScript and not orca_state.activeScript.app):
@@ -151,36 +151,36 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
     try:
         oldFocus.getRole()
     except:
-        msg = "INFO: Old locusOfFocus is null or defunct"
-        debug.println(debug.LEVEL_INFO, msg)
+        msg = "ORCA: Old locusOfFocus is null or defunct"
+        debug.println(debug.LEVEL_INFO, msg, True)
         oldFocus = None
 
     if not obj:
-        msg = "INFO: New locusOfFocus is null (being cleared)"
-        debug.println(debug.LEVEL_INFO, msg)
+        msg = "ORCA: New locusOfFocus is null (being cleared)"
+        debug.println(debug.LEVEL_INFO, msg, True)
         orca_state.locusOfFocus = None
         return
 
     if orca_state.activeScript:
         if orca_state.activeScript.utilities.isZombie(obj):
             msg = "ERROR: New locusOfFocus (%s) is zombie. Not updating." % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
         if orca_state.activeScript.utilities.isDead(obj):
             msg = "ERROR: New locusOfFocus (%s) is dead. Not updating." % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-    msg = "INFO: Changing locusOfFocus from %s to %s" % (oldFocus, obj)
-    debug.println(debug.LEVEL_INFO, msg)
+    msg = "ORCA: Changing locusOfFocus from %s to %s" % (oldFocus, obj)
+    debug.println(debug.LEVEL_INFO, msg, True)
     orca_state.locusOfFocus = obj
 
     if not notifyScript:
         return
 
     if not orca_state.activeScript:
-        msg = "INFO: Cannot notify active script because there isn't one"
-        debug.println(debug.LEVEL_INFO, msg)
+        msg = "ORCA: Cannot notify active script because there isn't one"
+        debug.println(debug.LEVEL_INFO, msg, True)
         return
 
     orca_state.activeScript.locusOfFocusChanged(event, oldFocus, orca_state.locusOfFocus)
@@ -406,7 +406,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     Returns True to indicate the input event has been consumed.
     """
 
-    debug.println(debug.LEVEL_FINEST, 'INFO: Loading User Settings')
+    debug.println(debug.LEVEL_INFO, 'ORCA: Loading User Settings', True)
 
     global _userSettings
 
@@ -425,7 +425,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
             _settingsManager.setProfile(_profile)
             reloaded = True
         except ImportError:
-            debug.printException(debug.LEVEL_FINEST)
+            debug.printException(debug.LEVEL_INFO)
         except:
             debug.printException(debug.LEVEL_SEVERE)
     else:
@@ -433,7 +433,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         try:
             _userSettings = _settingsManager.getGeneralSettings(_profile)
         except ImportError:
-            debug.printException(debug.LEVEL_FINEST)
+            debug.printException(debug.LEVEL_INFO)
         except:
             debug.printException(debug.LEVEL_SEVERE)
 
@@ -447,23 +447,19 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
             speech.init()
             if reloaded and not skipReloadMessage:
                 script.speakMessage(messages.SETTINGS_RELOADED)
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "Speech module has been initialized.")
         except:
             debug.printException(debug.LEVEL_SEVERE)
-            debug.println(debug.LEVEL_SEVERE,
-                          "Could not initialize connection to speech.")
     else:
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "Speech module has NOT been initialized.")
+        msg = 'ORCA: Speech is not enabled in settings'
+        debug.println(debug.LEVEL_INFO, msg, True)
 
     if _settingsManager.getSetting('enableBraille'):
         try:
             braille.init(_processBrailleEvent, settings.tty)
         except:
             debug.printException(debug.LEVEL_WARNING)
-            debug.println(debug.LEVEL_WARNING,
-                          "Could not initialize connection to braille.")
+            msg = 'ORCA: Could not initialize connection to braille.'
+            debug.println(debug.LEVEL_WARNING, msg, True)
 
     # I'm not sure where else this should go. But it doesn't really look
     # right here.
@@ -486,7 +482,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     _scriptManager.activate()
     _eventManager.activate()
 
-    debug.println(debug.LEVEL_FINEST, 'INFO: User Settings Loaded')
+    debug.println(debug.LEVEL_INFO, 'ORCA: User Settings Loaded', True)
 
     return True
 
@@ -589,7 +585,7 @@ def init(registry):
     module has already been initialized.
     """
 
-    debug.println(debug.LEVEL_FINEST, 'INFO: Initializing Orca module')
+    debug.println(debug.LEVEL_INFO, 'ORCA: Initializing', True)
 
     global _initialized
 
@@ -615,7 +611,7 @@ def init(registry):
     if a11yAppSettings:
         a11yAppSettings.connect('changed', onEnabledChanged)
 
-    debug.println(debug.LEVEL_FINEST, 'INFO: Orca module initialized')
+    debug.println(debug.LEVEL_INFO, 'ORCA: Initialized', True)
 
     return True
 
@@ -623,7 +619,7 @@ def start(registry, cacheValues):
     """Starts Orca.
     """
 
-    debug.println(debug.LEVEL_FINEST, 'INFO: Starting Orca')
+    debug.println(debug.LEVEL_INFO, 'ORCA: Starting', True)
 
     if not _initialized:
         init(registry)
@@ -640,7 +636,7 @@ def start(registry, cacheValues):
     if cacheValues:
         pyatspi.setCacheLevel(pyatspi.CACHE_PROPERTIES)
 
-    debug.println(debug.LEVEL_FINEST, 'INFO: Orca starting registry')
+    debug.println(debug.LEVEL_INFO, 'ORCA: Starting registry', True)
     registry.start(gil=False)
 
 def die(exitCode=1):
@@ -656,8 +652,8 @@ def die(exitCode=1):
         os.kill(pid, signal.SIGTERM)
 
 def timeout(signum=None, frame=None):
-    debug.println(debug.LEVEL_SEVERE,
-                  "TIMEOUT: something has hung.  Aborting.")
+    msg = 'TIMEOUT: something has hung. Aborting.'
+    debug.println(debug.LEVEL_SEVERE, msg, True)
     debug.printStack(debug.LEVEL_ALL)
     debug.examineProcesses()
     die(EXIT_CODE_HANG)
@@ -669,7 +665,7 @@ def shutdown(script=None, inputEvent=None):
     was never initialized.
     """
 
-    debug.println(debug.LEVEL_FINEST, 'INFO: Shutting down Orca')
+    debug.println(debug.LEVEL_INFO, 'ORCA: Shutting down', True)
 
     global _initialized
 
@@ -702,10 +698,10 @@ def shutdown(script=None, inputEvent=None):
     _initialized = False
     _restoreXmodmap(_orcaModifiers)
 
-    debug.println(debug.LEVEL_FINEST, 'INFO: Orca stopping registry')
+    debug.println(debug.LEVEL_INFO, 'ORCA: Stopping registry', True)
     pyatspi.Registry.stop()
 
-    debug.println(debug.LEVEL_FINEST, 'INFO: Orca shutdown complete')
+    debug.println(debug.LEVEL_INFO, 'ORCA: Shutdown complete', True)
 
     return True
 
@@ -713,12 +709,8 @@ exitCount = 0
 def shutdownOnSignal(signum, frame):
     global exitCount
 
-    debug.println(debug.LEVEL_ALL,
-                  "Shutting down and exiting due to signal = %d" \
-                  % signum)
-
-    debug.println(debug.LEVEL_ALL, "Current stack is:")
-    debug.printStack(debug.LEVEL_ALL)
+    msg = 'ORCA: Shutting down and exiting due to signal=%d' % signum
+    debug.println(debug.LEVEL_INFO, msg, True)
 
     # Well...we'll try to exit nicely, but if we keep getting called,
     # something bad is happening, so just quit.

@@ -430,12 +430,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def generateSpeech(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
-            msg = "\nINFO: %s is not in document content. Calling default speech generator." % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            msg = "WEB: %s is not in document content. Calling default speech generator." % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return super().generateSpeech(obj, **args)
 
-        msg = "\nINFO: Generating speech for document object %s" % obj
-        debug.println(debug.LEVEL_INFO, msg)
+        msg = "WEB: Generating speech for document object %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         result = []
         if args.get('formatType') == 'detailedWhereAmI':
@@ -453,8 +453,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result = list(filter(lambda x: x, result))
         self._restoreRole(oldRole, args)
 
-        msg = "\nINFO: Speech generation for document object %s complete:\n%s\n" % (obj, result)
+        msg = "WEB: Speech generation for document object %s complete:" % obj
         debug.println(debug.LEVEL_INFO, msg)
+        for element in result:
+            debug.println(debug.LEVEL_ALL, "           %s" % element)
+
         return result
 
     def generateContents(self, contents, **args):
@@ -463,13 +466,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         result = []
         contents = self._script.utilities.filterContentsForPresentation(contents, False)
-        msg = "INFO: Generating speech contents (length: %i)" % len(contents)
-        debug.println(debug.LEVEL_INFO, msg)
+        msg = "WEB: Generating speech contents (length: %i)" % len(contents)
+        debug.println(debug.LEVEL_INFO, msg, True)
         for i, content in enumerate(contents):
             obj, start, end, string = content
             msg = "ITEM %i: %s, start: %i, end: %i, string: '%s'" \
                   % (i, obj, start, end, string)
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             utterance = self.generateSpeech(
                 obj, startOffset=start, endOffset=end, string=string,
                 index=i, total=len(contents), **args)

@@ -358,14 +358,14 @@ class Script(Gecko.Script):
         self.updateBraille(obj)
         if not _settingsManager.getSetting('sayAllOnLoad'):
             msg = "THUNDERBIRD: SayAllOnLoad is False. Presenting line."
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(obj, offset)
             self.speakContents(contents)
             return
 
         if _settingsManager.getSetting('enableSpeech'):
             msg = "THUNDERBIRD: SayAllOnLoad is True and speech is enabled"
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.sayAll(None)
 
     def sayCharacter(self, obj):

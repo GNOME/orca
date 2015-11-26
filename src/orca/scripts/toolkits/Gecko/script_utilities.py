@@ -58,7 +58,7 @@ class Utilities(web.Utilities):
             attrs = obj.getAttributes()
         except:
             msg = "GECKO: Exception getting attributes for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return -1
         for attr in attrs:
             if attr.startswith("level:"):

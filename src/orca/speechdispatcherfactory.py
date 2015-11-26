@@ -128,12 +128,12 @@ class SpeechServer(speechserver.SpeechServer):
             (ACSS.FAMILY, self._set_family),
             )
         if not _speechd_available:
-            debug.println(debug.LEVEL_WARNING,
-                          "Speech Dispatcher interface not installed.")
+            msg = 'ERROR: Speech Dispatcher is not available'
+            debug.println(debug.LEVEL_WARNING, msg, True)
             return
         if not _speechd_version_ok:
-            debug.println(debug.LEVEL_WARNING,
-                        "Speech Dispatcher version 0.6.2 or later is required.")
+            msg = 'ERROR: Speech Dispatcher version 0.6.2 or later is required.'
+            debug.println(debug.LEVEL_WARNING, msg, True)
             return
         # The following constants must be initialized in runtime since they
         # depend on the speechd module being available.
@@ -155,9 +155,9 @@ class SpeechServer(speechserver.SpeechServer):
         try:
             self._init()
         except:
-            debug.println(debug.LEVEL_WARNING,
-                          "Speech Dispatcher service failed to connect:")
             debug.printException(debug.LEVEL_WARNING)
+            msg = 'ERROR: Speech Dispatcher service failed to connect'
+            debug.println(debug.LEVEL_WARNING, msg, True)
         else:
             SpeechServer._active_servers[serverId] = self
 
@@ -193,9 +193,8 @@ class SpeechServer(speechserver.SpeechServer):
             try:
                 return command(*args, **kwargs)
             except speechd.SSIPCommunicationError:
-                debug.println(debug.LEVEL_CONFIGURATION,
-                              "Speech Dispatcher connection lost. "
-                              "Trying to reconnect.")
+                msg = "SPEECH DISPATCHER: Connection lost. Trying to reconnect."
+                debug.println(debug.LEVEL_INFO, msg, True)
                 self.reset()
                 return command(*args, **kwargs)
             except:
@@ -254,7 +253,7 @@ class SpeechServer(speechserver.SpeechServer):
                self._current_voice_properties.get(ACSS.AVERAGE_PITCH),
                sd_rate,
                sd_pitch)
-        debug.println(debug.LEVEL_INFO, msg)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
     def _apply_acss(self, acss):
         if acss is None:
@@ -377,9 +376,8 @@ class SpeechServer(speechserver.SpeechServer):
         except KeyError:
             rate = 50
         acss[ACSS.RATE] = max(0, min(99, rate + delta))
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "Speech rate is now %d" % rate)
-
+        msg = 'SPEECH DISPATCHER: Rate set to %d' % rate
+        debug.println(debug.LEVEL_INFO, msg, True)
         self.speak(decrease and messages.SPEECH_SLOWER \
                    or messages.SPEECH_FASTER, acss=acss)
 
@@ -391,9 +389,8 @@ class SpeechServer(speechserver.SpeechServer):
         except KeyError:
             pitch = 5
         acss[ACSS.AVERAGE_PITCH] = max(0, min(9, pitch + delta))
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "Speech pitch is now %d" % pitch)
-
+        msg = 'SPEECH DISPATCHER: Pitch set to %d' % pitch
+        debug.println(debug.LEVEL_INFO, msg, True)
         self.speak(decrease and messages.SPEECH_LOWER \
                    or messages.SPEECH_HIGHER, acss=acss)
 
@@ -405,9 +402,8 @@ class SpeechServer(speechserver.SpeechServer):
         except KeyError:
             volume = 5
         acss[ACSS.GAIN] = max(0, min(9, volume + delta))
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "Speech volume is now %d" % volume)
-
+        msg = 'SPEECH DISPATCHER: Volume set to %d' % volume
+        debug.println(debug.LEVEL_INFO, msg, True)
         self.speak(decrease and messages.SPEECH_SOFTER \
                    or messages.SPEECH_LOUDER, acss=acss)
 
