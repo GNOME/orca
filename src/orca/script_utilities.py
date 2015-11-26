@@ -3162,6 +3162,7 @@ class Utilities:
         topLevelRoles = [pyatspi.ROLE_APPLICATION,
                          pyatspi.ROLE_ALERT,
                          pyatspi.ROLE_DIALOG,
+                         pyatspi.ROLE_PAGE, # For Evince bug
                          pyatspi.ROLE_WINDOW,
                          pyatspi.ROLE_FRAME]
         if index == -1 and role not in topLevelRoles:
