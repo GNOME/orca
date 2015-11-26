@@ -999,6 +999,9 @@ class Script(default.Script):
         if self.utilities.isAnchor(newFocus):
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
             utterances = self.speechGenerator.generateContents(contents)
+        elif newFocus.getRole() == pyatspi.ROLE_HEADING:
+            contents = self.utilities.getObjectContentsAtOffset(newFocus, 0)
+            utterances = self.speechGenerator.generateContents(contents)
         else:
             utterances = self.speechGenerator.generateSpeech(newFocus, priorObj=oldFocus)
 
