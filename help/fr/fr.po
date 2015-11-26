@@ -5214,9 +5214,9 @@ msgid ""
 msgstr ""
 "Si vous êtes dans le correcteur orthographique d'une application où "
 "<app>Orca</app> offre une gestion améliorée, un Où suis-je basique répète "
-"l'erreur en respectant vos <linkxref=\"preferences_spellcheck\">préférences "
+"l'erreur en respectant vos <link xref=\"preferences_spellcheck\">préférences "
 "de correcteur orthographique</link>. Un Où suis-je détaillé conduit "
-"<app<Orca</app> à présenter tous les détails de l'erreur."
+"<app>Orca</app> à présenter tous les détails de l'erreur."
 
 #. (itstool) path: page/p
 #: C/howto_whereami.page:104
