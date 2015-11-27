@@ -63,7 +63,7 @@ else:
         _speechd_version_ok = True
 
 PUNCTUATION = re.compile('[^\w\s]', re.UNICODE)
-ELLIPSIS = re.compile('(\342\200\246|\.\.\.\s*)')
+ELLIPSIS = re.compile('(\342\200\246|[^\.]\.{3,4}(\s|\Z))')
 
 class SpeechServer(speechserver.SpeechServer):
     # See the parent class for documentation.
