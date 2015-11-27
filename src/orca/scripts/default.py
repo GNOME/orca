@@ -4446,22 +4446,25 @@ class Script(script.Script):
            or _settingsManager.getSetting('onlySpeakDisplayedText'):
             return
 
-        capStyle = _settingsManager.getSetting('capitalizationStyle')
-        _settingsManager.setSetting('capitalizationStyle', settings.CAPITALIZATION_STYLE_NONE)
-        speech.updateCapitalizationStyle()
+        systemVoice = self.voices.get(settings.SYSTEM_VOICE)
+        voice = voice or systemVoice
+        if voice == systemVoice:
+            capStyle = _settingsManager.getSetting('capitalizationStyle')
+            _settingsManager.setSetting('capitalizationStyle', settings.CAPITALIZATION_STYLE_NONE)
+            speech.updateCapitalizationStyle()
 
-        punctStyle = _settingsManager.getSetting('verbalizePunctuationStyle')
-        _settingsManager.setSetting('verbalizePunctuationStyle', settings.PUNCTUATION_STYLE_NONE)
-        speech.updatePunctuationLevel()
+            punctStyle = _settingsManager.getSetting('verbalizePunctuationStyle')
+            _settingsManager.setSetting('verbalizePunctuationStyle', settings.PUNCTUATION_STYLE_NONE)
+            speech.updatePunctuationLevel()
 
-        voice = voice or self.voices.get(settings.SYSTEM_VOICE)
         speech.speak(string, voice, interrupt)
 
-        _settingsManager.setSetting('capitalizationStyle', capStyle)
-        speech.updateCapitalizationStyle()
+        if voice == systemVoice:
+            _settingsManager.setSetting('capitalizationStyle', capStyle)
+            speech.updateCapitalizationStyle()
 
-        _settingsManager.setSetting('verbalizePunctuationStyle', punctStyle)
-        speech.updatePunctuationLevel()
+            _settingsManager.setSetting('verbalizePunctuationStyle', punctStyle)
+            speech.updatePunctuationLevel()
 
     @staticmethod
     def presentItemsInSpeech(items):
