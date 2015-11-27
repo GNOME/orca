@@ -4050,7 +4050,7 @@ class Script(script.Script):
             else:
                 message = fullMessage
             if message:
-                self.speakMessage(message, voice, resetStyles)
+                self.speakMessage(message, voice=voice, resetStyles=resetStyles)
 
         if (_settingsManager.getSetting('enableBraille') \
              or _settingsManager.getSetting('enableBrailleMonitor')) \
