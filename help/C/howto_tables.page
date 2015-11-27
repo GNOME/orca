@@ -35,17 +35,22 @@
     </p>
     <p>
       <app>Orca</app> allows you to customize whether only the cell should be
-      read, or if the full row should be. You can set this preference Orca wide
-      as well as on an application-by-application basis. How to do each is
-      described in the guide on <link xref="preferences"><app>Orca</app>'s
-      preferences dialogs</link>. The setting can be found in the <gui>Table
-      Rows</gui> radio button group on the <link xref="preferences_speech">
+      read, or if the full row should be, for GUI tables, document tables,
+      and spreadsheets. Because these settings are independent of one another,
+      you do not have to choose one table reading mode to fit multiple types of
+      tables.
+    </p>
+    <p>
+      You can set each of <app>Orca</app>'s table reading preferences <app>Orca</app>
+      wide as well as on an application-by-application basis. How to do each is
+      described in the guide on <link xref="preferences"><app>Orca</app>'s preferences
+      dialogs</link>. The settings can be found on the <link xref="preferences_speech">
       <gui>Speech</gui> page</link>.
     </p>
     <p>
-      In addition, there is an <app>Orca</app> command which allows you to
-      toggle this setting on the fly: <keyseq><key>Orca Modifier</key>
-      <key>F11</key></keyseq>.
+      Lastly, there is also an <app>Orca</app> command which allows you to toggle
+      cell versus row reading on the fly for the currently-active table:
+      <keyseq><key>Orca Modifier</key><key>F11</key></keyseq>.
     </p>
   </section>
   <section id="structural_navigation">

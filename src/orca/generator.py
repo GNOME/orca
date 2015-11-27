@@ -776,7 +776,8 @@ class Generator:
         except:
             parentTable = None
         isDetailedWhereAmI = args.get('formatType', None) == 'detailedWhereAmI'
-        if (settings.readTableCellRow or isDetailedWhereAmI) and parentTable \
+        readFullRow = self._script.utilities.shouldReadFullRow(obj)
+        if (readFullRow or isDetailedWhereAmI) and parentTable \
            and (not self._script.utilities.isLayoutOnly(obj.parent)):
             parent = obj.parent
             index = self._script.utilities.cellIndex(obj)

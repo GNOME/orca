@@ -596,7 +596,7 @@ class Script(default.Script):
         default.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
 
-        if self.utilities.isDocumentCell(newLocusOfFocus):
+        if self.utilities.isTextDocumentCell(newLocusOfFocus):
             row, column, table = \
                 self.utilities.getRowColumnAndTable(newLocusOfFocus.parent)
             self.pointOfReference['lastRow'] = row
@@ -673,7 +673,7 @@ class Script(default.Script):
             return
 
         if anyDataRole == pyatspi.ROLE_TABLE:
-            if self.utilities.isSpreadSheetCell(event.any_data, True):
+            if self.utilities.isSpreadSheetCell(event.any_data):
                 orca.setLocusOfFocus(event, event.any_data)
             return
 

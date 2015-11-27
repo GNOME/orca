@@ -40,25 +40,6 @@
       Default value: <gui>Verbose</gui>
     </p>
   </section>
-  <section id="table_rows">
-    <title>Table Rows</title>
-    <p>
-      The <gui>Table Rows</gui> radio button group determines what gets
-      spoken when navigating amongst rows in a table. The available
-      options are <gui>speak row</gui> and <gui>speak cell</gui>.
-    </p>
-    <p>
-      Consider the process of examining the list of messages in your Inbox.
-      In order to have <app>Orca</app> announce the sender, subject, date,
-      and presence of attachments you would need <gui>speak row</gui>. On
-      the other hand, when navigating amongst rows in a spreadsheet, hearing
-      the full row may not be desired. In that case, <gui>speak cell</gui>
-      should instead be chosen.
-    </p>
-    <p>
-      Default value: <gui>Speak row</gui>
-    </p>
-  </section>
   <section id="punctuation_level">
     <title>Punctuation Level</title>
     <p>
@@ -213,6 +194,42 @@
       </p>
       <p>
         Default value: checked
+      </p>
+    </section>
+    <section id="read_full_row_in_gui_tables">
+      <title>Read full row in GUI tables</title>
+      <p>
+        If <gui>Read full row in GUI tables</gui> is checked, as you arrow up
+        and down in application tables such as the list of messages in your
+        Inbox, <app>Orca</app> will speak the entire row. If you would prefer
+        to hear only the cell with focus, you should uncheck this checkbox.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
+    <section id="read_full_row_in_document_tables">
+      <title>Read full row in document tables</title>
+      <p>
+        If <gui>Read full row in document tables</gui> is checked, as you arrow
+        up and down in tables such as those found in <app>Writer</app> and web
+        documents, <app>Orca</app> will speak the entire row. If you would prefer
+        to hear only the cell with focus, you should uncheck this checkbox.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
+    <section id="read_full_row_in_spreadsheets">
+      <title>Read full row in spreadsheets</title>
+      <p>
+        If <gui>Read full row in spreadsheets</gui> is checked, as you arrow
+        up and down in spreadsheets, <app>Orca</app> will speak the entire
+        row. If you would prefer to hear only the cell with focus, you should
+        uncheck this checkbox.
+      </p>
+      <p>
+        Default value: not checked
       </p>
     </section>
   </section>

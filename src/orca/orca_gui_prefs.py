@@ -1302,11 +1302,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         else:
             self.get_widget("speechVerboseButton").set_active(True)
 
-        if prefs["readTableCellRow"]:
-            self.get_widget("rowSpeechButton").set_active(True)
-        else:
-            self.get_widget("cellSpeechButton").set_active(True)
-
         self.get_widget("onlySpeakDisplayedTextCheckButton").set_active(
             prefs["onlySpeakDisplayedText"])
 
@@ -1333,6 +1328,15 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         enable = prefs.get("useColorNames", settings.useColorNames)
         self.get_widget("useColorNamesCheckButton").set_active(enable)
+
+        enable = prefs.get("readFullRowInGUITable", settings.readFullRowInGUITable)
+        self.get_widget("readFullRowInGUITableCheckButton").set_active(enable)
+
+        enable = prefs.get("readFullRowInDocumentTable", settings.readFullRowInDocumentTable)
+        self.get_widget("readFullRowInDocumentTableCheckButton").set_active(enable)
+
+        enable = prefs.get("readFullRowInSpreadSheet", settings.readFullRowInSpreadSheet)
+        self.get_widget("readFullRowInSpreadSheetCheckButton").set_active(enable)
 
         style = prefs.get("capitalizationStyle", settings.capitalizationStyle)
         combobox = self.get_widget("capitalizationStyle")
@@ -2512,24 +2516,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             else:
                 self.prefsDict["speechVerbosityLevel"] = \
                     settings.VERBOSITY_LEVEL_VERBOSE
-
-    def tableSpeechChanged(self, widget):
-        """Signal handler for the "toggled" signal for the cellSpeechButton,
-           or rowSpeechButton GtkRadioButton widgets. The user has
-           toggled the table row speech type value. If this signal was
-           generated as the result of a radio button getting selected
-           (as opposed to a radio button losing the selection), set the
-           'readTableCellRow' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        if widget.get_active():
-            if widget.get_label() == guilabels.TABLE_SPEAK_CELL:
-                self.prefsDict["readTableCellRow"] = False
-            else:
-                self.prefsDict["readTableCellRow"] = True
 
     def progressBarUpdateIntervalValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the

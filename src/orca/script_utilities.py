@@ -913,6 +913,123 @@ class Utilities:
 
         return int((val / (maxval - minval)) * 100)
 
+    def isDocument(self, obj):
+        documentRoles = [pyatspi.ROLE_DOCUMENT_EMAIL,
+                         pyatspi.ROLE_DOCUMENT_FRAME,
+                         pyatspi.ROLE_DOCUMENT_PRESENTATION,
+                         pyatspi.ROLE_DOCUMENT_SPREADSHEET,
+                         pyatspi.ROLE_DOCUMENT_TEXT,
+                         pyatspi.ROLE_DOCUMENT_WEB]
+        return obj and obj.getRole() in documentRoles
+
+    def inDocumentContent(self, obj=None):
+        obj = obj or orca_state.locusOfFocus
+        return self.getContainingDocument(obj) is not None
+
+    def getContainingDocument(self, obj):
+        if not obj:
+            return None
+
+        try:
+            doc = pyatspi.findAncestor(obj, self.isDocument)
+        except:
+            msg = "ERROR: Exception finding ancestor of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        msg = "INFO: Document containing %s is %s" % (obj, doc)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return doc
+
+    def getTable(self, obj):
+        if not obj:
+            return None
+
+        tableRoles = [pyatspi.ROLE_TABLE, pyatspi.ROLE_TREE_TABLE]
+        isTable = lambda x: x and x.getRole() in tableRoles
+        if isTable(obj):
+            return obj
+
+        try:
+            table = pyatspi.findAncestor(obj, isTable)
+        except:
+            msg = "ERROR: Exception finding ancestor of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        return table
+
+    def isTextDocumentTable(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE):
+            return False
+
+        doc = self.getContainingDocument(obj)
+        if not doc:
+            return False
+
+        return doc.getRole() != pyatspi.ROLE_DOCUMENT_SPREADSHEET
+
+    def isGUITable(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE):
+            return False
+
+        return self.getContainingDocument(obj) is None
+
+    def isSpreadSheetTable(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE):
+            return False
+
+        doc = self.getContainingDocument(obj)
+        if not doc:
+            return False
+
+        if doc.getRole() == pyatspi.ROLE_DOCUMENT_SPREADSHEET:
+            return True
+
+        try:
+            table = obj.queryTable()
+        except NotImplementedError:
+            msg = 'ERROR: Table %s does not implement table interface' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+        except:
+            msg = 'ERROR: Exception querying table interface of %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+        else:
+            return table.nRows > 65536
+
+        return False
+
+    def isTextDocumentCell(self, obj):
+        cellRoles = [pyatspi.ROLE_TABLE_CELL,
+                     pyatspi.ROLE_COLUMN_HEADER,
+                     pyatspi.ROLE_ROW_HEADER]
+        if not (obj and obj.getRole() in cellRoles):
+            return False
+
+        return pyatspi.findAncestor(obj, self.isTextDocumentTable)
+
+    def isSpreadSheetCell(self, obj):
+        cellRoles = [pyatspi.ROLE_TABLE_CELL,
+                     pyatspi.ROLE_COLUMN_HEADER,
+                     pyatspi.ROLE_ROW_HEADER]
+        if not (obj and obj.getRole() in cellRoles):
+            return False
+
+        return pyatspi.findAncestor(obj, self.isSpreadSheetTable)
+
+    def shouldReadFullRow(self, obj):
+        table = self.getTable(obj)
+        if not table:
+            return False
+
+        if not self.getContainingDocument(table):
+            return _settingsManager.getSetting('readFullRowInGUITable')
+
+        if self.isSpreadSheetTable(table):
+            return _settingsManager.getSetting('readFullRowInSpreadSheet')
+
+        return _settingsManager.getSetting('readFullRowInDocumentTable')
+
     def isStatic(self, obj):
         role = obj.getRole()
         try:

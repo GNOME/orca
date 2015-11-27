@@ -2003,8 +2003,21 @@ class Script(script.Script):
         """Toggles an indicator for whether we should just read the current
         table cell or read the whole row."""
 
-        speakRow = _settingsManager.getSetting('readTableCellRow')
-        _settingsManager.setSetting('readTableCellRow', not speakRow)
+        table = self.utilities.getTable(orca_state.locusOfFocus)
+        if not table:
+            self.presentMessage(messages.TABLE_NOT_IN_A)
+            return True
+
+        if not self.utilities.getContainingDocument(table):
+            settingName = 'readFullRowInGUITable'
+        elif self.utilities.isSpreadSheetTable(table):
+            settingName = 'readFullRowInSpreadsheet'
+        else:
+            settingName = 'readFullRowInDocumentTable'
+
+        speakRow = _settingsManager.getSetting(settingName)
+        _settingsManager.setSetting(settingName, not speakRow)
+
         if not speakRow:
             line = messages.TABLE_MODE_ROW
         else:

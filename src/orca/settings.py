@@ -40,7 +40,9 @@ userCustomizableSettings = [
     "speechServerInfo",
     "voices",
     "speechVerbosityLevel",
-    "readTableCellRow",
+    "readFullRowInGUITable",
+    "readFullRowInDocumentTable",
+    "readFullRowInSpreadSheet",
     "enableSpeechIndentation",
     "enableEchoByCharacter",
     "enableEchoByWord",
@@ -203,7 +205,9 @@ onlySpeakDisplayedText       = False
 presentToolTips              = False
 speakBlankLines              = True
 repeatCharacterLimit         = 4
-readTableCellRow             = True
+readFullRowInGUITable        = True
+readFullRowInDocumentTable   = True
+readFullRowInSpreadSheet     = False
 speakCellCoordinates         = True
 speakCellSpan                = True
 speakCellHeaders             = True

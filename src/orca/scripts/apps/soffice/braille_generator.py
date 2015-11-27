@@ -130,10 +130,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return result
 
     def _generateTableCellRow(self, obj, **args):
-        """Get the speech for a table cell row or a single table cell
-        if settings.readTableCellRow is False. If this isn't inside a
-        spread sheet, just return the utterances returned by the default
-        table cell speech handler.
+        """Get the speech for a table row or cell depending on settings.
 
         Arguments:
         - obj: the table cell
@@ -148,7 +145,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             #
             parent = obj.parent
             parentTable = parent.queryTable()
-            if _settingsManager.getSetting('readTableCellRow') and parentTable:
+            readFullRow = self._script.utilities.shouldReadFullRow(obj)
+            if readFullRow and parentTable:
                 index = self._script.utilities.cellIndex(obj)
                 row = parentTable.getRowAtIndex(index)
                 column = parentTable.getColumnAtIndex(index)

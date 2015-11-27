@@ -170,7 +170,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         """
 
         result = []
-        if not self._script.utilities.isSpreadSheetCell(obj, startFromTable=True):
+        if not self._script.utilities.isSpreadSheetCell(obj):
             result.extend(speech_generator.SpeechGenerator.\
                 _generateAvailability(self, obj, **args))
 
@@ -209,7 +209,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateCurrentLineText(self, obj, **args):
-        if self._script.utilities.isDocumentCell(obj.parent):
+        if self._script.utilities.isTextDocumentCell(obj.parent):
             priorObj = args.get('priorObj', None)
             if priorObj and priorObj.parent != obj.parent:
                 return []
@@ -251,7 +251,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         row header(s).
         """
 
-        if _settingsManager.getSetting('readTableCellRow'):
+        if self._script.utilities.shouldReadFullRow(obj):
             return []
 
         newOnly = args.get('newOnly', False)
@@ -370,7 +370,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if speakCoordinates and not isBasicWhereAmI:
             result.append(self._script.utilities.spreadSheetCellName(obj))
 
-        if _settingsManager.getSetting('readTableCellRow'):
+        if self._script.utilities.shouldReadFullRow(obj):
             row, col, table = self._script.utilities.getRowColumnAndTable(obj)
             lastRow = self._script.pointOfReference.get("lastRow")
             if row != lastRow:
@@ -392,7 +392,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         """Get the speech for a table cell row if the user wants to hear
         the full row and if the row has actually changed."""
 
-        speakFullRow = _settingsManager.getSetting('readTableCellRow')
+        speakFullRow = self._script.utilities.shouldReadFullRow(obj)
         if speakFullRow:
             row, column, table = \
                 self._script.utilities.getRowColumnAndTable(obj)

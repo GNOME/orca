@@ -615,7 +615,8 @@ class TutorialGenerator:
                 parent_table = obj.parent.queryTable()
             except:
                 parent_table = None
-            if settings.readTableCellRow and parent_table \
+            readFullRow = self._script.utilities.shouldReadFullRow(obj)
+            if readFullRow and parent_table \
                 and not self._script.utilities.isLayoutOnly(obj.parent):
                 parent = obj.parent
                 index = self._script.utilities.cellIndex(obj)

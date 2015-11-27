@@ -84,7 +84,7 @@ class Utilities(script_utilities.Utilities):
                 return text
 
         try:
-            text = script_utilities.Utilities.displayedText(self, obj)
+            text = super().displayedText(obj)
         except:
             return ""
 
@@ -92,22 +92,13 @@ class Utilities(script_utilities.Utilities):
         # back on the name, which is bogus. Once that has been fixed, this
         # hack can go.
         if role == pyatspi.ROLE_TABLE_CELL and text == obj.name \
-           and (self.isSpreadSheetCell(obj) or self.isDocumentCell(obj)):
+           and (self.isSpreadSheetCell(obj) or self.isTextDocumentCell(obj)):
             return ""
 
         return text
 
-    def isReadOnlyTextArea(self, obj):
-        """Returns True if obj is a text entry area that is read only."""
-
-        if not obj.getRole() == pyatspi.ROLE_TEXT:
-            return False
-
-        state = obj.getState()
-        readOnly = state.contains(pyatspi.STATE_FOCUSABLE) \
-                   and not state.contains(pyatspi.STATE_EDITABLE)
-
-        return readOnly
+    def isTextArea(self, obj):
+        return obj and obj.getRole() == pyatspi.ROLE_TEXT
 
     def isCellBeingEdited(self, obj):
         if not obj:
@@ -119,40 +110,6 @@ class Utilities(script_utilities.Utilities):
                 return True
 
         return False
-
-    def isSpreadSheetCell(self, obj, startFromTable=False):
-        """Return an indication of whether the given obj is a spread sheet
-        table cell.
-
-        Arguments:
-        - obj: the object to check.
-        - startFromTable: if True, then the component hierarchy check should
-          start from a table (as opposed to a table cell).
-
-        Returns True if this is a table cell, False otherwise.
-        """
-
-        cell = obj
-        if not startFromTable:
-            obj = obj.parent
-
-        try:
-            table = obj.queryTable()
-        except:
-            return self.isCellBeingEdited(cell)
-        else:
-            return table.nRows in [65536, 1048576]
-
-    def isDocumentCell(self, cell):
-        isCell = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_CELL
-        if not isCell(cell):
-            cell = pyatspi.findAncestor(cell, isCell)
-
-        if not cell or self.isSpreadSheetCell(cell):
-            return False
-
-        isDocument = lambda x: x and x.getRole() == pyatspi.ROLE_DOCUMENT_FRAME
-        return pyatspi.findAncestor(cell, isDocument) != None
 
     def spreadSheetCellName(self, cell):
         nameList = cell.name.split()
@@ -672,7 +629,7 @@ class Utilities(script_utilities.Utilities):
         # Things only seem broken for certain tables, e.g. the Paths table.
         # TODO - JD: File the LibreOffice bugs and reference them here.
         if obj.getRole() != pyatspi.ROLE_TABLE \
-           or self.isSpreadSheetCell(obj, True):
+           or self.isSpreadSheetCell(obj):
             return script_utilities.Utilities.selectedChildren(self, obj)
 
         try:
