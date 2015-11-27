@@ -4022,7 +4022,7 @@ class Script(script.Script):
         speech.speakKeyEvent(event)
         return True
 
-    def presentMessage(self, fullMessage, briefMessage=None, voice=None):
+    def presentMessage(self, fullMessage, briefMessage=None, voice=None, resetStyles=True):
         """Convenience method to speak a message and 'flash' it in braille.
 
         Arguments:
@@ -4050,7 +4050,7 @@ class Script(script.Script):
             else:
                 message = fullMessage
             if message:
-                self.speakMessage(message, voice)
+                self.speakMessage(message, voice, resetStyles)
 
         if (_settingsManager.getSetting('enableBraille') \
              or _settingsManager.getSetting('enableBrailleMonitor')) \
@@ -4431,7 +4431,7 @@ class Script(script.Script):
         spokenCharacter = chnames.getCharacterName(character)
         speech.speakCharacter(spokenCharacter, voice)
 
-    def speakMessage(self, string, voice=None, interrupt=True):
+    def speakMessage(self, string, voice=None, interrupt=True, resetStyles=True):
         """Method to speak a single string. Scripts should use this
         method rather than calling speech.speak directly.
 
@@ -4448,7 +4448,7 @@ class Script(script.Script):
 
         systemVoice = self.voices.get(settings.SYSTEM_VOICE)
         voice = voice or systemVoice
-        if voice == systemVoice:
+        if voice == systemVoice and resetStyles:
             capStyle = _settingsManager.getSetting('capitalizationStyle')
             _settingsManager.setSetting('capitalizationStyle', settings.CAPITALIZATION_STYLE_NONE)
             speech.updateCapitalizationStyle()
@@ -4459,7 +4459,7 @@ class Script(script.Script):
 
         speech.speak(string, voice, interrupt)
 
-        if voice == systemVoice:
+        if voice == systemVoice and resetStyles:
             _settingsManager.setSetting('capitalizationStyle', capStyle)
             speech.updateCapitalizationStyle()
 

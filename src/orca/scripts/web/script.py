@@ -1073,12 +1073,12 @@ class Script(default.Script):
 
         if not _settingsManager.getSetting('onlySpeakDisplayedText'):
             if event.detail1:
-                msg = messages.PAGE_LOADING_START
+                self.presentMessage(messages.PAGE_LOADING_START)
             elif event.source.name:
                 msg = messages.PAGE_LOADING_END_NAMED % event.source.name
+                self.presentMessage(msg, resetStyles=False)
             else:
-                msg = messages.PAGE_LOADING_END
-            self.presentMessage(msg)
+                self.presentMessage(messages.PAGE_LOADING_END)
 
         if event.detail1:
             return True
