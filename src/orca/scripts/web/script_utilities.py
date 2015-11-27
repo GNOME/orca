@@ -187,7 +187,14 @@ class Utilities(script_utilities.Utilities):
 
     def documentFrame(self, obj=None):
         app = self._script.app
-        if orca_state.activeWindow in app:
+        try:
+            windowInApp = orca_state.activeWindow in app
+        except:
+            msg = "ERROR: Exception checking if %s is in %s" % (orca_state.activeWindow, app)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            windowInApp = False
+
+        if windowInApp:
             window = orca_state.activeWindow
         else:
             msg = "WARNING: %s is not in %s" % (orca_state.activeWindow, app)

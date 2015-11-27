@@ -136,7 +136,11 @@ class Utilities:
         candidates = []
         apps = apps or self.knownApplications()
         for app in apps:
-            candidates.extend([child for child in app if self.canBeActiveWindow(child)])
+            try:
+                candidates.extend([child for child in app if self.canBeActiveWindow(child)])
+            except:
+                msg = "ERROR: Exception examining children of %s" % app
+                debug.println(debug.LEVEL_INFO, msg, True)
 
         if not candidates:
             msg = "ERROR: Unable to find active window from %s" % list(map(str, apps))
