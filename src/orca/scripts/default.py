@@ -2107,7 +2107,7 @@ class Script(script.Script):
                 orca_state.activeWindow = None
                 return
 
-            if event.detail1:
+            if event.detail1 and not event.source == orca_state.activeWindow:
                 msg = "DEFAULT: Updating active window to event source."
                 debug.println(debug.LEVEL_INFO, msg, True)
                 self.windowActivateTime = time.time()
