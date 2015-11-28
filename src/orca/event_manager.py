@@ -153,11 +153,6 @@ class EventManager:
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if role in [pyatspi.ROLE_FILLER]:
-            msg = 'EVENT MANAGER: Ignoring because events from this role are ignored'
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
         if event.type.startswith('object:state-changed:showing'):
             if role not in [pyatspi.ROLE_ALERT,
                             pyatspi.ROLE_ANIMATION,
