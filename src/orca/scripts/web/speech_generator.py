@@ -194,11 +194,15 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
             return super()._generateNumberOfChildren(obj, **args)
 
-        children = [x for x in obj if x.getRole() == pyatspi.ROLE_LIST_ITEM]
-        if not children:
+        setsize = self._script.utilities.getSetSize(obj[0])
+        if setsize is None:
+            children = [x for x in obj if x.getRole() == pyatspi.ROLE_LIST_ITEM]
+            setsize = len(children)
+
+        if not setsize:
             return []
 
-        result = [messages.listItemCount(len(children))]
+        result = [messages.listItemCount(setsize)]
         result.extend(self.voice(speech_generator.SYSTEM))
         return result
 
@@ -404,13 +408,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
-        try:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-        except:
-            attrs = {}
-
-        position = attrs.get("posinset")
-        total = attrs.get("setsize")
+        position = self._script.utilities.getPositionInSet(obj)
+        total = self._script.utilities.getSetSize(obj)
         if position is None or total is None:
             return super()._generatePositionInList(obj, **args)
 

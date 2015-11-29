@@ -1468,8 +1468,10 @@ class SpeechGenerator(generator.Generator):
         if role not in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
             return result
 
-        items = self._script.utilities.selectedChildren(obj)
-        items = items or [self._script.utilities.focusedChild(obj)]
+        if 'Selection' in pyatspi.listInterfaces(obj):
+            items = self._script.utilities.selectedChildren(obj)
+        else:
+            items = items or [self._script.utilities.focusedChild(obj)]
         if not (items and items[0]):
             return result
 

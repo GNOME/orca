@@ -74,6 +74,8 @@ class Utilities(script_utilities.Utilities):
         self._text = {}
         self._tag = {}
         self._treatAsDiv = {}
+        self._posinset = {}
+        self._setsize = {}
         self._currentObjectContents = None
         self._currentSentenceContents = None
         self._currentLineContents = None
@@ -119,6 +121,8 @@ class Utilities(script_utilities.Utilities):
         self._roleDescription = {}
         self._tag = {}
         self._treatAsDiv = {}
+        self._posinset = {}
+        self._setsize = {}
         self._cleanupContexts()
 
     def clearContentCache(self):
@@ -369,6 +373,40 @@ class Utilities(script_utilities.Utilities):
 
         rv = attrs.get('roledescription', '')
         self._roleDescription[hash(obj)] = rv
+        return rv
+
+    def getPositionInSet(self, obj):
+        rv = self._posinset.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            attrs = {}
+
+        position = attrs.get('posinset')
+        if position is not None:
+            rv = int(position)
+
+        self._posinset[hash(obj)] = rv
+        return rv
+
+    def getSetSize(self, obj):
+        rv = self._setsize.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            attrs = {}
+
+        setsize = attrs.get('setsize')
+        if setsize is not None:
+            rv = int(setsize)
+
+        self._setsize[hash(obj)] = rv
         return rv
 
     def _getID(self, obj):
