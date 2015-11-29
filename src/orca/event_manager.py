@@ -641,7 +641,7 @@ class EventManager:
 
         if state and state.contains(pyatspi.STATE_ICONIFIED):
             msg = 'EVENT MANAGER: Ignoring iconified object: %s' % event.source
-            debug.println(debug.LEVEL_INFO, True)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         if not debug.eventDebugFilter or debug.eventDebugFilter.match(eType) \
