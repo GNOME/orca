@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
 "POT-Creation-Date: 2015-11-24 02:08+0000\n"
-"PO-Revision-Date: 2015-11-24 11:14+0100\n"
+"PO-Revision-Date: 2015-11-30 12:22+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -722,7 +722,7 @@ msgstr "Línea siguiente:"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:66
 msgid "Desktop: <keyseq><key>KP 9</key></keyseq>"
-msgstr "Portátil: <keyseq><key>TN 9</key></keyseq>"
+msgstr "Sobremesa: <keyseq><key>TN 9</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:67
@@ -902,7 +902,7 @@ msgstr "Carácter actual:"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:136 C/commands_reading.page:111
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq>"
-msgstr "Portátil: <keyseq><key>TN 2</key></keyseq>"
+msgstr "Sobremesa: <keyseq><key>TN 2</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:137 C/commands_reading.page:116
@@ -1025,7 +1025,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:181
 msgid "Use Say All to review the current dialog or window:"
-msgstr "Usar Leer todo para revisar el diálogo o la ventana actuales:"
+msgstr "Usar Hablar todo para revisar el diálogo o la ventana actuales:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:183
@@ -1459,7 +1459,7 @@ msgstr "Leer el valor unicode del carácter actual:"
 #. (itstool) path: section/title
 #: C/commands_reading.page:157
 msgid "Say All"
-msgstr "Leer todo"
+msgstr "Hablar todo"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:158
@@ -1467,8 +1467,8 @@ msgid ""
 "Orca's Say All command will cause <app>Orca</app> to speak the entire "
 "document beginning from your current location."
 msgstr ""
-"El comando Leer todo de Orca hará que <app>Orca</app> lea todo el documento "
-"comenzando desde su ubicación actual."
+"El comando Hablar todo de Orca hará que <app>Orca</app> hable todo el "
+"documento comenzando desde su ubicación actual."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:164
@@ -1545,7 +1545,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/commands_reading.page:222
 msgid "Browse and Focus Modes"
-msgstr ""
+msgstr "Modos de navegación y de foco"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:223
@@ -1553,22 +1553,22 @@ msgid ""
 "<app>Orca</app>'s Browse and Focus modes let you switch between reading and "
 "interacting with web content."
 msgstr ""
+"Los modos de foco y navegación de <app>Orca</app> le permiten cambiar entre "
+"leer e interactual con el contenido web."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:229
-#, fuzzy
 #| msgid ""
 #| "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgid ""
 "Switch between browse mode and focus mode: <keyseq><key>Orca Modifier</"
 "key><key>A</key></keyseq>"
 msgstr ""
-"Entrar en modo de aprendizaje: <keyseq><key>Modificador de Orca</key><key>H</"
-"key></keyseq>"
+"Cambiar entre modo navegación y modo foco: <keyseq><key>Modificador de Orca</"
+"key><key>A</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:235
-#, fuzzy
 #| msgid ""
 #| "Enter list shortcuts mode: <keyseq><key>Orca Modifier</key><key>H</key></"
 #| "keyseq> (double-clicked)"
@@ -1576,8 +1576,8 @@ msgid ""
 "Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (double-clicked)"
 msgstr ""
-"Entrar en modo de lista de atajos: <keyseq><key>Modificador de Orca</"
-"key><key>H</key></keyseq> (doble pulsación)"
+"Activa el modo de foco «pegajoso»: <keyseq><key>Modificador de Orca</"
+"key><key>A</key></keyseq> (doble pulsación)"
 
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
@@ -1634,7 +1634,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:40
-#, fuzzy
 #| msgid ""
 #| "Toggle between cell and row reading in a table: <keyseq><key>Orca "
 #| "Modifier</key><key>F11</key></keyseq>"
@@ -1642,8 +1641,8 @@ msgid ""
 "Toggle between verbose and brief verbosity levels: <keyseq><key>Orca "
 "Modifier</key><key>V</key></keyseq>"
 msgstr ""
-"Alternar entre lectura de celdas y lectura de filas en una tabla: "
-"<keyseq><key>Modificador de Orca</key><key>F11</key></keyseq>"
+"Alternar entre los niveles de detalle ampliado y escueto: "
+"<keyseq><key>Modificador de Orca</key><key>V</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:46
@@ -1653,10 +1652,9 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:51
-#, fuzzy
 #| msgid "Cycle to the next spoken punctuation level: (Unbound)"
 msgid "Change the spoken number style: (Unbound)"
-msgstr "Cambiar al siguiente nivel de lectura de puntuación: (sin asociar)"
+msgstr "Cambiar el estilo de número hablado: (sin asociar)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:54
@@ -2728,10 +2726,10 @@ msgid ""
 "guide."
 msgstr ""
 "Finalmente, para que <app>Orca</app> lea todo el documento desde su "
-"ubicación actual, use el comando «Leer todo». Puede encontrar este comando, "
-"junto con un listado más completo de comandos de <app>Orca</app> para "
-"acceder al texto de los documentos, en la guía <link xref=\"commands_reading"
-"\">comandos de lectura</link>."
+"ubicación actual, use el comando «Hablar todo». Puede encontrar este "
+"comando, junto con un listado más completo de comandos de <app>Orca</app> "
+"para acceder al texto de los documentos, en la guía <link xref="
+"\"commands_reading\">comandos de lectura</link>."
 
 #. (itstool) path: info/title
 #: C/howto_flat_review.page:5
@@ -2833,7 +2831,6 @@ msgstr "Rellenar formularios"
 
 #. (itstool) path: page/p
 #: C/howto_forms.page:18
-#, fuzzy
 #| msgid ""
 #| "When interacting with web pages and other documents using <app>Orca</"
 #| "app>, you are interacting with the document itself; not a buffered copy "
@@ -2849,10 +2846,8 @@ msgid ""
 msgstr ""
 "Cuando interactúa con páginas web y otros documentos usando <app>Orca</app>, "
 "está interactuando con el documento en sí, no con una copia en el búfer de "
-"ese documento. Por lo tanto, no existe un modo especial en el cual entrar o "
-"salir cuando quiera rellenar un formulario. En cambio, simplemente navegue a "
-"cada campo cuyo contenido quiere cambiar e interactúe con el widget como si "
-"fuera un cuadro de diálogo."
+"ese documento. Los modos de foco y navegación de <app>Orca</app> le permiten "
+"cambiar entre leer y rellenar fomularios."
 
 #. (itstool) path: section/title
 #: C/howto_forms.page:25
@@ -2899,6 +2894,10 @@ msgid ""
 "in focus mode, you can switch to browse mode by pressing <keyseq><key>Orca "
 "Modifier</key><key>A</key></keyseq>."
 msgstr ""
+"Para usar los comandos de navegación de cursor o de navegación estructural "
+"de <app>Orca</app> para navegar a un campo de un formulario, debe estar en "
+"modo navegación. Si está en modo foco, puede cambiar al modo navegación "
+"pulsando <keyseq><key>Modificador de Orca</key><key>A</key></keyseq>."
 
 #. (itstool) path: section/title
 #: C/howto_forms.page:59
@@ -2923,7 +2922,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_forms.page:72
-#, fuzzy
 #| msgid ""
 #| "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms"
 #| "\"> structural navigation commands for forms</link>."
@@ -2933,7 +2931,8 @@ msgid ""
 "previous form field."
 msgstr ""
 "Use <link xref=\"commands_structural_navigation#forms\">los comandos de "
-"navegación estructural para formularios</link> de <app>Orca</app>."
+"navegación estructural para formularios</link> de <app>Orca</app> para "
+"moverse a los campos anterior o siguiente."
 
 #. (itstool) path: item/p
 #: C/howto_forms.page:79
@@ -2952,6 +2951,10 @@ msgid ""
 "focus mode, you can switch to browse mode by pressing <keyseq><key>Orca "
 "Modifier</key><key>A</key></keyseq>."
 msgstr ""
+"Para usar los comandos de navegación de cursor o de navegación estructural "
+"de <app>Orca</app> para salir de un campo de un formulario, debe estar en "
+"modo navegación. Si está en modo foco, puede cambiar al modo navegación "
+"pulsando <keyseq><key>Modificador de Orca</key><key>A</key></keyseq>."
 
 #. (itstool) path: info/title
 #: C/howto_key_bindings.page:5
@@ -3172,7 +3175,7 @@ msgid ""
 msgstr ""
 "La distribución también determina las pulsaciones de teclas asociadas a un "
 "número de comandos de <app>Orca</app>, especialmente en las áreas de "
-"«Revisión», «¿Dónde estoy?» y «Leer todo»."
+"«Revisión», «¿Dónde estoy?» y «Hablar todo»."
 
 #. (itstool) path: steps/title
 #: C/howto_keyboard_layout.page:41
@@ -5636,6 +5639,11 @@ msgid ""
 "the original contents of the braille display are restored. <app>Orca</app> "
 "has several settings you can use to control flash message presentation."
 msgstr ""
+"Los mensajes temporales son similares a las notificaciones o los anuncios: "
+"se muestran en su pantalla Braille actualizable durante un breve tiempo, "
+"después del cual se restaura el contenido original de la pantalla Braille. "
+"<app>Orca</app> tiene varias opciones de configuración que puede usar para "
+"controlar la presentación de los mensajes temporales."
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:123
@@ -5649,6 +5657,9 @@ msgid ""
 "messages to you in braille. If you prefer to only have <app>Orca</app>'s "
 "messages spoken, you should uncheck this checkbox."
 msgstr ""
+"Si la casilla <gui>Activar mensajes temporales</gui> está marcada <app>Orca</"
+"app> mostrará mensajes en braille. Si prefiere que <app>Orca</app> sólo "
+"hable los mensajes, debe desmarcar esta casilla."
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:129 C/preferences_braille.page:142
@@ -5682,6 +5693,12 @@ msgid ""
 "set to word.\" If you would prefer shorter messages, such as simply \"word,"
 "\" you should uncheck this checkbox."
 msgstr ""
+"Si la opción <gui>Los mensajes son detallados</gui> está activada, "
+"<app>Orca</app> presentará menajes detallados en Braille. Por ejemplo, si "
+"usa el comando de <app>Orca</app> para cambiar el eco de la tecla, "
+"<app>Orca</app> puede mostrar «Eco de teclado establecido a tecla». Si "
+"prefiere mensajes más cortos, como simplemente «palabra», debe desmarcar "
+"esta casilla."
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:147
@@ -5696,6 +5713,10 @@ msgid ""
 "which causes your display to be updated, you should check the <gui>Messages "
 "are persistent</gui> checkbox."
 msgstr ""
+"Como se ha indicado antes, los mensajes temporales sólo se muestran durante "
+"un breve período de tiempo. Si prefiere que los mensajes se sigan mostrando "
+"mientras realiza una acción que hace que se actualice su pantalla, debe "
+"marcar la casilla <gui>Los mensajes son persistentes</gui>."
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:159
@@ -5710,6 +5731,10 @@ msgid ""
 "Message duration (secs)</gui> spin button. Note that the value of this "
 "setting will be ignored if you have enabled persistent flash messages."
 msgstr ""
+"La cantidad de tiempo que <app>Orca</app> esperará antes de eliminar el "
+"mensaje y restaurar el contenido original de la pantalla se puede configurar "
+"con el botón <gui>Duración del mensaje (segs)</gui>. Tenga en cuenta que el "
+"valor de esta opción se ignorará si los mensajes temporales son persistentes."
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:166
@@ -5903,7 +5928,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:47
 msgid "Automatic focus mode during caret navigation"
-msgstr ""
+msgstr "Modo de foco automático durante la navegación de cursor"
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:48
@@ -5917,11 +5942,20 @@ msgid ""
 "continue to control what happens when you press <key>Down</key>, thus making "
 "it possible to arrow out of the entry and continue reading."
 msgstr ""
+"Si esta casilla está activada, <app>Orca</app> activará automáticamente el "
+"modo de foco cuando use los comandos de navegación del cursor para navegar a "
+"un campo de un formulario. Por ejemplo, pulsar la tecla <key>Abajo</key> le "
+"permitirá moverse a una entrada pero una vez que lo haya hecho, Orca "
+"cambiará al modo de foco, y la siguientes pulsaciones de la tecla "
+"<key>Abajo</key> estarán controladas por el navegador web y no por Orca. Si "
+"esta casilla no está marcada, <app>Orca</app> continuará controlando lo que "
+"sucede cuando pulsa la tecla <key>Abajo</key>, haciendo por lo tanto posible "
+"salir de la entrada y seguir leyendo."
 
 #. (itstool) path: note/title
 #: C/preferences_gecko.page:62 C/preferences_gecko.page:104
 msgid "Manually switching between browse mode and focus mode"
-msgstr ""
+msgstr "Cambiar manualmente entre modo navegación y modo foco"
 
 #. (itstool) path: note/p
 #: C/preferences_gecko.page:63 C/preferences_gecko.page:105
@@ -5930,6 +5964,9 @@ msgid ""
 "<keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch between "
 "browse mode and focus mode."
 msgstr ""
+"Para iniciar o detener la interacción con el campo del formulario que tiene "
+"el foco, use <keyseq><key>Modificador de Orca</key><key>A</key></keyseq> "
+"para cambiar entre el modo navegación y el modo foco."
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:71
@@ -5960,10 +5997,9 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:90
-#, fuzzy
 #| msgid "Configuring Structural Navigation"
 msgid "Automatic focus mode during structural navigation"
-msgstr "Configurar la navegación estructural"
+msgstr "Modo de foco automático durante la navegación estructural"
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:91
@@ -5976,6 +6012,14 @@ msgid ""
 "checked, then <app>Orca</app> will leave you in browse mode and your next "
 "press of <key>E</key> would move you to the next entry on the page."
 msgstr ""
+"Si esta casilla está marcada, <app>Orca</app> activará automáticamente el "
+"modo foco cuando use los comandos de navegación estructural para navegar al "
+"campo de un formulario. Por ejemplo, al pulsar la tecla <key>E</key> para "
+"moverse a la siguiente entrada se moverá el foco y se activará el modo foco, "
+"por lo que la siguiente pulsación de la tecla <key>E</key> escribirá una «e» "
+"en la entrada. Si esta casilla no está marcada <app>Orca</app> permanecerá "
+"en modo navegación, y la siguiente pulsación de la tecla <key>E</key> le "
+"moverá a la siguiente entrada en la página."
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:113
@@ -6001,11 +6045,10 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:123
 msgid "Enable layout mode for content"
-msgstr ""
+msgstr "Activar el modo de distribución para el contenido"
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:124
-#, fuzzy
 #| msgid ""
 #| "If this checkbox is checked, <app>Orca</app> will always move the caret "
 #| "to the beginning of the line when <app>Orca</app> is controlling the "
@@ -6019,11 +6062,12 @@ msgid ""
 "<app>Orca</app> will treat objects such as links and form fields as if they "
 "were on separate lines, both for presentation and navigation."
 msgstr ""
-"Si esta casilla está marcada, <app>Orca</app> moverá siempre el cursor al "
-"comienzo de la línea cuando <app>Orca</app> está controlando el cursor y "
-"pulse flecha arriba o flecha abajo para leer la línea anterior o siguiente. "
-"Si esta casilla no está marcada, <app>Orca</app> tratará de mantener el "
-"cursor en la misma posición horizontal mientras navega arriba o abajo."
+"Si esta casilla está marcada, <app>Orca</app> respetará siempre la "
+"distribución del contenido de la pantalla y mostrará la línea completa, "
+"incluyendo los enlaces o campos de formulario de esa línea. Si esta casilla "
+"no está marcada, <app>Orca</app> tratará los objetos como enlaces y campos "
+"de formulario como si estuvieran en líneas separadas, tanto para "
+"presentación como para navegación."
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:137
@@ -6254,14 +6298,13 @@ msgstr ""
 
 #. (itstool) path: info/desc
 #: C/preferences_general.page:93
-#, fuzzy
 #| msgid "Preferences dialog box options for managing settings profiles."
 msgid ""
 "Preferences dialog box options for enabling rewind, fast forward, and "
 "structural navigation during Say All."
 msgstr ""
-"Opciones del cuadro de diálogo de preferencias para gestionar perfiles de "
-"configuración."
+"Opciones del cuadro de diálogo de preferencias para activar el ir hacia "
+"adelante y hacia atrás y la navegación estructural al Hablar todo."
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:98
@@ -6279,6 +6322,14 @@ msgid ""
 "document in order to re-hear something which was just read or skip past text "
 "of no interest without having to restart Say All."
 msgstr ""
+"La funcionalidad Hablar todo de <app>Orca</app> habla el contenido del "
+"documento desde el punto actual hasta el final. De manera predeterminada, al "
+"pulsar cualquier tecla se interrumpirá la presentación de Hablar todo. Sin "
+"embargo, si activa la casilla <gui>Activar ir hacia atrás y avance rápido en "
+"Hablar todo</gui>, las teclas <key>Arriba</key> y <key>Abajo</key> se pueden "
+"usar durante Hablar todo para moverse rápidamente por el documento para "
+"volver a escuchar algo que ya se ha leído o para omitir texto no interesante "
+"sin tener que reiniciar la lectura."
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:108
@@ -6293,10 +6344,17 @@ msgid ""
 "<key>T</key></keyseq> continues reading from the next/previous table, and so "
 "on."
 msgstr ""
+"Si está leyendo un documento con un aplicación que soporte la navegación "
+"estructural, y ha marcado la casilla <gui>Activar la navegación estructural "
+"en Hablar todo</gui> puede usar los comandos de navegación estructural "
+"soportados de manera similar: <key>H</key>/<keyseq><key>Mayús</key> <key>H</"
+"key></keyseq> sigue leyendo el encabezado anterior o siguiente, <key>P</key>/"
+"<keyseq><key>Mayús</key><key>P</key></keyseq> sigue leyendo el párrafo "
+"anterior o siguiente, <key>T</key>/<keyseq><key>Mayús</key> <key>T</key></"
+"keyseq>, sigue leyendo la tabla anterior o siguiente, y así sucesivamente."
 
 #. (itstool) path: info/desc
 #: C/preferences_general.page:125
-#, fuzzy
 #| msgid ""
 #| "Preferences dialog box option for showing or hiding the <app>Orca</app> "
 #| "main window."
@@ -6304,13 +6362,13 @@ msgid ""
 "Preferences dialog box option for customizing <app>Orca</app>'s Say All "
 "presentation."
 msgstr ""
-"Opción del cuadro de diálogo de preferencias para mostrar u ocultar la "
-"ventana principal de <app>Orca</app>."
+"Opción del cuadro de diálogo de preferencias para personalizar la "
+"presentación Hablar todo de <app>Orca</app>."
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:130
 msgid "Say All By"
-msgstr "Leer todo por"
+msgstr "Hablar todo por"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:131
@@ -6319,9 +6377,9 @@ msgid ""
 "app> speaks a sentence at a time or a line at a time when doing a \"Say All"
 "\" of a document."
 msgstr ""
-"El cuadro combinado <gui>Leer todo por</gui> le permite especificar si "
-"<app>Orca</app> habla una frase a la vez o una línea cuando se hace un «Leer "
-"todo» de un documento."
+"El cuadro combinado <gui>Hablar todo por</gui> le permite especificar si "
+"<app>Orca</app> habla una frase a la vez o una línea cuando se hace un "
+"«Hablar todo» de un documento."
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:136
@@ -6395,7 +6453,6 @@ msgstr "Hablar actualizaciones"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:184
-#, fuzzy
 #| msgid ""
 #| "If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
 #| "periodically present the status of progress bars."
@@ -6403,8 +6460,8 @@ msgid ""
 "If the <gui>Speak updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically speak the status of progress bars."
 msgstr ""
-"Si la casilla <gui>Activado</gui> está marcada <app>Orca</app> presentará "
-"periódicamente el estado de las barras de progreso."
+"Si la casilla <gui>Hablar actualizaciones</gui> está marcada <app>Orca</app> "
+"hablará periódicamente el estado de las barras de progreso."
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:193
@@ -6414,7 +6471,6 @@ msgstr "Actualizaciones en Braille"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:194
-#, fuzzy
 #| msgid ""
 #| "If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
 #| "periodically present the status of progress bars."
@@ -6423,8 +6479,9 @@ msgid ""
 "periodically display the status of progress bars on your refreshable braille "
 "display."
 msgstr ""
-"Si la casilla <gui>Activado</gui> está marcada <app>Orca</app> presentará "
-"periódicamente el estado de las barras de progreso."
+"Si la casilla <gui>Actualizaciones en Braille</gui> está marcada <app>Orca</"
+"app> presentará periódicamente el estado de las barras de progreso en su "
+"pantalla Braille."
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:204
@@ -6433,7 +6490,6 @@ msgstr "Sonar actualizaciones"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:205
-#, fuzzy
 #| msgid ""
 #| "If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
 #| "periodically present the status of progress bars."
@@ -6442,8 +6498,9 @@ msgid ""
 "periodically emit beeps which increase in pitch as the value of the progress "
 "bar increases."
 msgstr ""
-"Si la casilla <gui>Activado</gui> está marcada <app>Orca</app> presentará "
-"periódicamente el estado de las barras de progreso."
+"Si la casilla <gui>Sonar actualizaciones</gui> está marcada <app>Orca</app> "
+"emitirá pitidos periódicos a medida que el valor de la barra de progreso "
+"aumenta."
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:215
@@ -6452,10 +6509,11 @@ msgstr "Frecuencia (segs)"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:216
-#, fuzzy
 #| msgid "This spin button determines how often the announcement is made."
 msgid "This spin button determines how often updates are presented."
-msgstr "Este botón contador determina con qué frecuencia se hace el anuncio."
+msgstr ""
+"Este botón incremental determina con qué frecuencia se muestran las "
+"actualizaciones."
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:219
@@ -6869,7 +6927,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:133
-#, fuzzy
 #| msgid ""
 #| "While echo by character seems quite similar to the key echo of "
 #| "alphanumeric and punctuation keys, there are important differences, "
@@ -7408,6 +7465,12 @@ msgid ""
 "\"Key echo set to word.\" If you would prefer shorter messages, such as "
 "simply \"word,\" you should uncheck this checkbox."
 msgstr ""
+"Si la opción <gui>Los mensajes son del sistema son detallados</gui> está "
+"activada, <app>Orca</app> mostrará mensajes detalladados al hablar. Por "
+"ejemplo, si usa el comando de <app>Orca</app> para cambiar el eco de las "
+"teclas, <app>Orca</app> puede hablar «Eco de tecla establecido a palabra». "
+"Si prefiere mensajes más cortos, como simplemente «palabra», debe desmarcar "
+"esta casilla."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:207
@@ -7422,6 +7485,10 @@ msgid ""
 "27, 51 would be spoken as \"midnight blue.\" If you would prefer to hear the "
 "exact RGB value, you should uncheck this checkbox."
 msgstr ""
+"Si la opción <gui>Hablar colores como nombres</gui> está activada, "
+"<app>Orca</app> describirá los colores de manera más aproximada. Por "
+"ejemplo, RGB 0, 27, 51 se hablará como «midnight blue»\" Si prefiere "
+"escuchar el valor RGB exacto, desmarque esta casilla."
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:4
@@ -8017,6 +8084,9 @@ msgid ""
 "<app>Orca</app> to break a number like \"123\" into separate digits (\"1,\" "
 "\"2,\" and \"3\") prior to passing it along to the speech synthesizer."
 msgstr ""
+"Marcar la casilla <gui>Hablar números como dígitos</gui> hará que <app>Orca</"
+"app> divida un número como «123» en dígitos separados («1», «2» y «3») antes "
+"de enviarlo a sintetizador de voz."
 
 #~ msgid "Enabled"
 #~ msgstr "Activado"
