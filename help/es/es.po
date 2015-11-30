@@ -15,8 +15,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2015-11-24 02:08+0000\n"
-"PO-Revision-Date: 2015-11-30 12:22+0100\n"
+"POT-Creation-Date: 2015-11-30 11:27+0000\n"
+"PO-Revision-Date: 2015-11-30 16:41+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -1487,19 +1487,32 @@ msgstr "Atributos del texto y texto seleccionado"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:175
+#| msgid ""
+#| "Orca has a dedicated command for obtaining the attributes of the text at "
+#| "the caret location. In addition, if you use <app>Orca</app>'s Where Am I "
+#| "commands from within a text object in which text has been selected, "
+#| "<app>Orca</app> will announce the selected text."
 msgid ""
-"Orca has a dedicated command for obtaining the attributes of the text at the "
-"caret location. In addition, if you use <app>Orca</app>'s Where Am I "
-"commands from within a text object in which text has been selected, "
-"<app>Orca</app> will announce the selected text."
+"<app>Orca</app> has a dedicated command for obtaining the attributes of the "
+"text at the caret location. In addition, if you use <app>Orca</app>'s Where "
+"Am I commands from within a text object in which text has been selected, "
+"<app>Orca</app> will announce the selected text. If you would instead prefer "
+"a dedicated command for this purpose, you can bind <app>Orca</app>'s Speak "
+"Selected Text command to a keystroke. Please see <link xref="
+"\"howto_key_bindings\">Modifying Keybindings</link> for information on how "
+"to do so."
 msgstr ""
-"Orca ha dedicado un comando para obtener los atributos del texto en la "
-"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de "
-"<app>Orca</app> desde un objeto de texto en el que se ha seleccionado texto, "
-"<app>Orca</app> hablará el texto seleccionado."
+"<app>Orca</app> tiene un comando dedicado para obtener los atributos del "
+"texto en la ubicación del cursor. Además, si usa los comandos «Dónde estoy» "
+"de <app>Orca</app> desde un objeto de texto en el que se ha seleccionado "
+"texto, <app>Orca</app> hablará el texto seleccionado. Si en lugar de esto "
+"prefiere un comando dedicado para este propósito, puede vincular el comando "
+"Hablar el texto seleccionado de <app>Orca</app> a una pulsación de teclas. "
+"Consulte el apartado <link xref=\"howto_key_bindings\">Modificar las "
+"asociaciones de teclas</link> para obtener información sobre cómo hacerlo."
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:183
+#: C/commands_reading.page:187
 msgid ""
 "Present the text attributes: <keyseq><key>Orca Modifier</key><key>F</key></"
 "keyseq>"
@@ -1508,33 +1521,33 @@ msgstr ""
 "key><key>F</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:189 C/commands_where_am_i.page:31
+#: C/commands_reading.page:193 C/commands_where_am_i.page:31
 msgid "Perform basic where am I:"
 msgstr "Realizar el «dónde estoy» básico:"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:192 C/commands_where_am_i.page:34
+#: C/commands_reading.page:196 C/commands_where_am_i.page:34
 msgid "Desktop: <key>KP Enter</key>"
 msgstr "Sobremesa: <key>TN Intro</key>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:197 C/commands_where_am_i.page:37
+#: C/commands_reading.page:201 C/commands_where_am_i.page:37
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>"
 msgstr ""
 "Portátil: <keyseq><key>Modificador de Orca</key><key>Intro</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:204 C/commands_where_am_i.page:42
+#: C/commands_reading.page:208 C/commands_where_am_i.page:42
 msgid "Perform detailed where am I:"
 msgstr "Realizar el «dónde estoy» detallado:"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:207 C/commands_where_am_i.page:45
+#: C/commands_reading.page:211 C/commands_where_am_i.page:45
 msgid "Desktop: <key>KP Enter</key> (double-clicked)"
 msgstr "Sobremesa: <key>TN Intro</key> (doble pulsación)"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:212 C/commands_where_am_i.page:48
+#: C/commands_reading.page:216 C/commands_where_am_i.page:48
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq> (double-"
 "clicked)"
@@ -1542,13 +1555,55 @@ msgstr ""
 "Portátil: <keyseq><key>Modificador de Orca</key><key>Intro</key></keyseq> "
 "(doble pulsación)"
 
+#. (itstool) path: item/p
+#: C/commands_reading.page:224
+#| msgid "Decrease the rate: (Unbound)"
+msgid "Speak the selected text: (Unbound)"
+msgstr "Hablar el texto seleccionado: (sin asociar)"
+
 #. (itstool) path: section/title
-#: C/commands_reading.page:222
+#: C/commands_reading.page:229
+msgid "Link Details"
+msgstr "Detalles del enlace"
+
+#. (itstool) path: section/p
+#: C/commands_reading.page:230
+#| msgid ""
+#| "If you are using <app>Orca</app> in another desktop environment in which "
+#| "there is no command to toggle <app>Orca</app> on and off, you may find "
+#| "the command to quit <app>Orca</app> helpful. This command is unbound by "
+#| "default. Please see <link xref=\"howto_key_bindings\">Modifying "
+#| "Keybindings</link> for information on how to bind unbound commands."
+msgid ""
+"If you are on a link, <app>Orca</app>'s Basic Where Am I command can be used "
+"to announce the details associated with the link such as the link type, if "
+"the link is visited, the site description, and file size. If you would "
+"instead prefer dedicated command for this purpose, you can bind <app>Orca</"
+"app>'s Speak Link Details command to a keystroke. Please see <link xref="
+"\"howto_key_bindings\"> Modifying Keybindings</link> for information on how "
+"to do so."
+msgstr ""
+"Si está sobre un enlace, el comando de <app>Orca</app> Dónde estoy básico se "
+"puede usar para hablar los detalles asociados al enlace como su tipo, si se "
+"ha visitado, la descripción del sitio y el tamaño del archivo. Si en vez de "
+"esto, prefiere un comando para este propósito, puede vincular el comando de "
+"<app>Orca</app> Hablar los detalles del enlace a una pulsación de teclas. "
+"Consulte cómo <link xref=\"howto_key_bindings\">Modificar las asociaciones "
+"de teclas</link> para obtener información sobre cómo hacerlo."
+
+#. (itstool) path: item/p
+#: C/commands_reading.page:240
+#| msgid "Decrease the pitch: (Unbound)"
+msgid "Speak the link details: (Unbound)"
+msgstr "Hablar los detalles del enlace: (sin asociar)"
+
+#. (itstool) path: section/title
+#: C/commands_reading.page:245
 msgid "Browse and Focus Modes"
 msgstr "Modos de navegación y de foco"
 
 #. (itstool) path: section/p
-#: C/commands_reading.page:223
+#: C/commands_reading.page:246
 msgid ""
 "<app>Orca</app>'s Browse and Focus modes let you switch between reading and "
 "interacting with web content."
@@ -1557,9 +1612,7 @@ msgstr ""
 "leer e interactual con el contenido web."
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:229
-#| msgid ""
-#| "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
+#: C/commands_reading.page:252
 msgid ""
 "Switch between browse mode and focus mode: <keyseq><key>Orca Modifier</"
 "key><key>A</key></keyseq>"
@@ -1568,10 +1621,7 @@ msgstr ""
 "key><key>A</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:235
-#| msgid ""
-#| "Enter list shortcuts mode: <keyseq><key>Orca Modifier</key><key>H</key></"
-#| "keyseq> (double-clicked)"
+#: C/commands_reading.page:258
 msgid ""
 "Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (double-clicked)"
@@ -1634,9 +1684,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:40
-#| msgid ""
-#| "Toggle between cell and row reading in a table: <keyseq><key>Orca "
-#| "Modifier</key><key>F11</key></keyseq>"
 msgid ""
 "Toggle between verbose and brief verbosity levels: <keyseq><key>Orca "
 "Modifier</key><key>V</key></keyseq>"
@@ -1652,7 +1699,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:51
-#| msgid "Cycle to the next spoken punctuation level: (Unbound)"
 msgid "Change the spoken number style: (Unbound)"
 msgstr "Cambiar el estilo de número hablado: (sin asociar)"
 
@@ -2831,13 +2877,6 @@ msgstr "Rellenar formularios"
 
 #. (itstool) path: page/p
 #: C/howto_forms.page:18
-#| msgid ""
-#| "When interacting with web pages and other documents using <app>Orca</"
-#| "app>, you are interacting with the document itself; not a buffered copy "
-#| "of that document. Thus there is no special mode to get into or out of "
-#| "when you wish to fill out a form. Instead, simply navigate to each field "
-#| "whose contents you wish to change, and interact with the widget as if it "
-#| "were in a dialog box."
 msgid ""
 "When interacting with web pages and other documents using <app>Orca</app>, "
 "you are interacting with the document itself; not a buffered copy of that "
@@ -2922,9 +2961,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_forms.page:72
-#| msgid ""
-#| "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms"
-#| "\"> structural navigation commands for forms</link>."
 msgid ""
 "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
 "structural navigation commands for forms</link> to move to the next or "
@@ -3969,7 +4005,7 @@ msgstr "Moverse por las cabeceras y otros elementos"
 
 #. (itstool) path: page/title
 #. (itstool) path: section/title
-#: C/howto_structural_navigation.page:19 C/howto_tables.page:52
+#: C/howto_structural_navigation.page:19 C/howto_tables.page:57
 msgid "Structural Navigation"
 msgstr "Navegación estructural"
 
@@ -4048,7 +4084,7 @@ msgstr ""
 "por parte de sus desarrolladores."
 
 #. (itstool) path: note/title
-#: C/howto_structural_navigation.page:52 C/howto_tables.page:74
+#: C/howto_structural_navigation.page:52 C/howto_tables.page:79
 msgid "Don't Forget To Toggle Structural Navigation On!"
 msgstr "No olvide activar la navegación estructural."
 
@@ -4212,12 +4248,33 @@ msgstr ""
 #: C/howto_tables.page:36
 msgid ""
 "<app>Orca</app> allows you to customize whether only the cell should be "
-"read, or if the full row should be. You can set this preference Orca wide as "
-"well as on an application-by-application basis. How to do each is described "
-"in the guide on <link xref=\"preferences\"><app>Orca</app>'s preferences "
-"dialogs</link>. The setting can be found in the <gui>Table Rows</gui> radio "
-"button group on the <link xref=\"preferences_speech\"> <gui>Speech</gui> "
-"page</link>."
+"read, or if the full row should be, for GUI tables, document tables, and "
+"spreadsheets. Because these settings are independent of one another, you do "
+"not have to choose one table reading mode to fit multiple types of tables."
+msgstr ""
+"<app>Orca</app> le permite personalizar si se debe leer sólo la celda o si "
+"se debe leer la fila entera, en tablas de la IGU, de documentos y hojas de "
+"cálculo. Dado que estas opciones son independientes unas de las otras, no "
+"necesita elegir un modo de lectura de tablas que se ajuste a varios tipos de "
+"tablas."
+
+#. (itstool) path: section/p
+#: C/howto_tables.page:43
+#, fuzzy
+#| msgid ""
+#| "<app>Orca</app> allows you to customize whether only the cell should be "
+#| "read, or if the full row should be. You can set this preference Orca wide "
+#| "as well as on an application-by-application basis. How to do each is "
+#| "described in the guide on <link xref=\"preferences\"><app>Orca</app>'s "
+#| "preferences dialogs</link>. The setting can be found in the <gui>Table "
+#| "Rows</gui> radio button group on the <link xref=\"preferences_speech\"> "
+#| "<gui>Speech</gui> page</link>."
+msgid ""
+"You can set each of <app>Orca</app>'s table reading preferences <app>Orca</"
+"app> wide as well as on an application-by-application basis. How to do each "
+"is described in the guide on <link xref=\"preferences\"><app>Orca</app>'s "
+"preferences dialogs</link>. The settings can be found on the <link xref="
+"\"preferences_speech\"> <gui>Speech</gui> page</link>."
 msgstr ""
 "<app>Orca</app> le permite personalizar si sólo se debería leer la celda, o "
 "si se debería leer la fila completa. Puede configurar esta preferencia de "
@@ -4228,18 +4285,22 @@ msgstr ""
 "gui> <link xref=\"preferences_speech\"><gui>página de</gui> Voz</link>."
 
 #. (itstool) path: section/p
-#: C/howto_tables.page:45
+#: C/howto_tables.page:50
+#| msgid ""
+#| "In addition, there is an <app>Orca</app> command which allows you to "
+#| "toggle this setting on the fly: <keyseq><key>Orca Modifier</key> "
+#| "<key>F11</key></keyseq>."
 msgid ""
-"In addition, there is an <app>Orca</app> command which allows you to toggle "
-"this setting on the fly: <keyseq><key>Orca Modifier</key> <key>F11</key></"
-"keyseq>."
+"Lastly, there is also an <app>Orca</app> command which allows you to toggle "
+"cell versus row reading on the fly for the currently-active table: "
+"<keyseq><key>Orca Modifier</key><key>F11</key></keyseq>."
 msgstr ""
 "Además, hay un comando de <app>Orca</app> que le permite cambiar esta "
-"configuración al vuelo: <keyseq><key>Modificador de Orca</key><key>F11</"
-"key></keyseq>."
+"configuración al vuelo para la tabla actualmente activa: "
+"<keyseq><key>Modificador de Orca</key><key>F11</key></keyseq>."
 
 #. (itstool) path: section/p
-#: C/howto_tables.page:53
+#: C/howto_tables.page:58
 msgid ""
 "<app>Orca</app>'s <link xref=\"commands_structural_navigation#tables\">table "
 "Structural Navigation commands</link> make it possible for you to quickly "
@@ -4252,7 +4313,7 @@ msgstr ""
 "una tabla y pasar a la siguiente celda en cualquier dirección."
 
 #. (itstool) path: section/p
-#: C/howto_tables.page:59
+#: C/howto_tables.page:64
 msgid ""
 "As you navigate amongst and within tables using Structural Navigation, "
 "<app>Orca</app> will announce additional details to help you understand your "
@@ -4266,7 +4327,7 @@ msgstr ""
 "dirección que se está moviendo."
 
 #. (itstool) path: section/p
-#: C/howto_tables.page:66
+#: C/howto_tables.page:71
 msgid ""
 "In addition, <app>Orca</app> provides configurable <link xref="
 "\"preferences_table_navigation\">presentation options</link> which work in "
@@ -4281,7 +4342,7 @@ msgstr ""
 "anuncian o no las cabeceras de celda."
 
 #. (itstool) path: note/p
-#: C/howto_tables.page:75
+#: C/howto_tables.page:80
 msgid ""
 "Depending on where you are, it may be necessary for you to explicitly toggle "
 "Structural Navigation on before you can use it. To learn more, read <link "
@@ -4295,12 +4356,12 @@ msgstr ""
 "activar la navegación estructural</link>."
 
 #. (itstool) path: section/title
-#: C/howto_tables.page:84
+#: C/howto_tables.page:89
 msgid "Dynamic Headers"
 msgstr "Cabeceras dinámicas"
 
 #. (itstool) path: section/p
-#: C/howto_tables.page:85
+#: C/howto_tables.page:90
 msgid ""
 "Many of the tables you will encounter while reading have cells which serve "
 "as the header for a row or a column. Whether or not the creator of that "
@@ -4321,17 +4382,17 @@ msgstr ""
 "cabeceras dinámicas de <app>Orca</app> hace posible superar estos desafíos."
 
 #. (itstool) path: steps/title
-#: C/howto_tables.page:96
+#: C/howto_tables.page:101
 msgid "Setting Column Headers"
 msgstr "Configurar las cabeceras de las columnas"
 
 #. (itstool) path: item/p
-#: C/howto_tables.page:98
+#: C/howto_tables.page:103
 msgid "Move to the row which contains all of the column headers."
 msgstr "Muévase a la fila que contiene todas las cabeceras de las columnas."
 
 #. (itstool) path: item/p
-#: C/howto_tables.page:103
+#: C/howto_tables.page:108
 msgid ""
 "Press <keyseq><key>Orca Modifier</key><key>R</key></keyseq> to tell "
 "<app>Orca</app> that the current row is the one with the headers."
@@ -4340,17 +4401,17 @@ msgstr ""
 "indicar a <app>Orca</app> que la fila actual es la que tiene las cabeceras."
 
 #. (itstool) path: steps/title
-#: C/howto_tables.page:110
+#: C/howto_tables.page:115
 msgid "Set Row Headers"
 msgstr "Configurar las cabeceras de las filas"
 
 #. (itstool) path: item/p
-#: C/howto_tables.page:112
+#: C/howto_tables.page:117
 msgid "Move to the column which contains all of the row headers."
 msgstr "Muévase a la columna que contiene las cabeceras de las filas."
 
 #. (itstool) path: item/p
-#: C/howto_tables.page:117
+#: C/howto_tables.page:122
 msgid ""
 "Press <keyseq><key>Orca Modifier</key><key>C</key></keyseq> to tell "
 "<app>Orca</app> that the current column is the one with the headers."
@@ -4360,7 +4421,7 @@ msgstr ""
 "cabeceras."
 
 #. (itstool) path: section/p
-#: C/howto_tables.page:123
+#: C/howto_tables.page:128
 msgid ""
 "Having set either the column headers or the row headers, you should find "
 "that as you navigate amongst the cells, <app>Orca</app> will present each "
@@ -4384,7 +4445,7 @@ msgstr ""
 "cabeceras de columna, se presentará la cabecera asociada a la nueva columna."
 
 #. (itstool) path: section/p
-#: C/howto_tables.page:135
+#: C/howto_tables.page:140
 msgid ""
 "To clear headers, simply double-click the command you used to set them. Thus "
 "double-clicking <keyseq><key>Orca Modifier</key><key>R</key></keyseq> tells "
@@ -5477,10 +5538,11 @@ msgstr ""
 #: C/preferences_general.page:199 C/preferences_general.page:210
 #: C/preferences_key_echo.page:112 C/preferences_key_echo.page:122
 #: C/preferences_key_echo.page:157 C/preferences_key_echo.page:179
-#: C/preferences_speech.page:124 C/preferences_speech.page:154
-#: C/preferences_speech.page:166 C/preferences_speech.page:177
-#: C/preferences_speech.page:189 C/preferences_table_navigation.page:65
-#: C/preferences_voice.page:97 C/preferences_voice.page:108
+#: C/preferences_speech.page:105 C/preferences_speech.page:135
+#: C/preferences_speech.page:147 C/preferences_speech.page:158
+#: C/preferences_speech.page:170 C/preferences_speech.page:231
+#: C/preferences_table_navigation.page:65 C/preferences_voice.page:122
+#: C/preferences_voice.page:133
 msgid "Default value: not checked"
 msgstr "Valor predeterminado: no marcado"
 
@@ -5627,7 +5689,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:114
-#| msgid "3. Magnifier Settings"
 msgid "Flash Message Settings"
 msgstr "Configuración de mensajes temporales"
 
@@ -5670,12 +5731,13 @@ msgstr ""
 #: C/preferences_key_echo.page:57 C/preferences_key_echo.page:67
 #: C/preferences_key_echo.page:77 C/preferences_key_echo.page:87
 #: C/preferences_key_echo.page:99 C/preferences_speech.page:26
-#: C/preferences_speech.page:142 C/preferences_speech.page:202
-#: C/preferences_speech.page:214 C/preferences_spellcheck.page:41
+#: C/preferences_speech.page:123 C/preferences_speech.page:183
+#: C/preferences_speech.page:195 C/preferences_speech.page:207
+#: C/preferences_speech.page:219 C/preferences_spellcheck.page:41
 #: C/preferences_spellcheck.page:51 C/preferences_spellcheck.page:61
 #: C/preferences_table_navigation.page:34
 #: C/preferences_table_navigation.page:44
-#: C/preferences_table_navigation.page:54 C/preferences_voice.page:82
+#: C/preferences_table_navigation.page:54 C/preferences_voice.page:107
 msgid "Default value: checked"
 msgstr "Valor predeterminado: marcado"
 
@@ -5913,6 +5975,7 @@ msgstr ""
 
 #. (itstool) path: note/title
 #: C/preferences_gecko.page:39 C/preferences_gecko.page:82
+#: C/preferences_voice.page:76
 msgid "This setting can be toggled on the fly"
 msgstr "Esta configuración se puede cambiar al vuelo"
 
@@ -5997,7 +6060,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:90
-#| msgid "Configuring Structural Navigation"
 msgid "Automatic focus mode during structural navigation"
 msgstr "Modo de foco automático durante la navegación estructural"
 
@@ -6049,12 +6111,6 @@ msgstr "Activar el modo de distribución para el contenido"
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:124
-#| msgid ""
-#| "If this checkbox is checked, <app>Orca</app> will always move the caret "
-#| "to the beginning of the line when <app>Orca</app> is controlling the "
-#| "caret and you press Up or Down Arrow to read the previous or next line. "
-#| "If this checkbox is not checked, <app>Orca</app> will attempt to keep the "
-#| "caret in the same horizontal position as you navigate Up or Down."
 msgid ""
 "If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
 "the on-screen layout of the content and present the full line, including any "
@@ -6298,7 +6354,6 @@ msgstr ""
 
 #. (itstool) path: info/desc
 #: C/preferences_general.page:93
-#| msgid "Preferences dialog box options for managing settings profiles."
 msgid ""
 "Preferences dialog box options for enabling rewind, fast forward, and "
 "structural navigation during Say All."
@@ -6355,9 +6410,6 @@ msgstr ""
 
 #. (itstool) path: info/desc
 #: C/preferences_general.page:125
-#| msgid ""
-#| "Preferences dialog box option for showing or hiding the <app>Orca</app> "
-#| "main window."
 msgid ""
 "Preferences dialog box option for customizing <app>Orca</app>'s Say All "
 "presentation."
@@ -6447,15 +6499,11 @@ msgstr "Actualizaciones de barras de progreso"
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:183
-#| msgid "Speak cell coordinates"
 msgid "Speak updates"
 msgstr "Hablar actualizaciones"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:184
-#| msgid ""
-#| "If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
-#| "periodically present the status of progress bars."
 msgid ""
 "If the <gui>Speak updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically speak the status of progress bars."
@@ -6465,15 +6513,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:193
-#| msgid "Braille indicator"
 msgid "Braille updates"
 msgstr "Actualizaciones en Braille"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:194
-#| msgid ""
-#| "If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
-#| "periodically present the status of progress bars."
 msgid ""
 "If the <gui>Braille updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically display the status of progress bars on your refreshable braille "
@@ -6490,9 +6534,6 @@ msgstr "Sonar actualizaciones"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:205
-#| msgid ""
-#| "If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
-#| "periodically present the status of progress bars."
 msgid ""
 "If the <gui>Beep updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically emit beeps which increase in pitch as the value of the progress "
@@ -6509,7 +6550,6 @@ msgstr "Frecuencia (segs)"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:216
-#| msgid "This spin button determines how often the announcement is made."
 msgid "This spin button determines how often updates are presented."
 msgstr ""
 "Este botón incremental determina con qué frecuencia se muestran las "
@@ -6927,11 +6967,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:133
-#| msgid ""
-#| "While echo by character seems quite similar to the key echo of "
-#| "alphanumeric and punctuation keys, there are important differences, "
-#| "especially with respect to accented letters and other symbols for which "
-#| "there is no dedicated key:"
 msgid ""
 "While echo by character seems quite similar to the key echo of alphabetic, "
 "numeric, and punctuation keys, there are important differences, especially "
@@ -7197,48 +7232,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:44
-msgid "Table Rows"
-msgstr "Filas de tabla"
-
-#. (itstool) path: section/p
-#: C/preferences_speech.page:45
-msgid ""
-"The <gui>Table Rows</gui> radio button group determines what gets spoken "
-"when navigating amongst rows in a table. The available options are "
-"<gui>speak row</gui> and <gui>speak cell</gui>."
-msgstr ""
-"El grupo de botones de radio <gui>Filas de tabla</gui> determina qué se "
-"habla cuando se navega entre las filas de una tabla. Las opciones "
-"disponibles son <gui>Leer fila</gui> y <gui>Leer celda</gui>."
-
-#. (itstool) path: section/p
-#: C/preferences_speech.page:50
-msgid ""
-"Consider the process of examining the list of messages in your Inbox. In "
-"order to have <app>Orca</app> announce the sender, subject, date, and "
-"presence of attachments you would need <gui>speak row</gui>. On the other "
-"hand, when navigating amongst rows in a spreadsheet, hearing the full row "
-"may not be desired. In that case, <gui>speak cell</gui> should instead be "
-"chosen."
-msgstr ""
-"Considere el proceso de examinar la lista de mensajes en su bandeja de "
-"entrada. Para que <app>Orca</app> anuncie el remitente, asunto, fecha y la "
-"presencia de adjuntos necesitará <gui>Leer fila</gui>. Por otro lado, cuando "
-"se navega entre filas de una hoja de cálculo, puede que no desee escuchar la "
-"fila completa. En ese caso debería seleccionar <gui>Leer celda</gui>."
-
-#. (itstool) path: section/p
-#: C/preferences_speech.page:58
-msgid "Default value: <gui>Speak row</gui>"
-msgstr "Valor predeterminado: <gui>Leer fila</gui>"
-
-#. (itstool) path: section/title
-#: C/preferences_speech.page:63
 msgid "Punctuation Level"
 msgstr "Nivel de puntuación"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:64
+#: C/preferences_speech.page:45
 msgid ""
 "The <gui>Punctuation Level</gui> radio button group is used to adjust the "
 "amount of punctuation spoken by the synthesizer. The available levels are "
@@ -7250,17 +7248,17 @@ msgstr ""
 "mayoría</gui> y <gui>Toda</gui>."
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:70
+#: C/preferences_speech.page:51
 msgid "Default value: <gui>Most</gui>"
 msgstr "Valor predeterminado: <gui>La mayoría</gui>"
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:74
+#: C/preferences_speech.page:55
 msgid "None"
 msgstr "Ninguna"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:75
+#: C/preferences_speech.page:56
 msgid ""
 "Choosing a punctuation level of <gui>None</gui> would, as you expect, cause "
 "no punctuation to be spoken. Note, however, that special symbols such as "
@@ -7275,12 +7273,12 @@ msgstr ""
 "considerar estos símbolos como signos de puntuación."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:84
+#: C/preferences_speech.page:65
 msgid "Some"
 msgstr "Alguna"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:85
+#: C/preferences_speech.page:66
 msgid ""
 "Choosing a punctuation level of <gui>Some</gui> causes all of the previously-"
 "mentioned symbols to be spoken. In addition, <app>Orca</app> will speak "
@@ -7293,12 +7291,12 @@ msgstr ""
 "«/», «&amp;», «#»."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:93
+#: C/preferences_speech.page:74
 msgid "Most"
 msgstr "La mayoría"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:94
+#: C/preferences_speech.page:75
 msgid ""
 "Choosing a punctuation level of <gui>Most</gui> causes all of the previous-"
 "mentioned symbols to be spoken. In addition, <app>Orca</app> will speak all "
@@ -7311,12 +7309,12 @@ msgstr ""
 "em> «!», «'», «,», «.», «?»."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:102
+#: C/preferences_speech.page:83
 msgid "All"
 msgstr "Toda"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:103
+#: C/preferences_speech.page:84
 msgid ""
 "Choosing a punctuation level of <gui>All</gui>, as expected, causes "
 "<app>Orca</app> to speak all known punctuation symbols."
@@ -7325,12 +7323,12 @@ msgstr ""
 "que <app>Orca</app> hable todos los símbolos de puntuación conocidos."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:110
+#: C/preferences_speech.page:91
 msgid "Spoken Context"
 msgstr "Contexto hablado"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:111
+#: C/preferences_speech.page:92
 msgid ""
 "The following items control the presentation of a variety of supplemental, "
 "\"system\" information about the item with focus. Because the associated "
@@ -7343,12 +7341,12 @@ msgstr ""
 "voz de sistema de <app>Orca</app>."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:118
+#: C/preferences_speech.page:99
 msgid "Only speak displayed text"
 msgstr "Hablar solamente el texto mostrado"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:119
+#: C/preferences_speech.page:100
 msgid ""
 "Checking this checkbox causes <app>Orca</app> to only speak actual text "
 "displayed on screen. This option is intended primarily for low vision users "
@@ -7359,7 +7357,7 @@ msgstr ""
 "baja visión y usuarios con una discapacidad de aprendizaje visual."
 
 #. (itstool) path: note/p
-#: C/preferences_speech.page:128
+#: C/preferences_speech.page:109
 msgid ""
 "The follow items will not be available for configuration if the <gui>Only "
 "speak displayed text</gui> checkbox is checked."
@@ -7368,12 +7366,12 @@ msgstr ""
 "casilla <gui>Hablar solamente el texto mostrado.</gui> está marcada."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:135
+#: C/preferences_speech.page:116
 msgid "Speak blank lines"
 msgstr "Indicar líneas en blanco"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:136
+#: C/preferences_speech.page:117
 msgid ""
 "If the <gui>Speak blank lines</gui> checkbox is checked, <app>Orca</app> "
 "will say \"blank\" each time you arrow to a blank line. If it is unchecked, "
@@ -7385,12 +7383,12 @@ msgstr ""
 "a una línea en blanco."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:147
+#: C/preferences_speech.page:128
 msgid "Speak indentation and justification"
 msgstr "Indicar sangrado y justificación"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:148
+#: C/preferences_speech.page:129
 msgid ""
 "When working with code or editing other documents it is often desirable to "
 "be aware of justification and indentation. Checking the <gui>Speak "
@@ -7403,12 +7401,12 @@ msgstr ""
 "anuncie esta información."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:159
+#: C/preferences_speech.page:140
 msgid "Speak object mnemonics"
 msgstr "Leer las teclas de acceso del objeto"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:160
+#: C/preferences_speech.page:141
 msgid ""
 "If the <gui>Speak object mnemonics</gui> checkbox is checked, <app>Orca</"
 "app> will announce the mnemonic associated with the object with focus (such "
@@ -7420,12 +7418,12 @@ msgstr ""
 "<gui>Aceptar</gui>)."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:171
+#: C/preferences_speech.page:152
 msgid "Speak child position"
 msgstr "Indicar la posición del hijo"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:172
+#: C/preferences_speech.page:153
 msgid ""
 "Checking the <gui>Speak child position</gui> checkbox will cause <app>Orca</"
 "app> to announce the position of the focused item in menus, lists, and trees "
@@ -7436,12 +7434,12 @@ msgstr ""
 "listas y árboles (Ej. «9 de 16»)."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:182
+#: C/preferences_speech.page:163
 msgid "Speak tutorial messages"
 msgstr "Leer mensajes de aprendizaje"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:183
+#: C/preferences_speech.page:164
 msgid ""
 "If the <gui>Speak tutorial messages</gui> checkbox is checked, as you move "
 "amongst objects in an interface, <app>Orca</app> will provide additional "
@@ -7452,12 +7450,12 @@ msgstr ""
 "interactuar con el objeto que actualmente tiene el foco."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:194
+#: C/preferences_speech.page:175
 msgid "System messages are detailed"
 msgstr "Los mensajes del sistema son detallados"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:195
+#: C/preferences_speech.page:176
 msgid ""
 "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> will "
 "present detailed messages to you in speech. For instance, if you use "
@@ -7473,12 +7471,12 @@ msgstr ""
 "esta casilla."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:207
+#: C/preferences_speech.page:188
 msgid "Speak colors as names"
 msgstr "Hablar colores como nombres"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:208
+#: C/preferences_speech.page:189
 msgid ""
 "If <gui>Speak colors as names</gui> is checked, <app>Orca</app> will "
 "describe colors, looking for the closest approximate. For instance, RGB 0, "
@@ -7489,6 +7487,70 @@ msgstr ""
 "<app>Orca</app> describirá los colores de manera más aproximada. Por "
 "ejemplo, RGB 0, 27, 51 se hablará como «midnight blue»\" Si prefiere "
 "escuchar el valor RGB exacto, desmarque esta casilla."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:200
+msgid "Read full row in GUI tables"
+msgstr "Leer la fila completa el tablas de la IGU"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:201
+msgid ""
+"If <gui>Read full row in GUI tables</gui> is checked, as you arrow up and "
+"down in application tables such as the list of messages in your Inbox, "
+"<app>Orca</app> will speak the entire row. If you would prefer to hear only "
+"the cell with focus, you should uncheck this checkbox."
+msgstr ""
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:212
+#| msgid "Reading Documents and Web Pages"
+msgid "Read full row in document tables"
+msgstr "Leer la fila completa el tablas del documento"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:213
+#, fuzzy
+#| msgid ""
+#| "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> "
+#| "will present detailed messages to you in speech. For instance, if you use "
+#| "<app>Orca</app>'s command to change key echo, <app>Orca</app> might speak "
+#| "\"Key echo set to word.\" If you would prefer shorter messages, such as "
+#| "simply \"word,\" you should uncheck this checkbox."
+msgid ""
+"If <gui>Read full row in document tables</gui> is checked, as you arrow up "
+"and down in tables such as those found in <app>Writer</app> and web "
+"documents, <app>Orca</app> will speak the entire row. If you would prefer to "
+"hear only the cell with focus, you should uncheck this checkbox."
+msgstr ""
+"Si la opción <gui>Los mensajes son del sistema son detallados</gui> está "
+"activada, <app>Orca</app> mostrará mensajes detalladados al hablar. Por "
+"ejemplo, si usa el comando de <app>Orca</app> para cambiar el eco de las "
+"teclas, <app>Orca</app> puede hablar «Eco de tecla establecido a palabra». "
+"Si prefiere mensajes más cortos, como simplemente «palabra», debe desmarcar "
+"esta casilla."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:224
+msgid "Read full row in spreadsheets"
+msgstr "Leer la fila completa el hojas de cálculo"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:225
+#| msgid ""
+#| "If <gui>Enable flash messages</gui> is checked, <app>Orca</app> will "
+#| "present messages to you in braille. If you prefer to only have <app>Orca</"
+#| "app>'s messages spoken, you should uncheck this checkbox."
+msgid ""
+"If <gui>Read full row in spreadsheets</gui> is checked, as you arrow up and "
+"down in spreadsheets, <app>Orca</app> will speak the entire row. If you "
+"would prefer to hear only the cell with focus, you should uncheck this "
+"checkbox."
+msgstr ""
+"Si la casilla <gui>Hablar fila completa en hojas de cálculo</gui> está "
+"marcada, a medida que sube y baja en la hoja de cálculo <app>Orca</app> "
+"hablará la fila completa. Si prefiere escuchar sólo la celda que tiene el "
+"foco, debe desmarcar esta casilla."
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:4
@@ -8008,11 +8070,62 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:63
+msgid "Capitalization style"
+msgstr "Estilo de uso de mayúsculas"
+
+#. (itstool) path: section/p
+#: C/preferences_voice.page:64
+msgid ""
+"This combo box allows you to choose which Speech Dispatcher capitalization "
+"indication styles you wish to use in addition to <app>Orca</app>'s "
+"capitalization voice. The options, which are named using Speech Dispatcher's "
+"terminology, are:"
+msgstr ""
+"Esta caja combinada le permite elegir qué estilo de uso de mayúsculas de "
+"«Speech Dispatcher» quiere usar además de la voz de <app>Orca</app>. Las "
+"opciones, usando la terminología de nombres de «Speech Dispatcher», son:"
+
+#. (itstool) path: item/p
+#: C/preferences_voice.page:71
+#| msgid "<gui>Smoothing</gui>: Bilinear or none."
+msgid "<gui>icon</gui>: Plays a tone"
+msgstr "<gui>icono</gui>: reproduce un tono"
+
+#. (itstool) path: item/p
+#: C/preferences_voice.page:72
+msgid "<gui>spell</gui>: Speaks the word \"capital\""
+msgstr "<gui>deletrear</gui>: habla la palabra «mayúscula»"
+
+#. (itstool) path: item/p
+#: C/preferences_voice.page:73
+#| msgid "<gui>Insert</gui>"
+msgid "<gui>none</gui>"
+msgstr "<gui>ninguno</gui>"
+
+#. (itstool) path: note/p
+#: C/preferences_voice.page:77
+msgid ""
+"<app>Orca</app> also has a command to cycle through the available "
+"capitalization styles. See <link xref=\"commands_speech_settings\"> Speech "
+"Settings Commands</link> for more information."
+msgstr ""
+"<app>Orca</app> también tiene un comando para cambia entre estilos de uso de "
+"mayúsculas. Consulte <link xref=\"commands_speech_settings\">Comandos de "
+"configuración de voz</link> para obtener más información."
+
+#. (itstool) path: section/p
+#: C/preferences_voice.page:83
+#| msgid "Default value: 5"
+msgid "Default value: none"
+msgstr "Valor predeterminado: ninguno"
+
+#. (itstool) path: section/title
+#: C/preferences_voice.page:88
 msgid "Rate, Pitch, and Volume"
 msgstr "Velocidad, tono y volumen"
 
 #. (itstool) path: section/p
-#: C/preferences_voice.page:64
+#: C/preferences_voice.page:89
 msgid ""
 "These three left-right sliders allow you to further customize the sound of "
 "the person you have just selected."
@@ -8021,17 +8134,17 @@ msgstr ""
 "el sonido de la persona que acaba de seleccionar."
 
 #. (itstool) path: section/title
-#: C/preferences_voice.page:71
+#: C/preferences_voice.page:96
 msgid "Global Voice Settings"
 msgstr "Configuración global de voz"
 
 #. (itstool) path: section/title
-#: C/preferences_voice.page:73
+#: C/preferences_voice.page:98
 msgid "Break speech into chunks between pauses"
 msgstr "Partir la voz en trozos entre pausas"
 
 #. (itstool) path: section/p
-#: C/preferences_voice.page:74
+#: C/preferences_voice.page:99
 msgid ""
 "Depending on the enabled speech settings, <app>Orca</app> may have quite a "
 "bit to say about a particular object such as its name, its role, its state, "
@@ -8047,12 +8160,12 @@ msgstr ""
 "de estos elementos de información."
 
 #. (itstool) path: section/title
-#: C/preferences_voice.page:87
+#: C/preferences_voice.page:112
 msgid "Speak multicase strings as words"
 msgstr "Hablar cadenas con mayúsculas y minúsculas como palabras"
 
 #. (itstool) path: section/p
-#: C/preferences_voice.page:88
+#: C/preferences_voice.page:113
 msgid ""
 "In some text, and especially when working with code, one often comes across "
 "a \"word\" consisting of several words with alternating case, such as "
@@ -8073,12 +8186,12 @@ msgstr ""
 "voz."
 
 #. (itstool) path: section/title
-#: C/preferences_voice.page:102
+#: C/preferences_voice.page:127
 msgid "Speak numbers as digits"
 msgstr "Hablar números como dígitos"
 
 #. (itstool) path: section/p
-#: C/preferences_voice.page:103
+#: C/preferences_voice.page:128
 msgid ""
 "Checking the <gui>Speak numbers as digits</gui> checkbox will cause "
 "<app>Orca</app> to break a number like \"123\" into separate digits (\"1,\" "
@@ -8087,6 +8200,36 @@ msgstr ""
 "Marcar la casilla <gui>Hablar números como dígitos</gui> hará que <app>Orca</"
 "app> divida un número como «123» en dígitos separados («1», «2» y «3») antes "
 "de enviarlo a sintetizador de voz."
+
+#~ msgid "Table Rows"
+#~ msgstr "Filas de tabla"
+
+#~ msgid ""
+#~ "The <gui>Table Rows</gui> radio button group determines what gets spoken "
+#~ "when navigating amongst rows in a table. The available options are "
+#~ "<gui>speak row</gui> and <gui>speak cell</gui>."
+#~ msgstr ""
+#~ "El grupo de botones de radio <gui>Filas de tabla</gui> determina qué se "
+#~ "habla cuando se navega entre las filas de una tabla. Las opciones "
+#~ "disponibles son <gui>Leer fila</gui> y <gui>Leer celda</gui>."
+
+#~ msgid ""
+#~ "Consider the process of examining the list of messages in your Inbox. In "
+#~ "order to have <app>Orca</app> announce the sender, subject, date, and "
+#~ "presence of attachments you would need <gui>speak row</gui>. On the other "
+#~ "hand, when navigating amongst rows in a spreadsheet, hearing the full row "
+#~ "may not be desired. In that case, <gui>speak cell</gui> should instead be "
+#~ "chosen."
+#~ msgstr ""
+#~ "Considere el proceso de examinar la lista de mensajes en su bandeja de "
+#~ "entrada. Para que <app>Orca</app> anuncie el remitente, asunto, fecha y "
+#~ "la presencia de adjuntos necesitará <gui>Leer fila</gui>. Por otro lado, "
+#~ "cuando se navega entre filas de una hoja de cálculo, puede que no desee "
+#~ "escuchar la fila completa. En ese caso debería seleccionar <gui>Leer "
+#~ "celda</gui>."
+
+#~ msgid "Default value: <gui>Speak row</gui>"
+#~ msgstr "Valor predeterminado: <gui>Leer fila</gui>"
 
 #~ msgid "Enabled"
 #~ msgstr "Activado"
@@ -9452,9 +9595,6 @@ msgstr ""
 #~ "Si pulsa el botón <gui>Avanzado</gui> en la parte inferior de la página "
 #~ "del magnificador, puede personalizar aún más el soporte de magnificación "
 #~ "de <app>Orca</app>."
-
-#~ msgid "<gui>Smoothing</gui>: Bilinear or none."
-#~ msgstr "<gui>Suavizado</gui>: bilineal o ninguno."
 
 #~ msgid ""
 #~ "<gui>Brightness</gui>: Choosing different brightness levels for red, "
