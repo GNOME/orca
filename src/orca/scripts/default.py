@@ -765,9 +765,7 @@ class Script(script.Script):
             pass
         else:
             self._saveLastCursorPosition(obj, max(0, text.caretOffset))
-            textSelections = self.pointOfReference.get('textSelections', {})
-            textSelections[hash(obj)] = text.getSelection(0)
-            self.pointOfReference['textSelections'] = textSelections
+        self.utilities.updateCachedTextSelection(obj)
 
         # We want to save the current row and column of a newly focused
         # or selected table cell so that on subsequent cell focus/selection
@@ -2765,23 +2763,14 @@ class Script(script.Script):
         # to text selection will get eliminated once the new text-selection API
         # is added to ATK and implemented by the toolkits. (BGO 638378)
 
-        textSelections = self.pointOfReference.get('textSelections', {})
-        oldStart, oldEnd = textSelections.get(hash(obj), (0, 0))
-
-        # TODO: JD - this doesn't yet handle the case of multiple non-contiguous
-        # selections in a single accessible object.
-
-        text = obj.queryText()
-        newStart, newEnd = text.getSelection(0)
-        textSelections[hash(obj)] = newStart, newEnd
-        self.pointOfReference['textSelections'] = textSelections
+        oldStart, oldEnd, oldString = self.utilities.getCachedTextSelection(obj)
+        self.utilities.updateCachedTextSelection(obj)
+        newStart, newEnd, newString = self.utilities.getCachedTextSelection(obj)
 
         if self.pointOfReference.get('lastAutoComplete') == hash(obj):
             return
 
-        nSelections = text.getNSelections()
-        handled = self._speakTextSelectionState(nSelections)
-        if handled:
+        if self._speakTextSelectionState(max(1, len(newString))):
             return
 
         changes = []

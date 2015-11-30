@@ -3389,3 +3389,36 @@ class Utilities:
         position = siblings.index(obj)
         setSize = len(siblings)
         return position, setSize
+
+    def getCachedTextSelection(self, obj):
+        textSelections = self._script.pointOfReference.get('textSelections', {})
+        start, end, string = textSelections.get(hash(obj), (0, 0, ''))
+        msg = "INFO: Cached selection for %s is '%s' (%i, %i)" % (obj, string, start, end)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return start, end, string
+
+    def updateCachedTextSelection(self, obj):
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
+            msg = "ERROR: %s doesn't implement AtspiText" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            text = None
+        except:
+            msg = "ERROR: Exception querying text interface for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            text = None
+
+        # TODO: JD - this doesn't yet handle the case of multiple non-contiguous
+        # selections in a single accessible object.
+        textSelections = self._script.pointOfReference.get('textSelections', {})
+        if text:
+            start, end = text.getSelection(0)
+            string = text.getText(start, end)
+        else:
+            start, end, string = 0, 0, ''
+
+        msg = "INFO: New selection for %s is '%s' (%i, %i)" % (obj, string, start, end)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        textSelections[hash(obj)] = start, end, string
+        self._script.pointOfReference['textSelections'] = textSelections

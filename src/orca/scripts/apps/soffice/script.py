@@ -774,8 +774,7 @@ class Script(default.Script):
 
         if role == pyatspi.ROLE_PARAGRAPH:
             obj, offset = self.pointOfReference.get("lastCursorPosition", (None, -1))
-            textSelections = self.pointOfReference.get('textSelections', {})
-            start, end = textSelections.get(hash(obj), (0, 0))
+            start, end, string = self.utilities.getCachedTextSelection(obj)
             if start != end:
                 return
 

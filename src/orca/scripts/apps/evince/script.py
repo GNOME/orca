@@ -129,8 +129,7 @@ class Script(gtk.Script):
         # location no longer exists.
 
         obj = event.source
-        textSelections = self.pointOfReference.get('textSelections', {})
-        oldStart, oldEnd = textSelections.get(hash(obj), (0, 0))
+        oldStart, oldEnd, oldString = self.utilities.getCachedTextSelection(obj)
 
         crossedPages = False
         keyString, mods = self.utilities.lastKeyAndModifiers()
