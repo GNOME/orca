@@ -976,7 +976,17 @@ class Utilities:
         return self.getContainingDocument(obj) is None
 
     def isSpreadSheetTable(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE):
+        if not obj:
+            return False
+
+        try:
+            role = obj.getRole()
+        except:
+            msg = 'ERROR: Exception getting role of %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if not role == pyatspi.ROLE_TABLE:
             return False
 
         doc = self.getContainingDocument(obj)
@@ -1000,19 +1010,39 @@ class Utilities:
         return False
 
     def isTextDocumentCell(self, obj):
+        if not obj:
+            return False
+
+        try:
+            role = obj.getRole()
+        except:
+            msg = 'ERROR: Exception getting role of %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
         cellRoles = [pyatspi.ROLE_TABLE_CELL,
                      pyatspi.ROLE_COLUMN_HEADER,
                      pyatspi.ROLE_ROW_HEADER]
-        if not (obj and obj.getRole() in cellRoles):
+        if not role in cellRoles:
             return False
 
         return pyatspi.findAncestor(obj, self.isTextDocumentTable)
 
     def isSpreadSheetCell(self, obj):
+        if not obj:
+            return False
+
+        try:
+            role = obj.getRole()
+        except:
+            msg = 'ERROR: Exception getting role of %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
         cellRoles = [pyatspi.ROLE_TABLE_CELL,
                      pyatspi.ROLE_COLUMN_HEADER,
                      pyatspi.ROLE_ROW_HEADER]
-        if not (obj and obj.getRole() in cellRoles):
+        if not role in cellRoles:
             return False
 
         return pyatspi.findAncestor(obj, self.isSpreadSheetTable)
