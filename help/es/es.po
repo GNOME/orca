@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
 "POT-Creation-Date: 2015-11-30 11:27+0000\n"
-"PO-Revision-Date: 2015-11-30 16:41+0100\n"
+"PO-Revision-Date: 2015-12-01 12:27+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -4260,7 +4260,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/howto_tables.page:43
-#, fuzzy
 #| msgid ""
 #| "<app>Orca</app> allows you to customize whether only the cell should be "
 #| "read, or if the full row should be. You can set this preference Orca wide "
@@ -4276,13 +4275,12 @@ msgid ""
 "preferences dialogs</link>. The settings can be found on the <link xref="
 "\"preferences_speech\"> <gui>Speech</gui> page</link>."
 msgstr ""
-"<app>Orca</app> le permite personalizar si sólo se debería leer la celda, o "
-"si se debería leer la fila completa. Puede configurar esta preferencia de "
-"Orca así como aplicación por aplicación. Las instrucciones para realizar "
-"estas operaciones se describen en la guía sobre <link xref=\"preferences"
-"\">diálogos de preferencias de <app>Orca</app></link>. La configuración se "
-"puede encontrar en el grupo de botones de radio <gui>Filas de tabla en la</"
-"gui> <link xref=\"preferences_speech\"><gui>página de</gui> Voz</link>."
+"Puede configurar cada una de las preferencias de lectura de tablas de "
+"<app>Orca</app> para la configuración global de <app>Orca</app>, así como "
+"por aplicaciones individuales. En la guía del <link xref=\"preferences"
+"\">diálogo de preferencias de <app>Orca</app></link> se describe cómo "
+"hacerlo. Esta configuración se puede encontrar en la <link xref="
+"\"preferences_speech\">página <gui>Voz</gui></link>."
 
 #. (itstool) path: section/p
 #: C/howto_tables.page:50
@@ -7501,6 +7499,11 @@ msgid ""
 "<app>Orca</app> will speak the entire row. If you would prefer to hear only "
 "the cell with focus, you should uncheck this checkbox."
 msgstr ""
+"Si la opción <gui>Leer fila completa el tablas de la IGU</gui> está marcada, "
+"a medida que sube y baja en las tablas de la aplicación, tales como la lista "
+"de mensajes de la bandeja de entrada, <app>Orca</app> hablará la fila "
+"completa. Si prefiere escuchar sólo la celda con el foco, debe desmarcar "
+"esta casilla."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:212
@@ -7510,7 +7513,6 @@ msgstr "Leer la fila completa el tablas del documento"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:213
-#, fuzzy
 #| msgid ""
 #| "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> "
 #| "will present detailed messages to you in speech. For instance, if you use "
@@ -7523,12 +7525,10 @@ msgid ""
 "documents, <app>Orca</app> will speak the entire row. If you would prefer to "
 "hear only the cell with focus, you should uncheck this checkbox."
 msgstr ""
-"Si la opción <gui>Los mensajes son del sistema son detallados</gui> está "
-"activada, <app>Orca</app> mostrará mensajes detalladados al hablar. Por "
-"ejemplo, si usa el comando de <app>Orca</app> para cambiar el eco de las "
-"teclas, <app>Orca</app> puede hablar «Eco de tecla establecido a palabra». "
-"Si prefiere mensajes más cortos, como simplemente «palabra», debe desmarcar "
-"esta casilla."
+"Si la opción <gui>Leer fila completa el tablas del documento</gui> está "
+"marcada, a medida que sube y baja en las tablas como las de <app>writer</"
+"app> y en documentos web, <app>Orca</app> hablará la fila completa. Si "
+"prefiere escuchar sólo la celda con el foco, debe desmarcar esta casilla."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:224
