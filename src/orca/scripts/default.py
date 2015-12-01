@@ -2507,7 +2507,7 @@ class Script(script.Script):
             if orca_state.locusOfFocus and keyString == "F1":
                 obj = orca_state.locusOfFocus
                 self.updateBraille(obj)
-                speech.speak(self.speechGenerator.generateSpeech(obj))
+                speech.speak(self.speechGenerator.generateSpeech(obj, priorObj=event.source))
                 return
 
     def onTextAttributesChanged(self, event):

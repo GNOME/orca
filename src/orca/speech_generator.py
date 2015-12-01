@@ -210,6 +210,10 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
+        priorObj = args.get('priorObj')
+        if priorObj and priorObj.getRole() == pyatspi.ROLE_TOOL_TIP:
+            return []
+
         acss = self.voice(SYSTEM)
         result = generator.Generator._generateDescription(self, obj, **args)
         if result:
@@ -1568,6 +1572,9 @@ class SpeechGenerator(generator.Generator):
         """
         result = []
         priorObj = args.get('priorObj', None)
+        if priorObj and priorObj.getRole() == pyatspi.ROLE_TOOL_TIP:
+            return []
+
         commonAncestor = self._script.utilities.commonAncestor(priorObj, obj)
         try:
             role = commonAncestor.getRole()
