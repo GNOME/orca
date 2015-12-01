@@ -2195,10 +2195,16 @@ class Script(script.Script):
 
         if event.source != orca_state.locusOfFocus \
            and event.source.getState().contains(pyatspi.STATE_FOCUSED):
-            msg = "DEFAULT: Updating locusOfFocus from %s to %s" % \
-                  (orca_state.locusOfFocus, event.source)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            orca.setLocusOfFocus(event, event.source, False)
+            topLevelObject = self.utilities.topLevelObject(event.source)
+            if orca_state.activeWindow == topLevelObject:
+                msg = "DEFAULT: Updating locusOfFocus from %s to %s" % \
+                      (orca_state.locusOfFocus, event.source)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                orca.setLocusOfFocus(event, event.source, False)
+            else:
+                msg = "DEFAULT: Source window (%s) is not active window(%s)" \
+                      % (topLevelObject, orca_state.activeWindow)
+                debug.println(debug.LEVEL_INFO, msg, True)
 
         if event.source != orca_state.locusOfFocus:
             msg = "DEFAULT: Event source (%s) is not locusOfFocus (%s)" \
