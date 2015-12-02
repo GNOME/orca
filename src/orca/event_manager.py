@@ -97,7 +97,9 @@ class EventManager:
         """Returns True if this event should be ignored."""
 
         debug.println(debug.LEVEL_INFO, '')
-        msg = 'EVENT MANAGER: %s for %s in %s' % (event.type, event.source, event.host_application)
+        msg = 'EVENT MANAGER: %s for %s in %s (%s, %s, %s)' % \
+              (event.type, event.source, event.host_application,
+               event.detail1,event.detail2, event.any_data)
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if not self._active:
@@ -127,7 +129,7 @@ class EventManager:
             # We should also get children-changed events telling us the same thing.
             # Getting a bunch of both can result in a flood that grinds us to a halt.
             if event.any_data == self.EMBEDDED_OBJECT_CHARACTER:
-                msg = 'EVENT MANAGER: Text changed event for embedded object. Who cares?'
+                msg = 'EVENT MANAGER: Ignoring because changed text is embedded object'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
@@ -141,15 +143,11 @@ class EventManager:
             state = event.source.getState()
             role = event.source.getRole()
         except:
-            msg = 'ERROR: %s from potentially-defunct source %s in app %s (%s, %s, %s)' % \
-                  (event.type, event.source, event.host_application, event.detail1,
-                   event.detail2, event.any_data)
+            msg = 'ERROR: Event is from potentially-defunct source'
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
         if state.contains(pyatspi.STATE_DEFUNCT):
-            msg = 'ERROR: %s from defunct source %s in app %s (%s, %s, %s)' % \
-                  (event.type, event.source, event.host_application, event.detail1,
-                   event.detail2, event.any_data)
+            msg = 'ERROR: Event is from defunct source'
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -161,29 +159,25 @@ class EventManager:
                             pyatspi.ROLE_PANEL,
                             pyatspi.ROLE_STATUS_BAR,
                             pyatspi.ROLE_TOOL_TIP]:
-                msg = 'EVENT MANAGER: %s for %s in app %s. Who cares?' % \
-                      (event.type, event.source, event.host_application)
+                msg = 'EVENT MANAGER: Ignoring event type due to role'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
         if event.type.startswith('object:children-changed:add') \
            or event.type.startswith('object:active-descendant-changed'):
             if not event.any_data:
-                msg = 'ERROR: %s without child from source %s in app %s' % \
-                      (event.type, event.source, event.host_application)
+                msg = 'ERROR: Event any_data lacks child/descendant'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
             try:
                 state = event.any_data.getState()
                 role = event.any_data.getRole()
             except:
-                msg = 'ERROR: %s with potentially-defunct child %s from source %s in app %s' % \
-                      (event.type, event.any_data, event.source, event.host_application)
+                msg = 'ERROR: Event any_data contains potentially-defunct child/descendant'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
             if state.contains(pyatspi.STATE_DEFUNCT):
-                msg = 'ERROR: %s with defunct child %s from source %s in app %s' % \
-                      (event.type, event.any_data, event.source, event.host_application)
+                msg = 'ERROR: Event any_data contains defunct child/descendant'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
@@ -193,8 +187,7 @@ class EventManager:
             # reason for ignoring it here rather than quickly processing it is the
             # potential for event floods like we're seeing from matrix.org.
             if role == pyatspi.ROLE_IMAGE:
-                msg = 'EVENT MANAGER: %s for child image %s from source %s in app %s. Who cares?' % \
-                      (event.type, event.any_data, event.source, event.host_application)
+                msg = 'EVENT MANAGER: Ignoring event type due to role'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
