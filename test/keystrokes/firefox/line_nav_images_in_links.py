@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -153,7 +154,8 @@ sequence.append(utils.AssertPresentationAction(
     "17. Line Down",
     ["BRAILLE LINE:  'silly link'",
      "     VISIBLE:  'silly link', cursor=1",
-     "SPEECH OUTPUT: 'silly link link.'"]))
+     "SPEECH OUTPUT: 'silly link'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -197,7 +199,8 @@ sequence.append(utils.AssertPresentationAction(
     "22. Line Down",
     ["BRAILLE LINE:  'After the paragraph'",
      "     VISIBLE:  'After the paragraph', cursor=1",
-     "SPEECH OUTPUT: 'After the paragraph link.'"]))
+     "SPEECH OUTPUT: 'After the paragraph'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -214,7 +217,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'the paragraph: Before the paragraph'",
      "     VISIBLE:  'the paragraph: Before the paragr', cursor=1",
      "SPEECH OUTPUT: 'the paragraph:'",
-     "SPEECH OUTPUT: 'Before the paragraph link.'"]))
+     "SPEECH OUTPUT: 'Before the paragraph'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -230,7 +234,8 @@ sequence.append(utils.AssertPresentationAction(
     "26. Line Down",
     ["BRAILLE LINE:  'silly link'",
      "     VISIBLE:  'silly link', cursor=1",
-     "SPEECH OUTPUT: 'silly link link.'"]))
+     "SPEECH OUTPUT: 'silly link'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -246,7 +251,8 @@ sequence.append(utils.AssertPresentationAction(
     "28. Line Down",
     ["BRAILLE LINE:  'After the paragraph'",
      "     VISIBLE:  'After the paragraph', cursor=1",
-     "SPEECH OUTPUT: 'After the paragraph link.'"]))
+     "SPEECH OUTPUT: 'After the paragraph'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -262,7 +268,8 @@ sequence.append(utils.AssertPresentationAction(
     "30. Line Up",
     ["BRAILLE LINE:  'silly link'",
      "     VISIBLE:  'silly link', cursor=1",
-     "SPEECH OUTPUT: 'silly link link.'"]))
+     "SPEECH OUTPUT: 'silly link'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -279,7 +286,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'the paragraph: Before the paragraph'",
      "     VISIBLE:  'the paragraph: Before the paragr', cursor=1",
      "SPEECH OUTPUT: 'the paragraph:'",
-     "SPEECH OUTPUT: 'Before the paragraph link.'"]))
+     "SPEECH OUTPUT: 'Before the paragraph'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -295,7 +303,8 @@ sequence.append(utils.AssertPresentationAction(
     "34. Line Up",
     ["BRAILLE LINE:  'After the paragraph'",
      "     VISIBLE:  'After the paragraph', cursor=1",
-     "SPEECH OUTPUT: 'After the paragraph link.'"]))
+     "SPEECH OUTPUT: 'After the paragraph'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -339,7 +348,8 @@ sequence.append(utils.AssertPresentationAction(
     "39. Line Up",
     ["BRAILLE LINE:  'silly link'",
      "     VISIBLE:  'silly link', cursor=1",
-     "SPEECH OUTPUT: 'silly link link.'"]))
+     "SPEECH OUTPUT: 'silly link'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

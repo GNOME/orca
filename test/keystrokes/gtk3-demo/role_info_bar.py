@@ -35,7 +35,10 @@ sequence.append(utils.AssertPresentationAction(
     "1. Show the Message info bar",
     ["BRAILLE LINE:  'gtk3-demo application Info Bars frame Info bars panel &=y Message toggle button'",
      "     VISIBLE:  '&=y Message toggle button', cursor=1",
-     "SPEECH OUTPUT: 'pressed'"]))
+     "BRAILLE LINE:  'gtk3-demo application Info Bars frame Information info bar'",
+     "     VISIBLE:  'Information info bar', cursor=1",
+     "SPEECH OUTPUT: 'pressed'",
+     "SPEECH OUTPUT: 'Information This is an info bar with message type GTK_MESSAGE_INFO'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

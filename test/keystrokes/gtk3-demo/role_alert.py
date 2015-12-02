@@ -16,11 +16,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("space"))
 sequence.append(utils.AssertPresentationAction(
     "1. Initial dialog",
-    ["BRAILLE LINE:  'gtk3-demo application Dialogs frame'",
-     "     VISIBLE:  'Dialogs frame', cursor=1",
-     "BRAILLE LINE:  'gtk3-demo application Dialogs frame Dialogs panel Message Dialog push button'",
+    ["BRAILLE LINE:  'gtk3-demo application Dialogs and Message Boxes frame'",
+     "     VISIBLE:  'Dialogs and Message Boxes frame', cursor=1",
+     "BRAILLE LINE:  'gtk3-demo application Dialogs and Message Boxes frame Dialogs panel Message Dialog push button'",
      "     VISIBLE:  'Message Dialog push button', cursor=1",
-     "SPEECH OUTPUT: 'Dialogs frame'",
+     "SPEECH OUTPUT: 'Dialogs and Message Boxes frame'",
      "SPEECH OUTPUT: 'Dialogs panel'",
      "SPEECH OUTPUT: 'Message Dialog push button'"]))
 
@@ -32,7 +32,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Information alert', cursor=1",
      "BRAILLE LINE:  'gtk3-demo application Information alert Cancel push button'",
      "     VISIBLE:  'Cancel push button', cursor=1",
-     "SPEECH OUTPUT: 'Information   This message box has been popped up the following",
+     "SPEECH OUTPUT: 'Information alert.'",
+     "SPEECH OUTPUT: '  This message box has been popped up the following",
      "number of times: 1'",
      "SPEECH OUTPUT: 'Cancel push button'"]))
 
@@ -54,7 +55,8 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk3-demo application Interactive Dialog dialog Entry 1 Testing $l'",
      "     VISIBLE:  'Entry 1 Testing $l', cursor=16",
      "SPEECH OUTPUT: 'Interactive Dialog'",
-     "SPEECH OUTPUT: 'Entry 1 text Testing selected'"]))
+     "SPEECH OUTPUT: 'Entry 1 text.'",
+     "SPEECH OUTPUT: 'Testing selected'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -64,7 +66,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Entry 2 Again $l', cursor=14",
      "BRAILLE LINE:  'gtk3-demo application Interactive Dialog dialog Entry 2 Again $l'",
      "     VISIBLE:  'Entry 2 Again $l', cursor=14",
-     "SPEECH OUTPUT: 'Entry 2 text Again selected'"]))
+     "SPEECH OUTPUT: 'Entry 2 text.'",
+     "SPEECH OUTPUT: 'Again selected'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

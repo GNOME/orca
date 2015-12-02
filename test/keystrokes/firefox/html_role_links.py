@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
@@ -68,10 +69,12 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '1188 bytes.'"]))
 
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 sequence.append(KeyComboAction("<Alt>Left"))
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -80,7 +83,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• anchors.html'",
      "     VISIBLE:  '• anchors.html', cursor=1",
      "SPEECH OUTPUT: '•.'",
-     "SPEECH OUTPUT: 'anchors.html link.'"]))
+     "SPEECH OUTPUT: 'anchors.html'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 sequence.append(KeyComboAction("<Control>Home"))
 
@@ -64,10 +65,14 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'clickable'",
      "SPEECH OUTPUT: 'Click here to publicly +1 this. toggle button not pressed'",
      "SPEECH OUTPUT: '15'",
-     "SPEECH OUTPUT: 'More link.'",
-     "SPEECH OUTPUT: 'Next Blog» link.'",
-     "SPEECH OUTPUT: 'Create Blog link.'",
-     "SPEECH OUTPUT: 'Sign In link.'"]))
+     "SPEECH OUTPUT: 'More'",
+     "SPEECH OUTPUT: 'link.'",
+     "SPEECH OUTPUT: 'Next Blog»'",
+     "SPEECH OUTPUT: 'link.'",
+     "SPEECH OUTPUT: 'Create Blog'",
+     "SPEECH OUTPUT: 'link.'",
+     "SPEECH OUTPUT: 'Sign In'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 sequence.append(KeyComboAction("Tab"))
 
 sequence.append(utils.StartRecordingAction())
@@ -16,20 +17,18 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'Hello world, this is a test.'",
      "     VISIBLE:  'Hello world, this is a test.', cursor=1",
-     "SPEECH OUTPUT: 'Hello world link.'",
+     "SPEECH OUTPUT: 'Hello world'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: ', this is a test.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down to the Foo link",
-    ["KNOWN ISSUE: We're double-presenting this due to the caret-moved event",
-     "BRAILLE LINE:  'Foo'",
+    ["BRAILLE LINE:  'Foo'",
      "     VISIBLE:  'Foo', cursor=1",
-     "BRAILLE LINE:  'Foo'",
-     "     VISIBLE:  'Foo', cursor=1",
-     "SPEECH OUTPUT: 'Foo link.'",
-     "SPEECH OUTPUT: 'Foo'"]))
+     "SPEECH OUTPUT: 'Foo'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

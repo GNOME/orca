@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 sequence.append(KeyComboAction("<Control>Home"))
 
 sequence.append(utils.StartRecordingAction())
@@ -18,7 +19,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Foo', cursor=1",
      "BRAILLE LINE:  'Foo'",
      "     VISIBLE:  'Foo', cursor=1",
-     "SPEECH OUTPUT: 'Foo link.'",
+     "SPEECH OUTPUT: 'Foo'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'Title of the Foo link.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -27,7 +29,8 @@ sequence.append(utils.AssertPresentationAction(
     "2. k for next link",
     ["BRAILLE LINE:  'Bar'",
      "     VISIBLE:  'Bar', cursor=1",
-     "SPEECH OUTPUT: 'Bar link.'",
+     "SPEECH OUTPUT: 'Bar'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'ARIA description text.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -36,7 +39,8 @@ sequence.append(utils.AssertPresentationAction(
     "3. k for next link",
     ["BRAILLE LINE:  'Baz'",
      "     VISIBLE:  'Baz', cursor=1",
-     "SPEECH OUTPUT: 'Baz link.'",
+     "SPEECH OUTPUT: 'Baz'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'Title of the Baz link.'"]))
 
 sequence.append(utils.StartRecordingAction())

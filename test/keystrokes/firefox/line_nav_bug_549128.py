@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -35,7 +36,8 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  'The Ideal Gift Collection'",
      "     VISIBLE:  'The Ideal Gift Collection', cursor=1",
-     "SPEECH OUTPUT: 'The Ideal Gift Collection link.'"]))
+     "SPEECH OUTPUT: 'The Ideal Gift Collection'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -153,7 +155,8 @@ sequence.append(utils.AssertPresentationAction(
     "18. Line Up",
     ["BRAILLE LINE:  'The Ideal Gift Collection'",
      "     VISIBLE:  'The Ideal Gift Collection', cursor=1",
-     "SPEECH OUTPUT: 'The Ideal Gift Collection link.'"]))
+     "SPEECH OUTPUT: 'The Ideal Gift Collection'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

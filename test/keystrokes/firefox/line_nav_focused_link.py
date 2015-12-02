@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -34,7 +35,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '[Line 2]'",
      "     VISIBLE:  '[Line 2]', cursor=1",
      "SPEECH OUTPUT: '['",
-     "SPEECH OUTPUT: 'Line 2 link.'",
+     "SPEECH OUTPUT: 'Line 2'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: ']'"]))
 
 sequence.append(utils.StartRecordingAction())

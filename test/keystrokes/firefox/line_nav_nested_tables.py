@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -27,13 +28,17 @@ sequence.append(utils.AssertPresentationAction(
     "2. line Down",
     ["BRAILLE LINE:  'Campus  .  Classroom  .  Communicate  .  Reports'",
      "     VISIBLE:  'Campus  .  Classroom  .  Communi', cursor=1",
-     "SPEECH OUTPUT: 'Campus link.'",
+     "SPEECH OUTPUT: 'Campus'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '.'",
-     "SPEECH OUTPUT: 'Classroom link.'",
+     "SPEECH OUTPUT: 'Classroom'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '.'",
-     "SPEECH OUTPUT: 'Communicate link.'",
+     "SPEECH OUTPUT: 'Communicate'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '.'",
-     "SPEECH OUTPUT: 'Reports link.'"]))
+     "SPEECH OUTPUT: 'Reports'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -65,7 +70,8 @@ sequence.append(utils.AssertPresentationAction(
     "6. line Down",
     ["BRAILLE LINE:  'Take Course'",
      "     VISIBLE:  'Take Course', cursor=1",
-     "SPEECH OUTPUT: 'Take Course link.'"]))
+     "SPEECH OUTPUT: 'Take Course'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -97,7 +103,8 @@ sequence.append(utils.AssertPresentationAction(
     "10. line Down",
     ["BRAILLE LINE:  'Take Course'",
      "     VISIBLE:  'Take Course', cursor=1",
-     "SPEECH OUTPUT: 'Take Course link.'"]))
+     "SPEECH OUTPUT: 'Take Course'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -129,7 +136,8 @@ sequence.append(utils.AssertPresentationAction(
     "14. line Up",
     ["BRAILLE LINE:  'Take Course'",
      "     VISIBLE:  'Take Course', cursor=1",
-     "SPEECH OUTPUT: 'Take Course link.'"]))
+     "SPEECH OUTPUT: 'Take Course'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -161,7 +169,8 @@ sequence.append(utils.AssertPresentationAction(
     "18. line Up",
     ["BRAILLE LINE:  'Take Course'",
      "     VISIBLE:  'Take Course', cursor=1",
-     "SPEECH OUTPUT: 'Take Course link.'"]))
+     "SPEECH OUTPUT: 'Take Course'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -193,13 +202,17 @@ sequence.append(utils.AssertPresentationAction(
     "22. line Up",
     ["BRAILLE LINE:  'Campus  .  Classroom  .  Communicate  .  Reports'",
      "     VISIBLE:  'Campus  .  Classroom  .  Communi', cursor=1",
-     "SPEECH OUTPUT: 'Campus link.'",
+     "SPEECH OUTPUT: 'Campus'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '.'",
-     "SPEECH OUTPUT: 'Classroom link.'",
+     "SPEECH OUTPUT: 'Classroom'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '.'",
-     "SPEECH OUTPUT: 'Communicate link.'",
+     "SPEECH OUTPUT: 'Communicate'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '.'",
-     "SPEECH OUTPUT: 'Reports link.'"]))
+     "SPEECH OUTPUT: 'Reports'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

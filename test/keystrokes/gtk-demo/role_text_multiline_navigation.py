@@ -253,8 +253,10 @@ sequence.append(TypeAction("f"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "27. Insert+f for text attributes",
-    ["SPEECH OUTPUT: 'size 11' voice=system",
-     "SPEECH OUTPUT: 'family name Cantarell' voice=system"]))
+    ["SPEECH OUTPUT: 'size: 11' voice=system",
+     "SPEECH OUTPUT: 'family name: Cantarell' voice=system",
+     "SPEECH OUTPUT: 'foreground color: dark slate gray' voice=system",
+     "SPEECH OUTPUT: 'background color: white' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))

@@ -5,7 +5,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -34,7 +35,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Line 3'",
      "     VISIBLE:  'Line 3', cursor=1",
      "SPEECH OUTPUT: 'Line'",
-     "SPEECH OUTPUT: '3 link.'"]))
+     "SPEECH OUTPUT: '3'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -67,7 +69,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Line 3'",
      "     VISIBLE:  'Line 3', cursor=1",
      "SPEECH OUTPUT: 'Line'",
-     "SPEECH OUTPUT: '3 link.'"]))
+     "SPEECH OUTPUT: '3'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

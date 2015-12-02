@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -181,7 +182,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "21. Line Up",
     ["BRAILLE LINE:  '1. remember what the heck we are doing each day'",
-     "     VISIBLE:  '1. remember what the heck we are', cursor=1",
+     "     VISIBLE:  ' the heck we are doing each day', cursor=32",
      "SPEECH OUTPUT: '1. remember what the heck we are doing each day.'"]))
 
 sequence.append(utils.StartRecordingAction())

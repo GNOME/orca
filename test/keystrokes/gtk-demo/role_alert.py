@@ -19,7 +19,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Information alert', cursor=1",
      "BRAILLE LINE:  'gtk-demo application Information alert OK push button'",
      "     VISIBLE:  'OK push button', cursor=1",
-     "SPEECH OUTPUT: 'Information This message box has been popped up the following",
+     "SPEECH OUTPUT: 'Information alert.'",
+     "SPEECH OUTPUT: 'This message box has been popped up the following",
      "number of times: 1'",
      "SPEECH OUTPUT: 'OK push button'"]))
 
@@ -41,7 +42,8 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk-demo application Interactive Dialog dialog Entry 1 Testing $l'",
      "     VISIBLE:  'Entry 1 Testing $l', cursor=16",
      "SPEECH OUTPUT: 'Interactive Dialog'",
-     "SPEECH OUTPUT: 'Entry 1 text Testing selected'"]))
+     "SPEECH OUTPUT: 'Entry 1 text.'",
+     "SPEECH OUTPUT: 'Testing selected'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -51,7 +53,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Entry 2 Again $l', cursor=14",
      "BRAILLE LINE:  'gtk-demo application Interactive Dialog dialog Entry 2 Again $l'",
      "     VISIBLE:  'Entry 2 Again $l', cursor=14",
-     "SPEECH OUTPUT: 'Entry 2 text Again selected'"]))
+     "SPEECH OUTPUT: 'Entry 2 text.'",
+     "SPEECH OUTPUT: 'Again selected'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

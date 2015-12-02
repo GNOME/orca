@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -45,8 +46,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. line Down",
-    ["KNOWN ISSUE: When the test is run, we sometimes get extra presentation which doesn't happen in real use.",
-     "BRAILLE LINE:  'I am a monkey with a long tail.  I like  $l'",
+    ["BRAILLE LINE:  'I am a monkey with a long tail.  I like  $l'",
      "     VISIBLE:  'I am a monkey with a long tail. ', cursor=1",
      "SPEECH OUTPUT: 'entry I am a monkey with a long tail.  I like '"]))
 
@@ -107,9 +107,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "11. line Down",
-    ["BRAILLE LINE:  'Hockey list box'",
-     "     VISIBLE:  'Hockey list box', cursor=1",
-     "SPEECH OUTPUT: 'Hockey.'",
+    ["BRAILLE LINE:  'list box'",
+     "     VISIBLE:  'list box', cursor=1",
      "SPEECH OUTPUT: 'multi-select List with 4 items.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -144,9 +143,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "15. line Up",
-    ["BRAILLE LINE:  'Hockey list box'",
-     "     VISIBLE:  'Hockey list box', cursor=1",
-     "SPEECH OUTPUT: 'Hockey.'",
+    ["BRAILLE LINE:  'list box'",
+     "     VISIBLE:  'list box', cursor=1",
      "SPEECH OUTPUT: 'multi-select List with 4 items.'"]))
 
 sequence.append(utils.StartRecordingAction())

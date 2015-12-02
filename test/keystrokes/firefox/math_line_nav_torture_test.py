@@ -5,7 +5,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
@@ -227,7 +228,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'over partial differential y.'",
      "SPEECH OUTPUT: 'superscript 2.'",
      "SPEECH OUTPUT: 'fraction end.'",
-     "SPEECH OUTPUT: 'right paren vertical bar φ  left paren x plus i y right paren vertical bar.'",
+     "SPEECH OUTPUT: 'right paren vertical bar φ left paren x plus i y right paren vertical bar.'",
      "SPEECH OUTPUT: 'superscript 2.'",
      "SPEECH OUTPUT: 'equals 0'"]))
 

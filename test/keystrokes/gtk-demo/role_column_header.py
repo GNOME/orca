@@ -20,7 +20,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Bug number column header",
     ["BRAILLE LINE:  'gtk-demo application GtkListStore demo frame table Bug number table column header'",
      "     VISIBLE:  'Bug number table column header', cursor=1",
-     "SPEECH OUTPUT: 'Bug number table column header'"]))
+     "SPEECH OUTPUT: 'Bug number table column header not selected'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -46,8 +46,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'scrollable notebooks and hidden ', cursor=1",
      "BRAILLE LINE:  'gtk-demo application GtkListStore demo frame table Fixed? column header < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
-     "SPEECH OUTPUT: 'Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs'",
-     "SPEECH OUTPUT: 'Fixed? column header check box not checked'"]))
+     "SPEECH OUTPUT: 'Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs.'",
+     "SPEECH OUTPUT: 'Fixed? column header check box not checked.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -55,7 +55,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Normal cell",
     ["BRAILLE LINE:  'gtk-demo application GtkListStore demo frame table Severity column header < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
-     "SPEECH OUTPUT: 'Severity column header Normal'"]))
+     "SPEECH OUTPUT: 'Severity column header Normal.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -63,7 +63,12 @@ sequence.append(utils.AssertPresentationAction(
     "6. Normal cell basic Where Am I",
     ["BRAILLE LINE:  'gtk-demo application GtkListStore demo frame table Severity column header < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
-     "SPEECH OUTPUT: 'table Severity table cell Normal column 3 of 5 row 1 of 14'"]))
+     "SPEECH OUTPUT: 'table.'",
+     "SPEECH OUTPUT: 'Severity.'",
+     "SPEECH OUTPUT: 'table cell.'",
+     "SPEECH OUTPUT: 'Normal.'",
+     "SPEECH OUTPUT: 'column 3 of 5'",
+     "SPEECH OUTPUT: 'row 1 of 14.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -74,8 +79,20 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
      "BRAILLE LINE:  'gtk-demo application GtkListStore demo frame table Severity column header < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
-     "SPEECH OUTPUT: 'table Severity table cell Normal column 3 of 5 row 1 of 14'",
-     "SPEECH OUTPUT: 'table Severity table cell Normal column 3 of 5 row 1 of 14 Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs'"]))
+     "SPEECH OUTPUT: 'table.'",
+     "SPEECH OUTPUT: 'Severity.'",
+     "SPEECH OUTPUT: 'table cell.'",
+     "SPEECH OUTPUT: 'Normal.'",
+     "SPEECH OUTPUT: 'column 3 of 5'",
+     "SPEECH OUTPUT: 'row 1 of 14.'",
+     "SPEECH OUTPUT: 'table.'",
+     "SPEECH OUTPUT: 'Severity.'",
+     "SPEECH OUTPUT: 'table cell.'",
+     "SPEECH OUTPUT: 'Normal.'",
+     "SPEECH OUTPUT: 'column 3 of 5'",
+     "SPEECH OUTPUT: 'row 1 of 14.'",
+     "SPEECH OUTPUT: 'Fixed?'",
+     "SPEECH OUTPUT: 'check box not checked 60482 Normal scrollable notebooks and hidden tabs.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -83,7 +100,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. 60482 cell",
     ["BRAILLE LINE:  'gtk-demo application GtkListStore demo frame table Bug number column header < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  '60482 Normal scrollable notebook', cursor=1",
-     "SPEECH OUTPUT: 'Bug number column header 60482'"]))
+     "SPEECH OUTPUT: 'Bug number column header 60482.'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

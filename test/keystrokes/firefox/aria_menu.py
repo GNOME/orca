@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -17,9 +18,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Alt>m"))
 sequence.append(utils.AssertPresentationAction(
     "1. Move to the menu",
-    ["BRAILLE LINE:  'table'",
-     "     VISIBLE:  'table', cursor=1",
-     "BRAILLE LINE:  'Edit menu'",
+    ["BRAILLE LINE:  'Edit menu'",
      "     VISIBLE:  'Edit menu', cursor=1",
      "SPEECH OUTPUT: 'Edit menu.'"]))
 

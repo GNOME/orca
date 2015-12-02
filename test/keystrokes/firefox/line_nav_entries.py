@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -28,9 +29,11 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Type something rather amusing here:  $l'",
      "     VISIBLE:  'Type something rather amusing he', cursor=1",
      "SPEECH OUTPUT: 'Type'",
-     "SPEECH OUTPUT: 'something link.'",
+     "SPEECH OUTPUT: 'something'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'rather'",
-     "SPEECH OUTPUT: 'amusing link.'",
+     "SPEECH OUTPUT: 'amusing'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'here:'",
      "SPEECH OUTPUT: 'entry'"]))
 
@@ -203,7 +206,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Last name'",
      "     VISIBLE:  'Last name', cursor=1",
      "SPEECH OUTPUT: 'Last.'",
-     "SPEECH OUTPUT: 'name link.'"]))
+     "SPEECH OUTPUT: 'name'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -244,7 +248,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Last name'",
      "     VISIBLE:  'Last name', cursor=1",
      "SPEECH OUTPUT: 'Last.'",
-     "SPEECH OUTPUT: 'name link.'"]))
+     "SPEECH OUTPUT: 'name'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -298,7 +303,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Last name'",
      "     VISIBLE:  'Last name', cursor=1",
      "SPEECH OUTPUT: 'Last.'",
-     "SPEECH OUTPUT: 'name link.'"]))
+     "SPEECH OUTPUT: 'name'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -339,7 +345,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Last name'",
      "     VISIBLE:  'Last name', cursor=1",
      "SPEECH OUTPUT: 'Last.'",
-     "SPEECH OUTPUT: 'name link.'"]))
+     "SPEECH OUTPUT: 'name'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -510,9 +517,11 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Type something rather amusing here:  $l'",
      "     VISIBLE:  'Type something rather amusing he', cursor=1",
      "SPEECH OUTPUT: 'Type'",
-     "SPEECH OUTPUT: 'something link.'",
+     "SPEECH OUTPUT: 'something'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'rather'",
-     "SPEECH OUTPUT: 'amusing link.'",
+     "SPEECH OUTPUT: 'amusing'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'here:'",
      "SPEECH OUTPUT: 'entry'"]))
 

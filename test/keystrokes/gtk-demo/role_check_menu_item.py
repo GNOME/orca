@@ -20,7 +20,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Arrow to check menu item - checked",
     ["BRAILLE LINE:  'gtk-demo application Application Window frame <x> Bold check menu item(Ctrl+B)'",
      "     VISIBLE:  '<x> Bold check menu item(Ctrl+B)', cursor=1",
-     "SPEECH OUTPUT: 'Bold check menu item checked Ctrl+B'"]))
+     "SPEECH OUTPUT: 'Bold check menu item checked Ctrl+B.'"]))
 
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Escape"))
@@ -33,7 +33,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Arrow to check menu item - not checked",
     ["BRAILLE LINE:  'gtk-demo application Application Window frame < > Bold check menu item(Ctrl+B)'",
      "     VISIBLE:  '< > Bold check menu item(Ctrl+B)', cursor=1",
-     "SPEECH OUTPUT: 'Bold check menu item not checked Ctrl+B'"]))
+     "SPEECH OUTPUT: 'Bold check menu item not checked Ctrl+B.'"]))
 
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Escape"))
@@ -46,7 +46,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Arrow to check menu item - checked",
     ["BRAILLE LINE:  'gtk-demo application Application Window frame <x> Bold check menu item(Ctrl+B)'",
      "     VISIBLE:  '<x> Bold check menu item(Ctrl+B)', cursor=1",
-     "SPEECH OUTPUT: 'Bold check menu item checked Ctrl+B'"]))
+     "SPEECH OUTPUT: 'Bold check menu item checked Ctrl+B.'"]))
 
 sequence.append(KeyComboAction("Escape"))
 sequence.append(KeyComboAction("<Alt>F4"))

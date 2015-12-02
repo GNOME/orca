@@ -7,7 +7,9 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
+sequence.append(PauseAction(3000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -21,7 +23,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '» search tips Search $l Submit Search push button'",
      "     VISIBLE:  '» search tips Search $l Submit S', cursor=1",
      "SPEECH OUTPUT: '»'",
-     "SPEECH OUTPUT: 'search tips link.'",
+     "SPEECH OUTPUT: 'search tips'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'entry Search'",
      "SPEECH OUTPUT: 'Submit Search push button'"]))
 
@@ -40,12 +43,18 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  'APIs Downloads Products Support Training Participate'",
      "     VISIBLE:  'APIs Downloads Products Support ', cursor=1",
-     "SPEECH OUTPUT: 'APIs link.'",
-     "SPEECH OUTPUT: 'Downloads link.'",
-     "SPEECH OUTPUT: 'Products link.'",
-     "SPEECH OUTPUT: 'Support link.'",
-     "SPEECH OUTPUT: 'Training link.'",
-     "SPEECH OUTPUT: 'Participate link.'"]))
+     "SPEECH OUTPUT: 'APIs'",
+     "SPEECH OUTPUT: 'link.'",
+     "SPEECH OUTPUT: 'Downloads'",
+     "SPEECH OUTPUT: 'link.'",
+     "SPEECH OUTPUT: 'Products'",
+     "SPEECH OUTPUT: 'link.'",
+     "SPEECH OUTPUT: 'Support'",
+     "SPEECH OUTPUT: 'link.'",
+     "SPEECH OUTPUT: 'Training'",
+     "SPEECH OUTPUT: 'link.'",
+     "SPEECH OUTPUT: 'Participate'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -77,7 +86,8 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
     ["BRAILLE LINE:  'JDK Documentation'",
      "     VISIBLE:  'JDK Documentation', cursor=1",
-     "SPEECH OUTPUT: 'JDK Documentation link.'"]))
+     "SPEECH OUTPUT: 'JDK Documentation'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -93,7 +103,8 @@ sequence.append(utils.AssertPresentationAction(
     "9. Line Down",
     ["BRAILLE LINE:  'System Requirements'",
      "     VISIBLE:  'System Requirements', cursor=1",
-     "SPEECH OUTPUT: 'System Requirements link.'"]))
+     "SPEECH OUTPUT: 'System Requirements'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -101,7 +112,8 @@ sequence.append(utils.AssertPresentationAction(
     "10. Line Down",
     ["BRAILLE LINE:  'JDK Installation Instructions'",
      "     VISIBLE:  'JDK Installation Instructions', cursor=1",
-     "SPEECH OUTPUT: 'JDK Installation Instructions link.'"]))
+     "SPEECH OUTPUT: 'JDK Installation Instructions'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -109,7 +121,8 @@ sequence.append(utils.AssertPresentationAction(
     "11. Line Down",
     ["BRAILLE LINE:  'Installation of Self-Extracting Binary'",
      "     VISIBLE:  'Installation of Self-Extracting ', cursor=0",
-     "SPEECH OUTPUT: 'Installation of Self-Extracting Binary link.'"]))
+     "SPEECH OUTPUT: 'Installation of Self-Extracting Binary'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -117,7 +130,8 @@ sequence.append(utils.AssertPresentationAction(
     "12. Line Down",
     ["BRAILLE LINE:  'Installation of RPM File'",
      "     VISIBLE:  'Installation of RPM File', cursor=0",
-     "SPEECH OUTPUT: 'Installation of RPM File link.'"]))
+     "SPEECH OUTPUT: 'Installation of RPM File'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -125,7 +139,8 @@ sequence.append(utils.AssertPresentationAction(
     "13. Line Down",
     ["BRAILLE LINE:  'Java Plugin Browser Registration Instructions'",
      "     VISIBLE:  'Java Plugin Browser Registration', cursor=1",
-     "SPEECH OUTPUT: 'Java Plugin Browser Registration Instructions link.'"]))
+     "SPEECH OUTPUT: 'Java Plugin Browser Registration Instructions'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -133,7 +148,8 @@ sequence.append(utils.AssertPresentationAction(
     "14. Line Down",
     ["BRAILLE LINE:  'Java Web Start Installation Notes'",
      "     VISIBLE:  'Java Web Start Installation Note', cursor=1",
-     "SPEECH OUTPUT: 'Java Web Start Installation Notes link.'"]))
+     "SPEECH OUTPUT: 'Java Web Start Installation Notes'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -141,7 +157,8 @@ sequence.append(utils.AssertPresentationAction(
     "15. Line Down",
     ["BRAILLE LINE:  'Troubleshooting'",
      "     VISIBLE:  'Troubleshooting', cursor=1",
-     "SPEECH OUTPUT: 'Troubleshooting link.'"]))
+     "SPEECH OUTPUT: 'Troubleshooting'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -158,7 +175,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'See supported System Configurations for information about supported platforms, operating systems, desktop managers, and browsers.'",
      "     VISIBLE:  'See supported System Configurati', cursor=1",
      "SPEECH OUTPUT: 'See supported.'",
-     "SPEECH OUTPUT: 'System Configurations link.'",
+     "SPEECH OUTPUT: 'System Configurations'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'for information about supported platforms, operating systems, desktop managers, and browsers.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -168,7 +186,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'For issues, see the Troubleshooting section below.'",
      "     VISIBLE:  'For issues, see the Troubleshoot', cursor=1",
      "SPEECH OUTPUT: 'For issues, see the'",
-     "SPEECH OUTPUT: 'Troubleshooting link.'",
+     "SPEECH OUTPUT: 'Troubleshooting'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'section below.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -194,7 +213,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• Java Plugin Browser Registration Instructions'",
      "     VISIBLE:  '• Java Plugin Browser Registrati', cursor=1",
      "SPEECH OUTPUT: '•.'",
-     "SPEECH OUTPUT: 'Java Plugin Browser Registration Instructions link.'"]))
+     "SPEECH OUTPUT: 'Java Plugin Browser Registration Instructions'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -203,7 +223,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• Java Web Start Installation Notes'",
      "     VISIBLE:  '• Java Web Start Installation No', cursor=1",
      "SPEECH OUTPUT: '•.'",
-     "SPEECH OUTPUT: 'Java Web Start Installation Notes link.'"]))
+     "SPEECH OUTPUT: 'Java Web Start Installation Notes'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -235,7 +256,8 @@ sequence.append(utils.AssertPresentationAction(
     "26. Line Down",
     ["BRAILLE LINE:  'Installation of Self-Extracting Binary below.'",
      "     VISIBLE:  'Installation of Self-Extracting ', cursor=1",
-     "SPEECH OUTPUT: 'Installation of Self-Extracting Binary link.'",
+     "SPEECH OUTPUT: 'Installation of Self-Extracting Binary'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'below.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -253,7 +275,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'installation on Linux. To use this bundle, see Installation of RPM File below.'",
      "     VISIBLE:  'installation on Linux. To use th', cursor=1",
      "SPEECH OUTPUT: 'installation on Linux. To use this bundle, see.'",
-     "SPEECH OUTPUT: 'Installation of RPM File link.'",
+     "SPEECH OUTPUT: 'Installation of RPM File'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'below.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -327,7 +350,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Use these instructions if you want to use the self-extracting binary file to install the JDK. If you want to install RPM packages instead, see Installation of RPM File.'",
      "     VISIBLE:  'Use these instructions if you wa', cursor=1",
      "SPEECH OUTPUT: 'Use these instructions if you want to use the self-extracting binary file to install the JDK. If you want to install RPM packages instead, see.'",
-     "SPEECH OUTPUT: 'Installation of RPM File link.'",
+     "SPEECH OUTPUT: 'Installation of RPM File'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '.'"]))
 
 sequence.append(utils.StartRecordingAction())

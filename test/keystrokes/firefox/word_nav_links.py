@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -30,10 +31,14 @@ sequence.append(utils.AssertPresentationAction(
     "2. Next Word",
     ["BRAILLE LINE:  'Hello W o r l d. Go odbye w orld.'",
      "     VISIBLE:  'd. Go odbye w orld.', cursor=3",
-     "SPEECH OUTPUT: 'W link.'",
-     "SPEECH OUTPUT: 'o link.'",
-     "SPEECH OUTPUT: 'r link.'",
-     "SPEECH OUTPUT: 'l link.'",
+     "SPEECH OUTPUT: 'W'",
+     "SPEECH OUTPUT: 'link.'",
+     "SPEECH OUTPUT: 'o'",
+     "SPEECH OUTPUT: 'link.'",
+     "SPEECH OUTPUT: 'r'",
+     "SPEECH OUTPUT: 'link.'",
+     "SPEECH OUTPUT: 'l'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'd.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -70,7 +75,8 @@ sequence.append(utils.AssertPresentationAction(
     "6. Next Word",
     ["BRAILLE LINE:  'More stuff! Yay!'",
      "     VISIBLE:  'More stuff! Yay!', cursor=12",
-     "SPEECH OUTPUT: 'stuff link.'",
+     "SPEECH OUTPUT: 'stuff'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '!'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -79,7 +85,8 @@ sequence.append(utils.AssertPresentationAction(
     "7. Previous Word",
     ["BRAILLE LINE:  'More stuff! Yay!'",
      "     VISIBLE:  'More stuff! Yay!', cursor=6",
-     "SPEECH OUTPUT: 'stuff link.'",
+     "SPEECH OUTPUT: 'stuff'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '!'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -116,10 +123,14 @@ sequence.append(utils.AssertPresentationAction(
     "11. Previous Word",
     ["BRAILLE LINE:  'Hello W o r l d. Go odbye w orld.'",
      "     VISIBLE:  'W o r l d. Go odbye w orld.', cursor=1",
-     "SPEECH OUTPUT: 'W link.'",
-     "SPEECH OUTPUT: 'o link.'",
-     "SPEECH OUTPUT: 'r link.'",
-     "SPEECH OUTPUT: 'l link.'",
+     "SPEECH OUTPUT: 'W'",
+     "SPEECH OUTPUT: 'link.'",
+     "SPEECH OUTPUT: 'o'",
+     "SPEECH OUTPUT: 'link.'",
+     "SPEECH OUTPUT: 'r'",
+     "SPEECH OUTPUT: 'link.'",
+     "SPEECH OUTPUT: 'l'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'd.'"]))
 
 sequence.append(utils.StartRecordingAction())

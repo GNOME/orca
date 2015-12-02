@@ -12,5 +12,4 @@ orca.settings.enableSpeech = True
 orca.settings.speechFactoryModules = []
 orca.settings.speechServerFactory = None
 orca.settings.asyncMode = False
-orca.settings.enableProgressBarUpdates = True
 orca.settings.progressBarUpdateInterval = 0

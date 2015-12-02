@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Control>Home"))
 
@@ -70,9 +71,11 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'installer'",
      "     VISIBLE:  'installer', cursor=1",
      "SPEECH OUTPUT: 'Download'",
-     "SPEECH OUTPUT: 'installer link.'",
+     "SPEECH OUTPUT: 'installer'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '(10190 KB).'",
-     "SPEECH OUTPUT: 'portable archive link.'",
+     "SPEECH OUTPUT: 'portable archive'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '(9154 KB).'",
      "SPEECH OUTPUT: 'Row 2, column 3.' voice=system",
      "SPEECH OUTPUT: 'blank' voice=system"]))
@@ -87,9 +90,11 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'installer (10193 KB) portable ar', cursor=1",
      "BRAILLE LINE:  'Row 3, column 3.'",
      "     VISIBLE:  'Row 3, column 3.', cursor=0",
-     "SPEECH OUTPUT: 'installer link.'",
+     "SPEECH OUTPUT: 'installer'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '(10193 KB).'",
-     "SPEECH OUTPUT: 'portable archive link.'",
+     "SPEECH OUTPUT: 'portable archive'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '(9149 KB).'",
      "SPEECH OUTPUT: 'Row 3, column 3.' voice=system"]))
 
@@ -137,9 +142,11 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Row 4, column 3.'",
      "     VISIBLE:  'Row 4, column 3.', cursor=0",
      "SPEECH OUTPUT: 'Download'",
-     "SPEECH OUTPUT: 'installer link.'",
+     "SPEECH OUTPUT: 'installer'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '(10186 KB).'",
-     "SPEECH OUTPUT: 'portable archive link.'",
+     "SPEECH OUTPUT: 'portable archive'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '(9146 KB).'",
      "SPEECH OUTPUT: 'Row 4, column 3.' voice=system"]))
 

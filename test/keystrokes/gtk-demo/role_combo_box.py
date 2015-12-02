@@ -20,7 +20,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk-demo application Combo boxes frame Some stock icons panel Warning combo box Warning'",
      "     VISIBLE:  'Warning', cursor=1",
      "SPEECH OUTPUT: 'window'",
-     "SPEECH OUTPUT: 'Warning'"]))
+     "SPEECH OUTPUT: 'Warning.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -30,7 +30,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Warning', cursor=1",
      "SPEECH OUTPUT: 'Combo boxes frame'",
      "SPEECH OUTPUT: 'Some stock icons panel'",
-     "SPEECH OUTPUT: 'combo box Warning 1 of 5'"]))
+     "SPEECH OUTPUT: 'Warning.'",
+     "SPEECH OUTPUT: '1 of 5'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -38,7 +39,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. New combo box item",
     ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Some stock icons panel Warning combo box New'",
      "     VISIBLE:  'New', cursor=1",
-     "SPEECH OUTPUT: 'New'"]))
+     "SPEECH OUTPUT: 'New.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -48,7 +49,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'New', cursor=1",
      "SPEECH OUTPUT: 'Combo boxes frame'",
      "SPEECH OUTPUT: 'Some stock icons panel'",
-     "SPEECH OUTPUT: 'combo box New 3 of 5'"]))
+     "SPEECH OUTPUT: 'New.'",
+     "SPEECH OUTPUT: '3 of 5'"]))
 
 sequence.append(KeyComboAction("Escape"))
 sequence.append(KeyComboAction("Tab"))
@@ -60,7 +62,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel  $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Editable panel'",
-     "SPEECH OUTPUT: 'text'"]))
+     "SPEECH OUTPUT: 'text.'"]))
 
 sequence.append(TypeAction("Fou"))
 sequence.append(utils.StartRecordingAction())
@@ -78,7 +80,8 @@ sequence.append(utils.AssertPresentationAction(
     "7. Editable text combo box Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5",
-     "SPEECH OUTPUT: 'text Four'"]))
+     "SPEECH OUTPUT: 'text.'",
+     "SPEECH OUTPUT: 'Four.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -86,7 +89,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Editable text combo box open button",
     ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel Four $l combo box'",
      "     VISIBLE:  'Four $l combo box', cursor=5",
-     "SPEECH OUTPUT: 'Four combo box'"]))
+     "SPEECH OUTPUT: 'Four combo box.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
@@ -96,7 +99,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Four $l', cursor=5",
      "BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5",
-     "SPEECH OUTPUT: 'text Four selected'"]))
+     "SPEECH OUTPUT: 'text.'",
+     "SPEECH OUTPUT: 'Four selected'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -104,7 +108,8 @@ sequence.append(utils.AssertPresentationAction(
     "10. Editable text combo box with selected text Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5",
-     "SPEECH OUTPUT: 'text Four selected'"]))
+     "SPEECH OUTPUT: 'text.'",
+     "SPEECH OUTPUT: 'Four selected.'"]))
 
 sequence.append(KeyComboAction("Escape"))
 sequence.append(KeyComboAction("Tab"))
@@ -117,7 +122,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Where are we ? panel Boston combo box'",
      "     VISIBLE:  'Boston combo box', cursor=1",
      "SPEECH OUTPUT: 'Where are we ? panel'",
-     "SPEECH OUTPUT: 'Boston combo box'"]))
+     "SPEECH OUTPUT: 'Boston combo box.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -133,7 +138,8 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: The count is wrong due to a Gtk+ 2 bug which has been fixed in Gtk+ 3",
      "BRAILLE LINE:  'gtk-demo application Combo boxes frame Where are we ? panel Carson City combo box'",
      "     VISIBLE:  'Carson City combo box', cursor=1",
-     "SPEECH OUTPUT: 'combo box Carson City 1 of 1'"]))
+     "SPEECH OUTPUT: 'combo box.'",
+     "SPEECH OUTPUT: 'Carson City 1 of 1'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 sequence.append(utils.AssertionSummaryAction())

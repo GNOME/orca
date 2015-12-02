@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Add"))
@@ -15,7 +16,6 @@ sequence.append(utils.AssertPresentationAction(
     "1. KP_Add to do a SayAll",
     ["SPEECH OUTPUT: 'Home'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'Back to the Gnome Bugzilla home page'",
      "SPEECH OUTPUT: 'Bugzilla'",
      "SPEECH OUTPUT: 'New bug'",
      "SPEECH OUTPUT: 'link'",
@@ -61,12 +61,11 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Product:'",
      "SPEECH OUTPUT: 'orca'",
      "SPEECH OUTPUT: 'Version:'",
-     "SPEECH OUTPUT: '2.21.x '",
+     "SPEECH OUTPUT: '2.21.x'",
      "SPEECH OUTPUT: 'List with 9 items'",
      "SPEECH OUTPUT: 'Component'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: ':'",
-     "SPEECH OUTPUT: 'braille '",
      "SPEECH OUTPUT: 'List with 5 items'",
      "SPEECH OUTPUT: 'GNOME version'",
      "SPEECH OUTPUT: 'link'",

@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -18,8 +19,6 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "1. Basic whereAmI",
     ["BRAILLE LINE:  'Tab Zero page tab'",
-     "     VISIBLE:  'Tab Zero page tab', cursor=1",
-     "BRAILLE LINE:  'Tab Zero page tab'",
      "     VISIBLE:  'Tab Zero page tab', cursor=1",
      "SPEECH OUTPUT: 'page tab list.'",
      "SPEECH OUTPUT: 'Tab Zero page tab.'",

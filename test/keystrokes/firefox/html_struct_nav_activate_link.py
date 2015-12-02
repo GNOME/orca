@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 sequence.append(KeyComboAction("<Control>Home"))
 
 sequence.append(utils.StartRecordingAction())
@@ -18,7 +19,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Anchors2.html h3', cursor=1",
      "BRAILLE LINE:  'Anchors2.html h3'",
      "     VISIBLE:  'Anchors2.html h3', cursor=1",
-     "SPEECH OUTPUT: 'Anchors2.html link heading level 3.'"]))
+     "SPEECH OUTPUT: 'Anchors2.html'",
+     "SPEECH OUTPUT: 'link heading level 3.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))

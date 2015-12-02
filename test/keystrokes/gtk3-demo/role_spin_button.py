@@ -8,7 +8,12 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(TypeAction("Printing"))
+sequence.append(TypeAction("Popovers"))
+sequence.append(KeyComboAction("Escape"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("<Shift>Right"))
+sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(PauseAction(3000))
 
@@ -20,7 +25,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Copies: 1 $l', cursor=10",
      "BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Copies panel Copies: 1 $l'",
      "     VISIBLE:  'Copies: 1 $l', cursor=10",
-     "SPEECH OUTPUT: 'General page tab'",
      "SPEECH OUTPUT: 'Copies panel'",
      "SPEECH OUTPUT: 'Copies: 1 selected spin button'"]))
 

@@ -16,32 +16,32 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "1. Toggle button Where Am I",
-    ["BRAILLE LINE:  'gtk3-demo application GtkExpander dialog & y Details collapsed toggle button'",
-     "     VISIBLE:  '& y Details collapsed toggle but', cursor=1",
-     "SPEECH OUTPUT: 'Details toggle button collapsed'"]))
+    ["BRAILLE LINE:  'gtk3-demo application Error alert & y Details: collapsed toggle button'",
+     "     VISIBLE:  '& y Details: collapsed toggle bu', cursor=1",
+     "SPEECH OUTPUT: 'Details: toggle button collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "2. Toggle button state changed to expanded",
-    ["BRAILLE LINE:  'gtk3-demo application GtkExpander dialog &=y Details expanded toggle button'",
-     "     VISIBLE:  '&=y Details expanded toggle butt', cursor=1",
+    ["BRAILLE LINE:  'gtk3-demo application Error alert &=y Details: expanded toggle button'",
+     "     VISIBLE:  '&=y Details: expanded toggle but', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "3. Toggle button pressed Where Am I",
-    ["BRAILLE LINE:  'gtk3-demo application GtkExpander dialog &=y Details expanded toggle button'",
-     "     VISIBLE:  '&=y Details expanded toggle butt', cursor=1",
-     "SPEECH OUTPUT: 'Details toggle button expanded'"]))
+    ["BRAILLE LINE:  'gtk3-demo application Error alert &=y Details: expanded toggle button'",
+     "     VISIBLE:  '&=y Details: expanded toggle but', cursor=1",
+     "SPEECH OUTPUT: 'Details: toggle button expanded'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "4. Toggle button state changed to collapsed",
-    ["BRAILLE LINE:  'gtk3-demo application GtkExpander dialog & y Details collapsed toggle button'",
-     "     VISIBLE:  '& y Details collapsed toggle but', cursor=1",
+    ["BRAILLE LINE:  'gtk3-demo application Error alert & y Details: collapsed toggle button'",
+     "     VISIBLE:  '& y Details: collapsed toggle bu', cursor=1",
      "SPEECH OUTPUT: 'collapsed'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))

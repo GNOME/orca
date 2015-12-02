@@ -20,8 +20,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Preferences menu', cursor=1",
      "BRAILLE LINE:  'gtk-demo application Application Window frame Color menu'",
      "     VISIBLE:  'Color menu', cursor=1",
-     "SPEECH OUTPUT: 'Preferences menu'",
-     "SPEECH OUTPUT: 'Color menu'"]))
+     "SPEECH OUTPUT: 'Preferences menu.'",
+     "SPEECH OUTPUT: 'Color menu.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -31,7 +31,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Color menu', cursor=1",
      "SPEECH OUTPUT: 'Application Window frame'",
      "SPEECH OUTPUT: 'Preferences menu'",
-     "SPEECH OUTPUT: 'Color menu 1 of 3.'",
+     "SPEECH OUTPUT: 'Color menu.'",
+     "SPEECH OUTPUT: '1 of 4.'",
      "SPEECH OUTPUT: 'C'"]))
 
 sequence.append(KeyComboAction("Escape"))

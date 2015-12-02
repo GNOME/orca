@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -70,7 +71,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
-    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l text field using'",
+    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l text field'",
      "     VISIBLE:  '2. Enter your City:  $l 3. Enter', cursor=1",
      "SPEECH OUTPUT: '2. Enter your City:'",
      "SPEECH OUTPUT: 'entry'",
@@ -79,7 +80,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '4. Enter your Country:'",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'US'",
-     "SPEECH OUTPUT: 'text field using'"]))
+     "SPEECH OUTPUT: 'text field'"]))
 
 sequence.append(KeyComboAction("Down"))
 
@@ -366,7 +367,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "41. Line Up",
-    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l text field using'",
+    ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l text field'",
      "     VISIBLE:  '2. Enter your City:  $l 3. Enter', cursor=1",
      "SPEECH OUTPUT: '2. Enter your City:'",
      "SPEECH OUTPUT: 'entry'",
@@ -375,7 +376,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '4. Enter your Country:'",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'US'",
-     "SPEECH OUTPUT: 'text field using'"]))
+     "SPEECH OUTPUT: 'text field'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

@@ -147,7 +147,8 @@ sequence.append(utils.AssertPresentationAction(
     "6. Where Am I",
     ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test. $l'",
      "     VISIBLE:  'This is a test. $l', cursor=11",
-     "SPEECH OUTPUT: 'text  is a  selected'"]))
+     "SPEECH OUTPUT: 'text.'",
+     "SPEECH OUTPUT: ' is a  selected.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Down"))
@@ -174,8 +175,9 @@ sequence.append(utils.AssertPresentationAction(
     "9. Basic Where Am I multiline selection",
     ["BRAILLE LINE:  'Here is another test. $l'",
      "     VISIBLE:  'Here is another test. $l', cursor=22",
-     "SPEECH OUTPUT: 'text  is a test.",
-     "Here is another test. selected'"]))
+     "SPEECH OUTPUT: 'text.'",
+     "SPEECH OUTPUT: ' is a test.",
+     "Here is another test. selected.'"]))
 
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.StartRecordingAction())
@@ -184,8 +186,9 @@ sequence.append(utils.AssertPresentationAction(
     "10. Detailed Where Am I multiline selection",
     ["BRAILLE LINE:  'Here is another test. $l'",
      "     VISIBLE:  'Here is another test. $l', cursor=22",
-     "SPEECH OUTPUT: 'text  is a test.",
-     "Here is another test. selected'"]))
+     "SPEECH OUTPUT: 'text.'",
+     "SPEECH OUTPUT: ' is a test.",
+     "Here is another test. selected.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))

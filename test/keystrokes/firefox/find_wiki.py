@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(KeyComboAction("<Control>F"))
 sequence.append(TypeAction("orca"))
@@ -28,7 +29,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Welcome to Orca!'",
      "     VISIBLE:  'Welcome to Orca!', cursor=1",
      "SPEECH OUTPUT: '1.'",
-     "SPEECH OUTPUT: 'Welcome to Orca! link.'"]))
+     "SPEECH OUTPUT: 'Welcome to Orca!'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))

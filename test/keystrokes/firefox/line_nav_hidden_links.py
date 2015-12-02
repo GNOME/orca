@@ -7,7 +7,12 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
+
+# Work around some new quirk in Gecko that causes this test to fail if
+# run via the test harness rather than manually.
+sequence.append(KeyComboAction("<Control>r"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
@@ -23,7 +28,8 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  'up vote'",
      "     VISIBLE:  'up vote', cursor=1",
-     "SPEECH OUTPUT: 'up vote link.'"]))
+     "SPEECH OUTPUT: 'up vote'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -39,7 +45,8 @@ sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
     ["BRAILLE LINE:  'down vote'",
      "     VISIBLE:  'down vote', cursor=1",
-     "SPEECH OUTPUT: 'down vote link.'"]))
+     "SPEECH OUTPUT: 'down vote'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -71,7 +78,8 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Up",
     ["BRAILLE LINE:  'down vote'",
      "     VISIBLE:  'down vote', cursor=1",
-     "SPEECH OUTPUT: 'down vote link.'"]))
+     "SPEECH OUTPUT: 'down vote'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -87,7 +95,8 @@ sequence.append(utils.AssertPresentationAction(
     "10. Line Up",
     ["BRAILLE LINE:  'up vote'",
      "     VISIBLE:  'up vote', cursor=1",
-     "SPEECH OUTPUT: 'up vote link.'"]))
+     "SPEECH OUTPUT: 'up vote'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

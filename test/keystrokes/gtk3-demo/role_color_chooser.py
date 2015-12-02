@@ -20,7 +20,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. Arrow to the next swatch",
     ["BRAILLE LINE:  'gtk3-demo application Changing color dialog & y Light Orange radio button'",
      "     VISIBLE:  '& y Light Orange radio button', cursor=1",
-     "SPEECH OUTPUT: 'Light Orange not selected radio button'"]))
+     "SPEECH OUTPUT: 'Light Orange.'",
+     "SPEECH OUTPUT: 'not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("space"))

@@ -5,7 +5,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -17,6 +18,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Give focus to a widget in the first Tab",
     ["BRAILLE LINE:  '&=y Thick and cheesy radio button'",
      "     VISIBLE:  '&=y Thick and cheesy radio butto', cursor=1",
+     "SPEECH OUTPUT: 'List with 4 items'",
      "SPEECH OUTPUT: 'Thick and cheesy.'",
      "SPEECH OUTPUT: 'selected radio button'"]))
 
@@ -75,6 +77,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '< > Pepperoni check box', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",
+     "SPEECH OUTPUT: 'List with 4 items'",
      "SPEECH OUTPUT: 'Pepperoni check box not checked'",
      "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 

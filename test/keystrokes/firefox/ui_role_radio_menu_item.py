@@ -16,7 +16,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. y for the Page Style menu",
     ["BRAILLE LINE:  'Firefox application (Mozilla Firefox|Nightly) frame Menu Bar tool bar Application menu bar View menu & y No Style radio menu item'",
      "     VISIBLE:  '& y No Style radio menu item', cursor=1",
-     "SPEECH OUTPUT: 'Page Style menu(\.|)'",
+     "SPEECH OUTPUT: 'Page Style menu.'",
      "SPEECH OUTPUT: 'No Style not selected radio menu item'"]))
 
 sequence.append(utils.StartRecordingAction())

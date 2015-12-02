@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -49,21 +50,21 @@ sequence.append(utils.AssertPresentationAction(
     "4. Tab",
     ["BRAILLE LINE:  'Search push button'",
      "     VISIBLE:  'Search push button', cursor=1",
-     "BRAILLE LINE:  'Admin '",
-     "     VISIBLE:  'Admin ', cursor=1",
+     "BRAILLE LINE:  'Admin'",
+     "     VISIBLE:  'Admin', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Classification: multi-select List with 8 items'",
-     "SPEECH OUTPUT: 'Admin .'",
+     "SPEECH OUTPUT: 'Admin.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "5. Tab",
-    ["BRAILLE LINE:  'Admin '",
-     "     VISIBLE:  'Admin ', cursor=1",
+    ["BRAILLE LINE:  'Admin'",
+     "     VISIBLE:  'Admin', cursor=1",
      "BRAILLE LINE:  'accerciser'",
      "     VISIBLE:  'accerciser', cursor=1",
      "SPEECH OUTPUT: 'table with 2 rows 1 column'",
@@ -241,7 +242,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '<x> the bug assignee check box', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",
-     "SPEECH OUTPUT: 'Email and Numbering  panel'",
+     "SPEECH OUTPUT: 'Email and Numbering panel'",
      "SPEECH OUTPUT: 'the bug assignee check box checked'",
      "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
@@ -389,6 +390,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Only bugs changed between:  $l'",
      "     VISIBLE:  'Only bugs changed between:  $l', cursor=28",
      "SPEECH OUTPUT: 'Bug Changes panel'",
+     "SPEECH OUTPUT: 'List with 3 items'",
      "SPEECH OUTPUT: 'Only bugs changed between: entry'"]))
 
 sequence.append(utils.StartRecordingAction())

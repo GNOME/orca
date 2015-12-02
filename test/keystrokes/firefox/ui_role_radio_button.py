@@ -17,7 +17,6 @@ sequence.append(utils.AssertPresentationAction(
     "1. Alt a to radio button group",
     ["BRAILLE LINE:  'Firefox application Print dialog General page tab Range Range &=y All Pages radio button'",
      "     VISIBLE:  '&=y All Pages radio button', cursor=1",
-     "SPEECH OUTPUT: 'General page tab.'",
      "SPEECH OUTPUT: 'Range panel'",
      "SPEECH OUTPUT: 'All Pages.'",
      "SPEECH OUTPUT: 'selected radio button'"]))

@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Add"))
@@ -26,7 +27,8 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '  I like to swing from trees and eat bananas. '",
      "SPEECH OUTPUT: '  I've recently taken up typing and plan to write my memoirs.",
      "'",
-     "SPEECH OUTPUT: '     '",
+     "SPEECH OUTPUT: '",
+     "     '",
      "SPEECH OUTPUT: 'Check one or more:'",
      "SPEECH OUTPUT: 'Red'",
      "SPEECH OUTPUT: 'check box'",
@@ -44,7 +46,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Water'",
      "SPEECH OUTPUT: 'combo box'",
      "SPEECH OUTPUT: 'Which sports do you like?'",
-     "SPEECH OUTPUT: 'Hockey'",
      "SPEECH OUTPUT: 'multi-select'",
      "SPEECH OUTPUT: 'List with 4 items'",
      "SPEECH OUTPUT: 'Dashing picture of Willie Walker'",

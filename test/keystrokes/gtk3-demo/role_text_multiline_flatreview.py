@@ -286,7 +286,7 @@ sequence.append(KeyComboAction("KP_5"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "19. Insert+KP_5 to flat review 'Help' accessible",
-    ["SPEECH OUTPUT: 'Help menu'"]))
+    ["SPEECH OUTPUT: 'Help menu.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -36,7 +37,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  ' Before Line After'",
      "     VISIBLE:  ' Before Line After', cursor=1",
      "SPEECH OUTPUT: 'Before'",
-     "SPEECH OUTPUT: 'Line link.'",
+     "SPEECH OUTPUT: 'Line'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'After'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -54,7 +56,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  ' Before Line After'",
      "     VISIBLE:  ' Before Line After', cursor=1",
      "SPEECH OUTPUT: 'Before'",
-     "SPEECH OUTPUT: 'Line link.'",
+     "SPEECH OUTPUT: 'Line'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'After'"]))
 
 sequence.append(utils.StartRecordingAction())

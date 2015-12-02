@@ -241,10 +241,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "14. KP_7 to flat review 'This is a test.' and the scrollbar",
-    ["BRAILLE LINE:  'This is a test.  vertical scroll bar 0% $l'",
-     "     VISIBLE:  'This is a test.  vertical scroll', cursor=1",
+    ["BRAILLE LINE:  'This is a test.  $l'",
+     "     VISIBLE:  'This is a test.  $l', cursor=1",
      "SPEECH OUTPUT: 'This is a test. ",
-     " vertical scroll bar 0 percent.'"]))
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
@@ -284,7 +284,7 @@ sequence.append(KeyComboAction("KP_5"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "19. Insert+KP_5 to flat review 'Help' accessible",
-    ["SPEECH OUTPUT: 'Help menu'"]))
+    ["SPEECH OUTPUT: 'Help menu.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

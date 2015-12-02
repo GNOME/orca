@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -77,7 +78,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• This is a test that is not very interesting.'",
      "     VISIBLE:  '• This is a test that is not ver', cursor=1",
      "SPEECH OUTPUT: '•.'",
-     "SPEECH OUTPUT: 'This is a test link.'",
+     "SPEECH OUTPUT: 'This is a test'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'that is not very interesting.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -87,7 +89,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• But it looks like a real-world example.'",
      "     VISIBLE:  '• But it looks like a real-world', cursor=1",
      "SPEECH OUTPUT: '•.'",
-     "SPEECH OUTPUT: 'But it looks like link.'",
+     "SPEECH OUTPUT: 'But it looks like'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'a real-world example.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -97,7 +100,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• And that's why this silly test is here.'",
      "     VISIBLE:  '• And that's why this silly test', cursor=1",
      "SPEECH OUTPUT: '•.'",
-     "SPEECH OUTPUT: 'And that's link.'",
+     "SPEECH OUTPUT: 'And that's'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'why this silly test is here.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -107,7 +111,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'So it's far more interesting than it looks.'",
      "     VISIBLE:  'So it's far more interesting tha', cursor=1",
      "SPEECH OUTPUT: 'So it's'",
-     "SPEECH OUTPUT: 'far more interesting link.'",
+     "SPEECH OUTPUT: 'far more interesting'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'than it looks.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -125,7 +130,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• The thing is we can't copy content.'",
      "     VISIBLE:  '• The thing is we can't copy con', cursor=1",
      "SPEECH OUTPUT: '•.'",
-     "SPEECH OUTPUT: 'The thing is link.'",
+     "SPEECH OUTPUT: 'The thing is'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'we can't copy content.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -135,7 +141,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• So we must create silly tests.'",
      "     VISIBLE:  '• So we must create silly tests.', cursor=1",
      "SPEECH OUTPUT: '•.'",
-     "SPEECH OUTPUT: 'So we must link.'",
+     "SPEECH OUTPUT: 'So we must'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'create silly tests.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -145,7 +152,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• Oh well.'",
      "     VISIBLE:  '• Oh well.', cursor=1",
      "SPEECH OUTPUT: '•.'",
-     "SPEECH OUTPUT: 'Oh link.'",
+     "SPEECH OUTPUT: 'Oh'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'well.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -155,7 +163,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'At least it's over.'",
      "     VISIBLE:  'At least it's over.', cursor=1",
      "SPEECH OUTPUT: 'At least it's'",
-     "SPEECH OUTPUT: 'over link.'",
+     "SPEECH OUTPUT: 'over'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -165,7 +174,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• Oh well.'",
      "     VISIBLE:  '• Oh well.', cursor=1",
      "SPEECH OUTPUT: '•.'",
-     "SPEECH OUTPUT: 'Oh link.'",
+     "SPEECH OUTPUT: 'Oh'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'well.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -175,7 +185,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• So we must create silly tests.'",
      "     VISIBLE:  '• So we must create silly tests.', cursor=1",
      "SPEECH OUTPUT: '•.'",
-     "SPEECH OUTPUT: 'So we must link.'",
+     "SPEECH OUTPUT: 'So we must'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'create silly tests.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -185,7 +196,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• The thing is we can't copy content.'",
      "     VISIBLE:  '• The thing is we can't copy con', cursor=1",
      "SPEECH OUTPUT: '•.'",
-     "SPEECH OUTPUT: 'The thing is link.'",
+     "SPEECH OUTPUT: 'The thing is'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'we can't copy content.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -203,7 +215,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'So it's far more interesting than it looks.'",
      "     VISIBLE:  'So it's far more interesting tha', cursor=1",
      "SPEECH OUTPUT: 'So it's'",
-     "SPEECH OUTPUT: 'far more interesting link.'",
+     "SPEECH OUTPUT: 'far more interesting'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'than it looks.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -213,7 +226,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• And that's why this silly test is here.'",
      "     VISIBLE:  '• And that's why this silly test', cursor=1",
      "SPEECH OUTPUT: '•.'",
-     "SPEECH OUTPUT: 'And that's link.'",
+     "SPEECH OUTPUT: 'And that's'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'why this silly test is here.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -223,7 +237,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• But it looks like a real-world example.'",
      "     VISIBLE:  '• But it looks like a real-world', cursor=1",
      "SPEECH OUTPUT: '•.'",
-     "SPEECH OUTPUT: 'But it looks like link.'",
+     "SPEECH OUTPUT: 'But it looks like'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'a real-world example.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -233,7 +248,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• This is a test that is not very interesting.'",
      "     VISIBLE:  '• This is a test that is not ver', cursor=1",
      "SPEECH OUTPUT: '•.'",
-     "SPEECH OUTPUT: 'This is a test link.'",
+     "SPEECH OUTPUT: 'This is a test'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'that is not very interesting.'"]))
 
 sequence.append(utils.StartRecordingAction())

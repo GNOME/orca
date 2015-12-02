@@ -6,7 +6,8 @@ from macaroon.playback import *
 import utils
 
 sequence = MacroSequence()
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 sequence.append(KeyComboAction("Tab"))
 
 sequence.append(utils.StartRecordingAction())

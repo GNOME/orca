@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -39,7 +40,8 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  'installer (10190 KB)'",
      "     VISIBLE:  'installer (10190 KB)', cursor=1",
-     "SPEECH OUTPUT: 'installer link.'",
+     "SPEECH OUTPUT: 'installer'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '(10190 KB).'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -48,7 +50,8 @@ sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
     ["BRAILLE LINE:  'portable archive (9154 KB)'",
      "     VISIBLE:  'portable archive (9154 KB)', cursor=1",
-     "SPEECH OUTPUT: 'portable archive link.'",
+     "SPEECH OUTPUT: 'portable archive'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '(9154 KB).'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -66,7 +69,8 @@ sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
     ["BRAILLE LINE:  'installer (10193 KB)'",
      "     VISIBLE:  'installer (10193 KB)', cursor=1",
-     "SPEECH OUTPUT: 'installer link.'",
+     "SPEECH OUTPUT: 'installer'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '(10193 KB).'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -75,7 +79,8 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
     ["BRAILLE LINE:  'portable archive (9149 KB)'",
      "     VISIBLE:  'portable archive (9149 KB)', cursor=1",
-     "SPEECH OUTPUT: 'portable archive link.'",
+     "SPEECH OUTPUT: 'portable archive'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '(9149 KB).'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -84,7 +89,8 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Up",
     ["BRAILLE LINE:  'installer (10193 KB)'",
      "     VISIBLE:  'installer (10193 KB)', cursor=1",
-     "SPEECH OUTPUT: 'installer link.'",
+     "SPEECH OUTPUT: 'installer'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '(10193 KB).'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -102,7 +108,8 @@ sequence.append(utils.AssertPresentationAction(
     "10. Line Up",
     ["BRAILLE LINE:  'portable archive (9154 KB)'",
      "     VISIBLE:  'portable archive (9154 KB)', cursor=1",
-     "SPEECH OUTPUT: 'portable archive link.'",
+     "SPEECH OUTPUT: 'portable archive'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '(9154 KB).'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -111,7 +118,8 @@ sequence.append(utils.AssertPresentationAction(
     "11. Line Up",
     ["BRAILLE LINE:  'installer (10190 KB)'",
      "     VISIBLE:  'installer (10190 KB)', cursor=1",
-     "SPEECH OUTPUT: 'installer link.'",
+     "SPEECH OUTPUT: 'installer'",
+     "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '(10190 KB).'"]))
 
 sequence.append(utils.StartRecordingAction())

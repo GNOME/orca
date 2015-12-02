@@ -7,7 +7,9 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
+sequence.append(PauseAction(3000))
 
 # Work around some new quirk in Gecko that causes this test to fail if
 # run via the test harness rather than manually.
@@ -37,7 +39,8 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  'Science h4'",
      "     VISIBLE:  'Science h4', cursor=1",
-     "SPEECH OUTPUT: 'Science link heading level 4.'"]))
+     "SPEECH OUTPUT: 'Science'",
+     "SPEECH OUTPUT: 'link heading level 4.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -45,7 +48,8 @@ sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
     ["BRAILLE LINE:  'Recent Tags h4'",
      "     VISIBLE:  'Recent Tags h4', cursor=1",
-     "SPEECH OUTPUT: 'Recent Tags link heading level 4.'"]))
+     "SPEECH OUTPUT: 'Recent Tags'",
+     "SPEECH OUTPUT: 'link heading level 4.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -79,9 +83,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
-    ["BRAILLE LINE:  'What is your favorite poison?'",
-     "     VISIBLE:  'What is your favorite poison?', cursor=1",
-     "SPEECH OUTPUT: 'What is your favorite poison?"]))
+    ["BRAILLE LINE:  'Poll What is your favorite poison?'",
+     "     VISIBLE:  'Poll What is your favorite poiso', cursor=6",
+     "SPEECH OUTPUT: 'What is your favorite poison? panel'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -98,7 +102,8 @@ sequence.append(utils.AssertPresentationAction(
     "10. Line Down",
     ["BRAILLE LINE:  'Book Reviews h4'",
      "     VISIBLE:  'Book Reviews h4', cursor=1",
-     "SPEECH OUTPUT: 'Book Reviews link heading level 4.'"]))
+     "SPEECH OUTPUT: 'Book Reviews'",
+     "SPEECH OUTPUT: 'link heading level 4.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -113,9 +118,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "12. Line Up",
-    ["BRAILLE LINE:  'What is your favorite poison?'",
-     "     VISIBLE:  'What is your favorite poison?', cursor=1",
-     "SPEECH OUTPUT: 'What is your favorite poison?"]))
+    ["BRAILLE LINE:  'Poll What is your favorite poison?'",
+     "     VISIBLE:  'Poll What is your favorite poiso', cursor=6",
+     "SPEECH OUTPUT: 'What is your favorite poison? panel'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -151,7 +156,8 @@ sequence.append(utils.AssertPresentationAction(
     "16. Line Up",
     ["BRAILLE LINE:  'Recent Tags h4'",
      "     VISIBLE:  'Recent Tags h4', cursor=1",
-     "SPEECH OUTPUT: 'Recent Tags link heading level 4.'"]))
+     "SPEECH OUTPUT: 'Recent Tags'",
+     "SPEECH OUTPUT: 'link heading level 4.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -159,7 +165,8 @@ sequence.append(utils.AssertPresentationAction(
     "17. Line Up",
     ["BRAILLE LINE:  'Science h4'",
      "     VISIBLE:  'Science h4', cursor=1",
-     "SPEECH OUTPUT: 'Science link heading level 4.'"]))
+     "SPEECH OUTPUT: 'Science'",
+     "SPEECH OUTPUT: 'link heading level 4.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

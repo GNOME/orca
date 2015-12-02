@@ -30,9 +30,8 @@ sequence.append(utils.AssertPresentationAction(
     "2. Hide tooltip",
     ["BRAILLE LINE:  'gtk-demo application Print dialog General page tab &=y Pages: radio button'",
      "     VISIBLE:  '&=y Pages: radio button', cursor=1",
-     "SPEECH OUTPUT: 'Print'",
-     "SPEECH OUTPUT: 'General page tab'",
-     "SPEECH OUTPUT: 'Pages: selected radio button'"]))
+     "SPEECH OUTPUT: 'Pages:.'",
+     "SPEECH OUTPUT: 'selected radio button'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

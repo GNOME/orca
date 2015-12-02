@@ -20,7 +20,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Arrow to first check menu item - not checked",
     ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame < > Hide Titlebar when maximized check menu item'",
      "     VISIBLE:  '< > Hide Titlebar when maximized', cursor=1",
-     "SPEECH OUTPUT: 'Hide Titlebar when maximized check menu item not checked'"]))
+     "SPEECH OUTPUT: 'Hide Titlebar when maximized check menu item not checked.'"]))
 
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Escape"))
@@ -32,7 +32,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Arrow to first check menu item - checked",
     ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame <x> Hide Titlebar when maximized check menu item'",
      "     VISIBLE:  '<x> Hide Titlebar when maximized', cursor=1",
-     "SPEECH OUTPUT: 'Hide Titlebar when maximized check menu item checked'"]))
+     "SPEECH OUTPUT: 'Hide Titlebar when maximized check menu item checked.'"]))
 
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Escape"))
@@ -44,7 +44,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Arrow to first check menu item - not checked",
     ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame < > Hide Titlebar when maximized check menu item'",
      "     VISIBLE:  '< > Hide Titlebar when maximized', cursor=1",
-     "SPEECH OUTPUT: 'Hide Titlebar when maximized check menu item not checked'"]))
+     "SPEECH OUTPUT: 'Hide Titlebar when maximized check menu item not checked.'"]))
 
 sequence.append(KeyComboAction("Escape"))
 sequence.append(KeyComboAction("<Alt>F4"))

@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
@@ -29,9 +30,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
-    ["BRAILLE LINE:  'Here is a step-by-step tutorial:'",
-     "     VISIBLE:  'Here is a step-by-step tutorial:', cursor=1",
-     "SPEECH OUTPUT: 'Here is a step-by-step tutorial:"]))
+    ["BRAILLE LINE:  'Solution  Here is a step-by-step tutorial:'",
+     "     VISIBLE:  'Solution  Here is a step-by-step', cursor=11",
+     "SPEECH OUTPUT: 'Here is a step-by-step tutorial: panel'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -61,9 +62,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Up",
-    ["BRAILLE LINE:  'Here is a step-by-step tutorial:'",
-     "     VISIBLE:  'Here is a step-by-step tutorial:', cursor=1",
-     "SPEECH OUTPUT: 'Here is a step-by-step tutorial:"]))
+    ["BRAILLE LINE:  'Solution  Here is a step-by-step tutorial:'",
+     "     VISIBLE:  'Solution  Here is a step-by-step', cursor=11",
+     "SPEECH OUTPUT: 'Here is a step-by-step tutorial: panel'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

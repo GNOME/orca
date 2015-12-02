@@ -7,7 +7,8 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(WaitForDocLoad())
+#sequence.append(WaitForDocLoad())
+sequence.append(PauseAction(5000))
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
@@ -349,7 +350,10 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "41. Insert+f",
     ["SPEECH OUTPUT: 'size: 9' voice=system",
-     "SPEECH OUTPUT: 'family name: DejaVu Sans Mono' voice=system"]))
+     "SPEECH OUTPUT: 'family name: DejaVu Sans Mono' voice=system",
+     "SPEECH OUTPUT: 'misspelled' voice=system",
+     "SPEECH OUTPUT: 'foreground color: black' voice=system",
+     "SPEECH OUTPUT: 'background color: white' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
@@ -391,7 +395,9 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "46. Insert+f",
     ["SPEECH OUTPUT: 'size: 9' voice=system",
-     "SPEECH OUTPUT: 'family name: DejaVu Sans Mono' voice=system"]))
+     "SPEECH OUTPUT: 'family name: DejaVu Sans Mono' voice=system",
+     "SPEECH OUTPUT: 'foreground color: black' voice=system",
+     "SPEECH OUTPUT: 'background color: white' voice=system"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()
