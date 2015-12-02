@@ -2776,7 +2776,7 @@ class Script(script.Script):
         if self.pointOfReference.get('lastAutoComplete') == hash(obj):
             return
 
-        if self._speakTextSelectionState(max(1, len(newString))):
+        if self._speakTextSelectionState(len(newString)):
             return
 
         changes = []
