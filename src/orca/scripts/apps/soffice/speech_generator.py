@@ -218,12 +218,16 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # together in the scripts. In addition, the voice crap needs to go
         # here. Then it needs to be removed from the scripts.
         [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
+        voice = self.voice(string=text)
         text = self._script.utilities.adjustForLinks(obj, text, startOffset)
         text = self._script.utilities.adjustForRepeats(text)
         if not text:
-            text = [messages.BLANK]
+            result = [messages.BLANK]
+        else:
+            result = [text]
+        result.extend(voice)
 
-        return [text]
+        return result
 
     def _generateToggleState(self, obj, **args):
         """Treat toggle buttons in the toolbar specially. This is so we can

@@ -2328,4 +2328,10 @@ class SpeechGenerator(generator.Generator):
         if not rv or rv.get('established') == False:
             rv = voices.get(voiceType.get(DEFAULT))
 
-        return [acss.ACSS(rv)]
+        voice = acss.ACSS(rv)
+        if key in [None, DEFAULT]:
+            string = args.get('string', '')
+            if string.isupper():
+                voice.update(voices.get(voiceType.get(UPPERCASE)))
+
+        return [voice]

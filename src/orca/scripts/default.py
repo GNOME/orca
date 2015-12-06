@@ -3366,22 +3366,18 @@ class Script(script.Script):
                interface
         """
 
-        # Get the AccessibleText interface of the provided object
-        #
         [line, caretOffset, startOffset] = self.getTextLineAtCaret(obj)
         if len(line) and line != "\n":
-            if line.isupper():
-                voice = self.voices[settings.UPPERCASE_VOICE]
-            else:
-                voice = self.voices[settings.DEFAULT_VOICE]
-
-            result = \
-              self.speechGenerator.generateTextIndentation(obj, line=line)
+            result = self.speechGenerator.generateTextIndentation(obj, line=line)
             if result:
                 self.speakMessage(result[0])
+
+            voice = self.speechGenerator.voice(string=line)
             line = self.utilities.adjustForLinks(obj, line, startOffset)
             line = self.utilities.adjustForRepeats(line)
-            speech.speak(line, voice)
+            utterance = [line]
+            utterance.extend(voice)
+            speech.speak(utterance)
         else:
             # Speak blank line if appropriate.
             #
@@ -3403,13 +3399,11 @@ class Script(script.Script):
             return
 
         if len(phrase) > 1 or phrase.isalnum():
-            if phrase.isupper():
-                voice = self.voices[settings.UPPERCASE_VOICE]
-            else:
-                voice = self.voices[settings.DEFAULT_VOICE]
-
+            voice = self.speechGenerator.voice(string=phrase)
             phrase = self.utilities.adjustForRepeats(phrase)
-            speech.speak(phrase, voice)
+            utterance = [phrase]
+            utterance.extend(voice)
+            speech.speak(utterance)
         else:
             self.sayCharacter(obj)
 
