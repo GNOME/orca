@@ -861,7 +861,7 @@ class Utilities:
                 app = obj.getApplication()
             if app == orca_state.activeScript.app:
                 return True, "Verbosity is app"
-            return False, "App % is not %s" % (app, orca_state.activeScript.app)
+            return False, "App %s is not %s" % (app, orca_state.activeScript.app)
 
         return True, "Not handled by any other case"
 
