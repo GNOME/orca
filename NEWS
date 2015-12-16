@@ -1,3 +1,51 @@
+3.19.3 - 16 December 2016
+
+New Settings and Commands:
+
+ * Create separate cell-vs-row reading options for tables in GUIs, text
+   documents, and spreadsheets
+
+ * Add GUI option to configure capitalization style
+
+Web:
+
+ * Improve performance of presentation of web listboxes
+
+ * Improve presentation of headings which contain embedded objects
+
+ * Improve presentation of non-empty anchors
+
+General:
+
+ * Ensure the correct voice is used when generating current line of text
+
+ * Call gdk_notify_startup_complete()
+
+ * Fix several bugs related to presenting the locus of focus
+
+ * Fix double-presentation of top-level Gtk+ alerts
+
+ * Cache the string in addition to the offsets for selected text (perf.)
+
+ * Add more sanity checks for defunct objects and applications
+
+ * Stop filtering out events from ROLE_FILLER (because some applications
+   lack proper roles)
+
+ * Don't treat a series of periods as an ellipsis
+
+ * Treat ROLE_PAGE as a top-level object when doing Zombie checks (fixes
+   Evince issue)
+
+ * Don't verbalize punctuation or capitalization for system messages
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es            Spanish                     Daniel Mustieles
+    pt            Portuguese                  Pedro Albuquerque
+
+=========
+
 3.19.2 - 25 November 2015
 
 New Settings and Commands:
