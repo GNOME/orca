@@ -28,6 +28,7 @@ __license__   = "LGPL"
 import pyatspi
 import re
 
+import orca.debug as debug
 import orca.script_utilities as script_utilities
 
 class Utilities(script_utilities.Utilities):
@@ -104,3 +105,12 @@ class Utilities(script_utilities.Utilities):
         red, green, blue = string.split(",")
 
         return int(red) >> 8, int(green) >> 8, int(blue) >> 8
+
+    def isZombie(self, obj):
+        rv = super().isZombie(obj)
+        if rv and self.isLink(obj) and obj.getIndexInParent() == -1:
+            msg = 'INFO: Hacking around bug 759736 for %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return rv
