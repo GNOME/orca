@@ -11137,12 +11137,12 @@ msgstr "Plynulé čtení"
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically speak the current percentage.
 #: ../src/orca/orca-setup.ui.h:44
 msgid "_Speak updates"
-msgstr "Čí_st postup"
+msgstr "Čí_st průběh"
 
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically display the current percentage in braille.
 #: ../src/orca/orca-setup.ui.h:46
 msgid "_Braille updates"
-msgstr "Zobrazovat postup na _braillském řádku"
+msgstr "Zobrazovat průběh na _braillském řádku"
 
 #: ../src/orca/orca-setup.ui.h:47
 msgid "10"
@@ -11152,7 +11152,7 @@ msgstr "10"
 #: ../src/orca/orca-setup.ui.h:49
 msgctxt "ProgressBar"
 msgid "Frequency (secs):"
-msgstr "Frekvence (v sekundách):"
+msgstr "Četnost (v sekundách):"
 
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.
 #: ../src/orca/orca-setup.ui.h:51
@@ -11162,7 +11162,7 @@ msgstr "Omezit na:"
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically emit beeps which increase in pitch as the value of the progress bar increases.
 #: ../src/orca/orca-setup.ui.h:53
 msgid "Bee_p updates"
-msgstr "_Pípnou při postupu"
+msgstr "_Pípat průběh"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
 #: ../src/orca/orca-setup.ui.h:55
@@ -11295,7 +11295,7 @@ msgstr "Číst celé řádky tabulek v _uživatelském rozhraní"
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a document table. In this context, document tables include tables such as those found in Writer documents as well as HTML table elements, but exclude spreadsheet tables such as found in Calc. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: ../src/orca/orca-setup.ui.h:102
 msgid "Speak full row in _document tables"
-msgstr "Číst celé řádky tabulek v _dokumentaci"
+msgstr "Číst celé řádky tabulek v _dokumentech"
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a spreadsheet. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: ../src/orca/orca-setup.ui.h:104
