@@ -5,15 +5,15 @@
 #
 # Baris Cicek <baris@teamforce.name.tr>, 2008, 2009.
 # Gökhan Gurbetoğlu <ggurbet@gmail.com>, 2015.
-# Muhammet Kara <muhammetk@gmail.com>, 2011, 2014, 2015.
+# Muhammet Kara <muhammetk@gmail.com>, 2011, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2015-12-05 14:08+0000\n"
-"PO-Revision-Date: 2015-12-06 01:27+0200\n"
+"POT-Creation-Date: 2016-01-01 02:16+0000\n"
+"PO-Revision-Date: 2016-01-01 10:29+0200\n"
 "Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -1830,14 +1830,12 @@ msgstr "Detaylı neredeyim işlemini gerçekleştir."
 #. Translators: This is the description of a dedicated command to speak the
 #. selected text (if any) in a document.
 #: ../src/orca/cmdnames.py:75
-#| msgid "Speaks the title bar."
 msgid "Speaks the selected text."
 msgstr "Seçili metni seslendirir."
 
 #. Translators: This is the description of a dedicated command to speak details
 #. about a link, such as the uri and type of link.
 #: ../src/orca/cmdnames.py:79
-#| msgid "Speak blank lines"
 msgid "Speaks link details."
 msgstr "Bağlantı ayrıntılarını seslendirir."
 
@@ -8184,28 +8182,24 @@ msgstr "Tuş yankısı etkinleştirilsin mi? e veya h girin:"
 #. Translators: This is in reference to key echo for alphabetic keys and
 #. is part of Orca's console-based setup.
 #: ../src/orca/messages.py:380
-#| msgid "Enable action keys?  Enter y or n: "
 msgid "Enable alphabetic keys?  Enter y or n: "
 msgstr "Alfabetik tuşlar etkinleştirilsin mi? e veya h girin:"
 
 #. Translators: This is in reference to key echo for numeric keys and
 #. is part of Orca's console-based setup.
 #: ../src/orca/messages.py:385
-#| msgid "Enable modifier keys?  Enter y or n: "
 msgid "Enable numeric keys?  Enter y or n: "
 msgstr "Sayısal tuşlar etkinleştirilsin mi? e veya h girin:"
 
 #. Translators: This is in reference to key echo for punctuation keys and
 #. is part of Orca's console-based setup.
 #: ../src/orca/messages.py:390
-#| msgid "Enable function keys?  Enter y or n: "
 msgid "Enable punctuation keys?  Enter y or n: "
 msgstr "Noktalama tuşları etkinleştirilsin mi? e veya h girin:"
 
 #. Translators: This is in reference to key echo for the space key and
 #. is part of Orca's console-based setup.
 #: ../src/orca/messages.py:395
-#| msgid "Enable Braille?  Enter y or n: "
 msgid "Enable space?  Enter y or n: "
 msgstr "Boşluk tuşu etkinleştirilsin mi? e veya h girin:"
 
@@ -9292,8 +9286,6 @@ msgstr "%s bağlantısı"
 #. along with the visited state of that link.
 #: ../src/orca/messages.py:1218
 #, python-format
-#| msgid "%d visited link"
-#| msgid_plural "%d visited links"
 msgid "visited %s link"
 msgstr "ziyaret edilmiş %s bağlantısı"
 
@@ -9768,8 +9760,6 @@ msgstr "Başka ziyaret edilmiş bağlantı yok."
 #. text. This message is what Orca will present if the user performs this
 #. command when no text is selected.
 #: ../src/orca/messages.py:1578
-#| msgctxt "radiobutton"
-#| msgid "not selected"
 msgid "No selected text."
 msgstr "Seçili metin yok."
 
@@ -9777,7 +9767,6 @@ msgstr "Seçili metin yok."
 #. about the currently-focused link. This message is what Orca will present
 #. if the user performs this command when not on a link.
 #: ../src/orca/messages.py:1583
-#| msgid "No more links."
 msgid "Not on a link."
 msgstr "Bir bağlantı üzerinde değilsiniz."
 
@@ -9840,7 +9829,7 @@ msgstr "Bildirim iletisi yok"
 #: ../src/orca/messages.py:1621
 msgctxt "number style"
 msgid "digits"
-msgstr ""
+msgstr "rakamlar"
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -9849,7 +9838,7 @@ msgstr ""
 #. the user has enabled speaking numbers as digits.
 #: ../src/orca/messages.py:1628
 msgid "Speak numbers as digits."
-msgstr ""
+msgstr "Sayıları rakam olarak seslendir."
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -9857,12 +9846,11 @@ msgstr ""
 #. two options. This string to be translated is the brief message spoken when the
 #. user has enabled speaking numbers as words.
 #: ../src/orca/messages.py:1635
-#, fuzzy
 #| msgctxt "key echo"
 #| msgid "word"
 msgctxt "number style"
 msgid "words"
-msgstr "kelime"
+msgstr "kelimeler"
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -9870,10 +9858,9 @@ msgstr "kelime"
 #. two options. This string to be translated is the verbose message spoken when
 #. the user has enabled speaking numbers as words.
 #: ../src/orca/messages.py:1642
-#, fuzzy
 #| msgid "Speak multicase strings as wor_ds"
 msgid "Speak numbers as words."
-msgstr "Değişik büyüklükteki dizgilleri _kelime olarak oku"
+msgstr "Sayıları kelime olarak seslendir."
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
@@ -10111,8 +10098,6 @@ msgstr "Ekran okuyucusu ayarları yeniden yüklendi."
 #. selected. The string substitution is for the selected text.
 #: ../src/orca/messages.py:1810
 #, python-format
-#| msgctxt "structural navigation"
-#| msgid "Selected Item"
 msgid "Selected text is: %s"
 msgstr "Seçili metin şudur: %s"
 
@@ -11065,10 +11050,9 @@ msgstr ""
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if structural navigation is enabled for Say All, users can use commands such as H/Shift+H to jump to the next/previous heading, P/Shift+P to jump to the next/previous paragraph, T/Shift+T to jump to the next/previous table, and so on. Thus this setting is like fast forward and rewind, but with semantic awareness for web documents and similar content.
 #: ../src/orca/orca-setup.ui.h:39
-#, fuzzy
 #| msgid "Enable _structural navigation"
 msgid "Enable _structural navigation in Say All"
-msgstr "_Yapısal dolaşımı etkinleştir"
+msgstr "Tümünü Seslendirmede _yapısal gezinmeyi etkinleştir"
 
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and say all by line.  If Orca were speaking a work of fiction, it would probably be best to do say all by sentence so it sounds more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: ../src/orca/orca-setup.ui.h:41
@@ -11076,24 +11060,21 @@ msgid "Say All B_y:"
 msgstr "_Seslendirme Türü:"
 
 #: ../src/orca/orca-setup.ui.h:42
-#, fuzzy
 #| msgid "Say All B_y:"
 msgid "Say All"
-msgstr "_Seslendirme Türü:"
+msgstr "Tümünü Seslendir"
 
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically speak the current percentage.
 #: ../src/orca/orca-setup.ui.h:44
-#, fuzzy
 #| msgid "_Speak all"
 msgid "_Speak updates"
-msgstr "Hepsini _seslendir"
+msgstr "Güncellemeleri _seslendir"
 
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically display the current percentage in braille.
 #: ../src/orca/orca-setup.ui.h:46
-#, fuzzy
 #| msgid "Braille Indicator"
 msgid "_Braille updates"
-msgstr "Braille Göstergesi"
+msgstr "_Braille güncellemeleri"
 
 #: ../src/orca/orca-setup.ui.h:47
 msgid "10"
@@ -11155,10 +11136,9 @@ msgstr "_Ses türü:"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via text-to-speech. Speech Dispatcher has a feature to control how capital letters are presented: Do nothing at all; say the word
 #: ../src/orca/orca-setup.ui.h:66
-#, fuzzy
 #| msgid "Capitalization style set to icon."
 msgid "_Capitalization style:"
-msgstr "Büyük harf ayarlama biçemi olarak simge ayarlandı."
+msgstr "_Büyük harf ayarlama biçemi:"
 
 #. Translators: Having multiple voice types in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available voice types in Orca include: default, uppercase, hyperlink, and system -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.
 #: ../src/orca/orca-setup.ui.h:68
@@ -11173,7 +11153,7 @@ msgstr "Değişik büyüklükteki dizgilleri _kelime olarak oku"
 #. Translators: If this setting is enabled, 123 will be spoken as the individual digits 1 2 3; otherwise, it will be sent to the synthesizer and (likely) spoken as one hundred and twenty three.
 #: ../src/orca/orca-setup.ui.h:74
 msgid "Speak _numbers as digits"
-msgstr ""
+msgstr "_Sayıları rakam olarak seslendir"
 
 #: ../src/orca/orca-setup.ui.h:75
 msgid "Global Voice Settings"
@@ -11236,10 +11216,9 @@ msgstr ""
 
 #. Translators: Orca has a command to present font and formatting information, including foreground and background color. The setting associated with this checkbox determines how Orca will speak colors: As rgb values or as names (e.g. light blue).
 #: ../src/orca/orca-setup.ui.h:98
-#, fuzzy
 #| msgid "Speak _cell coordinates"
 msgid "S_peak colors as names"
-msgstr "Hü_cre koordinatlarını seslendir"
+msgstr "Renkleri isim olarak s_eslendir"
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a GUI table, such as a GtkTreeView. Document tables, such as those found in Writer and web content, and spreadsheet tables such as those found in Calc are not considered GUI tables. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: ../src/orca/orca-setup.ui.h:100
