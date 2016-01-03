@@ -1,13 +1,13 @@
 # Czech translation for orca.
 # Copyright (C) 2011 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
-# Marek Černocký <marek@manet.cz>, 2015.
+# Marek Černocký <marek@manet.cz>, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca gnome-3-0\n"
-"POT-Creation-Date: 2015-12-23 14:16+0000\n"
-"PO-Revision-Date: 2015-12-24 01:46+0100\n"
+"POT-Creation-Date: 2016-01-03 14:19+0000\n"
+"PO-Revision-Date: 2016-01-03 16:53+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -1535,12 +1535,6 @@ msgstr "Vlastnosti textu a vybraný text"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:175
-#, fuzzy
-#| msgid ""
-#| "Orca has a dedicated command for obtaining the attributes of the text at "
-#| "the caret location. In addition, if you use <app>Orca</app>'s Where Am I "
-#| "commands from within a text object in which text has been selected, "
-#| "<app>Orca</app> will announce the selected text."
 msgid ""
 "<app>Orca</app> has a dedicated command for obtaining the attributes of the "
 "text at the caret location. In addition, if you use <app>Orca</app>'s Where "
@@ -1552,9 +1546,12 @@ msgid ""
 "to do so."
 msgstr ""
 "<app>Orca</app> má zvláštní příkazy pro získávání vlastností textu v místě "
-"kurzoru. A navíc, když použijete příkaz čtečky <app>Orca</app> „Kde se "
+"kurzoru. Navíc, když použijete příkaz čtečky <app>Orca</app> „Kde se "
 "nacházím“ pro textový objekt, ve kterém je vybrán text, oznámí vám "
-"<app>Orca</app> tento vybraný text."
+"<app>Orca</app> tento vybraný text. Pokud byste pro tento účel měli raději "
+"vyhrazený příkaz, můžete navázat příkaz „Přečíst vybraný text“ na klávesovou "
+"zkratku. Jak to udělat, najdete v kapitole <link xref=\"howto_key_bindings"
+"\">Změna klávesových zkratek</link>."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:187
@@ -1605,7 +1602,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:224
-#| msgid "Decrease the rate: (Unbound)"
 msgid "Speak the selected text: (Unbound)"
 msgstr "Přečíst vybraný text: (bez klávesové zkratky)"
 
@@ -1616,13 +1612,6 @@ msgstr "Podrobnosti k odkazu"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:230
-#, fuzzy
-#| msgid ""
-#| "If you are using <app>Orca</app> in another desktop environment in which "
-#| "there is no command to toggle <app>Orca</app> on and off, you may find "
-#| "the command to quit <app>Orca</app> helpful. This command is unbound by "
-#| "default. Please see <link xref=\"howto_key_bindings\">Modifying "
-#| "Keybindings</link> for information on how to bind unbound commands."
 msgid ""
 "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be used "
 "to announce the details associated with the link such as the link type, if "
@@ -1632,15 +1621,15 @@ msgid ""
 "\"howto_key_bindings\"> Modifying Keybindings</link> for information on how "
 "to do so."
 msgstr ""
-"Pokud používáte čtečku <app>Orca</app> v jiném pracovním prostředí, ve "
-"kterém není žádný příkaz pro její zapnutí a vypnutí, může se vám hodit "
-"příkaz pro její ukončení. Ve výchozím stavu nemá tento příkaz přidělenou "
-"žádnou klávesovou zkratku. Jak mu ji přidělit najdete v kapitole <link xref="
-"\"howto_key_bindings\">Změna klávesových zkratek</link>."
+"Když se nacházíte na odkazu, můžete použít příkaz čtečky <app>Orca</app> "
+"„Kde se nacházím“ k oznámení informací patřících k odkazu, jako typ odkazu, "
+"jestli byl již navštíven, popis webu a velikost souboru. Pokud byste pro "
+"tento účel měli raději vyhrazený příkaz, můžete navázat příkaz „Přečíst "
+"podrobnosti k odkazu“ na klávesovou zkratku. Jak to udělat, najdete v "
+"kapitole <link xref=\"howto_key_bindings\">Změna klávesových zkratek</link>."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:240
-#| msgid "Decrease the pitch: (Unbound)"
 msgid "Speak the link details: (Unbound)"
 msgstr "Přečíst podrobnosti k odkazu: (bez klávesové zkratky)"
 
@@ -4271,15 +4260,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/howto_tables.page:43
-#, fuzzy
-#| msgid ""
-#| "<app>Orca</app> allows you to customize whether only the cell should be "
-#| "read, or if the full row should be. You can set this preference Orca wide "
-#| "as well as on an application-by-application basis. How to do each is "
-#| "described in the guide on <link xref=\"preferences\"><app>Orca</app>'s "
-#| "preferences dialogs</link>. The setting can be found in the <gui>Table "
-#| "Rows</gui> radio button group on the <link xref=\"preferences_speech\"> "
-#| "<gui>Speech</gui> page</link>."
 msgid ""
 "You can set each of <app>Orca</app>'s table reading preferences <app>Orca</"
 "app> wide as well as on an application-by-application basis. How to do each "
@@ -4287,19 +4267,14 @@ msgid ""
 "preferences dialogs</link>. The settings can be found on the <link xref="
 "\"preferences_speech\"> <gui>Speech</gui> page</link>."
 msgstr ""
-"Ve čtečce <app>Orca</app> si můžete přizpůsobit, jestli se má číst jen buňka "
-"nebo celý řádek. Tuto předvolbu můžete nastavit jak pro celou čtečku, tak "
-"jednotlivě aplikaci od aplikace. Jak to udělat, je popsáno v části příručky "
-"o <link xref=\"preferences\">dialogovém oknu předvoleb <app>Orca</app></"
-"link>. Nastavení najdete ve skupinových přepínačích <gui>Řádky tabulky</gui> "
-"na <link xref=\"preferences_speech\">kartě <gui>Řeč</gui></link>."
+"Kteroukoliv předvolbu týkající se čtení tabulek ve čtečce <app>Orca</app> "
+"můžete nastavit jak globálně, tak jednotlivě pro různé aplikace. Jak to "
+"udělat, je popsáno v části příručky o <link xref=\"preferences\">dialogovém "
+"oknu předvoleb <app>Orca</app></link>. Nastavení najdete na <link xref="
+"\"preferences_speech\">kartě <gui>Řeč</gui></link>."
 
 #. (itstool) path: section/p
 #: C/howto_tables.page:50
-#| msgid ""
-#| "In addition, there is an <app>Orca</app> command which allows you to "
-#| "toggle this setting on the fly: <keyseq><key>Orca Modifier</key> "
-#| "<key>F11</key></keyseq>."
 msgid ""
 "Lastly, there is also an <app>Orca</app> command which allows you to toggle "
 "cell versus row reading on the fly for the currently-active table: "
@@ -5744,6 +5719,11 @@ msgid ""
 "set to word.\" If you would prefer shorter messages, such as simply \"word,"
 "\" you should uncheck this checkbox."
 msgstr ""
+"Když je zaškrtnuté <gui>Zprávy jsou podrobné</gui>, bude <app>Orca</app> "
+"prezentovat podrobné zprávy na braillském řádku. Například, když použijete "
+"příkaz <app>Orca</app> ke změně oznamování kláves, může vám oznámit "
+"„Oznamování kláves je nastavené na slova.“ Jestli dáváte přednost kratším "
+"zprávám, jako je prosté „slovo“, neměli byste mít toto políčko zaškrtnuté."
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:147
@@ -6355,6 +6335,13 @@ msgid ""
 "document in order to re-hear something which was just read or skip past text "
 "of no interest without having to restart Say All."
 msgstr ""
+"Funkce plynulého čtení ve čtečce <app>Orca</app> přečte obsah dokumentu od "
+"aktuálního místa až do konce. Výchozí chování je, že zmáčknutí kterékoliv "
+"klávesy čtení přeruší. Pokud ale zaškrtnete <gui>Povolit přeskakování zpět a "
+"vpřed při plynulém čtení</gui>, můžete během plynulého čtení používat "
+"klávesy <key>↑</key> a <key>↓</key> k rychlému přesunu v dokumentu, abyste "
+"si mohli nechat znovu zopakovat, co už jste slyšeli, nebo naopak některé "
+"pasáže přeskočit, bez nutnosti plynulé čtení znovu spouštět."
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:108
@@ -6369,6 +6356,15 @@ msgid ""
 "<key>T</key></keyseq> continues reading from the next/previous table, and so "
 "on."
 msgstr ""
+"Když čtete dokument v aplikaci, která má podporu pro strukturovanou "
+"navigaci, a máte zaškrtnuté <gui>Povolit strukturovanou navigaci při "
+"plynulém čtení</gui>, můžete používat podporované příkazy strukturované "
+"navigace takto: <key>H</key>/<keyseq><key>Shift</key> <key>H</key></keyseq> "
+"pokračovat ve čtení od následujícího/předchozího nadpisu, <key>P</key>/"
+"<keyseq><key>Shift</key><key>P</key></keyseq> pokračovat ve čtení od "
+"následujícího/předchozího odstavce, <key>T</key>/<keyseq><key>Shift</key> "
+"<key>T</key></keyseq> pokračovat ve čtení od následující/předchozí tabulky, "
+"apod."
 
 #. (itstool) path: info/desc
 #: C/preferences_general.page:125
@@ -6459,15 +6455,11 @@ msgstr "Aktualizace ukazatele průběhu"
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:183
-#| msgid "Speak cell coordinates"
 msgid "Speak updates"
 msgstr "Číst průběh"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:184
-#| msgid ""
-#| "If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
-#| "periodically present the status of progress bars."
 msgid ""
 "If the <gui>Speak updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically speak the status of progress bars."
@@ -6477,15 +6469,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:193
-#| msgid "Braille Commands"
 msgid "Braille updates"
 msgstr "Zobrazovat průběh na braillském řádku"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:194
-#| msgid ""
-#| "If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
-#| "periodically present the status of progress bars."
 msgid ""
 "If the <gui>Braille updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically display the status of progress bars on your refreshable braille "
@@ -6502,9 +6490,6 @@ msgstr "Pípat průběh"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:205
-#| msgid ""
-#| "If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
-#| "periodically present the status of progress bars."
 msgid ""
 "If the <gui>Beep updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically emit beeps which increase in pitch as the value of the progress "
@@ -6521,7 +6506,6 @@ msgstr "Četnost (v sekundách)"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:216
-#| msgid "This spin button determines how often the announcement is made."
 msgid "This spin button determines how often updates are presented."
 msgstr "Tento číselník určuje, jak často je postup prezentován."
 
@@ -6627,7 +6611,7 @@ msgstr ""
 "Například můžete nastavit odezvu pro oznamování kláves na celá slova a pro "
 "aplikaci Pidgin pak oznamování kláves vypnout. Když tak učiníte, bude "
 "<app>Orca</app> vždy po dopsání slova hlásit jednotlivé klávesy, vyjma "
-"situace, kdy budete v aplikaci Pidgin."
+"situace, kdy budete v komunikátoru Pidgin."
 
 #. (itstool) path: note/title
 #: C/preferences_introduction.page:30
@@ -6835,7 +6819,7 @@ msgid ""
 "exactly which keys should and should not be echoed to best suit your needs."
 msgstr ""
 "Nastavení oznamování kláves řídí, co se má stát pokaždé, když zmáčknete "
-"klávesu. Pro zapnutí oznamování kláves zašktněte políčko „Oznamovat "
+"klávesu. Pro zapnutí oznamování kláves zaškrtněte políčko „Oznamovat "
 "klávesy“. Tím se také zpřístupní další zaškrtávací políčka, pomocí kterých "
 "můžete podle svých potřeb přesněji zvolit, které klávesy mají být oznamovány "
 "a které ne."
@@ -7430,6 +7414,12 @@ msgid ""
 "\"Key echo set to word.\" If you would prefer shorter messages, such as "
 "simply \"word,\" you should uncheck this checkbox."
 msgstr ""
+"Když je zaškrtnuté <gui>Systémové zprávy jsou podrobné</gui>, bude "
+"<app>Orca</app> prezentovat podrobné zprávy na hlasovém výstupu. Například, "
+"když použijete příkaz <app>Orca</app> ke změně oznamování kláves, může vám "
+"říci „Oznamování kláves je nastavené na slova.“ Jestli dáváte přednost "
+"kratším zprávám, jako je prosté „slovo“, neměli byste mít toto políčko "
+"zaškrtnuté."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:188
@@ -7470,7 +7460,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:212
-#| msgid "Reading Documents and Web Pages"
 msgid "Read full row in document tables"
 msgstr "Číst celé řádky tabulek v dokumentech"
 
@@ -8025,22 +8014,25 @@ msgid ""
 "capitalization voice. The options, which are named using Speech Dispatcher's "
 "terminology, are:"
 msgstr ""
+"V tomto rozbalovacím seznamu si můžete zvolit styl reprezentace velkých "
+"písmen, který si přejete používat v dispečerovi hlasového výstupu navíc ke "
+"čtení velikosti písmen. Volby, nazvané tak, jak je používá dispečer "
+"hlasového výstupu, jsou:"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:71
 msgid "<gui>icon</gui>: Plays a tone"
-msgstr ""
+msgstr "<gui>icon</gui>: Přehrát tón"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:72
 msgid "<gui>spell</gui>: Speaks the word \"capital\""
-msgstr ""
+msgstr "<gui>spell</gui>: Říci slovo „capital“"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:73
-#| msgid "<gui>Insert</gui>"
 msgid "<gui>none</gui>"
-msgstr "<gui>žádný</gui>"
+msgstr "<gui>nic</gui>"
 
 #. (itstool) path: note/p
 #: C/preferences_voice.page:77
@@ -8049,10 +8041,12 @@ msgid ""
 "capitalization styles. See <link xref=\"commands_speech_settings\"> Speech "
 "Settings Commands</link> for more information."
 msgstr ""
+"<app>Orca</app> má také příkaz, který umožňuje cyklicky procházet dostupné "
+"styly oznamování velikosti písmen. Více informací viz <link xref="
+"\"commands_speech_settings\">Příkazy pro nastavení řeči</link>."
 
 #. (itstool) path: section/p
 #: C/preferences_voice.page:83
-#| msgid "Default value: 5"
 msgid "Default value: none"
 msgstr "Výchozí hodnota: žádný"
 

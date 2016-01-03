@@ -5276,7 +5276,7 @@ msgstr "Velká písmena"
 #. system. (http://devel.freebsoft.org/speechd)
 #: ../src/orca/guilabels.py:715
 msgid "Speech Dispatcher"
-msgstr "Speech Dispatcher"
+msgstr "Dispečer hlasového výstupu"
 
 #. Translators: This is a label for a group of options related to Orca's behavior
 #. when presenting an application's spell check dialog.
@@ -8590,7 +8590,7 @@ msgstr "klávesa"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:686
 msgid "Key echo set to key."
-msgstr "Oznamování kláves je nastavené na klávesa."
+msgstr "Oznamování kláves je nastavené na klávesy."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8621,7 +8621,7 @@ msgstr "Nic"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:712
 msgid "Key echo set to None."
-msgstr "Oznamování kláves je nastavené na nic."
+msgstr "Oznamování kláves není nastavené na nic."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8652,7 +8652,7 @@ msgstr "klávesa a slovo"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:738
 msgid "Key echo set to key and word."
-msgstr "Oznamování kláves je nastavené na klávesa a slovo."
+msgstr "Oznamování kláves je nastavené na klávesy a slova."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8683,7 +8683,7 @@ msgstr "věta"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:764
 msgid "Key echo set to sentence."
-msgstr "Oznamování kláves je nastavené na věta."
+msgstr "Oznamování kláves je nastavené na věty."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8714,7 +8714,7 @@ msgstr "slovo"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:790
 msgid "Key echo set to word."
-msgstr "Oznamování kláves je nastavené na slovo."
+msgstr "Oznamování kláves je nastavené na slova."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8745,7 +8745,7 @@ msgstr "slovo a věta"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:816
 msgid "Key echo set to word and sentence."
-msgstr "Oznamování kláves je nastavené na slovo a věta."
+msgstr "Oznamování kláves je nastavené na slova a věty."
 
 #. Translators: This phrase is spoken to inform the user of all of the MathML
 #. enclosure notations associated with a given mathematical expression. For
@@ -11118,12 +11118,12 @@ msgstr "Čas a datum"
 #. Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if rewind and fast forward is enabled, Up Arrow and Down Arrow can be used within Say All to quickly move within the document to re-hear something which was just read or skip past something of no interest.
 #: ../src/orca/orca-setup.ui.h:37
 msgid "Enable _rewind and fast forward in Say All"
-msgstr "Povolit přeskakování zpět a vpřed v plynulém čtení"
+msgstr "Povolit přeskakování zpět a vpřed při plynulém čtení"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if structural navigation is enabled for Say All, users can use commands such as H/Shift+H to jump to the next/previous heading, P/Shift+P to jump to the next/previous paragraph, T/Shift+T to jump to the next/previous table, and so on. Thus this setting is like fast forward and rewind, but with semantic awareness for web documents and similar content.
 #: ../src/orca/orca-setup.ui.h:39
 msgid "Enable _structural navigation in Say All"
-msgstr "Povolit _strukturovanou navigaci v plynulém čtení"
+msgstr "Povolit _strukturovanou navigaci při plynulém čtení"
 
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and say all by line.  If Orca were speaking a work of fiction, it would probably be best to do say all by sentence so it sounds more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: ../src/orca/orca-setup.ui.h:41
