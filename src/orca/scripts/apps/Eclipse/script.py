@@ -25,6 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Informal Informatica LTDA."
 __license__   = "LGPL"
 
+import orca.orca as orca
 import orca.scripts.toolkits.GAIL as GAIL
 import pyatspi
 
@@ -74,6 +75,21 @@ class Script(GAIL.Script):
             self.sayLine(obj)
 
         self._saveLastTextPosition(obj)
+
+    def onFocus(self, event):
+        """Callback for focus: accessibility events."""
+
+        # NOTE: This event type is deprecated and Orca should no longer use it.
+        # This callback remains just to handle bugs in applications and toolkits.
+
+        role = event.source.getRole()
+
+        menuItems = [pyatspi.ROLE_CHECK_MENU_ITEM,
+                     pyatspi.ROLE_MENU_ITEM,
+                     pyatspi.ROLE_RADIO_MENU_ITEM]
+        if role in menuItems:
+            orca.setLocusOfFocus(event, event.source)
+            return
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object. Overridden here
