@@ -3409,6 +3409,12 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             text = None
 
+        if self._script.pointOfReference.get('entireDocumentSelected'):
+            selectedText, selectedStart, selectedEnd = self.allSelectedText(obj)
+            if not selectedText:
+                self._script.pointOfReference['entireDocumentSelected'] = False
+                self._script.pointOfReference['textSelections'] = {}
+
         # TODO: JD - this doesn't yet handle the case of multiple non-contiguous
         # selections in a single accessible object.
         textSelections = self._script.pointOfReference.get('textSelections', {})
