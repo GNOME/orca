@@ -3415,9 +3415,17 @@ class Utilities:
                 self._script.pointOfReference['entireDocumentSelected'] = False
                 self._script.pointOfReference['textSelections'] = {}
 
+        textSelections = self._script.pointOfReference.get('textSelections', {})
+
+        # Because some apps and toolkits create, destroy, and duplicate objects
+        # and events.
+        if hash(obj) in textSelections:
+            value = textSelections.pop(hash(obj))
+            for x in [k for k in textSelections.keys() if textSelections.get(k) == value]:
+                textSelections.pop(x)
+
         # TODO: JD - this doesn't yet handle the case of multiple non-contiguous
         # selections in a single accessible object.
-        textSelections = self._script.pointOfReference.get('textSelections', {})
         if text:
             start, end = text.getSelection(0)
             string = text.getText(start, end)
