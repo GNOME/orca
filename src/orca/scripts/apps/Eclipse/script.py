@@ -92,6 +92,12 @@ class Script(GAIL.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
+        if role == pyatspi.ROLE_PANEL:
+            orca.setLocusOfFocus(event, event.source)
+            return
+
+        super().onFocus(event)
+
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object. Overridden here
         so that we can avoid speaking text when caret moves after new text
