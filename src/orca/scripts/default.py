@@ -3593,36 +3593,6 @@ class Script(script.Script):
                 self.reviewCurrentItem(None)
                 self.targetCursorCell = self.getBrailleCursorCell()
 
-    def speakMisspeltWord(self, allTokens, badWord):
-        """Called by various spell checking routine to speak the misspelt word,
-           plus the context that it is being used in.
-
-        Arguments:
-        - allTokens: a list of all the words.
-        - badWord: the misspelt word.
-        """
-
-        # Create an utterance to speak consisting of the misspelt
-        # word plus the context where it is used (upto five words
-        # to either side of it).
-        #
-        for i in range(0, len(allTokens)):
-            if allTokens[i].startswith(badWord):
-                minIndex = i - 5
-                if minIndex < 0:
-                    minIndex = 0
-                maxIndex = i + 5
-                if maxIndex > (len(allTokens) - 1):
-                    maxIndex = len(allTokens) - 1
-
-                utterances = [messages.MISSPELLED_WORD % badWord]
-                contextPhrase = " ".join(allTokens[minIndex:maxIndex+1])
-                utterances.append(messages.MISSPELLED_WORD_CONTEXT % contextPhrase)
-
-                # Turn the list of utterances into a string.
-                text = " ".join(utterances)
-                speech.speak(text)
-
     def textLines(self, obj, offset=None):
         """Creates a generator that can be used to iterate over each line
         of a text object, starting at the caret offset.
