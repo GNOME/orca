@@ -77,6 +77,7 @@ userCustomizableSettings = [
     "speakBlankLines",
     "speakMultiCaseStringsAsWords",
     "speakNumbersAsDigits",
+    "speakMisspelledIndicator",
     "enabledSpokenTextAttributes",
     "enabledBrailledTextAttributes",
     "textAttributesBrailleIndicator",
@@ -214,6 +215,7 @@ speakCellHeaders             = True
 speakSpreadsheetCoordinates  = True
 speakMultiCaseStringsAsWords = False
 speakNumbersAsDigits         = False
+speakMisspelledIndicator     = True
 useColorNames                = True
 usePronunciationDictionary   = True
 sayAllStyle                  = SAYALL_STYLE_SENTENCE

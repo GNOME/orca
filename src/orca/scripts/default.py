@@ -2520,8 +2520,7 @@ class Script(script.Script):
         - event: the Event
         """
 
-        verbosity = _settingsManager.getSetting('speechVerbosityLevel')
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE \
+        if _settingsManager.getSetting('speakMisspelledIndicator') \
            and self.utilities.isSameObject(
                 event.source, orca_state.locusOfFocus):
             try:
@@ -3926,8 +3925,7 @@ class Script(script.Script):
           attributes.
         """
 
-        verbosity = _settingsManager.getSetting('speechVerbosityLevel')
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+        if _settingsManager.getSetting('speakMisspelledIndicator'):
             try:
                 text = obj.queryText()
             except:

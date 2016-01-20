@@ -1322,6 +1322,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             prefs["enablePositionSpeaking"])
         self.get_widget("enableMnemonicSpeakingCheckButton").set_active(\
             prefs["enableMnemonicSpeaking"])
+        self.get_widget("speakMisspelledIndicatorCheckButton").set_active(
+            prefs.get("speakMisspelledIndicator", settings.speakMisspelledIndicator))
 
         enable = prefs.get("messagesAreDetailed", settings.messagesAreDetailed)
         self.get_widget("messagesAreDetailedCheckButton").set_active(enable)

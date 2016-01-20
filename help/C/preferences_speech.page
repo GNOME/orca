@@ -232,5 +232,18 @@
         Default value: not checked
       </p>
     </section>
+    <section id="speak_misspelled_word_indicator">
+      <title>Speak misspelled-word indicator</title>
+      <p>
+        The misspelled-word indicator is the red squiggly line that appears
+        underneath misspelled words in editable text fields. If <gui>Speak
+        misspelled-word indicator</gui> is checked, when you navigate into
+        a word with this indicator, or type a word incorrectly causing this
+        indicator to appear, <app>Orca</app> will speak "misspelled."
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
   </section>
 </page>
