@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca gnome-3-0\n"
-"POT-Creation-Date: 2016-01-03 14:19+0000\n"
-"PO-Revision-Date: 2016-01-03 16:53+0100\n"
+"POT-Creation-Date: 2016-02-02 14:20+0000\n"
+"PO-Revision-Date: 2016-02-02 21:13+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -5697,9 +5697,9 @@ msgstr ""
 #: C/preferences_key_echo.page:99 C/preferences_speech.page:26
 #: C/preferences_speech.page:123 C/preferences_speech.page:183
 #: C/preferences_speech.page:195 C/preferences_speech.page:207
-#: C/preferences_speech.page:219 C/preferences_spellcheck.page:41
-#: C/preferences_spellcheck.page:51 C/preferences_spellcheck.page:61
-#: C/preferences_table_navigation.page:34
+#: C/preferences_speech.page:219 C/preferences_speech.page:244
+#: C/preferences_spellcheck.page:41 C/preferences_spellcheck.page:51
+#: C/preferences_spellcheck.page:61 C/preferences_table_navigation.page:34
 #: C/preferences_table_navigation.page:44
 #: C/preferences_table_navigation.page:54 C/preferences_voice.page:107
 msgid "Default value: checked"
@@ -7495,6 +7495,27 @@ msgstr ""
 "kalkulátoru, bude <app>Orca</app> číst celé řádky. Jestli dáváte přednost "
 "čtení jen jediné buňky, která je právě zaměřená, neměli byste mít toto "
 "políčko zaškrtnuté."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:236
+#| msgid "Speak cell coordinates"
+msgid "Speak misspelled-word indicator"
+msgstr "Oznamovat označení pravopisně chybných slov"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:237
+msgid ""
+"The misspelled-word indicator is the red squiggly line that appears "
+"underneath misspelled words in editable text fields. If <gui>Speak "
+"misspelled-word indicator</gui> is checked, when you navigate into a word "
+"with this indicator, or type a word incorrectly causing this indicator to "
+"appear, <app>Orca</app> will speak \"misspelled.\""
+msgstr ""
+"V polích pro úpravu textu bývají pravopisně chybná slova označena podtržením "
+"červenou vlnovkou. Když je zaškrtnuto <gui>Oznamovat označení pravopisně "
+"chybných slov</gui> a na takovéto slovo se přemístíte, nebo slovo chybně "
+"napíšete, takže se pod ním označení objeví, oznámí vám to <app>Orca</app> "
+"slovem „překlep“."
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:4
