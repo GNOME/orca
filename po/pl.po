@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-06 22:53+0100\n"
-"PO-Revision-Date: 2016-02-06 22:54+0100\n"
+"PO-Revision-Date: 2016-02-06 22:59+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -1846,7 +1846,7 @@ msgstr "Odczytuje zaznaczony tekst."
 #. about a link, such as the uri and type of link.
 #: ../src/orca/cmdnames.py:79
 msgid "Speaks link details."
-msgstr "Odczytywanie informacji o odnośniku."
+msgstr "Odczytuje informacje o odnośniku."
 
 #. Translators: This command will cause the window's status bar contents to be
 #. spoken.
@@ -2313,7 +2313,7 @@ msgstr "Przełącza odczytywanie wcięć i wyrównania tekstu."
 #. toggling between the two options.
 #: ../src/orca/cmdnames.py:439
 msgid "Changes spoken number style."
-msgstr "Zmienia styl mówienia liczb."
+msgstr "Zmienia styl odczytywania liczb."
 
 #. Translators: Orca allows users to cycle through punctuation levels. None,
 #. some, most, or all, punctuation will be spoken.
