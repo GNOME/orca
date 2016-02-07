@@ -10,13 +10,13 @@
 # Gonzalo Sanhueza <gonzalo.sanhueza.r@gmail.com>, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011., 2011.
 # 
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2012, 2013, 2014, 2015., 2015.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2012, 2013, 2014, 2015., 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2015-11-30 11:27+0000\n"
-"PO-Revision-Date: 2015-12-01 12:27+0100\n"
+"POT-Creation-Date: 2016-02-01 02:20+0000\n"
+"PO-Revision-Date: 2016-02-01 09:09+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -30,7 +30,7 @@ msgstr ""
 msgctxt "_"
 msgid "translator-credits"
 msgstr ""
-"Daniel Mustieles <daniel.mustieles@gmail.com>, 2012 - 2015\n"
+"Daniel Mustieles <daniel.mustieles@gmail.com>, 2012 - 2016\n"
 "Jorge González <jorgegonz@svn.gnome.org>, 2011"
 
 #. (itstool) path: info/title
@@ -1487,11 +1487,6 @@ msgstr "Atributos del texto y texto seleccionado"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:175
-#| msgid ""
-#| "Orca has a dedicated command for obtaining the attributes of the text at "
-#| "the caret location. In addition, if you use <app>Orca</app>'s Where Am I "
-#| "commands from within a text object in which text has been selected, "
-#| "<app>Orca</app> will announce the selected text."
 msgid ""
 "<app>Orca</app> has a dedicated command for obtaining the attributes of the "
 "text at the caret location. In addition, if you use <app>Orca</app>'s Where "
@@ -1557,7 +1552,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:224
-#| msgid "Decrease the rate: (Unbound)"
 msgid "Speak the selected text: (Unbound)"
 msgstr "Hablar el texto seleccionado: (sin asociar)"
 
@@ -1568,12 +1562,6 @@ msgstr "Detalles del enlace"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:230
-#| msgid ""
-#| "If you are using <app>Orca</app> in another desktop environment in which "
-#| "there is no command to toggle <app>Orca</app> on and off, you may find "
-#| "the command to quit <app>Orca</app> helpful. This command is unbound by "
-#| "default. Please see <link xref=\"howto_key_bindings\">Modifying "
-#| "Keybindings</link> for information on how to bind unbound commands."
 msgid ""
 "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be used "
 "to announce the details associated with the link such as the link type, if "
@@ -1593,7 +1581,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:240
-#| msgid "Decrease the pitch: (Unbound)"
 msgid "Speak the link details: (Unbound)"
 msgstr "Hablar los detalles del enlace: (sin asociar)"
 
@@ -4260,14 +4247,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/howto_tables.page:43
-#| msgid ""
-#| "<app>Orca</app> allows you to customize whether only the cell should be "
-#| "read, or if the full row should be. You can set this preference Orca wide "
-#| "as well as on an application-by-application basis. How to do each is "
-#| "described in the guide on <link xref=\"preferences\"><app>Orca</app>'s "
-#| "preferences dialogs</link>. The setting can be found in the <gui>Table "
-#| "Rows</gui> radio button group on the <link xref=\"preferences_speech\"> "
-#| "<gui>Speech</gui> page</link>."
 msgid ""
 "You can set each of <app>Orca</app>'s table reading preferences <app>Orca</"
 "app> wide as well as on an application-by-application basis. How to do each "
@@ -4284,10 +4263,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/howto_tables.page:50
-#| msgid ""
-#| "In addition, there is an <app>Orca</app> command which allows you to "
-#| "toggle this setting on the fly: <keyseq><key>Orca Modifier</key> "
-#| "<key>F11</key></keyseq>."
 msgid ""
 "Lastly, there is also an <app>Orca</app> command which allows you to toggle "
 "cell versus row reading on the fly for the currently-active table: "
@@ -5731,9 +5706,9 @@ msgstr ""
 #: C/preferences_key_echo.page:99 C/preferences_speech.page:26
 #: C/preferences_speech.page:123 C/preferences_speech.page:183
 #: C/preferences_speech.page:195 C/preferences_speech.page:207
-#: C/preferences_speech.page:219 C/preferences_spellcheck.page:41
-#: C/preferences_spellcheck.page:51 C/preferences_spellcheck.page:61
-#: C/preferences_table_navigation.page:34
+#: C/preferences_speech.page:219 C/preferences_speech.page:244
+#: C/preferences_spellcheck.page:41 C/preferences_spellcheck.page:51
+#: C/preferences_spellcheck.page:61 C/preferences_table_navigation.page:34
 #: C/preferences_table_navigation.page:44
 #: C/preferences_table_navigation.page:54 C/preferences_voice.page:107
 msgid "Default value: checked"
@@ -7507,18 +7482,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:212
-#| msgid "Reading Documents and Web Pages"
 msgid "Read full row in document tables"
 msgstr "Leer la fila completa el tablas del documento"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:213
-#| msgid ""
-#| "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> "
-#| "will present detailed messages to you in speech. For instance, if you use "
-#| "<app>Orca</app>'s command to change key echo, <app>Orca</app> might speak "
-#| "\"Key echo set to word.\" If you would prefer shorter messages, such as "
-#| "simply \"word,\" you should uncheck this checkbox."
 msgid ""
 "If <gui>Read full row in document tables</gui> is checked, as you arrow up "
 "and down in tables such as those found in <app>Writer</app> and web "
@@ -7537,10 +7505,6 @@ msgstr "Leer la fila completa el hojas de cálculo"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:225
-#| msgid ""
-#| "If <gui>Enable flash messages</gui> is checked, <app>Orca</app> will "
-#| "present messages to you in braille. If you prefer to only have <app>Orca</"
-#| "app>'s messages spoken, you should uncheck this checkbox."
 msgid ""
 "If <gui>Read full row in spreadsheets</gui> is checked, as you arrow up and "
 "down in spreadsheets, <app>Orca</app> will speak the entire row. If you "
@@ -7551,6 +7515,28 @@ msgstr ""
 "marcada, a medida que sube y baja en la hoja de cálculo <app>Orca</app> "
 "hablará la fila completa. Si prefiere escuchar sólo la celda que tiene el "
 "foco, debe desmarcar esta casilla."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:236
+#| msgid "Speak cell coordinates"
+msgid "Speak misspelled-word indicator"
+msgstr "Hablar el indicador de palabra mal escrita"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:237
+msgid ""
+"The misspelled-word indicator is the red squiggly line that appears "
+"underneath misspelled words in editable text fields. If <gui>Speak "
+"misspelled-word indicator</gui> is checked, when you navigate into a word "
+"with this indicator, or type a word incorrectly causing this indicator to "
+"appear, <app>Orca</app> will speak \"misspelled.\""
+msgstr ""
+"El indicador de palabra mal escrita es la línea roja que aparece debajo de "
+"las palabras mal escritas en los campos de texto editables. Si la opción "
+"<gui>Hablar el indicador de palabra mal escrita</gui> está marcada, cuando "
+"navegue por una palabra con este indicador, o cuando escriba una palabra "
+"incorrectamente, haciendo que aparezca el indicador, <app>Orca</app> hablará "
+"«mal escrita»."
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:4
@@ -8087,7 +8073,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:71
-#| msgid "<gui>Smoothing</gui>: Bilinear or none."
 msgid "<gui>icon</gui>: Plays a tone"
 msgstr "<gui>icono</gui>: reproduce un tono"
 
@@ -8098,7 +8083,6 @@ msgstr "<gui>deletrear</gui>: habla la palabra «mayúscula»"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:73
-#| msgid "<gui>Insert</gui>"
 msgid "<gui>none</gui>"
 msgstr "<gui>ninguno</gui>"
 
@@ -8115,7 +8099,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_voice.page:83
-#| msgid "Default value: 5"
 msgid "Default value: none"
 msgstr "Valor predeterminado: ninguno"
 
