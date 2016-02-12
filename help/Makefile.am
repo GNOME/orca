@@ -38,7 +38,6 @@ HELP_FILES = \
 	howto_structural_navigation.page \
 	howto_tables.page \
 	howto_text_attributes.page \
-	howto_text_setup.page \
 	howto_the_orca_modifier.page \
 	howto_toggling_caps_lock.page \
 	howto_whereami.page \

@@ -42,7 +42,6 @@ orca_python_PYTHON = \
 	notification_messages.py \
 	object_properties.py \
 	orca.py \
-	orca_console_prefs.py \
 	orca_gtkbuilder.py \
 	orca_gui_find.py \
 	orca_gui_commandlist.py \

@@ -19,24 +19,13 @@
   <title>Orca Configuration</title>
     <section id="configuring_orca">
       <p>
-        If you want to configure <app>Orca</app>, you can do one
-        of the following:
+        If you want to configure <app>Orca</app>, get into the
+        <link xref="preferences">Preferences</link> dialog by pressing
+        <keyseq><key>Orca Modifier</key><key>Space</key></keyseq> from
+        within any accessible application. Alternatively, you can type
+        <cmd>orca</cmd> followed by either <cmd>-s</cmd> or <cmd>--setup</cmd>
+        in a terminal window or within the <gui>Run</gui> dialog and then press
+        <key>Return</key>.
       </p>
-      <list>
-        <item>
-          <p>
-            Get into the <link xref="preferences">Preferences</link> dialog
-            by pressing <keyseq><key>Orca Modifier</key><key>Space</key>
-            </keyseq> from within any accessible application.
-          </p>
-        </item>
-        <item>
-          <p>
-            Pass the <cmd>--text-setup</cmd> option to <app>Orca</app> to
-            re-run <app>Orca</app>'s <link xref="howto_text_setup">text-based
-            setup</link>.
-          </p>
-        </item> 
-      </list>
     </section>
 </page>

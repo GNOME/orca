@@ -75,8 +75,7 @@
         </item>
         <item>
           <p>
-            <cmd>-t</cmd>, <cmd>--text-setup</cmd>: Set up user preferences
-            (text version)
+            <cmd>-s</cmd>, <cmd>--setup</cmd>: Set up user preferences
           </p>
         </item>
         <item>

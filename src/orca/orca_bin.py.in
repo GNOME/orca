@@ -42,7 +42,6 @@ sys.path.insert(1, pythondir)
 from orca import debug
 from orca import messages
 from orca import orca
-from orca import orca_console_prefs
 from orca import settings
 from orca.orca_platform import version
 
@@ -98,8 +97,6 @@ class Parser(argparse.ArgumentParser):
             "-r", "--replace", action="store_true", help=messages.CLI_REPLACE)
         self.add_argument(
             "-s", "--setup", action="store_true", help=messages.CLI_GUI_SETUP)
-        self.add_argument(
-            "-t", "--text-setup", action="store_true", help=messages.CLI_SETUP)
         self.add_argument(
             "-l", "--list-apps", action=ListApps, nargs=0,
             help=messages.CLI_LIST_APPS)
@@ -227,8 +224,6 @@ def main():
         cleanup(signal.SIGKILL)
 
     settingsDict = getattr(args, 'settings', {})
-    if args.text_setup:
-        orca_console_prefs.showPreferencesUI(settingsDict)
 
     if not inGraphicalDesktop():
         print(messages.CLI_NO_DESKTOP_ERROR)
