@@ -3520,7 +3520,7 @@ class Utilities:
 
     def lastInputEventWasCommand(self):
         keyString, mods = self.lastKeyAndModifiers()
-        return mods & keybindings.COMMAND_MODIFIER_MASK
+        return mods & keybindings.CTRL_MODIFIER_MASK
 
     def lastInputEventWasCharNav(self):
         keyString, mods = self.lastKeyAndModifiers()
@@ -3573,36 +3573,36 @@ class Utilities:
 
     def lastInputEventWasUndo(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if mods & keybindings.COMMAND_MODIFIER_MASK and keyString.lower() == 'z':
+        if mods & keybindings.CTRL_MODIFIER_MASK and keyString.lower() == 'z':
             return not (mods & keybindings.SHIFT_MODIFIER_MASK)
 
         return False
 
     def lastInputEventWasRedo(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if mods & keybindings.COMMAND_MODIFIER_MASK and keyString.lower() == 'z':
+        if mods & keybindings.CTRL_MODIFIER_MASK and keyString.lower() == 'z':
             return mods & keybindings.SHIFT_MODIFIER_MASK
 
         return False
 
     def lastInputEventWasCut(self):
         keyString, mods = self.lastKeyAndModifiers()
-        return mods & keybindings.COMMAND_MODIFIER_MASK and keyString.lower() == 'x'
+        return mods & keybindings.CTRL_MODIFIER_MASK and keyString.lower() == 'x'
 
     def lastInputEventWasCopy(self):
         keyString, mods = self.lastKeyAndModifiers()
-        return mods & keybindings.COMMAND_MODIFIER_MASK and keyString.lower() == 'c'
+        return mods & keybindings.CTRL_MODIFIER_MASK and keyString.lower() == 'c'
 
     def lastInputEventWasPaste(self):
         keyString, mods = self.lastKeyAndModifiers()
-        return mods & keybindings.COMMAND_MODIFIER_MASK and keyString.lower() == 'v'
+        return mods & keybindings.CTRL_MODIFIER_MASK and keyString.lower() == 'v'
 
     def lastInputEventWasDelete(self):
         keyString, mods = self.lastKeyAndModifiers()
         if not mods and keyString == "Delete":
             return True
 
-        return mods & keybindings.COMMAND_MODIFIER_MASK and keyString.lower() == "d"
+        return mods & keybindings.CTRL_MODIFIER_MASK and keyString.lower() == 'd'
 
     def lastInputEventWasPrimaryMouseClick(self):
         event = orca_state.lastInputEvent
