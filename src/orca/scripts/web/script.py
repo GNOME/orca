@@ -1004,6 +1004,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
             utterances = self.speechGenerator.generateContents(contents)
+        elif self.utilities.lastInputEventWasPageNav():
+            msg = "WEB: New focus %s was scrolled to. Generating line contents." % newFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
+            contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
+            utterances = self.speechGenerator.generateContents(contents)
         elif newFocus.getRole() == pyatspi.ROLE_HEADING:
             msg = "WEB: New focus %s is heading. Generating object contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1204,6 +1209,14 @@ class Script(default.Script):
 
         if self.utilities.caretMovedToSamePageFragment(event):
             msg = "WEB: Event handled: Caret moved to fragment"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            orca.setLocusOfFocus(event, obj)
+            self.utilities.setCaretContext(obj, offset)
+            return True
+
+        if self.utilities.lastInputEventWasPageNav() \
+           and not self.utilities.isLink(event.source):
+            msg = "WEB: Event handled: Caret moved due to scrolling"
             debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, obj)
             self.utilities.setCaretContext(obj, offset)
@@ -1476,6 +1489,13 @@ class Script(default.Script):
             msg = "WEB: Unable to get non-null, non-zombie context object"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
+
+        if self.utilities.lastInputEventWasPageNav():
+            msg = "WEB: Event handled: Focus changed due to scrolling"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            orca.setLocusOfFocus(event, obj)
+            self.utilities.setCaretContext(obj, offset)
+            return True
 
         wasFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
         obj.clearCache()
