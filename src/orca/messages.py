@@ -266,6 +266,46 @@ CLI_GUI_SETUP = _("Set up user preferences (GUI version)")
 # from the command line and the help text is displayed.
 CLI_EPILOG = _("Report bugs to orca-list@gnome.org.")
 
+# Translators: Orca normal speaks the text which was just deleted from a
+# document via command. Depending on the circumstances, that might be a
+# large string. Therefore, if the text which has just been deleted from a
+# document matches the clipboard contents, Orca will indicate that fact
+# instead of presenting the full string which was just deleted. This message
+# is the full/verbose indication.
+CLIPBOARD_CUT_FULL = _("Cut selection to clipboard.")
+
+# Translators: Orca normal speaks the text which was just deleted from a
+# document via command. Depending on the circumstances, that might be a
+# large string. Therefore, if the text which has just been deleted from a
+# document matches the clipboard contents, Orca will indicate that fact
+# instead of presenting the full string which was just deleted. This message
+# is the brief indication.
+CLIPBOARD_CUT_BRIEF = C_("clipboard", "cut")
+
+# Translators: This message is the detailed message presented when the contents
+# of the clipboard have changed and match the current selection.
+CLIPBOARD_COPIED_FULL = _("Copied selection to clipboard.")
+
+# Translators: This message is the brief message presented when the contents
+# of the clipboard have changed and match the current selection.
+CLIPBOARD_COPIED_BRIEF = C_("clipboard", "copied")
+
+# Translators: Orca normal speaks the text which was just inserted into a
+# document via command. Depending on the circumstances, that might be a
+# large string. Therefore, if the text which has just been inserted into a
+# document matches the clipboard contents, Orca will indicate that fact
+# instead of presenting the full string which was just inserted. This message
+# is the full/verbose indication.
+CLIPBOARD_PASTED_FULL = _("Pasted contents from clipboard.")
+
+# Translators: Orca normal speaks the text which was just inserted into a
+# document via command. Depending on the circumstances, that might be a
+# large string. Therefore, if the text which has just been inserted into a
+# document matches the clipboard contents, Orca will indicate that fact
+# instead of presenting the full string which was just inserted. This message
+# is the brief indication.
+CLIPBOARD_PASTED_BRIEF = C_("clipboard", "pasted")
+
 # Translators: In chat applications, it is often possible to see that a "buddy"
 # is typing currently (e.g. via a keyboard icon or status text). Some users like
 # to have this typing status announced by Orca; others find that announcement
@@ -1659,6 +1699,23 @@ SETTINGS_RELOADED = _("Screen reader settings reloaded.")
 # selected. The string substitution is for the selected text.
 SELECTED_TEXT_IS = _("Selected text is: %s")
 
+# Translators: Orca normal speaks the text which was just deleted from a
+# document via command. Depending on the circumstances, that might be a
+# large string. Therefore, if the text which has just been deleted from a
+# document matches the previously-selected contents, Orca will indicate that
+# fact instead of presenting the full string which was just deleted.
+SELECTION_DELETED = _("Selection deleted.")
+
+# Translators: Orca normal speaks the text which was just inserted into a
+# document via command. Depending on the circumstances, that might be a
+# large string. Therefore, if the text which has just been inserted into a
+# document is also already selected, it is likely that the insertion is
+# due to having been restored (e.g. the user selected text, deleted it,
+# and then pressed Ctrl+Z to undo that deletion). In this instance, Orca
+# will indicate the restoration rather than presenting the full string
+# which was just inserted.
+SELECTION_RESTORED = _("Selection restored.")
+
 # Translators: This message is presented to the user when speech synthesis
 # has been temporarily turned off.
 SPEECH_DISABLED = _("Speech disabled.")
@@ -1863,6 +1920,14 @@ TIME_FORMAT_24_HM_WITH_WORDS = _("%H hours and %M minutes.")
 # Translators: this is information about a unicode character reported to the
 # user.  The value is the unicode number value of this character in hex.
 UNICODE = _("Unicode %s")
+
+# Translators: This string is presented when an application's undo command is
+# used in a document resulting in a change to that document's contents.
+UNDO = C_("command", "undo")
+
+# Translators: This string is presented when an application's redo command is
+# used in a document resulting in a change to that document's contents.
+REDO = C_("command", "redo")
 
 # Translators: This message presents the Orca version number.
 VERSION = _("Screen reader version %s.") % version

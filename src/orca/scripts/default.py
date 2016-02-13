@@ -32,8 +32,6 @@ __license__   = "LGPL"
 
 import time
 
-from gi.repository import Gtk, Gdk
-
 import pyatspi
 import orca.braille as braille
 import orca.chnames as chnames
@@ -714,16 +712,9 @@ class Script(script.Script):
         self._sayAllIsInterrupted = False
         self.pointOfReference = {}
 
-    def processKeyboardEvent(self, keyboardEvent):
-        """Processes the given keyboard event. It uses the super
-        class equivalent to do most of the work. The only thing done here
-        is to detect when the user is trying to get out of learn mode.
-
-        Arguments:
-        - keyboardEvent: an instance of input_event.KeyboardEvent
-        """
-
-        return script.Script.processKeyboardEvent(self, keyboardEvent)
+    def registerEventListeners(self):
+        super().registerEventListeners()
+        self.utilities.connectToClipboard()
 
     def _saveFocusedObjectInfo(self, obj):
         """Saves some basic information about obj. Note that this method is
@@ -796,6 +787,8 @@ class Script(script.Script):
         - oldLocusOfFocus: Accessible that is the old locus of focus
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
+
+        self.utilities.presentFocusChangeReason()
 
         if not newLocusOfFocus:
             orca_state.noFocusTimeStamp = time.time()
@@ -1197,9 +1190,7 @@ class Script(script.Script):
             self.utilities.adjustTextSelection(obj, caretOffset)
             texti = obj.queryText()
             startOffset, endOffset = texti.getSelection(0)
-            string = texti.getText(startOffset, endOffset)
-            clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
-            clipboard.set_text(string, len(string))
+            self.utilities.setClipboardText(texti.getText(startOffset, endOffset))
 
         return True
 
@@ -1719,23 +1710,10 @@ class Script(script.Script):
         them in the clipboard."""
 
         if self.flatReviewContext:
-            clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
-            clipboard.set_text(
-                self.currentReviewContents, len(self.currentReviewContents))
+            self.utilities.setClipboardText(self.currentReviewContents)
             self.presentMessage(messages.FLAT_REVIEW_COPIED)
         else:
             self.presentMessage(messages.FLAT_REVIEW_NOT_IN)
-
-        return True
-
-    def _appendToClipboard(self, clipboard, text, newText):
-        """Appends newText to text and places the results in the 
-        clipboard."""
-
-        text = text.rstrip("\n")
-        text = "%s\n%s" % (text, newText)
-        if clipboard:
-            clipboard.set_text(text, len(text))
 
         return True
 
@@ -1744,9 +1722,7 @@ class Script(script.Script):
         the clipboard."""
 
         if self.flatReviewContext:
-            clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
-            clipboard.request_text(
-                self._appendToClipboard, self.currentReviewContents)
+            self.utilities.appendTextToClipboard(self.currentReviewContents)
             self.presentMessage(messages.FLAT_REVIEW_APPENDED)
         else:
             self.presentMessage(messages.FLAT_REVIEW_NOT_IN)
@@ -2227,7 +2203,12 @@ class Script(script.Script):
         if text.getNSelections():
             msg = "DEFAULT: Event source has text selections"
             debug.println(debug.LEVEL_INFO, msg, True)
+            self.utilities.handleTextSelectionChange(event.source)
             return
+        else:
+            start, end, string = self.utilities.getCachedTextSelection(obj)
+            if string and self.utilities.handleTextSelectionChange(obj):
+                return
 
         msg = "DEFAULT: Presenting text at new caret position"
         debug.println(debug.LEVEL_INFO, msg, True)
@@ -2288,38 +2269,13 @@ class Script(script.Script):
         self.pointOfReference['indeterminateChange'] = hash(obj), event.detail1
 
     def onMouseButton(self, event):
-        """Called whenever the user presses or releases a mouse button.
-
-        Arguments:
-        - event: the Event
-        """
+        """Callback for mouse:button events."""
 
         mouseEvent = input_event.MouseButtonEvent(event)
         orca_state.lastInputEvent = mouseEvent
 
         if mouseEvent.pressed:
             speech.stop()
-            return
-
-        # If we've received a mouse button released event, then check if
-        # there are and text selections for the locus of focus and speak
-        # them.
-        #
-        obj = orca_state.locusOfFocus
-        try:
-            text = obj.queryText()
-        except:
-            return
-
-        self.updateBraille(orca_state.locusOfFocus)
-        textContents = self.utilities.allSelectedText(obj)[0]
-        if not textContents:
-            return
-
-        utterances = []
-        utterances.append(textContents)
-        utterances.append(messages.TEXT_SELECTED)
-        speech.speak(utterances)
 
     def onNameChanged(self, event):
         """Callback for object:property-change:accessible-name events."""
@@ -2409,9 +2365,13 @@ class Script(script.Script):
         """Callback for object:selection-changed accessibility events."""
 
         obj = event.source
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_MANAGES_DESCENDANTS):
-            return
+
+        if self.utilities.handlePasteLocusOfFocusChange():
+            orca.setLocusOfFocus(event, event.source, False)
+        else:
+            state = obj.getState()
+            if state.contains(pyatspi.STATE_MANAGES_DESCENDANTS):
+                return
 
         # TODO - JD: We need to give more thought to where we look to this
         # event and where we prefer object:state-changed:selected.
@@ -2511,30 +2471,18 @@ class Script(script.Script):
                 return
 
     def onTextAttributesChanged(self, event):
-        """Called when an object's text attributes change. Right now this
-        method is only to handle the presentation of spelling errors on
-        the fly. Also note that right now, the Gecko toolkit is the only
-        one to present this information to us.
+        """Callback for object:text-attributes-changed accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
+        if not self.utilities.isPresentableTextChangedEventForLocusOfFocus(event):
+            return
 
-        if _settingsManager.getSetting('speakMisspelledIndicator') \
-           and self.utilities.isSameObject(
-                event.source, orca_state.locusOfFocus):
-            try:
-                text = event.source.queryText()
-            except:
-                return
+        text = self.utilities.queryNonEmptyText(event.source)
+        if not text:
+            msg = "DEFAULT: Querying non-empty text returned None"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
 
-            # If the misspelled word indicator has just appeared, it's
-            # because the user typed a word boundary or navigated out
-            # of the word. We don't want to have to store a full set of
-            # each object's text attributes to compare, therefore, we'll
-            # check the previous word (most likely case) and the next
-            # word with respect to the current position.
-            #
+        if _settingsManager.getSetting('speakMisspelledIndicator'):
             offset = text.caretOffset
             if not text.getText(offset, offset+1).isalnum():
                 offset -= 1
@@ -2543,267 +2491,133 @@ class Script(script.Script):
                 self.speakMessage(messages.MISSPELLED)
 
     def onTextDeleted(self, event):
-        """Called whenever text is deleted from an object.
+        """Callback for object:text-changed:delete accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
-
-        role = event.source.getRole()
-        state = event.source.getState()
-        if role == pyatspi.ROLE_PASSWORD_TEXT and state.contains(pyatspi.STATE_FOCUSED):
-            orca.setLocusOfFocus(event, event.source, False)
-
-        # Ignore text deletions from non-focused objects, unless the
-        # currently focused object is the parent of the object from which
-        # text was deleted
-        #
-        if (event.source != orca_state.locusOfFocus) \
-            and (event.source.parent != orca_state.locusOfFocus):
+        if not self.utilities.isPresentableTextChangedEventForLocusOfFocus(event):
             return
 
-        # We'll also ignore sliders because we get their output via
-        # their values changing.
-        #
-        if role == pyatspi.ROLE_SLIDER:
-            return
+        self.utilities.handleUndoTextEvent(event)
 
-        # [[[NOTE: WDW - if we handle events synchronously, we'll
-        # be looking at the text object *before* the text was
-        # actually removed from the object.  If we handle events
-        # asynchronously, we'll be looking at the text object
-        # *after* the text was removed.  The importance of knowing
-        # this is that the output will differ depending upon how
-        # orca.settings.asyncMode has been set.  For example, the
-        # regression tests run in synchronous mode, so the output
-        # they see will not be the same as what the user normally
-        # experiences.]]]
-
+        orca.setLocusOfFocus(event, event.source, False)
         self.updateBraille(event.source)
 
-        # The any_data member of the event object has the deleted text in
-        # it - If the last key pressed was a backspace or delete key,
-        # speak the deleted text.  [[[TODO: WDW - again, need to think
-        # about the ramifications of this when it comes to editors such
-        # as vi or emacs.
-        #
-        keyString, mods = self.utilities.lastKeyAndModifiers()
-        if not keyString:
+        full, brief = "", ""
+        if self.utilities.isClipboardTextChangedEvent(event):
+            msg = "DEFAULT: Deletion is believed to be due to clipboard cut"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            full, brief = messages.CLIPBOARD_CUT_FULL, messages.CLIPBOARD_CUT_BRIEF
+        elif self.utilities.isSelectedTextDeletionEvent(event):
+            msg = "DEFAULT: Deletion is believed to be due to deleting selected text"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            full = messages.SELECTION_DELETED
+
+        if full or brief:
+            self.presentMessage(full, brief)
+            self.utilities.updateCachedTextSelection(event.source)
             return
 
-        text = event.source.queryText()
-        if keyString == "BackSpace":
-            # Speak the character that has just been deleted.
-            #
-            character = event.any_data
-
-        elif keyString == "Delete" \
-             or (keyString == "D" and mods & keybindings.CTRL_MODIFIER_MASK):
-            # Speak the character to the right of the caret after
-            # the current right character has been deleted.
-            #
-            offset = text.caretOffset
-            [character, startOffset, endOffset] = \
-                text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
-
+        string = event.any_data
+        if self.utilities.isDeleteCommandTextDeletionEvent(event):
+            msg = "DEFAULT: Deletion is believed to be due to Delete command"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            string = self.utilities.getCharacterAtOffset(event.source)
+        elif self.utilities.isBackSpaceCommandTextDeletionEvent(event):
+            msg = "DEFAULT: Deletion is believed to be due to BackSpace command"
+            debug.println(debug.LEVEL_INFO, msg, True)
         else:
+            msg = "INFO: Event is not being presented due to lack of cause"
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        if len(character) == 1:
-            self.speakCharacter(character)
-            return
-
-        if self.utilities.linkIndex(event.source, text.caretOffset) >= 0:
-            voice = self.voices[settings.HYPERLINK_VOICE]
-        elif character.isupper():
-            voice = self.voices[settings.UPPERCASE_VOICE]
+        if len(string) == 1:
+            self.speakCharacter(string)
+        elif string.isupper():
+            speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
         else:
-            voice = self.voices[settings.DEFAULT_VOICE]
-
-        # We won't interrupt what else might be being spoken
-        # right now because it is typically something else
-        # related to this event.
-        #
-        speech.speak(character, voice, False)
+            speech.speak(string, self.voices[settings.DEFAULT_VOICE])
 
     def onTextInserted(self, event):
-        """Called whenever text is inserted into an object.
+        """Callback for object:text-changed:insert accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
-
-        role = event.source.getRole()
-        state = event.source.getState()
-        if role == pyatspi.ROLE_PASSWORD_TEXT and state.contains(pyatspi.STATE_FOCUSED):
-            orca.setLocusOfFocus(event, event.source, False)
-
-        # Ignore text insertions from non-focused objects, unless the
-        # currently focused object is the parent of the object from which
-        # text was inserted.
-        #
-        if (event.source != orca_state.locusOfFocus) \
-            and (event.source.parent != orca_state.locusOfFocus):
+        if not self.utilities.isPresentableTextChangedEventForLocusOfFocus(event):
             return
 
-        ignoreRoles = [pyatspi.ROLE_LABEL,
-                       pyatspi.ROLE_MENU,
-                       pyatspi.ROLE_MENU_ITEM,
-                       pyatspi.ROLE_SLIDER,
-                       pyatspi.ROLE_SPIN_BUTTON]
-        if role in ignoreRoles:
-            return
+        self.utilities.handleUndoTextEvent(event)
 
-        if role == pyatspi.ROLE_TABLE_CELL \
-           and not state.contains(pyatspi.STATE_FOCUSED) \
-           and not state.contains(pyatspi.STATE_SELECTED):
-            return
-
+        orca.setLocusOfFocus(event, event.source, False)
         self.updateBraille(event.source)
 
-        # If the last input event was a keyboard event, check to see if
-        # the text for this event matches what the user typed. If it does,
-        # then don't speak it.
-        #
-        # Note that the text widgets sometimes compress their events,
-        # thus we might get a longer string from a single text inserted
-        # event, while we also get individual keyboard events for the
-        # characters used to type the string.  This is ugly.  We attempt
-        # to handle it here by only echoing text if we think it was the
-        # result of a command (e.g., a paste operation).
-        #
-        # Note that we have to special case the space character as it
-        # comes across as "space" in the keyboard event and " " in the
-        # text event.
-        #
+        full, brief = "", ""
+        if self.utilities.isClipboardTextChangedEvent(event):
+            msg = "DEFAULT: Insertion is believed to be due to clipboard paste"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            full, brief = messages.CLIPBOARD_PASTED_FULL, messages.CLIPBOARD_PASTED_BRIEF
+        elif self.utilities.isSelectedTextRestoredEvent(event):
+            msg = "DEFAULT: Insertion is believed to be due to restoring selected text"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            full = messages.SELECTION_RESTORED
+
+        if full or brief:
+            self.presentMessage(full, brief)
+            self.utilities.updateCachedTextSelection(event.source)
+            return
+
+        speakString = True
         string = event.any_data
-        speakThis = False
-        wasCommand = False
-        wasAutoComplete = False
-        if isinstance(orca_state.lastInputEvent, input_event.MouseButtonEvent):
-            speakThis = orca_state.lastInputEvent.button == "2"
-        else:
-            keyString, mods = self.utilities.lastKeyAndModifiers()
-            wasCommand = mods & keybindings.COMMAND_MODIFIER_MASK
-            if not wasCommand and keyString in ["Return", "Tab", "space"] \
-               and role == pyatspi.ROLE_TERMINAL \
-               and event.any_data.strip():
-                wasCommand = True
-            try:
-                selections = event.source.queryText().getNSelections()
-            except:
-                selections = 0
 
-            if selections:
-                wasAutoComplete = role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_ENTRY]
-
-            if (string == " " and keyString == "space") or string == keyString:
-                pass
-            elif wasCommand or wasAutoComplete:
-                speakThis = True
-            elif role == pyatspi.ROLE_PASSWORD_TEXT \
-                 and _settingsManager.getSetting('enableKeyEcho'):
-                # Echoing "star" is preferable to echoing the descriptive
-                # name of the bullet that has appeared (e.g. "black circle")
-                #
-                string = "*"
-                speakThis = True
-
-        # Auto-completed, auto-corrected, auto-inserted, etc.
-        #
-        speakThis = speakThis or self.utilities.isAutoTextEvent(event)
-
-        # We might need to echo this if it is a single character.
-        #
-        speakThis = speakThis \
-                    or (_settingsManager.getSetting('enableEchoByCharacter') \
-                        and string \
-                        and role != pyatspi.ROLE_PASSWORD_TEXT \
-                        and len(string.strip()) == 1)
-
-        if speakThis:
-            if string.isupper():
-                speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
-            elif not string.isalnum():
-                self.speakCharacter(string)
-            else:
-                speech.speak(string)
-
-        if wasCommand:
-            return
-
-        if wasAutoComplete:
+        if self.utilities.lastInputEventWasCommand():
+            msg = "DEFAULT: Insertion is believed to be due to command"
+            debug.println(debug.LEVEL_INFO, msg, True)
+        elif self.utilities.treatEventAsTerminalCommand(event):
+            msg = "DEFAULT: Insertion is believed to be due to terminal command"
+            debug.println(debug.LEVEL_INFO, msg, True)
+        elif self.utilities.isMiddleMouseButtonTextInsertionEvent(event):
+            msg = "DEFAULT: Insertion is believed to be due to middle mouse button"
+            debug.println(debug.LEVEL_INFO, msg, True)
+        elif self.utilities.isEchoableTextInsertionEvent(event):
+            msg = "DEFAULT: Insertion is believed to be echoable"
+            debug.println(debug.LEVEL_INFO, msg, True)
+        elif self.utilities.isAutoTextEvent(event):
+            msg = "DEFAULT: Insertion is believed to be auto text event"
+            debug.println(debug.LEVEL_INFO, msg, True)
+        elif self.utilities.isSelectedTextInsertionEvent(event):
+            msg = "DEFAULT: Insertion is also selected"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            # TODO - JD: This may be (now or soon) obsolete.
             self.pointOfReference['lastAutoComplete'] = hash(event.source)
+        else:
+            msg = "DEFAULT: Not speaking inserted string due to lack of cause"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            speakString = False
 
-        try:
-            text = event.source.queryText()
-        except NotImplementedError:
+        if speakString:
+            if len(string) == 1:
+                self.speakCharacter(string)
+            elif string.isupper():
+                speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
+            else:
+                speech.speak(string, self.voices[settings.DEFAULT_VOICE])
+
+        if len(string) != 1:
             return
-
-        offset = text.caretOffset - 1
-        previousOffset = offset - 1
-        if (offset < 0 or previousOffset < 0):
-            return
-
-        [currentChar, startOffset, endOffset] = \
-            text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
-        [previousChar, startOffset, endOffset] = \
-            text.getTextAtOffset(previousOffset, pyatspi.TEXT_BOUNDARY_CHAR)
 
         if _settingsManager.getSetting('enableEchoBySentence') \
-           and self.utilities.isSentenceDelimiter(currentChar, previousChar):
-            self.echoPreviousSentence(event.source)
+           and self.echoPreviousSentence(event.source):
+            return
 
-        elif _settingsManager.getSetting('enableEchoByWord') \
-             and self.utilities.isWordDelimiter(currentChar):
+        if _settingsManager.getSetting('enableEchoByWord'):
             self.echoPreviousWord(event.source)
 
     def onTextSelectionChanged(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
         obj = event.source
+        if self.utilities.handleUndoTextEvent(event):
+            self.updateBraille(obj)
+            return
+
+        self.utilities.handleTextSelectionChange(obj)
         self.updateBraille(obj)
-
-        # Note: This guesswork to figure out what actually changed with respect
-        # to text selection will get eliminated once the new text-selection API
-        # is added to ATK and implemented by the toolkits. (BGO 638378)
-
-        oldStart, oldEnd, oldString = self.utilities.getCachedTextSelection(obj)
-        self.utilities.updateCachedTextSelection(obj)
-        newStart, newEnd, newString = self.utilities.getCachedTextSelection(obj)
-
-        if self.pointOfReference.get('lastAutoComplete') == hash(obj):
-            return
-
-        if self._speakTextSelectionState(len(newString)):
-            return
-
-        changes = []
-        oldChars = set(range(oldStart, oldEnd))
-        newChars = set(range(newStart, newEnd))
-        if not oldChars.union(newChars):
-            return
-
-        if oldChars and newChars and not oldChars.intersection(newChars):
-            # A simultaneous unselection and selection centered at one offset.
-            changes.append([oldStart, oldEnd, messages.TEXT_UNSELECTED])
-            changes.append([newStart, newEnd, messages.TEXT_SELECTED])
-        else:
-            change = sorted(oldChars.symmetric_difference(newChars))
-            if not change:
-                return
-
-            changeStart, changeEnd = change[0], change[-1] + 1
-            if oldChars < newChars:
-                changes.append([changeStart, changeEnd, messages.TEXT_SELECTED])
-            else:
-                changes.append([changeStart, changeEnd, messages.TEXT_UNSELECTED])
-
-        speakMessage = not _settingsManager.getSetting('onlySpeakDisplayedText')
-        for start, end, message in changes:
-            self.sayPhrase(obj, start, end)
-            if speakMessage:
-                self.speakMessage(message, interrupt=False)
 
     def onColumnReordered(self, event):
         """Called whenever the columns in a table are reordered.
@@ -2964,6 +2778,19 @@ class Script(script.Script):
         # disable learn mode
         orca_state.learnModeEnabled = False
 
+    def onClipboardContentsChanged(self, *args):
+        if not self.utilities.objectContentsAreInClipboard():
+            return
+
+        if not self.utilities.lastInputEventWasCut():
+            self.presentMessage(messages.CLIPBOARD_COPIED_FULL, messages.CLIPBOARD_COPIED_BRIEF)
+            return
+
+        if self.utilities.isTextArea(orca_state.locusOfFocus):
+            return
+
+        self.presentMessage(messages.CLIPBOARD_CUT_FULL, messages.CLIPBOARD_CUT_BRIEF)
+
     ########################################################################
     #                                                                      #
     # Methods for presenting content                                       #
@@ -2971,64 +2798,54 @@ class Script(script.Script):
     ########################################################################
 
     def _presentTextAtNewCaretPosition(self, event, otherObj=None):
-        """Updates braille and outputs speech for the event.source or the
-        otherObj."""
-
         obj = otherObj or event.source
-        text = obj.queryText()
-
         self.updateBrailleForNewCaretPosition(obj)
         if self._inSayAll:
             return
 
-        if not orca_state.lastInputEvent:
-            return
-
-        if isinstance(orca_state.lastInputEvent, input_event.MouseButtonEvent):
-            if not orca_state.lastInputEvent.pressed:
-                self.sayLine(obj)
-            return
-
-        # Guess why the caret moved and say something appropriate.
-        # [[[TODO: WDW - this motion assumes traditional GUI
-        # navigation gestures.  In an editor such as vi, line up and
-        # down is done via other actions such as "i" or "j".  We may
-        # need to think about this a little harder.]]]
-        #
-        keyString, mods = self.utilities.lastKeyAndModifiers()
-        if not keyString:
-            return
-
-        isControlKey = mods & keybindings.CTRL_MODIFIER_MASK
-
-        if keyString in ["Up", "Down"]:
+        if self.utilities.lastInputEventWasLineNav():
+            msg = "DEFAULT: Presenting result of line nav"
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.sayLine(obj)
+            return
 
-        elif keyString in ["Left", "Right"]:
-            if isControlKey:
-                self.sayWord(obj)
-            else:
-                self.sayCharacter(obj)
+        if self.utilities.lastInputEventWasWordNav():
+            msg = "DEFAULT: Presenting result of word nav"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.sayWord(obj)
+            return
 
-        elif keyString == "Page_Up":
-            # TODO - JD: Why is Control special here?
-            # If the user has typed Control-Page_Up, then we
-            # speak the character to the right of the current text cursor
-            # position otherwise we speak the current line.
-            #
-            if isControlKey:
-                self.sayCharacter(obj)
-            else:
-                self.sayLine(obj)
+        if self.utilities.lastInputEventWasCharNav():
+            msg = "DEFAULT: Presenting result of char nav"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.sayCharacter(obj)
+            return
 
-        elif keyString == "Page_Down":
+        if self.utilities.lastInputEventWasPageNav():
+            msg = "DEFAULT: Presenting result of page nav"
+            debug.println(debug.LEVEL_INFO, msg, True)
             self.sayLine(obj)
+            return
 
-        elif keyString in ["Home", "End"]:
-            if isControlKey:
+        if self.utilities.lastInputEventWasLineBoundaryNav():
+            msg = "DEFAULT: Presenting result of line boundary nav"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.sayCharacter(obj)
+            return
+
+        if self.utilities.lastInputEventWasFileBoundaryNav():
+            msg = "DEFAULT: Presenting result of file boundary nav"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.sayLine(obj)
+            return
+
+        if self.utilities.lastInputEventWasPrimaryMouseRelease():
+            start, end, string = self.utilities.getCachedTextSelection(event.source)
+            if not string:
+                msg = "DEFAULT: Presenting result of primary mouse button release"
+                debug.println(debug.LEVEL_INFO, msg, True)
                 self.sayLine(obj)
-            else:
-                self.sayCharacter(obj)
+                return
 
     def _rewindSayAll(self, context, minCharCount=10):
         if not _settingsManager.getSetting('rewindAndFastForwardInSayAll'):
@@ -3140,19 +2957,19 @@ class Script(script.Script):
         try:
             text = obj.queryText()
         except NotImplementedError:
-            return
+            return False
 
         offset = text.caretOffset - 1
         previousOffset = text.caretOffset - 2
         if (offset < 0 or previousOffset < 0):
-            return
+            return False
 
         [currentChar, startOffset, endOffset] = \
             text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
         [previousChar, startOffset, endOffset] = \
             text.getTextAtOffset(previousOffset, pyatspi.TEXT_BOUNDARY_CHAR)
         if not self.utilities.isSentenceDelimiter(currentChar, previousChar):
-            return
+            return False
 
         # OK - we seem to be cool so far.  So...starting with what
         # should be the last character in the sentence (caretOffset - 2),
@@ -3184,7 +3001,7 @@ class Script(script.Script):
         # for that, too.
         #
         if sentenceStartOffset == sentenceEndOffset:
-            return
+            return False
         else:
             sentence = self.utilities.substring(obj, sentenceStartOffset + 1,
                                          sentenceEndOffset + 1)
@@ -3198,6 +3015,7 @@ class Script(script.Script):
 
         sentence = self.utilities.adjustForRepeats(sentence)
         speech.speak(sentence, voice)
+        return True
 
     def echoPreviousWord(self, obj, offset=None):
         """Speaks the word prior to the caret, as long as there is
@@ -3219,7 +3037,7 @@ class Script(script.Script):
         try:
             text = obj.queryText()
         except NotImplementedError:
-            return
+            return False
 
         if not offset:
             if text.caretOffset == -1:
@@ -3228,14 +3046,14 @@ class Script(script.Script):
                 offset = text.caretOffset - 1
 
         if (offset < 0):
-            return
+            return False
 
         [char, startOffset, endOffset] = \
             text.getTextAtOffset( \
                 offset,
                 pyatspi.TEXT_BOUNDARY_CHAR)
         if not self.utilities.isWordDelimiter(char):
-            return
+            return False
 
         # OK - we seem to be cool so far.  So...starting with what
         # should be the last character in the word (caretOffset - 2),
@@ -3265,7 +3083,7 @@ class Script(script.Script):
         # for that, too.
         #
         if wordStartOffset == wordEndOffset:
-            return
+            return False
         else:
             word = self.utilities.\
                 substring(obj, wordStartOffset + 1, wordEndOffset + 1)
@@ -3279,6 +3097,7 @@ class Script(script.Script):
 
         word = self.utilities.adjustForRepeats(word)
         speech.speak(word, voice)
+        return True
 
     def presentToolTip(self, obj):
         """
@@ -3799,74 +3618,6 @@ class Script(script.Script):
 
         self.pointOfReference["lastCursorPosition"] = [obj, caretOffset]
 
-    def _getCtrlShiftSelectionsStrings(self):
-        return [messages.PARAGRAPH_SELECTED_DOWN,
-                messages.PARAGRAPH_UNSELECTED_DOWN,
-                messages.PARAGRAPH_SELECTED_UP,
-                messages.PARAGRAPH_UNSELECTED_UP]
-
-    def _speakTextSelectionState(self, nSelections):
-        """Hacky method to speak special cases without any valid sanity
-        checking. It is not long for this world. Do not call it."""
-
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
-            return False
-
-        eventStr, mods = self.utilities.lastKeyAndModifiers()
-        isControlKey = mods & keybindings.CTRL_MODIFIER_MASK
-        isShiftKey = mods & keybindings.SHIFT_MODIFIER_MASK
-        selectedText = nSelections > 0
-
-        line = None
-        if (eventStr == "Page_Down") and isShiftKey and isControlKey:
-            line = messages.LINE_SELECTED_RIGHT
-        elif (eventStr == "Page_Up") and isShiftKey and isControlKey:
-            line = messages.LINE_SELECTED_LEFT
-        elif (eventStr == "Page_Down") and isShiftKey and not isControlKey:
-            if selectedText:
-                line = messages.PAGE_SELECTED_DOWN
-            else:
-                line = messages.PAGE_UNSELECTED_DOWN
-        elif (eventStr == "Page_Up") and isShiftKey and not isControlKey:
-            if selectedText:
-                line = messages.PAGE_SELECTED_UP
-            else:
-                line = messages.PAGE_UNSELECTED_UP
-        elif (eventStr == "Down") and isShiftKey and isControlKey:
-            strings = self._getCtrlShiftSelectionsStrings()
-            if selectedText:
-                line = strings[0]
-            else:
-                line = strings[1]
-        elif (eventStr == "Up") and isShiftKey and isControlKey:
-            strings = self._getCtrlShiftSelectionsStrings()
-            if selectedText:
-                line = strings[2]
-            else:
-                line = strings[3]
-        elif (eventStr == "Home") and isShiftKey and isControlKey:
-            if selectedText:
-                line = messages.DOCUMENT_SELECTED_UP
-            else:
-                line = messages.DOCUMENT_UNSELECTED_UP
-        elif (eventStr == "End") and isShiftKey and isControlKey:
-            if selectedText:
-                line = messages.DOCUMENT_SELECTED_DOWN
-            else:
-                line = messages.DOCUMENT_SELECTED_UP
-        elif (eventStr == "A") and isControlKey and selectedText:
-            if not self.pointOfReference.get('entireDocumentSelected'):
-                self.pointOfReference['entireDocumentSelected'] = True
-                line = messages.DOCUMENT_SELECTED_ALL
-            else:
-                return True
-
-        if line:
-            speech.speak(line, None, False)
-            return True
-
-        return False
-
     def systemBeep(self):
         """Rings the system bell. This is really a hack. Ideally, we want
         a method that will present an earcon (any sound designated for the
@@ -3940,6 +3691,7 @@ class Script(script.Script):
 
         if not event.isPressedKey():
             self._sayAllIsInterrupted = False
+            self.utilities.clearCachedCommandState()
 
         if not orca_state.learnModeEnabled:
             if event.shouldEcho == False or event.isOrcaModified():

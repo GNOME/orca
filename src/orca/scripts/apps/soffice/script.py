@@ -849,6 +849,27 @@ class Script(default.Script):
         # We're seeing a crazy ton of these emitted bogusly.
         pass
 
+    def onSelectedChanged(self, event):
+        """Callback for object:state-changed:selected accessibility events."""
+
+        full, brief = "", ""
+        if self.utilities.isSelectedTextDeletionEvent(event):
+            msg = "SOFFICE: Change is believed to be due to deleting selected text"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            full = messages.SELECTION_DELETED
+        elif self.utilities.isSelectedTextRestoredEvent(event):
+            msg = "SOFFICE: Selection is believed to be due to restoring selected text"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            if self.utilities.handleUndoTextEvent(event):
+                full = messages.SELECTION_RESTORED
+
+        if full or brief:
+            self.presentMessage(full, brief)
+            self.utilities.updateCachedTextSelection(event.source)
+            return
+
+        super().onSelectedChanged(event)
+
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
         """To-be-removed. Returns the string, caretOffset, startOffset."""
 

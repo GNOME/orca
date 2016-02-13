@@ -102,7 +102,7 @@ formatting = {
             },
         'default': {
             'focused': '[]',
-            'unfocused': 'labelOrName + allTextSelection + roleName + availability + ' + MNEMONIC + ' + accelerator + childWidget',
+            'unfocused': 'labelOrName + roleName + availability + ' + MNEMONIC + ' + accelerator + childWidget',
             'basicWhereAmI': 'labelOrName + roleName',
             'detailedWhereAmI' : 'pageSummary'
             },
@@ -177,7 +177,7 @@ formatting = {
             },
         pyatspi.ROLE_FRAME: {
             'focused': 'labelOrName + roleName',
-            'unfocused': 'labelOrName + allTextSelection + roleName + unfocusedDialogCount + availability'
+            'unfocused': 'labelOrName + roleName + unfocusedDialogCount + availability'
             },
         pyatspi.ROLE_HEADER: {
             'unfocused': '(displayedText or name) + roleName',
@@ -206,8 +206,8 @@ formatting = {
             'basicWhereAmI': 'labelAndName + allTextSelection + roleName'
             },
         pyatspi.ROLE_LAYERED_PANE: {
-            'focused': 'labelAndName + allTextSelection + roleName + availability + noShowingChildren',
-            'unfocused': 'labelAndName + allTextSelection + roleName + availability + noShowingChildren',
+            'focused': 'labelAndName + roleName + availability + noShowingChildren',
+            'unfocused': 'labelAndName + roleName + availability + noShowingChildren',
             'basicWhereAmI': 'labelAndName + pause + roleName + pause + selectedItemCount + pause',
             'detailedWhereAmI': 'labelAndName + pause + roleName + pause + selectedItemCount + pause + selectedItems + pause'
             },
@@ -270,7 +270,7 @@ formatting = {
         },
         pyatspi.ROLE_MENU: {
             'focused': 'labelOrName + roleName',
-            'unfocused': 'labelOrName + allTextSelection + roleName + availability + ' + MNEMONIC + ' + accelerator + pause + positionInList',
+            'unfocused': 'labelOrName + roleName + availability + ' + MNEMONIC + ' + accelerator + pause + positionInList',
             'basicWhereAmI': '(ancestors or parentRoleName) + pause + labelOrName + roleName + pause + positionInList + ' + MNEMONIC
             },
         pyatspi.ROLE_MENU_ITEM: {
@@ -398,7 +398,7 @@ formatting = {
             },
         pyatspi.ROLE_TEAROFF_MENU_ITEM: {
             'focused': '[]',
-            'unfocused': 'labelOrName + allTextSelection + roleName + availability '
+            'unfocused': 'labelOrName + roleName + availability '
             },
         pyatspi.ROLE_TERMINAL: {
             'focused': 'terminal',

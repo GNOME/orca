@@ -31,6 +31,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.debug as debug
+import orca.keybindings as keybindings
 import orca.orca_state as orca_state
 import orca.script_utilities as script_utilities
 
@@ -419,50 +420,6 @@ class Utilities(script_utilities.Utilities):
 
         return parent
 
-    def findPreviousObject(self, obj):
-        """Finds the object before this one."""
-
-        if not obj:
-            return None
-
-        for relation in obj.getRelationSet():
-            if relation.getRelationType() == pyatspi.RELATION_FLOWS_FROM:
-                return relation.getTarget(0)
-
-        index = obj.getIndexInParent() - 1
-        if not (0 <= index < obj.parent.childCount - 1):
-            obj = obj.parent
-            index = obj.getIndexInParent() - 1
-
-        try:
-            prevObj = obj.parent[index]
-        except:
-            prevObj = obj
-
-        return prevObj
-
-    def findNextObject(self, obj):
-        """Finds the object after this one."""
-
-        if not obj:
-            return None
-
-        for relation in obj.getRelationSet():
-            if relation.getRelationType() == pyatspi.RELATION_FLOWS_TO:
-                return relation.getTarget(0)
-
-        index = obj.getIndexInParent() + 1
-        if not (0 < index < obj.parent.childCount):
-            obj = obj.parent
-            index = obj.getIndexInParent() + 1
-
-        try:
-            nextObj = obj.parent[index]
-        except:
-            nextObj = None
-
-        return nextObj
-
     @staticmethod
     def _flowsFromOrToSelection(obj):
         try:
@@ -482,6 +439,18 @@ class Utilities(script_utilities.Utilities):
                 return True
 
         return False
+
+    def objectContentsAreInClipboard(self, obj=None):
+        obj = obj or orca_state.locusOfFocus
+        if not obj:
+            return False
+
+        if self.isSpreadSheetCell(obj):
+            contents = self.getClipboardContents()
+            string = self.displayedText(obj) or "\n"
+            return string in contents
+
+        return super().objectContentsAreInClipboard(obj)
 
     #########################################################################
     #                                                                       #
@@ -619,6 +588,22 @@ class Utilities(script_utilities.Utilities):
                 except:
                     charCount = 0
                 return charCount > 0
+
+        return False
+
+    def isSelectedTextDeletionEvent(self, event):
+        if event.type.startswith("object:state-changed:selected") and not event.detail1:
+            return self.isDead(orca_state.locusOfFocus) and self.lastInputEventWasDelete()
+
+        return super().isSelectedTextDeletionEvent(event)
+
+    def lastInputEventWasRedo(self):
+        if super().lastInputEventWasRedo():
+            return True
+
+        keyString, mods = self.lastKeyAndModifiers()
+        if mods & keybindings.COMMAND_MODIFIER_MASK and keyString.lower() == 'y':
+            return not (mods & keybindings.SHIFT_MODIFIER_MASK)
 
         return False
 

@@ -656,12 +656,6 @@ class Script(default.Script):
         orca.setLocusOfFocus(None, context.obj, notifyScript=False)
         self.utilities.setCaretContext(context.obj, context.currentOffset)
 
-    def _getCtrlShiftSelectionsStrings(self):
-        return [messages.LINE_SELECTED_DOWN,
-                messages.LINE_UNSELECTED_DOWN,
-                messages.LINE_SELECTED_UP,
-                messages.LINE_UNSELECTED_UP]
-
     def inFocusMode(self):
         """ Returns True if we're in focus mode."""
 
@@ -755,8 +749,17 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, "BRAILLE: disabled", True)
             return
 
-        if not (self._lastCommandWasCaretNav or self._lastCommandWasStructNav) \
-           or self._inFocusMode or not self.utilities.inDocumentContent():
+        if self._inFocusMode or not self.utilities.inDocumentContent():
+            msg = "WEB: updating braille for non-browse-mode object %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            super().updateBraille(obj, **args)
+            return
+
+        if not self._lastCommandWasCaretNav \
+           and not self._lastCommandWasStructNav \
+           and not self.utilities.lastInputEventWasCaretNavWithSelection():
+            msg = "WEB: updating braille for unhandled navigation type %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             super().updateBraille(obj, **args)
             return
 
@@ -1737,14 +1740,9 @@ class Script(default.Script):
             return True
 
         char = text.getText(event.detail1, event.detail1+1)
-        if char == self.EMBEDDED_OBJECT_CHARACTER:
-            msg = "WEB: Ignoring: Event offset is at embedded object"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
-        obj, offset = self.utilities.getCaretContext()
-        if obj and obj.parent and event.source in [obj.parent, obj.parent.parent]:
-            msg = "WEB: Ignoring: Source is context ancestor"
+        if char == self.EMBEDDED_OBJECT_CHARACTER \
+           and not self.utilities.lastInputEventWasCaretNavWithSelection():
+            msg = "WEB: Ignoring: Not selecting and event offset is at embedded object"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 

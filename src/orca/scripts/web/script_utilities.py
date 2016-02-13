@@ -611,7 +611,7 @@ class Utilities(script_utilities.Utilities):
 
     def expandEOCs(self, obj, startOffset=0, endOffset=-1):
         if not self.inDocumentContent(obj):
-            return ""
+            return super().expandEOCs(obj, startOffset, endOffset)
 
         text = self.queryNonEmptyText(obj)
         if not text:
@@ -1018,13 +1018,6 @@ class Utilities(script_utilities.Utilities):
 
         return objects
 
-    def getCharacterAtOffset(self, obj, offset):
-        text = self.queryNonEmptyText(obj)
-        if text:
-            return text.getText(offset, offset + 1)
-
-        return ""
-
     def getCharacterContentsAtOffset(self, obj, offset, useCache=True):
         if not obj:
             return []
@@ -1346,6 +1339,38 @@ class Utilities(script_utilities.Utilities):
             return []
 
         return contents
+
+    def hasPresentableText(self, obj):
+        text = self.queryNonEmptyText(obj)
+        if not text:
+            return False
+
+        return bool(re.search("\w", text.getText(0, -1)))
+
+    def updateCachedTextSelection(self, obj):
+        if not self.inDocumentContent(obj):
+            super().updateCachedTextSelection(obj)
+            return
+
+        if self.hasPresentableText(obj):
+            super().updateCachedTextSelection(obj)
+
+    def handleTextSelectionChange(self, obj):
+        if not self.inDocumentContent(obj):
+            return super().handleTextSelectionChange(obj)
+
+        if self.hasPresentableText(obj) and super().handleTextSelectionChange(obj):
+            return True
+
+        handled = False
+        descendants = pyatspi.findAllDescendants(obj, lambda x: self.hasPresentableText)
+        for descendant in descendants:
+            if handled:
+                super().updateCachedTextSelection(descendant)
+            else:
+                handled = handled or super().handleTextSelectionChange(descendant)
+
+        return handled
 
     def inTopLevelWebApp(self, obj=None):
         if not obj:
@@ -2429,7 +2454,7 @@ class Utilities(script_utilities.Utilities):
 
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             inputEvent = orca_state.lastNonModifierKeyEvent
-            return inputEvent and inputEvent.isPrintableKey()
+            return inputEvent and inputEvent.isPrintableKey() and not inputEvent.modifiers
 
         return False
 
@@ -2862,3 +2887,10 @@ class Utilities(script_utilities.Utilities):
                     uvlinks += 1
 
         return [headings, forms, tables, vlinks, uvlinks, percentRead]
+
+    def _getCtrlShiftSelectionsStrings(self):
+        """Hacky and to-be-obsoleted method."""
+        return [messages.LINE_SELECTED_DOWN,
+                messages.LINE_UNSELECTED_DOWN,
+                messages.LINE_SELECTED_UP,
+                messages.LINE_UNSELECTED_UP]

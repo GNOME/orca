@@ -26,7 +26,10 @@ __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
+
+import orca.debug as debug
 import orca.script_utilities as script_utilities
+
 
 class Utilities(script_utilities.Utilities):
 
@@ -49,3 +52,20 @@ class Utilities(script_utilities.Utilities):
                 children.append(selection.getSelectedChild(x))
 
         return children
+
+    def selectedText(self, obj):
+        string, start, end = super().selectedText(obj)
+        if -1 not in [start, end]:
+            return string, start, end
+
+        msg = "GNOME SHELL: Bogus selection range (%i, %i) for %s" % (start, end, obj)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        text = self.queryNonEmptyText(obj)
+        if text.getNSelections() > 0:
+            string = text.getText(0, -1)
+            start, end = 0, len(string)
+            msg = "HACK: Returning '%s' (%i, %i) for %s" % (string, start, end, obj)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        return string, start, end

@@ -34,6 +34,8 @@ import math
 import pyatspi
 import re
 import time
+from gi.repository import Gdk
+from gi.repository import Gtk
 
 from . import chnames
 from . import colornames
@@ -1613,6 +1615,9 @@ class Utilities:
         manages its descendants.
         """
 
+        if self.isDead(obj):
+            return None
+
         try:
             return self._script.\
                 generatorCache[self.REAL_ACTIVE_DESCENDANT][obj]
@@ -2028,6 +2033,56 @@ class Utilities:
                 endOffset = offset
             text.setSelection(0, startOffset, endOffset)
 
+    def findPreviousObject(self, obj):
+        """Finds the object before this one."""
+
+        if not obj:
+            return None
+
+        for relation in obj.getRelationSet():
+            if relation.getRelationType() == pyatspi.RELATION_FLOWS_FROM:
+                return relation.getTarget(0)
+
+        index = obj.getIndexInParent() - 1
+        if not (0 <= index < obj.parent.childCount - 1):
+            obj = obj.parent
+            index = obj.getIndexInParent() - 1
+
+        try:
+            prevObj = obj.parent[index]
+        except:
+            prevObj = None
+
+        if prevObj == obj:
+            prevObj = None
+
+        return prevObj
+
+    def findNextObject(self, obj):
+        """Finds the object after this one."""
+
+        if not obj:
+            return None
+
+        for relation in obj.getRelationSet():
+            if relation.getRelationType() == pyatspi.RELATION_FLOWS_TO:
+                return relation.getTarget(0)
+
+        index = obj.getIndexInParent() + 1
+        if not (0 < index < obj.parent.childCount):
+            obj = obj.parent
+            index = obj.getIndexInParent() + 1
+
+        try:
+            nextObj = obj.parent[index]
+        except:
+            nextObj = None
+
+        if nextObj == obj:
+            nextObj = None
+
+        return nextObj
+
     def allSelectedText(self, obj):
         """Get all the text applicable text selections for the given object.
         including any previous or next text objects that also have
@@ -2040,58 +2095,27 @@ class Utilities:
         offsets within the text for the given object.
         """
 
-        textContents = ""
-        startOffset = 0
-        endOffset = 0
-        text = obj.queryText()
-        if text.getNSelections() > 0:
-            [textContents, startOffset, endOffset] = self.selectedText(obj)
+        textContents, startOffset, endOffset = self.selectedText(obj)
 
-        current = obj
-        morePossibleSelections = True
-        while morePossibleSelections:
-            morePossibleSelections = False
-            for relation in current.getRelationSet():
-                if relation.getRelationType() == pyatspi.RELATION_FLOWS_FROM:
-                    prevObj = relation.getTarget(0)
-                    prevObjText = prevObj.queryText()
-                    if prevObjText.getNSelections() > 0:
-                        [newTextContents, start, end] = \
-                            self.selectedText(prevObj)
-                        textContents = newTextContents + " " + textContents
-                        current = prevObj
-                        morePossibleSelections = True
-                    else:
-                        displayedText = prevObjText.getText(0,
-                            prevObjText.characterCount)
-                        if len(displayedText) == 0:
-                            current = prevObj
-                            morePossibleSelections = True
+        prevObj = self.findPreviousObject(obj)
+        while prevObj:
+            if self.queryNonEmptyText(prevObj):
+                selection, start, end = self.selectedText(prevObj)
+                if not selection:
                     break
+                textContents = "%s %s" % (selection, textContents)
+            prevObj = self.findPreviousObject(prevObj)
 
-        current = obj
-        morePossibleSelections = True
-        while morePossibleSelections:
-            morePossibleSelections = False
-            for relation in current.getRelationSet():
-                if relation.getRelationType() == pyatspi.RELATION_FLOWS_TO:
-                    nextObj = relation.getTarget(0)
-                    nextObjText = nextObj.queryText()
-                    if nextObjText.getNSelections() > 0:
-                        [newTextContents, start, end] = \
-                            self.selectedText(nextObj)
-                        textContents += " " + newTextContents
-                        current = nextObj
-                        morePossibleSelections = True
-                    else:
-                        displayedText = nextObjText.getText(0,
-                            nextObjText.characterCount)
-                        if len(displayedText) == 0:
-                            current = nextObj
-                            morePossibleSelections = True
+        nextObj = self.findNextObject(obj)
+        while nextObj:
+            if self.queryNonEmptyText(nextObj):
+                selection, start, end = self.selectedText(nextObj)
+                if not selection:
                     break
+                textContents = "%s %s" % (textContents, selection)
+            nextObj = self.findNextObject(nextObj)
 
-        return [textContents, startOffset, endOffset]
+        return textContents, startOffset, endOffset
 
     @staticmethod
     def allTextSelections(obj):
@@ -2238,6 +2262,15 @@ class Utilities:
 
         return False
 
+    def getCharacterAtOffset(self, obj, offset=None):
+        text = self.queryNonEmptyText(obj)
+        if text:
+            if offset is None:
+                offset = text.caretOffset
+            return text.getText(offset, offset + 1)
+
+        return ""
+
     def queryNonEmptyText(self, obj):
         """Get the text interface associated with an object, if it is
         non-empty.
@@ -2256,8 +2289,7 @@ class Utilities:
 
         return None
 
-    @staticmethod
-    def selectedText(obj):
+    def selectedText(self, obj):
         """Get the text selection for the given object.
 
         Arguments:
@@ -2269,11 +2301,18 @@ class Utilities:
 
         textContents = ""
         startOffset = endOffset = 0
-        textObj = obj.queryText()
-        nSelections = textObj.getNSelections()
+        try:
+            textObj = obj.queryText()
+        except:
+            nSelections = 0
+        else:
+            nSelections = textObj.getNSelections()
+
         for i in range(0, nSelections):
             [startOffset, endOffset] = textObj.getSelection(i)
-            selectedText = textObj.getText(startOffset, endOffset)
+            if startOffset == endOffset:
+                continue
+            selectedText = self.expandEOCs(obj, startOffset, endOffset)
             if i > 0:
                 textContents += " "
             textContents += selectedText
@@ -3122,8 +3161,18 @@ class Utilities:
         try:
             attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
         except:
+            msg = "ERROR: Exception getting attributes for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return 0
-        return int(attrs.get('level', '0'))
+
+        try:
+            value = int(attrs.get('level', '0'))
+        except ValueError:
+            msg = "ERROR: Exception getting value for %s (%s)" % (obj, attrs)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return 0
+
+        return value
 
     def hasMeaningfulToggleAction(self, obj):
         try:
@@ -3426,13 +3475,532 @@ class Utilities:
 
         # TODO: JD - this doesn't yet handle the case of multiple non-contiguous
         # selections in a single accessible object.
+        start, end, string = 0, 0, ''
         if text:
             start, end = text.getSelection(0)
-            string = text.getText(start, end)
-        else:
-            start, end, string = 0, 0, ''
+            if start != end:
+                string = text.getText(start, end)
+                while string.endswith(self.EMBEDDED_OBJECT_CHARACTER):
+                    end -= 1
+                    string = string[:-1]
 
         msg = "INFO: New selection for %s is '%s' (%i, %i)" % (obj, string, start, end)
         debug.println(debug.LEVEL_INFO, msg, True)
         textSelections[hash(obj)] = start, end, string
         self._script.pointOfReference['textSelections'] = textSelections
+
+    @staticmethod
+    def onClipboardContentsChanged(*args):
+        script = orca_state.activeScript
+        if not script:
+            return
+
+        script.onClipboardContentsChanged(*args)
+
+    def connectToClipboard(self):
+        clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
+        clipboard.connect('owner-change', self.onClipboardContentsChanged)
+
+    def getClipboardContents(self):
+        clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
+        return clipboard.wait_for_text()
+
+    def setClipboardText(self, text):
+        clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
+        clipboard.set_text(text, len(text))
+
+    def appendTextToClipboard(self, text):
+        clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
+        clipboard.request_text(self._appendTextToClipboardCallback, text)
+
+    def _appendTextToClipboardCallback(self, clipboard, text, newText):
+        text = text.rstrip("\n")
+        text = "%s\n%s" % (text, newText)
+        clipboard.set_text(text, len(text))
+
+    def lastInputEventWasCommand(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        return mods & keybindings.COMMAND_MODIFIER_MASK
+
+    def lastInputEventWasCharNav(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        if not mods:
+            return keyString in ["Left", "Right"]
+
+        return False
+
+    def lastInputEventWasWordNav(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        if mods & keybindings.CTRL_MODIFIER_MASK:
+            return keyString in ["Left", "Right"]
+
+        return False
+
+    def lastInputEventWasLineNav(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        if not mods:
+            return keyString in ["Up", "Down"]
+
+        return False
+
+    def lastInputEventWasLineBoundaryNav(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        if not mods:
+            return keyString in ["Home", "End"]
+
+        return False
+
+    def lastInputEventWasPageNav(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        if not mods:
+            return keyString in ["Page_Up", "Page_Down"]
+
+        return False
+
+    def lastInputEventWasFileBoundaryNav(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        if mods & keybindings.CTRL_MODIFIER_MASK:
+            return keyString in ["Home", "End"]
+
+        return False
+
+    def lastInputEventWasCaretNavWithSelection(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        if mods & keybindings.SHIFT_MODIFIER_MASK:
+            return keyString in ["Home", "End", "Up", "Down", "Left", "Right"]
+
+        return False
+
+    def lastInputEventWasUndo(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        if mods & keybindings.COMMAND_MODIFIER_MASK and keyString.lower() == 'z':
+            return not (mods & keybindings.SHIFT_MODIFIER_MASK)
+
+        return False
+
+    def lastInputEventWasRedo(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        if mods & keybindings.COMMAND_MODIFIER_MASK and keyString.lower() == 'z':
+            return mods & keybindings.SHIFT_MODIFIER_MASK
+
+        return False
+
+    def lastInputEventWasCut(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        return mods & keybindings.COMMAND_MODIFIER_MASK and keyString.lower() == 'x'
+
+    def lastInputEventWasCopy(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        return mods & keybindings.COMMAND_MODIFIER_MASK and keyString.lower() == 'c'
+
+    def lastInputEventWasPaste(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        return mods & keybindings.COMMAND_MODIFIER_MASK and keyString.lower() == 'v'
+
+    def lastInputEventWasDelete(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        if not mods and keyString == "Delete":
+            return True
+
+        return mods & keybindings.COMMAND_MODIFIER_MASK and keyString.lower() == "d"
+
+    def lastInputEventWasPrimaryMouseClick(self):
+        event = orca_state.lastInputEvent
+        if isinstance(event, input_event.MouseButtonEvent):
+            return event.button == "1" and event.pressed
+
+        return False
+
+    def lastInputEventWasMiddleMouseClick(self):
+        event = orca_state.lastInputEvent
+        if isinstance(event, input_event.MouseButtonEvent):
+            return event.button == "2" and event.pressed
+
+        return False
+
+    def lastInputEventWasSecondaryMouseClick(self):
+        event = orca_state.lastInputEvent
+        if isinstance(event, input_event.MouseButtonEvent):
+            return event.button == "3" and event.pressed
+
+        return False
+
+    def lastInputEventWasPrimaryMouseRelease(self):
+        event = orca_state.lastInputEvent
+        if isinstance(event, input_event.MouseButtonEvent):
+            return event.button == "1" and not event.pressed
+
+        return False
+
+    def lastInputEventWasMiddleMouseRelease(self):
+        event = orca_state.lastInputEvent
+        if isinstance(event, input_event.MouseButtonEvent):
+            return event.button == "2" and not event.pressed
+
+        return False
+
+    def lastInputEventWasSecondaryMouseRelease(self):
+        event = orca_state.lastInputEvent
+        if isinstance(event, input_event.MouseButtonEvent):
+            return event.button == "3" and not event.pressed
+
+        return False
+
+    def treatEventAsTerminalCommand(self, event):
+        try:
+            role = event.source.getRole()
+        except:
+            msg = "ERROR: Exception getting role of %s" % event.source
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role != pyatspi.ROLE_TERMINAL:
+            return False
+
+        if self.lastInputEventWasCommand():
+            return True
+
+        if event.type.startswith("object:text-changed:insert") and event.any_data.strip():
+            keyString, mods = self.lastKeyAndModifiers()
+            if keyString in ["Return", "Tab", "space", " "]:
+                return True
+
+        return False
+
+    def isPresentableTextChangedEventForLocusOfFocus(self, event):
+        if not event.type.startswith("object:text-changed:") \
+           and not event.type.startswith("object:text-attributes-changed"):
+            return False
+
+        try:
+            role = event.source.getRole()
+            state = event.source.getState()
+        except:
+            msg = "ERROR: Exception getting role and state of %s" % event.source
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        ignoreRoles = [pyatspi.ROLE_LABEL,
+                       pyatspi.ROLE_MENU,
+                       pyatspi.ROLE_MENU_ITEM,
+                       pyatspi.ROLE_SLIDER,
+                       pyatspi.ROLE_SPIN_BUTTON]
+        if role in ignoreRoles:
+            msg = "INFO: Event is not being presented due to role"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role == pyatspi.ROLE_TABLE_CELL \
+           and not state.contains(pyatspi.STATE_FOCUSED) \
+           and not state.contains(pyatspi.STATE_SELECTED):
+            msg = "INFO: Event is not being presented due to role and states"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role == pyatspi.ROLE_PASSWORD_TEXT and state.contains(pyatspi.STATE_FOCUSED):
+            return True
+
+        if orca_state.locusOfFocus in [event.source, event.source.parent]:
+            return True
+
+        if self.isDead(orca_state.locusOfFocus):
+            return True
+
+        msg = "INFO: Event is not being presented due to lack of cause"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+
+    def isBackSpaceCommandTextDeletionEvent(self, event):
+        if not event.type.startswith("object:text-changed:delete"):
+            return False
+
+        keyString, mods = self.lastKeyAndModifiers()
+        if keyString == "BackSpace":
+            return True
+
+        return False
+
+    def isDeleteCommandTextDeletionEvent(self, event):
+        if not event.type.startswith("object:text-changed:delete"):
+            return False
+
+        return self.lastInputEventWasDelete()
+
+    def isUndoCommandTextDeletionEvent(self, event):
+        if not event.type.startswith("object:text-changed:delete"):
+            return False
+
+        if not self.lastInputEventWasUndo():
+            return False
+
+        start, end, string = self.getCachedTextSelection(event.source)
+        return not string
+
+    def isSelectedTextDeletionEvent(self, event):
+        if not event.type.startswith("object:text-changed:delete"):
+            return False
+
+        if self.lastInputEventWasPaste():
+            return False
+
+        start, end, string = self.getCachedTextSelection(event.source)
+        return string and string.strip() == event.any_data.strip()
+
+    def isSelectedTextInsertionEvent(self, event):
+        if not event.type.startswith("object:text-changed:insert"):
+            return False
+
+        self.updateCachedTextSelection(event.source)
+        start, end, string = self.getCachedTextSelection(event.source)
+        return string and string == event.any_data and start == event.detail1
+
+    def isSelectedTextRestoredEvent(self, event):
+        if not self.lastInputEventWasUndo():
+            return False
+
+        if self.isSelectedTextInsertionEvent(event):
+            return True
+
+        return False
+
+    def isMiddleMouseButtonTextInsertionEvent(self, event):
+        if not event.type.startswith("object:text-changed:insert"):
+            return False
+
+        return self.lastInputEventWasMiddleMouseClick()
+
+    def isEchoableTextInsertionEvent(self, event):
+        if not event.type.startswith("object:text-changed:insert"):
+            return False
+
+        try:
+            role = event.source.getRole()
+        except:
+            msg = "ERROR: Exception getting role of %s" % event.source
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role == pyatspi.ROLE_PASSWORD_TEXT:
+            return _settingsManager.getSetting("enableKeyEcho")
+
+        if len(event.any_data.strip()) == 1:
+            return _settingsManager.getSetting("enableEchoByCharacter")
+
+        return False
+
+    def isClipboardTextChangedEvent(self, event):
+        if not event.type.startswith("object:text-changed"):
+            return False
+
+        if not self.lastInputEventWasCommand() or self.lastInputEventWasUndo():
+            return False
+
+        if "delete" in event.type and self.lastInputEventWasPaste():
+            return False
+
+        try:
+            state = event.source.getState()
+        except:
+            msg = "ERROR: Exception getting state of %s" % event.source
+            debug.println(debug.LEVEL_INFO, msg, True)
+        else:
+            if not state.contains(pyatspi.STATE_EDITABLE):
+                return False
+
+        contents = self.getClipboardContents()
+        if event.any_data == contents:
+            return True
+
+        # HACK: If the application treats each paragraph as a separate object,
+        # we'll get individual events for each paragraph rather than a single
+        # event whose any_data matches the clipboard contents.
+        if "\n" in contents and event.any_data in contents:
+            return True
+
+        return False
+
+    def objectContentsAreInClipboard(self, obj=None):
+        obj = obj or orca_state.locusOfFocus
+        if not obj or self.isDead(obj):
+            return False
+
+        contents = self.getClipboardContents()
+        if not contents:
+            return False
+
+        string, start, end = self.selectedText(obj)
+        if string and string in contents:
+            return True
+
+        obj = self.realActiveDescendant(obj) or obj
+        if self.isDead(obj):
+            return False
+
+        return obj and obj.name in contents
+
+    def clearCachedCommandState(self):
+        self._script.pointOfReference['undo'] = False
+        self._script.pointOfReference['redo'] = False
+        self._script.pointOfReference['paste'] = False
+
+    def handleUndoTextEvent(self, event):
+        if self.lastInputEventWasUndo():
+            if not self._script.pointOfReference.get('undo'):
+                self._script.presentMessage(messages.UNDO)
+                self._script.pointOfReference['undo'] = True
+            self.updateCachedTextSelection(event.source)
+            return True
+
+        if self.lastInputEventWasRedo():
+            if not self._script.pointOfReference.get('redo'):
+                self._script.presentMessage(messages.REDO)
+                self._script.pointOfReference['redo'] = True
+            self.updateCachedTextSelection(event.source)
+            return True
+
+        return False
+
+    def handleUndoLocusOfFocusChange(self):
+        if self.lastInputEventWasUndo():
+            if not self._script.pointOfReference.get('undo'):
+                self._script.presentMessage(messages.UNDO)
+                self._script.pointOfReference['undo'] = True
+            return True
+
+        if self.lastInputEventWasRedo():
+            if not self._script.pointOfReference.get('redo'):
+                self._script.presentMessage(messages.REDO)
+                self._script.pointOfReference['redo'] = True
+            return True
+
+        return False
+
+    def handlePasteLocusOfFocusChange(self):
+        if self.lastInputEventWasPaste():
+            if not self._script.pointOfReference.get('paste'):
+                self._script.presentMessage(
+                    messages.CLIPBOARD_PASTED_FULL, messages.CLIPBOARD_PASTED_BRIEF)
+                self._script.pointOfReference['paste'] = True
+            return True
+
+        return False
+
+    def presentFocusChangeReason(self):
+        if self.handleUndoLocusOfFocusChange():
+            return True
+        if self.handlePasteLocusOfFocusChange():
+            return True
+        return False
+
+    def handleTextSelectionChange(self, obj):
+        # Note: This guesswork to figure out what actually changed with respect
+        # to text selection will get eliminated once the new text-selection API
+        # is added to ATK and implemented by the toolkits. (BGO 638378)
+
+        oldStart, oldEnd, oldString = self.getCachedTextSelection(obj)
+        self.updateCachedTextSelection(obj)
+        newStart, newEnd, newString = self.getCachedTextSelection(obj)
+
+        # TODO - JD: This may be (now or soon) obsolete.
+        if self._script.pointOfReference.get('lastAutoComplete') == hash(obj):
+            return False
+
+        if self._speakTextSelectionState(len(newString)):
+            return True
+
+        changes = []
+        oldChars = set(range(oldStart, oldEnd))
+        newChars = set(range(newStart, newEnd))
+        if not oldChars.union(newChars):
+            return False
+
+        if oldChars and newChars and not oldChars.intersection(newChars):
+            # A simultaneous unselection and selection centered at one offset.
+            changes.append([oldStart, oldEnd, messages.TEXT_UNSELECTED])
+            changes.append([newStart, newEnd, messages.TEXT_SELECTED])
+        else:
+            change = sorted(oldChars.symmetric_difference(newChars))
+            if not change:
+                return False
+
+            changeStart, changeEnd = change[0], change[-1] + 1
+            if oldChars < newChars:
+                changes.append([changeStart, changeEnd, messages.TEXT_SELECTED])
+            else:
+                changes.append([changeStart, changeEnd, messages.TEXT_UNSELECTED])
+
+        speakMessage = not _settingsManager.getSetting('onlySpeakDisplayedText')
+        for start, end, message in changes:
+            self._script.sayPhrase(obj, start, end)
+            if speakMessage:
+                self._script.speakMessage(message, interrupt=False)
+
+        return True
+
+    def _getCtrlShiftSelectionsStrings(self):
+        """Hacky and to-be-obsoleted method."""
+        return [messages.PARAGRAPH_SELECTED_DOWN,
+                messages.PARAGRAPH_UNSELECTED_DOWN,
+                messages.PARAGRAPH_SELECTED_UP,
+                messages.PARAGRAPH_UNSELECTED_UP]
+
+    def _speakTextSelectionState(self, nSelections):
+        """Hacky and to-be-obsoleted method."""
+
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return False
+
+        eventStr, mods = self.lastKeyAndModifiers()
+        isControlKey = mods & keybindings.CTRL_MODIFIER_MASK
+        isShiftKey = mods & keybindings.SHIFT_MODIFIER_MASK
+        selectedText = nSelections > 0
+
+        line = None
+        if (eventStr == "Page_Down") and isShiftKey and isControlKey:
+            line = messages.LINE_SELECTED_RIGHT
+        elif (eventStr == "Page_Up") and isShiftKey and isControlKey:
+            line = messages.LINE_SELECTED_LEFT
+        elif (eventStr == "Page_Down") and isShiftKey and not isControlKey:
+            if selectedText:
+                line = messages.PAGE_SELECTED_DOWN
+            else:
+                line = messages.PAGE_UNSELECTED_DOWN
+        elif (eventStr == "Page_Up") and isShiftKey and not isControlKey:
+            if selectedText:
+                line = messages.PAGE_SELECTED_UP
+            else:
+                line = messages.PAGE_UNSELECTED_UP
+        elif (eventStr == "Down") and isShiftKey and isControlKey:
+            strings = self._getCtrlShiftSelectionsStrings()
+            if selectedText:
+                line = strings[0]
+            else:
+                line = strings[1]
+        elif (eventStr == "Up") and isShiftKey and isControlKey:
+            strings = self._getCtrlShiftSelectionsStrings()
+            if selectedText:
+                line = strings[2]
+            else:
+                line = strings[3]
+        elif (eventStr == "Home") and isShiftKey and isControlKey:
+            if selectedText:
+                line = messages.DOCUMENT_SELECTED_UP
+            else:
+                line = messages.DOCUMENT_UNSELECTED_UP
+        elif (eventStr == "End") and isShiftKey and isControlKey:
+            if selectedText:
+                line = messages.DOCUMENT_SELECTED_DOWN
+            else:
+                line = messages.DOCUMENT_SELECTED_UP
+        elif (eventStr == "A") and isControlKey and selectedText:
+            if not self._script.pointOfReference.get('entireDocumentSelected'):
+                self._script.pointOfReference['entireDocumentSelected'] = True
+                line = messages.DOCUMENT_SELECTED_ALL
+            else:
+                return True
+
+        if line:
+            self._script.speakMessage(line)
+            return True
+
+        return False
