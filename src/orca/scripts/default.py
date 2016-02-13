@@ -2779,6 +2779,9 @@ class Script(script.Script):
         orca_state.learnModeEnabled = False
 
     def onClipboardContentsChanged(self, *args):
+        if self.flatReviewContext:
+            return
+
         if not self.utilities.objectContentsAreInClipboard():
             return
 
