@@ -297,8 +297,8 @@ formatting = {
             'unfocused': '((substring and currentLineText) or labelAndName) + roleName'
             },
         pyatspi.ROLE_PARAGRAPH: {
-            'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
-            'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection + ' + MNEMONIC,
+            'focused': 'labelOrName + readOnly + textRole + textIndentation + currentLineText + allTextSelection',
+            'unfocused': 'labelOrName + readOnly + textRole + textIndentation + currentLineText + allTextSelection + ' + MNEMONIC,
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
             'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
             },

@@ -2747,6 +2747,28 @@ class Utilities:
 
         return string
 
+    def indentationDescription(self, line):
+        if _settingsManager.getSetting('onlySpeakDisplayedText') \
+           or not _settingsManager.getSetting('enableSpeechIndentation'):
+            return ""
+
+        line = line.replace("\u00a0", " ")
+        end = re.search("[^ \t]", line)
+        if end:
+            line = line[:end.start()]
+
+        result = ""
+        spaces = [m.span() for m in re.finditer(" +", line)]
+        tabs = [m.span() for m in re.finditer("\t+", line)]
+        spans = sorted(spaces + tabs)
+        for (start, end) in spans:
+            if (start, end) in spaces:
+                result += "%s " % messages.spacesCount(end-start)
+            else:
+                result += "%s " % messages.tabsCount(end-start)
+
+        return result
+
     @staticmethod
     def absoluteMouseCoordinates():
         """Gets the absolute position of the mouse pointer."""

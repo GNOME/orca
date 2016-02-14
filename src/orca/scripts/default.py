@@ -3191,9 +3191,9 @@ class Script(script.Script):
 
         [line, caretOffset, startOffset] = self.getTextLineAtCaret(obj)
         if len(line) and line != "\n":
-            result = self.speechGenerator.generateTextIndentation(obj, line=line)
+            result = self.utilities.indentationDescription(line)
             if result:
-                self.speakMessage(result[0])
+                self.speakMessage(result)
 
             voice = self.speechGenerator.voice(string=line)
             line = self.utilities.adjustForLinks(obj, line, startOffset)
@@ -3222,6 +3222,10 @@ class Script(script.Script):
             return
 
         if len(phrase) > 1 or phrase.isalnum():
+            result = self.utilities.indentationDescription(phrase)
+            if result:
+                self.speakMessage(result)
+
             voice = self.speechGenerator.voice(string=phrase)
             phrase = self.utilities.adjustForRepeats(phrase)
             utterance = [phrase]

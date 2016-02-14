@@ -1253,53 +1253,21 @@ class SpeechGenerator(generator.Generator):
         result.extend(self._getACSS(obj, result[0]))
         return result
 
-    def generateTextIndentation(self, obj, **args):
-        return self._generateTextIndentation(obj, **args)
-
     def _generateTextIndentation(self, obj, **args):
         """Speaks a summary of the number of spaces and/or tabs at the
         beginning of the given line.
 
         Arguments:
         - obj: the text object.
-        - line: the string to check for spaces and tabs.
         """
-        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+
+        line, caretOffset, startOffset = self._script.getTextLineAtCaret(obj)
+        description = self._script.utilities.indentationDescription(line)
+        if not description:
             return []
 
-        acss = self.voice(SYSTEM)
-        if not _settingsManager.getSetting('enableSpeechIndentation'):
-            return []
-        line =  args.get('alreadyFocused', "")
-        if not line:
-            [line, caretOffset, startOffset] = \
-              self._script.getTextLineAtCaret(obj)
-
-        # For the purpose of speaking the text indentation, replace
-        # occurances the non breaking space character with spaces.
-        line = line.replace("\u00a0", " ")
-        spaceCount = 0
-        tabCount = 0
-        utterance = ""
-        offset = 0
-        while True:
-            while (offset < len(line)) and line[offset] == ' ':
-                spaceCount += 1
-                offset += 1
-            if spaceCount:
-                utterance += "%s " % messages.spacesCount(spaceCount)
-            while (offset < len(line)) and line[offset] == '\t':
-                tabCount += 1
-                offset += 1
-            if tabCount:
-                utterance += "%s " % messages.tabsCount(tabCount)
-            if not (spaceCount  or tabCount):
-                break
-            spaceCount  = tabCount = 0
-
-        result = [utterance]
-        if result and result[0]:
-            result.extend(acss)
+        result = [description]
+        result.extend(self.voice(SYSTEM))
         return result
 
     #####################################################################
