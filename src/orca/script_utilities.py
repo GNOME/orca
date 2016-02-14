@@ -3602,7 +3602,7 @@ class Utilities:
 
     def lastInputEventWasDelete(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if not mods and keyString == "Delete":
+        if keyString == "Delete":
             return True
 
         return mods & keybindings.CTRL_MODIFIER_MASK and keyString.lower() == 'd'
