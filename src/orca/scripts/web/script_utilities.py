@@ -31,6 +31,7 @@ import urllib
 
 from orca import debug
 from orca import input_event
+from orca import messages
 from orca import orca
 from orca import orca_state
 from orca import script_utilities
