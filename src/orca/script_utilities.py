@@ -3524,45 +3524,45 @@ class Utilities:
 
     def lastInputEventWasCharNav(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if not mods:
-            return keyString in ["Left", "Right"]
+        if not keyString in ["Left", "Right"]:
+            return False
 
-        return False
+        return not (mods & keybindings.CTRL_MODIFIER_MASK)
 
     def lastInputEventWasWordNav(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if mods & keybindings.CTRL_MODIFIER_MASK:
-            return keyString in ["Left", "Right"]
+        if not keyString in ["Left", "Right"]:
+            return False
 
-        return False
+        return mods & keybindings.CTRL_MODIFIER_MASK
 
     def lastInputEventWasLineNav(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if not mods:
-            return keyString in ["Up", "Down"]
+        if not keyString in ["Up", "Down"]:
+            return False
 
-        return False
+        return not (mods & keybindings.CTRL_MODIFIER_MASK)
 
     def lastInputEventWasLineBoundaryNav(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if not mods:
-            return keyString in ["Home", "End"]
+        if not keyString in ["Home", "End"]:
+            return False
 
-        return False
+        return not (mods & keybindings.CTRL_MODIFIER_MASK)
 
     def lastInputEventWasPageNav(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if not mods:
-            return keyString in ["Page_Up", "Page_Down"]
+        if not keyString in ["Page_Up", "Page_Down"]:
+            return False
 
-        return False
+        return not (mods & keybindings.CTRL_MODIFIER_MASK)
 
     def lastInputEventWasFileBoundaryNav(self):
         keyString, mods = self.lastKeyAndModifiers()
-        if mods & keybindings.CTRL_MODIFIER_MASK:
-            return keyString in ["Home", "End"]
+        if not keyString in ["Home", "End"]:
+            return False
 
-        return False
+        return mods & keybindings.CTRL_MODIFIER_MASK
 
     def lastInputEventWasCaretNavWithSelection(self):
         keyString, mods = self.lastKeyAndModifiers()
