@@ -2614,9 +2614,10 @@ class Script(script.Script):
         """Callback for object:text-selection-changed accessibility events."""
 
         obj = event.source
-        if self.utilities.handleUndoTextEvent(event):
-            self.updateBraille(obj)
-            return
+
+        # We won't handle undo here as it can lead to double-presentation.
+        # If there is an application for which text-changed events are
+        # missing upon undo, handle them in an app or toolkit script.
 
         self.utilities.handleTextSelectionChange(obj)
         self.updateBraille(obj)
@@ -2791,8 +2792,14 @@ class Script(script.Script):
             self.presentMessage(messages.CLIPBOARD_COPIED_FULL, messages.CLIPBOARD_COPIED_BRIEF)
             return
 
-        if self.utilities.isTextArea(orca_state.locusOfFocus):
-            return
+        try:
+            state = orca_state.locusOfFocus.getState()
+        except:
+            msg = "ERROR: Exception getting state of %s" % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
+        else:
+            if state.contains(pyatspi.STATE_EDITABLE):
+                return
 
         self.presentMessage(messages.CLIPBOARD_CUT_FULL, messages.CLIPBOARD_CUT_BRIEF)
 
