@@ -2289,6 +2289,9 @@ class Utilities:
 
         return None
 
+    def insertedText(self, event):
+        return event.any_data
+
     def selectedText(self, obj):
         """Get the text selection for the given object.
 

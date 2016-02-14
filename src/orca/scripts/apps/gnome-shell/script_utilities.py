@@ -53,6 +53,28 @@ class Utilities(script_utilities.Utilities):
 
         return children
 
+    def insertedText(self, event):
+        if event.any_data:
+            return event.any_data
+
+        if event.detail1 == -1:
+            msg = "GNOME SHELL: Broken text insertion event"
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+            text = self.queryNonEmptyText(event.source)
+            if text:
+                string = text.getText(0, -1)
+                if string:
+                    msg = "HACK: Returning last char in '%s'" % string
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    return string[-1]
+
+            msg = "GNOME SHELL: Unable to correct broken text insertion event"
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        return ""
+
+
     def selectedText(self, obj):
         string, start, end = super().selectedText(obj)
         if -1 not in [start, end]:

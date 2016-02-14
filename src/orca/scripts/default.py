@@ -2563,7 +2563,9 @@ class Script(script.Script):
             return
 
         speakString = True
-        string = event.any_data
+
+        # Because some implementations are broken.
+        string = self.utilities.insertedText(event)
 
         if self.utilities.lastInputEventWasCommand():
             msg = "DEFAULT: Insertion is believed to be due to command"
