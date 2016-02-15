@@ -126,6 +126,9 @@ class SpellCheck:
         return False
 
     def isSuggestionsItem(self, obj):
+        if not self._suggestionsList:
+            return False
+
         return obj and obj.parent == self._suggestionsList
 
     def presentContext(self):
