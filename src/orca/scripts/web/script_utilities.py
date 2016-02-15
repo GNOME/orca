@@ -2905,7 +2905,7 @@ class Utilities(script_utilities.Utilities):
         result.append(messages.tableCount(counts.get('tables', 0), onlyIfFound))
         result.append(messages.visitedLinkCount(counts.get('visitedLinks', 0), onlyIfFound))
         result.append(messages.unvisitedLinkCount(counts.get('unvisitedLinks', 0), onlyIfFound))
-        result = filter(lambda x: x, result)
+        result = list(filter(lambda x: x, result))
         if not result:
             return ""
 
