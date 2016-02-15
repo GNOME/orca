@@ -2906,8 +2906,10 @@ class Utilities(script_utilities.Utilities):
         result.append(messages.visitedLinkCount(counts.get('visitedLinks', 0), onlyIfFound))
         result.append(messages.unvisitedLinkCount(counts.get('unvisitedLinks', 0), onlyIfFound))
         result = filter(lambda x: x, result)
+        if not result:
+            return ""
 
-        return ", ".join(result)
+        return messages.PAGE_SUMMARY_PREFIX % ", ".join(result)
 
     def _getCtrlShiftSelectionsStrings(self):
         """Hacky and to-be-obsoleted method."""

@@ -1554,6 +1554,13 @@ PAGE_LOADING_END = _("Finished loading.")
 # object which has just finished loading (most likely the page's title).
 PAGE_LOADING_END_NAMED = _("Finished loading %s.")
 
+# Translators: When the user loads a new web page, they can optionally have Orca
+# automatically summarize details about the page, such as the number of elements
+# (landmarks, forms, links, tables, etc.). The following string precedes the
+# presentation of the summary. The string substitution is a list of items, such
+# as "10 headings, 1 form, 52 links".
+PAGE_SUMMARY_PREFIX = _("Page has %s.")
+
 # Translators: when the user selects (highlights) or unselects text in a
 # document, Orca will speak information about what they have selected or
 # unselected. This message is presented when the user selects from the
