@@ -80,6 +80,13 @@ ROLE_HEADING_LEVEL_SPEECH = _("%(role)s level %(level)d")
 # of icons.
 ROLE_ICON_PANEL = _("Icon panel")
 
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# The reason for including the visited state as part of the role is to make it
+# possible for users to quickly identify if the link is associated with content
+# already read.
+ROLE_VISITED_LINK = _("visited link")
+
 # Translators: This is a state which applies to elements in document content
 # which have an "onClick" action.
 STATE_CLICKABLE = _("clickable")

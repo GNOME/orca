@@ -386,6 +386,9 @@ class SpeechGenerator(generator.Generator):
         if not role:
             return ''
 
+        if role == pyatspi.ROLE_LINK and obj.getState().contains(pyatspi.STATE_VISITED):
+            return object_properties.ROLE_VISITED_LINK
+
         nonlocalized = Atspi.role_get_name(role)
         atkRole = Atk.role_for_name(nonlocalized)
 
