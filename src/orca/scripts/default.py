@@ -2777,8 +2777,11 @@ class Script(script.Script):
         if not self.utilities.objectContentsAreInClipboard():
             return
 
-        if not self.utilities.lastInputEventWasCut():
+        if self.utilities.lastInputEventWasCopy():
             self.presentMessage(messages.CLIPBOARD_COPIED_FULL, messages.CLIPBOARD_COPIED_BRIEF)
+            return
+
+        if not self.utilities.lastInputEventWasCut():
             return
 
         try:
