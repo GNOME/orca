@@ -2290,7 +2290,31 @@ class Utilities:
         return None
 
     def insertedText(self, event):
-        return event.any_data
+        if event.any_data:
+            return event.any_data
+
+        msg = "ERROR: Broken text insertion event"
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        try:
+            role = event.source.getRole()
+        except:
+            msg = "ERROR: Exception getting role of %s" % event.source
+            debug.println(debug.LEVEL_INFO, msg, True)
+            role = None
+
+        if role == pyatspi.ROLE_PASSWORD_TEXT:
+            text = self.queryNonEmptyText(event.source)
+            if text:
+                string = text.getText(0, -1)
+                if string:
+                    msg = "HACK: Returning last char in '%s'" % string
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    return string[-1]
+
+        msg = "FAIL: Unable to correct broken text insertion event"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return ""
 
     def selectedText(self, obj):
         """Get the text selection for the given object.
