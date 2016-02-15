@@ -56,7 +56,10 @@ keymap = (
     "toggleFlatReviewModeHandler"),
 
     ("KP_Add", defaultModifierMask, NO_MODIFIER_MASK,
-    "sayAllHandler"),
+    "sayAllHandler", 1),
+
+    ("KP_Add", defaultModifierMask, NO_MODIFIER_MASK,
+    "flatReviewSayAllHandler", 2),
 
     ("KP_Enter", defaultModifierMask, NO_MODIFIER_MASK,
     "whereAmIBasicHandler", 1),

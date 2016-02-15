@@ -58,6 +58,14 @@ RIGHT_CLICK_REVIEW_ITEM = _("Performs right click on current flat review item.")
 # and the cursor will be positioned at the point where the speech was interrupted.
 SAY_ALL = _("Speaks entire document.")
 
+# Translators: the 'flat review' feature of Orca allows the user to explore the
+# text in a window in a 2D fashion. That is, Orca treats all the text from all
+# objects in a window (e.g., buttons, labels, etc.) as a sequence of words in a
+# sequence of lines. The flat review feature allows the user to explore this text
+# by the {previous,next} {line,word,character}. This string is the name of a command
+# which causes Orca to speak the entire contents of the window using flat review.
+SAY_ALL_FLAT_REVIEW = _("Speaks entire window using flat review.")
+
 # Translators: the "Where am I" feature of Orca allows a user to press a key and
 # then have information about their current context spoken and brailled to them.
 # For example, the information may include the name of the current pushbutton

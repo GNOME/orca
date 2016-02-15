@@ -58,7 +58,10 @@ keymap = (
     "toggleFlatReviewModeHandler"),
 
     ("semicolon", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "sayAllHandler"),
+    "sayAllHandler", 1),
+
+    ("semicolon", defaultModifierMask, ORCA_MODIFIER_MASK,
+    "flatReviewSayAllHandler", 2),
 
     ("Return", defaultModifierMask, ORCA_MODIFIER_MASK,
     "whereAmIBasicHandler", 1),

@@ -153,6 +153,11 @@ class Script(script.Script):
                 Script.sayAll,
                 cmdnames.SAY_ALL)
 
+        self.inputEventHandlers["flatReviewSayAllHandler"] = \
+            input_event.InputEventHandler(
+                Script.flatReviewSayAll,
+                cmdnames.SAY_ALL_FLAT_REVIEW)
+
         self.inputEventHandlers["whereAmIBasicHandler"] = \
             input_event.InputEventHandler(
                 Script.whereAmIBasic,
@@ -1729,36 +1734,20 @@ class Script(script.Script):
 
         return True
 
+    def flatReviewSayAll(self, inputEvent):
+        context = self.getFlatReviewContext()
+        context.goBegin()
+
+        while True:
+            [wordString, x, y, width, height] = context.getCurrent(flat_review.Context.ZONE)
+            speech.speak(wordString)
+            moved = context.goNext(flat_review.Context.ZONE, flat_review.Context.WRAP_LINE)
+            if not moved:
+                break
+
+        return True
+
     def sayAll(self, inputEvent, obj=None, offset=None):
-        try:
-            clickCount = inputEvent.getClickCount()
-        except:
-            clickCount = 1
-        doubleClick = clickCount == 2
-
-        if doubleClick:
-            # Try to "say all" for the current dialog/window by flat
-            # reviewing everything. See bug #354462 for more details.
-            #
-            context = self.getFlatReviewContext()
-
-            utterances = []
-            context.goBegin()
-            while True:
-                [wordString, x, y, width, height] = \
-                         context.getCurrent(flat_review.Context.ZONE)
-
-                utterances.append(wordString)
-
-                moved = context.goNext(flat_review.Context.ZONE,
-                                       flat_review.Context.WRAP_LINE)
-
-                if not moved:
-                    break
-
-            speech.speak(utterances)
-            return
-
         obj = obj or orca_state.locusOfFocus
         try:
             text = obj.queryText()
