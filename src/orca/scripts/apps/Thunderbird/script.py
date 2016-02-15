@@ -65,6 +65,8 @@ class Script(Gecko.Script):
 
         if _settingsManager.getSetting('sayAllOnLoad') == None:
             _settingsManager.setSetting('sayAllOnLoad', False)
+        if _settingsManager.getSetting('pageSummaryOnLoad') == None:
+            _settingsManager.setSetting('pageSummaryOnLoad', False)
 
         Gecko.Script.__init__(self, app)
 
@@ -94,6 +96,8 @@ class Script(Gecko.Script):
 
         self._sayAllOnLoadCheckButton.set_active(
             _settingsManager.getSetting('sayAllOnLoad'))
+        self._pageSummaryOnLoadCheckButton.set_active(
+            _settingsManager.getSetting('pageSummaryOnLoad'))
 
         spellcheck = self.spellcheck.getAppPreferencesGUI()
         grid.attach(spellcheck, 0, len(grid.get_children()), 1, 1)
@@ -106,6 +110,7 @@ class Script(Gecko.Script):
 
         prefs = Gecko.Script.getPreferencesFromGUI(self)
         prefs['sayAllOnLoad'] = self._sayAllOnLoadCheckButton.get_active()
+        prefs['pageSummaryOnLoad'] = self._pageSummaryOnLoadCheckButton.get_active()
         prefs.update(self.spellcheck.getPreferencesFromGUI())
 
         return prefs
@@ -356,6 +361,14 @@ class Script(Gecko.Script):
         [obj, offset] = self.utilities.findFirstCaretContext(documentFrame, 0)
         self.utilities.setCaretPosition(obj, offset)
         self.updateBraille(obj)
+
+        if _settingsManager.getSetting('pageSummaryOnLoad'):
+            msg = "THUNDERBIRD: Getting page summary for obj %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            summary = self.utilities.getPageSummary(obj)
+            if summary:
+                self.presentMessage(summary)
+
         if not _settingsManager.getSetting('sayAllOnLoad'):
             msg = "THUNDERBIRD: SayAllOnLoad is False. Presenting line."
             debug.println(debug.LEVEL_INFO, msg, True)

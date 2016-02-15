@@ -674,6 +674,11 @@ PAGE_NAVIGATION = _("Page Navigation")
 READ_PAGE_UPON_LOAD = \
     _("Automatically start speaking a page when it is first _loaded")
 
+# Translators: When the user loads a new web page, they can optionally have Orca
+# automatically summarize details about the page, such as the number of elements
+# (landmarks, forms, links, tables, etc.).
+PAGE_SUMMARY_UPON_LOAD = _("_Present summary of a page when it is first loaded")
+
 # Translators: Different speech systems and speech engines work differently when
 # it comes to handling pauses (e.g. sentence boundaries). This property allows
 # the user to specify whether speech should be sent to the speech synthesis

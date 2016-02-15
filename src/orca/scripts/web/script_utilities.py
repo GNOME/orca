@@ -168,13 +168,13 @@ class Utilities(script_utilities.Utilities):
             return None
 
         if self.isDocument(obj):
-            msg = "WEB: %s is document" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
             return obj
 
         document = pyatspi.findAncestor(obj, self.isDocument)
-        msg = "WEB: Document for %s is %s" % (obj, document)
-        debug.println(debug.LEVEL_INFO, msg, True)
+        if not document:
+            msg = "WEB: Could not find document for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+
         return document
 
     def _getDocumentsEmbeddedBy(self, frame):
@@ -2852,19 +2852,23 @@ class Utilities(script_utilities.Utilities):
 
         return self.isLiveRegion(event.source)
 
-    def getPageSummary(self, obj):
+    def getPageObjectCount(self, obj):
+        result = {'landmarks': 0,
+                  'headings': 0,
+                  'forms': 0,
+                  'tables': 0,
+                  'visitedLinks': 0,
+                  'unvisitedLinks': 0}
+
         docframe = self.documentFrame(obj)
         col = docframe.queryCollection()
-        headings = 0
-        forms = 0
-        tables = 0
-        vlinks = 0
-        uvlinks = 0
-        percentRead = None
-
         stateset = pyatspi.StateSet()
-        roles = [pyatspi.ROLE_HEADING, pyatspi.ROLE_LINK, pyatspi.ROLE_TABLE,
-                 pyatspi.ROLE_FORM]
+        roles = [pyatspi.ROLE_HEADING,
+                 pyatspi.ROLE_LINK,
+                 pyatspi.ROLE_TABLE,
+                 pyatspi.ROLE_FORM,
+                 pyatspi.ROLE_SECTION, # We can nuke this when Firefox correcly maps landmarks
+                 pyatspi.ROLE_LANDMARK]
         rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
                                    "", col.MATCH_NONE,
                                    roles, col.MATCH_ANY,
@@ -2876,18 +2880,34 @@ class Utilities(script_utilities.Utilities):
         for obj in matches:
             role = obj.getRole()
             if role == pyatspi.ROLE_HEADING:
-                headings += 1
+                result['headings'] += 1
             elif role == pyatspi.ROLE_FORM:
-                forms += 1
+                result['forms'] += 1
             elif role == pyatspi.ROLE_TABLE and not self.isLayoutOnly(obj):
-                tables += 1
+                result['tables'] += 1
             elif role == pyatspi.ROLE_LINK:
-                if obj.getState().contains(pyatspi.STATE_VISITED):
-                    vlinks += 1
-                else:
-                    uvlinks += 1
+                if self.isLink(obj):
+                    if obj.getState().contains(pyatspi.STATE_VISITED):
+                        result['visitedLinks'] += 1
+                    else:
+                        result['unvisitedLinks'] += 1
+            elif self.isLandmark(obj):
+                result['landmarks'] += 1
 
-        return [headings, forms, tables, vlinks, uvlinks, percentRead]
+        return result
+
+    def getPageSummary(self, obj, onlyIfFound=True):
+        result = []
+        counts = self.getPageObjectCount(obj)
+        result.append(messages.landmarkCount(counts.get('landmarks', 0), onlyIfFound))
+        result.append(messages.headingCount(counts.get('headings', 0), onlyIfFound))
+        result.append(messages.formCount(counts.get('forms', 0), onlyIfFound))
+        result.append(messages.tableCount(counts.get('tables', 0), onlyIfFound))
+        result.append(messages.visitedLinkCount(counts.get('visitedLinks', 0), onlyIfFound))
+        result.append(messages.unvisitedLinkCount(counts.get('unvisitedLinks', 0), onlyIfFound))
+        result = filter(lambda x: x, result)
+
+        return ", ".join(result)
 
     def _getCtrlShiftSelectionsStrings(self):
         """Hacky and to-be-obsoleted method."""

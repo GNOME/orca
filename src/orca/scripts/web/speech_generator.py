@@ -317,25 +317,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return []
 
-        result = []
-        acss = self.voice(speech_generator.DEFAULT)
-        headings, forms, tables, vlinks, uvlinks, percent = \
-            self._script.utilities.getPageSummary(obj)
-        if headings:
-            result.append(messages.headingCount(headings))
-        if forms:
-            result.append(messages.formCount(forms))
-        if tables:
-            result.append(messages.tableCount(tables))
-        if vlinks:
-            result.append(messages.visitedLinkCount(vlinks))
-        if uvlinks:
-            result.append(messages.unvisitedLinkCount(uvlinks))
-        if percent is not None:
-            result.append(messages.percentRead(percent))
+        string = self._script.utilities.getPageSummary(obj)
+        if not string:
+            return []
 
-        if result:
-            result.extend(acss)
+        result = [string]
+        result.extend(self.voice(speech_generator.SYSTEM))
         return result
 
     def _generateSiteDescription(self, obj, **args):

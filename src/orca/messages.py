@@ -2013,11 +2013,17 @@ def filesFound(count):
     # a result of a search.
     return ngettext("%d file found", "%d files found", count) % count
 
-def formCount(count):
+def formCount(count, onlyIfFound=True):
+    if not count and onlyIfFound:
+        return ""
+
     # Translators: This message presents the number of forms in a document.
     return ngettext("%d form", "%d forms", count) % count
 
-def headingCount(count):
+def headingCount(count, onlyIfFound=True):
+    if not count and onlyIfFound:
+        return ""
+
     # Translators: This message presents the number of headings in a document.
     return ngettext("%d heading", "%d headings", count) % count
 
@@ -2025,6 +2031,15 @@ def itemCount(count):
     # Translators: This message presents the number of items in a layered pane
     # or table.
     return ngettext("%d item", "%d items", count) % count
+
+def landmarkCount(count, onlyIfFound=True):
+    if not count and onlyIfFound:
+        return ""
+
+    # Translators: This message presents the number of landmarks in a document.
+    # ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
+    # identify important part of webpage like banners, main context, search etc.
+    return ngettext("%d landmark", "%d landmarks", count) % count
 
 def itemsFound(count):
     # Translators: Orca has several commands that search for, and present a list
@@ -2131,7 +2146,10 @@ def tabsCount(count):
     # tab characters in a string.
     return ngettext("%d tab", "%d tabs", count) % count
 
-def tableCount(count):
+def tableCount(count, onlyIfFound=True):
+    if not count and onlyIfFound:
+        return ""
+
     # Translators: This message presents the number of tables in a document.
     return ngettext("%d table", "%d tables", count) % count
 
@@ -2147,12 +2165,18 @@ def tableSize(nRows, nColumns):
 
     return rowString + " " + colString
 
-def unvisitedLinkCount(count):
+def unvisitedLinkCount(count, onlyIfFound=True):
+    if not count and onlyIfFound:
+        return ""
+
     # Translators: This message presents the number of unvisited links in a
     # document.
     return ngettext("%d unvisited link", "%d unvisited links", count) % count
 
-def visitedLinkCount(count):
+def visitedLinkCount(count, onlyIfFound=True):
+    if not count and onlyIfFound:
+        return ""
+
     # Translators: This message presents the number of visited links in a
     # document.
     return ngettext("%d visited link", "%d visited links", count) % count

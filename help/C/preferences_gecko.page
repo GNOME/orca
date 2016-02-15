@@ -120,6 +120,17 @@
       </p>
     </section>
     <section>
+      <title>Present summary of a page when it is first loaded</title>
+      <p>
+        If this checkbox is checked, <app>Orca</app> will summarize details about the
+        newly opened web page or email, such as the number of headings, landmarks,
+        and links.
+      </p>
+      <p>
+        Default value: checked for Firefox; not checked for Thunderbird
+      </p>
+    </section>
+    <section>
       <title>Enable layout mode for content</title>
       <p>
         If this checkbox is checked, <app>Orca</app>'s caret navigation will respect

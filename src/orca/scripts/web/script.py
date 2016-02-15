@@ -83,12 +83,15 @@ class Script(default.Script):
             _settingsManager.setSetting('caretNavigationEnabled', True)
         if _settingsManager.getSetting('sayAllOnLoad') == None:
             _settingsManager.setSetting('sayAllOnLoad', True)
+        if _settingsManager.getSetting('pageSummaryOnLoad') == None:
+            _settingsManager.setSetting('pageSummaryOnLoad', True)
 
         self._changedLinesOnlyCheckButton = None
         self._controlCaretNavigationCheckButton = None
         self._minimumFindLengthAdjustment = None
         self._minimumFindLengthLabel = None
         self._minimumFindLengthSpinButton = None
+        self._pageSummaryOnLoadCheckButton = None
         self._sayAllOnLoadCheckButton = None
         self._skipBlankCellsCheckButton = None
         self._speakCellCoordinatesCheckButton = None
@@ -325,11 +328,17 @@ class Script(default.Script):
         self._sayAllOnLoadCheckButton.set_active(value)
         generalGrid.attach(self._sayAllOnLoadCheckButton, 0, 4, 1, 1)
 
+        label = guilabels.PAGE_SUMMARY_UPON_LOAD
+        value = _settingsManager.getSetting('pageSummaryOnLoad')
+        self._pageSummaryOnLoadCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
+        self._pageSummaryOnLoadCheckButton.set_active(value)
+        generalGrid.attach(self._pageSummaryOnLoadCheckButton, 0, 5, 1, 1)
+
         label = guilabels.CONTENT_LAYOUT_MODE
         value = _settingsManager.getSetting('layoutMode')
         self._layoutModeCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
         self._layoutModeCheckButton.set_active(value)
-        generalGrid.attach(self._layoutModeCheckButton, 0, 5, 1, 1)
+        generalGrid.attach(self._layoutModeCheckButton, 0, 6, 1, 1)
 
         tableFrame = Gtk.Frame()
         grid.attach(tableFrame, 0, 1, 1, 1)
@@ -436,6 +445,7 @@ class Script(default.Script):
             'findResultsVerbosity': verbosity,
             'findResultsMinimumLength': self._minimumFindLengthSpinButton.get_value(),
             'sayAllOnLoad': self._sayAllOnLoadCheckButton.get_active(),
+            'pageSummaryOnLoad': self._pageSummaryOnLoadCheckButton.get_active(),
             'structuralNavigationEnabled': self._structuralNavigationCheckButton.get_active(),
             'structNavTriggersFocusMode': self._autoFocusModeStructNavCheckButton.get_active(),
             'caretNavigationEnabled': self._controlCaretNavigationCheckButton.get_active(),
@@ -1092,6 +1102,13 @@ class Script(default.Script):
             return True
 
         self.utilities.clearCachedObjects()
+
+        if _settingsManager.getSetting('pageSummaryOnLoad'):
+            msg = "WEB: Getting page summary for obj %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            summary = self.utilities.getPageSummary(obj)
+            if summary:
+                self.presentMessage(summary)
 
         obj, offset = self.utilities.getCaretContext()
 
