@@ -36,7 +36,6 @@ import pyatspi
 
 from . import generator
 from . import settings_manager
-from . import sound_icons
 
 _settingsManager = settings_manager.getManager()
 
