@@ -3340,6 +3340,17 @@ class Utilities:
         row, col = table.getRowAtIndex(index), table.getColumnAtIndex(index)
         return table.getRowExtentAt(row, col), table.getColumnExtentAt(row, col)
 
+    def rowAndColumnCount(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE):
+            return -1, -1
+
+        try:
+            table = obj.queryTable()
+        except:
+            return -1, -1
+
+        return table.nRows, table.nColumns
+
     def cellForCoordinates(self, obj, row, column):
         try:
             table = obj.queryTable()
@@ -3347,6 +3358,21 @@ class Utilities:
             return None
 
         return table.getAccessibleAt(row, column)
+
+    def isLastCell(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
+            return False
+
+        isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
+        parent = pyatspi.findAncestor(obj, isTable)
+        try:
+            table = parent.queryTable()
+        except:
+            return False
+
+        index = self.cellIndex(obj)
+        row, col = table.getRowAtIndex(index), table.getColumnAtIndex(index)
+        return row + 1 == table.nRows and col + 1 == table.nColumns
 
     def isNonUniformTable(self, obj):
         try:

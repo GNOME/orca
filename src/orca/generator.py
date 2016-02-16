@@ -592,6 +592,22 @@ class Generator:
                 result.append(indicators[0])
         return result
 
+    def _generateMultiselectableState(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the multiselectable state of
+        the object.  This is typically for list boxes. If the object
+        is not multiselectable, an empty array will be returned.
+        """
+
+        result = []
+        if not args.get('mode', None):
+            args['mode'] = self._mode
+        args['stringType'] = 'multiselect'
+        if obj.getState().contains(pyatspi.STATE_MULTISELECTABLE) \
+           and obj.childCount:
+            result.append(self._script.formatting.getString(**args))
+        return result
+
     #####################################################################
     #                                                                   #
     # Table interface information                                       #
@@ -1035,3 +1051,28 @@ class Generator:
 
     def _generateProgressBarValue(self, obj, **args):
         return []
+
+    def _getAlternativeRole(self, obj, **args):
+        if self._script.utilities.isMath(obj):
+            if self._script.utilities.isMathFraction(obj):
+                return 'ROLE_MATH_FRACTION'
+            if self._script.utilities.isMathRoot(obj):
+                return 'ROLE_MATH_ROOT'
+            if self._script.utilities.isMathSubOrSuperScript(obj):
+                return 'ROLE_MATH_SCRIPT_SUBSUPER'
+            if self._script.utilities.isMathUnderOrOverScript(obj):
+                return 'ROLE_MATH_SCRIPT_UNDEROVER'
+            if self._script.utilities.isMathMultiScript(obj):
+                return 'ROLE_MATH_MULTISCRIPT'
+            if self._script.utilities.isMathEnclose(obj):
+                return 'ROLE_MATH_ENCLOSED'
+            if self._script.utilities.isMathFenced(obj):
+                return 'ROLE_MATH_FENCED'
+            if self._script.utilities.isMathTable(obj):
+                return 'ROLE_MATH_TABLE'
+            if self._script.utilities.isMathTableRow(obj):
+                return 'ROLE_MATH_TABLE_ROW'
+        if self._script.utilities.isStatic(obj):
+            return 'ROLE_STATIC'
+
+        return args.get('role', obj.getRole())

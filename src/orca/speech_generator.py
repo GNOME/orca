@@ -465,19 +465,15 @@ class SpeechGenerator(generator.Generator):
     def _generateMultiselectableState(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the multiselectable state of
-        the object.  This is typically for check boxes. If the object
+        the object.  This is typically for list boxes. If the object
         is not multiselectable, an empty array will be returned.
         """
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
-        result = []
         acss = self.voice(STATE)
-        if obj.getState().contains(pyatspi.STATE_MULTISELECTABLE) \
-           and obj.childCount:
-            result.append(self._script.formatting.getString(
-                mode='speech',
-                stringType='multiselect'))
+        result = super()._generateMultiselectableState(obj, **args)
+        if result:
             result.extend(acss)
         return result
 
@@ -928,27 +924,13 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
-        result = []
-        acss = self.voice(SYSTEM)
         if _settingsManager.getSetting('speechVerbosityLevel') \
-                == settings.VERBOSITY_LEVEL_VERBOSE:
-            if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-                cell = obj
-            else:
-                cell = self._script.utilities.ancestorWithRole(
-                    obj, [pyatspi.ROLE_TABLE_CELL], [pyatspi.ROLE_FRAME])
-            try:
-                table = cell.parent.queryTable()
-            except:
-                pass
-            else:
-                index = self._script.utilities.cellIndex(cell)
-                row = table.getRowAtIndex(index)
-                col = table.getColumnAtIndex(index)
-                if row + 1 == table.nRows and col + 1 == table.nColumns:
-                    result.append(messages.TABLE_END)
-        if result:
-            result.extend(acss)
+           != settings.VERBOSITY_LEVEL_VERBOSE:
+            return []
+
+        if self._script.utilities.isLastCell(obj):
+            result = [messages.TABLE_END]
+            result.extend(self.voice(SYSTEM))
         return result
 
     #####################################################################
@@ -1315,21 +1297,13 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
-        result = []
-        acss = self.voice(SYSTEM)
-        try:
-            value = obj.queryValue()
-        except NotImplementedError:
-            pass
-        else:
-            percentValue = \
-                (value.currentValue
-                 / (value.maximumValue - value.minimumValue)) \
-                * 100.0
-            result.append(messages.percentage(percentValue))
-        if result:
-            result.extend(acss)
-        return result
+        percentValue = self._script.utilities.getValueAsPercent(obj)
+        if percentValue is not None:
+            result = [percentValue]
+            result.extend(self.voice(SYSTEM))
+            return result
+
+        return []
 
     #####################################################################
     #                                                                   #
@@ -2251,31 +2225,6 @@ class SpeechGenerator(generator.Generator):
     # Other things for prosody and voice selection                      #
     #                                                                   #
     #####################################################################
-
-    def _getAlternativeRole(self, obj, **args):
-        if self._script.utilities.isMath(obj):
-            if self._script.utilities.isMathFraction(obj):
-                return 'ROLE_MATH_FRACTION'
-            if self._script.utilities.isMathRoot(obj):
-                return 'ROLE_MATH_ROOT'
-            if self._script.utilities.isMathSubOrSuperScript(obj):
-                return 'ROLE_MATH_SCRIPT_SUBSUPER'
-            if self._script.utilities.isMathUnderOrOverScript(obj):
-                return 'ROLE_MATH_SCRIPT_UNDEROVER'
-            if self._script.utilities.isMathMultiScript(obj):
-                return 'ROLE_MATH_MULTISCRIPT'
-            if self._script.utilities.isMathEnclose(obj):
-                return 'ROLE_MATH_ENCLOSED'
-            if self._script.utilities.isMathFenced(obj):
-                return 'ROLE_MATH_FENCED'
-            if self._script.utilities.isMathTable(obj):
-                return 'ROLE_MATH_TABLE'
-            if self._script.utilities.isMathTableRow(obj):
-                return 'ROLE_MATH_TABLE_ROW'
-        if self._script.utilities.isStatic(obj):
-            return 'ROLE_STATIC'
-
-        return args.get('role', obj.getRole())
 
     def _generatePause(self, obj, **args):
         if not _settingsManager.getSetting('enablePauseBreaks') \

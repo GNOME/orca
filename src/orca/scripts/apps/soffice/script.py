@@ -595,10 +595,16 @@ class Script(default.Script):
         # Pass the event onto the parent class to be handled in the default way.
         default.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
+        if not newLocusOfFocus:
+            return
 
+        cell = None
         if self.utilities.isTextDocumentCell(newLocusOfFocus):
-            row, column, table = \
-                self.utilities.getRowColumnAndTable(newLocusOfFocus.parent)
+            cell = newLocusOfFocus
+        elif self.utilities.isTextDocumentCell(newLocusOfFocus.parent):
+            cell = newLocusOfFocus.parent
+        if cell:
+            row, column = self.utilities.coordinatesForCell(cell)
             self.pointOfReference['lastRow'] = row
             self.pointOfReference['lastColumn'] = column
 
@@ -661,47 +667,28 @@ class Script(default.Script):
         default.Script.onActiveDescendantChanged(self, event)
 
     def onChildrenChanged(self, event):
-        """Called when a child node has changed.
+        """Callback for object:children-changed accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
-
-        try:
-            anyDataRole = event.any_data.getRole()
-        except:
+        if self.utilities.isSpreadSheetCell(event.any_data):
+            orca.setLocusOfFocus(event, event.any_data)
             return
 
-        if anyDataRole == pyatspi.ROLE_TABLE:
-            if self.utilities.isSpreadSheetCell(event.any_data):
-                orca.setLocusOfFocus(event, event.any_data)
-            return
-
-        if anyDataRole == pyatspi.ROLE_TABLE_CELL:
+        if self.utilities.isLastCell(event.any_data):
             activeRow = self.pointOfReference.get('lastRow', -1)
             activeCol = self.pointOfReference.get('lastColumn', -1)
             if activeRow < 0 or activeCol < 0:
                 return
 
-            eventRow, eventCol, table = \
-                self.utilities.getRowColumnAndTable(event.any_data)
-            try:
-                itable = table.queryTable()
-            except NotImplementedError:
-                return
-
-            if eventRow == itable.nRows - 1 and eventCol == itable.nColumns - 1:
-                fullMessage = briefMessage = ""
-                voice = self.voices.get(settings.SYSTEM_VOICE)
-                if activeRow == itable.nRows:
-                    fullMessage = messages.TABLE_ROW_DELETED_FROM_END
-                    briefMessage = messages.TABLE_ROW_DELETED
-                else:
-                    fullMessage =  messages.TABLE_ROW_INSERTED_AT_END
-                    briefMessage = messages.TABLE_ROW_INSERTED
-                if fullMessage:
-                    self.presentMessage(fullMessage, briefMessage, voice)
-                return
+            self.utilities.handleUndoTextEvent(event)
+            rowCount, colCount = self.utilities.rowAndColumnCount(event.source)
+            if activeRow == rowCount:
+                full = messages.TABLE_ROW_DELETED_FROM_END
+                brief = messages.TABLE_ROW_DELETED
+            else:
+                full = messages.TABLE_ROW_INSERTED_AT_END
+                brief = messages.TABLE_ROW_INSERTED
+            self.presentMessage(full, brief)
+            return
 
         default.Script.onChildrenChanged(self, event)
 
