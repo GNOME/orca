@@ -79,6 +79,19 @@ formatting = {
             'nodelevel': object_properties.NODE_LEVEL_BRAILLE,
             'nestinglevel': object_properties.NESTING_LEVEL_BRAILLE,
         },
+        'sound': {
+            'required': object_properties.STATE_REQUIRED_SOUND,
+            'readonly': object_properties.STATE_READ_ONLY_SOUND,
+            'insensitive': object_properties.STATE_INSENSITIVE_SOUND,
+            'checkbox': object_properties.CHECK_BOX_INDICATORS_SOUND,
+            'radiobutton': object_properties.RADIO_BUTTON_INDICATORS_SOUND,
+            'togglebutton': object_properties.TOGGLE_BUTTON_INDICATORS_SOUND,
+            'expansion': object_properties.EXPANSION_INDICATORS_SOUND,
+            'multiselect': object_properties.STATE_MULTISELECT_SOUND,
+            'clickable': object_properties.STATE_CLICKABLE_SOUND,
+            'haslongdesc': object_properties.STATE_HAS_LONGDESC_SOUND,
+            'visited': object_properties.STATE_VISITED_SOUND,
+        },
     },
 
     ####################################################################
@@ -693,7 +706,130 @@ formatting = {
         #pyatspi.ROLE_TREE: 'default'
         #pyatspi.ROLE_TREE_TABLE: 'default'
         #pyatspi.ROLE_WINDOW: 'default'
-    }
+    },
+
+    ####################################################################
+    #                                                                  #
+    # Formatting for sound.                                            #
+    #                                                                  #
+    ####################################################################
+
+    'sound': {
+        'prefix': {
+            'focused': '[]',
+            'unfocused': '[]',
+            'basicWhereAmI': '[]',
+            'detailedWhereAmI': '[]'
+        },
+        'suffix': {
+            'focused': '[]',
+            'unfocused': 'clickable + hasLongDesc',
+            'basicWhereAmI': '[]',
+            'detailedWhereAmI': '[]'
+        },
+        'default': {
+            'focused': '[]',
+            'unfocused': 'roleName',
+            'basicWhereAmI': '[]',
+            'detailedWhereAmI': '[]'
+        },
+        pyatspi.ROLE_CANVAS: {
+            'unfocused': 'roleName + positionInSet',
+        },
+        pyatspi.ROLE_CHECK_BOX: {
+            'focused': 'checkedState',
+            'unfocused': 'roleName + checkedState + required + availability',
+        },
+        pyatspi.ROLE_CHECK_MENU_ITEM: {
+            'focused': 'checkedState',
+            'unfocused': 'roleName + checkedState + availability + positionInSet',
+        },
+        pyatspi.ROLE_COMBO_BOX: {
+            'focused': 'expandableState',
+            'unfocused': 'roleName + positionInSet',
+        },
+        pyatspi.ROLE_DIAL: {
+            'focused': 'percentage',
+            'unfocused': 'roleName + percentage + required + availability',
+        },
+        pyatspi.ROLE_ENTRY: {
+            'unfocused': 'roleName + readOnly + required + availability',
+        },
+        pyatspi.ROLE_HEADING: {
+            'focused': 'expandableState',
+            'unfocused': 'roleName + expandableState',
+        },
+        pyatspi.ROLE_ICON: {
+            'unfocused': 'roleName + positionInSet',
+        },
+        pyatspi.ROLE_LINK: {
+            'focused': 'expandableState',
+            'unfocused': 'roleName + visitedState + expandableState',
+        },
+        pyatspi.ROLE_LIST: {
+            'unfocused': 'roleName + multiselectableState',
+        },
+        pyatspi.ROLE_LIST_BOX: {
+            'unfocused': 'roleName + multiselectableState',
+        },
+        pyatspi.ROLE_LIST_ITEM: {
+            'focused': 'expandableState',
+            'unfocused': 'roleName + expandableState + positionInSet',
+        },
+        pyatspi.ROLE_MENU_ITEM: {
+            'focused': 'expandableState',
+            'unfocused': 'roleName + expandableState + availability + positionInSet',
+        },
+        pyatspi.ROLE_PAGE_TAB: {
+            'unfocused': 'roleName + positionInSet',
+        },
+        pyatspi.ROLE_PROGRESS_BAR: {
+            'focused': 'progressBarValue',
+            'unfocused': 'roleName + progressBarValue'
+        },
+        pyatspi.ROLE_PUSH_BUTTON: {
+            'focused': 'expandableState',
+            'unfocused': 'roleName + expandableState + availability',
+        },
+        pyatspi.ROLE_RADIO_BUTTON: {
+            'focused': 'radioState',
+            'unfocused': 'roleName + radioState + availability + positionInSet',
+        },
+        pyatspi.ROLE_RADIO_MENU_ITEM: {
+            'focused': 'radioState',
+            'unfocused': 'roleName + checkedState + availability + positionInSet',
+        },
+        pyatspi.ROLE_SCROLL_BAR: {
+            'focused': 'percentage',
+            'unfocused': 'roleName + percentage',
+        },
+        pyatspi.ROLE_SLIDER: {
+            'focused': 'percentage',
+            'unfocused': 'roleName + percentage + required + availability',
+        },
+        pyatspi.ROLE_SPIN_BUTTON: {
+            'focused': 'percentage',
+            'unfocused': 'roleName + availability + percentage + required',
+        },
+        pyatspi.ROLE_SPLIT_PANE: {
+            'focused': 'percentage',
+            'unfocused': 'roleName + percentage + availability',
+        },
+        pyatspi.ROLE_TABLE_CELL: {
+            'focused': 'expandableState',
+            'unfocused': 'roleName + expandableState',
+        },
+        pyatspi.ROLE_TABLE_ROW: {
+            'focused': 'expandableState',
+        },
+        pyatspi.ROLE_TEXT: {
+            'unfocused': 'roleName + readOnly + required + availability',
+        },
+        pyatspi.ROLE_TOGGLE_BUTTON: {
+            'focused': 'expandableState or toggleState',
+            'unfocused': 'roleName + (expandableState or toggleState) + availability',
+        },
+    },
 }
 
 class Formatting(dict):

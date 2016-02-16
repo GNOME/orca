@@ -76,6 +76,7 @@ from . import script_manager
 from . import settings
 from . import settings_manager
 from . import speech
+from . import sound
 from .input_event import BrailleEvent
 from .input_event import KeyboardEvent
 
@@ -412,6 +413,8 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
 
     # Shutdown the output drivers and give them a chance to die.
 
+    player = sound.getPlayer()
+    player.shutdown()
     speech.shutdown()
     braille.shutdown()
 
@@ -460,6 +463,9 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
             debug.printException(debug.LEVEL_WARNING)
             msg = 'ORCA: Could not initialize connection to braille.'
             debug.println(debug.LEVEL_WARNING, msg, True)
+
+    if _settingsManager.getSetting('enableSound'):
+        player.init()
 
     # I'm not sure where else this should go. But it doesn't really look
     # right here.
@@ -700,6 +706,9 @@ def shutdown(script=None, inputEvent=None):
         speech.shutdown()
     if settings.enableBraille:
         braille.shutdown()
+    if settings.enableSound:
+        player = sound.getPlayer()
+        player.shutdown()
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)

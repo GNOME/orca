@@ -69,6 +69,12 @@ userCustomizableSettings = [
     "brailleSelectorIndicator",
     "brailleLinkIndicator",
     "brailleAlignmentStyle",
+    "enableSound",
+    "soundVolume",
+    "playSoundForRole",
+    "playSoundForState",
+    "playSoundForPositionInSet",
+    "playSoundForValue",
     "enableBrailleMonitor",
     "verbalizePunctuationStyle",
     "presentToolTips",
@@ -245,6 +251,14 @@ brailleVerbosityLevel          = VERBOSITY_LEVEL_VERBOSE
 brailleAlignmentStyle          = BRAILLE_ALIGN_BY_EDGE
 brailleAlignmentMargin         = 3
 brailleMaximumJump             = 8
+
+# Sound
+enableSound = True
+soundVolume = 0.5
+playSoundForRole = False
+playSoundForState = False
+playSoundForPositionInSet = False
+playSoundForValue = False
 
 # Keyboard and Echo
 keyboardLayout               = GENERAL_KEYBOARD_LAYOUT_DESKTOP

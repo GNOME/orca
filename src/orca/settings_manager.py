@@ -183,6 +183,9 @@ class SettingsManager(object):
         orcaSettingsDir = os.path.join(orcaDir, "app-settings")
         _createDir(orcaSettingsDir)
 
+        orcaSoundsDir = os.path.join(orcaDir, "sounds")
+        _createDir(orcaSoundsDir)
+
         # Set up $XDG_DATA_HOME/orca/orca-customizations.py empty file and
         # define orcaDir as a Python package.
         initFile = os.path.join(orcaDir, "__init__.py")

@@ -4,6 +4,7 @@ orca_python_PYTHON = \
 	braille_generator.py \
 	script.py \
 	script_utilities.py \
+	sound_generator.py \
 	speech_generator.py \
 	tutorial_generator.py
 

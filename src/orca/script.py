@@ -53,6 +53,7 @@ from . import script_manager
 from . import script_utilities
 from . import settings
 from . import settings_manager
+from . import sound_generator
 from . import speech_generator
 from . import structural_navigation
 from . import where_am_I
@@ -111,6 +112,7 @@ class Script:
 
         self.formatting = self.getFormatting()
         self.brailleGenerator = self.getBrailleGenerator()
+        self.soundGenerator = self.getSoundGenerator()
         self.speechGenerator = self.getSpeechGenerator()
         self.generatorCache = {}
         self.eventCache = {}
@@ -206,6 +208,10 @@ class Script:
         """Returns the braille generator for this script.
         """
         return braille_generator.BrailleGenerator(self)
+
+    def getSoundGenerator(self):
+        """Returns the sound generator for this script."""
+        return sound_generator.SoundGenerator(self)
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.

@@ -197,3 +197,15 @@ TOGGLE_BUTTON_INDICATORS_BRAILLE = ["& y", "&=y"]
 
 TABLE_CELL_DELIMITER_BRAILLE = " "
 EOL_INDICATOR_BRAILLE = " $l"
+
+CHECK_BOX_INDICATORS_SOUND = ["not_checked", "checked", "partially_checked"]
+EXPANSION_INDICATORS_SOUND = ["collapsed", "expanded"]
+RADIO_BUTTON_INDICATORS_SOUND = ["unselected", "selected"]
+TOGGLE_BUTTON_INDICATORS_SOUND = ["not_pressed", "pressed"]
+STATE_CLICKABLE_SOUND = "clickable"
+STATE_HAS_LONGDESC_SOUND = "haslongdesc"
+STATE_INSENSITIVE_SOUND = "insensitive"
+STATE_MULTISELECT_SOUND = "multiselect"
+STATE_READ_ONLY_SOUND = "readonly"
+STATE_REQUIRED_SOUND = "required"
+STATE_VISITED_SOUND = "visited"
