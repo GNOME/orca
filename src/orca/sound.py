@@ -74,7 +74,6 @@ class Player:
 
     def _onTimeout(self, element):
         element.set_state(Gst.State.NULL)
-        self.stop(element)
         return False
 
     def _playIcon(self, icon, interrupt=True):
