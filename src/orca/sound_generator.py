@@ -288,11 +288,10 @@ class SoundGenerator(generator.Generator):
     def _generateProgressBarValue(self, obj, **args):
         """Returns an array of sounds representing the progress bar value."""
 
-        if args.get('isProgressBarUpdate') \
-           and not _settingsManager.getSetting('beepProgressBarUpdates'):
-            return []
-
-        if not _settingsManager.getSetting('playSoundForValue'):
+        if args.get('isProgressBarUpdate'):
+            if not _settingsManager.getSetting('beepProgressBarUpdates'):
+                return []
+        elif not _settingsManager.getSetting('playSoundForValue'):
             return []
 
         percent = self._script.utilities.getValueAsPercent(obj)

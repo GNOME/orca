@@ -51,6 +51,7 @@ import orca.phonnames as phonnames
 import orca.script as script
 import orca.settings as settings
 import orca.settings_manager as settings_manager
+import orca.sound as sound
 import orca.speech as speech
 import orca.speechserver as speechserver
 import orca.mouse_review as mouse_review
@@ -2670,6 +2671,8 @@ class Script(script.Script):
         self.updateBraille(obj, isProgressBarUpdate=isProgressBarUpdate)
         speech.speak(self.speechGenerator.generateSpeech(
             obj, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
+        self.__play(self.soundGenerator.generateSound(
+            obj, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
 
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated.
@@ -3804,6 +3807,19 @@ class Script(script.Script):
                 duration = _settingsManager.getSetting('brailleFlashTime')
 
             braille.displayMessage(message, flashTime=duration)
+
+    @staticmethod
+    def __play(sounds, interrupt=True):
+        if not sounds:
+            return
+
+        if not isinstance(sounds, list):
+            icon = [sounds]
+
+        _player = sound.getPlayer()
+        _player.play(sounds[0], interrupt)
+        for i in range(1, len(sounds)):
+            sound.play(sounds[i], interrupt=False)
 
     @staticmethod
     def addBrailleRegionToLine(region, line):

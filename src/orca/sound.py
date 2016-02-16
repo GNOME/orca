@@ -44,6 +44,8 @@ class Player:
 
     def __init__(self):
         self._initialized = False
+        self._source = None
+        self._sink = None
 
         if not _gstreamerAvailable:
             msg = 'SOUND ERROR: Gstreamer is not available'
@@ -70,6 +72,11 @@ class Player:
             msg = 'SOUND ERROR: %s' % error
             debug.println(debug.LEVEL_INFO, msg, True)
 
+    def _onTimeout(self, element):
+        element.set_state(Gst.State.NULL)
+        self.stop(element)
+        return False
+
     def _playIcon(self, icon, interrupt=True):
         """Plays a sound icon, interrupting the current play first unless specified."""
 
@@ -90,7 +97,7 @@ class Player:
         self._source.set_property('wave', tone.wave)
         self._pipeline.set_state(Gst.State.PLAYING)
         duration = int(1000 * tone.duration)
-        GLib.timeout_add(duration, self._pipeline.set_state, Gst.State.NULL)
+        GLib.timeout_add(duration, self._onTimeout, self._pipeline)
 
     def init(self):
         """(Re)Initializes the Player."""
@@ -127,10 +134,14 @@ class Player:
             msg = 'SOUND ERROR: %s is not an Icon or Tone' % item
             debug.println(debug.LEVEL_INFO, msg, True)
 
-    def stop(self):
+    def stop(self, element=None):
         """Stops play."""
 
         if not _gstreamerAvailable:
+            return
+
+        if element:
+            element.set_state(Gst.State.NULL)
             return
 
         self._player.set_state(Gst.State.NULL)
