@@ -37,6 +37,7 @@ Orca also has the following dependencies:
 * BrlTTY           - BrlTTY support for braille (optional)
 * BrlAPI           - BrlAPI support for braille (optional)
 * py-setproctitle  - Python library to set the process title (optional)
+* gstreamer-1.0    - GStreamer - Streaming media framework (optional)
 
 YOU ALSO NEED THE LATEST AT-SPI2, PYATSPI2 AND ATK FOR THE GNOME 3.19.x
 RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!

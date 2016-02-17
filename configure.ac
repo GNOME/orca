@@ -31,6 +31,7 @@ YELP_HELP_INIT
 PKG_CHECK_MODULES([PYGOBJECT], [pygobject-3.0 >= pygobject_required_version])
 PKG_CHECK_MODULES([ATSPI2], [atspi-2 >= atspi_required_version])
 PKG_CHECK_MODULES([ATKBRIDGE], [atk-bridge-2.0 >= atkbridge_required_version])
+PKG_CHECK_MODULES([GSTREAMER], [gstreamer-1.0], [gstreamer="yes"], [gstreamer="no"])
 
 dnl Needed programs
 AC_PROG_INSTALL
@@ -149,8 +150,14 @@ echo
 echo "NOTE: Speech support requires speech-dispatcher >= 0.8."
 fi
 
+if test "x$gstreamer" = "xno" ; then
+echo
+echo "NOTE: Sound support requires gstreamer-1.0."
+fi
+
 echo
 echo Use speech-dispatcher: $speechd_available
 echo Use brltty: $brlapi_available
 echo Use liblouis: $louis_available
+echo Use gstreamer: $gstreamer
 echo
