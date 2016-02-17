@@ -3582,7 +3582,7 @@ class Utilities:
 
     def setClipboardText(self, text):
         clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
-        clipboard.set_text(text, len(text))
+        clipboard.set_text(text, -1)
 
     def appendTextToClipboard(self, text):
         clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
@@ -3591,7 +3591,7 @@ class Utilities:
     def _appendTextToClipboardCallback(self, clipboard, text, newText):
         text = text.rstrip("\n")
         text = "%s\n%s" % (text, newText)
-        clipboard.set_text(text, len(text))
+        clipboard.set_text(text, -1)
 
     def lastInputEventWasCommand(self):
         keyString, mods = self.lastKeyAndModifiers()
