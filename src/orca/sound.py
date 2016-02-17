@@ -34,7 +34,7 @@ try:
 except:
     _gstreamerAvailable = False
 else:
-    _gstreamerAvailable, args = Gst.init_check()
+    _gstreamerAvailable, args = Gst.init_check(None)
 
 from . import debug
 from .sound_generator import Icon, Tone
