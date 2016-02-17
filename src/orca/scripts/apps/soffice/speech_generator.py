@@ -448,7 +448,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not priorObj:
             return []
 
-        if obj.getRoleName() == 'text frame':
+        if self._script.utilities.isSpreadSheetCell(priorObj):
             return []
 
         isTable = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE

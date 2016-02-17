@@ -931,7 +931,9 @@ class SpeechGenerator(generator.Generator):
         if self._script.utilities.isLastCell(obj):
             result = [messages.TABLE_END]
             result.extend(self.voice(SYSTEM))
-        return result
+            return result
+
+        return []
 
     #####################################################################
     #                                                                   #
