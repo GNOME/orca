@@ -1975,7 +1975,7 @@ class Script(script.Script):
         if not self.utilities.getContainingDocument(table):
             settingName = 'readFullRowInGUITable'
         elif self.utilities.isSpreadSheetTable(table):
-            settingName = 'readFullRowInSpreadsheet'
+            settingName = 'readFullRowInSpreadSheet'
         else:
             settingName = 'readFullRowInDocumentTable'
 
