@@ -49,7 +49,7 @@ class Player:
 
         if not _gstreamerAvailable:
             msg = 'SOUND ERROR: Gstreamer is not available'
-            debug.println(debug.LEVEL_INFO, mSG, True)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         self.init()
