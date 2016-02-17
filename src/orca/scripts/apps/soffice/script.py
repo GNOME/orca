@@ -736,12 +736,18 @@ class Script(default.Script):
         if not event.detail1:
             return
 
-        if event.source.getRoleName() == 'text frame':
-            return
-
         parent = event.source.parent
-        if parent and parent.getRoleName() == 'text frame':
-            return
+        inputLine = self.utilities.locateInputLine(orca_state.locusOfFocus)
+        if inputLine:
+            if inputLine == event.source:
+                msg = "SOFFICE: Event ignored: spam from inputLine"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return
+            if self.utilities.isSameObject(inputLine.parent, parent) \
+               or self.utilities.isSameObject(inputLine.parent, event.source):
+                msg = "SOFFICE: Event ignored: spam from inputLine clone"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return
 
         if parent and parent.getRole() == pyatspi.ROLE_TOOL_BAR:
             default.Script.onFocusedChanged(self, event)
