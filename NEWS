@@ -1,3 +1,61 @@
+3.19.90 - 17 February 2016
+
+New Features and Options:
+
+ * Present copy, cut, paste, undo, redo, selection deletion, and
+   selection restoration
+
+ * Add progress bar beeps
+
+ * Add core support for sound-icons (not yet enabled)
+
+ * Add option to present page summary upon load, and include landmarks
+   in summary
+
+ * Speak visited state for links which have been visited
+
+ * Make Flat Review SayAll binding independent of focus-tracking SayAll
+   binding
+
+ * Speak text indentation during selection
+
+ * Add a specific setting for speaking the misspelled indicator
+
+General:
+
+ * Improve presentation of selected content in Gecko
+
+ * Fix bug in on-the-fly row reading for spreadsheets
+
+ * Update support for changes in Calc 5.1
+
+ * Fix failure to copy all characters when using flat review copy
+
+ * Present the new location when using PageUp/PageDown in web content
+
+ * Remove the old and broken-for-years console setup
+
+ * Work around broken text-insertion events from gnome-shell
+
+ * Handle missing events from Eclipse
+
+ * Work around focused links Gtk+ links reporting index in parent of -1
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                       Marek Černocký
+    de            German                      Mario Blättermann
+    es            Spanish                     Daniel Mustieles
+    eo            Esperanto                   Kristjan SCHMIDT
+    lt            Lithuanian                  Aurimas Černius
+    lv            Latvian                     Rūdolfs Mazurs
+    oc            Occitan                     Cédric Valmary
+    pl            Polish                      Piotr Drąg
+    sv            Swedish                     Anders Jonsson
+    tr            Turkish                     Muhammet Kara
+
+=========
+
 3.19.3 - 16 December 2016
 
 New Settings and Commands:
