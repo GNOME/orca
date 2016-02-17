@@ -2749,7 +2749,7 @@ class Utilities(script_utilities.Utilities):
         if self.isSameObject(obj, documentFrame):
             return None, -1
 
-        while obj.parent:
+        while obj and obj.parent:
             if self.isDetachedDocument(obj.parent):
                 obj = self.iframeForDetachedDocument(obj.parent)
                 continue
@@ -2813,7 +2813,7 @@ class Utilities(script_utilities.Utilities):
         if self.isSameObject(obj, documentFrame):
             return None, -1
 
-        while obj.parent:
+        while obj and obj.parent:
             if self.isDetachedDocument(obj.parent):
                 obj = self.iframeForDetachedDocument(obj.parent)
                 continue

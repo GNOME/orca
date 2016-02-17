@@ -2220,7 +2220,7 @@ class Utilities:
             #
             childOffset = 0
             for child in obj:
-                if Utilities.characterOffsetInParent(child) >= startOffset:
+                if self.characterOffsetInParent(child) >= startOffset:
                     break
                 childOffset += 1
 
