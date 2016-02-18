@@ -724,6 +724,9 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
+        if self.utilities.isSpreadSheetTable(event.source):
+            orca.setLocusOfFocus(event, event.source)
+
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
