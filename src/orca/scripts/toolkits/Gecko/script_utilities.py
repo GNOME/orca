@@ -65,6 +65,33 @@ class Utilities(web.Utilities):
                 return int(attr[6:]) - 1
         return -1
 
+    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False):
+        if super().isSameObject(obj1, obj2, comparePaths, ignoreNames):
+            return True
+        try:
+            role1 = obj1.getRole()
+            role2 = obj2.getRole()
+        except:
+            msg = "GECKO: Exception getting role for %s and %s" % (obj1, obj2)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if not(role1 == role2 == pyatspi.ROLE_FRAME):
+            return False
+
+        try:
+            name1 = obj1.name
+            name2 = obj2.name
+        except:
+            msg = "GECKO: Exception getting name for %s and %s" % (obj1, obj2)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        rv = name1 == name2
+        msg = "GECKO: Treating %s and %s as same object: %s" % (obj1, obj2, rv)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return rv
+
     def showingDescendants(self, parent):
         """Given an accessible object, returns a list of accessible children
         that are actually showing/visible/pursable for flat review. We're
