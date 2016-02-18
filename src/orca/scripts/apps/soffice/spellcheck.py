@@ -41,6 +41,10 @@ class SpellCheck(spellcheck.SpellCheck):
         super().__init__(script, hasChangeToEntry=False)
 
     def _isCandidateWindow(self, window):
+        if self._script.utilities.isDead(window):
+            msg = "SOFFICE: %s is not candidate window because it's dead." % window
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
         if window and window.childCount and window.getRole() == pyatspi.ROLE_FRAME:
             child = window[0]
             if child.getRole() == pyatspi.ROLE_DIALOG:

@@ -480,8 +480,13 @@ class Utilities(script_utilities.Utilities):
         #
         if obj:
             topLevel = self.topLevelObject(obj)
-            if topLevel and not self.isZombie(topLevel) \
-               and topLevel.name.endswith("Impress"):
+            if not topLevel:
+                return False
+            if self.isDead(topLevel):
+                msg = "SOFFICE: Top level object %s is dead." % topLevel
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return False
+            if topLevel.name.endswith("Impress"):
                 return True
 
         return False
