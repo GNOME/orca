@@ -2896,6 +2896,23 @@ class Utilities:
         return False
 
     @staticmethod
+    def _allNamesForKeyCode(keycode):
+        keymap = Gdk.Keymap.get_default()
+        entries = keymap.get_entries_for_keycode(keycode)[-1]
+        return list(map(Gdk.keyval_name, set(entries)))
+
+    @staticmethod
+    def _lastKeyCodeAndModifiers():
+        if not isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            return 0, 0
+
+        event = orca_state.lastNonModifierKeyEvent
+        if event:
+            return event.hw_code, event.modifiers
+
+        return 0, 0
+
+    @staticmethod
     def lastKeyAndModifiers():
         """Convenience method which returns a tuple containing the event
         string and modifiers of the last non-modifier key event or ("", 0)
@@ -3647,37 +3664,82 @@ class Utilities:
         return False
 
     def lastInputEventWasUndo(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        if mods & keybindings.CTRL_MODIFIER_MASK and keyString.lower() == 'z':
+        keycode, mods = self._lastKeyCodeAndModifiers()
+        keynames = self._allNamesForKeyCode(keycode)
+        if 'z' not in keynames:
+            return False
+
+        if mods & keybindings.CTRL_MODIFIER_MASK:
             return not (mods & keybindings.SHIFT_MODIFIER_MASK)
 
         return False
 
     def lastInputEventWasRedo(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        if mods & keybindings.CTRL_MODIFIER_MASK and keyString.lower() == 'z':
+        keycode, mods = self._lastKeyCodeAndModifiers()
+        keynames = self._allNamesForKeyCode(keycode)
+        if 'z' not in keynames:
+            return False
+
+        if mods & keybindings.CTRL_MODIFIER_MASK:
             return mods & keybindings.SHIFT_MODIFIER_MASK
 
         return False
 
     def lastInputEventWasCut(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        return mods & keybindings.CTRL_MODIFIER_MASK and keyString.lower() == 'x'
+        keycode, mods = self._lastKeyCodeAndModifiers()
+        keynames = self._allNamesForKeyCode(keycode)
+        if 'x' not in keynames:
+            return False
+
+        if mods & keybindings.CTRL_MODIFIER_MASK:
+            return not (mods & keybindings.SHIFT_MODIFIER_MASK)
+
+        return False
 
     def lastInputEventWasCopy(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        return mods & keybindings.CTRL_MODIFIER_MASK and keyString.lower() == 'c'
+        keycode, mods = self._lastKeyCodeAndModifiers()
+        keynames = self._allNamesForKeyCode(keycode)
+        if 'c' not in keynames:
+            return False
+
+        if mods & keybindings.CTRL_MODIFIER_MASK:
+            return not (mods & keybindings.SHIFT_MODIFIER_MASK)
+
+        return False
 
     def lastInputEventWasPaste(self):
-        keyString, mods = self.lastKeyAndModifiers()
-        return mods & keybindings.CTRL_MODIFIER_MASK and keyString.lower() == 'v'
+        keycode, mods = self._lastKeyCodeAndModifiers()
+        keynames = self._allNamesForKeyCode(keycode)
+        if 'v' not in keynames:
+            return False
+
+        if mods & keybindings.CTRL_MODIFIER_MASK:
+            return not (mods & keybindings.SHIFT_MODIFIER_MASK)
+
+        return False
+
+    def lastInputEventWasSelectAll(self):
+        keycode, mods = self._lastKeyCodeAndModifiers()
+        keynames = self._allNamesForKeyCode(keycode)
+        if 'a' not in keynames:
+            return False
+
+        if mods & keybindings.CTRL_MODIFIER_MASK:
+            return not (mods & keybindings.SHIFT_MODIFIER_MASK)
+
+        return False
 
     def lastInputEventWasDelete(self):
         keyString, mods = self.lastKeyAndModifiers()
         if keyString == "Delete":
             return True
 
-        return mods & keybindings.CTRL_MODIFIER_MASK and keyString.lower() == 'd'
+        keycode, mods = self._lastKeyCodeAndModifiers()
+        keynames = self._allNamesForKeyCode(keycode)
+        if 'd' not in keynames:
+            return False
+
+        return mods & keybindings.CTRL_MODIFIER_MASK
 
     def lastInputEventWasPrimaryMouseClick(self):
         event = orca_state.lastInputEvent
@@ -4067,7 +4129,7 @@ class Utilities:
                 line = messages.DOCUMENT_SELECTED_DOWN
             else:
                 line = messages.DOCUMENT_SELECTED_UP
-        elif (eventStr == "A") and isControlKey and selectedText:
+        elif self.lastInputEventWasSelectAll() and selectedText:
             if not self._script.pointOfReference.get('entireDocumentSelected'):
                 self._script.pointOfReference['entireDocumentSelected'] = True
                 line = messages.DOCUMENT_SELECTED_ALL
