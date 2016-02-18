@@ -479,7 +479,12 @@ class Utilities(script_utilities.Utilities):
         # that the Frame name will end with "Impress", unlocalized.
         #
         if obj:
-            topLevel = self.topLevelObject(obj)
+            try:
+                topLevel = self.topLevelObject(obj)
+            except:
+                msg = "ERROR: Exception getting top-level object for %s" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return False
             if not topLevel:
                 return False
             if self.isDead(topLevel):

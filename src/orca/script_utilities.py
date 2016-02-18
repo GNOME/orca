@@ -3569,7 +3569,12 @@ class Utilities:
         # selections in a single accessible object.
         start, end, string = 0, 0, ''
         if text:
-            start, end = text.getSelection(0)
+            try:
+                start, end = text.getSelection(0)
+            except:
+                msg = "ERROR: Exception getting selected text for %s" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                start = end = 0
             if start != end:
                 string = text.getText(start, end)
                 while string.endswith(self.EMBEDDED_OBJECT_CHARACTER):
