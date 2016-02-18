@@ -762,7 +762,7 @@ class Script(script.Script):
             pass
         else:
             self._saveLastCursorPosition(obj, max(0, text.caretOffset))
-        self.utilities.updateCachedTextSelection(obj)
+            self.utilities.updateCachedTextSelection(obj)
 
         # We want to save the current row and column of a newly focused
         # or selected table cell so that on subsequent cell focus/selection
