@@ -106,9 +106,15 @@ class Utilities(script_utilities.Utilities):
             return False
 
         parent = obj.parent
-        if parent and parent.getRoleName() == 'text frame':
-            if self.spreadSheetCellName(parent):
-                return True
+        try:
+            role = parent.getRole()
+        except:
+            msg = "SOFFICE: Exception getting role of %s" % parent
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role in [pyatspi.ROLE_EXTENDED, pyatspi.ROLE_PANEL]:
+            return self.spreadSheetCellName(parent)
 
         return False
 
@@ -297,6 +303,37 @@ class Utilities(script_utilities.Utilities):
 
         return script_utilities.Utilities.isLayoutOnly(self, obj)
 
+    def isAnInputLine(self, obj):
+        if not obj:
+            return False
+        if obj == self.locateInputLine(obj):
+            return True
+
+        parent = obj.parent
+        try:
+            role = parent.getRole()
+        except:
+            msg = "SOFFICE: Exception getting role of %s" % parent
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role in [pyatspi.ROLE_EXTENDED, pyatspi.ROLE_PANEL]:
+            if self.spreadSheetCellName(parent):
+                return False
+
+        parent = parent.parent
+        try:
+            role = parent.getRole()
+        except:
+            msg = "SOFFICE: Exception getting role of %s" % parent
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role == pyatspi.ROLE_TEXT:
+            return True
+
+        return False
+
     def locateInputLine(self, obj):
         """Return the spread sheet input line. This only needs to be found
         the very first time a spread sheet table cell gets focus. We use the
@@ -312,7 +349,9 @@ class Utilities(script_utilities.Utilities):
         """
 
         if self._script.inputLineForCell:
-            return self._script.inputLineForCell
+            topLevel = self.topLevelObject(self._script.inputLineForCell)
+            if self.isSameObject(orca_state.activeWindow, topLevel):
+                return self._script.inputLineForCell
 
         isScrollPane = lambda x: x and x.getRole() == pyatspi.ROLE_SCROLL_PANE
         scrollPane = pyatspi.findAncestor(obj, isScrollPane)
