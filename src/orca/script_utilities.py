@@ -3950,6 +3950,8 @@ class Utilities:
                 return False
 
         contents = self.getClipboardContents()
+        if not contents:
+            return False
         if event.any_data == contents:
             return True
 
