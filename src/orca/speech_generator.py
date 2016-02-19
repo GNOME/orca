@@ -937,33 +937,6 @@ class SpeechGenerator(generator.Generator):
 
     #####################################################################
     #                                                                   #
-    # Terminal information                                              #
-    #                                                                   #
-    #####################################################################
-
-    def _generateTerminal(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) used especially for handling terminal objects.
-        This either is the name of the frame the terminal is in or the
-        displayed label of the terminal.  [[[WDW - it might be nice
-        to return an empty array if this is not a terminal.]]]
-        """
-        result = []
-        acss = self.voice(DEFAULT)
-        title = None
-        frame = self._script.utilities.ancestorWithRole(
-            obj, [pyatspi.ROLE_FRAME], [])
-        if frame:
-            title = frame.name
-        if not title:
-            title = self._script.utilities.displayedLabel(obj)
-        result.append(title)
-        if result:
-            result.extend(acss)
-        return result
-
-    #####################################################################
-    #                                                                   #
     # Text interface information                                        #
     #                                                                   #
     #####################################################################

@@ -414,8 +414,8 @@ formatting = {
             'unfocused': 'labelOrName + roleName + availability '
             },
         pyatspi.ROLE_TERMINAL: {
-            'focused': 'terminal',
-            'unfocused': 'terminal',
+            'focused': 'textContent',
+            'unfocused': 'textContent',
             'basicWhereAmI': 'label + readOnly + pause + textRole + pause + textContent + anyTextSelection + ' + MNEMONIC,
             'detailedWhereAmI': 'label + readOnly + pause + textRole + pause + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
             },

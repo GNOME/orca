@@ -372,6 +372,14 @@ class Generator:
         represent the description of the object, if that description
         is different from that of the name and label.
         """
+
+        role = args.get('role', obj.getRole())
+
+        # The text in the description is the same as the text in the page
+        # tab and similar to (and sometimes the same as) the prompt.
+        if role == pyatspi.ROLE_TERMINAL:
+            return []
+
         result = []
         if obj.description:
             label = self._script.utilities.displayedLabel(obj) or ""
