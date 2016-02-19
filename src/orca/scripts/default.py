@@ -2385,6 +2385,10 @@ class Script(script.Script):
 
         selectedChildren = self.utilities.selectedChildren(obj)
         for child in selectedChildren:
+            if pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == child):
+                msg = "DEFAULT: Child %s is ancestor of locusOfFocus" % child
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return
             if not self.utilities.isLayoutOnly(child):
                 orca.setLocusOfFocus(event, child)
                 break
