@@ -1245,6 +1245,13 @@ class Script(default.Script):
             self.utilities.setCaretContext(obj, offset)
             return True
 
+        if self.utilities.isContentEditableWithEmbeddedObjects(event.source):
+            msg = "WEB: Event handled: In content editable with embedded objects"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            orca.setLocusOfFocus(event, event.source, False)
+            self.utilities.setCaretContext(obj, offset)
+            return False
+
         text = self.utilities.queryNonEmptyText(event.source)
         if not text:
             if event.source.getRole() == pyatspi.ROLE_LINK:

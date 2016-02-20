@@ -2500,6 +2500,19 @@ class Utilities(script_utilities.Utilities):
         isSameFragment = lambda x: self._getID(x) == parseResult.fragment
         return pyatspi.findAncestor(obj, isSameFragment) is not None
 
+    def isContentEditableWithEmbeddedObjects(self, obj):
+        if not (obj and obj.getState().contains(pyatspi.STATE_EDITABLE)):
+            return False
+
+        try:
+            childCount = obj.childCount
+        except:
+            msg = "WEB: Exception getting childCount for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return childCount > 0
+
     @staticmethod
     def getHyperlinkRange(obj):
         try:
