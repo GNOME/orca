@@ -332,8 +332,8 @@ formatting = {
             },
         pyatspi.ROLE_RADIO_BUTTON: {
             'focused': 'radioState',
-            'unfocused': 'labelOrName + pause + radioState + roleName + availability + lineBreak + ' + MNEMONIC + ' + accelerator + pause + positionInList + pause',
-            'basicWhereAmI': 'radioButtonGroup + pause + labelOrName + roleName + pause + radioState + pause + positionInGroup + ' + MNEMONIC + ' + accelerator'
+            'unfocused': '(name or label) + pause + radioState + roleName + availability + lineBreak + ' + MNEMONIC + ' + accelerator + pause + positionInList + pause',
+            'basicWhereAmI': 'radioButtonGroup + pause + (name or label) + roleName + pause + radioState + pause + positionInGroup + ' + MNEMONIC + ' + accelerator'
             },
         pyatspi.ROLE_RADIO_MENU_ITEM: {
             # OpenOffice check menu items currently have a role of "menu item"
