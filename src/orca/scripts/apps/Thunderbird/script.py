@@ -134,11 +134,15 @@ class Script(Gecko.Script):
 
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 
-    def _useFocusMode(self, obj):
+    def useFocusMode(self, obj):
         if self.isEditableMessage(obj):
+            msg = "THUNDERBIRD: Using focus mode for editable message %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        return Gecko.Script._useFocusMode(self, obj)
+        msg = "THUNDERBIRD: %s is not an editable message." % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return super().useFocusMode(obj)
 
     def togglePresentationMode(self, inputEvent):
         if self._inFocusMode and self.isEditableMessage(orca_state.locusOfFocus):
