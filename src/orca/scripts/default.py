@@ -784,6 +784,8 @@ class Script(script.Script):
 
         self.pointOfReference['checkedChange'] = \
             hash(obj), state.contains(pyatspi.STATE_CHECKED)
+        self.pointOfReference['selectedChange'] = \
+            hash(obj), state.contains(pyatspi.STATE_SELECTED)
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -2321,6 +2323,7 @@ class Script(script.Script):
         """Callback for object:state-changed:selected accessibility events."""
 
         obj = event.source
+        obj.clearCache()
         state = obj.getState()
         if not state.contains(pyatspi.STATE_FOCUSED):
             return
@@ -2332,6 +2335,17 @@ class Script(script.Script):
             return
 
         isSelected = state.contains(pyatspi.STATE_SELECTED)
+        if isSelected != event.detail1:
+            msg = "DEFAULT: Bogus event: detail1 doesn't match state"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        oldObj, oldState = self.pointOfReference.get('selectedChange', (None, 0))
+        if hash(oldObj) == hash(obj) and oldState == event.detail1:
+            msg = "DEFAULT: Duplicate or spam event"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         announceState = False
         keyString, mods = self.utilities.lastKeyAndModifiers()
         if keyString == "space":
@@ -2353,6 +2367,8 @@ class Script(script.Script):
             speech.speak(messages.TEXT_SELECTED, voice, False)
         else:
             speech.speak(messages.TEXT_UNSELECTED, voice, False)
+
+        self.pointOfReference['selectedChange'] = hash(obj), event.detail1
 
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
