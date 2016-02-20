@@ -3960,7 +3960,7 @@ class Utilities:
         # HACK: If the application treats each paragraph as a separate object,
         # we'll get individual events for each paragraph rather than a single
         # event whose any_data matches the clipboard contents.
-        if "\n" in contents and event.any_data in contents:
+        if "\n" in contents and event.any_data.rstrip() in contents:
             return True
 
         return False
