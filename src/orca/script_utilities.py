@@ -1147,7 +1147,9 @@ class Utilities:
                 elif not (obj.name or self.displayedLabel(obj)):
                     layoutOnly = not (table.getColumnHeader(0) or table.getRowHeader(0))
         elif role == pyatspi.ROLE_TABLE_CELL and obj.childCount:
-            if firstChild.getRole() == pyatspi.ROLE_TABLE_CELL:
+            if parentRole == pyatspi.ROLE_TREE_TABLE:
+                layoutOnly = False
+            elif firstChild.getRole() == pyatspi.ROLE_TABLE_CELL:
                 layoutOnly = True
             elif parentRole == pyatspi.ROLE_TABLE:
                 layoutOnly = self.isLayoutOnly(obj.parent)
