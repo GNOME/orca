@@ -1246,7 +1246,7 @@ class Script(default.Script):
             return True
 
         if self.utilities.isContentEditableWithEmbeddedObjects(event.source):
-            msg = "WEB: Event handled: In content editable with embedded objects"
+            msg = "WEB: In content editable with embedded objects"
             debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, event.source, False)
             self.utilities.setCaretContext(obj, offset)
