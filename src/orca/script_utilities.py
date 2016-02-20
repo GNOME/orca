@@ -2831,6 +2831,8 @@ class Utilities:
             state = event.source.getState()
             if not state.contains(pyatspi.STATE_EDITABLE):
                 return False
+            if not state.contains(pyatspi.STATE_SHOWING):
+                return False
 
             lastKey, mods = self.lastKeyAndModifiers()
             if lastKey == "Tab" and event.any_data != "\t":
