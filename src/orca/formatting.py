@@ -307,7 +307,7 @@ formatting = {
             },
         pyatspi.ROLE_PANEL: {
             'focused': 'labelAndName + roleName',
-            'unfocused': '((substring and currentLineText) or labelAndName) + roleName'
+            'unfocused': '((substring and currentLineText) or labelAndName) + roleName + pause + unrelatedLabels'
             },
         pyatspi.ROLE_PARAGRAPH: {
             'focused': 'labelOrName + readOnly + textRole + textIndentation + currentLineText + allTextSelection',
