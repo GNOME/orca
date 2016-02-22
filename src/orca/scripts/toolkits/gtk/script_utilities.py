@@ -79,15 +79,7 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def _isNonModalPopOver(self, obj):
-        try:
-            state = obj.getState()
-        except:
-            return False
-
-        if state.contains(pyatspi.STATE_MODAL):
-            return False
-
+    def isPopOver(self, obj):
         try:
             relations = obj.getRelationSet()
         except:

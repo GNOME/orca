@@ -212,7 +212,7 @@ class Script(default.Script):
             return
 
         obj = event.source
-        if self.utilities._isNonModalPopOver(obj) \
+        if self.utilities.isPopOver(obj) \
            or obj.getRole() in [pyatspi.ROLE_ALERT, pyatspi.ROLE_INFO_BAR]:
             if obj.parent and obj.parent.getRole() == pyatspi.ROLE_APPLICATION:
                 return

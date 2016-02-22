@@ -3208,8 +3208,21 @@ class Utilities:
     def isEntryCompletionPopupItem(self, obj):
         return False
 
-    def _isNonModalPopOver(self, obj):
+    def isPopOver(self, obj):
         return False
+
+    def isNonModalPopOver(self, obj):
+        if not self.isPopOver(obj):
+            return False
+
+        try:
+            state = obj.getState()
+        except:
+            msg = "ERROR: Exception getting state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return not state.contains(pyatspi.STATE_MODAL)
 
     def rgbFromString(self, attributeValue):
         regex = re.compile("rgb|[^\w,]", re.IGNORECASE)
