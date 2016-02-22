@@ -2480,6 +2480,9 @@ class Utilities(script_utilities.Utilities):
         if not event.type.startswith("object:text-caret-moved"):
             return False
 
+        if event.source.getState().contains(pyatspi.STATE_EDITABLE):
+            return False
+
         linkURI = self.uri(orca_state.locusOfFocus)
         docURI = self.documentFrameURI()
         if linkURI == docURI:
