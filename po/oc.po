@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: oc\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&ke"
-"ywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2016-02-16 14:21+0000\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=orca&keywords=I18N+L10N&component=i18n\n"
+"POT-Creation-Date: 2016-02-18 14:20+0000\n"
 "PO-Revision-Date: 2016-02-16 16:32+0200\n"
 "Last-Translator: Cédric VALMARY <cvalmary@yahoo.fr>\n"
 "Language-Team: Tot en òc (totenoc.eu)\n"
@@ -750,7 +750,7 @@ msgstr "dos punts"
 msgid "semicolon"
 msgstr "punt virgula"
 
-#. Translators: this is the spoken word for the character '< ' (U+003c)
+#. Translators: this is the spoken word for the character '< ' (U+003c)
 #.
 #: ../src/orca/chnames.py:121
 msgid "less"
@@ -762,7 +762,7 @@ msgstr "inferior a"
 msgid "equals"
 msgstr "egal a"
 
-#. Translators: this is the spoken word for the character '> ' (U+003e)
+#. Translators: this is the spoken word for the character '> ' (U+003e)
 #.
 #: ../src/orca/chnames.py:129
 msgid "greater"
@@ -1533,7 +1533,6 @@ msgstr "prime doble"
 #. Translators: this is the spoken word for the character '‴' (U+2034)
 #.
 #: ../src/orca/chnames.py:632
-#| msgid "double prime"
 msgid "triple prime"
 msgstr "prima dobla"
 
@@ -2263,14 +2262,12 @@ msgstr "Aumenta la nautor de la votz."
 #. Translators: the speech volume is how high or low in gain/volume the
 #. speech synthesis engine will generate speech.
 #: ../src/orca/cmdnames.py:409
-#| msgid "Increases the speech rate."
 msgid "Increases the speech volume."
 msgstr "Aumenta lo ritme de lectura."
 
 #. Translators: the speech volume is how high or low in gain/volume the
 #. speech synthesis engine will generate speech.
 #: ../src/orca/cmdnames.py:413
-#| msgid "Decreases the speech rate."
 msgid "Decreases the speech volume."
 msgstr "Demesís lo ritme de lectura."
 
@@ -5269,7 +5266,7 @@ msgstr ""
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is encountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
 #: ../src/orca/guilabels.py:688 ../src/orca/orca-setup.ui.h:70
 msgid "Break speech into ch_unks between pauses"
-msgstr "Copar la sintèsi vocala en _tròces entre las pausas"
+msgstr "Talhar la sintèsi vocala en _tròces entre las pausas"
 
 #. Translators: This string will appear in the list of available voices for the
 #. current speech engine. "%s" will be replaced by the name of the current speech
@@ -5589,7 +5586,7 @@ msgstr "tòca Super drecha"
 #.
 #: ../src/orca/keynames.py:194
 msgid "menu"
-msgstr "menut"
+msgstr "menú"
 
 #. Translators: this is how someone would speak the name of the ISO shift key
 #.
@@ -12914,7 +12911,7 @@ msgstr ""
 #. on the desktop, describing how to access the system menus.
 #: ../src/orca/tutorialgenerator.py:289
 msgid "To get to the system menus press the alt+f1 key."
-msgstr "Per aténher los menuts del sistèma, quichatz sus las tòcas Alt+F1."
+msgstr "Per aténher los menús del sistèma, quichatz sus las tòcas Alt+F1."
 
 #. Translators: this is the tutorial string when navigating lists.
 #: ../src/orca/tutorialgenerator.py:326
@@ -12988,7 +12985,7 @@ msgstr ""
 #. navigate into sub menus.
 #: ../src/orca/tutorialgenerator.py:698
 msgid "To enter sub menu, press right arrow."
-msgstr "Per entrar dins lo sosmenut, quichatz sus la flècha drecha."
+msgstr "Per entrar dins lo sosmenú, quichatz sus la flècha drecha."
 
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
