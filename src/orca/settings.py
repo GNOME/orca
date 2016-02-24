@@ -93,6 +93,7 @@ userCustomizableSettings = [
     "beepProgressBarUpdates",
     "progressBarUpdateInterval",
     "progressBarVerbosity",
+    "ignoreStatusBarProgressBars",
     "enableContractedBraille",
     "brailleContractionTable",
     "enableMouseReview",
@@ -290,6 +291,7 @@ brailleProgressBarUpdates  = False
 beepProgressBarUpdates     = False
 progressBarUpdateInterval  = 10
 progressBarVerbosity       = PROGRESS_BAR_APPLICATION
+ignoreStatusBarProgressBars = True
 
 # Structural navigation
 structuralNavigationEnabled = True

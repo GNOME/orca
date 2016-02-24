@@ -842,9 +842,10 @@ class Utilities:
             if percent != 100:
                 return False, "Last update was only %is ago" % interval
 
-        isStatusBar = lambda x: x and x.getRole() == pyatspi.ROLE_STATUS_BAR
-        if pyatspi.findAncestor(obj, isStatusBar):
-            return False, "Is status bar descendant"
+        if _settingsManager.getSetting('ignoreStatusBarProgressBars'):
+            isStatusBar = lambda x: x and x.getRole() == pyatspi.ROLE_STATUS_BAR
+            if pyatspi.findAncestor(obj, isStatusBar):
+                return False, "Is status bar descendant"
 
         verbosity = _settingsManager.getSetting('progressBarVerbosity')
         if verbosity == settings.PROGRESS_BAR_ALL:
