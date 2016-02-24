@@ -317,7 +317,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return []
 
-        string = self._script.utilities.getPageSummary(obj)
+        onlyIfFound = args.get('formatType') != 'detailedWhereAmI'
+
+        string = self._script.utilities.getPageSummary(obj, onlyIfFound)
         if not string:
             return []
 
