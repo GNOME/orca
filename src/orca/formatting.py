@@ -901,23 +901,28 @@ class Formatting(dict):
           'focused', 'basicWhereAmI', etc.
         """
         try:
-            # First try to find the exact match.
-            #
-            format = self[args['mode']][args['role']][args['formatType']]
+            return self[args['mode']][args['role']][args['formatType']]
         except:
+            pass
+
+        if args.get('formatType') == 'detailedWhereAmI':
             try:
-                # Failing that, fallback to the 'unfocused' formatType
-                # for the mode and role, if it exists.
-                #
-                format = self[args['mode']][args['role']]['unfocused']
+                return self[args['mode']][args['role']]['basicWhereAmI']
             except:
-                try:
-                    # Failing that, fallback to the default for the
-                    # formatType
-                    #
-                    format = self[args['mode']]['default'][args['formatType']]
-                except:
-                    # Failing that, just used the default 'unfocused' format
-                    #
-                    format = self[args['mode']]['default']['unfocused']
-        return format
+                pass
+
+        try:
+            return self[args['mode']][args['role']]['unfocused']
+        except:
+            pass
+
+
+        try:
+            return self[args['mode']]['default'][args['formatType']]
+        except:
+            pass
+
+        try:
+            return self[args['mode']]['default']['unfocused']
+        except:
+            return []
