@@ -2936,3 +2936,17 @@ class Utilities(script_utilities.Utilities):
                 messages.LINE_UNSELECTED_DOWN,
                 messages.LINE_SELECTED_UP,
                 messages.LINE_UNSELECTED_UP]
+
+    def lastInputEventWasCopy(self):
+        if super().lastInputEventWasCopy():
+            return True
+
+        if not self.inDocumentContent():
+            return False
+
+        if 'Action' in pyatspi.listInterfaces(orca_state.locusOfFocus):
+            msg = "WEB: Treating %s as source of copy" % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
