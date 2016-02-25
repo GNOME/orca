@@ -1796,6 +1796,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        if self.utilities.isContentEditableWithEmbeddedObjects(event.source):
+            msg = "WEB: In content editable with embedded objects"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
         char = text.getText(event.detail1, event.detail1+1)
         if char == self.EMBEDDED_OBJECT_CHARACTER \
            and not self.utilities.lastInputEventWasCaretNavWithSelection():
