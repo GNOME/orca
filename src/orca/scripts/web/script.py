@@ -1803,7 +1803,8 @@ class Script(default.Script):
 
         char = text.getText(event.detail1, event.detail1+1)
         if char == self.EMBEDDED_OBJECT_CHARACTER \
-           and not self.utilities.lastInputEventWasCaretNavWithSelection():
+           and not self.utilities.lastInputEventWasCaretNavWithSelection() \
+           and not self.utilities.lastInputEventWasCommand():
             msg = "WEB: Ignoring: Not selecting and event offset is at embedded object"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
