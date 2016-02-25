@@ -17,7 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-""" Custom script for Thunderbird 3."""
+"""Custom script for Thunderbird."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -68,10 +68,10 @@ class Script(Gecko.Script):
         if _settingsManager.getSetting('pageSummaryOnLoad') == None:
             _settingsManager.setSetting('pageSummaryOnLoad', False)
 
-        Gecko.Script.__init__(self, app)
+        super().__init__(app)
 
     def setupInputEventHandlers(self):
-        Gecko.Script.setupInputEventHandlers(self)
+        super().setupInputEventHandlers()
 
         self.inputEventHandlers["togglePresentationModeHandler"] = \
             input_event.InputEventHandler(
@@ -92,7 +92,7 @@ class Script(Gecko.Script):
         """Return a GtkGrid containing the application unique configuration
         GUI items for the current application."""
 
-        grid = Gecko.Script.getAppPreferencesGUI(self)
+        grid = super().getAppPreferencesGUI()
 
         self._sayAllOnLoadCheckButton.set_active(
             _settingsManager.getSetting('sayAllOnLoad'))
@@ -108,7 +108,7 @@ class Script(Gecko.Script):
     def getPreferencesFromGUI(self):
         """Returns a dictionary with the app-specific preferences."""
 
-        prefs = Gecko.Script.getPreferencesFromGUI(self)
+        prefs = super().getPreferencesFromGUI()
         prefs['sayAllOnLoad'] = self._sayAllOnLoadCheckButton.get_active()
         prefs['pageSummaryOnLoad'] = self._pageSummaryOnLoadCheckButton.get_active()
         prefs.update(self.spellcheck.getPreferencesFromGUI())
@@ -148,7 +148,7 @@ class Script(Gecko.Script):
         if self._inFocusMode and self.isEditableMessage(orca_state.locusOfFocus):
             return
 
-        Gecko.Script.togglePresentationMode(self, inputEvent)
+        super().togglePresentationMode(inputEvent)
 
     def useStructuralNavigationModel(self):
         """Returns True if structural navigation should be enabled here."""
@@ -156,7 +156,7 @@ class Script(Gecko.Script):
         if self.isEditableMessage(orca_state.locusOfFocus):
             return False
 
-        return Gecko.Script.useStructuralNavigationModel(self)
+        return super().useStructuralNavigationModel()
 
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
@@ -173,14 +173,14 @@ class Script(Gecko.Script):
             self.updateBraille(orca_state.locusOfFocus)
 
         if not self.utilities.inDocumentContent(obj):
-            default.Script.onFocusedChanged(self, event)
+            super().onFocusedChanged(event)
             return
 
         if self.isEditableMessage(obj):
-            default.Script.onFocusedChanged(self, event)
+            super().onFocusedChanged(event)
             return
 
-        Gecko.Script.onFocusedChanged(self, event)
+        super().onFocusedChanged(event)
 
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
@@ -210,7 +210,7 @@ class Script(Gecko.Script):
             if self.spellcheck.isActive():
                 return
 
-        Gecko.Script.onCaretMoved(self, event)
+        super().onCaretMoved(event)
 
     def onSelectionChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
@@ -224,7 +224,7 @@ class Script(Gecko.Script):
            and not parent.getState().contains(pyatspi.STATE_FOCUSED):
             return
 
-        Gecko.Script.onSelectionChanged(self, event)
+        super().onSelectionChanged(event)
 
     def onSensitiveChanged(self, event):
         """Callback for object:state-changed:sensitive accessibility events."""
@@ -233,7 +233,7 @@ class Script(Gecko.Script):
            and self.spellcheck.presentCompletionMessage():
             return
 
-        Gecko.Script.onSensitiveChanged(self, event)
+        super().onSensitiveChanged(event)
 
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
@@ -264,7 +264,7 @@ class Script(Gecko.Script):
         if role == pyatspi.ROLE_LABEL and parentRole == pyatspi.ROLE_STATUS_BAR:
             return
 
-        Gecko.Script.onTextDeleted(self, event)
+        super().onTextDeleted(event)
 
     def onTextInserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
@@ -313,7 +313,7 @@ class Script(Gecko.Script):
                 self.pointOfReference['lastAutoComplete'] = hash(obj)
                 return
 
-        Gecko.Script.onTextInserted(self, event)
+        super().onTextInserted(event)
 
     def onTextSelectionChanged(self, event):
         """Callback for object:text-selection-changed accessibility events."""
@@ -329,7 +329,7 @@ class Script(Gecko.Script):
             self.spellcheck.setDocumentPosition(obj, selStart)
             return
 
-        default.Script.onTextSelectionChanged(self, event)
+        super().onTextSelectionChanged(event)
 
     def onNameChanged(self, event):
         """Callback for object:property-change:accessible-name events."""
@@ -394,14 +394,14 @@ class Script(Gecko.Script):
                 default.Script.sayCharacter(self, obj)
                 return
 
-        Gecko.Script.sayCharacter(self, obj)
+        super().sayCharacter(obj)
 
     def sayWord(self, obj):
         """Speaks the word at the current caret position."""
 
         contextObj, offset = self.utilities.getCaretContext(documentFrame=None)
         if contextObj != obj:
-            Gecko.Script.sayWord(self, obj)
+            super().sayWord(obj)
             return
 
         wordContents = self.utilities.getWordContentsAtOffset(obj, offset)
@@ -447,7 +447,7 @@ class Script(Gecko.Script):
     def onWindowActivated(self, event):
         """Callback for window:activate accessibility events."""
 
-        Gecko.Script.onWindowActivated(self, event)
+        super().onWindowActivated(event)
         if not self.spellcheck.isCheckWindow(event.source):
             self.spellcheck.deactivate()
             return
@@ -459,5 +459,5 @@ class Script(Gecko.Script):
     def onWindowDeactivated(self, event):
         """Callback for window:deactivate accessibility events."""
 
-        Gecko.Script.onWindowDeactivated(self, event)
+        super().onWindowDeactivated(event)
         self.spellcheck.deactivate()
