@@ -461,3 +461,4 @@ class Script(Gecko.Script):
 
         super().onWindowDeactivated(event)
         self.spellcheck.deactivate()
+        self.utilities.clearContentCache()
