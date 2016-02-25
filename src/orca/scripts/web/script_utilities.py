@@ -441,6 +441,9 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             obj = orca_state.locusOfFocus
 
+        if self.inDocumentContent(obj):
+            return False
+
         if obj and obj.parent \
            and obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
             return False

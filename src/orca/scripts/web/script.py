@@ -1208,10 +1208,15 @@ class Script(default.Script):
             self.utilities.setCaretContext(event.source, event.detail1)
             return True
 
-        if self.utilities.inFindToolbar() and not self._madeFindAnnouncement:
-            msg = "WEB: Event handled: Presenting find results"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            self.presentFindResults(event.source, event.detail1)
+        if self.utilities.inFindToolbar():
+            if not self._madeFindAnnouncement:
+                msg = "WEB: Event handled: Presenting find results"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                self.presentFindResults(event.source, event.detail1)
+            else:
+                self.utilities.setCaretContext(event.source, event.detail1)
+                msg = "WEB: Event handled: Setting context to source and offset"
+                debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsAutocompleteNoise(event):
