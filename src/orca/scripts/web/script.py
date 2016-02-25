@@ -1084,6 +1084,8 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        self.structuralNavigation.clearCache()
+
         if self.utilities.getDocumentForObject(event.source.parent):
             msg = "WEB: Ignoring: Event source is nested document"
             debug.println(debug.LEVEL_INFO, msg, True)
