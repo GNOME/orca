@@ -460,11 +460,15 @@ class Utilities:
 
         try:
             role = obj.getRole()
-        except (LookupError, RuntimeError):
+            name = obj.name
+        except:
+            msg = 'ERROR: Exception getting role and name of %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             role = None
+            name = ''
 
-        if role == pyatspi.ROLE_PUSH_BUTTON and obj.name:
-            return obj.name
+        if role == pyatspi.ROLE_PUSH_BUTTON and name:
+            return name
 
         try:
             text = obj.queryText()
