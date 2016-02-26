@@ -1670,6 +1670,16 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        obj, offset = self.utilities.getCaretContext(getZombieReplicant=False)
+        if self.utilities.isZombie(obj):
+            obj, offset = self.utilities.getCaretContext(getZombieReplicant=True)
+            if obj:
+                orca.setLocusOfFocus(event, obj, notifyScript=False)
+
+        if self.utilities.isZombie(obj):
+            msg = "WEB: Unable to get non-null, non-zombie context object"
+            debug.println(debug.LEVEL_INFO, msg, True)
+
         msg = "WEB: Clearing content cache due to text deletion"
         debug.println(debug.LEVEL_INFO, msg, True)
         self.utilities.clearContentCache()

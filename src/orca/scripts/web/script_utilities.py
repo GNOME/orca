@@ -48,6 +48,8 @@ class Utilities(script_utilities.Utilities):
 
         self._currentAttrs = {}
         self._caretContexts = {}
+        self._contextPathsRolesAndNames = {}
+        self._paths = {}
         self._inDocumentContent = {}
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
@@ -124,6 +126,8 @@ class Utilities(script_utilities.Utilities):
         self._treatAsDiv = {}
         self._posinset = {}
         self._setsize = {}
+        self._paths = {}
+        self._contextPathsRolesAndNames = {}
         self._cleanupContexts()
 
     def clearContentCache(self):
@@ -2656,7 +2660,7 @@ class Utilities(script_utilities.Utilities):
 
         return obj, offset
 
-    def getCaretContext(self, documentFrame=None):
+    def getCaretContext(self, documentFrame=None, getZombieReplicant=False):
         if not documentFrame or self.isZombie(documentFrame):
             documentFrame = self.documentFrame()
 
@@ -2664,13 +2668,44 @@ class Utilities(script_utilities.Utilities):
             return self._getCaretContextViaLocusOfFocus()
 
         context = self._caretContexts.get(hash(documentFrame.parent))
-        if context:
+        if not context:
+            obj, offset = self._searchForCaretContext(documentFrame)
+        elif not getZombieReplicant:
             return context
+        elif self.isZombie(context[0]):
+            obj, offset = self.findContextReplicant()
+        else:
+            obj, offset = context
 
-        obj, offset = self._searchForCaretContext(documentFrame)
         self.setCaretContext(obj, offset, documentFrame)
 
         return obj, offset
+
+    def _getCaretContextPathRoleAndName(self, documentFrame=None):
+        documentFrame = self.documentFrame()
+        if not documentFrame:
+            return [-1], None, None
+
+        rv = self._contextPathsRolesAndNames.get(hash(documentFrame.parent))
+        if not rv:
+            return [-1], None, None
+
+        return rv
+
+    def getObjectFromPath(self, path):
+        start = self._script.app
+        rv = None
+        for p in path:
+            if p == -1:
+                continue
+            try:
+                start = start[p]
+            except:
+                break
+        else:
+            rv = start
+
+        return rv
 
     def clearCaretContext(self, documentFrame=None):
         self.clearContentCache()
@@ -2681,6 +2716,38 @@ class Utilities(script_utilities.Utilities):
         parent = documentFrame.parent
         self._caretContexts.pop(hash(parent), None)
 
+    def findContextReplicant(self, documentFrame=None, matchRole=True, matchName=True):
+        path, oldRole, oldName = self._getCaretContextPathRoleAndName(documentFrame)
+        obj = self.getObjectFromPath(path)
+        if obj and matchRole:
+            if obj.getRole() != oldRole:
+                obj = None
+        if obj and matchName:
+            if obj.name != oldName:
+                obj = None
+        if not obj:
+            return None, -1
+
+        obj, offset = self.findFirstCaretContext(obj, 0)
+        msg = "WEB: Context replicant is %s, %i" % (obj, offset)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return obj, offset
+
+    def _getPath(self, obj):
+        rv = self._paths.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            rv = pyatspi.getPath(obj)
+        except:
+            msg = "WEB: Exception getting path for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            rv = [-1]
+
+        self._paths[hash(obj)] = rv
+        return rv
+
     def setCaretContext(self, obj=None, offset=-1, documentFrame=None):
         documentFrame = documentFrame or self.documentFrame()
         if not documentFrame:
@@ -2688,6 +2755,18 @@ class Utilities(script_utilities.Utilities):
 
         parent = documentFrame.parent
         self._caretContexts[hash(parent)] = obj, offset
+
+        path = self._getPath(obj)
+        try:
+            role = obj.getRole()
+            name = obj.name
+        except:
+            msg = "WEB: Exception getting role and name for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            role = None
+            name = None
+
+        self._contextPathsRolesAndNames[hash(parent)] = path, role, name
 
     def findFirstCaretContext(self, obj, offset):
         try:
