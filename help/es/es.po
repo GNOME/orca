@@ -15,8 +15,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2016-02-01 02:20+0000\n"
-"PO-Revision-Date: 2016-02-01 09:09+0100\n"
+"POT-Creation-Date: 2016-02-22 02:24+0000\n"
+"PO-Revision-Date: 2016-02-26 09:10+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -67,15 +67,14 @@ msgstr "Comandos para marcar y obtener objetos"
 #: C/howto_orca_find.page:8 C/howto_profiles.page:8
 #: C/howto_setting_up_orca.page:12 C/howto_structural_navigation.page:12
 #: C/howto_tables.page:10 C/howto_text_attributes.page:10
-#: C/howto_text_setup.page:8 C/howto_the_orca_modifier.page:11
-#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:9
-#: C/introduction.page:10 C/preferences_braille.page:11
-#: C/preferences_chat.page:11 C/preferences_gecko.page:12
-#: C/preferences_general.page:11 C/preferences_introduction.page:8
-#: C/preferences_key_bindings.page:12 C/preferences_key_echo.page:11
-#: C/preferences.page:7 C/preferences_pronunciation.page:12
-#: C/preferences_speech.page:11 C/preferences_spellcheck.page:10
-#: C/preferences_table_navigation.page:14
+#: C/howto_the_orca_modifier.page:11 C/howto_toggling_caps_lock.page:8
+#: C/howto_whereami.page:10 C/index.page:9 C/introduction.page:10
+#: C/preferences_braille.page:11 C/preferences_chat.page:11
+#: C/preferences_gecko.page:12 C/preferences_general.page:11
+#: C/preferences_introduction.page:8 C/preferences_key_bindings.page:12
+#: C/preferences_key_echo.page:11 C/preferences.page:7
+#: C/preferences_pronunciation.page:12 C/preferences_speech.page:11
+#: C/preferences_spellcheck.page:10 C/preferences_table_navigation.page:14
 #: C/preferences_text_attributes.page:13 C/preferences_voice.page:11
 msgid "Joanmarie Diggs"
 msgstr "Joanmarie Diggs"
@@ -97,15 +96,14 @@ msgstr "Joanmarie Diggs"
 #: C/howto_orca_find.page:12 C/howto_profiles.page:12
 #: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
 #: C/howto_tables.page:14 C/howto_text_attributes.page:14
-#: C/howto_text_setup.page:12 C/howto_the_orca_modifier.page:15
-#: C/howto_toggling_caps_lock.page:12 C/howto_whereami.page:14 C/index.page:13
-#: C/introduction.page:14 C/preferences_braille.page:15
-#: C/preferences_chat.page:15 C/preferences_gecko.page:16
-#: C/preferences_general.page:15 C/preferences_introduction.page:12
-#: C/preferences_key_bindings.page:16 C/preferences_key_echo.page:15
-#: C/preferences.page:11 C/preferences_pronunciation.page:16
-#: C/preferences_speech.page:15 C/preferences_spellcheck.page:14
-#: C/preferences_table_navigation.page:18
+#: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
+#: C/howto_whereami.page:14 C/index.page:13 C/introduction.page:14
+#: C/preferences_braille.page:15 C/preferences_chat.page:15
+#: C/preferences_gecko.page:16 C/preferences_general.page:15
+#: C/preferences_introduction.page:12 C/preferences_key_bindings.page:16
+#: C/preferences_key_echo.page:15 C/preferences.page:11
+#: C/preferences_pronunciation.page:16 C/preferences_speech.page:15
+#: C/preferences_spellcheck.page:14 C/preferences_table_navigation.page:18
 #: C/preferences_text_attributes.page:17 C/preferences_voice.page:15
 msgid "Creative Commons Share Alike 3.0"
 msgstr "Creative Commons Compartir Igual 3.0"
@@ -3167,8 +3165,7 @@ msgstr ""
 "se usa como modificador de Orca."
 
 #. (itstool) path: item/p
-#: C/howto_keyboard_layout.page:22 C/howto_text_setup.page:156
-#: C/howto_the_orca_modifier.page:33
+#: C/howto_keyboard_layout.page:22 C/howto_the_orca_modifier.page:33
 msgid ""
 "If you are using the Laptop layout, the default Orca Modifier will be "
 "<key>CapsLock</key>"
@@ -3177,8 +3174,7 @@ msgstr ""
 "predeterminado será <key>Bloq Mayús</key>"
 
 #. (itstool) path: item/p
-#: C/howto_keyboard_layout.page:28 C/howto_text_setup.page:162
-#: C/howto_the_orca_modifier.page:39
+#: C/howto_keyboard_layout.page:28 C/howto_the_orca_modifier.page:39
 msgid ""
 "If you are using the Desktop layout, the Orca Modifier will be both "
 "<key>Insert</key> and <key>KeyPad Insert</key>, the latter being the same "
@@ -3189,8 +3185,7 @@ msgstr ""
 "que <key>TN 0</key>."
 
 #. (itstool) path: page/p
-#. (itstool) path: item/p
-#: C/howto_keyboard_layout.page:35 C/howto_text_setup.page:169
+#: C/howto_keyboard_layout.page:35
 msgid ""
 "The layout also determines the keystrokes associated with a number of "
 "<app>Orca</app>'s commands, especially in the areas of Flat Review, Where Am "
@@ -3954,30 +3949,19 @@ msgstr "Configuración de Orca"
 #. (itstool) path: section/p
 #: C/howto_setting_up_orca.page:21
 msgid ""
-"If you want to configure <app>Orca</app>, you can do one of the following:"
+"If you want to configure <app>Orca</app>, get into the <link xref="
+"\"preferences\">Preferences</link> dialog by pressing <keyseq><key>Orca "
+"Modifier</key><key>Space</key></keyseq> from within any accessible "
+"application. Alternatively, you can type <cmd>orca</cmd> followed by either "
+"<cmd>-s</cmd> or <cmd>--setup</cmd> in a terminal window or within the "
+"<gui>Run</gui> dialog and then press <key>Return</key>."
 msgstr ""
-"Si quiere configurar <app>Orca</app> puede hacerlo de las siguientes maneras:"
-
-#. (itstool) path: item/p
-#: C/howto_setting_up_orca.page:27
-msgid ""
-"Get into the <link xref=\"preferences\">Preferences</link> dialog by "
-"pressing <keyseq><key>Orca Modifier</key><key>Space</key> </keyseq> from "
-"within any accessible application."
-msgstr ""
-"Vaya al diálogo de <link xref=\"preferences\">Preferencias</link> pulsando "
-"<keyseq><key>Modificador de Orca</key><key>Espacio</key></keyseq> desde "
-"cualquier aplicación accesible."
-
-#. (itstool) path: item/p
-#: C/howto_setting_up_orca.page:34
-msgid ""
-"Pass the <cmd>--text-setup</cmd> option to <app>Orca</app> to re-run "
-"<app>Orca</app>'s <link xref=\"howto_text_setup\">text-based setup</link>."
-msgstr ""
-"Pase la opción de <cmd>--text-setup</cmd> a <app>Orca</app> para volver a "
-"ejecutar la <link xref=\"howto_text_setup\">configuración de texto</link> de "
-"<app>Orca</app>."
+"Si quiere configurar <app>Orca</app>, vaya al diálogo de <link xref="
+"\"preferences\">Preferencias</link> pulsando <keyseq><key>Modificador de "
+"Orca</key><key>Espacio</key></keyseq> desde cualquier aplicación accesible. "
+"Alternativamente, puede escribir <cmd>orca</cmd> seguido de <cmd>-s</cmd> o "
+"<cmd>--setup</cmd> en una ventana de la terminal o en el diálogo "
+"<gui>Ejecutar</gui> y pulse <key>Intro</key>."
 
 #. (itstool) path: info/title
 #: C/howto_structural_navigation.page:7
@@ -4560,336 +4544,6 @@ msgstr ""
 "traslade a una palabra mal escrita, <app>Orca</app> anunciará la presencia "
 "de un error ortográfico."
 
-#. (itstool) path: info/desc
-#: C/howto_text_setup.page:3
-msgid ""
-"A feature which allows you to perform basic configuration of <app>Orca</app> "
-"even if the graphical desktop is not running."
-msgstr ""
-"Una característica que le permite realizar una configuración básica de "
-"<app>Orca</app> aunque el entorno gráfico no esté en ejecución."
-
-#. (itstool) path: page/title
-#: C/howto_text_setup.page:15
-msgid "Using Text Setup"
-msgstr "Usar la configuración en modo texto"
-
-#. (itstool) path: page/p
-#: C/howto_text_setup.page:16
-msgid ""
-"Orca has a text setup feature which allows you to perform basic "
-"configuration of <app>Orca</app> even if the graphical desktop is not "
-"running."
-msgstr ""
-"Orca tiene una característica de configuración en modo texto que le permite "
-"realizar una configuración básica de <app>Orca</app> aunque el entorno "
-"gráfico no esté en ejecución."
-
-#. (itstool) path: steps/title
-#: C/howto_text_setup.page:21
-msgid "Launching <app>Orca</app>'s Text-Only Guided Setup"
-msgstr ""
-"Iniciar la instalación asistida de <app>Orca</app> en modo de sólo texto"
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:23
-msgid ""
-"Open a <gui>Run</gui> dialog. For most distros, this can be accomplished by "
-"pressing <keyseq><key>Alt</key><key>F2</key></keyseq>. Alternatively, you "
-"can use a terminal window or the system text console."
-msgstr ""
-"Abra un diálogo <gui>Ejecutar</gui>. En la mayoría de las distribuciones, "
-"esto se puede hacer pulsando <keyseq><key>Alt</key><key>F2</key></keyseq>. "
-"Alternativamente, puede usar una ventana de la termina o la consola de texto "
-"del sistema."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:30
-msgid ""
-"Type <cmd>orca --text-setup</cmd> or <cmd>orca -t</cmd> and press "
-"<key>Return</key>."
-msgstr ""
-"Escriba <cmd>orca --text-setup</cmd> o <cmd>orca -t</cmd> y pulse "
-"<key>Intro</key>."
-
-#. (itstool) path: page/p
-#: C/howto_text_setup.page:36
-msgid "You will be asked a few questions:"
-msgstr "Se le harán algunas preguntas:"
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:39
-msgid "Select desired speech system"
-msgstr "Seleccione el sistema de voz deseado"
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:40
-msgid ""
-"The choices that follow will depend on which speech systems you have "
-"installed on your system. Type the number associated with your desired "
-"speech system and press <key>Return</key>."
-msgstr ""
-"Las siguientes opciones dependerán de qué sistemas de voz tenga instalados "
-"en su sistema. Escriba el número asociado a su sistema de voz deseado y "
-"pulse <key>Intro</key>."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:47
-msgid "Select desired speech server"
-msgstr "Seleccione el servidor de voz deseado"
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:48
-msgid ""
-"The choices that follow will depend on which speech synthesizers you have "
-"installed on your system. Type the number associated with your desired "
-"speech server and press <key>Return</key>."
-msgstr ""
-"Las siguientes opciones dependerán de qué sintetizadores de voz tenga "
-"instalados en su sistema. Escriba el número asociado a su servidor de voz "
-"deseado y pulse <key>Intro</key>."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:55
-msgid "Select desired voice"
-msgstr "Seleccione la voz deseada"
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:56
-msgid ""
-"The \"voices\" correspond with the languages available. In the case of "
-"speech-dispatcher, there are approximately 60 languages and dialects "
-"supported with more being added regularly. Type in the number of your "
-"language choice (e.g., <cmd>7</cmd> for American English) and press "
-"<key>Return</key>. You do not need to wait for the entire list to be spoken. "
-"In addition, <app>Orca</app> attempts to make your default language the "
-"first choice, so in many cases you can simply type <cmd>1</cmd> and press "
-"<key>Return</key> without having to listen to the full list of voices."
-msgstr ""
-"Las «voces» corresponden a los idiomas disponibles. En el caso de «speech-"
-"dispatcher», hay aproximadamente 60 idiomas y dialectos admitidos, y cada "
-"cierto tiempo se agregan más. Escriba el número de su opción de idioma (por "
-"ejemplo, <cmd>7</cmd> para «Inglés americano») y pulse <key>Intro</key>. No "
-"necesita esperar a que se lea la lista completa. Además, <app>Orca</app> "
-"trata de poner su idioma predeterminado como primera opción, de modo que en "
-"muchos casos simplemente tendrá que escribir <cmd>1</cmd> y pulsar "
-"<key>Intro</key> sin tener que escuchar la lista completa de voces."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:68
-msgid "Enable echo by word?"
-msgstr "¿Activar eco por palabras?"
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:69
-msgid ""
-"This option causes <app>Orca</app> to speak words as you finish typing them. "
-"Type <cmd>y</cmd> or <cmd>n</cmd> and press <key>Return</key>."
-msgstr ""
-"Esta opción hace que <app>Orca</app> lea las palabras cuando termina de "
-"escribirlas. Escriba <cmd>s</cmd> o <cmd>n</cmd> y pulse <key>Intro</key>."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:75
-msgid "Enable key echo?"
-msgstr "¿Activar eco de teclas?"
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:76
-msgid ""
-"This option causes <app>Orca</app> to speak all keys as they are pressed. "
-"Type <cmd>y</cmd> or <cmd>n</cmd> and press <key>Return</key>."
-msgstr ""
-"Esta opción hace que <app>Orca</app> lea todas las teclas que se pulsan. "
-"Escriba <cmd>s</cmd> o <cmd>n</cmd> y pulse <key>Intro</key>."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:80
-msgid ""
-"If you indicate that you would like key echo enabled, setup will then ask "
-"you about the types of key echo you can enable or disable. For each one, "
-"type <cmd>y</cmd> to enable it or <cmd>n</cmd> to disable it and press "
-"<key>Return</key>. The types are:"
-msgstr ""
-"Si indica que le gustaría activar el eco de teclas, la configuración le "
-"preguntará por los tipos de eco de teclas que puede activar o desactivar. "
-"Para cada uno, escriba <cmd>s</cmd> para activarlo o <cmd>n</cmd> para "
-"desactivarlo y pulse <key>Intro</key>. Los tipos de eco de teclas son:"
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:88
-msgid "alphabetic keys"
-msgstr "teclas alfabéticas"
-
-#. (itstool) path: item/p
-#. (itstool) path: section/p
-#: C/howto_text_setup.page:89 C/preferences_key_echo.page:33
-msgid ""
-"This option controls whether or not keys like <key>a</key>, <key>b</key>, "
-"and <key>c</key> should be spoken when pressed."
-msgstr ""
-"Esta opción controla si las teclas <key>a</key>, <key>b</key> y <key>c</key> "
-"se deben hablar o no cuando se pulsan."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:95
-msgid "numeric keys"
-msgstr "teclas numéricas"
-
-#. (itstool) path: item/p
-#. (itstool) path: section/p
-#: C/howto_text_setup.page:96 C/preferences_key_echo.page:43
-msgid ""
-"This option controls whether or not keys like <key>1</key>, <key>2</key>, "
-"and <key>3</key> should be spoken when pressed."
-msgstr ""
-"Esta opción controla si las teclas <key>1</key>, <key>2</key> y <key>3</key> "
-"se deben hablar o no cuando se pulsan."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:102
-msgid "punctuation keys"
-msgstr "teclas de puntuación"
-
-#. (itstool) path: item/p
-#. (itstool) path: section/p
-#: C/howto_text_setup.page:103 C/preferences_key_echo.page:53
-msgid ""
-"This option controls whether or not keys like <key>%</key>, <key>;</key>, "
-"and <key>?</key> should be spoken when pressed."
-msgstr ""
-"Esta opción controla si las teclas <key>%</key>, <key>;</key> y <key>?</key> "
-"se deben hablar o no cuando se pulsan."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:109
-msgid "space"
-msgstr "espacio"
-
-#. (itstool) path: item/p
-#. (itstool) path: section/p
-#: C/howto_text_setup.page:110 C/preferences_key_echo.page:63
-msgid ""
-"This option controls whether or not <key>space</key> should be spoken when "
-"pressed."
-msgstr ""
-"Esta opción controla si la tecla <key>espacio</key> se debe hablar o no "
-"cuando se pulsa."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:116
-msgid "modifier keys"
-msgstr "teclas modificadoras"
-
-#. (itstool) path: item/p
-#. (itstool) path: section/p
-#: C/howto_text_setup.page:117 C/preferences_key_echo.page:73
-msgid ""
-"This option controls whether or not <key>Shift</key>, <key>Ctrl</key>, "
-"<key>Alt</key> and <key>Meta</key> should be spoken when pressed."
-msgstr ""
-"Esta opción controla si las teclas <key>Shift</key>, <key>Ctrl</key>, "
-"<key>Alt</key> y <key>Windows</key>, etcétera se deben hablar o no cuando se "
-"pulsan."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:123
-msgid "locking keys"
-msgstr "teclas de bloqueo"
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:124
-msgid ""
-"This option controls whether or not <key>Caps Lock</key>, <key>Scroll Lock</"
-"key>, and <key>Num Lock</key> should be spoken when pressed."
-msgstr ""
-"Esta opción controla si las teclas <key>Bloq Mayús</key>, <key>Bloq Despl</"
-"key>, y <key>Bloq Num</key>, etcétera se deben hablar o no cuando se pulsan."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:130
-msgid "function keys"
-msgstr "teclas de función"
-
-#. (itstool) path: item/p
-#. (itstool) path: section/p
-#: C/howto_text_setup.page:131 C/preferences_key_echo.page:83
-msgid ""
-"This option controls whether or not <key>F1</key> through <key>F12</key> "
-"should be spoken when pressed."
-msgstr ""
-"Esta opción controla si las teclas <key>F1</key> hasta <key>F12</key> se "
-"deben hablar o no cuando se pulsan."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:137
-msgid "action keys"
-msgstr "teclas de acción"
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:138
-msgid ""
-"This option controls whether or not <key>BackSpace</key>, <key>Delete</key>, "
-"<key>Return</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</key>, "
-"<key>Page Down</key>, <key>Home</key>, and <key>End</key> should be spoken "
-"when pressed."
-msgstr ""
-"Esta opción controla si las teclas <key>Retroceso</key>, <key>Supr</key>, "
-"<key>Intro</key>, <key>Escape</key>, <key>Tab</key>, <key>Re Pág</key>, "
-"<key>Av Pág</key>, <key>Inicio</key>, y <key>Fin</key> se deben leer al "
-"pulsarlas."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:149
-msgid "Select desired keyboard layout."
-msgstr "Seleccione la distribución de teclado deseada."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:150
-msgid ""
-"Orca has two keyboard layouts: Desktop and Laptop. The layout you choose "
-"impacts which key is used as the Orca Modifier."
-msgstr ""
-"Orca tiene dos distribuciones de teclado: escritorio y portátil. La "
-"distribución que elija afecta a qué tecla se usa como «modificador de Orca»."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:174
-msgid ""
-"Type <cmd>1</cmd> for Desktop layout or <cmd>2</cmd> for Laptop layout and "
-"press <key>Return</key>."
-msgstr ""
-"Escriba <cmd>1</cmd> para la distribución de escritorio o <cmd>2</cmd> para "
-"la distribución de portátil y pulse <key>Intro</key>."
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:180
-msgid "Enable Braille"
-msgstr "Activar Braille"
-
-#. (itstool) path: item/p
-#: C/howto_text_setup.page:181
-msgid ""
-"This functionality assumes a BrlTTY-compatible device is available. Type "
-"<cmd>y</cmd> or <cmd>n</cmd> and press <key>Return</key>. Note that you can "
-"usually just enter <cmd>y</cmd> here; <app>Orca</app> will recover "
-"gracefully and function even if it cannot find BrlTTY."
-msgstr ""
-"Esta función da por hecho que hay disponible un dispositivo compatible con "
-"BrlTTY. Escriba <cmd>s</cmd> o <cmd>n</cmd> y pulse <key>Intro</key>. Tenga "
-"en cuenta que por lo general solamente puede introducir <cmd>s</cmd>; Orca "
-"se recuperará correctamente y funcionará incluso si no puede encontrar "
-"BrlTTY."
-
-#. (itstool) path: page/p
-#: C/howto_text_setup.page:189
-msgid ""
-"That's it. <app>Orca</app> is now ready for use and will be launched if you "
-"are in a graphical desktop environment where accessibility is enabled."
-msgstr ""
-"Ya está. <app>Orca</app> está listo para usarse y se ejecutará cuando tenga "
-"la accesibilidad activada y esté en el entorno del escritorio."
-
 #. (itstool) path: info/title
 #: C/howto_the_orca_modifier.page:5
 msgctxt "sort"
@@ -5377,15 +5031,13 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/introduction.page:77
-msgid ""
-"<cmd>-t</cmd>, <cmd>--text-setup</cmd>: Set up user preferences (text "
-"version)"
+#| msgid "<cmd>-n</cmd>, <cmd>--no-setup</cmd>Skip set up of user preferences"
+msgid "<cmd>-s</cmd>, <cmd>--setup</cmd>: Set up user preferences"
 msgstr ""
-"<cmd>-t</cmd>, <cmd>--text-setup</cmd>: configurar las preferencias de "
-"usuario (versión texto)"
+"<cmd>-s</cmd>, <cmd>--setup</cmd>: configurar las preferencias del usuario"
 
 #. (itstool) path: item/p
-#: C/introduction.page:83
+#: C/introduction.page:82
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs=<em>dirname</em></cmd>: Use <em>dirname</"
 "em> as the alternate directory for user preferences"
@@ -5394,7 +5046,7 @@ msgstr ""
 "em> como la carpeta alternativa para las preferencias del usuario"
 
 #. (itstool) path: item/p
-#: C/introduction.page:90
+#: C/introduction.page:89
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
@@ -5403,22 +5055,22 @@ msgstr ""
 "opción, donde <em>opción</em> puede ser una de las siguientes:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:95 C/introduction.page:107
+#: C/introduction.page:94 C/introduction.page:106
 msgid "<cmd>speech</cmd>"
 msgstr "<cmd>speech</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:96 C/introduction.page:108
+#: C/introduction.page:95 C/introduction.page:107
 msgid "<cmd>braille</cmd>"
 msgstr "<cmd>braille</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:97 C/introduction.page:109
+#: C/introduction.page:96 C/introduction.page:108
 msgid "<cmd>braille-monitor</cmd>"
 msgstr "<cmd>braille-monitor</cmd>"
 
 #. (itstool) path: item/p
-#: C/introduction.page:101
+#: C/introduction.page:100
 msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
@@ -5427,7 +5079,7 @@ msgstr ""
 "opción, donde la <em>opción</em> puede ser una de las siguientes:"
 
 #. (itstool) path: item/p
-#: C/introduction.page:113
+#: C/introduction.page:112
 msgid ""
 "<cmd>-p</cmd>, <cmd>--profile=<em>filename</em></cmd>: Import a profile from "
 "a given <app>Orca</app> profile file"
@@ -5436,7 +5088,7 @@ msgstr ""
 "archivo desde un perfil de <app>Orca</app> dado"
 
 #. (itstool) path: item/p
-#: C/introduction.page:119
+#: C/introduction.page:118
 msgid ""
 "<cmd>-r</cmd>, <cmd>--replace</cmd>: Replace a currently-running <app>Orca</"
 "app>"
@@ -5445,7 +5097,7 @@ msgstr ""
 "app> en ejecución"
 
 #. (itstool) path: item/p
-#: C/introduction.page:124
+#: C/introduction.page:123
 msgid ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
 msgstr ""
@@ -5453,14 +5105,14 @@ msgstr ""
 "en ejecución"
 
 #. (itstool) path: item/p
-#: C/introduction.page:130
+#: C/introduction.page:129
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "<cmd>--debug</cmd>: enviar información de depurado a debug-YYYY-MM-DD-HH:MM:"
 "SS.out"
 
 #. (itstool) path: item/p
-#: C/introduction.page:135
+#: C/introduction.page:134
 msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
@@ -5506,7 +5158,7 @@ msgstr ""
 #: C/preferences_braille.page:154 C/preferences_chat.page:31
 #: C/preferences_chat.page:42 C/preferences_chat.page:54
 #: C/preferences_gecko.page:58 C/preferences_gecko.page:100
-#: C/preferences_gecko.page:171 C/preferences_general.page:52
+#: C/preferences_gecko.page:182 C/preferences_general.page:52
 #: C/preferences_general.page:70 C/preferences_general.page:119
 #: C/preferences_general.page:199 C/preferences_general.page:210
 #: C/preferences_key_echo.page:112 C/preferences_key_echo.page:122
@@ -5698,7 +5350,7 @@ msgstr ""
 #. (itstool) path: section/p
 #: C/preferences_braille.page:129 C/preferences_braille.page:142
 #: C/preferences_gecko.page:35 C/preferences_gecko.page:78
-#: C/preferences_gecko.page:131 C/preferences_gecko.page:159
+#: C/preferences_gecko.page:142 C/preferences_gecko.page:170
 #: C/preferences_general.page:188 C/preferences_key_echo.page:28
 #: C/preferences_key_echo.page:37 C/preferences_key_echo.page:47
 #: C/preferences_key_echo.page:57 C/preferences_key_echo.page:67
@@ -6072,18 +5724,38 @@ msgstr ""
 "correo-e completos."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:118
+#: C/preferences_gecko.page:118 C/preferences_gecko.page:129
 msgid "Default value: checked for Firefox; not checked for Thunderbird"
 msgstr ""
 "Valor predeterminado: activado para Firefox, desactivado para Thunderbird"
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:123
+#| msgid "Automatically start speaking a page when it is first loaded"
+msgid "Present summary of a page when it is first loaded"
+msgstr "Mostrar el resumen de una página cuando se carga por primera vez"
+
+#. (itstool) path: section/p
+#: C/preferences_gecko.page:124
+#| msgid ""
+#| "If this checkbox is checked, <app>Orca</app> will perform a Say All on "
+#| "the newly opened web page or email."
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will summarize details about "
+"the newly opened web page or email, such as the number of headings, "
+"landmarks, and links."
+msgstr ""
+"Si esta casilla está marcada, <app>Orca</app> resumirá los detalles sobre la "
+"nueva página o correo-e abierto, tales como el número de encabezados, "
+"marcadores y enlaces."
+
+#. (itstool) path: section/title
+#: C/preferences_gecko.page:134
 msgid "Enable layout mode for content"
 msgstr "Activar el modo de distribución para el contenido"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:124
+#: C/preferences_gecko.page:135
 msgid ""
 "If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
 "the on-screen layout of the content and present the full line, including any "
@@ -6099,12 +5771,12 @@ msgstr ""
 "presentación como para navegación."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:137
+#: C/preferences_gecko.page:148
 msgid "Table Options"
 msgstr "Opciones de tabla"
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:139
+#: C/preferences_gecko.page:150
 msgid ""
 "To learn more about <app>Orca's</app> options for navigating within tables, "
 "please see <link xref=\"preferences_table_navigation\">Table Navigation "
@@ -6115,12 +5787,12 @@ msgstr ""
 "\">Preferencias de navegación por tablas</link>."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:147
+#: C/preferences_gecko.page:158
 msgid "Find Options"
 msgstr "Opciones de búsqueda"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:148
+#: C/preferences_gecko.page:159
 msgid ""
 "The <gui>Find Options</gui> group of controls make it possible for you to "
 "customize how <app>Orca</app> presents the results of a search conducted "
@@ -6131,12 +5803,12 @@ msgstr ""
 "llevada a cabo usando la funcionalidad de búsqueda de la aplicación."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:154
+#: C/preferences_gecko.page:165
 msgid "Speak results during find"
 msgstr "Hablar resultados durante la búsqueda"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:155
+#: C/preferences_gecko.page:166
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will read the line which "
 "matches your current search query."
@@ -6145,12 +5817,12 @@ msgstr ""
 "con su búsqueda actual."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:164
+#: C/preferences_gecko.page:175
 msgid "Only speak changed lines during find"
 msgstr "Hablar solamente las líneas modificadas durante la búsqueda"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:165
+#: C/preferences_gecko.page:176
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will not present the matching "
 "line if it is the same line as the previous match. This option is designed "
@@ -6163,12 +5835,12 @@ msgstr ""
 "múltiples coincidencias de la cadena que está buscando."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:176
+#: C/preferences_gecko.page:187
 msgid "Minimum length of matched text"
 msgstr "Longitud mínima del texto coincidente"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:177
+#: C/preferences_gecko.page:188
 msgid ""
 "This editable spin button is where you can specify the number of characters "
 "which much match before <app>Orca</app> announces the matching line. This "
@@ -6182,7 +5854,7 @@ msgstr ""
 "muchas coincidencias."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:184
+#: C/preferences_gecko.page:195
 msgid "Default value: 4"
 msgstr "Valor predeterminado: 4"
 
@@ -6850,30 +6522,85 @@ msgstr ""
 msgid "Enable alphabetic keys"
 msgstr "Activar teclas alfabéticas"
 
+#. (itstool) path: section/p
+#: C/preferences_key_echo.page:33
+msgid ""
+"This option controls whether or not keys like <key>a</key>, <key>b</key>, "
+"and <key>c</key> should be spoken when pressed."
+msgstr ""
+"Esta opción controla si las teclas <key>a</key>, <key>b</key> y <key>c</key> "
+"se deben hablar o no cuando se pulsan."
+
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:42
 msgid "Enable numeric keys"
 msgstr "Activar teclas numéricas"
+
+#. (itstool) path: section/p
+#: C/preferences_key_echo.page:43
+msgid ""
+"This option controls whether or not keys like <key>1</key>, <key>2</key>, "
+"and <key>3</key> should be spoken when pressed."
+msgstr ""
+"Esta opción controla si las teclas <key>1</key>, <key>2</key> y <key>3</key> "
+"se deben hablar o no cuando se pulsan."
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:52
 msgid "Enable punctuation keys"
 msgstr "Activar teclas de puntuación"
 
+#. (itstool) path: section/p
+#: C/preferences_key_echo.page:53
+msgid ""
+"This option controls whether or not keys like <key>%</key>, <key>;</key>, "
+"and <key>?</key> should be spoken when pressed."
+msgstr ""
+"Esta opción controla si las teclas <key>%</key>, <key>;</key> y <key>?</key> "
+"se deben hablar o no cuando se pulsan."
+
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:62
 msgid "Enable space"
 msgstr "Activar espacio"
+
+#. (itstool) path: section/p
+#: C/preferences_key_echo.page:63
+msgid ""
+"This option controls whether or not <key>space</key> should be spoken when "
+"pressed."
+msgstr ""
+"Esta opción controla si la tecla <key>espacio</key> se debe hablar o no "
+"cuando se pulsa."
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:72
 msgid "Enable modifier keys"
 msgstr "Activar teclas modificadoras"
 
+#. (itstool) path: section/p
+#: C/preferences_key_echo.page:73
+msgid ""
+"This option controls whether or not <key>Shift</key>, <key>Ctrl</key>, "
+"<key>Alt</key> and <key>Meta</key> should be spoken when pressed."
+msgstr ""
+"Esta opción controla si las teclas <key>Shift</key>, <key>Ctrl</key>, "
+"<key>Alt</key> y <key>Windows</key>, etcétera se deben hablar o no cuando se "
+"pulsan."
+
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:82
 msgid "Enable function keys"
 msgstr "Activar teclas de función"
+
+#. (itstool) path: section/p
+#: C/preferences_key_echo.page:83
+msgid ""
+"This option controls whether or not <key>F1</key> through <key>F12</key> "
+"should be spoken when pressed."
+msgstr ""
+"Esta opción controla si las teclas <key>F1</key> hasta <key>F12</key> se "
+"deben hablar o no cuando se pulsan."
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:92
@@ -7518,7 +7245,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:236
-#| msgid "Speak cell coordinates"
 msgid "Speak misspelled-word indicator"
 msgstr "Hablar el indicador de palabra mal escrita"
 
@@ -8183,6 +7909,241 @@ msgstr ""
 "Marcar la casilla <gui>Hablar números como dígitos</gui> hará que <app>Orca</"
 "app> divida un número como «123» en dígitos separados («1», «2» y «3») antes "
 "de enviarlo a sintetizador de voz."
+
+#~ msgid ""
+#~ "If you want to configure <app>Orca</app>, you can do one of the following:"
+#~ msgstr ""
+#~ "Si quiere configurar <app>Orca</app> puede hacerlo de las siguientes "
+#~ "maneras:"
+
+#~ msgid ""
+#~ "Get into the <link xref=\"preferences\">Preferences</link> dialog by "
+#~ "pressing <keyseq><key>Orca Modifier</key><key>Space</key> </keyseq> from "
+#~ "within any accessible application."
+#~ msgstr ""
+#~ "Vaya al diálogo de <link xref=\"preferences\">Preferencias</link> "
+#~ "pulsando <keyseq><key>Modificador de Orca</key><key>Espacio</key></"
+#~ "keyseq> desde cualquier aplicación accesible."
+
+#~ msgid ""
+#~ "Pass the <cmd>--text-setup</cmd> option to <app>Orca</app> to re-run "
+#~ "<app>Orca</app>'s <link xref=\"howto_text_setup\">text-based setup</link>."
+#~ msgstr ""
+#~ "Pase la opción de <cmd>--text-setup</cmd> a <app>Orca</app> para volver a "
+#~ "ejecutar la <link xref=\"howto_text_setup\">configuración de texto</link> "
+#~ "de <app>Orca</app>."
+
+#~ msgid ""
+#~ "A feature which allows you to perform basic configuration of <app>Orca</"
+#~ "app> even if the graphical desktop is not running."
+#~ msgstr ""
+#~ "Una característica que le permite realizar una configuración básica de "
+#~ "<app>Orca</app> aunque el entorno gráfico no esté en ejecución."
+
+#~ msgid "Using Text Setup"
+#~ msgstr "Usar la configuración en modo texto"
+
+#~ msgid ""
+#~ "Orca has a text setup feature which allows you to perform basic "
+#~ "configuration of <app>Orca</app> even if the graphical desktop is not "
+#~ "running."
+#~ msgstr ""
+#~ "Orca tiene una característica de configuración en modo texto que le "
+#~ "permite realizar una configuración básica de <app>Orca</app> aunque el "
+#~ "entorno gráfico no esté en ejecución."
+
+#~ msgid "Launching <app>Orca</app>'s Text-Only Guided Setup"
+#~ msgstr ""
+#~ "Iniciar la instalación asistida de <app>Orca</app> en modo de sólo texto"
+
+#~ msgid ""
+#~ "Open a <gui>Run</gui> dialog. For most distros, this can be accomplished "
+#~ "by pressing <keyseq><key>Alt</key><key>F2</key></keyseq>. Alternatively, "
+#~ "you can use a terminal window or the system text console."
+#~ msgstr ""
+#~ "Abra un diálogo <gui>Ejecutar</gui>. En la mayoría de las distribuciones, "
+#~ "esto se puede hacer pulsando <keyseq><key>Alt</key><key>F2</key></"
+#~ "keyseq>. Alternativamente, puede usar una ventana de la termina o la "
+#~ "consola de texto del sistema."
+
+#~ msgid ""
+#~ "Type <cmd>orca --text-setup</cmd> or <cmd>orca -t</cmd> and press "
+#~ "<key>Return</key>."
+#~ msgstr ""
+#~ "Escriba <cmd>orca --text-setup</cmd> o <cmd>orca -t</cmd> y pulse "
+#~ "<key>Intro</key>."
+
+#~ msgid "You will be asked a few questions:"
+#~ msgstr "Se le harán algunas preguntas:"
+
+#~ msgid "Select desired speech system"
+#~ msgstr "Seleccione el sistema de voz deseado"
+
+#~ msgid ""
+#~ "The choices that follow will depend on which speech systems you have "
+#~ "installed on your system. Type the number associated with your desired "
+#~ "speech system and press <key>Return</key>."
+#~ msgstr ""
+#~ "Las siguientes opciones dependerán de qué sistemas de voz tenga "
+#~ "instalados en su sistema. Escriba el número asociado a su sistema de voz "
+#~ "deseado y pulse <key>Intro</key>."
+
+#~ msgid "Select desired speech server"
+#~ msgstr "Seleccione el servidor de voz deseado"
+
+#~ msgid ""
+#~ "The choices that follow will depend on which speech synthesizers you have "
+#~ "installed on your system. Type the number associated with your desired "
+#~ "speech server and press <key>Return</key>."
+#~ msgstr ""
+#~ "Las siguientes opciones dependerán de qué sintetizadores de voz tenga "
+#~ "instalados en su sistema. Escriba el número asociado a su servidor de voz "
+#~ "deseado y pulse <key>Intro</key>."
+
+#~ msgid "Select desired voice"
+#~ msgstr "Seleccione la voz deseada"
+
+#~ msgid ""
+#~ "The \"voices\" correspond with the languages available. In the case of "
+#~ "speech-dispatcher, there are approximately 60 languages and dialects "
+#~ "supported with more being added regularly. Type in the number of your "
+#~ "language choice (e.g., <cmd>7</cmd> for American English) and press "
+#~ "<key>Return</key>. You do not need to wait for the entire list to be "
+#~ "spoken. In addition, <app>Orca</app> attempts to make your default "
+#~ "language the first choice, so in many cases you can simply type <cmd>1</"
+#~ "cmd> and press <key>Return</key> without having to listen to the full "
+#~ "list of voices."
+#~ msgstr ""
+#~ "Las «voces» corresponden a los idiomas disponibles. En el caso de «speech-"
+#~ "dispatcher», hay aproximadamente 60 idiomas y dialectos admitidos, y cada "
+#~ "cierto tiempo se agregan más. Escriba el número de su opción de idioma "
+#~ "(por ejemplo, <cmd>7</cmd> para «Inglés americano») y pulse <key>Intro</"
+#~ "key>. No necesita esperar a que se lea la lista completa. Además, "
+#~ "<app>Orca</app> trata de poner su idioma predeterminado como primera "
+#~ "opción, de modo que en muchos casos simplemente tendrá que escribir "
+#~ "<cmd>1</cmd> y pulsar <key>Intro</key> sin tener que escuchar la lista "
+#~ "completa de voces."
+
+#~ msgid "Enable echo by word?"
+#~ msgstr "¿Activar eco por palabras?"
+
+#~ msgid ""
+#~ "This option causes <app>Orca</app> to speak words as you finish typing "
+#~ "them. Type <cmd>y</cmd> or <cmd>n</cmd> and press <key>Return</key>."
+#~ msgstr ""
+#~ "Esta opción hace que <app>Orca</app> lea las palabras cuando termina de "
+#~ "escribirlas. Escriba <cmd>s</cmd> o <cmd>n</cmd> y pulse <key>Intro</key>."
+
+#~ msgid "Enable key echo?"
+#~ msgstr "¿Activar eco de teclas?"
+
+#~ msgid ""
+#~ "This option causes <app>Orca</app> to speak all keys as they are pressed. "
+#~ "Type <cmd>y</cmd> or <cmd>n</cmd> and press <key>Return</key>."
+#~ msgstr ""
+#~ "Esta opción hace que <app>Orca</app> lea todas las teclas que se pulsan. "
+#~ "Escriba <cmd>s</cmd> o <cmd>n</cmd> y pulse <key>Intro</key>."
+
+#~ msgid ""
+#~ "If you indicate that you would like key echo enabled, setup will then ask "
+#~ "you about the types of key echo you can enable or disable. For each one, "
+#~ "type <cmd>y</cmd> to enable it or <cmd>n</cmd> to disable it and press "
+#~ "<key>Return</key>. The types are:"
+#~ msgstr ""
+#~ "Si indica que le gustaría activar el eco de teclas, la configuración le "
+#~ "preguntará por los tipos de eco de teclas que puede activar o desactivar. "
+#~ "Para cada uno, escriba <cmd>s</cmd> para activarlo o <cmd>n</cmd> para "
+#~ "desactivarlo y pulse <key>Intro</key>. Los tipos de eco de teclas son:"
+
+#~ msgid "alphabetic keys"
+#~ msgstr "teclas alfabéticas"
+
+#~ msgid "numeric keys"
+#~ msgstr "teclas numéricas"
+
+#~ msgid "punctuation keys"
+#~ msgstr "teclas de puntuación"
+
+#~ msgid "space"
+#~ msgstr "espacio"
+
+#~ msgid "modifier keys"
+#~ msgstr "teclas modificadoras"
+
+#~ msgid "locking keys"
+#~ msgstr "teclas de bloqueo"
+
+#~ msgid ""
+#~ "This option controls whether or not <key>Caps Lock</key>, <key>Scroll "
+#~ "Lock</key>, and <key>Num Lock</key> should be spoken when pressed."
+#~ msgstr ""
+#~ "Esta opción controla si las teclas <key>Bloq Mayús</key>, <key>Bloq "
+#~ "Despl</key>, y <key>Bloq Num</key>, etcétera se deben hablar o no cuando "
+#~ "se pulsan."
+
+#~ msgid "function keys"
+#~ msgstr "teclas de función"
+
+#~ msgid "action keys"
+#~ msgstr "teclas de acción"
+
+#~ msgid ""
+#~ "This option controls whether or not <key>BackSpace</key>, <key>Delete</"
+#~ "key>, <key>Return</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</"
+#~ "key>, <key>Page Down</key>, <key>Home</key>, and <key>End</key> should be "
+#~ "spoken when pressed."
+#~ msgstr ""
+#~ "Esta opción controla si las teclas <key>Retroceso</key>, <key>Supr</key>, "
+#~ "<key>Intro</key>, <key>Escape</key>, <key>Tab</key>, <key>Re Pág</key>, "
+#~ "<key>Av Pág</key>, <key>Inicio</key>, y <key>Fin</key> se deben leer al "
+#~ "pulsarlas."
+
+#~ msgid "Select desired keyboard layout."
+#~ msgstr "Seleccione la distribución de teclado deseada."
+
+#~ msgid ""
+#~ "Orca has two keyboard layouts: Desktop and Laptop. The layout you choose "
+#~ "impacts which key is used as the Orca Modifier."
+#~ msgstr ""
+#~ "Orca tiene dos distribuciones de teclado: escritorio y portátil. La "
+#~ "distribución que elija afecta a qué tecla se usa como «modificador de "
+#~ "Orca»."
+
+#~ msgid ""
+#~ "Type <cmd>1</cmd> for Desktop layout or <cmd>2</cmd> for Laptop layout "
+#~ "and press <key>Return</key>."
+#~ msgstr ""
+#~ "Escriba <cmd>1</cmd> para la distribución de escritorio o <cmd>2</cmd> "
+#~ "para la distribución de portátil y pulse <key>Intro</key>."
+
+#~ msgid "Enable Braille"
+#~ msgstr "Activar Braille"
+
+#~ msgid ""
+#~ "This functionality assumes a BrlTTY-compatible device is available. Type "
+#~ "<cmd>y</cmd> or <cmd>n</cmd> and press <key>Return</key>. Note that you "
+#~ "can usually just enter <cmd>y</cmd> here; <app>Orca</app> will recover "
+#~ "gracefully and function even if it cannot find BrlTTY."
+#~ msgstr ""
+#~ "Esta función da por hecho que hay disponible un dispositivo compatible "
+#~ "con BrlTTY. Escriba <cmd>s</cmd> o <cmd>n</cmd> y pulse <key>Intro</key>. "
+#~ "Tenga en cuenta que por lo general solamente puede introducir <cmd>s</"
+#~ "cmd>; Orca se recuperará correctamente y funcionará incluso si no puede "
+#~ "encontrar BrlTTY."
+
+#~ msgid ""
+#~ "That's it. <app>Orca</app> is now ready for use and will be launched if "
+#~ "you are in a graphical desktop environment where accessibility is enabled."
+#~ msgstr ""
+#~ "Ya está. <app>Orca</app> está listo para usarse y se ejecutará cuando "
+#~ "tenga la accesibilidad activada y esté en el entorno del escritorio."
+
+#~ msgid ""
+#~ "<cmd>-t</cmd>, <cmd>--text-setup</cmd>: Set up user preferences (text "
+#~ "version)"
+#~ msgstr ""
+#~ "<cmd>-t</cmd>, <cmd>--text-setup</cmd>: configurar las preferencias de "
+#~ "usuario (versión texto)"
 
 #~ msgid "Table Rows"
 #~ msgstr "Filas de tabla"
@@ -9049,11 +9010,6 @@ msgstr ""
 #~ msgstr ""
 #~ "<cmd>-s</cmd>, <cmd>--setup</cmd>, <cmd>--gui-setup</cmd>: configurar las "
 #~ "preferencias de usuario"
-
-#~ msgid "<cmd>-n</cmd>, <cmd>--no-setup</cmd>Skip set up of user preferences"
-#~ msgstr ""
-#~ "<cmd>-n</cmd>, <cmd>--no-setup</cmd>: omitir la configuración de las "
-#~ "preferencias del usuario"
 
 #~ msgid "<cmd>-q</cmd>, <cmd>--quit</cmd>: Quits <app>Orca</app>"
 #~ msgstr "<cmd>-q</cmd>, <cmd>--quit</cmd>: salir de <app>Orca</app>"
