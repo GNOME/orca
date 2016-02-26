@@ -104,6 +104,9 @@ class Player:
         if self._initialized:
             return
 
+        if not _gstreamerAvailable:
+            return
+
         self._player = Gst.ElementFactory.make('playbin', 'player')
         bus = self._player.get_bus()
         bus.add_signal_watch()
