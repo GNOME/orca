@@ -166,11 +166,9 @@ class Script(default.Script):
 
         # Unfiled. When a canvas item gets focus but is not selected, we
         # are only getting a focus event. This happens in Nautilus.
-        if role == pyatspi.ROLE_CANVAS:
-            topLevelObject = self.utilities.topLevelObject(event.source)
-            if topLevelObject == orca_state.activeWindow:
-                orca.setLocusOfFocus(event, event.source)
-                return
+        if role == pyatspi.ROLE_CANVAS and not self.utilities.eventIsCanvasNoise(event):
+            orca.setLocusOfFocus(event, event.source)
+            return
 
         # Unfiled, but yet another case of only getting a focus: event when
         # a widget appears in a parent container and is already focused.
@@ -231,3 +229,9 @@ class Script(default.Script):
             return
 
         default.Script.onTextSelectionChanged(self, event)
+
+    def isActivatableEvent(self, event):
+        if self.utilities.eventIsCanvasNoise(event):
+            return False
+
+        return super().isActivatableEvent(event)

@@ -30,6 +30,7 @@ import re
 
 import orca.debug as debug
 import orca.script_utilities as script_utilities
+import orca.orca_state as orca_state
 
 class Utilities(script_utilities.Utilities):
 
@@ -106,3 +107,20 @@ class Utilities(script_utilities.Utilities):
             return False
 
         return rv
+
+    def eventIsCanvasNoise(self, event):
+        if event.source.getRole() != pyatspi.ROLE_CANVAS:
+            return False
+
+        if not orca_state.activeWindow:
+            msg = 'INFO: No active window'
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        topLevel = self.topLevelObject(event.source)
+        if not self.isSameObject(topLevel, orca_state.activeWindow):
+            msg = 'INFO: Event is believed to be canvas noise'
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
