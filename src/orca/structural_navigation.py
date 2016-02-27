@@ -2747,6 +2747,14 @@ class StructuralNavigation:
                 self._script.presentMessage(caption)
             self._script.presentMessage(self._getTableDescription(obj))
             cell = obj.queryTable().getAccessibleAt(0, 0)
+            if not cell:
+                msg = 'ERROR: Broken table interface for %s' % obj
+                debug.println(debug.LEVEL_INFO, msg)
+                cell = pyatspi.findDescendant(obj, self._tableCellPredicate)
+                if cell:
+                    msg = 'HACK: Located %s for first cell' % cell
+                    debug.println(debug.LEVEL_INFO, msg)
+
             self.lastTableCell = [0, 0]
             self._presentObject(cell, 0)
             [cell, characterOffset] = self._getCaretPosition(cell)
