@@ -64,6 +64,8 @@ _settingsManager = settings_manager.getManager()
 
 class Utilities:
 
+    _desktop = pyatspi.Registry.getDesktop(0)
+
     EMBEDDED_OBJECT_CHARACTER = '\ufffc'
     SUPERSCRIPT_DIGITS = \
         ['\u2070', '\u00b9', '\u00b2', '\u00b3', '\u2074',
@@ -1320,7 +1322,7 @@ class Utilities:
         as a list of Accessible objects.
         """
 
-        return [x for x in pyatspi.Registry.getDesktop(0) if x is not None]
+        return [x for x in Utilities._desktop if x is not None]
 
     def labelsForObject(self, obj):
         """Return a list of the objects that are labelling this object.

@@ -49,6 +49,7 @@ class EventManager:
         self._asyncMode = asyncMode
         self._scriptListenerCounts = {}
         self.registry = pyatspi.Registry
+        self._desktop = pyatspi.Registry.getDesktop(0)
         self._active = False
         self._enqueueCount = 0
         self._dequeueCount = 0
@@ -131,7 +132,7 @@ class EventManager:
         # This should ultimately be changed as there are valid reasons
         # to handle these events at the application level.
         if event.type.startswith('object:children-changed:remove') \
-           and event.source != self.registry.getDesktop(0):
+           and event.source != self._desktop:
             msg = 'EVENT MANAGER: Ignoring because event type is ignored'
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -603,7 +604,7 @@ class EventManager:
 
         if eType.startswith("object:children-changed:remove"):
             try:
-                if event.source == self.registry.getDesktop(0):
+                if event.source == self._desktop:
                     _scriptManager.reclaimScripts()
                     return
             except (LookupError, RuntimeError):

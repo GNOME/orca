@@ -25,6 +25,7 @@ __copyright__ = "Copyright (c) 2011. Orca Team."
 __license__   = "LGPL"
 
 import importlib
+import pyatspi
 
 from . import debug
 from . import orca_state
@@ -65,6 +66,7 @@ class ScriptManager:
              'gnome-terminal-server': 'gnome-terminal'}
 
         self.setActiveScript(None, "__init__")
+        self._desktop = pyatspi.Registry.getDesktop(0)
         debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Initialized', True)
 
     def activate(self):
@@ -278,16 +280,13 @@ class ScriptManager:
         deleting any scripts as necessary.
         """
 
-        from pyatspi import Registry
-
+        appList = list(self.appScripts.keys())
         try:
-            desktop = Registry.getDesktop(0)
+            appList = [a for a in appList if a != None and a not in self._desktop]
         except:
             debug.printException(debug.LEVEL_FINEST)
             return
 
-        appList = list(self.appScripts.keys())
-        appList = [a for a in appList if a != None and a not in desktop]
         for app in appList:
             appScript = self.appScripts.pop(app)
             del appScript
