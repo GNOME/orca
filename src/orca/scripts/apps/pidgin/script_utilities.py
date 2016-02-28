@@ -179,3 +179,14 @@ class Utilities(script_utilities.Utilities):
     # Miscellaneous Utilities                                               #
     #                                                                       #
     #########################################################################
+
+    def isZombie(self, obj):
+        if not super().isZombie(obj):
+            return False
+
+        if obj.getRole() != pyatspi.ROLE_TOGGLE_BUTTON:
+            return True
+
+        msg = 'INFO: Hacking around broken index in parent for %s' % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return obj.getIndexInParent() != -1
