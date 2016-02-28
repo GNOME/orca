@@ -236,6 +236,31 @@ class Utilities(script_utilities.Utilities):
 
         return None
 
+    def grabFocusWhenSettingCaret(self, obj):
+        try:
+            role = obj.getRole()
+            state = obj.getState()
+        except:
+            msg = "WEB: Exception getting role and state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        # To avoid triggering popup lists.
+        if role == pyatspi.ROLE_ENTRY:
+            return False
+
+        return state.contains(pyatspi.STATE_FOCUSABLE)
+
+    def grabFocus(self, obj):
+        try:
+            obj.queryComponent().grabFocus()
+        except NotImplementedError:
+            msg = "WEB: %s does not implement the component interface" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+        except:
+            msg = "WEB: Exception grabbing focus on %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+
     def setCaretPosition(self, obj, offset):
         if self._script.flatReviewContext:
             self._script.toggleFlatReviewMode()
@@ -245,25 +270,9 @@ class Utilities(script_utilities.Utilities):
         if self._script.focusModeIsSticky():
             return
 
-        try:
-            state = obj.getState()
-        except:
-            msg = "WEB: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return
-
         orca.setLocusOfFocus(None, obj, notifyScript=False)
-        if state.contains(pyatspi.STATE_FOCUSABLE):
-            try:
-                obj.queryComponent().grabFocus()
-            except NotImplementedError:
-                msg = "WEB: %s does not implement the component interface" % obj
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return
-            except:
-                msg = "WEB: Exception grabbing focus on %s" % obj
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return
+        if self.grabFocusWhenSettingCaret(obj):
+            self.grabFocus(obj)
 
         text = self.queryNonEmptyText(obj)
         if text:

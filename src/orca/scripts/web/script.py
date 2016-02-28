@@ -962,8 +962,8 @@ class Script(default.Script):
         self._focusModeIsSticky = True
 
     def togglePresentationMode(self, inputEvent):
+        [obj, characterOffset] = self.utilities.getCaretContext()
         if self._inFocusMode:
-            [obj, characterOffset] = self.utilities.getCaretContext()
             try:
                 parentRole = obj.parent.getRole()
             except:
@@ -975,6 +975,12 @@ class Script(default.Script):
 
             self.presentMessage(messages.MODE_BROWSE)
         else:
+            if not self.utilities.grabFocusWhenSettingCaret(obj) \
+               and (self._lastCommandWasCaretNav \
+                    or self._lastCommandWasStructNav \
+                    or inputEvent):
+                self.utilities.grabFocus(obj)
+
             self.presentMessage(messages.MODE_FOCUS)
         self._inFocusMode = not self._inFocusMode
         self._focusModeIsSticky = False
