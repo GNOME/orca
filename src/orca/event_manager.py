@@ -117,6 +117,17 @@ class EventManager:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        script = orca_state.activeScript
+        if event.type.startswith('object:children-changed:add'):
+            if not script:
+                msg = 'EVENT MANAGER: Ignoring because there is no active script'
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+            if script.app != event.host_application:
+                msg = 'EVENT MANAGER: Ignoring because event is not from active app'
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+
         # This should ultimately be changed as there are valid reasons
         # to handle these events at the application level.
         if event.type.startswith('object:children-changed:remove') \
