@@ -247,7 +247,7 @@ def _processKeyboardEvent(event):
         script.presentationInterrupt()
     script.presentKeyboardEvent(keyboardEvent)
     if keyboardEvent.isModifierKey() and not isOrcaModifier:
-        return False
+        return orca_state.learnModeEnabled
  
     # Special modes.
     if not isPressedEvent and keyboardEvent.event_string == "Escape":
