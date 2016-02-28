@@ -118,6 +118,14 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
+        # Unfiled, but yet another case of only getting a focus: event.
+        # Seems to happen mainly when selecting.
+        if role == pyatspi.ROLE_ICON:
+            topLevelObject = self.utilities.topLevelObject(event.source)
+            if topLevelObject == orca_state.activeWindow:
+                orca.setLocusOfFocus(event, event.source)
+                return
+
         # Unfiled, but yet another case of only getting a focus: event when
         # a widget appears in a parent container and is already focused.
         if role == pyatspi.ROLE_TABLE:
@@ -128,6 +136,15 @@ class Script(default.Script):
 
             orca.setLocusOfFocus(event, obj)
             return
+
+    def onSelectionChanged(self, event):
+        """Callback for object:selection-changed accessibility events."""
+
+        if event.source.getRole() == pyatspi.ROLE_LAYERED_PANE \
+           and self.utilities.selectedChildCount(event.source) > 1:
+            return
+
+        super().onSelectionChanged(event)
 
     def onTextSelectionChanged(self, event):
         """Callback for object:text-selection-changed accessibility events."""

@@ -3200,6 +3200,23 @@ class Utilities:
 
         return children
 
+    def selectedChildCount(self, obj):
+        try:
+            selection = obj.querySelection()
+        except NotImplementedError:
+            msg = "INFO: %s does not implement the selection interface" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return 0
+        except:
+            msg = "ERROR: Exception querying selection interface for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return 0
+
+        count = selection.nSelectedChildren
+        msg = "INFO: %s reports %i selected children" % (obj, count)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return count
+
     def focusedChild(self, obj):
         isFocused = lambda x: x and x.getState().contains(pyatspi.STATE_FOCUSED)
         child = pyatspi.findDescendant(obj, isFocused)

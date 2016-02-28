@@ -198,11 +198,16 @@ class Script(default.Script):
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
 
-        if event.source.getRole() == pyatspi.ROLE_COMBO_BOX \
+        role = event.source.getRole()
+        if role == pyatspi.ROLE_COMBO_BOX \
            and not event.source.getState().contains(pyatspi.STATE_FOCUSED):
             return
 
-        default.Script.onSelectionChanged(self, event)
+        if role == pyatspi.ROLE_LAYERED_PANE \
+           and self.utilities.selectedChildCount(event.source) > 1:
+            return
+
+        super().onSelectionChanged(event)
 
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
