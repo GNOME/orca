@@ -1,3 +1,81 @@
+3.19.91 - 2 March 2016
+
+General:
+
+ * Fix several issues in presentation of clipboard notifications
+
+ * Ignore some uninteresting and spammy events (performance, chattiness)
+
+ * Don't keep asking the registry for the desktop (performance)
+
+ * Eliminate several instances of terminal chattiness
+
+ * Hack around Pidgin status toggle button bug
+
+ * Improve presentation of selection changes in layered panes
+
+ * Fix modifier keys being passed to application while in in learn mode
+
+ * Add a customization to present updates for status bar progress bars
+
+ * Make detailed whereAmI fall back on basic whereAmI presentation
+
+ * Speak popovers which are modal but do not claim focus
+
+ * Fix incorrect identification of commands entered on Cyrillic keyboards
+
+ * Fix presentation of first radio button in a functional (but not actual)
+   group
+
+ * Use isSameObject() to detect widgets and windows which were recreated
+
+Gecko:
+
+ * Work around multiple accessible objects for one functional window
+
+ * Add more, and more performant, zombie replicant recovery utilities
+
+ * Grab focus on entries when setting focus mode; not when positioning
+   caret so we don't accidentally trigger popups
+
+ * Notify script when locusOfFocus is set from window to contenteditable
+   objects so we're not silent
+
+ * Work around broken table interface Gecko issue
+
+ * Attempt to identify and present clipboard events caused by elements
+
+ * Let default script handle content editable during selection
+
+ * Clear content cache when Thunderbird window is deactivated so we don't
+   mistakenly conclude we're in the same document frame
+
+ * Fix several caret navigation and structural navigation bugs
+
+ * Present object counts for all objects in detailed whereAmI page
+   summary
+
+LibreOffice:
+
+ * Update some heuristics to address changed roles in Calc 5.1.x
+
+ * Handle more cases of Calc becoming non-responsive or crashing
+
+ * Work around missing event from LibreOffice Calc
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca            Catalan                     Jordi Mas
+    cs            Czech                       Marek Černocký
+    es            Spanish                     Daniel Mustieles
+    gl            Galician                    Fran Diéguez
+    lt            Lithuanian                  Aurimas Černius
+    oc            Occitan                     Cédric Valmary
+    pl            Polish                      Piotr Drąg
+    sv            Swedish                     Anders Jonsson
+
+=========
+
 3.19.90 - 17 February 2016
 
 New Features and Options:
