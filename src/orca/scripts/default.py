@@ -767,20 +767,19 @@ class Script(script.Script):
         # We want to save the current row and column of a newly focused
         # or selected table cell so that on subsequent cell focus/selection
         # we only present the changed location.
+        self.pointOfReference['lastColumn'] = -1
+        self.pointOfReference['lastRow'] = -1
         if role == pyatspi.ROLE_TABLE_CELL:
             try:
                 table = obj.parent.queryTable()
-            except:
-                pass
-            else:
                 index = self.utilities.cellIndex(obj)
                 column = table.getColumnAtIndex(index)
                 row = table.getRowAtIndex(index)
+            except:
+                pass
+            else:
                 self.pointOfReference['lastColumn'] = column
                 self.pointOfReference['lastRow'] = row
-        else:
-            self.pointOfReference['lastColumn'] = -1
-            self.pointOfReference['lastRow'] = -1
 
         self.pointOfReference['checkedChange'] = \
             hash(obj), state.contains(pyatspi.STATE_CHECKED)

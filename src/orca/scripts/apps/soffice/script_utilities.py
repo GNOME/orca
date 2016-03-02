@@ -349,9 +349,15 @@ class Utilities(script_utilities.Utilities):
         """
 
         if self._script.inputLineForCell:
-            topLevel = self.topLevelObject(self._script.inputLineForCell)
-            if self.isSameObject(orca_state.activeWindow, topLevel):
-                return self._script.inputLineForCell
+            try:
+                topLevel = self.topLevelObject(self._script.inputLineForCell)
+            except:
+                msg = "ERROR: Exception getting topLevelObject for inputline"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                self._script.inputLineForCell = None
+            else:
+                if self.isSameObject(orca_state.activeWindow, topLevel):
+                    return self._script.inputLineForCell
 
         isScrollPane = lambda x: x and x.getRole() == pyatspi.ROLE_SCROLL_PANE
         scrollPane = pyatspi.findAncestor(obj, isScrollPane)
@@ -367,7 +373,7 @@ class Utilities(script_utilities.Utilities):
         if not toolbar:
             msg = "ERROR: Calc inputline toolbar not found."
             debug.println(debug.LEVEL_INFO, msg, True)
-            return
+            return None
 
         isParagraph = lambda x: x and x.getRole() == pyatspi.ROLE_PARAGRAPH
         allParagraphs = pyatspi.findAllDescendants(toolbar, isParagraph)
