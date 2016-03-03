@@ -62,7 +62,9 @@ class ScriptManager:
              'marco':            'metacity',
              'Nereid':           'Banshee',
              'vte':              'gnome-terminal',
-             'gnome-terminal-server': 'gnome-terminal'}
+             'gnome-terminal-server': 'gnome-terminal',
+             'mate-notification-daemon': 'notification-daemon',
+            }
 
         self.setActiveScript(None, "__init__")
         debug.println(debug.LEVEL_FINEST, 'INFO: Script manager initialized')
