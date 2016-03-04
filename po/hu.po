@@ -1,25 +1,26 @@
 # Hungarian translation of orca
-# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 Free Software Foundation, Inc.
+# Copyright (C) 2006-2016 Free Software Foundation, Inc.
 # This file is distributed under the same license as the orca package.
 #
 # Kálmán Kéménczy <kkemenczy at novell dot com>, 2006, 2007.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015.
 # Attila Hammer <hammera at pickup dot hu>, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015.
-# Balázs Úr <urbalazs at gmail dot com>, 2013, 2014.
+# Balázs Úr <urbalazs at gmail dot com>, 2013, 2014, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-28 07:04+0100\n"
-"PO-Revision-Date: 2015-10-28 14:07+0100\n"
-"Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=orca&keywords=I18N+L10N&component=i18n\n"
+"POT-Creation-Date: 2016-03-04 14:17+0000\n"
+"PO-Revision-Date: 2016-03-04 21:49+0100\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Lokalize 1.2\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Screen Reader"
@@ -3142,12 +3143,12 @@ msgstr "A nem látogatott hivatkozások listájának megjelenítése."
 #. Translators: this is for navigating among visited links in a document.
 #: ../src/orca/cmdnames.py:1011
 msgid "Goes to previous visited link."
-msgstr "Ugrás az előző látogatott hivatkozásra."
+msgstr "Ugrás az előző meglátogatott hivatkozásra."
 
 #. Translators: this is for navigating among visited links in a document.
 #: ../src/orca/cmdnames.py:1014
 msgid "Goes to next visited link."
-msgstr "Ugrás a következő látogatott hivatkozásra."
+msgstr "Ugrás a következő meglátogatott hivatkozásra."
 
 #. Translators: this is for navigating among visited links in a document.
 #: ../src/orca/cmdnames.py:1017
@@ -6784,13 +6785,13 @@ msgstr "nagyobb vagy kisebb, mint"
 #: ../src/orca/mathsymbols.py:1723
 msgctxt "math symbol"
 msgid "neither less than nor greater than"
-msgstr "nem kisebb és nem nagyobb mint:"
+msgstr "nem kisebb és nem nagyobb mint"
 
 #. Translators: this is the spoken representation for the character '≹' (U+2279)
 #: ../src/orca/mathsymbols.py:1726
 msgctxt "math symbol"
 msgid "neither greater than nor less than"
-msgstr "nem nagyobb és nem kevesebb mint:"
+msgstr "nem nagyobb és nem kevesebb mint"
 
 #. Translators: this is the spoken representation for the character '≺' (U+227a)
 #: ../src/orca/mathsymbols.py:1729
@@ -6922,13 +6923,13 @@ msgstr "többszörös unió"
 #: ../src/orca/mathsymbols.py:1792
 msgctxt "math symbol"
 msgid "square image of"
-msgstr "négyzet képe:"
+msgstr "négyzet képe"
 
 #. Translators: this is the spoken representation for the character '⊐' (U+2290)
 #: ../src/orca/mathsymbols.py:1795
 msgctxt "math symbol"
 msgid "square original of"
-msgstr "négyzet eredetije:"
+msgstr "négyzet eredetije"
 
 #. Translators: this is the spoken representation for the character '⊑' (U+2291)
 #: ../src/orca/mathsymbols.py:1798
@@ -7038,31 +7039,31 @@ msgstr "pont operátor négyzetben"
 #: ../src/orca/mathsymbols.py:1849
 msgctxt "math symbol"
 msgid "right tack"
-msgstr "Jobbra nyíl"
+msgstr "jobbra nyíl"
 
 #. Translators: this is the spoken representation for the character '⊣' (U+22a3)
 #: ../src/orca/mathsymbols.py:1852
 msgctxt "math symbol"
 msgid "left tack"
-msgstr "Balra nyíl"
+msgstr "balra nyíl"
 
 #. Translators: this is the spoken representation for the character '⊤' (U+22a4)
 #: ../src/orca/mathsymbols.py:1855
 msgctxt "math symbol"
 msgid "down tack"
-msgstr "Lefelé nyíl"
+msgstr "lefelé nyíl"
 
 #. Translators: this is the spoken representation for the character '⊥' (U+22a5)
 #: ../src/orca/mathsymbols.py:1858
 msgctxt "math symbol"
 msgid "up tack"
-msgstr "Felfelé nyíl"
+msgstr "felfelé nyíl"
 
 #. Translators: this is the spoken representation for the character '⊦' (U+22a6)
 #: ../src/orca/mathsymbols.py:1861
 msgctxt "math symbol"
 msgid "assertion"
-msgstr "Kijelentés"
+msgstr "kijelentés"
 
 #. Translators: this is the spoken representation for the character '⊧' (U+22a7)
 #: ../src/orca/mathsymbols.py:1864
@@ -7171,7 +7172,7 @@ msgstr "képe"
 #: ../src/orca/mathsymbols.py:1915
 msgctxt "math symbol"
 msgid "multimap"
-msgstr ""
+msgstr "többértékű leképezés"
 
 #. Translators: this is the spoken representation for the character '⊹' (U+22b9)
 #: ../src/orca/mathsymbols.py:1918
@@ -8755,7 +8756,7 @@ msgstr "A billentyűvisszhang szavak és mondatokra állítva."
 #, python-format
 msgctxt "math enclosure"
 msgid "Enclosed by: %s"
-msgstr "%s Által körbezárt"
+msgstr "%s által körbezárt"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -11051,12 +11052,12 @@ msgstr "Beszédszintetizát_or:"
 msgid "Speech _system:"
 msgstr "Beszé_drendszer:"
 
-#. Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.
+#. Translators: Having multiple
 #: ../src/orca/orca-setup.ui.h:44
 msgid "_Voice type:"
 msgstr "_Hangtípus:"
 
-#. Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.
+#. Translators: Having multiple
 #: ../src/orca/orca-setup.ui.h:46
 msgid "Voice Type Settings"
 msgstr "Hangtípusok beállításai"
@@ -11066,7 +11067,7 @@ msgstr "Hangtípusok beállításai"
 msgid "Speak multicase strings as wor_ds"
 msgstr "Több NagyBetűt tartalmazó kifejezések _szavankénti felolvasása"
 
-#. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
+#. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it
 #: ../src/orca/orca-setup.ui.h:52
 msgid "Say All B_y:"
 msgstr "_Kimondás:"
@@ -11109,7 +11110,7 @@ msgstr "_Mindent"
 msgid "Punctuation Level"
 msgstr "Központozás szintje"
 
-#. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. 'checkbox') or its state (e.g. 'not checked') or say 'mispelled' to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
+#. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g.
 #: ../src/orca/orca-setup.ui.h:72
 msgid "Only speak displayed text"
 msgstr "Csak a képernyőn megjelenő szöveg kimondása"
@@ -11126,7 +11127,7 @@ msgstr "Be_húzás és igazítás felolvasása"
 msgid "Spea_k object mnemonics"
 msgstr "Gy_orsbillentyűk felolvasása"
 
-#. Translators: This checkbox toggles whether or not Orca says the child position (e.g., 'item 6 of 7').
+#. Translators: This checkbox toggles whether or not Orca says the child position (e.g.,
 #: ../src/orca/orca-setup.ui.h:77
 msgid "Speak child p_osition"
 msgstr "P_ozícióadatok kimondásának engedélyezése"
@@ -11159,7 +11160,7 @@ msgstr "Korlátozás erre:"
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
 #: ../src/orca/orca-setup.ui.h:87
 msgid "Progress Bar Updates"
-msgstr "Folyamatjelző frissítésének felolvasása"
+msgstr "Folyamatjelző frissítési beállításai"
 
 #: ../src/orca/orca-setup.ui.h:88
 msgid "Speech"
@@ -11181,7 +11182,7 @@ msgstr "A _sorvég jel szimbólum letiltása"
 msgid "_Enable Contracted Braille"
 msgstr "I_rodalmi braille támogatás engedélyezése"
 
-#. Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille 'contractions' get used. Contractions are shorter forms of commonly-used letter combinations and words. For instance in English there is a single braille symbol for 'ing' (dots 3-4-6), and the letter 'e' (dots 1-5) all by itself means 'every'. The list of rules which dictate what contractions should be used and whether or not they can be used in a particular context are stored in liblouis' tables.
+#. Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille
 #: ../src/orca/orca-setup.ui.h:94
 msgid "Contraction _Table:"
 msgstr "Fordítási _tábla:"
@@ -11190,7 +11191,7 @@ msgstr "Fordítási _tábla:"
 msgid "Display Settings"
 msgstr "Megjelenítés beállításai"
 
-#. Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.
+#. Translators: This option refers to the dot or dots in braille which will be used to
 #: ../src/orca/orca-setup.ui.h:97
 msgctxt "braille dots"
 msgid "_None"
