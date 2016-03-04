@@ -1,26 +1,26 @@
 # Hungarian translation of orca
-# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 Free Software Foundation, Inc.
+# Copyright (C) 2006-2016 Free Software Foundation, Inc.
 # This file is distributed under the same license as the orca package.
 #
 # Kálmán Kéménczy <kkemenczy at novell dot com>, 2006, 2007.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015.
 # Attila Hammer <hammera at pickup dot hu>, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015.
-# Balázs Úr <urbalazs at gmail dot com>, 2013, 2014.
+# Balázs Úr <urbalazs at gmail dot com>, 2013, 2014, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2015-03-20 11:45+0000\n"
-"PO-Revision-Date: 2015-03-23 01:57+0100\n"
-"Last-Translator: Gabor Kelemen <kelemeng at ubuntu dot com>\n"
+"POT-Creation-Date: 2016-03-04 14:15+0000\n"
+"PO-Revision-Date: 2016-03-04 21:48+0100\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 1.2\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Screen Reader"
@@ -961,7 +961,7 @@ msgstr "fok"
 #.
 #: ../src/orca/chnames.py:249
 msgid "plus or minus"
-msgstr "plusz-mínusz"
+msgstr "pluszminusz"
 
 #. Translators: this is the spoken word for the character '²' (U+00b2)
 #.
@@ -1201,7 +1201,7 @@ msgstr "Ö"
 #.
 #: ../src/orca/chnames.py:405
 msgid "times"
-msgstr "talpas"
+msgstr "szor"
 
 #. Translators: this is the spoken word for the character 'Ø' (U+00d8)
 #.
@@ -1387,7 +1387,7 @@ msgstr "ö"
 #.
 #: ../src/orca/chnames.py:529
 msgid "divided by"
-msgstr "osztás"
+msgstr "osztva"
 
 #. Translators: this is the spoken word for the character 'ø' (U+00f8)
 #.
@@ -1447,7 +1447,7 @@ msgstr "umlautos Y"
 #.
 #: ../src/orca/chnames.py:569
 msgid "florin"
-msgstr "florin"
+msgstr "függvény"
 
 #. Translators: this is the spoken word for the character '–' (U+2013)
 #.
@@ -1556,120 +1556,17 @@ msgstr "euró"
 msgid "trademark"
 msgstr "védjegy"
 
-#. Translators: this is the spoken word for the character '←' (U+2190)
-#.
-#: ../src/orca/chnames.py:643
-msgid "left arrow"
-msgstr "balra nyíl"
-
-#. Translators: this is the spoken word for the character '→' (U+2192)
-#.
-#: ../src/orca/chnames.py:647
-msgid "right arrow"
-msgstr "jobbra nyíl"
-
-#. Translators: this is the spoken word for the character '≈' (U+2248)
-#.
-#: ../src/orca/chnames.py:651
-msgid "almost equal to"
-msgstr "közelítőleg egyenlő"
-
-#. Translators: this is the spoken word for the character '≠' (U+2260)
-#.
-#: ../src/orca/chnames.py:655
-msgid "not equal to"
-msgstr "nem egyenlő"
-
-#. Translators: this is the spoken word for the character '≤' (U+2264)
-#.
-#: ../src/orca/chnames.py:659
-msgid "less than or equal to"
-msgstr "kisebb vagy egyenlő"
-
-#. Translators: this is the spoken word for the character '≥' (U+2265)
-#.
-#: ../src/orca/chnames.py:663
-msgid "greater than or equal to"
-msgstr "nagyobb vagy egyenlő"
-
-#. Translators: this is the spoken word for the character '√' (U+221a)
-#.
-#: ../src/orca/chnames.py:667
-msgid "square root"
-msgstr "négyzetgyök"
-
-#. Translators: this is the spoken word for the character '∛' (U+221b)
-#.
-#: ../src/orca/chnames.py:671
-msgid "cube root"
-msgstr "köbgyök"
-
-#. Translators: this is the spoken word for the character '∞' (U+221e)
-#.
-#: ../src/orca/chnames.py:675
-msgid "infinity"
-msgstr "végtelen"
-
-#. Translators: this is the spoken word for the character '■' (U+25a0)
-#. It can be used as a bullet in a list.
-#.
-#. Translators:  StarOffice/OOo includes private-use unicode character U+E00A
-#. as a bullet which looks like the black square: ■ (U+25A0).  Therefore,
-#. please use the same translation for this character.
-#.
-#: ../src/orca/chnames.py:680 ../src/orca/chnames.py:855
-msgid "black square"
-msgstr "fekete négyzet"
-
-#. Translators: this is the spoken word for the character '□' (U+25a1)
-#. It can be used as a bullet in a list.
-#.
-#: ../src/orca/chnames.py:685
-msgid "white square"
-msgstr "üres négyzet"
-
-#. Translators: this is the spoken word for the character '◆' (U+25c6)
-#. It can be used as a bullet in a list.
-#.
-#. Translators:  StarOffice/OOo includes private-use unicode character U+E00C
-#. as a bullet which looks like the black diamond: ◆ (U+25C6).  Therefore,
-#. please use the same translation for this character.
-#.
-#: ../src/orca/chnames.py:690 ../src/orca/chnames.py:861
-msgid "black diamond"
-msgstr "fekete káró"
-
-#. Translators: this is the spoken word for the character '○' (U+25cb)
-#. It can be used as a bullet in a list.
-#.
-#: ../src/orca/chnames.py:695
-msgid "white circle"
-msgstr "üres kör"
-
-#. Translators: this is the spoken word for the character '●' (U+25cf)
-#. It can be used as a bullet in a list.
-#.
-#: ../src/orca/chnames.py:700
-msgid "black circle"
-msgstr "fekete kör"
-
-#. Translators: this is the spoken word for the character '◦' (U+25e6)
-#.
-#: ../src/orca/chnames.py:704
-msgid "white bullet"
-msgstr "üres listajel"
-
 #. Translators: this is the spoken word for the character '✓' (U+2713)
 #. It can be used as a bullet in a list.
 #.
-#: ../src/orca/chnames.py:709
+#: ../src/orca/chnames.py:644
 msgid "check mark"
 msgstr "pipa"
 
 #. Translators: this is the spoken word for the character '✔' (U+2714)
 #. It can be used as a bullet in a list.
 #.
-#: ../src/orca/chnames.py:714
+#: ../src/orca/chnames.py:649
 msgid "heavy check mark"
 msgstr "vastag pipa"
 
@@ -1680,195 +1577,195 @@ msgstr "vastag pipa"
 #. the typed letter 'x'.  "Ballot x" might confuse the user.  Hence the
 #. use of "x-shaped bullet".
 #.
-#: ../src/orca/chnames.py:723
+#: ../src/orca/chnames.py:658
 msgid "x-shaped bullet"
 msgstr "x formájú listajel"
 
-#. Translators: this is the spoken word for the character '➔' (U+2794)
-#. This symbol is included here because it can be used as a bullet in
-#. an OOo list. The goal is to inform the user of the appearance of
-#. the bullet without too much verbiage, hence simply "right-pointing arrow".
-#.
-#: ../src/orca/chnames.py:730
-msgid "right-pointing arrow"
-msgstr "jobbra mutató nyíl"
-
 #. Translators: this is the spoken word for the character '⁰' (U+2070)
 #.
-#: ../src/orca/chnames.py:734
+#: ../src/orca/chnames.py:662
 msgid "superscript 0"
 msgstr "felső index 0"
 
 #. Translators: this is the spoken word for the character '⁴' (U+2074)
 #.
-#: ../src/orca/chnames.py:738
+#: ../src/orca/chnames.py:666
 msgid "superscript 4"
 msgstr "felső index 4"
 
 #. Translators: this is the spoken word for the character '⁵' (U+2075)
 #.
-#: ../src/orca/chnames.py:742
+#: ../src/orca/chnames.py:670
 msgid "superscript 5"
 msgstr "felső index 5"
 
 #. Translators: this is the spoken word for the character '⁶' (U+2076)
 #.
-#: ../src/orca/chnames.py:746
+#: ../src/orca/chnames.py:674
 msgid "superscript 6"
 msgstr "felső index 6"
 
 #. Translators: this is the spoken word for the character '⁷' (U+2077)
 #.
-#: ../src/orca/chnames.py:750
+#: ../src/orca/chnames.py:678
 msgid "superscript 7"
 msgstr "felső index 7"
 
 #. Translators: this is the spoken word for the character '⁸' (U+2078)
 #.
-#: ../src/orca/chnames.py:754
+#: ../src/orca/chnames.py:682
 msgid "superscript 8"
 msgstr "felső index 8"
 
 #. Translators: this is the spoken word for the character '⁹' (U+2079)
 #.
-#: ../src/orca/chnames.py:758
+#: ../src/orca/chnames.py:686
 msgid "superscript 9"
 msgstr "felső index 9"
 
 #. Translators: this is the spoken word for the character '⁺' (U+207a)
 #.
-#: ../src/orca/chnames.py:762
+#: ../src/orca/chnames.py:690
 msgid "superscript plus"
 msgstr "felső index plusz"
 
 #. Translators: this is the spoken word for the character '⁻' (U+207b)
 #.
-#: ../src/orca/chnames.py:766
+#: ../src/orca/chnames.py:694
 msgid "superscript minus"
 msgstr "felső index mínusz"
 
 #. Translators: this is the spoken word for the character '⁼' (U+207c)
 #.
-#: ../src/orca/chnames.py:770
+#: ../src/orca/chnames.py:698
 msgid "superscript equals"
 msgstr "felső index egyenlő"
 
 #. Translators: this is the spoken word for the character '⁽' (U+207d)
 #.
-#: ../src/orca/chnames.py:774
+#: ../src/orca/chnames.py:702
 msgid "superscript left paren"
 msgstr "felső index bal zárójel"
 
 #. Translators: this is the spoken word for the character '⁾' (U+207e)
 #.
-#: ../src/orca/chnames.py:778
+#: ../src/orca/chnames.py:706
 msgid "superscript right paren"
 msgstr "felső index jobb zárójel"
 
 #. Translators: this is the spoken word for the character 'ⁿ' (U+207f)
 #.
-#: ../src/orca/chnames.py:782
+#: ../src/orca/chnames.py:710
 msgid "superscript n"
 msgstr "n-edik hatvány"
 
 #. Translators: this is the spoken word for the character '₀' (U+2080)
 #.
-#: ../src/orca/chnames.py:786
+#: ../src/orca/chnames.py:714
 msgid "subscript 0"
 msgstr "alsó index 0"
 
 #. Translators: this is the spoken word for the character '₁' (U+2081)
 #.
-#: ../src/orca/chnames.py:790
+#: ../src/orca/chnames.py:718
 msgid "subscript 1"
 msgstr "alsó index 1"
 
 #. Translators: this is the spoken word for the character '₂' (U+2082)
 #.
-#: ../src/orca/chnames.py:794
+#: ../src/orca/chnames.py:722
 msgid "subscript 2"
 msgstr "alsó index 2"
 
 #. Translators: this is the spoken word for the character '₃' (U+2083)
 #.
-#: ../src/orca/chnames.py:798
+#: ../src/orca/chnames.py:726
 msgid "subscript 3"
 msgstr "alsó index 3"
 
 #. Translators: this is the spoken word for the character '₄' (U+2084)
 #.
-#: ../src/orca/chnames.py:802
+#: ../src/orca/chnames.py:730
 msgid "subscript 4"
 msgstr "alsó index 4"
 
 #. Translators: this is the spoken word for the character '₅' (U+2085)
 #.
-#: ../src/orca/chnames.py:806
+#: ../src/orca/chnames.py:734
 msgid "subscript 5"
 msgstr "alsó index 5"
 
 #. Translators: this is the spoken word for the character '₆' (U+2086)
 #.
-#: ../src/orca/chnames.py:810
+#: ../src/orca/chnames.py:738
 msgid "subscript 6"
 msgstr "alsó index 6"
 
 #. Translators: this is the spoken word for the character '₇' (U+2087)
 #.
-#: ../src/orca/chnames.py:814
+#: ../src/orca/chnames.py:742
 msgid "subscript 7"
 msgstr "alsó index 7"
 
 #. Translators: this is the spoken word for the character '₈' (U+2088)
 #.
-#: ../src/orca/chnames.py:818
+#: ../src/orca/chnames.py:746
 msgid "subscript 8"
 msgstr "alsó index 8"
 
 #. Translators: this is the spoken word for the character '₉' (U+2089)
 #.
-#: ../src/orca/chnames.py:822
+#: ../src/orca/chnames.py:750
 msgid "subscript 9"
 msgstr "alsó index 9"
 
 #. Translators: this is the spoken word for the character '₊' (U+208a)
 #.
-#: ../src/orca/chnames.py:826
+#: ../src/orca/chnames.py:754
 msgid "subscript plus"
 msgstr "alsó index plusz"
 
 #. Translators: this is the spoken word for the character '₋' (U+208b)
 #.
-#: ../src/orca/chnames.py:830
+#: ../src/orca/chnames.py:758
 msgid "subscript minus"
 msgstr "alsó index mínusz"
 
 #. Translators: this is the spoken word for the character '₌' (U+208c)
 #.
-#: ../src/orca/chnames.py:834
+#: ../src/orca/chnames.py:762
 msgid "subscript equals"
 msgstr "alsó index egyenlő"
 
 #. Translators: this is the spoken word for the character '₍' (U+208d)
 #.
-#: ../src/orca/chnames.py:838
+#: ../src/orca/chnames.py:766
 msgid "subscript left paren"
 msgstr "alsó index bal zárójel"
 
 #. Translators: this is the spoken word for the character '₎' (U+208e)
 #.
-#: ../src/orca/chnames.py:842
+#: ../src/orca/chnames.py:770
 msgid "subscript right paren"
 msgstr "alsó index jobb zárójel"
 
-#. Translators: this is the spoken word for the character '➢' (U+27a2)
-#. This symbol is included here because it can be used as a bullet in an
-#. OOo list. The goal is to inform the user of the appearance of the bullet
-#. without too much verbiage, hence simply "right-pointing arrowhead".
+#. Translators:  StarOffice/OOo includes private-use unicode character U+E00A
+#. as a bullet which looks like the black square: ■ (U+25A0).  Therefore,
+#. please use the same translation for this character.
 #.
-#: ../src/orca/chnames.py:849
-msgid "right-pointing arrowhead"
-msgstr "jobbra mutató nyílhegy"
+#. Translators: this is the spoken representation for the character '■' (U+25a0)
+#: ../src/orca/chnames.py:776 ../src/orca/mathsymbols.py:2032
+msgid "black square"
+msgstr "fekete négyzet"
+
+#. Translators:  StarOffice/OOo includes private-use unicode character U+E00C
+#. as a bullet which looks like the black diamond: ◆ (U+25C6).  Therefore,
+#. please use the same translation for this character.
+#.
+#. Translators: this is the spoken representation for the character '◆' (U+25c6)
+#: ../src/orca/chnames.py:782 ../src/orca/mathsymbols.py:2038
+msgid "black diamond"
+msgstr "fekete káró"
 
 #. Translators: This refers to U+FFFC, the "object replacement character."
 #. This character appears in the accessible text of documents and serves as
@@ -1882,7 +1779,7 @@ msgstr "jobbra mutató nyílhegy"
 #. * http://www.fileformat.info/info/unicode/char/fffc/index.htm
 #. * http://en.wikipedia.org/wiki/Specials_(Unicode_block)
 #.
-#: ../src/orca/chnames.py:875
+#: ../src/orca/chnames.py:796
 msgid "object replacement character"
 msgstr "objektumot helyettesítő karakter"
 
@@ -3230,12 +3127,12 @@ msgstr "A nem látogatott hivatkozások listájának megjelenítése."
 #. Translators: this is for navigating among visited links in a document.
 #: ../src/orca/cmdnames.py:1003
 msgid "Goes to previous visited link."
-msgstr "Ugrás az előző látogatott hivatkozásra."
+msgstr "Ugrás az előző meglátogatott hivatkozásra."
 
 #. Translators: this is for navigating among visited links in a document.
 #: ../src/orca/cmdnames.py:1006
 msgid "Goes to next visited link."
-msgstr "Ugrás a következő látogatott hivatkozásra."
+msgstr "Ugrás a következő meglátogatott hivatkozásra."
 
 #. Translators: this is for navigating among visited links in a document.
 #: ../src/orca/cmdnames.py:1009
@@ -5934,1544 +5831,1584 @@ msgctxt "math symbol"
 msgid "dotless %s"
 msgstr "pont nélküli %s"
 
-#. Translators: this is the spoken representation for the character '∀' (U+2200)
+#. Translators: this is the spoken representation for the character '←' (U+2190)
 #: ../src/orca/mathsymbols.py:1252
+msgid "left arrow"
+msgstr "balra nyíl"
+
+#. Translators: this is the spoken representation for the character '→' (U+2192)
+#: ../src/orca/mathsymbols.py:1255
+msgid "right arrow"
+msgstr "jobbra nyíl"
+
+#. Translators: this is the spoken representation for the character '➔' (U+2794)
+#: ../src/orca/mathsymbols.py:1258
+msgid "right-pointing arrow"
+msgstr "jobbra mutató nyíl"
+
+#. Translators: this is the spoken representation for the character '➢' (U+27a2)
+#: ../src/orca/mathsymbols.py:1261
+msgid "right-pointing arrowhead"
+msgstr "jobbra mutató nyílhegy"
+
+#. Translators: this is the spoken representation for the character '∀' (U+2200)
+#: ../src/orca/mathsymbols.py:1264
 msgctxt "math symbol"
 msgid "for all"
 msgstr "minden"
 
 #. Translators: this is the spoken representation for the character '∁' (U+2201)
-#: ../src/orca/mathsymbols.py:1255
+#: ../src/orca/mathsymbols.py:1267
 msgctxt "math symbol"
 msgid "complement"
 msgstr "komplemens"
 
 #. Translators: this is the spoken representation for the character '∂' (U+2202)
-#: ../src/orca/mathsymbols.py:1258
+#: ../src/orca/mathsymbols.py:1270
 msgctxt "math symbol"
 msgid "partial differential"
 msgstr "parciális differenciális"
 
 #. Translators: this is the spoken representation for the character '∃' (U+2203)
-#: ../src/orca/mathsymbols.py:1261
+#: ../src/orca/mathsymbols.py:1273
 msgctxt "math symbol"
 msgid "there exists"
 msgstr "létezik"
 
 #. Translators: this is the spoken representation for the character '∄' (U+2204)
-#: ../src/orca/mathsymbols.py:1264
+#: ../src/orca/mathsymbols.py:1276
 msgctxt "math symbol"
 msgid "there does not exist"
 msgstr "nem létezik"
 
 #. Translators: this is the spoken representation for the character '∅' (U+2205)
-#: ../src/orca/mathsymbols.py:1267
+#: ../src/orca/mathsymbols.py:1279
 msgctxt "math symbol"
 msgid "empty set"
 msgstr "üres halmaz"
 
 #. Translators: this is the spoken representation for the character '∆' (U+2206)
-#: ../src/orca/mathsymbols.py:1270
+#: ../src/orca/mathsymbols.py:1282
 msgctxt "math symbol"
 msgid "increment"
 msgstr "növekmény"
 
 #. Translators: this is the spoken representation for the character '∇' (U+2207)
-#: ../src/orca/mathsymbols.py:1273
+#: ../src/orca/mathsymbols.py:1285
 msgctxt "math symbol"
 msgid "nabla"
 msgstr "nabla"
 
 #. Translators: this is the spoken representation for the character '∈' (U+2208)
-#: ../src/orca/mathsymbols.py:1276
+#: ../src/orca/mathsymbols.py:1288
 msgctxt "math symbol"
 msgid "element of"
 msgstr "eleme"
 
 #. Translators: this is the spoken representation for the character '∉' (U+2209)
-#: ../src/orca/mathsymbols.py:1279
+#: ../src/orca/mathsymbols.py:1291
 msgctxt "math symbol"
 msgid "not an element of"
 msgstr "nem eleme"
 
 #. Translators: this is the spoken representation for the character '∊' (U+220a)
-#: ../src/orca/mathsymbols.py:1282
+#: ../src/orca/mathsymbols.py:1294
 msgctxt "math symbol"
 msgid "small element of"
 msgstr "kis eleme jel"
 
 #. Translators: this is the spoken representation for the character '∋' (U+220b)
-#: ../src/orca/mathsymbols.py:1285
+#: ../src/orca/mathsymbols.py:1297
 msgctxt "math symbol"
 msgid "contains as a member"
 msgstr "tagként tartalmazza"
 
 #. Translators: this is the spoken representation for the character '∌' (U+220c)
-#: ../src/orca/mathsymbols.py:1288
+#: ../src/orca/mathsymbols.py:1300
 msgctxt "math symbol"
 msgid "does not contain as a member"
 msgstr "tagként nem tartalmazza"
 
 #. Translators: this is the spoken representation for the character '∍' (U+220d)
-#: ../src/orca/mathsymbols.py:1291
+#: ../src/orca/mathsymbols.py:1303
 msgctxt "math symbol"
 msgid "small contains as a member"
 msgstr "kis tagként tartalmazza jel"
 
 #. Translators: this is the spoken representation for the character '∎' (U+220e)
-#: ../src/orca/mathsymbols.py:1294
+#: ../src/orca/mathsymbols.py:1306
 msgctxt "math symbol"
 msgid "end of proof"
 msgstr "bizonyítás vége"
 
 #. Translators: this is the spoken representation for the character '∏' (U+220f)
-#: ../src/orca/mathsymbols.py:1297
+#: ../src/orca/mathsymbols.py:1309
 msgctxt "math symbol"
 msgid "n-ary product"
 msgstr "n-ed rendű szorzat"
 
 #. Translators: this is the spoken representation for the character '∐' (U+2210)
-#: ../src/orca/mathsymbols.py:1300
+#: ../src/orca/mathsymbols.py:1312
 msgctxt "math symbol"
 msgid "n-ary coproduct"
 msgstr "n-ed rendű koszorzat"
 
 #. Translators: this is the spoken representation for the character '∑' (U+2211)
-#: ../src/orca/mathsymbols.py:1303
+#: ../src/orca/mathsymbols.py:1315
 msgctxt "math symbol"
 msgid "n-ary summation"
 msgstr "n-ed rendű összegzés"
 
 #. Translators: this is the spoken representation for the character '−' (U+2212)
-#: ../src/orca/mathsymbols.py:1306
+#: ../src/orca/mathsymbols.py:1318
 msgctxt "math symbol"
 msgid "minus"
 msgstr "mínusz"
 
 #. Translators: this is the spoken representation for the character '∓' (U+2213)
-#: ../src/orca/mathsymbols.py:1309
+#: ../src/orca/mathsymbols.py:1321
 msgctxt "math symbol"
 msgid "minus or plus"
-msgstr "mínuszplusz"
+msgstr "minuszplusz"
 
 #. Translators: this is the spoken representation for the character '∔' (U+2214)
-#: ../src/orca/mathsymbols.py:1312
+#: ../src/orca/mathsymbols.py:1324
 msgctxt "math symbol"
 msgid "dot plus"
 msgstr "pontozott plusz"
 
 #. Translators: this is the spoken representation for the character '∕' (U+2215)
-#: ../src/orca/mathsymbols.py:1315
+#: ../src/orca/mathsymbols.py:1327
 msgctxt "math symbol"
 msgid "division slash"
 msgstr "osztásjel"
 
 #. Translators: this is the spoken representation for the character '∖' (U+2216)
-#: ../src/orca/mathsymbols.py:1318
+#: ../src/orca/mathsymbols.py:1330
 msgctxt "math symbol"
 msgid "set minus"
 msgstr "halmaz mínusz"
 
 #. Translators: this is the spoken representation for the character '∗' (U+2217)
-#: ../src/orca/mathsymbols.py:1321
+#: ../src/orca/mathsymbols.py:1333
 msgctxt "math symbol"
 msgid "asterisk operator"
 msgstr "csillag operátor"
 
 #. Translators: this is the spoken representation for the character '∘' (U+2218)
-#: ../src/orca/mathsymbols.py:1324
+#: ../src/orca/mathsymbols.py:1336
 msgctxt "math symbol"
 msgid "ring operator"
 msgstr "gyűrű operátor"
 
 #. Translators: this is the spoken representation for the character '∙' (U+2219)
-#: ../src/orca/mathsymbols.py:1327
+#: ../src/orca/mathsymbols.py:1339
 msgctxt "math symbol"
 msgid "bullet operator"
 msgstr "pont operátor"
 
 #. Translators: this is the spoken representation for the character '√' (U+221a)
-#: ../src/orca/mathsymbols.py:1330
+#: ../src/orca/mathsymbols.py:1342
 msgctxt "math symbol"
 msgid "square root"
 msgstr "négyzetgyök"
 
 #. Translators: this is the spoken representation for the character '∛' (U+221b)
-#: ../src/orca/mathsymbols.py:1333
+#: ../src/orca/mathsymbols.py:1345
 msgctxt "math symbol"
 msgid "cube root"
 msgstr "köbgyök"
 
 #. Translators: this is the spoken representation for the character '∜' (U+221c)
-#: ../src/orca/mathsymbols.py:1336
+#: ../src/orca/mathsymbols.py:1348
 msgctxt "math symbol"
 msgid "fourth root"
-msgstr "negyedgyök"
+msgstr "negyedik gyök"
 
 #. Translators: this is the spoken representation for the character '∝' (U+221d)
-#: ../src/orca/mathsymbols.py:1339
+#: ../src/orca/mathsymbols.py:1351
 msgctxt "math symbol"
 msgid "proportional to"
 msgstr "aránylik ehhez"
 
 #. Translators: this is the spoken representation for the character '∞' (U+221e)
-#: ../src/orca/mathsymbols.py:1342
+#: ../src/orca/mathsymbols.py:1354
 msgctxt "math symbol"
 msgid "infinity"
 msgstr "végtelen"
 
 #. Translators: this is the spoken representation for the character '∟' (U+221f)
-#: ../src/orca/mathsymbols.py:1345
+#: ../src/orca/mathsymbols.py:1357
 msgctxt "math symbol"
 msgid "right angle"
 msgstr "derékszög"
 
 #. Translators: this is the spoken representation for the character '∠' (U+2220)
-#: ../src/orca/mathsymbols.py:1348
+#: ../src/orca/mathsymbols.py:1360
 msgctxt "math symbol"
 msgid "angle"
 msgstr "szög"
 
 #. Translators: this is the spoken representation for the character '∡' (U+2221)
-#: ../src/orca/mathsymbols.py:1351
+#: ../src/orca/mathsymbols.py:1363
 msgctxt "math symbol"
 msgid "measured angle"
 msgstr "mért szög"
 
 #. Translators: this is the spoken representation for the character '∢' (U+2222)
-#: ../src/orca/mathsymbols.py:1354
+#: ../src/orca/mathsymbols.py:1366
 msgctxt "math symbol"
 msgid "spherical angle"
 msgstr "gömbszög"
 
 #. Translators: this is the spoken representation for the character '∣' (U+2223)
-#: ../src/orca/mathsymbols.py:1357
+#: ../src/orca/mathsymbols.py:1369
 msgctxt "math symbol"
 msgid "divides"
 msgstr "osztója"
 
 #. Translators: this is the spoken representation for the character '∤' (U+2224)
-#: ../src/orca/mathsymbols.py:1360
+#: ../src/orca/mathsymbols.py:1372
 msgctxt "math symbol"
 msgid "does not divide"
 msgstr "nem osztója"
 
 #. Translators: this is the spoken representation for the character '∥' (U+2225)
-#: ../src/orca/mathsymbols.py:1363
+#: ../src/orca/mathsymbols.py:1375
 msgctxt "math symbol"
 msgid "parallel to"
 msgstr "párhuzamos"
 
 #. Translators: this is the spoken representation for the character '∦' (U+2226)
-#: ../src/orca/mathsymbols.py:1366
+#: ../src/orca/mathsymbols.py:1378
 msgctxt "math symbol"
 msgid "not parallel to"
 msgstr "nem párhuzamos"
 
 #. Translators: this is the spoken representation for the character '∧' (U+2227)
-#: ../src/orca/mathsymbols.py:1369
+#: ../src/orca/mathsymbols.py:1381
 msgctxt "math symbol"
 msgid "logical and"
 msgstr "logikai és"
 
 #. Translators: this is the spoken representation for the character '∨' (U+2228)
-#: ../src/orca/mathsymbols.py:1372
+#: ../src/orca/mathsymbols.py:1384
 msgctxt "math symbol"
 msgid "logical or"
 msgstr "logikai vagy"
 
 #. Translators: this is the spoken representation for the character '∩' (U+2229)
-#: ../src/orca/mathsymbols.py:1375
+#: ../src/orca/mathsymbols.py:1387
 msgctxt "math symbol"
 msgid "intersection"
 msgstr "metszet"
 
 #. Translators: this is the spoken representation for the character '∪' (U+222a)
-#: ../src/orca/mathsymbols.py:1378
+#: ../src/orca/mathsymbols.py:1390
 msgctxt "math symbol"
 msgid "union"
 msgstr "unió"
 
 #. Translators: this is the spoken representation for the character '∫' (U+222b)
-#: ../src/orca/mathsymbols.py:1381
+#: ../src/orca/mathsymbols.py:1393
 msgctxt "math symbol"
 msgid "integral"
 msgstr "integrál"
 
 #. Translators: this is the spoken representation for the character '∬' (U+222c)
-#: ../src/orca/mathsymbols.py:1384
+#: ../src/orca/mathsymbols.py:1396
 msgctxt "math symbol"
 msgid "double integral"
 msgstr "dupla integráljel"
 
 #. Translators: this is the spoken representation for the character '∭' (U+222d)
-#: ../src/orca/mathsymbols.py:1387
+#: ../src/orca/mathsymbols.py:1399
 msgctxt "math symbol"
 msgid "triple integral"
 msgstr "hármas integráljel"
 
 #. Translators: this is the spoken representation for the character '∮' (U+222e)
-#: ../src/orca/mathsymbols.py:1390
+#: ../src/orca/mathsymbols.py:1402
 msgctxt "math symbol"
 msgid "contour integral"
 msgstr "kontúr integrál"
 
 #. Translators: this is the spoken representation for the character '∯' (U+222f)
-#: ../src/orca/mathsymbols.py:1393
+#: ../src/orca/mathsymbols.py:1405
 msgctxt "math symbol"
 msgid "surface integral"
 msgstr "felületi integrál"
 
 #. Translators: this is the spoken representation for the character '∰' (U+2230)
-#: ../src/orca/mathsymbols.py:1396
+#: ../src/orca/mathsymbols.py:1408
 msgctxt "math symbol"
 msgid "volume integral"
 msgstr "térfogati integrál"
 
 #. Translators: this is the spoken representation for the character '∱' (U+2231)
-#: ../src/orca/mathsymbols.py:1399
+#: ../src/orca/mathsymbols.py:1411
 msgctxt "math symbol"
 msgid "clockwise integral"
 msgstr "óramutató járásával megegyező integrál"
 
 #. Translators: this is the spoken representation for the character '∲' (U+2232)
-#: ../src/orca/mathsymbols.py:1402
+#: ../src/orca/mathsymbols.py:1414
 msgctxt "math symbol"
 msgid "clockwise contour integral"
 msgstr "óramutató járásával megegyező kontúr integrál"
 
 #. Translators: this is the spoken representation for the character '∳' (U+2233)
-#: ../src/orca/mathsymbols.py:1405
+#: ../src/orca/mathsymbols.py:1417
 msgctxt "math symbol"
 msgid "anticlockwise contour integral"
 msgstr "óramutató járásával ellentétes kontúr integrál"
 
 #. Translators: this is the spoken representation for the character '∴' (U+2234)
-#: ../src/orca/mathsymbols.py:1408
+#: ../src/orca/mathsymbols.py:1420
 msgctxt "math symbol"
 msgid "therefore"
 msgstr "azért"
 
 #. Translators: this is the spoken representation for the character '∵' (U+2235)
-#: ../src/orca/mathsymbols.py:1411
+#: ../src/orca/mathsymbols.py:1423
 msgctxt "math symbol"
 msgid "because"
 msgstr "mert"
 
 #. Translators: this is the spoken representation for the character '∶' (U+2236)
-#: ../src/orca/mathsymbols.py:1414
+#: ../src/orca/mathsymbols.py:1426
 msgctxt "math symbol"
 msgid "ratio"
 msgstr "arány"
 
 #. Translators: this is the spoken representation for the character '∷' (U+2237)
-#: ../src/orca/mathsymbols.py:1417
+#: ../src/orca/mathsymbols.py:1429
 msgctxt "math symbol"
 msgid "proportion"
 msgstr "arány"
 
 #. Translators: this is the spoken representation for the character '∸' (U+2238)
-#: ../src/orca/mathsymbols.py:1420
+#: ../src/orca/mathsymbols.py:1432
 msgctxt "math symbol"
 msgid "dot minus"
 msgstr "pontozott mínusz"
 
 #. Translators: this is the spoken representation for the character '∹' (U+2239)
-#: ../src/orca/mathsymbols.py:1423
+#: ../src/orca/mathsymbols.py:1435
 msgctxt "math symbol"
 msgid "excess"
 msgstr "többlet"
 
 #. Translators: this is the spoken representation for the character '∺' (U+223a)
-#: ../src/orca/mathsymbols.py:1426
+#: ../src/orca/mathsymbols.py:1438
 msgctxt "math symbol"
 msgid "geometric proportion"
 msgstr "geometriai aránya"
 
 #. Translators: this is the spoken representation for the character '∻' (U+223b)
-#: ../src/orca/mathsymbols.py:1429
+#: ../src/orca/mathsymbols.py:1441
 msgctxt "math symbol"
 msgid "homothetic"
 msgstr "homotetikus"
 
 # Szintén ilyen kérés. :-):-)
 #. Translators: this is the spoken representation for the character '∼' (U+223c)
-#: ../src/orca/mathsymbols.py:1432
+#: ../src/orca/mathsymbols.py:1444
 msgctxt "math symbol"
 msgid "tilde"
 msgstr "tilde"
 
 #. Translators: this is the spoken representation for the character '∽' (U+223d)
-#: ../src/orca/mathsymbols.py:1435
+#: ../src/orca/mathsymbols.py:1447
 msgctxt "math symbol"
 msgid "reversed tilde"
 msgstr "fordított tilde"
 
 #. Translators: this is the spoken representation for the character '∾' (U+223e)
-#: ../src/orca/mathsymbols.py:1438
+#: ../src/orca/mathsymbols.py:1450
 msgctxt "math symbol"
 msgid "inverted lazy S"
 msgstr "fordított lusta S"
 
 #. Translators: this is the spoken representation for the character '∿' (U+223f)
-#: ../src/orca/mathsymbols.py:1441
+#: ../src/orca/mathsymbols.py:1453
 msgctxt "math symbol"
 msgid "sine wave"
 msgstr "szinuszhullám"
 
 #. Translators: this is the spoken representation for the character '≀' (U+2240)
-#: ../src/orca/mathsymbols.py:1444
+#: ../src/orca/mathsymbols.py:1456
 msgctxt "math symbol"
 msgid "wreath product"
 msgstr "koszorúszorzat"
 
 #. Translators: this is the spoken representation for the character '≁' (U+2241)
-#: ../src/orca/mathsymbols.py:1447
+#: ../src/orca/mathsymbols.py:1459
 msgctxt "math symbol"
 msgid "not tilde"
 msgstr "nem tilde"
 
 #. Translators: this is the spoken representation for the character '≂' (U+2242)
-#: ../src/orca/mathsymbols.py:1450
+#: ../src/orca/mathsymbols.py:1462
 msgctxt "math symbol"
 msgid "minus tilde"
 msgstr "mínusz tilde"
 
 #. Translators: this is the spoken representation for the character '≃' (U+2243)
-#: ../src/orca/mathsymbols.py:1453
+#: ../src/orca/mathsymbols.py:1465
 msgctxt "math symbol"
 msgid "asymptotically equal to"
 msgstr "aszimptotikusan egyenlő"
 
 #. Translators: this is the spoken representation for the character '≄' (U+2244)
-#: ../src/orca/mathsymbols.py:1456
+#: ../src/orca/mathsymbols.py:1468
 msgctxt "math symbol"
 msgid "not asymptotically equal to"
 msgstr "nem aszimptotikusan egyenlő"
 
 #. Translators: this is the spoken representation for the character '≅' (U+2245)
-#: ../src/orca/mathsymbols.py:1459
+#: ../src/orca/mathsymbols.py:1471
 msgctxt "math symbol"
 msgid "approximately equal to"
 msgstr "nagyjából egyenlő"
 
 #. Translators: this is the spoken representation for the character '≆' (U+2246)
-#: ../src/orca/mathsymbols.py:1462
+#: ../src/orca/mathsymbols.py:1474
 msgctxt "math symbol"
 msgid "approximately but not actually equal to"
 msgstr "megközelítőleg, de valójában nem egyenlő"
 
 #. Translators: this is the spoken representation for the character '≇' (U+2247)
-#: ../src/orca/mathsymbols.py:1465
+#: ../src/orca/mathsymbols.py:1477
 msgctxt "math symbol"
 msgid "neither approximately nor actually equal to"
 msgstr "sem megközelítőleg, sem ténylegesen nem egyenlő"
 
 #. Translators: this is the spoken representation for the character '≈' (U+2248)
-#: ../src/orca/mathsymbols.py:1468
+#: ../src/orca/mathsymbols.py:1480
 msgctxt "math symbol"
 msgid "almost equal to"
-msgstr "közelítőleg egyenlő"
+msgstr "megközelítőleg egyenlő"
 
 #. Translators: this is the spoken representation for the character '≉' (U+2249)
-#: ../src/orca/mathsymbols.py:1471
+#: ../src/orca/mathsymbols.py:1483
 msgctxt "math symbol"
 msgid "not almost equal to"
 msgstr "szinte nem egyenlő"
 
 #. Translators: this is the spoken representation for the character '≊' (U+224a)
-#: ../src/orca/mathsymbols.py:1474
+#: ../src/orca/mathsymbols.py:1486
 msgctxt "math symbol"
 msgid "almost equal or equal to"
 msgstr "közel azonos vagy egyenlő"
 
 #. Translators: this is the spoken representation for the character '≋' (U+224b)
-#: ../src/orca/mathsymbols.py:1477
+#: ../src/orca/mathsymbols.py:1489
 msgctxt "math symbol"
 msgid "triple tilde"
 msgstr "háromszoros tilde"
 
 #. Translators: this is the spoken representation for the character '≌' (U+224c)
-#: ../src/orca/mathsymbols.py:1480
+#: ../src/orca/mathsymbols.py:1492
 msgctxt "math symbol"
 msgid "all equal to"
 msgstr "teljesen egyenlő"
 
 #. Translators: this is the spoken representation for the character '≍' (U+224d)
-#: ../src/orca/mathsymbols.py:1483
+#: ../src/orca/mathsymbols.py:1495
 msgctxt "math symbol"
 msgid "equivalent to"
 msgstr "egyenértékű"
 
 #. Translators: this is the spoken representation for the character '≎' (U+224e)
-#: ../src/orca/mathsymbols.py:1486
+#: ../src/orca/mathsymbols.py:1498
 msgctxt "math symbol"
 msgid "geometrically equivalent to"
 msgstr "geometriailag egyenértékű"
 
 #. Translators: this is the spoken representation for the character '≏' (U+224f)
-#: ../src/orca/mathsymbols.py:1489
+#: ../src/orca/mathsymbols.py:1501
 msgctxt "math symbol"
 msgid "difference between"
 msgstr "közötti különbség"
 
 #. Translators: this is the spoken representation for the character '≐' (U+2250)
-#: ../src/orca/mathsymbols.py:1492
+#: ../src/orca/mathsymbols.py:1504
 msgctxt "math symbol"
 msgid "approaches the limit"
 msgstr "megközelíti a határértéket"
 
 #. Translators: this is the spoken representation for the character '≑' (U+2251)
-#: ../src/orca/mathsymbols.py:1495
+#: ../src/orca/mathsymbols.py:1507
 msgctxt "math symbol"
 msgid "geometrically equal to"
 msgstr "geometriailag egyenlő"
 
 #. Translators: this is the spoken representation for the character '≒' (U+2252)
-#: ../src/orca/mathsymbols.py:1498
+#: ../src/orca/mathsymbols.py:1510
 msgctxt "math symbol"
 msgid "approximately equal to or the image of"
 msgstr "a kép körülbelül egyenlő"
 
 #. Translators: this is the spoken representation for the character '≓' (U+2253)
-#: ../src/orca/mathsymbols.py:1501
+#: ../src/orca/mathsymbols.py:1513
 msgctxt "math symbol"
 msgid "image of or approximately equal to"
 msgstr "a kép nagyjából azonos"
 
 #. Translators: this is the spoken representation for the character '≔' (U+2254)
-#: ../src/orca/mathsymbols.py:1504
+#: ../src/orca/mathsymbols.py:1516
 msgctxt "math symbol"
 msgid "colon equals"
 msgstr "kettőspont egyenlő"
 
 #. Translators: this is the spoken representation for the character '≕' (U+2255)
-#: ../src/orca/mathsymbols.py:1507
+#: ../src/orca/mathsymbols.py:1519
 msgctxt "math symbol"
 msgid "equals colon"
 msgstr "egyenlő kettőspont"
 
 #. Translators: this is the spoken representation for the character '≖' (U+2256)
-#: ../src/orca/mathsymbols.py:1510
+#: ../src/orca/mathsymbols.py:1522
 msgctxt "math symbol"
 msgid "ring in equal to"
 msgstr "gyűrű az egyenlőben"
 
 #. Translators: this is the spoken representation for the character '≗' (U+2257)
-#: ../src/orca/mathsymbols.py:1513
+#: ../src/orca/mathsymbols.py:1525
 msgctxt "math symbol"
 msgid "ring equal to"
 msgstr "gyűrű egyenlő"
 
 #. Translators: this is the spoken representation for the character '≘' (U+2258)
-#: ../src/orca/mathsymbols.py:1516
+#: ../src/orca/mathsymbols.py:1528
 msgctxt "math symbol"
 msgid "corresponds to"
 msgstr "megfelel"
 
 # Megjegyzés: ebben nem vagyok biztos
 #. Translators: this is the spoken representation for the character '≙' (U+2259)
-#: ../src/orca/mathsymbols.py:1519
+#: ../src/orca/mathsymbols.py:1531
 msgctxt "math symbol"
 msgid "estimates"
 msgstr "becslés"
 
 #. Translators: this is the spoken representation for the character '≚' (U+225a)
-#: ../src/orca/mathsymbols.py:1522
+#: ../src/orca/mathsymbols.py:1534
 msgctxt "math symbol"
 msgid "equiangular to"
 msgstr "egyenlő szögű"
 
 #. Translators: this is the spoken representation for the character '≛' (U+225b)
-#: ../src/orca/mathsymbols.py:1525
+#: ../src/orca/mathsymbols.py:1537
 msgctxt "math symbol"
 msgid "star equals"
 msgstr "csillag egyenlő"
 
 #. Translators: this is the spoken representation for the character '≜' (U+225c)
-#: ../src/orca/mathsymbols.py:1528
+#: ../src/orca/mathsymbols.py:1540
 msgctxt "math symbol"
 msgid "delta equal to"
 msgstr "delta egyenlő"
 
 #. Translators: this is the spoken representation for the character '≝' (U+225d)
-#: ../src/orca/mathsymbols.py:1531
+#: ../src/orca/mathsymbols.py:1543
 msgctxt "math symbol"
 msgid "equal to by definition"
 msgstr "a definíció szerint egyenlő"
 
 #. Translators: this is the spoken representation for the character '≞' (U+225e)
-#: ../src/orca/mathsymbols.py:1534
+#: ../src/orca/mathsymbols.py:1546
 msgctxt "math symbol"
 msgid "measured by"
 msgstr "mérve"
 
 #. Translators: this is the spoken representation for the character '≟' (U+225f)
-#: ../src/orca/mathsymbols.py:1537
+#: ../src/orca/mathsymbols.py:1549
 msgctxt "math symbol"
 msgid "questioned equal to"
 msgstr "nem biztos, hogy egyenlő"
 
 #. Translators: this is the spoken representation for the character '≠' (U+2260)
-#: ../src/orca/mathsymbols.py:1540
+#: ../src/orca/mathsymbols.py:1552
 msgctxt "math symbol"
 msgid "not equal to"
 msgstr "nem egyenlő"
 
 #. Translators: this is the spoken representation for the character '≡' (U+2261)
-#: ../src/orca/mathsymbols.py:1543
+#: ../src/orca/mathsymbols.py:1555
 msgctxt "math symbol"
 msgid "identical to"
-msgstr "teljesen megegyezik"
+msgstr "azonos"
 
 #. Translators: this is the spoken representation for the character '≢' (U+2262)
-#: ../src/orca/mathsymbols.py:1546
+#: ../src/orca/mathsymbols.py:1558
 msgctxt "math symbol"
 msgid "not identical to"
 msgstr "nem azonos"
 
 #. Translators: this is the spoken representation for the character '≣' (U+2263)
-#: ../src/orca/mathsymbols.py:1549
+#: ../src/orca/mathsymbols.py:1561
 msgctxt "math symbol"
 msgid "strictly equivalent to"
 msgstr "szigorúan egyenértékű"
 
 #. Translators: this is the spoken representation for the character '≤' (U+2264)
-#: ../src/orca/mathsymbols.py:1552
+#: ../src/orca/mathsymbols.py:1564
 msgctxt "math symbol"
 msgid "less than or equal to"
 msgstr "kisebb vagy egyenlő"
 
 #. Translators: this is the spoken representation for the character '≥' (U+2265)
-#: ../src/orca/mathsymbols.py:1555
+#: ../src/orca/mathsymbols.py:1567
 msgctxt "math symbol"
 msgid "greater than or equal to"
 msgstr "nagyobb vagy egyenlő"
 
 #. Translators: this is the spoken representation for the character '≦' (U+2266)
-#: ../src/orca/mathsymbols.py:1558
+#: ../src/orca/mathsymbols.py:1570
 msgctxt "math symbol"
 msgid "less than over equal to"
 msgstr "kisebb az egyenlőségjel fölött"
 
 #. Translators: this is the spoken representation for the character '≧' (U+2267)
-#: ../src/orca/mathsymbols.py:1561
+#: ../src/orca/mathsymbols.py:1573
 msgctxt "math symbol"
 msgid "greater than over equal to"
 msgstr "nagyobb az egyenlőségjel fölött"
 
 #. Translators: this is the spoken representation for the character '≨' (U+2268)
-#: ../src/orca/mathsymbols.py:1564
+#: ../src/orca/mathsymbols.py:1576
 msgctxt "math symbol"
 msgid "less than but not equal to"
 msgstr "kisebb, de nem egyenlő"
 
 #. Translators: this is the spoken representation for the character '≩' (U+2269)
-#: ../src/orca/mathsymbols.py:1567
+#: ../src/orca/mathsymbols.py:1579
 msgctxt "math symbol"
 msgid "greater than but not equal to"
 msgstr "nagyobb, de nem egyenlő"
 
 #. Translators: this is the spoken representation for the character '≪' (U+226a)
-#: ../src/orca/mathsymbols.py:1570
+#: ../src/orca/mathsymbols.py:1582
 msgctxt "math symbol"
 msgid "much less than"
 msgstr "sokkal kisebb, mint"
 
 #. Translators: this is the spoken representation for the character '≫' (U+226b)
-#: ../src/orca/mathsymbols.py:1573
+#: ../src/orca/mathsymbols.py:1585
 msgctxt "math symbol"
 msgid "much greater than"
 msgstr "sokkal nagyobb, mint"
 
 #. Translators: this is the spoken representation for the character '≬' (U+226c)
-#: ../src/orca/mathsymbols.py:1576
+#: ../src/orca/mathsymbols.py:1588
 msgctxt "math symbol"
 msgid "between"
 msgstr "között"
 
 #. Translators: this is the spoken representation for the character '≭' (U+226d)
-#: ../src/orca/mathsymbols.py:1579
+#: ../src/orca/mathsymbols.py:1591
 msgctxt "math symbol"
 msgid "not equivalent to"
 msgstr "nem egyenértékű"
 
 #. Translators: this is the spoken representation for the character '≮' (U+226e)
-#: ../src/orca/mathsymbols.py:1582
+#: ../src/orca/mathsymbols.py:1594
 msgctxt "math symbol"
 msgid "not less than"
 msgstr "nem kisebb, mint"
 
 #. Translators: this is the spoken representation for the character '≯' (U+226f)
-#: ../src/orca/mathsymbols.py:1585
+#: ../src/orca/mathsymbols.py:1597
 msgctxt "math symbol"
 msgid "not greater than"
 msgstr "nem nagyobb, mint"
 
 #. Translators: this is the spoken representation for the character '≰' (U+2270)
-#: ../src/orca/mathsymbols.py:1588
+#: ../src/orca/mathsymbols.py:1600
 msgctxt "math symbol"
 msgid "neither less than nor equal to"
 msgstr "se nem kisebb, se nem egyenlő"
 
 #. Translators: this is the spoken representation for the character '≱' (U+2271)
-#: ../src/orca/mathsymbols.py:1591
+#: ../src/orca/mathsymbols.py:1603
 msgctxt "math symbol"
 msgid "neither greater than nor equal to"
 msgstr "se nem nagyobb, se nem egyenlő"
 
 #. Translators: this is the spoken representation for the character '≲' (U+2272)
-#: ../src/orca/mathsymbols.py:1594
+#: ../src/orca/mathsymbols.py:1606
 msgctxt "math symbol"
 msgid "less than or equivalent to"
 msgstr "kisebb vagy egyenértékű"
 
 #. Translators: this is the spoken representation for the character '≳' (U+2273)
-#: ../src/orca/mathsymbols.py:1597
+#: ../src/orca/mathsymbols.py:1609
 msgctxt "math symbol"
 msgid "greater than or equivalent to"
 msgstr "nagyobb vagy egyenértékű"
 
 #. Translators: this is the spoken representation for the character '≴' (U+2274)
-#: ../src/orca/mathsymbols.py:1600
+#: ../src/orca/mathsymbols.py:1612
 msgctxt "math symbol"
 msgid "neither less than nor equivalent to"
 msgstr "nem kevesebb és nem egyenértékű"
 
 #. Translators: this is the spoken representation for the character '≵' (U+2275)
-#: ../src/orca/mathsymbols.py:1603
+#: ../src/orca/mathsymbols.py:1615
 msgctxt "math symbol"
 msgid "neither greater than nor equivalent to"
 msgstr "nem nagyobb mint és nem egyenértékű"
 
 #. Translators: this is the spoken representation for the character '≶' (U+2276)
-#: ../src/orca/mathsymbols.py:1606
+#: ../src/orca/mathsymbols.py:1618
 msgctxt "math symbol"
 msgid "less than or greater than"
 msgstr "kisebb vagy nagyobb, mint"
 
 #. Translators: this is the spoken representation for the character '≷' (U+2277)
-#: ../src/orca/mathsymbols.py:1609
+#: ../src/orca/mathsymbols.py:1621
 msgctxt "math symbol"
 msgid "greater than or less than"
 msgstr "nagyobb vagy kisebb, mint"
 
 #. Translators: this is the spoken representation for the character '≸' (U+2278)
-#: ../src/orca/mathsymbols.py:1612
+#: ../src/orca/mathsymbols.py:1624
 msgctxt "math symbol"
 msgid "neither less than nor greater than"
-msgstr "nem kisebb és nem nagyobb mint:"
+msgstr "nem kisebb és nem nagyobb mint"
 
 #. Translators: this is the spoken representation for the character '≹' (U+2279)
-#: ../src/orca/mathsymbols.py:1615
+#: ../src/orca/mathsymbols.py:1627
 msgctxt "math symbol"
 msgid "neither greater than nor less than"
-msgstr "nem nagyobb és nem kevesebb mint:"
+msgstr "nem nagyobb és nem kevesebb mint"
 
 #. Translators: this is the spoken representation for the character '≺' (U+227a)
-#: ../src/orca/mathsymbols.py:1618
+#: ../src/orca/mathsymbols.py:1630
 msgctxt "math symbol"
 msgid "precedes"
 msgstr "megelőzi"
 
 #. Translators: this is the spoken representation for the character '≻' (U+227b)
-#: ../src/orca/mathsymbols.py:1621
+#: ../src/orca/mathsymbols.py:1633
 msgctxt "math symbol"
 msgid "succeeds"
 msgstr "követi"
 
 #. Translators: this is the spoken representation for the character '≼' (U+227c)
-#: ../src/orca/mathsymbols.py:1624
+#: ../src/orca/mathsymbols.py:1636
 msgctxt "math symbol"
 msgid "precedes or equal to"
 msgstr "megelőzi vagy egyenlő"
 
 #. Translators: this is the spoken representation for the character '≽' (U+227d)
-#: ../src/orca/mathsymbols.py:1627
+#: ../src/orca/mathsymbols.py:1639
 msgctxt "math symbol"
 msgid "succeeds or equal to"
 msgstr "követi vagy egyenlő"
 
 #. Translators: this is the spoken representation for the character '≾' (U+227e)
-#: ../src/orca/mathsymbols.py:1630
+#: ../src/orca/mathsymbols.py:1642
 msgctxt "math symbol"
 msgid "precedes or equivalent to"
 msgstr "megelőzi vagy egyenértékű"
 
 #. Translators: this is the spoken representation for the character '≿' (U+227f)
-#: ../src/orca/mathsymbols.py:1633
+#: ../src/orca/mathsymbols.py:1645
 msgctxt "math symbol"
 msgid "succeeds or equivalent to"
 msgstr "követi vagy ekvivalens"
 
 #. Translators: this is the spoken representation for the character '⊀' (U+2280)
-#: ../src/orca/mathsymbols.py:1636
+#: ../src/orca/mathsymbols.py:1648
 msgctxt "math symbol"
 msgid "does not precede"
 msgstr "nem előzi meg"
 
 #. Translators: this is the spoken representation for the character '⊁' (U+2281)
-#: ../src/orca/mathsymbols.py:1639
+#: ../src/orca/mathsymbols.py:1651
 msgctxt "math symbol"
 msgid "does not succeed"
 msgstr "nem követi"
 
 #. Translators: this is the spoken representation for the character '⊂' (U+2282)
-#: ../src/orca/mathsymbols.py:1642
+#: ../src/orca/mathsymbols.py:1654
 msgctxt "math symbol"
 msgid "subset of"
 msgstr "részhalmaza"
 
 #. Translators: this is the spoken representation for the character '⊃' (U+2283)
-#: ../src/orca/mathsymbols.py:1645
+#: ../src/orca/mathsymbols.py:1657
 msgctxt "math symbol"
 msgid "superset of"
 msgstr "halmaza"
 
 #. Translators: this is the spoken representation for the character '⊄' (U+2284)
-#: ../src/orca/mathsymbols.py:1648
+#: ../src/orca/mathsymbols.py:1660
 msgctxt "math symbol"
 msgid "not a subset of"
 msgstr "nem egy részhalmaza"
 
 #. Translators: this is the spoken representation for the character '⊅' (U+2285)
-#: ../src/orca/mathsymbols.py:1651
+#: ../src/orca/mathsymbols.py:1663
 msgctxt "math symbol"
 msgid "not a superset of"
 msgstr "nem a halmaza"
 
 #. Translators: this is the spoken representation for the character '⊆' (U+2286)
-#: ../src/orca/mathsymbols.py:1654
+#: ../src/orca/mathsymbols.py:1666
 msgctxt "math symbol"
 msgid "subset of or equal to"
 msgstr "részhalmaza vagy egyenlő"
 
 #. Translators: this is the spoken representation for the character '⊇' (U+2287)
-#: ../src/orca/mathsymbols.py:1657
+#: ../src/orca/mathsymbols.py:1669
 msgctxt "math symbol"
 msgid "superset of or equal to"
 msgstr "halmaza vagy egyenlő"
 
 #. Translators: this is the spoken representation for the character '⊈' (U+2288)
-#: ../src/orca/mathsymbols.py:1660
+#: ../src/orca/mathsymbols.py:1672
 msgctxt "math symbol"
 msgid "neither a subset of nor equal to"
 msgstr "nem egy részhalmaza és nem egyenlő"
 
 #. Translators: this is the spoken representation for the character '⊉' (U+2289)
-#: ../src/orca/mathsymbols.py:1663
+#: ../src/orca/mathsymbols.py:1675
 msgctxt "math symbol"
 msgid "neither a superset of nor equal to"
 msgstr "nem halmaza és nem egyenlő"
 
 #. Translators: this is the spoken representation for the character '⊊' (U+228a)
-#: ../src/orca/mathsymbols.py:1666
+#: ../src/orca/mathsymbols.py:1678
 msgctxt "math symbol"
 msgid "subset of with not equal to"
 msgstr "részhalmaza, nem egyenlő jellel"
 
 #. Translators: this is the spoken representation for the character '⊋' (U+228b)
-#: ../src/orca/mathsymbols.py:1669
+#: ../src/orca/mathsymbols.py:1681
 msgctxt "math symbol"
 msgid "superset of with not equal to"
 msgstr "halmaza, nem egyenlő jellel"
 
 #. Translators: this is the spoken representation for the character '⊌' (U+228c)
-#: ../src/orca/mathsymbols.py:1672
+#: ../src/orca/mathsymbols.py:1684
 msgctxt "math symbol"
 msgid "multiset"
 msgstr "többszörös"
 
 #. Translators: this is the spoken representation for the character '⊍' (U+228d)
-#: ../src/orca/mathsymbols.py:1675
+#: ../src/orca/mathsymbols.py:1687
 msgctxt "math symbol"
 msgid "multiset multiplication"
 msgstr "többszörös szorzás"
 
 #. Translators: this is the spoken representation for the character '⊎' (U+228e)
-#: ../src/orca/mathsymbols.py:1678
+#: ../src/orca/mathsymbols.py:1690
 msgctxt "math symbol"
 msgid "multiset union"
 msgstr "többszörös unió"
 
 #. Translators: this is the spoken representation for the character '⊏' (U+228f)
-#: ../src/orca/mathsymbols.py:1681
+#: ../src/orca/mathsymbols.py:1693
 msgctxt "math symbol"
 msgid "square image of"
-msgstr "négyzet képe:"
+msgstr "négyzet képe"
 
 #. Translators: this is the spoken representation for the character '⊐' (U+2290)
-#: ../src/orca/mathsymbols.py:1684
+#: ../src/orca/mathsymbols.py:1696
 msgctxt "math symbol"
 msgid "square original of"
-msgstr "négyzet eredetije:"
+msgstr "négyzet eredetije"
 
 #. Translators: this is the spoken representation for the character '⊑' (U+2291)
-#: ../src/orca/mathsymbols.py:1687
+#: ../src/orca/mathsymbols.py:1699
 msgctxt "math symbol"
 msgid "square image of or equal to"
 msgstr "négyzet képe vagy egyenlő ezzel:"
 
 #. Translators: this is the spoken representation for the character '⊒' (U+2292)
-#: ../src/orca/mathsymbols.py:1690
+#: ../src/orca/mathsymbols.py:1702
 msgctxt "math symbol"
 msgid "square original of or equal to"
 msgstr "négyzet eredetije vagy egyenlő ezzel:"
 
 #. Translators: this is the spoken representation for the character '⊓' (U+2293)
-#: ../src/orca/mathsymbols.py:1693
+#: ../src/orca/mathsymbols.py:1705
 msgctxt "math symbol"
 msgid "square cap"
 msgstr "négyzetes sapka"
 
 #. Translators: this is the spoken representation for the character '⊔' (U+2294)
-#: ../src/orca/mathsymbols.py:1696
+#: ../src/orca/mathsymbols.py:1708
 msgctxt "math symbol"
 msgid "square cup"
 msgstr "négyzetes alj"
 
 #. Translators: this is the spoken representation for the character '⊕' (U+2295)
-#: ../src/orca/mathsymbols.py:1699
+#: ../src/orca/mathsymbols.py:1711
 msgctxt "math symbol"
 msgid "circled plus"
 msgstr "bekarikázott plusz"
 
 #. Translators: this is the spoken representation for the character '⊖' (U+2296)
-#: ../src/orca/mathsymbols.py:1702
+#: ../src/orca/mathsymbols.py:1714
 msgctxt "math symbol"
 msgid "circled minus"
 msgstr "bekarikázott mínusz"
 
 #. Translators: this is the spoken representation for the character '⊗' (U+2297)
-#: ../src/orca/mathsymbols.py:1705
+#: ../src/orca/mathsymbols.py:1717
 msgctxt "math symbol"
 msgid "circled times"
 msgstr "bekarikázott szorzás"
 
 #. Translators: this is the spoken representation for the character '⊘' (U+2298)
-#: ../src/orca/mathsymbols.py:1708
+#: ../src/orca/mathsymbols.py:1720
 msgctxt "math symbol"
 msgid "circled division slash"
 msgstr "bekarikázott osztás"
 
 #. Translators: this is the spoken representation for the character '⊙' (U+2299)
-#: ../src/orca/mathsymbols.py:1711
+#: ../src/orca/mathsymbols.py:1723
 msgctxt "math symbol"
 msgid "circled dot operator"
 msgstr "bekarikázott pont operátor"
 
 #. Translators: this is the spoken representation for the character '⊚' (U+229a)
-#: ../src/orca/mathsymbols.py:1714
+#: ../src/orca/mathsymbols.py:1726
 msgctxt "math symbol"
 msgid "circled ring operator"
 msgstr "bekarikázott gyűrű operátor"
 
 #. Translators: this is the spoken representation for the character '⊛' (U+229b)
-#: ../src/orca/mathsymbols.py:1717
+#: ../src/orca/mathsymbols.py:1729
 msgctxt "math symbol"
 msgid "circled asterisk operator"
 msgstr "bekarikázott csillag operátor"
 
 #. Translators: this is the spoken representation for the character '⊜' (U+229c)
-#: ../src/orca/mathsymbols.py:1720
+#: ../src/orca/mathsymbols.py:1732
 msgctxt "math symbol"
 msgid "circled equals"
 msgstr "bekarikázott egyenlőségjel"
 
 #. Translators: this is the spoken representation for the character '⊝' (U+229d)
-#: ../src/orca/mathsymbols.py:1723
+#: ../src/orca/mathsymbols.py:1735
 msgctxt "math symbol"
 msgid "circled dash"
 msgstr "bekarikázott mínusz"
 
 #. Translators: this is the spoken representation for the character '⊞' (U+229e)
-#: ../src/orca/mathsymbols.py:1726
+#: ../src/orca/mathsymbols.py:1738
 msgctxt "math symbol"
 msgid "squared plus"
 msgstr "pluszjel négyzetben"
 
 #. Translators: this is the spoken representation for the character '⊟' (U+229f)
-#: ../src/orca/mathsymbols.py:1729
+#: ../src/orca/mathsymbols.py:1741
 msgctxt "math symbol"
 msgid "squared minus"
 msgstr "mínuszjel négyzetben"
 
 #. Translators: this is the spoken representation for the character '⊠' (U+22a0)
-#: ../src/orca/mathsymbols.py:1732
+#: ../src/orca/mathsymbols.py:1744
 msgctxt "math symbol"
 msgid "squared times"
 msgstr "szorzásjel négyzetben"
 
 #. Translators: this is the spoken representation for the character '⊡' (U+22a1)
-#: ../src/orca/mathsymbols.py:1735
+#: ../src/orca/mathsymbols.py:1747
 msgctxt "math symbol"
 msgid "squared dot operator"
 msgstr "pont operátor négyzetben"
 
 #. Translators: this is the spoken representation for the character '⊢' (U+22a2)
-#: ../src/orca/mathsymbols.py:1738
-msgctxt "math symbol"
-msgid "right tack"
-msgstr ""
-
-#. Translators: this is the spoken representation for the character '⊣' (U+22a3)
-#: ../src/orca/mathsymbols.py:1741
-msgctxt "math symbol"
-msgid "left tack"
-msgstr ""
-
-#. Translators: this is the spoken representation for the character '⊤' (U+22a4)
-#: ../src/orca/mathsymbols.py:1744
-msgctxt "math symbol"
-msgid "down tack"
-msgstr ""
-
-#. Translators: this is the spoken representation for the character '⊥' (U+22a5)
-#: ../src/orca/mathsymbols.py:1747
-msgctxt "math symbol"
-msgid "up tack"
-msgstr ""
-
-#. Translators: this is the spoken representation for the character '⊦' (U+22a6)
 #: ../src/orca/mathsymbols.py:1750
 msgctxt "math symbol"
+msgid "right tack"
+msgstr "jobbra nyíl"
+
+#. Translators: this is the spoken representation for the character '⊣' (U+22a3)
+#: ../src/orca/mathsymbols.py:1753
+msgctxt "math symbol"
+msgid "left tack"
+msgstr "balra nyíl"
+
+#. Translators: this is the spoken representation for the character '⊤' (U+22a4)
+#: ../src/orca/mathsymbols.py:1756
+msgctxt "math symbol"
+msgid "down tack"
+msgstr "lefelé nyíl"
+
+#. Translators: this is the spoken representation for the character '⊥' (U+22a5)
+#: ../src/orca/mathsymbols.py:1759
+msgctxt "math symbol"
+msgid "up tack"
+msgstr "felfelé nyíl"
+
+#. Translators: this is the spoken representation for the character '⊦' (U+22a6)
+#: ../src/orca/mathsymbols.py:1762
+msgctxt "math symbol"
 msgid "assertion"
-msgstr ""
+msgstr "kijelentés"
 
 #. Translators: this is the spoken representation for the character '⊧' (U+22a7)
-#: ../src/orca/mathsymbols.py:1753
+#: ../src/orca/mathsymbols.py:1765
 msgctxt "math symbol"
 msgid "models"
 msgstr "modellezi"
 
 #. Translators: this is the spoken representation for the character '⊨' (U+22a8)
-#: ../src/orca/mathsymbols.py:1756
+#: ../src/orca/mathsymbols.py:1768
 msgctxt "math symbol"
 msgid "true"
 msgstr "igaz"
 
 #. Translators: this is the spoken representation for the character '⊩' (U+22a9)
-#: ../src/orca/mathsymbols.py:1759
+#: ../src/orca/mathsymbols.py:1771
 msgctxt "math symbol"
 msgid "forces"
-msgstr ""
+msgstr "kényszeríti"
 
 #. Translators: this is the spoken representation for the character '⊪' (U+22aa)
-#: ../src/orca/mathsymbols.py:1762
+#: ../src/orca/mathsymbols.py:1774
 msgctxt "math symbol"
 msgid "triple vertical bar right turnstile"
 msgstr ""
 
 #. Translators: this is the spoken representation for the character '⊫' (U+22ab)
-#: ../src/orca/mathsymbols.py:1765
+#: ../src/orca/mathsymbols.py:1777
 msgctxt "math symbol"
 msgid "double vertical bar double right turnstile"
 msgstr ""
 
 #. Translators: this is the spoken representation for the character '⊬' (U+22ac)
-#: ../src/orca/mathsymbols.py:1768
+#: ../src/orca/mathsymbols.py:1780
 msgctxt "math symbol"
 msgid "does not prove"
 msgstr "nem bizonyítja"
 
 # megjegyzés: használhatjuk esetleg a hamis fordítást is, nem tudom, hogy a matematikai terminológiában a hamis vagy a nem igaz az elfogadott -e
 #. Translators: this is the spoken representation for the character '⊭' (U+22ad)
-#: ../src/orca/mathsymbols.py:1771
+#: ../src/orca/mathsymbols.py:1783
 msgctxt "math symbol"
 msgid "not true"
 msgstr "nem igaz"
 
 #. Translators: this is the spoken representation for the character '⊮' (U+22ae)
-#: ../src/orca/mathsymbols.py:1774
+#: ../src/orca/mathsymbols.py:1786
 msgctxt "math symbol"
 msgid "does not force"
 msgstr "nem kényszeríti"
 
 #. Translators: this is the spoken representation for the character '⊯' (U+22af)
-#: ../src/orca/mathsymbols.py:1777
+#: ../src/orca/mathsymbols.py:1789
 msgctxt "math symbol"
 msgid "negated double vertical bar double right turnstile"
 msgstr ""
 
 #. Translators: this is the spoken representation for the character '⊰' (U+22b0)
-#: ../src/orca/mathsymbols.py:1780
+#: ../src/orca/mathsymbols.py:1792
 msgctxt "math symbol"
 msgid "precedes under relation"
-msgstr ""
+msgstr "megelőzi a relációban"
 
 #. Translators: this is the spoken representation for the character '⊱' (U+22b1)
-#: ../src/orca/mathsymbols.py:1783
+#: ../src/orca/mathsymbols.py:1795
 msgctxt "math symbol"
 msgid "succeeds under relation"
-msgstr ""
+msgstr "követi a relációban"
 
 #. Translators: this is the spoken representation for the character '⊲' (U+22b2)
-#: ../src/orca/mathsymbols.py:1786
+#: ../src/orca/mathsymbols.py:1798
 msgctxt "math symbol"
 msgid "normal subgroup of"
 msgstr "normál alcsoportja"
 
 #. Translators: this is the spoken representation for the character '⊳' (U+22b3)
-#: ../src/orca/mathsymbols.py:1789
+#: ../src/orca/mathsymbols.py:1801
 msgctxt "math symbol"
 msgid "contains as normal subgroup"
 msgstr "normál alcsoportként tartalmazza"
 
 #. Translators: this is the spoken representation for the character '⊴' (U+22b4)
-#: ../src/orca/mathsymbols.py:1792
+#: ../src/orca/mathsymbols.py:1804
 msgctxt "math symbol"
 msgid "normal subgroup of or equal to"
 msgstr "normál alcsoportja vagy egyenlő"
 
 #. Translators: this is the spoken representation for the character '⊵' (U+22b5)
-#: ../src/orca/mathsymbols.py:1795
+#: ../src/orca/mathsymbols.py:1807
 msgctxt "math symbol"
 msgid "contains as normal subgroup of or equal to"
 msgstr "normál alcsoportként tartalmazza vagy egyenlő"
 
 #. Translators: this is the spoken representation for the character '⊶' (U+22b6)
-#: ../src/orca/mathsymbols.py:1798
+#: ../src/orca/mathsymbols.py:1810
 msgctxt "math symbol"
 msgid "original of"
 msgstr "eredetije"
 
 #. Translators: this is the spoken representation for the character '⊷' (U+22b7)
-#: ../src/orca/mathsymbols.py:1801
+#: ../src/orca/mathsymbols.py:1813
 msgctxt "math symbol"
 msgid "image of"
 msgstr "képe"
 
 #. Translators: this is the spoken representation for the character '⊸' (U+22b8)
-#: ../src/orca/mathsymbols.py:1804
+#: ../src/orca/mathsymbols.py:1816
 msgctxt "math symbol"
 msgid "multimap"
-msgstr ""
+msgstr "többértékű leképezés"
 
 #. Translators: this is the spoken representation for the character '⊹' (U+22b9)
-#: ../src/orca/mathsymbols.py:1807
+#: ../src/orca/mathsymbols.py:1819
 msgctxt "math symbol"
 msgid "hermitian conjugate matrix"
 msgstr "Hermite-féle konjugált mátrix"
 
 #. Translators: this is the spoken representation for the character '⊺' (U+22ba)
-#: ../src/orca/mathsymbols.py:1810
+#: ../src/orca/mathsymbols.py:1822
 msgctxt "math symbol"
 msgid "intercalate"
-msgstr ""
+msgstr "beékelődés"
 
 #. Translators: this is the spoken representation for the character '⊻' (U+22bb)
-#: ../src/orca/mathsymbols.py:1813
+#: ../src/orca/mathsymbols.py:1825
 msgctxt "math symbol"
 msgid "xor"
 msgstr "xor"
 
 #. Translators: this is the spoken representation for the character '⊼' (U+22bc)
-#: ../src/orca/mathsymbols.py:1816
+#: ../src/orca/mathsymbols.py:1828
 msgctxt "math symbol"
 msgid "nand"
 msgstr "nand"
 
 #. Translators: this is the spoken representation for the character '⊽' (U+22bd)
-#: ../src/orca/mathsymbols.py:1819
+#: ../src/orca/mathsymbols.py:1831
 msgctxt "math symbol"
 msgid "nor"
 msgstr "nor"
 
 #. Translators: this is the spoken representation for the character '⊾' (U+22be)
-#: ../src/orca/mathsymbols.py:1822
+#: ../src/orca/mathsymbols.py:1834
 msgctxt "math symbol"
 msgid "right angle with arc"
 msgstr "derékszög ívvel"
 
 #. Translators: this is the spoken representation for the character '⊿' (U+22bf)
-#: ../src/orca/mathsymbols.py:1825
+#: ../src/orca/mathsymbols.py:1837
 msgctxt "math symbol"
 msgid "right triangle"
 msgstr "jobb háromszög"
 
 #. Translators: this is the spoken representation for the character '⋀' (U+22c0)
-#: ../src/orca/mathsymbols.py:1828
+#: ../src/orca/mathsymbols.py:1840
 msgctxt "math symbol"
 msgid "n-ary logical and"
 msgstr "n-ed rendű logikai és"
 
 #. Translators: this is the spoken representation for the character '⋁' (U+22c1)
-#: ../src/orca/mathsymbols.py:1831
+#: ../src/orca/mathsymbols.py:1843
 msgctxt "math symbol"
 msgid "n-ary logical or"
 msgstr "n-ed rendű logikai vagy"
 
 #. Translators: this is the spoken representation for the character '⋂' (U+22c2)
-#: ../src/orca/mathsymbols.py:1834
+#: ../src/orca/mathsymbols.py:1846
 msgctxt "math symbol"
 msgid "n-ary intersection"
 msgstr "n-ed rendű metszet"
 
 #. Translators: this is the spoken representation for the character '⋃' (U+22c3)
-#: ../src/orca/mathsymbols.py:1837
+#: ../src/orca/mathsymbols.py:1849
 msgctxt "math symbol"
 msgid "n-ary union"
 msgstr "n-ed rendű unió"
 
 #. Translators: this is the spoken representation for the character '⋄' (U+22c4)
-#: ../src/orca/mathsymbols.py:1840
+#: ../src/orca/mathsymbols.py:1852
 msgctxt "math symbol"
 msgid "diamond operator"
 msgstr "gyémánt operátor"
 
 #. Translators: this is the spoken representation for the character '⋅' (U+22c5)
-#: ../src/orca/mathsymbols.py:1843
+#: ../src/orca/mathsymbols.py:1855
 msgctxt "math symbol"
 msgid "dot operator"
 msgstr "pont operátor"
 
 #. Translators: this is the spoken representation for the character '⋆' (U+22c6)
-#: ../src/orca/mathsymbols.py:1846
+#: ../src/orca/mathsymbols.py:1858
 msgctxt "math symbol"
 msgid "star operator"
 msgstr "csillag operátor"
 
 #. Translators: this is the spoken representation for the character '⋇' (U+22c7)
-#: ../src/orca/mathsymbols.py:1849
+#: ../src/orca/mathsymbols.py:1861
 msgctxt "math symbol"
 msgid "division times"
 msgstr ""
 
 #. Translators: this is the spoken representation for the character '⋈' (U+22c8)
-#: ../src/orca/mathsymbols.py:1852
-msgctxt "math symbol"
-msgid "bowtie"
-msgstr ""
-
-#. Translators: this is the spoken representation for the character '⋉' (U+22c9)
-#: ../src/orca/mathsymbols.py:1855
-msgctxt "math symbol"
-msgid "left normal factor semidirect product"
-msgstr ""
-
-#. Translators: this is the spoken representation for the character '⋊' (U+22ca)
-#: ../src/orca/mathsymbols.py:1858
-msgctxt "math symbol"
-msgid "right normal factor semidirect product"
-msgstr ""
-
-#. Translators: this is the spoken representation for the character '⋋' (U+22cb)
-#: ../src/orca/mathsymbols.py:1861
-msgctxt "math symbol"
-msgid "left semidirect product"
-msgstr ""
-
-#. Translators: this is the spoken representation for the character '⋌' (U+22cc)
 #: ../src/orca/mathsymbols.py:1864
 msgctxt "math symbol"
+msgid "bowtie"
+msgstr "természetes összekapcsolás"
+
+#. Translators: this is the spoken representation for the character '⋉' (U+22c9)
+#: ../src/orca/mathsymbols.py:1867
+msgctxt "math symbol"
+msgid "left normal factor semidirect product"
+msgstr "bal oldali féldirekt szorzat"
+
+#. Translators: this is the spoken representation for the character '⋊' (U+22ca)
+#: ../src/orca/mathsymbols.py:1870
+msgctxt "math symbol"
+msgid "right normal factor semidirect product"
+msgstr "jobb oldali féldirekt szorzat"
+
+#. Translators: this is the spoken representation for the character '⋋' (U+22cb)
+#: ../src/orca/mathsymbols.py:1873
+msgctxt "math symbol"
+msgid "left semidirect product"
+msgstr "bal oldali féldirekt szorzat"
+
+#. Translators: this is the spoken representation for the character '⋌' (U+22cc)
+#: ../src/orca/mathsymbols.py:1876
+msgctxt "math symbol"
 msgid "right semidirect product"
-msgstr ""
+msgstr "jobb oldali féldirekt szorzat"
 
 #. Translators: this is the spoken representation for the character '⋍' (U+22cd)
-#: ../src/orca/mathsymbols.py:1867
+#: ../src/orca/mathsymbols.py:1879
 msgctxt "math symbol"
 msgid "reversed tilde equals"
 msgstr "fordított hullámvonal alakú egyenlőségjel"
 
 #. Translators: this is the spoken representation for the character '⋎' (U+22ce)
-#: ../src/orca/mathsymbols.py:1870
+#: ../src/orca/mathsymbols.py:1882
 msgctxt "math symbol"
 msgid "curly logical or"
 msgstr "ívelt logikai vagy"
 
 #. Translators: this is the spoken representation for the character '⋏' (U+22cf)
-#: ../src/orca/mathsymbols.py:1873
+#: ../src/orca/mathsymbols.py:1885
 msgctxt "math symbol"
 msgid "curly logical and"
 msgstr "ívelt logikai és"
 
 #. Translators: this is the spoken representation for the character '⋐' (U+22d0)
-#: ../src/orca/mathsymbols.py:1876
+#: ../src/orca/mathsymbols.py:1888
 msgctxt "math symbol"
 msgid "double subset"
 msgstr "duplán részhalmaza"
 
 #. Translators: this is the spoken representation for the character '⋑' (U+22d1)
-#: ../src/orca/mathsymbols.py:1879
+#: ../src/orca/mathsymbols.py:1891
 msgctxt "math symbol"
 msgid "double superset"
 msgstr "duplán halmaza"
 
 #. Translators: this is the spoken representation for the character '⋒' (U+22d2)
-#: ../src/orca/mathsymbols.py:1882
+#: ../src/orca/mathsymbols.py:1894
 msgctxt "math symbol"
 msgid "double intersection"
 msgstr "dupla metszet"
 
 #. Translators: this is the spoken representation for the character '⋓' (U+22d3)
-#: ../src/orca/mathsymbols.py:1885
+#: ../src/orca/mathsymbols.py:1897
 msgctxt "math symbol"
 msgid "double union"
 msgstr "dupla unió"
 
 #. Translators: this is the spoken representation for the character '⋔' (U+22d4)
-#: ../src/orca/mathsymbols.py:1888
+#: ../src/orca/mathsymbols.py:1900
 msgctxt "math symbol"
 msgid "pitchfork"
 msgstr "vasvilla"
 
 #. Translators: this is the spoken representation for the character '⋕' (U+22d5)
-#: ../src/orca/mathsymbols.py:1891
+#: ../src/orca/mathsymbols.py:1903
 msgctxt "math symbol"
 msgid "equal and parallel to"
 msgstr "egyenlő és párhuzamos ezzel:"
 
 #. Translators: this is the spoken representation for the character '⋖' (U+22d6)
-#: ../src/orca/mathsymbols.py:1894
+#: ../src/orca/mathsymbols.py:1906
 msgctxt "math symbol"
 msgid "less than with dot"
 msgstr "kisebb mint, ponttal"
 
 #. Translators: this is the spoken representation for the character '⋗' (U+22d7)
-#: ../src/orca/mathsymbols.py:1897
+#: ../src/orca/mathsymbols.py:1909
 msgctxt "math symbol"
 msgid "greater than with dot"
 msgstr "nagyobb mint, ponttal"
 
 #. Translators: this is the spoken representation for the character '⋘' (U+22d8)
-#: ../src/orca/mathsymbols.py:1900
+#: ../src/orca/mathsymbols.py:1912
 msgctxt "math symbol"
 msgid "very much less than"
 msgstr "nagyon sokkal kisebb, mint"
 
 #. Translators: this is the spoken representation for the character '⋙' (U+22d9)
-#: ../src/orca/mathsymbols.py:1903
+#: ../src/orca/mathsymbols.py:1915
 msgctxt "math symbol"
 msgid "very much greater than"
 msgstr "nagyon sokkal nagyobb, mint"
 
 #. Translators: this is the spoken representation for the character '⋚' (U+22da)
-#: ../src/orca/mathsymbols.py:1906
+#: ../src/orca/mathsymbols.py:1918
 msgctxt "math symbol"
 msgid "less than equal to or greater than"
 msgstr "kisebb mint egyenlő, vagy nagyobb mint"
 
 #. Translators: this is the spoken representation for the character '⋛' (U+22db)
-#: ../src/orca/mathsymbols.py:1909
+#: ../src/orca/mathsymbols.py:1921
 msgctxt "math symbol"
 msgid "greater than equal to or less than"
 msgstr "nagyobb mint egyenlő, vagy kisebb mint"
 
 #. Translators: this is the spoken representation for the character '⋜' (U+22dc)
-#: ../src/orca/mathsymbols.py:1912
+#: ../src/orca/mathsymbols.py:1924
 msgctxt "math symbol"
 msgid "equal to or less than"
 msgstr "egyenlő, vagy kisebb mint"
 
 #. Translators: this is the spoken representation for the character '⋝' (U+22dd)
-#: ../src/orca/mathsymbols.py:1915
+#: ../src/orca/mathsymbols.py:1927
 msgctxt "math symbol"
 msgid "equal to or greater than"
 msgstr "egyenlő, vagy nagyobb mint"
 
 #. Translators: this is the spoken representation for the character '⋝' (U+22de)
-#: ../src/orca/mathsymbols.py:1918
+#: ../src/orca/mathsymbols.py:1930
 msgctxt "math symbol"
 msgid "equal to or precedes"
 msgstr "egyenlő, vagy megelőzi"
 
 #. Translators: this is the spoken representation for the character '⋝' (U+22df)
-#: ../src/orca/mathsymbols.py:1921
+#: ../src/orca/mathsymbols.py:1933
 msgctxt "math symbol"
 msgid "equal to or succeeds"
 msgstr "egyenlő, vagy követi"
 
 #. Translators: this is the spoken representation for the character '⋠' (U+22e0)
-#: ../src/orca/mathsymbols.py:1924
+#: ../src/orca/mathsymbols.py:1936
 msgctxt "math symbol"
 msgid "does not precede or equal"
 msgstr "nem előzi meg, vagy egyenlő"
 
 #. Translators: this is the spoken representation for the character '⋡' (U+22e1)
-#: ../src/orca/mathsymbols.py:1927
+#: ../src/orca/mathsymbols.py:1939
 msgctxt "math symbol"
 msgid "does not succeed or equal"
 msgstr "nem követi, vagy egyenlő"
 
 #. Translators: this is the spoken representation for the character '⋢' (U+22e2)
-#: ../src/orca/mathsymbols.py:1930
+#: ../src/orca/mathsymbols.py:1942
 msgctxt "math symbol"
 msgid "not square image of or equal to"
 msgstr "nem négyzetes képe, vagy egyenlő"
 
 #. Translators: this is the spoken representation for the character '⋣' (U+22e3)
-#: ../src/orca/mathsymbols.py:1933
+#: ../src/orca/mathsymbols.py:1945
 msgctxt "math symbol"
 msgid "not square original of or equal to"
 msgstr "nem négyzetes eredetije, vagy egyenlő"
 
 #. Translators: this is the spoken representation for the character '⋤' (U+22e4)
-#: ../src/orca/mathsymbols.py:1936
+#: ../src/orca/mathsymbols.py:1948
 msgctxt "math symbol"
 msgid "square image of or not equal to"
 msgstr "négyzetes képe, vagy nem egyenlő"
 
 #. Translators: this is the spoken representation for the character '⋥' (U+22e5)
-#: ../src/orca/mathsymbols.py:1939
+#: ../src/orca/mathsymbols.py:1951
 msgctxt "math symbol"
 msgid "square original of or not equal to"
 msgstr "négyzetes eredetije, vagy nem egyenlő"
 
 #. Translators: this is the spoken representation for the character '⋦' (U+22e6)
-#: ../src/orca/mathsymbols.py:1942
+#: ../src/orca/mathsymbols.py:1954
 msgctxt "math symbol"
 msgid "less than but not equivalent to"
 msgstr "kisebb, de nem azonos ezzel:"
 
 #. Translators: this is the spoken representation for the character '⋧' (U+22e7)
-#: ../src/orca/mathsymbols.py:1945
+#: ../src/orca/mathsymbols.py:1957
 msgctxt "math symbol"
 msgid "greater than but not equivalent to"
 msgstr "nagyobb, de nem azonos ezzel:"
 
 #. Translators: this is the spoken representation for the character '⋨' (U+22e8)
-#: ../src/orca/mathsymbols.py:1948
+#: ../src/orca/mathsymbols.py:1960
 msgctxt "math symbol"
 msgid "precedes but not equivalent to"
 msgstr "megelőzi, de nem azonos ezzel:"
 
 #. Translators: this is the spoken representation for the character '⋩' (U+22e9)
-#: ../src/orca/mathsymbols.py:1951
+#: ../src/orca/mathsymbols.py:1963
 msgctxt "math symbol"
 msgid "succeeds but not equivalent to"
 msgstr "követi, de nem ekvivalens ezzel:"
 
 #. Translators: this is the spoken representation for the character '⋪' (U+22ea)
-#: ../src/orca/mathsymbols.py:1954
+#: ../src/orca/mathsymbols.py:1966
 msgctxt "math symbol"
 msgid "not normal subgroup of"
 msgstr "nem normál alcsoportja ennek:"
 
 #. Translators: this is the spoken representation for the character '⋫' (U+22eb)
-#: ../src/orca/mathsymbols.py:1957
+#: ../src/orca/mathsymbols.py:1969
 msgctxt "math symbol"
 msgid "does not contain as normal subgroup"
 msgstr "nem tartalmazza normál alcsoportként"
 
 #. Translators: this is the spoken representation for the character '⋬' (U+22ec)
-#: ../src/orca/mathsymbols.py:1960
+#: ../src/orca/mathsymbols.py:1972
 msgctxt "math symbol"
 msgid "not normal subgroup of or equal to"
 msgstr "nem normál alcsoportja, vagy egyenlő"
 
 #. Translators: this is the spoken representation for the character '⋭' (U+22ed)
-#: ../src/orca/mathsymbols.py:1963
+#: ../src/orca/mathsymbols.py:1975
 msgctxt "math symbol"
 msgid "does not contain as normal subgroup or equal"
 msgstr "nem tartalmazza normál alcsoportként, vagy egyenlő"
 
 #. Translators: this is the spoken representation for the character '⋮' (U+22ee)
-#: ../src/orca/mathsymbols.py:1966
+#: ../src/orca/mathsymbols.py:1978
 msgctxt "math symbol"
 msgid "vertical ellipsis"
 msgstr "függőleges három pont"
 
 #. Translators: this is the spoken representation for the character '⋯' (U+22ef)
-#: ../src/orca/mathsymbols.py:1969
+#: ../src/orca/mathsymbols.py:1981
 msgctxt "math symbol"
 msgid "midline horizontal ellipsis"
 msgstr "középvonali vízszintes három pont"
 
 #. Translators: this is the spoken representation for the character '⋰' (U+22f0)
-#: ../src/orca/mathsymbols.py:1972
+#: ../src/orca/mathsymbols.py:1984
 msgctxt "math symbol"
 msgid "up right diagonal ellipsis"
 msgstr "felfelé mutató jobb átlós három pont"
 
 #. Translators: this is the spoken representation for the character '⋱' (U+22f1)
-#: ../src/orca/mathsymbols.py:1975
+#: ../src/orca/mathsymbols.py:1987
 msgctxt "math symbol"
 msgid "down right diagonal ellipsis"
 msgstr "lefelé mutató jobb átlós három pont"
 
 #. Translators: this is the spoken representation for the character '⋲' (U+22f2)
-#: ../src/orca/mathsymbols.py:1978
+#: ../src/orca/mathsymbols.py:1990
 msgctxt "math symbol"
 msgid "element of with long horizontal stroke"
 msgstr "eleme, hosszú vízszintes vonallal"
 
 #. Translators: this is the spoken representation for the character '⋳' (U+22f3)
-#: ../src/orca/mathsymbols.py:1981
+#: ../src/orca/mathsymbols.py:1993
 msgctxt "math symbol"
 msgid "element of with vertical bar at end of horizontal stroke"
 msgstr "eleme, függőleges vonallal a vízszintes vonal végén"
 
 #. Translators: this is the spoken representation for the character '⋴' (U+22f4)
-#: ../src/orca/mathsymbols.py:1984
+#: ../src/orca/mathsymbols.py:1996
 msgctxt "math symbol"
 msgid "small element of with vertical bar at end of horizontal stroke"
 msgstr "kis eleme, függőleges vonallal a vízszintes vonal végén"
 
 #. Translators: this is the spoken representation for the character '⋵' (U+22f5)
-#: ../src/orca/mathsymbols.py:1987
+#: ../src/orca/mathsymbols.py:1999
 msgctxt "math symbol"
 msgid "element of with dot above"
 msgstr "eleme, fölötte ponttal"
 
 #. Translators: this is the spoken representation for the character '⋶' (U+22f6)
-#: ../src/orca/mathsymbols.py:1990
+#: ../src/orca/mathsymbols.py:2002
 msgctxt "math symbol"
 msgid "element of with overbar"
 msgstr "eleme, felülvonással"
 
 #. Translators: this is the spoken representation for the character '⋷' (U+22f7)
-#: ../src/orca/mathsymbols.py:1993
+#: ../src/orca/mathsymbols.py:2005
 msgctxt "math symbol"
 msgid "small element of with overbar"
 msgstr "kis eleme, felülvonással"
 
 #. Translators: this is the spoken representation for the character '⋸' (U+22f8)
-#: ../src/orca/mathsymbols.py:1996
+#: ../src/orca/mathsymbols.py:2008
 msgctxt "math symbol"
 msgid "element of with underbar"
 msgstr "eleme, aláhúzással"
 
 #. Translators: this is the spoken representation for the character '⋹' (U+22f9)
-#: ../src/orca/mathsymbols.py:1999
+#: ../src/orca/mathsymbols.py:2011
 msgctxt "math symbol"
 msgid "element of with two horizontal strokes"
 msgstr "eleme, két vízszintes vonallal"
 
 #. Translators: this is the spoken representation for the character '⋺' (U+22fa)
-#: ../src/orca/mathsymbols.py:2002
+#: ../src/orca/mathsymbols.py:2014
 msgctxt "math symbol"
 msgid "contains with long horizontal stroke"
 msgstr "tartalmazza, hosszú vízszintes vonallal"
 
 #. Translators: this is the spoken representation for the character '⋻' (U+22fb)
-#: ../src/orca/mathsymbols.py:2005
+#: ../src/orca/mathsymbols.py:2017
 msgctxt "math symbol"
 msgid "contains with vertical bar at end of horizontal stroke"
 msgstr "tartalmazza, függőleges vonallal a vízszintes vonal végén"
 
 #. Translators: this is the spoken representation for the character '⋼' (U+22fc)
-#: ../src/orca/mathsymbols.py:2008
+#: ../src/orca/mathsymbols.py:2020
 msgctxt "math symbol"
 msgid "small contains with vertical bar at end of horizontal stroke"
 msgstr "kis tartalmazza, függőleges vonallal a vízszintes vonal végén"
 
 #. Translators: this is the spoken representation for the character '⋽' (U+22fd)
-#: ../src/orca/mathsymbols.py:2011
+#: ../src/orca/mathsymbols.py:2023
 msgctxt "math symbol"
 msgid "contains with overbar"
 msgstr "tartalmazza, felülvonással"
 
 #. Translators: this is the spoken representation for the character '⋾' (U+22fe)
-#: ../src/orca/mathsymbols.py:2014
+#: ../src/orca/mathsymbols.py:2026
 msgctxt "math symbol"
 msgid "small contains with overbar"
 msgstr "kis tartalmazza, felülvonással"
 
 #. Translators: this is the spoken representation for the character '⋿' (U+22ff)
-#: ../src/orca/mathsymbols.py:2017
+#: ../src/orca/mathsymbols.py:2029
 msgctxt "math symbol"
 msgid "z notation bag membership"
 msgstr "z jelölési csoport tagság"
+
+#. Translators: this is the spoken representation for the character '□' (U+25a1)
+#: ../src/orca/mathsymbols.py:2035
+msgid "white square"
+msgstr "üres négyzet"
+
+#. Translators: this is the spoken representation for the character '○' (U+25cb)
+#: ../src/orca/mathsymbols.py:2041
+msgid "white circle"
+msgstr "üres kör"
+
+#. Translators: this is the spoken representation for the character '●' (U+25cf)
+#: ../src/orca/mathsymbols.py:2044
+msgid "black circle"
+msgstr "fekete kör"
+
+#. Translators: this is the spoken representation for the character '◦' (U+25e6)
+#: ../src/orca/mathsymbols.py:2047
+msgid "white bullet"
+msgstr "üres listajel"
 
 #. Translators: Sometimes when we attempt to get the name of an accessible
 #. software application, we fail because the app or one of its elements is
@@ -9500,7 +9437,7 @@ msgstr "A beszéd nem érhető el."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:1535 ../src/orca/scripts/default.py:3785
+#: ../src/orca/messages.py:1535 ../src/orca/scripts/default.py:3789
 msgid "string not found"
 msgstr "a karakterlánc nem található"
 
@@ -10387,12 +10324,12 @@ msgstr "Beszédszintetizát_or:"
 msgid "Speech _system:"
 msgstr "Beszé_drendszer:"
 
-#. Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.
+#. Translators: Having multiple
 #: ../src/orca/orca-setup.ui.h:44
 msgid "_Voice type:"
 msgstr "_Hangtípus:"
 
-#. Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.
+#. Translators: Having multiple
 #: ../src/orca/orca-setup.ui.h:46
 msgid "Voice Type Settings"
 msgstr "Hangtípusok beállításai"
@@ -10402,7 +10339,7 @@ msgstr "Hangtípusok beállításai"
 msgid "Speak multicase strings as wor_ds"
 msgstr "Több NagyBetűt tartalmazó kifejezések _szavankénti felolvasása"
 
-#. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
+#. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it
 #: ../src/orca/orca-setup.ui.h:52
 msgid "Say All B_y:"
 msgstr "_Kimondás:"
@@ -10445,7 +10382,7 @@ msgstr "_Mindent"
 msgid "Punctuation Level"
 msgstr "Központozás szintje"
 
-#. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. 'checkbox') or its state (e.g. 'not checked') or say 'mispelled' to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
+#. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g.
 #: ../src/orca/orca-setup.ui.h:72
 msgid "Only speak displayed text"
 msgstr "Csak a képernyőn megjelenő szöveg kimondása"
@@ -10462,7 +10399,7 @@ msgstr "Be_húzás és igazítás felolvasása"
 msgid "Spea_k object mnemonics"
 msgstr "Gy_orsbillentyűk felolvasása"
 
-#. Translators: This checkbox toggles whether or not Orca says the child position (e.g., 'item 6 of 7').
+#. Translators: This checkbox toggles whether or not Orca says the child position (e.g.,
 #: ../src/orca/orca-setup.ui.h:77
 msgid "Speak child p_osition"
 msgstr "P_ozícióadatok kimondásának engedélyezése"
@@ -10495,7 +10432,7 @@ msgstr "Korlátozás erre:"
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
 #: ../src/orca/orca-setup.ui.h:87
 msgid "Progress Bar Updates"
-msgstr "Folyamatjelző frissítésének felolvasása"
+msgstr "Folyamatjelző frissítési beállításai"
 
 #: ../src/orca/orca-setup.ui.h:88
 msgid "Speech"
@@ -10517,7 +10454,7 @@ msgstr "A _sorvég jel szimbólum letiltása"
 msgid "_Enable Contracted Braille"
 msgstr "I_rodalmi braille támogatás engedélyezése"
 
-#. Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille 'contractions' get used. Contractions are shorter forms of commonly-used letter combinations and words. For instance in English there is a single braille symbol for 'ing' (dots 3-4-6), and the letter 'e' (dots 1-5) all by itself means 'every'. The list of rules which dictate what contractions should be used and whether or not they can be used in a particular context are stored in liblouis' tables.
+#. Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille
 #: ../src/orca/orca-setup.ui.h:94
 msgid "Contraction _Table:"
 msgstr "Fordítási _tábla:"
@@ -10526,7 +10463,7 @@ msgstr "Fordítási _tábla:"
 msgid "Display Settings"
 msgstr "Megjelenítés beállításai"
 
-#. Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.
+#. Translators: This option refers to the dot or dots in braille which will be used to
 #: ../src/orca/orca-setup.ui.h:97
 msgctxt "braille dots"
 msgid "_None"
@@ -10733,7 +10670,7 @@ msgstr "Helyesírás-ellenőrzés"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:3397 ../src/orca/scripts/default.py:3409
+#: ../src/orca/scripts/default.py:3401 ../src/orca/scripts/default.py:3413
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -11837,6 +11774,27 @@ msgstr ""
 "Az érték csökkentéséhez használja a balra nyíl, növeléséhez a jobbra nyíl "
 "billentyűt. A legkisebb értékre ugráshoz használja a Home, a legnagyobb "
 "értékre ugráshoz pedig az End billentyűt."
+
+#~ msgid "almost equal to"
+#~ msgstr "közelítőleg egyenlő"
+
+#~ msgid "not equal to"
+#~ msgstr "nem egyenlő"
+
+#~ msgid "less than or equal to"
+#~ msgstr "kisebb vagy egyenlő"
+
+#~ msgid "greater than or equal to"
+#~ msgstr "nagyobb vagy egyenlő"
+
+#~ msgid "square root"
+#~ msgstr "négyzetgyök"
+
+#~ msgid "cube root"
+#~ msgstr "köbgyök"
+
+#~ msgid "infinity"
+#~ msgstr "végtelen"
 
 #~ msgctxt "math symbol"
 #~ msgid "szorzó operátor"
