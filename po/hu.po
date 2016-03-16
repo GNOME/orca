@@ -9,17 +9,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-04 06:46+0100\n"
-"PO-Revision-Date: 2016-03-04 01:03+0100\n"
-"Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=orca&keywords=I18N+L10N&component=i18n\n"
+"POT-Creation-Date: 2016-03-16 02:18+0000\n"
+"PO-Revision-Date: 2016-03-16 11:41+0100\n"
+"Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Screen Reader"
@@ -7180,13 +7181,13 @@ msgstr "kényszeríti"
 #: ../src/orca/mathsymbols.py:1873
 msgctxt "math symbol"
 msgid "triple vertical bar right turnstile"
-msgstr ""
+msgstr "háromszoros függőleges vonal jobboldali forgókereszttel"
 
 #. Translators: this is the spoken representation for the character '⊫' (U+22ab)
 #: ../src/orca/mathsymbols.py:1876
 msgctxt "math symbol"
 msgid "double vertical bar double right turnstile"
-msgstr ""
+msgstr "kettős függőleges vonal dupla jobboldali forgókereszttel"
 
 #. Translators: this is the spoken representation for the character '⊬' (U+22ac)
 #: ../src/orca/mathsymbols.py:1879
@@ -7211,7 +7212,7 @@ msgstr "nem kényszeríti"
 #: ../src/orca/mathsymbols.py:1888
 msgctxt "math symbol"
 msgid "negated double vertical bar double right turnstile"
-msgstr ""
+msgstr "negált kettős függőleges vonal dupla jobboldali forgókereszttel"
 
 #. Translators: this is the spoken representation for the character '⊰' (U+22b0)
 #: ../src/orca/mathsymbols.py:1891
@@ -7331,7 +7332,7 @@ msgstr "csillag operátor"
 #: ../src/orca/mathsymbols.py:1960
 msgctxt "math symbol"
 msgid "division times"
-msgstr ""
+msgstr "osztásszorzás"
 
 #. Translators: this is the spoken representation for the character '⋈' (U+22c8)
 #: ../src/orca/mathsymbols.py:1963
@@ -11177,7 +11178,7 @@ msgstr "Beszé_drendszer:"
 msgid "_Voice type:"
 msgstr "_Hangtípus:"
 
-#. Translators: Orca uses Speech Dispatcher to present content to users via text-to-speech. Speech Dispatcher has a feature to control how capital letters are presented: Do nothing at all; say the word 'capital' prior to presenting a capital letter (which Speech Dispatcher refers to as 'spell'), or play a tone (which Speech Dispatcher refers to as a sound 'icon'). Orca refers to these things as 'capitalization style'. This string is the text of the label through which users can choose which of style they would prefer.
+#. Translators: Orca uses Speech Dispatcher to present content to users via text-to-speech. Speech Dispatcher has a feature to control how capital letters are presented: Do nothing at all; say the word
 #: ../src/orca/orca-setup.ui.h:66
 msgid "_Capitalization style:"
 msgstr "_Nagybetű jelzési stílus:"
