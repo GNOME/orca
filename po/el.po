@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2016-03-02 19:09+0000\n"
-"PO-Revision-Date: 2016-03-03 01:10+0200\n"
+"POT-Creation-Date: 2016-03-11 02:20+0000\n"
+"PO-Revision-Date: 2016-03-16 15:55+0200\n"
 "Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
 "Language-Team: Greek, Modern (1453-) <opensuse-translation-el@opensuse.org>\n"
 "Language: el\n"
@@ -2341,7 +2341,7 @@ msgstr "Εναλλάσσει την εκφώνηση ή μη των εσοχών
 #. toggling between the two options.
 #: ../src/orca/cmdnames.py:447
 msgid "Changes spoken number style."
-msgstr ""
+msgstr "Αλλαγές στο στυλ της προφοράς του αριθμού"
 
 #. Translators: Orca allows users to cycle through punctuation levels. None,
 #. some, most, or all, punctuation will be spoken.
@@ -9266,7 +9266,7 @@ msgstr "σύνδεσμος %s"
 #: ../src/orca/messages.py:1108
 #, python-format
 msgid "visited %s link"
-msgstr ""
+msgstr "αναγνωσμένος %s σύνδεσμος"
 
 #. Translators: The following string instructs the user how to navigate amongst
 #. the list of commands presented in learn mode, as well as how to exit the list
@@ -10827,7 +10827,7 @@ msgstr "Πίνακας εικονιδίων"
 #. already read.
 #: ../src/orca/object_properties.py:88
 msgid "visited link"
-msgstr ""
+msgstr "σύνδεσμο που έχει επισκεφθεί"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
@@ -11168,7 +11168,7 @@ msgstr "Περιορισμός σε:"
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically emit beeps which increase in pitch as the value of the progress bar increases.
 #: ../src/orca/orca-setup.ui.h:53
 msgid "Bee_p updates"
-msgstr ""
+msgstr "Ηχητικό σήμα στις ενημερώσεις"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
 #: ../src/orca/orca-setup.ui.h:55
@@ -11364,7 +11364,7 @@ msgstr "Ένδειξη συνδέσμων"
 #. Translators: Braille flash messages are similar in nature to notifications or announcements in that they are temporarily shown on the refreshable braille display. Upon removal of the message, the original contents of the braille display are restored. This checkbox allows the user to toggle this feature.
 #: ../src/orca/orca-setup.ui.h:124
 msgid "Enable flash _messages"
-msgstr ""
+msgstr "Ενεργοποίηση στιγμιαίων _μηνυμάτων"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. This label is for the spin button through which a user can customize how long (in seconds) these temporary messages should be displayed.
 #: ../src/orca/orca-setup.ui.h:126
@@ -11384,7 +11384,7 @@ msgstr "Τα μηνύματα είναι λ_επτομερή"
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored.
 #: ../src/orca/orca-setup.ui.h:132
 msgid "Flash Message Settings"
-msgstr ""
+msgstr "Ρυθμίσεις στιγμιαίων μηνυμάτων"
 
 #: ../src/orca/orca-setup.ui.h:133
 msgid "Braille"
