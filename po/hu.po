@@ -11,16 +11,16 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2016-03-04 14:15+0000\n"
-"PO-Revision-Date: 2016-03-04 21:48+0100\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"POT-Creation-Date: 2016-03-16 14:14+0000\n"
+"PO-Revision-Date: 2016-03-16 16:19+0100\n"
+"Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.2\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Screen Reader"
@@ -6877,13 +6877,13 @@ msgstr "kényszeríti"
 #: ../src/orca/mathsymbols.py:1774
 msgctxt "math symbol"
 msgid "triple vertical bar right turnstile"
-msgstr ""
+msgstr "háromszoros függőleges vonal jobboldali forgókereszttel"
 
 #. Translators: this is the spoken representation for the character '⊫' (U+22ab)
 #: ../src/orca/mathsymbols.py:1777
 msgctxt "math symbol"
 msgid "double vertical bar double right turnstile"
-msgstr ""
+msgstr "kettős függőleges vonal dupla jobboldali forgókereszttel"
 
 #. Translators: this is the spoken representation for the character '⊬' (U+22ac)
 #: ../src/orca/mathsymbols.py:1780
@@ -6908,7 +6908,7 @@ msgstr "nem kényszeríti"
 #: ../src/orca/mathsymbols.py:1789
 msgctxt "math symbol"
 msgid "negated double vertical bar double right turnstile"
-msgstr ""
+msgstr "negált kettős függőleges vonal dupla jobboldali forgókereszttel"
 
 #. Translators: this is the spoken representation for the character '⊰' (U+22b0)
 #: ../src/orca/mathsymbols.py:1792
@@ -7052,7 +7052,7 @@ msgstr "csillag operátor"
 #: ../src/orca/mathsymbols.py:1861
 msgctxt "math symbol"
 msgid "division times"
-msgstr ""
+msgstr "osztásszorzás"
 
 #. Translators: this is the spoken representation for the character '⋈' (U+22c8)
 #: ../src/orca/mathsymbols.py:1864
