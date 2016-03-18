@@ -1128,10 +1128,7 @@ class Utilities:
         except:
             firstChild = None
 
-        topLevelRoles = [pyatspi.ROLE_ALERT,
-                         pyatspi.ROLE_FRAME,
-                         pyatspi.ROLE_DIALOG,
-                         pyatspi.ROLE_WINDOW]
+        topLevelRoles = self._topLevelRoles()
         ignorePanelParent = [pyatspi.ROLE_MENU,
                              pyatspi.ROLE_MENU_ITEM,
                              pyatspi.ROLE_LIST_ITEM,
@@ -1792,8 +1789,30 @@ class Utilities:
 
         return statusBar
 
-    @staticmethod
-    def topLevelObject(obj):
+    def _topLevelRoles(self):
+        return [pyatspi.ROLE_ALERT,
+                pyatspi.ROLE_DIALOG,
+                pyatspi.ROLE_FRAME,
+                pyatspi.ROLE_WINDOW]
+
+    def _locusOfFocusIsTopLevelObject(self):
+        if not orca_state.locusOfFocus:
+            return False
+
+        try:
+            role = orca_state.locusOfFocus.getRole()
+        except:
+            msg = "ERROR: Exception getting role for %s" % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        rv = role in self._topLevelRoles()
+        msg = "INFO: %s is top-level object: %s" % (orca_state.locusOfFocus, rv)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        return rv
+
+    def topLevelObject(self, obj):
         """Returns the top-level object (frame, dialog ...) containing obj,
         or None if obj is not inside a top-level object.
 
@@ -1804,10 +1823,7 @@ class Utilities:
         if not obj:
             return None
 
-        stopAtRoles = [pyatspi.ROLE_ALERT,
-                       pyatspi.ROLE_DIALOG,
-                       pyatspi.ROLE_FRAME,
-                       pyatspi.ROLE_WINDOW]
+        stopAtRoles = self._topLevelRoles()
 
         while obj and obj.parent \
               and not obj.getRole() in stopAtRoles \
@@ -3997,6 +4013,8 @@ class Utilities:
             return False
         if event.any_data == contents:
             return True
+        if bool(re.search("\w", event.any_data)) != bool(re.search("\w", contents)):
+            return False
 
         # HACK: If the application treats each paragraph as a separate object,
         # we'll get individual events for each paragraph rather than a single
@@ -4048,6 +4066,9 @@ class Utilities:
         return False
 
     def handleUndoLocusOfFocusChange(self):
+        if self._locusOfFocusIsTopLevelObject():
+            return False
+
         if self.lastInputEventWasUndo():
             if not self._script.pointOfReference.get('undo'):
                 self._script.presentMessage(messages.UNDO)
@@ -4063,6 +4084,9 @@ class Utilities:
         return False
 
     def handlePasteLocusOfFocusChange(self):
+        if self._locusOfFocusIsTopLevelObject():
+            return False
+
         if self.lastInputEventWasPaste():
             if not self._script.pointOfReference.get('paste'):
                 self._script.presentMessage(
