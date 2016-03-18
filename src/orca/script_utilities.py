@@ -3996,6 +3996,9 @@ class Utilities:
         if not self.lastInputEventWasCommand() or self.lastInputEventWasUndo():
             return False
 
+        if self.isBackSpaceCommandTextDeletionEvent(event):
+            return False
+
         if "delete" in event.type and self.lastInputEventWasPaste():
             return False
 
