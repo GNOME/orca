@@ -2121,6 +2121,8 @@ class Utilities:
         """
 
         textContents, startOffset, endOffset = self.selectedText(obj)
+        if textContents and self._script.pointOfReference.get('entireDocumentSelected'):
+            return textContents, startOffset, endOffset
 
         prevObj = self.findPreviousObject(obj)
         while prevObj:
