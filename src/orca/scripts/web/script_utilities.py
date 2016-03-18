@@ -2460,6 +2460,23 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
+    def eventIsChromePageSwitchNoise(self, event):
+        selection = ["object:selection-changed", "object:state-changed:selected"]
+        if not event.type in selection:
+            return False
+
+        roles = [pyatspi.ROLE_PAGE_TAB, pyatspi.ROLE_PAGE_TAB_LIST]
+        if not event.source.getRole() in roles:
+            return False
+
+        if self.inDocumentContent(event.source):
+            return False
+
+        if not self.inDocumentContent(orca_state.locusOfFocus):
+            return False
+
+        return True
+
     def textEventIsDueToInsertion(self, event):
         if not event.type.startswith("object:text-"):
             return False
