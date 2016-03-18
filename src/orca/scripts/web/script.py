@@ -1006,7 +1006,7 @@ class Script(default.Script):
             oldFocus = None
 
         caretOffset = 0
-        if self.utilities.inFindToolbar(oldFocus):
+        if not oldFocus or self.utilities.inFindToolbar(oldFocus):
             newFocus, caretOffset = self.utilities.getCaretContext()
 
         if newFocus.getRole() == pyatspi.ROLE_UNKNOWN:
