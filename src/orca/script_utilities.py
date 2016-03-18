@@ -4047,6 +4047,7 @@ class Utilities:
         self._script.pointOfReference['undo'] = False
         self._script.pointOfReference['redo'] = False
         self._script.pointOfReference['paste'] = False
+        self._script.pointOfReference['last-selection-message'] = ''
 
     def handleUndoTextEvent(self, event):
         if self.lastInputEventWasUndo():
@@ -4210,8 +4211,11 @@ class Utilities:
             else:
                 return True
 
-        if line:
-            self._script.speakMessage(line)
-            return True
+        if not line:
+            return False
 
-        return False
+        if line != self._script.pointOfReference.get('last-selection-message'):
+            self._script.pointOfReference['last-selection-message'] = line
+            self._script.speakMessage(line)
+
+        return True
