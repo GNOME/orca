@@ -3847,6 +3847,8 @@ class Utilities:
             keyString, mods = self.lastKeyAndModifiers()
             if keyString in ["Return", "Tab", "space", " "]:
                 return True
+            if mods & keybindings.ALT_MODIFIER_MASK:
+                return True
 
         return False
 
