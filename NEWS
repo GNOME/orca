@@ -1,3 +1,41 @@
+3.19.92 - 19 March 2016
+
+General:
+
+ * Return early in allSelectedText() when entire document is selected
+   (performance)
+
+ * Fix restoration of location when returning to nested document after
+   find in page
+
+ * Work around unforunate event order when switching page tabs in Gecko
+   applications
+
+ * Eliminate several clipboard/selection-related-presentation false
+   positives
+
+ * Treat terminal text insertions resulting from Alt-modified input event
+   as command output
+
+ * Map MATE's notification daemon to the notification-daemon script
+
+New and updated translations (THANKS EVERYONE!!!):
+
+ bg           Bulgarian              Alexander Shopov, Zahari Yurukov
+ da           Danish                 scootergrisen
+ el           Greek                  Efstathios Iosifidis, Tom Tryfonidis
+ fr           French                 Claude Paroz
+ hu           Hungarian              Attila Hammer, Balázs Meskó
+ pt           Portuguese             Duarte Loreto
+ pt_BR        Brazilian Portuguese   Rafael Gazoni
+ ro           Romanian               Daniel Șerbănescu
+ sl           Slovenian              Matej Urbančič
+ sr           Serbian                Мирослав Николић
+ sr@latin     Serbian                Miroslav Nikolić
+ tr           Turkish                Muhammet Kara
+
+=========
+
 3.19.91 - 2 March 2016
 
 General:
