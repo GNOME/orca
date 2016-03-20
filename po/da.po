@@ -25,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.gnome-2-22\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-19 02:38+0100\n"
-"PO-Revision-Date: 2016-03-19 02:37+0100\n"
+"POT-Creation-Date: 2016-03-20 23:19+0100\n"
+"PO-Revision-Date: 2016-03-20 22:18+0100\n"
 "Last-Translator: Kenneth Nielsen <k.nielsen81@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -1889,7 +1889,7 @@ msgstr "Læser titellinjen op."
 #. the "OK" button.
 #: ../src/orca/cmdnames.py:99
 msgid "Opens the Find dialog."
-msgstr "Åbner søgevinduet."
+msgstr "Åbner søgedialogen."
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text. For example, they may want to find
@@ -2318,13 +2318,13 @@ msgstr "Afslutter skærmlæseren"
 #. users to set their preferences for Orca.
 #: ../src/orca/cmdnames.py:431
 msgid "Displays the preferences configuration dialog."
-msgstr "Viser indstillingsvinduet."
+msgstr "Viser indstillingsdialogen."
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for a specific application within Orca.
 #: ../src/orca/cmdnames.py:436
 msgid "Displays the application preferences configuration dialog."
-msgstr "Viser indstillingsvinduet for en applikation."
+msgstr "Viser indstillingsdialogen for en applikation."
 
 #. Translators: Orca allows the user to enable/disable speaking of indentation
 #. and justification.
@@ -10966,7 +10966,7 @@ msgstr "Find"
 
 #: ../src/orca/orca-find.ui.h:2
 msgid "Screen Reader Find Dialog"
-msgstr "Skærmlæserens søgevindue"
+msgstr "Skærmlæserens søgedialog"
 
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/orca-find.ui.h:4
@@ -13024,13 +13024,13 @@ msgstr ""
 
 #~ msgid "Toggle whether we present new mail if we are not the active script."
 #~ msgstr ""
-#~ "Slå visning af ny e-post til eller fra, hvis vi ikke er det aktive skript."
+#~ "Slå visning af ny e-mail til eller fra, hvis vi ikke er det aktive skript."
 
 #~ msgid "present new mail if this script is not active."
-#~ msgstr "vis ny e-post hvis dette skript ikke er aktivt."
+#~ msgstr "vis ny e-mail hvis dette skript ikke er aktivt."
 
 #~ msgid "do not present new mail if this script is not active."
-#~ msgstr "vis ikke ny e-post hvis dette skript ikke er aktivt."
+#~ msgstr "vis ikke ny e-mail hvis dette skript ikke er aktivt."
 
 #~ msgid "Flagged"
 #~ msgstr "Markeret"
@@ -13975,7 +13975,7 @@ msgstr ""
 #~ msgstr "Minefelt"
 
 #~ msgid "Mail/News"
-#~ msgstr "E-post/Nyheder"
+#~ msgstr "E-mail/Nyheder"
 
 # bindestreg
 #~ msgid "bug-buddy"
