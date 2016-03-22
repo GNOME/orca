@@ -1832,6 +1832,30 @@ class Utilities:
 
         return obj
 
+    def topLevelObjectIsActiveAndCurrent(self, obj=None):
+        obj = obj or orca_state.locusOfFocus
+
+        topLevel = self.topLevelObject(obj)
+        if not topLevel:
+            return False
+
+        topLevel.clearCache()
+        try:
+            state = topLevel.getState()
+        except:
+            msg = "ERROR: Exception getting state of topLevel %s" % topLevel
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if not state.contains(pyatspi.STATE_ACTIVE) \
+           or state.contains(pyatspi.STATE_DEFUNCT):
+            return False
+
+        if not self.isSameObject(topLevel, orca_state.activeWindow):
+            return False
+
+        return True
+
     @staticmethod
     def onSameLine(obj1, obj2, delta=0):
         """Determines if obj1 and obj2 are on the same line."""

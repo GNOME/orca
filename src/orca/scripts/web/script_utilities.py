@@ -3049,23 +3049,7 @@ class Utilities(script_utilities.Utilities):
         if not self.inDocumentContent():
             return False
 
-        topLevel = self.topLevelObject(orca_state.locusOfFocus)
-        if not topLevel:
-            return False
-
-        topLevel.clearCache()
-        try:
-            state = topLevel.getState()
-        except:
-            msg = "WEB: Exception getting state of topLevel %s" % topLevel
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if not state.contains(pyatspi.STATE_ACTIVE) \
-           or state.contains(pyatspi.STATE_DEFUNCT):
-            return False
-
-        if not self.isSameObject(topLevel, orca_state.activeWindow):
+        if not self.topLevelObjectIsActiveAndCurrent():
             return False
 
         if 'Action' in pyatspi.listInterfaces(orca_state.locusOfFocus):
