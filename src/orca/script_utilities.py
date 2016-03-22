@@ -1987,7 +1987,7 @@ class Utilities:
 
         alertAndDialogCount = 0
         app = obj.getApplication()
-        window = Utilities.topLevelObject(obj)
+        window = self.topLevelObject(obj)
         if window and window.getRole() != pyatspi.ROLE_ALERT and \
            window.getRole() != pyatspi.ROLE_DIALOG and \
            not self.isFunctionalDialog(window):
