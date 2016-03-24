@@ -6,15 +6,16 @@
 # Bruno Ramalhete <bram.512@gmail.com>, 2015.
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
 # Sérgio Cardeira <cardeira.sergio@gmail.com>, 2016.
+# Tiago Carrrondo <tcarrondo@ubuntu.com>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 3.10\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2016-02-21 14:22+0000\n"
-"PO-Revision-Date: 2016-02-21 21:14-0100\n"
-"Last-Translator: Sérgio Cardeira <cardeira.sergio@gmail.com>\n"
+"POT-Creation-Date: 2016-03-24 02:39+0000\n"
+"PO-Revision-Date: 2016-03-24 11:46+0000\n"
+"Last-Translator: Tiago Carrrondo <tcarrondo@ubuntu.com>\n"
 "Language-Team: Português <gnome_pt@yahoogroups.com>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
@@ -1823,10 +1824,9 @@ msgstr "Lê todo o documento."
 #. by the {previous,next} {line,word,character}. This string is the name of a command
 #. which causes Orca to speak the entire contents of the window using flat review.
 #: ../src/orca/cmdnames.py:67
-#, fuzzy
 #| msgid "Speaks the current flat review line."
 msgid "Speaks entire window using flat review."
-msgstr "Lê a linha de revisão plana atual."
+msgstr "Lê a janela inteira em modo plano."
 
 #. Translators: the "Where am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
@@ -5242,7 +5242,6 @@ msgstr ""
 #. automatically summarize details about the page, such as the number of elements
 #. (landmarks, forms, links, tables, etc.).
 #: ../src/orca/guilabels.py:680
-#, fuzzy
 #| msgid "Automatically start speaking a page when it is first _loaded"
 msgid "_Present summary of a page when it is first loaded"
 msgstr ""
@@ -8090,10 +8089,9 @@ msgstr "Reportar erros (em inglês) para orca-list@gnome.org."
 #. instead of presenting the full string which was just deleted. This message
 #. is the full/verbose indication.
 #: ../src/orca/messages.py:275
-#, fuzzy
 #| msgid "Copied contents to clipboard."
 msgid "Cut selection to clipboard."
-msgstr "Conteúdo copiado para a área de transferência."
+msgstr "Conteúdo cortado para a área de transferência."
 
 #. Translators: Orca normal speaks the text which was just deleted from a
 #. document via command. Depending on the circumstances, that might be a
@@ -8102,7 +8100,6 @@ msgstr "Conteúdo copiado para a área de transferência."
 #. instead of presenting the full string which was just deleted. This message
 #. is the brief indication.
 #: ../src/orca/messages.py:283
-#| msgid "acute"
 msgctxt "clipboard"
 msgid "cut"
 msgstr "cortar"
@@ -8110,7 +8107,6 @@ msgstr "cortar"
 #. Translators: This message is the detailed message presented when the contents
 #. of the clipboard have changed and match the current selection.
 #: ../src/orca/messages.py:287
-#| msgid "Copied contents to clipboard."
 msgid "Copied selection to clipboard."
 msgstr "Conteúdo copiado para a área de transferência."
 
@@ -8128,10 +8124,9 @@ msgstr "copiado"
 #. instead of presenting the full string which was just inserted. This message
 #. is the full/verbose indication.
 #: ../src/orca/messages.py:299
-#, fuzzy
 #| msgid "Copied contents to clipboard."
 msgid "Pasted contents from clipboard."
-msgstr "Conteúdo copiado para a área de transferência."
+msgstr "Conteúdo colado da área de transferência."
 
 #. Translators: Orca normal speaks the text which was just inserted into a
 #. document via command. Depending on the circumstances, that might be a
@@ -8140,7 +8135,6 @@ msgstr "Conteúdo copiado para a área de transferência."
 #. instead of presenting the full string which was just inserted. This message
 #. is the brief indication.
 #: ../src/orca/messages.py:307
-#| msgid "faster."
 msgctxt "clipboard"
 msgid "pasted"
 msgstr "colado"
@@ -10019,7 +10013,6 @@ msgstr "O texto selecionado é: %s"
 #. document matches the previously-selected contents, Orca will indicate that
 #. fact instead of presenting the full string which was just deleted.
 #: ../src/orca/messages.py:1714
-#| msgid "Row deleted."
 msgid "Selection deleted."
 msgstr "Seleção apagada."
 
@@ -10032,7 +10025,6 @@ msgstr "Seleção apagada."
 #. will indicate the restoration rather than presenting the full string
 #. which was just inserted.
 #: ../src/orca/messages.py:1724
-#| msgid "Selection Indicator"
 msgid "Selection restored."
 msgstr "Seleção reposta."
 
@@ -10489,13 +10481,13 @@ msgstr[1] "%d itens"
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
 #: ../src/orca/messages.py:2049
-#, fuzzy, python-format
+#, python-format
 #| msgctxt "structural navigation"
 #| msgid "Landmark"
 msgid "%d landmark"
 msgid_plural "%d landmarks"
-msgstr[0] "Marco"
-msgstr[1] "Marco"
+msgstr[0] "%d marco"
+msgstr[1] "%d marcos"
 
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
@@ -10757,8 +10749,6 @@ msgstr "Painel de ícones"
 #. possible for users to quickly identify if the link is associated with content
 #. already read.
 #: ../src/orca/object_properties.py:88
-#| msgid "%d visited link"
-#| msgid_plural "%d visited links"
 msgid "visited link"
 msgstr "ligação visitada"
 
@@ -11022,7 +11012,7 @@ msgstr "_Carregar"
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/orca-setup.ui.h:28
 msgid "Save _As"
-msgstr "Gravar _como"
+msgstr "Gravar _Como"
 
 #: ../src/orca/orca-setup.ui.h:29
 msgid "Profiles"
@@ -11042,7 +11032,7 @@ msgstr "Rato"
 
 #: ../src/orca/orca-setup.ui.h:33
 msgid "_Time format:"
-msgstr "Formato de _Hora:"
+msgstr "Formato de _hora:"
 
 #: ../src/orca/orca-setup.ui.h:34
 msgid "Dat_e format:"
@@ -11241,10 +11231,9 @@ msgstr "Dizer linha completa em _folhas de cálculo"
 
 #. Translators: The misspelled-word indicator is the red squiggly line that appears underneath misspelled words in editable text fields. If this setting is enabled, when a user first moves into a word with this indicator, or types a misspelled word causing this indicator to appear, Orca will announce that the word is misspelled.
 #: ../src/orca/orca-setup.ui.h:106
-#, fuzzy
 #| msgid "Speak _cell coordinates"
 msgid "Speak _misspelled-word indicator"
-msgstr "Dizer o indicador de palavras mal escritas"
+msgstr "Lê palavras indicadas como _mal escritas"
 
 #: ../src/orca/orca-setup.ui.h:107
 msgid "Spoken Context"
