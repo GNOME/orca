@@ -308,6 +308,7 @@ class Generator:
                 return result
             if description:
                 result.append(description)
+                self._script.pointOfReference['usedDescriptionForName'] = True
             else:
                 link = None
                 if obj.getRole() == pyatspi.ROLE_LINK:
@@ -372,6 +373,9 @@ class Generator:
         represent the description of the object, if that description
         is different from that of the name and label.
         """
+
+        if self._script.pointOfReference.get('usedDescriptionForName'):
+            return []
 
         role = args.get('role', obj.getRole())
 
