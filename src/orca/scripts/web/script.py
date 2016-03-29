@@ -1399,7 +1399,12 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        obj, offset = self.utilities.getCaretContext()
+        obj, offset = self.utilities.getCaretContext(getZombieReplicant=False)
+        if self.utilities.isZombie(obj):
+            obj, offset = self.utilities.getCaretContext(getZombieReplicant=True)
+            if obj:
+                orca.setLocusOfFocus(event, obj, notifyScript=False)
+
         contextDocument = self.utilities.getDocumentForObject(obj)
         if obj and document == contextDocument and self.utilities.isZombie(obj):
             msg = "WEB: Context obj %s is Zombie." % obj
