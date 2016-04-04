@@ -78,7 +78,6 @@ from . import settings_manager
 from . import speech
 from . import sound
 from .input_event import BrailleEvent
-from .input_event import KeyboardEvent
 
 _eventManager = event_manager.getManager()
 _scriptManager = script_manager.getManager()
@@ -188,103 +187,6 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
 
 ########################################################################
 #                                                                      #
-# METHODS FOR PRE-PROCESSING AND MASSAGING KEYBOARD EVENTS.            #
-#                                                                      #
-########################################################################
-
-_orcaModifierPressed = False
-
-def _processKeyboardEvent(event):
-    """The primary key event handler for Orca.  Keeps track of various
-    attributes, such as the lastInputEvent.  Also does key echo as well
-    as any local keybindings before passing the event on to the active
-    script.  This method is called synchronously from the AT-SPI registry
-    and should be performant.  In addition, it must return True if it has
-    consumed the event (and False if not).
-
-    Arguments:
-    - event: an AT-SPI DeviceEvent
-
-    Returns True if the event should be consumed.
-    """
-    global _orcaModifierPressed
-
-    keyboardEvent = KeyboardEvent(event)
-    debug.println(debug.LEVEL_FINE, keyboardEvent.toString())
-
-    # Weed out duplicate and otherwise bogus events.
-    # TODO - JD: Be sure these are the right values to return
-    if not keyboardEvent.timestamp:
-        debug.println(debug.LEVEL_FINE, "IGNORING EVENT: NO TIMESTAMP")
-        return False
-    if keyboardEvent == orca_state.lastInputEvent:
-        debug.println(debug.LEVEL_FINE, "IGNORING EVENT: DUPLICATE")
-        return False
-
-    # Figure out what we've got.
-    isOrcaModifier = keyboardEvent.isOrcaModifier()
-    isPressedEvent = keyboardEvent.isPressedKey()
-    if isOrcaModifier:
-        _orcaModifierPressed = isPressedEvent
-    if _orcaModifierPressed:
-        keyboardEvent.modifiers |= keybindings.ORCA_MODIFIER_MASK
-
-    # Update our state.
-    orca_state.lastInputEvent = keyboardEvent
-    if not keyboardEvent.isModifierKey():
-        keyboardEvent.setClickCount()
-        orca_state.lastNonModifierKeyEvent = keyboardEvent
-
-    # Echo it based on what it is and the user's settings.
-    script = orca_state.activeScript
-    if not script:
-        debug.println(debug.LEVEL_FINE, "IGNORING EVENT DUE TO NO SCRIPT")
-        return False
-
-    if isPressedEvent:
-        if not orca_state.activeWindow:
-            orca_state.activeWindow = script.utilities.activeWindow()
-        script.presentationInterrupt()
-    script.presentKeyboardEvent(keyboardEvent)
-    if keyboardEvent.isModifierKey() and not isOrcaModifier:
-        return orca_state.learnModeEnabled
- 
-    # Special modes.
-    if not isPressedEvent and keyboardEvent.event_string == "Escape":
-        script.exitLearnMode(keyboardEvent)
-    if orca_state.learnModeEnabled and not keyboardEvent.modifiers:
-        if keyboardEvent.event_string == "F1":
-            orca_state.learnModeEnabled = False
-            return helpForOrca()
-        if isPressedEvent and keyboardEvent.event_string in ["F2", "F3"]:
-            return script.listOrcaShortcuts(keyboardEvent)
-    if orca_state.capturingKeys:
-        return False
-    if notification_messages.listNotificationMessagesModeEnabled:
-        return notification_messages.listNotificationMessages(script, keyboardEvent)
-
-    # See if the event manager wants it (i.e. it is bound to a command.
-    if _eventManager.processKeyboardEvent(keyboardEvent):
-        return True
-
-    # Do any needed xmodmap crap.
-    global _restoreOrcaKeys
-    if not isPressedEvent:
-        if keyboardEvent.event_string in settings.orcaModifierKeys \
-           and orca_state.bypassNextCommand:
-            _restoreXmodmap()
-            _restoreOrcaKeys = True
-        elif _restoreOrcaKeys and not orca_state.bypassNextCommand:
-            _createOrcaXmodmap()
-            _restoreOrcaKeys = False
-    elif not keyboardEvent.isModifierKey():
-        _orcaModifierPressed = False
-        orca_state.bypassNextCommand = False
- 
-    return isOrcaModifier or orca_state.learnModeEnabled
-
-########################################################################
-#                                                                      #
 # METHODS FOR PRE-PROCESSING AND MASSAGING BRAILLE EVENTS.             #
 #                                                                      #
 ########################################################################
@@ -322,6 +224,23 @@ def _processBrailleEvent(event):
 # METHODS FOR HANDLING INITIALIZATION, SHUTDOWN, AND USE.              #
 #                                                                      #
 ########################################################################
+
+def updateKeyMap(keyboardEvent):
+    """Unsupported convenience method to call sad hacks which should go away."""
+
+    global _restoreOrcaKeys
+    if keyboardEvent.isPressedKey():
+        return
+
+    if keyboardEvent.event_string in settings.orcaModifierKeys \
+       and orca_state.bypassNextCommand:
+        _restoreXmodmap()
+        _restoreOrcaKeys = True
+        return
+
+    if _restoreOrcaKeys and not orca_state.bypassNextCommand:
+        _createOrcaXmodmap()
+        _restoreOrcaKeys = False
 
 def _setXmodmap(xkbmap):
     """Set the keyboard map using xkbcomp."""
@@ -547,6 +466,7 @@ def helpForOrca(script=None, inputEvent=None, page=""):
 
     Returns True to indicate the input event has been consumed.
     """
+    orca_state.learnModeEnabled = False
     uri = "help:orca"
     if page:
         uri += "?%s" % page
@@ -605,7 +525,6 @@ def init(registry):
         signal.alarm(settings.timeoutTime)
 
     loadUserSettings()
-    _eventManager.registerKeystrokeListener(_processKeyboardEvent)
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
@@ -696,8 +615,6 @@ def shutdown(script=None, inputEvent=None):
     orca_state.activeScript.presentMessage(messages.STOP_ORCA)
 
     _scriptManager.deactivate()
-
-    _eventManager.deregisterKeystrokeListener(_processKeyboardEvent)
     _eventManager.deactivate()
 
     # Shutdown all the other support.

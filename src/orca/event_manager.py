@@ -71,6 +71,7 @@ class EventManager:
         self._registerListener("window:deactivate")
         self._registerListener("object:children-changed")
         self._registerListener("mouse:button")
+        self.registerKeystrokeListener(self._processKeyboardEvent)
         self._active = True
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Activated', True)
 
@@ -82,6 +83,7 @@ class EventManager:
         for eventType in list(self._scriptListenerCounts.keys()):
             self.registry.deregisterEventListener(self._enqueue, eventType)
         self._scriptListenerCounts = {}
+        self.deregisterKeystrokeListener(self._processKeyboardEvent)
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
 
     def ignoreEventTypes(self, eventTypeList):
@@ -489,10 +491,7 @@ class EventManager:
         if not orca_state.activeScript:
             return
 
-        if isinstance(event, input_event.KeyboardEvent):
-            function = orca_state.activeScript.processKeyboardEvent
-            data = "'%s' (%d)" % (event.event_string, event.hw_code)
-        elif isinstance(event, input_event.BrailleEvent):
+        if isinstance(event, input_event.BrailleEvent):
             function = orca_state.activeScript.processBrailleEvent
             data = "'%s'" % repr(event.event)
         else:
@@ -681,26 +680,18 @@ class EventManager:
             debug.println(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_INFO)
 
-    def processKeyboardEvent(self, keyboardEvent):
-        """Processes the given keyboard event based on the keybinding from the
-        currently active script. This method is called synchronously from the
-        at-spi registry and should be performant.  In addition, it must return
-        True if it has consumed the event (and False if not).
+    def _processKeyboardEvent(self, event):
+        keyboardEvent = input_event.KeyboardEvent(event)
+        if not keyboardEvent.is_duplicate:
+            debug.println(debug.LEVEL_INFO, "\n%s" % keyboardEvent)
 
-        Arguments:
-        - keyboardEvent: an instance of input_event.KeyboardEvent
+        rv = keyboardEvent.process()
 
-        Returns True if the event should be consumed.
-        """
+        # Do any needed xmodmap crap. Hopefully this can die soon.
+        from orca import orca
+        orca.updateKeyMap(keyboardEvent)
 
-        consume = False
-        if orca_state.activeScript \
-           and orca_state.activeScript.consumesKeyboardEvent(keyboardEvent):
-            consume = not orca_state.bypassNextCommand
-            if consume:
-                self._enqueue(keyboardEvent)
-
-        return consume
+        return rv
 
     def processBrailleEvent(self, brailleEvent):
         """Called whenever a cursor key is pressed on the Braille display.

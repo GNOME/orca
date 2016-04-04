@@ -59,16 +59,6 @@ class Script(default.Script):
         """
         pass
 
-    def processKeyboardEvent(self, keyboardEvent):
-        """Does nothing.
-
-        Arguments:
-        - keyboardEvent: an instance of input_event.KeyboardEvent
-
-        Returns False to indicate the event was not consumed.
-        """
-        return False
-
     def processBrailleEvent(self, brailleEvent):
         """Does nothing.
 

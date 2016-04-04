@@ -926,8 +926,20 @@ class Script(script.Script):
         orca_state.learnModeEnabled = False
         return True
 
+    def showHelp(self, inputEvent=None):
+        return orca.helpForOrca()
+
+    def listNotifications(self, inputEvent=None):
+        if inputEvent is None:
+            inputEvent = orca_state.lastNonModifierKeyEvent
+
+        return notification_messages.listNotificationMessages(self, inputEvent)
+
     def listOrcaShortcuts(self, inputEvent=None):
         """Shows a simple gui listing Orca's bound commands."""
+
+        if inputEvent is None:
+            inputEvent = orca_state.lastNonModifierKeyEvent
 
         if not inputEvent or inputEvent.event_string == "F2":
             bound = self.getDefaultKeyBindings().getBoundBindings()
@@ -2790,7 +2802,7 @@ class Script(script.Script):
             orca_state.activeWindow = None
 
         # disable list notification  messages mode
-        notification_messages.listNotificationMessagesModeEnabled = False
+        orca_state.listNotificationsModeEnabled = False
 
         # disable learn mode
         orca_state.learnModeEnabled = False

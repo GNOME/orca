@@ -417,24 +417,6 @@ class KeyBindings:
 
         return None
 
-    def consumeKeyboardEvent(self, script, keyboardEvent):
-        """Attempts to consume the given keyboard event.  If these
-        keybindings have a handler for the given keyboardEvent, it is
-        assumed the event will always be consumed.
-        """
-
-        consumed = False
-        handler = self.getInputHandler(keyboardEvent)
-        if handler:
-            consumed = True
-            if keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT:
-                try:
-                    handler.processInputEvent(script, keyboardEvent)
-                except:
-                    debug.printException(debug.LEVEL_SEVERE)
-
-        return consumed
-
     def load(self, keymap, handlers):
         """ Takes the keymappings and tries to find a matching named
            function in handlers.

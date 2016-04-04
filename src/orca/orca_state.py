@@ -74,3 +74,5 @@ learnModeEnabled = False
 # Handle to the Orca Preferences Glade GUI object.
 #
 orcaOS = None
+
+listNotificationsModeEnabled = False

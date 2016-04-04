@@ -481,52 +481,6 @@ class Script:
                 consumes = handler != None
         return consumes
 
-    def processKeyboardEvent(self, keyboardEvent):
-        """Processes the given keyboard event.
-
-        This method will primarily use the keybindings field of this
-        script instance see if this script has an interest in the
-        event.
-
-        NOTE: there is latent, but unsupported, logic for allowing
-        the user's user-settings.py file to extend and/or override
-        the keybindings for a script.
-
-        Arguments:
-        - keyboardEvent: an instance of input_event.KeyboardEvent
-        """
-
-        # We'll annotate the event with a reference to this script.
-        # This will allow external scripts to muck with the script
-        # instance if they wish.
-        #
-        keyboardEvent.script = self
-
-        # We'll let the user keybindings take precedence.  First, we'll
-        # check to see if they have keybindings specific for the particular
-        # application, then we'll check to see if they have any default
-        # bindings to use.
-        #
-        # [[[TODO: WDW - for performance, these bindings should probably
-        # be conflated at initialization time.]]]
-        #
-        user_bindings = None
-
-        user_bindings_map = settings.keyBindingsMap
-        if self.__module__ in user_bindings_map:
-            user_bindings = user_bindings_map[self.__module__]
-        elif "default" in user_bindings_map:
-            user_bindings = user_bindings_map["default"]
-
-        consumed = False
-        if user_bindings:
-            consumed = user_bindings.consumeKeyboardEvent(self,
-                                                          keyboardEvent)
-        if not consumed:
-            consumed = self.keyBindings.consumeKeyboardEvent(self,
-                                                             keyboardEvent)
-        return consumed
-
     def consumesBrailleEvent(self, brailleEvent):
         """Called when a key is pressed on the braille display.
 
