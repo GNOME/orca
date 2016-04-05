@@ -35,7 +35,13 @@ import orca.orca_state as orca_state
 class Utilities(script_utilities.Utilities):
 
     def __init__(self, script):
-        script_utilities.Utilities.__init__(self, script)
+        super().__init__(script)
+        self._isComboBoxWithToggleDescendant = {}
+        self._isToggleDescendantOfComboBox = {}
+
+    def clearCachedObjects(self):
+        self._isComboBoxWithToggleDescendant = {}
+        self._isToggleDescendantOfComboBox = {}
 
     def displayedText(self, obj):
         displayedText = script_utilities.Utilities.displayedText(self, obj)
@@ -49,6 +55,46 @@ class Utilities(script_utilities.Utilities):
 
         self._script.generatorCache[self.DISPLAYED_TEXT][obj] = displayedText
         return displayedText
+
+    def isComboBoxWithToggleDescendant(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_COMBO_BOX):
+            return False
+
+        rv = self._isComboBoxWithToggleDescendant.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        isToggle = lambda x: x and x.getRole() == pyatspi.ROLE_TOGGLE_BUTTON
+
+        for child in obj:
+            if child.getRole() != pyatspi.ROLE_FILLER:
+                continue
+
+            toggle = pyatspi.findDescendant(child, isToggle)
+            rv = toggle is not None
+            if toggle:
+                self._isToggleDescendantOfComboBox[hash(toggle)] = True
+                break
+
+        self._isComboBoxWithToggleDescendant[hash(obj)] = rv
+        return rv
+
+    def isToggleDescendantOfComboBox(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_TOGGLE_BUTTON):
+            return False
+
+        rv = self._isToggleDescendantOfComboBox.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        isComboBox = lambda x: x and x.getRole() == pyatspi.ROLE_COMBO_BOX
+        comboBox = pyatspi.findAncestor(obj, isComboBox)
+        if comboBox:
+            self._isComboBoxWithToggleDescendant[hash(comboBox)] = True
+
+        rv = comboBox is not None
+        self._isToggleDescendantOfComboBox[hash(obj)] = rv
+        return rv
 
     def isSearchEntry(self, obj, focusedOnly=False):
         # Another example of why we need subrole support in ATK and AT-SPI2.

@@ -42,6 +42,21 @@ class Script(default.Script):
     def getUtilities(self):
         return Utilities(self)
 
+    def deactivate(self):
+        """Called when this script is deactivated."""
+
+        self.utilities.clearCachedObjects()
+        super().deactivate()
+
+    def locusOfFocusChanged(self, event, oldFocus, newFocus):
+        """Handles changes of focus of interest to the script."""
+
+        if self.utilities.isToggleDescendantOfComboBox(newFocus):
+            isComboBox = lambda x: x and x.getRole() == pyatspi.ROLE_COMBO_BOX
+            newFocus = pyatspi.findAncestor(newFocus, isComboBox) or newFocus
+
+        super().locusOfFocusChanged(event, oldFocus, newFocus)
+
     def onActiveDescendantChanged(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
@@ -197,6 +212,10 @@ class Script(default.Script):
 
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
+
+        if self.utilities.isComboBoxWithToggleDescendant(event.source):
+            super().onSelectionChanged(event)
+            return
 
         role = event.source.getRole()
         if role == pyatspi.ROLE_COMBO_BOX \
