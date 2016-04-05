@@ -664,6 +664,12 @@ class Utilities:
 
         return toolbar != None
 
+    def isComboBoxWithToggleDescendant(self, obj):
+        return False
+
+    def isToggleDescendantOfComboBox(self, obj):
+        return False
+
     def isFunctionalDialog(self, obj):
         """Returns True if the window is a functioning as a dialog.
         This method should be subclassed by application scripts as
