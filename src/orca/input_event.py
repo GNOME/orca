@@ -132,24 +132,32 @@ class KeyboardEvent(InputEvent):
             KeyboardEvent.duplicateCount = 0
 
         self.keyType = None
+
         _isPressed = event.type == pyatspi.KEY_PRESSED_EVENT
+
+        try:
+            role = self._obj.getRole()
+        except:
+            role = None
+        _mayEcho = _isPressed or role == pyatspi.ROLE_TERMINAL
+
         if self.isNavigationKey():
             self.keyType = KeyboardEvent.TYPE_NAVIGATION
-            self.shouldEcho = _isPressed and settings.enableNavigationKeys
+            self.shouldEcho = _mayEcho and settings.enableNavigationKeys
         elif self.isActionKey():
             self.keyType = KeyboardEvent.TYPE_ACTION
-            self.shouldEcho = _isPressed and settings.enableActionKeys
+            self.shouldEcho = _mayEcho and settings.enableActionKeys
         elif self.isModifierKey():
             self.keyType = KeyboardEvent.TYPE_MODIFIER
-            self.shouldEcho = _isPressed and settings.enableModifierKeys
+            self.shouldEcho = _mayEcho and settings.enableModifierKeys
             if self.isOrcaModifier():
                 KeyboardEvent.orcaModifierPressed = _isPressed
         elif self.isFunctionKey():
             self.keyType = KeyboardEvent.TYPE_FUNCTION
-            self.shouldEcho = _isPressed and settings.enableFunctionKeys
+            self.shouldEcho = _mayEcho and settings.enableFunctionKeys
         elif self.isDiacriticalKey():
             self.keyType = KeyboardEvent.TYPE_DIACRITICAL
-            self.shouldEcho = _isPressed and settings.enableDiacriticalKeys
+            self.shouldEcho = _mayEcho and settings.enableDiacriticalKeys
         elif self.isLockingKey():
             self.keyType = KeyboardEvent.TYPE_LOCKING
             self.shouldEcho = settings.presentLockingKeys
@@ -158,19 +166,19 @@ class KeyboardEvent(InputEvent):
             self.shouldEcho = self.shouldEcho and _isPressed
         elif self.isAlphabeticKey():
             self.keyType = KeyboardEvent.TYPE_ALPHABETIC
-            self.shouldEcho = _isPressed \
+            self.shouldEcho = _mayEcho \
                 and (settings.enableAlphabeticKeys or settings.enableEchoByCharacter)
         elif self.isNumericKey():
             self.keyType = KeyboardEvent.TYPE_NUMERIC
-            self.shouldEcho = _isPressed \
+            self.shouldEcho = _mayEcho \
                 and (settings.enableNumericKeys or settings.enableEchoByCharacter)
         elif self.isPunctuationKey():
             self.keyType = KeyboardEvent.TYPE_PUNCTUATION
-            self.shouldEcho = _isPressed \
+            self.shouldEcho = _mayEcho \
                 and (settings.enablePunctuationKeys or settings.enableEchoByCharacter)
         elif self.isSpace():
             self.keyType = KeyboardEvent.TYPE_SPACE
-            self.shouldEcho = _isPressed \
+            self.shouldEcho = _mayEcho \
                 and (settings.enableSpace or settings.enableEchoByCharacter)
         else:
             self.keyType = KeyboardEvent.TYPE_UNKNOWN
@@ -572,10 +580,13 @@ class KeyboardEvent(InputEvent):
         if not self._script:
             return False, 'No active script'
 
-        if self.is_duplicate or not self.isPressedKey():
+        if self.is_duplicate:
             return self._should_consume, 'Consumed based on handler'
 
         self._present()
+
+        if not self.isPressedKey():
+            return self._should_consume, 'Consumed based on handler'
 
         if self.isOrcaModifier():
             return True, 'Orca modifier'
