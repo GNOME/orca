@@ -456,6 +456,25 @@ class KeyboardEvent(InputEvent):
 
         return keynames.getKeyName(self.event_string)
 
+    def _getUserHandler(self):
+        # TODO - JD: This should go away once plugin support is in place.
+        try:
+            bindings = settings.keyBindingsMap.get(self._script.__module__)
+        except:
+            bindings = None
+        if not bindings:
+            try:
+                bindings = settings.keyBindingsMap.get("default")
+            except:
+                bindings = None
+
+        try:
+            handler = bindings.getInputHandler(self)
+        except:
+            handler = None
+
+        return handler
+
     def shouldConsume(self):
         """Returns True if this event should be consumed."""
 
@@ -468,7 +487,8 @@ class KeyboardEvent(InputEvent):
         if orca_state.capturingKeys:
             return False, 'Capturing keys'
 
-        self._handler = self._script.keyBindings.getInputHandler(self)
+        self._handler = self._getUserHandler() \
+            or self._script.keyBindings.getInputHandler(self)
 
         # TODO - JD: Right now we need to always call consumesKeyboardEvent()
         # because that method is updating state, even in instances where there
