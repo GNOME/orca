@@ -47,7 +47,7 @@ _settingsManager = settings_manager.getManager()
 #                                                                      #
 ########################################################################
 
-class Script(WebKitGtk.Script):
+class Script(WebKitGtk.Script, gtk.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.
