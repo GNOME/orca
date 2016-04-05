@@ -461,10 +461,11 @@ class KeyboardEvent(InputEvent):
             return False, 'Capturing keys'
 
         self._handler = self._script.keyBindings.getInputHandler(self)
-        if self._handler:
-            scriptConsumes = self._script.consumesKeyboardEvent(self)
-        else:
-            scriptConsumes = False
+
+        # TODO - JD: Right now we need to always call consumesKeyboardEvent()
+        # because that method is updating state, even in instances where there
+        # is no handler.
+        scriptConsumes = self._script.consumesKeyboardEvent(self)
 
         if self.is_duplicate:
             return scriptConsumes, 'Consuming based on handler'
