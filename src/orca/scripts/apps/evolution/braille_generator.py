@@ -26,9 +26,10 @@ __copyright__ = "Copyright (c) 2015 Igalia, S.L."
 __license__   = "LGPL"
 
 import orca.braille as braille
+import orca.braille_generator as braille_generator
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 
-class BrailleGenerator(WebKitGtk.BrailleGenerator):
+class BrailleGenerator(WebKitGtk.BrailleGenerator, braille_generator.BrailleGenerator):
 
     def __init__(self, script):
         super().__init__(script)
