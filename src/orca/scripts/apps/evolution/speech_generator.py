@@ -28,8 +28,9 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
+import orca.speech_generator as speech_generator
 
-class SpeechGenerator(WebKitGtk.SpeechGenerator):
+class SpeechGenerator(WebKitGtk.SpeechGenerator, speech_generator.SpeechGenerator):
 
     def __init__(self, script):
         super().__init__(script)

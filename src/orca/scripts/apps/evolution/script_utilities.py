@@ -30,7 +30,7 @@ import pyatspi
 import orca.scripts.toolkits.gtk as gtk
 import orca.scripts.toolkits.WebKitGtk as WebKitGtk
 
-class Utilities(WebKitGtk.Utilities):
+class Utilities(WebKitGtk.Utilities, gtk.Utilities):
 
     def __init__(self, script):
         super().__init__(script)
