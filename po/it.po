@@ -28,8 +28,8 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2016-03-20 14:25+0000\n"
-"PO-Revision-Date: 2016-03-20 18:52+0100\n"
+"POT-Creation-Date: 2016-04-06 01:48+0000\n"
+"PO-Revision-Date: 2016-04-06 11:21+0200\n"
 "Last-Translator: Milo Casagrande <milo@milo.name>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -2358,7 +2358,7 @@ msgstr ""
 #. and justification.
 #: ../src/orca/cmdnames.py:441
 msgid "Toggles the speaking of indentation and justification."
-msgstr "Commuta la lettura di indentazione e allineamento."
+msgstr "Attiva/Disattiva la lettura dei rientri e allineamento."
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -9136,7 +9136,7 @@ msgstr "Disabilitata"
 #. justification will not be spoken.
 #: ../src/orca/messages.py:1003
 msgid "Speaking of indentation and justification disabled."
-msgstr "Disabilita la lettura di indentazione e allineamento."
+msgstr "Lettura rientri e allineamento disabilitata."
 
 #. Translators: This brief message indicates that indentation and
 #. justification will be spoken.
@@ -9149,7 +9149,7 @@ msgstr "Abilitata"
 #. justification will be spoken.
 #: ../src/orca/messages.py:1013
 msgid "Speaking of indentation and justification enabled."
-msgstr "Abilitata la lettura di indentazione e allineamento."
+msgstr "Lettura rientri e allineamento abilitata."
 
 #. Translators: Orca has a "Learn Mode" that will allow the user to type any key
 #. on the keyboard and hear what the effects of that key would be.  The effects
@@ -12585,7 +12585,7 @@ msgstr "ortografia"
 #. Translators: this is a tip for the user on how to toggle a checkbox.
 #: ../src/orca/tutorialgenerator.py:161
 msgid "Press space to toggle."
-msgstr "Premere spazio per commutare."
+msgstr "Premere spazio per attivare/disattivare."
 
 #. Translators: this is a tip for the user on how to interact
 #. with a combobox.
@@ -12598,7 +12598,7 @@ msgstr ""
 #. dialog window, inform user of how to refocus these.
 #: ../src/orca/tutorialgenerator.py:219
 msgid "Press alt+f6 to give focus to child windows."
-msgstr "Premere alt+f6 per dare il focus alle finestre figlie."
+msgstr "Premere Alt+F6 per dare il focus alle finestre figlie."
 
 # http://en.wikipedia.org/wiki/Typeahead
 # http://www.mozilla.org/access/type-ahead/
