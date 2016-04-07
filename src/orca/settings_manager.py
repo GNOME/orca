@@ -38,6 +38,7 @@ from . import orca_i18n
 from . import script_manager
 from . import settings
 from . import pronunciation_dict
+from .acss import ACSS
 from .keybindings import KeyBinding
 
 try:
@@ -273,7 +274,7 @@ class SettingsManager(object):
 
     def getVoiceLocale(self, voice='default'):
         voices = self.getSetting('voices')
-        v = voices.get(voice, {})
+        v = ACSS(voices.get(voice, {}))
         lang = v.getLocale()
         dialect = v.getDialect()
         if dialect and len(str(dialect)) == 2:
