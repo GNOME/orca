@@ -1007,7 +1007,9 @@ class Script(default.Script):
 
         caretOffset = 0
         if not oldFocus or self.utilities.inFindToolbar(oldFocus):
-            newFocus, caretOffset = self.utilities.getCaretContext()
+            contextObj, contextOffset = self.utilities.getCaretContext()
+            if contextObj and not self.utilities.isZombie(contextObj):
+                newFocus, caretOffset = contextObj, contextOffset
 
         if newFocus.getRole() == pyatspi.ROLE_UNKNOWN:
             msg = "WEB: Event source has bogus role. Likely browser bug."
