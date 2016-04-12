@@ -608,6 +608,9 @@ class KeyboardEvent(InputEvent):
         if not self.isPressedKey():
             return self._should_consume, 'Consumed based on handler'
 
+        if orca_state.capturingKeys:
+            return False, 'Capturing keys'
+
         if self.isOrcaModifier():
             return True, 'Orca modifier'
 
