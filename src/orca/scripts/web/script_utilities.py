@@ -2615,7 +2615,8 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        self._hasNoSize[hash(obj)] = super().hasNoSize(obj)
+        rv = super().hasNoSize(obj)
+        self._hasNoSize[hash(obj)] = rv
         return rv
 
     def doNotDescendForCaret(self, obj):
