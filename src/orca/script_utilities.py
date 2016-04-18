@@ -1985,7 +1985,10 @@ class Utilities:
             return []
 
         hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_LABEL
-        allLabels = pyatspi.findAllDescendants(root, hasRole)
+        try:
+            allLabels = pyatspi.findAllDescendants(root, hasRole)
+        except:
+            return []
         try:
             labels = [x for x in allLabels if not x.getRelationSet()]
             if onlyShowing:
