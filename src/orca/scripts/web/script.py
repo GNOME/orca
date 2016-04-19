@@ -1833,7 +1833,8 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        char = text.getText(event.detail1, event.detail1+1)
+        offset = text.caretOffset
+        char = text.getText(offset, offset+1)
         if char == self.EMBEDDED_OBJECT_CHARACTER \
            and not self.utilities.lastInputEventWasCaretNavWithSelection() \
            and not self.utilities.lastInputEventWasCommand():
