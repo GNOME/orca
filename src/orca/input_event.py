@@ -484,8 +484,14 @@ class KeyboardEvent(InputEvent):
         if not self._script:
             return False, 'No active script when received'
 
+        if self.is_duplicate:
+            return False, 'Is duplicate'
+
         if orca_state.capturingKeys:
             return False, 'Capturing keys'
+
+        if orca_state.bypassNextCommand:
+            return False, 'Bypass next command'
 
         self._handler = self._getUserHandler() \
             or self._script.keyBindings.getInputHandler(self)
@@ -494,9 +500,6 @@ class KeyboardEvent(InputEvent):
         # because that method is updating state, even in instances where there
         # is no handler.
         scriptConsumes = self._script.consumesKeyboardEvent(self)
-
-        if self.is_duplicate:
-            return scriptConsumes, 'Consuming based on handler'
 
         if self._isReleaseForLastNonModifierKeyEvent():
             return scriptConsumes, 'Is release for last non-modifier keyevent'
@@ -523,6 +526,7 @@ class KeyboardEvent(InputEvent):
             return True, 'Orca modifier'
 
         if orca_state.listNotificationsModeEnabled:
+            self._consumer = self._script.listNotifications
             return True, 'Listing notifications'
 
         if not self._handler:
@@ -601,7 +605,7 @@ class KeyboardEvent(InputEvent):
             return False, 'No active script'
 
         if self.is_duplicate:
-            return self._should_consume, 'Consumed based on handler'
+            return False, 'Is duplicate'
 
         self._present()
 
@@ -615,7 +619,8 @@ class KeyboardEvent(InputEvent):
             return True, 'Orca modifier'
 
         if orca_state.bypassNextCommand:
-            orca_state.bypassNextCommand = False
+            if not self.isModifierKey():
+                orca_state.bypassNextCommand = False
             return False, 'Bypass next command'
 
         if not self._should_consume:
