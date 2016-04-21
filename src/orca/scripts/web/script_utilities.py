@@ -232,8 +232,8 @@ class Utilities(script_utilities.Utilities):
 
         return self.getDocumentForObject(obj or orca_state.locusOfFocus)
 
-    def documentFrameURI(self):
-        documentFrame = self.documentFrame()
+    def documentFrameURI(self, documentFrame=None):
+        documentFrame = documentFrame or self.documentFrame()
         if documentFrame and not self.isZombie(documentFrame):
             document = documentFrame.queryDocument()
             return document.getAttributeValue('DocURL')
@@ -2571,6 +2571,10 @@ class Utilities(script_utilities.Utilities):
         isSameFragment = lambda x: self._getID(x) == parseResult.fragment
         return pyatspi.findAncestor(obj, isSameFragment) is not None
 
+    def documentFragment(self, documentFrame):
+        parseResult = urllib.parse.urlparse(self.documentFrameURI(documentFrame))
+        return parseResult.fragment
+
     def isContentEditableWithEmbeddedObjects(self, obj):
         if not (obj and obj.getState().contains(pyatspi.STATE_EDITABLE)):
             return False
@@ -2744,7 +2748,7 @@ class Utilities(script_utilities.Utilities):
         return obj, offset
 
     def _getCaretContextPathRoleAndName(self, documentFrame=None):
-        documentFrame = self.documentFrame()
+        documentFrame = documentFrame or self.documentFrame()
         if not documentFrame:
             return [-1], None, None
 
