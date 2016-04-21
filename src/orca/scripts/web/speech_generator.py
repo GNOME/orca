@@ -156,6 +156,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
+        # TODO - JD: Once the formatting strings are vastly cleaned up
+        # or simply removed, hacks like this won't be needed.
+        role = args.get('role', obj.getRole())
+        if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_SPIN_BUTTON]:
+            return super()._generateName(obj, **args)
+
         if self._script.utilities.inDocumentContent(obj) and obj.name:
             result = [obj.name]
             result.extend(self.voice(speech_generator.DEFAULT))
