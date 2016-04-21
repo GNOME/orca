@@ -34,9 +34,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "3. Flat review next line",
-    ["BRAILLE LINE:  'Resolution: $l'",
-     "     VISIBLE:  'Resolution: $l', cursor=1",
-     "SPEECH OUTPUT: 'Resolution:",
+    ["BRAILLE LINE:  'Resolution:  $l'",
+     "     VISIBLE:  'Resolution:  $l', cursor=1",
+     "SPEECH OUTPUT: 'Resolution: ",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())

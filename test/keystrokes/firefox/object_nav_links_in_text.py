@@ -18,9 +18,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
-    ["BRAILLE LINE:  'Home'",
+    ["KNOWN ISSUE: We are presenting this twice",
+     "BRAILLE LINE:  'Home'",
      "     VISIBLE:  'Home', cursor=1",
-     "SPEECH OUTPUT: 'Home link.'"]))
+     "BRAILLE LINE:  'Home'",
+     "     VISIBLE:  'Home', cursor=1",
+     "SPEECH OUTPUT: 'Home link.' voice=hyperlink",
+     "SPEECH OUTPUT: 'Home link.' voice=hyperlink"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("H"))
@@ -58,25 +62,25 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. line Down",
-    ["BRAILLE LINE:  ','",
-     "     VISIBLE:  ',', cursor=1",
-     "SPEECH OUTPUT: ',.'"]))
+    ["BRAILLE LINE:  ', please look at the list of'",
+     "     VISIBLE:  ', please look at the list of', cursor=1",
+     "SPEECH OUTPUT: ', please look at the list of.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "7. line Down",
-    ["BRAILLE LINE:  'please look at the list of'",
-     "     VISIBLE:  'please look at the list of', cursor=1",
-     "SPEECH OUTPUT: 'please look at the list of.'"]))
+    ["BRAILLE LINE:  'most'",
+     "     VISIBLE:  'most', cursor=1",
+     "SPEECH OUTPUT: 'most link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "8. line Down",
-    ["BRAILLE LINE:  'most frequently reported bugs'",
-     "     VISIBLE:  'most frequently reported bugs', cursor=1",
-     "SPEECH OUTPUT: 'most frequently reported bugs link.'"]))
+    ["BRAILLE LINE:  'frequently reported bugs'",
+     "     VISIBLE:  'frequently reported bugs', cursor=1",
+     "SPEECH OUTPUT: 'frequently reported bugs link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -154,25 +158,25 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "18. line Up",
-    ["BRAILLE LINE:  'most frequently reported bugs'",
-     "     VISIBLE:  'most frequently reported bugs', cursor=1",
-     "SPEECH OUTPUT: 'most frequently reported bugs link.'"]))
+    ["BRAILLE LINE:  'frequently reported bugs'",
+     "     VISIBLE:  'frequently reported bugs', cursor=1",
+     "SPEECH OUTPUT: 'frequently reported bugs link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "19. line Up",
-    ["BRAILLE LINE:  'please look at the list of'",
-     "     VISIBLE:  'please look at the list of', cursor=1",
-     "SPEECH OUTPUT: 'please look at the list of.'"]))
+    ["BRAILLE LINE:  'most'",
+     "     VISIBLE:  'most', cursor=1",
+     "SPEECH OUTPUT: 'most link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "20. line Up",
-    ["BRAILLE LINE:  ','",
-     "     VISIBLE:  ',', cursor=1",
-     "SPEECH OUTPUT: ',.'"]))
+    ["BRAILLE LINE:  ', please look at the list of'",
+     "     VISIBLE:  ', please look at the list of', cursor=1",
+     "SPEECH OUTPUT: ', please look at the list of.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

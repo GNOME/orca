@@ -30,8 +30,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'This is a Heading 6. h6', cursor=1",
      "SPEECH OUTPUT: 'heading level 6.'",
      "SPEECH OUTPUT: 'This is a Heading 6.'",
-     "SPEECH OUTPUT: '14 headings 3 forms 43 tables'",
-     "SPEECH OUTPUT: '19 unvisited links'"]))
+     "SPEECH OUTPUT: 'Page has 0 landmarks, 14 headings, 3 forms, 43 tables, 0 visited links, 11 unvisited links.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

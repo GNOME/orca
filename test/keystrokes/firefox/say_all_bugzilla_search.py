@@ -19,7 +19,6 @@ sequence.append(utils.AssertPresentationAction(
     "KP_Add to do a SayAll",
     ["SPEECH OUTPUT: 'Home'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'Back to the Gnome Bugzilla home page'",
      "SPEECH OUTPUT: 'Bugzilla'",
      "SPEECH OUTPUT: 'New bug'",
      "SPEECH OUTPUT: 'link'",

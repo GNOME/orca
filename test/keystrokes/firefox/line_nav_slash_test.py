@@ -85,7 +85,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["BRAILLE LINE:  'Poll What is your favorite poison?'",
      "     VISIBLE:  'Poll What is your favorite poiso', cursor=6",
-     "SPEECH OUTPUT: 'What is your favorite poison? panel'"]))
+     "SPEECH OUTPUT: 'What is your favorite poison? panel.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -120,7 +120,7 @@ sequence.append(utils.AssertPresentationAction(
     "12. Line Up",
     ["BRAILLE LINE:  'Poll What is your favorite poison?'",
      "     VISIBLE:  'Poll What is your favorite poiso', cursor=6",
-     "SPEECH OUTPUT: 'What is your favorite poison? panel'"]))
+     "SPEECH OUTPUT: 'What is your favorite poison? panel.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

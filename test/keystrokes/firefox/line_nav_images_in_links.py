@@ -169,19 +169,19 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "19. Line Down",
-    ["BRAILLE LINE:  'Two \"useless\" images in a paragraph that is inside of a link along with text that is not in the paragraph: Before'",
+    ["BRAILLE LINE:  'Two \"useless\" images in a paragraph that is inside of a link along with text that is not in the paragraph: Before the'",
      "     VISIBLE:  'Two \"useless\" images in a paragr', cursor=1",
      "SPEECH OUTPUT: 'Two \"useless\" images in a paragraph that is inside of a link along with text that is not in the paragraph:'",
-     "SPEECH OUTPUT: 'Before'",
+     "SPEECH OUTPUT: 'Before the'",
      "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "20. Line Down",
-    ["BRAILLE LINE:  'the paragraph'",
-     "     VISIBLE:  'the paragraph', cursor=1",
-     "SPEECH OUTPUT: 'the paragraph'",
+    ["BRAILLE LINE:  'paragraph'",
+     "     VISIBLE:  'paragraph', cursor=1",
+     "SPEECH OUTPUT: 'paragraph'",
      "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -206,17 +206,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "23. Line Down",
-    ["BRAILLE LINE:  'Two \"useless\" images and some additional text in a paragraph that is inside of a link along with text that is not in'",
+    ["BRAILLE LINE:  'Two \"useless\" images and some additional text in a paragraph that is inside of a link along with text that is not in the'",
      "     VISIBLE:  'Two \"useless\" images and some ad', cursor=1",
-     "SPEECH OUTPUT: 'Two \"useless\" images and some additional text in a paragraph that is inside of a link along with text that is not in'"]))
+     "SPEECH OUTPUT: 'Two \"useless\" images and some additional text in a paragraph that is inside of a link along with text that is not in the'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "24. Line Down",
-    ["BRAILLE LINE:  'the paragraph: Before the paragraph'",
-     "     VISIBLE:  'the paragraph: Before the paragr', cursor=1",
-     "SPEECH OUTPUT: 'the paragraph:'",
+    ["BRAILLE LINE:  'paragraph: Before the paragraph'",
+     "     VISIBLE:  'paragraph: Before the paragraph', cursor=1",
+     "SPEECH OUTPUT: 'paragraph:'",
      "SPEECH OUTPUT: 'Before the paragraph'",
      "SPEECH OUTPUT: 'link.'"]))
 
@@ -283,9 +283,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "32. Line Up",
-    ["BRAILLE LINE:  'the paragraph: Before the paragraph'",
-     "     VISIBLE:  'the paragraph: Before the paragr', cursor=1",
-     "SPEECH OUTPUT: 'the paragraph:'",
+    ["BRAILLE LINE:  'paragraph: Before the paragraph'",
+     "     VISIBLE:  'paragraph: Before the paragraph', cursor=1",
+     "SPEECH OUTPUT: 'paragraph:'",
      "SPEECH OUTPUT: 'Before the paragraph'",
      "SPEECH OUTPUT: 'link.'"]))
 
@@ -293,9 +293,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "33. Line Up",
-    ["BRAILLE LINE:  'Two \"useless\" images and some additional text in a paragraph that is inside of a link along with text that is not in'",
+    ["BRAILLE LINE:  'Two \"useless\" images and some additional text in a paragraph that is inside of a link along with text that is not in the'",
      "     VISIBLE:  'Two \"useless\" images and some ad', cursor=1",
-     "SPEECH OUTPUT: 'Two \"useless\" images and some additional text in a paragraph that is inside of a link along with text that is not in'"]))
+     "SPEECH OUTPUT: 'Two \"useless\" images and some additional text in a paragraph that is inside of a link along with text that is not in the'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -319,19 +319,19 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "36. Line Up",
-    ["BRAILLE LINE:  'the paragraph'",
-     "     VISIBLE:  'the paragraph', cursor=1",
-     "SPEECH OUTPUT: 'the paragraph'",
+    ["BRAILLE LINE:  'paragraph'",
+     "     VISIBLE:  'paragraph', cursor=1",
+     "SPEECH OUTPUT: 'paragraph'",
      "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "37. Line Up",
-    ["BRAILLE LINE:  'Two \"useless\" images in a paragraph that is inside of a link along with text that is not in the paragraph: Before'",
+    ["BRAILLE LINE:  'Two \"useless\" images in a paragraph that is inside of a link along with text that is not in the paragraph: Before the'",
      "     VISIBLE:  'Two \"useless\" images in a paragr', cursor=1",
      "SPEECH OUTPUT: 'Two \"useless\" images in a paragraph that is inside of a link along with text that is not in the paragraph:'",
-     "SPEECH OUTPUT: 'Before'",
+     "SPEECH OUTPUT: 'Before the'",
      "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())

@@ -30,8 +30,6 @@ sequence.append(utils.AssertPresentationAction(
     "2. Decrement first spinner",
     ["BRAILLE LINE:  'Spinbox #1: 899 $l'",
      "     VISIBLE:  'Spinbox #1: 899 $l', cursor=16",
-     "BRAILLE LINE:  'Spinbox #1: 899 $l'",
-     "     VISIBLE:  'Spinbox #1: 899 $l', cursor=16",
      "SPEECH OUTPUT: '899'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -40,8 +38,6 @@ sequence.append(utils.AssertPresentationAction(
     "3. Decrement first spinner",
     ["BRAILLE LINE:  'Spinbox #1: 898 $l'",
      "     VISIBLE:  'Spinbox #1: 898 $l', cursor=16",
-     "BRAILLE LINE:  'Spinbox #1: 898 $l'",
-     "     VISIBLE:  'Spinbox #1: 898 $l', cursor=16",
      "SPEECH OUTPUT: '898'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -49,8 +45,6 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "4. Increment first spinner",
     ["BRAILLE LINE:  'Spinbox #1: 899 $l'",
-     "     VISIBLE:  'Spinbox #1: 899 $l', cursor=16",
-     "BRAILLE LINE:  'Spinbox #1: 899 $l'",
      "     VISIBLE:  'Spinbox #1: 899 $l', cursor=16",
      "SPEECH OUTPUT: '899'"]))
 

@@ -14,7 +14,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to the cb0 checkbox",
-    ["BRAILLE LINE:  '<x> cb0: Vanilla (non-dojo) checkbox (for comparison purposes) check box'",
+    ["KNOWN ISSUE: We are not presenting this in Nightly; we do with stable",
+     "BRAILLE LINE:  '<x> cb0: Vanilla (non-dojo) checkbox (for comparison purposes) check box'",
      "     VISIBLE:  '<x> cb0: Vanilla (non-dojo) chec', cursor=1",
      "SPEECH OUTPUT: 'cb0: Vanilla (non-dojo) checkbox (for comparison purposes) check box checked'"]))
 

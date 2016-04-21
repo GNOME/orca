@@ -14,7 +14,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. Line Down to what should be the text below the About heading",
-    ["BRAILLE LINE:  'Orca is a free, open source, flexible, extensible, and'",
+    ["KNOWN ISSUE: This test sometimes fails when run as part of the full suite; but passes when run alone.",
+     "BRAILLE LINE:  'Orca is a free, open source, flexible, extensible, and'",
      "     VISIBLE:  'Orca is a free, open source, fle', cursor=1",
      "SPEECH OUTPUT: 'Orca is a free, open source, flexible, extensible, and'"]))
 

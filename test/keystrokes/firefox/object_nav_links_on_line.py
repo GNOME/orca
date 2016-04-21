@@ -9,18 +9,20 @@ sequence = MacroSequence()
 
 #sequence.append(WaitForDocLoad())
 sequence.append(PauseAction(5000))
-
-# Work around some new quirk in Gecko that causes this test to fail if
-# run via the test harness rather than manually.
-sequence.append(KeyComboAction("<Control>r"))
+sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(KeyComboAction("Tab"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
-    ["BRAILLE LINE:  'Home'",
+    ["KNOWN ISSUE: We are presenting this twice",
+     "BRAILLE LINE:  'Home'",
      "     VISIBLE:  'Home', cursor=1",
-     "SPEECH OUTPUT: 'Home link.'"]))
+     "BRAILLE LINE:  'Home'",
+     "     VISIBLE:  'Home', cursor=1",
+     "SPEECH OUTPUT: 'Home link.' voice=hyperlink",
+     "SPEECH OUTPUT: 'Home link.' voice=hyperlink"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

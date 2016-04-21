@@ -232,7 +232,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "27. line Up",
     ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+     "     VISIBLE:  ' $l', cursor=0",
      "SPEECH OUTPUT: 'entry"]))
 
 sequence.append(utils.StartRecordingAction())

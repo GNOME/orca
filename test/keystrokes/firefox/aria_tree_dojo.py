@@ -16,7 +16,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to continents",
-    ["BRAILLE LINE:  'before:  $l'",
+    ["KNOWN ISSUE: Nightly crashes when this test is run",
+     "BRAILLE LINE:  'before:  $l'",
      "     VISIBLE:  'before:  $l', cursor=9",
      "BRAILLE LINE:  'Continents expanded list item'",
      "     VISIBLE:  'Continents expanded list item', cursor=1",

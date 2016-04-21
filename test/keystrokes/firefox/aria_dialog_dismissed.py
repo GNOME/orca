@@ -33,6 +33,8 @@ sequence.append(utils.AssertPresentationAction(
     "3. Tab to dialog button",
     ["BRAILLE LINE:  'OK push button'",
      "     VISIBLE:  'OK push button', cursor=1",
+     "BRAILLE LINE:  'Just an example. dialog'",
+     "     VISIBLE:  'Just an example. dialog', cursor=1",
      "SPEECH OUTPUT: 'OK push button'"]))
 
 sequence.append(utils.StartRecordingAction())

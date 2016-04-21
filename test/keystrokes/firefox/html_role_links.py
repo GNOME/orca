@@ -66,7 +66,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'blockquotes.html', cursor=1",
      "SPEECH OUTPUT: 'file link to blockquotes.html.'",
      "SPEECH OUTPUT: 'same site.'",
-     "SPEECH OUTPUT: '1188 bytes.'"]))
+     "SPEECH OUTPUT: '1235 bytes.'"]))
 
 sequence.append(KeyComboAction("Return"))
 #sequence.append(WaitForDocLoad())

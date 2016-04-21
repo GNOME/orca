@@ -121,7 +121,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Down"))
 sequence.append(utils.AssertPresentationAction(
     "12. Shift Down",
-    ["BRAILLE LINE:  'problems in other components, is maintained in Bugzilla \(please see our notes on how we'",
+    ["BRAILLE LINE:  'problems in other components, is maintained in Bugzilla \(please see our notes on how'",
      "     VISIBLE:  'r components, is maintained in B', cursor=32",
      "SPEECH OUTPUT: 'problems in other components, is maintained in Bugzilla  \(please see our'",
      "SPEECH OUTPUT: 'selected' voice=system"]))
@@ -130,9 +130,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Down"))
 sequence.append(utils.AssertPresentationAction(
     "13. Shift Down",
-    ["BRAILLE LINE:  'use Bugzilla).'",
-     "     VISIBLE:  'use Bugzilla).', cursor=1",
-     "SPEECH OUTPUT: 'notes on how we use Bugzilla ).'",
+    ["BRAILLE LINE:  'we use Bugzilla\).'",
+     "     VISIBLE:  'we use Bugzilla\).', cursor=1",
+     "SPEECH OUTPUT: 'notes on how we use Bugzilla \).'",
      "SPEECH OUTPUT: 'selected' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -175,8 +175,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Down"))
 sequence.append(utils.AssertPresentationAction(
     "18. Shift Down",
-    ["BRAILLE LINE:  'contribution (THANKS!)!!! The audio guides can be found at http://www.digitaldarragh.com'",
-     "     VISIBLE:  'e audio guides can be found at h', cursor=32",
+    ["BRAILLE LINE:  'contribution (THANKS!)!!! The audio guides can be found at'",
+     "     VISIBLE:  'e audio guides can be found at', cursor=32",
      "SPEECH OUTPUT: 'contribution (THANKS!)!!! The audio guides can be found at '",
      "SPEECH OUTPUT: 'selected' voice=system"]))
 
@@ -184,8 +184,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Down"))
 sequence.append(utils.AssertPresentationAction(
     "19. Shift Down",
-    ["BRAILLE LINE:  '/linuxat.asp and include the following:'",
-     "     VISIBLE:  '/linuxat.asp and include the fol', cursor=1",
+    ["BRAILLE LINE:  'http://www.digitaldarragh.com/linuxat.asp and include the following:'",
+     "     VISIBLE:  'http://www.digitaldarragh.com/li', cursor=1",
      "SPEECH OUTPUT: 'http://www.digitaldarragh.com/linuxat.asp  and include the following:'",
      "SPEECH OUTPUT: 'selected' voice=system"]))
 
@@ -238,25 +238,25 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Down"))
 sequence.append(utils.AssertPresentationAction(
     "25. Shift Down",
-    ["BRAILLE LINE:  'provided by default on a number of operating system distributions, including Open Solaris'",
+    ["BRAILLE LINE:  'provided by default on a number of operating system distributions, including Open'",
      "     VISIBLE:  'ystem distributions, including O', cursor=32",
-     "SPEECH OUTPUT: 'provided by default on a number of operating system distributions, including Open Solaris'",
+     "SPEECH OUTPUT: 'provided by default on a number of operating system distributions, including '",
      "SPEECH OUTPUT: 'selected' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Up"))
 sequence.append(utils.AssertPresentationAction(
     "26. Shift Up",
-    ["BRAILLE LINE:  'and Ubuntu.'",
-     "     VISIBLE:  'and Ubuntu.', cursor=0",
-     "SPEECH OUTPUT: 'provided by default on a number of operating system distributions, including Open Solaris'",
+    ["BRAILLE LINE:  'Solaris and Ubuntu.'",
+     "     VISIBLE:  'Solaris and Ubuntu.', cursor=1",
+     "SPEECH OUTPUT: 'provided by default on a number of operating system distributions, including '",
      "SPEECH OUTPUT: 'unselected' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Up"))
 sequence.append(utils.AssertPresentationAction(
     "27. Shift Up",
-    ["BRAILLE LINE:  'provided by default on a number of operating system distributions, including Open Solaris'",
+    ["BRAILLE LINE:  'provided by default on a number of operating system distributions, including Open'",
      "     VISIBLE:  'provided by default on a number ', cursor=0",
      "SPEECH OUTPUT: 'As of GNOME 2.16, Orca is a part of the GNOME platform. As a result, Orca is already '",
      "SPEECH OUTPUT: 'unselected' voice=system"]))
@@ -310,8 +310,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Up"))
 sequence.append(utils.AssertPresentationAction(
     "33. Shift Up",
-    ["BRAILLE LINE:  '/linuxat.asp and include the following:'",
-     "     VISIBLE:  '/linuxat.asp and include the fol', cursor=1",
+    ["BRAILLE LINE:  'http://www.digitaldarragh.com/linuxat.asp and include the following:'",
+     "     VISIBLE:  'http://www.digitaldarragh.com/li', cursor=1",
      "SPEECH OUTPUT: 'contribution (THANKS!)!!! The audio guides can be found at '",
      "SPEECH OUTPUT: 'unselected' voice=system"]))
 
@@ -319,7 +319,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Up"))
 sequence.append(utils.AssertPresentationAction(
     "34. Shift Up",
-    ["BRAILLE LINE:  'contribution (THANKS!)!!! The audio guides can be found at http://www.digitaldarragh.com'",
+    ["BRAILLE LINE:  'contribution (THANKS!)!!! The audio guides can be found at'",
      "     VISIBLE:  'contribution (THANKS!)!!! The au', cursor=0",
      "SPEECH OUTPUT: 'Darragh Ó Héiligh  has created several audio guides for Orca. This is a fantastic'",
      "SPEECH OUTPUT: 'unselected' voice=system"]))
