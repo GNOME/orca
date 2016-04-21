@@ -1172,6 +1172,9 @@ class Script(default.Script):
             msg = "WEB: Not doing SayAll due to focusable context obj %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             speech.speak(self.speechGenerator.generateSpeech(obj))
+        elif self.utilities.documentFragment(event.source):
+            msg = "WEB: Not doing SayAll due to page fragment"
+            debug.println(debug.LEVEL_INFO, msg, True)
         elif not _settingsManager.getSetting('sayAllOnLoad'):
             msg = "WEB: Not doing SayAll due to sayAllOnLoad being False"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1566,6 +1569,8 @@ class Script(default.Script):
             cause = "Context is not a non-focused link"
         elif self.utilities.isChildOfCurrentFragment(obj):
             cause = "Context is child of current fragment"
+        elif document == event.source and self.utilities.documentFragment(event.source):
+            cause = "Document URI is fragment"
         else:
             return False
 
