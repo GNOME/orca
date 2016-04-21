@@ -1281,7 +1281,11 @@ class Script(default.Script):
             return True
 
         char = text.getText(event.detail1, event.detail1+1)
-        isEditable = obj.getState().contains(pyatspi.STATE_EDITABLE)
+        try:
+            isEditable = obj.getState().contains(pyatspi.STATE_EDITABLE)
+        except:
+            isEditable = False
+
         if not char and not isEditable:
             msg = "WEB: Event ignored: Was for empty char in non-editable text"
             debug.println(debug.LEVEL_INFO, msg, True)
