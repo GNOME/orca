@@ -29,6 +29,7 @@ __license__   = "LGPL"
 
 import pyatspi
 import time
+from gi.repository import GLib
 
 from . import debug
 from . import keybindings
@@ -568,8 +569,6 @@ class KeyboardEvent(InputEvent):
         msg = '\nvvvvv PROCESS %s: %s vvvvv' % (self.type.value_name.upper(), data)
         debug.println(debug.LEVEL_INFO, msg, False)
 
-        self._did_consume, self._result_reason = self._process()
-
         msg = 'HOST_APP: %s' % self._app
         debug.println(debug.LEVEL_INFO, msg, True)
 
@@ -581,6 +580,8 @@ class KeyboardEvent(InputEvent):
 
         msg = 'CONSUME:  %s (%s)' % (self._should_consume, self._consume_reason)
         debug.println(debug.LEVEL_INFO, msg, True)
+
+        self._did_consume, self._result_reason = self._process()
 
         if self._should_consume != self._did_consume:
             msg = 'CONSUMED: %s (%s)' % (self._did_consume, self._result_reason)
@@ -629,15 +630,30 @@ class KeyboardEvent(InputEvent):
         if not (self._consumer or self._handler):
             return False, 'No consumer or handler'
 
-        if self._consumer:
-            self._consumer(self)
-            return True, 'Consumed by consumer'
-
-        if self._should_consume and self._handler.function:
-            self._handler.function(self._script, self)
-            return True, 'Consumed by handler'
+        if self._consumer or self._handler.function:
+            GLib.timeout_add(1, self._consume)
+            return True, 'Will be consumed'
 
         return False, 'Unaddressed case'
+
+    def _consume(self):
+        startTime = time.time()
+        data = "'%s' (%d)" % (self.event_string, self.hw_code)
+        msg = 'vvvvv CONSUME %s: %s vvvvv' % (self.type.value_name.upper(), data)
+        debug.println(debug.LEVEL_INFO, msg, False)
+
+        if self._consumer:
+            self._consumer(self)
+        elif self._handler.function:
+            self._handler.function(self._script, self)
+
+        msg = 'TOTAL PROCESSING TIME: %.4f' % (time.time() - startTime)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        msg = '^^^^^ CONSUME %s: %s ^^^^^' % (self.type.value_name.upper(), data)
+        debug.println(debug.LEVEL_INFO, msg, False)
+
+        return False
 
 class BrailleEvent(InputEvent):
 
