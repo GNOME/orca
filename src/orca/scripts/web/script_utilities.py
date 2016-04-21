@@ -73,6 +73,8 @@ class Utilities(script_utilities.Utilities):
         self._isUselessImage = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
+        self._actualLabels = {}
+        self._displayedLabelText = {}
         self._roleDescription = {}
         self._text = {}
         self._tag = {}
@@ -121,6 +123,8 @@ class Utilities(script_utilities.Utilities):
         self._isUselessImage = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
+        self._actualLabels = {}
+        self._displayedLabelText = {}
         self._roleDescription = {}
         self._tag = {}
         self._treatAsDiv = {}
@@ -2356,6 +2360,37 @@ class Utilities(script_utilities.Utilities):
             return False
 
         return True
+
+    def displayedLabel(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().displayedLabel(obj)
+
+        rv = self._displayedLabelText.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        labels = self.labelsForObject(obj)
+        strings = [l.name or self.displayedText(l) for l in labels if l is not None]
+        rv = " ".join(strings)
+
+        self._displayedLabelText[hash(obj)] = rv
+        return rv
+
+    def labelsForObject(self, obj):
+        if not obj:
+            return []
+
+        rv = self._actualLabels.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = super().labelsForObject(obj)
+        if not self.inDocumentContent(obj):
+            return rv
+
+        rv = list(filter(lambda x: x and x.getRole() == pyatspi.ROLE_LABEL, rv))
+        self._actualLabels[hash(obj)] = rv
+        return rv
 
     def isSpinnerEntry(self, obj):
         if not self.inDocumentContent(obj):
