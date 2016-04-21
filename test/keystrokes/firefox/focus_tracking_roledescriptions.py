@@ -69,7 +69,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Presentation slide set', cursor=1",
      "BRAILLE LINE:  'Here are some slides'",
      "     VISIBLE:  'Here are some slides', cursor=1",
-     "SPEECH OUTPUT: 'Presentation slide set'",
+     "SPEECH OUTPUT: 'Presentation slide set.'",
      "SPEECH OUTPUT: 'Here are some slides'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -80,7 +80,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'First Quarter 2015 slide', cursor=1",
      "BRAILLE LINE:  'First Quarter 2015 h1'",
      "     VISIBLE:  'First Quarter 2015 h1', cursor=1",
-     "SPEECH OUTPUT: 'First Quarter 2015 slide'",
+     "SPEECH OUTPUT: 'First Quarter 2015 slide.'",
      "SPEECH OUTPUT: 'First Quarter 2015 heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())

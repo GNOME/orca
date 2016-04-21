@@ -10,9 +10,10 @@ sequence = MacroSequence()
 #sequence.append(WaitForDocLoad())
 sequence.append(PauseAction(5000))
 sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("H"))
 sequence.append(KeyComboAction("H"))
-for i in range(5):
+for i in range(4):
     sequence.append(KeyComboAction("Tab"))
     sequence.append(PauseAction(1000))
 

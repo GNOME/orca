@@ -22,7 +22,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Line Up",
     ["BRAILLE LINE:  'Grey'",
      "     VISIBLE:  'Grey', cursor=1",
-     "SPEECH OUTPUT: 'Grey'"]))
+     "SPEECH OUTPUT: 'Grey clickable'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -38,7 +38,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Up",
     ["BRAILLE LINE:  'White'",
      "     VISIBLE:  'White', cursor=1",
-     "SPEECH OUTPUT: 'White'"]))
+     "SPEECH OUTPUT: 'White clickable'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -54,7 +54,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Line Up",
     ["BRAILLE LINE:  'Black'",
      "     VISIBLE:  'Black', cursor=1",
-     "SPEECH OUTPUT: 'Black'"]))
+     "SPEECH OUTPUT: 'Black clickable'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

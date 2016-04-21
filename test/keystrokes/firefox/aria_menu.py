@@ -10,10 +10,6 @@ sequence = MacroSequence()
 #sequence.append(WaitForDocLoad())
 sequence.append(PauseAction(5000))
 
-# Work around some new quirk in Gecko that causes this test to fail if
-# run via the test harness rather than manually.
-sequence.append(KeyComboAction("<Control>r"))
-
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Alt>m"))
 sequence.append(utils.AssertPresentationAction(

@@ -19,8 +19,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Shift Tab",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=1",
      "BRAILLE LINE:  'Summary: contains all of the words/strings combo box'",
      "     VISIBLE:  'Summary: contains all of the wor', cursor=10",
      "SPEECH OUTPUT: 'Summary: contains all of the words/strings combo box.'"]))
@@ -50,8 +50,8 @@ sequence.append(utils.AssertPresentationAction(
     "4. Tab",
     ["BRAILLE LINE:  'Search push button'",
      "     VISIBLE:  'Search push button', cursor=1",
-     "BRAILLE LINE:  'Admin'",
-     "     VISIBLE:  'Admin', cursor=1",
+     "BRAILLE LINE:  'Admin '",
+     "     VISIBLE:  'Admin ', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'table with 2 rows 1 column'",
@@ -63,8 +63,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "5. Tab",
-    ["BRAILLE LINE:  'Admin'",
-     "     VISIBLE:  'Admin', cursor=1",
+    ["BRAILLE LINE:  'Admin '",
+     "     VISIBLE:  'Admin ', cursor=1",
      "BRAILLE LINE:  'accerciser'",
      "     VISIBLE:  'accerciser', cursor=1",
      "SPEECH OUTPUT: 'table with 2 rows 1 column'",

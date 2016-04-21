@@ -29,7 +29,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'My slider 10% slider', cursor=1",
      "BRAILLE LINE:  'My slider 10% slider'",
      "     VISIBLE:  'My slider 10% slider', cursor=1",
-     "SPEECH OUTPUT: 'My slider slider 10% 10 percent.'"]))
+     "SPEECH OUTPUT: 'My slider slider 10%'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))

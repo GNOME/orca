@@ -246,17 +246,19 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "25. Line Down",
-    ["BRAILLE LINE:  'easily be installed in any location. As long as you are not root user, it cannot displace the system version of the Java platform suppled by Linux. To use this file, see'",
+    ["BRAILLE LINE:  'easily be installed in any location. As long as you are not root user, it cannot displace the system version of the Java platform suppled by Linux. To use this file, see Installation'",
      "     VISIBLE:  'easily be installed in any locat', cursor=1",
-     "SPEECH OUTPUT: 'easily be installed in any location. As long as you are not root user, it cannot displace the system version of the Java platform suppled by Linux. To use this file, see.'"]))
+     "SPEECH OUTPUT: 'easily be installed in any location. As long as you are not root user, it cannot displace the system version of the Java platform suppled by Linux. To use this file, see.'",
+     "SPEECH OUTPUT: 'Installation'",
+     "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "26. Line Down",
-    ["BRAILLE LINE:  'Installation of Self-Extracting Binary below.'",
-     "     VISIBLE:  'Installation of Self-Extracting ', cursor=1",
-     "SPEECH OUTPUT: 'Installation of Self-Extracting Binary'",
+    ["BRAILLE LINE:  'of Self-Extracting Binary below.'",
+     "     VISIBLE:  'of Self-Extracting Binary below.', cursor=1",
+     "SPEECH OUTPUT: 'of Self-Extracting Binary'",
      "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'below.'"]))
 

@@ -32,7 +32,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  'Solution  Here is a step-by-step tutorial:'",
      "     VISIBLE:  'Solution  Here is a step-by-step', cursor=11",
-     "SPEECH OUTPUT: 'Here is a step-by-step tutorial: panel'"]))
+     "SPEECH OUTPUT: 'Here is a step-by-step tutorial: panel.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -64,7 +64,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Up",
     ["BRAILLE LINE:  'Solution  Here is a step-by-step tutorial:'",
      "     VISIBLE:  'Solution  Here is a step-by-step', cursor=11",
-     "SPEECH OUTPUT: 'Here is a step-by-step tutorial: panel'"]))
+     "SPEECH OUTPUT: 'Here is a step-by-step tutorial: panel.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

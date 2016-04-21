@@ -9,8 +9,8 @@ sequence = MacroSequence()
 
 #sequence.append(WaitForDocLoad())
 sequence.append(PauseAction(5000))
-sequence.append(PauseAction(2000))
 sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("u"))
@@ -110,7 +110,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'tables.html'",
      "     VISIBLE:  'tables.html', cursor=1",
      "SPEECH OUTPUT: 'tables.html'",
-     "SPEECH OUTPUT: 'link.'"]))
+     "SPEECH OUTPUT: 'visited link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("v"))
@@ -122,7 +122,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'anchors.html', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.' voice=system",
      "SPEECH OUTPUT: 'anchors.html'",
-     "SPEECH OUTPUT: 'link.'"]))
+     "SPEECH OUTPUT: 'visited link.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>v"))
@@ -134,7 +134,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'tables.html', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to bottom.' voice=system",
      "SPEECH OUTPUT: 'tables.html'",
-     "SPEECH OUTPUT: 'link.'"]))
+     "SPEECH OUTPUT: 'visited link.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

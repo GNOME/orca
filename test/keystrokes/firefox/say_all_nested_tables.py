@@ -28,7 +28,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '.'",
      "SPEECH OUTPUT: 'Reports'",
      "SPEECH OUTPUT: 'link'",
-     "SPEECH OUTPUT: 'table row'",
      "SPEECH OUTPUT: 'Your Learning Plan'",
      "SPEECH OUTPUT: 'Below is a list of the courses that make up your learning plan.'",
      "SPEECH OUTPUT: 'UNIX 2007'",

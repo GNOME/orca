@@ -40,7 +40,7 @@
         "enableSpeechIndentation": false, 
         "chatSpeakRoomName": false, 
         "flashVerbosityLevel": 1, 
-        "enableBraille": true, 
+        "enableBraille": false, 
         "speakCellHeaders": true, 
         "layoutMode": false, 
         "enableBrailleMonitor": true, 

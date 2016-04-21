@@ -10,6 +10,13 @@ sequence = MacroSequence()
 sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Alt>b"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Up"))
+sequence.append(KeyComboAction("Up"))
+sequence.append(KeyComboAction("Up"))
+sequence.append(KeyComboAction("Tab"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
@@ -73,20 +80,20 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "7. Down Arrow in tree",
-    ["BRAILLE LINE:  'Firefox application Library frame Recently Bookmarked list item TREE LEVEL 3'",
-     "     VISIBLE:  'Recently Bookmarked list item TR', cursor=1",
-     "SPEECH OUTPUT: 'Recently Bookmarked.'",
+    ["BRAILLE LINE:  'Firefox application Library frame Recent Tags list item TREE LEVEL 3'",
+     "     VISIBLE:  'Recent Tags list item TREE LEVEL', cursor=1",
+     "SPEECH OUTPUT: 'Recent Tags.'",
      "SPEECH OUTPUT: 'tree level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "8. Basic Where Am I", 
-    ["BRAILLE LINE:  'Firefox application Library frame Recently Bookmarked list item TREE LEVEL 3'",
-     "     VISIBLE:  'Recently Bookmarked list item TR', cursor=1",
+    ["BRAILLE LINE:  'Firefox application Library frame Recent Tags list item TREE LEVEL 3'",
+     "     VISIBLE:  'Recent Tags list item TREE LEVEL', cursor=1",
      "SPEECH OUTPUT: 'list item.'",
-     "SPEECH OUTPUT: 'Recently Bookmarked.'",
-     "SPEECH OUTPUT: '1 of 4.'",
+     "SPEECH OUTPUT: 'Recent Tags.'",
+     "SPEECH OUTPUT: '1 of 3.'",
      "SPEECH OUTPUT: 'tree level 3.'"]))
 
 sequence.append(utils.StartRecordingAction())

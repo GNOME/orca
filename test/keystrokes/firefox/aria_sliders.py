@@ -8,10 +8,6 @@ sequence = MacroSequence()
 #sequence.append(WaitForDocLoad())
 sequence.append(PauseAction(5000))
 
-# Work around some new quirk in Gecko that causes this test to fail if
-# run via the test harness rather than manually.
-sequence.append(KeyComboAction("<Control>r"))
-
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
@@ -31,7 +27,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '30 slider', cursor=1",
      "BRAILLE LINE:  '30 slider'",
      "     VISIBLE:  '30 slider', cursor=1",
-     "SPEECH OUTPUT: 'slider 30 30 percent.'"]))
+     "SPEECH OUTPUT: 'slider 30'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))

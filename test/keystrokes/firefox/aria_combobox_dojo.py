@@ -34,8 +34,15 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: The braille line is not quite right",
      "BRAILLE LINE:  'US State test 1 (200% Courier font): C $l'",
      "     VISIBLE:  '(200% Courier font): C $l', cursor=23",
+     "BRAILLE LINE:  'Selection deleted.'",
+     "     VISIBLE:  'Selection deleted.', cursor=0",
+     "BRAILLE LINE:  'US State test 1 (200% Courier font): C $l'",
+     "     VISIBLE:  'e test 1 (200% Courier font): C ', cursor=32",
+     "BRAILLE LINE:  'US State test 1 (200% Courier font): C $l'",
+     "     VISIBLE:  'e test 1 (200% Courier font): C ', cursor=32",
      "BRAILLE LINE:  'US State test 1 (200% Courier font): US State test 1 (200% Courier font): combo box'",
      "     VISIBLE:  'te test 1 (200% Courier font): U', cursor=32",
+     "SPEECH OUTPUT: 'Selection deleted.' voice=system",
      "SPEECH OUTPUT: 'expanded'"]))
 
 sequence.append(utils.StartRecordingAction())

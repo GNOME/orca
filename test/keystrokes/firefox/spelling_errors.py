@@ -349,7 +349,7 @@ sequence.append(KeyComboAction("f"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "41. Insert+f",
-    ["SPEECH OUTPUT: 'size: 9' voice=system",
+    ["SPEECH OUTPUT: 'size: 12' voice=system",
      "SPEECH OUTPUT: 'family name: DejaVu Sans Mono' voice=system",
      "SPEECH OUTPUT: 'misspelled' voice=system",
      "SPEECH OUTPUT: 'foreground color: black' voice=system",
@@ -394,7 +394,7 @@ sequence.append(KeyComboAction("f"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "46. Insert+f",
-    ["SPEECH OUTPUT: 'size: 9' voice=system",
+    ["SPEECH OUTPUT: 'size: 12' voice=system",
      "SPEECH OUTPUT: 'family name: DejaVu Sans Mono' voice=system",
      "SPEECH OUTPUT: 'foreground color: black' voice=system",
      "SPEECH OUTPUT: 'background color: white' voice=system"]))

@@ -42,17 +42,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
-    ["BRAILLE LINE:  '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'",
+    ["BRAILLE LINE:  '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some sense of'",
      "     VISIBLE:  '2. arrange long and arbitrary li', cursor=1",
-     "SPEECH OUTPUT: '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some.'"]))
+     "SPEECH OUTPUT: '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some sense of.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
-    ["BRAILLE LINE:  'sense of priority, even if it is artificial'",
-     "     VISIBLE:  'sense of priority, even if it is', cursor=1",
-     "SPEECH OUTPUT: 'sense of priority, even if it is artificial.'"]))
+    ["BRAILLE LINE:  'priority, even if it is artificial'",
+     "     VISIBLE:  'priority, even if it is artifici', cursor=1",
+     "SPEECH OUTPUT: 'priority, even if it is artificial.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -165,24 +165,24 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "19. Line Up",
-    ["BRAILLE LINE:  'sense of priority, even if it is artificial'",
-     "     VISIBLE:  'sense of priority, even if it is', cursor=1",
-     "SPEECH OUTPUT: 'sense of priority, even if it is artificial.'"]))
+    ["BRAILLE LINE:  'priority, even if it is artificial'",
+     "     VISIBLE:  'priority, even if it is artifici', cursor=1",
+     "SPEECH OUTPUT: 'priority, even if it is artificial.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "20. Line Up",
-    ["BRAILLE LINE:  '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some'",
+    ["BRAILLE LINE:  '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some sense of'",
      "     VISIBLE:  '2. arrange long and arbitrary li', cursor=1",
-     "SPEECH OUTPUT: '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some.'"]))
+     "SPEECH OUTPUT: '2. arrange long and arbitrary lines of text into ordered lists that are pleasing to the eye and suggest some sense of.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "21. Line Up",
     ["BRAILLE LINE:  '1. remember what the heck we are doing each day'",
-     "     VISIBLE:  ' the heck we are doing each day', cursor=32",
+     "     VISIBLE:  '1. remember what the heck we are', cursor=1",
      "SPEECH OUTPUT: '1. remember what the heck we are doing each day.'"]))
 
 sequence.append(utils.StartRecordingAction())

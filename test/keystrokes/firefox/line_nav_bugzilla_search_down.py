@@ -354,7 +354,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "37. Line Down",
     ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+     "     VISIBLE:  ' $l', cursor=0",
      "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -418,7 +418,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "45. Line Down",
     ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+     "     VISIBLE:  ' $l', cursor=0",
      "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -433,7 +433,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "47. Line Down",
-    ["BRAILLE LINE:  'Only include combo box bugs numbered: $l'",
+    ["BRAILLE LINE:  'Only include combo box bugs numbered:  $l'",
      "     VISIBLE:  'Only include combo box bugs numb', cursor=1",
      "SPEECH OUTPUT: 'Only include combo box.'",
      "SPEECH OUTPUT: 'bugs numbered:.'",
@@ -468,7 +468,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "51. Line Down",
     ["BRAILLE LINE:  ' $l and Now $l'",
-     "     VISIBLE:  ' $l and Now $l', cursor=1",
+     "     VISIBLE:  ' $l and Now $l', cursor=0",
      "SPEECH OUTPUT: 'entry'",
      "SPEECH OUTPUT: 'and'",
      "SPEECH OUTPUT: 'entry Now'"]))
@@ -510,7 +510,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "56. Line Down",
     ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+     "     VISIBLE:  ' $l', cursor=0",
      "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(utils.StartRecordingAction())

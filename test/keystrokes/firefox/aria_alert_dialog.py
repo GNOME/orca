@@ -45,6 +45,8 @@ sequence.append(utils.AssertPresentationAction(
     "4. Down arrow to read next line of message",
     ["BRAILLE LINE:  'Close push button'",
      "     VISIBLE:  'Close push button', cursor=1",
+     "BRAILLE LINE:  'Close push button'",
+     "     VISIBLE:  'Close push button', cursor=1",
      "SPEECH OUTPUT: 'Close push button'"]))
 
 sequence.append(utils.StartRecordingAction())

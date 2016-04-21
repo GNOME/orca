@@ -15,7 +15,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow in Focus Mode - which should do nothing",
-    []))
+    [""]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -44,6 +44,14 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'No plugins, initially empty h2'",
      "     VISIBLE:  'No plugins, initially empty h2', cursor=1",
      "SPEECH OUTPUT: 'No plugins, initially empty heading level 2'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "5. Up Arrow in Browse Mode",
+    ["BRAILLE LINE:  'Editor + Plugins Test h1'",
+     "     VISIBLE:  'Editor + Plugins Test h1', cursor=1",
+     "SPEECH OUTPUT: 'Editor + Plugins Test heading level 1'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

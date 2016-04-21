@@ -27,7 +27,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. line Down",
     ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+     "     VISIBLE:  ' $l', cursor=0",
      "SPEECH OUTPUT: 'entry'"]))
 
 sequence.append(PauseAction(1000))
@@ -80,7 +80,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. line Down",
     ["BRAILLE LINE:  'I am a monkey with a long tail.  I like  $l'",
      "     VISIBLE:  'I am a monkey with a long tail. ', cursor=1",
-     "SPEECH OUTPUT: 'entry I am a monkey with a long tail.  I like "]))
+     "SPEECH OUTPUT: 'entry I am a monkey with a long tail.  I like '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -88,7 +88,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. line Down",
     ["BRAILLE LINE:  'to swing from trees and eat bananas.   $l'",
      "     VISIBLE:  'to swing from trees and eat bana', cursor=1",
-     "SPEECH OUTPUT: 'to swing from trees and eat bananas.  "]))
+     "SPEECH OUTPUT: 'to swing from trees and eat bananas.  '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
