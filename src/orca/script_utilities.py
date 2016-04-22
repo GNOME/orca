@@ -1657,7 +1657,7 @@ class Utilities:
                     except NotImplementedError:
                         continue
                     else:
-                        if text.getText(0, text.characterCount):
+                        if text.getText(0, -1).strip():
                             activeDescendant = child
 
         self._script.generatorCache[self.REAL_ACTIVE_DESCENDANT][obj] = \
