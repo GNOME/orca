@@ -197,6 +197,12 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, obj)
             return
 
+    def onRowReordered(self, event):
+        """Callback for object:row-reordered accessibility events."""
+
+        # We're seeing a crazy ton of these emitted bogusly.
+        pass
+
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
