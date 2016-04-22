@@ -2647,31 +2647,27 @@ class Script(script.Script):
         self.updateBraille(obj)
 
     def onColumnReordered(self, event):
-        """Called whenever the columns in a table are reordered.
+        """Callback for object:column-reordered accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
-
-        parentTable = self.utilities.ancestorWithRole(
-            orca_state.locusOfFocus, [pyatspi.ROLE_TABLE], [pyatspi.ROLE_FRAME])
-        if event.source != parentTable:
+        if not self.utilities.lastInputEventWasTableSort():
             return
 
+        if event.source != self.utilities.getTable(orca_state.locusOfFocus):
+            return
+
+        self.pointOfReference['last-table-sort-time'] = time.time()
         self.presentMessage(messages.TABLE_REORDERED_COLUMNS)
 
     def onRowReordered(self, event):
-        """Called whenever the rows in a table are reordered.
+        """Callback for object:row-reordered accessibility events."""
 
-        Arguments:
-        - event: the Event
-        """
-
-        parentTable = self.utilities.ancestorWithRole(
-            orca_state.locusOfFocus, [pyatspi.ROLE_TABLE], [pyatspi.ROLE_FRAME])
-        if event.source != parentTable:
+        if not self.utilities.lastInputEventWasTableSort():
             return
 
+        if event.source != self.utilities.getTable(orca_state.locusOfFocus):
+            return
+
+        self.pointOfReference['last-table-sort-time'] = time.time()
         self.presentMessage(messages.TABLE_REORDERED_ROWS)
 
     def onValueChanged(self, event):

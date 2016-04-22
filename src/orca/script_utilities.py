@@ -3880,6 +3880,42 @@ class Utilities:
 
         return False
 
+    def lastInputEventWasTableSort(self, delta=0.5):
+        event = orca_state.lastInputEvent
+        if not event:
+            return False
+
+        now = time.time()
+        if now - event.time > delta:
+            return False
+
+        lastSortTime = self._script.pointOfReference.get('last-table-sort-time', 0.0)
+        if now - lastSortTime < delta:
+            return False
+
+        if isinstance(event, input_event.MouseButtonEvent):
+            if not self.lastInputEventWasPrimaryMouseRelease():
+                return False
+        elif isinstance(event, input_event.KeyboardEvent):
+            if not event.isHandledBy(self._script.leftClickReviewItem):
+                keyString, mods = self.lastKeyAndModifiers()
+                if keyString not in ["Return", "space", " "]:
+                    return False
+
+        try:
+            role = orca_state.locusOfFocus.getRole()
+        except:
+            msg = "ERROR: Exception getting role for %s" % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        roles = [pyatspi.ROLE_COLUMN_HEADER,
+                 pyatspi.ROLE_ROW_HEADER,
+                 pyatspi.ROLE_TABLE_COLUMN_HEADER,
+                 pyatspi.ROLE_TABLE_ROW_HEADER]
+
+        return role in roles
+
     def treatEventAsTerminalCommand(self, event):
         try:
             role = event.source.getRole()

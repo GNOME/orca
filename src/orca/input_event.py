@@ -543,6 +543,12 @@ class KeyboardEvent(InputEvent):
 
         return False
 
+    def isHandledBy(self, method):
+        if not self._handler:
+            return False
+
+        return method.__func__ == self._handler.function
+
     def _present(self, inputEvent=None):
         if self.isPressedKey():
             self._script.presentationInterrupt()

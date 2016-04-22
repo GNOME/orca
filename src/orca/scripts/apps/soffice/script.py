@@ -833,12 +833,6 @@ class Script(default.Script):
         if weToggledIt:
             speech.speak(self.speechGenerator.generateSpeech(obj))
 
-    def onRowReordered(self, event):
-        """Callback for object:row-reordered accessibility events."""
-
-        # We're seeing a crazy ton of these emitted bogusly.
-        pass
-
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
