@@ -29,6 +29,7 @@ SUBDIRS = \
 	planner \
 	rhythmbox \
 	soffice \
+	SeaMonkey \
 	Thunderbird \
 	xfwm4
 

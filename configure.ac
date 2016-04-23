@@ -119,6 +119,7 @@ src/orca/scripts/apps/pidgin/Makefile
 src/orca/scripts/apps/planner/Makefile
 src/orca/scripts/apps/rhythmbox/Makefile
 src/orca/scripts/apps/soffice/Makefile
+src/orca/scripts/apps/SeaMonkey/Makefile
 src/orca/scripts/apps/Thunderbird/Makefile
 src/orca/scripts/apps/xfwm4/Makefile
 src/orca/scripts/toolkits/Makefile
