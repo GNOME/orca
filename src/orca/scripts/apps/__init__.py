@@ -28,5 +28,6 @@ __all__ = ['Banshee',
            'planner',
            'rhythmbox',
            'soffice',
+           'SeaMonkey',
            'Thunderbird',
            'xfwm4']
