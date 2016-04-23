@@ -1411,7 +1411,7 @@ class Script(default.Script):
         obj, offset = self.utilities.getCaretContext(getZombieReplicant=False)
         if self.utilities.isZombie(obj):
             obj, offset = self.utilities.getCaretContext(getZombieReplicant=True)
-            if obj:
+            if obj and self.utilities.isZombie(orca_state.locusOfFocus):
                 orca.setLocusOfFocus(event, obj, notifyScript=False)
 
         contextDocument = self.utilities.getDocumentForObject(obj)
