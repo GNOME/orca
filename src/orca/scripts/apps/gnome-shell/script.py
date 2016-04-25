@@ -193,3 +193,20 @@ class Script(clutter.Script):
                     self._activeDialogLabels[hash(label)] = label.name
 
         clutter.Script.onFocusedChanged(self, event)
+
+    def echoPreviousWord(self, obj, offset=None):
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
+            return False
+
+        if not offset:
+            if text.caretOffset == -1:
+                offset = text.characterCount - 1
+            else:
+                offset = text.caretOffset - 1
+
+        if offset == 0:
+            return False
+
+        return super().echoPreviousWord(obj, offset)
