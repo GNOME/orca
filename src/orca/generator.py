@@ -384,6 +384,12 @@ class Generator:
         if role == pyatspi.ROLE_TERMINAL:
             return []
 
+        # Unity Panel Service menubar items are labels which claim focus and
+        # have an accessible description of the text + underscore symbol used
+        # to create the mnemonic. We'll work around that here for now.
+        if role == pyatspi.ROLE_LABEL:
+            return []
+
         result = []
         if obj.description:
             label = self._script.utilities.displayedLabel(obj) or ""
