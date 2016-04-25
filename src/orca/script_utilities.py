@@ -3518,6 +3518,7 @@ class Utilities:
         topLevelRoles = [pyatspi.ROLE_APPLICATION,
                          pyatspi.ROLE_ALERT,
                          pyatspi.ROLE_DIALOG,
+                         pyatspi.ROLE_LABEL, # For Unity Panel Service bug
                          pyatspi.ROLE_PAGE, # For Evince bug
                          pyatspi.ROLE_WINDOW,
                          pyatspi.ROLE_FRAME]
