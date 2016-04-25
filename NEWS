@@ -1,3 +1,68 @@
+3.21.1 - 25 April 2016
+
+Gecko:
+
+ * Fix presentation of title bar in Gecko apps
+
+ * Work around Google Maps killing the focused widget
+
+ * Fix offset used when evaluating text selection in content with
+   embedded objects
+
+ * Don't set new focus to context object if context object is zombie
+
+ * Only update locusOfFocus to context replicant if locusOfFocus is a
+   zombie
+
+ * Don't use generated text as name for web content which exposes a name,
+   unless it's a combo box or spin button
+
+ * Cache label-related information for web content for performance
+
+ * Ignore events from Mozilla's self-repair hidden page
+
+ * Don't do SayAll for page fragments
+
+ * Prevent locusOfFocus change when navigating in SeaMonkey message list
+
+Unity Panel Service:
+
+ * Work around labels reporting an index in parent of -1
+
+ * Work around label descriptions containing unwanted content
+
+ * Fall back on name when labels fail to implement the text interface
+
+Gtk+
+
+ * Handle changes in Gtk+ 3.20 combo boxes
+
+ * Only treat cells with non-whitespace chars as real active descendants
+
+General:
+
+ * Detect and handle row-reordered event spam so valid events can be
+   presented
+
+ * Fix a false positive with clipboard messages
+
+ * Don't re-present description if it was used as name fallback
+
+ * Handle unhandled case of objects becoming defunct
+
+ * Fix syntax error in Bulgarian help file
+
+ * Begin refactoring of keyboard event processing
+
+New and updated translations (THANKS EVERYONE!!!):
+
+ hu           Hungarian              Attila Hammer
+ it           Italian                Milo Casagrande
+ pt           Portuguese             Tiago Carrondo
+ sl           Slovenian              Matej Urbančič
+
+=========
+
 3.20.0 - 21 March 2016
 
 General:
