@@ -77,6 +77,7 @@ class Utilities(script_utilities.Utilities):
         self._displayedLabelText = {}
         self._roleDescription = {}
         self._shouldFilter = {}
+        self._shouldInferLabelFor = {}
         self._text = {}
         self._tag = {}
         self._treatAsDiv = {}
@@ -128,6 +129,7 @@ class Utilities(script_utilities.Utilities):
         self._displayedLabelText = {}
         self._roleDescription = {}
         self._shouldFilter = {}
+        self._shouldInferLabelFor = {}
         self._tag = {}
         self._treatAsDiv = {}
         self._posinset = {}
@@ -2340,45 +2342,42 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def shouldInferLabelFor(self, obj):
-        try:
-            name = obj.name
-        except:
-            msg = "WEB: Exception getting name for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-        else:
-            if name:
-                return False
-
-        if self._script.inSayAll():
-            return False
-
         if not self.inDocumentContent() or self.inTopLevelWebApp():
             return False
+
+        rv = self._shouldInferLabelFor.get(hash(obj))
+        if rv:
+            return not self._script.inSayAll()
+        if rv == False:
+            return rv
+
         try:
             role = obj.getRole()
+            name = obj.name
         except:
-            msg = "WEB: Exception getting role for %s" % obj
+            msg = "WEB: Exception getting role and name for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-            return False
+            rv = False
+        else:
+            if name:
+                rv = False
+            else:
+                roles =  [pyatspi.ROLE_CHECK_BOX,
+                          pyatspi.ROLE_COMBO_BOX,
+                          pyatspi.ROLE_ENTRY,
+                          pyatspi.ROLE_LIST_BOX,
+                          pyatspi.ROLE_PASSWORD_TEXT,
+                          pyatspi.ROLE_RADIO_BUTTON]
+                rv = role in roles and not self.displayedLabel(obj)
+
+        self._shouldInferLabelFor[hash(obj)] = rv
 
         # TODO - JD: This is private.
         if self._script._lastCommandWasCaretNav \
            and role not in [pyatspi.ROLE_RADIO_BUTTON, pyatspi.ROLE_CHECK_BOX]:
             return False
 
-        roles =  [pyatspi.ROLE_CHECK_BOX,
-                  pyatspi.ROLE_COMBO_BOX,
-                  pyatspi.ROLE_ENTRY,
-                  pyatspi.ROLE_LIST_BOX,
-                  pyatspi.ROLE_PASSWORD_TEXT,
-                  pyatspi.ROLE_RADIO_BUTTON]
-        if role not in roles:
-            return False
-
-        if self.displayedLabel(obj):
-            return False
-
-        return True
+        return rv
 
     def displayedLabel(self, obj):
         if not (obj and self.inDocumentContent(obj)):
