@@ -1221,6 +1221,9 @@ class SpeechGenerator(generator.Generator):
         - obj: the text object.
         """
 
+        if not _settingsManager.getSetting('enableSpeechIndentation'):
+            return []
+
         line, caretOffset, startOffset = self._script.getTextLineAtCaret(obj)
         description = self._script.utilities.indentationDescription(line)
         if not description:
