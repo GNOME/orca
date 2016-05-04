@@ -697,6 +697,15 @@ class Utilities(script_utilities.Utilities):
         if match and match[0] and match[0] in contents:
             return contents.index(match[0])
 
+        if not self.isTextBlockElement(obj):
+            return -1
+
+        child = self.getChildAtOffset(obj, offset)
+        if child and not self.isTextBlockElement(child):
+            matches = [x for x in contents if x[0] == child]
+            if len(matches) == 1:
+                return contents.index(matches[0])
+
         return -1
 
     def isNonEntryTextWidget(self, obj):
