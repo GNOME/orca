@@ -76,6 +76,7 @@ class Utilities(script_utilities.Utilities):
         self._actualLabels = {}
         self._displayedLabelText = {}
         self._roleDescription = {}
+        self._shouldFilter = {}
         self._text = {}
         self._tag = {}
         self._treatAsDiv = {}
@@ -126,6 +127,7 @@ class Utilities(script_utilities.Utilities):
         self._actualLabels = {}
         self._displayedLabelText = {}
         self._roleDescription = {}
+        self._shouldFilter = {}
         self._tag = {}
         self._treatAsDiv = {}
         self._posinset = {}
@@ -1872,6 +1874,11 @@ class Utilities(script_utilities.Utilities):
             if not obj:
                 return False
 
+            rv = self._shouldFilter.get(hash(obj))
+            if rv is not None:
+                return rv
+
+            rv = True
             if (self.isTextBlockElement(obj) and not string.strip()) \
                or self.isEmptyAnchor(obj) \
                or (self.hasNoSize(obj) and not string.strip()) \
@@ -1879,19 +1886,22 @@ class Utilities(script_utilities.Utilities):
                or self.isOffScreenLabel(obj) \
                or self.isUselessImage(obj) \
                or self.isLabellingContents(x, contents):
-                return False
+                rv = False
 
             widget = self.isInferredLabelForContents(x, contents)
             alwaysFilter = [pyatspi.ROLE_RADIO_BUTTON, pyatspi.ROLE_CHECK_BOX]
             if widget and (inferLabels or widget.getRole() in alwaysFilter):
-                return False
+                rv = False
 
-            return True
+            self._shouldFilter[hash(obj)] = rv
+            return rv
 
         if len(contents) == 1:
             return contents
 
-        return list(filter(_include, contents))
+        rv = list(filter(_include, contents))
+        self._shouldFilter = {}
+        return rv
 
     def needsSeparator(self, lastChar, nextChar):
         if lastChar.isspace() or nextChar.isspace():
