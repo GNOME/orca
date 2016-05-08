@@ -2346,7 +2346,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         rv = self._shouldInferLabelFor.get(hash(obj))
-        if rv:
+        if rv and not self._script._lastCommandWasCaretNav:
             return not self._script.inSayAll()
         if rv == False:
             return rv
@@ -2361,7 +2361,7 @@ class Utilities(script_utilities.Utilities):
         else:
             if name:
                 rv = False
-            else:
+            elif not rv:
                 roles =  [pyatspi.ROLE_CHECK_BOX,
                           pyatspi.ROLE_COMBO_BOX,
                           pyatspi.ROLE_ENTRY,
