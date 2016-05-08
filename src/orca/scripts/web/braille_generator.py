@@ -117,6 +117,16 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return super()._generateLabel(obj, **args)
 
+    def _generateLabelAndName(self, obj, **args):
+        if self._script.utilities.isTextBlockElement(obj):
+            return []
+
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_LABEL and 'Text' in pyatspi.listInterfaces(obj):
+            return []
+
+        return super()._generateLabelAndName(obj, **args)
+
     def _generateExpandedEOCs(self, obj, **args):
         """Returns the expanded embedded object characters for an object."""
         result = []
