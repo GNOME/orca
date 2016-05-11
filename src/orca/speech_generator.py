@@ -1515,6 +1515,7 @@ class SpeechGenerator(generator.Generator):
             return x and x.getRole() == role and x.name == name
 
         skipRoles = args.get('skipRoles', [])
+        skipRoles.append(pyatspi.ROLE_TREE_ITEM)
         stopAtRoles = args.get('stopAtRoles', [])
         stopAtRoles.append(pyatspi.ROLE_APPLICATION)
         if obj != commonAncestor:

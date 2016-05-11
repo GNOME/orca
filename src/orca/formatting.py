@@ -434,6 +434,11 @@ formatting = {
             'unfocused': 'labelAndName',
             'basicWhereAmI': 'labelAndName'
             },
+        pyatspi.ROLE_TREE_ITEM: {
+            'focused': 'expandableState',
+            'unfocused': '(labelOrName or displayedText) + pause + expandableState + pause + positionInList',
+            'basicWhereAmI': '(labelOrName or displayedText) + roleName + pause + positionInList + pause + expandableState + (nodeLevel or nestingLevel)'
+            },
     },
 
     ####################################################################
@@ -703,6 +708,11 @@ formatting = {
         pyatspi.ROLE_TOOL_BAR: {
             'unfocused': '[Component(obj, asString(labelOrName + roleName))]',
             },
+        pyatspi.ROLE_TREE_ITEM: {
+            'unfocused': '((substring and ' + BRAILLE_TEXT + ')\
+                          or ([Component(obj, asString(labelOrName + expandableState))]\
+                              + (nestingLevel and [Region(" " + asString(nestingLevel))])))',
+            },
         #pyatspi.ROLE_TREE: 'default'
         #pyatspi.ROLE_TREE_TABLE: 'default'
         #pyatspi.ROLE_WINDOW: 'default'
@@ -828,6 +838,10 @@ formatting = {
         pyatspi.ROLE_TOGGLE_BUTTON: {
             'focused': 'expandableState or toggleState',
             'unfocused': 'roleName + (expandableState or toggleState) + availability',
+        },
+        pyatspi.ROLE_TREE_ITEM: {
+            'focused': 'expandableState',
+            'unfocused': 'roleName + expandableState + positionInSet',
         },
     },
 }
