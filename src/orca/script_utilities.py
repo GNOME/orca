@@ -1962,8 +1962,24 @@ class Utilities:
         roles = [pyatspi.ROLE_PAGE_TAB_LIST,
                  pyatspi.ROLE_SPLIT_PANE,
                  pyatspi.ROLE_TABLE]
-        isMatch = lambda x: x and x.getRole() in roles
-        return pyatspi.findDescendant(root, isMatch) is not None
+
+        def isMatch(x):
+            if not x:
+                return False
+
+            if x.getRole() in roles:
+                return True
+
+            if 'Table' in pyatspi.listInterfaces(x):
+                return x.childCount > 50
+
+        match = pyatspi.findDescendant(root, isMatch)
+        if match:
+            msg = "INFO: %s has descendant %s" % (root, match)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
 
     def unrelatedLabels(self, root, onlyShowing=True):
         """Returns a list containing all the unrelated (i.e., have no
