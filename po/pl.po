@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-17 22:14+0100\n"
-"PO-Revision-Date: 2016-02-17 22:15+0100\n"
+"PO-Revision-Date: 2016-05-14 15:00+0300\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -61,7 +61,7 @@ msgstr "???"
 #. other rolenames, and they typically act like an abbreviation.
 #: ../src/orca/braille_rolenames.py:43
 msgid "alrt"
-msgstr "alrm"
+msgstr "alrt"
 
 #. Translators: short braille for the rolename of an animation widget.
 #: ../src/orca/braille_rolenames.py:46
@@ -71,45 +71,45 @@ msgstr "anim"
 #. Translators: short braille for the rolename of an arrow widget.
 #: ../src/orca/braille_rolenames.py:49
 msgid "arw"
-msgstr "strz"
+msgstr "arw"
 
 #. Translators: short braille for the rolename of a calendar widget.
 #: ../src/orca/braille_rolenames.py:52
 msgid "cal"
-msgstr "kal"
+msgstr "cal"
 
 #. Translators: short braille for the rolename of a canvas widget.
 #: ../src/orca/braille_rolenames.py:55
 msgid "cnv"
-msgstr "płt"
+msgstr "cnv"
 
 #. Translators: short braille for the rolename of a caption (e.g.,
 #. table caption).
 #: ../src/orca/braille_rolenames.py:59
 msgid "cptn"
-msgstr "nagł"
+msgstr "cptn"
 
 #. Translators: short braille for the rolename of a checkbox.
 #. Translators: short braille for the rolename of a check menu item.
 #: ../src/orca/braille_rolenames.py:62 ../src/orca/braille_rolenames.py:65
 msgid "chk"
-msgstr "polwyb"
+msgstr "chk"
 
 #. Translators: short braille for the rolename of a color chooser.
 #: ../src/orca/braille_rolenames.py:68
 msgid "clrchsr"
-msgstr "wybkol"
+msgstr "clrchsr"
 
 #. Translators: short braille for the rolename of a column header.
 #. Translators: short braille for the rolename of a table column header.
 #: ../src/orca/braille_rolenames.py:71 ../src/orca/braille_rolenames.py:230
 msgid "colhdr"
-msgstr "nagkol"
+msgstr "colhdr"
 
 #. Translators: short braille for the rolename of a combo box.
 #: ../src/orca/braille_rolenames.py:74
 msgid "cbo"
-msgstr "lstrozw"
+msgstr "cbo"
 
 #. Translators: short braille for the rolename of a date editor.
 #: ../src/orca/braille_rolenames.py:77
@@ -120,13 +120,13 @@ msgstr "dat"
 #. Translators: short braille for the rolename of a icon.
 #: ../src/orca/braille_rolenames.py:80 ../src/orca/braille_rolenames.py:131
 msgid "icn"
-msgstr "ikn"
+msgstr "icn"
 
 #. Translators: short braille for the rolename of a desktop frame.
 #. Translators: short braille for the rolename of a frame.
 #: ../src/orca/braille_rolenames.py:83 ../src/orca/braille_rolenames.py:119
 msgid "frm"
-msgstr "rmk"
+msgstr "frm"
 
 #. Translators: short braille for the rolename of a dial.
 #. You should attempt to treat it as an abbreviation of
@@ -135,17 +135,17 @@ msgstr "rmk"
 #: ../src/orca/braille_rolenames.py:89
 msgctxt "shortbraille"
 msgid "dial"
-msgstr "poten"
+msgstr "dial"
 
 #. Translators: short braille for the rolename of a dialog.
 #: ../src/orca/braille_rolenames.py:92
 msgid "dlg"
-msgstr "okndlg"
+msgstr "dlg"
 
 #. Translators: short braille for the rolename of a directory pane.
 #: ../src/orca/braille_rolenames.py:95
 msgid "dip"
-msgstr "pankat"
+msgstr "dip"
 
 #. Translators: short braille for the rolename of an HTML document frame.
 #. Translators: short braille for the rolename of an html container.
@@ -156,22 +156,22 @@ msgstr "html"
 #. Translators: short braille for the rolename of a drawing area.
 #: ../src/orca/braille_rolenames.py:101
 msgid "draw"
-msgstr "plrys"
+msgstr "draw"
 
 #. Translators: short braille for the rolename of a file chooser.
 #: ../src/orca/braille_rolenames.py:104
 msgid "fchsr"
-msgstr "wybplk"
+msgstr "fchsr"
 
 #. Translators: short braille for the rolename of a filler.
 #: ../src/orca/braille_rolenames.py:107
 msgid "flr"
-msgstr "wypłn"
+msgstr "flr"
 
 #. Translators: short braille for the rolename of a font chooser.
 #: ../src/orca/braille_rolenames.py:110
 msgid "fnt"
-msgstr "wybczcn"
+msgstr "fnt"
 
 #. Translators: short braille for the rolename of a form.
 #. You should attempt to treat it as an abbreviation of
@@ -185,37 +185,37 @@ msgstr "form"
 #. Translators: short braille for the rolename of a glass pane.
 #: ../src/orca/braille_rolenames.py:122
 msgid "gpn"
-msgstr "obszkl"
+msgstr "gpn"
 
 #. Translators: short braille for the rolename of a heading.
 #: ../src/orca/braille_rolenames.py:125
 msgid "hdng"
-msgstr "nagł"
+msgstr "hdng"
 
 #. Translators: short braille for the rolename of a image.
 #: ../src/orca/braille_rolenames.py:134
 msgid "img"
-msgstr "obrz"
+msgstr "img"
 
 #. Translators: short braille for the rolename of an internal frame.
 #: ../src/orca/braille_rolenames.py:137
 msgid "ifrm"
-msgstr "ramwew"
+msgstr "ifrm"
 
 #. Translators: short braille for the rolename of a label.
 #: ../src/orca/braille_rolenames.py:140
 msgid "lbl"
-msgstr "etyk"
+msgstr "lbl"
 
 #. Translators: short braille for the rolename of a layered pane.
 #: ../src/orca/braille_rolenames.py:143
 msgid "lyrdpn"
-msgstr "pnlwrstw"
+msgstr "lyrdpn"
 
 #. Translators: short braille for the rolename of a link.
 #: ../src/orca/braille_rolenames.py:146
 msgid "lnk"
-msgstr "odn"
+msgstr "lnk"
 
 #. Translators: short braille for the rolename of a list.
 #: ../src/orca/braille_rolenames.py:149
@@ -225,7 +225,7 @@ msgstr "lst"
 #. Translators: short braille for the rolename of a list item.
 #: ../src/orca/braille_rolenames.py:152
 msgid "lstitm"
-msgstr "elemlis"
+msgstr "lstitm"
 
 #. Translators: short braille for the rolename of a menu.
 #: ../src/orca/braille_rolenames.py:155
@@ -235,27 +235,27 @@ msgstr "mnu"
 #. Translators: short braille for the rolename of a menu bar.
 #: ../src/orca/braille_rolenames.py:158
 msgid "mnubr"
-msgstr "pasmen"
+msgstr "mnubr"
 
 #. Translators: short braille for the rolename of a menu item.
 #: ../src/orca/braille_rolenames.py:161
 msgid "mnuitm"
-msgstr "elmen"
+msgstr "mnuitm"
 
 #. Translators: short braille for the rolename of an option pane.
 #: ../src/orca/braille_rolenames.py:164
 msgid "optnpn"
-msgstr "polopc"
+msgstr "optnpn"
 
 #. Translators: short braille for the rolename of a page tab.
 #: ../src/orca/braille_rolenames.py:167
 msgid "pgt"
-msgstr "karstr"
+msgstr "pgt"
 
 #. Translators: short braille for the rolename of a page tab list.
 #: ../src/orca/braille_rolenames.py:170
 msgid "tblst"
-msgstr "liskrt"
+msgstr "tblst"
 
 #. Translators: short braille for the rolename of a panel.
 #: ../src/orca/braille_rolenames.py:173
@@ -265,83 +265,83 @@ msgstr "pnl"
 #. Translators: short braille for the rolename of a password field.
 #: ../src/orca/braille_rolenames.py:176
 msgid "pwd"
-msgstr "has"
+msgstr "pwd"
 
 #. Translators: short braille for the rolename of a popup menu.
 #: ../src/orca/braille_rolenames.py:179
 msgid "popmnu"
-msgstr "mnuwsk"
+msgstr "popmnu"
 
 #. Translators: short braille for the rolename of a progress bar.
 #: ../src/orca/braille_rolenames.py:182
 msgid "pgbar"
-msgstr "paspos"
+msgstr "pgbar"
 
 #. Translators: short braille for the rolename of a push button.
 #: ../src/orca/braille_rolenames.py:185
 msgid "btn"
-msgstr "przyc"
+msgstr "btn"
 
 #. Translators: short braille for the rolename of a radio button.
 #: ../src/orca/braille_rolenames.py:188
 msgid "radio"
-msgstr "poljedwyb"
+msgstr "radio"
 
 #. Translators: short braille for the rolename of a radio menu item.
 #: ../src/orca/braille_rolenames.py:191
 msgid "rdmnuitm"
-msgstr "eljednok"
+msgstr "rdmnuitm"
 
 #. Translators: short braille for the rolename of a root pane.
 #: ../src/orca/braille_rolenames.py:194
 msgid "rtpn"
-msgstr "obgłw"
+msgstr "rtpn"
 
 #. Translators: short braille for the rolename of a row header.
 #. Translators: short braille for the rolename of a table row header.
 #: ../src/orca/braille_rolenames.py:197 ../src/orca/braille_rolenames.py:233
 msgid "rwhdr"
-msgstr "nagwier"
+msgstr "rwhdr"
 
 #. Translators: short braille for the rolename of a scroll bar.
 #: ../src/orca/braille_rolenames.py:200
 msgid "scbr"
-msgstr "pasprzew"
+msgstr "scbr"
 
 #. Translators: short braille for the rolename of a scroll pane.
 #: ../src/orca/braille_rolenames.py:203
 msgid "scpn"
-msgstr "obprzew"
+msgstr "scpn"
 
 #. Translators: short braille for the rolename of a section (e.g., in html).
 #: ../src/orca/braille_rolenames.py:206
 msgid "sctn"
-msgstr "sekc"
+msgstr "sctn"
 
 #. Translators: short braille for the rolename of a separator.
 #: ../src/orca/braille_rolenames.py:209
 msgid "seprtr"
-msgstr "separ"
+msgstr "seprtr"
 
 #. Translators: short braille for the rolename of a slider.
 #: ../src/orca/braille_rolenames.py:212
 msgid "sldr"
-msgstr "suw"
+msgstr "sldr"
 
 #. Translators: short braille for the rolename of a split pane.
 #: ../src/orca/braille_rolenames.py:215
 msgid "spltpn"
-msgstr "obpodz"
+msgstr "spltpn"
 
 #. Translators: short braille for the rolename of a spin button.
 #: ../src/orca/braille_rolenames.py:218
 msgid "spin"
-msgstr "wejlicz"
+msgstr "spin"
 
 #. Translators: short braille for the rolename of a statusbar.
 #: ../src/orca/braille_rolenames.py:221
 msgid "statbr"
-msgstr "passtan"
+msgstr "statbr"
 
 #. Translators: short braille for the rolename of a table.
 #: ../src/orca/braille_rolenames.py:224
@@ -351,12 +351,12 @@ msgstr "tbl"
 #. Translators: short braille for the rolename of a table cell.
 #: ../src/orca/braille_rolenames.py:227
 msgid "cll"
-msgstr "kmrk"
+msgstr "cll"
 
 #. Translators: short braille for the rolename of a tear off menu item.
 #: ../src/orca/braille_rolenames.py:236
 msgid "tomnuitm"
-msgstr "elmenodp"
+msgstr "tomnuitm"
 
 #. Translators: short braille for the rolename of a terminal.
 #: ../src/orca/braille_rolenames.py:239
@@ -366,67 +366,67 @@ msgstr "term"
 #. Translators: short braille for the rolename of a text entry field.
 #: ../src/orca/braille_rolenames.py:242
 msgid "txt"
-msgstr "tkst"
+msgstr "txt"
 
 #. Translators: short braille for the rolename of a toggle button.
 #: ../src/orca/braille_rolenames.py:245
 msgid "tglbtn"
-msgstr "przeł"
+msgstr "tglbtn"
 
 #. Translators: short braille for the rolename of a toolbar.
 #: ../src/orca/braille_rolenames.py:248
 msgid "tbar"
-msgstr "pasnarz"
+msgstr "tbar"
 
 #. Translators: short braille for the rolename of a tooltip.
 #: ../src/orca/braille_rolenames.py:251
 msgid "tip"
-msgstr "podp"
+msgstr "tip"
 
 #. Translators: short braille for the rolename of a tree.
 #: ../src/orca/braille_rolenames.py:254
 msgid "tre"
-msgstr "drz"
+msgstr "tre"
 
 #. Translators: short braille for the rolename of a tree table.
 #: ../src/orca/braille_rolenames.py:257
 msgid "trtbl"
-msgstr "tabdrz"
+msgstr "trtbl"
 
 #. Translators: short braille for when the rolename of an object is unknown.
 #: ../src/orca/braille_rolenames.py:260
 msgid "unk"
-msgstr "niezn"
+msgstr "unk"
 
 #. Translators: short braille for the rolename of a viewport.
 #: ../src/orca/braille_rolenames.py:263
 msgid "vwprt"
-msgstr "oknprzeg"
+msgstr "vwprt"
 
 #. Translators: short braille for the rolename of a window.
 #: ../src/orca/braille_rolenames.py:266
 msgid "wnd"
-msgstr "okn"
+msgstr "wnd"
 
 #. Translators: short braille for the rolename of a header.
 #: ../src/orca/braille_rolenames.py:269
 msgid "hdr"
-msgstr "nagł"
+msgstr "hdr"
 
 #. Translators: short braille for the rolename of a footer.
 #: ../src/orca/braille_rolenames.py:272
 msgid "ftr"
-msgstr "stopk"
+msgstr "ftr"
 
 #. Translators: short braille for the rolename of a paragraph.
 #: ../src/orca/braille_rolenames.py:275
 msgid "para"
-msgstr "akap"
+msgstr "para"
 
 #. Translators: short braille for the rolename of a application.
 #: ../src/orca/braille_rolenames.py:278
 msgid "app"
-msgstr "prog"
+msgstr "app"
 
 #. Translators: short braille for the rolename of a autocomplete.
 #: ../src/orca/braille_rolenames.py:281
@@ -436,12 +436,12 @@ msgstr "auto"
 #. Translators: short braille for the rolename of an editbar.
 #: ../src/orca/braille_rolenames.py:284
 msgid "edtbr"
-msgstr "pased"
+msgstr "edtbr"
 
 #. Translators: short braille for the rolename of an embedded component.
 #: ../src/orca/braille_rolenames.py:287
 msgid "emb"
-msgstr "kompos"
+msgstr "emb"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
