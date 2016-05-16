@@ -1,3 +1,39 @@
+3.20.2 - 16 May 2016
+
+Performance:
+
+ * Take interfaces into account when looking for non-descendable
+   descendants
+
+ * Cache results of shouldInferLabelFor()
+
+ * Cache results when filtering contents for presentation
+
+ * Give findObjectInContents() smarts for embedded children
+
+ * Check setting before generating spoken indentation information
+
+General:
+
+ * Add explicit handling for tree items
+
+ * Work around another instance of app-created duplicate accessible
+   objects
+
+ * Eliminate double presentation of inferred labels
+
+ * Work around GNOME Shell's broken text interface for word echo
+
+ * Fix desktop file keywords in Slovenian translation
+
+ * Handle another instance of an app becoming non-responsive
+
+New and updated translations (THANKS EVERYONE!!!):
+
+ pl            Polish                      Piotr Drąg
+
+=========
+
 3.20.1 - 25 April 2016
 
 Gecko:
