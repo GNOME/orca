@@ -95,7 +95,8 @@ class KeyboardEvent(InputEvent):
         self.keyval_name = ""
         self.is_text = event.is_text
         self.timestamp = event.timestamp
-        self.is_duplicate = self == orca_state.lastInputEvent
+        self.is_duplicate = self in [orca_state.lastInputEvent,
+                                     orca_state.lastNonModifierKeyEvent]
         self._script = orca_state.activeScript
         self._app = None
         self._window = orca_state.activeWindow
