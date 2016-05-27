@@ -2433,7 +2433,7 @@ class Utilities:
 
         return obj, offset
 
-    def setCaretPosition(self, obj, offset):
+    def setCaretPosition(self, obj, offset, documentFrame=None):
         orca.setLocusOfFocus(None, obj, False)
         self.setCaretOffset(obj, offset)
 

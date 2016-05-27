@@ -269,12 +269,12 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: Exception grabbing focus on %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
 
-    def setCaretPosition(self, obj, offset):
+    def setCaretPosition(self, obj, offset, documentFrame=None):
         if self._script.flatReviewContext:
             self._script.toggleFlatReviewMode()
 
         obj, offset = self.findFirstCaretContext(obj, offset)
-        self.setCaretContext(obj, offset, documentFrame=None)
+        self.setCaretContext(obj, offset, documentFrame)
         if self._script.focusModeIsSticky():
             return
 
@@ -2735,6 +2735,9 @@ class Utilities(script_utilities.Utilities):
 
     def _getCaretContextViaLocusOfFocus(self):
         obj = orca_state.locusOfFocus
+        if not self.inDocumentContent(obj):
+            return None, -1
+
         try:
             offset = obj.queryText().caretOffset
         except NotImplementedError:
