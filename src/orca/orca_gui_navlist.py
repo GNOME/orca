@@ -42,6 +42,7 @@ class OrcaNavListGUI:
         self._gui.set_title(title)
         self._gui.set_modal(True)
         self._script = orca_state.activeScript
+        self._document = None
         self.showGUI()
 
     def _createNavListDialog(self, columnHeaders, rows, selectedRow):
@@ -107,6 +108,7 @@ class OrcaNavListGUI:
         return dialog
 
     def showGUI(self):
+        self._document = self._script.utilities.documentFrame()
         self._gui.show_all()
         ts = orca_state.lastInputEvent.timestamp
         if ts == 0:
@@ -137,7 +139,7 @@ class OrcaNavListGUI:
     def _onJumpToClicked(self, widget):
         obj, offset = self._getSelectedAccessibleAndOffset()
         self._gui.destroy()
-        self._script.utilities.setCaretPosition(obj, offset)
+        self._script.utilities.setCaretPosition(obj, offset, self._document)
 
     def _onActivateClicked(self, widget):
         obj, offset = self._getSelectedAccessibleAndOffset()
