@@ -38,6 +38,8 @@ import signal
 import subprocess
 import sys
 
+from gi.repository import GLib
+
 try:
     from gi.repository.Gio import Settings
     a11yAppSettings = Settings(schema_id='org.gnome.desktop.a11y.applications')
@@ -686,6 +688,30 @@ def abortOnSignal(signum, frame):
                   % signum)
     die(signum)
 
+def _getRegistryPIDs(uid):
+    try:
+        output = subprocess.check_output('pgrep -f at-spi2-registryd -u %s' % uid, shell=True)
+        pids = [int(p) for p in output.split()]
+    except:
+        msg = 'ERROR: Could not obtain registry PID'
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return []
+
+    msg = 'ORCA: Registry PIDs FOR user id %s: %s' % (uid, pids)
+    debug.println(debug.LEVEL_INFO, msg, True)
+    return pids
+
+def _checkRegistry():
+    pids = _getRegistryPIDs(os.getuid())
+    if pids and orca_state.registryPID in pids:
+        return True
+
+    msg = 'FATAL: Registry PID %s is not in Registry PIDs for user %s' % (orca_state.registryPID, pids)
+    debug.println(debug.LEVEL_INFO, msg, True)
+    shutdown()
+
+    return False
+
 def main(cacheValues=True):
     """The main entry point for Orca.  The exit codes for Orca will
     loosely be based on signals, where the exit code will be the
@@ -709,6 +735,12 @@ def main(cacheValues=True):
         _settingsManager.setAccessibility(True)
 
     init(pyatspi.Registry)
+    registryPIDs = _getRegistryPIDs(os.getuid())
+    if registryPIDs:
+        orca_state.registryPID = registryPIDs[-1]
+
+    if settings.checkForRegistryCrash:
+        GLib.timeout_add(100, _checkRegistry)
 
     try:
         message = messages.START_ORCA

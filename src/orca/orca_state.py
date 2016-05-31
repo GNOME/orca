@@ -76,3 +76,5 @@ learnModeEnabled = False
 orcaOS = None
 
 listNotificationsModeEnabled = False
+
+registryPID = None

@@ -376,3 +376,6 @@ layoutMode = True
 
 rewindAndFastForwardInSayAll = False
 structNavInSayAll = False
+
+# NOTE: This is temporary and could change or vanish at any time.
+checkForRegistryCrash = False
