@@ -29,6 +29,7 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2012 Igalia, S.L."
 __license__   = "LGPL"
 
+import faulthandler
 import gi
 import importlib
 import os
@@ -680,18 +681,17 @@ def shutdownOnSignal(signum, frame):
     if not cleanExit:
         die(EXIT_CODE_HANG)
 
-def abortOnSignal(signum, frame):
-    debug.println(debug.LEVEL_ALL,
-                  "Aborting due to signal = %d" \
-                  % signum)
-    die(signum)
-
 def main(cacheValues=True):
     """The main entry point for Orca.  The exit codes for Orca will
     loosely be based on signals, where the exit code will be the
     signal used to terminate Orca (if a signal was used).  Otherwise,
     an exit code of 0 means normal completion and an exit code of 50
     means Orca exited because of a hang."""
+
+    if debug.debugFile and os.path.exists(debug.debugFile.name):
+        faulthandler.enable(file=debug.debugFile, all_threads=False)
+    else:
+        faulthandler.enable(all_threads=False)
 
     # Method to call when we think something might be hung.
     #
@@ -703,7 +703,6 @@ def main(cacheValues=True):
     signal.signal(signal.SIGINT, shutdownOnSignal)
     signal.signal(signal.SIGTERM, shutdownOnSignal)
     signal.signal(signal.SIGQUIT, shutdownOnSignal)
-    signal.signal(signal.SIGSEGV, abortOnSignal)
 
     if not _settingsManager.isAccessibilityEnabled():
         _settingsManager.setAccessibility(True)
