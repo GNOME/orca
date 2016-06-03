@@ -9,6 +9,8 @@ test -z "$srcdir" && srcdir=.
         exit 1
 }
 
+olddir=`pwd`
+
 PKG_NAME=`autoconf --trace 'AC_INIT:$1' "$srcdir/configure.ac"`
 
 if [ "$#" = 0 -a "x$NOCONFIGURE" = "x" ]; then
@@ -17,6 +19,8 @@ if [ "$#" = 0 -a "x$NOCONFIGURE" = "x" ]; then
         echo \`$0\'" command line." >&2
         echo "" >&2
 fi
+
+cd "$srcdir"
 
 aclocal --install || {
         echo "Try installing the 'automake' package."
@@ -37,6 +41,8 @@ which yelp-build > /dev/null || {
        echo "Try installing the 'yelp-tools' package."
        exit 1
 }
+
+cd "$olddir"
 
 if [ "$NOCONFIGURE" = "" ]; then
         $srcdir/configure "$@" || exit 1
