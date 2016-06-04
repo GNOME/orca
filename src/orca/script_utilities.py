@@ -2482,7 +2482,7 @@ class Utilities:
         otherwise.
         """
 
-        for key, value in list(self._script.attributeNamesDict.items()):
+        for key, value in self._script.attributeNamesDict.items():
             if value == attribName:
                 return key
 

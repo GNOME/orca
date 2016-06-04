@@ -69,7 +69,7 @@ class Bookmarks(bookmarks.Bookmarks):
         """Save the bookmarks for this script."""
 
         saved = {}
-        for index, bookmark in list(self._bookmarks.items()):
+        for index, bookmark in self._bookmarks.items():
             saved[index] = bookmark[0], bookmark[1]
 
         try:

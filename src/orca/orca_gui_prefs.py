@@ -2022,7 +2022,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._markModified()
         iterBB = self._createNode(guilabels.KB_GROUP_BRAILLE)
         self.bbindings = self.script.getBrailleBindings()
-        for com, inputEvHand in list(self.bbindings.items()):
+        for com, inputEvHand in self.bbindings.items():
             handl = self.script.getInputEventHandlerKey(inputEvHand)
             self._insertRowBraille(handl, com, inputEvHand, iterBB)
 

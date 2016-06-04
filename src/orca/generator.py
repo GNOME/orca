@@ -96,7 +96,7 @@ class Generator:
         # for the results of all the legal method names.
         #
         globalsDict = {}
-        for key in list(self._methodsDict.keys()):
+        for key in self._methodsDict.keys():
             globalsDict[key] = []
         self._addGlobals(globalsDict)
 

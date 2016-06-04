@@ -754,7 +754,7 @@ def getTextAttributeKey(localizedTextAttr):
     localized text attribute.
     """
 
-    for key, value in list(_textAttributeTable.items()):
+    for key, value in _textAttributeTable.items():
         if value == localizedTextAttr:
             return key
 

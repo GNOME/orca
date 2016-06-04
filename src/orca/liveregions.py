@@ -175,7 +175,7 @@ class LiveRegionManager:
         # objects that are not registered for this page
         newpoliteness = {}
         currenturi = self._script.bookmarks.getURIKey()
-        for key, value in list(self._politenessOverrides.items()):
+        for key, value in self._politenessOverrides.items():
             if key[0] == currenturi or value != LIVE_NONE:
                 newpoliteness[key] = value
         self._politenessOverrides = newpoliteness
@@ -340,7 +340,7 @@ class LiveRegionManager:
             self._restoreOverrides = copy.copy(self._politenessOverrides)
 
             # Set all politeness overrides to LIVE_OFF.
-            for override in list(self._politenessOverrides.keys()):
+            for override in self._politenessOverrides.keys():
                 self._politenessOverrides[override] = LIVE_OFF
 
             # look through all the objects on the page and set/add to
@@ -356,7 +356,7 @@ class LiveRegionManager:
 
         # The user wants to restore politeness levels
         else:
-            for key, value in list(self._restoreOverrides.items()):
+            for key, value in self._restoreOverrides.items():
                 self._politenessOverrides[key] = value
             self._script.presentMessage(messages.LIVE_REGIONS_ALL_RESTORED)
             # Toggle our flag

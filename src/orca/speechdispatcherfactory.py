@@ -110,7 +110,7 @@ class SpeechServer(speechserver.SpeechServer):
     getSpeechServer = staticmethod(getSpeechServer)
 
     def shutdownActiveServers():
-        for server in list(SpeechServer._active_servers.values()):
+        for server in SpeechServer._active_servers.values():
             server.shutdown()
     shutdownActiveServers = staticmethod(shutdownActiveServers)
 

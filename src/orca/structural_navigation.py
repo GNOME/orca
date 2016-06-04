@@ -703,7 +703,7 @@ class StructuralNavigation:
                 self.toggleStructuralNavigation,
                 cmdnames.STRUCTURAL_NAVIGATION_TOGGLE)
 
-        for structuralNavigationObject in list(self.enabledObjects.values()):
+        for structuralNavigationObject in self.enabledObjects.values():
             self.inputEventHandlers.update(\
                 structuralNavigationObject.inputEventHandlers)
             self.functions.extend(structuralNavigationObject.functions)
@@ -726,7 +726,7 @@ class StructuralNavigation:
                 keybindings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["toggleStructuralNavigationHandler"]))
 
-        for structuralNavigationObject in list(self.enabledObjects.values()):
+        for structuralNavigationObject in self.enabledObjects.values():
             bindings = structuralNavigationObject.keyBindings.keyBindings
             for keybinding in bindings:
                 keyBindings.add(keybinding)

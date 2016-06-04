@@ -298,7 +298,7 @@ class ScriptManager:
             except KeyError:
                 pass
             else:
-                for toolkitScript in list(toolkitScripts.values()):
+                for toolkitScript in toolkitScripts.values():
                     del toolkitScript
 
             del app

@@ -197,7 +197,7 @@ class Script:
         braille.py) that match the given inputEventHandler passed.
         """
         return [command
-                for command, handler in list(self.brailleBindings.items())
+                for command, handler in self.brailleBindings.items()
                 if inputEventHandler == handler]
 
     def getFormatting(self):
@@ -373,7 +373,7 @@ class Script:
         # to the order in which they were added.  So...we need to do something
         # different here.  Logged as bugzilla bug 319781.]]]
         #
-        for key in list(self.listeners.keys()):
+        for key in self.listeners.keys():
             if event.type.startswith(key):
                 self.listeners[key](event)
 

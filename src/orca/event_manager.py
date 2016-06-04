@@ -80,7 +80,7 @@ class EventManager:
 
         debug.println(debug.LEVEL_INFO, 'EVENT MANAGER: Dectivating', True)
         self._active = False
-        for eventType in list(self._scriptListenerCounts.keys()):
+        for eventType in self._scriptListenerCounts.keys():
             self.registry.deregisterEventListener(self._enqueue, eventType)
         self._scriptListenerCounts = {}
         self.deregisterKeystrokeListener(self._processKeyboardEvent)
@@ -422,7 +422,7 @@ class EventManager:
         msg = 'EVENT MANAGER: registering listeners for: %s' % script
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        for eventType in list(script.listeners.keys()):
+        for eventType in script.listeners.keys():
             self._registerListener(eventType)
 
     def deregisterScriptListeners(self, script):
@@ -436,19 +436,19 @@ class EventManager:
         msg = 'EVENT MANAGER: deregistering listeners for: %s' % script
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        for eventType in list(script.listeners.keys()):
+        for eventType in script.listeners.keys():
             self._deregisterListener(eventType)
 
     def registerModuleListeners(self, listeners):
         """Register the listeners on behalf of the caller."""
 
-        for eventType, function in list(listeners.items()):
+        for eventType, function in listeners.items():
             self.registry.registerEventListener(function, eventType)
 
     def deregisterModuleListeners(self, listeners):
         """Deegister the listeners on behalf of the caller."""
 
-        for eventType, function in list(listeners.items()):
+        for eventType, function in listeners.items():
             self.registry.deregisterEventListener(function, eventType)
 
     def registerKeystrokeListener(self, function, mask=None, kind=None):

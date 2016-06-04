@@ -228,12 +228,12 @@ class SettingsManager(object):
             return self.customizedSettings
 
         originalSettings = {}
-        for key, value in list(settings.__dict__.items()):
+        for key, value in settings.__dict__.items():
             originalSettings[key] = value
 
         self._customizationCompleted = self._loadUserCustomizations()
 
-        for key, value in list(originalSettings.items()):
+        for key, value in originalSettings.items():
             customValue = settings.__dict__.get(key)
             if value != customValue:
                 self.customizedSettings[key] = customValue
@@ -370,10 +370,10 @@ class SettingsManager(object):
             orca_i18n.setLocaleForGUI(newVoiceLocale)
 
     def _setSettingsRuntime(self, settingsDict):
-        for key, value in list(settingsDict.items()):
+        for key, value in settingsDict.items():
             setattr(settings, str(key), value)
         self._getCustomizedSettings()
-        for key, value in list(self.customizedSettings.items()):
+        for key, value in self.customizedSettings.items():
             setattr(settings, str(key), value)
 
     def _setPronunciationsRuntime(self, pronunciationsDict):
@@ -405,7 +405,7 @@ class SettingsManager(object):
         as the profile's."""
         self.profileGeneral = {}
 
-        for key, value in list(general.items()):
+        for key, value in general.items():
             if key in ['startingProfile', 'activeProfile']:
                 continue
             elif key == 'profile':
@@ -493,7 +493,7 @@ class SettingsManager(object):
 
     def overrideKeyBindings(self, script, scriptKeyBindings):
         keybindingsSettings = self.profileKeybindings
-        for handlerString, bindingTuples in list(keybindingsSettings.items()):
+        for handlerString, bindingTuples in keybindingsSettings.items():
             handler = script.inputEventHandlers.get(handlerString)
             if not handler:
                 continue

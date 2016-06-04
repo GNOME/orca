@@ -124,9 +124,9 @@ class Backend:
         self._getSettings()
         generalSettings = self.general.copy()
         profileSettings = self.profiles[profile].copy()
-        for key, value in list(profileSettings.items()):
+        for key, value in profileSettings.items():
             if key == 'voices':
-                for voiceType, voiceDef in list(value.items()):
+                for voiceType, voiceDef in value.items():
                     value[voiceType] = acss.ACSS(voiceDef)
             if key not in ['startingProfile', 'activeProfile']:
                 generalSettings[key] = value
@@ -183,7 +183,7 @@ class Backend:
         self._getSettings()
         profiles = []
 
-        for profileName in list(self.profiles.keys()):
+        for profileName in self.profiles.keys():
             profileDict = self.profiles[profileName].copy()
             profiles.append(profileDict.get('profile'))
 

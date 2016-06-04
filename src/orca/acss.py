@@ -73,7 +73,7 @@ class ACSS(dict):
                     #
                     if k == ACSS.FAMILY:
                         self[k] = {}
-                        for j in list(props[k].keys()):
+                        for j in props[k].keys():
                             self[k][j] = props[k][j]
                     else:
                         self[k] = props[k]
