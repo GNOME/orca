@@ -135,11 +135,6 @@ class Word:
                     [char, startOffset, endOffset] = text.getTextAtOffset(
                         self.startOffset + i,
                         pyatspi.TEXT_BOUNDARY_CHAR)
-                    # Sometimes we get more than a character's worth. See
-                    # Bug #495303. We can try to correct this.
-                    #
-                    if len(char):
-                        char[0]
                     [x, y, width, height] = text.getRangeExtents(
                         startOffset,
                         startOffset + 1,
