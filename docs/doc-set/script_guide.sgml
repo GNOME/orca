@@ -268,7 +268,7 @@
       to assist Orca in keeping track of the locus of focus.  When a
       script detects a change in the locus of focus, it should call
       <literal>orca.orca.setLocusOfFocus</literal> with the
-      <literal>pytaspi.Accessible</literal> object instance that is
+      <literal>pyatspi.Accessible</literal> object instance that is
       the new locus of focus.  Among other things, this results in
       the <literal>orca.orca_state.locusOfFocus</literal> field being
       updated.</para>
