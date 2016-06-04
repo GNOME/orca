@@ -261,8 +261,7 @@ def _setCapsLockAsOrcaModifier(enable):
     capsModLine =    '        action= SetMods(modifiers=Lock,clearLocks);'
     lines = _originalXmodmap.decode('UTF-8').split('\n')
     foundCapsInterpretSection = False
-    for i in range(len(lines)):
-        line = lines[i]
+    for i, line in enumerate(lines):
         if not foundCapsInterpretSection:
             if interpretCapsLineProg.match(line):
                 foundCapsInterpretSection = True
