@@ -85,15 +85,14 @@ class SayAllContext:
 
 
 class SpeechServer(object):
-
     """Provides speech server abstraction."""
 
+    @staticmethod
     def getFactoryName():
         """Returns a localized name describing this factory."""
         pass
 
-    getFactoryName = staticmethod(getFactoryName)
-
+    @staticmethod
     def getSpeechServers():
         """Gets available speech servers as a list.  The caller
         is responsible for calling the shutdown() method of each
@@ -101,22 +100,18 @@ class SpeechServer(object):
         """
         pass
 
-    getSpeechServers = staticmethod(getSpeechServers)
-
+    @staticmethod
     def getSpeechServer(info):
         """Gets a given SpeechServer based upon the info.
         See SpeechServer.getInfo() for more info.
         """
         pass
 
-    getSpeechServer = staticmethod(getSpeechServer)
-
+    @staticmethod
     def shutdownActiveServers():
         """Cleans up and shuts down this factory.
         """
         pass
-
-    shutdownActiveServers = staticmethod(shutdownActiveServers)
 
     def __init__(self):
         pass

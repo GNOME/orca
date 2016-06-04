@@ -73,10 +73,11 @@ class SpeechServer(speechserver.SpeechServer):
     DEFAULT_SERVER_ID = 'default'
     _SERVER_NAMES = {DEFAULT_SERVER_ID: guilabels.DEFAULT_SYNTHESIZER}
 
+    @staticmethod
     def getFactoryName():
         return guilabels.SPEECH_DISPATCHER
-    getFactoryName = staticmethod(getFactoryName)
 
+    @staticmethod
     def getSpeechServers():
         servers = []
         default = SpeechServer._getSpeechServer(SpeechServer.DEFAULT_SERVER_ID)
@@ -85,8 +86,8 @@ class SpeechServer(speechserver.SpeechServer):
             for module in default.list_output_modules():
                 servers.append(SpeechServer._getSpeechServer(module))
         return servers
-    getSpeechServers = staticmethod(getSpeechServers)
 
+    @classmethod
     def _getSpeechServer(cls, serverId):
         """Return an active server for given id.
 
@@ -99,20 +100,19 @@ class SpeechServer(speechserver.SpeechServer):
         # Don't return the instance, unless it is succesfully added
         # to `_active_Servers'.
         return cls._active_servers.get(serverId)
-    _getSpeechServer = classmethod(_getSpeechServer)
 
+    @staticmethod
     def getSpeechServer(info=None):
         if info is not None:
             thisId = info[1]
         else:
             thisId = SpeechServer.DEFAULT_SERVER_ID
         return SpeechServer._getSpeechServer(thisId)
-    getSpeechServer = staticmethod(getSpeechServer)
 
+    @staticmethod
     def shutdownActiveServers():
         for server in SpeechServer._active_servers.values():
             server.shutdown()
-    shutdownActiveServers = staticmethod(shutdownActiveServers)
 
     # *** Instance methods ***
 
