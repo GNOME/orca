@@ -327,8 +327,7 @@ class Region:
 
         # Create an empty mask.
         #
-        mask = ['\x00'] * maskSize
-        return "".join(mask)
+        return '\x00' * maskSize
 
     def repositionCursor(self):
         """Reposition the cursor offset for contracted mode.
