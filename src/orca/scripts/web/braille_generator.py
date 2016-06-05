@@ -73,7 +73,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                                  pyatspi.ROLE_TABLE_CELL,
                                  pyatspi.ROLE_PANEL])
 
-        if args.get('startOffset') != None and args.get('endOffset') != None:
+        if args.get('startOffset') is not None and args.get('endOffset') is not None:
             doNotDisplay.append(pyatspi.ROLE_ALERT)
 
         result = []

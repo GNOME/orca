@@ -63,9 +63,9 @@ class Script(Gecko.Script):
         #
         self._lastAutoComplete = ""
 
-        if _settingsManager.getSetting('sayAllOnLoad') == None:
+        if _settingsManager.getSetting('sayAllOnLoad') is None:
             _settingsManager.setSetting('sayAllOnLoad', False)
-        if _settingsManager.getSetting('pageSummaryOnLoad') == None:
+        if _settingsManager.getSetting('pageSummaryOnLoad') is None:
             _settingsManager.setSetting('pageSummaryOnLoad', False)
 
         super().__init__(app)

@@ -469,7 +469,7 @@ class Script:
                 if consumes:
                     self._lastCommandWasStructNav = True
             else:
-                consumes = handler != None
+                consumes = handler is not None
         if not consumes:
             handler = self.keyBindings.getInputHandler(keyboardEvent)
             if handler \
@@ -478,7 +478,7 @@ class Script:
                 if consumes:
                     self._lastCommandWasStructNav = True
             else:
-                consumes = handler != None
+                consumes = handler is not None
         return consumes
 
     def consumesBrailleEvent(self, brailleEvent):

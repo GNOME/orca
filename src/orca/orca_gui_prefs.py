@@ -557,19 +557,19 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._setSpeechFamiliesChoice(familyName)
 
         rate = self._getRateForVoiceType(voiceType)
-        if rate != None:
+        if rate is not None:
             self.get_widget("rateScale").set_value(rate)
         else:
             self.get_widget("rateScale").set_value(50.0)
             
         pitch = self._getPitchForVoiceType(voiceType)
-        if pitch != None:
+        if pitch is not None:
             self.get_widget("pitchScale").set_value(pitch)
         else:
             self.get_widget("pitchScale").set_value(5.0)
 
         volume = self._getVolumeForVoiceType(voiceType)
-        if volume != None:
+        if volume is not None:
             self.get_widget("volumeScale").set_value(volume)
         else:
             self.get_widget("volumeScale").set_value(10.0)
@@ -1885,10 +1885,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         model = self.keyBindingsModel
 
-        if parent == None:
+        if parent is None:
             parent = self._getIterOf(guilabels.KB_GROUP_DEFAULT)
 
-        if parent != None:
+        if parent is not None:
             myiter = model.append(parent)
             if not kb.keysymstring:
                 text = None
@@ -1906,7 +1906,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             model.set_value(myiter, MOD_USED1, str(kb.modifiers))
             model.set_value(myiter, KEY1, kb.keysymstring)
             model.set_value(myiter, CLICK_COUNT1, str(kb.click_count))
-            if text != None:
+            if text is not None:
                 model.set_value(myiter, OLDTEXT1, text)
                 model.set_value(myiter, TEXT1, text)
             model.set_value(myiter, MODIF, modif)
@@ -1932,10 +1932,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         model = self.keyBindingsModel
 
-        if parent == None:
+        if parent is None:
             parent = self._getIterOf(guilabels.KB_GROUP_BRAILLE)
 
-        if parent != None:
+        if parent is not None:
             myiter = model.append(parent)
             model.set_value(myiter, HANDLER, handl)
             model.set_value(myiter, DESCRIP, inputEvHand.description)
@@ -1959,9 +1959,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             treeModel = self.keyBindingsModel
 
             myiter = treeModel.get_iter_first()
-            while myiter != None:
+            while myiter is not None:
                 iterChild = treeModel.iter_children(myiter)
-                while iterChild != None:
+                while iterChild is not None:
                     descrip = treeModel.get_value(iterChild, DESCRIP)
                     keyBind.handler = \
                         input_event.InputEventHandler(None, descrip)
@@ -2991,7 +2991,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.prefsDict["speechServerInfo"] = \
                 self.speechServersChoice.getInfo()
 
-        if self.defaultVoice != None:
+        if self.defaultVoice is not None:
             self.prefsDict["voices"] = {
                 settings.DEFAULT_VOICE: acss.ACSS(self.defaultVoice),
                 settings.UPPERCASE_VOICE: acss.ACSS(self.uppercaseVoice),
@@ -3133,7 +3133,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 and profileToSave != 'default':
             saveActiveProfile()
         else:
-            if profileToSave != None:
+            if profileToSave is not None:
                 message = guilabels.PROFILE_CONFLICT_MESSAGE % \
                     ("<b>%s</b>" % profileToSaveLabel)
                 dialog = Gtk.MessageDialog(None,

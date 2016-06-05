@@ -1206,7 +1206,7 @@ class Utilities(script_utilities.Utilities):
             if self.findObjectInContents(obj, offset, self._currentLineContents) != -1:
                 return self._currentLineContents
 
-        if layoutMode == None:
+        if layoutMode is None:
             layoutMode = _settingsManager.getSetting('layoutMode')
 
         objects = []

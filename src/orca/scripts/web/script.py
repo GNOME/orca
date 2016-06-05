@@ -80,11 +80,11 @@ class Script(default.Script):
         self._inFocusMode = False
         self._focusModeIsSticky = False
 
-        if _settingsManager.getSetting('caretNavigationEnabled') == None:
+        if _settingsManager.getSetting('caretNavigationEnabled') is None:
             _settingsManager.setSetting('caretNavigationEnabled', True)
-        if _settingsManager.getSetting('sayAllOnLoad') == None:
+        if _settingsManager.getSetting('sayAllOnLoad') is None:
             _settingsManager.setSetting('sayAllOnLoad', True)
-        if _settingsManager.getSetting('pageSummaryOnLoad') == None:
+        if _settingsManager.getSetting('pageSummaryOnLoad') is None:
             _settingsManager.setSetting('pageSummaryOnLoad', True)
 
         self._changedLinesOnlyCheckButton = None
@@ -524,7 +524,7 @@ class Script(default.Script):
 
         sayAllStyle = _settingsManager.getSetting('sayAllStyle')
         sayAllBySentence = sayAllStyle == settings.SAYALL_STYLE_SENTENCE
-        if offset == None:
+        if offset is None:
             obj, characterOffset = self.utilities.getCaretContext()
         else:
             characterOffset = offset
@@ -561,7 +561,7 @@ class Script(default.Script):
             if (obj, characterOffset) == (lastObj, lastOffset):
                 obj, characterOffset = self.utilities.findNextCaretInOrder(lastObj, lastOffset)
 
-            done = (obj == None)
+            done = obj is None
 
         self._inSayAll = False
         self._sayAllContents = []

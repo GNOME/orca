@@ -163,7 +163,7 @@ class KeyboardEvent(InputEvent):
         elif self.isLockingKey():
             self.keyType = KeyboardEvent.TYPE_LOCKING
             self.shouldEcho = settings.presentLockingKeys
-            if self.shouldEcho == None:
+            if self.shouldEcho is None:
                 self.shouldEcho = not settings.onlySpeakDisplayedText
             self.shouldEcho = self.shouldEcho and _isPressed
         elif self.isAlphabeticKey():
@@ -445,7 +445,7 @@ class KeyboardEvent(InputEvent):
         include when presenting a locking key."""
 
         locked = self.getLockingState()
-        if locked == None:
+        if locked is None:
             return ''
 
         if not locked:

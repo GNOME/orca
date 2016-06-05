@@ -144,9 +144,9 @@ class Utilities(script_utilities.Utilities):
         if not string:
             return [(obj, 0, 1, '')]
 
-        if offset == None:
+        if offset is None:
             offset = text.caretOffset
-        if boundary == None:
+        if boundary is None:
             start = 0
             end = text.characterCount
         else:

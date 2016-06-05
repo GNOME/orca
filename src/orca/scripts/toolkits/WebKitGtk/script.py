@@ -70,7 +70,7 @@ class Script(default.Script):
         self._lastCaretContext = None, -1
         self.sayAllOnLoadCheckButton = None
 
-        if _settingsManager.getSetting('sayAllOnLoad') == None:
+        if _settingsManager.getSetting('sayAllOnLoad') is None:
             _settingsManager.setSetting('sayAllOnLoad', True)
 
     def setupInputEventHandlers(self):

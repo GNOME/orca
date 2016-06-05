@@ -1772,7 +1772,7 @@ class Script(script.Script):
         except AttributeError:
             pass
         else:
-            if offset == None:
+            if offset is None:
                 offset = text.caretOffset
             speech.sayAll(self.textLines(obj, offset),
                           self.__sayAllProgressCallback)
@@ -3478,7 +3478,7 @@ class Script(script.Script):
 
         self._inSayAll = True
         length = text.characterCount
-        if offset == None:
+        if offset is None:
             offset = text.caretOffset
 
         # Determine the correct "say all by" mode to use.

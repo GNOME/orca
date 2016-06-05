@@ -38,7 +38,7 @@ class BrailleGenerator(WebKitGtk.BrailleGenerator, braille_generator.BrailleGene
     def _isMessageListToggleCell(self, obj):
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isMessageListToggleCell")
-        if rv == None:
+        if rv is None:
             rv = self._script.utilities.isMessageListToggleCell(obj)
             cached["isMessageListToggleCell"] = rv
             self._cache[hash(obj)] = cached

@@ -61,7 +61,7 @@ def setPronunciation(word, replacementString, pronunciations=None):
     """
 
     key = word.lower()
-    if pronunciations != None:
+    if pronunciations is not None:
         pronunciations[key] = [ word, replacementString ]
     else:
         pronunciation_dict[key] = [ word, replacementString ]

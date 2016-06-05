@@ -96,7 +96,7 @@ class ScriptManager:
         """Returns the module name of the script to use for application app."""
 
         try:
-            appAndNameExist = app != None and app.name != ''
+            appAndNameExist = app is not None and app.name != ''
         except (LookupError, RuntimeError):
             appAndNameExist = False
             msg = 'ERROR: %s no longer exists' % app
@@ -284,7 +284,7 @@ class ScriptManager:
 
         appList = list(self.appScripts.keys())
         try:
-            appList = [a for a in appList if a != None and a not in self._desktop]
+            appList = [a for a in appList if a is not None and a not in self._desktop]
         except:
             debug.printException(debug.LEVEL_FINEST)
             return

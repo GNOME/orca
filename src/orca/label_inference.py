@@ -192,7 +192,7 @@ class LabelInference:
             return False
 
         rv = self._isWidgetCache.get(hash(obj))
-        if rv != None:
+        if rv is not None:
             return rv
 
         widgetRoles = [pyatspi.ROLE_CHECK_BOX,
@@ -538,7 +538,7 @@ class LabelInference:
             return None, []
 
         cells = [table.getAccessibleAt(i, col) for i in range(1, table.nRows)]
-        cells = [x for x in cells if x != None]
+        cells = [x for x in cells if x is not None]
         if [x for x in cells if x.childCount and x[0].getRole() != obj.getRole()]:
             return None, []
 

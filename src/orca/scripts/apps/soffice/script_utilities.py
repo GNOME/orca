@@ -241,8 +241,8 @@ class Utilities(script_utilities.Utilities):
         if headersRow == objRow or headersCol == objCol:
             return None, None
 
-        getRowHeader = headersCol != None
-        getColHeader = headersRow != None
+        getRowHeader = headersCol is not None
+        getColHeader = headersRow is not None
         if onlyIfNew:
             getRowHeader = \
                 getRowHeader and objRow != self._script.pointOfReference.get("lastRow")

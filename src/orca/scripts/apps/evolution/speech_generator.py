@@ -39,7 +39,7 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator, speech_generator.SpeechGenerato
     def _isTreeTableCell(self, obj):
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isTreeTableCell")
-        if rv == None:
+        if rv is None:
             rv = obj.parent and obj.parent.getRole() == pyatspi.ROLE_TREE_TABLE
             cached["isTreeTableCell"] = rv
             self._cache[hash(obj)] = cached
@@ -49,7 +49,7 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator, speech_generator.SpeechGenerato
     def _isMessageListStatusCell(self, obj):
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isMessageListStatusCell")
-        if rv == None:
+        if rv is None:
             rv = self._script.utilities.isMessageListStatusCell(obj)
             cached["isMessageListStatusCell"] = rv
             self._cache[hash(obj)] = cached
@@ -59,7 +59,7 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator, speech_generator.SpeechGenerato
     def _isMessageListToggleCell(self, obj):
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isMessageListToggleCell")
-        if rv == None:
+        if rv is None:
             rv = self._script.utilities.isMessageListToggleCell(obj)
             cached["isMessageListToggleCell"] = rv
             self._cache[hash(obj)] = cached
@@ -69,7 +69,7 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator, speech_generator.SpeechGenerato
     def _isFocused(self, obj):
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isFocused")
-        if rv == None:
+        if rv is None:
             rv = obj.getState().contains(pyatspi.STATE_FOCUSED)
             cached["isFocused"] = rv
             self._cache[hash(obj)] = cached
@@ -79,7 +79,7 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator, speech_generator.SpeechGenerato
     def _isChecked(self, obj):
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isChecked")
-        if rv == None:
+        if rv is None:
             rv = obj.getState().contains(pyatspi.STATE_CHECKED)
             cached["isChecked"] = rv
             self._cache[hash(obj)] = cached
@@ -89,7 +89,7 @@ class SpeechGenerator(WebKitGtk.SpeechGenerator, speech_generator.SpeechGenerato
     def _isInNewRow(self, obj):
         cached = self._cache.get(hash(obj), {})
         rv = cached.get("isInNewRow")
-        if rv == None:
+        if rv is None:
             row, column = self._script.utilities.coordinatesForCell(obj)
             lastRow = self._script.pointOfReference.get("lastRow")
             rv = row != lastRow

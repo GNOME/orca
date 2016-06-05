@@ -457,10 +457,10 @@ class EventManager:
         msg = 'EVENT MANAGER: registering keystroke listener function: %s' % function
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        if mask == None:
+        if mask is None:
             mask = list(range(256))
 
-        if kind == None:
+        if kind is None:
             kind = (pyatspi.KEY_PRESSED_EVENT, pyatspi.KEY_RELEASED_EVENT)
 
         self.registry.registerKeystrokeListener(function, mask=mask, kind=kind)
@@ -471,10 +471,10 @@ class EventManager:
         msg = 'EVENT MANAGER: deregistering keystroke listener function: %s' % function
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        if mask == None:
+        if mask is None:
             mask = list(range(256))
 
-        if kind == None:
+        if kind is None:
             kind = (pyatspi.KEY_PRESSED_EVENT, pyatspi.KEY_RELEASED_EVENT)
 
         self.registry.deregisterKeystrokeListener(

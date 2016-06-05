@@ -56,7 +56,7 @@ class Script(WebKitGtk.Script, gtk.Script):
         - app: the application to create a script for.
         """
 
-        if _settingsManager.getSetting('sayAllOnLoad') == None:
+        if _settingsManager.getSetting('sayAllOnLoad') is None:
             _settingsManager.setSetting('sayAllOnLoad', False)
 
         super().__init__(app)

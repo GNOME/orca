@@ -216,7 +216,7 @@ class SettingsManager(object):
         self.defaultGeneral = {}
         for key in settings.userCustomizableSettings:
             value = self.customizedSettings.get(key)
-            if value == None:
+            if value is None:
                 try:
                     value = getattr(settings, key)
                 except:

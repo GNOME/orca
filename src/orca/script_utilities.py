@@ -662,7 +662,7 @@ class Utilities:
         isToolbar = lambda x: x and x.getRole() == pyatspi.ROLE_TOOL_BAR
         toolbar = pyatspi.findAncestor(obj, isToolbar)
 
-        return toolbar != None
+        return toolbar is not None
 
     def isComboBoxWithToggleDescendant(self, obj):
         return False

@@ -48,7 +48,7 @@ from orca.orca_platform import version
 class ListApps(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         try:
-            apps = filter(lambda x: x != None, pyatspi.Registry.getDesktop(0))
+            apps = filter(lambda x: x is not None, pyatspi.Registry.getDesktop(0))
             names = [app.name for app in apps]
         except:
             pass
@@ -173,7 +173,7 @@ def inGraphicalDesktop():
     except:
         return False
 
-    return display != None
+    return display is not None
 
 def otherOrcas():
     """Returns the pid of any other instances of Orca owned by this user."""
