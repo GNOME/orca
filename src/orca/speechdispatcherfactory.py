@@ -108,7 +108,8 @@ class SpeechServer(speechserver.SpeechServer):
 
     @staticmethod
     def shutdownActiveServers():
-        for server in SpeechServer._active_servers.values():
+        servers = [s for s in SpeechServer._active_servers.values()]
+        for server in servers:
             server.shutdown()
 
     # *** Instance methods ***
