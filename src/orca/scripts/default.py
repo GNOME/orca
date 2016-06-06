@@ -1893,7 +1893,9 @@ class Script(script.Script):
         # self.voices directly and instead get the voices from the Settings
         # Manager. But that's too big a change too close to code freeze. So
         # for now we'll hack.
+        speech.shutdown()
         self.voices = _settingsManager.getSetting('voices')
+        speech.init()
 
         # TODO: This is another "too close to code freeze" hack to cause the
         # command names to be presented in the correct language.
