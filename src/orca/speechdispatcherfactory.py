@@ -103,10 +103,7 @@ class SpeechServer(speechserver.SpeechServer):
 
     @staticmethod
     def getSpeechServer(info=None):
-        if info is not None:
-            thisId = info[1]
-        else:
-            thisId = SpeechServer.DEFAULT_SERVER_ID
+        thisId = info[1] if info is not None else SpeechServer.DEFAULT_SERVER_ID
         return SpeechServer._getSpeechServer(thisId)
 
     @staticmethod

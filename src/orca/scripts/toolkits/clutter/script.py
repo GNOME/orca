@@ -64,15 +64,7 @@ def _computeIsText(string):
     Arguments:
     - string: a string representation of a keyboardEvent.
     """
-    is_text = False
-
-    if string:
-        if _unicharIsPrint(string):
-            is_text = True
-        else:
-            is_text = False
-
-    return is_text
+    return string and _unicharIsPrint(string)
 
 class Script(default.Script):
 

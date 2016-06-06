@@ -247,11 +247,8 @@ class LiveRegionManager:
             self.msg_queue.purgeByKeepAlive()
 
         # See you again soon, stay in event loop if we still have messages.
-        if len(self.msg_queue) > 0:
-            return True 
-        else:
-            return False
-        
+        return len(self.msg_queue) > 0
+
     def getLiveNoneObjects(self):
         """Return the live objects that are registered and have a politeness
         of LIVE_NONE. """

@@ -649,13 +649,12 @@ class Context:
                 while zoneIndex < len(line.zones):
                     zone = line.zones[zoneIndex]
                     if zone.accessible == accessible:
-                        if (caretOffset >= zone.startOffset):
-                            if (caretOffset \
-                                    < (zone.startOffset + zone.length)):
+                        if caretOffset >= zone.startOffset:
+                            endOffset = zone.startOffset + zone.length
+                            if caretOffset < endOffset:
                                 foundZoneWithCaret = True
                                 break
-                            elif (caretOffset \
-                                    == (zone.startOffset + zone.length)):
+                            elif caretOffset == endOffset:
                                 checkForEOF = True
                                 lineToCheck = lineIndex
                                 zoneToCheck = zoneIndex

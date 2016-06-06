@@ -2207,11 +2207,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        role = obj.getRole()
-        if role == pyatspi.ROLE_TOOL_TIP:
-            rv = True
-        else:
-            rv = False
+        rv = obj.getRole() == pyatspi.ROLE_TOOL_TIP
 
         self._isNonNavigablePopup[hash(obj)] = rv
         return rv
