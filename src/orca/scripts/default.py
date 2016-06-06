@@ -839,7 +839,7 @@ class Script(script.Script):
         """Called when this script is activated."""
 
         _settingsManager.loadAppSettings(self)
-        braille.setupKeyRanges(list(self.brailleBindings.keys()))
+        braille.setupKeyRanges(self.brailleBindings.keys())
         speech.updatePunctuationLevel()
         speech.updateCapitalizationStyle()
 

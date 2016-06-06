@@ -1402,8 +1402,7 @@ class SpeechGenerator(generator.Generator):
         if not (items and items[0]):
             return result
 
-        items = list(map(self._generateName, items))
-        for item in items:
+        for item in map(self._generateName, items):
             result.extend(item)
 
         return result
