@@ -47,13 +47,27 @@ from orca.orca_platform import version
 
 class ListApps(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
-        try:
-            apps = filter(lambda x: x is not None, pyatspi.Registry.getDesktop(0))
-            names = [app.name for app in apps]
-        except:
-            pass
-        else:
-            print("\n".join(names))
+        desktop = pyatspi.Registry.getDesktop(0)
+        for app in desktop:
+            if app is None:
+                continue
+
+            pid = app.get_process_id()
+            try:
+                name = app.name or "(none)"
+            except:
+                name = "[DEAD]"
+
+            try:
+                cmdline = subprocess.getoutput('cat /proc/%s/cmdline' % pid)
+            except:
+                cmdline = '(exception encountered)'
+            else:
+                cmdline = cmdline.replace('\x00', ' ')
+
+            print(time.strftime('%H:%M:%S', time.localtime()),
+                  '  pid: %5s   %-25s  %s' % (pid, name, cmdline))
+
         parser.exit()
 
 class Settings(argparse.Action):
