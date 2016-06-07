@@ -97,6 +97,7 @@ class Utilities:
 
         self._script = script
         self._activeProgressBars = {}
+        self._clipboardHandlerId = None
 
     #########################################################################
     #                                                                       #
@@ -3704,8 +3705,19 @@ class Utilities:
         script.onClipboardContentsChanged(*args)
 
     def connectToClipboard(self):
+        if self._clipboardHandlerId is not None:
+            return
+
         clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
-        clipboard.connect('owner-change', self.onClipboardContentsChanged)
+        self._clipboardHandlerId = clipboard.connect(
+            'owner-change', self.onClipboardContentsChanged)
+
+    def disconnectFromClipboard(self):
+        if self._clipboardHandlerId is None:
+            return
+
+        clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
+        clipboard.disconnect(self._clipboardHandlerId)
 
     def getClipboardContents(self):
         clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))

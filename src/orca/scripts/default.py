@@ -722,6 +722,10 @@ class Script(script.Script):
         super().registerEventListeners()
         self.utilities.connectToClipboard()
 
+    def deregisterEventListeners(self):
+        super().deregisterEventListeners()
+        self.utilities.disconnectFromClipboard()
+
     def _saveFocusedObjectInfo(self, obj):
         """Saves some basic information about obj. Note that this method is
         intended to be called primarily (if not only) by locusOfFocusChanged().
