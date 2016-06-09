@@ -3486,7 +3486,14 @@ class Utilities:
         return table.getAccessibleAt(row, column)
 
     def isLastCell(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL):
+        try:
+            role = obj.getRole()
+        except:
+            msg = "ERROR: Exception getting role of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if not role == pyatspi.ROLE_TABLE_CELL:
             return False
 
         isTable = lambda x: x and 'Table' in pyatspi.listInterfaces(x)
