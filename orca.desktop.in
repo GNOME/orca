@@ -13,4 +13,4 @@ Categories=GTK;GNOME;Utility;Accessibility;
 X-GNOME-Bugzilla-Bugzilla=GNOME
 X-GNOME-Bugzilla-Product=orca
 X-GNOME-Bugzilla-Component=general
-NotShowIn=GNOME;
+NotShowIn=GNOME;Unity;
