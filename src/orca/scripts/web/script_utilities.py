@@ -1221,7 +1221,7 @@ class Utilities(script_utilities.Utilities):
                 return False
 
             xExtents = self.getExtents(xObj, xStart, xStart + 1)
-            if self.isMathTopLevel(xObj):
+            if self.isMathTopLevel(xObj) or self.isMath(obj):
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents, extents[3])
             else:
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents)
@@ -1267,6 +1267,9 @@ class Utilities(script_utilities.Utilities):
                 nextObj, nOffset = self.findNextCaretInOrder(nextObj, nOffset)
 
             onRight = self._getContentsForObj(nextObj, nOffset, boundary)
+            if self._contentIsSubsetOf(objects[0], onRight[-1]):
+                onRight = onRight[0:-1]
+
             onRight = list(filter(_include, onRight))
             if not onRight:
                 break
@@ -1348,11 +1351,11 @@ class Utilities(script_utilities.Utilities):
         if not (line and line[0]):
             return []
 
-        math = self.getMathAncestor(obj)
+        lastObj, lastOffset = line[-1][0], line[-1][2] - 1
+        math = self.getMathAncestor(lastObj)
         if math:
             lastObj, lastOffset = self.lastContext(math)
-        else:
-            lastObj, lastOffset = line[-1][0], line[-1][2] - 1
+
         msg = "WEB: Last context on line is: %s, %i" % (lastObj, lastOffset)
         debug.println(debug.LEVEL_INFO, msg, True)
 

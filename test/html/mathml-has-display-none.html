@@ -1,0 +1,80 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+@namespace m url(http://www.w3.org/1998/Math/MathML);
+.math-inline {
+	display:inline !important
+}
+.math-a11y {
+	clip:rect( 1px,1px,1px,1px );
+	overflow:hidden;
+	position:absolute;
+	width:1px;
+	height:1px;
+	opacity:0
+}
+
+span.bigger-font {
+	font-size:118%
+}
+</style>
+</head>
+<body>
+  <div>Line 1</div>
+  <div>
+	<span class="math-inline bigger-font math-a11y" style="display: none;">
+	  <math xmlns="http://www.w3.org/1998/Math/MathML">
+	    <semantics>
+	      <mrow>
+		<mstyle displaystyle="true" scriptlevel="0">
+		  <mrow>
+		    <mfrac>
+		      <mrow>
+			<mi mathvariant="normal">Δ</mi>
+			<mi>y</mi>
+		      </mrow>
+		      <mrow>
+			<mi mathvariant="normal">Δ</mi>
+			<mi>x</mi>
+		      </mrow>
+		    </mfrac>
+		  </mrow>
+		</mstyle>
+	      </mrow>
+	    </semantics>
+	  </math>
+	</span>
+	<img src="fraction.svg" aria-hidden="true" style="vertical-align: -2.005ex; width:4.123ex; height:5.676ex;">.
+  </div>
+  <div>Line 3</div>
+<div>
+<dl>
+<dd><span><span class="math-inline math-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow>
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mrow>
+          <mfrac>
+            <mrow>
+              <mi mathvariant="normal">Δ<!-- Δ --></mi>
+              <mi>y</mi>
+            </mrow>
+            <mrow>
+              <mi mathvariant="normal">Δ<!-- Δ --></mi>
+              <mi>x</mi>
+            </mrow>
+          </mfrac>
+        </mrow>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle {\frac {\Delta y}{\Delta x}}}</annotation>
+  </semantics>
+</math>
+</span>
+<img src="fraction.svg"  aria-hidden="true" style="vertical-align: -2.005ex; width:4.123ex; height:5.676ex;"></span>.</dd>
+</dl>
+<p>Line 5</p>
+</div>
+</body>
+</html>
