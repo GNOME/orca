@@ -1,3 +1,55 @@
+3.21.3 - 20 June 2016
+
+Web:
+
+ * Fix a couple of instances of Orca getting stuck during caret
+   navigation
+
+ * Fix bug in setting position via element-list dialogs
+
+ * Eliminate double-presentation of inferred labels
+
+ * Add more caching for performance
+
+LibreOffice:
+
+ * Ignore object:state-changed:sensitive events for menu items
+   because LibreOffice is flooding us
+
+General:
+
+ * Eliminate hang resulting from AT-SPI2 crash
+
+ * Don't show as desktop application in Unity; Orca is part of
+   Universal Access
+
+ * Take interfaces into account when looking for non-descendable
+   descendants (helps with performance)
+
+ * Handle more instances of objects going defunct, apps becoming
+   non-responsive, and apps creating duplicate accessible objects
+
+ * Make the output of 'orca -l' more verbose to identify non-
+   responsive apps
+
+ * Ensure a script only registers one signal handler for clipboard
+   changes
+
+ * Ensure synthesizer is changed when switching profiles via command
+
+ * Filter out more duplicate input events
+
+ * Support non-srcdir builds in autogen.sh
+
+ * Miscellaneous code clean up
+
+New and updated translations (THANKS EVERYONE!!!):
+
+ oc            Occitan                     Cédric Valmary
+ pl            Polish                      Piotr Drąg
+
+=========
+
 3.21.1 - 25 April 2016
 
 Gecko:
