@@ -5,11 +5,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: orca master\n"
+"Project-Id-Version: orca gnome-3-18\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2015-09-19 23:48+0000\n"
-"PO-Revision-Date: 2015-09-20 16:08+0700\n"
+"POT-Creation-Date: 2016-05-12 19:58+0000\n"
+"PO-Revision-Date: 2016-06-29 03:15+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Screen Reader"
@@ -3965,7 +3965,6 @@ msgstr "goldenrod"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:545
-#, fuzzy
 msgctxt "color name"
 msgid "pale green"
 msgstr "hijau pucat"
@@ -4092,10 +4091,9 @@ msgstr "salmon"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: ../src/orca/colornames.py:620
-#, fuzzy
 msgctxt "color name"
 msgid "sandy brown"
-msgstr "coklat"
+msgstr "coklat pasir"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4294,8 +4292,6 @@ msgstr "_Aktifkan"
 #. If this setting is not enabled, the second press of "e" would continue to be
 #. a navigation command to move amongst entries.
 #: ../src/orca/guilabels.py:58
-#, fuzzy
-#| msgid "Enable _structural navigation"
 msgid "Automatic focus mode during structural navigation"
 msgstr "Mode fokus otomatis selama navigasi struktural"
 
@@ -4316,7 +4312,6 @@ msgstr "Mode fokus otomatis selama navigasi struktural"
 #. what happens when you press an arrow key, thus making it possible to arrow out
 #. of the entry.
 #: ../src/orca/guilabels.py:76
-#, fuzzy
 msgid "Automatic focus mode during caret navigation"
 msgstr "Mode fokus otomatis selama navigasi karet"
 
@@ -4420,7 +4415,6 @@ msgstr "_Ucapkan nama Ruang Obrolan"
 #. it is disabled, Orca will treat each object as if it were on a separate line,
 #. both for presentation and navigation.
 #: ../src/orca/guilabels.py:150
-#, fuzzy
 msgid "Enable layout mode for content"
 msgstr "Fungsikan mode tata letak bagi isi"
 
@@ -5762,7 +5756,7 @@ msgstr "%s tebal"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: ../src/orca/mathsymbols.py:1200
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "sans-serif %s"
 msgstr "%s sans serif"
@@ -5776,7 +5770,7 @@ msgstr "%s sans serif"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: ../src/orca/mathsymbols.py:1210
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "sans-serif bold %s"
 msgstr "%s sans serif tebal"
@@ -5790,7 +5784,7 @@ msgstr "%s sans serif tebal"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: ../src/orca/mathsymbols.py:1220
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "sans-serif italic %s"
 msgstr "%s sans serif miring"
@@ -5804,7 +5798,7 @@ msgstr "%s sans serif miring"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: ../src/orca/mathsymbols.py:1230
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "sans-serif bold italic %s"
 msgstr "%s sans serif tebal miring"
@@ -5841,8 +5835,6 @@ msgstr " (%s)"
 
 #. Translators: this is the spoken representation for the character '←' (U+2190)
 #: ../src/orca/mathsymbols.py:1253
-#, fuzzy
-#| msgid "left arrow"
 msgctxt "math symbol"
 msgid "left arrow"
 msgstr "panah ke kiri"
@@ -6016,11 +6008,10 @@ msgstr "lebih dari"
 #. Translators: this is the spoken word for the character '^' (U+005e) when used
 #. as a MathML operator.
 #: ../src/orca/mathsymbols.py:1341
-#, fuzzy
 #| msgid "circumflex"
 msgctxt "math symbol"
 msgid "circumflex"
-msgstr "A CIRCUMFLEX"
+msgstr "circumflex"
 
 #. Translators: this is the spoken word for the character 'ˇ' (U+02c7) when used
 #. as a MathML operator.
@@ -6039,8 +6030,6 @@ msgstr ""
 #. Translators: this is the spoken word for the character '˙' (U+02d9) when used
 #. as a MathML operator.
 #: ../src/orca/mathsymbols.py:1353
-#, fuzzy
-#| msgid "dot"
 msgctxt "math symbol"
 msgid "dot"
 msgstr "titik"
@@ -6048,20 +6037,15 @@ msgstr "titik"
 #. Translators: this is the spoken word for the character '‖' (U+2016) when used
 #. as a MathML operator.
 #: ../src/orca/mathsymbols.py:1357
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "vertical align"
 msgctxt "math symbol"
 msgid "double vertical line"
-msgstr "ganda"
+msgstr "garis tegak ganda"
 
 #. Translators: this is the spoken representation for the character '…' (U+2026)
 #: ../src/orca/mathsymbols.py:1360
-#, fuzzy
-#| msgid "horizontal"
 msgctxt "math symbol"
 msgid "horizontal ellipsis"
-msgstr "Batas Elipsis Teks"
+msgstr "elipsis horisontal"
 
 #. Translators: this is the spoken representation for the character '∀' (U+2200)
 #: ../src/orca/mathsymbols.py:1363
@@ -6071,7 +6055,6 @@ msgstr "untuk semua"
 
 #. Translators: this is the spoken representation for the character '∁' (U+2201)
 #: ../src/orca/mathsymbols.py:1366
-#, fuzzy
 msgctxt "math symbol"
 msgid "complement"
 msgstr "komplemen"
@@ -6102,19 +6085,17 @@ msgstr "set kosong"
 
 #. Translators: this is the spoken representation for the character '∆' (U+2206)
 #: ../src/orca/mathsymbols.py:1381
-#, fuzzy
 msgctxt "math symbol"
 msgid "increment"
-msgstr "Tingkat Kenaikan"
+msgstr ""
 
 #. Translators: this is the spoken representation for the character '∇' (U+2207)
 #: ../src/orca/mathsymbols.py:1384
-#, fuzzy
 #| msgctxt "indentation and justification"
 #| msgid "Enabled"
 msgctxt "math symbol"
 msgid "nabla"
-msgstr "Difungsikan"
+msgstr "nabla"
 
 #. Translators: this is the spoken representation for the character '∈' (U+2208)
 #: ../src/orca/mathsymbols.py:1387
@@ -6136,10 +6117,9 @@ msgstr "elemen kecil dari"
 
 #. Translators: this is the spoken representation for the character '∋' (U+220b)
 #: ../src/orca/mathsymbols.py:1396
-#, fuzzy
 msgctxt "math symbol"
 msgid "contains as a member"
-msgstr "Anggota"
+msgstr ""
 
 #. Translators: this is the spoken representation for the character '∌' (U+220c)
 #: ../src/orca/mathsymbols.py:1399
@@ -6218,17 +6198,15 @@ msgstr "operator asterisk"
 
 #. Translators: this is the spoken representation for the character '∘' (U+2218)
 #: ../src/orca/mathsymbols.py:1435
-#, fuzzy
 msgctxt "math symbol"
 msgid "ring operator"
-msgstr "A RING"
+msgstr "operator cincin"
 
 #. Translators: this is the spoken representation for the character '∙' (U+2219)
 #: ../src/orca/mathsymbols.py:1438
-#, fuzzy
 msgctxt "math symbol"
 msgid "bullet operator"
-msgstr "bulet"
+msgstr "operator bulet"
 
 #. Translators: this is the spoken representation for the character '√' (U+221a)
 #: ../src/orca/mathsymbols.py:1441
@@ -6244,11 +6222,9 @@ msgstr "akar pangkat tiga"
 
 #. Translators: this is the spoken representation for the character '∜' (U+221c)
 #: ../src/orca/mathsymbols.py:1447
-#, fuzzy
-#| msgid "square root"
 msgctxt "math symbol"
 msgid "fourth root"
-msgstr "keempat"
+msgstr "akar pangkat empat"
 
 #. Translators: this is the spoken representation for the character '∝' (U+221d)
 #: ../src/orca/mathsymbols.py:1450
@@ -6517,24 +6493,18 @@ msgstr "minus"
 
 #. Translators: this is the spoken representation for the character '≃' (U+2243)
 #: ../src/orca/mathsymbols.py:1564
-#, fuzzy
-#| msgid "almost equal to"
 msgctxt "math symbol"
 msgid "asymptotically equal to"
-msgstr "tak sama dengan"
+msgstr "secara asimtot sama dengan"
 
 #. Translators: this is the spoken representation for the character '≄' (U+2244)
 #: ../src/orca/mathsymbols.py:1567
-#, fuzzy
-#| msgid "almost equal to"
 msgctxt "math symbol"
 msgid "not asymptotically equal to"
-msgstr "tak sama dengan"
+msgstr "tidak secara asimtot sama dengan"
 
 #. Translators: this is the spoken representation for the character '≅' (U+2245)
 #: ../src/orca/mathsymbols.py:1570
-#, fuzzy
-#| msgid "almost equal to"
 msgctxt "math symbol"
 msgid "approximately equal to"
 msgstr "kira-kira sama dengan"
@@ -6561,32 +6531,24 @@ msgstr "hampir sama dengan"
 
 #. Translators: this is the spoken representation for the character '≉' (U+2249)
 #: ../src/orca/mathsymbols.py:1582
-#, fuzzy
-#| msgid "almost equal to"
 msgctxt "math symbol"
 msgid "not almost equal to"
-msgstr "hampir sama dengan"
+msgstr "tidak hampir sama dengan"
 
 #. Translators: this is the spoken representation for the character '≊' (U+224a)
 #: ../src/orca/mathsymbols.py:1585
-#, fuzzy
-#| msgid "almost equal to"
 msgctxt "math symbol"
 msgid "almost equal or equal to"
-msgstr "hampir sama dengan"
+msgstr "hampir sama dengan atau sama dengan"
 
 #. Translators: this is the spoken representation for the character '≋' (U+224b)
 #: ../src/orca/mathsymbols.py:1588
-#, fuzzy
-#| msgid "triple click"
 msgctxt "math symbol"
 msgid "triple tilde"
-msgstr "A TILDE"
+msgstr "tilde rangkap tiga"
 
 #. Translators: this is the spoken representation for the character '≌' (U+224c)
 #: ../src/orca/mathsymbols.py:1591
-#, fuzzy
-#| msgid "almost equal to"
 msgctxt "math symbol"
 msgid "all equal to"
 msgstr "semua sama dengan"
@@ -6599,33 +6561,27 @@ msgstr "ekuivalen dengan"
 
 #. Translators: this is the spoken representation for the character '≎' (U+224e)
 #: ../src/orca/mathsymbols.py:1597
-#, fuzzy
 msgctxt "math symbol"
 msgid "geometrically equivalent to"
 msgstr "secara geometris ekuivalen dengan"
 
 #. Translators: this is the spoken representation for the character '≏' (U+224f)
 #: ../src/orca/mathsymbols.py:1600
-#, fuzzy
-#| msgid "different site"
 msgctxt "math symbol"
 msgid "difference between"
 msgstr "perbedaan antara"
 
 #. Translators: this is the spoken representation for the character '≐' (U+2250)
 #: ../src/orca/mathsymbols.py:1603
-#, fuzzy
 msgctxt "math symbol"
 msgid "approaches the limit"
-msgstr "Batas:"
+msgstr "mendekati batas"
 
 #. Translators: this is the spoken representation for the character '≑' (U+2251)
 #: ../src/orca/mathsymbols.py:1606
-#, fuzzy
-#| msgid "not equal to"
 msgctxt "math symbol"
 msgid "geometrically equal to"
-msgstr "tak sama dengan"
+msgstr "secara geometris sama dengan"
 
 #. Translators: this is the spoken representation for the character '≒' (U+2252)
 #: ../src/orca/mathsymbols.py:1609
@@ -6714,10 +6670,9 @@ msgstr "Delta"
 
 #. Translators: this is the spoken representation for the character '≝' (U+225d)
 #: ../src/orca/mathsymbols.py:1642
-#, fuzzy
 msgctxt "math symbol"
 msgid "equal to by definition"
-msgstr "tak sama dengan"
+msgstr "sama dengan menurut definisi"
 
 #. Translators: this is the spoken representation for the character '≞' (U+225e)
 #: ../src/orca/mathsymbols.py:1645
@@ -6736,27 +6691,21 @@ msgstr "tak sama dengan"
 
 #. Translators: this is the spoken representation for the character '≠' (U+2260)
 #: ../src/orca/mathsymbols.py:1651
-#, fuzzy
-#| msgid "not equal to"
 msgctxt "math symbol"
 msgid "not equal to"
 msgstr "tak sama dengan"
 
 #. Translators: this is the spoken representation for the character '≡' (U+2261)
 #: ../src/orca/mathsymbols.py:1654
-#, fuzzy
-#| msgid "vertical"
 msgctxt "math symbol"
 msgid "identical to"
 msgstr "identik dengan"
 
 #. Translators: this is the spoken representation for the character '≢' (U+2262)
 #: ../src/orca/mathsymbols.py:1657
-#, fuzzy
-#| msgid "not equal to"
 msgctxt "math symbol"
 msgid "not identical to"
-msgstr "identik dengan"
+msgstr "tidak identik dengan"
 
 #. Translators: this is the spoken representation for the character '≣' (U+2263)
 #: ../src/orca/mathsymbols.py:1660
@@ -6767,16 +6716,12 @@ msgstr "ekuivalen dengan"
 
 #. Translators: this is the spoken representation for the character '≤' (U+2264)
 #: ../src/orca/mathsymbols.py:1663
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than or equal to"
 msgstr "kurang dari atau sama dengan"
 
 #. Translators: this is the spoken representation for the character '≥' (U+2265)
 #: ../src/orca/mathsymbols.py:1666
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than or equal to"
 msgstr "lebih dari atau sama dengan"
@@ -6799,19 +6744,15 @@ msgstr "lebih dari atau sama dengan"
 
 #. Translators: this is the spoken representation for the character '≨' (U+2268)
 #: ../src/orca/mathsymbols.py:1675
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than but not equal to"
-msgstr "kurang dari atau sama dengan"
+msgstr "kurang dari tapi tidak sama dengan"
 
 #. Translators: this is the spoken representation for the character '≩' (U+2269)
 #: ../src/orca/mathsymbols.py:1678
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than but not equal to"
-msgstr "lebih dari atau sama dengan"
+msgstr "lebih dari tapi tidak sama dengan"
 
 #. Translators: this is the spoken representation for the character '≪' (U+226a)
 #: ../src/orca/mathsymbols.py:1681
@@ -6851,83 +6792,63 @@ msgstr "tidak lebih dari"
 
 #. Translators: this is the spoken representation for the character '≰' (U+2270)
 #: ../src/orca/mathsymbols.py:1699
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "neither less than nor equal to"
-msgstr "tidak mendekati atau sama dengan"
+msgstr "tidak kurang dari maupun sama dengan"
 
 #. Translators: this is the spoken representation for the character '≱' (U+2271)
 #: ../src/orca/mathsymbols.py:1702
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "neither greater than nor equal to"
-msgstr "tidak mendekati atau sama dengan"
+msgstr "tidak lebih dari maupun sama dengan"
 
 #. Translators: this is the spoken representation for the character '≲' (U+2272)
 #: ../src/orca/mathsymbols.py:1705
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than or equivalent to"
 msgstr "kurang dari atau ekuivalen dengan"
 
 #. Translators: this is the spoken representation for the character '≳' (U+2273)
 #: ../src/orca/mathsymbols.py:1708
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than or equivalent to"
 msgstr "lebih dari atau ekuivalen dengan"
 
 #. Translators: this is the spoken representation for the character '≴' (U+2274)
 #: ../src/orca/mathsymbols.py:1711
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "neither less than nor equivalent to"
-msgstr "kurang dari atau ekuivalen dengan"
+msgstr "tidak kurang dari maupun ekuivalen dengan"
 
 #. Translators: this is the spoken representation for the character '≵' (U+2275)
 #: ../src/orca/mathsymbols.py:1714
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "neither greater than nor equivalent to"
-msgstr "lebih dari atau ekuivalen dengan"
+msgstr "tidak lebih dari maupun ekuivalen dengan"
 
 #. Translators: this is the spoken representation for the character '≶' (U+2276)
 #: ../src/orca/mathsymbols.py:1717
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than or greater than"
-msgstr "lebih besar dari"
+msgstr "kurang dari atau lebih dari"
 
 #. Translators: this is the spoken representation for the character '≷' (U+2277)
 #: ../src/orca/mathsymbols.py:1720
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than or less than"
-msgstr "lebih besar dari"
+msgstr "lebih dari atau kurang dari"
 
 #. Translators: this is the spoken representation for the character '≸' (U+2278)
 #: ../src/orca/mathsymbols.py:1723
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "neither less than nor greater than"
-msgstr "kurang dari atau sama dengan"
+msgstr "tidak kurang maupun lebih dari"
 
 #. Translators: this is the spoken representation for the character '≹' (U+2279)
 #: ../src/orca/mathsymbols.py:1726
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "neither greater than nor less than"
-msgstr "lebih dari atau sama dengan"
+msgstr "tidak lebih dari maupun kurang dari"
 
 #. Translators: this is the spoken representation for the character '≺' (U+227a)
 #: ../src/orca/mathsymbols.py:1729
@@ -6937,60 +6858,45 @@ msgstr ""
 
 #. Translators: this is the spoken representation for the character '≻' (U+227b)
 #: ../src/orca/mathsymbols.py:1732
-#, fuzzy
 msgctxt "math symbol"
 msgid "succeeds"
-msgstr ""
-"Ketika menyambung ke jaringan yang mampu-IPv6, memungkinkan sambungan "
-"komplit bila konfigurasi IPv4 gagal tetapi konfigurasi IPv6 sukses."
+msgstr "mengikuti"
 
 #. Translators: this is the spoken representation for the character '≼' (U+227c)
 #: ../src/orca/mathsymbols.py:1735
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "precedes or equal to"
-msgstr "tak sama dengan"
+msgstr "mendahului atau sama dengan"
 
 #. Translators: this is the spoken representation for the character '≽' (U+227d)
 #: ../src/orca/mathsymbols.py:1738
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "succeeds or equal to"
-msgstr "tak sama dengan"
+msgstr "mengikuti atau sama dengan"
 
 #. Translators: this is the spoken representation for the character '≾' (U+227e)
 #: ../src/orca/mathsymbols.py:1741
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "precedes or equivalent to"
-msgstr "ekuivalen dengan"
+msgstr "mendahului atau ekuivalen dengan"
 
 #. Translators: this is the spoken representation for the character '≿' (U+227f)
 #: ../src/orca/mathsymbols.py:1744
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "succeeds or equivalent to"
-msgstr "ekuivalen dengan"
+msgstr "mengikuti atau ekuivalen dengan"
 
 #. Translators: this is the spoken representation for the character '⊀' (U+2280)
 #: ../src/orca/mathsymbols.py:1747
-#, fuzzy
-#| msgctxt "togglebutton"
-#| msgid "not pressed"
 msgctxt "math symbol"
 msgid "does not precede"
-msgstr "tidak berisi"
+msgstr "tidak mendahului"
 
 #. Translators: this is the spoken representation for the character '⊁' (U+2281)
 #: ../src/orca/mathsymbols.py:1750
-#, fuzzy
 msgctxt "math symbol"
 msgid "does not succeed"
-msgstr "tidak berisi"
+msgstr "tidak mengikuti"
 
 #. Translators: this is the spoken representation for the character '⊂' (U+2282)
 #: ../src/orca/mathsymbols.py:1753
@@ -7018,35 +6924,27 @@ msgstr "bukan superset dari"
 
 #. Translators: this is the spoken representation for the character '⊆' (U+2286)
 #: ../src/orca/mathsymbols.py:1765
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "subset of or equal to"
-msgstr "tak sama dengan"
+msgstr "subset dari atau sama dengan"
 
 #. Translators: this is the spoken representation for the character '⊇' (U+2287)
 #: ../src/orca/mathsymbols.py:1768
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "superset of or equal to"
-msgstr "bukan superset dari"
+msgstr "superset dari atau sama dengan"
 
 #. Translators: this is the spoken representation for the character '⊈' (U+2288)
 #: ../src/orca/mathsymbols.py:1771
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "neither a subset of nor equal to"
-msgstr "tidak mendekati atau sama dengan"
+msgstr "bukan subset maupun sama dengan"
 
 #. Translators: this is the spoken representation for the character '⊉' (U+2289)
 #: ../src/orca/mathsymbols.py:1774
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "neither a superset of nor equal to"
-msgstr "tidak mendekati atau sama dengan"
+msgstr "bukan superset maupun sama dengan"
 
 #. Translators: this is the spoken representation for the character '⊊' (U+228a)
 #: ../src/orca/mathsymbols.py:1777
@@ -7139,101 +7037,82 @@ msgstr "Bujur Sangkar"
 #. Translators: this is the spoken representation for the character '⊕' (U+2295)
 #. Translators: this is the spoken representation for the character '⨁' (U+2a01)
 #: ../src/orca/mathsymbols.py:1810 ../src/orca/mathsymbols.py:2158
-#, fuzzy
 msgctxt "math symbol"
 msgid "circled plus"
-msgstr "tambah"
+msgstr "tambah dilingkari"
 
 #. Translators: this is the spoken representation for the character '⊖' (U+2296)
 #: ../src/orca/mathsymbols.py:1813
-#, fuzzy
 msgctxt "math symbol"
 msgid "circled minus"
-msgstr "minus"
+msgstr "minus dilingkari"
 
 #. Translators: this is the spoken representation for the character '⊗' (U+2297)
 #. Translators: this is the spoken representation for the character '⨂' (U+2a02)
 #: ../src/orca/mathsymbols.py:1816 ../src/orca/mathsymbols.py:2161
-#, fuzzy
 msgctxt "math symbol"
 msgid "circled times"
-msgstr "kali"
+msgstr "kali dilingkari"
 
 #. Translators: this is the spoken representation for the character '⊘' (U+2298)
 #: ../src/orca/mathsymbols.py:1819
-#, fuzzy
 msgctxt "math symbol"
 msgid "circled division slash"
-msgstr "garis miring"
+msgstr "garis miring dilingkari"
 
 #. Translators: this is the spoken representation for the character '⊙' (U+2299)
 #: ../src/orca/mathsymbols.py:1822
-#, fuzzy
 msgctxt "math symbol"
 msgid "circled dot operator"
-msgstr "titik"
+msgstr "operator titik dilingkari"
 
 #. Translators: this is the spoken representation for the character '⊚' (U+229a)
 #: ../src/orca/mathsymbols.py:1825
-#, fuzzy
 msgctxt "math symbol"
 msgid "circled ring operator"
-msgstr "A RING"
+msgstr "operator cincin dilingkari"
 
 #. Translators: this is the spoken representation for the character '⊛' (U+229b)
 #: ../src/orca/mathsymbols.py:1828
-#, fuzzy
 msgctxt "math symbol"
 msgid "circled asterisk operator"
-msgstr "Bintang di awal pada komentar multi-baris"
+msgstr "operator bintang dilingkari"
 
 #. Translators: this is the spoken representation for the character '⊜' (U+229c)
 #: ../src/orca/mathsymbols.py:1831
-#, fuzzy
-#| msgid "subscript equals"
 msgctxt "math symbol"
 msgid "circled equals"
-msgstr "sama dengan"
+msgstr "sama dengan dilingkari"
 
 #. Translators: this is the spoken representation for the character '⊝' (U+229d)
 #: ../src/orca/mathsymbols.py:1834
-#, fuzzy
-#| msgid "en dash"
 msgctxt "math symbol"
 msgid "circled dash"
-msgstr "tanda hubung"
+msgstr "tanda hubung dilingkari"
 
 #. Translators: this is the spoken representation for the character '⊞' (U+229e)
 #: ../src/orca/mathsymbols.py:1837
-#, fuzzy
-#| msgid "subscript plus"
 msgctxt "math symbol"
 msgid "squared plus"
-msgstr "tambah"
+msgstr "tambah dalam bujur sangkar"
 
 #. Translators: this is the spoken representation for the character '⊟' (U+229f)
 #: ../src/orca/mathsymbols.py:1840
-#, fuzzy
-#| msgid "subscript minus"
 msgctxt "math symbol"
 msgid "squared minus"
-msgstr "minus"
+msgstr "minus dalam bujur sangkar"
 
 #. Translators: this is the spoken representation for the character '⊠' (U+22a0)
 #: ../src/orca/mathsymbols.py:1843
-#, fuzzy
-#| msgid "square root"
 msgctxt "math symbol"
 msgid "squared times"
-msgstr "kali"
+msgstr "kali dalam bujur sangkar"
 
 #. Translators: this is the spoken representation for the character '⊡' (U+22a1)
 #: ../src/orca/mathsymbols.py:1846
-#, fuzzy
-#| msgid "square root"
 msgctxt "math symbol"
 msgid "squared dot operator"
-msgstr "titik"
+msgstr "operator titik dalam bujur sangkar"
 
 #. Translators: this is the spoken representation for the character '⊢' (U+22a2)
 #: ../src/orca/mathsymbols.py:1849
@@ -7268,11 +7147,9 @@ msgstr "naik"
 
 #. Translators: this is the spoken representation for the character '⊦' (U+22a6)
 #: ../src/orca/mathsymbols.py:1861
-#, fuzzy
-#| msgid "section"
 msgctxt "math symbol"
 msgid "assertion"
-msgstr "panjang asersi lookbehind tak tetap"
+msgstr "asersi"
 
 #. Translators: this is the spoken representation for the character '⊧' (U+22a7)
 #: ../src/orca/mathsymbols.py:1864
@@ -7282,21 +7159,15 @@ msgstr "model"
 
 #. Translators: this is the spoken representation for the character '⊨' (U+22a8)
 #: ../src/orca/mathsymbols.py:1867
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "true"
 msgctxt "math symbol"
 msgid "true"
-msgstr "true"
+msgstr "benar"
 
 #. Translators: this is the spoken representation for the character '⊩' (U+22a9)
 #: ../src/orca/mathsymbols.py:1870
-#, fuzzy
 msgctxt "math symbol"
 msgid "forces"
-msgstr ""
-"Memaksa tekstur yang mendasari agar singuler dan tak dibuat dari tekstur-"
-"tekstur individu yang lebih kecil untuk menghemat ruang"
+msgstr "memaksa"
 
 #. Translators: this is the spoken representation for the character '⊪' (U+22aa)
 #: ../src/orca/mathsymbols.py:1873
@@ -7318,19 +7189,15 @@ msgstr "tidak membuktikan"
 
 #. Translators: this is the spoken representation for the character '⊭' (U+22ad)
 #: ../src/orca/mathsymbols.py:1882
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "true"
 msgctxt "math symbol"
 msgid "not true"
-msgstr "true"
+msgstr "tidak benar"
 
 #. Translators: this is the spoken representation for the character '⊮' (U+22ae)
 #: ../src/orca/mathsymbols.py:1885
-#, fuzzy
 msgctxt "math symbol"
 msgid "does not force"
-msgstr "Paksa"
+msgstr "tidak memaksa"
 
 #. Translators: this is the spoken representation for the character '⊯' (U+22af)
 #: ../src/orca/mathsymbols.py:1888
@@ -7354,10 +7221,9 @@ msgstr "_Simpan dalam:"
 
 #. Translators: this is the spoken representation for the character '⊲' (U+22b2)
 #: ../src/orca/mathsymbols.py:1897
-#, fuzzy
 msgctxt "math symbol"
 msgid "normal subgroup of"
-msgstr "normal"
+msgstr "subgrup normal dari"
 
 #. Translators: this is the spoken representation for the character '⊳' (U+22b3)
 #: ../src/orca/mathsymbols.py:1900
@@ -7368,10 +7234,9 @@ msgstr "normal"
 
 #. Translators: this is the spoken representation for the character '⊴' (U+22b4)
 #: ../src/orca/mathsymbols.py:1903
-#, fuzzy
 msgctxt "math symbol"
 msgid "normal subgroup of or equal to"
-msgstr "tak sama dengan"
+msgstr "subgrup normal dari atau sama dengan"
 
 #. Translators: this is the spoken representation for the character '⊵' (U+22b5)
 #: ../src/orca/mathsymbols.py:1906
@@ -7404,10 +7269,9 @@ msgstr "multi"
 
 #. Translators: this is the spoken representation for the character '⊹' (U+22b9)
 #: ../src/orca/mathsymbols.py:1918
-#, fuzzy
 msgctxt "math symbol"
 msgid "hermitian conjugate matrix"
-msgstr "Konjugasi kompleks"
+msgstr "matriks konjugasi hermit"
 
 #. Translators: this is the spoken representation for the character '⊺' (U+22ba)
 #: ../src/orca/mathsymbols.py:1921
@@ -7451,24 +7315,21 @@ msgstr "Kan_an"
 
 #. Translators: this is the spoken representation for the character '⋄' (U+22c4)
 #: ../src/orca/mathsymbols.py:1951
-#, fuzzy
 msgctxt "math symbol"
 msgid "diamond operator"
-msgstr "Diamond Mine"
+msgstr "operator permata"
 
 #. Translators: this is the spoken representation for the character '⋅' (U+22c5)
 #: ../src/orca/mathsymbols.py:1954
-#, fuzzy
 msgctxt "math symbol"
 msgid "dot operator"
-msgstr "titik"
+msgstr "operator titik"
 
 #. Translators: this is the spoken representation for the character '⋆' (U+22c6)
 #: ../src/orca/mathsymbols.py:1957
-#, fuzzy
 msgctxt "math symbol"
 msgid "star operator"
-msgstr "bintang"
+msgstr "operator bintang"
 
 #. Translators: this is the spoken representation for the character '⋇' (U+22c7)
 #: ../src/orca/mathsymbols.py:1960
@@ -7534,36 +7395,27 @@ msgstr "tanda not lojik"
 
 #. Translators: this is the spoken representation for the character '⋐' (U+22d0)
 #: ../src/orca/mathsymbols.py:1987
-#, fuzzy
-#| msgid "double prime"
 msgctxt "math symbol"
 msgid "double subset"
-msgstr "Subset yang ditempelkan"
+msgstr "subset ganda"
 
 #. Translators: this is the spoken representation for the character '⋑' (U+22d1)
 #: ../src/orca/mathsymbols.py:1990
-#, fuzzy
-#| msgid "double prime"
 msgctxt "math symbol"
 msgid "double superset"
-msgstr "bukan superset dari"
+msgstr "superset ganda"
 
 #. Translators: this is the spoken representation for the character '⋒' (U+22d2)
 #: ../src/orca/mathsymbols.py:1993
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "direction"
 msgctxt "math symbol"
 msgid "double intersection"
-msgstr "perpotongan"
+msgstr "perpotongan ganda"
 
 #. Translators: this is the spoken representation for the character '⋓' (U+22d3)
 #: ../src/orca/mathsymbols.py:1996
-#, fuzzy
-#| msgid "double prime"
 msgctxt "math symbol"
 msgid "double union"
-msgstr "union"
+msgstr "union ganda"
 
 #. Translators: this is the spoken representation for the character '⋔' (U+22d4)
 #: ../src/orca/mathsymbols.py:1999
@@ -7573,98 +7425,81 @@ msgstr ""
 
 #. Translators: this is the spoken representation for the character '⋕' (U+22d5)
 #: ../src/orca/mathsymbols.py:2002
-#, fuzzy
 msgctxt "math symbol"
 msgid "equal and parallel to"
-msgstr "sejajar dengan"
+msgstr "sama dan sejajar dengan"
 
 #. Translators: this is the spoken representation for the character '⋖' (U+22d6)
 #: ../src/orca/mathsymbols.py:2005
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than with dot"
-msgstr "Kurang Dari"
+msgstr "kurang dari dengan titik"
 
 #. Translators: this is the spoken representation for the character '⋗' (U+22d7)
 #: ../src/orca/mathsymbols.py:2008
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than with dot"
-msgstr "lebih besar dari"
+msgstr "lebih dari dengan titik"
 
 #. Translators: this is the spoken representation for the character '⋘' (U+22d8)
 #: ../src/orca/mathsymbols.py:2011
-#, fuzzy
 msgctxt "math symbol"
 msgid "very much less than"
-msgstr "jauh kurang dari"
+msgstr "sangat kurang dari"
 
 #. Translators: this is the spoken representation for the character '⋙' (U+22d9)
 #: ../src/orca/mathsymbols.py:2014
-#, fuzzy
 msgctxt "math symbol"
 msgid "very much greater than"
-msgstr "jauh lebih dari"
+msgstr "sangat lebih dari"
 
 #. Translators: this is the spoken representation for the character '⋚' (U+22da)
 #: ../src/orca/mathsymbols.py:2017
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than equal to or greater than"
-msgstr "lebih dari atau sama dengan"
+msgstr "kurang dari sama dengan atau lebih dari"
 
 #. Translators: this is the spoken representation for the character '⋛' (U+22db)
 #: ../src/orca/mathsymbols.py:2020
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than equal to or less than"
-msgstr "lebih dari atau sama dengan"
+msgstr "lebih dari sama dengan atau kurang dari"
 
 #. Translators: this is the spoken representation for the character '⋜' (U+22dc)
 #: ../src/orca/mathsymbols.py:2023
-#, fuzzy
 msgctxt "math symbol"
 msgid "equal to or less than"
 msgstr "kurang dari atau sama dengan"
 
 #. Translators: this is the spoken representation for the character '⋝' (U+22dd)
 #: ../src/orca/mathsymbols.py:2026
-#, fuzzy
 msgctxt "math symbol"
 msgid "equal to or greater than"
-msgstr "lebih dari atau sama dengan"
+msgstr "sama atau lebih dari"
 
 #. Translators: this is the spoken representation for the character '⋝' (U+22de)
 #: ../src/orca/mathsymbols.py:2029
-#, fuzzy
 msgctxt "math symbol"
 msgid "equal to or precedes"
-msgstr "tak sama dengan"
+msgstr "sama dengan atau mendahului"
 
 #. Translators: this is the spoken representation for the character '⋝' (U+22df)
 #: ../src/orca/mathsymbols.py:2032
-#, fuzzy
 msgctxt "math symbol"
 msgid "equal to or succeeds"
-msgstr "tak sama dengan"
+msgstr "sama dengan atau mengikuti"
 
 #. Translators: this is the spoken representation for the character '⋠' (U+22e0)
 #: ../src/orca/mathsymbols.py:2035
-#, fuzzy
 msgctxt "math symbol"
 msgid "does not precede or equal"
-msgstr "tak sama dengan"
+msgstr "tidak mendahului atau sama"
 
 #. Translators: this is the spoken representation for the character '⋡' (U+22e1)
 #: ../src/orca/mathsymbols.py:2038
-#, fuzzy
 msgctxt "math symbol"
 msgid "does not succeed or equal"
-msgstr "tak sama dengan"
+msgstr "tidak mengikuti atau sama"
 
 #. Translators: this is the spoken representation for the character '⋢' (U+22e2)
 #: ../src/orca/mathsymbols.py:2041
@@ -7683,69 +7518,57 @@ msgstr "tak sama dengan"
 
 #. Translators: this is the spoken representation for the character '⋤' (U+22e4)
 #: ../src/orca/mathsymbols.py:2047
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "square image of or not equal to"
-msgstr "tak sama dengan"
+msgstr "citra bujur sangkar dari atau tidak sama dengan"
 
 #. Translators: this is the spoken representation for the character '⋥' (U+22e5)
 #: ../src/orca/mathsymbols.py:2050
-#, fuzzy
 msgctxt "math symbol"
 msgid "square original of or not equal to"
-msgstr "tak sama dengan"
+msgstr "bujur sangkar asli dari atau tidak sama dengan"
 
 #. Translators: this is the spoken representation for the character '⋦' (U+22e6)
 #: ../src/orca/mathsymbols.py:2053
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than but not equivalent to"
-msgstr "kurang dari atau ekuivalen dengan"
+msgstr "kurang dari tapi tidak ekuivalen dengan"
 
 #. Translators: this is the spoken representation for the character '⋧' (U+22e7)
 #: ../src/orca/mathsymbols.py:2056
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than but not equivalent to"
-msgstr "lebih dari atau ekuivalen dengan"
+msgstr "lebih dari tapi tidak ekuivalen dengan"
 
 #. Translators: this is the spoken representation for the character '⋨' (U+22e8)
 #: ../src/orca/mathsymbols.py:2059
-#, fuzzy
 msgctxt "math symbol"
 msgid "precedes but not equivalent to"
-msgstr "ekuivalen dengan"
+msgstr "mendahului tapi tidak ekuivalen dengan"
 
 #. Translators: this is the spoken representation for the character '⋩' (U+22e9)
 #: ../src/orca/mathsymbols.py:2062
-#, fuzzy
 msgctxt "math symbol"
 msgid "succeeds but not equivalent to"
-msgstr "ekuivalen dengan"
+msgstr "mengikuti tapi tidak ekuivalen dengan"
 
 #. Translators: this is the spoken representation for the character '⋪' (U+22ea)
 #: ../src/orca/mathsymbols.py:2065
-#, fuzzy
 msgctxt "math symbol"
 msgid "not normal subgroup of"
-msgstr "normal"
+msgstr "bukan subgrup normal dari"
 
 #. Translators: this is the spoken representation for the character '⋫' (U+22eb)
 #: ../src/orca/mathsymbols.py:2068
-#, fuzzy
 msgctxt "math symbol"
 msgid "does not contain as normal subgroup"
-msgstr "tidak berisi"
+msgstr "tidak memuat sebagai subgrup normal"
 
 #. Translators: this is the spoken representation for the character '⋬' (U+22ec)
 #: ../src/orca/mathsymbols.py:2071
-#, fuzzy
 msgctxt "math symbol"
 msgid "not normal subgroup of or equal to"
-msgstr "tak sama dengan"
+msgstr "bukan subgrup normal dari atau sama dengan"
 
 #. Translators: this is the spoken representation for the character '⋭' (U+22ed)
 #: ../src/orca/mathsymbols.py:2074
@@ -7755,19 +7578,15 @@ msgstr ""
 
 #. Translators: this is the spoken representation for the character '⋮' (U+22ee)
 #: ../src/orca/mathsymbols.py:2077
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "vertical align"
 msgctxt "math symbol"
 msgid "vertical ellipsis"
-msgstr "Batas Elipsis Teks"
+msgstr "elipsis vertikal"
 
 #. Translators: this is the spoken representation for the character '⋯' (U+22ef)
 #: ../src/orca/mathsymbols.py:2080
-#, fuzzy
 msgctxt "math symbol"
 msgid "midline horizontal ellipsis"
-msgstr "Batas Elipsis Teks"
+msgstr "elipsis horisontal tengah garis"
 
 #. Translators: this is the spoken representation for the character '⋰' (U+22f0)
 #: ../src/orca/mathsymbols.py:2083
@@ -7801,10 +7620,9 @@ msgstr ""
 
 #. Translators: this is the spoken representation for the character '⋵' (U+22f5)
 #: ../src/orca/mathsymbols.py:2098
-#, fuzzy
 msgctxt "math symbol"
 msgid "element of with dot above"
-msgstr "titik"
+msgstr "elemen dari dengan titik di atas"
 
 #. Translators: this is the spoken representation for the character '⋶' (U+22f6)
 #: ../src/orca/mathsymbols.py:2101
@@ -7874,35 +7692,27 @@ msgstr ""
 
 #. Translators: this is the spoken representation for the character '⌈' (U+2308)
 #: ../src/orca/mathsymbols.py:2131
-#, fuzzy
-#| msgid "left paren"
 msgctxt "math symbol"
 msgid "left ceiling"
-msgstr "Kir_i:"
+msgstr "langit-langit kiri"
 
 #. Translators: this is the spoken representation for the character '⌉' (U+2309)
 #: ../src/orca/mathsymbols.py:2134
-#, fuzzy
-#| msgid "right paren"
 msgctxt "math symbol"
 msgid "right ceiling"
-msgstr "Kan_an"
+msgstr "langit-langit kanan"
 
 #. Translators: this is the spoken representation for the character '⌊' (U+230a)
 #: ../src/orca/mathsymbols.py:2137
-#, fuzzy
-#| msgid "left alt"
 msgctxt "math symbol"
 msgid "left floor"
-msgstr "Lantai:"
+msgstr "lantai kiri"
 
 #. Translators: this is the spoken representation for the character '⌋' (U+230b)
 #: ../src/orca/mathsymbols.py:2140
-#, fuzzy
-#| msgid "right alt"
 msgctxt "math symbol"
 msgid "right floor"
-msgstr "Lantai:"
+msgstr "lantai kanan"
 
 #. Translators: this is the spoken representation for the character '⏞' (U+23de)
 #: ../src/orca/mathsymbols.py:2143
@@ -7939,47 +7749,37 @@ msgstr "tanda lebih dari berganda"
 
 #. Translators: this is the spoken representation for the character '⨀' (U+2a00)
 #: ../src/orca/mathsymbols.py:2155
-#, fuzzy
-#| msgid "middle dot"
 msgctxt "math symbol"
 msgid "circled dot"
-msgstr "titik"
+msgstr "titik dilingkari"
 
 #. Translators: this is the spoken representation for the character '⨃' (U+2a03)
 #: ../src/orca/mathsymbols.py:2163
-#, fuzzy
 msgctxt "math symbol"
 msgid "union with dot"
-msgstr "union"
+msgstr "union dengan titik"
 
 #. Translators: this is the spoken representation for the character '⨄' (U+2a04)
 #: ../src/orca/mathsymbols.py:2165
-#, fuzzy
 msgctxt "math symbol"
 msgid "union with plus"
-msgstr "union"
+msgstr "union dengan plus"
 
 #. Translators: this is the spoken representation for the character '⨅' (U+2a05)
 #: ../src/orca/mathsymbols.py:2167
-#, fuzzy
-#| msgid "Search direction:"
 msgctxt "math symbol"
 msgid "square intersection"
-msgstr "perpotongan"
+msgstr "perpotongan bujur sangkar"
 
 #. Translators: this is the spoken representation for the character '⨆' (U+2a06)
 #: ../src/orca/mathsymbols.py:2169
-#, fuzzy
-#| msgid "square root"
 msgctxt "math symbol"
 msgid "square union"
-msgstr "Union Square"
+msgstr "union bujur sangkar"
 
 #. Translators: this is the spoken representation for the character '■' (U+25a0)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: ../src/orca/mathsymbols.py:2173
-#, fuzzy
-#| msgid "black square"
 msgctxt "math symbol"
 msgid "black square"
 msgstr "bujur sangkar hitam"
@@ -7987,8 +7787,6 @@ msgstr "bujur sangkar hitam"
 #. Translators: this is the spoken representation for the character '□' (U+25a1)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: ../src/orca/mathsymbols.py:2177
-#, fuzzy
-#| msgid "white square"
 msgctxt "math symbol"
 msgid "white square"
 msgstr "bujur sangkar putih"
@@ -7996,8 +7794,6 @@ msgstr "bujur sangkar putih"
 #. Translators: this is the spoken representation for the character '◆' (U+25c6)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: ../src/orca/mathsymbols.py:2181
-#, fuzzy
-#| msgid "black diamond"
 msgctxt "math symbol"
 msgid "black diamond"
 msgstr "berlian hitam"
@@ -8005,8 +7801,6 @@ msgstr "berlian hitam"
 #. Translators: this is the spoken representation for the character '○' (U+25cb)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: ../src/orca/mathsymbols.py:2185
-#, fuzzy
-#| msgid "white circle"
 msgctxt "math symbol"
 msgid "white circle"
 msgstr "lingkaran putih"
@@ -8014,16 +7808,12 @@ msgstr "lingkaran putih"
 #. Translators: this is the spoken representation for the character '●' (U+25cf)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: ../src/orca/mathsymbols.py:2189
-#, fuzzy
-#| msgid "black circle"
 msgctxt "math symbol"
 msgid "black circle"
 msgstr "lingkaran hitam"
 
 #. Translators: this is the spoken representation for the character '◦' (U+25e6)
 #: ../src/orca/mathsymbols.py:2192
-#, fuzzy
-#| msgid "white bullet"
 msgctxt "math symbol"
 msgid "white bullet"
 msgstr "bulet putih"
@@ -8211,10 +8001,8 @@ msgstr "Gaya kapitalisasi diatur ke pengejaan."
 #. is presented to indicate that the application's native caret navigation is
 #. active / not being overridden by Orca.
 #: ../src/orca/messages.py:144
-#, fuzzy
-#| msgid "Gecko is controlling the caret."
 msgid "The application is controlling the caret."
-msgstr "Gecko sedang mengendalikan karet."
+msgstr "Aplikasi sedang mengendalikan karet."
 
 #. Translators: Gecko native caret navigation is where Firefox (or Thunderbird)
 #. itself controls how the arrow keys move the caret around HTML content. It's
@@ -8252,9 +8040,8 @@ msgstr "OPSI"
 #. It serves as a sort of title and is followed by a detailed list of Orca's
 #. optional command-line arguments.
 #: ../src/orca/messages.py:170
-#, fuzzy
 msgid "Optional arguments"
-msgstr "opsional"
+msgstr "Argumen opsional"
 
 #. Translators: This string appears when using 'Orca -h' at the command line.
 #. It is followed by a brief list of Orca's optional command-line arguments.
@@ -8347,9 +8134,8 @@ msgstr "Gantikan instansi pembaca layar yang sedang berjalan ini"
 #. Translators: this is the description of command line option '-h, --help'
 #. which lists all the available command line options.
 #: ../src/orca/messages.py:236
-#, fuzzy
 msgid "Show this help message and exit"
-msgstr "Pesan bantuan"
+msgstr "Tampilkan pesan bantuan ini dan keluar"
 
 #. Translators: This is the description of command line option '--debug' which
 #. causes debugging output for Orca to be sent to a file. The YYYY-MM-DD-HH:MM:SS
@@ -8385,10 +8171,8 @@ msgstr "Atur preferensi pengguna (versi teks)"
 #. Translators: This is the description of command line option '-s, --setup'
 #. that will place the user in Orca's GUI preferences dialog.
 #: ../src/orca/messages.py:263
-#, fuzzy
-#| msgid "Set up user preferences (text version)"
 msgid "Set up user preferences (GUI version)"
-msgstr "Atur preferensi pengguna (versi teks)"
+msgstr "Atur preferensi pengguna (versi GUI)"
 
 #. Translators: This text is the description displayed when Orca is launched
 #. from the command line and the help text is displayed.
@@ -9082,10 +8866,10 @@ msgstr "Gaung tombol ditata ke kata dan kalimat."
 #. about the MathML 'menclose' element and its notation types, see:
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:813
-#, fuzzy, python-format
+#, python-format
 msgctxt "math enclosure"
 msgid "Enclosed by: %s"
-msgstr "Mengubah hak akses semua item pada '%s'"
+msgstr "Diapit oleh: %s"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9106,10 +8890,9 @@ msgstr "Simbol"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:829
-#, fuzzy
 msgctxt "math enclosure"
 msgid "a box"
-msgstr "kotak cek"
+msgstr "suatu kotak"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9118,11 +8901,9 @@ msgstr "kotak cek"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:837
-#, fuzzy
-#| msgid "black circle"
 msgctxt "math enclosure"
 msgid "a circle"
-msgstr "Lingkaran"
+msgstr "suatu lingkaran"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9154,10 +8935,9 @@ msgstr ""
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:861
-#, fuzzy
 msgctxt "math enclosure"
 msgid "a rounded box"
-msgstr "kotak cek"
+msgstr "kotak berpojok lengkung"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9166,11 +8946,9 @@ msgstr "kotak cek"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:869
-#, fuzzy
-#| msgid "horizontal"
 msgctxt "math enclosure"
 msgid "a horizontal strike"
-msgstr "Coret"
+msgstr "sebuah coret horisontal"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9179,11 +8957,9 @@ msgstr "Coret"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:877
-#, fuzzy
-#| msgid "vertical bar"
 msgctxt "math enclosure"
 msgid "a vertical strike"
-msgstr "Coret"
+msgstr "sebuah coret vertikal"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9192,10 +8968,9 @@ msgstr "Coret"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:885
-#, fuzzy
 msgctxt "math enclosure"
 msgid "a down diagonal strike"
-msgstr "Diagonal"
+msgstr "sebuah coret diagonal turun"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9204,10 +8979,9 @@ msgstr "Diagonal"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:893
-#, fuzzy
 msgctxt "math enclosure"
 msgid "an up diagonal strike"
-msgstr "Diagonal"
+msgstr "sebuah coret diagonal naik"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9216,11 +8990,9 @@ msgstr "Diagonal"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:901
-#, fuzzy
-#| msgid "right arrow"
 msgctxt "math enclosure"
 msgid "a northeast arrow"
-msgstr "Timur Laut"
+msgstr "suatu panah timur Laut"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9229,11 +9001,9 @@ msgstr "Timur Laut"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:909
-#, fuzzy
-#| msgid "Wrapping to bottom."
 msgctxt "math enclosure"
 msgid "a line at the bottom"
-msgstr "_Dasar"
+msgstr "suatu garis di dasar"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9242,10 +9012,9 @@ msgstr "_Dasar"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:917
-#, fuzzy
 msgctxt "math enclosure"
 msgid "a line on the left"
-msgstr "Baris Kiri"
+msgstr "suatu garis di kiri"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9254,12 +9023,9 @@ msgstr "Baris Kiri"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:925
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "line height"
 msgctxt "math enclosure"
 msgid "a line on the right"
-msgstr "Baris Kanan"
+msgstr "suatu garis di kanan"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9268,10 +9034,9 @@ msgstr "Baris Kanan"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:933
-#, fuzzy
 msgctxt "math enclosure"
 msgid "a line at the top"
-msgstr "_Puncak"
+msgstr "suatu garis di puncak"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9293,10 +9058,9 @@ msgstr "sudut"
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #. This particular string is for the "madruwb" notation type.
 #: ../src/orca/messages.py:950
-#, fuzzy
 msgctxt "math enclosure"
 msgid "an arabic factorial symbol"
-msgstr "Faktorial"
+msgstr "suatu simbol faktorial arab"
 
 #. Translators: This phrase is spoken to inform the user of all of the MathML
 #. enclosure notations associated with a given mathematical expression. For
@@ -9310,8 +9074,6 @@ msgstr "Faktorial"
 #. element and its notation types, see:
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: ../src/orca/messages.py:963
-#, fuzzy
-#| msgid "and"
 msgctxt "math enclosure"
 msgid "and"
 msgstr "dan"
@@ -9320,9 +9082,8 @@ msgstr "dan"
 #. be said is part of a mathematical fraction. For instance, given x+1/y+2, Orca
 #. would say "fraction start, x+1 over y+2, fraction end."
 #: ../src/orca/messages.py:968
-#, fuzzy
 msgid "fraction start"
-msgstr "Pembagian"
+msgstr "awal fraksi"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is part of a mathematical fraction whose bar is not displayed. See
@@ -9341,20 +9102,16 @@ msgstr ""
 #. denominator in a mathematical fraction. For instance, given x+1/y+2, Orca
 #. would would say "fraction start, x+1 over y+2, fraction end."
 #: ../src/orca/messages.py:984
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "overline"
 msgctxt "math fraction"
 msgid "over"
-msgstr "Mulai _Ulang"
+msgstr "dibagi"
 
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical fraction. For instance, given x+1/y+2,
 #. Orca would would say "fraction start, x+1 over y+2, fraction end."
 #: ../src/orca/messages.py:989
-#, fuzzy
 msgid "fraction end"
-msgstr "Pembagian"
+msgstr "akhir fraksi"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is a square root. For instance, for √9 Orca would say "square root
@@ -9363,10 +9120,8 @@ msgstr "Pembagian"
 #. might not even be a simple string; it might be the square root of another
 #. expression such as a fraction.
 #: ../src/orca/messages.py:997
-#, fuzzy
-#| msgid "square root"
 msgid "square root of"
-msgstr "akar kuadrat"
+msgstr "akar kuadrat dari"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is a cube root. For instance, for the cube root of 9 Orca would
@@ -9375,10 +9130,8 @@ msgstr "akar kuadrat"
 #. is unknown and might not even be a simple string; it might be the cube root
 #. of another expression such as a fraction.
 #: ../src/orca/messages.py:1005
-#, fuzzy
-#| msgid "cube root"
 msgid "cube root of"
-msgstr "akar pangkat tiga"
+msgstr "akar pangkat tiga dari"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is an nth root. https://en.wikipedia.org/wiki/Nth_root. For instance,
@@ -9387,9 +9140,8 @@ msgstr "akar pangkat tiga"
 #. index, which precedes this string, is unknown and might not even be a simple
 #. expression like "fourth"; the index might instead be a fraction.
 #: ../src/orca/messages.py:1013
-#, fuzzy
 msgid "root of"
-msgstr "Akar"
+msgstr "akar dari"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is part of a mathematical root (square root, cube root, nth root).
@@ -9399,18 +9151,16 @@ msgstr "Akar"
 #. 4, but instead the fraction x/4, beginning the phrase with "root start" can
 #. help the user better understand that x/4 is the index of the root.
 #: ../src/orca/messages.py:1022
-#, fuzzy
 msgid "root start"
-msgstr "Akar"
+msgstr "mulai akar"
 
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical root (square root, cube root, nth root).
 #. For instance, for the cube root of 9, Orca would say "cube root of 9, root
 #. end" (assuming the user settings indicate that root endings should be spoken).
 #: ../src/orca/messages.py:1028
-#, fuzzy
 msgid "root end"
-msgstr "Akar"
+msgstr "akhir akar"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is subscripted text in a mathematical expression. Note that the
@@ -9418,11 +9168,9 @@ msgstr "Akar"
 #. and in this instance we have no additional context through which a more user-
 #. friendly word or phrase can reliably be chosen.
 #: ../src/orca/messages.py:1035
-#, fuzzy
-#| msgid "subscript 0"
 msgctxt "math script generic"
 msgid "subscript"
-msgstr "Subskrip"
+msgstr "subskrip"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is superscripted text in a mathematical expression. Note that the
@@ -9430,11 +9178,9 @@ msgstr "Subskrip"
 #. and in this instance we have no additional context through which a more user-
 #. friendly word or phrase can reliably be chosen.
 #: ../src/orca/messages.py:1042
-#, fuzzy
-#| msgid "superscript a"
 msgctxt "math script generic"
 msgid "superscript"
-msgstr "Superskrip"
+msgstr "superskrip"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is subscripted text which precedes the base in a mathematical
@@ -9442,11 +9188,9 @@ msgstr "Superskrip"
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.mmultiscripts
 #. https://developer.mozilla.org/en-US/docs/Web/MathML/Element/mmultiscripts
 #: ../src/orca/messages.py:1049
-#, fuzzy
-#| msgid "subscript 0"
 msgctxt "math script"
 msgid "pre-subscript"
-msgstr "Subskrip"
+msgstr "pra-subskrip"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is superscripted text which precedes the base in a mathematical
@@ -9454,11 +9198,9 @@ msgstr "Subskrip"
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.mmultiscripts
 #. https://developer.mozilla.org/en-US/docs/Web/MathML/Element/mmultiscripts
 #: ../src/orca/messages.py:1056
-#, fuzzy
-#| msgid "superscript a"
 msgctxt "math script"
 msgid "pre-superscript"
-msgstr "Superskrip"
+msgstr "pra-superskrip"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is underscripted text in a mathematical expression. Note that the
@@ -9491,21 +9233,17 @@ msgstr "a superskrip"
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical table.
 #: ../src/orca/messages.py:1078
-#, fuzzy
-#| msgctxt "indentation and justification"
-#| msgid "Enabled"
 msgctxt "math table"
 msgid "table end"
-msgstr "Akhir tabel"
+msgstr "akhir tabel"
 
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical table which is nested inside another
 #. mathematical table.
 #: ../src/orca/messages.py:1083
-#, fuzzy
 msgctxt "math table"
 msgid "nested table end"
-msgstr "Akhir tabel"
+msgstr "akhir tabel bersarang"
 
 #. Translators: Inaccessible means that the application cannot be read by Orca.
 #. This usually means the application is not friendly to the assistive technology
@@ -9875,7 +9613,6 @@ msgstr "Konteksnya %s"
 #. key presses as something that should be handled by the focused widget.
 #. This string is the message presented when Orca switches to browse mode.
 #: ../src/orca/messages.py:1363
-#, fuzzy
 msgid "Browse mode"
 msgstr "Mode ramban"
 
@@ -9893,7 +9630,6 @@ msgstr "Mode ramban"
 #. key presses as something that should be handled by the focused widget.
 #. This string is the message presented when Orca switches to focus mode.
 #: ../src/orca/messages.py:1378
-#, fuzzy
 msgid "Focus mode"
 msgstr "Mode fokus"
 
@@ -9915,7 +9651,7 @@ msgstr "Mode fokus"
 #. with the widget. The substituted string is a human-consumable keybinding
 #. such as "Alt+Shift+A."
 #: ../src/orca/messages.py:1397
-#, fuzzy, python-format
+#, python-format
 msgid "To enable focus mode press %s."
 msgstr "Untuk memfungsikan mode fokus tekan %s."
 
@@ -10010,8 +9746,6 @@ msgstr "Tak ada objek besar lagi."
 #. elements which have an "onClick" action. This is a detailed message which
 #. will be presented to the user if no more clickable elements can be found.
 #: ../src/orca/messages.py:1465
-#, fuzzy
-#| msgid "No more tables."
 msgid "No more clickables."
 msgstr "Tak ada yang dapat diklik lagi."
 
@@ -10056,8 +9790,6 @@ msgstr "Tak ada heading lagi pada tingkat %d."
 #. to image. This is a detailed message which will be presented to the user
 #. if no more images can be found.
 #: ../src/orca/messages.py:1496
-#, fuzzy
-#| msgid "No more tables."
 msgid "No more images."
 msgstr "Tak ada citra lagi."
 
@@ -10868,12 +10600,10 @@ msgstr[0] "Senarai dengan %d butir"
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #: ../src/orca/messages.py:2064
-#, fuzzy, python-format
-#| msgid "table with %d row"
-#| msgid_plural "table with %d rows"
+#, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
-msgstr[0] "tabel dengan %d baris"
+msgstr[0] "tabel mat dengan %d baris"
 
 #. Translators: this represents the number of columns in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
@@ -10892,12 +10622,10 @@ msgstr[0] "%d kolom"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #: ../src/orca/messages.py:2079
-#, fuzzy, python-format
-#| msgid "table with %d row"
-#| msgid_plural "table with %d rows"
+#, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
-msgstr[0] "tabel dengan %d baris"
+msgstr[0] "tabel mat bersarang dengan %d baris"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
@@ -11086,7 +10814,6 @@ msgstr "Panel ikon"
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
 #: ../src/orca/object_properties.py:85
-#, fuzzy
 msgid "clickable"
 msgstr "dapat diklik"
 
@@ -11107,9 +10834,6 @@ msgstr "dikembangkan"
 #. Translators: This is a state which applies to elements in document content
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
 #: ../src/orca/object_properties.py:99
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Description"
 msgid "has long description"
 msgstr "punya deskripsi panjang"
 
