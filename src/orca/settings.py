@@ -290,6 +290,9 @@ speakProgressBarUpdates    = True
 brailleProgressBarUpdates  = False
 beepProgressBarUpdates     = False
 progressBarUpdateInterval  = 10
+progressBarSpeechInterval  = None
+progressBarBrailleInterval = None
+progressBarBeepInterval    = 0
 progressBarVerbosity       = PROGRESS_BAR_APPLICATION
 ignoreStatusBarProgressBars = True
 

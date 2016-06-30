@@ -355,19 +355,19 @@ class BrailleGenerator(generator.Generator):
 
     def _generateProgressBarIndex(self, obj, **args):
         if not args.get('isProgressBarUpdate') \
-           or not _settingsManager.getSetting('brailleProgressBarUpdates'):
+           or not self._shouldPresentProgressBarUpdate(obj, **args):
             return []
 
-        acc, updateTime, updateValue = self._script.utilities.getMostRecentProgressBarUpdate()
+        acc, updateTime, updateValue = self._getMostRecentProgressBarUpdate()
         if acc != obj:
-            number, count = self._script.utilities.getProgressBarNumberAndCount(obj)
+            number, count = self.getProgressBarNumberAndCount(obj)
             return ['%s' % number]
 
         return []
 
     def _generateProgressBarValue(self, obj, **args):
         if args.get('isProgressBarUpdate') \
-           and not _settingsManager.getSetting('brailleProgressBarUpdates'):
+           and not self._shouldPresentProgressBarUpdate(obj, **args):
             return []
 
         percent = self._script.utilities.getValueAsPercent(obj)
@@ -375,6 +375,19 @@ class BrailleGenerator(generator.Generator):
             return ['%s%%' % percent]
 
         return []
+
+    def _getProgressBarUpdateInterval(self):
+        interval = _settingsManager.getSetting('progressBarBrailleInterval')
+        if interval is None:
+            return super()._getProgressBarUpdateInterval()
+
+        return int(interval)
+
+    def _shouldPresentProgressBarUpdate(self, obj, **args):
+        if not _settingsManager.getSetting('brailleProgressBarUpdates'):
+            return False
+
+        return super()._shouldPresentProgressBarUpdate(obj, **args)
 
     #####################################################################
     #                                                                   #

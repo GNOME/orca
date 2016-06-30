@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2009 Sun Microsystems Inc.
+# Copyright 2015-2016 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,7 +23,8 @@
 __id__        = "$Id:$"
 __version__   = "$Revision:$"
 __date__      = "$Date:$"
-__copyright__ = "Copyright (c) 2009 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2009 Sun Microsystems Inc." \
+                "Copyright (c) 2015-2016 Igalia, S.L."
 __license__   = "LGPL"
 
 import sys
@@ -36,6 +38,7 @@ from . import debug
 from . import messages
 from . import object_properties
 from . import settings
+from . import settings_manager
 
 import collections
 
@@ -58,6 +61,8 @@ def _formatExceptionInfo(maxTBlevel=5):
 #
 METHOD_PREFIX = "_generate"
 
+_settingsManager = settings_manager.getManager()
+
 class Generator:
     """Takes accessible objects and generates a presentation for those
     objects.  See the generate method, which is the primary entry
@@ -71,6 +76,7 @@ class Generator:
 
         self._mode = mode
         self._script = script
+        self._activeProgressBars = {}
         self._methodsDict = {}
         for method in \
             [z for z in [getattr(self, y).__get__(self, self.__class__) for y in [x for x in dir(self) if x.startswith(METHOD_PREFIX)]] if isinstance(z, collections.Callable)]:
@@ -252,6 +258,9 @@ class Generator:
         debug.println(debug.LEVEL_ALL, "%s GENERATOR: Results:" % self._mode.upper(), True)
         for element in result:
             debug.println(debug.LEVEL_ALL, "           %s" % element)
+
+        if args.get('isProgressBarUpdate') and result:
+            self.setProgressBarUpdateTimeAndValue(obj)
 
         return result
 
@@ -1069,6 +1078,55 @@ class Generator:
 
     def _generateProgressBarValue(self, obj, **args):
         return []
+
+    def _getProgressBarUpdateInterval(self):
+        return int(_settingsManager.getSetting('progressBarUpdateInterval'))
+
+    def _shouldPresentProgressBarUpdate(self, obj, **args):
+        percent = self._script.utilities.getValueAsPercent(obj)
+        lastTime, lastValue = self.getProgressBarUpdateTimeAndValue(obj, type=self)
+        if percent == lastValue:
+            return False
+
+        if percent == 100:
+            return True
+
+        interval = int(time.time() - lastTime)
+        return interval >= self._getProgressBarUpdateInterval()
+
+    def _cleanUpCachedProgressBars(self):
+        isValid = lambda x: not (self._script.utilities.isZombie(x) or self._script.utilities.isDead(x))
+        bars = list(filter(isValid, self._activeProgressBars))
+        self._activeProgressBars = {x:self._activeProgressBars.get(x) for x in bars}
+
+    def _getMostRecentProgressBarUpdate(self):
+        self._cleanUpCachedProgressBars()
+        if not self._activeProgressBars.values():
+            return None, 0.0, None
+
+        sortedValues = sorted(self._activeProgressBars.values(), key=lambda x: x[0])
+        prevTime, prevValue = sortedValues[-1]
+        return list(self._activeProgressBars.keys())[-1], prevTime, prevValue
+
+    def getProgressBarNumberAndCount(self, obj):
+        self._cleanUpCachedProgressBars()
+        if not obj in self._activeProgressBars:
+            self._activeProgressBars[obj] = 0.0, None
+
+        thisValue = self.getProgressBarUpdateTimeAndValue(obj)
+        index = list(self._activeProgressBars.values()).index(thisValue)
+        return index + 1, len(self._activeProgressBars)
+
+    def getProgressBarUpdateTimeAndValue(self, obj, **args):
+        if not obj in self._activeProgressBars:
+            self._activeProgressBars[obj] = 0.0, None
+
+        return self._activeProgressBars.get(obj)
+
+    def setProgressBarUpdateTimeAndValue(self, obj, lastTime=None, lastValue=None):
+        lastTime = lastTime or time.time()
+        lastValue = lastValue or self._script.utilities.getValueAsPercent(obj)
+        self._activeProgressBars[obj] = lastTime, lastValue
 
     def _getAlternativeRole(self, obj, **args):
         if self._script.utilities.isMath(obj):

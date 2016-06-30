@@ -2700,9 +2700,6 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        if isProgressBarUpdate:
-            self.utilities.setProgressBarUpdateTimeAndValue(obj)
-
         self.pointOfReference["oldValue"] = value.currentValue
         self.updateBraille(obj, isProgressBarUpdate=isProgressBarUpdate)
         speech.speak(self.speechGenerator.generateSpeech(

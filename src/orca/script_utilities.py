@@ -96,7 +96,6 @@ class Utilities:
         """
 
         self._script = script
-        self._activeProgressBars = {}
         self._clipboardHandlerId = None
 
     #########################################################################
@@ -845,16 +844,6 @@ class Utilities:
         if self.hasNoSize(obj):
             return False, "Has no size"
 
-        percent = self.getValueAsPercent(obj)
-        lastTime, lastValue = self.getProgressBarUpdateTimeAndValue(obj)
-        if percent == lastValue:
-            return False, "Value (%s) hasn't changed" % percent
-
-        interval = int(time.time() - lastTime)
-        if interval < int(_settingsManager.getSetting('progressBarUpdateInterval')):
-            if percent != 100:
-                return False, "Last update was only %is ago" % interval
-
         if _settingsManager.getSetting('ignoreStatusBarProgressBars'):
             isStatusBar = lambda x: x and x.getRole() == pyatspi.ROLE_STATUS_BAR
             if pyatspi.findAncestor(obj, isStatusBar):
@@ -880,39 +869,6 @@ class Utilities:
             return False, "App %s is not %s" % (app, orca_state.activeScript.app)
 
         return True, "Not handled by any other case"
-
-    def _cleanUpCachedProgressBars(self):
-        isValid = lambda x: not (self.isZombie(x) or self.isDead(x))
-        bars = list(filter(isValid, self._activeProgressBars))
-        self._activeProgressBars = {x:self._activeProgressBars.get(x) for x in bars}
-
-    def getProgressBarNumberAndCount(self, obj):
-        self._cleanUpCachedProgressBars()
-        if not obj in self._activeProgressBars:
-            self._activeProgressBars[obj] = 0.0, None
-
-        thisValue = self.getProgressBarUpdateTimeAndValue(obj)
-        index = list(self._activeProgressBars.values()).index(thisValue)
-        return index + 1, len(self._activeProgressBars)
-
-    def getMostRecentProgressBarUpdate(self):
-        self._cleanUpCachedProgressBars()
-        if not self._activeProgressBars.values():
-            return None, 0.0, None
-
-        sortedValues = sorted(self._activeProgressBars.values(), key=lambda x: x[0])
-        prevTime, prevValue = sortedValues[-1]
-        return list(self._activeProgressBars.keys())[-1], prevTime, prevValue
-
-    def getProgressBarUpdateTimeAndValue(self, obj):
-        if not obj in self._activeProgressBars:
-            self._activeProgressBars[obj] = 0.0, None
-        return self._activeProgressBars.get(obj)
-
-    def setProgressBarUpdateTimeAndValue(self, obj, lastTime=None, lastValue=None):
-        lastTime = lastTime or time.time()
-        lastValue = lastValue or self.getValueAsPercent(obj)
-        self._activeProgressBars[obj] = lastTime, lastValue
 
     def getValueAsPercent(self, obj):
         try:

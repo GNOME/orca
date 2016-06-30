@@ -1668,13 +1668,13 @@ class SpeechGenerator(generator.Generator):
 
     def _generateProgressBarIndex(self, obj, **args):
         if not args.get('isProgressBarUpdate') \
-           or not _settingsManager.getSetting('speakProgressBarUpdates'):
+           or not self._shouldPresentProgressBarUpdate(obj, **args):
             return []
 
         result = []
-        acc, updateTime, updateValue = self._script.utilities.getMostRecentProgressBarUpdate()
+        acc, updateTime, updateValue = self._getMostRecentProgressBarUpdate()
         if acc != obj:
-            number, count = self._script.utilities.getProgressBarNumberAndCount(obj)
+            number, count = self.getProgressBarNumberAndCount(obj)
             result = [messages.PROGRESS_BAR_NUMBER % (number)]
             result.extend(self.voice(SYSTEM))
 
@@ -1682,7 +1682,7 @@ class SpeechGenerator(generator.Generator):
 
     def _generateProgressBarValue(self, obj, **args):
         if args.get('isProgressBarUpdate') \
-           and not _settingsManager.getSetting('speakProgressBarUpdates'):
+           and not self._shouldPresentProgressBarUpdate(obj, **args):
             return []
 
         result = []
@@ -1692,6 +1692,19 @@ class SpeechGenerator(generator.Generator):
             result.extend(self.voice(SYSTEM))
 
         return result
+
+    def _getProgressBarUpdateInterval(self):
+        interval = _settingsManager.getSetting('progressBarSpeechInterval')
+        if interval is None:
+            interval = super()._getProgressBarUpdateInterval()
+
+        return int(interval)
+
+    def _shouldPresentProgressBarUpdate(self, obj, **args):
+        if not _settingsManager.getSetting('speakProgressBarUpdates'):
+            return False
+
+        return super()._shouldPresentProgressBarUpdate(obj, **args)
 
     def _generateDefaultButton(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio

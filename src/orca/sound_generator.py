@@ -289,7 +289,7 @@ class SoundGenerator(generator.Generator):
         """Returns an array of sounds representing the progress bar value."""
 
         if args.get('isProgressBarUpdate'):
-            if not _settingsManager.getSetting('beepProgressBarUpdates'):
+            if not self._shouldPresentProgressBarUpdate(obj, **args):
                 return []
         elif not _settingsManager.getSetting('playSoundForValue'):
             return []
@@ -314,6 +314,19 @@ class SoundGenerator(generator.Generator):
             frequency = int(percent * 22)
 
         return [Tone(duration, frequency, volumeMultiplier, Tone.SINE_WAVE)]
+
+    def _getProgressBarUpdateInterval(self):
+        interval = _settingsManager.getSetting('progressBarBeepInterval')
+        if interval is None:
+            return super()._getProgressBarUpdateInterval()
+
+        return int(interval)
+
+    def _shouldPresentProgressBarUpdate(self, obj, **args):
+        if not _settingsManager.getSetting('beepProgressBarUpdates'):
+            return False
+
+        return super()._shouldPresentProgressBarUpdate(obj, **args)
 
     #####################################################################
     #                                                                   #
