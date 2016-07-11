@@ -3744,7 +3744,7 @@ class Script(script.Script):
                 orca.setLocusOfFocus(None, focusedObject, False)
                 role = focusedObject.getRole()
 
-        if role == pyatspi.ROLE_PASSWORD_TEXT:
+        if role == pyatspi.ROLE_PASSWORD_TEXT and not event.isLockingKey():
             return False
 
         # Worst. Hack. EVER. We have no reliable way of knowing a password is
