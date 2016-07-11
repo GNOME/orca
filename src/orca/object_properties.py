@@ -65,6 +65,13 @@ NODE_LEVEL_SPEECH = _("tree level %d")
 # ancestors the node has). This is the braille version.
 NODE_LEVEL_BRAILLE = _("TREE LEVEL %d")
 
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# The reason for including the editable state as part of the role is to make it
+# possible for users to quickly identify combo boxes in which a value can be
+# typed or arrowed to.
+ROLE_EDITABLE_COMBO_BOX = _("editable combo box")
+
 # Translators: The 'h' in this string represents a heading level attribute for
 # content that you might find in something such as HTML content (e.g., <h1>).
 # The translated form is meant to be a single character followed by a numeric

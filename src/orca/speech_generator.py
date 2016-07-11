@@ -377,7 +377,7 @@ class SpeechGenerator(generator.Generator):
         - role: an optional pyatspi role to use instead
         """
 
-        if not isinstance(role, pyatspi.Role):
+        if not isinstance(role, (pyatspi.Role, Atspi.Role)):
             try:
                 return obj.getLocalizedRoleName()
             except:
@@ -385,6 +385,10 @@ class SpeechGenerator(generator.Generator):
 
         if not role:
             return ''
+
+        if self._script.utilities.isEditableComboBox(obj) \
+           or self._script.utilities.isEditableDescendantOfComboBox(obj):
+            return object_properties.ROLE_EDITABLE_COMBO_BOX
 
         if role == pyatspi.ROLE_LINK and obj.getState().contains(pyatspi.STATE_VISITED):
             return object_properties.ROLE_VISITED_LINK

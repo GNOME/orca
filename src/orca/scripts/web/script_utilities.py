@@ -65,6 +65,8 @@ class Utilities(script_utilities.Utilities):
         self._id = {}
         self._isClickableElement = {}
         self._isAnchor = {}
+        self._isEditableComboBox = {}
+        self._isEditableDescendantOfComboBox = {}
         self._isLandmark = {}
         self._isLiveRegion = {}
         self._isLink = {}
@@ -117,6 +119,8 @@ class Utilities(script_utilities.Utilities):
         self._id = {}
         self._isClickableElement = {}
         self._isAnchor = {}
+        self._isEditableComboBox = {}
+        self._isEditableDescendantOfComboBox = {}
         self._isLandmark = {}
         self._isLiveRegion = {}
         self._isLink = {}
@@ -2134,6 +2138,53 @@ class Utilities(script_utilities.Utilities):
                 rv = "click" in names
 
         self._isClickableElement[hash(obj)] = rv
+        return rv
+
+    def isEditableDescendantOfComboBox(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isEditableDescendantOfComboBox(obj)
+
+        rv = self._isEditableDescendantOfComboBox.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            state = obj.getState()
+        except:
+            msg = "ERROR: Exception getting state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if not state.contains(pyatspi.STATE_EDITABLE):
+            return False
+
+        isComboBox = lambda x: x and x.getRole() == pyatspi.ROLE_COMBO_BOX
+        rv = pyatspi.findAncestor(obj, isComboBox) is not None
+
+        self._isEditableDescendantOfComboBox[hash(obj)] = rv
+        return rv
+
+    def isEditableComboBox(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isEditableComboBox(obj)
+
+        rv = self._isEditableComboBox.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            role = obj.getRole()
+            state = obj.getState()
+        except:
+            msg = "ERROR: Exception getting role and state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        rv = False
+        if role == pyatspi.ROLE_COMBO_BOX:
+            rv = state.contains(pyatspi.STATE_EDITABLE)
+
+        self._isEditableComboBox[hash(obj)] = rv
         return rv
 
     def isLandmark(self, obj):

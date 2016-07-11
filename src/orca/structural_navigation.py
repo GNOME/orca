@@ -1735,6 +1735,7 @@ class StructuralNavigation:
         """
 
         role = [pyatspi.ROLE_DOCUMENT_FRAME,
+                pyatspi.ROLE_COMBO_BOX,
                 pyatspi.ROLE_ENTRY,
                 pyatspi.ROLE_PASSWORD_TEXT,
                 pyatspi.ROLE_TEXT]
@@ -1762,6 +1763,7 @@ class StructuralNavigation:
 
         isMatch = False
         if obj and obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
+                                     pyatspi.ROLE_COMBO_BOX,
                                      pyatspi.ROLE_ENTRY,
                                      pyatspi.ROLE_PASSWORD_TEXT,
                                      pyatspi.ROLE_TEXT]:

@@ -3256,6 +3256,12 @@ class Utilities:
     def isEntryCompletionPopupItem(self, obj):
         return False
 
+    def isEditableComboBox(self, obj):
+        return False
+
+    def isEditableDescendantOfComboBox(self, obj):
+        return False
+
     def isPopOver(self, obj):
         return False
 

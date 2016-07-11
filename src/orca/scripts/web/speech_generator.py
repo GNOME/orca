@@ -408,6 +408,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
+        if self._script.utilities.isEditableComboBox(obj):
+            return []
+
         position = self._script.utilities.getPositionInSet(obj)
         total = self._script.utilities.getSetSize(obj)
         if position is None or total is None:
