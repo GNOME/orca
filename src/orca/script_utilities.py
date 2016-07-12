@@ -3705,6 +3705,13 @@ class Utilities:
         text = "%s\n%s" % (text, newText)
         clipboard.set_text(text, -1)
 
+    def lastInputEventWasPrintableKey(self):
+        event = orca_state.lastInputEvent
+        if not isinstance(event, input_event.KeyboardEvent):
+            return False
+
+        return event.isPrintableKey()
+
     def lastInputEventWasCommand(self):
         keyString, mods = self.lastKeyAndModifiers()
         return mods & keybindings.CTRL_MODIFIER_MASK

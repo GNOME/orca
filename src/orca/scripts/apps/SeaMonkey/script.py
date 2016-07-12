@@ -48,10 +48,38 @@ class Script(Gecko.Script):
             msg = "ERROR: Exception getting role for %s" % orca_state.locusOfFocus
             debug.println(debug.LEVEL_INFO, msg, True)
         else:
-            if focusRole == pyatspi.ROLE_TABLE_ROW :
+            if focusRole == pyatspi.ROLE_TABLE_ROW:
                 msg = "SEAMONKEY: Ignoring, locusOfFocus is %s" % orca_state.locusOfFocus
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
         super().onBusyChanged(event)
 
+    def onFocus(self, event):
+        """Callback for focus: accessibility events."""
+
+        # We should get proper state-changed events for these.
+        if self.utilities.inDocumentContent(event.source):
+            return
+
+        try:
+            focusRole = orca_state.locusOfFocus.getRole()
+        except:
+            msg = "ERROR: Exception getting role for %s" % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
+            focusRole = None
+
+        if focusRole != pyatspi.ROLE_ENTRY or not self.utilities.inDocumentContent():
+            super().onFocus(event)
+            return
+
+        if event.source.getRole() == pyatspi.ROLE_MENU:
+            msg = "SEAMONKEY: Non-document menu claimed focus from document entry"
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+            if self.utilities.lastInputEventWasPrintableKey():
+                msg = "SEAMONKEY: Ignoring, believed to be result of printable input"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return
+
+        super().onFocus(event)
