@@ -3483,6 +3483,22 @@ class Utilities:
 
         return False
 
+    def isShowingOrVisible(self, obj):
+        try:
+            state = obj.getState()
+        except:
+            msg = "ERROR: Exception getting state of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if state.contains(pyatspi.STATE_SHOWING) \
+           or state.contains(pyatspi.STATE_VISIBLE):
+            return True
+
+        msg = "INFO: %s is neither showing nor visible" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+
     def isDead(self, obj):
         try:
             name = obj.name

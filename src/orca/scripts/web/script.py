@@ -1105,10 +1105,11 @@ class Script(default.Script):
         if not obj or self.utilities.isZombie(obj):
             self.utilities.clearCaretContext()
 
+        shouldPresent = self.utilities.isShowingOrVisible(event.source)
         if not _settingsManager.getSetting('onlySpeakDisplayedText'):
             if event.detail1:
                 self.presentMessage(messages.PAGE_LOADING_START)
-            elif event.source.name:
+            elif event.source.name and shouldPresent:
                 msg = messages.PAGE_LOADING_END_NAMED % event.source.name
                 self.presentMessage(msg, resetStyles=False)
             else:
@@ -1119,7 +1120,7 @@ class Script(default.Script):
 
         self.utilities.clearCachedObjects()
 
-        if _settingsManager.getSetting('pageSummaryOnLoad'):
+        if _settingsManager.getSetting('pageSummaryOnLoad') and shouldPresent:
             msg = "WEB: Getting page summary for obj %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             summary = self.utilities.getPageSummary(obj)
