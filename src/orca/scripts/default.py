@@ -828,15 +828,11 @@ class Script(script.Script):
         shouldNotInterrupt = \
            self.windowActivateTime and time.time() - self.windowActivateTime < 1
 
-        # [[[TODO: WDW - this should move to the generator.]]]
-        if newLocusOfFocus.getRole() == pyatspi.ROLE_LINK:
-            voice = self.voices[settings.HYPERLINK_VOICE]
-        else:
-            voice = self.voices[settings.DEFAULT_VOICE]
         utterances = self.speechGenerator.generateSpeech(
             newLocusOfFocus,
             priorObj=oldLocusOfFocus)
-        speech.speak(utterances, voice, not shouldNotInterrupt)
+
+        speech.speak(utterances, interrupt=not shouldNotInterrupt)
         self._saveFocusedObjectInfo(newLocusOfFocus)
 
     def activate(self):
@@ -1247,25 +1243,14 @@ class Script(script.Script):
 
         obj = orca_state.locusOfFocus
         self.updateBraille(obj)
-        voice = self.voices[settings.DEFAULT_VOICE]
 
         frame, dialog = self.utilities.frameAndDialog(obj)
         if frame:
-            # In windows with lots of objects (Thunderbird, Firefox, etc.)
-            # If we wait until we've checked for both the status bar and
-            # a default button, there may be a noticable delay. Therefore,
-            # speak the status bar info immediately and then go looking
-            # for a default button.
-            #
-            msg = self.speechGenerator.generateStatusBar(frame)
-            if msg:
-                self.presentMessage(msg, voice=voice)
+            speech.speak(self.speechGenerator.generateStatusBar(frame))
 
         window = dialog or frame
         if window:
-            msg = self.speechGenerator.generateDefaultButton(window)
-            if msg:
-                self.presentMessage(msg, voice=voice)
+            speech.speak(self.speechGenerator.generateDefaultButton(window))
 
     def presentTitle(self, inputEvent):
         """Speaks and brailles the title of the window with focus."""
@@ -1362,6 +1347,8 @@ class Script(script.Script):
         [wordString, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.WORD)
 
+        voice = self.speechGenerator.voice(string=wordString)
+
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
         #
@@ -1378,15 +1365,14 @@ class Script(script.Script):
                 elif wordString.isspace():
                     speech.speak(messages.WHITE_SPACE)
                 elif wordString.isupper() and speechType == 1:
-                    speech.speak(wordString,
-                                 self.voices[settings.UPPERCASE_VOICE])
+                    speech.speak(wordString, voice)
                 elif speechType == 2:
                     self.spellCurrentItem(wordString)
                 elif speechType == 3:
                     self.phoneticSpellCurrentItem(wordString)
                 elif speechType == 1:
                     wordString = self.utilities.adjustForRepeats(wordString)
-                    speech.speak(wordString)
+                    speech.speak(wordString, voice)
 
         self.updateBrailleReview(targetCursorCell)
         self.currentReviewContents = wordString
@@ -1610,6 +1596,8 @@ class Script(script.Script):
         [lineString, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.LINE)
 
+        voice = self.speechGenerator.voice(string=lineString)
+
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
         #
@@ -1620,16 +1608,15 @@ class Script(script.Script):
                 speech.speak(messages.BLANK)
             elif lineString.isspace():
                 speech.speak(messages.WHITE_SPACE)
-            elif lineString.isupper() \
-                 and (speechType < 2 or speechType > 3):
-                speech.speak(lineString, self.voices[settings.UPPERCASE_VOICE])
+            elif lineString.isupper() and (speechType < 2 or speechType > 3):
+                speech.speak(lineString, voice)
             elif speechType == 2:
                 self.spellCurrentItem(lineString)
             elif speechType == 3:
                 self.phoneticSpellCurrentItem(lineString)
             else:
                 lineString = self.utilities.adjustForRepeats(lineString)
-                speech.speak(lineString)
+                speech.speak(lineString, voice)
 
         self.updateBrailleReview()
         self.currentReviewContents = lineString
@@ -1893,12 +1880,7 @@ class Script(script.Script):
 
         _settingsManager.setProfile(profileID, updateLocale=True)
 
-        # TODO: The right fix is to go find each and every case where we use
-        # self.voices directly and instead get the voices from the Settings
-        # Manager. But that's too big a change too close to code freeze. So
-        # for now we'll hack.
         speech.shutdown()
-        self.voices = _settingsManager.getSetting('voices')
         speech.init()
 
         # TODO: This is another "too close to code freeze" hack to cause the
@@ -2379,11 +2361,10 @@ class Script(script.Script):
         # expandable state if appropriate for the object type. The generators
         # need to gain some smarts w.r.t. state changes.
 
-        voice = self.voices.get(settings.SYSTEM_VOICE)
         if event.detail1:
-            speech.speak(messages.TEXT_SELECTED, voice, False)
+            self.speakMessage(messages.TEXT_SELECTED, interrupt=False)
         else:
-            speech.speak(messages.TEXT_UNSELECTED, voice, False)
+            self.speakMessage(messages.TEXT_UNSELECTED, interrupt=False)
 
         self.pointOfReference['selectedChange'] = hash(obj), event.detail1
 
@@ -2561,10 +2542,9 @@ class Script(script.Script):
 
         if len(string) == 1:
             self.speakCharacter(string)
-        elif string.isupper():
-            speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
         else:
-            speech.speak(string, self.voices[settings.DEFAULT_VOICE])
+            voice = self.speechGenerator.voice(string=string)
+            speech.speak(string, voice)
 
     def onTextInserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
@@ -2625,10 +2605,9 @@ class Script(script.Script):
         if speakString:
             if len(string) == 1:
                 self.speakCharacter(string)
-            elif string.isupper():
-                speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
             else:
-                speech.speak(string, self.voices[settings.DEFAULT_VOICE])
+                voice = self.speechGenerator.voice(string=string)
+                speech.speak(string, voice)
 
         if len(string) != 1:
             return
@@ -3049,13 +3028,7 @@ class Script(script.Script):
             sentence = self.utilities.substring(obj, sentenceStartOffset + 1,
                                          sentenceEndOffset + 1)
 
-        if self.utilities.linkIndex(obj, sentenceStartOffset + 1) >= 0:
-            voice = self.voices[settings.HYPERLINK_VOICE]
-        elif sentence.isupper():
-            voice = self.voices[settings.UPPERCASE_VOICE]
-        else:
-            voice = self.voices[settings.DEFAULT_VOICE]
-
+        voice = self.speechGenerator.voice(string=voice)
         sentence = self.utilities.adjustForRepeats(sentence)
         speech.speak(sentence, voice)
         return True
@@ -3131,13 +3104,7 @@ class Script(script.Script):
             word = self.utilities.\
                 substring(obj, wordStartOffset + 1, wordEndOffset + 1)
 
-        if self.utilities.linkIndex(obj, wordStartOffset + 1) >= 0:
-            voice = self.voices[settings.HYPERLINK_VOICE]
-        elif word.isupper():
-            voice = self.voices[settings.UPPERCASE_VOICE]
-        else:
-            voice = self.voices[settings.DEFAULT_VOICE]
-
+        voice = self.speechGenerator.voice(string=word)
         word = self.utilities.adjustForRepeats(word)
         speech.speak(word, voice)
         return True
@@ -3189,13 +3156,6 @@ class Script(script.Script):
             text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
         if not character or character == '\r':
             character = "\n"
-
-        if self.utilities.linkIndex(obj, offset) >= 0:
-            voice = self.voices[settings.HYPERLINK_VOICE]
-        elif character.isupper():
-            voice = self.voices[settings.UPPERCASE_VOICE]
-        else:
-            voice = self.voices[settings.DEFAULT_VOICE]
 
         speakBlankLines = _settingsManager.getSetting('speakBlankLines')
         if character == "\n":
@@ -3309,15 +3269,10 @@ class Script(script.Script):
             if lastChar == "\n" and lastWord != word:
                 self.speakCharacter("\n")
 
-        if self.utilities.linkIndex(obj, offset) >= 0:
-            voice = self.voices[settings.HYPERLINK_VOICE]
-        elif word.isupper():
-            voice = self.voices[settings.UPPERCASE_VOICE]
-        else:
-            voice = self.voices[settings.DEFAULT_VOICE]
 
         self.speakMisspelledIndicator(obj, startOffset)
 
+        voice = self.speechGenerator.voice(string=word)
         word = self.utilities.adjustForRepeats(word)
         self._lastWord = word
         speech.speak(word, voice)
@@ -3537,13 +3492,10 @@ class Script(script.Script):
                 lastEndOffset = endOffset
                 offset = endOffset
 
+                voice = self.speechGenerator.voice(string=lineString)
                 lineString = \
                     self.utilities.adjustForLinks(obj, lineString, startOffset)
                 lineString = self.utilities.adjustForRepeats(lineString)
-                if lineString.isupper():
-                    voice = settings.voices[settings.UPPERCASE_VOICE]
-                else:
-                    voice = settings.voices[settings.DEFAULT_VOICE]
 
                 context = speechserver.SayAllContext(
                     obj, lineString, startOffset, endOffset)
@@ -3647,11 +3599,7 @@ class Script(script.Script):
         """
 
         for (charIndex, character) in enumerate(itemString):
-            if character.isupper():
-                voice = settings.voices[settings.UPPERCASE_VOICE]
-                character = character.lower()
-            else:
-                voice =  settings.voices[settings.DEFAULT_VOICE]
+            voice = self.speechGenerator.voice(string=character)
             phoneticString = phonnames.getPhoneticName(character)
             speech.speak(phoneticString, voice)
 
@@ -4205,11 +4153,7 @@ class Script(script.Script):
         """Method to speak a single character. Scripts should use this
         method rather than calling speech.speakCharacter directly."""
 
-        if character.isupper():
-            voice = self.voices[settings.UPPERCASE_VOICE]
-        else:
-            voice = self.voices[settings.DEFAULT_VOICE]
-
+        voice = self.speechGenerator.voice(string=character)
         spokenCharacter = chnames.getCharacterName(character)
         speech.speakCharacter(spokenCharacter, voice)
 
@@ -4228,7 +4172,9 @@ class Script(script.Script):
            or _settingsManager.getSetting('onlySpeakDisplayedText'):
             return
 
-        systemVoice = self.voices.get(settings.SYSTEM_VOICE)
+        voices = _settingsManager.getSetting('voices')
+        systemVoice = voices.get(settings.SYSTEM_VOICE)
+
         voice = voice or systemVoice
         if voice == systemVoice and resetStyles:
             capStyle = _settingsManager.getSetting('capitalizationStyle')

@@ -347,11 +347,7 @@ class Script(default.Script):
 
         phrase = self.utilities.substring(obj, startOffset, endOffset)
         if len(phrase) and phrase != "\n":
-            if phrase.isupper():
-                voice = self.voices[settings.UPPERCASE_VOICE]
-            else:
-                voice = self.voices[settings.DEFAULT_VOICE]
-
+            voice = self.speechGenerator.voice(string=phrase)
             phrase = self.utilities.adjustForRepeats(phrase)
             links = [x for x in obj if x.getRole() == pyatspi.ROLE_LINK]
             if links:

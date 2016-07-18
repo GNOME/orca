@@ -118,7 +118,6 @@ class Script:
         self.eventCache = {}
         self.whereAmI = self.getWhereAmI()
         self.spellcheck = self.getSpellCheck()
-        self.voices = settings.voices
         self.tutorialGenerator = self.getTutorialGenerator()
 
         self.flatReviewContextClass = flat_review.Context

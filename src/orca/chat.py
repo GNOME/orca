@@ -35,7 +35,6 @@ from . import messages
 from . import orca_state
 from . import settings
 from . import settings_manager
-from . import speech
 
 _settingsManager = settings_manager.getManager()
 
@@ -596,7 +595,8 @@ class Chat:
         text = self._script.utilities.appendString(text, message)
 
         if len(text.strip()):
-            speech.speak(text)
+            voice = self._script.speechGenerator.voice(string=text)
+            self._script.speakMessage(text, voice=voice)
         self._script.displayBrailleMessage(text)
 
     def getMessageFromEvent(self, event):
@@ -677,11 +677,8 @@ class Chat:
 
         elif self.isAutoCompletedTextEvent(event):
             text = event.any_data
-            if text.isupper():
-                speech.speak(text,
-                             self._script.voices[settings.UPPERCASE_VOICE])
-            else:
-                speech.speak(text)
+            voice = self._script.speechGenerator.voice(string=text)
+            self._script.speakMessage(text, voice=voice)
             return True
 
         return False
@@ -700,7 +697,8 @@ class Chat:
         if _settingsManager.getSetting('chatAnnounceBuddyTyping'):
             conversation = self.getConversation(event.source)
             if conversation and (status != conversation.getTypingStatus()):
-                speech.speak(status)
+                voice = self._script.speechGenerator.voice(string=status)
+                self._script.speakMessage(status, voice=voice)
                 conversation.setTypingStatus(status)
                 return True
 

@@ -213,15 +213,29 @@ class SpeechServer(speechserver.SpeechServer):
         volume = int(15 * max(0, min(9, acss_volume)) - 35)
         self._send_command(self._client.set_volume, volume)
 
-    def _set_family(self, acss_family):
+    def _get_language_and_dialect(self, acss_family):
+        if acss_family is None:
+            acss_family = {}
+
         familyLocale = acss_family.get(speechserver.VoiceFamily.LOCALE)
         if not familyLocale:
             import locale
             familyLocale, encoding = locale.getdefaultlocale()
+
+        language, dialect = '', ''
         if familyLocale:
-            lang = familyLocale.split('_')[0]
-            if lang and len(lang) == 2:
-                self._send_command(self._client.set_language, str(lang))
+            localeValues = familyLocale.split('_')
+            language = localeValues[0]
+            if len(localeValues) == 2:
+                dialect = localeValues[1]
+
+        return language, dialect
+
+    def _set_family(self, acss_family):
+        lang, dialect = self._get_language_and_dialect(acss_family)
+        if len(lang) == 2:
+            self._send_command(self._client.set_language, lang)
+
         try:
             # This command is not available with older SD versions.
             set_synthesis_voice = self._client.set_synthesis_voice
@@ -229,8 +243,7 @@ class SpeechServer(speechserver.SpeechServer):
             pass
         else:
             name = acss_family.get(speechserver.VoiceFamily.NAME)
-            if name != self._default_voice_name:
-                self._send_command(set_synthesis_voice, name)
+            self._send_command(set_synthesis_voice, name)
 
     def _debug_sd_values(self, prefix=""):
         if debug.debugLevel > debug.LEVEL_INFO:
@@ -239,18 +252,25 @@ class SpeechServer(speechserver.SpeechServer):
         try:
             sd_rate = self._send_command(self._client.get_rate)
             sd_pitch = self._send_command(self._client.get_pitch)
+            sd_volume = self._send_command(self._client.get_volume)
+            sd_language = self._send_command(self._client.get_language)
         except:
-            sd_rate = "(exception occurred)"
-            sd_pitch = "(exception occurred)"
+            sd_rate = sd_pitch = sd_volume = sd_language = "(exception occurred)"
+
+        family = self._current_voice_properties.get(ACSS.FAMILY)
 
         current = self._current_voice_properties
-        msg = "SPEECH DISPATCHER: %sOrca rate %s, pitch %s; " \
-              "SD rate %s, pitch %s" % \
+        msg = "SPEECH DISPATCHER: %sOrca rate %s, pitch %s, volume %s, language %s; " \
+              "SD rate %s, pitch %s, volume %s, language %s" % \
               (prefix,
                self._current_voice_properties.get(ACSS.RATE),
                self._current_voice_properties.get(ACSS.AVERAGE_PITCH),
+               self._current_voice_properties.get(ACSS.GAIN),
+               self._get_language_and_dialect(family)[0],
                sd_rate,
-               sd_pitch)
+               sd_pitch,
+               sd_volume,
+               sd_language)
         debug.println(debug.LEVEL_INFO, msg, True)
 
     def _apply_acss(self, acss):
@@ -266,11 +286,13 @@ class SpeechServer(speechserver.SpeechServer):
             elif acss_property == ACSS.AVERAGE_PITCH:
                 method(5.0)
                 current[acss_property] = 5.0
-            elif acss_property == ACSS.FAMILY \
-                    and acss == settings.voices[settings.DEFAULT_VOICE]:
-                # We need to explicitly reset (at least) the family.
-                # See bgo#626072.
-                #
+            elif acss_property == ACSS.GAIN:
+                method(10)
+                current[acss_property] = 5.0
+            elif acss_property == ACSS.RATE:
+                method(50)
+                current[acss_property] = 5.0
+            elif acss_property == ACSS.FAMILY:
                 method({})
                 current[acss_property] = {}
 
@@ -398,7 +420,7 @@ class SpeechServer(speechserver.SpeechServer):
         try:
             volume = acss[ACSS.GAIN]
         except KeyError:
-            volume = 5
+            volume = 10
         acss[ACSS.GAIN] = max(0, min(9, volume + delta))
         msg = 'SPEECH DISPATCHER: Volume set to %d' % volume
         debug.println(debug.LEVEL_INFO, msg, True)

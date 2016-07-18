@@ -31,7 +31,6 @@ import pyatspi
 
 from orca import debug
 from orca import messages
-from orca import settings
 from orca import spellcheck
 
 
@@ -100,6 +99,7 @@ class SpellCheck(spellcheck.SpellCheck):
         if not string:
             return False
 
-        voice = self._script.voices.get(settings.DEFAULT_VOICE)
-        self._script.speakMessage(messages.MISSPELLED_WORD_CONTEXT % string, voice=voice)
+        msg = messages.MISSPELLED_WORD_CONTEXT % string
+        voice = self._script.speechGenerator.voice(string=msg)
+        self._script.speakMessage(msg, voice=voice)
         return True

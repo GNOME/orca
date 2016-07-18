@@ -124,8 +124,10 @@ def init():
     debug.println(debug.LEVEL_INFO, 'SPEECH: Initialized', True)
 
 def __resolveACSS(acss=None):
-    if acss:
+    if isinstance(acss, ACSS):
         return acss
+    elif isinstance(acss, list) and len(acss) == 1:
+        return ACSS(acss[0])
     else:
         voices = settings.voices
         return ACSS(voices[settings.DEFAULT_VOICE])
@@ -251,6 +253,7 @@ def speakCharacter(character, acss=None):
     if settings.silenceSpeech:
         return
 
+    acss = __resolveACSS(acss)
     msg = "SPEECH OUTPUT: '" + character + "' " + str(acss)
     debug.println(debug.LEVEL_INFO, msg, True)
     log.info("SPEECH OUTPUT: '%s'" % character)

@@ -34,7 +34,6 @@ from orca import guilabels
 from orca import messages
 from orca import object_properties
 from orca import orca_state
-from orca import settings
 from orca import settings_manager
 
 _settingsManager = settings_manager.getManager()
@@ -160,8 +159,9 @@ class SpellCheck:
         if not string:
             return False
 
-        voice = self._script.voices.get(settings.DEFAULT_VOICE)
-        self._script.speakMessage(messages.MISSPELLED_WORD_CONTEXT % string, voice=voice)
+        msg = messages.MISSPELLED_WORD_CONTEXT % string
+        voice = self._script.speechGenerator.voice(string=msg)
+        self._script.speakMessage(msg, voice=voice)
         return True
 
     def presentCompletionMessage(self):
@@ -169,8 +169,9 @@ class SpellCheck:
             return False
 
         self._script.clearBraille()
-        voice = self._script.voices.get(settings.DEFAULT_VOICE)
-        self._script.presentMessage(self.getCompletionMessage(), voice=voice)
+        msg = self.getCompletionMessage()
+        voice = self._script.speechGenerator.voice(string=msg)
+        self._script.presentMessage(msg, voice=voice)
         return True
 
     def presentErrorDetails(self, detailed=False):
@@ -193,8 +194,9 @@ class SpellCheck:
         if not word:
             return False
 
-        voice = self._script.voices.get(settings.DEFAULT_VOICE)
-        self._script.speakMessage(messages.MISSPELLED_WORD % word, voice=voice)
+        msg = messages.MISSPELLED_WORD % word
+        voice = self._script.speechGenerator.voice(string=msg)
+        self._script.speakMessage(msg, voice=voice)
         if detailed or _settingsManager.getSetting('spellcheckSpellError'):
             self._script.spellCurrentItem(word)
 
@@ -213,8 +215,9 @@ class SpellCheck:
 
         label = self._script.utilities.displayedLabel(entry) or entry.name
         string = self._script.utilities.substring(entry, 0, -1)
-        voice = self._script.voices.get(settings.DEFAULT_VOICE)
-        self._script.speakMessage("%s %s" % (label, string), voice=voice)
+        msg = "%s %s" % (label, string)
+        voice = self._script.speechGenerator.voice(string=msg)
+        self._script.speakMessage(msg, voice=voice)
         if detailed or _settingsManager.getSetting('spellcheckSpellSuggestion'):
             self._script.spellCurrentItem(string)
 
@@ -237,8 +240,10 @@ class SpellCheck:
         else:
             label = ""
         string = items[0].name
-        voice = self._script.voices.get(settings.DEFAULT_VOICE)
-        self._script.speakMessage(("%s %s" % (label, string)).strip(), voice=voice)
+
+        msg = "%s %s" % (label, string)
+        voice = self._script.speechGenerator.voice(string=msg)
+        self._script.speakMessage(msg.strip(), voice=voice)
         if detailed or _settingsManager.getSetting('spellcheckSpellSuggestion'):
             self._script.spellCurrentItem(string)
 

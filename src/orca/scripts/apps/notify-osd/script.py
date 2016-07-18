@@ -28,8 +28,11 @@ __license__   = "LGPL"
 import orca.messages as messages
 import orca.scripts.default as default
 import orca.settings as settings
+import orca.settings_manager as settings_manager
 import orca.speech as speech
 import orca.notification_messages as notification_messages
+
+_settingsManager = settings_manager.getManager()
 
 ########################################################################
 #                                                                      #
@@ -61,19 +64,20 @@ class Script(default.Script):
             
         utterances = []
         message = ""
+        voices = _settingsManager.getSetting('voices')
         if value < 0:
             utterances.append(messages.NOTIFICATION)
-            utterances.append(self.voices.get(settings.SYSTEM_VOICE))
+            utterances.append(voices.get(settings.SYSTEM_VOICE))
             message = '%s %s' % (event.source.name, event.source.description)
             utterances.append(message)
-            utterances.append(self.voices.get(settings.DEFAULT_VOICE))
+            utterances.append(voices.get(settings.DEFAULT_VOICE))
         else:
             # A gauge notification, e.g. the Ubuntu volume notification that
             # appears when you press the multimedia keys.
             #
             message = '%s %d' % (event.source.name, value)
             utterances.append(message)
-            utterances.append(self.voices.get(settings.SYSTEM_VOICE))
+            utterances.append(voices.get(settings.SYSTEM_VOICE))
 
         speech.speak(utterances, None, True)
         self.displayBrailleMessage(message, flashTime=settings.brailleFlashTime)

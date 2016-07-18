@@ -1721,6 +1721,8 @@ class SpeechGenerator(generator.Generator):
             name = self._generateName(button)
             if name:
                 result.append(messages.DEFAULT_BUTTON_IS % name[0])
+                result.extend(self.voice(SYSTEM))
+
         return result
 
     def generateDefaultButton(self, obj, **args):
