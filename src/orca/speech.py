@@ -168,7 +168,7 @@ def _speak(text, acss, interrupt):
     if _speechserver:
         voice = ACSS(settings.voices.get(settings.DEFAULT_VOICE))
         try:
-            voice.update(acss)
+            voice.update(__resolveACSS(acss))
         except:
             pass
         _speechserver.speak(text, __resolveACSS(voice), interrupt)
