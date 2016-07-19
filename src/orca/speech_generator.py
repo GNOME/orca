@@ -2258,7 +2258,7 @@ class SpeechGenerator(generator.Generator):
         voice = acss.ACSS(rv)
         if key in [None, DEFAULT]:
             string = args.get('string', '')
-            if string.isupper():
+            if isinstance(string, str) and string.isupper():
                 voice.update(voices.get(voiceType.get(UPPERCASE)))
 
         return [voice]

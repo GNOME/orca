@@ -3736,7 +3736,12 @@ class Script(script.Script):
                 self.phoneticSpellCurrentItem(event.event_string)
                 return True
 
-        speech.speakKeyEvent(event)
+        string = None
+        if event.isPrintableKey():
+            string = event.event_string
+
+        voice = self.speechGenerator.voice(string=string)
+        speech.speakKeyEvent(event, voice)
         return True
 
     def presentMessage(self, fullMessage, briefMessage=None, voice=None, resetStyles=True):

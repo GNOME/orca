@@ -499,12 +499,7 @@ class SpeechServer(speechserver.SpeechServer):
                 utilities.adjustForPronunciation(name)
         self.speak(name, acss)
 
-    def speakKeyEvent(self, event):
-        if event.isPrintableKey() and event.event_string.isupper():
-            acss = settings.voices[settings.UPPERCASE_VOICE]
-        else:
-            acss = ACSS(settings.voices[settings.DEFAULT_VOICE])
-
+    def speakKeyEvent(self, event, acss=None):
         event_string = event.getKeyName()
         if orca_state.activeScript:
             event_string = orca_state.activeScript.\

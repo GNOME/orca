@@ -139,7 +139,7 @@ class SpeechServer(object):
         """
         pass
 
-    def speakKeyEvent(self, event):
+    def speakKeyEvent(self, event, acss=None):
         """Speaks a key event immediately.
 
         Arguments:

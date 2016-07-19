@@ -226,7 +226,7 @@ def speak(content, acss=None, interrupt=True):
         string = " ".join(toSpeak)
         _speak(string, activeVoice, interrupt)
 
-def speakKeyEvent(event):
+def speakKeyEvent(event, acss=None):
     """Speaks a key event immediately.
 
     Arguments:
@@ -238,13 +238,14 @@ def speakKeyEvent(event):
 
     keyname = event.getKeyName()
     lockingStateString = event.getLockingStateString()
+    acss = __resolveACSS(acss)
     msg = "%s %s" % (keyname, lockingStateString)
-    logLine = "SPEECH OUTPUT: '%s'" % msg
+    logLine = "SPEECH OUTPUT: '%s' %s" % (msg, acss)
     debug.println(debug.LEVEL_INFO, logLine, True)
     log.info(logLine)
 
     if _speechserver:
-        _speechserver.speakKeyEvent(event)
+        _speechserver.speakKeyEvent(event, acss)
 
 def speakCharacter(character, acss=None):
     """Speaks a single character immediately.
