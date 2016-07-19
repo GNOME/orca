@@ -106,3 +106,10 @@ class ACSS(dict):
     def getDialect(self):
         family = self.get(ACSS.FAMILY, {})
         return family.get('dialect')
+
+    def update(self, newDict):
+        family = newDict.get(ACSS.FAMILY)
+        if isinstance(family, dict) and family.get('name') is None:
+            newDict.pop(ACSS.FAMILY)
+
+        return super().update(newDict)
