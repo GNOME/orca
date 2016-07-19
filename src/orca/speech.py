@@ -34,6 +34,7 @@ from . import logger
 from . import orca_state
 from . import settings
 from . import speech_generator
+from .speechserver import VoiceFamily
 
 from .acss import ACSS
 
@@ -125,6 +126,12 @@ def init():
 
 def __resolveACSS(acss=None):
     if isinstance(acss, ACSS):
+        family = acss.get(acss.FAMILY)
+        try:
+            family = VoiceFamily(family)
+        except:
+            family = VoiceFamily({})
+        acss[acss.FAMILY] = family
         return acss
     elif isinstance(acss, list) and len(acss) == 1:
         return ACSS(acss[0])
