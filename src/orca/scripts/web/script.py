@@ -1718,6 +1718,12 @@ class Script(default.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
         self.utilities.clearContentCache()
 
+        document = self.utilities.getDocumentForObject(event.source)
+        if document:
+            msg = "WEB: Clearing structural navigation cache for %s" % document
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.structuralNavigation.clearCache(document)
+
         state = event.source.getState()
         if not state.contains(pyatspi.STATE_EDITABLE):
             if self._inMouseOverObject \
@@ -1776,6 +1782,12 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             self.liveRegionManager.handleEvent(event)
             return True
+
+        document = self.utilities.getDocumentForObject(event.source)
+        if document:
+            msg = "WEB: Clearing structural navigation cache for %s" % document
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.structuralNavigation.clearCache(document)
 
         text = self.utilities.queryNonEmptyText(event.source)
         if not text:
