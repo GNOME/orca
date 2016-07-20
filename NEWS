@@ -1,3 +1,29 @@
+3.20.3 - 20 July 2016
+
+Web:
+
+ * Fix issue updating caret position during structural navigation
+
+General:
+
+ * Don't try to catch SIGSEGV; use faulthandler to dump output from
+   crash. This is needed to behave (slightly) better when AT-SPI2
+   crashes.
+
+ * Do not supress presentation of locking keys in password fields
+
+ * Don't show desktop file in Unity
+
+ * Ignore object:state-changed:sensitive events for menu items (perf)
+
+ * Handle another case of objects going defunct on us
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    id            Indonesian                  Andika Triwidada
+
+=========
+
 3.20.2 - 16 May 2016
 
 Performance:
