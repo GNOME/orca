@@ -7,8 +7,7 @@ DISTCHECK_CONFIGURE_FLAGS =     \
 	--disable-scrollkeeper
 
 DISTCLEANFILES =                \
-	orca-autostart.desktop  \
-	orca.desktop
+	orca-autostart.desktop
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
 
@@ -23,10 +22,6 @@ update-icon-cache:
 		echo "***   $(gtk_update_icon_cache)"; \
 	fi
 
-desktopdir 	 = $(datadir)/applications
-desktop_in_files = orca.desktop.in
-desktop_DATA     = $(desktop_in_files:.desktop.in=.desktop)
-
 autostartdir	 = $(sysconfdir)/xdg/autostart
 autostart_in_files = orca-autostart.desktop.in
 autostart_DATA   = $(autostart_in_files:.desktop.in=.desktop)
@@ -35,7 +30,6 @@ autostart_DATA   = $(autostart_in_files:.desktop.in=.desktop)
 
 EXTRA_DIST =                \
 	$(autostart_in_files) \
-	$(desktop_in_files) \
 	$(icon_DATA)        \
 	ChangeLog           \
 	MAINTAINERS
