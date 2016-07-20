@@ -2251,14 +2251,15 @@ class SpeechGenerator(generator.Generator):
 
         voicename = voiceType.get(key) or voiceType.get(DEFAULT)
         voices = _settingsManager.getSetting('voices')
-        rv = voices.get(voicename)
-        if not rv or rv.get('established') == False:
-            rv = voices.get(voiceType.get(DEFAULT))
+        voice = acss.ACSS(voices.get(voiceType.get(DEFAULT)))
 
-        voice = acss.ACSS(rv)
         if key in [None, DEFAULT]:
             string = args.get('string', '')
             if isinstance(string, str) and string.isupper():
                 voice.update(voices.get(voiceType.get(UPPERCASE)))
+        else:
+            override = voices.get(voicename)
+            if override and override.get('established', True):
+                voice.update(override)
 
         return [voice]
