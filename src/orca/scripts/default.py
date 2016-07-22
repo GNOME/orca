@@ -3493,6 +3493,9 @@ class Script(script.Script):
                 offset = endOffset
 
                 voice = self.speechGenerator.voice(string=lineString)
+                if voice and isinstance(voice, list):
+                    voice = voice[0]
+
                 lineString = \
                     self.utilities.adjustForLinks(obj, lineString, startOffset)
                 lineString = self.utilities.adjustForRepeats(lineString)
