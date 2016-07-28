@@ -96,6 +96,12 @@ class Utilities(script_utilities.Utilities):
            and (self.isSpreadSheetCell(obj) or self.isTextDocumentCell(obj)):
             return ""
 
+        # TODO - JD: Once the VCL script is completed and subclasses the
+        # appropriate toolkit scripts, this should not be needed.
+        if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
+            labels = self.unrelatedLabels(obj, onlyShowing=False)
+            text = " ".join(map(self.displayedText, labels))
+
         return text
 
     def isCellBeingEdited(self, obj):
