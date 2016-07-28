@@ -3603,7 +3603,7 @@ class Script(script.Script):
 
         for (charIndex, character) in enumerate(itemString):
             voice = self.speechGenerator.voice(string=character)
-            phoneticString = phonnames.getPhoneticName(character)
+            phoneticString = phonnames.getPhoneticName(character.lower())
             speech.speak(phoneticString, voice)
 
     def _saveLastCursorPosition(self, obj, caretOffset):
