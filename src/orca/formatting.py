@@ -430,6 +430,10 @@ formatting = {
             'unfocused': 'labelOrName + roleName + (expandableState or toggleState) + availability + ' + MNEMONIC + ' + accelerator',
             'basicWhereAmI': 'labelOrName + roleName + (expandableState or toggleState)'
             },
+        pyatspi.ROLE_TOOL_BAR: {
+            'focused': 'labelAndName + roleName',
+            'unfocused': 'labelAndName + roleName',
+            },
         pyatspi.ROLE_TOOL_TIP: {
             'unfocused': 'labelAndName',
             'basicWhereAmI': 'labelAndName'
