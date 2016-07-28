@@ -70,9 +70,7 @@ class Utilities(WebKitGtk.Utilities, gtk.Utilities):
         return topLevel and topLevel.getRole() == pyatspi.ROLE_WINDOW
 
     def findMessageBodyChild(self, root):
-        roles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
-        isDocument = lambda x: x and x.getRole() in roles
-        candidate = pyatspi.findDescendant(root, isDocument)
+        candidate = pyatspi.findDescendant(root, self.isDocument)
         if self.isEmbeddedDocument(candidate):
             return self.findMessageBodyChild(candidate)
 

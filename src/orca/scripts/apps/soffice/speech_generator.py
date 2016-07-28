@@ -455,7 +455,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         oldTable = pyatspi.findAncestor(priorObj, isTable)
         if oldTable:
             ancestor = self._script.utilities.commonAncestor(oldTable, obj)
-            if ancestor and ancestor.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+            if self._script.utilities.isDocument(ancestor):
                 result = [messages.TABLE_LEAVING]
                 result.extend(self.voice(speech_generator.SYSTEM))
                 result.extend(self._generatePause(obj, **args))

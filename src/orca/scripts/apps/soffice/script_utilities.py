@@ -512,7 +512,7 @@ class Utilities(script_utilities.Utilities):
     def isDrawingView(self, obj):
         """Returns True if obj is the Impress Drawing View."""
 
-        if obj and obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+        if self.isDocument(obj):
             return (":" in obj.name and "/" in obj.name)
 
         return False
@@ -560,8 +560,7 @@ class Utilities(script_utilities.Utilities):
             return None, None
 
         slidePane = taskPane = None
-        hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_DOCUMENT_FRAME
-        if pyatspi.findAllDescendants(panes[0], hasRole):
+        if pyatspi.findAllDescendants(panes[0], self.isDocument):
             slidePane = panes[0]
             if len(panes) == 2:
                 taskPane = panes[1]
@@ -579,10 +578,10 @@ class Utilities(script_utilities.Utilities):
         Returns a (title, position, count) tuple.
         """
 
-        if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+        if self.isDocument(obj):
             dv = obj
         else:
-            dv = self.ancestorWithRole(obj, [pyatspi.ROLE_DOCUMENT_FRAME], [])
+            dv = self.getContainingDocument(obj)
 
         if not dv or not self.isDrawingView(dv):
             return "", 0, 0

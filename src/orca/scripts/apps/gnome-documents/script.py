@@ -58,13 +58,12 @@ class Script(gtk.Script):
 
         try:
             eventRole = event.source.getRole()
-            focusRole = orca_state.locusOfFocus.getRole()
         except:
             return
 
         # Present page changes in the previewer.
         if eventRole == pyatspi.ROLE_LABEL \
-           and focusRole == pyatspi.ROLE_DOCUMENT_FRAME:
+           and self.utilities.isDocument(orca_state.locusOfFocus):
             self.presentMessage(event.any_data)
 
             # HACK: Reposition the caret offset from the last character to the

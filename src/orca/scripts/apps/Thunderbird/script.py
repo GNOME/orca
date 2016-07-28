@@ -186,7 +186,7 @@ class Script(Gecko.Script):
         """Callback for object:state-changed:busy accessibility events."""
 
         obj = event.source
-        if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME and not event.detail1:
+        if self.utilities.isDocument(obj) and not event.detail1:
             try:
                 role = orca_state.locusOfFocus.getRole()
                 name = orca_state.locusOfFocus.name
@@ -338,25 +338,13 @@ class Script(Gecko.Script):
             self.spellcheck.presentErrorDetails()
             return
 
-        obj = event.source
+        if not self.utilities.lastInputEventWasDelete() \
+           or not self.utilities.isDocument(event.source):
+            return
 
-        # If the user has just deleted an open mail message, then we want to
-        # try to speak the new name of the open mail message frame and also
-        # present the first line of that message to be consistent with what
-        # we do when a new message window is opened. See bug #540039 for more
-        # details.
-        #
-        rolesList = [pyatspi.ROLE_DOCUMENT_FRAME,
-                     pyatspi.ROLE_INTERNAL_FRAME,
-                     pyatspi.ROLE_FRAME,
-                     pyatspi.ROLE_APPLICATION]
-        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-            lastKey, mods = self.utilities.lastKeyAndModifiers()
-            if lastKey == "Delete":
-                speech.speak(obj.name)
-                [obj, offset] = self.utilities.findFirstCaretContext(obj, 0)
-                self.utilities.setCaretPosition(obj, offset)
-                return
+        speech.speak(obj.name)
+        [obj, offset] = self.utilities.findFirstCaretContext(obj, 0)
+        self.utilities.setCaretPosition(obj, offset)
 
     def _presentMessage(self, documentFrame):
         """Presents the first line of the message, or the entire message,
@@ -419,17 +407,6 @@ class Script(Gecko.Script):
 
         return default.Script.toggleFlatReviewMode(self, inputEvent)
 
-    def isNonHTMLEntry(self, obj):
-        """Checks for ROLE_ENTRY areas that are not part of an HTML
-        document.  See bug #607414.
-
-        Returns True is this is something like the Subject: entry
-        """
-        result = obj and obj.getRole() == pyatspi.ROLE_ENTRY \
-            and not self.utilities.ancestorWithRole(
-                obj, [pyatspi.ROLE_DOCUMENT_FRAME], [pyatspi.ROLE_FRAME])
-        return result
-
     def isEditableMessage(self, obj):
         """Returns True if this is a editable message."""
 
@@ -439,10 +416,14 @@ class Script(Gecko.Script):
         if not obj.getState().contains(pyatspi.STATE_EDITABLE):
             return False
 
-        if self.isNonHTMLEntry(obj):
-            return False
+        if self.utilities.isDocument(obj):
+            return True
 
-        return True
+        document = self.utilities.containingDocument(obj)
+        if document and document.getState().contains(pyatspi.STATE_EDITABLE):
+            return True
+
+        return False
 
     def onWindowActivated(self, event):
         """Callback for window:activate accessibility events."""

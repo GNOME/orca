@@ -38,12 +38,6 @@ import orca.chat as chat
 class Chat(chat.Chat):
 
     def __init__(self, script, buddyListAncestries):
-        # IMs get inserted as embedded object characters in these roles.
-        #
-        self._messageParentRoles = [pyatspi.ROLE_DOCUMENT_FRAME,
-                                    pyatspi.ROLE_SECTION,
-                                    pyatspi.ROLE_PARAGRAPH]
-
         chat.Chat.__init__(self, script, buddyListAncestries)
 
     ########################################################################
@@ -70,7 +64,7 @@ class Chat(chat.Chat):
         # document frame. The first paragraph is the bubble title; the
         # rest (usually just one) are the message itself.
         #
-        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+        if self._script.utilities.isDocument(event.source):
             bubble = event.source[event.detail1]
             hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_PARAGRAPH
             paragraphs = pyatspi.findAllDescendants(bubble, hasRole)
@@ -122,13 +116,13 @@ class Chat(chat.Chat):
         - obj: the accessible object to examine.
         """
 
-        # We might need to refine this later. For now, just get things
-        # working.
-        #
-        if obj and obj.getRole() in self._messageParentRoles:
+        if not obj:
+            return False
+
+        if self._script.utilities.isDocument(obj):
             return True
 
-        return False
+        return obj.getRole() in [pyatspi.ROLE_SECTION, pyatspi.ROLE_PARAGRAPH]
 
     def getChatRoomName(self, obj):
         """Attempts to find the name of the current chat room.

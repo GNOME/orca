@@ -36,13 +36,13 @@ class Utilities(gtk.Utilities):
         gtk.Utilities.__init__(self, script)
 
     def isReadOnlyTextArea(self, obj):
-        if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+        if self.isDocument(obj):
             return False
 
         return gtk.Utilities.isReadOnlyTextArea(self, obj)
 
     def isTextArea(self, obj):
-        if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+        if self.isDocument(obj):
             return True
 
         return gtk.Utilities.isTextArea(self, obj)

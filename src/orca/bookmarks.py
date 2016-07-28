@@ -219,8 +219,7 @@ class Bookmarks:
         if not start_obj:
             return []
 
-        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
-        if start_obj.getRole() in docRoles:
+        if self._script.utilities.isDocument(start_obj):
             return []
 
         path = []
