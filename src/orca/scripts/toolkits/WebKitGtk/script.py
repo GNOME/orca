@@ -513,7 +513,7 @@ class Script(default.Script):
         if self.utilities.isDocument(obj):
             document = obj
         else:
-            document = self.utilities.containingDocument(obj)
+            document = self.utilities.getContainingDocument(obj)
         if not document or document.getState().contains(pyatspi.STATE_BUSY):
             return
 

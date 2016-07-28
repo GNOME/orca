@@ -419,7 +419,7 @@ class Script(Gecko.Script):
         if self.utilities.isDocument(obj):
             return True
 
-        document = self.utilities.containingDocument(obj)
+        document = self.utilities.getContainingDocument(obj)
         if document and document.getState().contains(pyatspi.STATE_EDITABLE):
             return True
 
