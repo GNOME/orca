@@ -42,12 +42,13 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         braille_generator.BrailleGenerator.__init__(self, script)
 
     def _generateRoleName(self, obj, **args):
-        result = []
-        role = args.get('role', obj.getRole())
-        if role != pyatspi.ROLE_DOCUMENT_FRAME:
-            result.extend(braille_generator.BrailleGenerator._generateRoleName(
-                self, obj, **args))
-        return result
+        if self._script.utilities.isDocument(obj):
+            return []
+
+        if self._script.utilities.isFocusableLabel(obj):
+            return []
+
+        return super()._generateRoleName(obj, **args)
 
     def _generateRowHeader(self, obj, **args):
         """Returns an array of strings that represent the row header for an
@@ -211,11 +212,11 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return result
 
     def generateBraille(self, obj, **args):
-        result = []
-        args['useDefaultFormatting'] = \
-            ((obj.getRole() == pyatspi.ROLE_LIST) \
-                and (not obj.getState().contains(pyatspi.STATE_FOCUSABLE)))
-        result.extend(braille_generator.BrailleGenerator.\
-                          generateBraille(self, obj, **args))
+        args['useDefaultFormatting'] = self._script.utilities.isNonFocusableList(obj)
+        oldRole = self._overrideRole(self._getAlternativeRole(obj, **args), args)
+
+        result = super().generateBraille(obj, **args)
+
         del args['useDefaultFormatting']
+        self._restoreRole(oldRole, args)
         return result

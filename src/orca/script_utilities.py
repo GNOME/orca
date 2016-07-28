@@ -1043,6 +1043,46 @@ class Utilities:
             isStatic = not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
         return isStatic
 
+    def isFocusableLabel(self, obj):
+        try:
+            role = obj.getRole()
+            state = obj.getState()
+        except:
+            return False
+
+        if role != pyatspi.ROLE_LABEL:
+            return False
+
+        if state.contains(pyatspi.STATE_FOCUSABLE):
+            return True
+
+        if state.contains(pyatspi.STATE_FOCUSED):
+            msg = 'INFO: %s is focused but lacks state focusable' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
+
+    def isNonFocusableList(self, obj):
+        try:
+            role = obj.getRole()
+            state = obj.getState()
+        except:
+            return False
+
+        if role != pyatspi.ROLE_LIST:
+            return False
+
+        if state.contains(pyatspi.STATE_FOCUSABLE):
+            return False
+
+        if state.contains(pyatspi.STATE_FOCUSED):
+            msg = 'INFO: %s is focused but lacks state focusable' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return True
+
     def isStatusBarNotification(self, obj):
         if not (obj and obj.getRole() == pyatspi.ROLE_NOTIFICATION):
             return False
@@ -1081,9 +1121,12 @@ class Utilities:
             attrs = {}
         try:
             role = obj.getRole()
-            parentRole = obj.parent.getRole()
         except:
             role = None
+
+        try:
+            parentRole = obj.parent.getRole()
+        except:
             parentRole = None
 
         try:
@@ -3621,6 +3664,11 @@ class Utilities:
             siblings = list(filter(isNotLayoutOnly, siblings))
         if not (siblings and obj in siblings):
             return -1, -1
+
+        if self.isFocusableLabel(obj):
+            siblings = list(filter(self.isFocusableLabel, siblings))
+            if len(siblings) == 1:
+                return -1, -1
 
         position = siblings.index(obj)
         setSize = len(siblings)

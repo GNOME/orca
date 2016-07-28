@@ -36,11 +36,6 @@ import orca.settings
 
 formatting = {
     'speech': {
-        pyatspi.ROLE_LABEL: {
-            'focused': 'expandableState + availability',
-            'unfocused': 'name + allTextSelection + expandableState + availability + positionInList',
-            'basicWhereAmI': 'roleName + name + positionInList + expandableState + (nodeLevel or nestingLevel)'
-            },
         pyatspi.ROLE_TABLE_CELL: {
             'focused': 'endOfTableIndicator + pause + tableCellRow + pause',
             'unfocused': 'endOfTableIndicator + pause + tableCellRow + pause',

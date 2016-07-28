@@ -98,9 +98,6 @@ class Utilities(script_utilities.Utilities):
 
         return text
 
-    def isTextArea(self, obj):
-        return obj and obj.getRole() == pyatspi.ROLE_TEXT
-
     def isCellBeingEdited(self, obj):
         if not obj:
             return False
@@ -260,27 +257,32 @@ class Utilities(script_utilities.Utilities):
         return rowHeader, colHeader
 
     def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False):
-        same = super().isSameObject(obj1, obj2, comparePaths, ignoreNames)
-        if not same or obj1 == obj2:
-            return same
+        if obj1 == obj2:
+            return True
 
-        # The document frame currently contains just the active page,
-        # resulting in false positives. So for paragraphs, rely upon
-        # the equality check.
-        if obj1.getRole() == obj2.getRole() == pyatspi.ROLE_PARAGRAPH:
+        try:
+            role1 = obj1.getRole()
+            role2 = obj2.getRole()
+        except:
             return False
 
-        # Handle the case of false positives in dialog boxes resulting
-        # from getIndexInParent() returning a bogus value. bgo#618790.
-        #
-        if not obj1.name \
-           and obj1.getRole() == pyatspi.ROLE_TABLE_CELL \
-           and obj1.getIndexInParent() == obj2.getIndexInParent() == -1:
-            top = self.topLevelObject(obj1)
-            if top and top.getRole() == pyatspi.ROLE_DIALOG:
-                same = False
+        if role1 != role2 or role1 == pyatspi.ROLE_PARAGRAPH:
+            return False
 
-        return same
+        try:
+            name1 = obj1.name
+            name2 = obj2.name
+        except:
+            return False
+
+        if name1 == name2:
+            if role1 == pyatspi.ROLE_FRAME:
+                return True
+            if role1 == pyatspi.ROLE_TABLE_CELL and not name1:
+                if self.isZombie(obj1) and self.isZombie(obj2):
+                    return False
+
+        return super().isSameObject(obj1, obj2, comparePaths, ignoreNames)
 
     def isLayoutOnly(self, obj):
         """Returns True if the given object is a container which has
@@ -301,7 +303,7 @@ class Utilities(script_utilities.Utilities):
            and obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
             return True
 
-        return script_utilities.Utilities.isLayoutOnly(self, obj)
+        return super().isLayoutOnly(obj)
 
     def isAnInputLine(self, obj):
         if not obj:
@@ -407,35 +409,45 @@ class Utilities(script_utilities.Utilities):
 
         return results
 
-    def isFunctionalDialog(self, obj):
-        """Returns true if the window is functioning as a dialog."""
+    def validatedTopLevelObject(self, obj):
+        # TODO - JD: We cannot just override topLevelObject() because that will
+        # break flat review access to document content in LO using Gtk+ 3. That
+        # bug seems to be fixed in LO v5.3.0. When that version is released, this
+        # and hopefully other hacks can be removed.
+        window = super().topLevelObject(obj)
+        if not window or window.getIndexInParent() >= 0:
+            return window
 
-        # The OOo Navigator window looks like a dialog, acts like a
-        # dialog, and loses focus requiring the user to know that it's
-        # there and needs Alt+F6ing into.  But officially it's a normal
-        # window.
+        msg = "SOFFICE: %s's window %s has -1 indexInParent" % (obj, window)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
-        # There doesn't seem to be (an efficient) top-down equivalent
-        # of utilities.hasMatchingHierarchy(). But OOo documents have
-        # root panes; this thing does not.
-        #
-        rolesList = [pyatspi.ROLE_FRAME,
-                     pyatspi.ROLE_PANEL,
-                     pyatspi.ROLE_PANEL,
-                     pyatspi.ROLE_TOOL_BAR,
-                     pyatspi.ROLE_PUSH_BUTTON]
+        for child in self._script.app:
+            if self.isSameObject(child, window):
+                window = child
+                break
 
-        if obj.getRole() != rolesList[0]:
-            # We might be looking at the child.
-            #
-            rolesList.pop(0)
+        try:
+            index = window.getIndexInParent()
+        except:
+            index = -1
 
-        while obj and obj.childCount and len(rolesList):
-            if obj.getRole() != rolesList.pop(0):
-                return False
-            obj = obj[0]
+        msg = "SOFFICE: Returning %s (index: %i)" % (window, index)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return window
 
-        return True
+    def commonAncestor(self, a, b):
+        ancestor = super().commonAncestor(a, b)
+        if ancestor or not (a and b):
+            return ancestor
+
+        windowA = self.validatedTopLevelObject(a)
+        windowB = self.validatedTopLevelObject(b)
+        if not self.isSameObject(windowA, windowB):
+            return None
+
+        msg = "SOFFICE: Adjusted ancestor %s and %s to %s" % (a, b, windowA)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return windowA
 
     def validParent(self, obj):
         """Returns the first valid parent/ancestor of obj. We need to do
@@ -645,6 +657,56 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
+    def containingComboBox(self, obj):
+        isComboBox = lambda x: x and x.getRole() == pyatspi.ROLE_COMBO_BOX
+        if isComboBox(obj):
+            comboBox = obj
+        else:
+            comboBox = pyatspi.findAncestor(obj, isComboBox)
+
+        if not comboBox:
+            return None
+
+        if not self.isZombie(comboBox):
+            return comboBox
+
+        try:
+            parent = comboBox.parent
+        except:
+            pass
+        else:
+            replicant = self.findReplicant(parent, comboBox)
+            if replicant and not self.isZombie(replicant):
+                comboBox = replicant
+
+        return comboBox
+
+    def isComboBoxSelectionChange(self, event):
+        comboBox = self.containingComboBox(event.source)
+        if not comboBox:
+            return False
+
+        lastKey, mods = self.lastKeyAndModifiers()
+        if not lastKey in ["Down", "Up"]:
+            return False
+
+        return True
+
+    def isComboBoxNoise(self, event):
+        role = event.source.getRole()
+        if role == pyatspi.ROLE_TEXT and event.type.startswith("object:text-"):
+            return self.isComboBoxSelectionChange(event)
+
+        return False
+
+    def isPresentableTextChangedEventForLocusOfFocus(self, event):
+        if self.isComboBoxNoise(event):
+            msg = "SOFFICE: Event is believed to be combo box noise"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return super().isPresentableTextChangedEventForLocusOfFocus(event)
+
     def isSelectedTextDeletionEvent(self, event):
         if event.type.startswith("object:state-changed:selected") and not event.detail1:
             return self.isDead(orca_state.locusOfFocus) and self.lastInputEventWasDelete()
@@ -665,11 +727,17 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return []
 
+        role = obj.getRole()
+        isSelection = lambda x: x and 'Selection' in pyatspi.listInterfaces(x)
+        if not isSelection(obj) and role == pyatspi.ROLE_COMBO_BOX:
+            child = pyatspi.findDescendant(obj, isSelection)
+            if child:
+                return super().selectedChildren(child)
+
         # Things only seem broken for certain tables, e.g. the Paths table.
         # TODO - JD: File the LibreOffice bugs and reference them here.
-        if obj.getRole() != pyatspi.ROLE_TABLE \
-           or self.isSpreadSheetCell(obj):
-            return script_utilities.Utilities.selectedChildren(self, obj)
+        if role != pyatspi.ROLE_TABLE or self.isSpreadSheetCell(obj):
+            return super().selectedChildren(obj)
 
         try:
             selection = obj.querySelection()

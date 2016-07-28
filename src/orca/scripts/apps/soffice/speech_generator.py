@@ -484,11 +484,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             # we can use to guess the coordinates.
             #
             args['guessCoordinates'] = obj.getRole() == pyatspi.ROLE_PARAGRAPH
-            result.extend(speech_generator.SpeechGenerator.\
-                                           generateSpeech(self, obj, **args))
+            result.extend(super().generateSpeech(obj, **args))
             del args['guessCoordinates']
             self._restoreRole(oldRole, args)
         else:
-            result.extend(speech_generator.SpeechGenerator.\
-                                           generateSpeech(self, obj, **args))
+            oldRole = self._overrideRole(self._getAlternativeRole(obj, **args), args)
+            result.extend(super().generateSpeech(obj, **args))
+            self._restoreRole(oldRole, args)
+
         return result

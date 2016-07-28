@@ -1150,5 +1150,7 @@ class Generator:
                 return 'ROLE_MATH_TABLE_ROW'
         if self._script.utilities.isStatic(obj):
             return 'ROLE_STATIC'
+        if self._script.utilities.isFocusableLabel(obj):
+            return pyatspi.ROLE_LIST_ITEM
 
         return args.get('role', obj.getRole())

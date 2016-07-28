@@ -637,6 +637,11 @@ class Script(default.Script):
     def onActiveChanged(self, event):
         """Callback for object:state-changed:active accessibility events."""
 
+        if not event.source.parent:
+            msg = "SOFFICE: Event source lacks parent"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         # Prevent this events from activating the find operation.
         # See comment #18 of bug #354463.
         if self.findCommandRun:
@@ -702,6 +707,16 @@ class Script(default.Script):
         if self.utilities.isSameObject(orca_state.locusOfFocus, event.source):
             return
 
+        if self.utilities.isFocusableLabel(event.source):
+            orca.setLocusOfFocus(event, event.source)
+            return
+
+        if self.utilities.isZombie(event.source):
+            comboBox = self.utilities.containingComboBox(event.source)
+            if comboBox:
+                orca.setLocusOfFocus(event, comboBox, True)
+                return
+
         role = event.source.getRole()
 
         # This seems to be something we inherit from Gtk+
@@ -745,12 +760,19 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
+        role = event.source.getRole()
+        if role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_LIST]:
+            comboBox = self.utilities.containingComboBox(event.source)
+            if comboBox:
+                orca.setLocusOfFocus(event, comboBox, True)
+                return
+
         parent = event.source.parent
         if parent and parent.getRole() == pyatspi.ROLE_TOOL_BAR:
             default.Script.onFocusedChanged(self, event)
             return
 
-        role = event.source.getRole()
+        # TODO - JD: Verify this is still needed
         ignoreRoles = [pyatspi.ROLE_FILLER, pyatspi.ROLE_PANEL]
         if role in ignoreRoles:
             return
@@ -775,14 +797,12 @@ class Script(default.Script):
 
         # We should present this in response to active-descendant-changed events
         if event.source.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS):
-            if role != pyatspi.ROLE_LIST:
-                return
+            return
 
         default.Script.onFocusedChanged(self, event)
 
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
-
 
         if event.detail1 == -1:
             return
@@ -853,6 +873,27 @@ class Script(default.Script):
             return
 
         super().onSelectedChanged(event)
+
+    def onSelectionChanged(self, event):
+        """Callback for object:selection-changed accessibility events."""
+
+        if not self.utilities.isComboBoxSelectionChange(event):
+            super().onSelectionChanged(event)
+            return
+
+        selectedChildren = self.utilities.selectedChildren(event.source)
+        if len(selectedChildren) == 1:
+            orca.setLocusOfFocus(event, selectedChildren[0], True)
+
+    def onTextSelectionChanged(self, event):
+        """Callback for object:text-selection-changed accessibility events."""
+
+        if self.utilities.isComboBoxNoise(event):
+            msg = "SOFFICE: Event is believed to be combo box noise"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        super().onTextSelectionChanged(event)
 
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
         """To-be-removed. Returns the string, caretOffset, startOffset."""
