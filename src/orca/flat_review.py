@@ -211,6 +211,15 @@ class Zone:
         """Returns True if this Zone is on the same horiztonal line as
         the given zone."""
 
+        try:
+            thisParentRole = self.accessible.parent.getRole()
+            zoneParentRole = zone.accessible.parent.getRole()
+        except:
+            pass
+        else:
+            if pyatspi.ROLE_MENU_BAR in [thisParentRole, zoneParentRole]:
+                return self.accessible.parent == zone.accessible.parent
+
         highestBottom = min(self.y + self.height, zone.y + zone.height)
         lowestTop     = max(self.y,               zone.y)
 
