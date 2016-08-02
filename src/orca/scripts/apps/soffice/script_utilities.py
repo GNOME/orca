@@ -96,6 +96,11 @@ class Utilities(script_utilities.Utilities):
            and (self.isSpreadSheetCell(obj) or self.isTextDocumentCell(obj)):
             return ""
 
+        # More bogusness from (at least) Calc combined with the aforementioned
+        # fallback-to-name behavior....
+        if self.isDocument(obj) and text == obj.name and obj.name.startswith("file:///"):
+            return ""
+
         # TODO - JD: Once the VCL script is completed and subclasses the
         # appropriate toolkit scripts, this should not be needed.
         if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
@@ -155,67 +160,6 @@ class Utilities(script_utilities.Utilities):
         column = iTable.getColumnAtIndex(index)
 
         return row, column, table
-
-    def getShowingCellsInRow(self, obj):
-        row, column, parentTable = self.getRowColumnAndTable(obj)
-        try:
-            table = parentTable.queryTable()
-        except:
-            return []
-
-        startIndex, endIndex = self.getTableRowRange(obj)
-        cells = []
-        for i in range(startIndex, endIndex):
-            cell = table.getAccessibleAt(row, i)
-            try:
-                showing = cell.getState().contains(pyatspi.STATE_SHOWING)
-            except:
-                continue
-            if showing:
-                cells.append(cell)
-
-        return cells
-
-    def getTableRowRange(self, obj):
-        """If this is spread sheet cell, return the start and end indices
-        of the spread sheet cells for the table that obj is in. Otherwise
-        return the complete range (0, parentTable.nColumns).
-
-        Arguments:
-        - obj: a table cell.
-
-        Returns the start and end table cell indices.
-        """
-
-        parent = obj.parent
-        try:
-            parentTable = parent.queryTable()
-        except:
-            return [-1, -1]
-
-        startIndex = 0
-        endIndex = parentTable.nColumns
-
-        if self.isSpreadSheetCell(obj):
-            extents = parent.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
-            y = extents.y
-            leftX = extents.x + 1
-            leftCell = \
-                parent.queryComponent().getAccessibleAtPoint(leftX, y, 0)
-            if leftCell:
-                table = leftCell.parent.queryTable()
-                index = self.cellIndex(leftCell)
-                startIndex = table.getColumnAtIndex(index)
-
-            rightX = extents.x + extents.width - 1
-            rightCell = \
-                parent.queryComponent().getAccessibleAtPoint(rightX, y, 0)
-            if rightCell:
-                table = rightCell.parent.queryTable()
-                index = self.cellIndex(rightCell)
-                endIndex = table.getColumnAtIndex(index) + 1
-
-        return [startIndex, endIndex]
 
     def rowHeadersForCell(self, obj):
         rowHeader, colHeader = self.getDynamicHeadersForCell(obj)
@@ -762,3 +706,25 @@ class Utilities(script_utilities.Utilities):
                 children.append(obj[i])
 
         return children
+
+    def getFirstCaretPosition(self, obj):
+        try:
+            text = obj.queryText()
+        except:
+            if obj and obj.childCount:
+                return self.getFirstCaretPosition(obj[0])
+
+        return obj, 0
+
+    def shouldReadFullRow(self, obj):
+        if self._script._lastCommandWasStructNav:
+            return False
+
+        lastKey, mods = self.lastKeyAndModifiers()
+        if lastKey in ["Tab", "ISO_Left_Tab"]:
+            return False
+
+        if not super().shouldReadFullRow(obj):
+            return False
+
+        return self.cellRowChanged(obj)

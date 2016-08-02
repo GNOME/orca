@@ -39,7 +39,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
     # pylint: disable-msg=W0142
 
     def __init__(self, script):
-        braille_generator.BrailleGenerator.__init__(self, script)
+        super().__init__(script)
 
     def _generateRoleName(self, obj, **args):
         if self._script.utilities.isDocument(obj):
@@ -88,7 +88,17 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return []
 
-    def _generateSpreadSheetCell(self, obj, **args):
+    def _generateRealTableCell(self, obj, **args):
+        if not obj.childCount:
+            result = super()._generateRealTableCell(obj, **args)
+        else:
+            result = []
+            for child in obj:
+                result.extend(self.generate(child))
+
+        if not self._script.utilities.isSpreadSheetCell(obj):
+            return result
+
         try:
             objectText = self._script.utilities.substring(obj, 0, -1)
             cellName = self._script.utilities.spreadSheetCellName(obj)
@@ -97,97 +107,27 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return [braille.Component(obj, " ".join((objectText, cellName)))]
 
-    def _generateRealTableCell(self, obj, **args):
-        """Get the speech for a table cell. If this isn't inside a
-        spread sheet, just return the utterances returned by the default
-        table cell speech handler.
-
-        Arguments:
-        - obj: the table cell
-
-        Returns a list of utterances to be spoken for the object.
-        """
-        result = []
-        if self._script.utilities.isSpreadSheetCell(obj):
-            result.extend(self._generateSpreadSheetCell(obj, **args))
-        else:
-            # Check to see how many children this table cell has. If it's
-            # just one (or none), then pass it on to the superclass to be
-            # processed.
-            #
-            # If it's more than one, then get the speech for each child,
-            # and call this method again.
-            #
-            if obj.childCount <= 1:
-                result.extend(braille_generator.BrailleGenerator.\
-                              _generateRealTableCell(self, obj, **args))
-            else:
-                for child in obj:
-                    cellResult = self._generateRealTableCell(child, **args)
-                    if cellResult and result and self._mode == 'braille':
-                        result.append(braille.Region(
-                            object_properties.TABLE_CELL_DELIMITER_BRAILLE))
-                    result.extend(cellResult)
-        return result
+    def _generateTableCellDelimiter(self, obj, **args):
+        return braille.Region(object_properties.TABLE_CELL_DELIMITER_BRAILLE)
 
     def _generateTableCellRow(self, obj, **args):
-        """Get the speech for a table row or cell depending on settings.
+        if not self._script.utilities.shouldReadFullRow(obj):
+            return self._generateRealTableCell(obj, **args)
 
-        Arguments:
-        - obj: the table cell
+        if not self._script.utilities.isSpreadSheetCell(obj):
+            return super()._generateTableCellRow(obj, **args)
 
-        Returns a list of utterances to be spoken for the object.
-        """
+        cells = self._script.utilities.getShowingCellsInSameRow(obj)
+        if not cells:
+            return []
+
         result = []
-        if self._script.utilities.isSpreadSheetCell(obj):
-            # Adding in a check here to make sure that the parent is a
-            # valid table. It's possible that the parent could be a
-            # table cell too (see bug #351501).
-            #
-            parent = obj.parent
-            parentTable = parent.queryTable()
-            readFullRow = self._script.utilities.shouldReadFullRow(obj)
-            if readFullRow and parentTable:
-                index = self._script.utilities.cellIndex(obj)
-                row = parentTable.getRowAtIndex(index)
-                column = parentTable.getColumnAtIndex(index)
-                # This is an indication of whether we should present all the
-                # table cells (the user has moved focus up or down a row),
-                # or just the current one (focus has moved left or right in
-                # the same row).
-                #
-                presentAll = True
-                if "lastRow" in self._script.pointOfReference and \
-                    "lastColumn" in self._script.pointOfReference:
-                    pointOfReference = self._script.pointOfReference
-                    presentAll = \
-                        (self._mode == 'braille') \
-                        or ((pointOfReference["lastRow"] != row) \
-                            or ((row == 0 or row == parentTable.nRows-1) \
-                                and pointOfReference["lastColumn"] == column))
-                if presentAll:
-                    [startIndex, endIndex] = \
-                        self._script.utilities.getTableRowRange(obj)
-                    for i in range(startIndex, endIndex):
-                        cell = parentTable.getAccessibleAt(row, i)
-                        showing = cell.getState().contains( \
-                                      pyatspi.STATE_SHOWING)
-                        if showing:
-                            cellResult = self._generateRealTableCell(cell,
-                                                                     **args)
-                            if cellResult and result \
-                               and self._mode == 'braille':
-                                result.append(braille.Region(
-                                    object_properties.TABLE_CELL_DELIMITER_BRAILLE))
-                            result.extend(cellResult)
-                else:
-                    result.extend(self._generateRealTableCell(obj, **args))
-            else:
-                result.extend(self._generateRealTableCell(obj, **args))
-        else:
-            result.extend(
-                braille_generator.BrailleGenerator._generateTableCellRow(
-                    self, obj, **args))
+        for cell in cells:
+            cellResult = self._generateRealTableCell(cell, **args)
+            if cellResult and result:
+                result.append(self._generateTableCellDelimiter(obj, **args))
+            result.extend(cellResult)
+
         return result
 
     def _generateChildTab(self, obj, **args):
@@ -210,6 +150,18 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                             args['role'] = tab.getRole()
                             result.extend(self.generate(tab, **args))
         return result
+
+    def _generateAncestors(self, obj, **args):
+        if self._script._lastCommandWasStructNav:
+            return []
+
+        return super()._generateAncestors(obj, **args)
+
+    def _generateIncludeContext(self, obj, **args):
+        if self._script._lastCommandWasStructNav:
+            return False
+
+        return super()._generateIncludeContext(obj, **args)
 
     def generateBraille(self, obj, **args):
         args['useDefaultFormatting'] = self._script.utilities.isNonFocusableList(obj)

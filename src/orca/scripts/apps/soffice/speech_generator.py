@@ -361,10 +361,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
-        result = speech_generator.SpeechGenerator._generateRealTableCell(
-            self, obj, **args)
+        result = super()._generateRealTableCell(obj, **args)
 
         if not self._script.utilities.isSpreadSheetCell(obj):
+            if self._script._lastCommandWasStructNav:
+                return result
+
             if _settingsManager.getSetting('speakCellCoordinates'):
                 result.append(obj.name)
             return result
@@ -393,24 +395,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateTableCellRow(self, obj, **args):
-        """Get the speech for a table cell row if the user wants to hear
-        the full row and if the row has actually changed."""
-
-        speakFullRow = self._script.utilities.shouldReadFullRow(obj)
-        if speakFullRow:
-            row, column, table = \
-                self._script.utilities.getRowColumnAndTable(obj)
-            lastRow = self._script.pointOfReference.get("lastRow")
-            if lastRow == -1 and self._script.utilities.isSpreadSheetCell(obj):
-                speakFullRow = False
-            else:
-                speakFullRow = row != lastRow
-
-        if not speakFullRow:
+        if not self._script.utilities.shouldReadFullRow(obj):
             return self._generateRealTableCell(obj, **args)
 
+        if not self._script.utilities.isSpreadSheetCell(obj):
+            return super()._generateTableCellRow(obj, **args)
+
+        cells = self._script.utilities.getShowingCellsInSameRow(obj)
+        if not cells:
+            return []
+
         result = []
-        cells = self._script.utilities.getShowingCellsInRow(obj)
         for cell in cells:
             result.extend(self._generateRealTableCell(cell, **args))
 
@@ -423,6 +418,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         of table" in certain lists (e.g. the Templates and Documents
         dialog).
         """
+
+        if self._script._lastCommandWasStructNav:
+            return []
 
         topLevel = self._script.utilities.topLevelObject(obj)
         if topLevel and topLevel.getRole() == pyatspi.ROLE_DIALOG:
@@ -466,6 +464,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateUnselectedCell(self, obj, **args):
         if self._script.utilities.isSpreadSheetCell(obj):
+            return []
+
+        if self._script._lastCommandWasStructNav:
             return []
 
         return super()._generateUnselectedCell(obj, **args)

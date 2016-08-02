@@ -1110,7 +1110,7 @@ class StructuralNavigation:
           positioned.
         """
 
-        return [obj, 0]
+        return self._script.utilities.getFirstCaretPosition(obj)
 
     def _setCaretPosition(self, obj, characterOffset):
         """Sets the caret at the specified offset within obj."""

@@ -42,13 +42,13 @@ import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.settings as settings
 import orca.settings_manager as settings_manager
+import orca.structural_navigation as structural_navigation
 
 from .braille_generator import BrailleGenerator
 from .formatting import Formatting
 from .script_utilities import Utilities
 from .spellcheck import SpellCheck
 from .speech_generator import SpeechGenerator
-from .structural_navigation import StructuralNavigation
 
 _settingsManager = settings_manager.getManager()
 
@@ -106,14 +106,14 @@ class Script(default.Script):
         """Returns the 'structural navigation' class for this script.
         """
         types = self.getEnabledStructuralNavigationTypes()
-        return StructuralNavigation(self, types, enabled=False)
+        return structural_navigation.StructuralNavigation(self, types, enabled=False)
 
     def getEnabledStructuralNavigationTypes(self):
         """Returns a list of the structural navigation object types
         enabled in this script.
         """
 
-        enabledTypes = [StructuralNavigation.TABLE_CELL]
+        enabledTypes = [structural_navigation.StructuralNavigation.TABLE_CELL]
 
         return enabledTypes
 
@@ -290,27 +290,6 @@ class Script(default.Script):
         prefs.update(self.spellcheck.getPreferencesFromGUI())
         return prefs
 
-    def isStructuralNavigationCommand(self, inputEvent=None):
-        """Checks to see if the inputEvent was a structural navigation
-        command. This is necessary to prevent double-presentation of
-        items. [[[TODO - JD: Perhaps this should be moved to default.py]]]
-
-        Arguments:
-        - inputEvent: The input event to examine. If none is provided,
-          orca_state.lastInputEvent will be used.
-
-        Returns True if inputEvent is a structural navigation command
-        enabled in this script.
-        """
-
-        inputEvent = inputEvent or orca_state.lastInputEvent
-        if isinstance(inputEvent, input_event.KeyboardEvent):
-            if self.structuralNavigation.keyBindings.\
-                    getInputHandler(inputEvent):
-                return True
-
-        return False
-
     def doWhereAmI(self, inputEvent, basicOnly):
         """Performs the whereAmI operation."""
 
@@ -318,6 +297,14 @@ class Script(default.Script):
             self.spellcheck.presentErrorDetails(not basicOnly)
 
         super().doWhereAmI(inputEvent, basicOnly)
+
+    def presentObject(self, obj, offset=0):
+        if not self._lastCommandWasStructNav:
+            super().presentObject(obj, offset)
+            return
+
+        utterances = self.speechGenerator.generateSpeech(obj)
+        speech.speak(utterances)
 
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
         """In document content, we want to use the panning keys to browse the
@@ -745,7 +732,7 @@ class Script(default.Script):
         if self._inSayAll:
             return
 
-        if self.isStructuralNavigationCommand():
+        if self._lastCommandWasStructNav:
             return
 
         if not event.detail1:
@@ -810,7 +797,7 @@ class Script(default.Script):
         if self.utilities._flowsFromOrToSelection(event.source):
            return
 
-        if self.isStructuralNavigationCommand():
+        if self._lastCommandWasStructNav:
             return
 
         if self.utilities.isSpreadSheetCell(orca_state.locusOfFocus):
@@ -935,6 +922,8 @@ class Script(default.Script):
 
     def onWindowDeactivated(self, event):
         """Callback for window:deactivate accessibility events."""
+
+        self._lastCommandWasStructNav = False
 
         super().onWindowDeactivated(event)
         self.spellcheck.deactivate()

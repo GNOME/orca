@@ -1019,6 +1019,22 @@ class Utilities:
 
         return pyatspi.findAncestor(obj, self.isSpreadSheetTable)
 
+    def cellColumnChanged(self, cell):
+        row, column = self._script.utilities.coordinatesForCell(cell)
+        if column == -1:
+            return False
+
+        lastColumn = self._script.pointOfReference.get("lastColumn")
+        return column != lastColumn
+
+    def cellRowChanged(self, cell):
+        row, column = self._script.utilities.coordinatesForCell(cell)
+        if row == -1:
+            return False
+
+        lastRow = self._script.pointOfReference.get("lastRow")
+        return row != lastRow
+
     def shouldReadFullRow(self, obj):
         table = self.getTable(obj)
         if not table:
@@ -2173,6 +2189,9 @@ class Utilities:
         if textContents and self._script.pointOfReference.get('entireDocumentSelected'):
             return textContents, startOffset, endOffset
 
+        if self.isSpreadSheetCell(obj):
+            return textContents, startOffset, endOffset
+
         prevObj = self.findPreviousObject(obj)
         while prevObj:
             if self.queryNonEmptyText(prevObj):
@@ -2432,6 +2451,9 @@ class Utilities:
             offset = -1
 
         return obj, offset
+
+    def getFirstCaretPosition(self, obj):
+        return obj, 0
 
     def setCaretPosition(self, obj, offset, documentFrame=None):
         orca.setLocusOfFocus(None, obj, False)
@@ -3482,13 +3504,83 @@ class Utilities:
 
         return table.nRows, table.nColumns
 
-    def cellForCoordinates(self, obj, row, column):
+    def _getTableRowRange(self, obj):
+        rowCount, columnCount = self.rowAndColumnCount(obj)
+        startIndex, endIndex = 0, columnCount
+        if not self.isSpreadSheetCell(obj):
+            return startIndex, endIndex
+
+        parent = self._script.utilities.getTable(obj)
+        try:
+            component = parent.queryComponent()
+        except:
+            msg = "ERROR: Exception querying component interface of %s" % parent
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return startIndex, endIndex
+
+        x, y, width, height = component.getExtents(pyatspi.DESKTOP_COORDS)
+        cell = component.getAccessibleAtPoint(x+1, y, pyatspi.DESKTOP_COORDS)
+        if cell:
+            row, column = self.coordinatesForCell(cell)
+            startIndex = column
+
+        cell = component.getAccessibleAtPoint(x+width-1, y, pyatspi.DESKTOP_COORDS)
+        if cell:
+            row, column = self.coordinatesForCell(cell)
+            endIndex = column + 1
+
+        return startIndex, endIndex
+
+    def getShowingCellsInSameRow(self, obj):
+        parent = self._script.utilities.getTable(obj)
+        try:
+            table = parent.queryTable()
+        except:
+            msg = "ERROR: Exception querying table interface of %s" % parent
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
+        row, column = self.coordinatesForCell(obj)
+        if row == -1:
+            return []
+
+        startIndex, endIndex = self._getTableRowRange(obj)
+        if startIndex == endIndex:
+            return []
+
+        cells = []
+        for i in range(startIndex, endIndex):
+            cell = table.getAccessibleAt(row, i)
+            try:
+                showing = cell.getState().contains(pyatspi.STATE_SHOWING)
+            except:
+                continue
+            if showing:
+                cells.append(cell)
+
+        return cells
+
+    def cellForCoordinates(self, obj, row, column, showingOnly=False):
         try:
             table = obj.queryTable()
         except:
             return None
 
-        return table.getAccessibleAt(row, column)
+        cell = table.getAccessibleAt(row, column)
+        if not showingOnly:
+            return cell
+
+        try:
+            state = cell.getState()
+        except:
+            msg = "ERROR: Exception getting state of %s" % cell
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        if not state().contains(pyatspi.STATE_SHOWING):
+            return None
+
+        return cell
 
     def isLastCell(self, obj):
         try:
