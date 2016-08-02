@@ -713,6 +713,12 @@ class Utilities(script_utilities.Utilities):
 
         return super().isPresentableTextChangedEventForLocusOfFocus(event)
 
+    def isReadOnlyTextArea(self, obj):
+        if not super().isReadOnlyTextArea(obj):
+            return False
+
+        return not self.inDocumentContent(obj)
+
     def isSelectedTextDeletionEvent(self, event):
         if event.type.startswith("object:state-changed:selected") and not event.detail1:
             return self.isDead(orca_state.locusOfFocus) and self.lastInputEventWasDelete()
