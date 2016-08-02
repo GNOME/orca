@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2016-07-11 23:20+0000\n"
+"POT-Creation-Date: 2016-07-24 23:58+0000\n"
 "PO-Revision-Date: 2016-07-18 11:42+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
@@ -28,26 +28,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 2.91.6\n"
-
-#: ../orca.desktop.in.h:1
-msgid "Screen Reader"
-msgstr "Lector de pantalla"
-
-#: ../orca.desktop.in.h:2
-msgid "Orca Screen Reader"
-msgstr "Lector de pantalla Orca"
-
-#: ../orca.desktop.in.h:3
-msgid ""
-"Provide access to graphical desktop environments via synthesized speech and/"
-"or refreshable braille"
-msgstr ""
-"Proporciona acceso a entornos de escritorio gráficos a través de voz "
-"sintetizada y Braille actualizable"
-
-#: ../orca.desktop.in.h:4
-msgid "screen reader;speech;braille;"
-msgstr "lector de pantalla;voz;braille;"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -2313,7 +2293,7 @@ msgstr "Activa o desactiva el hablado del sangrado y la justificación."
 #. toggling between the two options.
 #: ../src/orca/cmdnames.py:447
 msgid "Changes spoken number style."
-msgstr "Cambiar el estilo de número hablado"
+msgstr "Cambiar el estilo de número hablado."
 
 #. Translators: Orca allows users to cycle through punctuation levels. None,
 #. some, most, or all, punctuation will be spoken.
@@ -9458,7 +9438,7 @@ msgstr "Para activar el modo de foco pulse %s."
 #. This string is the message presented when Orca switches to sticky focus mode.
 #: ../src/orca/messages.py:1317
 msgid "Focus mode is sticky."
-msgstr "El modo de foco es pegajoso"
+msgstr "El modo de foco es pegajoso."
 
 #. Translators: Hovering the mouse over certain objects on a web page causes a
 #. new object to appear such as a pop-up menu. Orca has a command will move the
@@ -9746,7 +9726,7 @@ msgstr "dígitos"
 #. the user has enabled speaking numbers as digits.
 #: ../src/orca/messages.py:1518
 msgid "Speak numbers as digits."
-msgstr "Hablar números como dígitos"
+msgstr "Hablar números como dígitos."
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -9809,7 +9789,7 @@ msgstr "Fin de la carga de %s."
 #: ../src/orca/messages.py:1562
 #, python-format
 msgid "Page has %s."
-msgstr "La página tiene %s"
+msgstr "La página tiene %s."
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -10730,7 +10710,6 @@ msgstr "NIVEL DE ÁRBOL %d"
 #. possible for users to quickly identify combo boxes in which a value can be
 #. typed or arrowed to.
 #: ../src/orca/object_properties.py:73
-#| msgid "Goes to next combo box."
 msgid "editable combo box"
 msgstr "caja combinada editable"
 
@@ -12520,7 +12499,7 @@ msgstr "Para activar pulse Intro."
 #. on text fields.
 #: ../src/orca/tutorialgenerator.py:424
 msgid "Type in text."
-msgstr "Escriba un texto"
+msgstr "Escriba un texto."
 
 #. Translators: this is the tutorial string for landing
 #. on a page tab, we are informing the
@@ -12572,6 +12551,22 @@ msgid ""
 msgstr ""
 "Para decrementar pulse flecha izquierda, para incrementar pulse flecha "
 "derecha, para el mínimo pulse inicio y para el máximo pulse fin."
+
+#~ msgid "Screen Reader"
+#~ msgstr "Lector de pantalla"
+
+#~ msgid "Orca Screen Reader"
+#~ msgstr "Lector de pantalla Orca"
+
+#~ msgid ""
+#~ "Provide access to graphical desktop environments via synthesized speech "
+#~ "and/or refreshable braille"
+#~ msgstr ""
+#~ "Proporciona acceso a entornos de escritorio gráficos a través de voz "
+#~ "sintetizada y Braille actualizable"
+
+#~ msgid "screen reader;speech;braille;"
+#~ msgstr "lector de pantalla;voz;braille;"
 
 #~ msgid "^[Yy1]"
 #~ msgstr "^[Ss1]"
