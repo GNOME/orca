@@ -54,6 +54,7 @@ class Script(default.Script):
         if self.utilities.isToggleDescendantOfComboBox(newFocus):
             isComboBox = lambda x: x and x.getRole() == pyatspi.ROLE_COMBO_BOX
             newFocus = pyatspi.findAncestor(newFocus, isComboBox) or newFocus
+            orca.setLocusOfFocus(event, newFocus, False)
 
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 
