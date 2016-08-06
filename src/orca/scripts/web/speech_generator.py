@@ -430,6 +430,20 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result.extend(self.voice(speech_generator.SYSTEM))
         return result
 
+    def _generateTableCellRow(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateTableCellRow(obj, **args)
+
+        if not self._script.utilities.shouldReadFullRow(obj):
+            return self._generateRealTableCell(obj, **args)
+
+        isRow = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_ROW
+        row = pyatspi.findAncestor(obj, isRow)
+        if row and row.name:
+            return self.generate(row)
+
+        return super()._generateTableCellRow(obj, **args)
+
     def generateSpeech(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             msg = "WEB: %s is not in document content. Calling default speech generator." % obj
