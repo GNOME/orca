@@ -1435,8 +1435,14 @@ class Script(default.Script):
                 self.utilities.setCaretContext(replicant, offset)
                 return True
 
-        child = event.any_data
-        if child.getRole() in [pyatspi.ROLE_ALERT, pyatspi.ROLE_DIALOG]:
+        childRole = event.any_data.getRole()
+        if childRole == pyatspi.ROLE_ALERT:
+            msg = "WEB: Presenting event.any_data"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.presentObject(event.any_data)
+            return True
+
+        if childRole == pyatspi.ROLE_DIALOG:
             msg = "WEB: Setting locusOfFocus to event.any_data"
             debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, child)
@@ -1447,7 +1453,7 @@ class Script(default.Script):
             utterances.append(messages.NEW_ITEM_ADDED)
             utterances.extend(self.speechGenerator.generateSpeech(child, force=True))
             speech.speak(utterances)
-            self._lastMouseOverObject = child
+            self._lastMouseOverObject = event.any_data
             self.preMouseOverContext = self.utilities.getCaretContext()
             return True
 
