@@ -84,6 +84,7 @@ class Utilities(script_utilities.Utilities):
         self._shouldInferLabelFor = {}
         self._text = {}
         self._tag = {}
+        self._xmlRoles = {}
         self._treatAsDiv = {}
         self._posinset = {}
         self._setsize = {}
@@ -139,6 +140,7 @@ class Utilities(script_utilities.Utilities):
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
         self._tag = {}
+        self._xmlRoles = {}
         self._treatAsDiv = {}
         self._posinset = {}
         self._setsize = {}
@@ -464,6 +466,20 @@ class Utilities(script_utilities.Utilities):
 
         rv = attrs.get('tag')
         self._tag[hash(obj)] = rv
+        return rv
+
+    def _getXMLRoles(self, obj):
+        rv = self._xmlRoles.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return None
+
+        rv = attrs.get('xml-roles', '').split()
+        self._xmlRoles[hash(obj)] = rv
         return rv
 
     def inFindToolbar(self, obj=None):
@@ -2234,14 +2250,35 @@ class Utilities(script_utilities.Utilities):
         if obj.getRole() == pyatspi.ROLE_LANDMARK:
             rv = True
         else:
-            try:
-                attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-            except:
-                attrs = {}
-            rv = attrs.get('xml-roles') in self.getLandmarkTypes()
+            roles = self._getXMLRoles(obj)
+            rv = bool(list(filter(lambda x: x in self.getLandmarkTypes(), roles)))
 
         self._isLandmark[hash(obj)] = rv
         return rv
+
+    def isLandmarkBanner(self, obj):
+        return 'banner' in self._getXMLRoles(obj)
+
+    def isLandmarkComplementary(self, obj):
+        return 'complementary' in self._getXMLRoles(obj)
+
+    def isLandmarkContentInfo(self, obj):
+        return 'contentinfo' in self._getXMLRoles(obj)
+
+    def isLandmarkForm(self, obj):
+        return 'form' in self._getXMLRoles(obj)
+
+    def isLandmarkMain(self, obj):
+        return 'main' in self._getXMLRoles(obj)
+
+    def isLandmarkNavigation(self, obj):
+        return 'navigation' in self._getXMLRoles(obj)
+
+    def isLandmarkRegion(self, obj):
+        return 'region' in self._getXMLRoles(obj)
+
+    def isLandmarkSearch(self, obj):
+        return 'search' in self._getXMLRoles(obj)
 
     def isLiveRegion(self, obj):
         if not (obj and self.inDocumentContent(obj)):

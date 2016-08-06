@@ -1161,7 +1161,7 @@ class StructuralNavigation:
     def _getRoleName(self, obj):
         # Another case where we'll do this for now, and clean it up when
         # object presentation is refactored.
-        return self._script.speechGenerator.getLocalizedRoleName(obj)
+        return self._script.speechGenerator.getLocalizedRoleName(obj, obj.getRole())
 
     def _getSelectedItem(self, obj):
         # Another case where we'll do this for now, and clean it up when
@@ -2192,7 +2192,7 @@ class StructuralNavigation:
         columnHeaders.append(guilabels.SN_HEADER_ROLE)
 
         def rowData(obj):
-            return [self._getText(obj), self._getRoleName(obj)]
+            return [obj.name, self._getRoleName(obj)]
 
         return guilabels.SN_TITLE_LANDMARK, columnHeaders, rowData
 

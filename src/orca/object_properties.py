@@ -89,6 +89,58 @@ ROLE_ICON_PANEL = _("Icon panel")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# The "banner" role is defined in the ARIA specification as "A region that
+# contains mostly site-oriented content, rather than page-specific content."
+# See https://www.w3.org/TR/wai-aria-1.1/#banner
+ROLE_LANDMARK_BANNER = C_("role", "banner")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# The "complementary" role is defined in the ARIA specification as "A supporting
+# section of the document, designed to be complementary to the main content at a
+# similar level in the DOM hierarchy, but remains meaningful when separated from
+# the main content." See https://www.w3.org/TR/wai-aria-1.1/#complementary
+ROLE_LANDMARK_COMPLEMENTARY = C_("role", "complementary content")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# The "contentinfo" role is defined in the ARIA specification as "A large
+# perceivable region that contains information about the parent document.
+# Examples of information included in this region of the page are copyrights and
+# links to privacy statements." See https://www.w3.org/TR/wai-aria-1.1/#contentinfo
+ROLE_LANDMARK_CONTENTINFO = C_("role", "information")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# The "main" role is defined in the ARIA specification as "The main content of
+# a document." See https://www.w3.org/TR/wai-aria-1.1/#main
+ROLE_LANDMARK_MAIN = C_("role", "main content")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# The "navigation" role is defined in the ARIA specification as "A collection of
+# navigational elements (usually links) for navigating the document or related
+# documents." See https://www.w3.org/TR/wai-aria-1.1/#navigation
+ROLE_LANDMARK_NAVIGATION =  C_("role", "navigation")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# The "region" role is defined in the ARIA specification as "A perceivable
+# section containing content that is relevant to a specific, author-specified
+# purpose and sufficiently important that users will likely want to be able to
+# navigate to the section easily and to have it listed in a summary of the page."
+# See https://www.w3.org/TR/wai-aria-1.1/#region
+ROLE_LANDMARK_REGION =  C_("role", "region")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# The "search" role is defined in the ARIA specification as "A landmark region
+# that contains a collection of items and objects that, as a whole, combine to
+# create a search facility." See https://www.w3.org/TR/wai-aria-1.1/#search
+ROLE_LANDMARK_SEARCH = C_("role", "search")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # The reason for including the visited state as part of the role is to make it
 # possible for users to quickly identify if the link is associated with content
 # already read.

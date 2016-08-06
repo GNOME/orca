@@ -687,6 +687,30 @@ class Utilities:
     def isLandmark(self, obj):
         return False
 
+    def isLandmarkBanner(self, obj):
+        return False
+
+    def isLandmarkComplementary(self, obj):
+        return False
+
+    def isLandmarkContentInfo(self, obj):
+        return False
+
+    def isLandmarkForm(self, obj):
+        return False
+
+    def isLandmarkMain(self, obj):
+        return False
+
+    def isLandmarkNavigation(self, obj):
+        return False
+
+    def isLandmarkRegion(self, obj):
+        return False
+
+    def isLandmarkSearch(self, obj):
+        return False
+
     def speakMathSymbolNames(self, obj=None):
         return False
 

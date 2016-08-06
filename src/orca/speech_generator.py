@@ -386,6 +386,24 @@ class SpeechGenerator(generator.Generator):
         if not role:
             return ''
 
+        if self._script.utilities.isLandmark(obj):
+            if self._script.utilities.isLandmarkBanner(obj):
+                return object_properties.ROLE_LANDMARK_BANNER
+            if self._script.utilities.isLandmarkComplementary(obj):
+                return object_properties.ROLE_LANDMARK_COMPLEMENTARY
+            if self._script.utilities.isLandmarkContentInfo(obj):
+                return object_properties.ROLE_LANDMARK_CONTENTINFO
+            if self._script.utilities.isLandmarkMain(obj):
+                return object_properties.ROLE_LANDMARK_MAIN
+            if self._script.utilities.isLandmarkNavigation(obj):
+                return object_properties.ROLE_LANDMARK_NAVIGATION
+            if self._script.utilities.isLandmarkRegion(obj):
+                return object_properties.ROLE_LANDMARK_REGION
+            if self._script.utilities.isLandmarkSearch(obj):
+                return object_properties.ROLE_LANDMARK_SEARCH
+            if self._script.utilities.isLandmarkForm(obj):
+                role = pyatspi.ROLE_FORM
+
         if self._script.utilities.isEditableComboBox(obj) \
            or self._script.utilities.isEditableDescendantOfComboBox(obj):
             return object_properties.ROLE_EDITABLE_COMBO_BOX
