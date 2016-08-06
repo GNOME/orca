@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2016-03-13 02:16+0000\n"
-"PO-Revision-Date: 2016-03-13 11:22+0200\n"
+"POT-Creation-Date: 2016-07-20 19:42+0000\n"
+"PO-Revision-Date: 2016-08-06 20:20+0300\n"
 "Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -21,27 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.8.6\n"
-
-#: ../orca.desktop.in.h:1
-msgid "Screen Reader"
-msgstr "Ekran Okuyucusu"
-
-#: ../orca.desktop.in.h:2
-msgid "Orca Screen Reader"
-msgstr "Orca Ekran Okuyucusu"
-
-#: ../orca.desktop.in.h:3
-msgid ""
-"Provide access to graphical desktop environments via synthesized speech and/"
-"or refreshable braille"
-msgstr ""
-"Grafik masaüstü ortamlarına yapay konuşma ve/veya yenilenebilir braille "
-"üzerinden erişim sağlar"
-
-#: ../orca.desktop.in.h:4
-msgid "screen reader;speech;braille;"
-msgstr "ekran okuyucu;konuşma;braille;"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -10657,11 +10637,21 @@ msgstr "ağaç seviyesi %d"
 msgid "TREE LEVEL %d"
 msgstr "AĞAÇ SEVİYESİ %d"
 
+#. Translators: This string should be treated as a role describing an object.
+#. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+#. The reason for including the editable state as part of the role is to make it
+#. possible for users to quickly identify combo boxes in which a value can be
+#. typed or arrowed to.
+#: ../src/orca/object_properties.py:73
+#| msgid "Goes to next combo box."
+msgid "editable combo box"
+msgstr "düzenlenebilir çoklu kutu"
+
 #. Translators: The 'h' in this string represents a heading level attribute for
 #. content that you might find in something such as HTML content (e.g., <h1>).
 #. The translated form is meant to be a single character followed by a numeric
 #. heading level, where the single character is to indicate 'heading'.
-#: ../src/orca/object_properties.py:72
+#: ../src/orca/object_properties.py:79
 #, python-format
 msgid "h%d"
 msgstr "h%d"
@@ -10669,14 +10659,14 @@ msgstr "h%d"
 #. Translators: The %(level)d is in reference to a heading level in HTML (e.g.,
 #. For <h3>, the level is 3) and the %(role)s is in reference to a previously
 #. translated rolename for the heading.
-#: ../src/orca/object_properties.py:77
+#: ../src/orca/object_properties.py:84
 #, python-format
 msgid "%(role)s level %(level)d"
 msgstr "%(role)s seviye %(level)d"
 
 #. Translators: This is an alternative name for the parent object of a series
 #. of icons.
-#: ../src/orca/object_properties.py:81
+#: ../src/orca/object_properties.py:88
 msgid "Icon panel"
 msgstr "Simge paneli"
 
@@ -10685,111 +10675,111 @@ msgstr "Simge paneli"
 #. The reason for including the visited state as part of the role is to make it
 #. possible for users to quickly identify if the link is associated with content
 #. already read.
-#: ../src/orca/object_properties.py:88
+#: ../src/orca/object_properties.py:95
 msgid "visited link"
 msgstr "ziyaret edilmiş bağlantı"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
-#: ../src/orca/object_properties.py:92
+#: ../src/orca/object_properties.py:99
 msgid "clickable"
 msgstr "tıklanabilir"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:97
+#: ../src/orca/object_properties.py:104
 msgid "collapsed"
 msgstr "kapanmış"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:102
+#: ../src/orca/object_properties.py:109
 msgid "expanded"
 msgstr "genişletilmiş"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
-#: ../src/orca/object_properties.py:106
+#: ../src/orca/object_properties.py:113
 msgid "has long description"
 msgstr "uzun açıklaması var"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:110
+#: ../src/orca/object_properties.py:117
 msgid "horizontal"
 msgstr "Yatay"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:114
+#: ../src/orca/object_properties.py:121
 msgid "vertical"
 msgstr "dikey"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:117
+#: ../src/orca/object_properties.py:124
 msgctxt "checkbox"
 msgid "checked"
 msgstr "işaretli"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:120
+#: ../src/orca/object_properties.py:127
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "işaretli değil"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:123
+#: ../src/orca/object_properties.py:130
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "kısmen işaretli"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:126
+#: ../src/orca/object_properties.py:133
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "basılmış"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:129
+#: ../src/orca/object_properties.py:136
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "basılmamış"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:132
+#: ../src/orca/object_properties.py:139
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "seçili"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:135
+#: ../src/orca/object_properties.py:142
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "seçili değil"
 
 #. Translators: This is a state which applies to a table cell.
-#: ../src/orca/object_properties.py:138
+#: ../src/orca/object_properties.py:145
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "seçili değil"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:141
+#: ../src/orca/object_properties.py:148
 msgctxt "link state"
 msgid "visited"
 msgstr "ziyaret edilmiş"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:144
+#: ../src/orca/object_properties.py:151
 msgctxt "link state"
 msgid "unvisited"
 msgstr "ziyaret edilmemiş"
 
 #. Translators: This state represents an item on the screen that has been set
 #. insensitive (or grayed out).
-#: ../src/orca/object_properties.py:148 ../src/orca/object_properties.py:152
+#: ../src/orca/object_properties.py:155 ../src/orca/object_properties.py:159
 msgid "grayed"
 msgstr "soluklaştırılmış"
 
@@ -10798,7 +10788,7 @@ msgstr "soluklaştırılmış"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the spoken
 #. version.
-#: ../src/orca/object_properties.py:159
+#: ../src/orca/object_properties.py:166
 msgctxt "text"
 msgid "read only"
 msgstr "salt okunur"
@@ -10808,20 +10798,20 @@ msgstr "salt okunur"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the braille
 #. version. (Because braille displays have limited real estate, we abbreviate.)
-#: ../src/orca/object_properties.py:166
+#: ../src/orca/object_properties.py:173
 msgctxt "text"
 msgid "rdonly"
 msgstr "saltokunur"
 
 #. Translators: Certain objects (such as form controls on web pages) can have
 #. STATE_REQUIRED set to inform the user that this field must be filled out.
-#: ../src/orca/object_properties.py:170 ../src/orca/object_properties.py:174
+#: ../src/orca/object_properties.py:177 ../src/orca/object_properties.py:181
 msgid "required"
 msgstr "gerekli"
 
 #. Translators: "multi-select" refers to a web form list in which more than
 #. one item can be selected at a time.
-#: ../src/orca/object_properties.py:178
+#: ../src/orca/object_properties.py:185
 msgid "multi-select"
 msgstr "çoklu-seçim"
 
@@ -12496,6 +12486,22 @@ msgid ""
 msgstr ""
 "Azaltmak için lütfen sol ok, arttırmak için ise sağ ok. En aza gitmek için "
 "home ve en fazlaya gitmek için end."
+
+#~ msgid "Screen Reader"
+#~ msgstr "Ekran Okuyucusu"
+
+#~ msgid "Orca Screen Reader"
+#~ msgstr "Orca Ekran Okuyucusu"
+
+#~ msgid ""
+#~ "Provide access to graphical desktop environments via synthesized speech "
+#~ "and/or refreshable braille"
+#~ msgstr ""
+#~ "Grafik masaüstü ortamlarına yapay konuşma ve/veya yenilenebilir braille "
+#~ "üzerinden erişim sağlar"
+
+#~ msgid "screen reader;speech;braille;"
+#~ msgstr "ekran okuyucu;konuşma;braille;"
 
 #~ msgid "^[Yy1]"
 #~ msgstr "^[Ee1]"
