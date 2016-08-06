@@ -54,6 +54,8 @@ class Utilities(script_utilities.Utilities):
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
         self._isGridDescendant = {}
+        self._isMenuDescendant = {}
+        self._isToolBarDescendant = {}
         self._isLayoutOnly = {}
         self._isMath = {}
         self._mathNestingLevel = {}
@@ -108,6 +110,8 @@ class Utilities(script_utilities.Utilities):
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
         self._isGridDescendant = {}
+        self._isMenuDescendant = {}
+        self._isToolBarDescendant = {}
         self._isLayoutOnly = {}
         self._isMath = {}
         self._mathNestingLevel = {}
@@ -1484,7 +1488,9 @@ class Utilities(script_utilities.Utilities):
            and not self.isTextBlockElement(obj):
             return True
 
-        if self.isGridDescendant(obj):
+        if self.isGridDescendant(obj) \
+           or self.isMenuDescendant(obj) \
+           or self.isToolBarDescendant(obj):
             return True
 
         return False
@@ -1939,6 +1945,32 @@ class Utilities(script_utilities.Utilities):
 
         rv = pyatspi.findAncestor(obj, self.supportsSelectionAndTable) is not None
         self._isGridDescendant[hash(obj)] = rv
+        return rv
+
+    def isMenuDescendant(self, obj):
+        if not obj:
+            return False
+
+        rv = self._isMenuDescendant.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        isMenu = lambda x: x and x.getRole() == pyatspi.ROLE_MENU
+        rv = pyatspi.findAncestor(obj, isMenu) is not None
+        self._isMenuDescendant[hash(obj)] = rv
+        return rv
+
+    def isToolBarDescendant(self, obj):
+        if not obj:
+            return False
+
+        rv = self._isToolBarDescendant.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        isMenu = lambda x: x and x.getRole() == pyatspi.ROLE_TOOL_BAR
+        rv = pyatspi.findAncestor(obj, isMenu) is not None
+        self._isToolBarDescendant[hash(obj)] = rv
         return rv
 
     def isLayoutOnly(self, obj):
