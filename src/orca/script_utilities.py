@@ -1020,7 +1020,7 @@ class Utilities:
         return pyatspi.findAncestor(obj, self.isSpreadSheetTable)
 
     def cellColumnChanged(self, cell):
-        row, column = self._script.utilities.coordinatesForCell(cell)
+        row, column = self.coordinatesForCell(cell)
         if column == -1:
             return False
 
@@ -1028,7 +1028,7 @@ class Utilities:
         return column != lastColumn
 
     def cellRowChanged(self, cell):
-        row, column = self._script.utilities.coordinatesForCell(cell)
+        row, column = self.coordinatesForCell(cell)
         if row == -1:
             return False
 
@@ -3510,7 +3510,7 @@ class Utilities:
         if not self.isSpreadSheetCell(obj):
             return startIndex, endIndex
 
-        parent = self._script.utilities.getTable(obj)
+        parent = self.getTable(obj)
         try:
             component = parent.queryComponent()
         except:
@@ -3532,7 +3532,7 @@ class Utilities:
         return startIndex, endIndex
 
     def getShowingCellsInSameRow(self, obj):
-        parent = self._script.utilities.getTable(obj)
+        parent = self.getTable(obj)
         try:
             table = parent.queryTable()
         except:
