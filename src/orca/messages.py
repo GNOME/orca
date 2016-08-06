@@ -1316,6 +1316,17 @@ MODE_FOCUS_TUTORIAL = _("To enable focus mode press %s.")
 # This string is the message presented when Orca switches to sticky focus mode.
 MODE_FOCUS_IS_STICKY = _("Focus mode is sticky.")
 
+# Translators: (Please see the previous, detailed translator notes about
+# Focus mode and Browse mode.) In order to minimize the amount of work Orca
+# users need to do to switch between focus mode and browse mode, Orca attempts
+# to automatically switch to the mode which is appropriate to the current
+# web element. Sometimes, however, this automatic mode switching is not what
+# the user wants. A good example being web apps which have their own keyboard
+# navigation and use interaction model. As a result, Orca has a command which
+# enables setting a "sticky" browse mode which disables all automatic toggling.
+# This string is the message presented when Orca switches to sticky browse mode.
+MODE_BROWSE_IS_STICKY = _("Browse mode is sticky.")
+
 # Translators: Hovering the mouse over certain objects on a web page causes a 
 # new object to appear such as a pop-up menu. Orca has a command will move the
 # user to the object which just appeared as a result of the user hovering the

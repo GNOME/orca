@@ -761,9 +761,12 @@ class Utilities(script_utilities.Utilities):
                 rv = None
 
         if not self.isLiveRegion(obj):
-            doNotQuery = [pyatspi.ROLE_EMBEDDED,
-                          pyatspi.ROLE_TABLE_ROW,
+            doNotQuery = [pyatspi.ROLE_TABLE_ROW,
                           pyatspi.ROLE_TOOL_BAR]
+
+            if not self._script.browseModeIsSticky():
+                doNotQuery.append(pyatspi.ROLE_EMBEDDED)
+
             role = obj.getRole()
             if rv and role in doNotQuery:
                 rv = None
@@ -2784,7 +2787,6 @@ class Utilities(script_utilities.Utilities):
             return False
 
         doNotDescend = [pyatspi.ROLE_COMBO_BOX,
-                        pyatspi.ROLE_EMBEDDED,
                         pyatspi.ROLE_LIST_BOX,
                         pyatspi.ROLE_MENU_BAR,
                         pyatspi.ROLE_MENU,
@@ -2795,6 +2797,10 @@ class Utilities(script_utilities.Utilities):
                         pyatspi.ROLE_TOOL_TIP,
                         pyatspi.ROLE_TREE,
                         pyatspi.ROLE_TREE_TABLE]
+
+        if not self._script.browseModeIsSticky():
+            doNotDescend.append(pyatspi.ROLE_EMBEDDED)
+
         return role in doNotDescend
 
     def _searchForCaretContext(self, obj):

@@ -260,6 +260,12 @@
           <keyseq><key>Orca Modifier</key><key>A</key></keyseq> (double-clicked)
         </p>
       </item>
+      <item>
+        <p>
+          Enable "sticky" browse mode:
+          <keyseq><key>Orca Modifier</key><key>A</key></keyseq> (triple-clicked)
+        </p>
+      </item>
     </list>
   </section>
 </page>

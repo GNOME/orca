@@ -79,6 +79,7 @@ class Script(default.Script):
         self._inMouseOverObject = False
         self._inFocusMode = False
         self._focusModeIsSticky = False
+        self._browseModeIsSticky = False
 
         if _settingsManager.getSetting('caretNavigationEnabled') is None:
             _settingsManager.setSetting('caretNavigationEnabled', True)
@@ -152,6 +153,14 @@ class Script(default.Script):
                 self.inputEventHandlers.get("enableStickyFocusModeHandler"),
                 2))
 
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "a",
+                keybindings.defaultModifierMask,
+                keybindings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers.get("enableStickyBrowseModeHandler"),
+                3))
+
         layout = _settingsManager.getSetting('keyboardLayout')
         if layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
             key = "KP_Multiply"
@@ -212,6 +221,10 @@ class Script(default.Script):
                 Script.enableStickyFocusMode,
                 cmdnames.SET_FOCUS_MODE_STICKY)
 
+        self.inputEventHandlers["enableStickyBrowseModeHandler"] = \
+            input_event.InputEventHandler(
+                Script.enableStickyBrowseMode,
+                cmdnames.SET_BROWSE_MODE_STICKY)
 
     def getBookmarks(self):
         """Returns the "bookmarks" class for this script."""
@@ -682,11 +695,19 @@ class Script(default.Script):
 
         return self._focusModeIsSticky
 
+    def browseModeIsSticky(self):
+        """Returns True if we're in 'sticky' browse mode."""
+
+        return self._browseModeIsSticky
+
     def useFocusMode(self, obj):
         """Returns True if we should use focus mode in obj."""
 
         if self._focusModeIsSticky:
             return True
+
+        if self._browseModeIsSticky:
+            return False
 
         if not _settingsManager.getSetting('structNavTriggersFocusMode') \
            and self._lastCommandWasStructNav:
@@ -954,12 +975,21 @@ class Script(default.Script):
         self._inMouseOverObject = False
         self._lastMouseOverObject = None
 
+    def enableStickyBrowseMode(self, inputEvent, forceMessage=False):
+        if not self._browseModeIsSticky or forceMessage:
+            self.presentMessage(messages.MODE_BROWSE_IS_STICKY)
+
+        self._inFocusMode = False
+        self._focusModeIsSticky = False
+        self._browseModeIsSticky = True
+
     def enableStickyFocusMode(self, inputEvent, forceMessage=False):
         if not self._focusModeIsSticky or forceMessage:
             self.presentMessage(messages.MODE_FOCUS_IS_STICKY)
 
         self._inFocusMode = True
         self._focusModeIsSticky = True
+        self._browseModeIsSticky = False
 
     def togglePresentationMode(self, inputEvent):
         [obj, characterOffset] = self.utilities.getCaretContext()
@@ -984,6 +1014,7 @@ class Script(default.Script):
             self.presentMessage(messages.MODE_FOCUS)
         self._inFocusMode = not self._inFocusMode
         self._focusModeIsSticky = False
+        self._browseModeIsSticky = False
 
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
         """Handles changes of focus of interest to the script."""
@@ -1052,6 +1083,7 @@ class Script(default.Script):
             return True
 
         if not self._focusModeIsSticky \
+           and not self._browseModeIsSticky \
            and self.useFocusMode(newFocus) != self._inFocusMode:
             self.togglePresentationMode(None)
 

@@ -1020,6 +1020,17 @@ TOGGLE_PRESENTATION_MODE = _("Switches between browse mode and focus mode.")
 # This string is associated with the Orca command to enable sticky focus mode.
 SET_FOCUS_MODE_STICKY = _("Enables sticky focus mode.")
 
+# Translators: (Please see the previous, detailed translator notes about
+# Focus mode and Browse mode.) In order to minimize the amount of work Orca
+# users need to do to switch between focus mode and browse mode, Orca attempts
+# to automatically switch to the mode which is appropriate to the current
+# web element. Sometimes, however, this automatic mode switching is not what
+# the user wants. A good example being web apps which have their own keyboard
+# navigation and use interaction model. As a result, Orca has a command which
+# enables setting a "sticky" browse mode which disables all automatic toggling.
+# This string is associated with the Orca command to enable sticky browse mode.
+SET_BROWSE_MODE_STICKY = _("Enables sticky browse mode.")
+
 # Translators: this is for navigating among unvisited links in a document.
 UNVISITED_LINK_PREV = _("Goes to previous unvisited link.")
 
