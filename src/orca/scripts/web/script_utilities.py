@@ -761,7 +761,8 @@ class Utilities(script_utilities.Utilities):
                 rv = None
 
         if not self.isLiveRegion(obj):
-            doNotQuery = [pyatspi.ROLE_TABLE_ROW,
+            doNotQuery = [pyatspi.ROLE_EMBEDDED,
+                          pyatspi.ROLE_TABLE_ROW,
                           pyatspi.ROLE_TOOL_BAR]
             role = obj.getRole()
             if rv and role in doNotQuery:
@@ -2783,6 +2784,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         doNotDescend = [pyatspi.ROLE_COMBO_BOX,
+                        pyatspi.ROLE_EMBEDDED,
                         pyatspi.ROLE_LIST_BOX,
                         pyatspi.ROLE_MENU_BAR,
                         pyatspi.ROLE_MENU,
