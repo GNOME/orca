@@ -855,11 +855,11 @@ class Chat:
 
         if obj and obj.getState().contains(pyatspi.STATE_SHOWING):
             active = self._script.utilities.topLevelObjectIsActiveAndCurrent(obj)
-            msg = "INFO: %s's is focused chat: %s" % (obj, active)
+            msg = "INFO: %s's window is focused chat: %s" % (obj, active)
             debug.println(debug.LEVEL_INFO, msg, True)
             return active
 
-        msg = "INFO: %s is not focused chat" % obj
+        msg = "INFO: %s is not focused chat (not showing)" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
 
