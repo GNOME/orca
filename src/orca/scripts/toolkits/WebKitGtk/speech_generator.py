@@ -84,10 +84,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         level = self._script.utilities.headingLevel(obj)
         if level:
             result.append(object_properties.ROLE_HEADING_LEVEL_SPEECH % {
-                    'role': self.getLocalizedRoleName(obj, role),
+                    'role': self.getLocalizedRoleName(obj, role=role),
                     'level': level})
         else:
-            result.append(self.getLocalizedRoleName(obj, role))
+            result.append(self.getLocalizedRoleName(obj, role=role))
 
         return result
 
@@ -120,7 +120,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             elif role == pyatspi.ROLE_HEADING:
                 result.extend(self.__generateHeadingRole(obj))
             else:
-                result.append(self.getLocalizedRoleName(obj, role))
+                result.append(self.getLocalizedRoleName(obj, role=role))
                 if obj.parent and obj.parent.getRole() == pyatspi.ROLE_HEADING:
                     result.extend(self.__generateHeadingRole(obj.parent))
 

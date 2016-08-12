@@ -41,15 +41,15 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
     def __init__(self, script):
         super().__init__(script)
 
-    def getLocalizedRoleName(self, obj, role=None):
+    def getLocalizedRoleName(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
-            return super().getLocalizedRoleName(obj, role)
+            return super().getLocalizedRoleName(obj, **args)
 
         roledescription = self._script.utilities.getRoleDescription(obj)
         if roledescription:
             return roledescription
 
-        return super().getLocalizedRoleName(obj, role)
+        return super().getLocalizedRoleName(obj, **args)
 
     def _generateRoleName(self, obj, **args):
         """Prevents some roles from being displayed."""

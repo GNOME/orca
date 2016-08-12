@@ -83,6 +83,62 @@ ROLE_HEADING_LEVEL_BRAILLE = _("h%d")
 # translated rolename for the heading.
 ROLE_HEADING_LEVEL_SPEECH = _("%(role)s level %(level)d")
 
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# The reason we include the orientation as part of the role is because in some
+# applications and toolkits, it can dictate which keyboard keys should be used
+# to modify the value of the widget.
+ROLE_SCROLL_BAR_HORIZONTAL = _("horizontal scroll bar")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# The reason we include the orientation as part of the role is because in some
+# applications and toolkits, it can dictate which keyboard keys should be used
+# to modify the value of the widget.
+ROLE_SCROLL_BAR_VERTICAL = _("vertical scroll bar")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# A slider is a widget which looks like a bar and displays a value as a range.
+# A common example of a slider can be found in UI for modifying volume levels.
+# The reason we include the orientation as part of the role is because in some
+# applications and toolkits, it can dictate which keyboard keys should be used
+# to modify the value of the widget.
+ROLE_SLIDER_HORIZONTAL = _("horizontal slider")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# A slider is a widget which looks like a bar and displays a value as a range.
+# A common example of a slider can be found in UI for modifying volume levels.
+# The reason we include the orientation as part of the role is because in some
+# applications and toolkits, it can dictate which keyboard keys should be used
+# to modify the value of the widget.
+ROLE_SLIDER_VERTICAL = _("vertical slider")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# A splitter is a bar that divides a container into two parts. It is often, but
+# not necessarily, user resizable. A common example of a splitter can be found
+# in email applications, where there is a container on the left which holds a
+# list of all the mail folders and a container on the right which lists all of
+# the messages in the selected folder. The bar which you click on and drag to
+# resize these containers is the splitter. The reason we include the orientation
+# as part of the role is because in some applications and toolkits, it can
+# dictate which keyboard keys should be used to modify the value of the widget.
+ROLE_SPLITTER_HORIZONTAL = _("horizontal splitter")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# A splitter is a bar that divides a container into two parts. It is often, but
+# not necessarily, user resizable. A common example of a splitter can be found
+# in email applications, where there is a container on the left which holds a
+# list of all the mail folders and a container on the right which lists all of
+# the messages in the selected folder. The bar which you click on and drag to
+# resize these containers is the splitter. The reason we include the orientation
+# as part of the role is because in some applications and toolkits, it can
+# dictate which keyboard keys should be used to modify the value of the widget.
+ROLE_SPLITTER_VERTICAL = _("vertical splitter")
+
 # Translators: This is an alternative name for the parent object of a series
 # of icons.
 ROLE_ICON_PANEL = _("Icon panel")

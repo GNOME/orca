@@ -400,15 +400,6 @@ class ValueZone(Zone):
 
     def __getattr__(self, attr):
         if attr in ["string", "length", "brailleString"]:
-            orientation = None
-            if self.role in [pyatspi.ROLE_SLIDER,
-                             pyatspi.ROLE_SCROLL_BAR]:
-                stateset = self.accessible.getState()
-                if stateset.contains(pyatspi.STATE_HORIZONTAL):
-                    orientation = object_properties.STATE_HORIZONTAL
-                elif stateset.contains(pyatspi.STATE_VERTICAL):
-                    orientation = object_properties.STATE_VERTICAL
-                        
             try:
                 value = self.accessible.queryValue()
             except NotImplementedError:
@@ -421,22 +412,15 @@ class ValueZone(Zone):
             except:
                 percentValue = 0
 
-            rolename = self.accessible.getLocalizedRoleName()
-            if orientation:
-                speechValue = orientation + " " + rolename
-            else:
-                speechValue = rolename
-
+            script = orca_state.activeScript
+            speechValue = script.speechGenerator.getLocalizedRoleName(
+                self.accessible, alreadyFocused=True)
             speechValue = speechValue + " " + messages.percentage(percentValue)
 
-            rolename = orca_state.activeScript.brailleGenerator.getLocalizedRoleName(
-                self.accessible)
-            if orientation:
-                brailleValue = "%s %s %d%%" % (orientation,
-                    rolename,
-                    percentValue)
-            else:
-                brailleValue = "%s %d%%" % (rolename, percentValue)
+            brailleValue = script.brailleGenerator.getLocalizedRoleName(
+                self.accessible, alreadyFocused=True)
+            brailleValue = "%s %d%%" % (brailleValue, percentValue)
+
             if attr == "string":
                 return speechValue
             elif attr == "length":

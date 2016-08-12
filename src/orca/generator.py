@@ -27,11 +27,12 @@ __copyright__ = "Copyright (c) 2009 Sun Microsystems Inc." \
                 "Copyright (c) 2015-2016 Igalia, S.L."
 __license__   = "LGPL"
 
+import collections
+import pyatspi
 import sys
 import time
 import traceback
-
-import pyatspi
+from gi.repository import Atspi, Atk
 
 from . import braille
 from . import debug
@@ -39,8 +40,6 @@ from . import messages
 from . import object_properties
 from . import settings
 from . import settings_manager
-
-import collections
 
 def _formatExceptionInfo(maxTBlevel=5):
     cla, exc, trbk = sys.exc_info()
@@ -655,7 +654,7 @@ class Generator:
         if not text:
             return result
 
-        roleString =  self.getLocalizedRoleName(obj, pyatspi.ROLE_ROW_HEADER)
+        roleString =  self.getLocalizedRoleName(obj, role=pyatspi.ROLE_ROW_HEADER)
         if args.get('mode') == 'speech':
             if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
                and not args.get('formatType') in ['basicWhereAmI', 'detailedWhereAmI']:
@@ -681,7 +680,7 @@ class Generator:
         if not text:
             return result
 
-        roleString =  self.getLocalizedRoleName(obj, pyatspi.ROLE_COLUMN_HEADER)
+        roleString =  self.getLocalizedRoleName(obj, role=pyatspi.ROLE_COLUMN_HEADER)
         if args.get('mode') == 'speech':
             if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
                and not args.get('formatType') in ['basicWhereAmI', 'detailedWhereAmI']:
@@ -1154,3 +1153,57 @@ class Generator:
             return pyatspi.ROLE_LIST_ITEM
 
         return args.get('role', obj.getRole())
+
+    def getLocalizedRoleName(self, obj, **args):
+        role = args.get('role', obj.getRole())
+
+        if "Value" in pyatspi.listInterfaces(obj):
+            state = obj.getState()
+            isVertical = state.contains(pyatspi.STATE_VERTICAL)
+            isHorizontal = state.contains(pyatspi.STATE_HORIZONTAL)
+            isFocused = state.contains(pyatspi.STATE_FOCUSED) \
+                        or args.get('alreadyFocused', False)
+
+            if role == pyatspi.ROLE_SLIDER:
+                if isHorizontal:
+                    return object_properties.ROLE_SLIDER_HORIZONTAL
+                if isVertical:
+                    return object_properties.ROLE_SLIDER_VERTICAL
+            elif role == pyatspi.ROLE_SCROLL_BAR:
+                if isHorizontal:
+                    return object_properties.ROLE_SCROLL_BAR_HORIZONTAL
+                if isVertical:
+                    return object_properties.ROLE_SCROLL_BAR_VERTICAL
+            elif role == pyatspi.ROLE_SEPARATOR:
+                if isHorizontal:
+                    return object_properties.ROLE_SPLITTER_HORIZONTAL
+                if isVertical:
+                    return object_properties.ROLE_SPLITTER_VERTICAL
+            elif role == pyatspi.ROLE_SPLIT_PANE and isFocused:
+                # The splitter has the opposite orientation of the split pane.
+                if isHorizontal:
+                    return object_properties.ROLE_SPLITTER_VERTICAL
+                if isVertical:
+                    return object_properties.ROLE_SPLITTER_HORIZONTAL
+
+        if self._script.utilities.isLandmark(obj):
+            if self._script.utilities.isLandmarkBanner(obj):
+                return object_properties.ROLE_LANDMARK_BANNER
+            if self._script.utilities.isLandmarkComplementary(obj):
+                return object_properties.ROLE_LANDMARK_COMPLEMENTARY
+            if self._script.utilities.isLandmarkContentInfo(obj):
+                return object_properties.ROLE_LANDMARK_CONTENTINFO
+            if self._script.utilities.isLandmarkMain(obj):
+                return object_properties.ROLE_LANDMARK_MAIN
+            if self._script.utilities.isLandmarkNavigation(obj):
+                return object_properties.ROLE_LANDMARK_NAVIGATION
+            if self._script.utilities.isLandmarkRegion(obj):
+                return object_properties.ROLE_LANDMARK_REGION
+            if self._script.utilities.isLandmarkSearch(obj):
+                return object_properties.ROLE_LANDMARK_SEARCH
+            if self._script.utilities.isLandmarkForm(obj):
+                role = pyatspi.ROLE_FORM
+
+        nonlocalized = Atspi.role_get_name(role)
+        atkRole = Atk.role_for_name(nonlocalized)
+        return Atk.role_get_localized_name(atkRole)

@@ -1161,7 +1161,7 @@ class StructuralNavigation:
     def _getRoleName(self, obj):
         # Another case where we'll do this for now, and clean it up when
         # object presentation is refactored.
-        return self._script.speechGenerator.getLocalizedRoleName(obj, obj.getRole())
+        return self._script.speechGenerator.getLocalizedRoleName(obj)
 
     def _getSelectedItem(self, obj):
         # Another case where we'll do this for now, and clean it up when

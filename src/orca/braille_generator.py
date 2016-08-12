@@ -26,7 +26,6 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
-from gi.repository import Atspi, Atk
 
 from . import braille
 from . import debug
@@ -158,56 +157,25 @@ class BrailleGenerator(generator.Generator):
 
         elif verbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
            and not args.get('readingRow', False) and role not in doNotPresent:
-            result.append(self.getLocalizedRoleName(obj, role))
+            result.append(self.getLocalizedRoleName(obj, **args))
         return result
 
-    def getLocalizedRoleName(self, obj, role=None):
+    def getLocalizedRoleName(self, obj, **args):
         """Returns the localized name of the given Accessible object; the name
         is suitable to be brailled.
 
         Arguments:
         - obj: an Accessible object
-        - role: an optional pyatspi role to use instead
         """
 
         if _settingsManager.getSetting('brailleRolenameStyle') \
                 == settings.BRAILLE_ROLENAME_STYLE_SHORT:
-            objRole = role or obj.getRole()
-            rv = shortRoleNames.get(objRole)
+            role = args.get('role', obj.getRole())
+            rv = shortRoleNames.get(role)
             if rv:
                 return rv
 
-        if not isinstance(role, (pyatspi.Role, Atspi.Role)):
-            try:
-                return obj.getLocalizedRoleName()
-            except:
-                return ''
-
-        if self._script.utilities.isLandmark(obj):
-            if self._script.utilities.isLandmarkBanner(obj):
-                return object_properties.ROLE_LANDMARK_BANNER
-            if self._script.utilities.isLandmarkComplementary(obj):
-                return object_properties.ROLE_LANDMARK_COMPLEMENTARY
-            if self._script.utilities.isLandmarkContentInfo(obj):
-                return object_properties.ROLE_LANDMARK_CONTENTINFO
-            if self._script.utilities.isLandmarkMain(obj):
-                return object_properties.ROLE_LANDMARK_MAIN
-            if self._script.utilities.isLandmarkNavigation(obj):
-                return object_properties.ROLE_LANDMARK_NAVIGATION
-            if self._script.utilities.isLandmarkRegion(obj):
-                return object_properties.ROLE_LANDMARK_REGION
-            if self._script.utilities.isLandmarkSearch(obj):
-                return object_properties.ROLE_LANDMARK_SEARCH
-            if self._script.utilities.isLandmarkForm(obj):
-                role = pyatspi.ROLE_FORM
-
-        if not role:
-            return ''
-
-        nonlocalized = Atspi.role_get_name(role)
-        atkRole = Atk.role_for_name(nonlocalized)
-
-        return Atk.role_get_localized_name(atkRole)
+        return super().getLocalizedRoleName(obj, **args)
 
     def _generateUnrelatedLabels(self, obj, **args):
         result = []

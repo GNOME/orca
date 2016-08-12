@@ -221,15 +221,15 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generateTextRole(self, obj, **args):
         return self._generateRoleName(obj, **args)
 
-    def getLocalizedRoleName(self, obj, role=None):
+    def getLocalizedRoleName(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
-            return super().getLocalizedRoleName(obj, role)
+            return super().getLocalizedRoleName(obj, **args)
 
         roledescription = self._script.utilities.getRoleDescription(obj)
         if roledescription:
             return roledescription
 
-        return super().getLocalizedRoleName(obj, role)
+        return super().getLocalizedRoleName(obj, **args)
 
     def _generateRoleName(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
@@ -283,18 +283,18 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 if text and end not in [None, text.characterCount]:
                     return []
             if role not in doNotSpeak:
-                result.append(self.getLocalizedRoleName(obj, role))
+                result.append(self.getLocalizedRoleName(obj, **args))
                 result.extend(acss)
 
         elif role == pyatspi.ROLE_HEADING:
             level = self._script.utilities.headingLevel(obj)
             if level:
                 result.append(object_properties.ROLE_HEADING_LEVEL_SPEECH % {
-                    'role': self.getLocalizedRoleName(obj, role),
+                    'role': self.getLocalizedRoleName(obj, **args),
                     'level': level})
                 result.extend(acss)
             else:
-                result.append(self.getLocalizedRoleName(obj, role))
+                result.append(self.getLocalizedRoleName(obj, **args))
                 result.extend(acss)
 
         elif self._script.utilities.isLink(obj):
@@ -303,13 +303,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result.extend(acss)
             else:
                 if self._script.utilities.hasUselessCanvasDescendant(obj):
-                    result.append(self.getLocalizedRoleName(obj, pyatspi.ROLE_IMAGE))
+                    result.append(self.getLocalizedRoleName(obj, role=pyatspi.ROLE_IMAGE))
                     result.extend(acss)
-                result.append(self.getLocalizedRoleName(obj, role))
+                result.append(self.getLocalizedRoleName(obj, **args))
                 result.extend(acss)
 
         elif role not in doNotSpeak:
-            result.append(self.getLocalizedRoleName(obj, role))
+            result.append(self.getLocalizedRoleName(obj, **args))
             result.extend(acss)
 
         index = args.get('index', 0)

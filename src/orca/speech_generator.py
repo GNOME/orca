@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 import pyatspi
 import urllib.parse, urllib.request, urllib.error, urllib.parse
-from gi.repository import Atspi, Atk
 
 from . import chnames
 from . import debug
@@ -349,12 +348,12 @@ class SpeechGenerator(generator.Generator):
             level = self._script.utilities.headingLevel(obj)
             if level:
                 result.append(object_properties.ROLE_HEADING_LEVEL_SPEECH % {
-                    'role': self.getLocalizedRoleName(obj, role),
+                    'role': self.getLocalizedRoleName(obj, **args),
                     'level': level})
                 result.extend(acss)
 
         if role not in doNotPresent and not result:
-            result.append(self.getLocalizedRoleName(obj, role))
+            result.append(self.getLocalizedRoleName(obj, **args))
             result.extend(acss)
         return result
 
@@ -366,55 +365,37 @@ class SpeechGenerator(generator.Generator):
         accessible role of the obj.  This is provided mostly as a
         method for scripts to call.
         """
-        return self._generateRoleName(obj, **args)
+        generated = self._generateRoleName(obj, **args)
+        if generated:
+            return generated[0]
 
-    def getLocalizedRoleName(self, obj, role=None):
+        return ""
+
+    def getName(self, obj, **args):
+        generated = self._generateName(obj, **args)
+        if generated:
+            return generated[0]
+
+        return ""
+
+    def getLocalizedRoleName(self, obj, **args):
         """Returns the localized name of the given Accessible object; the name
         is suitable to be spoken.
 
         Arguments:
         - obj: an Accessible object
-        - role: an optional pyatspi role to use instead
         """
-
-        if not isinstance(role, (pyatspi.Role, Atspi.Role)):
-            try:
-                return obj.getLocalizedRoleName()
-            except:
-                return ''
-
-        if not role:
-            return ''
-
-        if self._script.utilities.isLandmark(obj):
-            if self._script.utilities.isLandmarkBanner(obj):
-                return object_properties.ROLE_LANDMARK_BANNER
-            if self._script.utilities.isLandmarkComplementary(obj):
-                return object_properties.ROLE_LANDMARK_COMPLEMENTARY
-            if self._script.utilities.isLandmarkContentInfo(obj):
-                return object_properties.ROLE_LANDMARK_CONTENTINFO
-            if self._script.utilities.isLandmarkMain(obj):
-                return object_properties.ROLE_LANDMARK_MAIN
-            if self._script.utilities.isLandmarkNavigation(obj):
-                return object_properties.ROLE_LANDMARK_NAVIGATION
-            if self._script.utilities.isLandmarkRegion(obj):
-                return object_properties.ROLE_LANDMARK_REGION
-            if self._script.utilities.isLandmarkSearch(obj):
-                return object_properties.ROLE_LANDMARK_SEARCH
-            if self._script.utilities.isLandmarkForm(obj):
-                role = pyatspi.ROLE_FORM
 
         if self._script.utilities.isEditableComboBox(obj) \
            or self._script.utilities.isEditableDescendantOfComboBox(obj):
             return object_properties.ROLE_EDITABLE_COMBO_BOX
 
-        if role == pyatspi.ROLE_LINK and obj.getState().contains(pyatspi.STATE_VISITED):
+        role = args.get('role', obj.getRole())
+        state = obj.getState()
+        if role == pyatspi.ROLE_LINK and state.contains(pyatspi.STATE_VISITED):
             return object_properties.ROLE_VISITED_LINK
 
-        nonlocalized = Atspi.role_get_name(role)
-        atkRole = Atk.role_for_name(nonlocalized)
-
-        return Atk.role_get_localized_name(atkRole)
+        return super().getLocalizedRoleName(obj, **args)
 
     def _generateUnrelatedLabels(self, obj, **args):
         """Returns, as an array of strings (and possibly voice
