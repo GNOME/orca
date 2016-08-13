@@ -313,7 +313,7 @@ class BrailleGenerator(generator.Generator):
         if 'Selection' in pyatspi.listInterfaces(obj):
             items = self._script.utilities.selectedChildren(obj)
         else:
-            items = items or [self._script.utilities.focusedChild(obj)]
+            items = [self._script.utilities.focusedChild(obj)]
         if not (items and items[0]):
             return result
 
