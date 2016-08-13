@@ -1204,6 +1204,15 @@ class Generator:
             if self._script.utilities.isLandmarkForm(obj):
                 role = pyatspi.ROLE_FORM
 
+        if not isinstance(role, (pyatspi.Role, Atspi.Role)):
+            try:
+                return obj.getLocalizedRoleName()
+            except:
+                return ''
+
         nonlocalized = Atspi.role_get_name(role)
         atkRole = Atk.role_for_name(nonlocalized)
+        if atkRole == Atk.Role.INVALID and role == pyatspi.ROLE_STATUS_BAR:
+            atkRole = Atk.role_for_name("statusbar")
+
         return Atk.role_get_localized_name(atkRole)
