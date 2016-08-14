@@ -226,7 +226,7 @@ class Bookmarks:
         path.append(start_obj.getIndexInParent())
         p = start_obj.parent
         while p:
-            if p.getRole() in docRoles:
+            if self._script.utilities.isDocument(p):
                 path.reverse()
                 return path
             path.append(p.getIndexInParent())
