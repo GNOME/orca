@@ -529,14 +529,16 @@ class Script(default.Script):
         if sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
             boundary = pyatspi.TEXT_BOUNDARY_SENTENCE_START
 
+        voices = _settingsManager.getSetting('voices')
+        systemVoice = voices.get(settings.SYSTEM_VOICE)
+
         self._inSayAll = True
         offset = textObjs[0].queryText().caretOffset
         for textObj in textObjs:
             textSegments = self.getTextSegments(textObj, boundary, offset)
-            roleInfo = self.speechGenerator.getRoleName(textObj)
-            if roleInfo:
-                roleName, voice = roleInfo
-                textSegments.append([roleName, 0, -1, voice])
+            roleName = self.speechGenerator.getRoleName(textObj)
+            if roleName:
+                textSegments.append([roleName, 0, -1, systemVoice])
 
             for (string, start, end, voice) in textSegments:
                 context = speechserver.SayAllContext(textObj, string, start, end)
