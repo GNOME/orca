@@ -596,11 +596,7 @@ class Context:
         except:
             role = None
 
-        if role == pyatspi.ROLE_TABLE_CELL:
-            searchZone = self.script.\
-                utilities.realActiveDescendant(orca_state.locusOfFocus)
-        else:
-            searchZone = orca_state.locusOfFocus
+        searchZone = orca_state.locusOfFocus
 
         foundZoneWithFocus = False
         while currentLineIndex < len(self.lines):
@@ -608,8 +604,7 @@ class Context:
             currentZoneIndex = 0
             while currentZoneIndex < len(line.zones):
                 zone = line.zones[currentZoneIndex]
-                if self.script.utilities.isSameObject(
-                        zone.accessible, searchZone):
+                if searchZone in [zone.accessible, zone.accessible.parent]:
                     foundZoneWithFocus = True
                     break
                 else:
