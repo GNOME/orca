@@ -1149,6 +1149,7 @@ def _realignViewport(string, focusOffset, cursorOffset):
         #
         viewport[0] = min(viewport[0],
                           max(leftMostEdge, len(string) - _displaySize[0]))
+        viewport[0] = int(viewport[0])
 
 def refresh(panToCursor=True,
             targetCursorCell=0,
@@ -1279,7 +1280,7 @@ def refresh(panToCursor=True,
     #
     _realignViewport(string, focusOffset, cursorOffset)
 
-    startPos = viewport[0]
+    startPos = int(viewport[0])
     endPos = startPos + _displaySize[0]
 
     # Now normalize the cursor position to BrlTTY, which uses 1 as
