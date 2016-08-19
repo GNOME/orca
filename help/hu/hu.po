@@ -1,7 +1,6 @@
 # Hungarian translation for orca_help.
-# Copyright (C) 2010, 2011, 2012, 2013 Free Software Foundation, Inc.
+# Copyright (C) 2010-2016 Free Software Foundation, Inc.
 # This file is distributed under the same license as the orca help.
-#
 #
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2010, 2011, 2012, 2013, 2014, 2015, 2016.
 # Attila Hammer <hammera at pickup dot hu>, 2010, 2013, 2014, 2015, 2016.
@@ -9,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca_help master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-23 02:44+0000\n"
-"PO-Revision-Date: 2016-03-29 16:50+0200\n"
-"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"POT-Creation-Date: 2016-08-13 10:52+0000\n"
+"PO-Revision-Date: 2016-08-19 22:25+0200\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at gmail dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 1.2\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
@@ -1560,9 +1559,9 @@ msgstr ""
 "szövegrész kijelölése után, az <app>Orka</app> képes kimondani a kijelölt "
 "szöveget. Ha erre a célra inkább egy önálló billentyűparancsot szeretne "
 "használni, hozzon létre billentyűtársítást a „Kimondja a kijelölt szöveget” "
-"parancshoz. Ha billentyűtársítást szeretne hozzárendelni ehhez a "
-"parancshoz, olvassa el a <link xref=\"howto_key_bindings"
-"\">Billentyűtársítások módosítása</link> című fejezetet."
+"parancshoz. Ha billentyűtársítást szeretne hozzárendelni ehhez a parancshoz, "
+"olvassa el a <link xref=\"howto_key_bindings\">Billentyűtársítások "
+"módosítása</link> című fejezetet."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:187
@@ -1634,12 +1633,11 @@ msgstr ""
 "Ha egy hivatkozáson áll és az <app>Orka</app> egyszerű hol vagyok műveletét "
 "használja, információkat kaphat az adott hivatkozásról. Megtudhatja például "
 "a hivatkozás típusát, meglátogatta-e már az adott hivatkozást, az oldal "
-"leírását "
-"és a fájl méretét. Ha erre a célra inkább egy önálló billentyűparancsot "
-"szeretne használni, hozzon létre billentyűtársítást a „Kimondja a hivatkozás "
-"részleteit” parancshoz. Ha billentyűtársítást szeretne hozzárendelni ehhez a "
-"parancshoz, olvassa el a <link xref=\"howto_key_bindings"
-"\">Billentyűtársítások módosítása</link> című fejezetet."
+"leírását és a fájl méretét. Ha erre a célra inkább egy önálló "
+"billentyűparancsot szeretne használni, hozzon létre billentyűtársítást a "
+"„Kimondja a hivatkozás részleteit” parancshoz. Ha billentyűtársítást "
+"szeretne hozzárendelni ehhez a parancshoz, olvassa el a <link xref="
+"\"howto_key_bindings\">Billentyűtársítások módosítása</link> című fejezetet."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:240
@@ -1679,6 +1677,15 @@ msgid ""
 msgstr ""
 "A rögzített fókuszmód engedélyezése: <keyseq><key>Orka módosító</key><key>A</"
 "key></keyseq> (kétszer gyorsan megnyomva)"
+
+#. (itstool) path: item/p
+#: C/commands_reading.page:264
+msgid ""
+"Enable \"sticky\" browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
+"keyseq> (triple-clicked)"
+msgstr ""
+"A rögzített böngészőmód engedélyezése: <keyseq><key>Orka módosító</key><key>"
+"A</key></keyseq> (háromszor gyorsan megnyomva)"
 
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
@@ -4385,11 +4392,11 @@ msgid ""
 "not have to choose one table reading mode to fit multiple types of tables."
 msgstr ""
 "Az <app>Orka</app> lehetővé teszi annak testreszabását, hogy egy grafikus "
-"felületen megjelenő "
-"táblázatban, dokumentum táblázatban vagy egy táblázatkezelőben csak az adott "
-"cella, vagy a teljes sor kerüljön-e felolvasásra. Mivel ezek a beállítások "
-"függetlenek egymástól a különböző táblázattípusok esetén, nem szükséges "
-"egyetlen táblázatolvasási módot használni mindhárom táblázattípushoz."
+"felületen megjelenő táblázatban, dokumentum táblázatban vagy egy "
+"táblázatkezelőben csak az adott cella, vagy a teljes sor kerüljön-e "
+"felolvasásra. Mivel ezek a beállítások függetlenek egymástól a különböző "
+"táblázattípusok esetén, nem szükséges egyetlen táblázatolvasási módot "
+"használni mindhárom táblázattípushoz."
 
 #. (itstool) path: section/p
 #: C/howto_tables.page:43
@@ -7441,9 +7448,9 @@ msgid ""
 msgstr ""
 "Ha be van jelölve <gui>A színek kimondása színnevekkel</gui> jelölőnégyzet, "
 "az <app>Orka</app> megpróbálja leírni a fókuszban levő objektum "
-"színjellemzőit. Például, az RGB 0, 27, 51 színkód „éjkék” "
-"színként lesz kimondva. Ha inkább a színek RGB értékeit szeretné hallani, "
-"törölje a jelölést ebből a jelölőnégyzetből."
+"színjellemzőit. Például, az RGB 0, 27, 51 színkód „éjkék” színként lesz "
+"kimondva. Ha inkább a színek RGB értékeit szeretné hallani, törölje a "
+"jelölést ebből a jelölőnégyzetből."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:200
@@ -7459,10 +7466,11 @@ msgid ""
 "the cell with focus, you should uncheck this checkbox."
 msgstr ""
 "Ha a <gui>A teljes sor kimondása a grafikus táblázatokban</gui> "
-"jelölőnégyzet be van jelölve, úgy ha az alkalmazások táblázataiban, például a "
-"bejövő üzenetek listájában a nyilakkal mozog, az <app>Orka</app> a táblázat "
-"teljes sorát ki fogja mondani. Ha inkább csak a fókuszban levő cella "
-"tartalmát szeretné hallani, törölje a jelölést ebből a jelölőnégyzetből."
+"jelölőnégyzet be van jelölve, úgy ha az alkalmazások táblázataiban, például "
+"a bejövő üzenetek listájában a nyilakkal mozog, az <app>Orka</app> a "
+"táblázat teljes sorát ki fogja mondani. Ha inkább csak a fókuszban levő "
+"cella tartalmát szeretné hallani, törölje a jelölést ebből a "
+"jelölőnégyzetből."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:212
@@ -7517,12 +7525,11 @@ msgid ""
 "with this indicator, or type a word incorrectly causing this indicator to "
 "appear, <app>Orca</app> will speak \"misspelled.\""
 msgstr ""
-"A hibásan írt szó jelölés a cikk-cakkos piros vonal, mely a "
-"hibásan írt szavak alatt jelenik meg a szerkeszthető szövegmezőkben. Ha be "
-"van "
-"jelölve <gui>A hibásan írt szó jelzés felolvasása</gui> jelölőnégyzet, "
-"amikor egy hibásan írt szóra navigál vagy elgépel egy szót, és megjelenik ez "
-"a jelölés, az <app>Orka</app> a „Hibásan írt szó” üzenetet fogja kimondani."
+"A hibásan írt szó jelölés a cikk-cakkos piros vonal, mely a hibásan írt "
+"szavak alatt jelenik meg a szerkeszthető szövegmezőkben. Ha be van jelölve "
+"<gui>A hibásan írt szó jelzés felolvasása</gui> jelölőnégyzet, amikor egy "
+"hibásan írt szóra navigál vagy elgépel egy szót, és megjelenik ez a jelölés, "
+"az <app>Orka</app> a „Hibásan írt szó” üzenetet fogja kimondani."
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:4
