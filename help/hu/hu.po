@@ -9,15 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca_help master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-21 10:15+0000\n"
-"PO-Revision-Date: 2014-04-14 01:46+0200\n"
-"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"POT-Creation-Date: 2016-05-05 14:11+0000\n"
+"PO-Revision-Date: 2016-08-20 13:56+0200\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Lokalize 1.2\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
@@ -52,22 +52,21 @@ msgstr "Objektumok könyvjelzőzése és lekérése"
 #: C/commands_structural_navigation.page:12 C/commands_table.page:12
 #: C/commands_time_date_notifications.page:12 C/commands_where_am_i.page:12
 #: C/howto_bookmarks.page:7 C/howto_documents.page:10
-#: C/howto_flat_review.page:8 C/howto_forms.page:10
-#: C/howto_key_bindings.page:8 C/howto_keyboard_layout.page:8
-#: C/howto_learn_modes.page:10 C/howto_live_regions.page:10
-#: C/howto_mouse_review.page:8 C/howto_notifications.page:8
-#: C/howto_orca_find.page:8 C/howto_profiles.page:8
-#: C/howto_setting_up_orca.page:12 C/howto_structural_navigation.page:12
-#: C/howto_tables.page:10 C/howto_text_attributes.page:10
-#: C/howto_text_setup.page:8 C/howto_the_orca_modifier.page:11
-#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:9
-#: C/introduction.page:10 C/preferences_braille.page:11
-#: C/preferences_chat.page:11 C/preferences_gecko.page:12
-#: C/preferences_general.page:11 C/preferences_introduction.page:8
-#: C/preferences_key_bindings.page:12 C/preferences_key_echo.page:11
-#: C/preferences.page:7 C/preferences_pronunciation.page:12
-#: C/preferences_speech.page:11 C/preferences_spellcheck.page:10
-#: C/preferences_table_navigation.page:14
+#: C/howto_flat_review.page:8 C/howto_forms.page:10 C/howto_key_bindings.page:8
+#: C/howto_keyboard_layout.page:8 C/howto_learn_modes.page:10
+#: C/howto_live_regions.page:10 C/howto_mouse_review.page:8
+#: C/howto_notifications.page:8 C/howto_orca_find.page:8
+#: C/howto_profiles.page:8 C/howto_setting_up_orca.page:12
+#: C/howto_structural_navigation.page:12 C/howto_tables.page:10
+#: C/howto_text_attributes.page:10 C/howto_text_setup.page:8
+#: C/howto_the_orca_modifier.page:11 C/howto_toggling_caps_lock.page:8
+#: C/howto_whereami.page:10 C/index.page:9 C/introduction.page:10
+#: C/preferences_braille.page:11 C/preferences_chat.page:11
+#: C/preferences_gecko.page:12 C/preferences_general.page:11
+#: C/preferences_introduction.page:8 C/preferences_key_bindings.page:12
+#: C/preferences_key_echo.page:11 C/preferences.page:7
+#: C/preferences_pronunciation.page:12 C/preferences_speech.page:11
+#: C/preferences_spellcheck.page:10 C/preferences_table_navigation.page:14
 #: C/preferences_text_attributes.page:13 C/preferences_voice.page:11
 msgid "Joanmarie Diggs"
 msgstr "Joanmarie Diggs"
@@ -97,8 +96,8 @@ msgstr "Joanmarie Diggs"
 #: C/preferences_key_bindings.page:16 C/preferences_key_echo.page:15
 #: C/preferences.page:11 C/preferences_pronunciation.page:16
 #: C/preferences_speech.page:15 C/preferences_spellcheck.page:14
-#: C/preferences_table_navigation.page:18
-#: C/preferences_text_attributes.page:17 C/preferences_voice.page:15
+#: C/preferences_table_navigation.page:18 C/preferences_text_attributes.page:17
+#: C/preferences_voice.page:15
 msgid "Creative Commons Share Alike 3.0"
 msgstr "Creative Commons Share Alike 3.0"
 
@@ -1435,8 +1434,9 @@ msgstr "Felolvasással kapcsolatos parancsok"
 
 #. (itstool) path: info/desc
 #: C/commands_reading.page:10
-msgid "Commands for accessing document text"
-msgstr "Parancsok a dokumentumszöveg eléréséhez"
+#| msgid "Commands for accessing document text"
+msgid "Commands for accessing document content"
+msgstr "Parancsok a dokumentumtartalom eléréséhez"
 
 #. (itstool) path: page/title
 #: C/commands_reading.page:21
@@ -1617,6 +1617,43 @@ msgstr ""
 "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Enter</key></keyseq> "
 "(kétszer gyorsan megnyomva)"
 
+#. (itstool) path: section/title
+#: C/commands_reading.page:222
+msgid "Browse and Focus Modes"
+msgstr "A böngészőmód és a fókuszmód"
+
+#. (itstool) path: section/p
+#: C/commands_reading.page:223
+msgid ""
+"<app>Orca</app>'s Browse and Focus modes let you switch between reading and "
+"interacting with web content."
+msgstr ""
+"Az <app>Orka</app> böngésző- és fókuszmódjának segítségével váltani tud a "
+"weboldalakon az olvasási és űrlapmód között."
+
+#. (itstool) path: item/p
+#: C/commands_reading.page:229
+#| msgid ""
+#| "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
+msgid ""
+"Switch between browse mode and focus mode: <keyseq><key>Orca Modifier</"
+"key><key>A</key></keyseq>"
+msgstr ""
+"Váltás a böngészőmód és a fókuszmód között: <keyseq><key>Orka módosító</"
+"key><key>A</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_reading.page:235
+#| msgid ""
+#| "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq> (double-"
+#| "clicked)"
+msgid ""
+"Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
+"keyseq> (double-clicked)"
+msgstr ""
+"A rögzített fókuszmód engedélyezése: <keyseq><key>Orka módosító</key><key>A</"
+"key></keyseq> (kétszer gyorsan megnyomva)"
+
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
 msgctxt "sort"
@@ -1672,53 +1709,65 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:40
+#| msgid ""
+#| "Toggle between cell and row reading in a table: <keyseq><key>Orca "
+#| "Modifier</key><key>F11</key></keyseq>"
+msgid ""
+"Toggle between verbose and brief verbosity levels: <keyseq><key>Orca "
+"Modifier</key><key>V</key></keyseq>"
+msgstr ""
+"Váltás a részletes és tömör részletességi szintek között: <keyseq><key>Orka "
+"módosító</key><key>V</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_speech_settings.page:46
 msgid "Enable/disable speaking of indentation and justification: (Unbound)"
 msgstr ""
 "A behúzás és igazítás felolvasásának be- vagy kikapcsolása: Ehhez a "
 "parancshoz nincs előre definiált billentyűtársítás"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:45
+#: C/commands_speech_settings.page:51
 msgid "Cycle to the next spoken punctuation level: (Unbound)"
 msgstr ""
 "Váltás a következő központozási szintre: Ehhez a parancshoz nincs előre "
 "definiált billentyűtársítás"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:48
+#: C/commands_speech_settings.page:54
 msgid "Cycle to the next key echo level: (Unbound)"
 msgstr ""
 "Váltás a következő billentyűvisszhang-szintre: Ehhez a parancshoz nincs "
 "előre definiált billentyűtársítás"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:51
+#: C/commands_speech_settings.page:57
 msgid "Cycle to the next capitalization style: (Unbound)"
 msgstr ""
 "Váltás a következő nagybetű stílusra: Ehhez a parancshoz nincs előre "
 "definiált billentyűtársítás"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:54
+#: C/commands_speech_settings.page:60
 msgid "Decrease the rate: (Unbound)"
 msgstr ""
 "A beszéd sebességének csökkentése: nincs előre definiált billentyűtársítás"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:57
+#: C/commands_speech_settings.page:63
 msgid "Increase the rate: (Unbound)"
 msgstr ""
 "A beszéd sebességének növelése: nincs előre definiált billentyűtársítás"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:60
+#: C/commands_speech_settings.page:66
 msgid "Decrease the pitch: (Unbound)"
 msgstr ""
 "A beszéd hangmagasságának csökkentése: Ehhez a parancshoz nincs előre "
 "definiált billentyűtársítás"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:63
+#: C/commands_speech_settings.page:69
 msgid "Increase the pitch: (Unbound)"
 msgstr ""
 "A beszéd hangmagasságának növelése: nincs előre definiált billentyűtársítás"
@@ -2015,26 +2064,15 @@ msgstr ""
 "Jelölőnégyzetek listájának megjelenítése: <keyseq><key>Alt</key><key>Shift</"
 "key><key>X</key></keyseq>"
 
-#. (itstool) path: item/p
-#: C/commands_structural_navigation.page:211
-msgid ""
-"Next and previous object (to exit field): <keyseq><key>Orca Modifier</"
-"key><key>Right</key></keyseq> and <keyseq><key>Orca Modifier</key><key>Left</"
-"key></keyseq>"
-msgstr ""
-"Ugrás a következő és előző objektumra: <keyseq><key>Orka módosító</"
-"key><key>Jobbra nyíl</key></keyseq> és <keyseq><key>Orka módosító</"
-"key><key>Balra nyíl</key></keyseq>"
-
 #. (itstool) path: section/title
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:220
+#: C/commands_structural_navigation.page:213
 #: C/howto_structural_navigation.page:28
 msgid "Links"
 msgstr "Hivatkozások"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:223
+#: C/commands_structural_navigation.page:216
 msgid ""
 "Next and previous link: <keyseq><key>K</key></keyseq> and "
 "<keyseq><key>Shift</key><key>K</key></keyseq>"
@@ -2043,7 +2081,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>K</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:230
+#: C/commands_structural_navigation.page:223
 msgid ""
 "Display a list of links: <keyseq><key>Alt</key><key>Shift</key><key>K</key></"
 "keyseq>"
@@ -2052,7 +2090,7 @@ msgstr ""
 "key><key>K</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:236
+#: C/commands_structural_navigation.page:229
 msgid ""
 "Next and previous unvisited link: <keyseq><key>U</key></keyseq> and "
 "<keyseq><key>Shift</key><key>U</key></keyseq>"
@@ -2062,7 +2100,7 @@ msgstr ""
 "keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:243
+#: C/commands_structural_navigation.page:236
 msgid ""
 "Display a list of unvisited links: <keyseq><key>Alt</key><key>Shift</"
 "key><key>U</key></keyseq>"
@@ -2071,7 +2109,7 @@ msgstr ""
 "key><key>Shift</key><key>U</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:249
+#: C/commands_structural_navigation.page:242
 msgid ""
 "Next and previous visited link: <keyseq><key>V</key></keyseq> and "
 "<keyseq><key>Shift</key><key>V</key></keyseq>"
@@ -2080,7 +2118,7 @@ msgstr ""
 "key></keyseq> és <keyseq><key>Shift</key><key>V</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:256
+#: C/commands_structural_navigation.page:249
 msgid ""
 "Display a list of visited links: <keyseq><key>Alt</key><key>Shift</"
 "key><key>V</key></keyseq>"
@@ -2090,12 +2128,12 @@ msgstr ""
 
 # Megjegyzés: szándékosan adtam hosszabb címet.
 #. (itstool) path: section/title
-#: C/commands_structural_navigation.page:264
+#: C/commands_structural_navigation.page:257
 msgid "Lists"
 msgstr "Listanavigációs billentyűparancsok"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:267
+#: C/commands_structural_navigation.page:260
 msgid ""
 "Next and previous list: <keyseq><key>L</key></keyseq> and "
 "<keyseq><key>Shift</key><key>L</key></keyseq>"
@@ -2104,7 +2142,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>L</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:274
+#: C/commands_structural_navigation.page:267
 msgid ""
 "Display a list of lists: <keyseq><key>Alt</key><key>Shift</key><key>L</key></"
 "keyseq>"
@@ -2113,7 +2151,7 @@ msgstr ""
 "key><key>L</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:280
+#: C/commands_structural_navigation.page:273
 msgid ""
 "Next and previous list item: <keyseq><key>I</key></keyseq> and "
 "<keyseq><key>Shift</key><key>I</key></keyseq>"
@@ -2122,7 +2160,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>I</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:287
+#: C/commands_structural_navigation.page:280
 msgid ""
 "Display a list of list items: <keyseq><key>Alt</key><key>Shift</key><key>I</"
 "key></keyseq>"
@@ -2132,12 +2170,12 @@ msgstr ""
 
 #. (itstool) path: section/title
 #. (itstool) path: page/title
-#: C/commands_structural_navigation.page:295 C/howto_tables.page:17
+#: C/commands_structural_navigation.page:288 C/howto_tables.page:17
 msgid "Tables"
 msgstr "Táblázatok"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:298
+#: C/commands_structural_navigation.page:291
 msgid ""
 "Next and previous table: <keyseq><key>T</key></keyseq> and "
 "<keyseq><key>Shift</key><key>T</key></keyseq>"
@@ -2146,7 +2184,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>T</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:305
+#: C/commands_structural_navigation.page:298
 msgid ""
 "Display a list of tables: <keyseq><key>Alt</key><key>Shift</key><key>T</"
 "key></keyseq>"
@@ -2155,7 +2193,7 @@ msgstr ""
 "key><key>T</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:311
+#: C/commands_structural_navigation.page:304
 msgid ""
 "Cell on left: <keyseq><key>Alt</key><key>Shift</key><key>Left</key></keyseq>"
 msgstr ""
@@ -2163,7 +2201,7 @@ msgstr ""
 "nyíl</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:317
+#: C/commands_structural_navigation.page:310
 msgid ""
 "Cell on right: <keyseq><key>Alt</key><key>Shift</key><key>Right</key></"
 "keyseq>"
@@ -2172,7 +2210,7 @@ msgstr ""
 "nyíl</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:323
+#: C/commands_structural_navigation.page:316
 msgid ""
 "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgstr ""
@@ -2180,7 +2218,7 @@ msgstr ""
 "nyíl</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:329
+#: C/commands_structural_navigation.page:322
 msgid ""
 "Cell below: <keyseq><key>Alt</key><key>Shift</key><key>Down</key></keyseq>"
 msgstr ""
@@ -2188,7 +2226,7 @@ msgstr ""
 "nyíl</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:335
+#: C/commands_structural_navigation.page:328
 msgid ""
 "First cell in table: <keyseq><key>Alt</key><key>Shift</key><key>Home</key></"
 "keyseq>"
@@ -2197,7 +2235,7 @@ msgstr ""
 "key><key>Home</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:341
+#: C/commands_structural_navigation.page:334
 msgid ""
 "Last cell in table: <keyseq><key>Alt</key><key>Shift</key><key>End</key></"
 "keyseq>"
@@ -2206,12 +2244,12 @@ msgstr ""
 "key><key>End</key></keyseq>"
 
 #. (itstool) path: section/title
-#: C/commands_structural_navigation.page:349
+#: C/commands_structural_navigation.page:342
 msgid "Text Blocks"
 msgstr "Szövegblokkal kapcsolatos navigációs parancsok"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:352
+#: C/commands_structural_navigation.page:345
 msgid ""
 "Next and previous paragraph: <keyseq><key>P</key></keyseq> and "
 "<keyseq><key>Shift</key><key>P</key></keyseq>"
@@ -2220,7 +2258,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>P</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:359
+#: C/commands_structural_navigation.page:352
 msgid ""
 "Display a list of paragraphs: <keyseq><key>Alt</key><key>Shift</key><key>P</"
 "key></keyseq>"
@@ -2229,7 +2267,7 @@ msgstr ""
 "key><key>P</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:365
+#: C/commands_structural_navigation.page:358
 msgid ""
 "Next and previous blockquote: <keyseq><key>Q</key></keyseq> and "
 "<keyseq><key>Shift</key><key>Q</key></keyseq>"
@@ -2238,7 +2276,7 @@ msgstr ""
 "és <keyseq><key>Shift</key><key>Q</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:372
+#: C/commands_structural_navigation.page:365
 msgid ""
 "Display a list of blockquotes: <keyseq><key>Alt</key><key>Shift</key><key>Q</"
 "key></keyseq>"
@@ -2247,7 +2285,7 @@ msgstr ""
 "key><key>Q</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:378
+#: C/commands_structural_navigation.page:371
 msgid ""
 "Next and previous \"large object\": <keyseq><key>O</key></keyseq> and "
 "<keyseq><key>Shift</key><key>O</key></keyseq>"
@@ -2256,7 +2294,7 @@ msgstr ""
 "keyseq> és <keyseq><key>Shift</key><key>O</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:385
+#: C/commands_structural_navigation.page:378
 msgid ""
 "Display a list of \"large objects\": <keyseq><key>Alt</key><key>Shift</"
 "key><key>O</key></keyseq>"
@@ -2265,12 +2303,12 @@ msgstr ""
 "key><key>O</key></keyseq>"
 
 #. (itstool) path: section/title
-#: C/commands_structural_navigation.page:393
+#: C/commands_structural_navigation.page:386
 msgid "Other Elements"
 msgstr "Egyéb navigációs parancsok"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:396
+#: C/commands_structural_navigation.page:389
 msgid ""
 "Next and previous landmark: <keyseq><key>M</key></keyseq> and "
 "<keyseq><key>Shift</key><key>M</key></keyseq>"
@@ -2279,7 +2317,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>M</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:403
+#: C/commands_structural_navigation.page:396
 msgid ""
 "Display a list of landmarks: <keyseq><key>Alt</key><key>Shift</key><key>M</"
 "key></keyseq>"
@@ -2288,7 +2326,7 @@ msgstr ""
 "key><key>M</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:409
+#: C/commands_structural_navigation.page:402
 msgid ""
 "Next and previous separator: <keyseq><key>S</key></keyseq> and "
 "<keyseq><key>Shift</key><key>S</key></keyseq>"
@@ -2297,13 +2335,52 @@ msgstr ""
 "<keyseq><key>Shift</key><key>S</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_structural_navigation.page:416
+#: C/commands_structural_navigation.page:409
+#| msgid ""
+#| "Next and previous table: <keyseq><key>T</key></keyseq> and "
+#| "<keyseq><key>Shift</key><key>T</key></keyseq>"
 msgid ""
-"Next and previous anchor: <keyseq><key>A</key></keyseq> and "
+"Next and previous \"clickable\": <keyseq><key>A</key></keyseq> and "
 "<keyseq><key>Shift</key><key>A</key></keyseq>"
 msgstr ""
-"Ugrás a következő és az előző iránypontra: <keyseq><key>A</key></keyseq> és "
-"<keyseq><key>Shift</key><key>A</key></keyseq>"
+"Ugrás a következő vagy előző kattintható elemre: <keyseq><key>A</key></"
+"keyseq> és <keyseq><key>Shift</key><key>A</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_structural_navigation.page:416
+#| msgid ""
+#| "Display a list of tables: <keyseq><key>Alt</key><key>Shift</key><key>T</"
+#| "key></keyseq>"
+msgid ""
+"Display a list of \"clickables\": <keyseq><key>Alt</key><key>Shift</"
+"key><key>A</key></keyseq>"
+msgstr ""
+"Kattintható elemek listájának megjelenítése: <keyseq><key>Alt</"
+"key><key>Shift</key><key>A</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_structural_navigation.page:422
+#| msgid ""
+#| "Next and previous table: <keyseq><key>T</key></keyseq> and "
+#| "<keyseq><key>Shift</key><key>T</key></keyseq>"
+msgid ""
+"Next and previous image: <keyseq><key>G</key></keyseq> and "
+"<keyseq><key>Shift</key><key>G</key></keyseq>"
+msgstr ""
+"Ugrás a következő vagy előző képre: <keyseq><key>G</key></keyseq> és "
+"<keyseq><key>Shift</key><key>G</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_structural_navigation.page:429
+#| msgid ""
+#| "Display a list of tables: <keyseq><key>Alt</key><key>Shift</key><key>T</"
+#| "key></keyseq>"
+msgid ""
+"Display a list of images: <keyseq><key>Alt</key><key>Shift</key><key>G</"
+"key></keyseq>"
+msgstr ""
+"Képek listájának megjelenítése: <keyseq><key>Alt</key><key>Shift</"
+"key><key>G</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_table.page:6
@@ -2866,38 +2943,44 @@ msgstr "Űrlapok kitöltése"
 
 #. (itstool) path: page/p
 #: C/howto_forms.page:18
+#| msgid ""
+#| "When interacting with web pages and other documents using <app>Orca</"
+#| "app>, you are interacting with the document itself; not a buffered copy "
+#| "of that document. Thus there is no special mode to get into or out of "
+#| "when you wish to fill out a form. Instead, simply navigate to each field "
+#| "whose contents you wish to change, and interact with the widget as if it "
+#| "were in a dialog box."
 msgid ""
 "When interacting with web pages and other documents using <app>Orca</app>, "
 "you are interacting with the document itself; not a buffered copy of that "
-"document. Thus there is no special mode to get into or out of when you wish "
-"to fill out a form. Instead, simply navigate to each field whose contents "
-"you wish to change, and interact with the widget as if it were in a dialog "
-"box."
+"document. <app>Orca</app>'s browse and focus modes let you switch between "
+"reading and filling out forms."
 msgstr ""
 "Amikor az <app>Orka</app> segítségével dolgozik egy weboldallal vagy "
 "dokumentummal, Ön a dokumentumon hajt végre minden feladatot, nem pedig a "
-"dokumentum egy átmeneti pufferbe töltött másolatán. Az <app>Orkának</app> "
-"tehát nincs olyan speciális módja, amely segítségével beléphet vagy kiléphet "
-"az űrlapokból a kitöltés közben. Ha az űrlapmezők vagy a felületi elemek "
-"között szeretne navigálni, azt ugyanúgy teheti meg, mintha egy hagyományos "
-"párbeszédablakban navigálna."
+"dokumentum egy átmeneti pufferbe töltött másolatán. Az <app>Orka</app> "
+"böngésző- és fókuszmódja lehetőséget nyújt az olvasási és űrlapkitöltési mód "
+"közötti váltásra."
 
 #. (itstool) path: section/title
-#: C/howto_forms.page:27
+#: C/howto_forms.page:25
 msgid "Navigating Amongst Form Fields"
 msgstr "Navigálás az űrlapmezők között"
 
 # Megjegyzés: itt az options szót lehetőségként fordítottam.
 #. (itstool) path: section/p
-#: C/howto_forms.page:28
+#: C/howto_forms.page:26
 msgid "To navigate amongst form fields, you have several options:"
 msgstr ""
 "Az űrlapmezők közötti navigációhoz számos lehetőség áll rendelkezésére:"
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:33
+#: C/howto_forms.page:31
+#| msgid ""
+#| "Use <key>Tab</key> and <keyseq><key>Shift</key><key>Tab</key></keyseq>, "
+#| "to navigate amongst focusable objects, regardless of type."
 msgid ""
-"Use <key>Tab</key> and <keyseq><key>Shift</key><key>Tab</key></keyseq>, to "
+"Use <key>Tab</key> and <keyseq><key>Shift</key><key>Tab</key></keyseq> to "
 "navigate amongst focusable objects, regardless of type."
 msgstr ""
 "Az előző vagy következő objektum fókuszba hozására használhatja a <key>Tab</"
@@ -2905,7 +2988,7 @@ msgstr ""
 "függetlenül az objektum típusától."
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:39
+#: C/howto_forms.page:37
 msgid ""
 "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
 "structural navigation commands for forms</link>."
@@ -2914,7 +2997,7 @@ msgstr ""
 "\"commands_structural_navigation#forms\">űrlapok kezeléséhez</link>."
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:45
+#: C/howto_forms.page:43
 msgid ""
 "Depending on the form and the application, you may also be able to use the "
 "arrow keys to navigate to a given form field."
@@ -2922,68 +3005,85 @@ msgstr ""
 "Az űrlaptól és a használt alkalmazástól függően a nyílbillentyűkkel is "
 "ráléphet egy űrlapmezőre."
 
+#. (itstool) path: note/p
+#: C/howto_forms.page:50
+msgid ""
+"In order to use <app>Orca</app>'s caret navigation or structural navigation "
+"commands to navigate to a form field, you must be in browse mode. If you are "
+"in focus mode, you can switch to browse mode by pressing <keyseq><key>Orca "
+"Modifier</key><key>A</key></keyseq>."
+msgstr ""
+"Függetlenül attól, hogy az <app>Orka</app> mutatónavigációját vagy "
+"strukturált navigációs parancsait használja egy űrlapmezőre navigáláshoz, "
+"böngészőmódban kell lennie. Ha éppen fókuszmódban van, böngészőmódba tud "
+"váltani az <keyseq><key>Orka módosító</key><key>A</key></keyseq> "
+"billentyűkombinációval."
+
 #. (itstool) path: section/title
-#: C/howto_forms.page:53
+#: C/howto_forms.page:59
 msgid "Exiting Form Fields"
 msgstr "Kilépés az űrlapmezőkből"
 
+# Megjegyzés: itt az options szót lehetőségként fordítottam.
 #. (itstool) path: section/p
-#: C/howto_forms.page:54
-msgid ""
-"Because there is no special mode in <app>Orca</app> for interacting with "
-"forms, the most frequently-asked question is how to exit a focused form "
-"field. For this, too, you have several options:"
+#: C/howto_forms.page:60
+#| msgid "To navigate amongst form fields, you have several options:"
+msgid "To exit a form field, you have several options:"
 msgstr ""
-"Mivel az <app>Orkának</app> nincs speciális űrlap módja az űrlapok "
-"kezeléséhez, a leggyakrabban feltett kérdés, hogyan lehet kilépni egy "
-"fókuszba került űrlapmezőből. Számos lehetőség áll rendelkezésére:"
+"Ha egy űrlapmezőből ki szeretne lépni, számos lehetőség áll rendelkezésére:"
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:61
+#: C/howto_forms.page:65
+#| msgid ""
+#| "Use <key>Tab</key>/<keyseq><key>Shift</key><key>Tab</key></keyseq> if you "
+#| "wish to leave the currenty-focused form field and move to the next/"
+#| "previous focusable object, regardless of what that object happens to be."
 msgid ""
 "Use <key>Tab</key>/<keyseq><key>Shift</key><key>Tab</key></keyseq> if you "
-"wish to leave the currenty-focused form field and move to the next/previous "
-"focusable object, regardless of what that object happens to be."
+"wish to leave the currently-focused form field and move to the next/previous "
+"focusable object, regardless of type."
 msgstr ""
 "Ha el szeretné hagyni a fókuszban levő űrlapmezőt, és a következő vagy előző "
-"űrlapmezőre szeretne lépni, az objektum típusától függetlenül használja a "
-"<key>Tab</key> és a <keyseq><key>Shift</key><key>Tab</key></keyseq> "
-"billentyűket."
+"objektumot szeretné fókuszba hozni, az objektum típusától függetlenül "
+"használja a <key>Tab</key> vagy a <keyseq><key>Shift</key><key>Tab</key></"
+"keyseq> billentyűkombinációt."
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:69
+#: C/howto_forms.page:72
+#| msgid ""
+#| "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms"
+#| "\"> structural navigation commands for forms</link>."
 msgid ""
 "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
-"structural navigation</link> to move to the next/previous form field: "
-"<keyseq><key>Orca Modifier</key><key>Tab</key></keyseq>/<keyseq> <key>Orca "
-"Modifier</key><key>Shift</key><key>Tab</key></keyseq>."
+"structural navigation commands for forms</link> to move to the next or "
+"previous form field."
 msgstr ""
-"Használhatja az <link xref=\"commands_structural_navigation#forms\"> "
-"<app>Orka</app> strukturált navigációs parancsait</link> az előző vagy "
-"következő űrlapmezőre ugráshoz (<keyseq><key>Orka módosító</key><key>Tab</"
-"key></keyseq> és <keyseq><key>Orka módosító</key><key>Shift</key><key>Tab</"
-"key></keyseq>)."
+"Az előző vagy következő űrlapmezőre lépéshez használhatja az <app>Orka</app> "
+"strukturált navigációjának <link xref=\"commands_structural_navigation#forms"
+"\">űrlapkezeléssel kapcsolatos parancsait</link>."
 
 #. (itstool) path: item/p
-#: C/howto_forms.page:77
-msgid ""
-"Use <app>Orca</app>'s commands for moving to the next/previous object or "
-"chunk of text: <keyseq><key>Orca Modifier</key><key>Right</key> </keyseq>/"
-"<keyseq><key>Orca Modifier</key><key>Left</key></keyseq>."
-msgstr ""
-"Használhatja az <app>Orka</app> parancsait az előző vagy következő "
-"objektumra való ugráshoz (<keyseq><key>Orka módosító</key><key>Jobbra nyíl</"
-"key></keyseq> és <keyseq><key>Orka módosító</key><key>Balra nyíl</key></"
-"keyseq>)."
-
-#. (itstool) path: item/p
-#: C/howto_forms.page:84
+#: C/howto_forms.page:79
 msgid ""
 "Depending on the form and the application, you may also be able to use the "
 "arrow keys to navigate out of a given form field."
 msgstr ""
 "A használt űrlaptól és alkalmazástól függően a nyílbillentyűkkel is kiléphet "
 "egy űrlapmezőből."
+
+#. (itstool) path: note/p
+#: C/howto_forms.page:86
+msgid ""
+"In order to use <app>Orca</app>'s caret navigation or structural navigation "
+"commands to exit a form field, you must be in browse mode. If you are in "
+"focus mode, you can switch to browse mode by pressing <keyseq><key>Orca "
+"Modifier</key><key>A</key></keyseq>."
+msgstr ""
+"Ahhoz, hogy egy űrlapmezőből ki tudjon lépni az <app>Orka</app> "
+"mutatónavigációjával vagy az <app>Orka</app> strukturált navigációs "
+"parancsaival, az <app>Orkának</app> böngészőmódban kell lennie. Ha az "
+"<app>Orka</app> fókuszmódban van, átválthat a böngészőmódba az "
+"<keyseq><key>Orka módosító</key><key>A</key></keyseq> billentyűkombinációval."
 
 #. (itstool) path: info/title
 #: C/howto_key_bindings.page:5
@@ -5557,7 +5657,8 @@ msgstr ""
 #: C/preferences_braille.page:27 C/preferences_braille.page:50
 #: C/preferences_braille.page:63 C/preferences_braille.page:73
 #: C/preferences_chat.page:31 C/preferences_chat.page:42
-#: C/preferences_chat.page:54 C/preferences_gecko.page:124
+#: C/preferences_chat.page:54 C/preferences_gecko.page:58
+#: C/preferences_gecko.page:100 C/preferences_gecko.page:171
 #: C/preferences_general.page:52 C/preferences_general.page:70
 #: C/preferences_key_echo.page:83 C/preferences_key_echo.page:93
 #: C/preferences_key_echo.page:128 C/preferences_key_echo.page:150
@@ -5891,8 +5992,8 @@ msgstr ""
 "beépített Gecko mutatónavigáció lesz aktív."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:35 C/preferences_gecko.page:54
-#: C/preferences_gecko.page:74 C/preferences_gecko.page:112
+#: C/preferences_gecko.page:35 C/preferences_gecko.page:78
+#: C/preferences_gecko.page:131 C/preferences_gecko.page:159
 #: C/preferences_key_echo.page:28 C/preferences_key_echo.page:38
 #: C/preferences_key_echo.page:48 C/preferences_key_echo.page:58
 #: C/preferences_key_echo.page:70 C/preferences_speech.page:26
@@ -5905,7 +6006,7 @@ msgid "Default value: checked"
 msgstr "Alapbeállítás: bejelölve"
 
 #. (itstool) path: note/title
-#: C/preferences_gecko.page:39 C/preferences_gecko.page:58
+#: C/preferences_gecko.page:39 C/preferences_gecko.page:82
 msgid "This setting can be toggled on the fly"
 msgstr "A beállítás menet közben módosítható"
 
@@ -5921,11 +6022,56 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:47
+msgid "Automatic focus mode during caret navigation"
+msgstr "A fókuszmód automatikus bekapcsolása a mutatónavigáció használatakor"
+
+#. (itstool) path: section/p
+#: C/preferences_gecko.page:48
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use caret navigation commands to navigate to a form "
+"field. For example, pressing <key>Down</key> would allow you to move into an "
+"entry but once you had done so, Orca would switch to focus mode and "
+"subsequent presses of <key>Down</key> would be controlled by the web browser "
+"and not by Orca. If this checkbox is not checked, <app>Orca</app> would "
+"continue to control what happens when you press <key>Down</key>, thus making "
+"it possible to arrow out of the entry and continue reading."
+msgstr ""
+"Ha ez a jelölőnégyzet be van jelölve, az <app>Orka</app> automatikusan "
+"fókuszmódba fog váltani egy űrlapmezőre lépéskor, ha a mutatónavigációt "
+"használja. Tegyük fel, hogy a <key>Lefelé nyíl</key> segítségével szeretne "
+"egy szerkesztőmezőre lépni. Ha ez megtörténik, az <app>Orka</app> "
+"automatikusan fókuszmódba kerül, és a további <key>Lefelé nyíl</key> "
+"billentyűlenyomásokat már a webböngésző, és nem az <app>Orka</app> vezérli. "
+"Ha ez a jelölőnégyzet nincs bejelölve, folyamatosan az <app>Orka</app> "
+"vezérli, hogy mi történjen  a <key>Lefelé nyíl</key> lenyomásakor, így "
+"lehetséges ellépni a szerkesztőmezőről, és folytatni az olvasást."
+
+#. (itstool) path: note/title
+#: C/preferences_gecko.page:62 C/preferences_gecko.page:104
+msgid "Manually switching between browse mode and focus mode"
+msgstr "Manuális váltás a böngészőmód és a fókuszmód között"
+
+#. (itstool) path: note/p
+#: C/preferences_gecko.page:63 C/preferences_gecko.page:105
+msgid ""
+"In order to start or stop interacting with the focused form field, use "
+"<keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch between "
+"browse mode and focus mode."
+msgstr ""
+"Annak érdekében, hogy meg tudjon kezdeni vagy be tudjon fejezni egy "
+"műveletet az éppen fókuszban levő űrlapmezővel, használja az "
+"<keyseq><key>Orka módosító</key><key>A</key></keyseq> billentyűkombinációt. "
+"Ezzel a billentyűkombinációval váltani tud a fókuszmód és a böngészőmód "
+"között."
+
+#. (itstool) path: section/title
+#: C/preferences_gecko.page:71
 msgid "Enable structural navigation"
 msgstr "Strukturált navigáció engedélyezése"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:48
+#: C/preferences_gecko.page:72
 msgid ""
 "This checkbox toggles <app>Orca</app>'s <link xref="
 "\"howto_structural_navigation\">Structural Navigation</link> on and off. "
@@ -5938,7 +6084,7 @@ msgstr ""
 "hivatkozások és űrlapmezők alapján történő navigációt."
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:59
+#: C/preferences_gecko.page:83
 msgid ""
 "To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
 "Modifier</key><key>Z</key></keyseq>."
@@ -5947,36 +6093,41 @@ msgstr ""
 "<keyseq><key>Orka módosító</key><key>Z</key></keyseq> billentyűkombinációt. "
 "Ha ezt a billentyűkombinációt használja, a beállítás nem kerül mentésre."
 
-# Megjegyzés: a felhasználói felületen a rövidebb fordítás van használva. Ha mégis meg szeretnéd tartani a függőleges szót a fordításban, ott is cserélni kell ennek a beállításnak a fordítását.
-# Ha visszaállítod a dokumentációban a fordítást, jelezd nekem, és a felhasználói felületnél is frissítek.
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:66
-msgid "Position cursor at start of line when navigating vertically"
-msgstr "A kurzor kerüljön a sor elejére navigálás közben"
+#: C/preferences_gecko.page:90
+#| msgid "Configuring Structural Navigation"
+msgid "Automatic focus mode during structural navigation"
+msgstr ""
+"A fókuszmód automatikus bekapcsolása a strukturált navigáció használatakor"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:67
+#: C/preferences_gecko.page:91
 msgid ""
-"If this checkbox is checked, <app>Orca</app> will always move the caret to "
-"the beginning of the line when <app>Orca</app> is controlling the caret and "
-"you press Up or Down Arrow to read the previous or next line. If this "
-"checkbox is not checked, <app>Orca</app> will attempt to keep the caret in "
-"the same horizontal position as you navigate Up or Down."
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use structural navigation commands to navigate to a form "
+"field. For example, pressing <key>E</key> to move to the next entry would "
+"move focus there and also turn focus mode on so that your next press of "
+"<key>E</key> would type an \"e\" into that entry. If this checkbox is not "
+"checked, then <app>Orca</app> will leave you in browse mode and your next "
+"press of <key>E</key> would move you to the next entry on the page."
 msgstr ""
-"Ha ez a jelölőnégyzet be van jelölve, és az <app>Orka</app> vezérli a "
-"mutatót, a mutató mindig a sor elejére fog kerülni, ha lenyomja a felfelé "
-"vagy lefelé nyíl billentyűt az előző vagy következő sor felolvasásához. Ha "
-"ez a jelölőnégyzet nincs bejelölve, az <app>Orka</app> megpróbálja "
-"ugyanabban a vízszintes pozícióban tartani a mutatót, amelyben kezdeményezte "
-"a felfelé vagy lefelé történő navigációt."
+"Ha ez a jelölőnégyzet be van jelölve, az <app>Orka</app> automatikusan "
+"fókuszmódba fog kerülni, amikor az <app>Orka</app> strukturált navigációs "
+"parancsait használja egy űrlapmezőre navigáláshoz. Tegyük fel, hogy az "
+"<key>E</key> billentyű lenyomásával a következő szerkesztőmezőre szeretne "
+"lépni. Ha újra lenyomja az <key>E</key> billentyűt, mivel az <app>Orka</app> "
+"már fókuszmódba került, a fókuszban levő szerkesztőmezőbe be fog íródni az "
+"<key>E</key> betű. Ha ez a jelölőnégyzet nincs bejelölve, akkor az "
+"<app>Orka</app> böngészőmódban marad, és a következő lenyomott <key>E</key> "
+"billentyű hatására a következő szerkesztőmezőre kerül a weboldalon."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:79
+#: C/preferences_gecko.page:113
 msgid "Automatically start speaking a page when it is first loaded"
 msgstr "A weblap automatikus felolvasása, amint befejeződött a letöltése"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:80
+#: C/preferences_gecko.page:114
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
 "newly opened web page or email."
@@ -5985,18 +6136,45 @@ msgstr ""
 "az újonnan betöltött oldal vagy egy e-mail tartalmát."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:84
+#: C/preferences_gecko.page:118
 msgid "Default value: checked for Firefox; not checked for Thunderbird"
 msgstr ""
 "Alapbeállítás: Firefox esetén bejelölve, Thunderbird esetén nincs bejelölve"
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:90
+#: C/preferences_gecko.page:123
+msgid "Enable layout mode for content"
+msgstr "Az elrendezésmód engedélyezése a tartalom megjelenítésekor"
+
+#. (itstool) path: section/p
+#: C/preferences_gecko.page:124
+#| msgid ""
+#| "If this checkbox is checked, <app>Orca</app> will always move the caret "
+#| "to the beginning of the line when <app>Orca</app> is controlling the "
+#| "caret and you press Up or Down Arrow to read the previous or next line. "
+#| "If this checkbox is not checked, <app>Orca</app> will attempt to keep the "
+#| "caret in the same horizontal position as you navigate Up or Down."
+msgid ""
+"If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
+"the on-screen layout of the content and present the full line, including any "
+"links or form fields on that line. If this checkbox is not checked, "
+"<app>Orca</app> will treat objects such as links and form fields as if they "
+"were on separate lines, both for presentation and navigation."
+msgstr ""
+"Ha ez a jelölőnégyzet be van jelölve, az <app>Orka</app> mutatónavigációja a "
+"képernyő-elrendezés szerinti teljes sort fogja megjeleníteni, az adott "
+"sorban szereplő hivatkozásokkal és űrlapmezőkkel együtt. Ha ez a "
+"jelölőnégyzet nincs bejelölve, az <app>Orka</app> különálló sorként fogja "
+"kezelni a hivatkozásokat és az űrlapmezőket, a megjelenítéskor és a "
+"navigációkor egyaránt."
+
+#. (itstool) path: section/title
+#: C/preferences_gecko.page:137
 msgid "Table Options"
 msgstr "Táblázatnavigáció beállításai"
 
 #. (itstool) path: note/p
-#: C/preferences_gecko.page:92
+#: C/preferences_gecko.page:139
 msgid ""
 "To learn more about <app>Orca's</app> options for navigating within tables, "
 "please see <link xref=\"preferences_table_navigation\">Table Navigation "
@@ -6009,12 +6187,12 @@ msgstr ""
 
 # Megjegyzés: Gecko navigációnál Orkában is így van fordítva.
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:100
+#: C/preferences_gecko.page:147
 msgid "Find Options"
 msgstr "Keresési feltételek"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:101
+#: C/preferences_gecko.page:148
 msgid ""
 "The <gui>Find Options</gui> group of controls make it possible for you to "
 "customize how <app>Orca</app> presents the results of a search conducted "
@@ -6025,12 +6203,12 @@ msgstr ""
 "keresőjében végzett keresés eredményeit."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:107
+#: C/preferences_gecko.page:154
 msgid "Speak results during find"
 msgstr "Keresés eredményének felolvasása"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:108
+#: C/preferences_gecko.page:155
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will read the line which "
 "matches your current search query."
@@ -6039,12 +6217,12 @@ msgstr ""
 "azt a sort, amelyben az Ön által keresett kifejezés található."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:117
+#: C/preferences_gecko.page:164
 msgid "Only speak changed lines during find"
 msgstr "Csak a megváltozott sorok felolvasása a keresés során"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:118
+#: C/preferences_gecko.page:165
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will not present the matching "
 "line if it is the same line as the previous match. This option is designed "
@@ -6056,12 +6234,12 @@ msgstr ""
 "kifejezés."
 
 #. (itstool) path: section/title
-#: C/preferences_gecko.page:129
+#: C/preferences_gecko.page:176
 msgid "Minimum length of matched text"
 msgstr "A keresett szöveg minimális hossza"
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:130
+#: C/preferences_gecko.page:177
 msgid ""
 "This editable spin button is where you can specify the number of characters "
 "which much match before <app>Orca</app> announces the matching line. This "
@@ -6074,7 +6252,7 @@ msgstr ""
 "rövidebb egyezéseket tartalmazó sorok felolvasását."
 
 #. (itstool) path: section/p
-#: C/preferences_gecko.page:137
+#: C/preferences_gecko.page:184
 msgid "Default value: 4"
 msgstr "Alapbeállítás: 4"
 
@@ -7869,6 +8047,58 @@ msgstr ""
 #: C/preferences_voice.page:108
 msgid "Default value: <gui>Sentence</gui>"
 msgstr "Alapbeállítás: <gui>Mondat</gui>"
+
+#~ msgid ""
+#~ "Next and previous object (to exit field): <keyseq><key>Orca Modifier</"
+#~ "key><key>Right</key></keyseq> and <keyseq><key>Orca Modifier</"
+#~ "key><key>Left</key></keyseq>"
+#~ msgstr ""
+#~ "Ugrás a következő és előző objektumra: <keyseq><key>Orka módosító</"
+#~ "key><key>Jobbra nyíl</key></keyseq> és <keyseq><key>Orka módosító</"
+#~ "key><key>Balra nyíl</key></keyseq>"
+
+#~ msgid ""
+#~ "Next and previous anchor: <keyseq><key>A</key></keyseq> and "
+#~ "<keyseq><key>Shift</key><key>A</key></keyseq>"
+#~ msgstr ""
+#~ "Ugrás a következő és az előző iránypontra: <keyseq><key>A</key></keyseq> "
+#~ "és <keyseq><key>Shift</key><key>A</key></keyseq>"
+
+#~ msgid ""
+#~ "Because there is no special mode in <app>Orca</app> for interacting with "
+#~ "forms, the most frequently-asked question is how to exit a focused form "
+#~ "field. For this, too, you have several options:"
+#~ msgstr ""
+#~ "Mivel az <app>Orkának</app> nincs speciális űrlap módja az űrlapok "
+#~ "kezeléséhez, a leggyakrabban feltett kérdés, hogyan lehet kilépni egy "
+#~ "fókuszba került űrlapmezőből. Számos lehetőség áll rendelkezésére:"
+
+#~ msgid ""
+#~ "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms"
+#~ "\"> structural navigation</link> to move to the next/previous form field: "
+#~ "<keyseq><key>Orca Modifier</key><key>Tab</key></keyseq>/<keyseq> "
+#~ "<key>Orca Modifier</key><key>Shift</key><key>Tab</key></keyseq>."
+#~ msgstr ""
+#~ "Használhatja az <link xref=\"commands_structural_navigation#forms\"> "
+#~ "<app>Orka</app> strukturált navigációs parancsait</link> az előző vagy "
+#~ "következő űrlapmezőre ugráshoz (<keyseq><key>Orka módosító</key><key>Tab</"
+#~ "key></keyseq> és <keyseq><key>Orka módosító</key><key>Shift</"
+#~ "key><key>Tab</key></keyseq>)."
+
+#~ msgid ""
+#~ "Use <app>Orca</app>'s commands for moving to the next/previous object or "
+#~ "chunk of text: <keyseq><key>Orca Modifier</key><key>Right</key> </keyseq>/"
+#~ "<keyseq><key>Orca Modifier</key><key>Left</key></keyseq>."
+#~ msgstr ""
+#~ "Használhatja az <app>Orka</app> parancsait az előző vagy következő "
+#~ "objektumra való ugráshoz (<keyseq><key>Orka módosító</key><key>Jobbra "
+#~ "nyíl</key></keyseq> és <keyseq><key>Orka módosító</key><key>Balra nyíl</"
+#~ "key></keyseq>)."
+
+# Megjegyzés: a felhasználói felületen a rövidebb fordítás van használva. Ha mégis meg szeretnéd tartani a függőleges szót a fordításban, ott is cserélni kell ennek a beállításnak a fordítását.
+# Ha visszaállítod a dokumentációban a fordítást, jelezd nekem, és a felhasználói felületnél is frissítek.
+#~ msgid "Position cursor at start of line when navigating vertically"
+#~ msgstr "A kurzor kerüljön a sor elejére navigálás közben"
 
 #~ msgctxt "_"
 #~ msgid ""
