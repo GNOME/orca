@@ -4126,6 +4126,31 @@ class Utilities:
 
         return False
 
+    def treatEventAsTerminalNoise(self, event):
+        try:
+            role = event.source.getRole()
+        except:
+            msg = "ERROR: Exception getting role of %s" % event.source
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role != pyatspi.ROLE_TERMINAL:
+            return False
+
+        if self.lastInputEventWasCommand():
+            return False
+
+        if event.type.startswith("object:text-changed:delete") and event.any_data.strip():
+            keyString, mods = self.lastKeyAndModifiers()
+            if keyString in ["Return", "Tab", "space", " "]:
+                return True
+            if mods & keybindings.ALT_MODIFIER_MASK:
+                return True
+            if len(event.any_data) > 1 and self.lastInputEventWasPrintableKey():
+                return True
+
+        return False
+
     def isPresentableTextChangedEventForLocusOfFocus(self, event):
         if not event.type.startswith("object:text-changed:") \
            and not event.type.startswith("object:text-attributes-changed"):

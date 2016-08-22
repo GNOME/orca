@@ -2507,6 +2507,11 @@ class Script(script.Script):
         if not self.utilities.isPresentableTextChangedEventForLocusOfFocus(event):
             return
 
+        if self.utilities.treatEventAsTerminalNoise(event):
+            msg = "DEFAULT: Deletion is believed to be noise"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         self.utilities.handleUndoTextEvent(event)
 
         orca.setLocusOfFocus(event, event.source, False)
