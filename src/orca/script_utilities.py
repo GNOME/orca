@@ -4121,6 +4121,8 @@ class Utilities:
                 return True
             if mods & keybindings.ALT_MODIFIER_MASK:
                 return True
+            if len(event.any_data) > 1 and self.lastInputEventWasPrintableKey():
+                return True
 
         return False
 
