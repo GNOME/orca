@@ -46,6 +46,9 @@ class Utilities(script_utilities.Utilities):
         if len(event.any_data) == 1:
             return event.any_data
 
+        if self.isAutoTextEvent(event):
+            return event.any_data
+
         try:
             text = event.source.queryText()
         except:
@@ -69,10 +72,22 @@ class Utilities(script_utilities.Utilities):
     def isTextArea(self, obj):
         return True
 
-    def treatEventAsTerminalCommand(self, event):
-        if self.lastInputEventWasCommand():
-            return True
+    def isAutoTextEvent(self, event):
+        if not event.type.startswith("object:text-changed:insert"):
+            return False
 
+        if not event.any_data or not event.source:
+            return False
+
+        lastKey, mods = self.lastKeyAndModifiers()
+        if lastKey == "Tab":
+            return event.any_data != "\t"
+        if lastKey == "Return":
+            return event.any_data.startswith("\n")
+
+        return False
+
+    def treatEventAsCommand(self, event):
         if event.type.startswith("object:text-changed:insert") and event.any_data.strip():
             keyString, mods = self.lastKeyAndModifiers()
             if keyString in ["Return", "Tab", "space", " "]:
@@ -84,7 +99,7 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def treatEventAsTerminalNoise(self, event):
+    def treatEventAsNoise(self, event):
         if self.lastInputEventWasCommand():
             return False
 

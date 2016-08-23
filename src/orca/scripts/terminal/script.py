@@ -81,7 +81,7 @@ class Script(default.Script):
     def onTextDeleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
 
-        if self.utilities.treatEventAsTerminalNoise(event):
+        if self.utilities.treatEventAsNoise(event):
             msg = "TERMINAL: Deletion is believed to be noise"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -91,7 +91,7 @@ class Script(default.Script):
     def onTextInserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
 
-        if not self.utilities.treatEventAsTerminalCommand(event):
+        if not self.utilities.treatEventAsCommand(event):
             super().onTextInserted(event)
             return
 

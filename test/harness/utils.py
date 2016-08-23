@@ -5,6 +5,7 @@ import re
 import sys
 
 from gi.repository import Gio
+from gi.repository import Gdk
 from macaroon.playback import *
 
 testLogger = Gio.DBusProxy.new_for_bus_sync(
@@ -33,6 +34,14 @@ if outFilename and len(outFilename):
         myOut = open(outFilename, 'a', 0)
 else:
     myOut = sys.stdout
+
+def getKeyCodeForName(name):
+    keymap = Gdk.Keymap.get_default()
+    success, entries = keymap.get_entries_for_keyval(Gdk.keyval_from_name(name))
+    if success:
+        return entries[-1].keycode
+
+    return None
 
 class StartRecordingAction(AtomicAction):
     '''Tells Orca to log speech and braille output to a string which we

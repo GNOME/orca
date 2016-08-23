@@ -5,6 +5,7 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(3000))
 sequence.append(TypeAction("ftp"))
 sequence.append(KeyComboAction("Return"))
 
@@ -44,6 +45,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '$ '"]))
 
 sequence.append(KeyComboAction("<Alt>1"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
@@ -62,6 +64,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'ftp> '"]))
 
 sequence.append(KeyComboAction("<Alt>2"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))

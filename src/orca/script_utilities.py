@@ -4098,12 +4098,6 @@ class Utilities:
 
         return role in roles
 
-    def treatEventAsTerminalCommand(self, event):
-        return False
-
-    def treatEventAsTerminalNoise(self, event):
-        return False
-
     def isPresentableTextChangedEventForLocusOfFocus(self, event):
         if not event.type.startswith("object:text-changed:") \
            and not event.type.startswith("object:text-attributes-changed"):
