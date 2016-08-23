@@ -2507,11 +2507,6 @@ class Script(script.Script):
         if not self.utilities.isPresentableTextChangedEventForLocusOfFocus(event):
             return
 
-        if self.utilities.treatEventAsTerminalNoise(event):
-            msg = "DEFAULT: Deletion is believed to be noise"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return
-
         self.utilities.handleUndoTextEvent(event)
 
         orca.setLocusOfFocus(event, event.source, False)
@@ -2584,9 +2579,6 @@ class Script(script.Script):
 
         if self.utilities.lastInputEventWasCommand():
             msg = "DEFAULT: Insertion is believed to be due to command"
-            debug.println(debug.LEVEL_INFO, msg, True)
-        elif self.utilities.treatEventAsTerminalCommand(event):
-            msg = "DEFAULT: Insertion is believed to be due to terminal command"
             debug.println(debug.LEVEL_INFO, msg, True)
         elif self.utilities.isMiddleMouseButtonTextInsertionEvent(event):
             msg = "DEFAULT: Insertion is believed to be due to middle mouse button"
@@ -3472,14 +3464,6 @@ class Script(script.Script):
                     [lineString, startOffset, endOffset] = \
                         text.getTextAtOffset(offset, mode)
 
-                # [[[WDW - HACK: well...gnome-terminal sometimes wants to
-                # give us outrageous values back from getTextAtOffset
-                # (see http://bugzilla.gnome.org/show_bug.cgi?id=343133),
-                # so we try to handle it.]]]
-                #
-                if startOffset < 0:
-                    break
-
                 # [[[WDW - HACK: this is here because getTextAtOffset
                 # tends not to be implemented consistently across toolkits.
                 # Sometimes it behaves properly (i.e., giving us an endOffset
@@ -3714,25 +3698,7 @@ class Script(script.Script):
         if role == pyatspi.ROLE_PASSWORD_TEXT and not event.isLockingKey():
             return False
 
-        # Worst. Hack. EVER. We have no reliable way of knowing a password is
-        # being entered into a terminal -- other than the fact that the text
-        # typed ain't there. As a result, we have to do special things when
-        # not in special modes. :( See bgo 668025.
-        if role == pyatspi.ROLE_TERMINAL:
-            if not event.isPressedKey():
-                try:
-                    text = orca_state.locusOfFocus.queryText()
-                    o = text.caretOffset
-                    string = text.getText(o-1, o)
-                except:
-                    pass
-                else:
-                    if not event.event_string in [string, 'space']:
-                        return False
-            elif not (orca_state.learnModeEnabled or event.isLockingKey()):
-                return False
-
-        elif not event.isPressedKey():
+        if not event.isPressedKey():
             return False
 
         braille.displayKeyEvent(event)
@@ -3747,6 +3713,9 @@ class Script(script.Script):
         string = None
         if event.isPrintableKey():
             string = event.event_string
+
+        msg = "DEFAULT: Presenting keyboard event"
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         voice = self.speechGenerator.voice(string=string)
         speech.speakKeyEvent(event, voice)

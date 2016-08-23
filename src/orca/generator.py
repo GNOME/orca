@@ -387,11 +387,6 @@ class Generator:
 
         role = args.get('role', obj.getRole())
 
-        # The text in the description is the same as the text in the page
-        # tab and similar to (and sometimes the same as) the prompt.
-        if role == pyatspi.ROLE_TERMINAL:
-            return []
-
         # Unity Panel Service menubar items are labels which claim focus and
         # have an accessible description of the text + underscore symbol used
         # to create the mnemonic. We'll work around that here for now.

@@ -1,6 +1,7 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2016 Igalia, S.L.
+# Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -17,7 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Custom script for gnome-terminal."""
-
+from .braille_generator import BrailleGenerator
 from .script import Script
+from .speech_generator import SpeechGenerator
+from .script_utilities import Utilities
 

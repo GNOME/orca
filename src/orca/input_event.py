@@ -458,6 +458,11 @@ class KeyboardEvent(InputEvent):
 
         return keynames.getKeyName(self.event_string)
 
+    def getObject(self):
+        """Returns the object believed to be associated with this key event."""
+
+        return self._obj
+
     def _getUserHandler(self):
         # TODO - JD: This should go away once plugin support is in place.
         try:

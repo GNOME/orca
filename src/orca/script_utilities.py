@@ -1356,8 +1356,7 @@ class Utilities:
 
         return obj and obj.getRole() in (pyatspi.ROLE_TEXT,
                                          pyatspi.ROLE_ENTRY,
-                                         pyatspi.ROLE_PARAGRAPH,
-                                         pyatspi.ROLE_TERMINAL)
+                                         pyatspi.ROLE_PARAGRAPH)
 
     @staticmethod
     def knownApplications():
@@ -2412,15 +2411,15 @@ class Utilities:
         if event.any_data:
             return event.any_data
 
-        msg = "ERROR: Broken text insertion event"
-        debug.println(debug.LEVEL_INFO, msg, True)
-
         try:
             role = event.source.getRole()
         except:
             msg = "ERROR: Exception getting role of %s" % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             role = None
+
+        msg = "ERROR: Broken text insertion event"
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         if role == pyatspi.ROLE_PASSWORD_TEXT:
             text = self.queryNonEmptyText(event.source)
@@ -2626,8 +2625,6 @@ class Utilities:
 
         obj = orca_state.locusOfFocus
         role = obj.getRole()
-        if role == pyatspi.ROLE_TERMINAL:
-            return True
         if role == pyatspi.ROLE_PASSWORD_TEXT:
             return False
 
@@ -4102,53 +4099,9 @@ class Utilities:
         return role in roles
 
     def treatEventAsTerminalCommand(self, event):
-        try:
-            role = event.source.getRole()
-        except:
-            msg = "ERROR: Exception getting role of %s" % event.source
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if role != pyatspi.ROLE_TERMINAL:
-            return False
-
-        if self.lastInputEventWasCommand():
-            return True
-
-        if event.type.startswith("object:text-changed:insert") and event.any_data.strip():
-            keyString, mods = self.lastKeyAndModifiers()
-            if keyString in ["Return", "Tab", "space", " "]:
-                return True
-            if mods & keybindings.ALT_MODIFIER_MASK:
-                return True
-            if len(event.any_data) > 1 and self.lastInputEventWasPrintableKey():
-                return True
-
         return False
 
     def treatEventAsTerminalNoise(self, event):
-        try:
-            role = event.source.getRole()
-        except:
-            msg = "ERROR: Exception getting role of %s" % event.source
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if role != pyatspi.ROLE_TERMINAL:
-            return False
-
-        if self.lastInputEventWasCommand():
-            return False
-
-        if event.type.startswith("object:text-changed:delete") and event.any_data.strip():
-            keyString, mods = self.lastKeyAndModifiers()
-            if keyString in ["Return", "Tab", "space", " "]:
-                return True
-            if mods & keybindings.ALT_MODIFIER_MASK:
-                return True
-            if len(event.any_data) > 1 and self.lastInputEventWasPrintableKey():
-                return True
-
         return False
 
     def isPresentableTextChangedEventForLocusOfFocus(self, event):

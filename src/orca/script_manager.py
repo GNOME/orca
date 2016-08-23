@@ -37,6 +37,7 @@ class ScriptManager:
         debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Initializing', True)
         self.appScripts = {}
         self.toolkitScripts = {}
+        self.customScripts = {}
         self._appModules = apps.__all__
         self._toolkitModules = toolkits.__all__
         self._defaultScript = None
@@ -62,8 +63,6 @@ class ScriptManager:
              'gnome-calculator': 'gcalctool',
              'marco':            'metacity',
              'Nereid':           'Banshee',
-             'vte':              'gnome-terminal',
-             'gnome-terminal-server': 'gnome-terminal',
              'mate-notification-daemon': 'notification-daemon',
             }
 
@@ -90,6 +89,7 @@ class ScriptManager:
         self.setActiveScript(None, "deactivate")
         self.appScripts = {}
         self.toolkitScripts = {}
+        self.customScripts = {}
         debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Deactivated', True)
 
     def getModuleName(self, app):
@@ -138,6 +138,17 @@ class ScriptManager:
                 name = attrs.get('toolkit', '')
 
         return name
+
+    def _scriptForRole(self, obj):
+        try:
+            role = obj.getRole()
+        except:
+            return ''
+
+        if role == pyatspi.ROLE_TERMINAL:
+            return 'terminal'
+
+        return ''
 
     def _newNamedScript(self, app, name):
         """Attempts to locate and load the named module. If successful, returns
@@ -221,8 +232,18 @@ class ScriptManager:
         Returns an instance of a Script.
         """
 
+        customScript = None
         appScript = None
         toolkitScript = None
+
+        roleName = self._scriptForRole(obj)
+        if roleName:
+            customScripts = self.customScripts.get(app, {})
+            customScript = customScripts.get(roleName)
+            if not customScript:
+                customScript = self._newNamedScript(app, roleName)
+                customScripts[roleName] = customScript
+            self.customScripts[app] = customScripts
 
         objToolkit = self._toolkitForObject(obj)
         if objToolkit:
@@ -246,6 +267,9 @@ class ScriptManager:
             debug.printException(debug.LEVEL_ALL)
             debug.println(debug.LEVEL_WARNING, msg, True)
             appScript = self.getDefaultScript()
+
+        if customScript:
+            return customScript
 
         # Only defer to the toolkit script for this object if the app script
         # is based on a different toolkit.
@@ -300,6 +324,14 @@ class ScriptManager:
             else:
                 for toolkitScript in toolkitScripts.values():
                     del toolkitScript
+
+            try:
+                customScripts = self.customScripts.pop(app)
+            except KeyError:
+                pass
+            else:
+                for customScript in customScripts.values():
+                    del customScript
 
             del app
 
