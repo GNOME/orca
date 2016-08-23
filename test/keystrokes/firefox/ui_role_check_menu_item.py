@@ -24,6 +24,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Firefox application (Mozilla Firefox|Nightly) frame Menu Bar tool bar Application menu bar < > Full Screen check menu item'",
      "     VISIBLE:  '< > Full Screen check menu item', cursor=1",
      "SPEECH OUTPUT: '(Mozilla Firefox|Nightly) frame'",
+     "SPEECH OUTPUT: 'Menu Bar tool bar'",
      "SPEECH OUTPUT: 'View menu'",
      "SPEECH OUTPUT: 'Menu Bar tool bar.'",
      "SPEECH OUTPUT: 'Full Screen check menu item not checked.'",

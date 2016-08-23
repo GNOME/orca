@@ -26,7 +26,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'main application embedded'",
      "     VISIBLE:  'main application embedded', cursor=1",
      "SPEECH OUTPUT: 'main'",
-     "SPEECH OUTPUT: 'application'",
      "SPEECH OUTPUT: 'embedded'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -114,7 +113,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'main application embedded'",
      "     VISIBLE:  'main application embedded', cursor=1",
      "SPEECH OUTPUT: 'main'",
-     "SPEECH OUTPUT: 'application'",
      "SPEECH OUTPUT: 'embedded'"]))
 
 sequence.append(utils.StartRecordingAction())

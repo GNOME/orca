@@ -45,7 +45,8 @@ sequence.append(utils.AssertPresentationAction(
     "4. Enter table",
     ["BRAILLE LINE:  'gtk3-demo application List Store frame table Fixed? column header < > Fixed? 60482 Normal scrollable notebooks and hidden tabs  '",
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
-     "SPEECH OUTPUT: 'Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs image.'"]))
+     "SPEECH OUTPUT: 'Fixed?'",
+     "SPEECH OUTPUT: 'check box not checked 60482 Normal scrollable notebooks and hidden tabs image.'"]))
 
 # GtkTreeView swallows this keypress (for all users; not just Orca users).
 sequence.append(KeyComboAction("Left"))

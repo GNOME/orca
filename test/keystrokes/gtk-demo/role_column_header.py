@@ -46,7 +46,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'scrollable notebooks and hidden ', cursor=1",
      "BRAILLE LINE:  'gtk-demo application GtkListStore demo frame table Fixed? column header < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
-     "SPEECH OUTPUT: 'Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs.'",
+     "SPEECH OUTPUT: 'Fixed?'",
+     "SPEECH OUTPUT: 'check box not checked 60482 Normal scrollable notebooks and hidden tabs.'",
      "SPEECH OUTPUT: 'Fixed? column header check box not checked.'"]))
 
 sequence.append(utils.StartRecordingAction())

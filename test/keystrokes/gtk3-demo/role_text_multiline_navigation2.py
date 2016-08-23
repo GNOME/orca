@@ -11,6 +11,7 @@ sequence.append(KeyComboAction("<Control>f"))
 sequence.append(TypeAction("Application class"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(KeyComboAction("Tab"))
 sequence.append(PauseAction(3000))
 
 sequence.append(TypeAction("This is a test. "))
@@ -71,9 +72,6 @@ sequence.append(utils.AssertPresentationAction(
     "5. Ctrl+Page_Up to beginning of line",
     ["BRAILLE LINE:  'This is only a test. $l'",
      "     VISIBLE:  'This is only a test. $l', cursor=1",
-     "BRAILLE LINE:  'This is only a test. $l'",
-     "     VISIBLE:  'This is only a test. $l', cursor=1",
-     "SPEECH OUTPUT: 'T'",
      "SPEECH OUTPUT: 'is only a test.'",
      "SPEECH OUTPUT: 'unselected' voice=system"]))
 
@@ -81,9 +79,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Page_Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. Ctrl+Page_Down to end of line",
-    ["BRAILLE LINE:  'This is only a test. $l'",
-     "     VISIBLE:  'This is only a test. $l', cursor=21",
-     "SPEECH OUTPUT: 'This is only a test.'"]))
+    ["KNOWN ISSUE: We say nothing here",
+     "BRAILLE LINE:  'This is only a test. $l'",
+     "     VISIBLE:  'This is only a test. $l', cursor=21"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Page_Up"))
@@ -115,10 +113,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Shift+Page_Down to deselect text",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'blank' voice=system",
-     "SPEECH OUTPUT: 'page unselected from cursor position'"]))
+     "SPEECH OUTPUT: 'page unselected from cursor position' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Page_Up"))

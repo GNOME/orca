@@ -128,7 +128,7 @@
         "enabledBrailledTextAttributes": "size:; family-name:; weight:400; indent:0; underline:none; strikethrough:false; justification:left; style:normal; text-spelling:none;", 
         "speechVerbosityLevel": 1, 
         "enableMagCrossHair": true, 
-        "enableBrailleMonitor": false, 
+        "enableBrailleMonitor": true, 
         "voices": {
             "default": {
                 "established": false

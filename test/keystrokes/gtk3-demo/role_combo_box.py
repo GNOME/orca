@@ -8,7 +8,7 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(TypeAction("Combo boxes"))
+sequence.append(TypeAction("Combo Boxes"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(PauseAction(3000))
 
@@ -53,6 +53,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '3 of 5'"]))
 
 sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Tab"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -60,7 +61,6 @@ sequence.append(utils.AssertPresentationAction(
     "5. Editable text combo box",
     ["BRAILLE LINE:  'gtk3-demo application Combo Boxes frame Editable panel  $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'Editable panel'",
      "SPEECH OUTPUT: 'text.'"]))
 
 sequence.append(TypeAction("Fou"))
@@ -110,13 +110,10 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'text.'",
      "SPEECH OUTPUT: 'Four selected.'"]))
 
-sequence.append(KeyComboAction("Tab"))
-sequence.append(KeyComboAction("Tab"))
-sequence.append(KeyComboAction("Tab"))
-sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(utils.AssertPresentationAction(
     "11. Combo box with multiple levels",
     ["BRAILLE LINE:  'gtk3-demo application Combo Boxes frame Where are we ? panel Boston combo box'",

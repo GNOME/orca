@@ -7,11 +7,13 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(TypeAction("Application main window"))
 sequence.append(KeyComboAction("Return"))
-sequence.append(KeyComboAction("Tab"))
+sequence.append(PauseAction(3000))
 
+sequence.append(KeyComboAction("Tab"))
 sequence.append(TypeAction("This is a test. "))
 sequence.append(KeyComboAction("Return"))
 sequence.append(TypeAction("This is only a test."))
@@ -229,7 +231,7 @@ sequence.append(utils.AssertPresentationAction(
     "24. Back up to 'PLEASE DO NOT PANIC.'",
     ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
      "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
-     "SPEECH OUTPUT: 'PLEASE DO NOT PANIC.' voice=uppercase"]))
+     "SPEECH OUTPUT: 'PLEASE DO NOT PANIC.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
@@ -255,7 +257,7 @@ sequence.append(utils.AssertPresentationAction(
     "27. Insert+f for text attributes",
     ["SPEECH OUTPUT: 'size: 11' voice=system",
      "SPEECH OUTPUT: 'family name: Cantarell' voice=system",
-     "SPEECH OUTPUT: 'foreground color: dark slate gray' voice=system",
+     "SPEECH OUTPUT: 'foreground color: black' voice=system",
      "SPEECH OUTPUT: 'background color: white' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())

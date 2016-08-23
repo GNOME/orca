@@ -7,6 +7,17 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(1000))
+sequence.append(KeyComboAction("<Alt>v"))
+sequence.append(KeyComboAction("Up"))
+sequence.append(KeyComboAction("Up"))
+sequence.append(KeyComboAction("Up"))
+sequence.append(KeyComboAction("Up"))
+sequence.append(KeyComboAction("Up"))
+sequence.append(KeyComboAction("Up"))
+sequence.append(KeyComboAction("Up"))
+sequence.append(KeyComboAction("Return"))
+
 sequence.append(TypeAction("Line 1"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(TypeAction("Line 2"))
@@ -17,9 +28,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
 sequence.append(utils.AssertPresentationAction(
     "1. Review current line.",
-    ["BRAILLE LINE:  'ruler Line 1 $l'",
-     "     VISIBLE:  'ruler Line 1 $l', cursor=7",
-     "SPEECH OUTPUT: 'ruler Line 1'"]))
+    ["BRAILLE LINE:  'Line 1 $l'",
+     "     VISIBLE:  'Line 1 $l', cursor=1",
+     "SPEECH OUTPUT: 'Line 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
@@ -65,7 +76,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'e'",
      "SPEECH OUTPUT: 'space'",
      "SPEECH OUTPUT: '2'",
-     "SPEECH OUTPUT: 'lima' voice=uppercase",
+     "SPEECH OUTPUT: 'lima'",
      "SPEECH OUTPUT: 'india'",
      "SPEECH OUTPUT: 'november'",
      "SPEECH OUTPUT: 'echo'",
@@ -76,9 +87,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "5. Review previous line.",
-    ["BRAILLE LINE:  'ruler Line 1 $l'",
-     "     VISIBLE:  'ruler Line 1 $l', cursor=1",
-     "SPEECH OUTPUT: 'ruler Line 1'"]))
+    ["BRAILLE LINE:  'Line 1 $l'",
+     "     VISIBLE:  'Line 1 $l', cursor=1",
+     "SPEECH OUTPUT: 'Line 1'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

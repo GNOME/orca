@@ -8,6 +8,7 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Down"))
@@ -81,6 +82,5 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
      "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Amongst our weaponry are such diverse elements as: fear, surprise, ruthless efficiency, an almost fanatical devotion to the Pope, and nice red uniforms - Oh damn!'"]))
 
-sequence.append(KeyComboAction("<Control>w"))
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

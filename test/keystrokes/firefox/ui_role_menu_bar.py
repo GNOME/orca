@@ -39,11 +39,12 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Firefox application (Mozilla Firefox|Nightly) frame Menu Bar tool bar Application menu bar New Tab\(Ctrl\+T\)'",
      "     VISIBLE:  'New Tab(Ctrl+T)', cursor=1",
      "SPEECH OUTPUT: '(Mozilla Firefox|Nightly) frame'",
+     "SPEECH OUTPUT: 'Menu Bar tool bar'",
      "SPEECH OUTPUT: 'File menu'",
      "SPEECH OUTPUT: 'Menu Bar tool bar.'",
      "SPEECH OUTPUT: 'New Tab.'",
      "SPEECH OUTPUT: 'Ctrl+T.'",
-     "SPEECH OUTPUT: '1 of 12.'",
+     "SPEECH OUTPUT: '1 of 13.'",
      "SPEECH OUTPUT: 'T'"]))
 
 sequence.append(KeyComboAction("Escape"))

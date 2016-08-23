@@ -45,7 +45,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Flat review next line",
     ["BRAILLE LINE:  'FIXED $l'",
      "     VISIBLE:  'FIXED $l', cursor=1",
-     "SPEECH OUTPUT: 'FIXED' voice=uppercase"]))
+     "SPEECH OUTPUT: 'FIXED'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))

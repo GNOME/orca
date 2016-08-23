@@ -20,7 +20,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  'nested-tables image'",
      "     VISIBLE:  'nested-tables image', cursor=1",
-     "SPEECH OUTPUT: 'nested-tables image link'"]))
+     "SPEECH OUTPUT: 'nested-tables image visited link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -220,7 +220,7 @@ sequence.append(utils.AssertPresentationAction(
     "23. line Up",
     ["BRAILLE LINE:  'nested-tables image'",
      "     VISIBLE:  'nested-tables image', cursor=1",
-     "SPEECH OUTPUT: 'nested-tables image link'"]))
+     "SPEECH OUTPUT: 'nested-tables image visited link'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

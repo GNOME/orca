@@ -25,8 +25,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Open push button', cursor=1",
      "BRAILLE LINE:  'gtk-demo application Application Window frame Open push button'",
      "     VISIBLE:  'Open push button', cursor=1",
-     "BRAILLE LINE:  'Cursor at row 0 column 0 - 0 chars in document'",
-     "     VISIBLE:  'Cursor at row 0 column 0 - 0 cha', cursor=0",
      "SPEECH OUTPUT: 'Application Window'",
      "SPEECH OUTPUT: 'Cursor at row 0 column 0 - 0 chars in document'"]))
 

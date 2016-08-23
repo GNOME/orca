@@ -20,7 +20,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk3-demo application Error alert & y Details: collapsed toggle button'",
      "     VISIBLE:  '& y Details: collapsed toggle bu', cursor=1",
      "SPEECH OUTPUT: 'Error alert.'",
-     "SPEECH OUTPUT: '  Something went wrong Here are some more details but not the full story.'",
+     "SPEECH OUTPUT: 'Something went wrong Here are some more details but not the full story.'",
      "SPEECH OUTPUT: 'Details: toggle button collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())

@@ -25,11 +25,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>F1"))
 sequence.append(utils.AssertPresentationAction(
     "1. Show tooltip",
-    ["BRAILLE LINE:  'Specify one or more page ranges,",
-     " e.g. 1–3, 7, 11'",
-     "     VISIBLE:  'Specify one or more page ranges,', cursor=0",
-     "SPEECH OUTPUT: 'Specify one or more page ranges,",
-     " e.g. 1–3, 7, 11'"]))
+    ["KNOWN ISSUE: Now that gnome-shell is used to display tooltips, the content is not accessible",
+     ""]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>F1"))

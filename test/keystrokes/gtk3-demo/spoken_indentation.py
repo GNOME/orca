@@ -14,6 +14,7 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(PauseAction(3000))
 
 sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Return"))
 
 sequence.append(KeyComboAction("Tab"))
@@ -119,13 +120,13 @@ sequence.append(TypeAction("  "))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(TypeAction("foo"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. 1 Tab",
     ["KNOWN ISSUE: We verbalize AND speak it rather than just verbalizing it",
-     "SPEECH OUTPUT: 'left control '",
      "SPEECH OUTPUT: '1 tab ' voice=system",
      "SPEECH OUTPUT: '	'"]))
 

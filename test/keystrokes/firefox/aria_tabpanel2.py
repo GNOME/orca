@@ -18,15 +18,20 @@ sequence.append(utils.AssertPresentationAction(
     "1. Give focus to a widget in the first Tab",
     ["BRAILLE LINE:  '&=y Thick and cheesy radio button'",
      "     VISIBLE:  '&=y Thick and cheesy radio butto', cursor=1",
+     "BRAILLE LINE:  'Browse mode'",
+     "     VISIBLE:  'Browse mode', cursor=0",
      "SPEECH OUTPUT: 'List with 4 items'",
      "SPEECH OUTPUT: 'Thick and cheesy.'",
-     "SPEECH OUTPUT: 'selected radio button'"]))
+     "SPEECH OUTPUT: 'selected radio button'",
+     "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Page_Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Ctrl Page Down to second tab",
-    ["BRAILLE LINE:  'Veggies page tab'",
+    ["BRAILLE LINE:  '&=y Thick and cheesy radio button'",
+     "     VISIBLE:  '&=y Thick and cheesy radio butto', cursor=1",
+     "BRAILLE LINE:  'Veggies page tab'",
      "     VISIBLE:  'Veggies page tab', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",

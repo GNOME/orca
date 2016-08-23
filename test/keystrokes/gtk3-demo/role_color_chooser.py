@@ -38,6 +38,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Left"))
 sequence.append(KeyComboAction("space"))
 sequence.append(KeyComboAction("Tab"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -69,7 +70,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Hue Where Am I",
     ["BRAILLE LINE:  'gtk3-demo application Changing color dialog Hue 0.02 color chooser'",
      "     VISIBLE:  'Hue 0.02 color chooser', cursor=1",
-     "SPEECH OUTPUT: 'color chooser 0.02 2 percent.'"]))
+     "SPEECH OUTPUT: 'color chooser 0.02'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -124,7 +125,7 @@ sequence.append(utils.AssertPresentationAction(
     "13. Alpha Where Am I",
     ["BRAILLE LINE:  'gtk3-demo application Changing color dialog Alpha 0.99 color chooser'",
      "     VISIBLE:  'Alpha 0.99 color chooser', cursor=1",
-     "SPEECH OUTPUT: 'color chooser 0.99 99 percent.'"]))
+     "SPEECH OUTPUT: 'color chooser 0.99'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

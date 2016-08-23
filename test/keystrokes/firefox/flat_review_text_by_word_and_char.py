@@ -85,22 +85,22 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
-    "flat review next word",
+    "5. flat review next word",
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
-     "SPEECH OUTPUT: 'NOBODY' voice=uppercase"]))
+     "SPEECH OUTPUT: 'NOBODY'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
-    "flat review next word",
+    "6. flat review next word",
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=8",
      "SPEECH OUTPUT: 'expects'"]))
 
 sequence.append(KeyComboAction("KP_2"))
 sequence.append(utils.AssertPresentationAction(
-    "flat review current char",
+    "7. flat review current char",
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=8",
      "BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
@@ -112,7 +112,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_2"))
 sequence.append(KeyComboAction("KP_2"))
 sequence.append(utils.AssertPresentationAction(
-    "phonetic for current char",
+    "8. phonetic for current char",
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=8",
      "BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
@@ -125,7 +125,7 @@ sequence.append(KeyComboAction("KP_2"))
 sequence.append(KeyComboAction("KP_2"))
 sequence.append(KeyComboAction("KP_2"))
 sequence.append(utils.AssertPresentationAction(
-    "unicode for current char",
+    "9. unicode for current char",
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=8",
      "BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
@@ -139,7 +139,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_3"))
 sequence.append(utils.AssertPresentationAction(
-    "flat review next char",
+    "10. flat review next char",
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=9",
      "SPEECH OUTPUT: 'x'"]))
@@ -147,7 +147,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_3"))
 sequence.append(utils.AssertPresentationAction(
-    "flat review next char",
+    "11. flat review next char",
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=10",
      "SPEECH OUTPUT: 'p'"]))
@@ -155,7 +155,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_1"))
 sequence.append(utils.AssertPresentationAction(
-    "flat review previous char",
+    "12. flat review previous char",
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=9",
      "SPEECH OUTPUT: 'x'"]))
@@ -163,7 +163,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_1"))
 sequence.append(utils.AssertPresentationAction(
-    "flat review previous char",
+    "13. flat review previous char",
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=8",
      "SPEECH OUTPUT: 'e'"]))
@@ -171,15 +171,15 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_4"))
 sequence.append(utils.AssertPresentationAction(
-    "flat review previous word",
+    "14. flat review previous word",
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
-     "SPEECH OUTPUT: 'NOBODY' voice=uppercase"]))
+     "SPEECH OUTPUT: 'NOBODY'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_4"))
 sequence.append(utils.AssertPresentationAction(
-    "flat review previous word",
+    "15. flat review previous word",
     ["BRAILLE LINE:  'On weaponry: $l'",
      "     VISIBLE:  'On weaponry: $l', cursor=4",
      "SPEECH OUTPUT: 'weaponry:'"]))

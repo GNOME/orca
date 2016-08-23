@@ -27,6 +27,8 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  '  Line 2   push button'",
      "     VISIBLE:  '  Line 2   push button', cursor=1",
+     "BRAILLE LINE:  '  Line 2   push button'",
+     "     VISIBLE:  '  Line 2   push button', cursor=1",
      "SPEECH OUTPUT: '  Line 2   push button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -42,6 +44,8 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Up",
     ["BRAILLE LINE:  '  Line 2   push button'",
+     "     VISIBLE:  '  Line 2   push button', cursor=1",
+     "BRAILLE LINE:  '  Line 2   push button'",
      "     VISIBLE:  '  Line 2   push button', cursor=1",
      "SPEECH OUTPUT: '  Line 2   push button'"]))
 

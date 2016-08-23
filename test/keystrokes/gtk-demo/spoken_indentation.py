@@ -7,9 +7,11 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(TypeAction("Application main window"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("Tab"))
 
 sequence.append(KeyComboAction("Tab"))

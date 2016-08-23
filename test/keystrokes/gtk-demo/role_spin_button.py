@@ -42,8 +42,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Copies: 16 $l', cursor=9",
      "BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies: 16 $l'",
      "     VISIBLE:  'Copies: 16 $l', cursor=9",
-     "BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies: 16 $l'",
-     "     VISIBLE:  'Copies: 16 $l', cursor=9",
      "SPEECH OUTPUT: '16'",
      "SPEECH OUTPUT: '16'"]))
 
@@ -52,8 +50,6 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Decrement value",
     ["BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies: 15 $l'",
-     "     VISIBLE:  'Copies: 15 $l', cursor=9",
-     "BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies: 15 $l'",
      "     VISIBLE:  'Copies: 15 $l', cursor=9",
      "SPEECH OUTPUT: '15'"]))
 

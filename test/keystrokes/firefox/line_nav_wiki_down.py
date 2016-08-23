@@ -201,7 +201,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "16. Line Down",
     ["BRAILLE LINE:  '6. Accessible Applications'",
-     "     VISIBLE:  '6. Accessible Applications', cursor=1",
+     "     VISIBLE:  '6. Accessible Applications', cursor=4",
      "SPEECH OUTPUT: '6.'",
      "SPEECH OUTPUT: 'Accessible Applications'",
      "SPEECH OUTPUT: 'link.'"]))
@@ -850,7 +850,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "84. Line Down",
     ["BRAILLE LINE:  '• Python Pocket Reference, Mark Lutz'",
-     "     VISIBLE:  '• Python Pocket Reference, Mark ', cursor=1",
+     "     VISIBLE:  '• Python Pocket Reference, Mark ', cursor=3",
      "SPEECH OUTPUT: '•.'",
      "SPEECH OUTPUT: 'Python Pocket Reference, Mark Lutz'",
      "SPEECH OUTPUT: 'link.'"]))

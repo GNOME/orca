@@ -33,7 +33,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk3-demo application Information alert Cancel push button'",
      "     VISIBLE:  'Cancel push button', cursor=1",
      "SPEECH OUTPUT: 'Information alert.'",
-     "SPEECH OUTPUT: '  This message box has been popped up the following",
+     "SPEECH OUTPUT: 'This message box has been popped up the following",
      "number of times: 1'",
      "SPEECH OUTPUT: 'Cancel push button'"]))
 

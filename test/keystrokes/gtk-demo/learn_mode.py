@@ -10,10 +10,12 @@ sequence = MacroSequence()
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(TypeAction("Printing"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
 
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("h"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

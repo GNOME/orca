@@ -11,6 +11,7 @@ sequence.append(KeyComboAction("<Control>f"))
 sequence.append(TypeAction("Application class"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(KeyComboAction("Tab"))
 sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())

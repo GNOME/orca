@@ -8,32 +8,31 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(PauseAction(3000))
-sequence.append(KeyComboAction("<Alt>w"))
+sequence.append(KeyComboAction("<Alt>v"))
 sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Down"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "1. Arrow to the Freeze menu item (unchecked)",
-    ["BRAILLE LINE:  'soffice application fruit.ods - LibreOffice Calc frame (1 dialog) fruit.ods - LibreOffice Calc root pane Freeze'",
-     "     VISIBLE:  'Freeze', cursor=1",
-     "SPEECH OUTPUT: 'Freeze'"]))
+    "1. Arrow to the check menu item (checked)",
+    ["BRAILLE LINE:  'soffice application fruit.ods - LibreOffice Calc frame <x> Formula Bar check menu item'",
+     "     VISIBLE:  '<x> Formula Bar check menu item', cursor=1",
+     "SPEECH OUTPUT: 'Formula Bar check menu item checked.'"]))
 
 sequence.append(KeyComboAction("Return"))
-sequence.append(KeyComboAction("<Alt>w"))
+sequence.append(KeyComboAction("<Alt>v"))
 sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Down"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "2. Arrow to the Freeze menu item (checked)",
-    ["BRAILLE LINE:  'soffice application fruit.ods - LibreOffice Calc frame (1 dialog) fruit.ods - LibreOffice Calc root pane <x> Freeze'",
-     "     VISIBLE:  '<x> Freeze', cursor=1",
-     "SPEECH OUTPUT: 'Freeze checked'"]))
+    "2. Arrow to the check menu item (unchecked)",
+    ["BRAILLE LINE:  'soffice application fruit.ods - LibreOffice Calc frame < > Formula Bar check menu item'",
+     "     VISIBLE:  '< > Formula Bar check menu item', cursor=1",
+     "SPEECH OUTPUT: 'Formula Bar check menu item not checked.'"]))
 
 sequence.append(KeyComboAction("Return"))
-sequence.append(KeyComboAction("<Control>w"))
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

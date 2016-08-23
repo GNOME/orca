@@ -33,8 +33,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'anchors.html', cursor=1",
      "BRAILLE LINE:  'anchors.html'",
      "     VISIBLE:  'anchors.html', cursor=1",
-     "BRAILLE LINE:  'file:///.+/anchors.html'",
-     "     VISIBLE:  'file:///.+', cursor=0",
      "SPEECH OUTPUT: 'Links to test files - Nightly'",
      "SPEECH OUTPUT: 'file:///.+/anchors.html'"]))
 

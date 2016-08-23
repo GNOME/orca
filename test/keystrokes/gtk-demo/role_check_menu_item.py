@@ -7,10 +7,12 @@ from macaroon.playback import *
 sequence = MacroSequence()
 import utils
 
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(TypeAction("Application main window"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Alt>p"))
 sequence.append(KeyComboAction("Down"))
 

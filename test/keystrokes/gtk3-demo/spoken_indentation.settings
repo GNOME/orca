@@ -72,7 +72,7 @@
         "messageVerbosityLevel": 1, 
         "enableMagLiveUpdating": true, 
         "enableSpeechIndentation": true, 
-        "enableKeyEcho": true, 
+        "enableKeyEcho": false, 
         "magHideCursor": false, 
         "magZoomerBorderColor": "#000000", 
         "magPointerFollowsZoomer": true, 

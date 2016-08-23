@@ -12,17 +12,24 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to first radio button",
-    ["BRAILLE LINE:  '&=y Radio Maria radio button'",
+    ["BRAILLE LINE:  'embedded'",
+     "     VISIBLE:  'embedded', cursor=1",
+     "BRAILLE LINE:  '&=y Radio Maria radio button'",
      "     VISIBLE:  '&=y Radio Maria radio button', cursor=1",
+     "BRAILLE LINE:  'Browse mode'",
+     "     VISIBLE:  'Browse mode', cursor=0",
      "SPEECH OUTPUT: 'Lunch Options panel'",
      "SPEECH OUTPUT: 'Radio Maria.'",
-     "SPEECH OUTPUT: 'selected radio button'"]))
+     "SPEECH OUTPUT: 'selected radio button'",
+     "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic whereamI",
     ["BRAILLE LINE:  '&=y Radio Maria radio button'",
+     "     VISIBLE:  '&=y Radio Maria radio button', cursor=1",
+     "BRAILLE LINE:  '&=y Radio Maria radio button'",
      "     VISIBLE:  '&=y Radio Maria radio button', cursor=1",
      "SPEECH OUTPUT: 'Lunch Options.'",
      "SPEECH OUTPUT: 'Radio Maria radio button.'",

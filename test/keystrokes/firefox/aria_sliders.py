@@ -12,20 +12,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to slider 1",
-    ["BRAILLE LINE:  '30 slider'",
+    ["BRAILLE LINE:  'embedded'",
+     "     VISIBLE:  'embedded', cursor=1",
+     "BRAILLE LINE:  '30 slider'",
      "     VISIBLE:  '30 slider', cursor=1",
-     "BRAILLE LINE:  'Focus mode'",
-     "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'slider 30'",
-     "SPEECH OUTPUT: 'Focus mode' voice=system"]))
+     "SPEECH OUTPUT: 'slider 30'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic whereAmI on slider 1",
     ["BRAILLE LINE:  '30 slider'",
-     "     VISIBLE:  '30 slider', cursor=1",
-     "BRAILLE LINE:  '30 slider'",
      "     VISIBLE:  '30 slider', cursor=1",
      "SPEECH OUTPUT: 'slider 30'"]))
 

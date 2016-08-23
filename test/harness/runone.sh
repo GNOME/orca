@@ -87,7 +87,6 @@ fi
 if [ "$APP_NAME" == "swriter" ] || [ "$APP_NAME" == "oowriter" ] || [ "$APP_NAME" == "scalc" ] || [ "$APP_NAME" == "oocalc" ] || [ "$APP_NAME" == "simpress" ] || [ "$APP_NAME" == "ooimpress" ] || [ "$APP_NAME" == "sbase" ] || [ "$APP_NAME" == "oobase" ] || [ "$APP_NAME" == "soffice" ] || [ "$APP_NAME" == "ooffice" ]
 then
     SOFFICE=1
-    ARGS="--norestore --nologo"
 fi
 
 # If we're using Firefox, give it a known profile to work from.
@@ -111,6 +110,19 @@ then
     cp $harnessDir/../html/EpiphanyProfile/bookmarks.rdf $EWB_PROFILE_DIR
     cp $harnessDir/../html/EpiphanyProfile/states.xml $EWB_PROFILE_DIR
     ARGS="-p --profile=$EWB_PROFILE_DIR"
+fi
+
+if [ "x$SOFFICE" == "x1" ]
+then
+    LO_PROFILE_DIR=/tmp/soffice-profile
+    ARGS="--norestore --nologo --nolockcheck -env:UserInstallation=file://$LO_PROFILE_DIR"
+fi
+
+if [ "$APP_NAME" = "gnome-terminal" ]
+then
+    TERMINAL_WORKING_DIR=/tmp/gnome-terminal-wd
+    mkdir $TERMINAL_WORKING_DIR
+    ARGS="--working-directory=$TERMINAL_WORKING_DIR"
 fi
 
 if [ $orcaRunning -eq 0 ]
@@ -140,6 +152,13 @@ if [ "x$SOFFICE" == "x1" ]
 then
     APP_PID=$(ps -eo pid,ruid,args | grep norestore | grep -v grep | awk '{ print $1 }')
     kill $APP_PID > /dev/null 2>&1
+    rm -rf $LO_PROFILE_DIR
+fi
+
+if [ "$APP_NAME" == "gnome-terminal" ]
+then
+    pkill $APP_NAME > /dev/null 2>&1
+    rm -rf $TERMINAL_WORKING_DIR
 fi
 
 if [ "$APP_NAME" == "epiphany" ]

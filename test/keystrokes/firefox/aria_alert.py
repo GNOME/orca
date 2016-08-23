@@ -22,14 +22,16 @@ sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "1. Press button",
     ["KNOWN ISSUE: Because the link has focus, we double-present it.",
-     "BRAILLE LINE:  'alert'",
-     "     VISIBLE:  'alert', cursor=1",
+     "BRAILLE LINE:  'This popup is created as a div in the HTML content, rather than being created in the DOM at the time of use. The display style is changed from \"none\" to \"block\" to hide and show it. close'",
+     "     VISIBLE:  'This popup is created as a div i', cursor=0",
      "BRAILLE LINE:  'close'",
      "     VISIBLE:  'close', cursor=1",
      "BRAILLE LINE:  'close'",
      "     VISIBLE:  'close', cursor=1",
      "SPEECH OUTPUT: 'alert.'",
-     "SPEECH OUTPUT: 'This popup is created as a div in the HTML content, rather than being created in the DOM at the time of use. The display style is changed from \"none\" to \"block\" to hide and show it. close'",
+     "SPEECH OUTPUT: 'This popup is created as a div in the HTML content, rather than being created in the DOM at the time of use. The display style is changed from \"none\" to \"block\" to hide and show it. '",
+     "SPEECH OUTPUT: 'close'",
+     "SPEECH OUTPUT: 'link.'",     
      "SPEECH OUTPUT: 'close link.'"]))
 
 sequence.append(utils.StartRecordingAction())

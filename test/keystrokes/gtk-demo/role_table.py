@@ -7,11 +7,13 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("End"))
 sequence.append(KeyComboAction("Up"))
 sequence.append(KeyComboAction("<Shift>Right"))
 sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))

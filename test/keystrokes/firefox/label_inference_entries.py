@@ -381,10 +381,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "37. Next form field",
-    ["KNOWN ISSUE: We're double-displaying the placeholder text.",
-     "BRAILLE LINE:  'Magic disappearing text trick:  $l'",
+    ["BRAILLE LINE:  'Magic disappearing text trick:  $l'",
      "     VISIBLE:  'Magic disappearing text trick:  ', cursor=0",
-     "BRAILLE LINE:  'Magic disappearing text trick: Magic disappearing text trick:  $l'",
+     "BRAILLE LINE:  'Magic disappearing text trick:  $l'",
      "     VISIBLE:  'Magic disappearing text trick:  ', cursor=32",
      "SPEECH OUTPUT: 'Magic disappearing text trick: entry'"]))
 

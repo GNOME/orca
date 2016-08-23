@@ -20,8 +20,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. Line Down",
-    ["BRAILLE LINE:  '» search tips Search $l Submit Search push button'",
-     "     VISIBLE:  '» search tips Search $l Submit S', cursor=1",
+    ["BRAILLE LINE:  '» search tips  Search $l Submit Search push button'",
+     "     VISIBLE:  '» search tips  Search $l Submit ', cursor=1",
      "SPEECH OUTPUT: '»'",
      "SPEECH OUTPUT: 'search tips'",
      "SPEECH OUTPUT: 'link.'",

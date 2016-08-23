@@ -20,33 +20,33 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. Down to next bulleted line",
-    ["BRAILLE LINE:  '•Line 2 $l'",
-     "     VISIBLE:  '•Line 2 $l', cursor=2",
-     "SPEECH OUTPUT: '•Line 2'"]))
+    ["BRAILLE LINE:  '• Line 2 $l'",
+     "     VISIBLE:  '• Line 2 $l', cursor=3",
+     "SPEECH OUTPUT: '• Line 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Down to next bulleted line",
-    ["BRAILLE LINE:  '•Line 3 $l'",
-     "     VISIBLE:  '•Line 3 $l', cursor=2",
-     "SPEECH OUTPUT: '•Line 3'"]))
+    ["BRAILLE LINE:  '• Line 3 $l'",
+     "     VISIBLE:  '• Line 3 $l', cursor=3",
+     "SPEECH OUTPUT: '• Line 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Up to previous bulleted line",
-    ["BRAILLE LINE:  '•Line 2 $l'",
-     "     VISIBLE:  '•Line 2 $l', cursor=2",
-     "SPEECH OUTPUT: '•Line 2'"]))
+    ["BRAILLE LINE:  '• Line 2 $l'",
+     "     VISIBLE:  '• Line 2 $l', cursor=3",
+     "SPEECH OUTPUT: '• Line 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "4. Up to previous bulleted line",
-    ["BRAILLE LINE:  'soffice application Untitled 1 - LibreOffice Writer frame Untitled 1 - LibreOffice Writer root pane Document view •Line 1 $l'",
-     "     VISIBLE:  '•Line 1 $l', cursor=2",
-     "SPEECH OUTPUT: '•Line 1'"]))
+    ["BRAILLE LINE:  'soffice application Untitled 1 - LibreOffice Writer frame Untitled 1 - LibreOffice Writer root pane Untitled1 - LibreOffice Document • Line 1 $l'",
+     "     VISIBLE:  '• Line 1 $l', cursor=3",
+     "SPEECH OUTPUT: '• Line 1'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

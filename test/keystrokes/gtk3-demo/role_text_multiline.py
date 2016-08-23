@@ -11,6 +11,7 @@ sequence.append(KeyComboAction("<Control>f"))
 sequence.append(TypeAction("Application class"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(KeyComboAction("Tab"))
 sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
@@ -196,9 +197,6 @@ sequence.append(utils.AssertPresentationAction(
     "11. Navigate home",
     ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test. $l'",
      "     VISIBLE:  'This is a test. $l', cursor=1",
-     "BRAILLE LINE:  'gtk3-demo-application application Application Class frame This is a test. $l'",
-     "     VISIBLE:  'This is a test. $l', cursor=1",
-     "SPEECH OUTPUT: 'This is a test.'",
      "SPEECH OUTPUT: ' is a test.",
      "Here is another test.'",
      "SPEECH OUTPUT: 'unselected' voice=system"]))

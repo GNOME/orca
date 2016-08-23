@@ -16,12 +16,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
-    ["KNOWN ISSUE: We are presenting this twice",
-     "BRAILLE LINE:  'Home'",
+    ["BRAILLE LINE:  'Home'",
      "     VISIBLE:  'Home', cursor=1",
-     "BRAILLE LINE:  'Home'",
-     "     VISIBLE:  'Home', cursor=1",
-     "SPEECH OUTPUT: 'Home link.' voice=hyperlink",
      "SPEECH OUTPUT: 'Home link.' voice=hyperlink"]))
 
 sequence.append(utils.StartRecordingAction())

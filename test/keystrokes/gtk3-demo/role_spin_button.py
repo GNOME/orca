@@ -7,6 +7,7 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(TypeAction("Popovers"))
 sequence.append(KeyComboAction("Escape"))
@@ -48,8 +49,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Copies: 16 $l', cursor=9",
      "BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Copies panel Copies: 16 $l'",
      "     VISIBLE:  'Copies: 16 $l', cursor=9",
-     "BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Copies panel Copies: 16 $l'",
-     "     VISIBLE:  'Copies: 16 $l', cursor=9",
      "SPEECH OUTPUT: '16'",
      "SPEECH OUTPUT: '16'"]))
 
@@ -58,8 +57,6 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Decrement value",
     ["BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Copies panel Copies: 15 $l'",
-     "     VISIBLE:  'Copies: 15 $l', cursor=9",
-     "BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Copies panel Copies: 15 $l'",
      "     VISIBLE:  'Copies: 15 $l', cursor=9",
      "SPEECH OUTPUT: '15'"]))
 

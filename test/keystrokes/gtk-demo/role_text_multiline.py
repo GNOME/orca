@@ -7,9 +7,11 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(TypeAction("Application main window"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("Tab"))
 
 sequence.append(utils.StartRecordingAction())
@@ -195,9 +197,6 @@ sequence.append(utils.AssertPresentationAction(
     "11. Navigate home",
     ["BRAILLE LINE:  'gtk-demo application Application Window frame This is a test. $l'",
      "     VISIBLE:  'This is a test. $l', cursor=1",
-     "BRAILLE LINE:  'gtk-demo application Application Window frame This is a test. $l'",
-     "     VISIBLE:  'This is a test. $l', cursor=1",
-     "SPEECH OUTPUT: 'This is a test.'",
      "SPEECH OUTPUT: ' is a test.",
      "Here is another test.'",
      "SPEECH OUTPUT: 'unselected' voice=system"]))

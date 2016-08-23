@@ -7,6 +7,9 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(KeyComboAction("Down"))
+sequence.append(PauseAction(3000))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("KP_Enter"))

@@ -11,6 +11,9 @@ sequence.append(KeyComboAction("<Control>f"))
 sequence.append(TypeAction("Application class"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Return"))
+sequence.append(KeyComboAction("Tab"))
+sequence.append(TypeAction("1"))
+sequence.append(KeyComboAction("BackSpace"))
 sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
@@ -26,8 +29,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' $l', cursor=1",
      "BRAILLE LINE:  'gtk3-demo-application application Application Class frame  $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  'Cursor at row 0 column 0 - 0 chars in document'",
-     "     VISIBLE:  'Cursor at row 0 column 0 - 0 cha', cursor=0",
      "SPEECH OUTPUT: 'Application Class'",
      "SPEECH OUTPUT: 'Cursor at row 0 column 0 - 0 chars in document'"]))
 
