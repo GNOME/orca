@@ -49,6 +49,9 @@ class Utilities(script_utilities.Utilities):
         if self.isAutoTextEvent(event):
             return event.any_data
 
+        if self.isClipboardTextChangedEvent(event):
+            return event.any_data
+
         try:
             text = event.source.queryText()
         except:
@@ -69,8 +72,17 @@ class Utilities(script_utilities.Utilities):
 
         return text.getText(start, end)
 
+    def isEditableTextArea(self, obj):
+        if obj and obj.getRole() == pyatspi.ROLE_TERMINAL:
+            return True
+
+        return super().isEditableTextArea(obj)
+
     def isTextArea(self, obj):
-        return True
+        if obj and obj.getRole() == pyatspi.ROLE_TERMINAL:
+            return True
+
+        return super().isTextArea(obj)
 
     def isAutoTextEvent(self, event):
         if not event.type.startswith("object:text-changed:insert"):
@@ -87,8 +99,34 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
+    def lastInputEventWasCopy(self):
+        keycode, mods = self._lastKeyCodeAndModifiers()
+        keynames = self._allNamesForKeyCode(keycode)
+        if 'c' not in keynames:
+            return False
+
+        if mods & keybindings.CTRL_MODIFIER_MASK:
+            return mods & keybindings.SHIFT_MODIFIER_MASK
+
+        return False
+
+    def lastInputEventWasPaste(self):
+        keycode, mods = self._lastKeyCodeAndModifiers()
+        keynames = self._allNamesForKeyCode(keycode)
+        if 'v' not in keynames:
+            return False
+
+        if mods & keybindings.CTRL_MODIFIER_MASK:
+            return mods & keybindings.SHIFT_MODIFIER_MASK
+
+        return False
+
     def treatEventAsCommand(self, event):
         if event.type.startswith("object:text-changed:insert") and event.any_data.strip():
+            # To let default script handle presentation.
+            if self.lastInputEventWasPaste():
+                return False
+
             keyString, mods = self.lastKeyAndModifiers()
             if keyString in ["Return", "Tab", "space", " "]:
                 return True

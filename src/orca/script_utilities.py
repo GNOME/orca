@@ -4219,6 +4219,19 @@ class Utilities:
 
         return False
 
+    def isEditableTextArea(self, obj):
+        if not self.isTextArea(obj):
+            return False
+
+        try:
+            state = obj.getState()
+        except:
+            msg = "ERROR: Exception getting state of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return state.contains(pyatspi.STATE_EDITABLE)
+
     def isClipboardTextChangedEvent(self, event):
         if not event.type.startswith("object:text-changed"):
             return False
@@ -4232,14 +4245,8 @@ class Utilities:
         if "delete" in event.type and self.lastInputEventWasPaste():
             return False
 
-        try:
-            state = event.source.getState()
-        except:
-            msg = "ERROR: Exception getting state of %s" % event.source
-            debug.println(debug.LEVEL_INFO, msg, True)
-        else:
-            if not state.contains(pyatspi.STATE_EDITABLE):
-                return False
+        if not self.isEditableTextArea(event.source):
+            return False
 
         contents = self.getClipboardContents()
         if not contents:
