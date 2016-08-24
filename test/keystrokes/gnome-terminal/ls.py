@@ -19,8 +19,6 @@ sequence.append(utils.AssertPresentationAction(
     "1. ls",
     ["BRAILLE LINE:  '$ '",
      "     VISIBLE:  '$ ', cursor=3",
-     "BRAILLE LINE:  '$ '",
-     "     VISIBLE:  '$ ', cursor=3",
      "SPEECH OUTPUT: 'another_test_file_0  another_test_file_4  another_test_file_8",
      "another_test_file_1  another_test_file_5  another_test_file_9",
      "another_test_file_2  another_test_file_6",

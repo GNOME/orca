@@ -203,8 +203,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '(press h for help or q to quit)', cursor=32",
      "BRAILLE LINE:  ' Manual page orca(1) line 1 (press h for help or q to quit)'",
      "     VISIBLE:  '(press h for help or q to quit)', cursor=32",
-     "BRAILLE LINE:  ' Manual page orca(1) line 1 (press h for help or q to quit)'",
-     "     VISIBLE:  '(press h for help or q to quit)', cursor=32",
      "SPEECH OUTPUT: 'orca(1)                     General Commands Manual                    orca(1)",
      "",
      "NAME",

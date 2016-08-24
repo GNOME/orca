@@ -137,3 +137,19 @@ class Script(default.Script):
         voice = self.speechGenerator.voice(string=string)
         speech.speakKeyEvent(event, voice)
         return True
+
+    def skipObjectEvent(self, event):
+        newEvent, newTime = None, 0
+        if event.type == "object:text-changed:delete":
+            newEvent, newTime = self.eventCache.get("object:text-changed:insert")
+
+        if newEvent is None or newEvent.source != event.source:
+            return super().skipObjectEvent(event)
+
+        if event.detail1 != newEvent.detail1:
+            return False
+
+        data = "\n%s%s" % (" " * 11, str(newEvent).replace("\t", " " * 11))
+        msg = "TERMINAL: Skipping due to more recent event at offset%s" % data
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return True
