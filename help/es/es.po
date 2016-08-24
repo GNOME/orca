@@ -15,8 +15,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2016-02-22 02:24+0000\n"
-"PO-Revision-Date: 2016-02-26 09:10+0100\n"
+"POT-Creation-Date: 2016-08-21 20:26+0000\n"
+"PO-Revision-Date: 2016-08-24 10:37+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -1613,6 +1613,18 @@ msgid ""
 msgstr ""
 "Activa el modo de foco «pegajoso»: <keyseq><key>Modificador de Orca</"
 "key><key>A</key></keyseq> (doble pulsación)"
+
+#. (itstool) path: item/p
+#: C/commands_reading.page:264
+#| msgid ""
+#| "Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</"
+#| "key></keyseq> (double-clicked)"
+msgid ""
+"Enable \"sticky\" browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
+"keyseq> (triple-clicked)"
+msgstr ""
+"Activa el modo de foco «pegajoso»: <keyseq><key>Modificador de Orca</"
+"key><key>A</key></keyseq> (triple pulsación)"
 
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
@@ -5031,7 +5043,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/introduction.page:77
-#| msgid "<cmd>-n</cmd>, <cmd>--no-setup</cmd>Skip set up of user preferences"
 msgid "<cmd>-s</cmd>, <cmd>--setup</cmd>: Set up user preferences"
 msgstr ""
 "<cmd>-s</cmd>, <cmd>--setup</cmd>: configurar las preferencias del usuario"
@@ -5731,15 +5742,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:123
-#| msgid "Automatically start speaking a page when it is first loaded"
 msgid "Present summary of a page when it is first loaded"
 msgstr "Mostrar el resumen de una página cuando se carga por primera vez"
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:124
-#| msgid ""
-#| "If this checkbox is checked, <app>Orca</app> will perform a Say All on "
-#| "the newly opened web page or email."
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will summarize details about "
 "the newly opened web page or email, such as the number of headings, "
