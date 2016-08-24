@@ -105,6 +105,9 @@ class Utilities(script_utilities.Utilities):
         if not event.any_data or not event.source:
             return False
 
+        if len(event.any_data) <= 1:
+            return False
+
         lastKey, mods = self.lastKeyAndModifiers()
         if lastKey == "Tab":
             return event.any_data != "\t"
