@@ -98,12 +98,7 @@ class Script(default.Script):
         msg = "TERMINAL: Insertion is believed to be due to terminal command"
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        oldString = event.any_data
         newString = self.utilities.insertedText(event)
-        if oldString != newString:
-            msg = "TERMINAL: Adjusting event string to: %s" % newString
-            debug.println(debug.LEVEL_INFO, msg, True)
-
         if len(newString) == 1:
             self.speakCharacter(newString)
         else:

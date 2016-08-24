@@ -64,14 +64,27 @@ class Utilities(script_utilities.Utilities):
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
 
         firstLine = text.getTextAtOffset(start, boundary)
+        msg = "TERMINAL: First line of insertion: '%s' (%i, %i)" % firstLine
+        debug.println(debug.LEVEL_INFO, msg, True)
         if firstLine != ("", 0, 0):
             start = firstLine[1]
 
         lastLine = text.getTextAtOffset(end - 1, boundary)
+        msg = "TERMINAL: Last line of insertion: '%s' (%i, %i)" % lastLine
+        debug.println(debug.LEVEL_INFO, msg, True)
         if lastLine != ("", 0, 0):
             end = min(lastLine[2], text.caretOffset)
 
-        return text.getText(start, end)
+        adjusted = text.getText(start, end)
+        if adjusted:
+            msg = "TERMINAL: Adjusted insertion: '%s'" % adjusted
+            debug.println(debug.LEVEL_INFO, msg, True)
+        else:
+            msg = "TERMINAL: Adjustment failed. Returning any_data."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            adjusted = event.any_data
+
+        return adjusted
 
     def isEditableTextArea(self, obj):
         if obj and obj.getRole() == pyatspi.ROLE_TERMINAL:
