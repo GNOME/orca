@@ -69,9 +69,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "7. Review next line",
-    ["BRAILLE LINE:  'vertical scroll bar 0% $l'",
-     "     VISIBLE:  'vertical scroll bar 0% $l', cursor=1",
-     "SPEECH OUTPUT: 'vertical scroll bar 0 percent.'"]))
+    ["BRAILLE LINE:  'vertical scroll bar 3% $l'",
+     "     VISIBLE:  'vertical scroll bar 3% $l', cursor=1",
+     "SPEECH OUTPUT: 'vertical scroll bar 3 percent.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
@@ -182,9 +182,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "17. Review next line",
-    ["BRAILLE LINE:  'vertical scroll bar 0% $l'",
-     "     VISIBLE:  'vertical scroll bar 0% $l', cursor=1",
-     "SPEECH OUTPUT: 'vertical scroll bar 0 percent.'"]))
+    ["BRAILLE LINE:  'vertical scroll bar 26% $l'",
+     "     VISIBLE:  'vertical scroll bar 26% $l', cursor=1",
+     "SPEECH OUTPUT: 'vertical scroll bar 26 percent.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
@@ -280,9 +280,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "25. Review next line",
-    ["BRAILLE LINE:  'vertical scroll bar 0% $l'",
-     "     VISIBLE:  'vertical scroll bar 0% $l', cursor=1",
-     "SPEECH OUTPUT: 'vertical scroll bar 0 percent.'"]))
+    ["BRAILLE LINE:  'vertical scroll bar 26% $l'",
+     "     VISIBLE:  'vertical scroll bar 26% $l', cursor=1",
+     "SPEECH OUTPUT: 'vertical scroll bar 26 percent.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))

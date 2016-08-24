@@ -907,6 +907,11 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
+        if maxval == minval == val:
+            if 1 <= val <= 100:
+                return int(val)
+            return None
+
         return int((val / (maxval - minval)) * 100)
 
     def isDocument(self, obj):
@@ -3526,9 +3531,6 @@ class Utilities:
         return table.getRowExtentAt(row, col), table.getColumnExtentAt(row, col)
 
     def rowAndColumnCount(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_TABLE):
-            return -1, -1
-
         try:
             table = obj.queryTable()
         except:

@@ -1211,3 +1211,34 @@ class Generator:
             atkRole = Atk.role_for_name("statusbar")
 
         return Atk.role_get_localized_name(atkRole)
+
+    def getStateIndicator(self, obj, **args):
+        role = args.get('role', obj.getRole())
+
+        if role == pyatspi.ROLE_MENU_ITEM:
+            return self._generateMenuItemCheckedState(obj, **args)
+
+        if role in [pyatspi.ROLE_RADIO_BUTTON, pyatspi.ROLE_RADIO_MENU_ITEM]:
+            return self._generateRadioState(obj, **args)
+
+        if role in [pyatspi.ROLE_CHECK_BOX, pyatspi.ROLE_CHECK_MENU_ITEM]:
+            return self._generateCheckedState(obj, **args)
+
+        if role == pyatspi.ROLE_TOGGLE_BUTTON:
+            return self._generateToggleState(obj, **args)
+
+        if role == pyatspi.ROLE_TABLE_CELL:
+            return self._generateCellCheckedState(obj, **args)
+
+        return []
+
+    def getValue(self, obj, **args):
+        role = args.get('role', obj.getRole())
+
+        if role == pyatspi.ROLE_PROGRESS_BAR:
+            return self._generateProgressBarValue(obj, **args)
+
+        if role in [pyatspi.ROLE_SCROLL_BAR, pyatspi.ROLE_SLIDER]:
+            return self._generatePercentage(obj, **args)
+
+        return []

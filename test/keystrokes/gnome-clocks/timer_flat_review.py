@@ -48,10 +48,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "4. Review previous line",
-    ["KNOWN ISSUE: We're not presenting the displayed values",
-     "BRAILLE LINE:  'label spin button ∶ spin button ∶ spin button label $l'",
-     "     VISIBLE:  'label spin button ∶ spin button ', cursor=1",
-     "SPEECH OUTPUT: 'label spin button ∶ spin button ∶ spin button label'"]))
+    ["BRAILLE LINE:  'label 00 ∶ 04 ∶ 58 label $l'",
+     "     VISIBLE:  'label 00 ∶ 04 ∶ 58 label $l', cursor=1",
+     "SPEECH OUTPUT: 'label 00 ∶ 04 ∶ 58 label'"])) 
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
@@ -64,17 +63,16 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
-    "5. Review next line",
-    ["KNOWN ISSUE: The spin buttons are no longer showing",
-     "BRAILLE LINE:  'label spin button ∶ spin button ∶ spin button label $l'",
-     "     VISIBLE:  'label spin button ∶ spin button ', cursor=1",
-     "SPEECH OUTPUT: 'label spin button ∶ spin button ∶ spin button label'"]))
+    "6. Review next line",
+    ["BRAILLE LINE:  'label 00 ∶ 04 ∶ 58 label $l'",
+     "     VISIBLE:  'label 00 ∶ 04 ∶ 58 label $l', cursor=1",
+     "SPEECH OUTPUT: 'label 00 ∶ 04 ∶ 58 label'"])) 
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Subtract"))
 sequence.append(KeyComboAction("KP_Subtract"))
 sequence.append(utils.AssertPresentationAction(
-    "6. Toggle flat review",
+    "7. Toggle flat review",
     ["BRAILLE LINE:  'Leaving flat review.'",
      "     VISIBLE:  'Leaving flat review.', cursor=0",
      "BRAILLE LINE:  'gnome-clocks application frame Pause push button'",
@@ -90,29 +88,29 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
-    "7. Review previous line",
-    ["KNOWN ISSUE: The spin buttons are no longer showing",
-     "BRAILLE LINE:  'label spin button ∶ spin button ∶ spin button label $l'",
-     "     VISIBLE:  'label spin button ∶ spin button ', cursor=1",
-     "SPEECH OUTPUT: 'label spin button ∶ spin button ∶ spin button label'"]))
+    "8. Review previous line",
+    ["BRAILLE LINE:  'label 00 ∶ 04 ∶ 49 label $l'",
+     "     VISIBLE:  'label 00 ∶ 04 ∶ 49 label $l', cursor=1",
+     "SPEECH OUTPUT: 'label 00 ∶ 04 ∶ 49 label'"])) 
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
 sequence.append(utils.AssertPresentationAction(
-    "8. Review current line",
-    ["BRAILLE LINE:  'label spin button ∶ spin button ∶ spin button label $l'",
-     "     VISIBLE:  'label spin button ∶ spin button ', cursor=1",
-     "SPEECH OUTPUT: 'label spin button ∶ spin button ∶ spin button label'"]))
+    "9. Review current line",
+    ["BRAILLE LINE:  'label 00 ∶ 04 ∶ 49 label $l'",
+     "     VISIBLE:  'label 00 ∶ 04 ∶ 49 label $l', cursor=1",
+     "SPEECH OUTPUT: 'label 00 ∶ 04 ∶ 49 label'"]))
 
 sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
 sequence.append(utils.AssertPresentationAction(
-    "9. Review current line",
-    ["BRAILLE LINE:  'label spin button ∶ spin button ∶ spin button label $l'",
-     "     VISIBLE:  'label spin button ∶ spin button ', cursor=1",
-     "SPEECH OUTPUT: 'label spin button ∶ spin button ∶ spin button label'"]))
+    "10. Review current line",
+    ["KNOWN ISSUE: The values are now being displayed, but are not yet being updated. Also the labels are useless.",
+     "BRAILLE LINE:  'label 00 ∶ 04 ∶ 49 label $l'",
+     "     VISIBLE:  'label 00 ∶ 04 ∶ 49 label $l', cursor=1",
+     "SPEECH OUTPUT: 'label 00 ∶ 04 ∶ 49 label'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

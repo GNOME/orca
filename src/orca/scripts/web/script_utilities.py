@@ -192,12 +192,7 @@ class Utilities(script_utilities.Utilities):
         if self.isDocument(obj):
             return obj
 
-        document = pyatspi.findAncestor(obj, self.isDocument)
-        if not document:
-            msg = "WEB: Could not find document for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-
-        return document
+        return pyatspi.findAncestor(obj, self.isDocument)
 
     def _getDocumentsEmbeddedBy(self, frame):
         isEmbeds = lambda r: r.getRelationType() == pyatspi.RELATION_EMBEDS

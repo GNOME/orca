@@ -1280,7 +1280,7 @@ class SpeechGenerator(generator.Generator):
 
         percentValue = self._script.utilities.getValueAsPercent(obj)
         if percentValue is not None:
-            result = [percentValue]
+            result = [messages.percentage(percentValue)]
             result.extend(self.voice(SYSTEM))
             return result
 

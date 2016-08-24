@@ -28,34 +28,33 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
 sequence.append(utils.AssertPresentationAction(
     "2. Review current line",
-    ["KNOWN ISSUE: This and all the subsequent assertions are broken due to flat review bugs",
-     "BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=1",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'bin boot dev etc home lib $l'",
+     "     VISIBLE:  'bin boot dev etc home lib $l', cursor=1",
+     "SPEECH OUTPUT: 'bin boot dev etc home lib'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
     "3. Review current word",
-    ["BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=1",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'bin boot dev etc home lib $l'",
+     "     VISIBLE:  'bin boot dev etc home lib $l', cursor=1",
+     "SPEECH OUTPUT: 'bin'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "4. Review next word",
-    ["BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=2",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'bin boot dev etc home lib $l'",
+     "     VISIBLE:  'bin boot dev etc home lib $l', cursor=5",
+     "SPEECH OUTPUT: 'boot'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_2"))
 sequence.append(utils.AssertPresentationAction(
     "5. Review current char",
-    ["BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=2",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'bin boot dev etc home lib $l'",
+     "     VISIBLE:  'bin boot dev etc home lib $l', cursor=5",
+     "SPEECH OUTPUT: 'boot'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -63,9 +62,9 @@ sequence.append(KeyComboAction("KP_6"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "6. Review item below",
-    ["BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=2",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'lib64 lost+found media mnt opt proc $l'",
+     "     VISIBLE:  'b64 lost+found media mnt opt pro', cursor=5",
+     "SPEECH OUTPUT: 'lost+found'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -73,9 +72,9 @@ sequence.append(KeyComboAction("KP_6"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "7. Review item below",
-    ["BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=2",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'root run sbin srv sys tmp $l'",
+     "     VISIBLE:  'root run sbin srv sys tmp $l', cursor=6",
+     "SPEECH OUTPUT: 'run'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -83,9 +82,9 @@ sequence.append(KeyComboAction("KP_4"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "8. Review item above",
-    ["BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=2",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'lib64 lost+found media mnt opt proc $l'",
+     "     VISIBLE:  'b64 lost+found media mnt opt pro', cursor=5",
+     "SPEECH OUTPUT: 'lost+found'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -93,41 +92,41 @@ sequence.append(KeyComboAction("KP_4"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "9. Review item above",
-    ["BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=2",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'bin boot dev etc home lib $l'",
+     "     VISIBLE:  'bin boot dev etc home lib $l', cursor=5",
+     "SPEECH OUTPUT: 'boot'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "10. Review next line",
-    ["BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=1",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'lib64 lost+found media mnt opt proc $l'",
+     "     VISIBLE:  'lib64 lost+found media mnt opt p', cursor=1",
+     "SPEECH OUTPUT: 'lib64 lost+found media mnt opt proc'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "11. Review next word",
-    ["BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=2",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'lib64 lost+found media mnt opt proc $l'",
+     "     VISIBLE:  'lib64 lost+found media mnt opt p', cursor=7",
+     "SPEECH OUTPUT: 'lost+found'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_3"))
 sequence.append(utils.AssertPresentationAction(
     "12. Review next char",
-    ["BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=3",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'lib64 lost+found media mnt opt proc $l'",
+     "     VISIBLE:  'lib64 lost+found media mnt opt p', cursor=18",
+     "SPEECH OUTPUT: 'media'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "13. Review previous line",
-    ["BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=1",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'bin boot dev etc home lib $l'",
+     "     VISIBLE:  'bin boot dev etc home lib $l', cursor=1",
+     "SPEECH OUTPUT: 'bin boot dev etc home lib'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))

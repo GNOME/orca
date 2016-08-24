@@ -356,6 +356,9 @@ class BrailleGenerator(generator.Generator):
            and not self._shouldPresentProgressBarUpdate(obj, **args):
             return []
 
+        return self._generatePercentage(obj, **args)
+
+    def _generatePercentage(self, obj, **args):
         percent = self._script.utilities.getValueAsPercent(obj)
         if percent is not None:
             return ['%s%%' % percent]

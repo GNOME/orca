@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2016 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,7 +23,8 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
+                "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
@@ -32,7 +34,6 @@ from . import braille
 from . import debug
 from . import eventsynthesizer
 from . import messages
-from . import object_properties
 from . import orca_state
 from . import settings
 
@@ -334,113 +335,56 @@ class TextZone(Zone):
 
 
 class StateZone(Zone):
-    """Represents a Zone for an accessible that shows a state using
-    a graphical indicator, such as a checkbox or radio button."""
+    """A Zone whose purpose is to display the state of an object."""
 
-    def __init__(self,
-                 accessible,
-                 x, y,
-                 width, height,
-                 role=None):
-        Zone.__init__(self, accessible, "", x, y, width, height, role)
+    def __init__(self, accessible, x, y, width, height, role=None):
+        super().__init__(accessible, "", x, y, width, height, role)
 
-        # Force the use of __getattr__ so we get the actual state
-        # of the accessible each time we look at the 'string' field.
-        #
-        del self.string
+    def __getattribute__(self, attr):
+        """To ensure we update the state."""
 
-    def __getattr__(self, attr):
-        if attr in ["string", "length", "brailleString"]:
-            # stateCount is used as a boolean and as an index
-            stateset = self.accessible.getState()
-            if stateset.contains(pyatspi.STATE_INDETERMINATE):
-                stateCount = 2
-            elif stateset.contains(pyatspi.STATE_CHECKED):
-                stateCount = 1
-            else:
-                stateCount = 0
-            if self.role in [pyatspi.ROLE_CHECK_BOX,
-                             pyatspi.ROLE_CHECK_MENU_ITEM,
-                             pyatspi.ROLE_TABLE_CELL]:
-                if stateCount == 2:
-                    speechState = object_properties.STATE_PARTIALLY_CHECKED
-                elif stateCount == 1:
-                    speechState = object_properties.STATE_CHECKED
-                else:
-                    speechState = object_properties.STATE_NOT_CHECKED
-                brailleState = \
-                    object_properties.CHECK_BOX_INDICATORS_BRAILLE[stateCount]
-            elif self.role == pyatspi.ROLE_TOGGLE_BUTTON:
-                if stateCount:
-                    speechState = object_properties.STATE_PRESSED
-                else:
-                    speechState = object_properties.STATE_NOT_PRESSED
-                brailleState = \
-                    object_properties.RADIO_BUTTON_INDICATORS_BRAILLE[stateCount]
-            else:
-                if stateCount:
-                    speechState = object_properties.STATE_SELECTED_RADIO_BUTTON
-                else:
-                    speechState = object_properties.STATE_UNSELECTED_RADIO_BUTTON
-                brailleState = \
-                    object_properties.RADIO_BUTTON_INDICATORS_BRAILLE[stateCount]
+        if attr not in ["string", "brailleString"]:
+            return super().__getattribute__(attr)
 
-            if attr == "string":
-                return speechState
-            elif attr == "length":
-                return len(speechState)
-            elif attr == "brailleString":
-                return brailleState
+        if attr == "string":
+            generator = orca_state.activeScript.speechGenerator
         else:
-            return Zone.__getattr__(self, attr)
+            generator = orca_state.activeScript.brailleGenerator
+
+        result = generator.getStateIndicator(self.accessible, role=self.role)
+        if result:
+            return result[0]
+
+        return ""
+
 
 class ValueZone(Zone):
-    """Represents a Zone for an accessible that shows a value using
-    a graphical indicator, such as a progress bar or slider."""
+    """A Zone whose purpose is to display the value of an object."""
 
-    def __init__(self,
-                 accessible,
-                 x, y,
-                 width, height,
-                 role=None):
-        Zone.__init__(self, accessible, "", x, y, width, height, role)
+    def __init__(self, accessible, x, y, width, height, role=None):
+        super().__init__(accessible, "", x, y, width, height, role)
 
-        # Force the use of __getattr__ so we get the actual state
-        # of the accessible each time we look at the 'string' field.
-        #
-        del self.string
+    def __getattribute__(self, attr):
+        """To ensure we update the value."""
 
-    def __getattr__(self, attr):
-        if attr in ["string", "length", "brailleString"]:
-            try:
-                value = self.accessible.queryValue()
-            except NotImplementedError:
-                debug.println(debug.LEVEL_FINE,
-                              'ValueZone does not implement Value interface')
-            try:
-                percentValue = int((value.currentValue /
-                                    (value.maximumValue - value.minimumValue))
-                                   * 100.0)
-            except:
-                percentValue = 0
+        if attr not in ["string", "brailleString"]:
+            return super().__getattribute__(attr)
 
-            script = orca_state.activeScript
-            speechValue = script.speechGenerator.getLocalizedRoleName(
-                self.accessible, alreadyFocused=True)
-            speechValue = speechValue + " " + messages.percentage(percentValue)
-
-            brailleValue = script.brailleGenerator.getLocalizedRoleName(
-                self.accessible, alreadyFocused=True)
-            brailleValue = "%s %d%%" % (brailleValue, percentValue)
-
-            if attr == "string":
-                return speechValue
-            elif attr == "length":
-                return len(speechValue)
-            elif attr == "brailleString":
-                return brailleValue
+        if attr == "string":
+            generator = orca_state.activeScript.speechGenerator
         else:
-            return Zone.__getattr__(self, attr)
+            generator = orca_state.activeScript.brailleGenerator
+
+        result = ""
+
+        # TODO - JD: This cobbling together beats what we had, but the
+        # generators should also be doing the assembly.
+        rolename = generator.getLocalizedRoleName(self.accessible)
+        value = generator.getValue(self.accessible)
+        if rolename and value:
+            result = "%s %s" % (rolename, value[0])
+
+        return result
 
 
 class Line:
@@ -967,63 +911,47 @@ class Context:
 
         return zones
 
-    def _insertStateZone(self, zones, accessible, role=None):
+    def _insertStateZone(self, zones, accessible, extents):
         """If the accessible presents non-textual state, such as a
         checkbox or radio button, insert a StateZone representing
         that state."""
 
+        # TODO - JD: This whole thing is pretty hacky. Either do it
+        # right or nuke it.
+
+        indicatorExtents = extents.x, extents.y, 1, extents.height
+        role = accessible.getRole()
+        if role == pyatspi.ROLE_TOGGLE_BUTTON:
+            zone = StateZone(accessible, *indicatorExtents, role=role)
+            if zone:
+                zones.insert(0, zone)
+            return
+
+        if role == pyatspi.ROLE_TABLE_CELL \
+           and self.script.utilities.hasMeaningfulToggleAction(accessible):
+            role = pyatspi.ROLE_CHECK_BOX
+
+        if role not in [pyatspi.ROLE_CHECK_BOX,
+                        pyatspi.ROLE_CHECK_MENU_ITEM,
+                        pyatspi.ROLE_RADIO_BUTTON,
+                        pyatspi.ROLE_RADIO_MENU_ITEM]:
+            return
+
         zone = None
         stateOnLeft = True
 
-        role = role or accessible.getRole()
-        if role in [pyatspi.ROLE_CHECK_BOX,
-                    pyatspi.ROLE_CHECK_MENU_ITEM,
-                    pyatspi.ROLE_RADIO_BUTTON,
-                    pyatspi.ROLE_RADIO_MENU_ITEM]:
-
-            # Attempt to infer if the indicator is to the left or
-            # right of the text.
-            #
-            extents = accessible.queryComponent().getExtents(0)
-            stateX = extents.x
-            stateY = extents.y
-            stateWidth = 1
-            stateHeight = extents.height
-
-            try:
-                text = accessible.queryText()
-            except NotImplementedError:
-                pass
+        if len(zones) == 1 and isinstance(zones[0], TextZone):
+            textZone = zones[0]
+            textToLeftEdge = textZone.x - extents.x
+            textToRightEdge = (extents.x + extents.width) - (textZone.x + width)
+            stateOnLeft = textToLeftEdge > 20
+            if stateOnLeft:
+                indicatorExtents[2] = textToLeftEdge
             else:
-                [x, y, width, height] = \
-                    text.getRangeExtents( \
-                        0, text.characterCount, 0)
-                textToLeftEdge = x - extents.x
-                textToRightEdge = (extents.x + extents.width) - (x + width)
-                stateOnLeft = textToLeftEdge > 20
-                if stateOnLeft:
-                    stateWidth = textToLeftEdge
-                else:
-                    stateX = x + width
-                    stateWidth = textToRightEdge
+                indicatorExtents[0] = textZone.x + width
+                indicatorExtents[2] = textToRightEdge
 
-            zone = StateZone(accessible,
-                             stateX, stateY, stateWidth, stateHeight)
-
-        elif role ==  pyatspi.ROLE_TOGGLE_BUTTON:
-            # [[[TODO: WDW - This is a major hack.  We make up an
-            # indicator for a toggle button to let the user know
-            # whether a toggle button is pressed or not.]]]
-            #
-            extents = accessible.queryComponent().getExtents(0)
-            zone = StateZone(accessible,
-                             extents.x, extents.y, 1, extents.height)
-
-        elif role == pyatspi.ROLE_TABLE_CELL:
-            # Handle table cells that act like check boxes.
-            if self.script.utilities.hasMeaningfulToggleAction(accessible):
-                self._insertStateZone(zones, accessible, pyatspi.ROLE_CHECK_BOX)
-
+        zone = StateZone(accessible, *indicatorExtents, role=role)
         if zone:
             if stateOnLeft:
                 zones.insert(0, zone)
@@ -1037,31 +965,21 @@ class Context:
         - accessible: the accessible
         - cliprect: the extents that the Zones must fit inside.
         """
-        icomponent = accessible.queryComponent()
-        if not icomponent:
+
+        try:
+            component = accessible.queryComponent()
+            extents = component.getExtents(pyatspi.DESKTOP_COORDS)
+        except:
             return []
 
-        # Get the component extents in screen coordinates.
-        #
-        extents = icomponent.getExtents(0)
-
-        if not self.script.utilities.containsRegion(
-                extents.x, extents.y,
-                extents.width, extents.height,
-                cliprect.x, cliprect.y,
-                cliprect.width, cliprect.height):
+        if not self.script.utilities.containsRegion(*extents, *cliprect):
             return []
 
-        debug.println(
-            debug.LEVEL_FINEST,
-            "flat_review.getZonesFromAccessible (name=%s role=%s)" \
-            % (accessible.name, accessible.getRoleName()))
-
-        # Now see if there is any accessible text.  If so, find new zones,
-        # where each zone represents a line of this text object.  When
-        # creating the zone, only keep track of the text that is actually
-        # showing on the screen.
-        #
+        try:
+            role = accessible.getRole()
+            childCount = accessible.childCount
+        except:
+            return []
 
         try:
             accessible.queryText()
@@ -1070,114 +988,27 @@ class Context:
         else:
             zones = self.getZonesFromText(accessible, cliprect)
 
-        # We really want the accessible text information.  But, if we have
-        # an image, and it has a description, we can fall back on it.
-        # First, try to get the image interface.
-        try:
-            iimage = accessible.queryImage()
-        except NotImplementedError:
-            iimage = None
-        
-        if (len(zones) == 0) and iimage:
-            # Check for accessible.name, if it exists and has len > 0, use it
-            # Otherwise, do the same for accessible.description
-            # Otherwise, do the same for accessible.image.description
-            imageName = ""
-            if accessible.name and len(accessible.name):
-                imageName = accessible.name
-            elif accessible.description and len(accessible.description):
-                imageName = accessible.description
-            elif iimage.imageDescription and \
-                     len(iimage.imageDescription):
-                imageName = iimage.imageDescription
-
-            [x, y] = iimage.getImagePosition(0)
-            [width, height] = iimage.getImageSize()
-
-            if width != 0 and height != 0 \
-               and self.script.utilities.containsRegion(
-                    x, y, width, height,
-                    cliprect.x, cliprect.y,
-                    cliprect.width, cliprect.height):
-
-                clipping = self.clip(x, y, width, height,
-                                     cliprect.x, cliprect.y,
-                                     cliprect.width, cliprect.height)
-
-                if (clipping[2] != 0) or (clipping[3] != 0):
-                    zones.append(Zone(accessible,
-                                      imageName,
-                                      clipping[0],
-                                      clipping[1],
-                                      clipping[2],
-                                      clipping[3]))
-
-        # If the accessible is a parent, we really only looked at it for
-        # its accessible text.  So...we'll skip the hacking here if that's
-        # the case.  [[[TODO: WDW - HACK That is, except in the case of
-        # combo boxes, which don't implement the accesible text
-        # interface.  We also hack with MENU items for similar reasons.]]]
-        #
-        # Otherwise, even if we didn't get anything of use, we certainly
-        # know there's something there.  If that's the case, we'll just
-        # use the component extents and the name or description of the
-        # accessible.
-        #
-        clipping = self.clip(extents.x, extents.y,
-                             extents.width, extents.height,
-                             cliprect.x, cliprect.y,
-                             cliprect.width, cliprect.height)
-        role = accessible.getRole()
-
-        if (len(zones) == 0) \
-            and role in [pyatspi.ROLE_SCROLL_BAR,
-                         pyatspi.ROLE_SLIDER,
-                         pyatspi.ROLE_PROGRESS_BAR]:
-            zones.append(ValueZone(accessible,
-                                   clipping[0],
-                                   clipping[1],
-                                   clipping[2],
-                                   clipping[3]))
-        elif (role != pyatspi.ROLE_COMBO_BOX) \
-            and (role != pyatspi.ROLE_EMBEDDED) \
-            and (role != pyatspi.ROLE_LABEL) \
-            and (role != pyatspi.ROLE_MENU) \
-            and (role != pyatspi.ROLE_PAGE_TAB) \
-            and accessible.childCount > 0:
+        clipping = self.clip(*extents, *cliprect)
+        if not zones and role in [pyatspi.ROLE_SCROLL_BAR,
+                                  pyatspi.ROLE_SLIDER,
+                                  pyatspi.ROLE_PROGRESS_BAR]:
+            zones.append(ValueZone(accessible, *clipping))
+        elif childCount and role not in [pyatspi.ROLE_COMBO_BOX,
+                                         pyatspi.ROLE_EMBEDDED,
+                                         pyatspi.ROLE_LABEL,
+                                         pyatspi.ROLE_MENU,
+                                         pyatspi.ROLE_PAGE_TAB]:
             pass
-        elif len(zones) == 0:
-            string = ""
-            if role == pyatspi.ROLE_COMBO_BOX:
-                try:
-                    selection = accessible[0].querySelection()
-                except:
-                    string = self.script.utilities.displayedText(accessible[0])
-                else:
-                    item = selection.getSelectedChild(0)
-                    if item:
-                        string = item.name
+        elif not zones:
+            string = self.script.speechGenerator.getName(accessible)
+            if not string and role != pyatspi.ROLE_TABLE_CELL:
+                string = self.script.speechGenerator.getLocalizedRoleName(accessible)
 
-            if not string and accessible.name and len(accessible.name):
-                string = accessible.name
-            elif accessible.description and len(accessible.description):
-                string = accessible.description
+            # TODO - JD: This check will become obsolete soon.
+            if string and (clipping[2] or clipping[3] != 0):
+                zones.append(Zone(accessible, string, *clipping))
 
-            if not string and role == pyatspi.ROLE_ICON:
-                string = self.script.utilities.displayedText(accessible)
-
-            if (string == "") \
-                and (role != pyatspi.ROLE_TABLE_CELL):
-                string = accessible.getLocalizedRoleName()
-
-            if len(string) and ((clipping[2] != 0) or (clipping[3] != 0)):
-                zones.append(Zone(accessible,
-                                  string,
-                                  clipping[0],
-                                  clipping[1],
-                                  clipping[2],
-                                  clipping[3]))
-
-        self._insertStateZone(zones, accessible)
+        self._insertStateZone(zones, accessible, extents)
 
         return zones
 

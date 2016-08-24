@@ -175,58 +175,57 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "20. Review next line",
-    ["KNOWN ISSUE: The value is not reviewable",
-     "BRAILLE LINE:  '&=y All Pages Copies: spin button $l'",
-     "     VISIBLE:  '&=y All Pages Copies: spin butto', cursor=1",
-     "SPEECH OUTPUT: 'selected All Pages Copies: spin button'"]))
+    ["BRAILLE LINE:  '&=y All Pages Copies: 1 $l'",
+     "     VISIBLE:  '&=y All Pages Copies: 1 $l', cursor=1",
+     "SPEECH OUTPUT: 'selected All Pages Copies: 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
     "21. Review current word",
-    ["BRAILLE LINE:  '&=y All Pages Copies: spin button $l'",
-     "     VISIBLE:  '&=y All Pages Copies: spin butto', cursor=1",
+    ["BRAILLE LINE:  '&=y All Pages Copies: 1 $l'",
+     "     VISIBLE:  '&=y All Pages Copies: 1 $l', cursor=1",
      "SPEECH OUTPUT: 'selected'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_2"))
 sequence.append(utils.AssertPresentationAction(
     "22. Review current char",
-    ["BRAILLE LINE:  '&=y All Pages Copies: spin button $l'",
-     "     VISIBLE:  '&=y All Pages Copies: spin butto', cursor=1",
+    ["BRAILLE LINE:  '&=y All Pages Copies: 1 $l'",
+     "     VISIBLE:  '&=y All Pages Copies: 1 $l', cursor=1",
      "SPEECH OUTPUT: 'selected'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "23. Review next word",
-    ["BRAILLE LINE:  '&=y All Pages Copies: spin button $l'",
-     "     VISIBLE:  '&=y All Pages Copies: spin butto', cursor=5",
+    ["BRAILLE LINE:  '&=y All Pages Copies: 1 $l'",
+     "     VISIBLE:  '&=y All Pages Copies: 1 $l', cursor=5",
      "SPEECH OUTPUT: 'All Pages'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "24. Review next word",
-    ["BRAILLE LINE:  '&=y All Pages Copies: spin button $l'",
-     "     VISIBLE:  '&=y All Pages Copies: spin butto', cursor=15",
+    ["BRAILLE LINE:  '&=y All Pages Copies: 1 $l'",
+     "     VISIBLE:  '&=y All Pages Copies: 1 $l', cursor=15",
      "SPEECH OUTPUT: 'Copies:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_3"))
 sequence.append(utils.AssertPresentationAction(
     "25. Review next char",
-    ["BRAILLE LINE:  '&=y All Pages Copies: spin button $l'",
-     "     VISIBLE:  '&=y All Pages Copies: spin butto', cursor=16",
+    ["BRAILLE LINE:  '&=y All Pages Copies: 1 $l'",
+     "     VISIBLE:  '&=y All Pages Copies: 1 $l', cursor=16",
      "SPEECH OUTPUT: 'o'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "26. Review next word",
-    ["BRAILLE LINE:  '&=y All Pages Copies: spin button $l'",
-     "     VISIBLE:  '&=y All Pages Copies: spin butto', cursor=23",
-     "SPEECH OUTPUT: 'spin button'"]))
+    ["BRAILLE LINE:  '&=y All Pages Copies: 1 $l'",
+     "     VISIBLE:  '&=y All Pages Copies: 1 $l', cursor=23",
+     "SPEECH OUTPUT: '1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
