@@ -207,9 +207,32 @@ class Zone:
         else:
             return self.__dict__[attr]
 
+    def _extentsAreOnSameLine(self, zone, pixelDelta=5):
+        """Returns True if this Zone is physically on the same line as zone."""
+
+        if self.width == 0 and self.height == 0:
+            return zone.y <= self.y <= zone.y + zone.height
+
+        if zone.width == 0 and self.height == 0:
+            return self.y <= zone.y <= self.y + self.height
+
+        highestBottom = min(self.y + self.height, zone.y + zone.height)
+        lowestTop = max(self.y, zone.y)
+        if lowestTop >= highestBottom:
+            return False
+
+        middle = self.y + self.height / 2
+        zoneMiddle = zone.y + zone.height / 2
+        if abs(middle - zoneMiddle) > pixelDelta:
+            return False
+
+        return True
+
     def onSameLine(self, zone):
-        """Returns True if this Zone is on the same horiztonal line as
-        the given zone."""
+        """Returns True if we treat this Zone and zone as being on one line."""
+
+        if pyatspi.ROLE_SCROLL_BAR in [self.role, zone.role]:
+            return self.accessible == zone.accessible
 
         try:
             thisParentRole = self.accessible.parent.getRole()
@@ -220,18 +243,7 @@ class Zone:
             if pyatspi.ROLE_MENU_BAR in [thisParentRole, zoneParentRole]:
                 return self.accessible.parent == zone.accessible.parent
 
-        highestBottom = min(self.y + self.height, zone.y + zone.height)
-        lowestTop     = max(self.y,               zone.y)
-
-        # If we do overlap, lets see how much.  We'll require a 25% overlap
-        # for now...
-        #
-        if lowestTop < highestBottom:
-            overlapAmount = highestBottom - lowestTop
-            shortestHeight = min(self.height, zone.height)
-            return ((1.0 * overlapAmount) / shortestHeight) > 0.25
-        else:
-            return False
+        return self._extentsAreOnSameLine(zone)
 
     def getWordAtOffset(self, charOffset):
         wordAtOffset = None
@@ -1284,72 +1296,32 @@ class Context:
 
         return zones
 
-    def clusterZonesByLine(self, zones):
-        """Given a list of interesting accessible objects (the Zones),
-        returns a list of lines in order from the top to bottom, where
-        each line is a list of accessible objects in order from left
-        to right.
-        """
 
-        if len(zones) == 0:
+    def clusterZonesByLine(self, zones):
+        """Returns a sorted list of Line clusters containing sorted Zones."""
+
+        if not zones:
             return []
 
-        # Sort the zones and also find the top most zone - we'll bias
-        # the clustering to the top of the window.  That is, if an
-        # object can be part of multiple clusters, for now it will
-        # become a part of the top most cluster.
-        #
-        numZones = len(zones)
-        for i in range(0, numZones):
-            for j in range(0, numZones - 1 - i):
-                a = zones[j]
-                b = zones[j + 1]
-                if b.y < a.y:
-                    zones[j] = b
-                    zones[j + 1] = a
-
-        # Now we cluster the zones.  We create the clusters on the
-        # fly, adding a zone to an existing cluster only if it's
-        # rectangle horizontally overlaps all other zones in the
-        # cluster.
-        #
         lineClusters = []
-        for clusterCandidate in zones:
-            addedToCluster = False
-            for lineCluster in lineClusters:
-                inCluster = True
-                for zone in lineCluster:
-                    if not zone.onSameLine(clusterCandidate):
-                        inCluster = False
-                        break
-                if inCluster:
-                    # Add to cluster based on the x position.
-                    #
-                    i = 0
-                    while i < len(lineCluster):
-                        zone = lineCluster[i]
-                        if clusterCandidate.x < zone.x:
-                            break
-                        else:
-                            i += 1
-                    lineCluster.insert(i, clusterCandidate)
-                    addedToCluster = True
-                    break
-            if not addedToCluster:
-                lineClusters.append([clusterCandidate])
+        sortedZones = sorted(zones, key=lambda z: z.y)
+        newCluster = [sortedZones.pop(0)]
+        for zone in sortedZones:
+            if zone.onSameLine(newCluster[-1]):
+                newCluster.append(zone)
+            else:
+                lineClusters.append(sorted(newCluster, key=lambda z: z.x))
+                newCluster = [zone]
 
-        # Now, adjust all the indeces.
-        #
+        if newCluster:
+            lineClusters.append(sorted(newCluster, key=lambda z: z.x))
+
         lines = []
-        lineIndex = 0
-        for lineCluster in lineClusters:
+        for lineIndex, lineCluster in enumerate(lineClusters):
             lines.append(Line(lineIndex, lineCluster))
-            zoneIndex = 0
-            for zone in lineCluster:
+            for zoneIndex, zone in enumerate(lineCluster):
                 zone.line = lines[lineIndex]
                 zone.index = zoneIndex
-                zoneIndex += 1
-            lineIndex += 1
 
         return lines
 

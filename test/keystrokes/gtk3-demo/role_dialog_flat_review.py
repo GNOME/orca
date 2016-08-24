@@ -232,16 +232,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "27. Review next line",
-    ["BRAILLE LINE:  '& y Current Page <x> Collate drawing area $l'",
-     "     VISIBLE:  '& y Current Page <x> Collate dra', cursor=1",
-     "SPEECH OUTPUT: 'not selected Current Page checked Collate drawing area'"]))
+    ["BRAILLE LINE:  '& y Current Page $l'",
+     "     VISIBLE:  '& y Current Page $l', cursor=1",
+     "SPEECH OUTPUT: 'not selected Current Page'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
     "28. Review current word",
-    ["BRAILLE LINE:  '& y Current Page <x> Collate drawing area $l'",
-     "     VISIBLE:  '& y Current Page <x> Collate dra', cursor=1",
+    ["BRAILLE LINE:  '& y Current Page $l'",
+     "     VISIBLE:  '& y Current Page $l', cursor=1",
      "SPEECH OUTPUT: 'not selected'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -249,33 +249,33 @@ sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "29. Review next word",
     ["KNOWN ISSUE: These labels don't implement the text interface so it's a single word",
-     "BRAILLE LINE:  '& y Current Page <x> Collate drawing area $l'",
-     "     VISIBLE:  '& y Current Page <x> Collate dra', cursor=5",
+     "BRAILLE LINE:  '& y Current Page $l'",
+     "     VISIBLE:  '& y Current Page $l', cursor=5",
      "SPEECH OUTPUT: 'Current Page'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "30. Review next word",
-    ["BRAILLE LINE:  '& y Current Page <x> Collate drawing area $l'",
-     "     VISIBLE:  '& y Current Page <x> Collate dra', cursor=18",
-     "SPEECH OUTPUT: 'checked'"]))
+    ["BRAILLE LINE:  'drawing area $l'",
+     "     VISIBLE:  'drawing area $l', cursor=1",
+     "SPEECH OUTPUT: 'drawing area'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "31. Review next word",
-    ["BRAILLE LINE:  '& y Current Page <x> Collate drawing area $l'",
-     "     VISIBLE:  '& y Current Page <x> Collate dra', cursor=22",
-     "SPEECH OUTPUT: 'Collate'"]))
+    ["BRAILLE LINE:  '<x> Collate $l'",
+     "     VISIBLE:  '<x> Collate $l', cursor=1",
+     "SPEECH OUTPUT: 'checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "32. Review next word",
-    ["BRAILLE LINE:  '& y Current Page <x> Collate drawing area $l'",
-     "     VISIBLE:  '& y Current Page <x> Collate dra', cursor=30",
-     "SPEECH OUTPUT: 'drawing area'"]))
+    ["BRAILLE LINE:  '<x> Collate $l'",
+     "     VISIBLE:  '<x> Collate $l', cursor=5",
+     "SPEECH OUTPUT: 'Collate'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))

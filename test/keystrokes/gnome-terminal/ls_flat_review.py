@@ -82,15 +82,23 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "8. Review next line",
-    ["BRAILLE LINE:  '$ ls vertical scroll bar 0% $l'",
-     "     VISIBLE:  '$ ls vertical scroll bar 0% $l', cursor=1",
+    ["BRAILLE LINE:  '$ ls $l'",
+     "     VISIBLE:  '$ ls $l', cursor=1",
      "SPEECH OUTPUT: '$ ls",
-     " vertical scroll bar 0 percent.'"]))
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "9. Review next line",
+    ["BRAILLE LINE:  'vertical scroll bar 0% $l'",
+     "     VISIBLE:  'vertical scroll bar 0% $l', cursor=1",
+     "SPEECH OUTPUT: 'vertical scroll bar 0 percent.'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_9"))
+sequence.append(utils.AssertPresentationAction(
+    "10. Review next line",
     ["BRAILLE LINE:  'another_test_file_0  another_test_file_4  another_test_file_8 $l'",
      "     VISIBLE:  'another_test_file_0  another_tes', cursor=1",
      "SPEECH OUTPUT: 'another_test_file_0  another_test_file_4  another_test_file_8",
@@ -101,7 +109,7 @@ sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
-    "10. Review last line",
+    "11. Review last line",
     ["KNOWN ISSUE: We're not finding the bottom",
      "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
@@ -110,7 +118,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
-    "11. Review previous line",
+    "12. Review previous line",
     ["KNOWN ISSUE: We're not finding the bottom",
      "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",

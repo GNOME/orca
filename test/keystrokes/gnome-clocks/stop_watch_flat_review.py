@@ -43,10 +43,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "4. Review previous line",
-    ["KNOWN ISSUE: There is no listbox on the screen, and we're not updating the values",
-     "BRAILLE LINE:  '00‎∶00.0 list box $l'",
-     "     VISIBLE:  '00‎∶00.0 list box $l', cursor=1",
-     "SPEECH OUTPUT: '00‎∶00.0 list box'"]))
+    ["KNOWN ISSUE: We're not updating the values",
+     "BRAILLE LINE:  '00‎∶00.0 $l'",
+     "     VISIBLE:  '00‎∶00.0 $l', cursor=1",
+     "SPEECH OUTPUT: '00‎∶00.0'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
@@ -60,10 +60,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "5. Review next line",
-    ["KNOWN ISSUE: There is no listbox on the screen, and we're not updating the values",
-     "BRAILLE LINE:  '00‎∶00.0 list box $l'",
-     "     VISIBLE:  '00‎∶00.0 list box $l', cursor=1",
-     "SPEECH OUTPUT: '00‎∶00.0 list box'"]))
+    ["KNOWN ISSUE: We're not updating the values",
+     "BRAILLE LINE:  '00‎∶00.0 $l'",
+     "     VISIBLE:  '00‎∶00.0 $l', cursor=1",
+     "SPEECH OUTPUT: '00‎∶00.0'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Subtract"))
@@ -86,9 +86,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "7. Review previous line",
-    ["BRAILLE LINE:  '00‎∶11.5 list box $l'",
-     "     VISIBLE:  '00‎∶11.5 list box $l', cursor=1",
-     "SPEECH OUTPUT: '00‎∶11.5 list box'"]))
+    ["BRAILLE LINE:  '00‎∶11.5 $l'",
+     "     VISIBLE:  '00‎∶11.5 $l', cursor=1",
+     "SPEECH OUTPUT: '00‎∶11.5'"]))
 
 sequence.append(PauseAction(3000))
 
@@ -97,9 +97,9 @@ sequence.append(KeyComboAction("KP_8"))
 sequence.append(utils.AssertPresentationAction(
     "8. Review current line",
     ["KNOWN ISSUE: We're not presenting the updated value",
-     "BRAILLE LINE:  '00‎∶11.5 list box $l'",
-     "     VISIBLE:  '00‎∶11.5 list box $l', cursor=1",
-     "SPEECH OUTPUT: '00‎∶11.5 list box'"]))
+     "BRAILLE LINE:  '00‎∶11.5 $l'",
+     "     VISIBLE:  '00‎∶11.5 $l', cursor=1",
+     "SPEECH OUTPUT: '00‎∶11.5'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -42,24 +42,24 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "4. Review next line",
-    ["BRAILLE LINE:  'Open & y toggle button Quit panel GTK! $l'",
-     "     VISIBLE:  'Open & y toggle button Quit pane', cursor=1",
-     "SPEECH OUTPUT: 'Open not pressed toggle button Quit panel GTK!'"]))
+    ["BRAILLE LINE:  'Open & y toggle button Quit GTK! $l'",
+     "     VISIBLE:  'Open & y toggle button Quit GTK!', cursor=1",
+     "SPEECH OUTPUT: 'Open not pressed toggle button Quit GTK!'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
     "5. Review current word",
-    ["BRAILLE LINE:  'Open & y toggle button Quit panel GTK! $l'",
-     "     VISIBLE:  'Open & y toggle button Quit pane', cursor=1",
+    ["BRAILLE LINE:  'Open & y toggle button Quit GTK! $l'",
+     "     VISIBLE:  'Open & y toggle button Quit GTK!', cursor=1",
      "SPEECH OUTPUT: 'Open'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "6. Review next word",
-    ["BRAILLE LINE:  'Open & y toggle button Quit panel GTK! $l'",
-     "     VISIBLE:  'Open & y toggle button Quit pane', cursor=6",
+    ["BRAILLE LINE:  'Open & y toggle button Quit GTK! $l'",
+     "     VISIBLE:  'Open & y toggle button Quit GTK!', cursor=6",
      "SPEECH OUTPUT: 'not pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -122,8 +122,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_4"))
 sequence.append(utils.AssertPresentationAction(
     "14. Review previous word",
-    ["BRAILLE LINE:  'Open & y toggle button Quit panel GTK! $l'",
-     "     VISIBLE:  'l GTK! $l', cursor=3",
+    ["BRAILLE LINE:  'Open & y toggle button Quit GTK! $l'",
+     "     VISIBLE:  'Open & y toggle button Quit GTK!', cursor=29",
      "SPEECH OUTPUT: 'GTK!'"]))
 
 sequence.append(utils.StartRecordingAction())

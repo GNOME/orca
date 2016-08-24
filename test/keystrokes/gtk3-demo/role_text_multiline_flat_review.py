@@ -242,42 +242,33 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
-    "14. KP_7 to flat review 'This is a test.' and the scrollbar",
-    ["BRAILLE LINE:  'This is a test.  vertical scroll bar 0% $l'",
-     "     VISIBLE:  'This is a test.  vertical scroll', cursor=1",
+    "14. KP_7 to flat review the scrollbar",
+    ["BRAILLE LINE:  'vertical scroll bar 0% $l'",
+     "     VISIBLE:  'vertical scroll bar 0% $l', cursor=1",
+     "SPEECH OUTPUT: 'vertical scroll bar 0 percent.'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_7"))
+sequence.append(utils.AssertPresentationAction(
+    "15. KP_7 to flat review 'This is a test.'",
+    ["BRAILLE LINE:  'This is a test.  $l'",
+     "     VISIBLE:  'This is a test.  $l', cursor=1",
      "SPEECH OUTPUT: 'This is a test. ",
-     " vertical scroll bar 0 percent.'"]))
-
-#sequence.append(utils.StartRecordingAction())
-#sequence.append(KeyComboAction("KP_7"))
-#sequence.append(utils.AssertPresentationAction(
-#    "14. KP_7 to flat review 'This is a test.' and the scrollbar",
-#    ["BRAILLE LINE:  'vertical scroll bar 0% $l'",
-#     "     VISIBLE:  'vertical scroll bar 0% $l', cursor=1",
-#     "SPEECH OUTPUT: 'vertical scroll bar 0%'"]))
-#
-#sequence.append(utils.StartRecordingAction())
-#sequence.append(KeyComboAction("KP_7"))
-#sequence.append(utils.AssertPresentationAction(
-#    "15. KP_7 to flat review 'This is a test.' and the scrollbar",
-#    ["BRAILLE LINE:  'This is a test.  $l'",
-#     "     VISIBLE:  'This is a test.  $l', cursor=1",
-#     "SPEECH OUTPUT: 'This is a test. ",
-#     "'"]))
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
-    "15. KP_7 to flat review toolbar",
+    "16. KP_7 to flat review toolbar",
     ["KNOWN ISSUE: gtk3-demo's toolbar widgets lack names that were present in the past",
-     "BRAILLE LINE:  'push button push button panel push button $l'",
-     "     VISIBLE:  'push button push button panel pu', cursor=1",
-     "SPEECH OUTPUT: 'push button push button panel push button'"]))
+     "BRAILLE LINE:  'push button push button push button $l'",
+     "     VISIBLE:  'push button push button push but', cursor=1",
+     "SPEECH OUTPUT: 'push button push button push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
-    "16. KP_7 to flat review menu",
+    "17. KP_7 to flat review menu",
     ["BRAILLE LINE:  'Preferences Help $l'",
      "     VISIBLE:  'Preferences Help $l', cursor=1",
      "SPEECH OUTPUT: 'Preferences Help'"]))
@@ -285,7 +276,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
-    "17. KP_5 to flat review 'Preferences'",
+    "18. KP_5 to flat review 'Preferences'",
     ["BRAILLE LINE:  'Preferences Help $l'",
      "     VISIBLE:  'Preferences Help $l', cursor=1",
      "SPEECH OUTPUT: 'Preferences'"]))
@@ -293,7 +284,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
-    "18. KP_6 to flat review 'Help'",
+    "19. KP_6 to flat review 'Help'",
     ["BRAILLE LINE:  'Preferences Help $l'",
      "     VISIBLE:  'Preferences Help $l', cursor=13",
      "SPEECH OUTPUT: 'Help'"]))
@@ -303,7 +294,7 @@ sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("KP_5"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
-    "19. Insert+KP_5 to flat review 'Help' accessible",
+    "20. Insert+KP_5 to flat review 'Help' accessible",
     ["SPEECH OUTPUT: 'Help menu.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -311,9 +302,9 @@ sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
-    "20. Insert+KP_9 to flat review end",
-    ["BRAILLE LINE:  ' Cursor at row 1 column 0 - 60 chars in document $l'",
-     "     VISIBLE:  ' Cursor at row 1 column 0 - 60 c', cursor=2",
+    "21. Insert+KP_9 to flat review end",
+    ["BRAILLE LINE:  'Cursor at row 1 column 0 - 60 chars in document $l'",
+     "     VISIBLE:  'Cursor at row 1 column 0 - 60 ch', cursor=1",
      "SPEECH OUTPUT: 'Cursor at row 1 column 0 - 60 chars in document'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -321,7 +312,7 @@ sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
-    "21. Insert+KP_7 to flat review home",
+    "22. Insert+KP_7 to flat review home",
     ["BRAILLE LINE:  'Preferences Help $l'",
      "     VISIBLE:  'Preferences Help $l', cursor=1",
      "SPEECH OUTPUT: 'Preferences Help'"]))
@@ -331,9 +322,9 @@ sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
-    "22. Insert+KP_6 to flat review below",
-    ["BRAILLE LINE:  'push button push button panel push button $l'",
-     "     VISIBLE:  'push button push button panel pu', cursor=1",
+    "23. Insert+KP_6 to flat review below",
+    ["BRAILLE LINE:  'push button push button push button $l'",
+     "     VISIBLE:  'push button push button push but', cursor=1",
      "SPEECH OUTPUT: 'push button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -341,7 +332,7 @@ sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("KP_4"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
-    "23. Insert+KP_4 to flat review above",
+    "24. Insert+KP_4 to flat review above",
     ["BRAILLE LINE:  'Preferences Help $l'",
      "     VISIBLE:  'Preferences Help $l', cursor=1",
      "SPEECH OUTPUT: 'Preferences'"]))
@@ -349,7 +340,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Subtract"))
 sequence.append(utils.AssertPresentationAction(
-    "24. KP_Subtract to exit flat review",
+    "25. KP_Subtract to exit flat review",
     ["BRAILLE LINE:  'Leaving flat review.'",
      "     VISIBLE:  'Leaving flat review.', cursor=0",
      "BRAILLE LINE:  'This is only a test. $l'",

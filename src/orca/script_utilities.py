@@ -1617,13 +1617,24 @@ class Utilities:
             return False
 
         try:
+            role = obj.getRole()
             state = obj.getState()
+            childCount = obj.childCount
         except:
-            msg = "ERROR: Exception getting state of %s" % obj
+            msg = "ERROR: Exception getting role, state, childCount of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
-        else:
-            return state.contains(pyatspi.STATE_SHOWING)
+
+        if not state.contains(pyatspi.STATE_SHOWING):
+            return False
+
+        containers = [pyatspi.ROLE_LIST_BOX,
+                      pyatspi.ROLE_PANEL]
+
+        if role in containers and not childCount:
+            return False
+
+        return True
 
     @staticmethod
     def isTableRow(obj):

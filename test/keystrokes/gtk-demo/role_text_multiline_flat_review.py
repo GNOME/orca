@@ -252,9 +252,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "15. KP_7 to flat review toolbar",
-    ["BRAILLE LINE:  'Open & y toggle button Quit panel GTK! $l'",
-     "     VISIBLE:  'Open & y toggle button Quit pane', cursor=1",
-     "SPEECH OUTPUT: 'Open not pressed toggle button Quit panel GTK!'"]))
+    ["BRAILLE LINE:  'Open & y toggle button Quit GTK! $l'",
+     "     VISIBLE:  'Open & y toggle button Quit GTK!', cursor=1",
+     "SPEECH OUTPUT: 'Open not pressed toggle button Quit GTK!'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
@@ -314,8 +314,8 @@ sequence.append(KeyComboAction("KP_6"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "22. Insert+KP_6 to flat review below",
-    ["BRAILLE LINE:  'Open & y toggle button Quit panel GTK! $l'",
-     "     VISIBLE:  'Open & y toggle button Quit pane', cursor=1",
+    ["BRAILLE LINE:  'Open & y toggle button Quit GTK! $l'",
+     "     VISIBLE:  'Open & y toggle button Quit GTK!', cursor=1",
      "SPEECH OUTPUT: 'Open'"]))
 
 sequence.append(utils.StartRecordingAction())
