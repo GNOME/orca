@@ -28,6 +28,7 @@ import pyatspi
 
 from orca import debug
 from orca import keybindings
+from orca import orca_state
 from orca import script_utilities
 from orca import settings_manager
 
@@ -122,6 +123,9 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def treatEventAsCommand(self, event):
+        if event.source != orca_state.locusOfFocus:
+            return False
+
         if event.type.startswith("object:text-changed:insert") and event.any_data.strip():
             # To let default script handle presentation.
             if self.lastInputEventWasPaste():

@@ -4,8 +4,13 @@ import difflib
 import re
 import sys
 
+import gi
+gi.require_version("Gdk", "3.0")
+gi.require_version("Gtk", "3.0")
+
 from gi.repository import Gio
 from gi.repository import Gdk
+from gi.repository import Gtk
 from macaroon.playback import *
 
 testLogger = Gio.DBusProxy.new_for_bus_sync(
@@ -42,6 +47,10 @@ def getKeyCodeForName(name):
         return entries[-1].keycode
 
     return None
+
+def setClipboardText(text):
+    clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
+    clipboard.set_text(text, -1)
 
 class StartRecordingAction(AtomicAction):
     '''Tells Orca to log speech and braille output to a string which we

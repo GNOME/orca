@@ -1,15 +1,9 @@
 #!/usr/bin/python
 
-import gi
-gi.require_version("Gdk", "3.0")
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gdk
-from gi.repository import Gtk
 from macaroon.playback import *
 import utils
 
-clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
-clipboard.set_text("Hello world", -1)
+utils.setClipboardText("Hello world")
 
 sequence = MacroSequence()
 sequence.append(KeyComboAction("Return"))

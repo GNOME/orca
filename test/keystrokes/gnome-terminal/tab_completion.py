@@ -5,6 +5,7 @@ import utils
 
 sequence = MacroSequence()
 sequence.append(PauseAction(3000))
+sequence.append(KeyComboAction("Return"))
 sequence.append(TypeAction("cd "))
 
 slash = utils.getKeyCodeForName("slash")
@@ -17,7 +18,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to complete 'cd /ho'",
-    []))
+    ["BRAILLE LINE:  '$ cd /ho'",
+     "     VISIBLE:  '$ cd /ho', cursor=12",
+     "SPEECH OUTPUT: 'me/'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()
