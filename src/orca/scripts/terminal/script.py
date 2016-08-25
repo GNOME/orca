@@ -62,16 +62,6 @@ class Script(default.Script):
 
         return Utilities(self)
 
-    def locusOfFocusChanged(self, event, oldFocus, newFocus):
-        """Handles changes of focus of interest to the script."""
-
-        super().locusOfFocusChanged(event, oldFocus, newFocus)
-
-    def onCaretMoved(self, event):
-        """Callback for object:text-caret-moved accessibility events."""
-
-        super().onCaretMoved(event)
-
     def onFocus(self, event):
         """Callback for focus: accessibility events."""
 
@@ -98,12 +88,25 @@ class Script(default.Script):
         msg = "TERMINAL: Insertion is believed to be due to terminal command"
         debug.println(debug.LEVEL_INFO, msg, True)
 
+        self.updateBraille(event.source)
+
         newString = self.utilities.insertedText(event)
         if len(newString) == 1:
             self.speakCharacter(newString)
         else:
             voice = self.speechGenerator.voice(string=newString)
             speech.speak(newString, voice)
+
+        if self.flatReviewContext:
+            return
+
+        try:
+            text = event.source.queryText()
+        except:
+            pass
+        else:
+            self._saveLastCursorPosition(event.source, text.caretOffset)
+            self.utilities.updateCachedTextSelection(event.source)
 
     def presentKeyboardEvent(self, event):
         if orca_state.learnModeEnabled or not event.isPrintableKey():
@@ -141,6 +144,9 @@ class Script(default.Script):
     def skipObjectEvent(self, event):
         newEvent, newTime = None, 0
         if event.type == "object:text-changed:delete":
+            if self.utilities.isBackSpaceCommandTextDeletionEvent(event):
+                return False
+
             newEvent, newTime = self.eventCache.get("object:text-changed:insert")
 
         if newEvent is None or newEvent.source != event.source:

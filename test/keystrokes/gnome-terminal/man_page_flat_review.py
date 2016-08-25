@@ -109,6 +109,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '(press h for help or q to quit)', cursor=32",
      "BRAILLE LINE:  ' Manual page orca(1) line 24 (press h for help or q to quit)'",
      "     VISIBLE:  '(press h for help or q to quit)', cursor=32",
+     "BRAILLE LINE:  ' Manual page orca(1) line 24 (press h for help or q to quit)'",
+     "     VISIBLE:  '(press h for help or q to quit)', cursor=32",
      "SPEECH OUTPUT: '              When starting orca, use dirname as an  alternate  directory  for",
      "              the user preferences.",
      "",
@@ -200,6 +202,8 @@ sequence.append(KeyComboAction("<Control>b"))
 sequence.append(utils.AssertPresentationAction(
     "19. Back one page",
     ["BRAILLE LINE:  ' Manual page orca(1) line 1 (press h for help or q to quit)'",
+     "     VISIBLE:  '(press h for help or q to quit)', cursor=32",
+     "BRAILLE LINE:  ' Manual page orca(1) line 1 (press h for help or q to quit)'",
      "     VISIBLE:  '(press h for help or q to quit)', cursor=32",
      "BRAILLE LINE:  ' Manual page orca(1) line 1 (press h for help or q to quit)'",
      "     VISIBLE:  '(press h for help or q to quit)', cursor=32",

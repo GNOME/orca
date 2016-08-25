@@ -18,8 +18,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to complete 'cd /ho'",
-    ["BRAILLE LINE:  '$ cd /ho'",
-     "     VISIBLE:  '$ cd /ho', cursor=12",
+    ["BRAILLE LINE:  '$ cd /home/'",
+     "     VISIBLE:  '$ cd /home/', cursor=12",
      "SPEECH OUTPUT: 'me/'"]))
 
 sequence.append(utils.AssertionSummaryAction())

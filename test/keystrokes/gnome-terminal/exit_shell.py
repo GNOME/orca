@@ -7,6 +7,8 @@ utils.setClipboardText('PS1="prompt> "')
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(3000))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(

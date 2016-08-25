@@ -66,14 +66,30 @@ class Utilities(script_utilities.Utilities):
         firstLine = text.getTextAtOffset(start, boundary)
         msg = "TERMINAL: First line of insertion: '%s' (%i, %i)" % firstLine
         debug.println(debug.LEVEL_INFO, msg, True)
-        if firstLine != ("", 0, 0):
-            start = firstLine[1]
 
         lastLine = text.getTextAtOffset(end - 1, boundary)
         msg = "TERMINAL: Last line of insertion: '%s' (%i, %i)" % lastLine
         debug.println(debug.LEVEL_INFO, msg, True)
+
+        if firstLine == lastLine:
+            msg = "TERMINAL: Not adjusting single-line insertion."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return event.any_data
+
+        currentLine = text.getTextAtOffset(text.caretOffset, boundary)
+        msg = "TERMINAL: Current line: '%s' (%i, %i)" % currentLine
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        if firstLine != ("", 0, 0):
+            start = firstLine[1]
+
+        if currentLine not in (("", 0, 0), firstLine, lastLine):
+            lastLine = currentLine
+
         if lastLine != ("", 0, 0):
-            end = min(lastLine[2], text.caretOffset)
+            end = lastLine[2]
+            if lastLine[0].endswith("\n"):
+                end -= 1
 
         adjusted = text.getText(start, end)
         if adjusted:

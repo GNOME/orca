@@ -91,9 +91,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "9. Review next line",
-    ["BRAILLE LINE:  'vertical scroll bar 0% $l'",
-     "     VISIBLE:  'vertical scroll bar 0% $l', cursor=1",
-     "SPEECH OUTPUT: 'vertical scroll bar 0 percent.'"]))
+    ["BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))

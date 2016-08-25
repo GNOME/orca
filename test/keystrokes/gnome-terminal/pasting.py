@@ -6,6 +6,7 @@ import utils
 utils.setClipboardText("Hello world")
 
 sequence = MacroSequence()
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Shift>v"))
