@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2016-03-22 20:15+0100\n"
-"PO-Revision-Date: 2016-03-22 20:24+0100\n"
+"POT-Creation-Date: 2016-08-26 22:15+0200\n"
+"PO-Revision-Date: 2016-08-26 22:31+0200\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Screen Reader"
@@ -41,7 +41,7 @@ msgstr ""
 
 #: ../orca.desktop.in.h:4
 msgid "screen reader;speech;braille;"
-msgstr "govor;zaslonski bralnik;Braillova pisava;brajica;povečevalnik;"
+msgstr "govor;zaslonski bralnik;Braillova pisava;brajica;povečevalnik"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -1791,7 +1791,7 @@ msgstr "Premakne kazalnik na trenutni predmet."
 #. Left click means to generate a left mouse button click on the current item.
 #: ../src/orca/cmdnames.py:45
 msgid "Performs left click on current flat review item."
-msgstr "Izvede levi klik na trenutnem predmetu ploske ocene."
+msgstr "Izvede levi klik na trenutnem predmetu v vrstičnem pregledu."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1801,7 +1801,7 @@ msgstr "Izvede levi klik na trenutnem predmetu ploske ocene."
 #. Right click means to generate a right mouse button click on the current item.
 #: ../src/orca/cmdnames.py:53
 msgid "Performs right click on current flat review item."
-msgstr "Izvede desni klik na trenutnem predmetu ploske ocene."
+msgstr "Izvede desni klik na trenutnem predmetu v vrstičnem pregledu."
 
 #. Translators: the Orca "SayAll" command allows the user to press a key and have
 #. the entire document in a window be automatically spoken to the user. If the
@@ -1819,7 +1819,7 @@ msgstr "Prebere celoten dokument."
 #. which causes Orca to speak the entire contents of the window using flat review.
 #: ../src/orca/cmdnames.py:67
 msgid "Speaks entire window using flat review."
-msgstr ""
+msgstr "Izgovori celotno vsebino okna v vrstičnem pregledu."
 
 #. Translators: the "Where am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
@@ -1890,7 +1890,7 @@ msgstr "Iskanje predhodne pojavitve niza."
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: ../src/orca/cmdnames.py:118
 msgid "Enters and exits flat review mode."
-msgstr "Vstopi in izstopi iz načina ploske ocene."
+msgstr "Vstopi in izstopi iz načina vrstičnega pregleda."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1900,7 +1900,7 @@ msgstr "Vstopi in izstopi iz načina ploske ocene."
 #. The home position is the beginning of the content in the window.
 #: ../src/orca/cmdnames.py:126
 msgid "Moves flat review to the home position."
-msgstr "Plosko oceno premakne na začetek."
+msgstr "Premakne vrstični pregled na začetek."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1910,7 +1910,7 @@ msgstr "Plosko oceno premakne na začetek."
 #. The home position is the last bit of information in the window.
 #: ../src/orca/cmdnames.py:134
 msgid "Moves flat review to the end position."
-msgstr "Plosko oceno premakne na konec."
+msgstr "Premakne vrstični pregled na konec."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1919,7 +1919,7 @@ msgstr "Plosko oceno premakne na konec."
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: ../src/orca/cmdnames.py:142
 msgid "Moves flat review to the beginning of the previous line."
-msgstr "Plosko oceno premakne na začetek prejšnje vrstice."
+msgstr "Vrstični prelged premakne na začetek prejšnje vrstice."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1928,7 +1928,7 @@ msgstr "Plosko oceno premakne na začetek prejšnje vrstice."
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: ../src/orca/cmdnames.py:149
 msgid "Speaks the current flat review line."
-msgstr "Izgovori trenutno vrstico ploske ocene."
+msgstr "Izgovori trenutno vrstico v vrstičnem pregledu."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1939,7 +1939,7 @@ msgstr "Izgovori trenutno vrstico ploske ocene."
 #. by character.
 #: ../src/orca/cmdnames.py:158
 msgid "Spells the current flat review line."
-msgstr "Črkuje trenutno vrstico ploske ocene."
+msgstr "Črkuje trenutno vrstico v vrstičnem pregledu."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1950,7 +1950,7 @@ msgstr "Črkuje trenutno vrstico ploske ocene."
 #. by character phonetically, saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: ../src/orca/cmdnames.py:168
 msgid "Phonetically spells the current flat review line."
-msgstr "Fonetično črkuje trenutno vrstico ploske ocene."
+msgstr "Fonetično črkuje trenutno vrstico v vrstičnem pregledu."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1959,7 +1959,7 @@ msgstr "Fonetično črkuje trenutno vrstico ploske ocene."
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: ../src/orca/cmdnames.py:175
 msgid "Moves flat review to the beginning of the next line."
-msgstr "Plosko oceno premakne na začetek naslednje vrstice."
+msgstr "Premakne vrstični prelged na začetek naslednje vrstice."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1970,7 +1970,7 @@ msgstr "Plosko oceno premakne na začetek naslednje vrstice."
 #. will wrap across lines if necessary).
 #: ../src/orca/cmdnames.py:184
 msgid "Moves flat review to the previous item or word."
-msgstr "Plosko oceno premakne na prejšnji predmet ali besedo."
+msgstr "Premakne vrstični pregled na predhodni predmet ali besedo."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1980,7 +1980,7 @@ msgstr "Plosko oceno premakne na prejšnji predmet ali besedo."
 #. This command will speak the current word or item.
 #: ../src/orca/cmdnames.py:192
 msgid "Speaks the current flat review item or word."
-msgstr "Izgovori trenutni predmet ali besedo ploske ocene."
+msgstr "Izgovori trenutni predmet ali besedo v vrstičnem pregledu."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1991,7 +1991,7 @@ msgstr "Izgovori trenutni predmet ali besedo ploske ocene."
 #. character by character.
 #: ../src/orca/cmdnames.py:201
 msgid "Spells the current flat review item or word."
-msgstr "Črkuje trenutni predmet ali besedo ploske ocene."
+msgstr "Črkuje trenutni predmet ali besedo v vrstičnem pregledu."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2003,7 +2003,7 @@ msgstr "Črkuje trenutni predmet ali besedo ploske ocene."
 #. and so on.
 #: ../src/orca/cmdnames.py:212
 msgid "Phonetically spells the current flat review item or word."
-msgstr "Fonetično črkuje trenutni predmet ali besedo ploske ocene."
+msgstr "Fonetično črkuje trenutni predmet ali besedo v vrstičnem pregledu."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2014,7 +2014,7 @@ msgstr "Fonetično črkuje trenutni predmet ali besedo ploske ocene."
 #. will wrap across lines if necessary).
 #: ../src/orca/cmdnames.py:221
 msgid "Moves flat review to the next item or word."
-msgstr "Plosko oceno premakne do naslednjega predmeta ali besede."
+msgstr "Premakne vrstični pregled do naslednjega predmeta ali besede."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2025,7 +2025,7 @@ msgstr "Plosko oceno premakne do naslednjega predmeta ali besede."
 #. line upward on the screen.
 #: ../src/orca/cmdnames.py:230
 msgid "Moves flat review to the word above the current word."
-msgstr "Plosko oceno premakne do besede nad trenutno besedo."
+msgstr "Premakne vstični pregled do besede nad trenutno besedo."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2037,7 +2037,7 @@ msgstr "Plosko oceno premakne do besede nad trenutno besedo."
 #. will speak the text associated with the object.
 #: ../src/orca/cmdnames.py:240
 msgid "Speaks the current flat review object."
-msgstr "Izgovori trenutni predmet ploske ocene."
+msgstr "Izgovori trenutni predmet v vrstičnem pregledu."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2048,7 +2048,7 @@ msgstr "Izgovori trenutni predmet ploske ocene."
 #. line downward on the screen.
 #: ../src/orca/cmdnames.py:249
 msgid "Moves flat review to the word below the current word."
-msgstr "Plosko oceno premakne do besede pod trenutno besedo."
+msgstr "Premakne vrstični pregled do besede pod trenutno besedo."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2059,7 +2059,7 @@ msgstr "Plosko oceno premakne do besede pod trenutno besedo."
 #. will wrap across lines if necessary).
 #: ../src/orca/cmdnames.py:258
 msgid "Moves flat review to the previous character."
-msgstr "Plosko oceno premakne do prejšnjega znaka."
+msgstr "Premakne vrstični prelged do predhodnega znaka."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2069,7 +2069,7 @@ msgstr "Plosko oceno premakne do prejšnjega znaka."
 #. This command will speak the current character
 #: ../src/orca/cmdnames.py:266
 msgid "Speaks the current flat review character."
-msgstr "Izgovori trenutni znak ploske ocene."
+msgstr "Izgovori trenutni znak v vrstičnem pregledu."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2080,7 +2080,7 @@ msgstr "Izgovori trenutni znak ploske ocene."
 #. saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: ../src/orca/cmdnames.py:276
 msgid "Phonetically speaks the current flat review character."
-msgstr "Fonetično izgovori trenutni znak ploske ocene."
+msgstr "Fonetično izgovori trenutni znak v vrstičnem pregledu."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2091,7 +2091,7 @@ msgstr "Fonetično izgovori trenutni znak ploske ocene."
 #. value.
 #: ../src/orca/cmdnames.py:286
 msgid "Speaks unicode value of the current flat review character."
-msgstr "Izgovori unicode vrednost trenutnega znaka ploske ocene."
+msgstr "Izgovori oznako unikod trenutnega znaka v vrstičnem pregledu."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2102,7 +2102,7 @@ msgstr "Izgovori unicode vrednost trenutnega znaka ploske ocene."
 #. will wrap across lines if necessary).
 #: ../src/orca/cmdnames.py:295
 msgid "Moves flat review to the next character."
-msgstr "Plosko oceno premakne do naslednjega znaka."
+msgstr "Premakne vrstični pregled do naslednjega znaka."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2112,7 +2112,7 @@ msgstr "Plosko oceno premakne do naslednjega znaka."
 #. This command will move to and present the end of the line.
 #: ../src/orca/cmdnames.py:303
 msgid "Moves flat review to the end of the line."
-msgstr "Plosko oceno premakne na konec vrstice."
+msgstr "Premakne vrstični pogled na konec vrstice."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2122,7 +2122,7 @@ msgstr "Plosko oceno premakne na konec vrstice."
 #. The bottom left is the bottom left of the window currently being reviewed.
 #: ../src/orca/cmdnames.py:311
 msgid "Moves flat review to the bottom left."
-msgstr "Plosko oceno premakne v spodnji levi kot."
+msgstr "Premakne vrstični pregled v spodnji levi kot."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2133,7 +2133,7 @@ msgstr "Plosko oceno premakne v spodnji levi kot."
 #. clipboard.
 #: ../src/orca/cmdnames.py:320
 msgid "Copies the contents under flat review to the clipboard."
-msgstr "Kopira vsebino ploske ocene v odložišče."
+msgstr "Kopira vsebino v vrstičnem pregledu v odložišče."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2144,7 +2144,7 @@ msgstr "Kopira vsebino ploske ocene v odložišče."
 #. the existing contents of the clipboard.
 #: ../src/orca/cmdnames.py:330
 msgid "Appends the contents under flat review to the clipboard."
-msgstr "Pripne vsebino poloske ocene v odložišče."
+msgstr "Pripne vsebino v vrstičnem pregledu v odložišče."
 
 #. Translators: when users are navigating a table, they sometimes want the
 #. entire row of a table read; other times they just want the current cell
@@ -2303,9 +2303,8 @@ msgstr "Preklopi izgovarjanje zamikanja in poravnave."
 #. three"). This string to be translated refers to an Orca command for quickly
 #. toggling between the two options.
 #: ../src/orca/cmdnames.py:447
-#, fuzzy
 msgid "Changes spoken number style."
-msgstr "Pokvarjena datoteka: neimenovan slog števila je prezrt."
+msgstr "Spremeni slog izgovorjave števil."
 
 #. Translators: Orca allows users to cycle through punctuation levels. None,
 #. some, most, or all, punctuation will be spoken.
@@ -5225,9 +5224,8 @@ msgstr "Samodejno začni z izgovarjanjem vsebine strani po _nalaganju"
 #. automatically summarize details about the page, such as the number of elements
 #. (landmarks, forms, links, tables, etc.).
 #: ../src/orca/guilabels.py:680
-#, fuzzy
 msgid "_Present summary of a page when it is first loaded"
-msgstr "Samodejno začni z izgovarjanjem vsebine strani po _nalaganju"
+msgstr "_Predstavi povzetek strani, ko je prvič naložena"
 
 #. Translators: Different speech systems and speech engines work differently when
 #. it comes to handling pauses (e.g. sentence boundaries). This property allows
@@ -8353,7 +8351,7 @@ msgstr "Vsebina je kopirana v odložišče."
 #. not using flat review.
 #: ../src/orca/messages.py:494
 msgid "Not using flat review."
-msgstr "Možnost ploske ocene ni na voljo."
+msgstr "Način vrstičnega pregleda ni v uporabi."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -8362,7 +8360,7 @@ msgstr "Možnost ploske ocene ni na voljo."
 #. let the user know he/she just entered flat review.
 #: ../src/orca/messages.py:501
 msgid "Entering flat review."
-msgstr "Vstop v način ploske ocene."
+msgstr "Omogočen je način vrstičnega pregleda."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -8371,7 +8369,7 @@ msgstr "Vstop v način ploske ocene."
 #. let the user know he/she just entered flat review.
 #: ../src/orca/messages.py:508
 msgid "Leaving flat review."
-msgstr "Izstop iz načina ploske ocene."
+msgstr "Izstop iz načina vrstičnega pregleda."
 
 #. Translators: this means a particular cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
@@ -10486,10 +10484,10 @@ msgstr[3] "%d predmeti"
 #, python-format
 msgid "%d landmark"
 msgid_plural "%d landmarks"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%d mejnikov"
+msgstr[1] "%d mejnik"
+msgstr[2] "%d mejnika"
+msgstr[3] "%d mejniki"
 
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
@@ -11088,13 +11086,12 @@ msgstr "Čas in datum"
 #. Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if rewind and fast forward is enabled, Up Arrow and Down Arrow can be used within Say All to quickly move within the document to re-hear something which was just read or skip past something of no interest.
 #: ../src/orca/orca-setup.ui.h:37
 msgid "Enable _rewind and fast forward in Say All"
-msgstr ""
+msgstr "Omogoči preskoke vsebine naprej in nazaj v načinu Izgovori vse"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if structural navigation is enabled for Say All, users can use commands such as H/Shift+H to jump to the next/previous heading, P/Shift+P to jump to the next/previous paragraph, T/Shift+T to jump to the next/previous table, and so on. Thus this setting is like fast forward and rewind, but with semantic awareness for web documents and similar content.
 #: ../src/orca/orca-setup.ui.h:39
-#, fuzzy
 msgid "Enable _structural navigation in Say All"
-msgstr "Omogoči _strukturno krmarjenje"
+msgstr "Omogoči _strukturno krmarjenje v načinu Izgovori vse"
 
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and say all by line.  If Orca were speaking a work of fiction, it would probably be best to do say all by sentence so it sounds more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: ../src/orca/orca-setup.ui.h:41
@@ -11260,23 +11257,22 @@ msgstr "Izgovori _barve z imeni"
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a GUI table, such as a GtkTreeView. Document tables, such as those found in Writer and web content, and spreadsheet tables such as those found in Calc are not considered GUI tables. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: ../src/orca/orca-setup.ui.h:100
 msgid "Speak full row in _GUI tables"
-msgstr ""
+msgstr "Izgovori celotno vrstico v _razpredelnicah vmesnika"
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a document table. In this context, document tables include tables such as those found in Writer documents as well as HTML table elements, but exclude spreadsheet tables such as found in Calc. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: ../src/orca/orca-setup.ui.h:102
 msgid "Speak full row in _document tables"
-msgstr ""
+msgstr "Izgovori celotno vrstico v _razpredelnici dokumenta"
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a spreadsheet. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: ../src/orca/orca-setup.ui.h:104
 msgid "Speak full row in sp_readsheets"
-msgstr ""
+msgstr "Izgovori celotno vrstico v _preglednici"
 
 #. Translators: The misspelled-word indicator is the red squiggly line that appears underneath misspelled words in editable text fields. If this setting is enabled, when a user first moves into a word with this indicator, or types a misspelled word causing this indicator to appear, Orca will announce that the word is misspelled.
 #: ../src/orca/orca-setup.ui.h:106
-#, fuzzy
 msgid "Speak _misspelled-word indicator"
-msgstr "Prezri napačno črkovano besedo"
+msgstr "_Izgovori označeno napačno črkovano besede"
 
 #: ../src/orca/orca-setup.ui.h:107
 msgid "Spoken Context"
