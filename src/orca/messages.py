@@ -1333,12 +1333,12 @@ MODE_BROWSE_IS_STICKY = _("Browse mode is sticky.")
 # mouse. If this command fails, Orca will present this message.
 MOUSE_OVER_NOT_FOUND = _("Mouse over object not found.")
 
-# Translators: Orca has a feature to speak the item under the pointer. This feaure,
+# Translators: Orca has a feature to speak the item under the pointer. This feature,
 # known as mouse review, can be enabled and disabled via command. The following is
 # the message which Orca will present when mouse review is toggled off via command.
 MOUSE_REVIEW_DISABLED = _("Mouse review disabled.")
 
-# Translators: Orca has a feature to speak the item under the pointer. This feaure,
+# Translators: Orca has a feature to speak the item under the pointer. This feature,
 # known as mouse review, can be enabled and disabled via command. The following is
 # the message which Orca will present when mouse review is toggled on via command.
 MOUSE_REVIEW_ENABLED = _("Mouse review enabled.")
