@@ -45,6 +45,18 @@ class Utilities(web.Utilities):
     def _attemptBrokenTextRecovery(self):
         return True
 
+    def containsPoint(self, obj, x, y, coordType):
+        if not super().containsPoint(obj, x, y, coordType):
+            return False
+
+        roles = [pyatspi.ROLE_MENU, pyatspi.ROLE_TOOL_TIP]
+        if obj.getRole() in roles and self.topLevelObject(obj) == obj.parent:
+            msg = "GECKO: %s is suspected to be off screen object" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return True
+
     def nodeLevel(self, obj):
         """Determines the level of at which this object is at by using
         the object attribute 'level'.  To be consistent with the default

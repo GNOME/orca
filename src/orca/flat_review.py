@@ -703,18 +703,11 @@ class Context:
                 substringEndOffset   = substringStartOffset
                 unicodeStartOffset   = i + 1
             else:
-                [x, y, width, height] = text.getRangeExtents(
-                        substringStartOffset, substringEndOffset, 0)
-                if self.script.utilities.containsRegion(
-                        x, y, width, height,
-                        cliprect.x, cliprect.y,
-                        cliprect.width, cliprect.height):
-
+                extents = text.getRangeExtents(
+                    substringStartOffset, substringEndOffset, 0)
+                if self.script.utilities.containsRegion(extents, cliprect):
                     anyVisible = True
-
-                    clipping = self.clip(x, y, width, height,
-                                         cliprect.x, cliprect.y,
-                                         cliprect.width, cliprect.height)
+                    clipping = self.clip(*extents, *cliprect)
 
                     # [[[TODO: WDW - HACK it would be nice to clip the
                     # the text by what is really showing on the screen,
@@ -972,7 +965,7 @@ class Context:
         except:
             return []
 
-        if not self.script.utilities.containsRegion(*extents, *cliprect):
+        if not self.script.utilities.containsRegion(extents, cliprect):
             return []
 
         try:

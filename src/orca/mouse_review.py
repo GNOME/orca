@@ -1,6 +1,7 @@
 # Mouse reviewer for Orca
 #
 # Copyright 2008 Eitan Isaacson
+# Copyright 2016 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,332 +23,317 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2008 Eitan Isaacson"
+__copyright__ = "Copyright (c) 2008 Eitan Isaacson" \
+                "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
 import gi
+import math
+import pyatspi
+import time
 
-from . import debug
-
+from gi.repository import Gdk
 try:
     gi.require_version("Wnck", "3.0")
     from gi.repository import Wnck
     _mouseReviewCapable = True
 except:
-    debug.println(debug.LEVEL_WARNING, \
-                  "Python module wnck not found, mouse review not available.")
     _mouseReviewCapable = False
 
-import pyatspi
-from gi.repository import Gdk
-from gi.repository import GLib
-
+from . import debug
 from . import event_manager
+from . import messages
+from . import orca_state
 from . import script_manager
+from . import settings_manager
 from . import speech
-from . import braille
-from . import settings
 
 _eventManager = event_manager.getManager()
 _scriptManager = script_manager.getManager()
+_settingsManager = settings_manager.getManager()
 
-class BoundingBox:
-    """A bounding box, currently it is used to test if a given point is
-    inside the bounds of the box.
-    """
+class _StringContext:
+    """The textual information associated with an _ItemContext."""
 
-    def __init__(self, x, y, width, height):
-        """Initialize a bounding box.
-
-        Arguments:
-        - x: Left border of box.
-        - y: Top border of box.
-        - width: Width of box.
-        - height: Height of box.
-        """
-        self.x, self.y, self.width, self.height = x, y, width, height
-
-    def isInBox(self, x, y):
-        """Test if a given point is inside a box.
+    def __init__(self, obj, script=None, string="", start=0, end=0):
+        """Initialize the _StringContext.
 
         Arguments:
-        - x: X coordinate.
-        - y: Y coordinate.
-
-        Returns True if point is inside box.
+        - string: The human-consumable string
+        - obj: The accessible object associated with this string
+        - start: The start offset with respect to entire text, if one exists
+        - end: The end offset with respect to the entire text, if one exists
+        - script: The script associated with the accessible object
         """
-        return (self.x <= x <= self.x + self.width) and \
-            (self.y <= y <= self.y + self.height)
 
-class _WordContext:
-    """A word on which the mouse id hovering above. This class should have
-    enough info to make it unique, so we know when we have left the word.
-    """
-    def __init__(self, word, acc, start, end):
-        """Initialize a word context.
+        self._obj = hash(obj)
+        self._script = script
+        self._string = string
+        self._start = start
+        self._end = end
 
-        Arguments:
-        - word: The string of the word we are on.
-        - acc: The accessible object that contains the word.
-        - start: The start offset of the word in the text.
-        - end: The end offset of the word in the text.
-        """
-        self.word = word
-        self.acc = acc
-        self.start = start
-        self.end = end
+    def __eq__(self, other):
+        return other is not None \
+            and self._obj == other._obj \
+            and self._string == other._string \
+            and self._start == other._start \
+            and self._end == other._end
 
-    def __cmp__(self, other):
-        """Compare two word contexts, if they refer to the same word, return 0.
-        Otherwise return 1
-        """
-        if other is None:
-            return 1
-        return int(not(self.word == other.word and self.acc == other.acc and
-                       self.start == other.start and self.end == other.end))
+    def present(self):
+        """Presents this context to the user."""
+
+        if not (self._script and self._string):
+            return False
+
+        voice = self._script.speechGenerator.voice(string=self._string)
+        string = self._script.utilities.adjustForRepeats(self._string)
+        self._script.speakMessage(string, voice=voice, interrupt=False)
+        self._script.displayBrailleMessage(self._string, -1)
+        return True
+
 
 class _ItemContext:
-    """An _ItemContext holds all the information of the item we are currently
-    hovering above. If the accessible supports word speaking, we also store
-    a word context here.
-    """
-    def __init__(self, x=0, y=0, acc=None, frame=None, app=None, script=None):
-        """Initialize an _ItemContext with all the information we have.
+    """Holds all the information of the item at a specified point."""
+
+    def __init__(self, x=0, y=0, obj=None, frame=None, script=None):
+        """Initialize the _ItemContext.
 
         Arguments:
-        - x: The X coordinate of the pointer.
-        - y: The Y coordinate of the pointer.
-        - acc: The end-node accessible at that coordinate.
-        - frame: The top-level frame below the pointer.
-        - app: The application the pointer is hovering above.
-        - script: The script for the context's application.
+        - x: The X coordinate
+        - y: The Y coordinate
+        - obj: The accessible object of interest at that coordinate
+        - frame: The containing accessible object (often a top-level window)
+        - script: The script associated with the accessible object
         """
-        self.acc = acc
-        self.frame = frame
-        self.app = app
-        self.script = script
-        self.word_ctx = self._getWordContext(x, y)
 
-    def _getWordContext(self, x, y):
-        """If the context's accessible supports it, retrieve the word we are
-        currently hovering above.
+        self._x = x
+        self._y = y
+        self._obj = obj
+        self._frame = frame
+        self._script = script
+        self._string = self._getStringContext()
 
-        Arguments:
-        - x: The X coordinate of the pointer.
-        - y: The Y coordinate of the pointer.
+    def __eq__(self, other):
+        return other is not None \
+            and self._frame == other._frame \
+            and self._obj == other._obj \
+            and self._string == other._string
 
-        Returns a _WordContext of the current word, or None.
-        """
-        if not self.script or not self.script.speakWordUnderMouse(self.acc):
-            return None
-        word, start, end = self.script.utilities.wordAtCoords(self.acc, x, y)
-        return _WordContext(word, self.acc, start, end)
+    def _getStringContext(self):
+        """Returns the _StringContext associated with the specified point."""
+
+        if not (self._script and self._obj):
+            return _StringContext(self._obj)
+
+        interfaces = pyatspi.listInterfaces(self._obj)
+        if "Text" not in interfaces:
+            return _StringContext(self._obj, self._script)
+
+        state = self._obj.getState()
+        if not state.contains(pyatspi.STATE_SELECTABLE):
+            boundary = pyatspi.TEXT_BOUNDARY_WORD_START
+        else:
+            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+
+        string, start, end = self._script.utilities.textAtPoint(
+            self._obj, self._x, self._y, boundary=boundary)
+        if not string and self._script.utilities.isTextArea(self._obj):
+            string = self._script.speechGenerator.getRoleName(self._obj)
+
+        return _StringContext(self._obj, self._script, string, start, end)
+
+    def present(self, prior):
+        """Presents this context to the user."""
+
+        if self == prior:
+            return False
+
+        interrupt = self._obj and self._obj != prior._obj \
+            or math.sqrt((self._x - prior._x)**2 + (self._y - prior._y)**2) > 25
+
+        if interrupt:
+            self._script.presentationInterrupt()
+
+        if self._frame and self._frame != prior._frame:
+            self._script.presentObject(self._frame, alreadyFocused=True)
+
+        if self._string != prior._string and self._string.present():
+            return True
+
+        if self._obj and self._obj != prior._obj:
+            self._script.presentObject(self._obj)
+
+        return True
+
 
 class MouseReviewer:
-    """Main class for the mouse-review feature.
-    """
+    """Main class for the mouse-review feature."""
+
     def __init__(self):
-        """Initalize a mouse reviewer class.
-        """
-        if not _mouseReviewCapable:
-            return
-
-        # Need to do this and allow the main loop to cycle once to get any info
-        # IMPORTANT: This causes orca to segfault upon launch in Wayland.
-        # wnck_screen = Wnck.Screen.get_default()
-        self.active = False
+        self._active = _settingsManager.getSetting("enableMouseReview")
         self._currentMouseOver = _ItemContext()
-        self._oldMouseOver = _ItemContext()
-        self._lastReportedCoord = None
+        self._pointer = None
+        self._windows = []
+        self._handlerIds = {}
 
-    def toggle(self, on=None):
-        """Toggle mouse reviewing on or off.
+        if not _mouseReviewCapable:
+            msg = "MOUSE REVIEW ERROR: Wnck is not available"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
 
-        Arguments:
-        - on: If set to True or False, explicitly toggles reviewing on or off.
-        """
+        if not self._active:
+            return
+
+        self.activate()
+
+    def _get_listeners(self):
+        """Returns the accessible-event listeners for mouse review."""
+
+        return {"mouse:abs": self._listener}
+
+    def activate(self):
+        """Activates mouse review."""
+
+        display = Gdk.Display.get_default()
+        seat = Gdk.Display.get_default_seat(display)
+        self._pointer = seat.get_pointer()
+
+        _eventManager.registerModuleListeners(self._get_listeners())
+        screen = Wnck.Screen.get_default()
+        i = screen.connect("window-stacking-changed", self._on_stacking_changed)
+        self._handlerIds[i] = screen
+
+    def deactivate(self):
+        """Deactivates mouse review."""
+
+        _eventManager.deregisterModuleListeners(self._get_listeners())
+        for key, value in self._handlerIds.items():
+            value.disconnect(key)
+        self._handlerIds = {}
+
+    def toggle(self, script=None, event=None):
+        """Toggle mouse reviewing on or off."""
+
         if not _mouseReviewCapable:
             return
 
-        if on is None:
-            on = not self.active
-        if on and not self.active:
-            _eventManager.registerModuleListeners(
-                {"mouse:abs":self._onMouseMoved})
-        elif not on and self.active:
-            _eventManager.deregisterModuleListeners(
-                {"mouse:abs":self._onMouseMoved})
-        self.active = on
+        self._active = not self._active
+        _settingsManager.setSetting("enableMouseReview", self._active)
 
-    def _onMouseMoved(self, event):
-        """Callback for "mouse:abs" AT-SPI event. We will check after the dwell
-        delay if the mouse moved away, if it didn't we will review the
-        component under it.
-
-        Arguments:
-        - event: The event we recieved.
-        """
-        if settings.mouseDwellDelay:
-            GLib.timeout_add(settings.mouseDwellDelay,
-                             self._mouseDwellTimeout,
-                             event.detail1,
-                             event.detail2)
+        if not self._active:
+            self.deactivate()
+            msg = messages.MOUSE_REVIEW_DISABLED
         else:
-            self._mouseDwellTimeout(event.detail1, event.detail2)
+            self.activate()
+            msg = messages.MOUSE_REVIEW_ENABLED
 
-    def _mouseDwellTimeout(self, prev_x, prev_y):
-        """Dwell timout callback. If we are still dwelling, review the
-        component.
+        if orca_state.activeScript:
+            orca_state.activeScript.presentMessage(msg)
 
-        Arguments:
-        - prev_x: Previous X coordinate of mouse pointer.
-        - prev_y: Previous Y coordinate of mouse pointer.
-        """
-        display = Gdk.Display.get_default()
-        screen, x, y, flags =  display.get_pointer()
-        if abs(prev_x - x) <= settings.mouseDwellMaxDrift \
-           and abs(prev_y - y) <= settings.mouseDwellMaxDrift \
-           and not (x, y) == self._lastReportedCoord:
-            self._lastReportedCoord = (x, y)
-            self._reportUnderMouse(x, y)
-        return False
+    def _on_stacking_changed(self, screen):
+        """Callback for Wnck's window-stacking-changed signal."""
 
-    def _reportUnderMouse(self, x, y):
-        """Report the element under the given coordinates:
+        stacked = screen.get_windows_stacked()
+        stacked.reverse()
+        self._windows = stacked
 
-        Arguments:
-        - x: X coordinate.
-        - y: Y coordinate.
-        """
-        current_element = self._getContextUnderMouse(x, y)
-        if not current_element:
+    def _contains_point(self, obj, x, y, coordType=None):
+        if coordType is None:
+            coordType = pyatspi.DESKTOP_COORDS
+
+        try:
+            return obj.queryComponent().contains(x, y, coordType)
+        except:
+            return False
+
+    def _has_bounds(self, obj, bounds, coordType=None):
+        """Returns True if the bounding box of obj is bounds."""
+
+        if coordType is None:
+            coordType = pyatspi.DESKTOP_COORDS
+
+        try:
+            extents = obj.queryComponent().getExtents(coordType)
+        except:
+            return False
+
+        return list(extents) == list(bounds)
+
+    def _accessible_window_at_point(self, pX, pY):
+        """Returns the accessible window at the specified coordinates."""
+
+        window = None
+        for w in self._windows:
+            x, y, width, height = w.get_geometry()
+            if x <= pX <= x + width and y <= pY <= y + height:
+                window = w
+                break
+
+        if not window:
+            return None
+
+        app = None
+        pid = window.get_application().get_pid()
+        for a in pyatspi.Registry.getDesktop(0):
+            if a.get_process_id() == pid:
+                app = a
+                break
+
+        if not app:
+            return None
+
+        candidates = [o for o in app if self._contains_point(o, pX, pY)]
+        if len(candidates) == 1:
+            return candidates[0]
+
+        name = window.get_name()
+        matches = [o for o in candidates if o.name == name]
+        if len(matches) == 1:
+            return matches[0]
+
+        bbox = window.get_client_window_geometry()
+        matches = [o for o in candidates if self._has_bounds(o, bbox)]
+        if len(matches) == 1:
+            return matches[0]
+
+        return None
+
+    def _on_mouse_moved(self, event):
+        """Callback for mouse:abs events."""
+
+        screen, pX, pY = self._pointer.get_position()
+        window = self._accessible_window_at_point(pX, pY)
+        msg = "MOUSE REVIEW: Window at (%i, %i) is %s" % (pX, pY, window)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        if not window:
             return
 
-        self._currentMouseOver, self._oldMouseOver = \
-            current_element, self._currentMouseOver
-
-        output_obj = []
-
-        if current_element.acc.getRole() in (pyatspi.ROLE_MENU_ITEM,
-                                             pyatspi.ROLE_COMBO_BOX) and \
-                current_element.acc.getState().contains(
-                    pyatspi.STATE_SELECTED):
-            # If it is selected, we are probably doing that by hovering over it
-            # Orca will report this in any case.
+        script = orca_state.activeScript
+        if not script:
             return
 
-        if self._currentMouseOver.frame != self._oldMouseOver.frame and \
-                settings.mouseDwellDelay == 0:
-            output_obj.append(self._currentMouseOver.frame)
+        obj = script.utilities.descendantAtPoint(window, pX, pY)
+        msg = "MOUSE REVIEW: Object at (%i, %i) is %s" % (pX, pY, obj)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
-        if self._currentMouseOver.acc != self._oldMouseOver.acc \
-                or (settings.mouseDwellDelay > 0 and \
-                        not self._currentMouseOver.word_ctx):
-            output_obj.append(self._currentMouseOver.acc)
+        script = _scriptManager.getScript(window.getApplication(), obj)
+        new = _ItemContext(pX, pY, obj, window, script)
+        new.present(self._currentMouseOver)
+        self._currentMouseOver = new
 
-        if self._currentMouseOver.word_ctx:
-            if self._currentMouseOver.word_ctx != self._oldMouseOver.word_ctx:
-                output_obj.append(self._currentMouseOver.word_ctx.word)
+    def _listener(self, event):
+        """Generic listener, mainly to output debugging info."""
 
-        self._outputElements(output_obj)
-        return False
+        startTime = time.time()
+        msg = "\nvvvvv PROCESS OBJECT EVENT %s vvvvv" % event.type
+        debug.println(debug.LEVEL_INFO, msg, False)
 
-    def _outputElements(self, output_obj):
-        """Output the given elements.
-        TODO: Now we are mainly using WhereAmI, we might need to find out a
-        better, less verbose output method.
+        if event.type.startswith("mouse:abs"):
+            self._on_mouse_moved(event)
 
-        Arguments:
-        - output_obj: A list of objects to output, could be accessibles and
-        text.
-        """
-        if output_obj:
-            speech.stop()
-        for obj in output_obj:
-            if obj is None:
-                continue
-            if isinstance(obj, str):
-                speech.speak(obj)
-                # TODO: There is probably something more useful that we could
-                # display.
-                braille.displayMessage(obj)
-            else:
-                speech.speak(
-                    self._currentMouseOver.script.speechGenerator.\
-                        generateSpeech(obj))
-                self._currentMouseOver.script.updateBraille(obj)
+        msg = "TOTAL PROCESSING TIME: %.4f\n" % (time.time() - startTime)
+        msg += "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" % event.type
+        debug.println(debug.LEVEL_INFO, msg, False)
 
-    def _getZOrder(self, frame_name):
-        """Determine the stack position of a given window.
 
-        Arguments:
-        - frame_name: The name of the window.
-
-        Returns position of given window in window-managers stack.
-        """
-        # This is neccesary because z-order is still broken in AT-SPI.
-        wnck_screen = Wnck.Screen.get_default()
-        window_order = \
-            [w.get_name() for w in wnck_screen.get_windows_stacked()]
-        return window_order.index(frame_name)
-
-    def _getContextUnderMouse(self, x, y):
-        """Get the context under the mouse.
-
-        Arguments:
-        - x: X coordinate.
-        - y: Y coordinate.
-
-        Returns _ItemContext of the component under the mouse.
-        """
-
-        # Inspect accessible under mouse
-        desktop = pyatspi.Registry.getDesktop(0)
-        top_window = [None, -1]
-        for app in desktop:
-            if not app:
-                continue
-            script = _scriptManager.getScript(app)
-            if not script:
-                continue
-            for frame in app:
-                if not frame:
-                    continue
-                acc = script.utilities.componentAtDesktopCoords(frame, x, y)
-                if acc:
-                    try:
-                        z_order = self._getZOrder(frame.name)
-                    except ValueError:
-                        # It's possibly a popup menu, so it would not be in
-                        # our frame name list.
-                        # And if it is, it is probably the top-most
-                        # component.
-                        try:
-                            if acc.queryComponent().getLayer() == \
-                                    pyatspi.LAYER_POPUP:
-                                return _ItemContext(x, y, acc, frame,
-                                                    app, script)
-                        except:
-                            pass
-                    else:
-                        if z_order > top_window[-1]:
-                            top_window = \
-                                [_ItemContext(x, y, acc, frame, app, script),
-                                 z_order]
-        return top_window[0]
-
-# Initialize a singleton reviewer.
-if Gdk.Display.get_default():
-    mouse_reviewer = MouseReviewer()
-else:
-    raise RuntimeError('Cannot initialize mouse review, no display')
-
-def toggle(script=None, event=None):
-    """
-    Toggle the reviewer on or off.
-
-    Arguments:
-    - script: Given script if this was called as a keybinding callback.
-    - event: Given event if this was called as a keybinding callback.
-    """
-    mouse_reviewer.toggle()
+reviewer = MouseReviewer()

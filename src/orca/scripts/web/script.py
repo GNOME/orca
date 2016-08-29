@@ -773,7 +773,8 @@ class Script(default.Script):
         obj, offset = self.utilities.getCaretContext(documentFrame=None)
         self.speakContents(self.utilities.getLineContentsAtOffset(obj, offset))
 
-    def presentObject(self, obj, offset=0):
+    def presentObject(self, obj, **args):
+        offset = args.get("offset", 0)
         contents = self.utilities.getObjectContentsAtOffset(obj, offset)
         self.displayContents(contents)
         self.speakContents(contents)

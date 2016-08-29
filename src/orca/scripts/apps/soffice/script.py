@@ -298,12 +298,12 @@ class Script(default.Script):
 
         super().doWhereAmI(inputEvent, basicOnly)
 
-    def presentObject(self, obj, offset=0):
+    def presentObject(self, obj, **args):
         if not self._lastCommandWasStructNav:
-            super().presentObject(obj, offset)
+            super().presentObject(obj, **args)
             return
 
-        utterances = self.speechGenerator.generateSpeech(obj)
+        utterances = self.speechGenerator.generateSpeech(obj, **args)
         speech.speak(utterances)
 
     def panBrailleLeft(self, inputEvent=None, panAmount=0):

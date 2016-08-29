@@ -96,8 +96,6 @@ class Script(script.Script):
         self.digits = '0123456789'
         self.whitespace = ' \t\n\r\v\f'
 
-        self.lastSelectedMenu = None
-
         # A dictionary of non-standardly-named text attributes and their
         # Atk equivalents.
         #
@@ -500,7 +498,7 @@ class Script(script.Script):
 
         self.inputEventHandlers["toggleMouseReviewHandler"] = \
             input_event.InputEventHandler(
-                mouse_review.toggle,
+                mouse_review.reviewer.toggle,
                 cmdnames.MOUSE_REVIEW_TOGGLE)
 
         self.inputEventHandlers["presentTimeHandler"] = \
@@ -2389,14 +2387,6 @@ class Script(script.Script):
         if keyString == "space":
             return
  
-        # Save the event source, if it is a menu or combo box. It will be
-        # useful for optimizing componentAtDesktopCoords in the case that
-        # the pointer is hovering over a menu item. The alternative is to
-        # traverse the application's tree looking for potential moused-over
-        # menu items.
-        if obj.getRole() in (pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_MENU):
-            self.lastSelectedMenu = obj
-
         selectedChildren = self.utilities.selectedChildren(obj)
         for child in selectedChildren:
             if pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == child):
@@ -3274,10 +3264,11 @@ class Script(script.Script):
         self._lastWord = word
         speech.speak(word, voice)
 
-    def presentObject(self, obj, offset=0):
-        self.updateBraille(obj)
-        utterances = self.speechGenerator.generateSpeech(obj)
-        speech.speak(utterances)
+    def presentObject(self, obj, **args):
+        interrupt = args.get("interrupt", False)
+        self.updateBraille(obj, **args)
+        utterances = self.speechGenerator.generateSpeech(obj, **args)
+        speech.speak(utterances, interrupt=interrupt)
 
     def stopSpeechOnActiveDescendantChanged(self, event):
         """Whether or not speech should be stopped prior to setting the
@@ -3612,17 +3603,6 @@ class Script(script.Script):
         """
 
         print("\a")
-
-    def speakWordUnderMouse(self, acc):
-        """Determine if the speak-word-under-mouse capability applies to
-        the given accessible.
-
-        Arguments:
-        - acc: Accessible to test.
-
-        Returns True if this accessible should provide the single word.
-        """
-        return acc and acc.getState().contains(pyatspi.STATE_EDITABLE)
 
     def speakMisspelledIndicator(self, obj, offset):
         """Speaks an announcement indicating that a given word is misspelled.

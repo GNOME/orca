@@ -1561,6 +1561,34 @@ class Utilities(script_utilities.Utilities):
         self._isTextBlockElement[hash(obj)] = rv
         return rv
 
+    def _treatAsLeafNode(self, obj):
+        if super()._treatAsLeafNode(obj):
+            return True
+
+        if not self.isTextBlockElement(obj):
+            return False
+
+        for child in obj:
+            if self.isTextBlockElement(child):
+                return False
+
+        return True
+
+    def textAtPoint(self, obj, x, y, coordType=None, boundary=None):
+        if coordType is None:
+            coordType = pyatspi.DESKTOP_COORDS
+
+        if boundary is None:
+            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+
+        string, start, end = super().textAtPoint(obj, x, y, coordType, boundary)
+        if string == self.EMBEDDED_OBJECT_CHARACTER:
+            child = self.getChildAtOffset(obj, start)
+            if child:
+                return self.textAtPoint(child, x, y, coordType, boundary)
+
+        return string, start, end
+
     def treatAsDiv(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False

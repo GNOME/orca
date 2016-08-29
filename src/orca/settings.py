@@ -282,8 +282,6 @@ presentLockingKeys           = None
 
 # Mouse review
 enableMouseReview          = False
-mouseDwellDelay            = 0
-mouseDwellMaxDrift         = 3
 
 # Progressbars
 speakProgressBarUpdates    = True

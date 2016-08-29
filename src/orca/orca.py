@@ -85,12 +85,6 @@ _scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
 _logger = logger.getLogger()
 
-try:
-    # If we don't have an active desktop, we will get a RuntimeError.
-    from . import mouse_review
-except RuntimeError:
-    pass
-
 def onEnabledChanged(gsetting, key):
     try:
         enabled = gsetting.get_boolean(key)
@@ -385,13 +379,6 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
 
     if _settingsManager.getSetting('enableSound'):
         player.init()
-
-    # I'm not sure where else this should go. But it doesn't really look
-    # right here.
-    try:
-        mouse_review.mouse_reviewer.toggle(on=settings.enableMouseReview)
-    except NameError:
-        pass
 
     global _orcaModifiers
     custom = [k for k in settings.orcaModifierKeys if k not in _orcaModifiers]

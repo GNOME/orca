@@ -170,3 +170,48 @@ class Utilities(script_utilities.Utilities):
             return True
 
         return False
+
+    def _adjustPointForObj(self, obj, x, y, coordType):
+        try:
+            singleLine = obj.getState().contains(pyatspi.STATE_SINGLE_LINE)
+        except:
+            singleLine = False
+
+        if not singleLine or "EditableText" not in pyatspi.listInterfaces(obj):
+            return x, y
+
+        text = self.queryNonEmptyText(obj)
+        if not text:
+            return x, y
+
+        objBox = obj.queryComponent().getExtents(coordType)
+        stringBox = text.getRangeExtents(0, text.characterCount, coordType)
+        if self.intersection(objBox, stringBox) != (0, 0, 0, 0):
+            return x, y
+
+        msg = "ERROR: text bounds %s not in obj bounds %s" % (stringBox, objBox)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        # This is where the string starts; not the widget.
+        boxX, boxY = stringBox[0], stringBox[1]
+
+        # Window Coordinates should be relative to the window; not the widget.
+        # But broken interface is broken, and this appears to be what is being
+        # exposed. And we need this information to get the widget's x and y.
+        charExtents = text.getCharacterExtents(0, pyatspi.WINDOW_COORDS)
+        if 0 < charExtents[0] < charExtents[2]:
+            boxX -= charExtents[0]
+        if 0 < charExtents[1] < charExtents[3]:
+            boxY -= charExtents[1]
+
+        # The point relative to the widget:
+        relX = x - objBox[0]
+        relY = y - objBox[1]
+
+        # The point relative to our adjusted bounding box:
+        newX = boxX + relX
+        newY = boxY + relY
+
+        msg = "INFO: Adjusted (%i, %i) to (%i, %i)" % (x, y, newX, newY)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return newX, newY

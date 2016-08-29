@@ -29,6 +29,7 @@ __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
 import functools
+import gi
 import locale
 import math
 import pyatspi
@@ -45,7 +46,6 @@ from . import keybindings
 from . import input_event
 from . import mathsymbols
 from . import messages
-from . import mouse_review
 from . import orca
 from . import orca_state
 from . import object_properties
@@ -350,40 +350,6 @@ class Utilities:
         msg = 'INFO: Common ancestor of %s and %s is %s' % (a, b, commonAncestor)
         debug.println(debug.LEVEL_INFO, msg, True)
         return commonAncestor
-
-    def componentAtDesktopCoords(self, parent, x, y):
-        """Get the descendant component at the given desktop coordinates.
-
-        Arguments:
-
-        - parent: The parent component we are searching below.
-        - x: X coordinate.
-        - y: Y coordinate.
-
-        Returns end-node that contains the given coordinates, or None.
-        """
-        acc = self.popupItemAtDesktopCoords(x, y)
-        if acc:
-            return acc
-
-        container = parent
-        while True:
-            try:
-                ci = container.queryComponent()
-            except:
-                return None
-            else:
-                inner_container = container
-            container =  ci.getAccessibleAtPoint(x, y, pyatspi.DESKTOP_COORDS)
-            if not container or container.queryComponent() == ci:
-                break
-            if inner_container.getRole() == pyatspi.ROLE_PAGE_TAB_LIST:
-                return container
-
-        if inner_container == parent:
-            return None
-        else:
-            return inner_container
 
     def defaultButton(self, obj):
         """Returns the default button in the dialog which contains obj.
@@ -1582,38 +1548,6 @@ class Utilities:
         self._script.generatorCache[self.NODE_LEVEL][obj] = len(nodes) - 1
         return self._script.generatorCache[self.NODE_LEVEL][obj]
 
-    def popupItemAtDesktopCoords(self, x, y):
-        """Since pop-up items often don't contain nested components, we need
-        a way to efficiently determine if the cursor is over a menu item.
-
-        Arguments:
-        - x: X coordinate.
-        - y: Y coordinate.
-
-        Returns a menu item the mouse is over, or None.
-        """
-
-        suspect_children = []
-        if self._script.lastSelectedMenu:
-            try:
-                si = self._script.lastSelectedMenu.querySelection()
-            except NotImplementedError:
-                return None
-
-            if si.nSelectedChildren > 0:
-                suspect_children = [si.getSelectedChild(0)]
-            else:
-                suspect_children = self._script.lastSelectedMenu
-            for child in suspect_children:
-                try:
-                    ci = child.queryComponent()
-                except NotImplementedError:
-                    continue
-
-                if ci.contains(x, y, pyatspi.DESKTOP_COORDS) \
-                   and ci.getLayer() == pyatspi.LAYER_POPUP:
-                    return child
-
     def pursueForFlatReview(self, obj):
         """Determines if we should look any further at the object
         for flat review."""
@@ -1775,11 +1709,7 @@ class Utilities:
                     if stateset.contains(pyatspi.STATE_SHOWING) \
                        and (extents.x >= 0) and (extents.y >= 0) \
                        and (extents.width > 0) and (extents.height > 0) \
-                       and self.containsRegion(
-                            extents.x, extents.y,
-                            extents.width, extents.height,
-                            parentExtents.x, parentExtents.y,
-                            parentExtents.width, parentExtents.height):
+                       and self.containsRegion(extents, parentExtents):
                         descendants.append(header)
 
         # This algorithm goes left to right, top to bottom while attempting
@@ -2005,7 +1935,7 @@ class Utilities:
             return False
 
         try:
-            extents = obj.queryComponent().getExtents(0)
+            extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
         except:
             msg = "ERROR: Exception getting extents for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -2649,60 +2579,6 @@ class Utilities:
 
         return False
 
-    def wordAtCoords(self, acc, x, y):
-        """Get the word at the given coords in the accessible.
-
-        Arguments:
-        - acc: Accessible that supports the Text interface.
-        - x: X coordinate.
-        - y: Y coordinate.
-
-        Returns a tuple containing the word, start offset, and end offset.
-        """
-
-        try:
-            ti = acc.queryText()
-        except NotImplementedError:
-            return '', 0, 0
-
-        text_contents = ti.getText(0, ti.characterCount)
-        line_offsets = []
-        start_offset = 0
-        while True:
-            try:
-                end_offset = text_contents.index('\n', start_offset)
-            except ValueError:
-                line_offsets.append((start_offset, len(text_contents)))
-                break
-            line_offsets.append((start_offset, end_offset))
-            start_offset = end_offset + 1
-        for start, end in line_offsets:
-            bx, by, bw, bh = \
-                ti.getRangeExtents(start, end, pyatspi.DESKTOP_COORDS)
-            bb = mouse_review.BoundingBox(bx, by, bw, bh)
-            if bb.isInBox(x, y):
-                start_offset = 0
-                word_offsets = []
-                while True:
-                    try:
-                        end_offset = \
-                            text_contents[start:end].index(' ', start_offset)
-                    except ValueError:
-                        word_offsets.append((start_offset,
-                                             len(text_contents[start:end])))
-                        break
-                    word_offsets.append((start_offset, end_offset))
-                    start_offset = end_offset + 1
-                for a, b in word_offsets:
-                    bx, by, bw, bh = \
-                        ti.getRangeExtents(start+a, start+b,
-                                           pyatspi.DESKTOP_COORDS)
-                    bb = mouse_review.BoundingBox(bx, by, bw, bh)
-                    if bb.isInBox(x, y):
-                        return text_contents[start+a:start+b], start+a, start+b
-
-        return '', 0, 0
-
     #########################################################################
     #                                                                       #
     # Miscellaneous Utilities                                               #
@@ -3009,28 +2885,44 @@ class Utilities:
                or character in '!*+,-./:;<=>?@[\]^_{|}' \
                or character == self._script.NO_BREAK_SPACE_CHARACTER
 
-    @staticmethod
-    def containsRegion(ax, ay, awidth, aheight, bx, by, bwidth, bheight):
-        """Returns true if any portion of region 'a' is in region 'b'"""
+    def intersectingRegion(self, obj1, obj2, coordType=None):
+        """Returns the extents of the intersection of obj1 and obj2."""
 
-        highestBottom = min(ay + aheight, by + bheight)
-        lowestTop = max(ay, by)
-        leftMostRightEdge = min(ax + awidth, bx + bwidth)
-        rightMostLeftEdge = max(ax, bx)
+        if coordType is None:
+            coordType = pyatspi.DESKTOP_COORDS
 
-        if lowestTop <= highestBottom \
-           and rightMostLeftEdge <= leftMostRightEdge:
-            return True
-        elif aheight == 0:
-            if awidth == 0:
-                return lowestTop == highestBottom \
-                       and leftMostRightEdge == rightMostLeftEdge
-            else:
-                return leftMostRightEdge <= rightMostLeftEdge
-        elif awidth == 0:
-            return lowestTop <= highestBottom
+        try:
+            extents1 = obj1.queryComponent().getExtents(coordType)
+            extents2 = obj2.queryComponent().getExtents(coordType)
+        except:
+            return 0, 0, 0, 0
 
-        return False
+        return self.intersection(extents1, extents2)
+
+    def intersection(self, extents1, extents2):
+        x1, y1, width1, height1 = extents1
+        x2, y2, width2, height2 = extents2
+
+        xPoints1 = range(x1, x1 + width1 + 1)
+        xPoints2 = range(x2, x2 + width2 + 1)
+        xIntersection = sorted(set(xPoints1).intersection(set(xPoints2)))
+
+        yPoints1 = range(y1, y1 + height1 + 1)
+        yPoints2 = range(y2, y2 + height2 + 1)
+        yIntersection = sorted(set(yPoints1).intersection(set(yPoints2)))
+
+        if not (xIntersection and yIntersection):
+            return 0, 0, 0, 0
+
+        x = xIntersection[0]
+        y = yIntersection[0]
+        width = xIntersection[-1] - x
+        height = yIntersection[-1] - y
+
+        return x, y, width, height
+
+    def containsRegion(self, extents1, extents2):
+        return self.intersection(extents1, extents2) != (0, 0, 0, 0)
 
     @staticmethod
     def _allNamesForKeyCode(keycode):
@@ -3537,6 +3429,88 @@ class Utilities:
             return -1, -1
 
         return table.nRows, table.nColumns
+
+    def containsPoint(self, obj, x, y, coordType):
+        try:
+            component = obj.queryComponent()
+        except:
+            return False
+
+        return component.contains(x, y, coordType)
+
+    def _boundsIncludeChildren(self, obj):
+        if not obj:
+            return False
+
+        roles = [pyatspi.ROLE_MENU,
+                 pyatspi.ROLE_PAGE_TAB]
+
+        return obj.getRole() not in roles
+
+    def _treatAsLeafNode(self, obj):
+        if not obj:
+            return False
+
+        if not obj.childCount:
+            return True
+
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EXPANDABLE):
+            return not state.contains(pyatspi.STATE_EXPANDED)
+
+        roles = [pyatspi.ROLE_COMBO_BOX,
+                 pyatspi.ROLE_PUSH_BUTTON]
+
+        return obj.getRole() in roles
+
+    def descendantAtPoint(self, root, x, y, coordType=None):
+        if coordType is None:
+            coordType = pyatspi.DESKTOP_COORDS
+
+        if self.containsPoint(root, x, y, coordType):
+            if self._treatAsLeafNode(root) or not self._boundsIncludeChildren(root):
+                return root
+        elif self._treatAsLeafNode(root) or self._boundsIncludeChildren(root):
+            return None
+
+        for child in root:
+            obj = self.descendantAtPoint(child, x, y, coordType)
+            if obj:
+                return obj
+
+        return None
+
+    def _adjustPointForObj(self, obj, x, y, coordType):
+        return x, y
+
+    def textAtPoint(self, obj, x, y, coordType=None, boundary=None):
+        text = self.queryNonEmptyText(obj)
+        if not text:
+            return "", 0, 0
+
+        if coordType is None:
+            coordType = pyatspi.DESKTOP_COORDS
+
+        if boundary is None:
+            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+
+        x, y = self._adjustPointForObj(obj, x, y, coordType)
+        offset = text.getOffsetAtPoint(x, y, coordType)
+        if not 0 <= offset < text.characterCount:
+            return "", 0, 0
+
+        string, start, end = text.getTextAtOffset(offset, boundary)
+        if not string:
+            return "", start, end
+
+        if boundary == pyatspi.TEXT_BOUNDARY_WORD_START and not string.strip():
+            return "", 0, 0
+
+        extents = text.getRangeExtents(start, end, coordType)
+        if not self.containsRegion(extents, (x, y, 1, 1)):
+            return "", 0, 0
+
+        return string, start, end
 
     def _getTableRowRange(self, obj):
         rowCount, columnCount = self.rowAndColumnCount(obj)
