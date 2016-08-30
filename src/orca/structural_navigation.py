@@ -1148,7 +1148,7 @@ class StructuralNavigation:
         if self._presentWithSayAll(obj, offset):
             return
 
-        self._script.presentObject(obj, offset)
+        self._script.presentObject(obj, offset=offset)
 
     def _presentWithSayAll(self, obj, offset):
         if self._script.inSayAll() \
