@@ -37,176 +37,145 @@ from . import messages
 from . import orca_state
 from . import settings
 
-# [[[WDW - HACK Regular expression to split strings on whitespace
-# boundaries, which is what we'll use for word dividers instead of
-# living at the whim of whomever decided to implement the AT-SPI
-# interfaces for their toolkit or app.]]]
-#
-whitespace_re = re.compile(r'(\s+)', re.DOTALL | re.IGNORECASE | re.M)
-
 EMBEDDED_OBJECT_CHARACTER = '\ufffc'
 
 class Char:
-    """Represents a single char of an Accessibility_Text object."""
+    """A character's worth of presentable information."""
 
-    def __init__(self,
-                 word,
-                 index,
-                 string,
-                 x, y, width, height):
+    def __init__(self, word, index, startOffset, string, x, y, width, height):
         """Creates a new char.
 
         Arguments:
         - word: the Word instance this belongs to
-        - index: the index of this char in the word
+        - startOffset: the start offset with respect to the accessible
         - string: the actual char
         - x, y, width, height: the extents of this Char on the screen
         """
 
         self.word = word
-        self.string = string
         self.index = index
+        self.startOffset = startOffset
+        self.endOffset = startOffset + 1
+        self.string = string
         self.x = x
         self.y = y
         self.width = width
         self.height = height
 
-class Word:
-    """Represents a single word of an Accessibility_Text object, or
-    the entire name of an Image or Component if the associated object
-    does not implement the Accessibility_Text interface.  As a rule of
-    thumb, all words derived from an Accessibility_Text interface will
-    start with the word and will end with all chars up to the
-    beginning of the next word.  That is, whitespace and punctuation
-    will usually be tacked on to the end of words."""
 
-    def __init__(self,
-                 zone,
-                 index,
-                 startOffset,
-                 string,
-                 x, y, width, height):
+class Word:
+    """A single chunk (word or object) of presentable information."""
+
+    def __init__(self, zone, index, startOffset, string, x, y, width, height):
         """Creates a new Word.
 
         Arguments:
         - zone: the Zone instance this belongs to
-        - index: the index of this word in the Zone
+        - index: the index of this Word in the Zone
+        - startOffset: the start offset with respect to the accessible
         - string: the actual string
-        - x, y, width, height: the extents of this Char on the screen"""
+        - x, y, width, height: the extents of this Word on the screen
+        """
 
         self.zone = zone
         self.index = index
         self.startOffset = startOffset
         self.string = string
         self.length = len(string)
+        self.endOffset = self.startOffset + len(string)
         self.x = x
         self.y = y
         self.width = width
         self.height = height
+        self.chars = []
 
-    def __getattr__(self, attr):
-        """Used for lazily determining the chars of a word.  We do
-        this to reduce the total number of round trip calls to the app,
-        and to also spread the round trip calls out over the lifetime
-        of a flat review context.
+    def __getattribute__(self, attr):
+        if attr != "chars":
+            return super().__getattribute__(attr)
 
-        Arguments:
-        - attr: a string indicating the attribute name to retrieve
+        try:
+            text = self.zone.accessible.queryText()
+        except:
+            return []
 
-        Returns the value of the given attribute.
-        """
+        chars = []
+        for i, char in enumerate(self.string):
+            start = i + self.startOffset
+            extents = text.getRangeExtents(start, start+1, pyatspi.DESKTOP_COORDS)
+            chars.append(Char(self, i, start, char, *extents))
 
-        if attr == "chars":
-            if isinstance(self.zone, TextZone):
-                text = self.zone.accessible.queryText()
+        return chars
 
-                # Pylint is confused and flags this warning:
-                #
-                # W0201:132:Word.__getattr__: Attribute 'chars' defined 
-                # outside __init__
-                #
-                # So for now, we just disable this error in this method.
-                #
-                # pylint: disable-msg=W0201
+    def getRelativeOffset(self, offset):
+        """Returns the char offset with respect to this word or -1."""
 
-                self.chars = []
+        if self.startOffset <= offset < self.startOffset + len(self.string):
+            return offset - self.startOffset
 
-                i = 0
-                while i < self.length:
-                    [char, startOffset, endOffset] = text.getTextAtOffset(
-                        self.startOffset + i,
-                        pyatspi.TEXT_BOUNDARY_CHAR)
-                    [x, y, width, height] = text.getRangeExtents(
-                        startOffset,
-                        startOffset + 1,
-                        0)
-                    self.chars.append(Char(self,
-                                           i,
-                                           char,
-                                           x, y, width, height))
-                    i += 1
-            else:
-                self.chars = None
-            return self.chars
-        elif attr.startswith('__') and attr.endswith('__'):
-            raise AttributeError(attr)
-        else:
-            return self.__dict__[attr]
+        return -1
+
 
 class Zone:
     """Represents text that is a portion of a single horizontal line."""
 
-    def __init__(self,
-                 accessible,
-                 string,
-                 x, y,
-                 width, height,
-                 role=None):
-        """Creates a new Zone, which is a horizontal region of text.
+    WORDS_RE = re.compile("(\S+\s*)", re.UNICODE)
+
+    def __init__(self, accessible, string, x, y, width, height, role=None):
+        """Creates a new Zone.
 
         Arguments:
         - accessible: the Accessible associated with this Zone
         - string: the string being displayed for this Zone
         - extents: x, y, width, height in screen coordinates
-        - role: Role to override accesible's role.
+        - role: Role to override accessible's role.
         """
 
         self.accessible = accessible
-        self.string = string
+        self.startOffset = 0
+        self._string = string
         self.length = len(string)
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.role = role or accessible.getRole()
+        self._words = []
 
-    def __getattr__(self, attr):
-        """Used for lazily determining the words in a Zone.
+    def __getattribute__(self, attr):
+        """To ensure we update the content."""
 
-        Arguments:
-        - attr: a string indicating the attribute name to retrieve
+        if attr not in ["words", "string"]:
+            return super().__getattribute__(attr)
 
-        Returns the value of the given attribute.
-        """
+        if attr == "string":
+            return self._string
 
-        if attr == "words":
+        if not self._shouldFakeText():
+            return self._words
 
-            # Pylint is confused and flags this warning:
-            #
-            # W0201:203:Zone.__getattr__: Attribute 'words' defined 
-            # outside __init__
-            #
-            # So for now, we just disable this error in this method.
-            #
-            # pylint: disable-msg=W0201
+        # TODO - JD: For now, don't fake character and word extents.
+        # The main goal is to improve reviewability.
+        extents = self.x, self.y, self.width, self.height
 
-            self.words = []
+        words = []
+        for i, word in enumerate(re.finditer(self.WORDS_RE, self._string)):
+            words.append(Word(self, i, word.start(), word.group(), *extents))
 
-            return self.words
-        elif attr.startswith('__') and attr.endswith('__'):
-            raise AttributeError(attr)
-        else:
-            return self.__dict__[attr]
+        self._words = words
+        return words
+
+    def _shouldFakeText(self):
+        """Returns True if we should try to fake the text interface"""
+
+        textRoles = [pyatspi.ROLE_LABEL,
+                     pyatspi.ROLE_MENU,
+                     pyatspi.ROLE_MENU_ITEM,
+                     pyatspi.ROLE_CHECK_MENU_ITEM,
+                     pyatspi.ROLE_RADIO_MENU_ITEM]
+        if self.role in textRoles:
+            return True
+
+        return False
 
     def _extentsAreOnSameLine(self, zone, pixelDelta=5):
         """Returns True if this Zone is physically on the same line as zone."""
@@ -247,91 +216,66 @@ class Zone:
         return self._extentsAreOnSameLine(zone)
 
     def getWordAtOffset(self, charOffset):
-        wordAtOffset = None
-        offset = 0
         for word in self.words:
-            nextOffset = offset + len(word.string)
-            wordAtOffset = word
-            if nextOffset > charOffset:
-                return [wordAtOffset, charOffset - offset]
-            else:
-                offset = nextOffset
+            offset = word.getRelativeOffset(charOffset)
+            if offset >= 0:
+                return word, offset
 
-        return [wordAtOffset, offset]
+        return None, -1
+
+    def hasCaret(self):
+        """Returns True if this Zone contains the caret."""
+
+        return False
+
+    def wordWithCaret(self):
+        """Returns the Word and relative offset with the caret."""
+
+        return None, -1
 
 class TextZone(Zone):
-    """Represents Accessibility_Text that is a portion of a single
-    horizontal line."""
+    """A Zone whose purpose is to display text of an object."""
 
-    def __init__(self,
-                 accessible,
-                 startOffset,
-                 string,
-                 x, y,
-                 width, height):
-        """Creates a new Zone, which is a horizontal region of text.
+    def __init__(self, accessible, startOffset, string, x, y, width, height, role=None):
+        super().__init__(accessible, string, x, y, width, height, role)
 
-        Arguments:
-        - accessible: the Accessible associated with this Zone
-        - startOffset: the index of the char in the Accessibility_Text
-                       interface where this Zone starts
-        - string: the string being displayed for this Zone
-        - extents: x, y, width, height in screen coordinates
-        """
-
-        Zone.__init__(self, accessible, string, x, y, width, height)
         self.startOffset = startOffset
+        self.endOffset = self.startOffset + len(string)
+        self._itext = self.accessible.queryText()
 
-    def __getattr__(self, attr):
-        """Used for lazily determining the words in a Zone.  The words
-        will either be all whitespace (interword boundaries) or actual
-        words.  To determine if a Word is whitespace, use
-        word.string.isspace()
+    def __getattribute__(self, attr):
+        """To ensure we update the content."""
 
-        Arguments:
-        - attr: a string indicating the attribute name to retrieve
+        if not attr in ["words", "string"]:
+            return super().__getattribute__(attr)
 
-        Returns the value of the given attribute.
-        """
+        string = self._itext.getText(self.startOffset, self.endOffset)
+        words = []
+        for i, word in enumerate(re.finditer(self.WORDS_RE, string)):
+            start, end = map(lambda x: x + self.startOffset, word.span())
+            extents = self._itext.getRangeExtents(start, end, pyatspi.DESKTOP_COORDS)
+            words.append(Word(self, i, start, word.group(), *extents))
 
-        if attr == "words":
-            text = self.accessible.queryText()
+        self._string = string
+        self._words = words
+        return super().__getattribute__(attr)
 
-            # Pylint is confused and flags this warning:
-            #
-            # W0201:288:TextZone.__getattr__: Attribute 'words' defined
-            # outside __init__
-            #
-            # So for now, we just disable this error in this method.
-            #
-            # pylint: disable-msg=W0201
+    def hasCaret(self):
+        """Returns True if this Zone contains the caret."""
 
-            self.words = []
+        offset = self._itext.caretOffset
+        if self.startOffset <= offset < self.endOffset:
+            return True
 
-            wordIndex = 0
-            offset = self.startOffset
-            for string in whitespace_re.split(self.string):
-                if len(string):
-                    endOffset = offset + len(string)
-                    [x, y, width, height] = text.getRangeExtents(
-                        offset,
-                        endOffset,
-                        0)
-                    word = Word(self,
-                                wordIndex,
-                                offset,
-                                string,
-                                x, y, width, height)
-                    self.words.append(word)
-                    wordIndex += 1
-                    offset = endOffset
+        return self.endOffset == self._itext.characterCount
 
-            return self.words
+    def wordWithCaret(self):
+        """Returns the Word and relative offset with the caret."""
 
-        elif attr.startswith('__') and attr.endswith('__'):
-            raise AttributeError(attr)
-        else:
-            return self.__dict__[attr]
+        if not self.hasCaret():
+            return None, -1
+
+        return self.getWordAtOffset(self._itext.caretOffset)
 
 
 class StateZone(Zone):
@@ -403,46 +347,23 @@ class Line:
         self.zones = zones
         self.brailleRegions = None
 
-    def __getattr__(self, attr):
-        # We dynamically create the string each time to handle
-        # StateZone and ValueZone zones.
-        #
-        if attr in ["string", "length", "x", "y", "width", "height"]:
-            bounds = None
-            string = ""
-            for zone in self.zones:
-                if not bounds:
-                    bounds = [zone.x, zone.y,
-                              zone.x + zone.width, zone.y + zone.height]
-                else:
-                    bounds[0] = min(bounds[0], zone.x)
-                    bounds[1] = min(bounds[1], zone.y)
-                    bounds[2] = max(bounds[2], zone.x + zone.width)
-                    bounds[3] = max(bounds[3], zone.y + zone.height)
-                if len(zone.string):
-                    if len(string):
-                        string += " "
-                    string += zone.string
+    def __getattribute__(self, attr):
+        if attr == "string":
+            return " ".join([zone.string for zone in self.zones])
 
-            if not bounds:
-                bounds = [-1, -1, -1, -1]
+        if attr == "x":
+            return min([zone.x for zone in self.zones])
 
-            if attr == "string":
-                return string
-            elif attr == "length":
-                return len(string)
-            elif attr == "x":
-                return bounds[0]
-            elif attr == "y":
-                return bounds[1]
-            elif attr == "width":
-                return bounds[2] - bounds[0]
-            elif attr == "height":
-                return bounds[3] - bounds[1]
-        elif attr.startswith('__') and attr.endswith('__'):
-            raise AttributeError(attr)
-        else:
-            return self.__dict__[attr]
+        if attr == "y":
+            return min([zone.y for zone in self.zones])
+
+        if attr == "width":
+            return sum([zone.width for zone in self.zones])
+
+        if attr == "height":
+            return max([zone.height for zone in self.zones])
+
+        return super().__getattribute__(attr)
 
     def getBrailleRegions(self):
         # [[[WDW - We'll always compute the braille regions.  This
@@ -768,6 +689,14 @@ class Context:
         else:
             zones = []
 
+        # TODO - JD: This is here temporarily whilst I sort out the rest
+        # of the text-related mess.
+        if "EditableText" in pyatspi.listInterfaces(accessible) \
+           and accessible.getState().contains(pyatspi.STATE_SINGLE_LINE):
+            extents = accessible.queryComponent().getExtents(0)
+            return [TextZone(accessible, 0, text.getText(0, -1), *extents)]
+
+
         offset = 0
         lastEndOffset = -1
         upperMax = lowerMax = text.characterCount
@@ -887,21 +816,6 @@ class Context:
                 #
                 break
 
-        # We might have a zero length text area.  In that case, well,
-        # lets hack if this is something whose sole purpose is to
-        # act as a text entry area.
-        #
-        if len(zones) == 0:
-            if (accessible.getRole() == pyatspi.ROLE_TEXT) \
-               or ((accessible.getRole() == pyatspi.ROLE_ENTRY)) \
-               or ((accessible.getRole() == pyatspi.ROLE_PASSWORD_TEXT)):
-                extents = accessible.queryComponent().getExtents(0)
-                zones.append(TextZone(accessible,
-                                      0,
-                                      "",
-                                      extents.x, extents.y,
-                                      extents.width, extents.height))
-
         return zones
 
     def _insertStateZone(self, zones, accessible, extents):
@@ -994,7 +908,8 @@ class Context:
             pass
         elif not zones:
             string = self.script.speechGenerator.getName(accessible)
-            if not string and role != pyatspi.ROLE_TABLE_CELL:
+            useless = [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_LABEL]
+            if not string and role not in useless:
                 string = self.script.speechGenerator.getLocalizedRoleName(accessible)
 
             # TODO - JD: This check will become obsolete soon.

@@ -44,13 +44,15 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Pause Reset $l', cursor=1",
      "SPEECH OUTPUT: 'Pause Reset'"]))
 
+sequence.append(PauseAction(5000))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "4. Review previous line",
-    ["BRAILLE LINE:  'label 00 ∶ 04 ∶ 58 label $l'",
-     "     VISIBLE:  'label 00 ∶ 04 ∶ 58 label $l', cursor=1",
-     "SPEECH OUTPUT: 'label 00 ∶ 04 ∶ 58 label'"])) 
+    ["BRAILLE LINE:  '00 ∶ 04 ∶ 5[0-9] \$l'",
+     "     VISIBLE:  '00 ∶ 04 ∶ 5[0-9] \$l', cursor=1",
+     "SPEECH OUTPUT: '00 ∶ 04 ∶ 5[0-9]'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
@@ -60,57 +62,35 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '& y World & y Alarm & y Stopwatc', cursor=1",
      "SPEECH OUTPUT: 'not selected World not selected Alarm not selected Stopwatch selected Timer'"]))
 
+sequence.append(PauseAction(5000))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "6. Review next line",
-    ["BRAILLE LINE:  'label 00 ∶ 04 ∶ 58 label $l'",
-     "     VISIBLE:  'label 00 ∶ 04 ∶ 58 label $l', cursor=1",
-     "SPEECH OUTPUT: 'label 00 ∶ 04 ∶ 58 label'"])) 
+    ["BRAILLE LINE:  '00 ∶ 04 ∶ 4[0-9] \$l'",
+     "     VISIBLE:  '00 ∶ 04 ∶ 4[0-9] \$l', cursor=1",
+     "SPEECH OUTPUT: '00 ∶ 04 ∶ 4[0-9]'"]))
 
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_Subtract"))
-sequence.append(KeyComboAction("KP_Subtract"))
-sequence.append(utils.AssertPresentationAction(
-    "7. Toggle flat review",
-    ["BRAILLE LINE:  'Leaving flat review.'",
-     "     VISIBLE:  'Leaving flat review.', cursor=0",
-     "BRAILLE LINE:  'gnome-clocks application frame Pause push button'",
-     "     VISIBLE:  'Pause push button', cursor=1",
-     "BRAILLE LINE:  'Entering flat review.'",
-     "     VISIBLE:  'Entering flat review.', cursor=0",
-     "BRAILLE LINE:  'Pause Reset $l'",
-     "     VISIBLE:  'Pause Reset $l', cursor=1",
-     "SPEECH OUTPUT: 'Leaving flat review.' voice=system",
-     "SPEECH OUTPUT: 'Entering flat review.' voice=system",
-     "SPEECH OUTPUT: 'Pause'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_7"))
-sequence.append(utils.AssertPresentationAction(
-    "8. Review previous line",
-    ["BRAILLE LINE:  'label 00 ∶ 04 ∶ 49 label $l'",
-     "     VISIBLE:  'label 00 ∶ 04 ∶ 49 label $l', cursor=1",
-     "SPEECH OUTPUT: 'label 00 ∶ 04 ∶ 49 label'"])) 
+sequence.append(PauseAction(5000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
 sequence.append(utils.AssertPresentationAction(
-    "9. Review current line",
-    ["BRAILLE LINE:  'label 00 ∶ 04 ∶ 49 label $l'",
-     "     VISIBLE:  'label 00 ∶ 04 ∶ 49 label $l', cursor=1",
-     "SPEECH OUTPUT: 'label 00 ∶ 04 ∶ 49 label'"]))
+    "7. Review current line",
+    ["BRAILLE LINE:  '00 ∶ 04 ∶ 3[0-9] \$l'",
+     "     VISIBLE:  '00 ∶ 04 ∶ 3[0-9] \$l', cursor=1",
+     "SPEECH OUTPUT: '00 ∶ 04 ∶ 3[0-9]'"]))
 
-sequence.append(PauseAction(3000))
+sequence.append(PauseAction(5000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
 sequence.append(utils.AssertPresentationAction(
-    "10. Review current line",
-    ["KNOWN ISSUE: The values are now being displayed, but are not yet being updated. Also the labels are useless.",
-     "BRAILLE LINE:  'label 00 ∶ 04 ∶ 49 label $l'",
-     "     VISIBLE:  'label 00 ∶ 04 ∶ 49 label $l', cursor=1",
-     "SPEECH OUTPUT: 'label 00 ∶ 04 ∶ 49 label'"]))
+    "8. Review current line",
+    ["BRAILLE LINE:  '00 ∶ 04 ∶ 2[0-9] \$l'",
+     "     VISIBLE:  '00 ∶ 04 ∶ 2[0-9] \$l', cursor=1",
+     "SPEECH OUTPUT: '00 ∶ 04 ∶ 2[0-9]'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

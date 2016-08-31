@@ -63,7 +63,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Review next word",
     ["BRAILLE LINE:  'Here are some more details but not the full story. $l'",
      "     VISIBLE:  'Here are some more details but n', cursor=6",
-     "SPEECH OUTPUT: 'are'"]))
+     "SPEECH OUTPUT: 'are '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
@@ -71,7 +71,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Review next word",
     ["BRAILLE LINE:  'Here are some more details but not the full story. $l'",
      "     VISIBLE:  'Here are some more details but n', cursor=10",
-     "SPEECH OUTPUT: 'some'"]))
+     "SPEECH OUTPUT: 'some '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
@@ -79,7 +79,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Review next word",
     ["BRAILLE LINE:  'Here are some more details but not the full story. $l'",
      "     VISIBLE:  'Here are some more details but n', cursor=15",
-     "SPEECH OUTPUT: 'more'"]))
+     "SPEECH OUTPUT: 'more '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
@@ -87,7 +87,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Review next word",
     ["BRAILLE LINE:  'Here are some more details but not the full story. $l'",
      "     VISIBLE:  'Here are some more details but n', cursor=20",
-     "SPEECH OUTPUT: 'details'"]))
+     "SPEECH OUTPUT: 'details '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
@@ -95,7 +95,7 @@ sequence.append(utils.AssertPresentationAction(
     "11. Review next word",
     ["BRAILLE LINE:  'Here are some more details but not the full story. $l'",
      "     VISIBLE:  'Here are some more details but n', cursor=28",
-     "SPEECH OUTPUT: 'but'"]))
+     "SPEECH OUTPUT: 'but '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
@@ -103,7 +103,7 @@ sequence.append(utils.AssertPresentationAction(
     "12. Review next word",
     ["BRAILLE LINE:  'Here are some more details but not the full story. $l'",
      "     VISIBLE:  'Here are some more details but n', cursor=32",
-     "SPEECH OUTPUT: 'not'"]))
+     "SPEECH OUTPUT: 'not '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
@@ -111,7 +111,7 @@ sequence.append(utils.AssertPresentationAction(
     "13. Review next word",
     ["BRAILLE LINE:  'Here are some more details but not the full story. $l'",
      "     VISIBLE:  'ot the full story. $l', cursor=4",
-     "SPEECH OUTPUT: 'the'"]))
+     "SPEECH OUTPUT: 'the '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
@@ -119,7 +119,7 @@ sequence.append(utils.AssertPresentationAction(
     "14. Review next word",
     ["BRAILLE LINE:  'Here are some more details but not the full story. $l'",
      "     VISIBLE:  'ot the full story. $l', cursor=8",
-     "SPEECH OUTPUT: 'full'"]))
+     "SPEECH OUTPUT: 'full '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))

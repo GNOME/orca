@@ -68,7 +68,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Review next word'",
     ["BRAILLE LINE:  '2 packages of chocolate chip cookies $l'",
      "     VISIBLE:  '2 packages of chocolate chip coo', cursor=3",
-     "SPEECH OUTPUT: 'packages'"]))
+     "SPEECH OUTPUT: 'packages '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
@@ -76,7 +76,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Review next word'",
     ["BRAILLE LINE:  '2 packages of chocolate chip cookies $l'",
      "     VISIBLE:  '2 packages of chocolate chip coo', cursor=12",
-     "SPEECH OUTPUT: 'of'"]))
+     "SPEECH OUTPUT: 'of '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_3"))
@@ -116,7 +116,7 @@ sequence.append(utils.AssertPresentationAction(
     "13. Review previous word'",
     ["BRAILLE LINE:  '2 packages of chocolate chip cookies $l'",
      "     VISIBLE:  '2 packages of chocolate chip coo', cursor=3",
-     "SPEECH OUTPUT: 'packages'"]))
+     "SPEECH OUTPUT: 'packages '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_4"))

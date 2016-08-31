@@ -66,25 +66,25 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "7. Review next line",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'text $l'",
+     "     VISIBLE:  'text $l', cursor=1",
+     "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
     "8. Review current word",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'text $l'",
+     "     VISIBLE:  'text $l', cursor=1",
+     "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_2"))
 sequence.append(utils.AssertPresentationAction(
     "9. Review current char",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'text $l'",
+     "     VISIBLE:  'text $l', cursor=1",
+     "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
@@ -92,7 +92,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Review next word",
     ["BRAILLE LINE:  'Cursor at row 0 column 0 - 0 chars in document $l'",
      "     VISIBLE:  'Cursor at row 0 column 0 - 0 cha', cursor=1",
-     "SPEECH OUTPUT: 'Cursor'"]))
+     "SPEECH OUTPUT: 'Cursor '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_3"))
@@ -114,9 +114,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_1"))
 sequence.append(utils.AssertPresentationAction(
     "13. Review previous char",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  'text $l'",
+     "     VISIBLE:  'text $l', cursor=1",
+     "SPEECH OUTPUT: 'text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_4"))

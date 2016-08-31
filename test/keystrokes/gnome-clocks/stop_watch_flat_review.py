@@ -43,10 +43,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "4. Review previous line",
-    ["KNOWN ISSUE: We're not updating the values",
-     "BRAILLE LINE:  '00‎∶00.0 $l'",
-     "     VISIBLE:  '00‎∶00.0 $l', cursor=1",
-     "SPEECH OUTPUT: '00‎∶00.0'"]))
+    ["BRAILLE LINE:  '00‎∶04\.[0-9] \$l'",
+     "     VISIBLE:  '00‎∶04\.[0-9] \$l', cursor=1",
+     "SPEECH OUTPUT: '00‎∶04\.[0-9]'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
@@ -59,17 +58,16 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
-    "5. Review next line",
-    ["KNOWN ISSUE: We're not updating the values",
-     "BRAILLE LINE:  '00‎∶00.0 $l'",
-     "     VISIBLE:  '00‎∶00.0 $l', cursor=1",
-     "SPEECH OUTPUT: '00‎∶00.0'"]))
+    "6. Review next line",
+    ["BRAILLE LINE:  '00‎∶0(8|9)\.[0-9] \$l'",
+     "     VISIBLE:  '00‎∶0(8|9)\.[0-9] \$l', cursor=1",
+     "SPEECH OUTPUT: '00‎∶0(8|9)\.[0-9]'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Subtract"))
 sequence.append(KeyComboAction("KP_Subtract"))
 sequence.append(utils.AssertPresentationAction(
-    "6. Toggle flat review",
+    "7. Toggle flat review",
     ["BRAILLE LINE:  'Leaving flat review.'",
      "     VISIBLE:  'Leaving flat review.', cursor=0",
      "BRAILLE LINE:  'gnome-clocks application frame Stop push button'",
@@ -85,21 +83,20 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
-    "7. Review previous line",
-    ["BRAILLE LINE:  '00‎∶11.5 $l'",
-     "     VISIBLE:  '00‎∶11.5 $l', cursor=1",
-     "SPEECH OUTPUT: '00‎∶11.5'"]))
+    "8. Review previous line",
+    ["BRAILLE LINE:  '00‎∶(13|14)\.[0-9] \$l'",
+     "     VISIBLE:  '00‎∶(13|14)\.[0-9] \$l', cursor=1",
+     "SPEECH OUTPUT: '00‎∶(13|14)\.[0-9]'"]))
 
 sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
 sequence.append(utils.AssertPresentationAction(
-    "8. Review current line",
-    ["KNOWN ISSUE: We're not presenting the updated value",
-     "BRAILLE LINE:  '00‎∶11.5 $l'",
-     "     VISIBLE:  '00‎∶11.5 $l', cursor=1",
-     "SPEECH OUTPUT: '00‎∶11.5'"]))
+    "9. Review current line",
+    ["BRAILLE LINE:  '00‎∶(19|20)\.[0-9] \$l'",
+     "     VISIBLE:  '00‎∶(19|20)\.[0-9] \$l', cursor=1",
+     "SPEECH OUTPUT: '00‎∶(19|20)\.[0-9]'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

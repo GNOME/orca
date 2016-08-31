@@ -20,7 +20,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Flat review current word",
     ["BRAILLE LINE:  'On weaponry: $l'",
      "     VISIBLE:  'On weaponry: $l', cursor=1",
-     "SPEECH OUTPUT: 'On'"]))
+     "SPEECH OUTPUT: 'On '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
@@ -88,7 +88,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. flat review next word",
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
-     "SPEECH OUTPUT: 'NOBODY'"]))
+     "SPEECH OUTPUT: 'NOBODY '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
@@ -96,7 +96,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. flat review next word",
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=8",
-     "SPEECH OUTPUT: 'expects'"]))
+     "SPEECH OUTPUT: 'expects '"]))
 
 sequence.append(KeyComboAction("KP_2"))
 sequence.append(utils.AssertPresentationAction(
@@ -105,7 +105,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=8",
      "BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=8",
-     "SPEECH OUTPUT: 'expects'",
+     "SPEECH OUTPUT: 'expects '",
      "SPEECH OUTPUT: 'e'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -174,7 +174,7 @@ sequence.append(utils.AssertPresentationAction(
     "14. flat review previous word",
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
-     "SPEECH OUTPUT: 'NOBODY'"]))
+     "SPEECH OUTPUT: 'NOBODY '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_4"))

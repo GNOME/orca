@@ -30,7 +30,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Review current word.",
     ["BRAILLE LINE:  'Line 1 $l'",
      "     VISIBLE:  'Line 1 $l', cursor=1",
-     "SPEECH OUTPUT: 'Line'"]))
+     "SPEECH OUTPUT: 'Line '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
@@ -41,11 +41,12 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Line 1 $l', cursor=1",
      "BRAILLE LINE:  'Line 1 $l'",
      "     VISIBLE:  'Line 1 $l', cursor=1",
-     "SPEECH OUTPUT: 'Line'",
+     "SPEECH OUTPUT: 'Line '",
      "SPEECH OUTPUT: 'L'",
      "SPEECH OUTPUT: 'i'",
      "SPEECH OUTPUT: 'n'",
-     "SPEECH OUTPUT: 'e'"]))
+     "SPEECH OUTPUT: 'e'",
+     "SPEECH OUTPUT: 'space'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
@@ -59,15 +60,17 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Line 1 $l', cursor=1",
      "BRAILLE LINE:  'Line 1 $l'",
      "     VISIBLE:  'Line 1 $l', cursor=1",
-     "SPEECH OUTPUT: 'Line'",
+     "SPEECH OUTPUT: 'Line '",
      "SPEECH OUTPUT: 'L'",
      "SPEECH OUTPUT: 'i'",
      "SPEECH OUTPUT: 'n'",
      "SPEECH OUTPUT: 'e'",
+     "SPEECH OUTPUT: 'space'",
      "SPEECH OUTPUT: 'lima'",
      "SPEECH OUTPUT: 'india'",
      "SPEECH OUTPUT: 'november'",
-     "SPEECH OUTPUT: 'echo'"]))
+     "SPEECH OUTPUT: 'echo'",
+     "SPEECH OUTPUT: ' '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
@@ -83,7 +86,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Review next word.",
     ["BRAILLE LINE:  'Line 2 $l'",
      "     VISIBLE:  'Line 2 $l', cursor=1",
-     "SPEECH OUTPUT: 'Line'"]))
+     "SPEECH OUTPUT: 'Line '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
@@ -99,7 +102,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Review previous word.",
     ["BRAILLE LINE:  'Line 2 $l'",
      "     VISIBLE:  'Line 2 $l', cursor=1",
-     "SPEECH OUTPUT: 'Line'"]))
+     "SPEECH OUTPUT: 'Line '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_4"))
@@ -115,7 +118,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Review previous word.",
     ["BRAILLE LINE:  'Line 1 $l'",
      "     VISIBLE:  'Line 1 $l', cursor=1",
-     "SPEECH OUTPUT: 'Line'"]))
+     "SPEECH OUTPUT: 'Line '"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

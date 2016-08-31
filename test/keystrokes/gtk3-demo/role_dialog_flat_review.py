@@ -89,7 +89,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Review next word",
     ["BRAILLE LINE:  'File: ~/Documents/gtk-demo.pdf Output format: &=y PDF & y Postscript & y SVG $l'",
      "     VISIBLE:  'File: ~/Documents/gtk-demo.pdf O', cursor=32",
-     "SPEECH OUTPUT: 'Output'"]))
+     "SPEECH OUTPUT: 'Output '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_3"))

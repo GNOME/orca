@@ -36,7 +36,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
      "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
      "SPEECH OUTPUT: 'Entering flat review.' voice=system",
-     "SPEECH OUTPUT: 'PLEASE'"]))
+     "SPEECH OUTPUT: 'PLEASE '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
@@ -50,10 +50,10 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
-    "3. KP_5 to flat review 'PLEASE'",
+    "3. KP_5 to flat review 'PLEASE '",
     ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
      "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
-     "SPEECH OUTPUT: 'PLEASE'"]))
+     "SPEECH OUTPUT: 'PLEASE '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_2"))
@@ -69,47 +69,50 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
-    "5. KP_5 to flat review 'This'",
+    "5. KP_5 to flat review 'This '",
     ["BRAILLE LINE:  'This is only a test. $l'",
      "     VISIBLE:  'This is only a test. $l', cursor=1",
-     "SPEECH OUTPUT: 'This'"]))
+     "SPEECH OUTPUT: 'This '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
 sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
-    "6. KP_5 2X to spell 'This'",
+    "6. KP_5 2X to spell 'This '",
     ["BRAILLE LINE:  'This is only a test. $l'",
      "     VISIBLE:  'This is only a test. $l', cursor=1",
      "BRAILLE LINE:  'This is only a test. $l'",
      "     VISIBLE:  'This is only a test. $l', cursor=1",
-     "SPEECH OUTPUT: 'This'",
-     "SPEECH OUTPUT: 'T'",
-     "SPEECH OUTPUT: 'h'",
-     "SPEECH OUTPUT: 'i'",
-     "SPEECH OUTPUT: 's'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_5"))
-sequence.append(KeyComboAction("KP_5"))
-sequence.append(KeyComboAction("KP_5"))
-sequence.append(utils.AssertPresentationAction(
-    "7. KP_5 3X to military spell 'This'",
-    ["BRAILLE LINE:  'This is only a test. $l'",
-     "     VISIBLE:  'This is only a test. $l', cursor=1",
-     "BRAILLE LINE:  'This is only a test. $l'",
-     "     VISIBLE:  'This is only a test. $l', cursor=1",
-     "BRAILLE LINE:  'This is only a test. $l'",
-     "     VISIBLE:  'This is only a test. $l', cursor=1",
-     "SPEECH OUTPUT: 'This'",
+     "SPEECH OUTPUT: 'This '",
      "SPEECH OUTPUT: 'T'",
      "SPEECH OUTPUT: 'h'",
      "SPEECH OUTPUT: 'i'",
      "SPEECH OUTPUT: 's'",
+     "SPEECH OUTPUT: 'space'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_5"))
+sequence.append(KeyComboAction("KP_5"))
+sequence.append(KeyComboAction("KP_5"))
+sequence.append(utils.AssertPresentationAction(
+    "7. KP_5 3X to military spell 'This '",
+    ["BRAILLE LINE:  'This is only a test. $l'",
+     "     VISIBLE:  'This is only a test. $l', cursor=1",
+     "BRAILLE LINE:  'This is only a test. $l'",
+     "     VISIBLE:  'This is only a test. $l', cursor=1",
+     "BRAILLE LINE:  'This is only a test. $l'",
+     "     VISIBLE:  'This is only a test. $l', cursor=1",
+     "SPEECH OUTPUT: 'This '",
+     "SPEECH OUTPUT: 'T'",
+     "SPEECH OUTPUT: 'h'",
+     "SPEECH OUTPUT: 'i'",
+     "SPEECH OUTPUT: 's'",
+     "SPEECH OUTPUT: 'space'",
      "SPEECH OUTPUT: 'tango'",
      "SPEECH OUTPUT: 'hotel'",
      "SPEECH OUTPUT: 'india'",
-     "SPEECH OUTPUT: 'sierra'"]))
+     "SPEECH OUTPUT: 'sierra'",
+     "SPEECH OUTPUT: ' '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
@@ -237,7 +240,7 @@ sequence.append(utils.AssertPresentationAction(
     "13. KP_6 to flat review 'is'",
     ["BRAILLE LINE:  'This is only a test. $l'",
      "     VISIBLE:  'This is only a test. $l', cursor=6",
-     "SPEECH OUTPUT: 'is'"]))
+     "SPEECH OUTPUT: 'is '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
