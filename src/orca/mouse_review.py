@@ -181,6 +181,15 @@ class MouseReviewer:
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
+        display = Gdk.Display.get_default()
+        try:
+            seat = Gdk.Display.get_default_seat(display)
+            self._pointer = seat.get_pointer()
+        except AttributeError:
+            msg = "MOUSE REVIEW ERROR: Gtk+ 3.20 is not available"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if not self._active:
             return
 
@@ -193,10 +202,6 @@ class MouseReviewer:
 
     def activate(self):
         """Activates mouse review."""
-
-        display = Gdk.Display.get_default()
-        seat = Gdk.Display.get_default_seat(display)
-        self._pointer = seat.get_pointer()
 
         _eventManager.registerModuleListeners(self._get_listeners())
         screen = Wnck.Screen.get_default()
