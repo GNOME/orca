@@ -566,23 +566,6 @@ class Context:
         #
         self.targetCharInfo = None
 
-    def clip(self,
-             ax, ay, awidth, aheight,
-             bx, by, bwidth, bheight):
-        """Clips region 'a' by region 'b' and returns the new region as
-        a list: [x, y, width, height].
-        """
-
-        x = max(ax, bx)
-        x2 = min(ax + awidth, bx + bwidth)
-        width = x2 - x
-
-        y = max(ay, by)
-        y2 = min(ay + aheight, by + bheight)
-        height = y2 - y
-
-        return [x, y, width, height]
-
     def splitTextIntoZones(self, accessible, string, startOffset, cliprect):
         """Traverses the string, splitting it up into separate zones if the
         string contains the EMBEDDED_OBJECT_CHARACTER, which is used by apps
@@ -628,7 +611,8 @@ class Context:
                     substringStartOffset, substringEndOffset, 0)
                 if self.script.utilities.containsRegion(extents, cliprect):
                     anyVisible = True
-                    clipping = self.clip(*extents, *cliprect)
+                    clipping = self.script.utilities.intersection(extents, cliprect)
+
 
                     # [[[TODO: WDW - HACK it would be nice to clip the
                     # the text by what is really showing on the screen,
@@ -895,7 +879,7 @@ class Context:
         else:
             zones = self.getZonesFromText(accessible, cliprect)
 
-        clipping = self.clip(*extents, *cliprect)
+        clipping = self.script.utilities.intersection(extents, cliprect)
         if not zones and role in [pyatspi.ROLE_SCROLL_BAR,
                                   pyatspi.ROLE_SLIDER,
                                   pyatspi.ROLE_PROGRESS_BAR]:
