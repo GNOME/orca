@@ -991,11 +991,12 @@ class Context:
         except NotImplementedError:
             pass
 
-        showingDescendants = \
-            self.script.utilities.showingDescendants(root)
-        if len(showingDescendants):
-            for child in showingDescendants:
-                zones.extend(self.getShowingZones(child))
+        cells = None
+        if "Table" in pyatspi.listInterfaces(root):
+            cells = self.script.utilities.getVisibleTableCells(root, rootexts)
+        if cells:
+            for cell in cells:
+                zones.extend(self.getShowingZones(cell))
         else:
             for i in range(0, root.childCount):
                 child = root.getChildAtIndex(i)

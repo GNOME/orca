@@ -1653,101 +1653,6 @@ class Utilities:
             activeDescendant or obj
         return self._script.generatorCache[self.REAL_ACTIVE_DESCENDANT][obj]
 
-    def showingDescendants(self, parent):
-        """Given a parent that manages its descendants, return a list of
-        Accessible children that are actually showing.  This algorithm
-        was inspired a little by the srw_elements_from_accessible logic
-        in Gnopernicus, and makes the assumption that the children of
-        an object that manages its descendants are arranged in a row
-        and column format.
-
-        Arguments:
-        - parent: The accessible which manages its descendants
-
-        Returns a list of Accessible descendants which are showing.
-        """
-
-        import sys
-
-        if not parent:
-            return []
-
-        if not parent.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS) \
-           or parent.childCount <= 50:
-            return []
-
-        try:
-            icomponent = parent.queryComponent()
-        except NotImplementedError:
-            return []
-
-        descendants = []
-
-        parentExtents = icomponent.getExtents(0)
-
-        # [[[TODO: WDW - HACK related to GAIL bug where table column
-        # headers seem to be ignored:
-        # http://bugzilla.gnome.org/show_bug.cgi?id=325809.  The
-        # problem is that this causes getAccessibleAtPoint to return
-        # the cell effectively below the real cell at a given point,
-        # making a mess of everything.  So...we just manually add in
-        # showing headers for now.  The remainder of the logic below
-        # accidentally accounts for this offset, yet it should also
-        # work when bug 325809 is fixed.]]]
-        #
-        try:
-            table = parent.queryTable()
-        except NotImplementedError:
-            table = None
-
-        if table:
-            for i in range(0, table.nColumns):
-                header = table.getColumnHeader(i)
-                if header:
-                    extents = header.queryComponent().getExtents(0)
-                    stateset = header.getState()
-                    if stateset.contains(pyatspi.STATE_SHOWING) \
-                       and (extents.x >= 0) and (extents.y >= 0) \
-                       and (extents.width > 0) and (extents.height > 0) \
-                       and self.containsRegion(extents, parentExtents):
-                        descendants.append(header)
-
-        # This algorithm goes left to right, top to bottom while attempting
-        # to do *some* optimization over queries.  It could definitely be
-        # improved. The gridSize is a minimal chunk to jump around in the
-        # table.
-        #
-        gridSize = 7
-        currentY = parentExtents.y
-        while currentY < (parentExtents.y + parentExtents.height):
-            currentX = parentExtents.x
-            minHeight = sys.maxsize
-            index = -1
-            while currentX < (parentExtents.x + parentExtents.width):
-                child = \
-                    icomponent.getAccessibleAtPoint(currentX, currentY + 1, 0)
-                if child:
-                    index = child.getIndexInParent()
-                    extents = child.queryComponent().getExtents(0)
-                    if extents.x >= 0 and extents.y >= 0:
-                        newX = extents.x + extents.width
-                        minHeight = min(minHeight, extents.height)
-                        if not descendants.count(child):
-                            descendants.append(child)
-                    else:
-                        newX = currentX + gridSize
-                else:
-                    break
-                if newX <= currentX:
-                    currentX += gridSize
-                else:
-                    currentX = newX
-            if minHeight == sys.maxsize:
-                minHeight = gridSize
-            currentY += minHeight
-
-        return descendants
-
     def statusBar(self, obj):
         """Returns the status bar in the window which contains obj.
 
@@ -3464,6 +3369,9 @@ class Utilities:
         return obj.getRole() in roles
 
     def descendantAtPoint(self, root, x, y, coordType=None):
+        if not root:
+            return None
+
         if coordType is None:
             coordType = pyatspi.DESKTOP_COORDS
 
@@ -3472,6 +3380,17 @@ class Utilities:
                 return root
         elif self._treatAsLeafNode(root) or self._boundsIncludeChildren(root):
             return None
+
+        if "Table" in pyatspi.listInterfaces(root):
+            try:
+                component = root.queryComponent()
+            except:
+                child = None
+            else:
+                child = component.getAccessibleAtPoint(x, y, coordType)
+                if child and child != root:
+                    return self.descendantAtPoint(child, x, y, coordType)
+                return None
 
         for child in root:
             obj = self.descendantAtPoint(child, x, y, coordType)
@@ -3511,6 +3430,69 @@ class Utilities:
             return "", 0, 0
 
         return string, start, end
+
+    def visibleRows(self, obj, boundingbox):
+        try:
+            table = obj.queryTable()
+            nRows = table.nRows
+        except:
+            return []
+
+        x, y, width, height = boundingbox
+        cell = self.descendantAtPoint(obj, x, y + 1)
+        row, col = self.coordinatesForCell(cell)
+        startIndex = max(0, row)
+
+        # Just in case the row above is a static header row in a scrollable table.
+        try:
+            extents = cell.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+        except:
+            nextIndex = startIndex
+        else:
+            cell = self.descendantAtPoint(obj, x, y + extents.height + 1)
+            row, col = self.coordinatesForCell(cell)
+            nextIndex = max(startIndex, row)
+
+        cell = self.descendantAtPoint(obj, x, y + height - 1)
+        row, col = self.coordinatesForCell(cell)
+        if row == -1:
+            row = nRows
+        endIndex = row
+
+        rows = list(range(nextIndex, endIndex))
+        if startIndex not in rows:
+            rows.insert(0, startIndex)
+
+        return rows
+
+    def getVisibleTableCells(self, obj, extents):
+        try:
+            table = obj.queryTable()
+        except:
+            return []
+
+        rows = self.visibleRows(obj, extents)
+        if not rows:
+            return []
+
+        colStartIndex, colEndIndex = self._getTableRowRange(obj)
+        if colStartIndex == colEndIndex:
+            return []
+
+        cells = []
+        for col in range(colStartIndex, colEndIndex):
+            colHeader = table.getColumnHeader(col)
+            if colHeader:
+                cells.append(colHeader)
+            for row in rows:
+                try:
+                    cell = table.getAccessibleAt(row, col)
+                except:
+                    continue
+                if cell:
+                    cells.append(cell)
+
+        return cells
 
     def _getTableRowRange(self, obj):
         rowCount, columnCount = self.rowAndColumnCount(obj)
