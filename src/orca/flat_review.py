@@ -93,15 +93,20 @@ class Word:
         if attr != "chars":
             return super().__getattribute__(attr)
 
+        # TODO - JD: For now, don't fake character and word extents.
+        # The main goal is to improve reviewability.
+        extents = self.x, self.y, self.width, self.height
+
         try:
             text = self.zone.accessible.queryText()
         except:
-            return []
+            text = None
 
         chars = []
         for i, char in enumerate(self.string):
             start = i + self.startOffset
-            extents = text.getRangeExtents(start, start+1, pyatspi.DESKTOP_COORDS)
+            if text:
+                extents = text.getRangeExtents(start, start+1, pyatspi.DESKTOP_COORDS)
             chars.append(Char(self, i, start, char, *extents))
 
         return chars
@@ -171,7 +176,11 @@ class Zone:
                      pyatspi.ROLE_MENU,
                      pyatspi.ROLE_MENU_ITEM,
                      pyatspi.ROLE_CHECK_MENU_ITEM,
-                     pyatspi.ROLE_RADIO_MENU_ITEM]
+                     pyatspi.ROLE_RADIO_MENU_ITEM,
+                     pyatspi.ROLE_PAGE_TAB,
+                     pyatspi.ROLE_PUSH_BUTTON,
+                     pyatspi.ROLE_TABLE_CELL]
+
         if self.role in textRoles:
             return True
 
@@ -429,9 +438,7 @@ class Line:
         return self.brailleRegions
 
 class Context:
-    """Information regarding where a user happens to be exploring
-    right now.
-    """
+    """Contains the flat review regions for the current top-level object."""
 
     ZONE   = 0
     CHAR   = 1
@@ -445,126 +452,52 @@ class Context:
     WRAP_ALL        = (WRAP_LINE | WRAP_TOP_BOTTOM)
 
     def __init__(self, script):
-        """Create a new Context that will be used for handling flat
-        review mode.
-        """
-        self.script    = script
+        """Create a new Context for script."""
 
-        if (not orca_state.locusOfFocus) \
-            or (orca_state.locusOfFocus.getApplication() \
-                != self.script.app):
-            self.lines = []
-        else:
-            # We want to stop at the window or frame or equivalent level.
-            #
-            obj = script.utilities.topLevelObject(orca_state.locusOfFocus)
-            if obj:
-                self.lines = self.clusterZonesByLine(self.getShowingZones(obj))
-            else:
-                self.lines = []
-
-        currentLineIndex = 0
-        currentZoneIndex = 0
-        currentWordIndex = 0
-        currentCharIndex = 0
+        self.script = script
+        self.zones = []
+        self.lines = []
+        self.lineIndex = 0
+        self.zoneIndex = 0
+        self.wordIndex = 0
+        self.charIndex = 0
+        self.targetCharInfo = None
+        self.focusZone = None
+        self.container = None
+        self.focusObj = orca_state.locusOfFocus
+        self.topLevel = script.utilities.topLevelObject(self.focusObj)
+        self.bounds = 0, 0, 0, 0
 
         try:
-            role = orca_state.locusOfFocus.getRole()
+            component = self.topLevel.queryComponent()
+            self.bounds = component.getExtents(pyatspi.DESKTOP_COORDS)
         except:
-            role = None
+            msg = "ERROR: Exception getting extents of %s" % self.topLevel
+            debug.println(debug.LEVEL_INFO, msg, True)
 
-        searchZone = orca_state.locusOfFocus
+        containerRoles = [pyatspi.ROLE_MENU]
+        isContainer = lambda x: x and x.getRole() in containerRoles
+        container = pyatspi.findAncestor(self.focusObj, isContainer)
+        self.container = container or self.topLevel
 
-        foundZoneWithFocus = False
-        while currentLineIndex < len(self.lines):
-            line = self.lines[currentLineIndex]
-            currentZoneIndex = 0
-            while currentZoneIndex < len(line.zones):
-                zone = line.zones[currentZoneIndex]
-                if searchZone in [zone.accessible, zone.accessible.parent]:
-                    foundZoneWithFocus = True
-                    break
-                else:
-                    currentZoneIndex += 1
-            if foundZoneWithFocus:
+        self.zones, self.focusZone = self.getShowingZones(self.container)
+        self.lines = self.clusterZonesByLine(self.zones)
+        if not (self.lines and self.focusZone):
+            return
+
+        for i, line in enumerate(self.lines):
+            if self.focusZone in line.zones:
+                self.lineIndex = i
+                self.zoneIndex = line.zones.index(self.focusZone)
+                word, offset = self.focusZone.wordWithCaret()
+                if word:
+                    self.wordIndex = word.index
+                    self.charIndex = offset
                 break
-            else:
-                currentLineIndex += 1
 
-        # Fallback to the first Zone if we didn't find anything.
-        #
-        if not foundZoneWithFocus:
-            currentLineIndex = 0
-            currentZoneIndex = 0
-        elif isinstance(zone, TextZone):
-            # If we're on an accessible text object, try to set the
-            # review cursor to the caret position of that object.
-            #
-            accessible  = zone.accessible
-            lineIndex   = currentLineIndex
-            zoneIndex   = currentZoneIndex
-            try:
-                caretOffset = zone.accessible.queryText().caretOffset
-            except NotImplementedError:
-                caretOffset = -1
-            foundZoneWithCaret = False
-            checkForEOF = False
-            while lineIndex < len(self.lines):
-                line = self.lines[lineIndex]
-                while zoneIndex < len(line.zones):
-                    zone = line.zones[zoneIndex]
-                    if zone.accessible == accessible:
-                        if caretOffset >= zone.startOffset:
-                            endOffset = zone.startOffset + zone.length
-                            if caretOffset < endOffset:
-                                foundZoneWithCaret = True
-                                break
-                            elif caretOffset == endOffset:
-                                checkForEOF = True
-                                lineToCheck = lineIndex
-                                zoneToCheck = zoneIndex
-                    zoneIndex += 1
-                if foundZoneWithCaret:
-                    currentLineIndex = lineIndex
-                    currentZoneIndex = zoneIndex
-                    currentWordIndex = 0
-                    currentCharIndex = 0
-                    offset = zone.startOffset
-                    while currentWordIndex < len(zone.words):
-                        word = zone.words[currentWordIndex]
-                        if (word.length + offset) > caretOffset:
-                            currentCharIndex = caretOffset - offset
-                            break
-                        else:
-                            currentWordIndex += 1
-                            offset += word.length
-                    break
-                else:
-                    zoneIndex = 0
-                    lineIndex += 1
-            atEOF = not foundZoneWithCaret and checkForEOF
-            if atEOF:
-                line = self.lines[lineToCheck]
-                zone = line.zones[zoneToCheck]
-                currentLineIndex = lineToCheck
-                currentZoneIndex = zoneToCheck
-                if caretOffset and zone.words:
-                    currentWordIndex = len(zone.words) - 1
-                    currentCharIndex = \
-                          zone.words[currentWordIndex].length - 1
-
-        self.lineIndex = currentLineIndex
-        self.zoneIndex = currentZoneIndex
-        self.wordIndex = currentWordIndex
-        self.charIndex = currentCharIndex
-
-        # This is used to tell us where we should strive to move to
-        # when going up and down lines to the closest character.
-        # The targetChar is the character where we initially started
-        # moving from, and does not change when one moves up or down
-        # by line.
-        #
-        self.targetCharInfo = None
+        msg = "FLAT REVIEW: On line %i, zone %i, word %i, char %i" % \
+              (self.lineIndex, self.zoneIndex, self.wordIndex, self.charIndex)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
     def splitTextIntoZones(self, accessible, string, startOffset, cliprect):
         """Traverses the string, splitting it up into separate zones if the
@@ -664,8 +597,6 @@ class Context:
         Returns a list of Zones.
         """
 
-        debug.println(debug.LEVEL_FINEST, "  looking at text:")
-
         try:
             text = accessible.queryText()
         except NotImplementedError:
@@ -675,11 +606,16 @@ class Context:
 
         # TODO - JD: This is here temporarily whilst I sort out the rest
         # of the text-related mess.
+        if not re.search("[^\ufffc]", text.getText(0, -1)):
+            return []
+
+        # TODO - JD: Ditto.
         if "EditableText" in pyatspi.listInterfaces(accessible) \
            and accessible.getState().contains(pyatspi.STATE_SINGLE_LINE):
             extents = accessible.queryComponent().getExtents(0)
             return [TextZone(accessible, 0, text.getText(0, -1), *extents)]
 
+        debug.println(debug.LEVEL_FINEST, "  looking at text:")
 
         offset = 0
         lastEndOffset = -1
@@ -770,22 +706,6 @@ class Context:
             textZones = self.splitTextIntoZones(
                 accessible, string, startOffset, cliprect)
 
-            # We need to account for the fact that newlines at the end of 
-            # text are treated as being on the same line when they in fact
-            # are a whole separate blank line.  So, we check for this and
-            # make up a new text zone for these cases.  See bug 434654.
-            #
-            if (endOffset == length) and (string[-1:] == "\n"):
-                [x, y, width, height] = text.getRangeExtents(startOffset, 
-                                                             endOffset,
-                                                             0)
-                if not textZones:
-                    textZones = []
-                textZones.append(TextZone(accessible,
-                                          endOffset,
-                                          "",
-                                          x, y + height, 0, height))
-
             if textZones:
                 zones.extend(textZones)
             elif len(zones):
@@ -810,7 +730,7 @@ class Context:
         # TODO - JD: This whole thing is pretty hacky. Either do it
         # right or nuke it.
 
-        indicatorExtents = extents.x, extents.y, 1, extents.height
+        indicatorExtents = [extents.x, extents.y, 1, extents.height]
         role = accessible.getRole()
         if role == pyatspi.ROLE_TOGGLE_BUTTON:
             zone = StateZone(accessible, *indicatorExtents, role=role)
@@ -834,12 +754,12 @@ class Context:
         if len(zones) == 1 and isinstance(zones[0], TextZone):
             textZone = zones[0]
             textToLeftEdge = textZone.x - extents.x
-            textToRightEdge = (extents.x + extents.width) - (textZone.x + width)
+            textToRightEdge = (extents.x + extents.width) - (textZone.x + textZone.width)
             stateOnLeft = textToLeftEdge > 20
             if stateOnLeft:
                 indicatorExtents[2] = textToLeftEdge
             else:
-                indicatorExtents[0] = textZone.x + width
+                indicatorExtents[0] = textZone.x + textZone.width
                 indicatorExtents[2] = textToRightEdge
 
         zone = StateZone(accessible, *indicatorExtents, role=role)
@@ -850,12 +770,7 @@ class Context:
                 zones.append(zone)
 
     def getZonesFromAccessible(self, accessible, cliprect):
-        """Returns a list of Zones for the given accessible.
-
-        Arguments:
-        - accessible: the accessible
-        - cliprect: the extents that the Zones must fit inside.
-        """
+        """Returns a list of Zones for the given accessible."""
 
         try:
             component = accessible.queryComponent()
@@ -863,163 +778,52 @@ class Context:
         except:
             return []
 
-        if not self.script.utilities.containsRegion(extents, cliprect):
-            return []
-
         try:
             role = accessible.getRole()
-            childCount = accessible.childCount
         except:
             return []
 
-        try:
-            accessible.queryText()
-        except NotImplementedError:
-            zones = []
-        else:
-            zones = self.getZonesFromText(accessible, cliprect)
-
-        clipping = self.script.utilities.intersection(extents, cliprect)
+        zones = self.getZonesFromText(accessible, cliprect)
         if not zones and role in [pyatspi.ROLE_SCROLL_BAR,
                                   pyatspi.ROLE_SLIDER,
                                   pyatspi.ROLE_PROGRESS_BAR]:
-            zones.append(ValueZone(accessible, *clipping))
-        elif childCount and role not in [pyatspi.ROLE_COMBO_BOX,
-                                         pyatspi.ROLE_EMBEDDED,
-                                         pyatspi.ROLE_LABEL,
-                                         pyatspi.ROLE_MENU,
-                                         pyatspi.ROLE_PAGE_TAB]:
-            pass
+            zones.append(ValueZone(accessible, *extents))
         elif not zones:
             string = self.script.speechGenerator.getName(accessible)
             useless = [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_LABEL]
             if not string and role not in useless:
-                string = self.script.speechGenerator.getLocalizedRoleName(accessible)
-
-            # TODO - JD: This check will become obsolete soon.
-            if string and (clipping[2] or clipping[3] != 0):
-                zones.append(Zone(accessible, string, *clipping))
+                string = self.script.speechGenerator.getRoleName(accessible)
+            if string:
+                zones.append(Zone(accessible, string, *extents))
 
         self._insertStateZone(zones, accessible, extents)
 
         return zones
 
-    def getShowingZones(self, root):
-        """Returns a list of all interesting, non-intersecting, regions
-        that are drawn on the screen.  Each element of the list is the
-        Accessible object associated with a given region.  The term
-        'zone' here is inherited from OCR algorithms and techniques.
+    def getShowingZones(self, root, boundingbox=None):
+        """Returns an unsorted list of all the zones under root and the focusZone."""
 
-        The Zones are returned in no particular order.
+        if boundingbox is None:
+            boundingbox = self.bounds
 
-        Arguments:
-        - root: the Accessible object to traverse
+        objs = self.script.utilities.getOnScreenObjects(root, boundingbox)
+        msg = "FLAT REVIEW: %i on-screen objects found for %s" % (len(objs), root)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
-        Returns: a list of Zones under the specified object
-        """
+        allZones, focusZone = [], None
+        for o in objs:
+            zones = self.getZonesFromAccessible(o, boundingbox)
+            if not zones:
+                continue
 
-        if not root:
-            return []
+            allZones.extend(zones)
+            if zones and (o == self.focusObj or o in self.focusObj):
+                zones = list(filter(lambda z: z.hasCaret(), zones)) or zones
+                focusZone = zones[0]
 
-        zones = []
-        try:
-            rootexts = root.queryComponent().getExtents(0)
-        except:
-            return []
-
-        rootrole = root.getRole()
-
-        # If we're at a leaf node, then we've got a good one on our hands.
-        #
-        try:
-            childCount = root.childCount
-        except (LookupError, RuntimeError):
-            childCount = -1
-        if root.childCount <= 0:
-            return self.getZonesFromAccessible(root, rootexts)
-
-        # Handle non-leaf Java JTree nodes. If the node is collapsed,
-        # treat it as a leaf node. If it's expanded, add it to the
-        # Zones list.
-        #
-        stateset = root.getState()
-        if stateset.contains(pyatspi.STATE_EXPANDABLE):
-            if stateset.contains(pyatspi.STATE_COLLAPSED):
-                return self.getZonesFromAccessible(root, rootexts)
-            elif stateset.contains(pyatspi.STATE_EXPANDED):
-                treenode = self.getZonesFromAccessible(root, rootexts)
-                if treenode:
-                    zones.extend(treenode)
-
-        # We'll stop at various objects because, while they do have
-        # children, we logically think of them as one region on the
-        # screen.  [[[TODO: WDW - HACK stopping at menu bars for now
-        # because their menu items tell us they are showing even though
-        # they are not showing.  Until I can figure out a reliable way to
-        # get past these lies, I'm going to ignore them.]]]
-        #
-        if (root.parent and (root.parent.getRole() == pyatspi.ROLE_MENU_BAR)) \
-           or (rootrole == pyatspi.ROLE_COMBO_BOX) \
-           or (rootrole == pyatspi.ROLE_EMBEDDED) \
-           or (rootrole == pyatspi.ROLE_TEXT) \
-           or (rootrole == pyatspi.ROLE_SCROLL_BAR):
-            return self.getZonesFromAccessible(root, rootexts)
-
-        # If this is a status bar, only pursue its children if we cannot
-        # get non-empty text information from the status bar.
-        # See bug #506874 for more details.
-        #
-        if rootrole == pyatspi.ROLE_STATUS_BAR:
-            zones = self.getZonesFromText(root, rootexts)
-            if len(zones):
-                return zones
-
-        # Otherwise, dig deeper.
-        #
-        # We'll include page tabs: while they are parents, their extents do
-        # not contain their children. [[[TODO: WDW - need to consider all
-        # parents, especially those that implement accessible text.  Logged
-        # as bugzilla bug 319773.]]]
-        #
-        if rootrole == pyatspi.ROLE_PAGE_TAB:
-            zones.extend(self.getZonesFromAccessible(root, rootexts))
-
-        try:
-            root.queryText()
-            if len(zones) == 0:
-                zones = self.getZonesFromAccessible(root, rootexts)
-        except NotImplementedError:
-            pass
-
-        cells = None
-        if "Table" in pyatspi.listInterfaces(root):
-            cells = self.script.utilities.getVisibleTableCells(root, rootexts)
-        if cells:
-            for cell in cells:
-                zones.extend(self.getShowingZones(cell))
-        else:
-            for i in range(0, root.childCount):
-                child = root.getChildAtIndex(i)
-                if child == root:
-                    debug.println(debug.LEVEL_WARNING,
-                                  "flat_review.getShowingZones: " +
-                                  "WARNING CHILD == PARENT!!!")
-                    continue
-                elif not child:
-                    debug.println(debug.LEVEL_WARNING,
-                                  "flat_review.getShowingZones: " +
-                                  "WARNING CHILD IS NONE!!!")
-                    continue
-                elif child.parent != root:
-                    debug.println(debug.LEVEL_WARNING,
-                                  "flat_review.getShowingZones: " +
-                                  "WARNING CHILD.PARENT != PARENT!!!")
-                                  
-                if self.script.utilities.pursueForFlatReview(child):
-                    zones.extend(self.getShowingZones(child))
-
-        return zones
-
+        msg = "FLAT REVIEW: %i zones found for %s" % (len(allZones), root)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return allZones, focusZone
 
     def clusterZonesByLine(self, zones):
         """Returns a sorted list of Line clusters containing sorted Zones."""
@@ -1047,7 +851,29 @@ class Context:
                 zone.line = lines[lineIndex]
                 zone.index = zoneIndex
 
+        msg = "FLAT REVIEW: Zones clustered into %i lines" % len(lines)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return lines
+
+    def getCurrent(self, flatReviewType=ZONE):
+        """Returns the current string, offset, and extent information."""
+
+        # TODO - JD: This method has not (yet) been renamed. But we have a
+        # getter and setter which do totally different things....
+
+        zone = self._getCurrentZone()
+        if not zone:
+            return None, -1, -1, -1, -1
+
+        current = zone
+        if flatReviewType == Context.LINE:
+            current = zone.line
+        elif zone.words:
+            current = zone.words[self.wordIndex]
+            if flatReviewType == Context.CHAR and current.chars:
+                current = current.chars[self.charIndex]
+
+        return current.string, current.x, current.y, current.width, current.height
 
     def setCurrent(self, lineIndex, zoneIndex, wordIndex, charIndex):
         """Sets the current character of interest.
@@ -1065,123 +891,55 @@ class Context:
         self.charIndex = charIndex
         self.targetCharInfo = self.getCurrent(Context.CHAR)
 
-        #print "Current line=%d zone=%d word=%d char=%d" \
-        #      % (lineIndex, zoneIndex, wordIndex, charIndex)
+    def _getClickPoint(self):
+        string, x, y, width, height = self.getCurrent(Context.CHAR)
+        if x < 0 and y < 0:
+            return -1, -1
+
+        # Click left of center to position the caret there.
+        x = int(max(x, x + (width / 2) - 1))
+        y = int(y + height / 2)
+
+        return x, y
 
     def routeToCurrent(self):
         """Routes the mouse pointer to the current accessible."""
 
-        if (not self.lines) \
-           or (not self.lines[self.lineIndex].zones):
-            return
+        x, y = self._getClickPoint()
+        if x < 0 or y < 0:
+            return False
 
-        [string, x, y, width, height] = self.getCurrent(Context.CHAR)
-        try:
-            # We try to move to the left of center.  This is to
-            # handle toolkits that will offset the caret position to
-            # the right if you click dead on center of a character.
-            #
-            x = max(x, x + (width / 2) - 1)
-            eventsynthesizer.routeToPoint(x, y + height / 2, "abs")
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
+        eventsynthesizer.routeToPoint(x, y, "abs")
+        return True
 
     def clickCurrent(self, button=1):
         """Performs a mouse click on the current accessible."""
 
-        if (not self.lines) \
-           or (not self.lines[self.lineIndex].zones):
-            return
+        x, y = self._getClickPoint()
+        if x < 0 or y < 0:
+            return False
 
-        [string, x, y, width, height] = self.getCurrent(Context.CHAR)
-        try:
+        eventsynthesizer.clickPoint(x, y, button)
+        return True
 
-            # We try to click to the left of center.  This is to
-            # handle toolkits that will offset the caret position to
-            # the right if you click dead on center of a character.
-            #
-            x = max(x, x + (width / 2) - 1)
-            eventsynthesizer.clickPoint(x,
-                                        y + height / 2,
-                                        button)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
+    def _getCurrentZone(self):
+        if not (self.lines and 0 <= self.lineIndex < len(self.lines)):
+            return None
+
+        line = self.lines[self.lineIndex]
+        if not (line and 0 <= self.zoneIndex < len(line.zones)):
+            return None
+
+        return line.zones[self.zoneIndex]
 
     def getCurrentAccessible(self):
-        """Returns the accessible associated with the current locus of
-        interest.
-        """
+        """Returns the current accessible."""
 
-        if (not self.lines) \
-           or (not self.lines[self.lineIndex].zones):
-            return [None, -1, -1, -1, -1]
-
-        zone = self.lines[self.lineIndex].zones[self.zoneIndex]
+        zone = self._getCurrentZone()
+        if not zone:
+            return None
 
         return zone.accessible
-
-    def getCurrent(self, flatReviewType=ZONE):
-        """Gets the string, offset, and extent information for the
-        current locus of interest.
-
-        Arguments:
-        - flatReviewType: one of ZONE, CHAR, WORD, LINE
-
-        Returns: [string, x, y, width, height]
-        """
-
-        if (not self.lines) \
-           or (not self.lines[self.lineIndex].zones):
-            return [None, -1, -1, -1, -1]
-
-        zone = self.lines[self.lineIndex].zones[self.zoneIndex]
-
-        if flatReviewType == Context.ZONE:
-            return [zone.string,
-                    zone.x,
-                    zone.y,
-                    zone.width,
-                    zone.height]
-        elif flatReviewType == Context.CHAR:
-            if isinstance(zone, TextZone):
-                words = zone.words
-                if words:
-                    chars = zone.words[self.wordIndex].chars
-                    if chars:
-                        char = chars[self.charIndex]
-                        return [char.string,
-                                char.x,
-                                char.y,
-                                char.width,
-                                char.height]
-                    else:
-                        word = words[self.wordIndex]
-                        return [word.string,
-                                word.x,
-                                word.y,
-                                word.width,
-                                word.height]
-            return self.getCurrent(Context.ZONE)
-        elif flatReviewType == Context.WORD:
-            if isinstance(zone, TextZone):
-                words = zone.words
-                if words:
-                    word = words[self.wordIndex]
-                    return [word.string,
-                            word.x,
-                            word.y,
-                            word.width,
-                            word.height]
-            return self.getCurrent(Context.ZONE)
-        elif flatReviewType == Context.LINE:
-            line = self.lines[self.lineIndex]
-            return [line.string,
-                    line.x,
-                    line.y,
-                    line.width,
-                    line.height]
-        else:
-            raise Exception("Invalid type: %d" % flatReviewType)
 
     def getCurrentBrailleRegions(self):
         """Gets the braille for the entire current line.

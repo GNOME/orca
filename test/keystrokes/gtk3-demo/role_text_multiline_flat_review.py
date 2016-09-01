@@ -264,9 +264,9 @@ sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "16. KP_7 to flat review toolbar",
     ["KNOWN ISSUE: gtk3-demo's toolbar widgets lack names that were present in the past",
-     "BRAILLE LINE:  'push button push button push button $l'",
-     "     VISIBLE:  'push button push button push but', cursor=1",
-     "SPEECH OUTPUT: 'push button push button push button'"]))
+     "BRAILLE LINE:  'push button & y Menu push button push button $l'",
+     "     VISIBLE:  'push button & y Menu push button', cursor=1",
+     "SPEECH OUTPUT: 'push button not pressed Menu push button push button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
@@ -326,9 +326,9 @@ sequence.append(KeyComboAction("KP_6"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "23. Insert+KP_6 to flat review below",
-    ["BRAILLE LINE:  'push button push button push button $l'",
-     "     VISIBLE:  'push button push button push but', cursor=1",
-     "SPEECH OUTPUT: 'push button'"]))
+    ["BRAILLE LINE:  'push button & y Menu push button push button $l'",
+     "     VISIBLE:  'push button & y Menu push button', cursor=1",
+     "SPEECH OUTPUT: 'push '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

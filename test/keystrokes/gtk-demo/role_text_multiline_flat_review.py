@@ -318,8 +318,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "22. Insert+KP_6 to flat review below",
     ["BRAILLE LINE:  'Open & y toggle button Quit GTK! $l'",
-     "     VISIBLE:  'Open & y toggle button Quit GTK!', cursor=1",
-     "SPEECH OUTPUT: 'Open'"]))
+     "     VISIBLE:  '& y toggle button Quit GTK! $l', cursor=1",
+     "SPEECH OUTPUT: 'not pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

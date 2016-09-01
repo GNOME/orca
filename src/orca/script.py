@@ -44,7 +44,6 @@ import pyatspi
 from . import braille_generator
 from . import debug
 from . import event_manager
-from . import flat_review
 from . import formatting
 from . import label_inference
 from . import keybindings
@@ -119,8 +118,6 @@ class Script:
         self.whereAmI = self.getWhereAmI()
         self.spellcheck = self.getSpellCheck()
         self.tutorialGenerator = self.getTutorialGenerator()
-
-        self.flatReviewContextClass = flat_review.Context
 
         self.findCommandRun = False
         self._lastCommandWasStructNav = False

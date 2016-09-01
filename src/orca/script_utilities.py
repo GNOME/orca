@@ -1548,32 +1548,100 @@ class Utilities:
         self._script.generatorCache[self.NODE_LEVEL][obj] = len(nodes) - 1
         return self._script.generatorCache[self.NODE_LEVEL][obj]
 
-    def pursueForFlatReview(self, obj):
-        """Determines if we should look any further at the object
-        for flat review."""
+    def isOnScreen(self, obj, boundingbox=None):
+        if self.isDead(obj):
+            return False
 
         if self.isHidden(obj):
             return False
 
-        try:
-            role = obj.getRole()
-            state = obj.getState()
-            childCount = obj.childCount
-        except:
-            msg = "ERROR: Exception getting role, state, childCount of %s" % obj
+        if not self.isShowingAndVisible(obj):
+            msg = "INFO: %s is not showing and visible" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not state.contains(pyatspi.STATE_SHOWING):
+        try:
+            box = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+        except:
+            msg = "ERROR: Exception getting extents for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        containers = [pyatspi.ROLE_LIST_BOX,
-                      pyatspi.ROLE_PANEL]
+        if box.x < 0 and box.y < 0:
+            msg = "INFO: %s has negative coordinates" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
 
-        if role in containers and not childCount:
+        if not (box.width or box.height):
+            if not obj.childCount:
+                msg = "INFO: %s has no size and no children" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return False
+            return True
+
+        if boundingbox is None or not self._boundsIncludeChildren(obj.parent):
+            return True
+
+        if not self.containsRegion(box, boundingbox):
+            msg = "INFO: %s %s not in %s" % (obj, box, boundingbox)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         return True
+
+    def getOnScreenObjects(self, root, extents=None):
+        if not self.isOnScreen(root, extents):
+            return []
+
+        try:
+            role = root.getRole()
+        except:
+            msg = "ERROR: Exception getting role of %s" % root
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
+        if role == pyatspi.ROLE_INVALID:
+            return []
+
+        if role == pyatspi.ROLE_COMBO_BOX:
+            return [root]
+
+        if extents is None:
+            try:
+                component = root.queryComponent()
+                extents = component.getExtents(pyatspi.DESKTOP_COORDS)
+            except:
+                msg = "ERROR: Exception getting extents of %s" % root
+                debug.println(debug.LEVEL_INFO, msg, True)
+                extents = 0, 0, 0, 0
+
+        interfaces = pyatspi.listInterfaces(root)
+        if 'Table' in interfaces and 'Selection' in interfaces:
+            visibleCells = self.getVisibleTableCells(root)
+            if visibleCells:
+                return visibleCells
+
+        nonText = [pyatspi.ROLE_STATUS_BAR, pyatspi.ROLE_UNKNOWN]
+        objects = []
+        if (role == pyatspi.ROLE_PAGE_TAB and root.name) \
+           or (role not in nonText and "Text" in pyatspi.listInterfaces(root)):
+            objects.append(root)
+
+        for child in root:
+            objects.extend(self.getOnScreenObjects(child, extents))
+
+        if objects:
+            return objects
+
+        containers = [pyatspi.ROLE_FILLER,
+                      pyatspi.ROLE_LIST_BOX,
+                      pyatspi.ROLE_PANEL,
+                      pyatspi.ROLE_SCROLL_PANE,
+                      pyatspi.ROLE_VIEWPORT]
+        if role in containers:
+            return []
+
+        return [root]
 
     @staticmethod
     def isTableRow(obj):
@@ -3465,10 +3533,18 @@ class Utilities:
 
         return rows
 
-    def getVisibleTableCells(self, obj, extents):
+    def getVisibleTableCells(self, obj):
         try:
             table = obj.queryTable()
         except:
+            return []
+
+        try:
+            component = obj.queryComponent()
+            extents = component.getExtents(pyatspi.DESKTOP_COORDS)
+        except:
+            msg = "ERROR: Exception getting extents of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
         rows = self.visibleRows(obj, extents)
@@ -3489,7 +3565,7 @@ class Utilities:
                     cell = table.getAccessibleAt(row, col)
                 except:
                     continue
-                if cell:
+                if cell and self.isOnScreen(cell):
                     cells.append(cell)
 
         return cells
@@ -3622,6 +3698,31 @@ class Utilities:
 
         msg = "INFO: %s is neither showing nor visible" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+
+    def isShowingAndVisible(self, obj):
+        try:
+            state = obj.getState()
+        except:
+            msg = "ERROR: Exception getting state of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if state.contains(pyatspi.STATE_SHOWING) \
+           and state.contains(pyatspi.STATE_VISIBLE):
+            return True
+
+        # TODO - JD: This really should be in the toolkit scripts. But it
+        # seems to be present in multiple toolkits, so it's either being
+        # inherited (e.g. from Gtk in Firefox Chrome, LO, Eclipse) or it
+        # may be an AT-SPI2 bug. For now, handling it here.
+        isMenuBar = lambda x: x and x.getRole() == pyatspi.ROLE_MENU_BAR
+        result = pyatspi.findAncestor(obj, isMenuBar) is not None
+        if result:
+            msg = "HACK: Treating %s as showing and visible" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         return False
 
     def isDead(self, obj):

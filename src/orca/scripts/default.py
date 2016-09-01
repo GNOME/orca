@@ -3306,7 +3306,7 @@ class Script(script.Script):
         """Returns the flat review context, creating one if necessary."""
 
         if not self.flatReviewContext:
-            self.flatReviewContext = self.flatReviewContextClass(self)
+            self.flatReviewContext = flat_review.Context(self)
             self.justEnteredFlatReviewMode = True
 
             # Remember where the cursor currently was

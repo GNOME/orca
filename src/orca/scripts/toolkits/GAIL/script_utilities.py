@@ -25,8 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
+import pyatspi
 import re
 
+import orca.debug as debug
 import orca.script_utilities as script_utilities
 
 class Utilities(script_utilities.Utilities):

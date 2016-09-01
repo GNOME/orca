@@ -280,8 +280,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "33. Review next word",
-    ["BRAILLE LINE:  '& y Pages:  < > Reverse $l'",
-     "     VISIBLE:  '& y Pages:  < > Reverse $l', cursor=1",
+    ["BRAILLE LINE:  '& y Pages: Pages < > Reverse $l'",
+     "     VISIBLE:  '& y Pages: Pages < > Reverse $l', cursor=1",
      "SPEECH OUTPUT: 'not selected'"]))
 
 sequence.append(utils.StartRecordingAction())

@@ -45,6 +45,12 @@ class Utilities(web.Utilities):
     def _attemptBrokenTextRecovery(self):
         return True
 
+    def _treatAsLeafNode(self, obj):
+        if obj.getRole() == pyatspi.ROLE_TABLE_ROW:
+            return not obj.childCount
+
+        return super()._treatAsLeafNode(obj)
+
     def containsPoint(self, obj, x, y, coordType):
         if not super().containsPoint(obj, x, y, coordType):
             return False
@@ -103,3 +109,26 @@ class Utilities(web.Utilities):
         msg = "GECKO: Treating %s and %s as same object: %s" % (obj1, obj2, rv)
         debug.println(debug.LEVEL_INFO, msg, True)
         return rv
+
+    def isOnScreen(self, obj, boundingbox=None):
+        if not super().isOnScreen(obj, boundingbox):
+            return False
+        if obj.getRole() != pyatspi.ROLE_UNKNOWN:
+            return True
+
+        if self.topLevelObject(obj) == obj.parent:
+            msg = "INFO: %s is suspected to be off screen object" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return True
+
+    def getOnScreenObjects(self, root, extents=None):
+        objects = super().getOnScreenObjects(root, extents)
+
+        # For things like Thunderbird's "Select columns to display" button
+        if root.getRole() == pyatspi.ROLE_TREE_TABLE and root.childCount:
+            isExtra = lambda x: x and x.getRole() != pyatspi.ROLE_COLUMN_HEADER
+            objects.extend([x for x in root[0] if isExtra(x)])
+
+        return objects

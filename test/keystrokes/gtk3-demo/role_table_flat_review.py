@@ -234,14 +234,6 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "28. Review previous line",
-    ["BRAILLE LINE:  '6 eggs $l'",
-     "     VISIBLE:  '6 eggs $l', cursor=1",
-     "SPEECH OUTPUT: '6 eggs'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_7"))
-sequence.append(utils.AssertPresentationAction(
-    "29. Review previous line",
     [""]))
 
 sequence.append(utils.AssertionSummaryAction())

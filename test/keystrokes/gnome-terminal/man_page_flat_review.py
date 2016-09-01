@@ -15,7 +15,7 @@ sequence.append(KeyComboAction("KP_8"))
 sequence.append(utils.AssertPresentationAction(
     "1. Review current line",
     ["BRAILLE LINE:  ' Manual page orca(1) line 1 (press h for help or q to quit) $l'",
-     "     VISIBLE:  '(press h for help or q to quit) ', cursor=32",
+     "     VISIBLE:  ' (press h for help or q to quit)', cursor=32",
      "SPEECH OUTPUT: ' Manual page orca(1) line 1 (press h for help or q to quit)",
      "'"]))
 
@@ -140,7 +140,7 @@ sequence.append(utils.AssertPresentationAction(
     "12. Review current line",
     ["KNOWN ISSUE: We currently deliberately exit flat review and return to the bottom of the window",
     "BRAILLE LINE:  ' Manual page orca(1) line 24 (press h for help or q to quit) $l'",
-     "     VISIBLE:  '(press h for help or q to quit) ', cursor=32",
+     "     VISIBLE:  ' (press h for help or q to quit)', cursor=32",
      "SPEECH OUTPUT: ' Manual page orca(1) line 24 (press h for help or q to quit)",
      "'"]))
 
@@ -237,7 +237,7 @@ sequence.append(KeyComboAction("KP_8"))
 sequence.append(utils.AssertPresentationAction(
     "20. Review current line",
     ["BRAILLE LINE:  ' Manual page orca(1) line 1 (press h for help or q to quit) $l'",
-     "     VISIBLE:  '(press h for help or q to quit) ', cursor=32",
+     "     VISIBLE:  ' (press h for help or q to quit)', cursor=32",
      "SPEECH OUTPUT: ' Manual page orca(1) line 1 (press h for help or q to quit)",
      "'"]))
 
