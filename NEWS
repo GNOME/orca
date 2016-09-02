@@ -1,3 +1,153 @@
+3.21.91 - 2 September 2016
+
+Flat Review:
+
+ * Automatically refresh content
+
+ * Improve accuracy with respect to what is truly on screen and where
+   it is located
+
+ * Improve performance building context
+
+ * Fix reviewability of Gtk+ icon panels and Gtk+ spin button values
+
+ * Add toolkit-specific handling for special cases (and toolkit bugs)
+
+ * Make menu-bar menus reviewable, including separators and disabled
+   items which cannot be arrowed to natively
+
+ * Make objects which typically display text (but might not implement
+   the text interface) reviewable by word and character
+
+ * Fix issue finding initial flat review location in Thunderbird
+
+
+Mouse Review:
+
+ * Dig deeper to find object under pointer for page tab list descendants
+   (So we don't just say "Page Tab")
+
+ * Fix issue causing Orca to say "blank" in text with embedded objects
+
+ * Add word support to all text objects; not just editable text objects
+
+ * Work around Gtk+ 3 exposing incorrect text range extents for entries
+   (So we present the actual word under the mouse)
+
+ * Add logic to handle windows whose accessible name doesn't match the
+   displayed name
+
+ * Add an announcement so that when the user toggles Mouse Review some
+   confirmation is provided
+
+Terminal:
+
+ * Fix instance where braille was not being refreshed
+
+ * Do not ignore deletion events resulting from BackSpace
+
+ * Update some cached information
+
+ * Filter out a spurious, unwanted text-delete event from VTE
+
+ * Don't treat inserted strings <= 1 char as a terminal autotext event
+
+ * Don't treat terminal insertion as command result if terminal isn't
+   locusOfFocus
+
+ * Present terminal paste events like we do paste events from other apps
+
+ * Work around issues in the text support of VTE which was causing us
+   to present cut-off text
+
+ * Attempt to filter out terminal pager text-change noise to reduce
+   chattiness
+
+ * Present terminal pager text insertions when they result from a
+   printable key
+
+Web:
+
+ * Add a "sticky" browse mode and keybinding
+
+ * Do not descend ROLE_EMBEDDED objects for the caret (ARIA compliance)
+
+ * Treat menu and toolbar descendants as focus mode widgets
+
+ * Create new localized role names for ARIA landmark roles
+
+ * Don't automatically update locusOfFocus to alerts; just present them
+
+ * Improve presentation of Roundcube Mail's list of messages
+
+ * Fix issue presenting stale content
+
+ * Don't present name and summary for page which is no longer showing
+   or visible
+
+ * Attempt to hack around SeaMonkey's broken events for HTML input
+   popups which was causing us to exit focus mode incorrectly
+
+ * Improve presentation and handling of editable ARIA combo boxes
+
+LibreOffice:
+
+ * Don't treat present "readonly" state for paragraphs in read-only
+   documents
+
+ * Add handling for GtkListBox items used by LibreOffice
+
+ * Work around a number of LibreOffice bugs which were causing us to
+   to present the wrong thing
+
+Other:
+
+ * Ensure we use the system voice for rolename info in WebKitGtk SayAll
+
+ * Create new localized rolenames for horizontal and vertical scrollbars
+   bars, sliders, and splitters
+
+ * More aggressively verify if a message is from a focused chat
+
+ * Fix whereAmI presentation of Gtk+ 3.20 combo boxes
+
+ * Remove .desktop file
+
+ * Include tool bar when presenting context
+
+ * Improve reliability of profile-based synthesis switching
+
+ * Do not supress presentation of locking keys in password fields
+
+ * Make the progressbar update intervals independent so beeps are always
+   presented when that is desired
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca            Catalan                     Jordi Mas
+    cs            Czech                       Marek Černocký
+    da            Danish                      Ask Hjorth Larsen
+    de            German                      Mario Blättermann,
+                                              Christian Kirbach
+    en_GB         British English             David King
+    es            Spanish                     Daniel Mustieles
+    fr            French                      Claude Paroz
+    hu            Hungarian                   Balázs Úr
+    id            Indonesian                  Andika Triwidada
+    lt            Lithuanian                  Aurimas Černius
+    pl            Polish                      Piotr Drąg
+    pt            Portuguese                  Tiago Santos
+    pt_BR         Brazilian Portuguese        Rafael Fontenelle,
+                                              Enrico Nicoletto
+    sk            Slovak                      Dušan Kazik
+    sl            Slovenian                   Matej Urbančič
+    sr            Serbian                     Мирослав Николић
+    sr@latin      Serbian                     Miroslav Nikolić
+    sv            Swedish                     Anders Jonsson
+    tr            Turkish                     Muhammet Kara,
+                                              Neriman Kara
+=========
+
 3.21.3 - 20 June 2016
 
 Web:
