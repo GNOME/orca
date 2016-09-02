@@ -3506,10 +3506,15 @@ class Utilities:
         except:
             return []
 
+        msg = "INFO: %s has %i rows" % (obj, nRows)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         x, y, width, height = boundingbox
         cell = self.descendantAtPoint(obj, x, y + 1)
         row, col = self.coordinatesForCell(cell)
         startIndex = max(0, row)
+        msg = "INFO: First cell: %s (row: %i)" % (cell, row)
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         # Just in case the row above is a static header row in a scrollable table.
         try:
@@ -3520,9 +3525,14 @@ class Utilities:
             cell = self.descendantAtPoint(obj, x, y + extents.height + 1)
             row, col = self.coordinatesForCell(cell)
             nextIndex = max(startIndex, row)
+            msg = "INFO: Next cell: %s (row: %i)" % (cell, row)
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         cell = self.descendantAtPoint(obj, x, y + height - 1)
         row, col = self.coordinatesForCell(cell)
+        msg = "INFO: Last cell: %s (row: %i)" % (cell, row)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         if row == -1:
             row = nRows
         endIndex = row
