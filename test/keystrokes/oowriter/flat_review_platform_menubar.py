@@ -10,11 +10,12 @@ sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("F6"))
 sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("KP_8"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
-    "1. Review current line.",
+    "1. Review previous line.",
     ["BRAILLE LINE:  'File Edit View Insert Format Styles Table Tools Window Help $l'",
      "     VISIBLE:  'File Edit View Insert Format Sty', cursor=1",
      "SPEECH OUTPUT: 'File Edit View Insert Format Styles Table Tools Window Help'"]))

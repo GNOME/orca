@@ -478,6 +478,9 @@ class Context:
         containerRoles = [pyatspi.ROLE_MENU]
         isContainer = lambda x: x and x.getRole() in containerRoles
         container = pyatspi.findAncestor(self.focusObj, isContainer)
+        if not container and isContainer(self.focusObj):
+            container = self.focusObj
+
         self.container = container or self.topLevel
 
         self.zones, self.focusZone = self.getShowingZones(self.container)
@@ -817,7 +820,7 @@ class Context:
                 continue
 
             allZones.extend(zones)
-            if zones and (o == self.focusObj or o in self.focusObj):
+            if not focusZone and zones and (o == self.focusObj or o in self.focusObj):
                 zones = list(filter(lambda z: z.hasCaret(), zones)) or zones
                 focusZone = zones[0]
 
