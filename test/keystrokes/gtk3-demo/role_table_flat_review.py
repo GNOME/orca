@@ -146,14 +146,6 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "17. Review next line",
-    ["BRAILLE LINE:  '1 can vanilla ice cream $l'",
-     "     VISIBLE:  '1 can vanilla ice cream $l', cursor=1",
-     "SPEECH OUTPUT: '1 can vanilla ice cream'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_9"))
-sequence.append(utils.AssertPresentationAction(
-    "18. Review next line",
     ["BRAILLE LINE:  'horizontal scroll bar 0% $l'",
      "     VISIBLE:  'horizontal scroll bar 0% $l', cursor=1",
      "SPEECH OUTPUT: 'horizontal scroll bar 0 percent.'"]))
@@ -161,7 +153,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
-    "19. Review next line",
+    "18. Review next line",
     ["BRAILLE LINE:  'Add item Remove item $l'",
      "     VISIBLE:  'Add item Remove item $l', cursor=1",
      "SPEECH OUTPUT: 'Add item Remove item"]))
@@ -169,7 +161,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
-    "20. Review previous line",
+    "19. Review previous line",
     ["BRAILLE LINE:  'horizontal scroll bar 0% $l'",
      "     VISIBLE:  'horizontal scroll bar 0% $l', cursor=1",
      "SPEECH OUTPUT: 'horizontal scroll bar 0 percent.'"]))
@@ -177,15 +169,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
-    "21. Review previous line",
-    ["BRAILLE LINE:  '1 can vanilla ice cream $l'",
-     "     VISIBLE:  '1 can vanilla ice cream $l', cursor=1",
-     "SPEECH OUTPUT: '1 can vanilla ice cream'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_7"))
-sequence.append(utils.AssertPresentationAction(
-    "22. Review previous line",
+    "20. Review previous line",
     ["BRAILLE LINE:  '2 packages of chocolate chip cookies $l'",
      "     VISIBLE:  '2 packages of chocolate chip coo', cursor=1",
      "SPEECH OUTPUT: '2 packages of chocolate chip cookies'"]))
@@ -193,7 +177,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
-    "23. Review previous line",
+    "21. Review previous line",
     ["BRAILLE LINE:  '5 packages of noodles $l'",
      "     VISIBLE:  '5 packages of noodles $l', cursor=1",
      "SPEECH OUTPUT: '5 packages of noodles"]))
@@ -201,7 +185,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
-    "24. Review previous line",
+    "22. Review previous line",
     ["BRAILLE LINE:  '3 bottles of coke $l'",
      "     VISIBLE:  '3 bottles of coke $l', cursor=1",
      "SPEECH OUTPUT: '3 bottles of coke'"]))
@@ -209,7 +193,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
-    "25. Review previous line",
+    "23. Review previous line",
     ["BRAILLE LINE:  'vertical scroll bar 0% $l'",
      "     VISIBLE:  'vertical scroll bar 0% $l', cursor=1",
      "SPEECH OUTPUT: 'vertical scroll bar 0 percent."]))
@@ -217,7 +201,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
-    "26. Review previous line",
+    "24. Review previous line",
     ["BRAILLE LINE:  'Number Product Yummy $l'",
      "     VISIBLE:  'Number Product Yummy $l', cursor=1",
      "SPEECH OUTPUT: 'Number Product Yummy"]))
@@ -225,7 +209,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
-    "27. Review previous line",
+    "25. Review previous line",
     ["BRAILLE LINE:  'Shopping list (you can edit the cells!) $l'",
      "     VISIBLE:  'Shopping list (you can edit the ', cursor=1",
      "SPEECH OUTPUT: 'Shopping list (you can edit the cells!)'"]))
@@ -233,7 +217,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
-    "28. Review previous line",
+    "26. Review previous line",
     [""]))
 
 sequence.append(utils.AssertionSummaryAction())
