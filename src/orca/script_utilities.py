@@ -3458,11 +3458,20 @@ class Utilities:
             try:
                 component = root.queryComponent()
             except:
+                msg = "ERROR: Exception querying component of %s" % root
+                debug.println(debug.LEVEL_INFO, msg, True)
                 child = None
             else:
                 child = component.getAccessibleAtPoint(x, y, coordType)
+                msg = "INFO: %s is at (%s, %s) in %s" % (child, x, y, root)
+                debug.println(debug.LEVEL_INFO, msg, True)
+
                 if child and child != root:
-                    return self.descendantAtPoint(child, x, y, coordType)
+                    cell = self.descendantAtPoint(child, x, y, coordType)
+                    msg = "INFO: %s is at (%s, %s) in %s" % (cell, x, y, child)
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    return cell
+
                 return None
 
         for child in root:
