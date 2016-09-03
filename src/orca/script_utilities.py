@@ -3432,6 +3432,10 @@ class Utilities:
         if not obj.childCount:
             return True
 
+        role = obj.getRole()
+        if role == pyatspi.ROLE_TABLE_ROW:
+            return False
+
         state = obj.getState()
         if state.contains(pyatspi.STATE_EXPANDABLE):
             return not state.contains(pyatspi.STATE_EXPANDED)
@@ -3439,7 +3443,7 @@ class Utilities:
         roles = [pyatspi.ROLE_COMBO_BOX,
                  pyatspi.ROLE_PUSH_BUTTON]
 
-        return obj.getRole() in roles
+        return role in roles
 
     def descendantAtPoint(self, root, x, y, coordType=None):
         if not root:
