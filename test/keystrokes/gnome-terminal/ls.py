@@ -11,6 +11,7 @@ for i in range(10):
     os.close(os.open(filename, os.O_CREAT, 0o700))
 
 sequence = MacroSequence()
+sequence.append(PauseAction(3000))
 sequence.append(TypeAction("ls"))
 
 sequence.append(utils.StartRecordingAction())
