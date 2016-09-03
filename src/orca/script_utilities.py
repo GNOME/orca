@@ -1577,6 +1577,11 @@ class Utilities:
                 msg = "INFO: %s has no size and no children" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
+            if obj.getRole() == pyatspi.ROLE_MENU:
+                msg = "INFO: %s has no size" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return False
+
             return True
 
         if boundingbox is None or not self._boundsIncludeChildren(obj.parent):

@@ -29,14 +29,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
 sequence.append(utils.AssertPresentationAction(
     "2. Review current line",
-    ["BRAILLE LINE:  '<x> Bold < > Blue $l'",
-     "     VISIBLE:  '<x> Bold < > Blue $l', cursor=10",
-     "SPEECH OUTPUT: 'checked Bold not checked Blue'"]))
+    ["BRAILLE LINE:  'Color <x> Red $l'",
+     "     VISIBLE:  'Color <x> Red $l', cursor=1",
+     "SPEECH OUTPUT: 'Color checked Red'"]))
 
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_7"))
+sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
-    "3. Review previous line",
+    "3. Review next line",
     ["BRAILLE LINE:  'Shape < > Green $l'",
      "     VISIBLE:  'Shape < > Green $l', cursor=1",
      "SPEECH OUTPUT: 'Shape not checked Green'"]))
