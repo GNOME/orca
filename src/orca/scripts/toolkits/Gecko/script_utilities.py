@@ -51,8 +51,8 @@ class Utilities(web.Utilities):
 
         return super()._treatAsLeafNode(obj)
 
-    def containsPoint(self, obj, x, y, coordType):
-        if not super().containsPoint(obj, x, y, coordType):
+    def containsPoint(self, obj, x, y, coordType, margin=2):
+        if not super().containsPoint(obj, x, y, coordType, margin):
             return False
 
         roles = [pyatspi.ROLE_MENU, pyatspi.ROLE_TOOL_TIP]

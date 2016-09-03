@@ -3408,13 +3408,22 @@ class Utilities:
 
         return table.nRows, table.nColumns
 
-    def containsPoint(self, obj, x, y, coordType):
+    def containsPoint(self, obj, x, y, coordType, margin=2):
         try:
             component = obj.queryComponent()
         except:
             return False
 
-        return component.contains(x, y, coordType)
+        if component.contains(x, y, coordType):
+            return True
+
+        x1, y1 = x + margin, y + margin
+        if component.contains(x1, y1, coordType):
+            msg = "INFO: %s contains (%i,%i); not (%i,%i)" % (obj, x1, y1, x, y)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
 
     def _boundsIncludeChildren(self, obj):
         if not obj:
@@ -3474,9 +3483,8 @@ class Utilities:
                     cell = self.descendantAtPoint(child, x, y, coordType)
                     msg = "INFO: %s is at (%s, %s) in %s" % (cell, x, y, child)
                     debug.println(debug.LEVEL_INFO, msg, True)
-                    return cell
-
-                return None
+                    if cell:
+                        return cell
 
         for child in root:
             obj = self.descendantAtPoint(child, x, y, coordType)
