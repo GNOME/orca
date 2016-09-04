@@ -10949,7 +10949,7 @@ msgstr "navigáció"
 #: ../src/orca/object_properties.py:189
 msgctxt "role"
 msgid "region"
-msgstr "Terület"
+msgstr "Speciális terület"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
