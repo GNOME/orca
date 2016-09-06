@@ -592,7 +592,7 @@ class Chat:
 
         text = ""
         if _settingsManager.getSetting('chatSpeakRoomName') and chatRoomName:
-            text = message.CHAT_MESSAGE_FROM_ROOM % chatRoomName
+            text = messages.CHAT_MESSAGE_FROM_ROOM % chatRoomName
         text = self._script.utilities.appendString(text, message)
 
         if len(text.strip()):
