@@ -28,8 +28,10 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.debug as debug
 import orca.messages as messages
 import orca.scripts.toolkits.GAIL as GAIL
+import orca.settings as settings
 import orca.speech as speech
 
 from .chat import Chat
@@ -185,11 +187,22 @@ class Script(GAIL.Script):
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated."""
 
+        if not settings.enableSadPidginHack:
+            msg = "PIDGIN: Hack for missing events disabled"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            GAIL.Script.onWindowActivated(self, event)
+            return
+
+        msg = "PIDGIN: Starting hack for missing events"
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
         # missing.
         hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_PAGE_TAB
         allPageTabs = pyatspi.findAllDescendants(event.source, hasRole)
+        msg = "PIDGIN: Hack to work around missing events complete"
+        debug.println(debug.LEVEL_INFO, msg, True)
         GAIL.Script.onWindowActivated(self, event)
 
     def onExpandedChanged(self, event):
