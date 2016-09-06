@@ -3225,6 +3225,39 @@ class Utilities:
 
         return child
 
+    def popupMenuFor(self, obj):
+        if not obj and obj.childCount:
+            return None
+
+        menus = [child for child in obj if child.getRole() == pyatspi.ROLE_MENU]
+        for menu in menus:
+            try:
+                state = menu.getState()
+            except:
+                msg = "ERROR: Exception getting state for %s" % menu
+                debug.println(debug.LEVEL_INFO, msg, True)
+                continue
+            if state.contains(pyatspi.STATE_ENABLED):
+                return menu
+
+        return None
+
+    def isMenuButton(self, obj):
+        if not obj:
+            return False
+
+        try:
+            role = obj.getRole()
+        except:
+            msg = "ERROR: Exception getting role for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role not in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_TOGGLE_BUTTON]:
+            return False
+
+        return self.popupMenuFor(obj) is not None
+
     def isEntryCompletionPopupItem(self, obj):
         return False
 
