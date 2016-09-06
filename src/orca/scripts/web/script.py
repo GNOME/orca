@@ -1478,7 +1478,7 @@ class Script(default.Script):
         if childRole == pyatspi.ROLE_DIALOG:
             msg = "WEB: Setting locusOfFocus to event.any_data"
             debug.println(debug.LEVEL_INFO, msg, True)
-            orca.setLocusOfFocus(event, child)
+            orca.setLocusOfFocus(event, event.any_data)
             return True
 
         if self.lastMouseRoutingTime and 0 < time.time() - self.lastMouseRoutingTime < 1:
