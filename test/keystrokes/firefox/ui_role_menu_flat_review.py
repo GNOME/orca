@@ -19,6 +19,8 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'View menu'",
      "SPEECH OUTPUT: 'Toolbars menu.'"]))
 
+sequence.append(PauseAction(3000))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
@@ -26,6 +28,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Firefox application Nightly frame Menu Bar tool bar Application menu bar Sidebar menu'",
      "     VISIBLE:  'Sidebar menu', cursor=1",
      "SPEECH OUTPUT: 'Sidebar menu.'"]))
+
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))

@@ -97,6 +97,7 @@ class Utilities:
 
         self._script = script
         self._clipboardHandlerId = None
+        self._selectedMenuBarMenu = {}
 
     #########################################################################
     #                                                                       #
@@ -1594,6 +1595,60 @@ class Utilities:
 
         return True
 
+    def selectedMenuBarMenu(self, menubar):
+        try:
+            role = menubar.getRole()
+        except:
+            msg = "ERROR: Exception getting role of %s" % menubar
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        if role != pyatspi.ROLE_MENU_BAR:
+            return None
+
+        if "Selection" in pyatspi.listInterfaces(menubar):
+            selected = self.selectedChildren(menubar)
+            if selected:
+                return selected[0]
+            return None
+
+        for menu in menubar:
+            try:
+                menu.clearCache()
+                state = menu.getState()
+            except:
+                msg = "ERROR: Exception getting state of %s" % menu
+                debug.println(debug.LEVEL_INFO, msg, True)
+                continue
+
+            if state.contains(pyatspi.STATE_EXPANDED) \
+               or state.contains(pyatspi.STATE_SELECTED):
+                return menu
+
+        return None
+
+    def isInOpenMenuBarMenu(self, obj):
+        if not obj:
+            return False
+
+        isMenuBar = lambda x: x and x.getRole() == pyatspi.ROLE_MENU_BAR
+        menubar = pyatspi.findAncestor(obj, isMenuBar)
+        if menubar is None:
+            return False
+
+        selectedMenu = self._selectedMenuBarMenu.get(hash(menubar))
+        if selectedMenu is None:
+            selectedMenu = self.selectedMenuBarMenu(menubar)
+
+        if not selectedMenu:
+            return False
+
+        inSelectedMenu = lambda x: x == selectedMenu
+        if inSelectedMenu(obj):
+            return True
+
+        return pyatspi.findAncestor(obj, inSelectedMenu) is not None
+
     def getOnScreenObjects(self, root, extents=None):
         if not self.isOnScreen(root, extents):
             return []
@@ -1609,6 +1664,13 @@ class Utilities:
             return []
 
         if role == pyatspi.ROLE_COMBO_BOX:
+            return [root]
+
+        if role == pyatspi.ROLE_MENU_BAR:
+            self._selectedMenuBarMenu[hash(root)] = self.selectedMenuBarMenu(root)
+
+        if root.parent.getRole() == pyatspi.ROLE_MENU_BAR \
+           and not self.isInOpenMenuBarMenu(root):
             return [root]
 
         if extents is None:
@@ -1634,6 +1696,9 @@ class Utilities:
 
         for child in root:
             objects.extend(self.getOnScreenObjects(child, extents))
+
+        if role == pyatspi.ROLE_MENU_BAR:
+            self._selectedMenuBarMenu[hash(root)] = None
 
         if objects:
             return objects
@@ -3772,8 +3837,9 @@ class Utilities:
     def isShowingAndVisible(self, obj):
         try:
             state = obj.getState()
+            role = obj.getRole()
         except:
-            msg = "ERROR: Exception getting state of %s" % obj
+            msg = "ERROR: Exception getting state and role of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -3785,9 +3851,13 @@ class Utilities:
         # seems to be present in multiple toolkits, so it's either being
         # inherited (e.g. from Gtk in Firefox Chrome, LO, Eclipse) or it
         # may be an AT-SPI2 bug. For now, handling it here.
-        isMenuBar = lambda x: x and x.getRole() == pyatspi.ROLE_MENU_BAR
-        result = pyatspi.findAncestor(obj, isMenuBar) is not None
-        if result:
+        menuRoles = [pyatspi.ROLE_MENU,
+                     pyatspi.ROLE_MENU_ITEM,
+                     pyatspi.ROLE_CHECK_MENU_ITEM,
+                     pyatspi.ROLE_RADIO_MENU_ITEM,
+                     pyatspi.ROLE_SEPARATOR]
+
+        if role in menuRoles and self.isInOpenMenuBarMenu(obj):
             msg = "HACK: Treating %s as showing and visible" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
