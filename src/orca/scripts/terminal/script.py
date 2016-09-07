@@ -142,6 +142,9 @@ class Script(default.Script):
         return True
 
     def skipObjectEvent(self, event):
+        if event.type == "object:text-changed:insert":
+            return False
+
         newEvent, newTime = None, 0
         if event.type == "object:text-changed:delete":
             if self.utilities.isBackSpaceCommandTextDeletionEvent(event):
