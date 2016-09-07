@@ -593,7 +593,11 @@ class Chat:
         text = ""
         if _settingsManager.getSetting('chatSpeakRoomName') and chatRoomName:
             text = messages.CHAT_MESSAGE_FROM_ROOM % chatRoomName
-        text = self._script.utilities.appendString(text, message)
+
+        if not settings.presentChatRoomLast:
+            text = self._script.utilities.appendString(text, message)
+        else:
+            text = self._script.utilities.appendString(message, text)
 
         if len(text.strip()):
             voice = self._script.speechGenerator.voice(string=text)
