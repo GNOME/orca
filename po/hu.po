@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-03 05:42+0200\n"
-"PO-Revision-Date: 2016-09-03 05:44+0200\n"
+"POT-Creation-Date: 2016-09-08 11:47+0200\n"
+"PO-Revision-Date: 2016-09-08 11:48+0200\n"
 "Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -10970,107 +10970,116 @@ msgstr "Keresés"
 msgid "visited link"
 msgstr "meglátogatott hivatkozás"
 
+#Megjegyzés: ezt a vezérlőelemet a Windows alatt elérhető képernyőolvasók menügombnak hívják, nálunk is maradjon így. Az üzenet csak a beszédszintetizátor által van kimondva, és csak a Braille-kijelzőn jelenik meg.
+#. Translators: This string should be treated as a role describing an object.
+#. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+#. A menu button is button widget that causes a menu to appear when the user
+#. activates the button.
+#: ../src/orca/object_properties.py:209
+msgid "menu button"
+msgstr "menügomb"
+
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
-#: ../src/orca/object_properties.py:207
+#: ../src/orca/object_properties.py:213
 msgid "clickable"
 msgstr "Kattintható elem"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:212
+#: ../src/orca/object_properties.py:218
 msgid "collapsed"
 msgstr "összecsukott"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:217
+#: ../src/orca/object_properties.py:223
 msgid "expanded"
 msgstr "kiterjesztett"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
-#: ../src/orca/object_properties.py:221
+#: ../src/orca/object_properties.py:227
 msgid "has long description"
 msgstr "van hosszú leírása"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:225
+#: ../src/orca/object_properties.py:231
 msgid "horizontal"
 msgstr "vízszintes"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:229
+#: ../src/orca/object_properties.py:235
 msgid "vertical"
 msgstr "függőleges"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:232
+#: ../src/orca/object_properties.py:238
 msgctxt "checkbox"
 msgid "checked"
 msgstr "bejelölve"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:235
+#: ../src/orca/object_properties.py:241
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "nincs bejelölve"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:238
+#: ../src/orca/object_properties.py:244
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "részben bejelölve"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:241
+#: ../src/orca/object_properties.py:247
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "lenyomva"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:244
+#: ../src/orca/object_properties.py:250
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "nincs lenyomva"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:247
+#: ../src/orca/object_properties.py:253
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "kiválasztott"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:250
+#: ../src/orca/object_properties.py:256
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "nincs kiválasztva"
 
 #. Translators: This is a state which applies to a table cell.
-#: ../src/orca/object_properties.py:253
+#: ../src/orca/object_properties.py:259
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "Nincs kijelölve"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:256
+#: ../src/orca/object_properties.py:262
 msgctxt "link state"
 msgid "visited"
 msgstr "meglátogatott hivatkozás"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:259
+#: ../src/orca/object_properties.py:265
 msgctxt "link state"
 msgid "unvisited"
 msgstr "nem látogatott hivatkozás"
 
 #. Translators: This state represents an item on the screen that has been set
 #. insensitive (or grayed out).
-#: ../src/orca/object_properties.py:263 ../src/orca/object_properties.py:267
+#: ../src/orca/object_properties.py:269 ../src/orca/object_properties.py:273
 msgid "grayed"
 msgstr "letiltott"
 
@@ -11079,7 +11088,7 @@ msgstr "letiltott"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the spoken
 #. version.
-#: ../src/orca/object_properties.py:274
+#: ../src/orca/object_properties.py:280
 msgctxt "text"
 msgid "read only"
 msgstr "írásvédett"
@@ -11090,20 +11099,20 @@ msgstr "írásvédett"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the braille
 #. version. (Because braille displays have limited real estate, we abbreviate.)
-#: ../src/orca/object_properties.py:281
+#: ../src/orca/object_properties.py:287
 msgctxt "text"
 msgid "rdonly"
 msgstr "írsvd"
 
 #. Translators: Certain objects (such as form controls on web pages) can have
 #. STATE_REQUIRED set to inform the user that this field must be filled out.
-#: ../src/orca/object_properties.py:285 ../src/orca/object_properties.py:289
+#: ../src/orca/object_properties.py:291 ../src/orca/object_properties.py:295
 msgid "required"
 msgstr "szükséges"
 
 #. Translators: "multi-select" refers to a web form list in which more than
 #. one item can be selected at a time.
-#: ../src/orca/object_properties.py:293
+#: ../src/orca/object_properties.py:299
 msgid "multi-select"
 msgstr "többválasztós"
 
