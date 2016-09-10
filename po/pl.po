@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-30 13:32+0200\n"
-"PO-Revision-Date: 2016-08-30 13:33+0200\n"
+"POT-Creation-Date: 2016-09-10 18:35+0200\n"
+"PO-Revision-Date: 2016-09-10 18:37+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -6462,7 +6462,7 @@ msgstr "proporcja"
 #: ../src/orca/mathsymbols.py:1531
 msgctxt "math symbol"
 msgid "dot minus"
-msgstr "minus w kropką"
+msgstr "minus z kropką"
 
 #. Translators: this is the spoken representation for the character '∹' (U+2239)
 #: ../src/orca/mathsymbols.py:1534
@@ -8077,7 +8077,7 @@ msgstr "Preferencje użytkownika (wersja graficzna)"
 #: ../src/orca/messages.py:267
 msgid "Report bugs to orca-list@gnome.org."
 msgstr ""
-"Prosimy zgłaszać błędy na adres orca-list@gnome.org (w języku angielskim)."
+"Prosimy zgłaszać błędy na adres orca-list@gnome.org (w języku angielskim)."
 
 #. Translators: Orca normal speaks the text which was just deleted from a
 #. document via command. Depending on the circumstances, that might be a
@@ -10977,7 +10977,7 @@ msgstr "rozwinięty"
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
 #: ../src/orca/object_properties.py:221
 msgid "has long description"
-msgstr "posiada długi opis"
+msgstr "ma długi opis"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
@@ -11280,7 +11280,7 @@ msgstr "10"
 #: ../src/orca/orca-setup.ui.h:49
 msgctxt "ProgressBar"
 msgid "Frequency (secs):"
-msgstr "Częstotliwość (w sekundach):"
+msgstr "Częstotliwość (w sekundach):"
 
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.
 #: ../src/orca/orca-setup.ui.h:51
@@ -11444,7 +11444,7 @@ msgstr "Mowa"
 
 #: ../src/orca/orca-setup.ui.h:109
 msgid "Enable Braille _support"
-msgstr "Ob_sługa alfabetu Braille'a"
+msgstr "Ob_sługa alfabetu Braille’a"
 
 #: ../src/orca/orca-setup.ui.h:110
 msgid "_Abbreviated role names"
@@ -11489,7 +11489,7 @@ msgstr "_Błyskawiczne wiadomości"
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. This label is for the spin button through which a user can customize how long (in seconds) these temporary messages should be displayed.
 #: ../src/orca/orca-setup.ui.h:126
 msgid "Messa_ge duration (secs):"
-msgstr "_Czas trwania wiadomości (w sekundach):"
+msgstr "_Czas trwania wiadomości (w sekundach):"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. Some users, however, would prefer to have the message remain displayed until they explicitly dismiss it. This can be accomplished by making flash messages persistent by checking this checkbox.
 #: ../src/orca/orca-setup.ui.h:128
@@ -11508,7 +11508,7 @@ msgstr "Ustawienia wiadomości błyskawicznych"
 
 #: ../src/orca/orca-setup.ui.h:133
 msgid "Braille"
-msgstr "Alfabet Braille'a"
+msgstr "Alfabet Braille’a"
 
 #: ../src/orca/orca-setup.ui.h:134
 msgid "Enable _key echo"
