@@ -591,7 +591,8 @@ class Chat:
             return
 
         text = ""
-        if _settingsManager.getSetting('chatSpeakRoomName') and chatRoomName:
+        if chatRoomName and \
+           _settingsManager.getAppSetting(self._script.app, 'chatSpeakRoomName'):
             text = messages.CHAT_MESSAGE_FROM_ROOM % chatRoomName
 
         if not settings.presentChatRoomLast:
