@@ -2847,6 +2847,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         doNotDescend = [pyatspi.ROLE_COMBO_BOX,
+                        pyatspi.ROLE_IMAGE,
                         pyatspi.ROLE_LIST_BOX,
                         pyatspi.ROLE_MENU_BAR,
                         pyatspi.ROLE_MENU,
