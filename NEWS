@@ -1,3 +1,50 @@
+3.21.92 - 16 September 2016
+
+Chat:
+
+ * Fix performance issue with Pidgin channels with thousands of users
+
+ * Fix bug in presenting chatroom name when app is not active
+
+ * Add customization to present chat room name after incoming message
+
+Flat Review:
+
+ * Make context menus flat-reviewable
+
+ * Improve filtering out of non-showing menu items in flat review
+
+ * Take possible margins/padding into account when looking for the
+   descendant at a specified point (performance)
+
+ * Do not treat collapsed table rows as leaf nodes if they have
+   children
+
+Web:
+
+ * Add explicit do-not-descend-for-caret check for ROLE_IMAGE so that
+   we don't present useless information when authors use ARIA's img
+   role on embedded SVG documents
+
+ * Handle another instance of broken accessibility trees
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                 Marek Černocký
+    da            Danish                Kenneth Nielsen
+    el            Greek                 Tom Tryfonidis
+    es            Spanish               Daniel Mustieles
+    gl            Galician              Fran Diéguez
+    hu            Hungarian             Attila Hammer, Gábor Kelemen
+    kk            Kazakh                Baurzhan Muftakhidinov
+    lt            Lithuanian            Aurimas Černius
+    lv            Latvian               Rūdolfs Mazurs
+    pl            Polish                Piotr Drąg
+    sv            Swedish               Anders Jonsson
+    tr            Turkish               Muhammet Kara
+
+=========
+
 3.21.91 - 2 September 2016
 
 Flat Review:
