@@ -1561,6 +1561,13 @@ class Utilities(script_utilities.Utilities):
         self._isTextBlockElement[hash(obj)] = rv
         return rv
 
+    def _advanceCaretInEmptyObject(self, obj):
+        role = obj.getRole()
+        if role == pyatspi.ROLE_TABLE_CELL and not self.queryNonEmptyText(obj):
+            return not self._script._lastCommandWasStructNav
+
+        return True
+
     def _treatAsLeafNode(self, obj):
         if super()._treatAsLeafNode(obj):
             return True
@@ -3025,7 +3032,8 @@ class Utilities(script_utilities.Utilities):
 
         text = self.queryNonEmptyText(obj)
         if not text:
-            if self.isTextBlockElement(obj) or self.isEmptyAnchor(obj):
+            if self._advanceCaretInEmptyObject(obj) \
+               and (self.isTextBlockElement(obj) or self.isEmptyAnchor(obj)):
                 nextObj, nextOffset = self.nextContext(obj, offset)
                 if nextObj:
                     msg = "WEB: First caret context for %s, %i is %s, %i" % (obj, offset, nextObj, nextOffset)
