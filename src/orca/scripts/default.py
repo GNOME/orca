@@ -2517,7 +2517,7 @@ class Script(script.Script):
             self.utilities.updateCachedTextSelection(event.source)
             return
 
-        string = event.any_data
+        string = self.utilities.deletedText(event)
         if self.utilities.isDeleteCommandTextDeletionEvent(event):
             msg = "DEFAULT: Deletion is believed to be due to Delete command"
             debug.println(debug.LEVEL_INFO, msg, True)
