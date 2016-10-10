@@ -2396,6 +2396,9 @@ class Utilities:
 
         return None
 
+    def deletedText(self, event):
+        return event.any_data
+
     def insertedText(self, event):
         if event.any_data:
             return event.any_data

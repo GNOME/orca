@@ -25,6 +25,7 @@ __copyright__ = "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
+import re
 
 from orca import debug
 from orca import keybindings
@@ -42,6 +43,16 @@ class Utilities(script_utilities.Utilities):
 
     def clearCache(self):
         pass
+
+    def deletedText(self, event):
+        match = re.search("\n~", event.any_data)
+        if not match:
+            return event.any_data
+
+        adjusted = event.any_data[:match.start()]
+        msg = "TERMINAL: Adjusted deletion: '%s'" % adjusted
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return adjusted
 
     def insertedText(self, event):
         if len(event.any_data) == 1:
@@ -127,8 +138,8 @@ class Utilities(script_utilities.Utilities):
         lastKey, mods = self.lastKeyAndModifiers()
         if lastKey == "Tab":
             return event.any_data != "\t"
-        if lastKey == "Return":
-            return event.any_data.startswith("\n")
+        if lastKey == "Return" and event.any_data.startswith("\n"):
+            return event.any_data.strip() and not event.any_data.count("\n~")
 
         return False
 
@@ -163,9 +174,12 @@ class Utilities(script_utilities.Utilities):
             if self.lastInputEventWasPaste():
                 return False
 
+            if event.any_data.count("\n~"):
+                return False
+
             keyString, mods = self.lastKeyAndModifiers()
             if keyString in ["Return", "Tab", "space", " "]:
-                return True
+                return re.search("[^\d\s]", event.any_data)
             if mods & keybindings.ALT_MODIFIER_MASK:
                 return True
             if len(event.any_data) > 1 and self.lastInputEventWasPrintableKey():
