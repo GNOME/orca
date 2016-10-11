@@ -1669,7 +1669,7 @@ class Utilities:
         if role == pyatspi.ROLE_MENU_BAR:
             self._selectedMenuBarMenu[hash(root)] = self.selectedMenuBarMenu(root)
 
-        if root.parent.getRole() == pyatspi.ROLE_MENU_BAR \
+        if root.parent and root.parent.getRole() == pyatspi.ROLE_MENU_BAR \
            and not self.isInOpenMenuBarMenu(root):
             return [root]
 
