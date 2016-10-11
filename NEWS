@@ -1,3 +1,19 @@
+3.22.1 - 11 October 2016
+
+Terminal:
+
+ * Reduce some chattiness using vim
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    en_GB         British English       David King
+    hr            Croatian              gogo
+    it            Italian               Milo Casagrande
+    oc            Occitan               Cédric Valmary
+    sv            Swedish               Anders Jonsson
+
+=========
+
 3.21.92 - 16 September 2016
 
 Chat:
