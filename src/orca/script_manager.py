@@ -58,6 +58,7 @@ class ScriptManager:
              'Miramar':          'Thunderbird',
              'Shredder':         'Thunderbird',
              'Earlybird':        'Thunderbird',
+             'Icedove':          'Thunderbird',
              'gaim':             'pidgin',
              'empathy-chat':     'empathy',
              'gnome-calculator': 'gcalctool',
