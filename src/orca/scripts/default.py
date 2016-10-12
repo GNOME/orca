@@ -2680,6 +2680,11 @@ class Script(script.Script):
         - event: the Event
         """
 
+        if self.utilities.isSameObject(event.source, orca_state.activeWindow):
+            msg = "DEFAULT: Event is for active window."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         self.pointOfReference = {}
 
         self.windowActivateTime = time.time()
