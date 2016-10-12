@@ -27,6 +27,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.debug as debug
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.default as default
@@ -133,6 +134,10 @@ class Script(default.Script):
         if role == pyatspi.ROLE_TABLE_COLUMN_HEADER:
             orca.setLocusOfFocus(event, event.source)
             return
+
+        if role == pyatspi.ROLE_MENU and not event.source.name:
+            msg = "GTK: Nameless menu with parent %s" % event.source.parent
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         # https://bugzilla.gnome.org/show_bug.cgi?id=720989
         if role == pyatspi.ROLE_MENU == event.source.parent.getRole():
