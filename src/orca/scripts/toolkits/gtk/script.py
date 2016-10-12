@@ -135,13 +135,13 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
-        if role == pyatspi.ROLE_MENU and not event.source.name:
-            msg = "GTK: Nameless menu with parent %s" % event.source.parent
-            debug.println(debug.LEVEL_INFO, msg, True)
-
         # https://bugzilla.gnome.org/show_bug.cgi?id=720989
         if role == pyatspi.ROLE_MENU == event.source.parent.getRole():
-            orca.setLocusOfFocus(event, event.source)
+            if event.source.name:
+                orca.setLocusOfFocus(event, event.source)
+            else:
+                msg = "GTK: Nameless menu with parent %s" % event.source.parent
+                debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         # Unfiled, but a similar case of the above issue with combo boxes.
