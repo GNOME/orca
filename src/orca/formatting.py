@@ -154,8 +154,8 @@ formatting = {
             },
         pyatspi.ROLE_COMBO_BOX: {
             'focused': 'expandableState',
-            'unfocused': 'labelAndName + roleName + pause + positionInList + ' + MNEMONIC + ' + accelerator',
-            'basicWhereAmI': 'label + roleName + pause + name + positionInList + ' + MNEMONIC + ' + accelerator'
+            'unfocused': 'labelAndName + roleName + pause + (currentLineText + anyTextSelection or positionInList) + ' + MNEMONIC + ' + accelerator',
+            'basicWhereAmI': 'label + roleName + pause + name + (currentLineText + anyTextSelection or positionInList) + ' + MNEMONIC + ' + accelerator'
             },
         pyatspi.ROLE_DIAL: {
             'focused': 'value',

@@ -1654,6 +1654,9 @@ class SpeechGenerator(generator.Generator):
            and obj.parent == self._script.utilities.topLevelObject(obj):
             return []
 
+        if self._script.utilities.isEditableComboBox(obj):
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         position, total = self._script.utilities.getPositionAndSetSize(obj)

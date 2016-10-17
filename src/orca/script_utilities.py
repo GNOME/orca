@@ -3329,11 +3329,45 @@ class Utilities:
     def isEntryCompletionPopupItem(self, obj):
         return False
 
+    def getEntryForEditableComboBox(self, obj):
+        if not obj:
+            return None
+
+        try:
+            role = obj.getRole()
+        except:
+            msg = "ERROR: Exception getting role for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        if role != pyatspi.ROLE_COMBO_BOX:
+            return None
+
+        children = [x for x in obj if self.isEditableTextArea(x)]
+        if len(children) == 1:
+            return children[0]
+
+        return None
+
     def isEditableComboBox(self, obj):
-        return False
+        return self.getEntryForEditableComboBox(obj) is not None
 
     def isEditableDescendantOfComboBox(self, obj):
-        return False
+        if not obj:
+            return False
+
+        try:
+            state = obj.getState()
+        except:
+            msg = "ERROR: Exception getting state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if not state.contains(pyatspi.STATE_EDITABLE):
+            return False
+
+        isComboBox = lambda x: x and x.getRole() == pyatspi.ROLE_COMBO_BOX
+        return pyatspi.findAncestor(obj, isComboBox) is not None
 
     def isPopOver(self, obj):
         return False

@@ -698,13 +698,14 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
-        if self.utilities.isZombie(event.source):
+        role = event.source.getRole()
+
+        if self.utilities.isZombie(event.source) \
+           or role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_LIST]:
             comboBox = self.utilities.containingComboBox(event.source)
             if comboBox:
                 orca.setLocusOfFocus(event, comboBox, True)
                 return
-
-        role = event.source.getRole()
 
         # This seems to be something we inherit from Gtk+
         if role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_PASSWORD_TEXT]:

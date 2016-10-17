@@ -111,28 +111,43 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         object will be used.  This method will return an empty array
         if nothing can be found.
         """
-        role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_TEXT and obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
-            return []
 
-        if role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_TOGGLE_BUTTON] \
-           and self._script.utilities.ancestorWithRole(
-                obj, [pyatspi.ROLE_TOOL_BAR], [pyatspi.ROLE_FRAME]):
-            acss = self.voice(speech_generator.SYSTEM)
+        # TODO - JD: This should be the behavior by default. But the default
+        # generators call displayedText(). Once that is corrected, this method
+        # can be removed.
+        if obj.name:
             result = [obj.name]
-            if result:
-                result.extend(acss)
-                return result
+            result.extend(self.voice(speech_generator.DEFAULT))
+            return result
 
-        return speech_generator.SpeechGenerator._generateName(
-            self, obj, **args)
+        return super()._generateName(obj, **args)
+
+    def _generateLabelAndName(self, obj, **args):
+        if obj.getRole() != pyatspi.ROLE_COMBO_BOX:
+            return super()._generateLabelAndName(obj, **args)
+
+        # TODO - JD: This should be the behavior by default because many
+        # toolkits use the label for the name.
+        result = []
+        label = self._script.utilities.displayedLabel(obj)
+        if label:
+            result.append(label)
+            result.extend(self.voice(speech_generator.DEFAULT))           
+
+        name = obj.name
+        if label == name or not name:
+            selected = self._script.utilities.selectedChildren(obj)
+            if selected:
+                name = selected[0].name
+
+        if name:
+            result.append(name)
+            result.extend(self.voice(speech_generator.DEFAULT))
+
+        return result
 
     def _generateLabelOrName(self, obj, **args):
         """Gets the label or the name if the label is not preset."""
-
-        role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_TEXT and obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
-            return []
 
         result = []
         acss = self.voice(speech_generator.DEFAULT)
@@ -161,6 +176,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(speech_generator.SpeechGenerator._generateLabelOrName(
                 self, obj, **args))
         return result
+
+    def _generateAnyTextSelection(self, obj, **args):
+        comboBoxEntry = self._script.utilities.getEntryForEditableComboBox(obj)
+        if comboBoxEntry:
+            return super()._generateAnyTextSelection(comboBoxEntry)
+
+        return super()._generateAnyTextSelection(obj, **args)
 
     def _generateAvailability(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
@@ -213,6 +235,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             priorObj = args.get('priorObj', None)
             if priorObj and priorObj.parent != obj.parent:
                 return []
+
+        if obj.getRole() == pyatspi.ROLE_COMBO_BOX:
+            entry = self._script.utilities.getEntryForEditableComboBox(obj)
+            if entry:
+                return super()._generateCurrentLineText(entry)
+            return []
 
         # TODO - JD: The SayLine, etc. code should be generated and not put
         # together in the scripts. In addition, the voice crap needs to go
