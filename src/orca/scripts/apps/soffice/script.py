@@ -717,6 +717,11 @@ class Script(default.Script):
             return
 
         # Ditto.
+        if role == pyatspi.ROLE_TOGGLE_BUTTON:
+            orca.setLocusOfFocus(event, event.source)
+            return
+
+        # Ditto.
         if role == pyatspi.ROLE_COMBO_BOX:
             orca.setLocusOfFocus(event, event.source)
             return
