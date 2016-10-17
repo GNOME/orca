@@ -91,5 +91,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Line 1 $l', cursor=1",
      "SPEECH OUTPUT: 'Line 1'"]))
 
+sequence.append(KeyComboAction("<Alt>F4"))
+
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

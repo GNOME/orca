@@ -57,5 +57,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'foreground color: black' voice=system",
      "SPEECH OUTPUT: 'background color: white' voice=system"]))
 
+sequence.append(KeyComboAction("<Alt>F4"))
+
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

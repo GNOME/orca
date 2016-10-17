@@ -46,7 +46,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "4. Top of file.",
-    ["BRAILLE LINE:  'soffice application column-example.odt - LibreOffice Writer frame column-example.odt - LibreOffice Writer root pane column-example - LibreOffice Document EFFector Vol. 19, No. 38  October  $l'",
+    ["BRAILLE LINE:  'column-example.odt - LibreOffice Writer frame column-example.odt - LibreOffice Writer root pane column-example - LibreOffice Document EFFector Vol. 19, No. 38  October  $l'",
      "     VISIBLE:  'EFFector Vol. 19, No. 38  Octobe', cursor=1",
      "SPEECH OUTPUT: 'EFFector Vol. 19, No. 38  October '"]))
 
@@ -121,6 +121,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'EFFector Vol. 19, No. 38  October  Intercept Personal ",
      "'"]))
 
-sequence.append(KeyComboAction("<Control>w"))
+sequence.append(KeyComboAction("<Alt>F4"))
+
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

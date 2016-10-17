@@ -75,7 +75,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Row inserted at the end of the table.' voice=system",
-     "SPEECH OUTPUT: 'blank'"]))
+     "SPEECH OUTPUT: 'blank A3.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Z"))
@@ -89,7 +89,10 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'undo' voice=system",
      "SPEECH OUTPUT: 'Last row deleted.' voice=system",
-     "SPEECH OUTPUT: 'blank'"]))
+     "SPEECH OUTPUT: 'End of table.'",
+     "SPEECH OUTPUT: 'A2 B2.'"]))
+
+sequence.append(KeyComboAction("<Alt>F4"))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

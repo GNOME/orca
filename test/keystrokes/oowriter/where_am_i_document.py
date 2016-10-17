@@ -36,6 +36,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Basic WhereAmI with multiple paragraphs selected",
     ["SPEECH OUTPUT: 'Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and surprise. And ruthless efficiency. Our three weapons are fear, surprise, and ruthless efficiency. And an almost fanatical devotion to the Pope. Our four. No. Amongst our weapons. Amongst our weaponry, are such elements as fear, surprise. I'll come in again. NOBODY expects the Spanish Inquisition! Amongst our weaponry are such diverse elements as: fear, surprise, ruthless efficiency, an almost fanatical devotion to the Pope, and nice red uniforms - Oh damn! Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance. Hm! She is made  selected'"]))
 
-sequence.append(KeyComboAction("<Control>w"))
+sequence.append(KeyComboAction("<Alt>F4"))
+
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

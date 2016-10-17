@@ -20,7 +20,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. Return to top of document",
-    ["BRAILLE LINE:  'soffice application Untitled 1 - LibreOffice Writer frame Untitled 1 - LibreOffice Writer root pane Untitled1 - LibreOffice Document Line 1 $l'",
+    ["BRAILLE LINE:  'Untitled 1 - LibreOffice Writer frame Untitled 1 - LibreOffice Writer root pane Untitled1 - LibreOffice Document Line 1 $l'",
      "     VISIBLE:  'Line 1 $l', cursor=1",
      "SPEECH OUTPUT: 'Line 1'"]))
 
@@ -32,6 +32,8 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Line 2'",
      "SPEECH OUTPUT: 'Line 3'",
      "SPEECH OUTPUT: 'Line 4'"]))
+
+sequence.append(KeyComboAction("<Alt>F4"))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -25,5 +25,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'fox jumps over'",
      "SPEECH OUTPUT: 'the lazy dog'"]))
 
+sequence.append(KeyComboAction("<Alt>F4"))
+
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

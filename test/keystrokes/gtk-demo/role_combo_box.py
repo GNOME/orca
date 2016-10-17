@@ -62,7 +62,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel  $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Editable panel'",
-     "SPEECH OUTPUT: 'text.'"]))
+     "SPEECH OUTPUT: 'editable combo box.'"]))
 
 sequence.append(TypeAction("Fou"))
 sequence.append(utils.StartRecordingAction())
@@ -80,7 +80,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Editable text combo box Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5",
-     "SPEECH OUTPUT: 'text.'",
+     "SPEECH OUTPUT: 'editable combo box.'",
      "SPEECH OUTPUT: 'Four.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -89,7 +89,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Editable text combo box open button",
     ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel Four $l combo box'",
      "     VISIBLE:  'Four $l combo box', cursor=5",
-     "SPEECH OUTPUT: 'Four combo box.'"]))
+     "SPEECH OUTPUT: 'Four editable combo box.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
@@ -99,7 +99,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Four $l', cursor=5",
      "BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5",
-     "SPEECH OUTPUT: 'text.'",
+     "SPEECH OUTPUT: 'editable combo box.'",
      "SPEECH OUTPUT: 'Four selected'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -108,7 +108,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Editable text combo box with selected text Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Combo boxes frame Editable panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5",
-     "SPEECH OUTPUT: 'text.'",
+     "SPEECH OUTPUT: 'editable combo box.'",
      "SPEECH OUTPUT: 'Four selected.'"]))
 
 sequence.append(KeyComboAction("Escape"))

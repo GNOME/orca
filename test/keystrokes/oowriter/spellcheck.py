@@ -32,5 +32,7 @@ sequence.append(utils.AssertPresentationAction(
     ["SPEECH OUTPUT: 'Suggestions'",
      "SPEECH OUTPUT: 'overt.'"]))
 
+sequence.append(KeyComboAction("<Alt>F4"))
+
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

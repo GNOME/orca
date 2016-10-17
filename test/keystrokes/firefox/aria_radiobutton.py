@@ -12,9 +12,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to first radio button",
-    ["BRAILLE LINE:  'embedded'",
-     "     VISIBLE:  'embedded', cursor=1",
-     "BRAILLE LINE:  '&=y Radio Maria radio button'",
+    ["BRAILLE LINE:  '&=y Radio Maria radio button'",
      "     VISIBLE:  '&=y Radio Maria radio button', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",

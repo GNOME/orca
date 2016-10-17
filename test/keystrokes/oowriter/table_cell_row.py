@@ -7,10 +7,11 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(5000))
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Down"))
-sequence.append(PauseAction(10000))
+sequence.append(PauseAction(5000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -68,6 +69,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Mon $l'",
      "     VISIBLE:  'Mon $l', cursor=4",
      "SPEECH OUTPUT: 'Sun A1 Mon B1 Tue C1 Wed D1 Thu E1 Fri F1 Sat G1.'"]))
+
+sequence.append(KeyComboAction("<Alt>F4"))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

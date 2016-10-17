@@ -16,9 +16,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "1. Review previous line.",
-    ["BRAILLE LINE:  'File Edit View Insert Format Styles Table Tools Window Help $l'",
-     "     VISIBLE:  'File Edit View Insert Format Sty', cursor=1",
-     "SPEECH OUTPUT: 'File Edit View Insert Format Styles Table Tools Window Help'"]))
+    []))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
@@ -95,6 +93,8 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'F'",
      "SPEECH OUTPUT: 'foxtrot'",
      "SPEECH OUTPUT: 'Unicode 0046'"]))
+
+sequence.append(KeyComboAction("<Alt>F4"))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

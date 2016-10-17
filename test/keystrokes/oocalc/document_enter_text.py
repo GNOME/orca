@@ -10,22 +10,29 @@ sequence = MacroSequence()
 sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
-sequence.append(TypeAction("hi"))
+sequence.append(TypeAction("h"))
 sequence.append(utils.AssertPresentationAction(
-    "1. Type 'hi' - keyecho is off",
-    ["BRAILLE LINE:  'soffice application Untitled 1 - LibreOffice Calc frame Untitled 1 - LibreOffice Calc root pane Untitled1 - LibreOffice Spreadsheets Cell A1 panel Paragraph 0 hi $l'",
-     "     VISIBLE:  'Paragraph 0 hi $l', cursor=15",
-     "BRAILLE LINE:  'soffice application Untitled 1 - LibreOffice Calc frame Untitled 1 - LibreOffice Calc root pane Untitled1 - LibreOffice Spreadsheets Cell A1 panel Paragraph 0 hi $l'",
-     "     VISIBLE:  'Paragraph 0 hi $l', cursor=15",
+    "1. Type 'h' - keyecho is off",
+    ["BRAILLE LINE:  'Untitled 1 - LibreOffice Calc frame Untitled 1 - LibreOffice Calc root pane Untitled1 - LibreOffice Spreadsheets Cell A1 panel Paragraph 0 h $l'",
+     "     VISIBLE:  'Paragraph 0 h $l', cursor=14",
      "SPEECH OUTPUT: 'Cell A1 panel'",
-     "SPEECH OUTPUT: 'Paragraph 0 hi'"]))
+     "SPEECH OUTPUT: 'Paragraph 0 h'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(TypeAction("i"))
+sequence.append(utils.AssertPresentationAction(
+    "2. Type 'i' - keyecho is off",
+    ["BRAILLE LINE:  'Untitled 1 - LibreOffice Calc frame Untitled 1 - LibreOffice Calc root pane Untitled1 - LibreOffice Spreadsheets Cell A1 panel Paragraph 0 hi $l'",
+     "     VISIBLE:  'Paragraph 0 hi $l', cursor=15",
+     "BRAILLE LINE:  'Untitled 1 - LibreOffice Calc frame Untitled 1 - LibreOffice Calc root pane Untitled1 - LibreOffice Spreadsheets Cell A1 panel Paragraph 0 hi $l'",
+     "     VISIBLE:  'Paragraph 0 hi $l', cursor=15"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
-    "2. Press Return",
-    ["BRAILLE LINE:  'soffice application Untitled 1 - LibreOffice Calc frame Untitled 1 - LibreOffice Calc root pane Untitled1 - LibreOffice Spreadsheets Sheet Sheet1 table  A2'",
+    "3. Press Return",
+    ["BRAILLE LINE:  'Untitled 1 - LibreOffice Calc frame Untitled 1 - LibreOffice Calc root pane Untitled1 - LibreOffice Spreadsheets Sheet Sheet1 table  A2'",
      "     VISIBLE:  ' A2', cursor=1",
      "SPEECH OUTPUT: 'Sheet Sheet1.'",
      "SPEECH OUTPUT: 'table with 1048576 rows 1024 columns'",

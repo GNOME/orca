@@ -16,7 +16,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. KP_Add to do a SayAll",
     ["SPEECH OUTPUT: 'nested-tables'",
      "SPEECH OUTPUT: 'image'",
-     "SPEECH OUTPUT: 'link'",
+     "SPEECH OUTPUT: 'visited link'",
      "SPEECH OUTPUT: 'Campus'",
      "SPEECH OUTPUT: 'link'",
      "SPEECH OUTPUT: '.'",

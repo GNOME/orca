@@ -18,13 +18,19 @@ sequence.append(utils.AssertPresentationAction(
     "1. Tab to first button",
     ["BRAILLE LINE:  '& y Font Larger toggle button'",
      "     VISIBLE:  '& y Font Larger toggle button', cursor=1",
-     "SPEECH OUTPUT: 'Font Larger toggle button not pressed'"]))
+     "BRAILLE LINE:  'Browse mode'",
+     "     VISIBLE:  'Browse mode', cursor=0",
+
+     "SPEECH OUTPUT: 'Font Larger toggle button not pressed'",
+     "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic whereamI",
     ["BRAILLE LINE:  '& y Font Larger toggle button'",
+     "     VISIBLE:  '& y Font Larger toggle button', cursor=1",
+     "BRAILLE LINE:  '& y Font Larger toggle button'",
      "     VISIBLE:  '& y Font Larger toggle button', cursor=1",
      "SPEECH OUTPUT: 'Font Larger toggle button not pressed'"]))
 

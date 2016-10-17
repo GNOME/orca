@@ -21,5 +21,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow to typed line",
     ["SPEECH OUTPUT: '2 tabs 3 spaces  		   This is a test.'"]))
 
+sequence.append(KeyComboAction("<Alt>F4"))
+
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

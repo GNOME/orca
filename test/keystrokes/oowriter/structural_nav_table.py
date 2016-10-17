@@ -188,7 +188,7 @@ sequence.append(utils.AssertPresentationAction(
     "15. Up Arrow out of table.",
     ["BRAILLE LINE:  'Sun $l'",
      "     VISIBLE:  'Sun $l', cursor=1",
-     "BRAILLE LINE:  'soffice application table-sample2.odt - LibreOffice Writer frame table-sample2.odt - LibreOffice Writer root pane table-sample2 - LibreOffice Document This is a test. $l'",
+     "BRAILLE LINE:  'table-sample2.odt - LibreOffice Writer frame table-sample2.odt - LibreOffice Writer root pane table-sample2 - LibreOffice Document This is a test. $l'",
      "     VISIBLE:  'This is a test. $l', cursor=16",
      "SPEECH OUTPUT: 'leaving table.'",
      "SPEECH OUTPUT: 'This is a test.'"]))
@@ -207,12 +207,13 @@ sequence.append(KeyComboAction("z"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "17. Toggle structural navigation off",
-    ["BRAILLE LINE:  'soffice application table-sample2.odt - LibreOffice Writer frame table-sample2.odt - LibreOffice Writer root pane table-sample2 - LibreOffice Document This is a test. $l'",
+    ["BRAILLE LINE:  'table-sample2.odt - LibreOffice Writer frame table-sample2.odt - LibreOffice Writer root pane table-sample2 - LibreOffice Document This is a test. $l'",
      "     VISIBLE:  'This is a test. $l', cursor=16",
      "BRAILLE LINE:  'Structural navigation keys off.'",
      "     VISIBLE:  'Structural navigation keys off.', cursor=0",
      "SPEECH OUTPUT: 'Structural navigation keys off.' voice=system"]))
 
-sequence.append(KeyComboAction("<Control>W"))
+sequence.append(KeyComboAction("<Alt>F4"))
+
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

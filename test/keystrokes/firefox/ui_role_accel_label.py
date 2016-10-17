@@ -9,7 +9,6 @@ sequence = MacroSequence()
 
 sequence.append(KeyComboAction("<Alt>f"))
 sequence.append(KeyComboAction("Down"))
-sequence.append(KeyComboAction("Down"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

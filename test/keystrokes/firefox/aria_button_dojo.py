@@ -85,8 +85,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "10. Open drop down menu on Create",
-    ["BRAILLE LINE:  'save options push button'",
-     "     VISIBLE:  'save options push button', cursor=1",
+    ["BRAILLE LINE:  'save options menu button'",
+     "     VISIBLE:  'save options menu button', cursor=1",
      "BRAILLE LINE:  'Create blank'",
      "     VISIBLE:  'Create blank', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
@@ -129,8 +129,8 @@ sequence.append(utils.AssertPresentationAction(
     "14. Open the Edit! menu",
     ["BRAILLE LINE:  'Edit! push button'",
      "     VISIBLE:  'Edit! push button', cursor=1",
-     "BRAILLE LINE:  'Edit! push button'",
-     "     VISIBLE:  'Edit! push button', cursor=1",
+     "BRAILLE LINE:  'Edit! menu button'",
+     "     VISIBLE:  'Edit! menu button', cursor=1",
      "BRAILLE LINE:  'Cut'",
      "     VISIBLE:  'Cut', cursor=1",
      "BRAILLE LINE:  'Focus mode'",

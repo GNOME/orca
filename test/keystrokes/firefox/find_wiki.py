@@ -21,6 +21,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. Return to next result",
     ["BRAILLE LINE:  'Welcome to Orca! h1'",
      "     VISIBLE:  'Welcome to Orca! h1', cursor=12",
+     "BRAILLE LINE:  'Firefox application Orca - GNOME Live! - Nightly frame Find in page orca $l'",
+     "     VISIBLE:  'Find in page orca $l', cursor=18",
      "SPEECH OUTPUT: 'Welcome to Orca! heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -29,6 +31,8 @@ sequence.append(utils.AssertPresentationAction(
     "2. Return to next result",
     ["BRAILLE LINE:  'Welcome to Orca!'",
      "     VISIBLE:  'Welcome to Orca!', cursor=1",
+     "BRAILLE LINE:  'Firefox application Orca - GNOME Live! - Nightly frame Find in page orca $l'",
+     "     VISIBLE:  'Find in page orca $l', cursor=18",
      "SPEECH OUTPUT: '1.'",
      "SPEECH OUTPUT: 'Welcome to Orca!'",
      "SPEECH OUTPUT: 'link.'"]))
@@ -39,14 +43,18 @@ sequence.append(utils.AssertPresentationAction(
     "3. Return to next result",
     ["BRAILLE LINE:  'Orca is a free, open source, flexible, extensible, and '",
      "     VISIBLE:  'Orca is a free, open source, fle', cursor=1",
+     "BRAILLE LINE:  'Firefox application Orca - GNOME Live! - Nightly frame Find in page orca $l'",
+     "     VISIBLE:  'Find in page orca $l', cursor=18",
      "SPEECH OUTPUT: 'Orca is a free, open source, flexible, extensible, and'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "4. Return to next result",
-    ["BRAILLE LINE:  'synthesis, braille, and magnification, Orca helps provide '",
-     "     VISIBLE:  's, braille, and magnification, O', cursor=32",
+    ["BRAILLE LINE:  'Orca is a free, open source, flexible, extensible, and '",
+     "     VISIBLE:  'rce, flexible, extensible, and ', cursor=32",
+     "BRAILLE LINE:  'Firefox application Orca - GNOME Live! - Nightly frame Find in page orca $l'",
+     "     VISIBLE:  'Find in page orca $l', cursor=18",
      "SPEECH OUTPUT: 'synthesis, braille, and magnification, Orca helps provide'"]))
 
 sequence.append(utils.StartRecordingAction())

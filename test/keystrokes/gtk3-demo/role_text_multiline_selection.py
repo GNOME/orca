@@ -11,6 +11,7 @@ sequence.append(KeyComboAction("End"))
 sequence.append(KeyComboAction("Up"))
 sequence.append(KeyComboAction("Up"))
 sequence.append(KeyComboAction("Up"))
+sequence.append(KeyComboAction("Up"))
 sequence.append(KeyComboAction("<Shift><Control>Right"))
 sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Return"))
@@ -20,7 +21,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>a"))
 sequence.append(utils.AssertPresentationAction(
     "1. Select all'",
-    ["BRAILLE LINE:  'gtk3-demo application Hypertext frame Some text to show that simple hyper text can easily be  $l'",
+    ["BRAILLE LINE:  'gtk3-demo application Hypertext frame Some text to show that simple hyper text can easily be realized  $l'",
      "     VISIBLE:  'Some text to show that simple hy', cursor=1",
      "SPEECH OUTPUT: 'entire document selected' voice=system"]))
 

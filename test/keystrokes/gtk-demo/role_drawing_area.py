@@ -25,9 +25,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "2. Flat review next line",
-    ["BRAILLE LINE:  'unknown $l'",
-     "     VISIBLE:  'unknown $l', cursor=1",
-     "SPEECH OUTPUT: 'unknown'"]))
+    ["BRAILLE LINE:  'Scribble area $l'",
+     "     VISIBLE:  'Scribble area $l', cursor=1",
+     "SPEECH OUTPUT: 'Scribble area'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

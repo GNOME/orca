@@ -19,8 +19,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Shift Tab",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
+    ["BRAILLE LINE:  'S ummary: contains all of the words/strings Search table row'",
+     "     VISIBLE:  'S ummary: contains all of the wo', cursor=1",
      "BRAILLE LINE:  'Summary: contains all of the words/strings combo box'",
      "     VISIBLE:  'Summary: contains all of the wor', cursor=10",
      "SPEECH OUTPUT: 'Summary: contains all of the words/strings combo box.'"]))

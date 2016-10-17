@@ -31,7 +31,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'bin icon', cursor=1",
      "SPEECH OUTPUT: 'Icon panel.'",
      "SPEECH OUTPUT: 'bin.'",
-     "SPEECH OUTPUT: '1 of 20 items selected on 1 of 20.'"]))
+     "SPEECH OUTPUT: '1 of 22 items selected on 1 of 22.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -57,7 +57,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'bin icon', cursor=1",
      "SPEECH OUTPUT: 'Icon panel.'",
      "SPEECH OUTPUT: 'bin.'",
-     "SPEECH OUTPUT: '2 of 20 items selected on 1 of 20.'"]))
+     "SPEECH OUTPUT: '2 of 22 items selected on 1 of 22.'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

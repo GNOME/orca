@@ -46,9 +46,9 @@ sequence.append(KeyComboAction("KP_7"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "2. Flat review the home position to read the message",
-    ["BRAILLE LINE:  'Info bars This is an info bar with message type GTK_MESSAGE_INFO filler $l'",
+    ["BRAILLE LINE:  'Info bars This is an info bar with message type GTK_MESSAGE_INFO $l'",
      "     VISIBLE:  'Info bars This is an info bar wi', cursor=1",
-     "SPEECH OUTPUT: 'Info bars This is an info bar with message type GTK_MESSAGE_INFO filler'"]))
+     "SPEECH OUTPUT: 'Info bars This is an info bar with message type GTK_MESSAGE_INFO'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

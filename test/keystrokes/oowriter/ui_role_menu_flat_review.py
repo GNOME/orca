@@ -156,5 +156,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '<x> Status Bar $l', cursor=1",
      "SPEECH OUTPUT: 'checked Status Bar'"]))
 
+sequence.append(KeyComboAction("<Alt>F4"))
+
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

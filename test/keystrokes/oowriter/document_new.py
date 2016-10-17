@@ -20,5 +20,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Untitled 2 - LibreOffice Writer frame'",
      "SPEECH OUTPUT: 'blank'"]))
 
+sequence.append(KeyComboAction("<Alt>F4"))
+
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

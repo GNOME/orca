@@ -16,22 +16,19 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to tree",
-    ["BRAILLE LINE:  'Fruits expanded list item'",
+    ["BRAILLE LINE:  'embedded'",
+     "     VISIBLE:  'embedded', cursor=1",
+     "BRAILLE LINE:  'Fruits expanded list item'",
      "     VISIBLE:  'Fruits expanded list item', cursor=1",
-     "BRAILLE LINE:  'Focus mode'",
-     "     VISIBLE:  'Focus mode', cursor=0",
      "SPEECH OUTPUT: 'Fruits.'",
      "SPEECH OUTPUT: 'expanded.'",
-     "SPEECH OUTPUT: 'tree level 1'",
-     "SPEECH OUTPUT: 'Focus mode' voice=system"]))
+     "SPEECH OUTPUT: 'tree level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic whereAmI",
     ["BRAILLE LINE:  'Fruits expanded list item'",
-     "     VISIBLE:  'Fruits expanded list item', cursor=1",
-     "BRAILLE LINE:  'Fruits expanded list item'",
      "     VISIBLE:  'Fruits expanded list item', cursor=1",
      "SPEECH OUTPUT: 'list item.'",
      "SPEECH OUTPUT: 'Fruits.'",
