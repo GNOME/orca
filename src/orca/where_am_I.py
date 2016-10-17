@@ -48,6 +48,9 @@ class WhereAmI:
         list items and table cells.
         """
 
+        if obj.getState().contains(pyatspi.STATE_FOCUSED):
+            return obj
+
         roles = [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_LIST_ITEM]
         ancestor = pyatspi.findAncestor(obj, lambda x: x and x.getRole() in roles)
         if ancestor and not self._script.utilities.isLayoutOnly(ancestor.parent):

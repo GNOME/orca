@@ -74,6 +74,7 @@ class Utilities(script_utilities.Utilities):
         self._isLink = {}
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
+        self._isImageMap = {}
         self._isUselessImage = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
@@ -131,6 +132,7 @@ class Utilities(script_utilities.Utilities):
         self._isLink = {}
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
+        self._isImageMap = {}
         self._isUselessImage = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
@@ -2390,6 +2392,22 @@ class Utilities(script_utilities.Utilities):
         self._hasUselessCanvasDescendant[hash(obj)] = rv
         return rv
 
+    def isImageMap(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isImageMap.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        role = obj.getRole()
+        rv = role == pyatspi.ROLE_IMAGE_MAP
+        if rv == False and role == pyatspi.ROLE_IMAGE:
+            rv = obj.childCount and obj[0].getRole() == pyatspi.ROLE_LINK
+
+        self._isImageMap[hash(obj)] = rv
+        return rv
+
     def isUselessImage(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -2851,6 +2869,9 @@ class Utilities(script_utilities.Utilities):
             return True
 
         if self.isTextBlockElement(obj):
+            return False
+
+        if self.isImageMap(obj):
             return False
 
         doNotDescend = [pyatspi.ROLE_COMBO_BOX,
