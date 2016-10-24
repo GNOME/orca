@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>Invalid</title>
+</head>
+<body>
+<p>Examples:</p>
+<div>
+  <input aria-label="text 1" type="text" value="Hello wurld" aria-invalid="spelling">
+  <input aria-label="text 2" type="text" value="World hello" aria-invalid="grammar">
+  <input aria-label="text 3" type="text" value="1234" aria-invalid="true">
+  <input aria-label="text 4" type="text" value="Good" aria-invalid="false">
+  <input aria-label="accept terms of service" type="checkbox" value="tos-accepted" aria-invalid="true">
+</div>
+<div>
+  <input aria-label="time 1" id="time1" type="text" aria-errormessage="msgID" value="" aria-invalid="false">
+  <span id="msgID" aria-live="off" style="visibility:hidden"> Invalid time:  the time must be between 9:00 AM and 5:00 PM" </span>
+</div>
+<div>
+  <input aria-label="time 2" id="time2" type="text" aria-errormessage="msgID" aria-invalid="true" value="11:30 PM" />
+  <span id="msgID" style="visibility:visible"> Invalid time: The time must be between 9:00 AM and 5:00 PM"</span>
+</div>
+</body>
+</html>

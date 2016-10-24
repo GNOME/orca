@@ -298,7 +298,39 @@ STATE_REQUIRED_BRAILLE = _("required")
 # one item can be selected at a time.
 STATE_MULTISELECT_SPEECH = _("multi-select")
 
+# Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+# as a form field, has an error. The following string is spoken when all we
+# know is that an error has occurred, but not the type of error.
+STATE_INVALID_SPEECH = C_("error", "invalid entry")
 
+# Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+# as a form field, has an error. The following string is displayed in braille
+# when all we know is that an error has occurred, but not the type of error.
+# We prefer a smaller string than in speech because braille displays have a
+# limited size.
+STATE_INVALID_BRAILLE = C_("error", "invalid")
+
+# Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+# as a form field, has an error. The following string is spoken when the error
+# is related to spelling.
+STATE_INVALID_SPELLING_SPEECH = C_("error", "invalid spelling")
+
+# Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+# as a form field, has an error. The following string is displayed in braille
+# when the error is related to spelling. We prefer a smaller string than in
+# speech because braille displays have a limited size.
+STATE_INVALID_SPELLING_BRAILLE = C_("error", "spelling")
+
+# Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+# as a form field, has an error. The following string is spoken when the error
+# is related to grammar.
+STATE_INVALID_GRAMMAR_SPEECH = C_("error", "invalid grammar")
+
+# Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+# as a form field, has an error. The following string is displayed in braille
+# when the error is related to grammar. We prefer a smaller string than in
+# speech because braille displays have a limited size.
+STATE_INVALID_GRAMMAR_BRAILLE = C_("error", "grammar")
 
 # TODO: Look at why we're doing this as lists.
 
@@ -306,6 +338,10 @@ CHECK_BOX_INDICATORS_SPEECH = \
     [STATE_NOT_CHECKED, STATE_CHECKED, STATE_PARTIALLY_CHECKED]
 EXPANSION_INDICATORS_SPEECH = \
     [STATE_COLLAPSED, STATE_EXPANDED]
+INVALID_INDICATORS_SPEECH = \
+    [STATE_INVALID_SPEECH,
+     STATE_INVALID_SPELLING_SPEECH,
+     STATE_INVALID_GRAMMAR_SPEECH]
 RADIO_BUTTON_INDICATORS_SPEECH = \
     [STATE_UNSELECTED_RADIO_BUTTON, STATE_SELECTED_RADIO_BUTTON]
 TOGGLE_BUTTON_INDICATORS_SPEECH = \
@@ -313,6 +349,9 @@ TOGGLE_BUTTON_INDICATORS_SPEECH = \
 
 CHECK_BOX_INDICATORS_BRAILLE     = ["< >", "<x>", "<->"]
 EXPANSION_INDICATORS_BRAILLE     = [STATE_COLLAPSED, STATE_EXPANDED]
+INVALID_INDICATORS_BRAILLE       = [STATE_INVALID_BRAILLE,
+                                    STATE_INVALID_SPELLING_BRAILLE,
+                                    STATE_INVALID_GRAMMAR_BRAILLE]
 RADIO_BUTTON_INDICATORS_BRAILLE  = ["& y", "&=y"]
 TOGGLE_BUTTON_INDICATORS_BRAILLE = ["& y", "&=y"]
 
@@ -321,6 +360,7 @@ EOL_INDICATOR_BRAILLE = " $l"
 
 CHECK_BOX_INDICATORS_SOUND = ["not_checked", "checked", "partially_checked"]
 EXPANSION_INDICATORS_SOUND = ["collapsed", "expanded"]
+INVALID_INDICATORS_SOUND = ["invalid", "invalid_spelling", "invalid_grammar"]
 RADIO_BUTTON_INDICATORS_SOUND = ["unselected", "selected"]
 TOGGLE_BUTTON_INDICATORS_SOUND = ["not_pressed", "pressed"]
 STATE_CLICKABLE_SOUND = "clickable"

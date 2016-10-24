@@ -462,6 +462,25 @@ class Generator:
             result.append(self._script.formatting.getString(**args))
         return result
 
+    def _generateInvalid(self, obj, **args):
+        error = self._script.utilities.getError(obj)
+        if not error:
+            return []
+
+        result = []
+        if not args.get('mode', None):
+            args['mode'] = self._mode
+        args['stringType'] = 'invalid'
+        indicators = self._script.formatting.getString(**args)
+
+        if error == 'spelling':
+            result.append(indicators[1])
+        elif error == 'grammar':
+            result.append(indicators[2])
+        else:
+            result.append(indicators[0])
+        return result
+
     def _generateRequired(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
         represent the required state of the object, but only if it is

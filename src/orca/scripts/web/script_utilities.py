@@ -2835,6 +2835,34 @@ class Utilities(script_utilities.Utilities):
 
         return child
 
+    def getError(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().getError(obj)
+
+        try:
+            state = obj.getState()
+        except:
+            msg = "ERROR: Exception getting state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if not state.contains(pyatspi.STATE_INVALID_ENTRY):
+            return False
+
+        try:
+            self._currentAttrs.pop(hash(obj))
+        except:
+            pass
+
+        attrs, start, end = self.textAttributes(obj, 0, True)
+        error = attrs.get("invalid")
+        if error == "false":
+            return False
+        if error not in ["spelling", "grammar"]:
+            return True
+
+        return error
+
     def hasNoSize(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return super().hasNoSize(obj)

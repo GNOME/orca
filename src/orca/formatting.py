@@ -38,6 +38,7 @@ TUTORIAL = '(tutorial and (pause + tutorial) or [])'
 MNEMONIC = '(mnemonic and (pause + mnemonic + lineBreak) or [])'
 
 BRAILLE_TEXT = '[Text(obj, asString(labelOrName or placeholderText), asString(eol), startOffset, endOffset)]\
+                + (invalid and [Region(" " + asString(invalid))])\
                 + (required and [Region(" " + asString(required))])\
                 + (readOnly and [Region(" " + asString(readOnly))])'
 
@@ -52,6 +53,7 @@ formatting = {
 
     'strings' : {
         'speech': {
+            'invalid': object_properties.INVALID_INDICATORS_SPEECH,
             'required': object_properties.STATE_REQUIRED_SPEECH,
             'readonly': object_properties.STATE_READ_ONLY_SPEECH,
             'insensitive': object_properties.STATE_INSENSITIVE_SPEECH,
@@ -72,6 +74,7 @@ formatting = {
             'required': object_properties.STATE_REQUIRED_BRAILLE,
             'readonly': object_properties.STATE_READ_ONLY_BRAILLE,
             'insensitive': object_properties.STATE_INSENSITIVE_BRAILLE,
+            'invalid': object_properties.INVALID_INDICATORS_BRAILLE,
             'checkbox': object_properties.CHECK_BOX_INDICATORS_BRAILLE,
             'radiobutton': object_properties.RADIO_BUTTON_INDICATORS_BRAILLE,
             'togglebutton': object_properties.TOGGLE_BUTTON_INDICATORS_BRAILLE,
@@ -80,6 +83,7 @@ formatting = {
             'nestinglevel': object_properties.NESTING_LEVEL_BRAILLE,
         },
         'sound': {
+            'invalid': object_properties.INVALID_INDICATORS_SOUND,
             'required': object_properties.STATE_REQUIRED_SOUND,
             'readonly': object_properties.STATE_READ_ONLY_SOUND,
             'insensitive': object_properties.STATE_INSENSITIVE_SOUND,
@@ -136,8 +140,8 @@ formatting = {
             },
         pyatspi.ROLE_CHECK_BOX: {
             'focused': 'checkedState',
-            'unfocused': 'labelOrName + roleName + checkedState + required + availability + ' + MNEMONIC + ' + accelerator',
-            'basicWhereAmI': 'namedContainingPanel + labelOrName + roleName + checkedState + ' + MNEMONIC + ' + accelerator + required'
+            'unfocused': 'labelOrName + roleName + checkedState + required + pause + invalid + availability + ' + MNEMONIC + ' + accelerator',
+            'basicWhereAmI': 'namedContainingPanel + labelOrName + roleName + checkedState + ' + MNEMONIC + ' + accelerator + required + pause + invalid'
             },
         pyatspi.ROLE_CHECK_MENU_ITEM: {
             'focused': 'checkedState',
@@ -177,9 +181,9 @@ formatting = {
             },
         pyatspi.ROLE_ENTRY: {
             'focused': 'labelOrName + readOnly + textRole + (currentLineText or placeholderText) + allTextSelection',
-            'unfocused': 'labelOrName + readOnly + textRole + (currentLineText or placeholderText) + allTextSelection + ' + MNEMONIC,
-            'basicWhereAmI': 'labelOrName + readOnly + textRole + (textContent or placeholderText) + anyTextSelection + ' + MNEMONIC,
-            'detailedWhereAmI': 'labelOrName + readOnly + textRole + (textContentWithAttributes or placeholderText) + anyTextSelection + ' + MNEMONIC,
+            'unfocused': 'labelOrName + readOnly + textRole + (currentLineText or placeholderText) + allTextSelection + required + pause + invalid + ' + MNEMONIC,
+            'basicWhereAmI': 'labelOrName + readOnly + textRole + (textContent or placeholderText) + anyTextSelection + required + pause + invalid + ' + MNEMONIC,
+            'detailedWhereAmI': 'labelOrName + readOnly + textRole + (textContentWithAttributes or placeholderText) + anyTextSelection + required + pause + invalid + ' + MNEMONIC,
             },
         pyatspi.ROLE_FOOTER: {
             'unfocused': '(displayedText or name) + roleName',
@@ -361,13 +365,13 @@ formatting = {
             },
         pyatspi.ROLE_SLIDER: {
             'focused': 'value',
-            'unfocused': 'labelOrName + roleName + value + required + availability + ' + MNEMONIC,
-            'basicWhereAmI': 'labelOrName + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
+            'unfocused': 'labelOrName + roleName + value + required + pause + invalid + availability + ' + MNEMONIC,
+            'basicWhereAmI': 'labelOrName + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required + pause + invalid'
             },
         pyatspi.ROLE_SPIN_BUTTON: {
             'focused': 'name',
-            'unfocused': 'labelAndName + allTextSelection + roleName + availability + ' + MNEMONIC + ' + required',
-            'basicWhereAmI': 'label + roleName + name + allTextSelection + ' + MNEMONIC + ' + accelerator + required'
+            'unfocused': 'labelAndName + allTextSelection + roleName + required + pause + invalid + availability + ' + MNEMONIC,
+            'basicWhereAmI': 'label + roleName + name + allTextSelection + ' + MNEMONIC + ' + accelerator + required + pause + invalid'
             },
         pyatspi.ROLE_SPLIT_PANE: {
             'focused': 'value',
@@ -404,7 +408,7 @@ formatting = {
                               + cellCheckedState\
                               + (realActiveDescendantDisplayedText or imageDescription + image)\
                               + (expandableState and (expandableState + numberOfChildren))\
-                              + required)'
+                              + required + pause + invalid)'
             },
         pyatspi.ROLE_TABLE_ROW: {
             'focused': 'expandableState',
@@ -484,9 +488,9 @@ formatting = {
             },
         'default': {
             'focused':   '[Component(obj,\
-                                     asString(label + displayedText + value + roleName + required))]',
+                                     asString(label + displayedText + value + roleName + required + invalid))]',
             'unfocused': '[Component(obj,\
-                                     asString(label + displayedText + value + roleName + required))]',
+                                     asString(label + displayedText + value + roleName + required + invalid))]',
             },
         pyatspi.ROLE_ALERT: {
             'unfocused': '((substring and ' + BRAILLE_TEXT + ')\
@@ -668,7 +672,7 @@ formatting = {
         #'REAL_ROLE_SCROLL_PANE': 'default'
         pyatspi.ROLE_SLIDER: {
             'unfocused': '[Component(obj,\
-                                     asString(labelOrName + value + roleName + required))]'
+                                     asString(labelOrName + value + roleName + required + invalid))]'
             },
         pyatspi.ROLE_SPIN_BUTTON: {
             'unfocused': '[Text(obj, asString(label), asString(eol))]\
@@ -752,7 +756,7 @@ formatting = {
         },
         pyatspi.ROLE_CHECK_BOX: {
             'focused': 'checkedState',
-            'unfocused': 'roleName + checkedState + required + availability',
+            'unfocused': 'roleName + checkedState + required + invalid + availability',
         },
         pyatspi.ROLE_CHECK_MENU_ITEM: {
             'focused': 'checkedState',
@@ -764,10 +768,10 @@ formatting = {
         },
         pyatspi.ROLE_DIAL: {
             'focused': 'percentage',
-            'unfocused': 'roleName + percentage + required + availability',
+            'unfocused': 'roleName + percentage + required + invalid + availability',
         },
         pyatspi.ROLE_ENTRY: {
-            'unfocused': 'roleName + readOnly + required + availability',
+            'unfocused': 'roleName + readOnly + required + invalid + availability',
         },
         pyatspi.ROLE_HEADING: {
             'focused': 'expandableState',
@@ -819,11 +823,11 @@ formatting = {
         },
         pyatspi.ROLE_SLIDER: {
             'focused': 'percentage',
-            'unfocused': 'roleName + percentage + required + availability',
+            'unfocused': 'roleName + percentage + required + invalid + availability',
         },
         pyatspi.ROLE_SPIN_BUTTON: {
             'focused': 'percentage',
-            'unfocused': 'roleName + availability + percentage + required',
+            'unfocused': 'roleName + availability + percentage + required + invalid',
         },
         pyatspi.ROLE_SPLIT_PANE: {
             'focused': 'percentage',
@@ -837,7 +841,7 @@ formatting = {
             'focused': 'expandableState',
         },
         pyatspi.ROLE_TEXT: {
-            'unfocused': 'roleName + readOnly + required + availability',
+            'unfocused': 'roleName + readOnly + required + invalid + availability',
         },
         pyatspi.ROLE_TOGGLE_BUTTON: {
             'focused': 'expandableState or toggleState',

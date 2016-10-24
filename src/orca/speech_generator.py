@@ -262,6 +262,16 @@ class SpeechGenerator(generator.Generator):
             result.extend(acss)
         return result
 
+    def _generateInvalid(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        acss = self.voice(SYSTEM)
+        result = generator.Generator._generateInvalid(self, obj, **args)
+        if result:
+            result.extend(acss)
+        return result
+
     def _generateRequired(self, obj, **args):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
