@@ -1598,13 +1598,9 @@ class Utilities(script_utilities.Utilities):
 
         return string, start, end
 
-    def treatAsDiv(self, obj):
+    def treatAsDiv(self, obj, offset=None):
         if not (obj and self.inDocumentContent(obj)):
             return False
-
-        rv = self._treatAsDiv.get(hash(obj))
-        if rv is not None:
-            return rv
 
         try:
             role = obj.getRole()
@@ -1614,7 +1610,14 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        rv = False
+        if role == pyatspi.ROLE_LIST and offset is not None:
+            string = self.substring(obj, offset, offset + 1)
+            if string and string != self.EMBEDDED_OBJECT_CHARACTER:
+                return True
+
+        rv = self._treatAsDiv.get(hash(obj))
+        if rv is not None:
+            return rv
 
         validRoles = self._validChildRoles.get(role)
         if validRoles:
@@ -3074,7 +3077,7 @@ class Utilities(script_utilities.Utilities):
                        pyatspi.ROLE_INTERNAL_FRAME,
                        pyatspi.ROLE_TABLE,
                        pyatspi.ROLE_TABLE_ROW]
-        if role in lookInChild and obj.childCount and not self.treatAsDiv(obj):
+        if role in lookInChild and obj.childCount and not self.treatAsDiv(obj, offset):
             msg = "WEB: First caret context for %s, %i will look in child %s" % (obj, offset, obj[0])
             debug.println(debug.LEVEL_INFO, msg, True)
             return self.findFirstCaretContext(obj[0], 0)
