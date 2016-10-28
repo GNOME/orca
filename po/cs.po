@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2016-08-29 23:54+0000\n"
-"PO-Revision-Date: 2016-09-04 22:01+0200\n"
+"POT-Creation-Date: 2016-10-26 14:30+0000\n"
+"PO-Revision-Date: 2016-10-28 14:06+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>>\n"
 "Language: cs\n"
@@ -9450,14 +9450,14 @@ msgstr "Režim procházení je přichytávací."
 msgid "Mouse over object not found."
 msgstr "Nenalezen objekt pod kurzorem myši."
 
-#. Translators: Orca has a feature to speak the item under the pointer. This feaure,
+#. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled off via command.
 #: ../src/orca/messages.py:1339
 msgid "Mouse review disabled."
 msgstr "Zkoumání myší je zakázáno."
 
-#. Translators: Orca has a feature to speak the item under the pointer. This feaure,
+#. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled on via command.
 #: ../src/orca/messages.py:1344
@@ -10936,107 +10936,115 @@ msgstr "hledání"
 msgid "visited link"
 msgstr "navštívený odkaz"
 
+#. Translators: This string should be treated as a role describing an object.
+#. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+#. A menu button is button widget that causes a menu to appear when the user
+#. activates the button.
+#: ../src/orca/object_properties.py:209
+msgid "menu button"
+msgstr "tlačítko s nabídkou"
+
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
-#: ../src/orca/object_properties.py:207
+#: ../src/orca/object_properties.py:213
 msgid "clickable"
 msgstr "kliknutelný"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:212
+#: ../src/orca/object_properties.py:218
 msgid "collapsed"
 msgstr "sbaleno"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:217
+#: ../src/orca/object_properties.py:223
 msgid "expanded"
 msgstr "rozbaleno"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
-#: ../src/orca/object_properties.py:221
+#: ../src/orca/object_properties.py:227
 msgid "has long description"
 msgstr "má dlouhý popis"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:225
+#: ../src/orca/object_properties.py:231
 msgid "horizontal"
 msgstr "vodorovně"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:229
+#: ../src/orca/object_properties.py:235
 msgid "vertical"
 msgstr "svisle"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:232
+#: ../src/orca/object_properties.py:238
 msgctxt "checkbox"
 msgid "checked"
 msgstr "zaškrtnuto"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:235
+#: ../src/orca/object_properties.py:241
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "nezaškrtnuto"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:238
+#: ../src/orca/object_properties.py:244
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "částečně zaškrtnuto"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:241
+#: ../src/orca/object_properties.py:247
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "zmáčknuto"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:244
+#: ../src/orca/object_properties.py:250
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "nezmáčknuto"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:247
+#: ../src/orca/object_properties.py:253
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "vybráno"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:250
+#: ../src/orca/object_properties.py:256
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "nevybráno"
 
 #. Translators: This is a state which applies to a table cell.
-#: ../src/orca/object_properties.py:253
+#: ../src/orca/object_properties.py:259
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "nevybrána"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:256
+#: ../src/orca/object_properties.py:262
 msgctxt "link state"
 msgid "visited"
 msgstr "navštíveno"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:259
+#: ../src/orca/object_properties.py:265
 msgctxt "link state"
 msgid "unvisited"
 msgstr "nenavštíveno"
 
 #. Translators: This state represents an item on the screen that has been set
 #. insensitive (or grayed out).
-#: ../src/orca/object_properties.py:263 ../src/orca/object_properties.py:267
+#: ../src/orca/object_properties.py:269 ../src/orca/object_properties.py:273
 msgid "grayed"
 msgstr "nepřístupné"
 
@@ -11045,7 +11053,7 @@ msgstr "nepřístupné"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the spoken
 #. version.
-#: ../src/orca/object_properties.py:274
+#: ../src/orca/object_properties.py:280
 msgctxt "text"
 msgid "read only"
 msgstr "jen ke čtení"
@@ -11055,22 +11063,74 @@ msgstr "jen ke čtení"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the braille
 #. version. (Because braille displays have limited real estate, we abbreviate.)
-#: ../src/orca/object_properties.py:281
+#: ../src/orca/object_properties.py:287
 msgctxt "text"
 msgid "rdonly"
 msgstr "kčtení"
 
 #. Translators: Certain objects (such as form controls on web pages) can have
 #. STATE_REQUIRED set to inform the user that this field must be filled out.
-#: ../src/orca/object_properties.py:285 ../src/orca/object_properties.py:289
+#: ../src/orca/object_properties.py:291 ../src/orca/object_properties.py:295
 msgid "required"
 msgstr "vyžadováno"
 
 #. Translators: "multi-select" refers to a web form list in which more than
 #. one item can be selected at a time.
-#: ../src/orca/object_properties.py:293
+#: ../src/orca/object_properties.py:299
 msgid "multi-select"
 msgstr "vícenásobný výběr"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is spoken when all we
+#. know is that an error has occurred, but not the type of error.
+#: ../src/orca/object_properties.py:304
+msgctxt "error"
+msgid "invalid entry"
+msgstr "neplatný vstup"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is displayed in braille
+#. when all we know is that an error has occurred, but not the type of error.
+#. We prefer a smaller string than in speech because braille displays have a
+#. limited size.
+#: ../src/orca/object_properties.py:311
+msgctxt "error"
+msgid "invalid"
+msgstr "neplatné"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is spoken when the error
+#. is related to spelling.
+#: ../src/orca/object_properties.py:316
+msgctxt "error"
+msgid "invalid spelling"
+msgstr "pravopisná chyba"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is displayed in braille
+#. when the error is related to spelling. We prefer a smaller string than in
+#. speech because braille displays have a limited size.
+#: ../src/orca/object_properties.py:322
+msgctxt "error"
+msgid "spelling"
+msgstr "pravopis"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is spoken when the error
+#. is related to grammar.
+#: ../src/orca/object_properties.py:327
+msgctxt "error"
+msgid "invalid grammar"
+msgstr "gramatická chyba"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is displayed in braille
+#. when the error is related to grammar. We prefer a smaller string than in
+#. speech because braille displays have a limited size.
+#: ../src/orca/object_properties.py:333
+msgctxt "error"
+msgid "grammar"
+msgstr "gramatika"
 
 #: ../src/orca/orca-find.ui.h:1
 msgid "Find"
@@ -12746,18 +12806,3 @@ msgstr ""
 "Šipka vlevo snižuje, šipka vpravo zvyšuje. Minimum nastaví klávesa Home a "
 "maximum klávesa End."
 
-#~ msgid "Screen Reader"
-#~ msgstr "Čtečka obrazovky"
-
-#~ msgid "Orca Screen Reader"
-#~ msgstr "Čtečka obrazovky Orca"
-
-#~ msgid ""
-#~ "Provide access to graphical desktop environments via synthesized speech "
-#~ "and/or refreshable braille"
-#~ msgstr ""
-#~ "Poskytuje přístup ke grafickému pracovnímu prostředí pomocí hlasového "
-#~ "generátoru a/nebo braillského řádku"
-
-#~ msgid "screen reader;speech;braille;"
-#~ msgstr "čtečka obrazovky;řeč;mluvení;čtení;hlasový;braille;braillský řádek;"
