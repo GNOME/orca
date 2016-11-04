@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-08 11:47+0200\n"
-"PO-Revision-Date: 2016-09-08 11:48+0200\n"
+"POT-Creation-Date: 2016-11-04 16:05+0100\n"
+"PO-Revision-Date: 2016-11-03 15:16+0100\n"
 "Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -10970,7 +10970,7 @@ msgstr "Keresés"
 msgid "visited link"
 msgstr "meglátogatott hivatkozás"
 
-#Megjegyzés: ezt a vezérlőelemet a Windows alatt elérhető képernyőolvasók menügombnak hívják, nálunk is maradjon így. Az üzenet csak a beszédszintetizátor által van kimondva, és csak a Braille-kijelzőn jelenik meg.
+# Megjegyzés: ezt a vezérlőelemet a Windows alatt elérhető képernyőolvasók menügombnak hívják, nálunk is maradjon így. Az üzenet csak a beszédszintetizátor által van kimondva, és csak a Braille-kijelzőn jelenik meg.
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. A menu button is button widget that causes a menu to appear when the user
@@ -11115,6 +11115,58 @@ msgstr "szükséges"
 #: ../src/orca/object_properties.py:299
 msgid "multi-select"
 msgstr "többválasztós"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is spoken when all we
+#. know is that an error has occurred, but not the type of error.
+#: ../src/orca/object_properties.py:304
+msgctxt "error"
+msgid "invalid entry"
+msgstr "érvénytelen bejegyzés"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is displayed in braille
+#. when all we know is that an error has occurred, but not the type of error.
+#. We prefer a smaller string than in speech because braille displays have a
+#. limited size.
+#: ../src/orca/object_properties.py:311
+msgctxt "error"
+msgid "invalid"
+msgstr "érvénytelen"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is spoken when the error
+#. is related to spelling.
+#: ../src/orca/object_properties.py:316
+msgctxt "error"
+msgid "invalid spelling"
+msgstr "helyesírási hiba"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is displayed in braille
+#. when the error is related to spelling. We prefer a smaller string than in
+#. speech because braille displays have a limited size.
+#: ../src/orca/object_properties.py:322
+msgctxt "error"
+msgid "spelling"
+msgstr "elgépelés"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is spoken when the error
+#. is related to grammar.
+#: ../src/orca/object_properties.py:327
+msgctxt "error"
+msgid "invalid grammar"
+msgstr "nyelvhelyességi hiba"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is displayed in braille
+#. when the error is related to grammar. We prefer a smaller string than in
+#. speech because braille displays have a limited size.
+#: ../src/orca/object_properties.py:333
+msgctxt "error"
+msgid "grammar"
+msgstr "nyelvi hiba"
 
 #: ../src/orca/orca-find.ui.h:1
 msgid "Find"
