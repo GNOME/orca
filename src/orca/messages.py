@@ -211,7 +211,7 @@ CLI_SETTINGS_MANAGER_ERROR = \
 # Orca, but Orca is already running.
 CLI_OTHER_ORCAS_ERROR = \
     _('Another screen reader process is already running for this ' \
-      'session.\nRun "orca --replace" to replace that ' \
+      'session.\nRun “orca --replace” to replace that ' \
       'process with a new one.')
 
 # Translators: This string indicates to the user what should be provided when
@@ -1028,9 +1028,9 @@ LEARN_MODE_START_BRAILLE = _("Learn mode.  Press escape to exit.")
 # Mode.
 LEARN_MODE_START_SPEECH = \
     _("Entering learn mode.  Press any key to hear its function.  " \
-      "To view the screen reader's documentation, press F1. " \
-      "To get a list of the screen reader's default shortcuts, press F2. " \
-      "To get a list of the screen reader's shortcuts for the current application, " \
+      "To view the screen reader’s documentation, press F1. " \
+      "To get a list of the screen reader’s default shortcuts, press F2. " \
+      "To get a list of the screen reader’s shortcuts for the current application, " \
       "press F3. " \
       "To exit learn mode, press the escape key.")
 
