@@ -1,3 +1,22 @@
+3.22.2 - 8 November 2016
+
+General:
+
+ * Improve support for Icedove
+
+ * Work around broken accessibility trees causing flat review to fail
+
+ * Work around missing state-changed events for LibreOffice toggle
+   buttons
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    fr            French                      Claude Paroz
+    nb            Norwegian bokmål            Kjartan Maraas
+    nl            Dutch                       Justin van Steijn
+
+=========
+
 3.22.1 - 11 October 2016
 
 Terminal:
