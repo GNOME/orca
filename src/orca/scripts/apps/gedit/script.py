@@ -151,6 +151,9 @@ class Script(gtk.Script):
         if not self.utilities.isSearchEntry(orca_state.locusOfFocus, True):
             return
 
+        if not self.utilities.isShowingAndVisible(event.source):
+            return
+
         # To avoid extreme chattiness.
         keyString, mods = self.utilities.lastKeyAndModifiers()
         if keyString in ["BackSpace", "Delete"]:
