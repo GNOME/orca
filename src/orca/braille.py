@@ -321,13 +321,9 @@ class Region:
           unreasonable amount of time (AKA Gecko).
         """
 
-        # Double check for ellipses.
-        #
-        maskSize = len(self.string) + (2 * self.string.count('\u2026'))
-
         # Create an empty mask.
         #
-        return '\x00' * maskSize
+        return '\x00' * len(self.string)
 
     def repositionCursor(self):
         """Reposition the cursor offset for contracted mode.
@@ -854,11 +850,7 @@ class Line:
             if region == _regionWithFocus:
                 focusOffset = len(string)
             if region.string:
-                # [[[TODO: WDW - HACK: Replace ellipses with "..."
-                # The ultimate solution is to get i18n support into
-                # BrlTTY.]]]
-                #
-                string += region.string.replace('\u2026', "...")
+                string += region.string
             mask = region.getAttributeMask(getLinkMask)
             attributeMask += mask
 
