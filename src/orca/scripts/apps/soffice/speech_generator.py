@@ -343,7 +343,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         text = self._script.utilities.displayedText(inputLine)
-        if text.startswith("="):
+        if text and text.startswith("="):
             result = [messages.HAS_FORMULA]
             result.extend(self.voice(speech_generator.SYSTEM))
             return result
