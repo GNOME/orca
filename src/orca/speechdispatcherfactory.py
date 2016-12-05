@@ -47,7 +47,10 @@ from . import speechserver
 from . import settings
 from . import orca_state
 from . import punctuation_settings
+from . import settings_manager
 from .acss import ACSS
+
+_settingsManager = settings_manager.getManager()
 
 try:
     import speechd
@@ -308,6 +311,10 @@ class SpeechServer(speechserver.SpeechServer):
 
         Returns a text string with the punctuation symbols adjusted accordingly.
         """
+
+        style = _settingsManager.getSetting("verbalizePunctuationStyle")
+        if style == settings.PUNCTUATION_STYLE_NONE:
+            return oldText
 
         spokenEllipsis = messages.SPOKEN_ELLIPSIS + " "
         newText = re.sub(ELLIPSIS, spokenEllipsis, oldText)
