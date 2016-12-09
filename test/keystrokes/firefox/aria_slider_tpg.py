@@ -18,7 +18,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Tab to Volume Horizontal Slider",
     ["BRAILLE LINE:  'Volume 0 % horizontal slider'",
      "     VISIBLE:  'Volume 0 % horizontal slider', cursor=1",
-     "SPEECH OUTPUT: 'Volume horizontal slider 0 %'"]))
+     "SPEECH OUTPUT: 'Volume horizontal slider 0 %.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -123,7 +123,8 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: The double-presentation is because of the authoring, putting the name and value into the description",
      "BRAILLE LINE:  'Food Quality terrible horizontal slider'",
      "     VISIBLE:  'Food Quality terrible horizontal', cursor=1",
-     "SPEECH OUTPUT: 'Food Quality horizontal slider terrible Food Quality: terrible (1 of 5)'"]))
+     "SPEECH OUTPUT: 'Food Quality horizontal slider terrible.'",
+     "SPEECH OUTPUT: 'Food Quality: terrible (1 of 5)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))

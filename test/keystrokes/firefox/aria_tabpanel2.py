@@ -83,7 +83,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",
      "SPEECH OUTPUT: 'List with 4 items'",
-     "SPEECH OUTPUT: 'Pepperoni check box not checked'",
+     "SPEECH OUTPUT: 'Pepperoni check box not checked.'",
      "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())

@@ -33,7 +33,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Tab to checkbox",
     ["BRAILLE LINE:  'Firefox application Print dialog Options page tab <x> Ignore Scaling and Shrink To Fit Page Width check box'",
      "     VISIBLE:  '<x> Ignore Scaling and Shrink To', cursor=1",
-     "SPEECH OUTPUT: 'Ignore Scaling and Shrink To Fit Page Width check box checked'"]))
+     "SPEECH OUTPUT: 'Ignore Scaling and Shrink To Fit Page Width check box checked.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))

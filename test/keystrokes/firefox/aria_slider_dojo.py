@@ -18,7 +18,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'slider 1 10 horizontal slider', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'slider 1 horizontal slider 10'",
+     "SPEECH OUTPUT: 'slider 1 horizontal slider 10.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(KeyComboAction("Right"))
@@ -64,7 +64,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Slider1 Value: 10.[0-9]% rdonly', cursor=21",
      "BRAILLE LINE:  'Slider1 Value: 10.[0-9]% rdonly'",
      "     VISIBLE:  'Slider1 Value: 10.[0-9]% rdonly', cursor=21",
-     "SPEECH OUTPUT: 'Slider1 Value: read only entry 10.[0-9]% selected'"]))
+     "SPEECH OUTPUT: 'Slider1 Value: read only entry 10.[0-9]% selected.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -87,7 +87,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'slider 2 10 horizontal slider', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'slider 2 horizontal slider 10'",
+     "SPEECH OUTPUT: 'slider 2 horizontal slider 10.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())

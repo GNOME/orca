@@ -17,7 +17,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. E for next entry",
     ["BRAILLE LINE:  'Search  $l'",
      "     VISIBLE:  'Search  $l', cursor=7",
-     "SPEECH OUTPUT: 'Search entry'"]))
+     "SPEECH OUTPUT: 'Search entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -55,17 +55,15 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
-    "7. Line Up",
-    ["KNOWN ISSUE: We're not presenting the '15'. Seems to be the result of a change in Nightly.",
-     "BRAILLE LINE:  'Go to Blogger.com Search  $l Search this blog & y Click here to publicly +1 this. toggle button More Next Blog»Create Blog Sign In'",
-#    "BRAILLE LINE:  'Go to Blogger.com Search  $l Search this blog & y Click here to publicly +1 this. toggle button 15 More Next Blog»Create Blog Sign In'",
+    "6. Line Up",
+    ["BRAILLE LINE:  'Go to Blogger.com Search  $l Search this blog +1 push button 9 More Next Blog»Create Blog Sign In'",
      "     VISIBLE:  'Go to Blogger.com Search  $l Sea', cursor=1",
      "SPEECH OUTPUT: 'Go to Blogger.com link.'",
-     "SPEECH OUTPUT: 'Search entry'",
+     "SPEECH OUTPUT: 'Search entry.'",
      "SPEECH OUTPUT: 'Search this blog link.'",
      "SPEECH OUTPUT: 'clickable'",
-     "SPEECH OUTPUT: 'Click here to publicly +1 this. toggle button not pressed'",
-#     "SPEECH OUTPUT: '15'",
+     "SPEECH OUTPUT: '+1 push button'",
+     "SPEECH OUTPUT: '9'",
      "SPEECH OUTPUT: 'More'",
      "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'Next Blog»'",
@@ -78,7 +76,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "8. Line Down",
+    "7. Line Down",
     ["BRAILLE LINE:  'After the iframe'",
      "     VISIBLE:  'After the iframe', cursor=1",
      "SPEECH OUTPUT: 'After the iframe'"]))

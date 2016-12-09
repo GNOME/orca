@@ -79,7 +79,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["BRAILLE LINE:  '< > Title of the Black checkbox check box'",
      "     VISIBLE:  '< > Title of the Black checkbox ', cursor=1",
-     "SPEECH OUTPUT: 'Title of the Black checkbox check box not checked'"]))
+     "SPEECH OUTPUT: 'Title of the Black checkbox check box not checked.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -95,7 +95,8 @@ sequence.append(utils.AssertPresentationAction(
     "10. Line Down",
     ["BRAILLE LINE:  '< > Title of the White checkbox check box'",
      "     VISIBLE:  '< > Title of the White checkbox ', cursor=1",
-     "SPEECH OUTPUT: 'Title of the White checkbox check box not checked ARIA description text.'"]))
+     "SPEECH OUTPUT: 'Title of the White checkbox check box not checked.'",
+     "SPEECH OUTPUT: 'ARIA description text.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -111,7 +112,7 @@ sequence.append(utils.AssertPresentationAction(
     "12. Line Down",
     ["BRAILLE LINE:  '< > Title of the Grey checkbox check box'",
      "     VISIBLE:  '< > Title of the Grey checkbox c', cursor=1",
-     "SPEECH OUTPUT: 'Title of the Grey checkbox check box not checked'"]))
+     "SPEECH OUTPUT: 'Title of the Grey checkbox check box not checked.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -135,7 +136,7 @@ sequence.append(utils.AssertPresentationAction(
     "15. Line Down",
     ["BRAILLE LINE:  '< > Black check box'",
      "     VISIBLE:  '< > Black check box', cursor=1",
-     "SPEECH OUTPUT: 'Black check box not checked'"]))
+     "SPEECH OUTPUT: 'Black check box not checked.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -151,7 +152,8 @@ sequence.append(utils.AssertPresentationAction(
     "17. Line Down",
     ["BRAILLE LINE:  '< > White check box'",
      "     VISIBLE:  '< > White check box', cursor=1",
-     "SPEECH OUTPUT: 'White check box not checked ARIA description text.'"]))
+     "SPEECH OUTPUT: 'White check box not checked.'",
+     "SPEECH OUTPUT: 'ARIA description text.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -167,7 +169,8 @@ sequence.append(utils.AssertPresentationAction(
     "19. Line Down",
     ["BRAILLE LINE:  '< > Grey check box'",
      "     VISIBLE:  '< > Grey check box', cursor=1",
-     "SPEECH OUTPUT: 'Grey check box not checked Title of the Grey checkbox'"]))
+     "SPEECH OUTPUT: 'Grey check box not checked.'",
+     "SPEECH OUTPUT: 'Title of the Grey checkbox'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

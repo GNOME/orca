@@ -20,7 +20,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Next form field",
     ["BRAILLE LINE:  'search mozilla:  $l'",
      "     VISIBLE:  'search mozilla:  $l', cursor=16",
-     "SPEECH OUTPUT: 'search mozilla: entry'"]))
+     "SPEECH OUTPUT: 'search mozilla: entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -40,7 +40,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Next form field",
     ["BRAILLE LINE:  'Your email address:  $l'",
      "     VISIBLE:  'Your email address:  $l', cursor=20",
-     "SPEECH OUTPUT: 'Your email address: entry'"]))
+     "SPEECH OUTPUT: 'Your email address: entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -50,7 +50,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Next form field",
     ["BRAILLE LINE:  'Your name (optional):  $l'",
      "     VISIBLE:  'Your name (optional):  $l', cursor=22",
-     "SPEECH OUTPUT: 'Your name (optional): entry'"]))
+     "SPEECH OUTPUT: 'Your name (optional): entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -112,7 +112,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Next form field",
     ["BRAILLE LINE:  'Admin address:  $l'",
      "     VISIBLE:  'Admin address:  $l', cursor=15",
-     "SPEECH OUTPUT: 'Admin address: entry'"]))
+     "SPEECH OUTPUT: 'Admin address: entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -142,7 +142,7 @@ sequence.append(utils.AssertPresentationAction(
     "13. Next form field",
     ["BRAILLE LINE:  'subscription email address:  $l'",
      "     VISIBLE:  'subscription email address:  $l', cursor=28",
-     "SPEECH OUTPUT: 'subscription email address: entry'"]))
+     "SPEECH OUTPUT: 'subscription email address: entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

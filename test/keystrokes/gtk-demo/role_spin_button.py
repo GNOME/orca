@@ -20,7 +20,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk-demo application Print dialog General page tab Copies: 1 $l'",
      "     VISIBLE:  'Copies: 1 $l', cursor=10",
      "SPEECH OUTPUT: 'General page tab.'",
-     "SPEECH OUTPUT: 'Copies: 1 selected spin button'"]))
+     "SPEECH OUTPUT: 'Copies: 1 selected spin button.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))

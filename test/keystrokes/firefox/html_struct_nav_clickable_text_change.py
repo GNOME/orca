@@ -43,7 +43,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Goodbye cruel static', cursor=1",
      "SPEECH OUTPUT: 'Clickables: 1 item found'",
      "SPEECH OUTPUT: 'table with 1 row 2 columns'",
-     "SPEECH OUTPUT: 'Goodbye cruel static.'"]))
+     "SPEECH OUTPUT: 'Goodbye cruel.'",
+     "SPEECH OUTPUT: 'static.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>a"))

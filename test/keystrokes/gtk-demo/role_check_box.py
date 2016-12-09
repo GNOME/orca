@@ -21,7 +21,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo application Panes frame Horizontal panel < > Resize check box'",
      "     VISIBLE:  '< > Resize check box', cursor=1",
      "SPEECH OUTPUT: 'Horizontal panel'",
-     "SPEECH OUTPUT: 'Resize check box not checked'"]))
+     "SPEECH OUTPUT: 'Resize check box not checked.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -68,7 +68,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo application Panes frame Vertical panel < > Resize check box'",
      "     VISIBLE:  '< > Resize check box', cursor=1",
      "SPEECH OUTPUT: 'Vertical panel'",
-     "SPEECH OUTPUT: 'Resize check box not checked'"]))
+     "SPEECH OUTPUT: 'Resize check box not checked.'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

@@ -66,7 +66,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Nickname $l Password $l Log in push button'",
      "     VISIBLE:  'Nickname $l Password $l Log in p', cursor=1",
      "SPEECH OUTPUT: 'Nickname'",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'entry.'",
      "SPEECH OUTPUT: 'Password'",
      "SPEECH OUTPUT: 'password text'",
      "SPEECH OUTPUT: 'Log in push button'"]))
@@ -137,7 +137,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Nickname $l Password $l Log in push button'",
      "     VISIBLE:  'Nickname $l Password $l Log in p', cursor=1",
      "SPEECH OUTPUT: 'Nickname'",
-     "SPEECH OUTPUT: 'entry'",
+     "SPEECH OUTPUT: 'entry.'",
      "SPEECH OUTPUT: 'Password'",
      "SPEECH OUTPUT: 'password text'",
      "SPEECH OUTPUT: 'Log in push button'"]))

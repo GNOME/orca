@@ -7,6 +7,8 @@ sequence = MacroSequence()
 
 #sequence.append(WaitForDocLoad())
 sequence.append(PauseAction(5000))
+sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("<Shift>Tab"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -14,7 +16,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Tab to slider 1",
     ["BRAILLE LINE:  '30 horizontal slider'",
      "     VISIBLE:  '30 horizontal slider', cursor=1",
-     "SPEECH OUTPUT: 'horizontal slider 30'"]))
+     "SPEECH OUTPUT: 'horizontal slider 30.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -54,7 +56,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Tab to slider 2's left range",
     ["BRAILLE LINE:  '1950 horizontal slider'",
      "     VISIBLE:  '1950 horizontal slider', cursor=1",
-     "SPEECH OUTPUT: 'horizontal slider 1950'"]))
+     "SPEECH OUTPUT: 'horizontal slider 1950.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -86,7 +88,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Tab to slider 2's right range",
     ["BRAILLE LINE:  '2000 horizontal slider'",
      "     VISIBLE:  '2000 horizontal slider', cursor=1",
-     "SPEECH OUTPUT: 'horizontal slider 2000'"]))
+     "SPEECH OUTPUT: 'horizontal slider 2000.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))

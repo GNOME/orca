@@ -17,7 +17,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Guess me 1:  $l', cursor=13",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'Guess me 1: entry'",
+     "SPEECH OUTPUT: 'Guess me 1: entry.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -28,7 +28,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Guess me 1:  $l', cursor=13",
      "BRAILLE LINE:  'E-mail:  $l'",
      "     VISIBLE:  'E-mail:  $l', cursor=9",
-     "SPEECH OUTPUT: 'E-mail: entry'"]))
+     "SPEECH OUTPUT: 'E-mail: entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

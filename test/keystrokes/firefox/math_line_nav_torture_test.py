@@ -413,7 +413,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'vertical ellipsis.'",
      "SPEECH OUTPUT: 'vertical ellipsis.'",
      "SPEECH OUTPUT: 'vertical ellipsis.'",
-     "SPEECH OUTPUT: 'blank.'",
      "SPEECH OUTPUT: 'vertical ellipsis.'",
      "SPEECH OUTPUT: 'row 5.'",
      "SPEECH OUTPUT: 'c.'",

@@ -9,18 +9,27 @@ sequence = MacroSequence()
 
 sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Alt>v"))
-sequence.append(KeyComboAction("Up"))
-sequence.append(KeyComboAction("Up"))
-sequence.append(KeyComboAction("Up"))
-sequence.append(KeyComboAction("Up"))
-sequence.append(KeyComboAction("Up"))
-sequence.append(KeyComboAction("Up"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Down"))
 sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
+sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "1. Up to menu item",
+    "1. Down to menu item",
     ["BRAILLE LINE:  'soffice application column-example.odt - LibreOffice Writer frame <x> Sidebar check menu item'",
      "     VISIBLE:  '<x> Sidebar check menu item', cursor=1",
      "SPEECH OUTPUT: 'Sidebar check menu item checked.'"]))

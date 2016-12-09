@@ -18,7 +18,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Tracking number  $l', cursor=17",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'Tracking number entry'",
+     "SPEECH OUTPUT: 'Tracking number entry.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())

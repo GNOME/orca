@@ -46,7 +46,11 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk3-demo application List Store frame table Fixed? column header < > Fixed? 60482 Normal scrollable notebooks and hidden tabs  '",
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
      "SPEECH OUTPUT: 'Fixed?'",
-     "SPEECH OUTPUT: 'check box not checked 60482 Normal scrollable notebooks and hidden tabs image.'"]))
+     "SPEECH OUTPUT: 'check box not checked.'",
+     "SPEECH OUTPUT: '60482.'",
+     "SPEECH OUTPUT: 'Normal.'",
+     "SPEECH OUTPUT: 'scrollable notebooks and hidden tabs.'",
+     "SPEECH OUTPUT: 'image.'"]))
 
 # GtkTreeView swallows this keypress (for all users; not just Orca users).
 sequence.append(KeyComboAction("Left"))
@@ -94,7 +98,11 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'column 3 of 6'",
      "SPEECH OUTPUT: 'row 1 of 14.'",
      "SPEECH OUTPUT: 'Fixed?'",
-     "SPEECH OUTPUT: 'check box not checked 60482 Normal scrollable notebooks and hidden tabs image.'"]))
+     "SPEECH OUTPUT: 'check box not checked.'",
+     "SPEECH OUTPUT: '60482.'",
+     "SPEECH OUTPUT: 'Normal.'",
+     "SPEECH OUTPUT: 'scrollable notebooks and hidden tabs.'",
+     "SPEECH OUTPUT: 'image.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))

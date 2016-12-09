@@ -25,7 +25,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Next form field",
     ["BRAILLE LINE:  'Enter your Name:  $l'",
      "     VISIBLE:  'Enter your Name:  $l', cursor=17",
-     "SPEECH OUTPUT: 'Enter your Name: entry'"]))
+     "SPEECH OUTPUT: 'Enter your Name: entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -35,7 +35,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Next form field",
     ["BRAILLE LINE:  '1. Enter your Address:  $l'",
      "     VISIBLE:  '1. Enter your Address:  $l', cursor=23",
-     "SPEECH OUTPUT: '1. Enter your Address: entry'"]))
+     "SPEECH OUTPUT: '1. Enter your Address: entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -45,7 +45,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Next form field",
     ["BRAILLE LINE:  '2. Enter your City:  $l'",
      "     VISIBLE:  '2. Enter your City:  $l', cursor=20",
-     "SPEECH OUTPUT: '2. Enter your City: entry'"]))
+     "SPEECH OUTPUT: '2. Enter your City: entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -55,7 +55,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Next form field",
     ["BRAILLE LINE:  '3. Enter your State:  $l'",
      "     VISIBLE:  '3. Enter your State:  $l', cursor=21",
-     "SPEECH OUTPUT: '3. Enter your State: entry'"]))
+     "SPEECH OUTPUT: '3. Enter your State: entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -66,7 +66,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '4. Enter your Country: US $l'",
      "     VISIBLE:  '4. Enter your Country: US $l', cursor=24",
      "SPEECH OUTPUT: '4. Enter your Country: entry'",
-     "SPEECH OUTPUT: 'US'"]))
+     "SPEECH OUTPUT: 'US.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -76,7 +76,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Next form field",
     ["BRAILLE LINE:  '5. Enter your Zip:  $l'",
      "     VISIBLE:  '5. Enter your Zip:  $l', cursor=19",
-     "SPEECH OUTPUT: '5. Enter your Zip: entry'"]))
+     "SPEECH OUTPUT: '5. Enter your Zip: entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -86,7 +86,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Next form field",
     ["BRAILLE LINE:  'character:  $l'",
      "     VISIBLE:  'character:  $l', cursor=11",
-     "SPEECH OUTPUT: 'character: entry'"]))
+     "SPEECH OUTPUT: 'character: entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -96,7 +96,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Next form field",
     ["BRAILLE LINE:  '< > bird check box'",
      "     VISIBLE:  '< > bird check box', cursor=1",
-     "SPEECH OUTPUT: 'bird check box not checked'"]))
+     "SPEECH OUTPUT: 'bird check box not checked.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -106,7 +106,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Next form field",
     ["BRAILLE LINE:  '< > fish check box'",
      "     VISIBLE:  '< > fish check box', cursor=1",
-     "SPEECH OUTPUT: 'fish check box not checked'"]))
+     "SPEECH OUTPUT: 'fish check box not checked.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -116,7 +116,7 @@ sequence.append(utils.AssertPresentationAction(
     "10. Next form field",
     ["BRAILLE LINE:  '< > wild animal check box'",
      "     VISIBLE:  '< > wild animal check box', cursor=1",
-     "SPEECH OUTPUT: 'wild animal check box not checked'"]))
+     "SPEECH OUTPUT: 'wild animal check box not checked.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -184,7 +184,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Enter your Name:  $l'",
      "     VISIBLE:  'Enter your Name:  $l', cursor=17",
      "SPEECH OUTPUT: 'Wrapping to top.' voice=system",
-     "SPEECH OUTPUT: 'Enter your Name: entry'"]))
+     "SPEECH OUTPUT: 'Enter your Name: entry.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -23,6 +23,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. All Pages radio button",
     ["BRAILLE LINE:  'gtk3-demo application Print dialog General page tab Range panel Range &=y All Pages radio button'",
      "     VISIBLE:  '&=y All Pages radio button', cursor=1",
+     "SPEECH OUTPUT: 'General page tab.'",
      "SPEECH OUTPUT: 'Range panel'",
      "SPEECH OUTPUT: 'All Pages.'",
      "SPEECH OUTPUT: 'selected radio button'"]))

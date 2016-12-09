@@ -25,7 +25,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '»'",
      "SPEECH OUTPUT: 'search tips'",
      "SPEECH OUTPUT: 'link.'",
-     "SPEECH OUTPUT: 'entry Search'",
+     "SPEECH OUTPUT: 'entry Search.'",
      "SPEECH OUTPUT: 'Submit Search push button'"]))
 
 sequence.append(utils.StartRecordingAction())

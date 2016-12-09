@@ -24,7 +24,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
      "     VISIBLE:  '(200% Courier font): California ', cursor=32",
      "SPEECH OUTPUT: 'collapsed'",
-     "SPEECH OUTPUT: 'US State test 1 (200% Courier font): editable combo box California selected'",
+     "SPEECH OUTPUT: 'US State test 1 (200% Courier font): editable combo box California selected.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -120,7 +120,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'US State test 1 (200% Courier font): California $l'",
      "     VISIBLE:  '(200% Courier font): California ', cursor=32",
      "SPEECH OUTPUT: 'collapsed'",
-     "SPEECH OUTPUT: 'US State test 1 (200% Courier font): editable combo box California selected'"]))
+     "SPEECH OUTPUT: 'US State test 1 (200% Courier font): editable combo box California selected.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

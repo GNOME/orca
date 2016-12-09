@@ -35,7 +35,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'accesskeys', cursor=1",
      "BRAILLE LINE:  'Form! h1'",
      "     VISIBLE:  'Form! h1', cursor=1",
-     "SPEECH OUTPUT: 'accesskeys link.'",
+     "SPEECH OUTPUT: 'accesskeys visited link.'",
      "SPEECH OUTPUT: 'Form! heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -56,7 +56,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Form! h1', cursor=1",
      "BRAILLE LINE:  'Search:  $l I feel frightened push button'",
      "     VISIBLE:  'Search:  $l I feel frightened pu', cursor=9",
-     "SPEECH OUTPUT: 'Search: entry'"]))
+     "SPEECH OUTPUT: 'Search: entry.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

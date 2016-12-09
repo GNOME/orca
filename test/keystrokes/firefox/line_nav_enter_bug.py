@@ -197,7 +197,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Summary: $l'",
      "     VISIBLE:  'Summary: $l', cursor=1",
      "SPEECH OUTPUT: 'Summary:.'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -213,7 +213,7 @@ sequence.append(utils.AssertPresentationAction(
     "19. Line Down",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=0",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -230,7 +230,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Cc: $l'",
      "     VISIBLE:  'Cc: $l', cursor=1",
      "SPEECH OUTPUT: 'Cc:.'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -248,7 +248,7 @@ sequence.append(utils.AssertPresentationAction(
     "23. Line Down",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=0",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -267,7 +267,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Cc: $l'",
      "     VISIBLE:  'Cc: $l', cursor=1",
      "SPEECH OUTPUT: 'Cc:.'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -283,7 +283,7 @@ sequence.append(utils.AssertPresentationAction(
     "27. Line Up",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=0",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -300,7 +300,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Summary: $l'",
      "     VISIBLE:  'Summary: $l', cursor=1",
      "SPEECH OUTPUT: 'Summary:.'",
-     "SPEECH OUTPUT: 'entry'"]))
+     "SPEECH OUTPUT: 'entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

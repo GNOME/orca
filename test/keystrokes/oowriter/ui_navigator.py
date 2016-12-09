@@ -11,14 +11,6 @@ sequence.append(PauseAction(2000))
 sequence.append(KeyComboAction("F5"))
 sequence.append(PauseAction(2000))
 
-# GNOME Shell seems to steal focus
-sequence.append(KeyComboAction("<Alt>Tab"))
-sequence.append(KeyComboAction("<Alt>Tab"))
-sequence.append(PauseAction(2000))
-
-sequence.append(KeyComboAction("<Alt>F6"))
-sequence.append(PauseAction(2000))
-
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(

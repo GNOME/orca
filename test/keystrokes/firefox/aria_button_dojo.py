@@ -91,6 +91,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Create blank', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
+     "SPEECH OUTPUT: 'Create ▼ menu'",
      "SPEECH OUTPUT: 'Create blank.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
@@ -274,8 +275,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("space"))
 sequence.append(utils.AssertPresentationAction(
     "29. Toggle the state of the toggle me off button",
-    ["BRAILLE LINE:  '&=y toggle me off toggle button'",
-     "     VISIBLE:  '&=y toggle me off toggle button', cursor=1",
+    ["BRAILLE LINE:  '&=y toggle me on toggle button'",
+     "     VISIBLE:  '&=y toggle me on toggle button', cursor=1",
      "SPEECH OUTPUT: 'pressed'"]))
 
 sequence.append(utils.StartRecordingAction())

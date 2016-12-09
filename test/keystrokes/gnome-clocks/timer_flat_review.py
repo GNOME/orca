@@ -6,10 +6,7 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(PauseAction(3000))
-sequence.append(KeyComboAction("F10"))
-sequence.append(KeyComboAction("space"))
-sequence.append(PauseAction(3000))
-sequence.append(KeyComboAction("F10"))
+sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
@@ -29,11 +26,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("space"))
 sequence.append(utils.AssertPresentationAction(
     "2. Activate timer",
-    ["BRAILLE LINE:  'gnome-clocks application frame Pause push button'",
+    ["BRAILLE LINE:  'gnome-clocks application Clocks frame Pause push button'",
      "     VISIBLE:  'Pause push button', cursor=1",
-     "BRAILLE LINE:  'gnome-clocks application frame Pause push button'",
+     "BRAILLE LINE:  'gnome-clocks application Clocks frame Pause push button'",
      "     VISIBLE:  'Pause push button', cursor=1",
-     "SPEECH OUTPUT: 'frame'",
+     "SPEECH OUTPUT: 'Clocks frame'",
      "SPEECH OUTPUT: 'Pause push button'"]))
 
 sequence.append(utils.StartRecordingAction())

@@ -6,10 +6,7 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(PauseAction(3000))
-sequence.append(KeyComboAction("F10"))
-sequence.append(KeyComboAction("space"))
-sequence.append(PauseAction(3000))
-sequence.append(KeyComboAction("F10"))
+sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
@@ -28,7 +25,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("space"))
 sequence.append(utils.AssertPresentationAction(
     "2. Activate stop watch",
-    ["BRAILLE LINE:  'gnome-clocks application frame Stop push button'",
+    ["BRAILLE LINE:  'gnome-clocks application Clocks frame Stop push button'",
      "     VISIBLE:  'Stop push button', cursor=1"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -70,7 +67,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Toggle flat review",
     ["BRAILLE LINE:  'Leaving flat review.'",
      "     VISIBLE:  'Leaving flat review.', cursor=0",
-     "BRAILLE LINE:  'gnome-clocks application frame Stop push button'",
+     "BRAILLE LINE:  'gnome-clocks application Clocks frame Stop push button'",
      "     VISIBLE:  'Stop push button', cursor=1",
      "BRAILLE LINE:  'Entering flat review.'",
      "     VISIBLE:  'Entering flat review.', cursor=0",

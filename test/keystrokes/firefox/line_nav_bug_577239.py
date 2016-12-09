@@ -71,7 +71,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["BRAILLE LINE:  '• This is a short list item.'",
-     "     VISIBLE:  '• This is a short list item.', cursor=1",
+     "     VISIBLE:  '• This is a short list item.', cursor=30",
      "SPEECH OUTPUT: '• This is a short list item.'"]))
 
 sequence.append(utils.StartRecordingAction())

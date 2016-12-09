@@ -32,7 +32,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Down Arrow",
     ["BRAILLE LINE:  'input before toolbar1 $l'",
      "     VISIBLE:  'input before toolbar1 $l', cursor=1",
-     "SPEECH OUTPUT: 'entry input before toolbar1'"]))
+     "SPEECH OUTPUT: 'entry input before toolbar1.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -49,7 +49,7 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: 'Sometimes it takes additional arrow presses to get here. Timing issue?",
      "BRAILLE LINE:  'input after toolbar1 $l'",
      "     VISIBLE:  'input after toolbar1 $l', cursor=1",
-     "SPEECH OUTPUT: 'entry input after toolbar1'"]))
+     "SPEECH OUTPUT: 'entry input after toolbar1.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

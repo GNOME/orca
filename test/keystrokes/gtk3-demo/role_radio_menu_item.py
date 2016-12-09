@@ -27,9 +27,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. radio menu item - selected",
-    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame Preferences menu &=y Blue radio menu item(Ctrl+B)'",
-     "     VISIBLE:  '&=y Blue radio menu item(Ctrl+B)', cursor=1",
-     "SPEECH OUTPUT: 'Blue selected radio menu item Ctrl+B'"]))
+    ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame Preferences menu & y Blue radio menu item(Ctrl+B)'",
+     "     VISIBLE:  '& y Blue radio menu item(Ctrl+B)', cursor=1",
+     "SPEECH OUTPUT: 'Blue not selected radio menu item Ctrl+B'"]))
 
 sequence.append(KeyComboAction("Escape"))
 sequence.append(KeyComboAction("<Alt>F4"))

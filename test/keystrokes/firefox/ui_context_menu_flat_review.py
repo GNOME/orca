@@ -37,8 +37,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "4. Review next line",
-    ["BRAILLE LINE:  'Save Page As... $l'",
-     "     VISIBLE:  'Save Page As... $l', cursor=1",
+    ["BRAILLE LINE:  'Save Page As… $l'",
+     "     VISIBLE:  'Save Page As… $l', cursor=1",
      "SPEECH OUTPUT: 'Save Page As…'"]))
 
 sequence.append(utils.StartRecordingAction())

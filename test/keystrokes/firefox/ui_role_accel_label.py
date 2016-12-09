@@ -7,8 +7,10 @@ import utils
 
 sequence = MacroSequence()
 
+sequence.append(PauseAction(2000))
 sequence.append(KeyComboAction("<Alt>f"))
 sequence.append(KeyComboAction("Down"))
+sequence.append(PauseAction(2000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

@@ -19,7 +19,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Focus mode', cursor=0",
      "BRAILLE LINE:  '0 $l'",
      "     VISIBLE:  '0 $l', cursor=2",
-     "SPEECH OUTPUT: 'entry 0 selected'",
+     "SPEECH OUTPUT: 'entry 0 selected.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())

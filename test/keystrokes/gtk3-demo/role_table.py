@@ -32,7 +32,8 @@ sequence.append(utils.AssertPresentationAction(
     "2. Next row",
     ["BRAILLE LINE:  'gtk3-demo application Editable Cells frame table Number column header 5 packages of noodles '",
      "     VISIBLE:  '5 packages of noodles ', cursor=1",
-     "SPEECH OUTPUT: '5 packages of noodles.'"]))
+     "SPEECH OUTPUT: '5.'",
+     "SPEECH OUTPUT: 'packages of noodles.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
