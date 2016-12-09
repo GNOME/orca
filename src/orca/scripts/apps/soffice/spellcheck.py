@@ -39,14 +39,27 @@ class SpellCheck(spellcheck.SpellCheck):
     def __init__(self, script):
         super().__init__(script, hasChangeToEntry=False)
 
+    def _findChildDialog(self, root):
+        if not root:
+            return None
+
+        if root.getRole() == pyatspi.ROLE_DIALOG:
+            return root
+
+        if root.childCount:
+            return self._findChildDialog(root[0])
+
+        return None
+
     def _isCandidateWindow(self, window):
         if self._script.utilities.isDead(window):
             msg = "SOFFICE: %s is not candidate window because it's dead." % window
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
+
         if window and window.childCount and window.getRole() == pyatspi.ROLE_FRAME:
-            child = window[0]
-            if child.getRole() == pyatspi.ROLE_DIALOG:
+            child = self._findChildDialog(window[0])
+            if child and child.getRole() == pyatspi.ROLE_DIALOG:
                 isPageTabList = lambda x: x and x.getRole() == pyatspi.ROLE_PAGE_TAB_LIST
                 if not pyatspi.findDescendant(child, isPageTabList):
                     return True
