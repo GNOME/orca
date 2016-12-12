@@ -87,15 +87,13 @@ class SpellCheck(spellcheck.SpellCheck):
         except:
             return ""
 
-        for i in range(text.characterCount):
-            attributes, start, end = text.getAttributeRun(i, False)
-            if attributes and start != end:
-                string = text.getText(start, end)
-                break
-        else:
-            msg = "SOFFICE: No text attributes for word in %s." % self._errorWidget
-            debug.println(debug.LEVEL_INFO, msg, True)
-            string = text.getText(0, -1)
+        offset, string = 0, ""
+        while 0 <= offset < text.characterCount:
+            attributes, start, end = text.getAttributeRun(offset, False)
+            attrs = dict([attr.split(":", 1) for attr in attributes])
+            if attrs.get("fg-color", "").replace(" ", "") == "255,0,0":
+                return text.getText(start, end)
+            offset = max(end, offset + 1)
 
         return string
 
