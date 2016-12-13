@@ -38,10 +38,12 @@ class Utilities(script_utilities.Utilities):
         super().__init__(script)
         self._isComboBoxWithToggleDescendant = {}
         self._isToggleDescendantOfComboBox = {}
+        self._isTypeahead = {}
 
     def clearCachedObjects(self):
         self._isComboBoxWithToggleDescendant = {}
         self._isToggleDescendantOfComboBox = {}
+        self._isTypeahead = {}
 
     def displayedText(self, obj):
         displayedText = script_utilities.Utilities.displayedText(self, obj)
@@ -94,6 +96,22 @@ class Utilities(script_utilities.Utilities):
 
         rv = comboBox is not None
         self._isToggleDescendantOfComboBox[hash(obj)] = rv
+        return rv
+
+    def isTypeahead(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_TEXT):
+            return False
+
+        rv = self._isTypeahead.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        parent = obj.parent
+        while parent and self.isLayoutOnly(parent):
+            parent = parent.parent
+
+        rv = parent and parent.getRole() == pyatspi.ROLE_WINDOW
+        self._isTypeahead[hash(obj)] = rv
         return rv
 
     def isSearchEntry(self, obj, focusedOnly=False):

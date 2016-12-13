@@ -62,19 +62,13 @@ class Script(default.Script):
     def onActiveDescendantChanged(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
-        role = event.source.getRole()
+        if not self.utilities.isTypeahead(orca_state.locusOfFocus):
+            super().onActiveDescendantChanged(event)
+            return
 
-        try:
-            focusedRole = orca_state.locusOfFocus.getRole()
-        except:
-            pass
-        else:
-            # This is very likely typeahead search and not a real focus change.
-            tableRoles = [pyatspi.ROLE_TABLE, pyatspi.ROLE_TREE_TABLE]
-            if focusedRole == pyatspi.ROLE_TEXT and role in tableRoles:
-                orca.setLocusOfFocus(event, event.source, False)
-
-        default.Script.onActiveDescendantChanged(self, event)
+        msg = "GTK: locusOfFocus believed to be typeahead. Presenting change."
+        debug.println(debug.LEVEL_INFO, msg, True)
+        self.presentObject(event.any_data)
 
     def onCheckedChanged(self, event):
         """Callback for object:state-changed:checked accessibility events."""
@@ -218,9 +212,19 @@ class Script(default.Script):
             super().onSelectionChanged(event)
             return
 
+        isFocused = event.source.getState().contains(pyatspi.STATE_FOCUSED)
         role = event.source.getRole()
-        if role == pyatspi.ROLE_COMBO_BOX \
-           and not event.source.getState().contains(pyatspi.STATE_FOCUSED):
+        if role == pyatspi.ROLE_COMBO_BOX and not isFocused:
+            return
+
+        if not isFocused and self.utilities.isTypeahead(orca_state.locusOfFocus):
+            msg = "GTK: locusOfFocus believed to be typeahead. Presenting change."
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+            selectedChildren = self.utilities.selectedChildren(event.source)
+            for child in selectedChildren:
+                if not self.utilities.isLayoutOnly(child):
+                    self.presentObject(child)
             return
 
         if role == pyatspi.ROLE_LAYERED_PANE \

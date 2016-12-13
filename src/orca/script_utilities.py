@@ -637,6 +637,9 @@ class Utilities:
     def isToggleDescendantOfComboBox(self, obj):
         return False
 
+    def isTypeahead(self, obj):
+        return False
+
     def isFunctionalDialog(self, obj):
         """Returns True if the window is a functioning as a dialog.
         This method should be subclassed by application scripts as
