@@ -393,10 +393,14 @@ class Generator:
         if role == pyatspi.ROLE_LABEL:
             return []
 
+        if role == pyatspi.ROLE_ICON:
+            name = self._script.utilities.displayedText(obj) or ""
+        else:
+            name = obj.name or ""
+
         result = []
         if obj.description:
             label = self._script.utilities.displayedLabel(obj) or ""
-            name = obj.name or ""
             desc = obj.description.lower()
             if not (desc in name.lower() or desc in label.lower()):
                 result.append(obj.description)
