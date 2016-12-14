@@ -1245,6 +1245,9 @@ class Script(script.Script):
         frame, dialog = self.utilities.frameAndDialog(obj)
         if frame:
             speech.speak(self.speechGenerator.generateStatusBar(frame))
+            infobar = self.utilities.infoBar(frame)
+            if infobar:
+                speech.speak(self.speechGenerator.generateSpeech(infobar))
 
         window = dialog or frame
         if window:

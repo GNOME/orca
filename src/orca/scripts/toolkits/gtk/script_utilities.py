@@ -58,6 +58,10 @@ class Utilities(script_utilities.Utilities):
         self._script.generatorCache[self.DISPLAYED_TEXT][obj] = displayedText
         return displayedText
 
+    def infoBar(self, root):
+        isInfoBar = lambda x: x and x.getRole() == pyatspi.ROLE_INFO_BAR
+        return pyatspi.findDescendant(root, isInfoBar)
+
     def isComboBoxWithToggleDescendant(self, obj):
         if not (obj and obj.getRole() == pyatspi.ROLE_COMBO_BOX):
             return False

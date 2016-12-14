@@ -1826,6 +1826,9 @@ class Utilities:
 
         return statusBar
 
+    def infoBar(self, root):
+        return None
+
     def _topLevelRoles(self):
         return [pyatspi.ROLE_ALERT,
                 pyatspi.ROLE_DIALOG,
