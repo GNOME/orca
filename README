@@ -42,6 +42,11 @@ Orca also has the following dependencies:
 YOU ALSO NEED THE LATEST AT-SPI2, PYATSPI2 AND ATK FOR THE GNOME 3.22.x
 RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
+You can get latest dependencies from ppa:vinux/trusty and ppa:vinux/trusty-proposed.
+
+sudo apt-add-repository ppa:vinux/trusty
+sudo apt-add-repository ppa:vinux/trusty-proposed
+
 NOTE: If you have multiple versions of the Python interpreter installed
 on your machine, you should set the PYTHON environment variable when 
 configuring Orca.  For example:
