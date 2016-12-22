@@ -42,16 +42,11 @@ class Script(Gecko.Script):
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
-        try:
-            focusRole = orca_state.locusOfFocus.getRole()
-        except:
-            msg = "ERROR: Exception getting role for %s" % orca_state.locusOfFocus
+        table = self.utilities.getTable(orca_state.locusOfFocus)
+        if table and not self.utilities.isTextDocumentTable(table):
+            msg = "SEAMONKEY: Ignoring, locusOfFocus is %s" % orca_state.locusOfFocus
             debug.println(debug.LEVEL_INFO, msg, True)
-        else:
-            if focusRole == pyatspi.ROLE_TABLE_ROW:
-                msg = "SEAMONKEY: Ignoring, locusOfFocus is %s" % orca_state.locusOfFocus
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return
+            return
 
         super().onBusyChanged(event)
 
