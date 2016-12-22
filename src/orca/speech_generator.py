@@ -1510,6 +1510,9 @@ class SpeechGenerator(generator.Generator):
         if priorObj and priorObj.getRole() == pyatspi.ROLE_TOOL_TIP:
             return []
 
+        if self._script.utilities.isTypeahead(priorObj):
+            return []
+
         commonAncestor = self._script.utilities.commonAncestor(priorObj, obj)
         try:
             role = commonAncestor.getRole()
