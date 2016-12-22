@@ -1168,7 +1168,7 @@ class Utilities:
                 layoutOnly = True
             else:
                 if not (table.nRows and table.nColumns):
-                    layoutOnly = True
+                    layoutOnly = not obj.getState().contains(pyatspi.STATE_FOCUSED)
                 elif not (obj.name or self.displayedLabel(obj)):
                     layoutOnly = not (table.getColumnHeader(0) or table.getRowHeader(0))
         elif role == pyatspi.ROLE_TABLE_CELL and obj.childCount:
