@@ -72,7 +72,15 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                              pyatspi.ROLE_LIST_ITEM,
                              pyatspi.ROLE_TEXT]
 
-        return super()._generateAncestors(obj, **args)
+        result = super()._generateAncestors(obj, **args)
+        priorObj = args.get('priorObj')
+        if priorObj and self._script.utilities.inDocumentContent(priorObj):
+            priorDoc = self._script.utilities.getDocumentForObject(priorObj)
+            doc = self._script.utilities.getDocumentForObject(obj)
+            if priorDoc != doc:
+                result.insert(0, super()._generateName(doc))
+
+        return result
 
     def _generateAllTextSelection(self, obj, **args):
         if self._script.utilities.isZombie(obj) \
