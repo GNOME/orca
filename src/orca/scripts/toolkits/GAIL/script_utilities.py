@@ -28,13 +28,32 @@ __license__   = "LGPL"
 import pyatspi
 import re
 
-import orca.debug as debug
 import orca.script_utilities as script_utilities
 
 class Utilities(script_utilities.Utilities):
 
     def __init__(self, script):
-        script_utilities.Utilities.__init__(self, script)
+        super().__init__(script)
+        self._isTypeahead = {}
+
+    def clearCachedObjects(self):
+        self._isTypeahead = {}
+
+    def isTypeahead(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_TEXT):
+            return False
+
+        rv = self._isTypeahead.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        parent = obj.parent
+        while parent and self.isLayoutOnly(parent):
+            parent = parent.parent
+
+        rv = parent and parent.getRole() == pyatspi.ROLE_WINDOW
+        self._isTypeahead[hash(obj)] = rv
+        return rv
 
     def rgbFromString(self, attributeValue):
         regex = re.compile("rgb|[^\w,]", re.IGNORECASE)

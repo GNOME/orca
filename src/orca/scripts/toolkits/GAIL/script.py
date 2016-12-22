@@ -27,6 +27,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.debug as debug
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.default as default
@@ -44,19 +45,13 @@ class Script(default.Script):
     def onActiveDescendantChanged(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
-        role = event.source.getRole()
+        if not self.utilities.isTypeahead(orca_state.locusOfFocus):
+            super().onActiveDescendantChanged(event)
+            return
 
-        try:
-            focusedRole = orca_state.locusOfFocus.getRole()
-        except:
-            pass
-        else:
-            # This is very likely typeahead search and not a real focus change.
-            tableRoles = [pyatspi.ROLE_TABLE, pyatspi.ROLE_TREE_TABLE]
-            if focusedRole == pyatspi.ROLE_TEXT and role in tableRoles:
-                orca.setLocusOfFocus(event, event.source, False)
-
-        default.Script.onActiveDescendantChanged(self, event)
+        msg = "GAIL: locusOfFocus believed to be typeahead. Presenting change."
+        debug.println(debug.LEVEL_INFO, msg, True)
+        self.presentObject(event.any_data)
 
     def onFocus(self, event):
         """Callback for focus: accessibility events."""
@@ -140,7 +135,20 @@ class Script(default.Script):
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
 
-        if event.source.getRole() == pyatspi.ROLE_LAYERED_PANE \
+        isFocused = event.source.getState().contains(pyatspi.STATE_FOCUSED)
+        role = event.source.getRole()
+
+        if not isFocused and self.utilities.isTypeahead(orca_state.locusOfFocus):
+            msg = "GAIL: locusOfFocus believed to be typeahead. Presenting change."
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+            selectedChildren = self.utilities.selectedChildren(event.source)
+            for child in selectedChildren:
+                if not self.utilities.isLayoutOnly(child):
+                    self.presentObject(child)
+            return
+
+        if role == pyatspi.ROLE_LAYERED_PANE \
            and self.utilities.selectedChildCount(event.source) > 1:
             return
 
