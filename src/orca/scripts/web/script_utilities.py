@@ -1292,7 +1292,7 @@ class Utilities(script_utilities.Utilities):
                 nextObj, nOffset = self.findNextCaretInOrder(nextObj, nOffset)
 
             onRight = self._getContentsForObj(nextObj, nOffset, boundary)
-            if self._contentIsSubsetOf(objects[0], onRight[-1]):
+            if onRight and self._contentIsSubsetOf(objects[0], onRight[-1]):
                 onRight = onRight[0:-1]
 
             onRight = list(filter(_include, onRight))
