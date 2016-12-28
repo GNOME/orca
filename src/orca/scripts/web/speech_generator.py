@@ -49,15 +49,18 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateAncestors(obj, **args)
 
-        role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_LINK:
-            return []
+        result = []
+        priorObj = args.get('priorObj')
+        if priorObj and self._script.utilities.inDocumentContent(priorObj):
+            priorDoc = self._script.utilities.getDocumentForObject(priorObj)
+            doc = self._script.utilities.getDocumentForObject(obj)
+            if priorDoc != doc:
+                result = [super()._generateName(doc)]
 
-        if self._script.utilities.isLandmark(obj):
-            return []
-
-        if self._script.utilities.isMath(obj):
-            return []
+        if self._script.utilities.isLink(obj) \
+           or self._script.utilities.isLandmark(obj) \
+           or self._script.utilities.isMath(obj):
+            return result
 
         args['stopAtRoles'] = [pyatspi.ROLE_DOCUMENT_FRAME,
                                pyatspi.ROLE_DOCUMENT_WEB,
@@ -72,13 +75,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                              pyatspi.ROLE_LIST_ITEM,
                              pyatspi.ROLE_TEXT]
 
-        result = super()._generateAncestors(obj, **args)
-        priorObj = args.get('priorObj')
-        if priorObj and self._script.utilities.inDocumentContent(priorObj):
-            priorDoc = self._script.utilities.getDocumentForObject(priorObj)
-            doc = self._script.utilities.getDocumentForObject(obj)
-            if priorDoc != doc:
-                result.insert(0, super()._generateName(doc))
+        result.extend(super()._generateAncestors(obj, **args))
 
         return result
 
