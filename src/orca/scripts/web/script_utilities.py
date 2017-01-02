@@ -53,6 +53,7 @@ class Utilities(script_utilities.Utilities):
         self._inDocumentContent = {}
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
+        self._isContentEditableWithEmbeddedObjects = {}
         self._isGridDescendant = {}
         self._isMenuDescendant = {}
         self._isToolBarDescendant = {}
@@ -111,6 +112,7 @@ class Utilities(script_utilities.Utilities):
         self._inDocumentContent = {}
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
+        self._isContentEditableWithEmbeddedObjects = {}
         self._isGridDescendant = {}
         self._isMenuDescendant = {}
         self._isToolBarDescendant = {}
@@ -858,7 +860,7 @@ class Utilities(script_utilities.Utilities):
 
         return string, rangeStart, rangeEnd
 
-    def _attemptBrokenTextRecovery(self):
+    def _attemptBrokenTextRecovery(self, obj):
         return False
 
     def _getTextAtOffset(self, obj, offset, boundary):
@@ -908,7 +910,7 @@ class Utilities(script_utilities.Utilities):
         string, start, end = text.getTextAtOffset(offset, boundary)
 
         # The above should be all that we need to do, but....
-        if not self._attemptBrokenTextRecovery():
+        if not self._attemptBrokenTextRecovery(obj):
             s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
             msg = "WEB: Results for text at offset %i for %s using %s:\n" \
                   "     String: '%s', Start: %i, End: %i.\n" \
@@ -2768,17 +2770,27 @@ class Utilities(script_utilities.Utilities):
         return parseResult.fragment
 
     def isContentEditableWithEmbeddedObjects(self, obj):
-        if not (obj and obj.getState().contains(pyatspi.STATE_EDITABLE)):
+        if not (obj and self.inDocumentContent(obj)):
             return False
 
+        rv = self._isContentEditableWithEmbeddedObjects.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = False
         try:
+            state = obj.getState()
             childCount = obj.childCount
         except:
-            msg = "WEB: Exception getting childCount for %s" % obj
+            msg = "WEB: Exception getting state and childCount for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-            return False
+            return rv
 
-        return childCount > 0
+        if state.contains(pyatspi.STATE_EDITABLE):
+            rv = childCount > 0 or self.isLink(obj)
+
+        self._isContentEditableWithEmbeddedObjects[hash(obj)] = rv
+        return rv
 
     @staticmethod
     def getHyperlinkRange(obj):

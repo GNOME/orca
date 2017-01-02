@@ -728,7 +728,8 @@ class Script(default.Script):
     def sayCharacter(self, obj):
         """Speaks the character at the current caret position."""
 
-        if not self._lastCommandWasCaretNav:
+        if not self._lastCommandWasCaretNav \
+           and not self.utilities.isContentEditableWithEmbeddedObjects(obj):
             super().sayCharacter(obj)
             return
 
@@ -753,7 +754,8 @@ class Script(default.Script):
     def sayWord(self, obj):
         """Speaks the word at the current caret position."""
 
-        if not self._lastCommandWasCaretNav:
+        if not self._lastCommandWasCaretNav \
+           and not self.utilities.isContentEditableWithEmbeddedObjects(obj):
             super().sayWord(obj)
             return
 
@@ -766,7 +768,8 @@ class Script(default.Script):
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
 
-        if not (self._lastCommandWasCaretNav or self._lastCommandWasStructNav):
+        if not (self._lastCommandWasCaretNav or self._lastCommandWasStructNav) \
+           and not self.utilities.isContentEditableWithEmbeddedObjects(obj):
             super().sayLine(obj)
             return
 
@@ -787,14 +790,15 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, "BRAILLE: disabled", True)
             return
 
-        if self._inFocusMode or not self.utilities.inDocumentContent():
-            msg = "WEB: updating braille for non-browse-mode object %s" % obj
+        if not self.utilities.inDocumentContent(obj):
+            msg = "WEB: updating braille for non-document object %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             super().updateBraille(obj, **args)
             return
 
         if not self._lastCommandWasCaretNav \
            and not self._lastCommandWasStructNav \
+           and not self.utilities.isContentEditableWithEmbeddedObjects(obj) \
            and not self.utilities.lastInputEventWasCaretNavWithSelection():
             msg = "WEB: updating braille for unhandled navigation type %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)

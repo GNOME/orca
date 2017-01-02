@@ -180,6 +180,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return result
 
     def _generateEol(self, obj, **args):
+        if self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
+            return []
+
         if obj.getState().contains(pyatspi.STATE_EDITABLE) \
            or not self._script.utilities.inDocumentContent(obj):
             return super()._generateEol(obj, **args)
