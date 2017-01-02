@@ -43,14 +43,7 @@ class Utilities(web.Utilities):
         super().__init__(script)
 
     def _attemptBrokenTextRecovery(self, obj):
-        try:
-            state = obj.getState()
-        except:
-            msg = "ERROR: Exception getting state for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if state.contains(pyatspi.STATE_EDITABLE):
+        if self.isContentEditableWithEmbeddedObjects(obj):
             return False
 
         return True
