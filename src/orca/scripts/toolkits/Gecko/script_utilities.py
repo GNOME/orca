@@ -43,8 +43,14 @@ class Utilities(web.Utilities):
         super().__init__(script)
 
     def _attemptBrokenTextRecovery(self, obj, **args):
+        boundary = args.get('boundary')
+
+        # Gecko fails to implement this boundary type.
+        if boundary == pyatspi.TEXT_BOUNDARY_SENTENCE_START:
+            return True
+
         if self.isContentEditableWithEmbeddedObjects(obj):
-            return args.get('boundary') == pyatspi.TEXT_BOUNDARY_WORD_START
+            return boundary == pyatspi.TEXT_BOUNDARY_WORD_START
 
         return True
 
