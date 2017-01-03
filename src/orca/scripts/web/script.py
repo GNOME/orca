@@ -1208,6 +1208,10 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, obj)
             return True
 
+        msg = "WEB: Setting locus of focus to context obj %s (no notification)" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        orca.setLocusOfFocus(event, obj, False)
+
         self.updateBraille(obj)
         if state.contains(pyatspi.STATE_FOCUSABLE) and not self.utilities.isDocument(obj):
             msg = "WEB: Not doing SayAll due to focusable context obj %s" % obj
