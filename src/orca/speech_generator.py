@@ -968,7 +968,8 @@ class SpeechGenerator(generator.Generator):
         acss = self.voice(DEFAULT)
         result = generator.Generator._generateCurrentLineText(self, obj, **args)
         if result:
-            if result == ['\n'] and _settingsManager.getSetting('speakBlankLines'):
+            if result == ['\n'] and _settingsManager.getSetting('speakBlankLines') \
+               and not self._script.inSayAll():
                 result = [messages.BLANK]
             result.extend(acss)
         return result
@@ -1223,7 +1224,8 @@ class SpeechGenerator(generator.Generator):
             result[0] = result[0].strip()
 
         result.extend(self._getACSS(obj, result[0]))
-        if result[0] in ['\n', ''] and _settingsManager.getSetting('speakBlankLines'):
+        if result[0] in ['\n', ''] and _settingsManager.getSetting('speakBlankLines') \
+           and not self._script.inSayAll():
             result[0] = messages.BLANK
 
         return result
