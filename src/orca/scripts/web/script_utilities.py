@@ -1514,6 +1514,30 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
+    def _textBlockElementRoles(self):
+        roles = [pyatspi.ROLE_CAPTION,
+                 pyatspi.ROLE_COLUMN_HEADER,
+                 pyatspi.ROLE_DOCUMENT_FRAME,
+                 pyatspi.ROLE_DOCUMENT_WEB,
+                 pyatspi.ROLE_FOOTER,
+                 pyatspi.ROLE_FORM,
+                 pyatspi.ROLE_HEADING,
+                 pyatspi.ROLE_LIST,
+                 pyatspi.ROLE_LIST_ITEM,
+                 pyatspi.ROLE_PARAGRAPH,
+                 pyatspi.ROLE_ROW_HEADER,
+                 pyatspi.ROLE_SECTION,
+                 pyatspi.ROLE_TEXT,
+                 pyatspi.ROLE_TABLE_CELL]
+
+        # TODO - JD: This protection won't be needed once we bump dependencies to 2.16.
+        try:
+            roles.append(pyatspi.ROLE_STATIC)
+        except:
+            pass
+
+        return roles
+
     def isTextBlockElement(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -1530,27 +1554,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        textBlockElements = [pyatspi.ROLE_CAPTION,
-                             pyatspi.ROLE_COLUMN_HEADER,
-                             pyatspi.ROLE_DOCUMENT_FRAME,
-                             pyatspi.ROLE_DOCUMENT_WEB,
-                             pyatspi.ROLE_FOOTER,
-                             pyatspi.ROLE_FORM,
-                             pyatspi.ROLE_HEADING,
-                             pyatspi.ROLE_LIST,
-                             pyatspi.ROLE_LIST_ITEM,
-                             pyatspi.ROLE_PARAGRAPH,
-                             pyatspi.ROLE_ROW_HEADER,
-                             pyatspi.ROLE_SECTION,
-                             pyatspi.ROLE_TEXT,
-                             pyatspi.ROLE_TABLE_CELL]
-
-        # TODO - JD: This protection won't be needed once we bump dependencies to 2.16.
-        try:
-            textBlockElements.append(pyatspi.ROLE_STATIC)
-        except:
-            pass
-
+        textBlockElements = self._textBlockElementRoles()
         if not role in textBlockElements:
             rv = False
         elif state.contains(pyatspi.STATE_EDITABLE):
@@ -2780,22 +2784,14 @@ class Utilities(script_utilities.Utilities):
         rv = False
         try:
             state = obj.getState()
-            childCount = obj.childCount
+            role = obj.getRole()
         except:
-            msg = "WEB: Exception getting state and childCount for %s" % obj
+            msg = "WEB: Exception getting state and role for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return rv
 
         if state.contains(pyatspi.STATE_EDITABLE):
-            rv = childCount > 0 or self.isLink(obj)
-            if not rv and "EditableText" in pyatspi.listInterfaces(obj):
-                try:
-                    string = obj.queryText().getText(0, -1)
-                except:
-                    msg = "WEB: Exception getting text for %s" % obj
-                    debug.println(debug.LEVEL_INFO, msg, True)
-                else:
-                    rv = string == ""
+            rv = role in self._textBlockElementRoles() or self.isLink(obj)
 
         self._isContentEditableWithEmbeddedObjects[hash(obj)] = rv
         return rv
