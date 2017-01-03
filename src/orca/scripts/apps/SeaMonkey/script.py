@@ -42,6 +42,11 @@ class Script(Gecko.Script):
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
+        if self.utilities.isContentEditableWithEmbeddedObjects(event.source):
+            msg = "SEAMONKEY: Ignoring, event source is content editable"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         table = self.utilities.getTable(orca_state.locusOfFocus)
         if table and not self.utilities.isTextDocumentTable(table):
             msg = "SEAMONKEY: Ignoring, locusOfFocus is %s" % orca_state.locusOfFocus
