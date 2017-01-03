@@ -42,9 +42,9 @@ class Utilities(web.Utilities):
     def __init__(self, script):
         super().__init__(script)
 
-    def _attemptBrokenTextRecovery(self, obj):
+    def _attemptBrokenTextRecovery(self, obj, **args):
         if self.isContentEditableWithEmbeddedObjects(obj):
-            return False
+            return args.get('boundary') == pyatspi.TEXT_BOUNDARY_WORD_START
 
         return True
 

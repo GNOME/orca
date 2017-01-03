@@ -860,7 +860,7 @@ class Utilities(script_utilities.Utilities):
 
         return string, rangeStart, rangeEnd
 
-    def _attemptBrokenTextRecovery(self, obj):
+    def _attemptBrokenTextRecovery(self, obj, **args):
         return False
 
     def _getTextAtOffset(self, obj, offset, boundary):
@@ -910,7 +910,7 @@ class Utilities(script_utilities.Utilities):
         string, start, end = text.getTextAtOffset(offset, boundary)
 
         # The above should be all that we need to do, but....
-        if not self._attemptBrokenTextRecovery(obj):
+        if not self._attemptBrokenTextRecovery(obj, boundary=boundary):
             s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
             msg = "WEB: Results for text at offset %i for %s using %s:\n" \
                   "     String: '%s', Start: %i, End: %i.\n" \
