@@ -551,6 +551,9 @@ class Script(default.Script):
                 contents = self.utilities.getLineContentsAtOffset(obj, characterOffset)
             self._sayAllContents = contents
             for content in contents:
+                if self.utilities.isInferredLabelForContents(content, contents):
+                    continue
+
                 obj, startOffset, endOffset, text = content
                 utterances = self.speechGenerator.generateContents([content], eliminatePauses=True)
 
