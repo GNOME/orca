@@ -2788,6 +2788,14 @@ class Utilities(script_utilities.Utilities):
 
         if state.contains(pyatspi.STATE_EDITABLE):
             rv = childCount > 0 or self.isLink(obj)
+            if not rv and "EditableText" in pyatspi.listInterfaces(obj):
+                try:
+                    string = obj.queryText().getText(0, -1)
+                except:
+                    msg = "WEB: Exception getting text for %s" % obj
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                else:
+                    rv = string == ""
 
         self._isContentEditableWithEmbeddedObjects[hash(obj)] = rv
         return rv

@@ -968,7 +968,7 @@ class SpeechGenerator(generator.Generator):
         acss = self.voice(DEFAULT)
         result = generator.Generator._generateCurrentLineText(self, obj, **args)
         if result:
-            if result == ["\n"]:
+            if result == ['\n'] and _settingsManager.getSetting('speakBlankLines'):
                 result = [messages.BLANK]
             result.extend(acss)
         return result
@@ -1081,9 +1081,8 @@ class SpeechGenerator(generator.Generator):
             else:
                 char = textObj.getTextAtOffset(caretOffset,
                     pyatspi.TEXT_BOUNDARY_CHAR)
-                if char[0] == "\n" and startOffset == caretOffset \
-                       and _settingsManager.getSetting('speakBlankLines'):
-                    textContents = (messages.BLANK)
+                if char[0] == "\n" and startOffset == caretOffset:
+                    textContents = char[0]
 
         self._script.generatorCache['textInformation'] = \
             [textContents, startOffset, endOffset, selected]
@@ -1224,6 +1223,9 @@ class SpeechGenerator(generator.Generator):
             result[0] = result[0].strip()
 
         result.extend(self._getACSS(obj, result[0]))
+        if result[0] in ['\n', ''] and _settingsManager.getSetting('speakBlankLines'):
+            result[0] = messages.BLANK
+
         return result
 
     def _generateTextIndentation(self, obj, **args):
