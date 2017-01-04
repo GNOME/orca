@@ -20,15 +20,15 @@
 # Júnior Pires <juniorpiresupe@gmail.com>, 2013.
 # Raniere Gaia <raniere@ime.unicamp.br>, 2015.
 # Rafael Gazoni <rafael.moreira@ifms.edu.br>, 2016.
-# Rafael Fontenelle <rafaelff@gnome.org>, 2013, 2014, 2015, 2016.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2013, 2014, 2015, 2016, 2017.
 # Enrico Nicoletto <liverig@gmail.com>, 2013, 2014, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&ke"
 "ywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2016-08-29 23:54+0000\n"
-"PO-Revision-Date: 2016-08-30 07:10-0200\n"
+"POT-Creation-Date: 2016-12-22 12:39+0000\n"
+"PO-Revision-Date: 2017-01-04 00:20-0200\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -36,7 +36,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"X-Generator: Virtaal 1.0.0-beta1\n"
 "X-Project-Style: gnome\n"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
@@ -8020,12 +8020,15 @@ msgstr "Não foi possível ativar o gerenciador de configurações. Saindo."
 #. Translators: This message is presented to the user when he/she tries to launch
 #. Orca, but Orca is already running.
 #: ../src/orca/messages.py:213
+#| msgid ""
+#| "Another screen reader process is already running for this session.\n"
+#| "Run \"orca --replace\" to replace that process with a new one."
 msgid ""
 "Another screen reader process is already running for this session.\n"
-"Run \"orca --replace\" to replace that process with a new one."
+"Run “orca --replace” to replace that process with a new one."
 msgstr ""
 "Já existe outro processo de leitor de tela em execução para esta sessão.\n"
-"Execute \"orca --replace\" para substituir este processo por um novo."
+"Execute “orca --replace” para substituir este processo por um novo."
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '-p, --profile' command line option.
@@ -9088,10 +9091,16 @@ msgstr "Modo de aprendizado.  Pressione ESC para sair."
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
 #: ../src/orca/messages.py:1030
+#| msgid ""
+#| "Entering learn mode.  Press any key to hear its function.  To view the "
+#| "screen reader's documentation, press F1. To get a list of the screen "
+#| "reader's default shortcuts, press F2. To get a list of the screen "
+#| "reader's shortcuts for the current application, press F3. To exit learn "
+#| "mode, press the escape key."
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the "
-"screen reader's documentation, press F1. To get a list of the screen "
-"reader's default shortcuts, press F2. To get a list of the screen reader's "
+"screen reader’s documentation, press F1. To get a list of the screen "
+"reader’s default shortcuts, press F2. To get a list of the screen reader’s "
 "shortcuts for the current application, press F3. To exit learn mode, press "
 "the escape key."
 msgstr ""
@@ -9487,19 +9496,17 @@ msgstr "Modo pegajoso de navegação."
 msgid "Mouse over object not found."
 msgstr "Objeto sob o mouse não localizado."
 
-#. Translators: Orca has a feature to speak the item under the pointer. This feaure,
+#. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled off via command.
 #: ../src/orca/messages.py:1339
-#| msgid "Toggle mouse review mode."
 msgid "Mouse review disabled."
 msgstr "Revisão do mouse desabilitada."
 
-#. Translators: Orca has a feature to speak the item under the pointer. This feaure,
+#. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled on via command.
 #: ../src/orca/messages.py:1344
-#| msgid "Speech enabled."
 msgid "Mouse review enabled."
 msgstr "Revisão do mouse habilitada."
 
@@ -10943,107 +10950,116 @@ msgstr "pesquisa"
 msgid "visited link"
 msgstr "link visitado"
 
+#. Translators: This string should be treated as a role describing an object.
+#. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+#. A menu button is button widget that causes a menu to appear when the user
+#. activates the button.
+#: ../src/orca/object_properties.py:209
+#| msgid "No more buttons."
+msgid "menu button"
+msgstr "botão de menu"
+
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
-#: ../src/orca/object_properties.py:207
+#: ../src/orca/object_properties.py:213
 msgid "clickable"
 msgstr "clicável"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:212
+#: ../src/orca/object_properties.py:218
 msgid "collapsed"
 msgstr "recolhido"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:217
+#: ../src/orca/object_properties.py:223
 msgid "expanded"
 msgstr "expandido"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
-#: ../src/orca/object_properties.py:221
+#: ../src/orca/object_properties.py:227
 msgid "has long description"
 msgstr "possui descrição comprida"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:225
+#: ../src/orca/object_properties.py:231
 msgid "horizontal"
 msgstr "horizontal"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:229
+#: ../src/orca/object_properties.py:235
 msgid "vertical"
 msgstr "vertical"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:232
+#: ../src/orca/object_properties.py:238
 msgctxt "checkbox"
 msgid "checked"
 msgstr "selecionada"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:235
+#: ../src/orca/object_properties.py:241
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "não selecionada"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:238
+#: ../src/orca/object_properties.py:244
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "parcialmente selecionada"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:241
+#: ../src/orca/object_properties.py:247
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "pressionado"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:244
+#: ../src/orca/object_properties.py:250
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "não pressionado"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:247
+#: ../src/orca/object_properties.py:253
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "selecionado"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:250
+#: ../src/orca/object_properties.py:256
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "não selecionado"
 
 #. Translators: This is a state which applies to a table cell.
-#: ../src/orca/object_properties.py:253
+#: ../src/orca/object_properties.py:259
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "não selecionada"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:256
+#: ../src/orca/object_properties.py:262
 msgctxt "link state"
 msgid "visited"
 msgstr "visitado"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:259
+#: ../src/orca/object_properties.py:265
 msgctxt "link state"
 msgid "unvisited"
 msgstr "não visitado"
 
 #. Translators: This state represents an item on the screen that has been set
 #. insensitive (or grayed out).
-#: ../src/orca/object_properties.py:263 ../src/orca/object_properties.py:267
+#: ../src/orca/object_properties.py:269 ../src/orca/object_properties.py:273
 msgid "grayed"
 msgstr "acinzentado"
 
@@ -11052,7 +11068,7 @@ msgstr "acinzentado"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the spoken
 #. version.
-#: ../src/orca/object_properties.py:274
+#: ../src/orca/object_properties.py:280
 msgctxt "text"
 msgid "read only"
 msgstr "apenas leitura"
@@ -11062,22 +11078,78 @@ msgstr "apenas leitura"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the braille
 #. version. (Because braille displays have limited real estate, we abbreviate.)
-#: ../src/orca/object_properties.py:281
+#: ../src/orca/object_properties.py:287
 msgctxt "text"
 msgid "rdonly"
 msgstr "apleit"
 
 #. Translators: Certain objects (such as form controls on web pages) can have
 #. STATE_REQUIRED set to inform the user that this field must be filled out.
-#: ../src/orca/object_properties.py:285 ../src/orca/object_properties.py:289
+#: ../src/orca/object_properties.py:291 ../src/orca/object_properties.py:295
 msgid "required"
 msgstr "obrigatório"
 
 #. Translators: "multi-select" refers to a web form list in which more than
 #. one item can be selected at a time.
-#: ../src/orca/object_properties.py:293
+#: ../src/orca/object_properties.py:299
 msgid "multi-select"
 msgstr "seleção múltipla"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is spoken when all we
+#. know is that an error has occurred, but not the type of error.
+#: ../src/orca/object_properties.py:304
+msgctxt "error"
+msgid "invalid entry"
+msgstr "entrada inválida"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is displayed in braille
+#. when all we know is that an error has occurred, but not the type of error.
+#. We prefer a smaller string than in speech because braille displays have a
+#. limited size.
+#: ../src/orca/object_properties.py:311
+msgctxt "error"
+msgid "invalid"
+msgstr "inválido"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is spoken when the error
+#. is related to spelling.
+#: ../src/orca/object_properties.py:316
+#| msgctxt "textattr"
+#| msgid "spelling"
+msgctxt "error"
+msgid "invalid spelling"
+msgstr "ortografia inválida"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is displayed in braille
+#. when the error is related to spelling. We prefer a smaller string than in
+#. speech because braille displays have a limited size.
+#: ../src/orca/object_properties.py:322
+#| msgctxt "textattr"
+#| msgid "spelling"
+msgctxt "error"
+msgid "spelling"
+msgstr "ortografia"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is spoken when the error
+#. is related to grammar.
+#: ../src/orca/object_properties.py:327
+msgctxt "error"
+msgid "invalid grammar"
+msgstr "gramática inválida"
+
+#. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
+#. as a form field, has an error. The following string is displayed in braille
+#. when the error is related to grammar. We prefer a smaller string than in
+#. speech because braille displays have a limited size.
+#: ../src/orca/object_properties.py:333
+msgctxt "error"
+msgid "grammar"
+msgstr "gramática"
 
 #: ../src/orca/orca-find.ui.h:1
 msgid "Find"
