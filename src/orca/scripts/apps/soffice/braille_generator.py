@@ -93,8 +93,11 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             result = super()._generateRealTableCell(obj, **args)
         else:
             result = []
+            formatType = args.get('formatType')
+            args['formatType'] = 'focused'
             for child in obj:
-                result.extend(self.generate(child))
+                result.extend(self.generate(child, **args))
+            args['formatType'] = formatType
 
         if not self._script.utilities.isSpreadSheetCell(obj):
             return result
