@@ -951,6 +951,15 @@ class Utilities(script_utilities.Utilities):
                   % (offset, obj, boundary, s1, start, end)
             debug.println(debug.LEVEL_INFO, msg, True)
             needSadHack = True
+        elif len(string) < end - start:
+            s1 = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
+            msg = "FAIL: Bad results for text at offset %i for %s using %s:\n" \
+                  "      String: '%s', Start: %i, End: %i.\n" \
+                  "      The bug is that the length of string is less than the text range.\n" \
+                  "      This very likely needs to be fixed by the toolkit." \
+                  % (offset, obj, boundary, s1, start, end)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            needSadHack = True
 
         if needSadHack:
             sadString, sadStart, sadEnd = self.__findRange(text, offset, start, end, boundary)
