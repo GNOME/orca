@@ -903,7 +903,7 @@ class Generator:
         if start is None or end is None:
             return []
 
-        substring = self._script.utilities.substring(obj, start, end)
+        substring = args.get('string', self._script.utilities.substring(obj, start, end))
         if substring and not self._script.EMBEDDED_OBJECT_CHARACTER in substring:
             return [substring]
 
