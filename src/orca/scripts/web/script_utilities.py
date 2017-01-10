@@ -826,8 +826,16 @@ class Utilities(script_utilities.Utilities):
             return span[0] <= offset <= span[1]
 
         def _onThisLine(span):
-            rangeExtents = list(text.getRangeExtents(span[0], span[0] + 1, 0))
-            return self.extentsAreOnSameLine(extents, rangeExtents)
+            start, end = span
+            startExtents = list(text.getRangeExtents(start, start + 1, 0))
+            endExtents = list(text.getRangeExtents(end - 1, end, 0))
+            if not self.extentsAreOnSameLine(startExtents, endExtents):
+                msg = "FAIL: Start %s and end %s of '%s' not on same line" \
+                      % (startExtents, endExtents, allText[start:end])
+                debug.println(debug.LEVEL_INFO, msg, True)
+                startExtents = endExtents
+
+            return self.extentsAreOnSameLine(extents, startExtents)
 
         spans = []
         charCount = text.characterCount
@@ -1406,6 +1414,12 @@ class Utilities(script_utilities.Utilities):
         debug.println(debug.LEVEL_INFO, msg, True)
 
         contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+        if line == contents:
+            obj, offset = self.nextContext(obj, offset, True)
+            msg = "WEB: Got same line. Trying again with %s, %i" % (obj, offset)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+
         if not contents:
             msg = "WEB: Could not get line contents for %s, %i" % (obj, offset)
             debug.println(debug.LEVEL_INFO, msg, True)
