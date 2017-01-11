@@ -155,25 +155,6 @@ class Script:
 
         return keybindings.KeyBindings()
 
-    def getKeyBindingsForInputHandler(self, inputEventHandler):
-        """ Returns a KeyBindings object with the list of KeyBindings that
-        matche the passed inputEventHandler as argument (at least the
-        inputEventHandler that has the same handler function)
-
-        Arguments:
-        - inputEventHandler: an instance of input_event.InputEventHandler
-
-        Returns an instance of keybindings.KeyBindings populated with
-        keybindings.KeyBinding instances that match the inputEventHandler.
-        """
-        matches = keybindings.KeyBindings()
-
-        for binding in self.keyBindings.keyBindings:
-            if inputEventHandler == binding.handler:
-                matches.add(binding)
-
-        return matches
-
     def getBrailleBindings(self):
         """Defines the braille bindings for this script.
 
@@ -181,20 +162,6 @@ class Script:
         values are InputEventHandler instances.
         """
         return {}
-
-    def getBrailleCommandsForInputHandler(self, inputEventHandler):
-        """Returns a list of BrlTTY commands (they're in braille.py) that
-        match the given inputEventHandler passed as argument.
-
-        Arguments:
-        - inputEventHandler: an instance of input_event.InputEventHandler
-
-        Returns a list (possibly empty) of BrlTTY commands (they're in
-        braille.py) that match the given inputEventHandler passed.
-        """
-        return [command
-                for command, handler in self.brailleBindings.items()
-                if inputEventHandler == handler]
 
     def getFormatting(self):
         """Returns the formatting strings for this script."""
@@ -563,24 +530,6 @@ class Script:
         - event: if not None, the Event that caused the change
         - oldLocusOfFocus: Accessible that is the old locus of focus
         - newLocusOfFocus: Accessible that is the new locus of focus
-        """
-        pass
-
-    def visualAppearanceChanged(self, event, obj):
-        """Called when the visual appearance of an object changes.
-        This method should not be called for objects whose visual
-        appearance changes solely because of focus -- setLocusOfFocus
-        is used for that.  Instead, it is intended mostly for objects
-        whose notional 'value' has changed, such as a checkbox
-        changing state, a progress bar advancing, a slider moving,
-        text inserted, caret moved, etc.
-
-        The primary purpose of this method is to present the changed
-        information to the user.
-
-        Arguments:
-        - event: if not None, the Event that caused this to happen
-        - obj: the Accessible whose visual appearance changed.
         """
         pass
 
