@@ -541,6 +541,7 @@ class Script(default.Script):
             obj, characterOffset = self.utilities.getCaretContext()
         else:
             characterOffset = offset
+        priorObj, priorOffset = self.utilities.getPriorContext()
 
         self._inSayAll = True
         done = False
@@ -555,14 +556,25 @@ class Script(default.Script):
                     continue
 
                 obj, startOffset, endOffset, text = content
-                utterances = self.speechGenerator.generateContents([content], eliminatePauses=True)
+                utterances = self.speechGenerator.generateContents(
+                    [content], eliminatePauses=True, priorObj=priorObj)
+                priorObj = obj
 
                 # TODO - JD: This is sad, but it's better than the old, broken
                 # clumpUtterances(). We really need to fix the speechservers'
                 # SayAll support. In the meantime, the generators should be
                 # providing one ACSS per string.
-                elements = list(filter(lambda x: isinstance(x, str), utterances[0]))
-                voices = list(filter(lambda x: isinstance(x, ACSS), utterances[0]))
+                utterance = utterances[0]
+                elements, voices = [], []
+                for u in utterance:
+                    if isinstance(u, list):
+                        elements.extend(filter(lambda x: isinstance(x, str), u))
+                        voices.extend(filter(lambda x: isinstance(x, ACSS), u))
+                    elif isinstance(u, str):
+                        elements.append(u)
+                    elif isinstance(u, ACSS):
+                        voices.append(u)
+
                 if len(elements) != len(voices):
                     continue
 
@@ -722,10 +734,10 @@ class Script(default.Script):
 
         return self.utilities.isFocusModeWidget(obj)
 
-    def speakContents(self, contents):
+    def speakContents(self, contents, **args):
         """Speaks the specified contents."""
 
-        utterances = self.speechGenerator.generateContents(contents)
+        utterances = self.speechGenerator.generateContents(contents, **args)
         speech.speak(utterances)
 
     def sayCharacter(self, obj):
@@ -776,15 +788,24 @@ class Script(default.Script):
             super().sayLine(obj)
             return
 
+        priorObj = None
+        if self._lastCommandWasCaretNav:
+            priorObj, priorOffset = self.utilities.getPriorContext()
+
         obj, offset = self.utilities.getCaretContext(documentFrame=None)
-        self.speakContents(self.utilities.getLineContentsAtOffset(obj, offset))
+        contents = self.utilities.getLineContentsAtOffset(obj, offset)
+        self.speakContents(contents, priorObj=priorObj)
 
     def presentObject(self, obj, **args):
+        priorObj = None
+        if self._lastCommandWasCaretNav:
+            priorObj, priorOffset = self.utilities.getPriorContext()
+
         offset = args.get("offset", 0)
         contents = self.utilities.getObjectContentsAtOffset(obj, offset)
         self.displayContents(contents)
-        self.speakContents(contents)
-
+        self.speakContents(contents, priorObj=priorObj)
+ 
     def updateBraille(self, obj, **args):
         """Updates the braille display to show the given object."""
 
@@ -1260,8 +1281,8 @@ class Script(default.Script):
         if self._lastCommandWasMouseButton:
             msg = "WEB: Event handled: Last command was mouse button"
             debug.println(debug.LEVEL_INFO, msg, True)
-            orca.setLocusOfFocus(event, event.source)
             self.utilities.setCaretContext(event.source, event.detail1)
+            orca.setLocusOfFocus(event, event.source)
             return True
 
         if self.utilities.inFindToolbar():
@@ -1296,24 +1317,24 @@ class Script(default.Script):
         if self.utilities.caretMovedToSamePageFragment(event):
             msg = "WEB: Event handled: Caret moved to fragment"
             debug.println(debug.LEVEL_INFO, msg, True)
-            orca.setLocusOfFocus(event, obj)
             self.utilities.setCaretContext(obj, offset)
+            orca.setLocusOfFocus(event, obj)
             return True
 
         if self.utilities.lastInputEventWasPageNav() \
            and not self.utilities.isLink(event.source):
             msg = "WEB: Event handled: Caret moved due to scrolling"
             debug.println(debug.LEVEL_INFO, msg, True)
-            orca.setLocusOfFocus(event, obj)
             self.utilities.setCaretContext(obj, offset)
+            orca.setLocusOfFocus(event, obj)
             return True
 
         if self.utilities.isContentEditableWithEmbeddedObjects(event.source):
             msg = "WEB: In content editable with embedded objects"
             debug.println(debug.LEVEL_INFO, msg, True)
             notify = orca_state.locusOfFocus == orca_state.activeWindow
-            orca.setLocusOfFocus(event, event.source, notify)
             self.utilities.setCaretContext(obj, offset)
+            orca.setLocusOfFocus(event, event.source, notify)
             return False
 
         text = self.utilities.queryNonEmptyText(event.source)
@@ -1321,8 +1342,8 @@ class Script(default.Script):
             if event.source.getRole() == pyatspi.ROLE_LINK:
                 msg = "WEB: Event handled: Was for non-text link"
                 debug.println(debug.LEVEL_INFO, msg, True)
-                orca.setLocusOfFocus(event, event.source)
                 self.utilities.setCaretContext(event.source, event.detail1)
+                orca.setLocusOfFocus(event, event.source)
             else:
                 msg = "WEB: Event ignored: Was for non-text non-link"
                 debug.println(debug.LEVEL_INFO, msg, True)
@@ -1347,8 +1368,8 @@ class Script(default.Script):
 
             msg = "WEB: Setting locusOfFocus, context to: %s, %i" % (obj, offset)
             debug.println(debug.LEVEL_INFO, msg, True)
-            orca.setLocusOfFocus(event, obj)
             self.utilities.setCaretContext(obj, offset)
+            orca.setLocusOfFocus(event, obj)
             return True
 
         if self.utilities.treatEventAsSpinnerValueChange(event):
@@ -1360,8 +1381,8 @@ class Script(default.Script):
 
         if not _settingsManager.getSetting('caretNavigationEnabled') \
            or self._inFocusMode or isEditable:
-            orca.setLocusOfFocus(event, event.source, False)
             self.utilities.setCaretContext(event.source, event.detail1)
+            orca.setLocusOfFocus(event, event.source, False)
             msg = "WEB: Setting locusOfFocus, context to: %s, %i" % \
                   (event.source, event.detail1)
             debug.println(debug.LEVEL_INFO, msg, True)

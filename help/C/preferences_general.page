@@ -120,6 +120,31 @@
       Default value: not checked
     </p>
   </section>
+  <section id="say_all_announce_context">
+    <title>Announce Blockquotes, Lists, and Tables in Say All</title>
+    <p>
+      <app>Orca</app> can optionally provide more information about the document
+      content being spoken, such as announcing when you are entering and leaving
+      a blockquote, list, or table. Whether or not these announcements are made
+      can be configured independently through the following checkboxes:
+    </p>
+    <list>
+      <item><p>Announce blockquotes in Say All</p></item>
+      <item><p>Announce lists in Say All</p></item>
+      <item><p>Announce tables in Say All</p></item>
+    </list>
+    <p>
+      Default value: checked
+    </p>
+    <note style="note">
+      <p>
+        Whether or not <app>Orca</app> makes these announcements during
+        navigation is also configurable. You will find similar checkboxes
+        on the <gui>Speech</gui> page. For more information, see
+        <link xref="preferences_speech#spoken_context">Spoken Context</link>.
+      </p>
+    </note>
+  </section>
   <section id="say_all_by">
    <info>
       <desc>

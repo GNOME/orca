@@ -54,7 +54,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if priorObj and self._script.utilities.inDocumentContent(priorObj):
             priorDoc = self._script.utilities.getDocumentForObject(priorObj)
             doc = self._script.utilities.getDocumentForObject(obj)
-            if priorDoc != doc:
+            if priorDoc != doc and not self._script.utilities.getDocumentForObject(doc):
                 result = [super()._generateName(doc)]
 
         if self._script.utilities.isLink(obj) \
@@ -72,6 +72,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                                pyatspi.ROLE_TOOL_BAR]
         args['skipRoles'] = [pyatspi.ROLE_PARAGRAPH,
                              pyatspi.ROLE_LABEL,
+                             pyatspi.ROLE_LINK,
                              pyatspi.ROLE_LIST_ITEM,
                              pyatspi.ROLE_TEXT]
 
@@ -250,8 +251,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return result
 
         role = args.get('role', obj.getRole())
-        force = args.get('force', False)
+        enabled, disabled = self._getEnabledAndDisabledContextRoles()
+        if role in disabled:
+            return []
 
+        force = args.get('force', False)
         start = args.get('startOffset')
         end = args.get('endOffset')
 
@@ -313,7 +317,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result.append(self.getLocalizedRoleName(obj, **args))
                 result.extend(acss)
 
-        elif role not in doNotSpeak:
+        elif role not in doNotSpeak and args.get('priorObj') != obj:
             result.append(self.getLocalizedRoleName(obj, **args))
             result.extend(acss)
 
@@ -470,6 +474,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         else:
             oldRole = self._overrideRole(self._getAlternativeRole(obj, **args), args)
 
+        if not 'priorObj' in args:
+            args['priorObj'] = self._script.utilities.getPriorContext()[0]
+
         result.extend(super().generateSpeech(obj, **args))
         result = list(filter(lambda x: x, result))
         self._restoreRole(oldRole, args)
@@ -499,6 +506,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 index=i, total=len(contents), **args)
             if utterance and utterance[0]:
                 result.append(utterance)
+                args['priorObj'] = obj
 
         if not result:
             if self._script.inSayAll():

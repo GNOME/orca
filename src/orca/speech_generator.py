@@ -286,7 +286,12 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
-        if _settingsManager.getSetting('speechVerbosityLevel') == \
+        if self._script.utilities.isTextDocumentTable(obj):
+            role = args.get('role', obj.getRole())
+            enabled, disabled = self._getEnabledAndDisabledContextRoles()
+            if role in disabled:
+                return []
+        elif _settingsManager.getSetting('speechVerbosityLevel') == \
            settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
@@ -1498,6 +1503,51 @@ class SpeechGenerator(generator.Generator):
             result.extend(acss)
         return result
 
+    def _getEnabledAndDisabledContextRoles(self):
+        allRoles = [pyatspi.ROLE_BLOCK_QUOTE,
+                    pyatspi.ROLE_LIST,
+                    pyatspi.ROLE_TABLE]
+
+        enabled, disabled = [], []
+        if self._script.inSayAll():
+            if _settingsManager.getSetting('sayAllContextBlockquote'):
+                enabled.append(pyatspi.ROLE_BLOCK_QUOTE)
+            if _settingsManager.getSetting('sayAllContextList'):
+                enabled.append(pyatspi.ROLE_LIST)
+            if _settingsManager.getSetting('sayAllContextTable'):
+                enabled.append(pyatspi.ROLE_TABLE)
+        else:
+            if _settingsManager.getSetting('speakContextBlockquote'):
+                enabled.append(pyatspi.ROLE_BLOCK_QUOTE)
+            if _settingsManager.getSetting('speakContextList'):
+                enabled.append(pyatspi.ROLE_LIST)
+            if _settingsManager.getSetting('speakContextTable'):
+                enabled.append(pyatspi.ROLE_TABLE)
+
+        disabled = list(set(allRoles).symmetric_difference(enabled))
+        return enabled, disabled
+
+    def _generateLeaving(self, obj, **args):
+        if not args.get('leaving'):
+            return []
+
+        role = args.get('role', obj.getRole)
+        enabled, disabled = self._getEnabledAndDisabledContextRoles()
+        if not role in enabled:
+            return []
+
+        result = []
+        if role == pyatspi.ROLE_BLOCK_QUOTE:
+            result.append(messages.LEAVING_BLOCKQUOTE)
+        elif role == pyatspi.ROLE_LIST and self._script.utilities.isDocumentList(obj):
+            result.append(messages.LEAVING_LIST)
+        elif role == pyatspi.ROLE_TABLE and self._script.utilities.isTextDocumentTable(obj):
+            result.append(messages.LEAVING_TABLE)
+        if result:
+            result.extend(self.voice(SYSTEM))
+
+        return result
+
     def _generateAncestors(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the text of the ancestors for
@@ -1510,7 +1560,14 @@ class SpeechGenerator(generator.Generator):
         previous object with focus.
         """
         result = []
-        priorObj = args.get('priorObj', None)
+
+        leaving = args.get('leaving')
+        if leaving and args.get('priorObj'):
+              priorObj = obj
+              obj = args.get('priorObj')
+        else:
+              priorObj = args.get('priorObj')
+
         if priorObj and priorObj.getRole() == pyatspi.ROLE_TOOL_TIP:
             return []
 
@@ -1533,10 +1590,16 @@ class SpeechGenerator(generator.Generator):
                 return False
             return x and x.getRole() == role and x.name == name
 
+        includeOnly = args.get('includeOnly', [])
+
         skipRoles = args.get('skipRoles', [])
         skipRoles.append(pyatspi.ROLE_TREE_ITEM)
+        enabled, disabled = self._getEnabledAndDisabledContextRoles()
+        skipRoles.extend(disabled)
+
         stopAtRoles = args.get('stopAtRoles', [])
         stopAtRoles.append(pyatspi.ROLE_APPLICATION)
+
         if obj != commonAncestor:
             parent = obj.parent
             while parent and not parent in [commonAncestor, parent.parent]:
@@ -1546,10 +1609,18 @@ class SpeechGenerator(generator.Generator):
                 parentRole = parent.getRole()
                 if parentRole in stopAtRoles:
                     break
-                if parentRole not in skipRoles \
-                   and not self._script.utilities.isLayoutOnly(parent):
-                    result.append(self.generate(parent, formatType='focused'))
+                if parentRole in skipRoles:
+                    pass
+                elif includeOnly and parentRole not in includeOnly:
+                    pass
+                elif not self._script.utilities.isLayoutOnly(parent):
+                    oldRole = self._getAlternativeRole(parent)
+                    self._overrideRole(oldRole, args)
+                    result.append(self.generate(parent, formatType='focused',
+                                                role=oldRole, leaving=leaving))
+                    self._restoreRole(oldRole, args)
                 parent = parent.parent
+
         result.reverse()
         return result
 
@@ -1558,7 +1629,39 @@ class SpeechGenerator(generator.Generator):
         specifications) that represent the text of the ancestors for
         the object being left."""
 
-        return []
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        if self._script.utilities.inFindToolbar():
+            return []
+
+        priorObj = args.get('priorObj')
+        if not priorObj or obj == priorObj:
+            return []
+
+        if obj.getApplication() != priorObj.getApplication() \
+           or pyatspi.findAncestor(obj, lambda x: x == priorObj):
+            return []
+
+        args['leaving'] = True
+        args['includeOnly'] = [pyatspi.ROLE_BLOCK_QUOTE,
+                               pyatspi.ROLE_LIST,
+                               pyatspi.ROLE_SECTION,
+                               pyatspi.ROLE_TABLE]
+
+        result = []
+        if self._script.utilities.isBlockquote(priorObj):
+            oldRole = self._getAlternativeRole(priorObj)
+            self._overrideRole(oldRole, args)
+            result.extend(self.generate(
+                priorObj, role=oldRole, formatType='focused', leaving=True))
+            self._restoreRole(oldRole, args)
+
+        result.extend(self._generateAncestors(obj, **args))
+        args.pop('leaving')
+        args.pop('includeOnly')
+
+        return result
 
     def _generateNewAncestors(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
@@ -1573,15 +1676,17 @@ class SpeechGenerator(generator.Generator):
         with focus.
         """
 
-        # TODO - JD: This is not the right way to do this, but we can fix
-        # that as part of the removal of formatting strings.
-        start = args.get('startOffset')
-        end = args.get('endOffset')
-        if start is not None or end is not None:
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        if self._script.utilities.inFindToolbar():
+            return []
+
+        priorObj = args.get('priorObj')
+        if priorObj == obj:
             return []
 
         result = []
-        priorObj = args.get('priorObj')
         if obj.getRole() == pyatspi.ROLE_MENU_ITEM \
            and (not priorObj or priorObj.getRole() == pyatspi.ROLE_WINDOW):
             return result
@@ -1590,6 +1695,14 @@ class SpeechGenerator(generator.Generator):
         if priorObj \
            or (topLevelObj and topLevelObj.getRole() == pyatspi.ROLE_DIALOG):
             result = self._generateAncestors(obj, **args)
+        return result
+
+    def generateContext(self, obj, **args):
+        if args.get('priorObj') == obj:
+            return []
+
+        result = self._generateOldAncestors(obj, **args)
+        result.append(self._generateNewAncestors(obj, **args))
         return result
 
     def _generateParentRoleName(self, obj, **args):

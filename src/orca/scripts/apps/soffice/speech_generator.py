@@ -389,6 +389,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
+        if self._script.inSayAll():
+            return []
+
         result = super()._generateRealTableCell(obj, **args)
 
         if not self._script.utilities.isSpreadSheetCell(obj):
@@ -447,48 +450,35 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         dialog).
         """
 
-        if self._script._lastCommandWasStructNav:
+        if self._script._lastCommandWasStructNav or self._script.inSayAll():
             return []
 
         topLevel = self._script.utilities.topLevelObject(obj)
         if topLevel and topLevel.getRole() == pyatspi.ROLE_DIALOG:
             return []
 
-        return (speech_generator.SpeechGenerator._generateEndOfTableIndicator(
-                self, obj, **args))
+        return super()._generateEndOfTableIndicator(obj, **args)
 
     def _generateNewAncestors(self, obj, **args):
         priorObj = args.get('priorObj', None)
         if not priorObj or priorObj.getRoleName() == 'text frame':
             return []
 
-        return speech_generator.SpeechGenerator._generateNewAncestors(
-            self, obj, **args)
+        return super()._generateNewAncestors(obj, **args)
 
     def _generateOldAncestors(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the text of the ancestors for
         the object being left."""
 
-        priorObj = args.get('priorObj', None)
-        if not priorObj:
+        if obj.getRoleName() == 'text frame':
             return []
 
+        priorObj = args.get('priorObj', None)
         if self._script.utilities.isSpreadSheetCell(priorObj):
             return []
 
-        isTable = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE
-        oldTable = pyatspi.findAncestor(priorObj, isTable)
-        if oldTable:
-            ancestor = self._script.utilities.commonAncestor(oldTable, obj)
-            if self._script.utilities.isDocument(ancestor):
-                result = [messages.TABLE_LEAVING]
-                result.extend(self.voice(speech_generator.SYSTEM))
-                result.extend(self._generatePause(obj, **args))
-                return result
-
-        return speech_generator.SpeechGenerator._generateOldAncestors(
-            self, obj, **args)
+        return super()._generateOldAncestors(obj, **args)
 
     def _generateUnselectedCell(self, obj, **args):
         if self._script.utilities.isSpreadSheetCell(obj):

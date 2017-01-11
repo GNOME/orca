@@ -196,6 +196,48 @@
         Default value: checked
       </p>
     </section>
+    <section id="announce_blockquotes_during_navigation">
+      <title>Announce blockquotes during navigation</title>
+      <p>
+        If <gui>Announce blockquotes during navigation</gui> is checked,
+        <app>Orca</app> will tell you when you navigate into or out of a
+        blockquote. Note that this setting is independent of whether or not
+        this announcement is made during Say All. See
+        <link xref="preferences_general#say_all_announce_context">Announce
+        Blockquotes, Lists, and Tables in Say All</link> for more information.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
+    <section id="announce_lists_during_navigation">
+      <title>Announce lists during navigation</title>
+      <p>
+        If <gui>Announce lists during navigation</gui> is checked,
+        <app>Orca</app> will tell you when you navigate into or out of a
+        list. Note that this setting is independent of whether or not
+        this announcement is made during Say All. See
+        <link xref="preferences_general#say_all_announce_context">Announce
+        Blockquotes, Lists, and Tables in Say All</link> for more information.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
+    <section id="announce_tables_during_navigation">
+      <title>Announce tables during navigation</title>
+      <p>
+        If <gui>Announce tables during navigation</gui> is checked,
+        <app>Orca</app> will tell you when you navigate into or out of a
+        table. Note that this setting is independent of whether or not
+        this announcement is made during Say All. See
+        <link xref="preferences_general#say_all_announce_context">Announce
+        Blockquotes, Lists, and Tables in Say All</link> for more information.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
     <section id="read_full_row_in_gui_tables">
       <title>Read full row in GUI tables</title>
       <p>

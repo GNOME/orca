@@ -17,7 +17,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. l to first list",
     ["BRAILLE LINE:  '1. remember what the heck we are doing each day'",
      "     VISIBLE:  '1. remember what the heck we are', cursor=1",
-     "SPEECH OUTPUT: 'List with 4 items.'",
+     "SPEECH OUTPUT: 'List with 4 items' voice=system",
      "SPEECH OUTPUT: '1. remember what the heck we are doing each day.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -27,7 +27,7 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: Gecko is not exposing this as a roman numeral.",
      "BRAILLE LINE:  '6. And use roman numerals,'",
      "     VISIBLE:  '6. And use roman numerals,', cursor=1",
-     "SPEECH OUTPUT: 'List with 6 items.'",
+     "SPEECH OUTPUT: 'List with 6 items' voice=system",
      "SPEECH OUTPUT: '6. And use roman numerals,.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -36,7 +36,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. l to third list (3) landing on the first item (3.1)",
     ["BRAILLE LINE:  '• listing item'",
      "     VISIBLE:  '• listing item', cursor=1",
-     "SPEECH OUTPUT: 'List with 2 items.'",
+     "SPEECH OUTPUT: 'List with 2 items' voice=system",
      "SPEECH OUTPUT: '• listing item.'"]))
 
 sequence.append(utils.StartRecordingAction())

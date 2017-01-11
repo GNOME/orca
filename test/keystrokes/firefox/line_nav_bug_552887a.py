@@ -19,7 +19,8 @@ sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
     ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1"]))
+     "     VISIBLE:  '', cursor=1",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

@@ -21,6 +21,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Line Down",
     ["BRAILLE LINE:  '1. item'",
      "     VISIBLE:  '1. item', cursor=1",
+     "SPEECH OUTPUT: 'List with 3 items'",
      "SPEECH OUTPUT: '1. item.'"]))
 
 sequence.append(utils.StartRecordingAction())

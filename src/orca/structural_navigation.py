@@ -950,6 +950,13 @@ class StructuralNavigation:
     #                                                                       #
     #########################################################################
 
+    def _getListDescription(self, obj):
+        children = [x for x in obj if x.getRole() == pyatspi.ROLE_LIST_ITEM]
+        if not children:
+            return ""
+
+        return messages.listItemCount(len(children))
+
     def _getTableCaption(self, obj):
         """Returns a string which contains the table caption, or
         None if a caption could not be found.
@@ -1323,16 +1330,7 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        if not obj:
-            return False
-
-        attributes = obj.getAttributes()
-        if attributes:
-            for attribute in attributes:
-                if attribute == "tag:BLOCKQUOTE":
-                    return True
-
-        return False
+        return self._script.utilities.isBlockquote(obj)
 
     def _blockquotePresentation(self, obj, arg=None):
         """Presents the blockquote or indicates that one was not found.
@@ -2264,7 +2262,7 @@ class StructuralNavigation:
         """
 
         if obj:
-            speech.speak(self._script.speechGenerator.generateSpeech(obj))
+            self._script.speakMessage(self._getListDescription(obj))
             [obj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(obj, characterOffset)
             self._presentLine(obj, characterOffset)

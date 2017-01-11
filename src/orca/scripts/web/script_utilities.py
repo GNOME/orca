@@ -48,6 +48,7 @@ class Utilities(script_utilities.Utilities):
 
         self._currentAttrs = {}
         self._caretContexts = {}
+        self._priorContexts = {}
         self._contextPathsRolesAndNames = {}
         self._paths = {}
         self._inDocumentContent = {}
@@ -151,6 +152,7 @@ class Utilities(script_utilities.Utilities):
         self._paths = {}
         self._contextPathsRolesAndNames = {}
         self._cleanupContexts()
+        self._priorContexts = {}
 
     def clearContentCache(self):
         self._currentObjectContents = None
@@ -1663,6 +1665,12 @@ class Utilities(script_utilities.Utilities):
         self._treatAsDiv[hash(obj)] = rv
         return rv
 
+    def isBlockquote(self, obj):
+        if super().isBlockquote(obj):
+            return True
+
+        return self._getTag(obj) == 'blockquote'
+
     def speakMathSymbolNames(self, obj=None):
         obj = obj or orca_state.locusOfFocus
         return self.isMath(obj)
@@ -3051,6 +3059,7 @@ class Utilities(script_utilities.Utilities):
 
         parent = documentFrame.parent
         self._caretContexts.pop(hash(parent), None)
+        self._priorContexts.pop(hash(parent), None)
 
     def findContextReplicant(self, documentFrame=None, matchRole=True, matchName=True):
         path, oldRole, oldName = self._getCaretContextPathRoleAndName(documentFrame)
@@ -3068,6 +3077,17 @@ class Utilities(script_utilities.Utilities):
         msg = "WEB: Context replicant is %s, %i" % (obj, offset)
         debug.println(debug.LEVEL_INFO, msg, True)
         return obj, offset
+
+    def getPriorContext(self, documentFrame=None):
+        if not documentFrame or self.isZombie(documentFrame):
+            documentFrame = self.documentFrame()
+
+        if documentFrame:
+            context = self._priorContexts.get(hash(documentFrame.parent))
+            if context:
+                return context
+
+        return None, -1
 
     def _getPath(self, obj):
         rv = self._paths.get(hash(obj))
@@ -3090,6 +3110,8 @@ class Utilities(script_utilities.Utilities):
             return
 
         parent = documentFrame.parent
+        oldObj, oldOffset = self._caretContexts.get(hash(parent), (obj, offset))
+        self._priorContexts[hash(parent)] = oldObj, oldOffset
         self._caretContexts[hash(parent)] = obj, offset
 
         path = self._getPath(obj)

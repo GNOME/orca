@@ -24,6 +24,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  'Solution'",
      "     VISIBLE:  'Solution', cursor=1",
+     "SPEECH OUTPUT: 'Solution panel'",
      "SPEECH OUTPUT: 'Solution'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -32,7 +33,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  'Solution  Here is a step-by-step tutorial:'",
      "     VISIBLE:  'Solution  Here is a step-by-step', cursor=11",
-     "SPEECH OUTPUT: 'Here is a step-by-step tutorial: panel.'"]))
+     "SPEECH OUTPUT: 'Here is a step-by-step tutorial:.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -40,6 +41,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
     ["BRAILLE LINE:  '• Do this thing'",
      "     VISIBLE:  '• Do this thing', cursor=1",
+     "SPEECH OUTPUT: 'List with 2 items'",
      "SPEECH OUTPUT: '• Do this thing.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -64,7 +66,8 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Up",
     ["BRAILLE LINE:  'Solution  Here is a step-by-step tutorial:'",
      "     VISIBLE:  'Solution  Here is a step-by-step', cursor=11",
-     "SPEECH OUTPUT: 'Here is a step-by-step tutorial: panel.'"]))
+     "SPEECH OUTPUT: 'leaving list.'",
+     "SPEECH OUTPUT: 'Here is a step-by-step tutorial:.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

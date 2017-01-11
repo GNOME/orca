@@ -16,6 +16,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. KP_Add to do a SayAll",
     ["SPEECH OUTPUT: 'Below is a table, with some sample table data'",
      "SPEECH OUTPUT: 'this is a caption for this table'",
+     "SPEECH OUTPUT: 'table with 4 rows 3 columns'",
+     "SPEECH OUTPUT: 'this is a caption for this table'",
      "SPEECH OUTPUT: 'caption'",
      "SPEECH OUTPUT: 'col1'",
      "SPEECH OUTPUT: 'column header'",
@@ -32,6 +34,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '7'",
      "SPEECH OUTPUT: '8'",
      "SPEECH OUTPUT: '9'",
+     "SPEECH OUTPUT: 'leaving table.'",
      "SPEECH OUTPUT: 'hope the table looks pretty'"]))
 
 sequence.append(utils.AssertionSummaryAction())

@@ -15,6 +15,7 @@ sequence.append(KeyComboAction("KP_Add"))
 sequence.append(utils.AssertPresentationAction(
     "1. KP_Add to do a SayAll",
     ["SPEECH OUTPUT: 'Here are some of our local test files:'",
+     "SPEECH OUTPUT: 'List with 16 items'",
      "SPEECH OUTPUT: '•'",
      "SPEECH OUTPUT: 'anchors.html'",
      "SPEECH OUTPUT: 'link'",

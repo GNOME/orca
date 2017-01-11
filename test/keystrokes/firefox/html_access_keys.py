@@ -35,7 +35,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'accesskeys', cursor=1",
      "BRAILLE LINE:  'Form! h1'",
      "     VISIBLE:  'Form! h1', cursor=1",
-     "SPEECH OUTPUT: 'accesskeys visited link.'",
+     "SPEECH OUTPUT: 'accesskeys link.'",
      "SPEECH OUTPUT: 'Form! heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())

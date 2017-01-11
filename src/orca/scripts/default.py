@@ -3451,10 +3451,14 @@ class Script(script.Script):
         else:
             mode = pyatspi.TEXT_BOUNDARY_LINE_START
 
+        priorObj = obj
+
         # Get the next line of text to read
         #
         done = False
         while not done:
+            speech.speak(self.speechGenerator.generateContext(obj, priorObj=priorObj))
+
             lastEndOffset = -1
             while offset < length:
                 [lineString, startOffset, endOffset] = text.getTextAtOffset(
@@ -3502,8 +3506,8 @@ class Script(script.Script):
             moreLines = False
             relations = obj.getRelationSet()
             for relation in relations:
-                if relation.getRelationType()  \
-                       == pyatspi.RELATION_FLOWS_TO:
+                if relation.getRelationType() == pyatspi.RELATION_FLOWS_TO:
+                    priorObj = obj
                     obj = relation.getTarget(0)
 
                     try:

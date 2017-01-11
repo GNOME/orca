@@ -1324,6 +1324,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             prefs["enableMnemonicSpeaking"])
         self.get_widget("speakMisspelledIndicatorCheckButton").set_active(
             prefs.get("speakMisspelledIndicator", settings.speakMisspelledIndicator))
+        self.get_widget("speakContextBlockquoteCheckButton").set_active(
+            prefs.get("speakContextBlockquote", settings.speakContextList))
+        self.get_widget("speakContextListCheckButton").set_active(
+            prefs.get("speakContextList", settings.speakContextList))
+        self.get_widget("speakContextTableCheckButton").set_active(
+            prefs.get("speakContextTable", settings.speakContextTable))
 
         enable = prefs.get("messagesAreDetailed", settings.messagesAreDetailed)
         self.get_widget("messagesAreDetailedCheckButton").set_active(enable)
@@ -1606,6 +1612,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             prefs.get("rewindAndFastForwardInSayAll", settings.rewindAndFastForwardInSayAll))
         self.get_widget("structNavInSayAllCheckButton").set_active(
             prefs.get("structNavInSayAll", settings.structNavInSayAll))
+        self.get_widget("sayAllContextBlockquoteCheckButton").set_active(
+            prefs.get("sayAllContextBlockquote", settings.sayAllContextBlockquote))
+        self.get_widget("sayAllContextListCheckButton").set_active(
+            prefs.get("sayAllListBlockquote", settings.sayAllContextList))
+        self.get_widget("sayAllContextTableCheckButton").set_active(
+            prefs.get("sayAllTableBlockquote", settings.sayAllContextTable))
 
         # Orca User Profiles
         #

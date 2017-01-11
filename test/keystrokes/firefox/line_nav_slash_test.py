@@ -65,6 +65,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
     ["BRAILLE LINE:  'Nickname $l Password $l Log in push button'",
      "     VISIBLE:  'Nickname $l Password $l Log in p', cursor=1",
+     "SPEECH OUTPUT: 'Log in panel'",
      "SPEECH OUTPUT: 'Nickname'",
      "SPEECH OUTPUT: 'entry.'",
      "SPEECH OUTPUT: 'Password'",
@@ -111,6 +112,7 @@ sequence.append(utils.AssertPresentationAction(
     "11. Line Up",
     ["BRAILLE LINE:  '& y Some polls radio button'",
      "     VISIBLE:  '& y Some polls radio button', cursor=1",
+     "SPEECH OUTPUT: 'Poll panel'",
      "SPEECH OUTPUT: 'Some polls.'",
      "SPEECH OUTPUT: 'not selected radio button'"]))
 
@@ -136,6 +138,7 @@ sequence.append(utils.AssertPresentationAction(
     "14. Line Up",
     ["BRAILLE LINE:  'Nickname $l Password $l Log in push button'",
      "     VISIBLE:  'Nickname $l Password $l Log in p', cursor=1",
+     "SPEECH OUTPUT: 'Log in panel'",
      "SPEECH OUTPUT: 'Nickname'",
      "SPEECH OUTPUT: 'entry.'",
      "SPEECH OUTPUT: 'Password'",

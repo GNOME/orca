@@ -130,7 +130,13 @@ userCustomizableSettings = [
     "caretNavTriggersFocusMode",
     "layoutMode",
     "rewindAndFastForwardInSayAll",
-    "structNavInSayAll"
+    "structNavInSayAll",
+    "speakContextBlockquote",
+    "speakContextList",
+    "speakContextTable",
+    "sayAllContextBlockquote",
+    "sayAllContextList",
+    "sayAllContextTable"
 ]
 
 GENERAL_KEYBOARD_LAYOUT_DESKTOP = 1
@@ -231,6 +237,12 @@ verbalizePunctuationStyle    = PUNCTUATION_STYLE_MOST
 speechVerbosityLevel         = VERBOSITY_LEVEL_VERBOSE
 messagesAreDetailed          = True
 enablePauseBreaks            = True
+speakContextBlockquote       = True
+speakContextList             = True
+speakContextTable            = True
+sayAllContextBlockquote      = True
+sayAllContextList            = True
+sayAllContextTable           = True
 
 # Braille
 tty = 7

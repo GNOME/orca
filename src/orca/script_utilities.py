@@ -884,6 +884,22 @@ class Utilities:
 
         return int((val / (maxval - minval)) * 100)
 
+    def isBlockquote(self, obj):
+        return obj and obj.getRole() == pyatspi.ROLE_BLOCK_QUOTE
+
+    def isDocumentList(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_LIST):
+            return False
+
+        try:
+            document = pyatspi.findAncestor(obj, self.isDocument)
+        except:
+            msg = "ERROR: Exception finding ancestor of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+
+        return document is not None
+
     def isDocument(self, obj):
         documentRoles = [pyatspi.ROLE_DOCUMENT_EMAIL,
                          pyatspi.ROLE_DOCUMENT_FRAME,
@@ -1035,6 +1051,9 @@ class Utilities:
         return row != lastRow
 
     def shouldReadFullRow(self, obj):
+        if self._script.inSayAll():
+            return False
+
         table = self.getTable(obj)
         if not table:
             return False
@@ -1179,7 +1198,7 @@ class Utilities:
             elif parentRole == pyatspi.ROLE_TABLE:
                 layoutOnly = self.isLayoutOnly(obj.parent)
         elif role == pyatspi.ROLE_SECTION:
-            layoutOnly = True
+            layoutOnly = not self.isBlockquote(obj)
         elif role == pyatspi.ROLE_FILLER:
             layoutOnly = True
         elif role == pyatspi.ROLE_SCROLL_PANE:

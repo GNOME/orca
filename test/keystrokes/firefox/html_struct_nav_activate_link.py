@@ -32,11 +32,10 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Page has 16 unvisited links.', cursor=0",
      "BRAILLE LINE:  'Here are some of our local test files:'",
      "     VISIBLE:  'Here are some of our local test ', cursor=1",
-     "BRAILLE LINE:  'Here are some of our local test files:'",
-     "     VISIBLE:  'Here are some of our local test ', cursor=1",
     "SPEECH OUTPUT: 'Finished loading Links to test files.' voice=system",
     "SPEECH OUTPUT: 'Page has 16 unvisited links.' voice=system",
     "SPEECH OUTPUT: 'Here are some of our local test files:'",
+    "SPEECH OUTPUT: 'List with 16 items'",
     "SPEECH OUTPUT: '•'",
     "SPEECH OUTPUT: 'anchors.html'",
     "SPEECH OUTPUT: 'link'",
@@ -84,8 +83,7 @@ sequence.append(utils.AssertPresentationAction(
     "SPEECH OUTPUT: 'link'",
     "SPEECH OUTPUT: '•'",
     "SPEECH OUTPUT: 'textattributes.html'",
-    "SPEECH OUTPUT: 'link'",
-    "SPEECH OUTPUT: 'Here are some of our local test files:'"]))
+    "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -1034,6 +1034,18 @@ LEARN_MODE_START_SPEECH = \
       "press F3. " \
       "To exit learn mode, press the escape key.")
 
+# Translators: This message is presented when a user is navigating within a
+# blockquote and then navigates out of it.
+LEAVING_BLOCKQUOTE = _("leaving blockquote.")
+
+# Translators: This message is presented when a user is navigating within a
+# list and then navigates out of it.
+LEAVING_LIST = _("leaving list.")
+
+# Translators: This message is presented when a user is navigating within a
+# table and then navigates out of it.
+LEAVING_TABLE = _("leaving table.")
+
 # Translators: when the user selects (highlights) or unselects text in a
 # document, Orca will speak information about what they have selected or
 # unselected. This message is presented when the user selects from the
@@ -1835,10 +1847,6 @@ TABLE_CELL_COORDINATES = _("Row %(row)d, column %(column)d.")
 # Translators: This message is presented to indicate the user is in the last
 # cell of a table in a document.
 TABLE_END = _("End of table")
-
-# Translators: This message is presented when a user is navigating within a
-# table and then navigates out of it.
-TABLE_LEAVING = _("leaving table.")
 
 # Translators: When users are navigating a table, they sometimes want the entire
 # row of a table read; other times they want just the current cell presented.

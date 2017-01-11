@@ -156,6 +156,9 @@ class Generator:
     def generateContents(self, contents, **args):
         return []
 
+    def generateContext(self, obj, **args):
+        return []
+
     def generate(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the complete presentatin for the
@@ -1167,6 +1170,8 @@ class Generator:
                 return 'ROLE_MATH_TABLE_ROW'
         if self._script.utilities.isStatic(obj):
             return 'ROLE_STATIC'
+        if self._script.utilities.isBlockquote(obj):
+            return pyatspi.ROLE_BLOCK_QUOTE
         if self._script.utilities.isFocusableLabel(obj):
             return pyatspi.ROLE_LIST_ITEM
 

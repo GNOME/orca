@@ -163,6 +163,7 @@ sequence.append(utils.AssertPresentationAction(
      "There's no other buyer likely to turn up.'",
      "     VISIBLE:  'I am a tranquilizer. ",
      "I am effec', cursor=1",
+     "SPEECH OUTPUT: 'block quote.'",
      "SPEECH OUTPUT: 'I am a tranquilizer. ",
      "I am effective at home, ",
      "I work well at the office, ",

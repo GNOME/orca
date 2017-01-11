@@ -60,6 +60,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
     ["BRAILLE LINE:  'Here are some slides'",
      "     VISIBLE:  'Here are some slides', cursor=1",
+     "SPEECH OUTPUT: 'Presentation slide set'",
      "SPEECH OUTPUT: 'Here are some slides'"]))
 
 sequence.append(utils.AssertionSummaryAction())
