@@ -11,15 +11,15 @@
 # 
 # Miguel Rodríguez Núñez <bokerones.fritos@gmail.com>, 2015.
 # 
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015, 2016.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2016-10-26 14:30+0000\n"
-"PO-Revision-Date: 2016-11-10 16:36+0100\n"
+"POT-Creation-Date: 2017-01-05 09:09+0000\n"
+"PO-Revision-Date: 2017-01-11 10:08+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -8004,9 +8004,12 @@ msgstr "No se pudo activar el gestor de configuración. Saliendo."
 #. Translators: This message is presented to the user when he/she tries to launch
 #. Orca, but Orca is already running.
 #: ../src/orca/messages.py:213
+#| msgid ""
+#| "Another screen reader process is already running for this session.\n"
+#| "Run \"orca --replace\" to replace that process with a new one."
 msgid ""
 "Another screen reader process is already running for this session.\n"
-"Run \"orca --replace\" to replace that process with a new one."
+"Run “orca --replace” to replace that process with a new one."
 msgstr ""
 "Ya hay otro proceso del lector de pantalla en ejecución para esta sesión.\n"
 "Ejecute «orca --replace» para reemplazar el proceso existente con uno nuevo."
@@ -9071,10 +9074,16 @@ msgstr "Modo de aprendizaje.  Pulse escape para salir."
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
 #: ../src/orca/messages.py:1030
+#| msgid ""
+#| "Entering learn mode.  Press any key to hear its function.  To view the "
+#| "screen reader's documentation, press F1. To get a list of the screen "
+#| "reader's default shortcuts, press F2. To get a list of the screen "
+#| "reader's shortcuts for the current application, press F3. To exit learn "
+#| "mode, press the escape key."
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the "
-"screen reader's documentation, press F1. To get a list of the screen "
-"reader's default shortcuts, press F2. To get a list of the screen reader's "
+"screen reader’s documentation, press F1. To get a list of the screen "
+"reader’s default shortcuts, press F2. To get a list of the screen reader’s "
 "shortcuts for the current application, press F3. To exit learn mode, press "
 "the escape key."
 msgstr ""
@@ -9478,7 +9487,6 @@ msgstr "Objeto bajo el ratón («mouse over») no encontrado."
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled off via command.
 #: ../src/orca/messages.py:1339
-#| msgid "Mouse enhancements disabled."
 msgid "Mouse review disabled."
 msgstr "Revisión con el ratón desactivada."
 
@@ -9486,7 +9494,6 @@ msgstr "Revisión con el ratón desactivada."
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled on via command.
 #: ../src/orca/messages.py:1344
-#| msgid "Mouse enhancements enabled."
 msgid "Mouse review enabled."
 msgstr "Revisión con el ratón activada."
 
@@ -10933,7 +10940,6 @@ msgstr "enlace visitado"
 #. A menu button is button widget that causes a menu to appear when the user
 #. activates the button.
 #: ../src/orca/object_properties.py:209
-#| msgid "spin button"
 msgid "menu button"
 msgstr "botón del menú"
 
@@ -11077,7 +11083,6 @@ msgstr "selección-múltiple"
 #. as a form field, has an error. The following string is spoken when all we
 #. know is that an error has occurred, but not the type of error.
 #: ../src/orca/object_properties.py:304
-#| msgid "invalid"
 msgctxt "error"
 msgid "invalid entry"
 msgstr "entrada no válida"
@@ -11088,7 +11093,6 @@ msgstr "entrada no válida"
 #. We prefer a smaller string than in speech because braille displays have a
 #. limited size.
 #: ../src/orca/object_properties.py:311
-#| msgid "invalid"
 msgctxt "error"
 msgid "invalid"
 msgstr "no válido"
@@ -11097,8 +11101,6 @@ msgstr "no válido"
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to spelling.
 #: ../src/orca/object_properties.py:316
-#| msgctxt "textattr"
-#| msgid "spelling"
 msgctxt "error"
 msgid "invalid spelling"
 msgstr "falta ortográfica"
@@ -11108,8 +11110,6 @@ msgstr "falta ortográfica"
 #. when the error is related to spelling. We prefer a smaller string than in
 #. speech because braille displays have a limited size.
 #: ../src/orca/object_properties.py:322
-#| msgctxt "textattr"
-#| msgid "spelling"
 msgctxt "error"
 msgid "spelling"
 msgstr "ortografía"
@@ -11118,7 +11118,6 @@ msgstr "ortografía"
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to grammar.
 #: ../src/orca/object_properties.py:327
-#| msgid "invalid"
 msgctxt "error"
 msgid "invalid grammar"
 msgstr "gramática no válida"
