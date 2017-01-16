@@ -286,6 +286,9 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
+        if args.get("leaving"):
+            return[]
+
         if self._script.utilities.isTextDocumentTable(obj):
             role = args.get('role', obj.getRole())
             enabled, disabled = self._getEnabledAndDisabledContextRoles()
