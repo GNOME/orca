@@ -900,6 +900,19 @@ class Utilities:
 
         return document is not None
 
+    def isDocumentPanel(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_PANEL):
+            return False
+
+        try:
+            document = pyatspi.findAncestor(obj, self.isDocument)
+        except:
+            msg = "ERROR: Exception finding ancestor of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg)
+            return False
+
+        return document is not None
+
     def isDocument(self, obj):
         documentRoles = [pyatspi.ROLE_DOCUMENT_EMAIL,
                          pyatspi.ROLE_DOCUMENT_FRAME,

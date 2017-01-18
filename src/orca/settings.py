@@ -132,9 +132,11 @@ userCustomizableSettings = [
     "rewindAndFastForwardInSayAll",
     "structNavInSayAll",
     "speakContextBlockquote",
+    "speakContextPanel",
     "speakContextList",
     "speakContextTable",
     "sayAllContextBlockquote",
+    "sayAllContextPanel",
     "sayAllContextList",
     "sayAllContextTable"
 ]
@@ -238,9 +240,11 @@ speechVerbosityLevel         = VERBOSITY_LEVEL_VERBOSE
 messagesAreDetailed          = True
 enablePauseBreaks            = True
 speakContextBlockquote       = True
+speakContextPanel            = True
 speakContextList             = True
 speakContextTable            = True
 sayAllContextBlockquote      = True
+sayAllContextPanel           = True
 sayAllContextList            = True
 sayAllContextTable           = True
 

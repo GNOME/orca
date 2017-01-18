@@ -136,6 +136,19 @@
         Default value: not checked
       </p>
     </section>
+    <section id="speak_misspelled_word_indicator">
+      <title>Speak misspelled-word indicator</title>
+      <p>
+        The misspelled-word indicator is the red squiggly line that appears
+        underneath misspelled words in editable text fields. If <gui>Speak
+        misspelled-word indicator</gui> is checked, when you navigate into
+        a word with this indicator, or type a word incorrectly causing this
+        indicator to appear, <app>Orca</app> will speak "misspelled."
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
     <section id="mnemonics">
      <title>Speak object mnemonics</title>
       <p>
@@ -204,7 +217,7 @@
         blockquote. Note that this setting is independent of whether or not
         this announcement is made during Say All. See
         <link xref="preferences_general#say_all_announce_context">Announce
-        Blockquotes, Lists, and Tables in Say All</link> for more information.
+        Contextual Information in Say All</link> for more information.
       </p>
       <p>
         Default value: checked
@@ -218,7 +231,21 @@
         list. Note that this setting is independent of whether or not
         this announcement is made during Say All. See
         <link xref="preferences_general#say_all_announce_context">Announce
-        Blockquotes, Lists, and Tables in Say All</link> for more information.
+        Contextual Information in Say All</link> for more information.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
+    <section id="announce_panels_during_navigation">
+      <title>Announce panels during navigation</title>
+      <p>
+        If <gui>Announce panels during navigation</gui> is checked,
+        <app>Orca</app> will tell you when you navigate into or out of a
+        panel. Note that this setting is independent of whether or not
+        this announcement is made during Say All. See
+        <link xref="preferences_general#say_all_announce_context">Announce
+        Contextual Information in Say All</link> for more information.
       </p>
       <p>
         Default value: checked
@@ -232,7 +259,7 @@
         table. Note that this setting is independent of whether or not
         this announcement is made during Say All. See
         <link xref="preferences_general#say_all_announce_context">Announce
-        Blockquotes, Lists, and Tables in Say All</link> for more information.
+        Contextual Information in Say All</link> for more information.
       </p>
       <p>
         Default value: checked
@@ -272,19 +299,6 @@
       </p>
       <p>
         Default value: not checked
-      </p>
-    </section>
-    <section id="speak_misspelled_word_indicator">
-      <title>Speak misspelled-word indicator</title>
-      <p>
-        The misspelled-word indicator is the red squiggly line that appears
-        underneath misspelled words in editable text fields. If <gui>Speak
-        misspelled-word indicator</gui> is checked, when you navigate into
-        a word with this indicator, or type a word incorrectly causing this
-        indicator to appear, <app>Orca</app> will speak "misspelled."
-      </p>
-      <p>
-        Default value: checked
       </p>
     </section>
   </section>

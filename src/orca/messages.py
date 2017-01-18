@@ -1043,6 +1043,11 @@ LEAVING_BLOCKQUOTE = _("leaving blockquote.")
 LEAVING_LIST = _("leaving list.")
 
 # Translators: This message is presented when a user is navigating within a
+# panel and then navigates out of it. A panel is a generic container of
+# objects, such as a group of related form fields.
+LEAVING_PANEL = _("leaving panel.")
+
+# Translators: This message is presented when a user is navigating within a
 # table and then navigates out of it.
 LEAVING_TABLE = _("leaving table.")
 

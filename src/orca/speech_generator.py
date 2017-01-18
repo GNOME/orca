@@ -1509,6 +1509,7 @@ class SpeechGenerator(generator.Generator):
     def _getEnabledAndDisabledContextRoles(self):
         allRoles = [pyatspi.ROLE_BLOCK_QUOTE,
                     pyatspi.ROLE_LIST,
+                    pyatspi.ROLE_PANEL,
                     pyatspi.ROLE_TABLE]
 
         enabled, disabled = [], []
@@ -1517,6 +1518,8 @@ class SpeechGenerator(generator.Generator):
                 enabled.append(pyatspi.ROLE_BLOCK_QUOTE)
             if _settingsManager.getSetting('sayAllContextList'):
                 enabled.append(pyatspi.ROLE_LIST)
+            if _settingsManager.getSetting('sayAllContextPanel'):
+                enabled.append(pyatspi.ROLE_PANEL)
             if _settingsManager.getSetting('sayAllContextTable'):
                 enabled.append(pyatspi.ROLE_TABLE)
         else:
@@ -1524,6 +1527,8 @@ class SpeechGenerator(generator.Generator):
                 enabled.append(pyatspi.ROLE_BLOCK_QUOTE)
             if _settingsManager.getSetting('speakContextList'):
                 enabled.append(pyatspi.ROLE_LIST)
+            if _settingsManager.getSetting('speakContextPanel'):
+                enabled.append(pyatspi.ROLE_PANEL)
             if _settingsManager.getSetting('speakContextTable'):
                 enabled.append(pyatspi.ROLE_TABLE)
 
@@ -1544,6 +1549,11 @@ class SpeechGenerator(generator.Generator):
             result.append(messages.LEAVING_BLOCKQUOTE)
         elif role == pyatspi.ROLE_LIST and self._script.utilities.isDocumentList(obj):
             result.append(messages.LEAVING_LIST)
+        elif role == pyatspi.ROLE_PANEL:
+            if self._script.utilities.isDocumentPanel(obj):
+                result.append(messages.LEAVING_PANEL)
+            else:
+                result = ['']
         elif role == pyatspi.ROLE_TABLE and self._script.utilities.isTextDocumentTable(obj):
             result.append(messages.LEAVING_TABLE)
         if result:
@@ -1649,6 +1659,7 @@ class SpeechGenerator(generator.Generator):
         args['leaving'] = True
         args['includeOnly'] = [pyatspi.ROLE_BLOCK_QUOTE,
                                pyatspi.ROLE_LIST,
+                               pyatspi.ROLE_PANEL,
                                pyatspi.ROLE_SECTION,
                                pyatspi.ROLE_TABLE]
 

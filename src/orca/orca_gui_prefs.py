@@ -1328,6 +1328,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             prefs.get("speakContextBlockquote", settings.speakContextList))
         self.get_widget("speakContextListCheckButton").set_active(
             prefs.get("speakContextList", settings.speakContextList))
+        self.get_widget("speakContextPanelCheckButton").set_active(
+            prefs.get("speakContextPanel", settings.speakContextPanel))
         self.get_widget("speakContextTableCheckButton").set_active(
             prefs.get("speakContextTable", settings.speakContextTable))
 
@@ -1615,9 +1617,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.get_widget("sayAllContextBlockquoteCheckButton").set_active(
             prefs.get("sayAllContextBlockquote", settings.sayAllContextBlockquote))
         self.get_widget("sayAllContextListCheckButton").set_active(
-            prefs.get("sayAllListBlockquote", settings.sayAllContextList))
+            prefs.get("sayAllContextList", settings.sayAllContextList))
+        self.get_widget("sayAllContextPanelCheckButton").set_active(
+            prefs.get("sayAllContextPanel", settings.sayAllContextPanel))
         self.get_widget("sayAllContextTableCheckButton").set_active(
-            prefs.get("sayAllTableBlockquote", settings.sayAllContextTable))
+            prefs.get("sayAllContextTable", settings.sayAllContextTable))
 
         # Orca User Profiles
         #
