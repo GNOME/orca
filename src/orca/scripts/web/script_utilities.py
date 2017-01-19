@@ -2075,6 +2075,8 @@ class Utilities(script_utilities.Utilities):
 
         if self.isMath(obj):
             rv = False
+        elif self.isLandmark(obj):
+            rv = False
         else:
             rv = super().isLayoutOnly(obj)
 

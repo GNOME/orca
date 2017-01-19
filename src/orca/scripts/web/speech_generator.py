@@ -66,7 +66,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                                pyatspi.ROLE_DOCUMENT_WEB,
                                pyatspi.ROLE_EMBEDDED,
                                pyatspi.ROLE_INTERNAL_FRAME,
-                               pyatspi.ROLE_FORM,
                                pyatspi.ROLE_MATH,
                                pyatspi.ROLE_MENU_BAR,
                                pyatspi.ROLE_TOOL_BAR]
@@ -261,7 +260,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if not force:
             doNotSpeak = [pyatspi.ROLE_FOOTER,
-                          pyatspi.ROLE_FORM,
                           pyatspi.ROLE_LABEL,
                           pyatspi.ROLE_MENU_ITEM,
                           pyatspi.ROLE_PARAGRAPH,

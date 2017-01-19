@@ -133,10 +133,14 @@ userCustomizableSettings = [
     "structNavInSayAll",
     "speakContextBlockquote",
     "speakContextPanel",
+    "speakContextLandmark",
+    "speakContextNonLandmarkForm",
     "speakContextList",
     "speakContextTable",
     "sayAllContextBlockquote",
     "sayAllContextPanel",
+    "sayAllContextLandmark",
+    "sayAllContextNonLandmarkForm",
     "sayAllContextList",
     "sayAllContextTable"
 ]
@@ -241,10 +245,14 @@ messagesAreDetailed          = True
 enablePauseBreaks            = True
 speakContextBlockquote       = True
 speakContextPanel            = True
+speakContextNonLandmarkForm  = True
+speakContextLandmark         = True
 speakContextList             = True
 speakContextTable            = True
 sayAllContextBlockquote      = True
 sayAllContextPanel           = True
+sayAllContextNonLandmarkForm = True
+sayAllContextLandmark        = True
 sayAllContextList            = True
 sayAllContextTable           = True
 

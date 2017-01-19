@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style type="text/css">
+	div {
+		padding: 2%;
+		border: solid 2px #000000;
+		margin: 10px;
+		white-space: inherit;
+	}
+	form {
+		padding: 2%;
+		border: dashed 2px #000000;
+		margin: 10px;
+		white-space: inherit;
+	}
+	#banner {height:100px;background:#ff8c00 }
+	#navigation {float:left;
+		width:15%;
+		height:600px;
+		background:#7fff00}
+	#main {float:left;
+		width:50%;
+		height:600px;
+		background:#f0e68c}
+	#complementary {float:left;width:15%;height:600px;background:#4682b4}
+	#contentinfo {clear:both;height:100px;background:#ffb6c1}
+	#search {background:#ffff00;}
+	#form {background:#fafad2;}
+	#region {background: #cccccc;}
+</style>
+
+</head>
+
+<body>
+<p>Start of test</p>
+<div id="banner" role="banner">
+  <p>Line one</p>
+  <p>Line two</p>
+  <button>Click me</button>
+</div>
+<div id="navigation" role="navigation">
+  <p>Line one</p>
+  <p>Line two</p>
+  <button>Click me</button>
+</div>
+<div id="main" role="main">
+  <p>Line one</p>
+  <p>Line two</p>
+  <button>Click me</button>
+  <div id="region" role="region" aria-label="My nifty foo">
+    <p>Line one</p>
+    <p>Line two</p>
+    <button>Click me</button>
+   </div>
+    <p>Line four</p>
+    <p>Line five</p>
+</div>
+<div id="complementary" role="complementary">
+  <p>Line one</p>
+  <p>Line two</p>
+  <button>Click me</button>
+  <div role="form" id="form">
+    <p>Line one</p>
+    <p>Line two</p>
+    <button>Click me</button>
+  </div>
+  <p>Line four</p>
+  <form>
+    <p>Line one</p>
+    <p>Line two</p>
+    <button>Click me</button>
+  </form>
+  <p>Line five</p>
+  <div id="search" role="search">
+    <p>Line one</p>
+    <p>Line two</p>
+    <button>Click me</button>
+  </div>
+</div>
+<div id="contentinfo" role="contentinfo">
+  <p>Line one</p>
+  <p>Line two</p>
+  <button>Click me</button>
+</div>
+<p>End of test</p>
+</body>
+</html>

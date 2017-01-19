@@ -193,8 +193,8 @@ formatting = {
             'unfocused': '(displayedText or name) + roleName',
         },
         pyatspi.ROLE_FORM: {
-            'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
-            'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection + ' + MNEMONIC,
+            'focused': 'leaving or (labelAndName + roleName)',
+            'unfocused': '((substring and currentLineText) or labelAndName) + roleName + pause + unrelatedLabels'
             },
         pyatspi.ROLE_FRAME: {
             'focused': 'labelOrName + roleName',
@@ -225,6 +225,10 @@ formatting = {
             'focused': 'labelAndName + allTextSelection + roleName',
             'unfocused': 'labelAndName + allTextSelection + roleName',
             'basicWhereAmI': 'labelAndName + allTextSelection + roleName'
+            },
+        pyatspi.ROLE_LANDMARK: {
+            'focused': 'leaving or (labelAndName + roleName)',
+            'unfocused': '((substring and currentLineText) or labelAndName) + roleName + pause + unrelatedLabels'
             },
         pyatspi.ROLE_LAYERED_PANE: {
             'focused': 'labelAndName + roleName + availability + noShowingChildren',

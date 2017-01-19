@@ -1508,6 +1508,8 @@ class SpeechGenerator(generator.Generator):
 
     def _getEnabledAndDisabledContextRoles(self):
         allRoles = [pyatspi.ROLE_BLOCK_QUOTE,
+                    pyatspi.ROLE_FORM,
+                    pyatspi.ROLE_LANDMARK,
                     pyatspi.ROLE_LIST,
                     pyatspi.ROLE_PANEL,
                     pyatspi.ROLE_TABLE]
@@ -1516,19 +1518,27 @@ class SpeechGenerator(generator.Generator):
         if self._script.inSayAll():
             if _settingsManager.getSetting('sayAllContextBlockquote'):
                 enabled.append(pyatspi.ROLE_BLOCK_QUOTE)
+            if _settingsManager.getSetting('sayAllContextLandmark'):
+                enabled.append(pyatspi.ROLE_LANDMARK)
             if _settingsManager.getSetting('sayAllContextList'):
                 enabled.append(pyatspi.ROLE_LIST)
             if _settingsManager.getSetting('sayAllContextPanel'):
                 enabled.append(pyatspi.ROLE_PANEL)
+            if _settingsManager.getSetting('sayAllContextNonLandmarkForm'):
+                enabled.append(pyatspi.ROLE_FORM)
             if _settingsManager.getSetting('sayAllContextTable'):
                 enabled.append(pyatspi.ROLE_TABLE)
         else:
             if _settingsManager.getSetting('speakContextBlockquote'):
                 enabled.append(pyatspi.ROLE_BLOCK_QUOTE)
+            if _settingsManager.getSetting('speakContextLandmark'):
+                enabled.append(pyatspi.ROLE_LANDMARK)
             if _settingsManager.getSetting('speakContextList'):
                 enabled.append(pyatspi.ROLE_LIST)
             if _settingsManager.getSetting('speakContextPanel'):
                 enabled.append(pyatspi.ROLE_PANEL)
+            if _settingsManager.getSetting('speakContextNonLandmarkForm'):
+                enabled.append(pyatspi.ROLE_FORM)
             if _settingsManager.getSetting('speakContextTable'):
                 enabled.append(pyatspi.ROLE_TABLE)
 
@@ -1539,7 +1549,7 @@ class SpeechGenerator(generator.Generator):
         if not args.get('leaving'):
             return []
 
-        role = args.get('role', obj.getRole)
+        role = args.get('role', obj.getRole())
         enabled, disabled = self._getEnabledAndDisabledContextRoles()
         if not role in enabled:
             return []
@@ -1549,13 +1559,31 @@ class SpeechGenerator(generator.Generator):
             result.append(messages.LEAVING_BLOCKQUOTE)
         elif role == pyatspi.ROLE_LIST and self._script.utilities.isDocumentList(obj):
             result.append(messages.LEAVING_LIST)
-        elif role == pyatspi.ROLE_PANEL:
-            if self._script.utilities.isDocumentPanel(obj):
-                result.append(messages.LEAVING_PANEL)
-            else:
-                result = ['']
+        elif role == pyatspi.ROLE_PANEL and self._script.utilities.isDocumentPanel(obj):
+            result.append(messages.LEAVING_PANEL)
         elif role == pyatspi.ROLE_TABLE and self._script.utilities.isTextDocumentTable(obj):
             result.append(messages.LEAVING_TABLE)
+        elif self._script.utilities.isLandmark(obj):
+            if self._script.utilities.isLandmarkBanner(obj):
+                result.append(messages.LEAVING_LANDMARK_BANNER)
+            if self._script.utilities.isLandmarkComplementary(obj):
+                result.append(messages.LEAVING_LANDMARK_COMPLEMENTARY)
+            if self._script.utilities.isLandmarkContentInfo(obj):
+                result.append(messages.LEAVING_LANDMARK_CONTENTINFO)
+            if self._script.utilities.isLandmarkMain(obj):
+                result.append(messages.LEAVING_LANDMARK_MAIN)
+            if self._script.utilities.isLandmarkNavigation(obj):
+                result.append(messages.LEAVING_LANDMARK_NAVIGATION)
+            if self._script.utilities.isLandmarkRegion(obj):
+                result.append(messages.LEAVING_LANDMARK_REGION)
+            if self._script.utilities.isLandmarkSearch(obj):
+                result.append(messages.LEAVING_LANDMARK_SEARCH)
+            if self._script.utilities.isLandmarkForm(obj):
+                result.append(messages.LEAVING_FORM)
+        elif role == pyatspi.ROLE_FORM:
+            result.append(messages.LEAVING_FORM)
+        else:
+            result = ['']
         if result:
             result.extend(self.voice(SYSTEM))
 
@@ -1634,7 +1662,8 @@ class SpeechGenerator(generator.Generator):
                     self._restoreRole(oldRole, args)
                 parent = parent.parent
 
-        result.reverse()
+        if not leaving:
+            result.reverse()
         return result
 
     def _generateOldAncestors(self, obj, **args):
@@ -1658,6 +1687,8 @@ class SpeechGenerator(generator.Generator):
 
         args['leaving'] = True
         args['includeOnly'] = [pyatspi.ROLE_BLOCK_QUOTE,
+                               pyatspi.ROLE_FORM,
+                               pyatspi.ROLE_LANDMARK,
                                pyatspi.ROLE_LIST,
                                pyatspi.ROLE_PANEL,
                                pyatspi.ROLE_SECTION,

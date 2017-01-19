@@ -1326,6 +1326,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             prefs.get("speakMisspelledIndicator", settings.speakMisspelledIndicator))
         self.get_widget("speakContextBlockquoteCheckButton").set_active(
             prefs.get("speakContextBlockquote", settings.speakContextList))
+        self.get_widget("speakContextLandmarkCheckButton").set_active(
+            prefs.get("speakContextLandmark", settings.speakContextLandmark))
+        self.get_widget("speakContextNonLandmarkFormCheckButton").set_active(
+            prefs.get("speakContextNonLandmarkForm", settings.speakContextNonLandmarkForm))
         self.get_widget("speakContextListCheckButton").set_active(
             prefs.get("speakContextList", settings.speakContextList))
         self.get_widget("speakContextPanelCheckButton").set_active(
@@ -1616,6 +1620,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             prefs.get("structNavInSayAll", settings.structNavInSayAll))
         self.get_widget("sayAllContextBlockquoteCheckButton").set_active(
             prefs.get("sayAllContextBlockquote", settings.sayAllContextBlockquote))
+        self.get_widget("sayAllContextLandmarkCheckButton").set_active(
+            prefs.get("sayAllContextLandmark", settings.sayAllContextLandmark))
+        self.get_widget("sayAllContextNonLandmarkFormCheckButton").set_active(
+            prefs.get("sayAllContextNonLandmarkForm", settings.sayAllContextNonLandmarkForm))
         self.get_widget("sayAllContextListCheckButton").set_active(
             prefs.get("sayAllContextList", settings.sayAllContextList))
         self.get_widget("sayAllContextPanelCheckButton").set_active(

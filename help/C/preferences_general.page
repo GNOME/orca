@@ -131,6 +131,8 @@
     </p>
     <list>
       <item><p>Announce blockquotes in Say All</p></item>
+      <item><p>Announce forms in Say All</p></item>
+      <item><p>Announce landmarks in Say All</p></item>
       <item><p>Announce lists in Say All</p></item>
       <item><p>Announce panels in Say All</p></item>
       <item><p>Announce tables in Say All</p></item>

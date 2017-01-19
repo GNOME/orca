@@ -1172,6 +1172,8 @@ class Generator:
             return 'ROLE_STATIC'
         if self._script.utilities.isBlockquote(obj):
             return pyatspi.ROLE_BLOCK_QUOTE
+        if self._script.utilities.isLandmark(obj):
+            return pyatspi.ROLE_LANDMARK
         if self._script.utilities.isFocusableLabel(obj):
             return pyatspi.ROLE_LIST_ITEM
 
