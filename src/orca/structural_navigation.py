@@ -2179,9 +2179,12 @@ class StructuralNavigation:
         """
 
         if obj:
+            self._script.speakMessage(self._getRoleName(obj))
+            landmark = obj
             [obj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(obj, characterOffset)
-            self._presentObject(obj, characterOffset)
+            if landmark != obj:
+                self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_LANDMARK_FOUND
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
