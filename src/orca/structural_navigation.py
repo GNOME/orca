@@ -364,6 +364,8 @@ class StructuralNavigationObject:
             return
 
         def _isValidMatch(x):
+            if script.utilities.isDead(x):
+                return False
             return not (script.utilities.isHidden(x) or script.utilities.isEmpty(x))
 
         objects = list(filter(_isValidMatch, objects))
