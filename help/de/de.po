@@ -21,8 +21,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca help master\n"
-"POT-Creation-Date: 2016-07-11 12:14+0000\n"
-"PO-Revision-Date: 2016-07-15 23:44+0200\n"
+"POT-Creation-Date: 2016-12-05 10:47+0000\n"
+"PO-Revision-Date: 2016-12-29 23:39+0100\n"
 "Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de_DE\n"
@@ -30,7 +30,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -220,9 +220,8 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:27
-#, fuzzy
 msgid "Toggle flat review mode: Freeze"
-msgstr "Die Übersicht betreten und verlassen."
+msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:28
@@ -377,16 +376,12 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:29
-#, fuzzy
-#| msgid ""
-#| "Quit <app>Orca</app>: <keyseq><key>Orca Modifier</key><key>Q</key></"
-#| "keyseq>."
 msgid ""
 "Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
 "key><key>Alt</key><key>S</key></keyseq>."
 msgstr ""
-"<app>Orca</app> beenden: <keyseq><key>Orca-Zusatztaste</key><key>Q</key></"
-"keyseq>"
+"<app>Orca</app> in GNOME ein- und ausschalten: <keyseq><key>Super-Taste</"
+"key><key>Alt</key><key>S</key></keyseq>"
 
 #. (itstool) path: note/p
 #: C/commands_controlling_orca.page:34
@@ -463,12 +458,8 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:79
-#, fuzzy
-#| msgid "Exit either mode: <keyseq><key>Esc</key></keyseq>"
 msgid "Exit learn mode: <keyseq><key>Esc</key></keyseq>"
-msgstr ""
-"Beenden Sie jeden Modus: <keyseq><key>Orca-Zusatztaste</key><key>Esc</key></"
-"keyseq>"
+msgstr "Lernmodus beenden: <keyseq><key>Esc</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_debugging.page:4
@@ -581,17 +572,15 @@ msgstr "Die Übersicht zur vorigen Instanz einer Zeichenkette bewegen:"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:58
-#, fuzzy
 msgid ""
 "Desktop: <keyseq> <key>Orca Modifier</key><key>Shift</key><key>KP Delete</"
 "key> </keyseq>"
 msgstr ""
-"Desktop: <keyseq><key>Orca-Zusatztaste</key><key>Umschalt</key><key>Entf "
-"(Nmblck)</key></keyseq>"
+"Desktop: <keyseq><key>Orca-Zusatztaste</key><key>Umschalttaste</"
+"key><key>Minustaste (Nummernblock)</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:66
-#, fuzzy
 msgid ""
 "Laptop: <keyseq> <key>Orca Modifier</key><key>Ctrl</key><key>Right Bracket</"
 "key> </keyseq>"
@@ -1056,22 +1045,16 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:183
-#, fuzzy
-#| msgid "Desktop: <key>KP Enter</key> (double-clicked)"
 msgid "Desktop: <key>KP Plus</key> (double-clicked)"
-msgstr "Desktop: <key>Eingabetaste (Nmblck)</key> (Doppelklick)"
+msgstr "Desktop: <key>Plustaste (Nummernblock)</key> (Doppelklick)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:184
-#, fuzzy
-#| msgid ""
-#| "Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq> (double-"
-#| "clicked)"
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Semicolon</key></keyseq> "
 "(double-clicked)"
 msgstr ""
-"Laptop: <keyseq><key>Orca-Zusatztaste</key><key>Schrägstrich</key></keyseq> "
+"Laptop: <keyseq><key>Orca-Zusatztaste</key><key>Semikolon</key></keyseq> "
 "(Doppelklick)"
 
 #. (itstool) path: item/p
@@ -1161,14 +1144,14 @@ msgstr ""
 #, fuzzy
 msgctxt "sort"
 msgid "3. Mouse/Pointer-Related"
-msgstr "Der Mauszeiger bewegt sich nicht"
+msgstr "3. Maus- und Zeigegerät"
 
 #. (itstool) path: info/title
 #: C/commands_mouse.page:6
 #, fuzzy
 msgctxt "link"
 msgid "Mouse/Pointer-Related"
-msgstr "Der Mauszeiger bewegt sich nicht"
+msgstr "3. Maus- und Zeigegerät"
 
 #. (itstool) path: info/desc
 #: C/commands_mouse.page:9
@@ -1331,17 +1314,13 @@ msgstr "Profile"
 
 #. (itstool) path: info/desc
 #: C/commands_profiles.page:8
-#, fuzzy
-#| msgid "Commands for accessing tabular information"
 msgid "Commands to access saved configurations"
-msgstr "Befehle zum Zugriff auf tabellarische Informationen"
+msgstr "Befehle zum Zugriff auf gespeicherte Konfigurationen"
 
 #. (itstool) path: page/title
 #: C/commands_profiles.page:19
-#, fuzzy
-#| msgid "Braille Commands"
 msgid "Profile Commands"
-msgstr "Braille-Befehle"
+msgstr "Profilbefehle"
 
 #. (itstool) path: page/p
 #: C/commands_profiles.page:20
@@ -1360,9 +1339,8 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_profiles.page:30
-#, fuzzy
 msgid "Cycle to the next profile: (Unbound)"
-msgstr "Schrift verkleinern"
+msgstr "Zum nächsten Profil wechseln: (nicht zugewiesen)"
 
 #. (itstool) path: info/title
 #: C/commands_reading.page:8
@@ -1410,9 +1388,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:39
-#, fuzzy
 msgid "Reading Your Current Location"
-msgstr "Erfahren Sie mehr über Ihren Standort"
+msgstr "Ihren aktuellen Standort vorlesen"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:40
@@ -1548,7 +1525,7 @@ msgstr "Den ausgewählten Text vorlesen: (Nicht belegt)"
 #. (itstool) path: section/title
 #: C/commands_reading.page:229
 msgid "Link Details"
-msgstr ""
+msgstr "Details zum Link"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:230
@@ -1578,9 +1555,8 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:240
-#, fuzzy
 msgid "Speak the link details: (Unbound)"
-msgstr "Horizontaler Rasterabstand des Zeichengitters."
+msgstr "Details zum Link vorlesen. (Nicht zugewiesen)"
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:245
@@ -1612,6 +1588,14 @@ msgstr ""
 msgid ""
 "Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (double-clicked)"
+msgstr "<keyseq><key>Orca-Zusatztaste</key><key>H</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_reading.page:264
+#, fuzzy
+msgid ""
+"Enable \"sticky\" browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
+"keyseq> (triple-clicked)"
 msgstr "<keyseq><key>Orca-Zusatztaste</key><key>H</key></keyseq>"
 
 #. (itstool) path: info/title
@@ -1682,9 +1666,8 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:51
-#, fuzzy
 msgid "Change the spoken number style: (Unbound)"
-msgstr "Schrift verkleinern"
+msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:54
@@ -1703,27 +1686,23 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:63
-#, fuzzy
 msgid "Decrease the rate: (Unbound)"
-msgstr "Schrift verkleinern"
+msgstr "Rate senken: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:66
-#, fuzzy
 msgid "Increase the rate: (Unbound)"
-msgstr "Schrift vergrößern"
+msgstr "Rate erhöhen: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:69
-#, fuzzy
 msgid "Decrease the pitch: (Unbound)"
-msgstr "Horizontaler Rasterabstand des Zeichengitters."
+msgstr "Tonhöhe senken: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:72
-#, fuzzy
 msgid "Increase the pitch: (Unbound)"
-msgstr "Horizontaler Rasterabstand des Zeichengitters."
+msgstr "Tonhöhe heben: (Nicht zugewiesen)"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:75
@@ -1939,15 +1918,12 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:153
-#, fuzzy
-#| msgid ""
-#| "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgid ""
 "Display a list of buttons: <keyseq><key>Alt</key><key>Shift</key><key>B</"
 "key></keyseq>"
 msgstr ""
-"Zelle darüber: <keyseq><key>Alt</key><key>Umschalt</key><key>Hoch</key></"
-"keyseq>"
+"Eine Liste der Knöpfe anzeigen: <keyseq><key>Alt</key><key>Umschalttaste</"
+"key><key>B</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:159
@@ -1999,16 +1975,12 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:192
-#, fuzzy
-#| msgid ""
-#| "Cell on right: <keyseq><key>Alt</key><key>Shift</key><key>Right</key></"
-#| "keyseq>"
 msgid ""
 "Display a list of radio buttons: <keyseq><key>Alt</key><key>Shift</"
 "key><key>R</key></keyseq>"
 msgstr ""
-"Zelle zur rechten: <keyseq><key>Alt</key><key>Umschalt</key><key>Rechts</"
-"key></keyseq>"
+"Eine Liste der Auswahlknöpfe anzeigen: <keyseq><key>Alt</key><key>Umschalt</"
+"key><key>R</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:198
@@ -2068,15 +2040,12 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:236
-#, fuzzy
-#| msgid ""
-#| "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgid ""
 "Display a list of unvisited links: <keyseq><key>Alt</key><key>Shift</"
 "key><key>U</key></keyseq>"
 msgstr ""
-"Zelle darüber: <keyseq><key>Alt</key><key>Umschalt</key><key>Hoch</key></"
-"keyseq>"
+"Eine Liste der nicht besuchten Links anzeigen: <keyseq><key>Alt</"
+"key><key>Umschalt</key><key>U</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:242
@@ -2865,7 +2834,7 @@ msgstr "So verlassen Sie Formularfelder"
 #. (itstool) path: section/p
 #: C/howto_forms.page:60
 msgid "To exit a form field, you have several options:"
-msgstr ""
+msgstr "Sie haben mehrere Möglichkeiten ein Eingabefeld zu verlassen:"
 
 #. (itstool) path: item/p
 #: C/howto_forms.page:65
@@ -2915,9 +2884,8 @@ msgstr "8. Tastenkürzel"
 
 #. (itstool) path: info/desc
 #: C/howto_key_bindings.page:6
-#, fuzzy
 msgid "Binding, rebinding, and unbinding commands"
-msgstr "Befehle zu Zeit, Datum und Benachrichtigung"
+msgstr ""
 
 #. (itstool) path: page/title
 #: C/howto_key_bindings.page:15
@@ -3623,6 +3591,8 @@ msgstr "Speichern eines neuen Profils"
 msgid ""
 "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog box."
 msgstr ""
+"Öffnen Sie das Dialogfenster <link xref=\"preferences\">Orca-Einstellungen</"
+"link>."
 
 #. (itstool) path: item/p
 #: C/howto_profiles.page:28
@@ -3633,6 +3603,8 @@ msgstr "Ändern Sie die Einstellungen nach Belieben."
 #: C/howto_profiles.page:31
 msgid "On the <gui>General</gui> page, press the <gui>Save As</gui> button."
 msgstr ""
+"Drücken Sie auf der Seite <gui>Allgemein</gui> den Knopf <gui>Speichern "
+"unter</gui>."
 
 #. (itstool) path: item/p
 #: C/howto_profiles.page:36
@@ -3904,19 +3876,15 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_structural_navigation.page:97
-#, fuzzy
-#| msgid ""
-#| "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog "
-#| "box for the current application by pressing: <keyseq> <key>Ctrl</"
-#| "key><key>Orca Modifier</key><key>Space</key> </keyseq>"
 msgid ""
 "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog box "
 "for the current application by pressing <keyseq> <key>Ctrl</key><key>Orca "
 "Modifier</key><key>Space</key> </keyseq>."
 msgstr ""
-"<link xref=\"preferences\">Orcas Einstellungen-Dialog</link> für die "
-"fokussierte Anwendung: <keyseq><key>Strg</key><key>Orca-Zusatztaste</"
-"key><key>Leertaste</key></keyseq>."
+"Sie gelangen in das Dialogfenster <link xref=\"preferences\">Orca-"
+"Einstellungen</link> für die fokussierte Anwendung indem Sie "
+"<keyseq><key>Strg</key><key>Orca-Zusatztaste</key><key>Leertaste</key></"
+"keyseq> drücken."
 
 #. (itstool) path: item/p
 #: C/howto_structural_navigation.page:106
@@ -3955,9 +3923,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/howto_tables.page:25
-#, fuzzy
 msgid "Cell Versus Row Reading"
-msgstr "Fehler beim Lesen der Server-Antwort"
+msgstr ""
 
 #. (itstool) path: section/p
 #: C/howto_tables.page:26
@@ -4065,6 +4032,7 @@ msgstr "Festlegen der Spaltenköpfe"
 #: C/howto_tables.page:103
 msgid "Move to the row which contains all of the column headers."
 msgstr ""
+"Navigieren Sie in die Reihe, welche alle Spaltenbeschriftungen enthält."
 
 #. (itstool) path: item/p
 #: C/howto_tables.page:108
@@ -4082,6 +4050,7 @@ msgstr "Festlegen der Zeilenköpfe"
 #: C/howto_tables.page:117
 msgid "Move to the column which contains all of the row headers."
 msgstr ""
+"Navigieren Sie in die Spalte, welche alle Zeilenbeschriftungen enthält."
 
 #. (itstool) path: item/p
 #: C/howto_tables.page:122
@@ -4137,6 +4106,9 @@ msgid ""
 "and other formatting associated with a given character or series of "
 "characters."
 msgstr ""
+"Der Begriff »Textattribute« bezieht sich auf alle Formatierungen von "
+"Schrift, Stil, Anordnung und andere im Bezug auf einen Buchstaben oder eine "
+"Gruppe von Buchstaben."
 
 #. (itstool) path: section/title
 #: C/howto_text_attributes.page:24
@@ -4218,6 +4190,8 @@ msgstr "3. Die Orca-Zusatztaste"
 msgid ""
 "A key that works like <key>Shift</key>, <key>Ctrl</key>, and <key>Alt</key>"
 msgstr ""
+"Eine Taste, welche ähnlich funktioniert wie <key>Umschalttaste</key>, "
+"<key>Strg</key> und <key>Alt</key>"
 
 #. (itstool) path: page/title
 #: C/howto_the_orca_modifier.page:18
@@ -4232,6 +4206,10 @@ msgid ""
 "<app>Orca</app> commands and doing so without introducing conflicts with the "
 "commands of the applications you are accessing."
 msgstr ""
+"Orca hat eine spezielle Zusatztaste, welche ähnlich funktioniert wie "
+"<key>Umschalttaste</key>, <key>Strg</key> und <key>Alt</key>. Die dient dazu "
+"einen bestimmten <app>Orca</app>-Befehl auszuführen, ohne dabei im Konflikt "
+"mit den Tastenkombinationen einer Anwendung zu stehen."
 
 #. (itstool) path: page/p
 #: C/howto_the_orca_modifier.page:26
@@ -5153,10 +5131,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:71
-#, fuzzy
-#| msgid "Structural Navigation"
 msgid "Enable structural navigation"
-msgstr "Strukturennavigation"
+msgstr "Strukturierte Navigation verwenden"
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:72
@@ -5176,8 +5152,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:90
-#, fuzzy
-#| msgid "Configuring Structural Navigation"
 msgid "Automatic focus mode during structural navigation"
 msgstr "Automatischer Fokus-Modus während Strukturnavigation"
 
@@ -5195,10 +5169,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:113
-#, fuzzy
-#| msgid "Automatically start <app>Orca</app> when you log in"
 msgid "Automatically start speaking a page when it is first loaded"
-msgstr "<app>Orca</app> beim Anmelden automatisch starten"
+msgstr "Seite automatisch beim ersten Laden vorlesen"
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:114
@@ -5214,10 +5186,9 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:123
-#, fuzzy
-#| msgid "Automatically start <app>Orca</app> when you log in"
 msgid "Present summary of a page when it is first loaded"
-msgstr "<app>Orca</app> beim Anmelden automatisch starten"
+msgstr ""
+"Eine Zusammenfassung einer Seite automatisch beim ersten Laden vorlesen"
 
 #. (itstool) path: section/p
 #: C/preferences_gecko.page:124
@@ -5869,10 +5840,11 @@ msgstr "Alphabetische Tasten aktivieren"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:33
+#, fuzzy
 msgid ""
 "This option controls whether or not keys like <key>a</key>, <key>b</key>, "
 "and <key>c</key> should be spoken when pressed."
-msgstr ""
+msgstr " <key>a</key>, <key>b</key>, and <key>c</key> "
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:42
@@ -6550,7 +6522,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:56
 msgid "Present context of error"
-msgstr ""
+msgstr "Fehlerkontex darstellen"
 
 #. (itstool) path: section/p
 #: C/preferences_spellcheck.page:57
@@ -6952,7 +6924,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_voice.page:63
 msgid "Capitalization style"
-msgstr ""
+msgstr "Großschreibungsstil"
 
 #. (itstool) path: section/p
 #: C/preferences_voice.page:64
