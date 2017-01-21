@@ -207,6 +207,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
+        if not _settingsManager.getSetting('speakDescription'):
+            return []
+
         if not args.get('formatType', '').endswith('WhereAmI'):
             return []
 

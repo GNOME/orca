@@ -184,6 +184,18 @@
         Default value: not checked
       </p>
     </section>
+    <section id="speak_description">
+      <title>Speak description</title>
+      <p>
+        If the <gui>Speak description</gui> checkbox is checked, as
+        you move amongst objects in an interface, <app>Orca</app> will
+        speak the accessible description in addition to the accessible
+        name of the object.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
     <section id="system_messages_are_detailed">
       <title>System messages are detailed</title>
       <p>

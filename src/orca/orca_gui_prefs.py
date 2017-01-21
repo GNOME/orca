@@ -1324,6 +1324,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             prefs["enableMnemonicSpeaking"])
         self.get_widget("speakMisspelledIndicatorCheckButton").set_active(
             prefs.get("speakMisspelledIndicator", settings.speakMisspelledIndicator))
+        self.get_widget("speakDescriptionCheckButton").set_active(
+            prefs.get("speakDescription", settings.speakDescription))
         self.get_widget("speakContextBlockquoteCheckButton").set_active(
             prefs.get("speakContextBlockquote", settings.speakContextList))
         self.get_widget("speakContextLandmarkCheckButton").set_active(

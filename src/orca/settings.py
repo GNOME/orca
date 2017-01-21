@@ -131,6 +131,7 @@ userCustomizableSettings = [
     "layoutMode",
     "rewindAndFastForwardInSayAll",
     "structNavInSayAll",
+    "speakDescription",
     "speakContextBlockquote",
     "speakContextPanel",
     "speakContextLandmark",
@@ -243,6 +244,7 @@ verbalizePunctuationStyle    = PUNCTUATION_STYLE_MOST
 speechVerbosityLevel         = VERBOSITY_LEVEL_VERBOSE
 messagesAreDetailed          = True
 enablePauseBreaks            = True
+speakDescription             = True
 speakContextBlockquote       = True
 speakContextPanel            = True
 speakContextNonLandmarkForm  = True

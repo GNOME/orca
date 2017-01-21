@@ -1878,7 +1878,7 @@
                                           </object>
                                           <packing>
                                             <property name="left_attach">0</property>
-                                            <property name="top_attach">6</property>
+                                            <property name="top_attach">7</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -1896,7 +1896,7 @@
                                           </object>
                                           <packing>
                                             <property name="left_attach">0</property>
-                                            <property name="top_attach">7</property>
+                                            <property name="top_attach">8</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -1914,7 +1914,7 @@
                                           </object>
                                           <packing>
                                             <property name="left_attach">0</property>
-                                            <property name="top_attach">8</property>
+                                            <property name="top_attach">9</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -1932,7 +1932,7 @@
                                           </object>
                                           <packing>
                                             <property name="left_attach">0</property>
-                                            <property name="top_attach">11</property>
+                                            <property name="top_attach">12</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -1950,7 +1950,7 @@
                                           </object>
                                           <packing>
                                             <property name="left_attach">0</property>
-                                            <property name="top_attach">13</property>
+                                            <property name="top_attach">14</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -1986,7 +1986,7 @@
                                           </object>
                                           <packing>
                                             <property name="left_attach">0</property>
-                                            <property name="top_attach">12</property>
+                                            <property name="top_attach">13</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -2004,7 +2004,7 @@
                                           </object>
                                           <packing>
                                             <property name="left_attach">0</property>
-                                            <property name="top_attach">10</property>
+                                            <property name="top_attach">11</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -2022,7 +2022,25 @@
                                           </object>
                                           <packing>
                                             <property name="left_attach">0</property>
-                                            <property name="top_attach">9</property>
+                                            <property name="top_attach">10</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="speakDescriptionCheckButton">
+                                            <property name="label" translatable="yes" comments="Translators: If this checkbox is checked, Orca will speak the accessible description of an object. Whereas the accessible name of an object tends to be short and typically corresponds to what is displayed on screen, the contents of the accessible description tend to be longer, e.g. matching the text of the tooltip, and are sometimes redundant to the accessible name. Therefore, we allow the user to opt out of this additional information.">Speak _description</property>
+                                            <property name="use_action_appearance">False</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="use_underline">True</property>
+                                            <property name="xalign">0</property>
+                                            <property name="active">True</property>
+                                            <property name="draw_indicator">True</property>
+                                            <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">0</property>
+                                            <property name="top_attach">6</property>
                                           </packing>
                                         </child>
                                       </object>

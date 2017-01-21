@@ -209,12 +209,31 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
+        if not _settingsManager.getSetting('speakDescription'):
+            return []
+
         priorObj = args.get('priorObj')
         if priorObj and priorObj.getRole() == pyatspi.ROLE_TOOL_TIP:
             return []
 
         acss = self.voice(SYSTEM)
         result = generator.Generator._generateDescription(self, obj, **args)
+        if result:
+            result.extend(acss)
+        return result
+
+    def _generateImageDescription(self, obj, **args ):
+        """Returns an array of strings for use by speech and braille that
+        represent the description of the image on the object."""
+
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        if not _settingsManager.getSetting('speakDescription'):
+            return []
+
+        acss = self.voice(SYSTEM)
+        result = generator.Generator._generateImageDescription(self, obj, **args)
         if result:
             result.extend(acss)
         return result
