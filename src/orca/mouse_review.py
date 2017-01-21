@@ -205,8 +205,9 @@ class MouseReviewer:
 
         _eventManager.registerModuleListeners(self._get_listeners())
         screen = Wnck.Screen.get_default()
-        i = screen.connect("window-stacking-changed", self._on_stacking_changed)
-        self._handlerIds[i] = screen
+        if screen:
+            i = screen.connect("window-stacking-changed", self._on_stacking_changed)
+            self._handlerIds[i] = screen
 
     def deactivate(self):
         """Deactivates mouse review."""
