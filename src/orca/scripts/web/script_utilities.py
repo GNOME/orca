@@ -2066,14 +2066,23 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isLayoutOnly(self, obj):
-        if not obj:
-            return False
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isLayoutOnly(obj)
 
         rv = self._isLayoutOnly.get(hash(obj))
         if rv is not None:
             return rv
 
-        if self.isMath(obj):
+        try:
+            role = obj.getRole()
+        except:
+            msg = "ERROR: Exception getting role for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role == pyatspi.ROLE_LIST:
+            rv = self.treatAsDiv(obj)
+        elif self.isMath(obj):
             rv = False
         elif self.isLandmark(obj):
             rv = False
