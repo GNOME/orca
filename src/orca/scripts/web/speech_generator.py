@@ -158,7 +158,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateLabelOrName(obj, **args)
 
     def _generateName(self, obj, **args):
-        if self._script.utilities.isTextBlockElement(obj):
+        if self._script.utilities.isTextBlockElement(obj) \
+           and not self._script.utilities.isLandmark(obj):
             return []
 
         # TODO - JD: Once the formatting strings are vastly cleaned up

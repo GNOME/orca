@@ -2332,6 +2332,8 @@ class Utilities(script_utilities.Utilities):
 
         if obj.getRole() == pyatspi.ROLE_LANDMARK:
             rv = True
+        elif self.isLandmarkRegion(obj):
+            rv = bool(obj.name)
         else:
             roles = self._getXMLRoles(obj)
             rv = bool(list(filter(lambda x: x in self.getLandmarkTypes(), roles)))
