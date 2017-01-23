@@ -81,6 +81,7 @@ class Utilities(script_utilities.Utilities):
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
         self._actualLabels = {}
+        self._labelTargets = {}
         self._displayedLabelText = {}
         self._roleDescription = {}
         self._shouldFilter = {}
@@ -140,6 +141,7 @@ class Utilities(script_utilities.Utilities):
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
         self._actualLabels = {}
+        self._labelTargets = {}
         self._displayedLabelText = {}
         self._roleDescription = {}
         self._shouldFilter = {}
@@ -1992,7 +1994,7 @@ class Utilities(script_utilities.Utilities):
                or self.isHidden(obj) \
                or self.isOffScreenLabel(obj) \
                or self.isUselessImage(obj) \
-               or self.isLabellingContents(x, contents):
+               or self.isLabellingContents(obj, contents):
                 rv = False
 
             widget = self.isInferredLabelForContents(x, contents)
@@ -2183,6 +2185,28 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
+    def labelTargets(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._labelTargets.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = False
+
+        isLabel = lambda r: r.getRelationType() == pyatspi.RELATION_LABEL_FOR
+        relations = list(filter(isLabel, obj.getRelationSet()))
+        if not relations:
+            return []
+
+        r = relations[0]
+        rv = [r.getTarget(i) for i in range(r.getNTargets())]
+        rv = [hash(x) for x in rv if x is not None]
+
+        self._labelTargets[hash(obj)] = rv
+        return rv
+
     def isInferredLabelForContents(self, content, contents):
         obj, start, end, string = content
         objs = list(filter(self.shouldInferLabelFor, [x[0] for x in contents]))
@@ -2196,24 +2220,16 @@ class Utilities(script_utilities.Utilities):
 
         return None
 
-    def isLabellingContents(self, content, contents):
-        obj, start, end, string = content
-        if obj.getRole() != pyatspi.ROLE_LABEL:
-            return None
+    def isLabellingContents(self, obj, contents=[]):
+        targets = self.labelTargets(obj)
+        if not contents:
+            return bool(targets)
 
-        relationSet = obj.getRelationSet()
-        if not relationSet:
-            return None
+        for acc, start, end, string in contents:
+            if hash(acc) in targets:
+                return True
 
-        for relation in relationSet:
-            if relation.getRelationType() == pyatspi.RELATION_LABEL_FOR:
-                for i in range(0, relation.getNTargets()):
-                    target = relation.getTarget(i)
-                    for content in contents:
-                        if content[0] == target:
-                            return target
-
-        return None
+        return False
 
     def isAnchor(self, obj):
         if not (obj and self.inDocumentContent(obj)):

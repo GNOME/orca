@@ -476,10 +476,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not 'priorObj' in args:
             args['priorObj'] = self._script.utilities.getPriorContext()[0]
 
-        result.extend(super().generateSpeech(obj, **args))
-        result = list(filter(lambda x: x, result))
-        self._restoreRole(oldRole, args)
+        if self._script.utilities.isLabellingContents(obj):
+            result = list(filter(lambda x: x, self.generateContext(obj, **args)))
 
+        if not result:
+            result = list(filter(lambda x: x, super().generateSpeech(obj, **args)))
+
+        self._restoreRole(oldRole, args)
         msg = "WEB: Speech generation for document object %s complete:" % obj
         debug.println(debug.LEVEL_INFO, msg)
         for element in result:
