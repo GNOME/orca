@@ -363,7 +363,7 @@ class Generator:
         result.extend(label)
         if not len(label):
             result.extend(name)
-        elif len(name) and name[0].strip() != label[0].strip():
+        elif len(name) and name[0].split() != label[0].split():
             result.extend(name)
         return result
 
