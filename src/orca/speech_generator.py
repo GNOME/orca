@@ -1677,7 +1677,7 @@ class SpeechGenerator(generator.Generator):
                 if _isCommonAncestor(parent):
                     break
 
-                parentRole = parent.getRole()
+                parentRole = self._getAlternativeRole(parent)
                 if parentRole in stopAtRoles:
                     break
                 if parentRole in skipRoles:
@@ -1685,11 +1685,10 @@ class SpeechGenerator(generator.Generator):
                 elif includeOnly and parentRole not in includeOnly:
                     pass
                 elif not self._script.utilities.isLayoutOnly(parent):
-                    oldRole = self._getAlternativeRole(parent)
-                    self._overrideRole(oldRole, args)
+                    self._overrideRole(parentRole, args)
                     result.append(self.generate(parent, formatType='focused',
-                                                role=oldRole, leaving=leaving))
-                    self._restoreRole(oldRole, args)
+                                                role=parentRole, leaving=leaving))
+                    self._restoreRole(parentRole, args)
                 parent = parent.parent
 
         if not leaving:
@@ -1721,7 +1720,6 @@ class SpeechGenerator(generator.Generator):
                                pyatspi.ROLE_LANDMARK,
                                pyatspi.ROLE_LIST,
                                pyatspi.ROLE_PANEL,
-                               pyatspi.ROLE_SECTION,
                                pyatspi.ROLE_TABLE]
 
         result = []
