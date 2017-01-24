@@ -241,17 +241,31 @@ class Utilities(script_utilities.Utilities):
         try:
             role = obj.getRole()
             childCount = obj.childCount
+            name = obj.name
         except:
-            role = None
-            childCount = 0
-
-        if role == pyatspi.ROLE_PANEL and childCount == 1:
-            if obj.name and obj.name == obj[0].name:
-                return True
-
-        if role == pyatspi.ROLE_LIST \
-           and obj.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
+            msg = "SOFFICE: Exception getting properties of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
+
+        if role == pyatspi.ROLE_PANEL and childCount == 1 and name:
+            try:
+                child = obj[0]
+            except:
+                msg = "SOFFICE: Exception getting child of %s" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                if child and child.name == name:
+                    return True
+
+        if role == pyatspi.ROLE_LIST:
+            try:
+                parentRole = obj.parent.getRole()
+            except:
+                msg = "SOFFICE: Exception getting parent role of %s" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                if parentRole == pyatspi.ROLE_COMBO_BOX:
+                    return True
 
         return super().isLayoutOnly(obj)
 
