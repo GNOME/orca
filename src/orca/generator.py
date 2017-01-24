@@ -587,6 +587,20 @@ class Generator:
 
         return []
 
+    def _generateSwitchState(self, obj, **args):
+        result = []
+        if not args.get('mode', None):
+            args['mode'] = self._mode
+        args['stringType'] = 'switch'
+        indicators = self._script.formatting.getString(**args)
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_CHECKED) \
+           or state.contains(pyatspi.STATE_PRESSED):
+            result.append(indicators[1])
+        else:
+            result.append(indicators[0])
+        return result
+
     def _generateToggleState(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
         represent the checked state of the object.  This is typically
@@ -1170,6 +1184,8 @@ class Generator:
                 return 'ROLE_MATH_TABLE_ROW'
         if self._script.utilities.isStatic(obj):
             return 'ROLE_STATIC'
+        if self._script.utilities.isSwitch(obj):
+            return 'ROLE_SWITCH'
         if self._script.utilities.isBlockquote(obj):
             return pyatspi.ROLE_BLOCK_QUOTE
         if self._script.utilities.isLandmark(obj):
@@ -1214,6 +1230,9 @@ class Generator:
         if self._script.utilities.isMenuButton(obj):
             return object_properties.ROLE_MENU_BUTTON
 
+        if self._script.utilities.isSwitch(obj):
+            return object_properties.ROLE_SWITCH
+
         if self._script.utilities.isLandmark(obj):
             if self._script.utilities.isLandmarkBanner(obj):
                 return object_properties.ROLE_LANDMARK_BANNER
@@ -1246,6 +1265,9 @@ class Generator:
         return Atk.role_get_localized_name(atkRole)
 
     def getStateIndicator(self, obj, **args):
+        if self._script.utilities.isSwitch(obj):
+            return self._generateSwitchState(obj, **args)
+
         role = args.get('role', obj.getRole())
 
         if role == pyatspi.ROLE_MENU_ITEM:

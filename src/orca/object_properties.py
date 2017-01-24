@@ -139,6 +139,12 @@ ROLE_SPLITTER_HORIZONTAL = _("horizontal splitter")
 # dictate which keyboard keys should be used to modify the value of the widget.
 ROLE_SPLITTER_VERTICAL = _("vertical splitter")
 
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# The "switch" role is a "light switch" style toggle, such as can be seen in
+# https://developer.gnome.org/gtk3/stable/GtkSwitch.html
+ROLE_SWITCH = C_("role", "switch")
+
 # Translators: This is an alternative name for the parent object of a series
 # of icons.
 ROLE_ICON_PANEL = _("Icon panel")
@@ -239,6 +245,14 @@ STATE_CHECKED = C_("checkbox", "checked")
 
 # Translators: This is a state which applies to a check box.
 STATE_NOT_CHECKED = C_("checkbox", "not checked")
+
+# Translators: This is a state which applies to a switch. For an example of
+# a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
+STATE_ON_SWITCH = C_("switch", "on")
+
+# Translators: This is a state which applies to a switch. For an example of
+# a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
+STATE_OFF_SWITCH = C_("switch", "off")
 
 # Translators: This is a state which applies to a check box.
 STATE_PARTIALLY_CHECKED = C_("checkbox", "partially checked")
@@ -344,6 +358,7 @@ INVALID_INDICATORS_SPEECH = \
      STATE_INVALID_GRAMMAR_SPEECH]
 RADIO_BUTTON_INDICATORS_SPEECH = \
     [STATE_UNSELECTED_RADIO_BUTTON, STATE_SELECTED_RADIO_BUTTON]
+SWITCH_INDICATORS_SPEECH = [STATE_OFF_SWITCH, STATE_ON_SWITCH]
 TOGGLE_BUTTON_INDICATORS_SPEECH = \
     [STATE_NOT_PRESSED, STATE_PRESSED]
 
@@ -353,6 +368,7 @@ INVALID_INDICATORS_BRAILLE       = [STATE_INVALID_BRAILLE,
                                     STATE_INVALID_SPELLING_BRAILLE,
                                     STATE_INVALID_GRAMMAR_BRAILLE]
 RADIO_BUTTON_INDICATORS_BRAILLE  = ["& y", "&=y"]
+SWITCH_INDICATORS_BRAILLE = ["& y", "&=y"]
 TOGGLE_BUTTON_INDICATORS_BRAILLE = ["& y", "&=y"]
 
 TABLE_CELL_DELIMITER_BRAILLE = " "
@@ -362,6 +378,7 @@ CHECK_BOX_INDICATORS_SOUND = ["not_checked", "checked", "partially_checked"]
 EXPANSION_INDICATORS_SOUND = ["collapsed", "expanded"]
 INVALID_INDICATORS_SOUND = ["invalid", "invalid_spelling", "invalid_grammar"]
 RADIO_BUTTON_INDICATORS_SOUND = ["unselected", "selected"]
+SWITCH_INDICATORS_SOUND = ["off", "on"]
 TOGGLE_BUTTON_INDICATORS_SOUND = ["not_pressed", "pressed"]
 STATE_CLICKABLE_SOUND = "clickable"
 STATE_HAS_LONGDESC_SOUND = "haslongdesc"

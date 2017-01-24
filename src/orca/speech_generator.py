@@ -532,6 +532,17 @@ class SpeechGenerator(generator.Generator):
             result.extend(acss)
         return result
 
+    def _generateSwitchState(self, obj, **args):
+        """Returns an array of strings indicating the on/off state of obj."""
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        acss = self.voice(STATE)
+        result = generator.Generator._generateSwitchState(self, obj, **args)
+        if result:
+            result.extend(acss)
+        return result
+
     def _generateToggleState(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
         represent the checked state of the object.  This is typically

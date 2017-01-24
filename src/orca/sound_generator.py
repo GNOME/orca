@@ -236,6 +236,19 @@ class SoundGenerator(generator.Generator):
 
         return []
 
+    def _generateSwitchState(self, obj, **args):
+        """Returns an array of sounds indicating the on/off state of obj."""
+
+        if not _settingsManager.getSetting('playSoundForState'):
+            return []
+
+        filenames = super()._generateSwitchState(obj, **args)
+        result = list(map(self._convertFilenameToIcon, filenames))
+        if result:
+            return result
+
+        return []
+
     def _generateToggleState(self, obj, **args):
         """Returns an array of sounds indicating the toggled state of obj."""
 

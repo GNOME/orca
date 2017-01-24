@@ -2461,6 +2461,12 @@ class Utilities(script_utilities.Utilities):
         self._hasUselessCanvasDescendant[hash(obj)] = rv
         return rv
 
+    def isSwitch(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isSwitch(obj)
+
+        return 'switch' in self._getXMLRoles(obj)
+
     def isImageMap(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False

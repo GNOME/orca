@@ -1291,6 +1291,9 @@ class Utilities:
                    and not state.contains(pyatspi.STATE_EDITABLE)
         return readOnly
 
+    def isSwitch(self, obj):
+        return False
+
     def _hasSamePath(self, obj1, obj2):
         path1 = pyatspi.utils.getPath(obj1)
         path2 = pyatspi.utils.getPath(obj2)

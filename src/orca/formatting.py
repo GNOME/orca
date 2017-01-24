@@ -59,6 +59,7 @@ formatting = {
             'insensitive': object_properties.STATE_INSENSITIVE_SPEECH,
             'checkbox': object_properties.CHECK_BOX_INDICATORS_SPEECH,
             'radiobutton': object_properties.RADIO_BUTTON_INDICATORS_SPEECH,
+            'switch': object_properties.SWITCH_INDICATORS_SPEECH,
             'togglebutton': object_properties.TOGGLE_BUTTON_INDICATORS_SPEECH,
             'expansion': object_properties.EXPANSION_INDICATORS_SPEECH,
             'nodelevel': object_properties.NODE_LEVEL_SPEECH,
@@ -77,6 +78,7 @@ formatting = {
             'invalid': object_properties.INVALID_INDICATORS_BRAILLE,
             'checkbox': object_properties.CHECK_BOX_INDICATORS_BRAILLE,
             'radiobutton': object_properties.RADIO_BUTTON_INDICATORS_BRAILLE,
+            'switch': object_properties.SWITCH_INDICATORS_BRAILLE,
             'togglebutton': object_properties.TOGGLE_BUTTON_INDICATORS_BRAILLE,
             'expansion': object_properties.EXPANSION_INDICATORS_BRAILLE,
             'nodelevel': object_properties.NODE_LEVEL_BRAILLE,
@@ -89,6 +91,7 @@ formatting = {
             'insensitive': object_properties.STATE_INSENSITIVE_SOUND,
             'checkbox': object_properties.CHECK_BOX_INDICATORS_SOUND,
             'radiobutton': object_properties.RADIO_BUTTON_INDICATORS_SOUND,
+            'switch': object_properties.SWITCH_INDICATORS_SOUND,
             'togglebutton': object_properties.TOGGLE_BUTTON_INDICATORS_SOUND,
             'expansion': object_properties.EXPANSION_INDICATORS_SOUND,
             'multiselect': object_properties.STATE_MULTISELECT_SOUND,
@@ -392,6 +395,12 @@ formatting = {
         'ROLE_STATIC': {
             'unfocused': '(displayedText or name) + roleName',
         },
+        'ROLE_SWITCH': {
+            'focused': 'switchState',
+            'unfocused': 'labelOrName + roleName + switchState + availability + ' + MNEMONIC + ' + accelerator',
+            'basicWhereAmI': 'labelOrName + roleName + switchState'
+            },
+
         pyatspi.ROLE_TABLE: {
             'focused': 'leaving or (labelAndName + pause + table)',
             'unfocused': 'labelAndName + pause + table',
@@ -687,6 +696,11 @@ formatting = {
                           + (required and [Region(" " + asString(required))] or [])\
                           + (readOnly and [Region(" " + asString(readOnly))] or [])'
             },
+        'ROLE_SWITCH' : {
+            'unfocused': '[Component(obj,\
+                                     asString((labelOrName or description) + roleName),\
+                                     indicator=asString(switchState))]'
+            },
         #pyatspi.ROLE_SPLIT_PANE: 'default'
         #pyatspi.ROLE_TABLE: 'default'
         pyatspi.ROLE_TABLE_CELL: {
@@ -840,6 +854,10 @@ formatting = {
         pyatspi.ROLE_SPLIT_PANE: {
             'focused': 'percentage',
             'unfocused': 'roleName + percentage + availability',
+        },
+        'ROLE_SWITCH': {
+            'focused': 'switchState',
+            'unfocused': 'roleName + switchState + availability',
         },
         pyatspi.ROLE_TABLE_CELL: {
             'focused': 'expandableState',
