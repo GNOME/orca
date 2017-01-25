@@ -26,6 +26,9 @@
         ],
         "brailleVerbosityLevel": 1,
         "sayAllContextTable": false,
+        "sayAllContextLandmark": false,
+        "sayAllContextPanel": false,
+        "sayAllContextNonLandmarkForm": false,
         "enableTutorialMessages": false,
         "wrappedStructuralNavigation": true,
         "capitalizationStyle": "none",
@@ -40,6 +43,9 @@
         "spellcheckSpellError": true,
         "useColorNames": true,
         "speakContextTable": false,
+        "speakContextLandmark": false,
+        "speakContextPanel": false,
+        "speakContextNonLandmarkForm": false,
         "readFullRowInGUITable": true,
         "enabledBrailledTextAttributes": "size:; family-name:; weight:400; indent:0; underline:none; strikethrough:false; justification:left; style:normal; text-spelling:none;",
         "enableSpace": true,
@@ -82,7 +88,7 @@
                 "established": false
             },
             "system": {
-                "average-pitch": 3.0
+                "established": false
             },
             "uppercase": {
                 "average-pitch": 7.0
@@ -143,7 +149,7 @@
                     "established": false
                 },
                 "system": {
-                    "average-pitch": 3.0
+                    "established": false
                 },
                 "uppercase": {
                     "average-pitch": 7.0

@@ -16,6 +16,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. KP_Add to do a SayAll",
     ["SPEECH OUTPUT: 'Here are some entries'",
      "SPEECH OUTPUT: 'heading level 2'",
+     "SPEECH OUTPUT: 'form'",
      "SPEECH OUTPUT: 'Type'",
      "SPEECH OUTPUT: 'something'",
      "SPEECH OUTPUT: 'link'",

@@ -17,8 +17,6 @@ sequence.append(utils.AssertPresentationAction(
     ["SPEECH OUTPUT: 'Below is a table, with some sample table data'",
      "SPEECH OUTPUT: 'this is a caption for this table'",
      "SPEECH OUTPUT: 'table with 4 rows 3 columns'",
-     "SPEECH OUTPUT: 'this is a caption for this table'",
-     "SPEECH OUTPUT: 'caption'",
      "SPEECH OUTPUT: 'col1'",
      "SPEECH OUTPUT: 'column header'",
      "SPEECH OUTPUT: 'col2'",
