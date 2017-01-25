@@ -543,6 +543,23 @@ class Script(default.Script):
             characterOffset = offset
         priorObj, priorOffset = self.utilities.getPriorContext()
 
+        # TODO - JD: This is sad, but it's better than the old, broken
+        # clumpUtterances(). We really need to fix the speechservers'
+        # SayAll support. In the meantime, the generators should be
+        # providing one ACSS per string.
+        def _parseUtterances(utterances):
+            elements, voices = [], []
+            for u in utterances:
+                if isinstance(u, list):
+                    e, v = _parseUtterances(u)
+                    elements.extend(e)
+                    voices.extend(v)
+                elif isinstance(u, str):
+                    elements.append(u)
+                elif isinstance(u, ACSS):
+                    voices.append(u)
+            return elements, voices
+
         self._inSayAll = True
         done = False
         while not done:
@@ -560,21 +577,7 @@ class Script(default.Script):
                     [content], eliminatePauses=True, priorObj=priorObj)
                 priorObj = obj
 
-                # TODO - JD: This is sad, but it's better than the old, broken
-                # clumpUtterances(). We really need to fix the speechservers'
-                # SayAll support. In the meantime, the generators should be
-                # providing one ACSS per string.
-                utterance = utterances[0]
-                elements, voices = [], []
-                for u in utterance:
-                    if isinstance(u, list):
-                        elements.extend(filter(lambda x: isinstance(x, str), u))
-                        voices.extend(filter(lambda x: isinstance(x, ACSS), u))
-                    elif isinstance(u, str):
-                        elements.append(u)
-                    elif isinstance(u, ACSS):
-                        voices.append(u)
-
+                elements, voices = _parseUtterances(utterances)
                 if len(elements) != len(voices):
                     continue
 
