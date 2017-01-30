@@ -118,27 +118,3 @@ class Script(gtk.Script):
             orca.setLocusOfFocus(event, event.source, False)
 
         gtk.Script.onCaretMoved(self, event)
-
-    def onTextSelectionChanged(self, event):
-        """Callback for object:text-selection-changed accessibility events."""
-
-        # Two functionally different objects (pages of a PDF) are currently
-        # contained in a single accessible object whose contents change. As
-        # a result, when a new text selection spans two pages, we have stored
-        # data for our previous location that makes no sense because that
-        # location no longer exists.
-
-        obj = event.source
-        oldStart, oldEnd, oldString = self.utilities.getCachedTextSelection(obj)
-
-        crossedPages = False
-        keyString, mods = self.utilities.lastKeyAndModifiers()
-        if keyString in ["Down", "Page_Down", "Right", "End"]:
-            crossedPages = oldStart > obj.queryText().caretOffset
-        elif keyString in ["Up", "Page_Up", "Left", "Home"]:
-            crossedPages = oldEnd < obj.queryText().caretOffset
-
-        if crossedPages:
-            self.pointOfReference['textSelections'] = {}
-
-        gtk.Script.onTextSelectionChanged(self, event)
