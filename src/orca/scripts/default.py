@@ -2274,9 +2274,13 @@ class Script(script.Script):
 
         mouseEvent = input_event.MouseButtonEvent(event)
         orca_state.lastInputEvent = mouseEvent
+        if not mouseEvent.pressed:
+            return
 
-        if mouseEvent.pressed:
-            speech.stop()
+        speech.stop()
+        obj = mouseEvent.obj
+        if obj and obj.getState().contains(pyatspi.STATE_FOCUSED):
+            orca.setLocusOfFocus(None, obj, False)
 
     def onNameChanged(self, event):
         """Callback for object:property-change:accessible-name events."""

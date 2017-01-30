@@ -27,8 +27,10 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2011-2016 Igalia, S.L."
 __license__   = "LGPL"
 
+import math
 import pyatspi
 import time
+from gi.repository import Gdk
 from gi.repository import GLib
 
 from . import debug
@@ -680,6 +682,13 @@ class BrailleEvent(InputEvent):
 
 class MouseButtonEvent(InputEvent):
 
+    try:
+        display = Gdk.Display.get_default()
+        seat = Gdk.Display.get_default_seat(display)
+        _pointer = seat.get_pointer()
+    except:
+        _pointer = None
+
     def __init__(self, event):
         """Creates a new InputEvent of type MOUSE_BUTTON_EVENT."""
 
@@ -688,6 +697,35 @@ class MouseButtonEvent(InputEvent):
         self.y = event.detail2
         self.pressed = event.type.endswith('p')
         self.button = event.type[len("mouse:button:"):-1]
+        self._script = orca_state.activeScript
+        self.window = None
+        self.obj = None
+
+        if self.pressed:
+            self._validateCoordinates()
+
+        if not self._script:
+            return
+
+        self.window = self._script.utilities.activeWindow()
+        if not self.window:
+            return
+
+        self.obj = self._script.utilities.descendantAtPoint(
+            self.window, self.x, self.y, event.any_data)
+
+    def _validateCoordinates(self):
+        if not self._pointer:
+            return
+
+        screen, x, y = self._pointer.get_position()
+        if math.sqrt((self.x - x)**2 + (self.y - y)**2) < 25:
+            return
+
+        msg = "WARNING: Event coordinates (%i, %i) may be bogus. " \
+              "Updating to (%i, %i)." % (self.x, self.y, x, y)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        self.x, self.y = x, y
 
     def setClickCount(self):
         """Updates the count of the number of clicks a user has made."""
@@ -695,6 +733,7 @@ class MouseButtonEvent(InputEvent):
         if not self.pressed:
             return
 
+        lastInputEvent = orca_state.lastInputEvent
         if not isinstance(lastInputEvent, MouseButtonEvent):
             self._clickCount = 1
             return

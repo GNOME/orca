@@ -301,7 +301,8 @@ class EventManager:
                 toolkitName = app.toolkitName
             except:
                 toolkitName = None
-            if toolkitName in self._synchronousToolkits:
+            if toolkitName in self._synchronousToolkits \
+               or isinstance(e, input_event.MouseButtonEvent):
                 asyncMode = False
             script = _scriptManager.getScript(app, e.source)
             script.eventCache[e.type] = (e, time.time())
