@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-23 23:03+0100\n"
-"PO-Revision-Date: 2017-01-23 23:04+0100\n"
+"POT-Creation-Date: 2017-01-30 02:47+0100\n"
+"PO-Revision-Date: 2017-01-30 02:48+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -10953,9 +10953,18 @@ msgstr "pozioma linia podziału"
 msgid "vertical splitter"
 msgstr "pionowa linia podziału"
 
+#. Translators: This string should be treated as a role describing an object.
+#. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+#. The "switch" role is a "light switch" style toggle, such as can be seen in
+#. https://developer.gnome.org/gtk3/stable/GtkSwitch.html
+#: ../src/orca/object_properties.py:146
+msgctxt "role"
+msgid "switch"
+msgstr "przełącznik"
+
 #. Translators: This is an alternative name for the parent object of a series
 #. of icons.
-#: ../src/orca/object_properties.py:144
+#: ../src/orca/object_properties.py:150
 msgid "Icon panel"
 msgstr "Panel ikon"
 
@@ -10964,7 +10973,7 @@ msgstr "Panel ikon"
 #. The "banner" role is defined in the ARIA specification as "A region that
 #. contains mostly site-oriented content, rather than page-specific content."
 #. See https://www.w3.org/TR/wai-aria-1.1/#banner
-#: ../src/orca/object_properties.py:151
+#: ../src/orca/object_properties.py:157
 msgctxt "role"
 msgid "banner"
 msgstr "baner"
@@ -10975,7 +10984,7 @@ msgstr "baner"
 #. section of the document, designed to be complementary to the main content at a
 #. similar level in the DOM hierarchy, but remains meaningful when separated from
 #. the main content." See https://www.w3.org/TR/wai-aria-1.1/#complementary
-#: ../src/orca/object_properties.py:159
+#: ../src/orca/object_properties.py:165
 msgctxt "role"
 msgid "complementary content"
 msgstr "treść uzupełniająca"
@@ -10986,7 +10995,7 @@ msgstr "treść uzupełniająca"
 #. perceivable region that contains information about the parent document.
 #. Examples of information included in this region of the page are copyrights and
 #. links to privacy statements." See https://www.w3.org/TR/wai-aria-1.1/#contentinfo
-#: ../src/orca/object_properties.py:167
+#: ../src/orca/object_properties.py:173
 msgctxt "role"
 msgid "information"
 msgstr "informacja"
@@ -10995,7 +11004,7 @@ msgstr "informacja"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. The "main" role is defined in the ARIA specification as "The main content of
 #. a document." See https://www.w3.org/TR/wai-aria-1.1/#main
-#: ../src/orca/object_properties.py:173
+#: ../src/orca/object_properties.py:179
 msgctxt "role"
 msgid "main content"
 msgstr "główna treść"
@@ -11005,7 +11014,7 @@ msgstr "główna treść"
 #. The "navigation" role is defined in the ARIA specification as "A collection of
 #. navigational elements (usually links) for navigating the document or related
 #. documents." See https://www.w3.org/TR/wai-aria-1.1/#navigation
-#: ../src/orca/object_properties.py:180
+#: ../src/orca/object_properties.py:186
 msgctxt "role"
 msgid "navigation"
 msgstr "nawigacja"
@@ -11017,7 +11026,7 @@ msgstr "nawigacja"
 #. purpose and sufficiently important that users will likely want to be able to
 #. navigate to the section easily and to have it listed in a summary of the page."
 #. See https://www.w3.org/TR/wai-aria-1.1/#region
-#: ../src/orca/object_properties.py:189
+#: ../src/orca/object_properties.py:195
 msgctxt "role"
 msgid "region"
 msgstr "region"
@@ -11027,7 +11036,7 @@ msgstr "region"
 #. The "search" role is defined in the ARIA specification as "A landmark region
 #. that contains a collection of items and objects that, as a whole, combine to
 #. create a search facility." See https://www.w3.org/TR/wai-aria-1.1/#search
-#: ../src/orca/object_properties.py:196
+#: ../src/orca/object_properties.py:202
 msgctxt "role"
 msgid "search"
 msgstr "wyszukiwanie"
@@ -11037,7 +11046,7 @@ msgstr "wyszukiwanie"
 #. The reason for including the visited state as part of the role is to make it
 #. possible for users to quickly identify if the link is associated with content
 #. already read.
-#: ../src/orca/object_properties.py:203
+#: ../src/orca/object_properties.py:209
 msgid "visited link"
 msgstr "odwiedzony odnośnik"
 
@@ -11045,111 +11054,125 @@ msgstr "odwiedzony odnośnik"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. A menu button is button widget that causes a menu to appear when the user
 #. activates the button.
-#: ../src/orca/object_properties.py:209
+#: ../src/orca/object_properties.py:215
 msgid "menu button"
 msgstr "przycisk menu"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
-#: ../src/orca/object_properties.py:213
+#: ../src/orca/object_properties.py:219
 msgid "clickable"
 msgstr "element klikalny"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:218
+#: ../src/orca/object_properties.py:224
 msgid "collapsed"
 msgstr "zwinięty"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:223
+#: ../src/orca/object_properties.py:229
 msgid "expanded"
 msgstr "rozwinięty"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
-#: ../src/orca/object_properties.py:227
+#: ../src/orca/object_properties.py:233
 msgid "has long description"
 msgstr "ma długi opis"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:231
+#: ../src/orca/object_properties.py:237
 msgid "horizontal"
 msgstr "poziomy"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:235
+#: ../src/orca/object_properties.py:241
 msgid "vertical"
 msgstr "pionowy"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:238
+#: ../src/orca/object_properties.py:244
 msgctxt "checkbox"
 msgid "checked"
 msgstr "zaznaczony"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:241
+#: ../src/orca/object_properties.py:247
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "niezaznaczony"
 
+#. Translators: This is a state which applies to a switch. For an example of
+#. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
+#: ../src/orca/object_properties.py:251
+msgctxt "switch"
+msgid "on"
+msgstr "włączony"
+
+#. Translators: This is a state which applies to a switch. For an example of
+#. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
+#: ../src/orca/object_properties.py:255
+msgctxt "switch"
+msgid "off"
+msgstr "wyłączony"
+
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:244
+#: ../src/orca/object_properties.py:258
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "częściowo zaznaczony"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:247
+#: ../src/orca/object_properties.py:261
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "wciśnięty"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:250
+#: ../src/orca/object_properties.py:264
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "niewciśnięty"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:253
+#: ../src/orca/object_properties.py:267
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "wybrany"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:256
+#: ../src/orca/object_properties.py:270
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "nie wybrany"
 
 #. Translators: This is a state which applies to a table cell.
-#: ../src/orca/object_properties.py:259
+#: ../src/orca/object_properties.py:273
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "niewybrana"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:262
+#: ../src/orca/object_properties.py:276
 msgctxt "link state"
 msgid "visited"
 msgstr "odwiedzony"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:265
+#: ../src/orca/object_properties.py:279
 msgctxt "link state"
 msgid "unvisited"
 msgstr "nieodwiedzony"
 
 #. Translators: This state represents an item on the screen that has been set
 #. insensitive (or grayed out).
-#: ../src/orca/object_properties.py:269 ../src/orca/object_properties.py:273
+#: ../src/orca/object_properties.py:283 ../src/orca/object_properties.py:287
 msgid "grayed"
 msgstr "wyszarzony"
 
@@ -11158,7 +11181,7 @@ msgstr "wyszarzony"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the spoken
 #. version.
-#: ../src/orca/object_properties.py:280
+#: ../src/orca/object_properties.py:294
 msgctxt "text"
 msgid "read only"
 msgstr "odczyt"
@@ -11168,27 +11191,27 @@ msgstr "odczyt"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the braille
 #. version. (Because braille displays have limited real estate, we abbreviate.)
-#: ../src/orca/object_properties.py:287
+#: ../src/orca/object_properties.py:301
 msgctxt "text"
 msgid "rdonly"
 msgstr "odcz"
 
 #. Translators: Certain objects (such as form controls on web pages) can have
 #. STATE_REQUIRED set to inform the user that this field must be filled out.
-#: ../src/orca/object_properties.py:291 ../src/orca/object_properties.py:295
+#: ../src/orca/object_properties.py:305 ../src/orca/object_properties.py:309
 msgid "required"
 msgstr "wymagane"
 
 #. Translators: "multi-select" refers to a web form list in which more than
 #. one item can be selected at a time.
-#: ../src/orca/object_properties.py:299
+#: ../src/orca/object_properties.py:313
 msgid "multi-select"
 msgstr "wielokrotny wybór"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when all we
 #. know is that an error has occurred, but not the type of error.
-#: ../src/orca/object_properties.py:304
+#: ../src/orca/object_properties.py:318
 msgctxt "error"
 msgid "invalid entry"
 msgstr "błąd pola"
@@ -11198,7 +11221,7 @@ msgstr "błąd pola"
 #. when all we know is that an error has occurred, but not the type of error.
 #. We prefer a smaller string than in speech because braille displays have a
 #. limited size.
-#: ../src/orca/object_properties.py:311
+#: ../src/orca/object_properties.py:325
 msgctxt "error"
 msgid "invalid"
 msgstr "błąd"
@@ -11206,7 +11229,7 @@ msgstr "błąd"
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to spelling.
-#: ../src/orca/object_properties.py:316
+#: ../src/orca/object_properties.py:330
 msgctxt "error"
 msgid "invalid spelling"
 msgstr "błąd pisowni"
@@ -11215,7 +11238,7 @@ msgstr "błąd pisowni"
 #. as a form field, has an error. The following string is displayed in braille
 #. when the error is related to spelling. We prefer a smaller string than in
 #. speech because braille displays have a limited size.
-#: ../src/orca/object_properties.py:322
+#: ../src/orca/object_properties.py:336
 msgctxt "error"
 msgid "spelling"
 msgstr "pisownia"
@@ -11223,7 +11246,7 @@ msgstr "pisownia"
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to grammar.
-#: ../src/orca/object_properties.py:327
+#: ../src/orca/object_properties.py:341
 msgctxt "error"
 msgid "invalid grammar"
 msgstr "błąd gramatyczny"
@@ -11232,7 +11255,7 @@ msgstr "błąd gramatyczny"
 #. as a form field, has an error. The following string is displayed in braille
 #. when the error is related to grammar. We prefer a smaller string than in
 #. speech because braille displays have a limited size.
-#: ../src/orca/object_properties.py:333
+#: ../src/orca/object_properties.py:347
 msgctxt "error"
 msgid "grammar"
 msgstr "gramatyka"
