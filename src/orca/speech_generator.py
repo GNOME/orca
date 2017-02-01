@@ -1650,6 +1650,9 @@ class SpeechGenerator(generator.Generator):
         if priorObj and priorObj.getRole() == pyatspi.ROLE_TOOL_TIP:
             return []
 
+        if priorObj and priorObj.parent == obj.parent:
+            return []
+
         if self._script.utilities.isTypeahead(priorObj):
             return []
 
