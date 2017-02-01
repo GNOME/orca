@@ -1584,11 +1584,19 @@ class SpeechGenerator(generator.Generator):
         if not role in enabled:
             return []
 
+        count = args.get('count', 1)
+
         result = []
         if role == pyatspi.ROLE_BLOCK_QUOTE:
-            result.append(messages.LEAVING_BLOCKQUOTE)
+            if count > 1:
+                result.append(messages.leavingNBlockquotes(count))
+            else:
+                result.append(messages.LEAVING_BLOCKQUOTE)
         elif role == pyatspi.ROLE_LIST and self._script.utilities.isDocumentList(obj):
-            result.append(messages.LEAVING_LIST)
+            if count > 1:
+                result.append(messages.leavingNLists(count))
+            else:
+                result.append(messages.LEAVING_LIST)
         elif role == pyatspi.ROLE_PANEL and self._script.utilities.isDocumentPanel(obj):
             result.append(messages.LEAVING_PANEL)
         elif role == pyatspi.ROLE_TABLE and self._script.utilities.isTextDocumentTable(obj):
@@ -1646,20 +1654,8 @@ class SpeechGenerator(generator.Generator):
             return []
 
         commonAncestor = self._script.utilities.commonAncestor(priorObj, obj)
-        try:
-            role = commonAncestor.getRole()
-            name = commonAncestor.name
-        except:
-            role = None
-            name = None
-        else:
-            if role == pyatspi.ROLE_COMBO_BOX:
-                return []
-
-        def _isCommonAncestor(x):
-            if not (name and role):
-                return False
-            return x and x.getRole() == role and x.name == name
+        if obj == commonAncestor:
+            return []
 
         includeOnly = args.get('includeOnly', [])
 
@@ -1671,25 +1667,40 @@ class SpeechGenerator(generator.Generator):
         stopAtRoles = args.get('stopAtRoles', [])
         stopAtRoles.append(pyatspi.ROLE_APPLICATION)
 
-        if obj != commonAncestor:
-            parent = obj.parent
-            while parent and not parent in [commonAncestor, parent.parent]:
-                if _isCommonAncestor(parent):
-                    break
+        presentOnce = [pyatspi.ROLE_BLOCK_QUOTE, pyatspi.ROLE_LIST]
 
-                parentRole = self._getAlternativeRole(parent)
-                if parentRole in stopAtRoles:
-                    break
-                if parentRole in skipRoles:
-                    pass
-                elif includeOnly and parentRole not in includeOnly:
-                    pass
-                elif not self._script.utilities.isLayoutOnly(parent):
-                    self._overrideRole(parentRole, args)
-                    result.append(self.generate(parent, formatType='focused',
-                                                role=parentRole, leaving=leaving))
-                    self._restoreRole(parentRole, args)
-                parent = parent.parent
+        ancestors, ancestorRoles = [], []
+        parent = obj.parent
+        while parent and parent != parent.parent:
+            parentRole = self._getAlternativeRole(parent)
+            if parentRole in stopAtRoles:
+                break
+            if parentRole in skipRoles:
+                pass
+            elif includeOnly and parentRole not in includeOnly:
+                pass
+            elif self._script.utilities.isLayoutOnly(parent):
+                pass
+            elif parent != commonAncestor or (not leaving and parentRole in presentOnce):
+                ancestors.append(parent)
+                ancestorRoles.append(parentRole)
+
+            if parent == commonAncestor:
+                break
+
+            parent = parent.parent
+
+        presentedRoles = []
+        for i, x in enumerate(ancestors):
+            altRole = ancestorRoles[i]
+            if altRole in presentOnce and altRole in presentedRoles:
+                continue
+
+            presentedRoles.append(altRole)
+            count = ancestorRoles.count(altRole)
+            self._overrideRole(altRole, args)
+            result.append(self.generate(x, formatType='focused', role=altRole, leaving=leaving, count=count))
+            self._restoreRole(altRole, args)
 
         if not leaving:
             result.reverse()

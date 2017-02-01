@@ -2134,6 +2134,17 @@ def itemsFound(count):
     # presented to the user to indicate how many matching items were found.
     return ngettext("%d item found", "%d items found", count) % count
 
+def leavingNBlockquotes(count):
+    # Translators: This message is presented when a user is navigating within a
+    # series of nested blockquotes, such as can be seen in deep email threads,
+    # and then navigates out of several levels at once.
+    return ngettext("Leaving %d blockquote.", "Leaving %d blockquotes.", count) % count
+
+def leavingNLists(count):
+    # Translators: This message is presented when a user is navigating within a
+    # series of nested lists and then navigates out of several levels at once.
+    return ngettext("Leaving %d list.", "Leaving %d lists.", count) % count
+
 def listItemCount(count):
     # Translators: This message describes a bulleted or numbered list.
     return ngettext("List with %d item", "List with %d items", count) % count

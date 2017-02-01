@@ -1510,8 +1510,7 @@ class Utilities:
         return -1
 
     def nestingLevel(self, obj):
-        """Determines the nesting level of this object in a list.  If this
-        object is not in a list relation, then 0 will be returned.
+        """Determines the nesting level of this object.
 
         Arguments:
         -obj: the Accessible object
@@ -1526,12 +1525,21 @@ class Utilities:
             if self.NESTING_LEVEL not in self._script.generatorCache:
                 self._script.generatorCache[self.NESTING_LEVEL] = {}
 
-        nestingLevel = 0
-        parent = obj.parent
-        while parent.parent and parent.parent.getRole() == pyatspi.ROLE_LIST:
-            nestingLevel += 1
-            parent = parent.parent
+        if self.isBlockquote(obj):
+            pred = lambda x: self.isBlockquote(x)
+        elif obj.getRole() == pyatspi.ROLE_LIST_ITEM:
+            pred = lambda x: x and x.parent and x.parent.getRole() == pyatspi.ROLE_LIST
+        else:
+            role = obj.getRole()
+            pred = lambda x: x and x.getRole() == role
 
+        ancestors = []
+        ancestor = pyatspi.findAncestor(obj, pred)
+        while ancestor:
+            ancestors.append(ancestor)
+            ancestor = pyatspi.findAncestor(ancestor, pred)
+
+        nestingLevel = len(ancestors)
         self._script.generatorCache[self.NESTING_LEVEL][obj] = nestingLevel
         return self._script.generatorCache[self.NESTING_LEVEL][obj]
 

@@ -133,8 +133,8 @@ formatting = {
             'unfocused': 'labelAndName'
             },
         pyatspi.ROLE_BLOCK_QUOTE: {
-            'focused' : 'leaving or roleName',
-            'unfocused': 'roleName + pause + displayedText',
+            'focused' : 'leaving or (roleName + pause + nestingLevel)',
+            'unfocused': 'roleName + pause + nestingLevel + pause + displayedText',
             },
         pyatspi.ROLE_CANVAS: {
             'focused': 'labelAndName + imageDescription + roleName + pause + positionInList',
@@ -244,7 +244,7 @@ formatting = {
             'basicWhereAmI': 'linkInfo + pause + siteDescription + pause + fileSize + pause + ' + MNEMONIC
             },
         pyatspi.ROLE_LIST: {
-            'focused': 'leaving or (labelOrName + multiselectableState + numberOfChildren)',
+            'focused' : 'leaving or (numberOfChildren + pause + nestingLevel)',
             'unfocused': 'labelOrName + pause + focusedItem + pause + multiselectableState + numberOfChildren + pause'
             },
         pyatspi.ROLE_LIST_BOX: {
