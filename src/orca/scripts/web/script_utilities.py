@@ -2126,7 +2126,7 @@ class Utilities(script_utilities.Utilities):
     def isDetachedDocument(self, obj):
         docRoles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]
         if (obj and obj.getRole() in docRoles):
-            if obj.parent is None:
+            if obj.parent is None or self.isZombie(obj.parent):
                 msg = "WEB: %s is a detatched document" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
