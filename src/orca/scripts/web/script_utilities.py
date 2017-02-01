@@ -3053,6 +3053,10 @@ class Utilities(script_utilities.Utilities):
             return context
         elif self.isZombie(context[0]):
             obj, offset = self.findContextReplicant()
+            if obj:
+                caretObj, caretOffset = self._searchForCaretContext(obj.parent)
+                if caretObj and not self.isZombie(caretObj):
+                    obj, offset = caretObj, caretOffset
         else:
             obj, offset = context
 
