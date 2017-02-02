@@ -1328,6 +1328,10 @@ class Utilities(script_utilities.Utilities):
 
             objects.extend(onRight)
             lastObj, lastEnd = objects[-1][0], objects[-1][2]
+            if self.isMathTopLevel(lastObj):
+                lastObj, lastEnd = self.lastContext(lastObj)
+                lastEnd += 1
+
             nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
 
         if useCache:
