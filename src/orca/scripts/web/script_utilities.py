@@ -1287,6 +1287,10 @@ class Utilities(script_utilities.Utilities):
             extents = self.getExtents(firstObj, firstStart, firstEnd)
 
         lastObj, lastStart, lastEnd, lastString = objects[-1]
+        if self.isMathTopLevel(lastObj):
+            lastObj, lastEnd = self.lastContext(lastObj)
+            lastEnd += 1
+
         prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
         nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
 
