@@ -764,8 +764,8 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def queryNonEmptyText(self, obj, excludeNonEntryTextWidgets=True):
-        if not obj:
-            return None
+        if not (obj and self.inDocumentContent(obj)) or self._script.browseModeIsSticky():
+            return super().queryNonEmptyText(obj)
 
         if hash(obj) in self._text:
             return self._text.get(hash(obj))
