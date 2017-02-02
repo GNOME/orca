@@ -1,3 +1,120 @@
+3.23.4 - 2 February 2017
+
+Web:
+
+ * Optionally announce when entering and leaving blockquotes, lists,
+   tables, panels, forms, and landmarks
+
+ * Improve handling of pages where the content is rapidly and repeatedly
+   destroyed and replaced
+
+ * Improve workarounds for several Gecko editable-text bugs
+
+ * Ensure we always announce ARIA landmark type before setting the caret
+
+ * Improve presentation of ARIA regions
+
+ * Add custom support for ARIA switch role
+
+ * Present messages resulting from use of aria-invalid
+
+ * Check for and filter out defunct objects when building elements list
+
+ * Eliminate double-speaking of line after document load
+
+ * Suppress presentation of irrelevant loading messages resulting from
+   busy state-change events in SeaMonkey's mail client
+
+ * Eliminate double-speaking of inferred labels in SayAll
+
+ * Fix several instances where new document name was not being presented
+
+ * Handle (un)ordered lists in which item text falls outside the item
+   element
+
+ * Descend images if they are imagemaps so that we don't fail to present
+   their content
+
+LibreOffice:
+
+ * Fix crash presenting certain Writer tables
+
+ * Handle LO's recently-corrected exposure of text attributes for
+   spellcheck
+
+ * Handle change in LO's accessibility tree for dialogs
+
+ * Handle more cases of LO objects becoming defunct
+
+ * Don't assume we can always get a string value for Calc input line
+
+ * Yet another workaround for yet another missing state-changed event
+
+General:
+
+ * Make spoken presentation of accessible description optional
+
+ * Work around missing focus-change events when focus changes due to a
+   mouse click
+
+ * Use Unicode in translatable strings
+
+ * Fix several issues in which we incorrectly update our location based
+   on bogus or redundant accessibility events
+
+ * Reduce chattiness associated with presentation of typeahead search
+
+ * Include infobar content when presenting status bar and default button
+
+ * Reduce chattiness associated with icons which incorrectly implement
+   accessible text
+
+ * Improve presentation of editable comboboxes
+
+ * Fix bug in which Orca is silent on launch due to inability to access
+   default screen
+
+ * Don't generate substring content unnecessarily (performance)
+
+ * Don't treat an empty table as layout only if the user gives it focus
+
+ * Fix bug speaking punctuation when punctuation style is set to NONE
+
+ * Stop converting horizontal ellipses to "..." in braille
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                   Marek Černocký
+    de            German                  Christian Kirbach
+    es            Spanish                 Daniel Mustieles
+    fr            French                  Claude Paroz
+    gl            Galician                Fran Diéguez
+    hu            Hungarian               Attila Hammer, Balázs Meskó
+    nl            Dutch                   Justin van Steijn
+    pl            Polish                  Piotr Drąg
+    pt_BR         Brazilian Portuguese    Rafael Fontenelle
+
+=========
+
+3.22.2 - 8 November 2016
+
+General:
+
+ * Improve support for Icedove
+
+ * Work around broken accessibility trees causing flat review to fail
+
+ * Work around missing state-changed events for LibreOffice toggle
+   buttons
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    fr            French                      Claude Paroz
+    nb            Norwegian bokmål            Kjartan Maraas
+    nl            Dutch                       Justin van Steijn
+
+=========
+
 3.22.1 - 11 October 2016
 
 Terminal:
