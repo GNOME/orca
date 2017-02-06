@@ -3264,6 +3264,14 @@ class Utilities:
 
         return obj, offset + 1
 
+    def lastContext(self, root):
+        offset = 0
+        text = self.queryNonEmptyText(root)
+        if text:
+            offset = text.characterCount - 1
+
+        return root, offset
+
     @staticmethod
     def getHyperlinkRange(obj):
         """Returns the start and end indices associated with the embedded

@@ -817,6 +817,16 @@ COMBO_BOX_PREV = _("Goes to previous combo box.")
 # Translators: this is for navigating among combo boxes in a document.
 COMBO_BOX_NEXT = _("Goes to next combo box.")
 
+# Translators: This string describes a document navigation command which moves
+# to the start of the current container. Examples of containers include tables,
+# lists, and blockquotes.
+CONTAINER_START = _("Goes to start of container.")
+
+# Translators: This string describes a document navigation command which moves
+# to the end of the current container. Examples of containers include tables,
+# lists, and blockquotes.
+CONTAINER_END = _("Goes to end of container.")
+
 # Translators: this is for navigating among combo boxes in a document.
 COMBO_BOX_LIST = _("Displays a list of combo boxes.")
 

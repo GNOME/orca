@@ -148,6 +148,7 @@ class Script(default.Script):
                 structural_navigation.StructuralNavigation.CHUNK,
                 structural_navigation.StructuralNavigation.CLICKABLE,
                 structural_navigation.StructuralNavigation.COMBO_BOX,
+                structural_navigation.StructuralNavigation.CONTAINER,
                 structural_navigation.StructuralNavigation.ENTRY,
                 structural_navigation.StructuralNavigation.FORM_FIELD,
                 structural_navigation.StructuralNavigation.HEADING,

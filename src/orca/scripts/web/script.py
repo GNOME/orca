@@ -254,6 +254,7 @@ class Script(default.Script):
                 structural_navigation.StructuralNavigation.CHUNK,
                 structural_navigation.StructuralNavigation.CLICKABLE,
                 structural_navigation.StructuralNavigation.COMBO_BOX,
+                structural_navigation.StructuralNavigation.CONTAINER,
                 structural_navigation.StructuralNavigation.ENTRY,
                 structural_navigation.StructuralNavigation.FORM_FIELD,
                 structural_navigation.StructuralNavigation.HEADING,
@@ -801,7 +802,7 @@ class Script(default.Script):
 
     def presentObject(self, obj, **args):
         priorObj = None
-        if self._lastCommandWasCaretNav:
+        if self._lastCommandWasCaretNav or args.get("includeContext"):
             priorObj, priorOffset = self.utilities.getPriorContext()
 
         offset = args.get("offset", 0)

@@ -295,6 +295,8 @@ class StructuralNavigationObject:
         directions["Down"]  = self.bindings.get("down")
         directions["First"] = self.bindings.get("first")
         directions["Last"]  = self.bindings.get("last")
+        directions["Start"]  = self.bindings.get("start")
+        directions["End"]  = self.bindings.get("end")
 
         for direction in directions:
             binding = directions.get(direction)
@@ -510,6 +512,12 @@ class StructuralNavigationObject:
             else:
                 script.presentMessage(messages.LIVE_REGIONS_OFF)
 
+        def goContainerEdge(script, inputEvent):
+            isStart = direction == "Start"
+            self.structuralNavigation.goEdge(self, isStart)
+
+        if self.objType == StructuralNavigation.CONTAINER:
+            return goContainerEdge
         if self.objType == StructuralNavigation.TABLE_CELL:
             return goCell
         elif self.objType == StructuralNavigation.LIVE_REGION \
@@ -551,6 +559,7 @@ class StructuralNavigation:
     CHUNK           = "chunk"
     CLICKABLE       = "clickable"
     COMBO_BOX       = "comboBox"
+    CONTAINER       = "container"
     ENTRY           = "entry"
     FORM_FIELD      = "formField"
     HEADING         = "heading"
@@ -600,6 +609,16 @@ class StructuralNavigation:
                     pyatspi.ROLE_DOCUMENT_SPREADSHEET,
                     pyatspi.ROLE_DOCUMENT_TEXT,
                     pyatspi.ROLE_DOCUMENT_WEB]
+
+    CONTAINER_ROLES = [pyatspi.ROLE_BLOCK_QUOTE,
+                       pyatspi.ROLE_FORM,
+                       pyatspi.ROLE_FOOTER,
+                       pyatspi.ROLE_HEADER,
+                       pyatspi.ROLE_LANDMARK,
+                       pyatspi.ROLE_LIST,
+                       pyatspi.ROLE_PANEL,
+                       pyatspi.ROLE_SECTION,
+                       pyatspi.ROLE_TABLE]
 
     IMAGE_ROLES = [pyatspi.ROLE_IMAGE,
                    pyatspi.ROLE_IMAGE_MAP]
@@ -865,6 +884,36 @@ class StructuralNavigation:
         self._objectCache[hash(document)] = cache
         return rv
 
+    def goEdge(self, structuralNavigationObject, isStart, container=None, arg=None):
+        if container is None:
+            obj, offset = self._script.utilities.getCaretContext()
+            container = self.getContainerForObject(obj)
+
+        if container is None or self._script.utilities.isDead(container):
+            structuralNavigationObject.present(None, arg)
+            return
+
+        if isStart:
+            obj, offset = self._script.utilities.nextContext(container, -1)
+            structuralNavigationObject.present(obj, offset)
+            return
+
+        obj, offset = self._script.utilities.lastContext(container)
+        newObj, newOffset = self._script.utilities.nextContext(obj, offset)
+        if not newObj:
+            document = self._script.utilities.getDocumentForObject(obj)
+            newObj = self._script.utilities.getNextObjectInDocument(obj, document)
+
+        newContainer = self.getContainerForObject(newObj)
+        if newObj and newContainer != container:
+            structuralNavigationObject.present(newObj)
+            return
+
+        if obj == container:
+            obj = obj[-1]
+
+        structuralNavigationObject.present(obj, sameContainer=True)
+
     def goObject(self, structuralNavigationObject, isNext, obj=None, arg=None):
         """The method used for navigation among StructuralNavigationObjects
         which are not table cells.
@@ -1003,6 +1052,31 @@ class StructuralNavigation:
             obj = pyatspi.utils.findAncestor(obj, isCell)
 
         return obj
+
+    def _isContainer(self, obj):
+        try:
+            role = obj.getRole()
+        except:
+            return False
+
+        if role not in self.CONTAINER_ROLES:
+            return False
+
+        if role == pyatspi.ROLE_SECTION \
+           and not self._script.utilities.isLandmark(obj) \
+           and not self._script.utilities.isBlockquote(obj):
+            return False
+
+        return self._script.utilities.inDocumentContent(obj)
+
+    def getContainerForObject(self, obj):
+        if not obj:
+            return None
+
+        if self._isContainer(obj):
+            return obj
+
+        return pyatspi.utils.findAncestor(obj, self._isContainer)
 
     def getTableForCell(self, obj):
         """Looks for a table in the ancestry of obj, if obj is not a table.
@@ -1143,7 +1217,7 @@ class StructuralNavigation:
         self._script.updateBraille(obj)
         self._script.sayLine(obj)
 
-    def _presentObject(self, obj, offset):
+    def _presentObject(self, obj, offset, includeContext=False):
         """Presents the entire object to the user.
 
         Arguments:
@@ -1157,7 +1231,7 @@ class StructuralNavigation:
         if self._presentWithSayAll(obj, offset):
             return
 
-        self._script.presentObject(obj, offset=offset)
+        self._script.presentObject(obj, offset=offset, includeContext=includeContext)
 
     def _presentWithSayAll(self, obj, offset):
         if self._script.inSayAll() \
@@ -3211,3 +3285,40 @@ class StructuralNavigation:
             return [self._getText(obj), self._getRoleName(obj)]
 
         return guilabels.SN_TITLE_CLICKABLE, columnHeaders, rowData
+
+    ########################
+    #                      #
+    # Containers           #
+    #                      #
+    ########################
+
+    def _containerBindings(self):
+        bindings = {}
+        desc = cmdnames.CONTAINER_START
+        bindings["start"] = ["comma", keybindings.SHIFT_MODIFIER_MASK, desc]
+
+        desc = cmdnames.CONTAINER_END
+        bindings["end"] = ["comma", keybindings.NO_MODIFIER_MASK, desc]
+
+        return bindings
+
+    def _containerCriteria(self, collection, arg=None):
+        return MatchCriteria(collection, roles=self.CONTAINER_ROLES, applyPredicate=True)
+
+    def _containerPredicate(self, obj, arg=None):
+        return self._isContainer(obj)
+
+    def _containerPresentation(self, obj, arg=None, **kwargs):
+        if not obj:
+            self._script.presentMessage(messages.CONTAINER_NOT_IN_A)
+            return
+
+        if kwargs.get("sameContainer"):
+            self._script.presentMessage(messages.CONTAINER_END)
+
+        characterOffset = arg
+        if characterOffset is None:
+            obj, characterOffset = self._getCaretPosition(obj)
+
+        self._setCaretPosition(obj, characterOffset)
+        self._presentObject(obj, characterOffset, True)

@@ -386,6 +386,21 @@ DATE_FORMAT_ABBREVIATED_DMY = "%a, %-d %b, %Y"
 DATE_FORMAT_ABBREVIATED_MDY = "%a, %b %-d, %Y"
 DATE_FORMAT_ABBREVIATED_YMD = "%Y. %b %-d, %a."
 
+# Translators: This is for navigating document content by moving to the start
+# or end of a container. Examples of containers include tables, lists, and
+# blockquotes. When moving to the end of a container, Orca attempts to place
+# the caret at the content which follows that container. If this is cannot be
+# done (e.g. because the container is the last element on the page), Orca will
+# instead present this message as an indication that the container was not
+# exited as expected.
+CONTAINER_END = _("End of container.")
+
+# Translators: This is for navigating document content by moving to the start
+# or end of a container. Examples of containers include tables, lists, and
+# blockquotes. If the user attempts to use this command in an object which is
+# not a container, this message will be presented.
+CONTAINER_NOT_IN_A = _("Not in a container.")
+
 # Translators: The "default" button in a dialog box is the button that gets
 # activated when Enter is pressed anywhere within that dialog box.
 DEFAULT_BUTTON_IS = _("Default button is %s")
