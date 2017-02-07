@@ -821,7 +821,8 @@ class Script(script.Script):
         if self.flatReviewContext:
             self.toggleFlatReviewMode()
 
-        if not orca_state.activeWindow:
+        if not orca_state.activeWindow \
+           or (event and event.host_application != orca_state.activeScript.app):
             orca_state.activeWindow = self.utilities.topLevelObject(newLocusOfFocus)
 
         self.updateBraille(newLocusOfFocus)
