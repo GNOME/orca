@@ -72,6 +72,10 @@ class Script(web.Script):
         if super().onActiveChanged(event):
             return
 
+        if event.detail1 and event.source.getRole() == pyatspi.ROLE_FRAME \
+           and not self.utilities.canBeActiveWindow(event.source):
+            return
+
         msg = "GECKO: Passing along event to default script"
         debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onActiveChanged(self, event)
