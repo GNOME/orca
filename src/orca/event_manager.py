@@ -591,6 +591,10 @@ class EventManager:
                and event.detail1):
             return True, "Event source claimed focus."
 
+        if eType.startswith('object:state-changed:selected') and event.detail1 \
+           and role == pyatspi.ROLE_MENU and state.contains(pyatspi.STATE_FOCUSED):
+            return True, "Selection change in focused menu"
+
         # This condition appears with gnome-screensave-dialog.
         # See bug 530368.
         if eType.startswith('object:state-changed:showing') \
