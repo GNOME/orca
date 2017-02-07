@@ -56,6 +56,12 @@ class Script(web.Script):
 
         return Utilities(self)
 
+    def isActivatableEvent(self, event):
+        if event.type == "window:activate":
+            return self.utilities.canBeActiveWindow(event.source)
+
+        return super().isActivatableEvent(event)
+
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
         """Handles changes of focus of interest to the script."""
 
