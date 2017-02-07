@@ -824,6 +824,7 @@ class Script(script.Script):
         if not orca_state.activeWindow \
            or (event and event.host_application != orca_state.activeScript.app):
             orca_state.activeWindow = self.utilities.topLevelObject(newLocusOfFocus)
+            self.windowActivateTime = time.time()
 
         self.updateBraille(newLocusOfFocus)
 

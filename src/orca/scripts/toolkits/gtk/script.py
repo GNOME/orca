@@ -26,6 +26,7 @@ __copyright__ = "Copyright (c) 2013-2014 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
+import time
 
 import orca.debug as debug
 import orca.orca as orca
@@ -57,7 +58,11 @@ class Script(default.Script):
             newFocus = pyatspi.findAncestor(newFocus, isComboBox) or newFocus
             orca.setLocusOfFocus(event, newFocus, False)
         elif self.utilities.isInOpenMenuBarMenu(newFocus):
-            orca_state.activeWindow = self.utilities.topLevelObject(newFocus)
+            window = self.utilities.topLevelObject(newFocus)
+            windowChanged = window and orca_state.activeWindow != window
+            if windowChanged:
+                orca_state.activeWindow = window
+                self.windowActivateTime = time.time()
 
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 
