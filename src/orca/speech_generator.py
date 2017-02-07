@@ -1668,7 +1668,7 @@ class SpeechGenerator(generator.Generator):
         skipRoles.extend(disabled)
 
         stopAtRoles = args.get('stopAtRoles', [])
-        stopAtRoles.append(pyatspi.ROLE_APPLICATION)
+        stopAtRoles.extend([pyatspi.ROLE_APPLICATION, pyatspi.ROLE_MENU_BAR])
 
         presentOnce = [pyatspi.ROLE_BLOCK_QUOTE, pyatspi.ROLE_LIST]
 
