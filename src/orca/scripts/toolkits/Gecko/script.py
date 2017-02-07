@@ -318,6 +318,9 @@ class Script(web.Script):
     def onWindowActivated(self, event):
         """Callback for window:activate accessibility events."""
 
+        if not self.utilities.canBeActiveWindow(event.source):
+            return
+
         if super().onWindowActivated(event):
             return
 
