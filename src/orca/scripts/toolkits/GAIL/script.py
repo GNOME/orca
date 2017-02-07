@@ -42,6 +42,14 @@ class Script(default.Script):
     def getUtilities(self):
         return Utilities(self)
 
+    def locusOfFocusChanged(self, event, oldFocus, newFocus):
+        """Handles changes of focus of interest to the script."""
+
+        if self.utilities.isInOpenMenuBarMenu(newFocus):
+            orca_state.activeWindow = self.utilities.topLevelObject(newFocus)
+
+        super().locusOfFocusChanged(event, oldFocus, newFocus)
+
     def onActiveDescendantChanged(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 

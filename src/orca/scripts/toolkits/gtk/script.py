@@ -56,6 +56,8 @@ class Script(default.Script):
             isComboBox = lambda x: x and x.getRole() == pyatspi.ROLE_COMBO_BOX
             newFocus = pyatspi.findAncestor(newFocus, isComboBox) or newFocus
             orca.setLocusOfFocus(event, newFocus, False)
+        elif self.utilities.isInOpenMenuBarMenu(newFocus):
+            orca_state.activeWindow = self.utilities.topLevelObject(newFocus)
 
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 
