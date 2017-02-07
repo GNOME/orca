@@ -2703,6 +2703,9 @@ class Script(script.Script):
         - event: the Event
         """
 
+        if not self.utilities.canBeActiveWindow(event.source):
+            return
+
         if self.utilities.isSameObject(event.source, orca_state.activeWindow):
             msg = "DEFAULT: Event is for active window."
             debug.println(debug.LEVEL_INFO, msg, True)
