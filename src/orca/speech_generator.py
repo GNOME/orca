@@ -1672,6 +1672,17 @@ class SpeechGenerator(generator.Generator):
 
         presentOnce = [pyatspi.ROLE_BLOCK_QUOTE, pyatspi.ROLE_LIST]
 
+        presentCommonAncestor = False
+        if commonAncestor and not leaving:
+            commonRole = self._getAlternativeRole(commonAncestor)
+            if commonRole in presentOnce:
+                pred = lambda x: x and self._getAlternativeRole(x) == commonRole
+                objAncestor = pyatspi.findAncestor(obj, pred)
+                priorAncestor = pyatspi.findAncestor(priorObj, pred)
+                objLevel = self._script.utilities.nestingLevel(objAncestor)
+                priorLevel = self._script.utilities.nestingLevel(priorAncestor)
+                presentCommonAncestor = objLevel != priorLevel
+
         ancestors, ancestorRoles = [], []
         parent = obj.parent
         while parent and parent != parent.parent:
@@ -1684,7 +1695,7 @@ class SpeechGenerator(generator.Generator):
                 pass
             elif self._script.utilities.isLayoutOnly(parent):
                 pass
-            elif parent != commonAncestor or (not leaving and parentRole in presentOnce):
+            elif parent != commonAncestor or presentCommonAncestor:
                 ancestors.append(parent)
                 ancestorRoles.append(parentRole)
 
