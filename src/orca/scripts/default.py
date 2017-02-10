@@ -2085,6 +2085,9 @@ class Script(script.Script):
         """Callback for object:state-changed:active accessibility events."""
 
         if event.source.getRole() == pyatspi.ROLE_FRAME:
+            if event.detail1 and not self.utilities.canBeActiveWindow(event.source):
+                return
+
             sourceIsActiveWindow = self.utilities.isSameObject(
                 event.source, orca_state.activeWindow)
 
