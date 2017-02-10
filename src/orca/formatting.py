@@ -197,7 +197,7 @@ formatting = {
         },
         pyatspi.ROLE_FORM: {
             'focused': 'leaving or (labelAndName + roleName)',
-            'unfocused': '((substring and currentLineText) or labelAndName) + roleName + pause + unrelatedLabels'
+            'unfocused': '((substring and currentLineText) or labelAndName) + roleName'
             },
         pyatspi.ROLE_FRAME: {
             'focused': 'labelOrName + roleName',
