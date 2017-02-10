@@ -1171,10 +1171,10 @@ class Script(default.Script):
             self.utilities.clearCaretContext()
 
         shouldPresent = self.utilities.isShowingOrVisible(event.source)
-        if not _settingsManager.getSetting('onlySpeakDisplayedText'):
+        if not _settingsManager.getSetting('onlySpeakDisplayedText') and shouldPresent:
             if event.detail1:
                 self.presentMessage(messages.PAGE_LOADING_START)
-            elif event.source.name and shouldPresent:
+            elif event.source.name:
                 msg = messages.PAGE_LOADING_END_NAMED % event.source.name
                 self.presentMessage(msg, resetStyles=False)
             else:
