@@ -1587,10 +1587,14 @@ class Script(default.Script):
             return False
 
         if self.utilities.isTopLevelWebApp(document):
-            msg = "WEB: Event handled: Setting locusOfFocus to event source"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            orca.setLocusOfFocus(event, event.source)
-            return True
+            if self._browseModeIsSticky:
+                msg = "WEB: Web app claimed focus, but browse mode is sticky"
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                msg = "WEB: Event handled: Setting locusOfFocus to event source"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                orca.setLocusOfFocus(event, event.source)
+                return True
 
         state = event.source.getState()
         if state.contains(pyatspi.STATE_EDITABLE):
