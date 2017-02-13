@@ -1600,6 +1600,9 @@ class Script(default.Script):
             return True
 
         obj, offset = self.utilities.getCaretContext()
+        msg = "WEB: Caret context is %s, %i" % (obj, offset)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         if obj and self.utilities.isZombie(obj):
             msg = "WEB: Clearing context - obj is zombie"
             debug.println(debug.LEVEL_INFO, msg, True)
