@@ -1487,10 +1487,16 @@ class Script(default.Script):
             return True
 
         obj, offset = self.utilities.getCaretContext(getZombieReplicant=False)
+        msg = "WEB: Context: %s, %i (focus: %s)" % (obj, offset, orca_state.locusOfFocus)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         if self.utilities.isZombie(obj):
             obj, offset = self.utilities.getCaretContext(getZombieReplicant=True)
             if obj and self.utilities.isZombie(orca_state.locusOfFocus):
+                msg = "WEB: Updating focus and context to %s, %i" % (obj, offset)
+                debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, obj, notifyScript=False)
+                self.utilities.setCaretContext(obj, offset)
 
         contextDocument = self.utilities.getDocumentForObject(obj)
         if obj and document == contextDocument and self.utilities.isZombie(obj):
