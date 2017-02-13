@@ -1600,7 +1600,8 @@ class Script(default.Script):
             return True
 
         obj, offset = self.utilities.getCaretContext()
-        msg = "WEB: Caret context is %s, %i" % (obj, offset)
+        msg = "WEB: Caret context is %s, %i (focus: %s)" \
+              % (obj, offset, orca_state.locusOfFocus)
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if obj and self.utilities.isZombie(obj):

@@ -1343,7 +1343,8 @@ class Utilities(script_utilities.Utilities):
         if obj is None:
             obj, offset = self.getCaretContext()
 
-        msg = "WEB: Current context is: %s, %i" % (obj, offset)
+        msg = "WEB: Current context is: %s, %i (focus: %s)" \
+              % (obj, offset, orca_state.locusOfFocus)
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if obj and self.isZombie(obj):
@@ -1388,7 +1389,8 @@ class Utilities(script_utilities.Utilities):
         if obj is None:
             obj, offset = self.getCaretContext()
 
-        msg = "WEB: Current context is: %s, %i" % (obj, offset)
+        msg = "WEB: Current context is: %s, %i (focus: %s)" \
+              % (obj, offset, orca_state.locusOfFocus)
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if obj and self.isZombie(obj):
