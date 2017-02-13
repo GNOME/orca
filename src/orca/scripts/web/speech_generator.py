@@ -194,6 +194,18 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return super()._generateNewNodeLevel(obj, **args)
 
+    def _generateLeaving(self, obj, **args):
+        if not args.get('leaving'):
+            return []
+
+        if self._script.utilities.inDocumentContent(obj) \
+           and not self._script.utilities.inDocumentContent(orca_state.locusOfFocus):
+            result = ['']
+            result.extend(self.voice(speech_generator.SYSTEM))
+            return result
+
+        return super()._generateLeaving(obj, **args)
+
     def _generateNewRadioButtonGroup(self, obj, **args):
         # TODO - JD: Looking at the default speech generator's method, this
         # is all kinds of broken. Until that can be sorted out, try to filter
