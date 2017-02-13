@@ -3013,7 +3013,7 @@ class Utilities(script_utilities.Utilities):
 
         return role in doNotDescend
 
-    def _searchForCaretContext(self, obj):
+    def searchForCaretContext(self, obj):
         contextObj, contextOffset = None, -1
         while obj:
             try:
@@ -3056,13 +3056,13 @@ class Utilities(script_utilities.Utilities):
 
         context = self._caretContexts.get(hash(documentFrame.parent))
         if not context:
-            obj, offset = self._searchForCaretContext(documentFrame)
+            obj, offset = self.searchForCaretContext(documentFrame)
         elif not getZombieReplicant:
             return context
         elif self.isZombie(context[0]):
             obj, offset = self.findContextReplicant()
             if obj:
-                caretObj, caretOffset = self._searchForCaretContext(obj.parent)
+                caretObj, caretOffset = self.searchForCaretContext(obj.parent)
                 if caretObj and not self.isZombie(caretObj):
                     obj, offset = caretObj, caretOffset
         else:

@@ -1599,6 +1599,19 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return True
 
+        obj, offset = self.utilities.getCaretContext()
+        if obj and self.utilities.isZombie(obj):
+            msg = "WEB: Clearing context - obj is zombie"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.utilities.clearCaretContext()
+
+            obj, offset = self.utilities.searchForCaretContext(event.source)
+            if obj:
+                msg = "WEB: Updating focus and context to %s, %i" % (obj, offset)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                orca.setLocusOfFocus(event, obj, False)
+                self.utilities.setCaretContext(obj, offset)
+
         if self._lastCommandWasCaretNav:
             msg = "WEB: Event ignored: Last command was caret nav"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1619,13 +1632,6 @@ class Script(default.Script):
             msg = "WEB: Deferring to other scripts for handling non-document source"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
-
-        obj, offset = self.utilities.getCaretContext(event.source)
-        if obj and self.utilities.isZombie(obj):
-            msg = "WEB: Clearing context - obj is zombie"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            self.utilities.clearCaretContext()
-            obj, offset = self.utilities.getCaretContext(event.source)
 
         if not obj:
             msg = "WEB: Unable to get non-null, non-zombie context object"
