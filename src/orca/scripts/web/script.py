@@ -1492,31 +1492,22 @@ class Script(default.Script):
 
         if self.utilities.isZombie(obj):
             obj, offset = self.utilities.getCaretContext(getZombieReplicant=True)
-            if obj and self.utilities.isZombie(orca_state.locusOfFocus):
-                msg = "WEB: Updating focus and context to %s, %i" % (obj, offset)
-                debug.println(debug.LEVEL_INFO, msg, True)
-                orca.setLocusOfFocus(event, obj, notifyScript=False)
-                self.utilities.setCaretContext(obj, offset)
+            if not obj:
+                if self._inFocusMode:
+                    msg = "WEB: Not looking for replicant due to focus mode."
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    return False
 
-        contextDocument = self.utilities.getDocumentForObject(obj)
-        if obj and document == contextDocument and self.utilities.isZombie(obj):
-            msg = "WEB: Context obj %s is Zombie." % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            if self._inFocusMode:
-                msg = "WEB: Not looking for replicant due to focus mode."
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return False
-
-            replicant = self.utilities.findReplicant(event.source, obj)
-            if replicant:
-                # Refrain from actually touching the replicant by grabbing
-                # focus or setting the caret in it. Doing so will only serve
-                # to anger it.
-                msg = "WEB: Event handled by updating locusOfFocus and context"
-                debug.println(debug.LEVEL_INFO, msg, True)
-                orca.setLocusOfFocus(event, replicant, False)
-                self.utilities.setCaretContext(replicant, offset)
-                return True
+                obj = self.utilities.findReplicant(event.source, obj)
+                if obj:
+                    # Refrain from actually touching the replicant by grabbing
+                    # focus or setting the caret in it. Doing so will only serve
+                    # to anger it.
+                    msg = "WEB: Event handled by updating locusOfFocus and context"
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    orca.setLocusOfFocus(event, obj, False)
+                    self.utilities.setCaretContext(obj, offset)
+                    return True
 
         childRole = event.any_data.getRole()
         if childRole == pyatspi.ROLE_ALERT:
@@ -1614,8 +1605,8 @@ class Script(default.Script):
               % (obj, offset, orca_state.locusOfFocus)
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        if obj and self.utilities.isZombie(obj):
-            msg = "WEB: Clearing context - obj is zombie"
+        if not obj or self.utilities.isZombie(obj):
+            msg = "WEB: Clearing context - obj is null or zombie"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.utilities.clearCaretContext()
 
@@ -1625,6 +1616,9 @@ class Script(default.Script):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 orca.setLocusOfFocus(event, obj, False)
                 self.utilities.setCaretContext(obj, offset)
+            else:
+                msg = "WEB: Search for caret context failed"
+                debug.println(debug.LEVEL_INFO, msg, True)
 
         if self._lastCommandWasCaretNav:
             msg = "WEB: Event ignored: Last command was caret nav"
