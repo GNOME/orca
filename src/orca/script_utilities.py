@@ -2944,6 +2944,11 @@ class Utilities:
                 return False
             if not state.contains(pyatspi.STATE_SHOWING):
                 return False
+            if state.contains(pyatspi.STATE_FOCUSABLE):
+                event.source.clearCache()
+                state = event.source.getState()
+                if not state.contains(pyatspi.STATE_FOCUSED):
+                    return False
 
             lastKey, mods = self.lastKeyAndModifiers()
             if lastKey == "Tab" and event.any_data != "\t":
