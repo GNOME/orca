@@ -734,44 +734,11 @@ class SpeechGenerator(generator.Generator):
         dictionary.  The 'priorObj' is typically set by Orca to be the
         previous object with focus.
         """
-        result = []
-        acss = self.voice(DEFAULT)
-        if obj:
-            priorObj = args.get('priorObj', None)
-            try:
-                priorParent = priorObj.parent
-            except:
-                priorParent = None
 
-            if (obj.getRole() == pyatspi.ROLE_TABLE_CELL) \
-                or (obj.parent and obj.parent.getRole() == pyatspi.ROLE_TABLE):
-                try:
-                    table = priorParent.queryTable()
-                except:
-                    table = None
-                if table \
-                   and ((priorObj.getRole() == pyatspi.ROLE_TABLE_CELL) \
-                         or (priorObj.getRole() == pyatspi.ROLE_TABLE)):
-                    index = self._script.utilities.cellIndex(priorObj)
-                    oldRow = table.getRowAtIndex(index)
-                else:
-                    oldRow = -1
+        if not self._script.utilities.cellRowChanged(obj):
+            return []
 
-                try:
-                    table = obj.parent.queryTable()
-                except:
-                    pass
-                else:
-                    index = self._script.utilities.cellIndex(obj)
-                    newRow = table.getRowAtIndex(index)
-                    if (newRow >= 0) \
-                       and (index != newRow) \
-                       and ((newRow != oldRow) \
-                            or (obj.parent != priorParent)):
-                        result = self._generateRowHeader(obj, **args)
-        if result:
-            result.extend(acss)
-        return result
+        return self._generateRowHeader(obj, **args)
 
     def _generateNewColumnHeader(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
@@ -783,44 +750,11 @@ class SpeechGenerator(generator.Generator):
         dictionary.  The 'priorObj' is typically set by Orca to be the
         previous object with focus.
         """
-        result = []
-        acss = self.voice(DEFAULT)
-        if obj and not args.get('readingRow', False):
-            priorObj = args.get('priorObj', None)
-            try:
-                priorParent = priorObj.parent
-            except:
-                priorParent = None
 
-            if (obj.getRole() == pyatspi.ROLE_TABLE_CELL) \
-                or (obj.parent and obj.parent.getRole() == pyatspi.ROLE_TABLE):
-                try:
-                    table = priorParent.queryTable()
-                except:
-                    table = None
-                if table \
-                   and ((priorObj.getRole() == pyatspi.ROLE_TABLE_CELL) \
-                         or (priorObj.getRole() == pyatspi.ROLE_TABLE)):
-                    index = self._script.utilities.cellIndex(priorObj)
-                    oldCol = table.getColumnAtIndex(index)
-                else:
-                    oldCol = -1
+        if not self._script.utilities.cellColumnChanged(obj):
+            return []
 
-                try:
-                    table = obj.parent.queryTable()
-                except:
-                    pass
-                else:
-                    index = self._script.utilities.cellIndex(obj)
-                    newCol = table.getColumnAtIndex(index)
-                    if (newCol >= 0) \
-                       and (index != newCol) \
-                       and ((newCol != oldCol) \
-                            or (obj.parent != priorParent)):
-                        result = self._generateColumnHeader(obj, **args)
-        if result:
-            result.extend(acss)
-        return result
+        return self._generateColumnHeader(obj, **args)
 
     def _generateRealTableCell(self, obj, **args):
         """Orca has a feature to automatically read an entire row of a table
