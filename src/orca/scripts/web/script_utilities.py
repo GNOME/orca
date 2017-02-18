@@ -1155,6 +1155,9 @@ class Utilities(script_utilities.Utilities):
             if not onLeft:
                 break
 
+            if self._contentIsSubsetOf(objects[0], onLeft[-1]):
+                objects.pop(0)
+
             objects[0:0] = onLeft
             firstObj, firstStart, firstEnd, firstString = objects[0]
             prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
@@ -1164,6 +1167,9 @@ class Utilities(script_utilities.Utilities):
         while lastObj and lastString and not lastString[-1].isspace():
             nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
             onRight = self._getContentsForObj(nextObj, nOffset, boundary)
+            if onRight and self._contentIsSubsetOf(objects[0], onRight[-1]):
+                onRight = onRight[0:-1]
+
             onRight = list(filter(_include, onRight))
             if not onRight:
                 break
