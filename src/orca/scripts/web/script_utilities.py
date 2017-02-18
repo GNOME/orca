@@ -1246,8 +1246,6 @@ class Utilities(script_utilities.Utilities):
             return []
 
         text = self.queryNonEmptyText(obj)
-        if text and offset == text.characterCount:
-            offset -= 1
         offset = max(0, offset)
 
         if useCache:
