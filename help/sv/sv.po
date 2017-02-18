@@ -1,13 +1,13 @@
 # Swedish translation for orca.
-# Copyright © 2015, 2016 orca's COPYRIGHT HOLDER
+# Copyright © 2015, 2016, 2017 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2016-09-19 11:37+0000\n"
-"PO-Revision-Date: 2016-09-20 22:35+0200\n"
+"POT-Creation-Date: 2017-02-06 16:00+0000\n"
+"PO-Revision-Date: 2017-02-12 00:43+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -15,12 +15,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
 msgid "translator-credits"
-msgstr "Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015"
+msgstr "Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017"
 
 #. (itstool) path: info/title
 #: C/commands_bookmarks.page:6
@@ -2325,6 +2325,18 @@ msgstr ""
 "Visa en lista över bilder: <keyseq><key>Alt</key><key>Skift</key><key>G</"
 "key></keyseq>"
 
+#. (itstool) path: item/p
+#: C/commands_structural_navigation.page:435
+#| msgid ""
+#| "Next and previous entry: <keyseq><key>E</key></keyseq> and "
+#| "<keyseq><key>Shift</key><key>E</key></keyseq>"
+msgid ""
+"Start and end of current container: <keyseq><key>Shift</key><key>comma</"
+"key></keyseq> and <keyseq><key>comma</key></keyseq>"
+msgstr ""
+"Början och slut på aktuell behållare: <keyseq><key>Skift</key><key>komma</"
+"key></keyseq> och <keyseq><key>komma</key></keyseq>"
+
 #. (itstool) path: info/title
 #: C/commands_table.page:6
 msgctxt "sort"
@@ -3761,7 +3773,7 @@ msgstr "Underhålla flera konfigurationer"
 
 #. (itstool) path: page/title
 #. (itstool) path: section/title
-#: C/howto_profiles.page:15 C/preferences_general.page:146
+#: C/howto_profiles.page:15 C/preferences_general.page:175
 msgid "Profiles"
 msgstr "Profiler"
 
@@ -5116,12 +5128,12 @@ msgstr ""
 #: C/preferences_gecko.page:58 C/preferences_gecko.page:100
 #: C/preferences_gecko.page:182 C/preferences_general.page:52
 #: C/preferences_general.page:70 C/preferences_general.page:119
-#: C/preferences_general.page:199 C/preferences_general.page:210
+#: C/preferences_general.page:228 C/preferences_general.page:239
 #: C/preferences_key_echo.page:112 C/preferences_key_echo.page:122
 #: C/preferences_key_echo.page:157 C/preferences_key_echo.page:179
 #: C/preferences_speech.page:105 C/preferences_speech.page:135
-#: C/preferences_speech.page:147 C/preferences_speech.page:158
-#: C/preferences_speech.page:170 C/preferences_speech.page:231
+#: C/preferences_speech.page:160 C/preferences_speech.page:171
+#: C/preferences_speech.page:183 C/preferences_speech.page:343
 #: C/preferences_table_navigation.page:65 C/preferences_voice.page:122
 #: C/preferences_voice.page:133
 msgid "Default value: not checked"
@@ -5306,14 +5318,18 @@ msgstr ""
 #: C/preferences_braille.page:129 C/preferences_braille.page:142
 #: C/preferences_gecko.page:35 C/preferences_gecko.page:78
 #: C/preferences_gecko.page:142 C/preferences_gecko.page:170
-#: C/preferences_general.page:188 C/preferences_key_echo.page:28
-#: C/preferences_key_echo.page:37 C/preferences_key_echo.page:47
-#: C/preferences_key_echo.page:57 C/preferences_key_echo.page:67
-#: C/preferences_key_echo.page:77 C/preferences_key_echo.page:87
-#: C/preferences_key_echo.page:99 C/preferences_speech.page:26
-#: C/preferences_speech.page:123 C/preferences_speech.page:183
-#: C/preferences_speech.page:195 C/preferences_speech.page:207
-#: C/preferences_speech.page:219 C/preferences_speech.page:244
+#: C/preferences_general.page:140 C/preferences_general.page:217
+#: C/preferences_key_echo.page:28 C/preferences_key_echo.page:37
+#: C/preferences_key_echo.page:47 C/preferences_key_echo.page:57
+#: C/preferences_key_echo.page:67 C/preferences_key_echo.page:77
+#: C/preferences_key_echo.page:87 C/preferences_key_echo.page:99
+#: C/preferences_speech.page:26 C/preferences_speech.page:123
+#: C/preferences_speech.page:148 C/preferences_speech.page:195
+#: C/preferences_speech.page:208 C/preferences_speech.page:220
+#: C/preferences_speech.page:234 C/preferences_speech.page:251
+#: C/preferences_speech.page:265 C/preferences_speech.page:279
+#: C/preferences_speech.page:293 C/preferences_speech.page:307
+#: C/preferences_speech.page:319 C/preferences_speech.page:331
 #: C/preferences_spellcheck.page:41 C/preferences_spellcheck.page:51
 #: C/preferences_spellcheck.page:61 C/preferences_table_navigation.page:34
 #: C/preferences_table_navigation.page:44
@@ -5997,8 +6013,71 @@ msgstr ""
 "från nästa/föregående stycke, <key>T</key>/<keyseq><key>Skift</key> <key>T</"
 "key></keyseq> fortsätter läsa från nästa/föregående tabell och så vidare."
 
-#. (itstool) path: info/desc
+#. (itstool) path: section/title
+#: C/preferences_general.page:124
+msgid "Announce Contextual Information in Say All"
+msgstr "Annonsera sammanhangsberoende information i Läs upp allt"
+
+#. (itstool) path: section/p
 #: C/preferences_general.page:125
+msgid ""
+"<app>Orca</app> can optionally provide more information about the document "
+"content being spoken, such as announcing when you are entering and leaving a "
+"blockquote, list, table, or other container. Whether or not these "
+"announcements are made can be configured independently through the following "
+"checkboxes:"
+msgstr ""
+"<app>Orca</app> kan valfritt tillhandahålla mer information om "
+"dokumentinnehållet som läses upp, så som att annonsera när du går in i eller "
+"ut ur blockcitat, listor, tabeller eller andra behållare. Huruvida dessa "
+"annonseringar görs eller inte kan ställas in oberoende genom följande "
+"kryssrutor:"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:133
+msgid "Announce blockquotes in Say All"
+msgstr "Annonsera blockcitat i Läs upp allt"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:134
+msgid "Announce forms in Say All"
+msgstr "Annonsera formulär i Läs upp allt"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:135
+msgid "Announce landmarks in Say All"
+msgstr "Annonsera landmärken i Läs upp allt"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:136
+msgid "Announce lists in Say All"
+msgstr "Annonsera listor i Läs upp allt"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:137
+msgid "Announce panels in Say All"
+msgstr "Annonsera paneler i Läs upp allt"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:138
+msgid "Announce tables in Say All"
+msgstr "Annonsera tabeller i Läs upp allt"
+
+#. (itstool) path: note/p
+#: C/preferences_general.page:144
+msgid ""
+"Whether or not <app>Orca</app> makes these announcements during navigation "
+"is also configurable. You will find similar checkboxes on the <gui>Speech</"
+"gui> page. For more information, see <link xref="
+"\"preferences_speech#spoken_context\">Spoken Context</link>."
+msgstr ""
+"Huruvida <app>Orca</app> utför dessa annonseringar under navigering kan "
+"också konfigureras. Du kommer hitta liknande kryssrutor på "
+"sidan<gui>Uppläsning</gui>. För mer information, se <link xref="
+"\"preferences_speech#spoken_context\">Talsammanhang</link>."
+
+#. (itstool) path: info/desc
+#: C/preferences_general.page:154
 msgid ""
 "Preferences dialog box option for customizing <app>Orca</app>'s Say All "
 "presentation."
@@ -6007,12 +6086,12 @@ msgstr ""
 "upp allt-presentation."
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:130
+#: C/preferences_general.page:159
 msgid "Say All By"
 msgstr "Läs upp allt efter"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:131
+#: C/preferences_general.page:160
 msgid ""
 "The <gui>Say All By</gui> combo box allows you to specify whether <app>Orca</"
 "app> speaks a sentence at a time or a line at a time when doing a \"Say All"
@@ -6023,18 +6102,18 @@ msgstr ""
 "allt” utförs på ett dokument."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:136
+#: C/preferences_general.page:165
 msgid "Default value: <gui>Sentence</gui>"
 msgstr "Standardvärde: <gui>Mening</gui>"
 
 #. (itstool) path: info/desc
-#: C/preferences_general.page:142
+#: C/preferences_general.page:171
 msgid "Preferences dialog box options for managing settings profiles."
 msgstr ""
 "Alternativ för inställningsdialogruta för att hantera inställningsprofiler."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:147
+#: C/preferences_general.page:176
 msgid ""
 "The <gui>Profiles</gui> group of controls, which appear at the bottom of the "
 "<gui>General</gui> page, make it possible for you to maintain and use "
@@ -6045,7 +6124,7 @@ msgstr ""
 "konfigurationer."
 
 #. (itstool) path: item/p
-#: C/preferences_general.page:154
+#: C/preferences_general.page:183
 msgid ""
 "The <gui>Active Profile</gui> combo box displays the current profile and "
 "allows you to select a different profile to load."
@@ -6054,7 +6133,7 @@ msgstr ""
 "låter dig välja en annan profil att läsa in."
 
 #. (itstool) path: item/p
-#: C/preferences_general.page:160
+#: C/preferences_general.page:189
 msgid ""
 "The <gui>Load</gui> button will cause <app>Orca</app> to load the profile "
 "indicated in the <gui>Active Profile</gui> combo box."
@@ -6063,7 +6142,7 @@ msgstr ""
 "i kombinationsrutan <gui>Aktiv profil</gui>."
 
 #. (itstool) path: item/p
-#: C/preferences_general.page:166
+#: C/preferences_general.page:195
 msgid ""
 "The <gui>Save As</gui> button allows you to save the current set of options "
 "from the preferences dialog box to a named profile."
@@ -6072,7 +6151,7 @@ msgstr ""
 "alternativ från inställningsdialogrutan till en namngiven profil."
 
 #. (itstool) path: item/p
-#: C/preferences_general.page:172
+#: C/preferences_general.page:201
 msgid ""
 "The <gui>Start-up Profile</gui> combo box allows you to select the profile "
 "which should be automatically loaded each time you launch <app>Orca</app>."
@@ -6081,17 +6160,17 @@ msgstr ""
 "ska läsas in automatiskt varje gång du startar <app>Orca</app>."
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:181
+#: C/preferences_general.page:210
 msgid "Progress Bar Updates"
 msgstr "Uppdateringar i förloppsindikator"
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:183
+#: C/preferences_general.page:212
 msgid "Speak updates"
 msgstr "Läs upp uppdateringar"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:184
+#: C/preferences_general.page:213
 msgid ""
 "If the <gui>Speak updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically speak the status of progress bars."
@@ -6100,12 +6179,12 @@ msgstr ""
 "app> med jämna mellanrum läsa upp statusen för förloppsindikatorer."
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:193
+#: C/preferences_general.page:222
 msgid "Braille updates"
 msgstr "Punktskriftsuppdateringar"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:194
+#: C/preferences_general.page:223
 msgid ""
 "If the <gui>Braille updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically display the status of progress bars on your refreshable braille "
@@ -6116,12 +6195,12 @@ msgstr ""
 "din uppdateringsbara punktskriftsskärm."
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:204
+#: C/preferences_general.page:233
 msgid "Beep updates"
 msgstr "Signalera uppdateringar"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:205
+#: C/preferences_general.page:234
 msgid ""
 "If the <gui>Beep updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically emit beeps which increase in pitch as the value of the progress "
@@ -6132,27 +6211,27 @@ msgstr ""
 "värdet för förloppsindikatorn ökar."
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:215
+#: C/preferences_general.page:244
 msgid "Frequency (secs)"
 msgstr "Frekvens (sekunder)"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:216
+#: C/preferences_general.page:245
 msgid "This spin button determines how often updates are presented."
 msgstr "Denna snurrknapp avgör hur ofta uppdateringar presenteras."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:219
+#: C/preferences_general.page:248
 msgid "Default value: 10"
 msgstr "Standardvärde: 10"
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:224
+#: C/preferences_general.page:253
 msgid "Restrict to"
 msgstr "Begränsa till"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:225
+#: C/preferences_general.page:254
 msgid ""
 "This combo box allows you to control which progress bars should be "
 "presented, assuming the presentation of progress bar updates has been "
@@ -6165,7 +6244,7 @@ msgstr ""
 "gui> och <gui>Fönster</gui>."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:231
+#: C/preferences_general.page:260
 msgid ""
 "Choosing <gui>All</gui> will result in <app>Orca</app> presenting updates "
 "for all progress bars, regardless of where the progress bars are located."
@@ -6175,7 +6254,7 @@ msgstr ""
 "förloppsindikatorerna finns."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:236
+#: C/preferences_general.page:265
 msgid ""
 "Choosing <gui>Application</gui> will result in <app>Orca</app> presenting "
 "updates from progress bars in the active application, even if they are not "
@@ -6186,7 +6265,7 @@ msgstr ""
 "inte är i det aktiva fönstret."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:241
+#: C/preferences_general.page:270
 msgid ""
 "Choosing <gui>Window</gui> will result in <app>Orca</app> only presenting "
 "updates for progress bars in the active window."
@@ -6195,7 +6274,7 @@ msgstr ""
 "presenterar uppdateringar för förloppsindikatorer i det aktiva fönstret."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:245
+#: C/preferences_general.page:274
 msgid "Default value: <gui>Application</gui>"
 msgstr "Standardvärde: <gui>Program</gui>"
 
@@ -7032,11 +7111,31 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:140
+msgid "Speak misspelled-word indicator"
+msgstr "Läs upp indikator för felstavade ord"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:141
+msgid ""
+"The misspelled-word indicator is the red squiggly line that appears "
+"underneath misspelled words in editable text fields. If <gui>Speak "
+"misspelled-word indicator</gui> is checked, when you navigate into a word "
+"with this indicator, or type a word incorrectly causing this indicator to "
+"appear, <app>Orca</app> will speak \"misspelled.\""
+msgstr ""
+"Indikatorn för felstavade ord är den röda vågiga linjen som visas under "
+"felstavade ord i redigerbara textrutor. Om <gui>Läs upp indikator för "
+"felstavade ord</gui> är ikryssad kommer orca läsa upp ”felstavat” när du "
+"navigerar till ett ord med denna indikator, eller då du stavar ett ord fel "
+"så att indikatorn dyker upp."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:153
 msgid "Speak object mnemonics"
 msgstr "Läs upp minnesobjekt"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:141
+#: C/preferences_speech.page:154
 msgid ""
 "If the <gui>Speak object mnemonics</gui> checkbox is checked, <app>Orca</"
 "app> will announce the mnemonic associated with the object with focus (such "
@@ -7048,12 +7147,12 @@ msgstr ""
 "gui>-knapp)."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:152
+#: C/preferences_speech.page:165
 msgid "Speak child position"
 msgstr "Läs upp barnposition"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:153
+#: C/preferences_speech.page:166
 msgid ""
 "Checking the <gui>Speak child position</gui> checkbox will cause <app>Orca</"
 "app> to announce the position of the focused item in menus, lists, and trees "
@@ -7064,12 +7163,12 @@ msgstr ""
 "träd (t.ex. ”9 av 16”)."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:163
+#: C/preferences_speech.page:176
 msgid "Speak tutorial messages"
 msgstr "Läs upp handledningsmeddelanden"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:164
+#: C/preferences_speech.page:177
 msgid ""
 "If the <gui>Speak tutorial messages</gui> checkbox is checked, as you move "
 "amongst objects in an interface, <app>Orca</app> will provide additional "
@@ -7081,12 +7180,28 @@ msgstr ""
 "fokuserade objektet."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:175
+#: C/preferences_speech.page:188
+msgid "Speak description"
+msgstr "Läs upp beskrivning"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:189
+msgid ""
+"If the <gui>Speak description</gui> checkbox is checked, as you move amongst "
+"objects in an interface, <app>Orca</app> will speak the accessible "
+"description in addition to the accessible name of the object."
+msgstr ""
+"Om kryssrutan <gui>Läs upp beskrivning</gui> är ikryssad kommer <app>Orca</"
+"app> under tiden du förflyttar dig längs objekt i ett gränssnitt att läsa "
+"upp den åtkomliga beskrivningen utöver det åtkomliga namnet för objektet."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:200
 msgid "System messages are detailed"
 msgstr "Systemmeddelanden är detaljerade"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:176
+#: C/preferences_speech.page:201
 msgid ""
 "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> will "
 "present detailed messages to you in speech. For instance, if you use "
@@ -7101,12 +7216,12 @@ msgstr ""
 "meddelanden, som bara ”ord”, ska du avmarkera denna kryssruta."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:188
+#: C/preferences_speech.page:213
 msgid "Speak colors as names"
 msgstr "Läs upp färger som namn"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:189
+#: C/preferences_speech.page:214
 msgid ""
 "If <gui>Speak colors as names</gui> is checked, <app>Orca</app> will "
 "describe colors, looking for the closest approximate. For instance, RGB 0, "
@@ -7118,15 +7233,147 @@ msgstr ""
 "skulle RGB 0, 27, 51 läsas upp som ”midnattsblå”. Om du föredrar att höra "
 "det exakta RGB-värdet ska du avmarkera denna kryssruta."
 
+#. (itstool) path: section/title
+#: C/preferences_speech.page:225
+msgid "Announce blockquotes during navigation"
+msgstr "Annonsera blockcitat under navigering"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:226
+msgid ""
+"If <gui>Announce blockquotes during navigation</gui> is checked, <app>Orca</"
+"app> will tell you when you navigate into or out of a blockquote. Note that "
+"this setting is independent of whether or not this announcement is made "
+"during Say All. See <link xref=\"preferences_general#say_all_announce_context"
+"\">Announce Contextual Information in Say All</link> for more information."
+msgstr ""
+"Om <gui>Annonsera blockcitat under navigering</gui> är ikryssad kommer "
+"<app>Orca</app> att säga till när du navigerar in i eller ut ur ett "
+"blockcitat. Observera att denna inställning är oberoende av huruvida denna "
+"annonsering görs under Läs upp allt. Se <link xref="
+"\"preferences_general#say_all_announce_context\">Annonsera "
+"sammanhangsberoende information i Läs upp allt</link> för mer information."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:239
+msgid "Announce forms during navigation"
+msgstr "Annonsera formulär under navigering"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:240
+msgid ""
+"If <gui>Announce forms during navigation</gui> is checked, <app>Orca</app> "
+"will tell you when you navigate into or out of a form. Note that this "
+"setting is specific to forms which are not ARIA landmarks. You can configure "
+"the presentation of ARIA landmarks through the <gui>Announce landmarks "
+"during navigation</gui> checkbox. In addition, note that this setting is "
+"independent of whether or not this announcement is made during Say All. See "
+"<link xref=\"preferences_general#say_all_announce_context\">Announce "
+"Contextual Information in Say All</link> for more information."
+msgstr ""
+"Om <gui>Annonsera formulär under navigering</gui> är ikryssad kommer "
+"<app>Orca</app> att säga till när du navigerar in i eller ut ur ett "
+"formulär. Observera att denna inställning är specifik för formulär som inte "
+"är ARIA-landmärken. Du kan konfigurera presentationen av ARIA-landmärken "
+"genom kryssrutan <gui>Annonsera landmärken under navigering</gui>. Observera "
+"dessutom att denna inställning är oberoende av huruvida denna annonsering "
+"görs under Läs upp allt. Se <link xref="
+"\"preferences_general#say_all_announce_context\">Annonsera "
+"sammanhangsberoende information i Läs upp allt</link> för mer information."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:256
+msgid "Announce landmarks during navigation"
+msgstr "Annonsera landmärken under navigering"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:257
+msgid ""
+"If <gui>Announce landmarks during navigation</gui> is checked, <app>Orca</"
+"app> will tell you when you navigate into or out of an ARIA landmark. Note "
+"that this setting is independent of whether or not this announcement is made "
+"during Say All. See <link xref=\"preferences_general#say_all_announce_context"
+"\">Announce Contextual Information in Say All</link> for more information."
+msgstr ""
+"Om <gui>Annonsera landmärken under navigering</gui> är ikryssad kommer "
+"<app>Orca</app> att säga till när du navigerar in i eller ut ur ett ARIA-"
+"landmärke. Observera att denna inställning är oberoende av huruvida denna "
+"annonsering görs under Läs upp allt. Se <link xref="
+"\"preferences_general#say_all_announce_context\">Annonsera "
+"sammanhangsberoende information i Läs upp allt</link> för mer information."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:270
+msgid "Announce lists during navigation"
+msgstr "Annonsera listor under navigering"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:271
+msgid ""
+"If <gui>Announce lists during navigation</gui> is checked, <app>Orca</app> "
+"will tell you when you navigate into or out of a list. Note that this "
+"setting is independent of whether or not this announcement is made during "
+"Say All. See <link xref=\"preferences_general#say_all_announce_context"
+"\">Announce Contextual Information in Say All</link> for more information."
+msgstr ""
+"Om <gui>Annonsera listor under navigering</gui> är ikryssad kommer "
+"<app>Orca</app> att säga till när du navigerar in i eller ut ur en lista. "
+"Observera att denna inställning är oberoende av huruvida denna annonsering "
+"görs under Läs upp allt. Se <link xref="
+"\"preferences_general#say_all_announce_context\">Annonsera "
+"sammanhangsberoende information i Läs upp allt</link> för mer information."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:284
+msgid "Announce panels during navigation"
+msgstr "Annonsera paneler under navigering"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:285
+msgid ""
+"If <gui>Announce panels during navigation</gui> is checked, <app>Orca</app> "
+"will tell you when you navigate into or out of a panel. Note that this "
+"setting is independent of whether or not this announcement is made during "
+"Say All. See <link xref=\"preferences_general#say_all_announce_context"
+"\">Announce Contextual Information in Say All</link> for more information."
+msgstr ""
+"Om <gui>Annonsera paneler under navigering</gui> är ikryssad kommer "
+"<app>Orca</app> att säga till när du navigerar in i eller ut ur en panel. "
+"Observera att denna inställning är oberoende av huruvida denna annonsering "
+"görs under Läs upp allt. Se <link xref="
+"\"preferences_general#say_all_announce_context\">Annonsera "
+"sammanhangsberoende information i Läs upp allt</link> för mer information."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:298
+msgid "Announce tables during navigation"
+msgstr "Annonsera tabeller under navigering"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:299
+msgid ""
+"If <gui>Announce tables during navigation</gui> is checked, <app>Orca</app> "
+"will tell you when you navigate into or out of a table. Note that this "
+"setting is independent of whether or not this announcement is made during "
+"Say All. See <link xref=\"preferences_general#say_all_announce_context"
+"\">Announce Contextual Information in Say All</link> for more information."
+msgstr ""
+"Om <gui>Annonsera tabeller under navigering</gui> är ikryssad kommer "
+"<app>Orca</app> att säga till när du navigerar in i eller ut ur en tabell. "
+"Observera att denna inställning är oberoende av huruvida denna annonsering "
+"görs under Läs upp allt. Se <link xref="
+"\"preferences_general#say_all_announce_context\">Annonsera "
+"sammanhangsberoende information i Läs upp allt</link> för mer information."
+
 # https://bugzilla.gnome.org/show_bug.cgi?id=758624#c4
 #. (itstool) path: section/title
-#: C/preferences_speech.page:200
+#: C/preferences_speech.page:312
 msgid "Read full row in GUI tables"
 msgstr "Läs upp hel rad i gränssnittstabeller"
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=758624#c4
 #. (itstool) path: section/p
-#: C/preferences_speech.page:201
+#: C/preferences_speech.page:313
 msgid ""
 "If <gui>Read full row in GUI tables</gui> is checked, as you arrow up and "
 "down in application tables such as the list of messages in your Inbox, "
@@ -7140,12 +7387,12 @@ msgstr ""
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=758624#c4
 #. (itstool) path: section/title
-#: C/preferences_speech.page:212
+#: C/preferences_speech.page:324
 msgid "Read full row in document tables"
 msgstr "Läs upp hel rad i dokumenttabeller"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:213
+#: C/preferences_speech.page:325
 msgid ""
 "If <gui>Read full row in document tables</gui> is checked, as you arrow up "
 "and down in tables such as those found in <app>Writer</app> and web "
@@ -7159,12 +7406,12 @@ msgstr ""
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=758624#c4
 #. (itstool) path: section/title
-#: C/preferences_speech.page:224
+#: C/preferences_speech.page:336
 msgid "Read full row in spreadsheets"
 msgstr "Läs upp hel rad i kalkylblad"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:225
+#: C/preferences_speech.page:337
 msgid ""
 "If <gui>Read full row in spreadsheets</gui> is checked, as you arrow up and "
 "down in spreadsheets, <app>Orca</app> will speak the entire row. If you "
@@ -7175,26 +7422,6 @@ msgstr ""
 "app> läsa upp hela raden då du pilar upp och ner i kalkylblad. Om du "
 "föredrar att endast höra cellen som har fokus bör du avmarkera denna "
 "kryssruta."
-
-#. (itstool) path: section/title
-#: C/preferences_speech.page:236
-msgid "Speak misspelled-word indicator"
-msgstr "Läs upp indikator för felstavade ord"
-
-#. (itstool) path: section/p
-#: C/preferences_speech.page:237
-msgid ""
-"The misspelled-word indicator is the red squiggly line that appears "
-"underneath misspelled words in editable text fields. If <gui>Speak "
-"misspelled-word indicator</gui> is checked, when you navigate into a word "
-"with this indicator, or type a word incorrectly causing this indicator to "
-"appear, <app>Orca</app> will speak \"misspelled.\""
-msgstr ""
-"Indikatorn för felstavade ord är den röda vågiga linjen som visas under "
-"felstavade ord i redigerbara textrutor. Om <gui>Läs upp indikator för "
-"felstavade ord</gui> är ikryssad kommer orca läsa upp ”felstavat” när du "
-"navigerar till ett ord med denna indikator, eller då du stavar ett ord fel "
-"så att indikatorn dyker upp."
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:4
