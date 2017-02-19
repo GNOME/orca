@@ -252,8 +252,16 @@ class Utilities(script_utilities.Utilities):
     def documentFrameURI(self, documentFrame=None):
         documentFrame = documentFrame or self.documentFrame()
         if documentFrame and not self.isZombie(documentFrame):
-            document = documentFrame.queryDocument()
-            return document.getAttributeValue('DocURL')
+            try:
+                document = documentFrame.queryDocument()
+            except NotImplementedError:
+                msg = "WEB: %s does not implement document interface" % documentFrame
+                debug.println(debug.LEVEL_INFO, msg, True)
+            except:
+                msg = "ERROR: Exception querying document interface of %s" % documentFrame
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                return document.getAttributeValue('DocURL')
 
         return None
 
