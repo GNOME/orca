@@ -1605,6 +1605,12 @@ class Utilities(script_utilities.Utilities):
 
         return roles
 
+    def unrelatedLabels(self, root, onlyShowing=True):
+        if not (root and self.inDocumentContent(root)):
+            return super().unrelatedLabels(root, onlyShowing)
+
+        return []
+
     def isTextBlockElement(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
