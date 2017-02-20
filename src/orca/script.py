@@ -551,3 +551,6 @@ class Script:
     def deactivate(self):
         """Called when this script is deactivated."""
         pass
+
+    def getTransferableAttributes(self):
+        return {}

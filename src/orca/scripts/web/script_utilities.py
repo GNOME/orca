@@ -35,9 +35,11 @@ from orca import messages
 from orca import orca
 from orca import orca_state
 from orca import script_utilities
+from orca import script_manager
 from orca import settings
 from orca import settings_manager
 
+_scriptManager = script_manager.getManager()
 _settingsManager = settings_manager.getManager()
 
 
@@ -229,6 +231,22 @@ class Utilities(script_utilities.Utilities):
         else:
             msg = "WARNING: %s is not in %s" % (orca_state.activeWindow, app)
             debug.println(debug.LEVEL_INFO, msg, True)
+
+            try:
+                script = _scriptManager.getScript(app, orca_state.activeWindow)
+                msg = "WEB: Script for active Window is %s" % script
+                debug.println(debug.LEVEL_INFO, msg, True)
+            except:
+                msg = "ERROR: Exception getting script for active window"
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                if type(script) == type(self._script):
+                    attrs = script.getTransferableAttributes()
+                    for attr, value in attrs.items():
+                        msg = "WEB: Setting %s to %s" % (attr, value)
+                        debug.println(debug.LEVEL_INFO, msg, True)
+                        setattr(self._script, attr, value)
+
             window = self.activeWindow(app)
             try:
                 self._script.app = window.getApplication()

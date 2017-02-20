@@ -1982,3 +1982,8 @@ class Script(default.Script):
         self._lastCommandWasStructNav = False
         self._lastCommandWasMouseButton = False
         return False
+
+    def getTransferableAttributes(self):
+        return {"_lastCommandWasCaretNav": self._lastCommandWasCaretNav,
+                "_lastCommandWasStructNav": self._lastCommandWasStructNav,
+                "_lastCommandWasMouseButton": self._lastCommandWasMouseButton}
