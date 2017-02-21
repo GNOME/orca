@@ -2052,6 +2052,9 @@ class Utilities:
             if 'Table' in pyatspi.listInterfaces(x):
                 return x.childCount > 50
 
+            if 'Document' in pyatspi.listInterfaces(x):
+                return True
+
         match = pyatspi.findDescendant(root, isMatch)
         if match:
             msg = "INFO: %s has descendant %s" % (root, match)
