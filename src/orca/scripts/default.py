@@ -126,7 +126,7 @@ class Script(script.Script):
 
         if app:
             app.setCacheMask(
-                pyatspi.cache.DEFAULT ^ pyatspi.cache.CHILDREN ^ pyatspi.cache.NAME)
+                pyatspi.cache.DEFAULT ^ pyatspi.cache.CHILDREN ^ pyatspi.cache.NAME ^ pyatspi.cache.DESCRIPTION)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
