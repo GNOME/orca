@@ -217,7 +217,7 @@ class Utilities(script_utilities.Utilities):
 
         return list(filter(self.isDocument, targets))
 
-    def documentFrame(self, obj=None):
+    def sanityCheckActiveWindow(self):
         app = self._script.app
         try:
             windowInApp = orca_state.activeWindow in app
@@ -227,40 +227,43 @@ class Utilities(script_utilities.Utilities):
             windowInApp = False
 
         if windowInApp:
-            window = orca_state.activeWindow
-        else:
-            msg = "WARNING: %s is not in %s" % (orca_state.activeWindow, app)
+            return True
+
+        msg = "WARNING: %s is not in %s" % (orca_state.activeWindow, app)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        try:
+            script = _scriptManager.getScript(app, orca_state.activeWindow)
+            msg = "WEB: Script for active Window is %s" % script
             debug.println(debug.LEVEL_INFO, msg, True)
+        except:
+            msg = "ERROR: Exception getting script for active window"
+            debug.println(debug.LEVEL_INFO, msg, True)
+        else:
+            if type(script) == type(self._script):
+                attrs = script.getTransferableAttributes()
+                for attr, value in attrs.items():
+                    msg = "WEB: Setting %s to %s" % (attr, value)
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    setattr(self._script, attr, value)
 
-            try:
-                script = _scriptManager.getScript(app, orca_state.activeWindow)
-                msg = "WEB: Script for active Window is %s" % script
-                debug.println(debug.LEVEL_INFO, msg, True)
-            except:
-                msg = "ERROR: Exception getting script for active window"
-                debug.println(debug.LEVEL_INFO, msg, True)
-            else:
-                if type(script) == type(self._script):
-                    attrs = script.getTransferableAttributes()
-                    for attr, value in attrs.items():
-                        msg = "WEB: Setting %s to %s" % (attr, value)
-                        debug.println(debug.LEVEL_INFO, msg, True)
-                        setattr(self._script, attr, value)
+        window = self.activeWindow(app)
+        try:
+            self._script.app = window.getApplication()
+            msg = "WEB: updating script's app to %s" % self._script.app
+            debug.println(debug.LEVEL_INFO, msg, True)
+        except:
+            msg = "ERROR: Exception getting app for %s" % window
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
 
-            window = self.activeWindow(app)
-            try:
-                self._script.app = window.getApplication()
-                msg = "WEB: updating script's app to %s" % self._script.app
-                debug.println(debug.LEVEL_INFO, msg, True)
-            except:
-                msg = "ERROR: Exception getting app for %s" % window
-                debug.println(debug.LEVEL_INFO, msg, True)
-            else:
-                orca_state.activeWindow = window
+        orca_state.activeWindow = window
+        return True
 
-        if window:
+    def documentFrame(self, obj=None):
+        if self.sanityCheckActiveWindow():
             isShowing = lambda x: x and x.getState().contains(pyatspi.STATE_SHOWING)
-            documents = self._getDocumentsEmbeddedBy(window)
+            documents = self._getDocumentsEmbeddedBy(orca_state.activeWindow)
             documents = list(filter(isShowing, documents))
             if len(documents) == 1:
                 return documents[0]
