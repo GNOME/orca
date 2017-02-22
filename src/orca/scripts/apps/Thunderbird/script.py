@@ -78,6 +78,16 @@ class Script(Gecko.Script):
                 Script.togglePresentationMode,
                 cmdnames.TOGGLE_PRESENTATION_MODE)
 
+        self.inputEventHandlers["enableStickyFocusModeHandler"] = \
+            input_event.InputEventHandler(
+                Script.enableStickyFocusMode,
+                cmdnames.SET_FOCUS_MODE_STICKY)
+
+        self.inputEventHandlers["enableStickyBrowseModeHandler"] = \
+            input_event.InputEventHandler(
+                Script.enableStickyBrowseMode,
+                cmdnames.SET_BROWSE_MODE_STICKY)
+
     def getSpeechGenerator(self):
         """Returns the speech generator for this script."""
 
@@ -135,7 +145,7 @@ class Script(Gecko.Script):
         super().locusOfFocusChanged(event, oldFocus, newFocus)
 
     def useFocusMode(self, obj):
-        if self.isEditableMessage(obj):
+        if self.utilities.isEditableMessage(obj):
             msg = "THUNDERBIRD: Using focus mode for editable message %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
@@ -144,8 +154,20 @@ class Script(Gecko.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
         return super().useFocusMode(obj)
 
+    def enableStickyBrowseMode(self, inputEvent, forceMessage=False):
+        if self.utilities.isEditableMessage(orca_state.locusOfFocus):
+            return
+
+        super().enableStickyBrowseMode(inputEvent, forceMessage)
+
+    def enableStickyFocusMode(self, inputEvent, forceMessage=False):
+        if self.utilities.isEditableMessage(orca_state.locusOfFocus):
+            return
+
+        super().enableStickyFocusMode(inputEvent, forceMessage)
+
     def togglePresentationMode(self, inputEvent):
-        if self._inFocusMode and self.isEditableMessage(orca_state.locusOfFocus):
+        if self._inFocusMode and self.utilities.isEditableMessage(orca_state.locusOfFocus):
             return
 
         super().togglePresentationMode(inputEvent)
@@ -153,7 +175,7 @@ class Script(Gecko.Script):
     def useStructuralNavigationModel(self):
         """Returns True if structural navigation should be enabled here."""
 
-        if self.isEditableMessage(orca_state.locusOfFocus):
+        if self.utilities.isEditableMessage(orca_state.locusOfFocus):
             return False
 
         return super().useStructuralNavigationModel()
@@ -176,7 +198,7 @@ class Script(Gecko.Script):
             super().onFocusedChanged(event)
             return
 
-        if self.isEditableMessage(obj):
+        if self.utilities.isEditableMessage(obj):
             super().onFocusedChanged(event)
             return
 
@@ -203,7 +225,7 @@ class Script(Gecko.Script):
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
-        if self.isEditableMessage(event.source):
+        if self.utilities.isEditableMessage(event.source):
             if event.detail1 == -1:
                 return
             self.spellcheck.setDocumentPosition(event.source, event.detail1)
@@ -286,7 +308,7 @@ class Script(Gecko.Script):
 
         # Try to stop unwanted chatter when a message is being replied to.
         # See bgo#618484.
-        if isSystemEvent and self.isEditableMessage(obj):
+        if isSystemEvent and self.utilities.isEditableMessage(obj):
             return
 
         # Speak the autocompleted text, but only if it is different
@@ -323,7 +345,7 @@ class Script(Gecko.Script):
         if obj == spellCheckEntry:
             return
 
-        if self.isEditableMessage(obj) and self.spellcheck.isActive():
+        if self.utilities.isEditableMessage(obj) and self.spellcheck.isActive():
             text = obj.queryText()
             selStart, selEnd = text.getSelection(0)
             self.spellcheck.setDocumentPosition(obj, selStart)
@@ -376,7 +398,7 @@ class Script(Gecko.Script):
     def sayCharacter(self, obj):
         """Speaks the character at the current caret position."""
 
-        if self.isEditableMessage(obj):
+        if self.utilities.isEditableMessage(obj):
             text = self.utilities.queryNonEmptyText(obj)
             if text and text.caretOffset + 1 >= text.characterCount:
                 default.Script.sayCharacter(self, obj)
@@ -406,24 +428,6 @@ class Script(Gecko.Script):
             pyatspi.clearCache()
 
         return default.Script.toggleFlatReviewMode(self, inputEvent)
-
-    def isEditableMessage(self, obj):
-        """Returns True if this is a editable message."""
-
-        if not obj:
-            return False
-
-        if not obj.getState().contains(pyatspi.STATE_EDITABLE):
-            return False
-
-        if self.utilities.isDocument(obj):
-            return True
-
-        document = self.utilities.getContainingDocument(obj)
-        if document and document.getState().contains(pyatspi.STATE_EDITABLE):
-            return True
-
-        return False
 
     def onWindowActivated(self, event):
         """Callback for window:activate accessibility events."""

@@ -29,7 +29,9 @@ __license__   = "LGPL"
 
 import pyatspi
 
+from orca import cmdnames
 from orca import debug
+from orca import input_event
 from orca import orca_state
 from orca.scripts.toolkits import Gecko
 
@@ -38,6 +40,24 @@ class Script(Gecko.Script):
 
     def __init__(self, app):
         super().__init__(app)
+
+    def setupInputEventHandlers(self):
+        super().setupInputEventHandlers()
+
+        self.inputEventHandlers["togglePresentationModeHandler"] = \
+            input_event.InputEventHandler(
+                Script.togglePresentationMode,
+                cmdnames.TOGGLE_PRESENTATION_MODE)
+
+        self.inputEventHandlers["enableStickyFocusModeHandler"] = \
+            input_event.InputEventHandler(
+                Script.enableStickyFocusMode,
+                cmdnames.SET_FOCUS_MODE_STICKY)
+
+        self.inputEventHandlers["enableStickyBrowseModeHandler"] = \
+            input_event.InputEventHandler(
+                Script.enableStickyBrowseMode,
+                cmdnames.SET_BROWSE_MODE_STICKY)
 
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
@@ -83,3 +103,38 @@ class Script(Gecko.Script):
                 return
 
         super().onFocus(event)
+
+    def useFocusMode(self, obj):
+        if self.utilities.isEditableMessage(obj):
+            msg = "SEAMONKEY: Using focus mode for editable message %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        msg = "SEAMONKEY: %s is not an editable message." % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return super().useFocusMode(obj)
+
+    def enableStickyBrowseMode(self, inputEvent, forceMessage=False):
+        if self.utilities.isEditableMessage(orca_state.locusOfFocus):
+            return
+
+        super().enableStickyBrowseMode(inputEvent, forceMessage)
+
+    def enableStickyFocusMode(self, inputEvent, forceMessage=False):
+        if self.utilities.isEditableMessage(orca_state.locusOfFocus):
+            return
+
+        super().enableStickyFocusMode(inputEvent, forceMessage)
+
+    def togglePresentationMode(self, inputEvent):
+        if self._inFocusMode \
+           and self.utilities.isEditableMessage(orca_state.locusOfFocus):
+            return
+
+        super().togglePresentationMode(inputEvent)
+
+    def useStructuralNavigationModel(self):
+        if self.utilities.isEditableMessage(orca_state.locusOfFocus):
+            return False
+
+        return super().useStructuralNavigationModel()

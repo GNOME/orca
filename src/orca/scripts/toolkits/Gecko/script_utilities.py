@@ -141,3 +141,27 @@ class Utilities(web.Utilities):
             objects.extend([x for x in root[0] if isExtra(x)])
 
         return objects
+
+    def isEditableMessage(self, obj):
+        """Returns True if this is an editable message."""
+
+        if not obj:
+            return False
+
+        if not obj.getState().contains(pyatspi.STATE_EDITABLE):
+            return False
+
+        if self.isDocument(obj):
+            msg = "GECKO: %s is believed to be an editable message" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        document = self.getContainingDocument(obj)
+        if document and document.getState().contains(pyatspi.STATE_EDITABLE):
+            msg = "GECKO: %s is in an editable document: %s" % (obj, document)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        msg = "GECKO: Editable %s not in an editable document" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
