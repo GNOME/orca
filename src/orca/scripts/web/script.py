@@ -1988,4 +1988,8 @@ class Script(default.Script):
     def getTransferableAttributes(self):
         return {"_lastCommandWasCaretNav": self._lastCommandWasCaretNav,
                 "_lastCommandWasStructNav": self._lastCommandWasStructNav,
-                "_lastCommandWasMouseButton": self._lastCommandWasMouseButton}
+                "_lastCommandWasMouseButton": self._lastCommandWasMouseButton,
+                "_inFocusMode": self._inFocusMode,
+                "_focusModeIsSticky": self._focusModeIsSticky,
+                "_browseModeIsSticky": self._browseModeIsSticky,
+        }
