@@ -1270,6 +1270,8 @@ class Script(default.Script):
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
+        self.utilities.sanityCheckActiveWindow()
+
         if self.utilities.isZombie(event.source):
             msg = "WEB: Event source is Zombie"
             debug.println(debug.LEVEL_INFO, msg, True)
