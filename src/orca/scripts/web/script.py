@@ -723,20 +723,35 @@ class Script(default.Script):
         """Returns True if we should use focus mode in obj."""
 
         if self._focusModeIsSticky:
+            msg = "WEB: Using focus mode because focus mode is sticky"
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if self._browseModeIsSticky:
+            msg = "WEB: Not using focus mode because browse mode is sticky"
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if not _settingsManager.getSetting('structNavTriggersFocusMode') \
            and self._lastCommandWasStructNav:
+            msg = "WEB: Not using focus mode due to struct nav settings"
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         if not _settingsManager.getSetting('caretNavTriggersFocusMode') \
            and self._lastCommandWasCaretNav:
+            msg = "WEB: Not using focus mode due to caret nav settings"
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        return self.utilities.isFocusModeWidget(obj)
+        if self.utilities.isFocusModeWidget(obj):
+            msg = "WEB: Using focus mode because %s is a focus mode widget" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        msg = "WEB: Not using focus mode for %s due to lack of cause" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
 
     def speakContents(self, contents, **args):
         """Speaks the specified contents."""
