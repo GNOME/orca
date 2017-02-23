@@ -58,6 +58,7 @@ class ScriptManager:
 
         self.setActiveScript(None, "__init__")
         self._desktop = pyatspi.Registry.getDesktop(0)
+        self._active = False
         debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Initialized', True)
 
     def activate(self):
@@ -67,6 +68,7 @@ class ScriptManager:
         self._defaultScript = self.getScript(None)
         self._defaultScript.registerEventListeners()
         self.setActiveScript(self._defaultScript, "activate")
+        self._active = True
         debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Activated', True)
 
     def deactivate(self):
@@ -80,6 +82,7 @@ class ScriptManager:
         self.appScripts = {}
         self.toolkitScripts = {}
         self.customScripts = {}
+        self._active = False
         debug.println(debug.LEVEL_INFO, 'SCRIPT MANAGER: Deactivated', True)
 
     def getModuleName(self, app):
@@ -212,6 +215,31 @@ class ScriptManager:
 
         return script
 
+    def sanityCheckScript(self, script):
+        if not self._active:
+            return script
+
+        try:
+            appInDesktop = script.app in self._desktop
+        except:
+            appInDesktop = False
+
+        if appInDesktop:
+            return script
+
+        msg = "WARNING: %s is not in the registry's desktop" % script.app
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        newScript = self._getScriptForAppReplicant(script.app)
+        if newScript:
+            msg = "SCRIPT MANAGER: Script for app replicant found: %s" % newScript
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return newScript
+
+        msg = "WARNING: Failed to get a replacement script for %s" % script.app
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return script
+
     def getScript(self, app, obj=None):
         """Get a script for an app (and make it if necessary).  This is used
         instead of a simple calls to Script's constructor.
@@ -274,6 +302,9 @@ class ScriptManager:
            and not issubclass(appScript.__class__, toolkitScript.__class__):
             return toolkitScript
 
+        if app:
+            appScript = self.sanityCheckScript(appScript)
+
         return appScript
 
     def setActiveScript(self, newScript, reason=None):
@@ -298,6 +329,27 @@ class ScriptManager:
               (newScript.name, reason)
         debug.println(debug.LEVEL_INFO, msg, True)
 
+    def _getScriptForAppReplicant(self, app):
+        if not self._active:
+            return None
+
+        def _pid(app):
+            try:
+                return app.get_process_id()
+            except:
+                return -1
+
+        pid = _pid(app)
+        if pid == -1:
+            return None
+
+        items = self.appScripts.items()
+        for a, script in items:
+            if a != app and _pid(a) == pid and a in self._desktop:
+                return script
+
+        return None
+
     def reclaimScripts(self):
         """Compares the list of known scripts to the list of known apps,
         deleting any scripts as necessary.
@@ -315,6 +367,17 @@ class ScriptManager:
             debug.println(debug.LEVEL_INFO, msg, True)
 
             appScript = self.appScripts.pop(app)
+            newScript = self._getScriptForAppReplicant(app)
+            if newScript:
+                msg = "SCRIPT MANAGER: Script for app replicant found: %s" % newScript
+                debug.println(debug.LEVEL_INFO, msg, True)
+
+                attrs = appScript.getTransferableAttributes()
+                for attr, value in attrs.items():
+                    msg = "SCRIPT MANAGER: Setting %s to %s" % (attr, value)
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    setattr(newScript, attr, value)
+
             del appScript
 
             try:

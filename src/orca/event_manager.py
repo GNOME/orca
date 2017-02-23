@@ -630,6 +630,15 @@ class EventManager:
         if eType.startswith("window"):
             _scriptManager.reclaimScripts()
 
+        if eType.startswith("object:state-changed:active"):
+            try:
+                role = event.source.getRole()
+            except:
+                pass
+            else:
+                if role == pyatspi.ROLE_FRAME:
+                    _scriptManager.reclaimScripts()
+
         # Clean up any flat review context so that Orca does not get
         # confused (see bgo#609633)
         #
