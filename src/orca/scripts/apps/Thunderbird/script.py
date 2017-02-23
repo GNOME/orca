@@ -37,7 +37,6 @@ import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.scripts.toolkits.Gecko as Gecko
 
-from .speech_generator import SpeechGenerator
 from .spellcheck import SpellCheck
 
 _settingsManager = settings_manager.getManager()
@@ -87,11 +86,6 @@ class Script(Gecko.Script):
             input_event.InputEventHandler(
                 Script.enableStickyBrowseMode,
                 cmdnames.SET_BROWSE_MODE_STICKY)
-
-    def getSpeechGenerator(self):
-        """Returns the speech generator for this script."""
-
-        return SpeechGenerator(self)
 
     def getSpellCheck(self):
         """Returns the spellcheck support for this script."""
