@@ -311,6 +311,9 @@ class ScriptManager:
             return
 
         for app in appList:
+            msg = "SCRIPT MANAGER: %s is no longer in registry's desktop" % app
+            debug.println(debug.LEVEL_INFO, msg, True)
+
             appScript = self.appScripts.pop(app)
             del appScript
 

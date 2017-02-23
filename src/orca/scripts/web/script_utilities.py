@@ -217,7 +217,39 @@ class Utilities(script_utilities.Utilities):
 
         return list(filter(self.isDocument, targets))
 
+    def sanityCheckApplication(self):
+        try:
+            appInDesktop = self._script.app in pyatspi.Registry.getDesktop(0)
+        except:
+            appInDesktop = False
+
+        if appInDesktop:
+            return True
+
+        msg = "WARNING: %s is not in the registry's desktop" % self._script.app
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        try:
+            app = orca_state.activeWindow.getApplication()
+        except:
+            msg = "ERROR: Exception getting application for active window"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        msg = "WEB: Application for active window is %s" % app
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        if app in pyatspi.Registry.getDesktop(0):
+            self._script.app = app
+            return True
+
+        msg = "WARNING: App for window is not in the registry's desktop"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+
     def sanityCheckActiveWindow(self):
+        self.sanityCheckApplication()
+
         app = self._script.app
         try:
             windowInApp = orca_state.activeWindow in app

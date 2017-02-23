@@ -627,6 +627,9 @@ class EventManager:
                 debug.printException(debug.LEVEL_WARNING)
                 return
 
+        if eType.startswith("window"):
+            _scriptManager.reclaimScripts()
+
         # Clean up any flat review context so that Orca does not get
         # confused (see bgo#609633)
         #
