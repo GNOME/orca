@@ -199,6 +199,16 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, obj)
             return
 
+    def onFocusedChanged(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
+
+        if self.utilities.isUselessPanel(event.source):
+            msg = "GTK: Event source believed to be useless panel"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        super().onFocusedChanged(event)
+
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
@@ -268,6 +278,9 @@ class Script(default.Script):
 
     def isActivatableEvent(self, event):
         if self.utilities.eventIsCanvasNoise(event):
+            return False
+
+        if self.utilities.isUselessPanel(event.source):
             return False
 
         return super().isActivatableEvent(event)

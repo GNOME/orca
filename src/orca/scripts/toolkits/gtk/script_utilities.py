@@ -39,11 +39,13 @@ class Utilities(script_utilities.Utilities):
         self._isComboBoxWithToggleDescendant = {}
         self._isToggleDescendantOfComboBox = {}
         self._isTypeahead = {}
+        self._isUselessPanel = {}
 
     def clearCachedObjects(self):
         self._isComboBoxWithToggleDescendant = {}
         self._isToggleDescendantOfComboBox = {}
         self._isTypeahead = {}
+        self._isUselessPanel = {}
 
     def displayedText(self, obj):
         displayedText = script_utilities.Utilities.displayedText(self, obj)
@@ -159,6 +161,26 @@ class Utilities(script_utilities.Utilities):
                 return True
 
         return False
+
+    def isUselessPanel(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_PANEL):
+            return False
+
+        rv = self._isUselessPanel.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            name = obj.name
+            childCount = obj.childCount
+            supportsText = "Text" in pyatspi.listInterfaces(obj)
+        except:
+            rv = True
+        else:
+            rv = not (name or childCount or supportsText)
+
+        self._isUselessPanel[hash(obj)] = rv
+        return rv
 
     def rgbFromString(self, attributeValue):
         regex = re.compile("rgb|[^\w,]", re.IGNORECASE)

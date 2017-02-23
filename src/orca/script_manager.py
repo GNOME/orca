@@ -272,9 +272,16 @@ class ScriptManager:
         if customScript:
             return customScript
 
+        try:
+            role = obj.getRole()
+        except:
+            forceAppScript = False
+        else:
+            forceAppScript = role == pyatspi.ROLE_FRAME
+
         # Only defer to the toolkit script for this object if the app script
         # is based on a different toolkit.
-        if toolkitScript \
+        if toolkitScript and not forceAppScript \
            and not issubclass(appScript.__class__, toolkitScript.__class__):
             return toolkitScript
 

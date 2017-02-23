@@ -3455,6 +3455,9 @@ class Utilities:
 
         return not state.contains(pyatspi.STATE_MODAL)
 
+    def isUselessPanel(self, obj):
+        return False
+
     def rgbFromString(self, attributeValue):
         regex = re.compile("rgb|[^\w,]", re.IGNORECASE)
         string = re.sub(regex, "", attributeValue)
