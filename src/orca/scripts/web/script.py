@@ -656,7 +656,11 @@ class Script(default.Script):
         if not _settingsManager.getSetting('rewindAndFastForwardInSayAll'):
             return False
 
-        obj, start, end, string = self._sayAllContents[0]
+        try:
+            obj, start, end, string = self._sayAllContents[0]
+        except IndexError:
+            return False
+
         orca.setLocusOfFocus(None, obj, notifyScript=False)
         self.utilities.setCaretContext(obj, start)
 
@@ -671,7 +675,11 @@ class Script(default.Script):
         if not _settingsManager.getSetting('rewindAndFastForwardInSayAll'):
             return False
 
-        obj, start, end, string = self._sayAllContents[-1]
+        try:
+            obj, start, end, string = self._sayAllContents[-1]
+        except IndexError:
+            return False
+
         orca.setLocusOfFocus(None, obj, notifyScript=False)
         self.utilities.setCaretContext(obj, end)
 
