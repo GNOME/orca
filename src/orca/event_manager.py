@@ -540,7 +540,23 @@ class EventManager:
             msg = 'WARNING: Exception when getting script for event.'
             debug.println(debug.LEVEL_WARNING, msg, True)
         else:
-            check = True
+            skipCheck = [
+                "object:active-descendant-changed",
+                "object:children-changed",
+                "object:column-reordered",
+                "object:row-reordered",
+                "object:property-change",
+                "object:selection-changed"
+                "object:state-changed:checked",
+                "object:state-changed:expanded",
+                "object:state-changed:indeterminate",
+                "object:state-changed:pressed",
+                "object:state-changed:selected",
+                "object:state-changed:sensitive",
+                "object:state-changed:showing",
+                "object:text-changed",
+            ]
+            check = not list(filter(lambda x: event.type.startswith(x), skipCheck))
             msg = 'EVENT MANAGER: Getting script for %s (check: %s)' % (app, check)
             debug.println(debug.LEVEL_INFO, msg, True)
             script = _scriptManager.getScript(app, event.source, sanityCheck=check)
