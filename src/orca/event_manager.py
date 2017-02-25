@@ -540,9 +540,10 @@ class EventManager:
             msg = 'WARNING: Exception when getting script for event.'
             debug.println(debug.LEVEL_WARNING, msg, True)
         else:
-            msg = 'EVENT MANAGER: Getting script for %s' % app
+            check = True
+            msg = 'EVENT MANAGER: Getting script for %s (check: %s)' % (app, check)
             debug.println(debug.LEVEL_INFO, msg, True)
-            script = _scriptManager.getScript(app, event.source)
+            script = _scriptManager.getScript(app, event.source, sanityCheck=check)
 
         msg = 'EVENT MANAGER: Script is %s' % script
         debug.println(debug.LEVEL_INFO, msg, True)

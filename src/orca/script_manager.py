@@ -240,7 +240,7 @@ class ScriptManager:
         debug.println(debug.LEVEL_INFO, msg, True)
         return script
 
-    def getScript(self, app, obj=None):
+    def getScript(self, app, obj=None, sanityCheck=False):
         """Get a script for an app (and make it if necessary).  This is used
         instead of a simple calls to Script's constructor.
 
@@ -302,7 +302,7 @@ class ScriptManager:
            and not issubclass(appScript.__class__, toolkitScript.__class__):
             return toolkitScript
 
-        if app:
+        if app and sanityCheck:
             appScript = self.sanityCheckScript(appScript)
 
         return appScript
