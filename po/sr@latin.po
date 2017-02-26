@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&ke"
-"ywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2017-02-06 15:57+0000\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=orca&keywords=I18N+L10N&component=i18n\n"
+"POT-Creation-Date: 2017-02-26 08:41+0000\n"
 "PO-Revision-Date: 2017-02-25 20:21+0200\n"
 "Last-Translator: Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <(nothing)>\n"
@@ -16,8 +16,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : "
-"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Project-Style: gnome\n"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
@@ -2804,7 +2804,6 @@ msgstr "Ide na sledeće prozorče za izbor."
 #. to the start of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
 #: ../src/orca/cmdnames.py:823
-#| msgid "Goes to the top of the file."
 msgid "Goes to start of container."
 msgstr "Ide na početak kontejnera."
 
@@ -2812,7 +2811,6 @@ msgstr "Ide na početak kontejnera."
 #. to the end of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
 #: ../src/orca/cmdnames.py:828
-#| msgid "Goes to the end of the line."
 msgid "Goes to end of container."
 msgstr "Ide na kraj kontejnera."
 
@@ -4311,7 +4309,8 @@ msgstr "_Aktiviraj"
 #. a navigation command to move amongst entries.
 #: ../src/orca/guilabels.py:58
 msgid "Automatic focus mode during structural navigation"
-msgstr "Omogući automatski režim usredsređivanja prilikom kretanja kroz strukturu"
+msgstr ""
+"Omogući automatski režim usredsređivanja prilikom kretanja kroz strukturu"
 
 #. Translators: Orca has a number of commands that override the default behavior
 #. within an application. For instance, if you are at the bottom of an entry and
@@ -7994,9 +7993,6 @@ msgstr "Ne mogu da pokrenem upravnika podešavanja. Izlazim."
 #. Translators: This message is presented to the user when he/she tries to launch
 #. Orca, but Orca is already running.
 #: ../src/orca/messages.py:213
-#| msgid ""
-#| "Another screen reader process is already running for this session.\n"
-#| "Run \"orca --replace\" to replace that process with a new one."
 msgid ""
 "Another screen reader process is already running for this session.\n"
 "Run “orca --replace” to replace that process with a new one."
@@ -8221,7 +8217,6 @@ msgstr "Obezbediće istorijate posebne poruke pričaonice."
 #. instead present this message as an indication that the container was not
 #. exited as expected.
 #: ../src/orca/messages.py:396
-#| msgid "End of table"
 msgid "End of container."
 msgstr "Kraj kontejnera."
 
@@ -8230,7 +8225,6 @@ msgstr "Kraj kontejnera."
 #. blockquotes. If the user attempts to use this command in an object which is
 #. not a container, this message will be presented.
 #: ../src/orca/messages.py:402
-#| msgid "Not in a table."
 msgid "Not in a container."
 msgstr "Nije u kontejneru."
 
@@ -9084,12 +9078,6 @@ msgstr "Režim za učenje.  Pritisnite „Napusti“ da izađete."
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
 #: ../src/orca/messages.py:1045
-#| msgid ""
-#| "Entering learn mode.  Press any key to hear its function.  To view the "
-#| "screen reader's documentation, press F1. To get a list of the screen "
-#| "reader's default shortcuts, press F2. To get a list of the screen "
-#| "reader's shortcuts for the current application, press F3. To exit learn "
-#| "mode, press the escape key."
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the "
 "screen reader’s documentation, press F1. To get a list of the screen "
@@ -9106,14 +9094,12 @@ msgstr ""
 #. Translators: This message is presented when a user is navigating within a
 #. blockquote and then navigates out of it.
 #: ../src/orca/messages.py:1054
-#| msgid "leaving table."
 msgid "leaving blockquote."
 msgstr "napuštam blok citata."
 
 #. Translators: This message is presented when a user is navigating within a
 #. form and then navigates out of it.
 #: ../src/orca/messages.py:1058
-#| msgid "leaving table."
 msgid "leaving form."
 msgstr "napuštam formular."
 
@@ -9122,7 +9108,6 @@ msgstr "napuštam formular."
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1064
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving banner."
 msgstr "napuštam vrpcu."
@@ -9132,8 +9117,6 @@ msgstr "napuštam vrpcu."
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1070
-#| msgctxt "role"
-#| msgid "complementary content"
 msgctxt "role"
 msgid "leaving complementary content."
 msgstr "napuštam komplementarni sadržaj."
@@ -9143,8 +9126,6 @@ msgstr "napuštam komplementarni sadržaj."
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1076
-#| msgctxt "role"
-#| msgid "information"
 msgctxt "role"
 msgid "leaving information."
 msgstr "napuštam informacije."
@@ -9155,8 +9136,6 @@ msgstr "napuštam informacije."
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1082
-#| msgctxt "role"
-#| msgid "main content"
 msgctxt "role"
 msgid "leaving main content."
 msgstr "napuštam glavni sadržaj."
@@ -9166,7 +9145,6 @@ msgstr "napuštam glavni sadržaj."
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1088
-#| msgid "Page Navigation"
 msgctxt "role"
 msgid "leaving navigation."
 msgstr "napuštam navigaciju."
@@ -9176,7 +9154,6 @@ msgstr "napuštam navigaciju."
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1094
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving region."
 msgstr "napuštam oblast."
@@ -9186,7 +9163,6 @@ msgstr "napuštam oblast."
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1100
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving search."
 msgstr "napuštam pretragu."
@@ -9194,7 +9170,6 @@ msgstr "napuštam pretragu."
 #. Translators: This message is presented when a user is navigating within a
 #. list and then navigates out of it.
 #: ../src/orca/messages.py:1104
-#| msgid "leaving table."
 msgid "leaving list."
 msgstr "napuštam spisak."
 
@@ -9202,7 +9177,6 @@ msgstr "napuštam spisak."
 #. panel and then navigates out of it. A panel is a generic container of
 #. objects, such as a group of related form fields.
 #: ../src/orca/messages.py:1109
-#| msgid "leaving table."
 msgid "leaving panel."
 msgstr "napuštam panel."
 
@@ -10675,25 +10649,23 @@ msgstr[3] "Pronašao sam %d stavku"
 #. and then navigates out of several levels at once.
 #: ../src/orca/messages.py:2156
 #, python-format
-#| msgid "No more blockquotes."
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
 msgstr[0] "Napuštam %d blok citata."
 msgstr[1] "Napuštam %d bloka citata."
 msgstr[2] "Napuštam %d blokova citata."
-msgstr[3] "Napuštam blok citata."
+msgstr[3] "Napuštam %d blok citata."
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
 #: ../src/orca/messages.py:2161
 #, python-format
-#| msgid "Leaving flat review."
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
 msgstr[0] "Napuštam %d spisak."
 msgstr[1] "Napuštam %d spiska."
 msgstr[2] "Napuštam %d spiskova."
-msgstr[3] "Napuštam spisak."
+msgstr[3] "Napuštam %d spisak."
 
 #. Translators: This message describes a bulleted or numbered list.
 #: ../src/orca/messages.py:2165
@@ -11046,7 +11018,6 @@ msgstr "uspravni razdelnik"
 #. The "switch" role is a "light switch" style toggle, such as can be seen in
 #. https://developer.gnome.org/gtk3/stable/GtkSwitch.html
 #: ../src/orca/object_properties.py:146
-#| msgid "mode switch"
 msgctxt "role"
 msgid "switch"
 msgstr "prebacivač"
@@ -11145,7 +11116,6 @@ msgstr "posećena veza"
 #. A menu button is button widget that causes a menu to appear when the user
 #. activates the button.
 #: ../src/orca/object_properties.py:215
-#| msgid "No more buttons."
 msgid "menu button"
 msgstr "dugme izbornika"
 
@@ -11202,7 +11172,6 @@ msgstr "nije označeno"
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
 #: ../src/orca/object_properties.py:251
-#| msgid "on"
 msgctxt "switch"
 msgid "on"
 msgstr "uklj"
@@ -11210,7 +11179,6 @@ msgstr "uklj"
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
 #: ../src/orca/object_properties.py:255
-#| msgid "off"
 msgctxt "switch"
 msgid "off"
 msgstr "isklj"
@@ -11323,8 +11291,6 @@ msgstr "neispravno"
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to spelling.
 #: ../src/orca/object_properties.py:330
-#| msgctxt "textattr"
-#| msgid "spelling"
 msgctxt "error"
 msgid "invalid spelling"
 msgstr "neispravno pisanje"
@@ -11334,8 +11300,6 @@ msgstr "neispravno pisanje"
 #. when the error is related to spelling. We prefer a smaller string than in
 #. speech because braille displays have a limited size.
 #: ../src/orca/object_properties.py:336
-#| msgctxt "textattr"
-#| msgid "spelling"
 msgctxt "error"
 msgid "spelling"
 msgstr "pravopis"
@@ -11714,19 +11678,16 @@ msgstr "Izgovori _boje kao nazive"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a blockquote has been entered as the user arrows into it and before speaking the text. Upon navigating out of the blockquote, Orca will announce that the blockquote has been exited prior to speaking the new location.
 #: ../src/orca/orca-setup.ui.h:112
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Announce block_quotes during navigation"
 msgstr "Najavi _blokove citata prilikom navigacije"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a list with x items has been entered as the user arrows into it and before speaking the list content. Upon navigating out of the list, Orca will announce that the list has been exited prior to speaking the new location.
 #: ../src/orca/orca-setup.ui.h:114
-#| msgid "Enable _structural navigation"
 msgid "Announce _lists during navigation"
 msgstr "Najavi _spiskove prilikom navigacije"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a table with x rows and y columns has been entered as the user arrows into it and before speaking the table content. Upon navigating out of the table, Orca will announce that the table has been exited prior to speaking the new location.
 #: ../src/orca/orca-setup.ui.h:116
-#| msgid "Enable _structural navigation"
 msgid "Announce _tables during navigation"
 msgstr "Najavi _tabele prilikom navigacije"
 
@@ -11747,14 +11708,11 @@ msgstr "Najavi _orjentire prilikom navigacije"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content. If this checkbox is checked, Orca will announce that a form has been entered as the user arrows into it and before speaking the new location. Upon navigating out of the form, Orca will announce that the form has been exited prior to speaking the new location.
 #: ../src/orca/orca-setup.ui.h:124
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Announce _forms during navigation"
 msgstr "Najavi _formulare prilikom navigacije"
 
 #. Translators: If this checkbox is checked, Orca will speak the accessible description of an object. Whereas the accessible name of an object tends to be short and typically corresponds to what is displayed on screen, the contents of the accessible description tend to be longer, e.g. matching the text of the tooltip, and are sometimes redundant to the accessible name. Therefore, we allow the user to opt out of this additional information.
 #: ../src/orca/orca-setup.ui.h:126
-#| msgctxt "structural navigation"
-#| msgid "Description"
 msgid "Speak _description"
 msgstr "Izgovori _opis"
 
