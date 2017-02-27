@@ -1,3 +1,76 @@
+3.23.91 - 27 February 2017
+
+Web:
+
+ * Add structural navigation commands to move to start, end of current
+   container.
+
+ * Handle bogus/duplicate accessible-application instances we're seeing
+   with Gecko apps built against Gtk+ 3 (eliminates double-presentation
+   during caret-navigation).
+
+ * Try to prevent SeaMonkey Mail composition from unexpectedly entering
+   browse mode.
+
+ * Fix issues getting stuck in visually-hidden MathML content (MathJax).
+
+ * Prevent generation of unrelated labels for web content (performance).
+
+ * Fix several issues to improve our workarounds for bugs in Gecko's
+   accessible-text interface.
+
+ * More work on recovery from zombified elements (improves reliability).
+
+ * Improve reliability of "sticky" browse mode.
+
+ * Fix minor issues in new context-presentation support.
+
+ * Don't present loading messages if document is neither showing nor
+   visible.
+
+MATE:
+
+ * Work around MATE Panel's less-than-ideal event ordering and missing
+   events in order to improve presentation of its Applications menu.
+
+ * Sanity-check windows which claim to be active and ignore bogus
+   window:active events and state-changed:active events from frames.
+
+General:
+
+ * Don't present new ancestors of menu bars.
+
+ * Don't use the pyatspi cache for descriptions to ensure we don't
+   present stale information.
+
+ * Don't treat insertions as auto-text events if the source is no longer
+   focused.
+
+ * Fix recent (unstable-version) regression in which labels which
+   label other labels stopped being presented.
+
+ * Update the active window and conditionally present mouse-triggered
+   focus changes.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    da            Danish                  Ask Hjorth Larsen
+    de            German                  Christian Kirbach
+    es            Spanish                 Daniel Mustieles
+    gl            Galician                Fran Diéguez
+    kk            Kazakh                  Baurzhan Muftakhidinov
+    lt            Lithuanian              Aurimas Černius
+    nb            Norwegian bokmål        Kjartan Maraas
+    pl            Polish                  Piotr Drąg
+    pt_BR         Brazilian Portuguese    Rafael Fontenelle
+    sr            Serbian                 Мирослав Николић
+    sr@latin      Serbian                 Miroslav Nikolić
+    sv            Swedish                 Anders Jonsson
+    zh_CN         Chinese (China)         Mandy Wang
+    zh_TW         Chinese (Taiwan)        Chao-Hsiung Liao
+
+=========
+
 3.23.4 - 2 February 2017
 
 Web:
