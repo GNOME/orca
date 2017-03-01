@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2016-08-29 23:54+0000\n"
-"PO-Revision-Date: 2016-08-30 08:47+0200\n"
+"POT-Creation-Date: 2016-10-12 15:33+0000\n"
+"PO-Revision-Date: 2017-03-01 08:47+0100\n"
 "Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -760,7 +760,7 @@ msgstr "point d'interrogation"
 #.
 #: ../src/orca/chnames.py:137
 msgid "at"
-msgstr "arrobe"
+msgstr "arobase"
 
 #. Translators: this is the spoken word for the character '[' (U+005b)
 #.
@@ -1776,7 +1776,7 @@ msgstr "Place le pointeur sur l'élément actuel."
 #. Left click means to generate a left mouse button click on the current item.
 #: ../src/orca/cmdnames.py:45
 msgid "Performs left click on current flat review item."
-msgstr "Effectue un clic gauche sur l'élément actuel d'examen global."
+msgstr "Effectue un clic gauche sur l'élément où est le curseur de balayage."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1786,7 +1786,7 @@ msgstr "Effectue un clic gauche sur l'élément actuel d'examen global."
 #. Right click means to generate a right mouse button click on the current item.
 #: ../src/orca/cmdnames.py:53
 msgid "Performs right click on current flat review item."
-msgstr "Effectue un clic droit sur l'élément actuel d'examen global."
+msgstr "Effectue un clic droit sur l'élément où est le curseur de balayage."
 
 #. Translators: the Orca "SayAll" command allows the user to press a key and have
 #. the entire document in a window be automatically spoken to the user. If the
@@ -1804,7 +1804,7 @@ msgstr "Lit le document entier."
 #. which causes Orca to speak the entire contents of the window using flat review.
 #: ../src/orca/cmdnames.py:67
 msgid "Speaks entire window using flat review."
-msgstr "Lit la fenêtre entière en examen global."
+msgstr "Lit la fenêtre entière avec le curseur de balayage."
 
 #. Translators: the "Where am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
@@ -1875,7 +1875,7 @@ msgstr "Recherche l'occurrence précédente d'une chaîne."
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: ../src/orca/cmdnames.py:118
 msgid "Enters and exits flat review mode."
-msgstr "Active et désactive le mode d'examen global."
+msgstr "Active et désactive le mode curseur de balayage."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1885,7 +1885,7 @@ msgstr "Active et désactive le mode d'examen global."
 #. The home position is the beginning of the content in the window.
 #: ../src/orca/cmdnames.py:126
 msgid "Moves flat review to the home position."
-msgstr "Déplace l'examen global à la position d'origine."
+msgstr "Déplace le curseur de balayage au début de l'écran."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1895,7 +1895,7 @@ msgstr "Déplace l'examen global à la position d'origine."
 #. The home position is the last bit of information in the window.
 #: ../src/orca/cmdnames.py:134
 msgid "Moves flat review to the end position."
-msgstr "Déplace l'examen global à la position finale."
+msgstr "Déplace le curseur de balayage à la fin de l'écran."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1904,7 +1904,7 @@ msgstr "Déplace l'examen global à la position finale."
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: ../src/orca/cmdnames.py:142
 msgid "Moves flat review to the beginning of the previous line."
-msgstr "Déplace l'examen global au début de la ligne précédente."
+msgstr "Déplace le curseur de balayage au début de la ligne précédente."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1913,7 +1913,7 @@ msgstr "Déplace l'examen global au début de la ligne précédente."
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: ../src/orca/cmdnames.py:149
 msgid "Speaks the current flat review line."
-msgstr "Lit la ligne actuelle d'examen global."
+msgstr "Lit la ligne actuelle où est le curseur de balayage."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1924,7 +1924,7 @@ msgstr "Lit la ligne actuelle d'examen global."
 #. by character.
 #: ../src/orca/cmdnames.py:158
 msgid "Spells the current flat review line."
-msgstr "Épelle la ligne actuelle d'examen global."
+msgstr "Épelle la ligne où est le curseur de balayage."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1935,7 +1935,7 @@ msgstr "Épelle la ligne actuelle d'examen global."
 #. by character phonetically, saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: ../src/orca/cmdnames.py:168
 msgid "Phonetically spells the current flat review line."
-msgstr "Épelle phonétiquement la ligne actuelle d'examen global."
+msgstr "Épelle phonétiquement la ligne où est le curseur de balayage."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1944,7 +1944,7 @@ msgstr "Épelle phonétiquement la ligne actuelle d'examen global."
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: ../src/orca/cmdnames.py:175
 msgid "Moves flat review to the beginning of the next line."
-msgstr "Déplace l'examen global au début de la ligne suivante."
+msgstr "Déplace le curseur de balayage au début de la ligne suivante."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1955,7 +1955,7 @@ msgstr "Déplace l'examen global au début de la ligne suivante."
 #. will wrap across lines if necessary).
 #: ../src/orca/cmdnames.py:184
 msgid "Moves flat review to the previous item or word."
-msgstr "Déplace l'examen global au précédent élément ou mot."
+msgstr "Déplace le curseur de balayage au précédent élément ou mot."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1965,7 +1965,7 @@ msgstr "Déplace l'examen global au précédent élément ou mot."
 #. This command will speak the current word or item.
 #: ../src/orca/cmdnames.py:192
 msgid "Speaks the current flat review item or word."
-msgstr "Lit l'élément ou le mot actuel d'examen global."
+msgstr "Lit l'élément ou le mot actuel où est le curseur de balayage."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1976,7 +1976,7 @@ msgstr "Lit l'élément ou le mot actuel d'examen global."
 #. character by character.
 #: ../src/orca/cmdnames.py:201
 msgid "Spells the current flat review item or word."
-msgstr "Épelle l'élément ou le mot actuel d'examen global."
+msgstr "Épelle l'élément ou le mot actuel où est le curseur de balayage."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1988,7 +1988,9 @@ msgstr "Épelle l'élément ou le mot actuel d'examen global."
 #. and so on.
 #: ../src/orca/cmdnames.py:212
 msgid "Phonetically spells the current flat review item or word."
-msgstr "Épelle phonétiquement l'élément ou le mot actuel d'examen global."
+msgstr ""
+"Épelle phonétiquement l'élément ou le mot actuel où est le curseur de "
+"balayage."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1999,7 +2001,7 @@ msgstr "Épelle phonétiquement l'élément ou le mot actuel d'examen global."
 #. will wrap across lines if necessary).
 #: ../src/orca/cmdnames.py:221
 msgid "Moves flat review to the next item or word."
-msgstr "Déplace l'examen global au prochain élément ou mot."
+msgstr "Déplace le curseur de balayage au prochain élément ou mot."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2010,7 +2012,7 @@ msgstr "Déplace l'examen global au prochain élément ou mot."
 #. line upward on the screen.
 #: ../src/orca/cmdnames.py:230
 msgid "Moves flat review to the word above the current word."
-msgstr "Déplace l'examen global au dessus du mot actuel."
+msgstr "Déplace le curseur de balayage au dessus du mot actuel."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2022,7 +2024,7 @@ msgstr "Déplace l'examen global au dessus du mot actuel."
 #. will speak the text associated with the object.
 #: ../src/orca/cmdnames.py:240
 msgid "Speaks the current flat review object."
-msgstr "Lit l'objet actuel d'examen global."
+msgstr "Lit l'objet actuel où est le curseur de balayage."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2033,7 +2035,7 @@ msgstr "Lit l'objet actuel d'examen global."
 #. line downward on the screen.
 #: ../src/orca/cmdnames.py:249
 msgid "Moves flat review to the word below the current word."
-msgstr "Déplace l'examen global en dessous du mot actuel."
+msgstr "Déplace le curseur de balayage en dessous du mot actuel."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2044,7 +2046,7 @@ msgstr "Déplace l'examen global en dessous du mot actuel."
 #. will wrap across lines if necessary).
 #: ../src/orca/cmdnames.py:258
 msgid "Moves flat review to the previous character."
-msgstr "Déplace l'examen global au caractère précédent."
+msgstr "Déplace le curseur de balayage au caractère précédent."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2054,7 +2056,7 @@ msgstr "Déplace l'examen global au caractère précédent."
 #. This command will speak the current character
 #: ../src/orca/cmdnames.py:266
 msgid "Speaks the current flat review character."
-msgstr "Lit le caractère actuel d'examen global."
+msgstr "Lit le caractère où est le curseur de balayage."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2065,7 +2067,7 @@ msgstr "Lit le caractère actuel d'examen global."
 #. saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: ../src/orca/cmdnames.py:276
 msgid "Phonetically speaks the current flat review character."
-msgstr "Lit phonétiquement le caractère actuel d'examen global."
+msgstr "Lit phonétiquement le caractère où est le curseur de balayage."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2076,7 +2078,7 @@ msgstr "Lit phonétiquement le caractère actuel d'examen global."
 #. value.
 #: ../src/orca/cmdnames.py:286
 msgid "Speaks unicode value of the current flat review character."
-msgstr "Lit la valeur Unicode du caractère actuel d'examen global."
+msgstr "Lit la valeur Unicode du caractère où est le curseur de balayage."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2087,7 +2089,7 @@ msgstr "Lit la valeur Unicode du caractère actuel d'examen global."
 #. will wrap across lines if necessary).
 #: ../src/orca/cmdnames.py:295
 msgid "Moves flat review to the next character."
-msgstr "Déplace l'examen global au caractère suivant."
+msgstr "Déplace le curseur de balayage au caractère suivant."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2097,7 +2099,7 @@ msgstr "Déplace l'examen global au caractère suivant."
 #. This command will move to and present the end of the line.
 #: ../src/orca/cmdnames.py:303
 msgid "Moves flat review to the end of the line."
-msgstr "Déplace l'examen global à la fin de la ligne."
+msgstr "Déplace le curseur de balayage à la fin de la ligne."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2107,7 +2109,7 @@ msgstr "Déplace l'examen global à la fin de la ligne."
 #. The bottom left is the bottom left of the window currently being reviewed.
 #: ../src/orca/cmdnames.py:311
 msgid "Moves flat review to the bottom left."
-msgstr "Déplace l'examen global en bas à gauche."
+msgstr "Déplace le curseur de balayage en bas à gauche."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2118,7 +2120,7 @@ msgstr "Déplace l'examen global en bas à gauche."
 #. clipboard.
 #: ../src/orca/cmdnames.py:320
 msgid "Copies the contents under flat review to the clipboard."
-msgstr "Copie le contenu de l'examen global vers le presse-papiers."
+msgstr "Copie le texte où est le curseur de balayage vers le presse-papiers."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2129,7 +2131,8 @@ msgstr "Copie le contenu de l'examen global vers le presse-papiers."
 #. the existing contents of the clipboard.
 #: ../src/orca/cmdnames.py:330
 msgid "Appends the contents under flat review to the clipboard."
-msgstr "Ajoute le contenu de l'examen global à la fin du presse-papiers."
+msgstr ""
+"Ajoute le texte où est le curseur de balayage à la fin du presse-papiers."
 
 #. Translators: when users are navigating a table, they sometimes want the
 #. entire row of a table read; other times they just want the current cell
@@ -8364,7 +8367,7 @@ msgstr "Contenu ajouté au presse-papiers."
 #. not using flat review.
 #: ../src/orca/messages.py:494
 msgid "Not using flat review."
-msgstr "Examen global non utilisé."
+msgstr "Curseur de balayage non utilisé."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -8373,7 +8376,7 @@ msgstr "Examen global non utilisé."
 #. let the user know he/she just entered flat review.
 #: ../src/orca/messages.py:501
 msgid "Entering flat review."
-msgstr "Activation de l'examen global."
+msgstr "Activation du curseur de balayage."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -8382,7 +8385,7 @@ msgstr "Activation de l'examen global."
 #. let the user know he/she just entered flat review.
 #: ../src/orca/messages.py:508
 msgid "Leaving flat review."
-msgstr "Désactivation de l'examen global."
+msgstr "Désactivation du curseur de balayage."
 
 #. Translators: this means a particular cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
@@ -9467,14 +9470,14 @@ msgstr "Le mode navigation est permanent."
 msgid "Mouse over object not found."
 msgstr "L'objet généré par le survol du pointeur n'a pas été trouvé."
 
-#. Translators: Orca has a feature to speak the item under the pointer. This feaure,
+#. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled off via command.
 #: ../src/orca/messages.py:1339
 msgid "Mouse review disabled."
 msgstr "Mode d'examen à la souris désactivé."
 
-#. Translators: Orca has a feature to speak the item under the pointer. This feaure,
+#. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled on via command.
 #: ../src/orca/messages.py:1344
