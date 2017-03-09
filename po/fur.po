@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2017-03-07 22:35+0000\n"
-"PO-Revision-Date: 2017-03-09 10:11+0100\n"
+"PO-Revision-Date: 2017-03-09 15:39+0100\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -568,7 +568,7 @@ msgstr "Francês francês grât 1"
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:136
 msgid "Greek Grade 1"
-msgstr "Grec grât 1"
+msgstr "Grêc grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
