@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2017-03-01 07:55+0000\n"
-"PO-Revision-Date: 2017-03-07 23:34+0100\n"
+"POT-Creation-Date: 2017-03-07 22:35+0000\n"
+"PO-Revision-Date: 2017-03-09 10:11+0100\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -418,199 +418,199 @@ msgstr ""
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:36
 msgid "Czech Grade 1"
-msgstr ""
+msgstr "Cec grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:40
 msgid "Spanish Grade 1"
-msgstr ""
+msgstr "Spagnûl grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:44
 msgid "Canada French Grade 2"
-msgstr ""
+msgstr "Francês canadês grât 2"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:48
 msgid "France French Grade 2"
-msgstr ""
+msgstr "Francês francês grât 2"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:52
 msgid "Latvian Grade 1"
-msgstr ""
+msgstr "Leton grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:56
 msgid "Netherlands Dutch Grade 1"
-msgstr ""
+msgstr "Olandês de Olande grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:60
 msgid "Norwegian Grade 0"
-msgstr ""
+msgstr "Norvegjês grât 0"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:64
 msgid "Norwegian Grade 1"
-msgstr ""
+msgstr "Norvegjês grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:68
 msgid "Norwegian Grade 2"
-msgstr ""
+msgstr "Norvegjês grât 2"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:72
 msgid "Norwegian Grade 3"
-msgstr ""
+msgstr "Norvegjês grât 3"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:76
 msgid "Polish Grade 1"
-msgstr ""
+msgstr "Polac grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:80
 msgid "Portuguese Grade 1"
-msgstr ""
+msgstr "Portughês grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:84
 msgid "Swedish Grade 1"
-msgstr ""
+msgstr "Svedês grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:88
 msgid "Arabic Grade 1"
-msgstr ""
+msgstr "Arap grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:92
 msgid "Welsh Grade 1"
-msgstr ""
+msgstr "Galês grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:96
 msgid "Welsh Grade 2"
-msgstr ""
+msgstr "Galês grât 2"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:100
 msgid "German Grade 0"
-msgstr ""
+msgstr "Todesc grât 0"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:104
 msgid "German Grade 1"
-msgstr ""
+msgstr "Todesc grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:108
 msgid "German Grade 2"
-msgstr ""
+msgstr "Todesc grât 2"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:112
 msgid "U.K. English Grade 2"
-msgstr ""
+msgstr "Inglês britanic grât 2"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:116
 msgid "U.K. English Grade 1"
-msgstr ""
+msgstr "Inglês britanic grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:120
 msgid "U.S. English Grade 1"
-msgstr ""
+msgstr "Inglês american grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:124
 msgid "U.S. English Grade 2"
-msgstr ""
+msgstr "Inglês american grât 2"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:128
 msgid "Canada French Grade 1"
-msgstr ""
+msgstr "Francês canadês grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:132
 msgid "France French Grade 1"
-msgstr ""
+msgstr "Francês francês grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:136
 msgid "Greek Grade 1"
-msgstr ""
+msgstr "Grec grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:140
 msgid "Hindi Grade 1"
-msgstr ""
+msgstr "Hindi grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:144
 msgid "Hungarian 8 dot computer"
-msgstr ""
+msgstr "Ongjarês computer a 8 ponts"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:148
 msgid "Hungarian Grade 1"
-msgstr ""
+msgstr "Ongjarês grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:152
 msgid "Italian Grade 1"
-msgstr ""
+msgstr "Talian grât 1"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:156
 msgid "Belgium Dutch Grade 1"
-msgstr ""
+msgstr "Olandês belgjic grât 1"
 
 #. Translators: this is the spoken word for the space character
 #.
 #: ../src/orca/chnames.py:41 ../src/orca/keynames.py:138
 msgid "space"
-msgstr ""
+msgstr "spazi"
 
 #. Translators: this is the spoken word for the newline character
 #.
 #: ../src/orca/chnames.py:45
 msgid "newline"
-msgstr ""
+msgstr "gnove rie"
 
 #. Translators: this is the spoken word for the tab character
 #.
@@ -618,19 +618,19 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:49 ../src/orca/keynames.py:130
 msgid "tab"
-msgstr ""
+msgstr "tabulazion"
 
 #. Translators: this is the spoken word for the character '!' (U+0021)
 #.
 #: ../src/orca/chnames.py:53
 msgid "exclaim"
-msgstr ""
+msgstr "pont esclamatîf"
 
 #. Translators: this is the spoken word for the character '"' (U+0022)
 #.
 #: ../src/orca/chnames.py:57
 msgid "quote"
-msgstr ""
+msgstr "virgulutis"
 
 #. Translators: this is the spoken word for the character '#' (U+0023)
 #.
@@ -642,13 +642,13 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:65
 msgid "dollar"
-msgstr ""
+msgstr "dolar"
 
 #. Translators: this is the spoken word for the character '%' (U+0025)
 #.
 #: ../src/orca/chnames.py:69
 msgid "percent"
-msgstr ""
+msgstr "percentuâl"
 
 #. Translators: this is the spoken word for the character '&' (U+0026)
 #.
@@ -660,25 +660,25 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:77
 msgid "apostrophe"
-msgstr ""
+msgstr "apostrof"
 
 #. Translators: this is the spoken word for the character '(' (U+0028)
 #.
 #: ../src/orca/chnames.py:81
 msgid "left paren"
-msgstr ""
+msgstr "parentesi vierte"
 
 #. Translators: this is the spoken word for the character ')' (U+0029)
 #.
 #: ../src/orca/chnames.py:85
 msgid "right paren"
-msgstr ""
+msgstr "parentesi sierade"
 
 #. Translators: this is the spoken word for the character '*' (U+002a)
 #.
 #: ../src/orca/chnames.py:89
 msgid "star"
-msgstr ""
+msgstr "asterisc"
 
 #. Translators: this is the spoken word for the character '+' (U+002b)
 #.
@@ -686,103 +686,103 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:93 ../src/orca/keynames.py:298
 msgid "plus"
-msgstr ""
+msgstr "plui"
 
 #. Translators: this is the spoken word for the character ',' (U+002c)
 #.
 #: ../src/orca/chnames.py:97
 msgid "comma"
-msgstr ""
+msgstr "virgule"
 
 #. Translators: this is the spoken word for the character '-' (U+002d)
 #.
 #: ../src/orca/chnames.py:101
 msgid "dash"
-msgstr ""
+msgstr "tratut"
 
 #. Translators: this is the spoken word for the character '.' (U+002e)
 #.
 #: ../src/orca/chnames.py:105
 msgid "dot"
-msgstr ""
+msgstr "pont"
 
 #. Translators: this is the spoken word for the character '/' (U+002f)
 #.
 #: ../src/orca/chnames.py:109
 msgid "slash"
-msgstr ""
+msgstr "sbare"
 
 #. Translators: this is the spoken word for the character ':' (U+003a)
 #.
 #: ../src/orca/chnames.py:113
 msgid "colon"
-msgstr ""
+msgstr "doi ponts"
 
 #. Translators: this is the spoken word for the character ';' (U+003b)
 #.
 #: ../src/orca/chnames.py:117
 msgid "semicolon"
-msgstr ""
+msgstr "pont e virgule"
 
 #. Translators: this is the spoken word for the character '< ' (U+003c)
 #.
 #: ../src/orca/chnames.py:121
 msgid "less"
-msgstr ""
+msgstr "minôr"
 
 #. Translators: this is the spoken word for the character '=' (U+003d)
 #.
 #: ../src/orca/chnames.py:125
 msgid "equals"
-msgstr ""
+msgstr "uguâl"
 
 #. Translators: this is the spoken word for the character '> ' (U+003e)
 #.
 #: ../src/orca/chnames.py:129
 msgid "greater"
-msgstr ""
+msgstr "maiôr"
 
 #. Translators: this is the spoken word for the character '?' (U+003f)
 #.
 #: ../src/orca/chnames.py:133
 msgid "question"
-msgstr ""
+msgstr "pont interogatîf"
 
 #. Translators: this is the spoken word for the character '@' (U+0040)
 #.
 #: ../src/orca/chnames.py:137
 msgid "at"
-msgstr ""
+msgstr "caiut"
 
 #. Translators: this is the spoken word for the character '[' (U+005b)
 #.
 #: ../src/orca/chnames.py:141
 msgid "left bracket"
-msgstr ""
+msgstr "parentesi cuadre vierte"
 
 #. Translators: this is the spoken word for the character '\' (U+005c)
 #.
 #: ../src/orca/chnames.py:145
 msgid "backslash"
-msgstr ""
+msgstr "sbare contrarie"
 
 #. Translators: this is the spoken word for the character ']' (U+005d)
 #.
 #: ../src/orca/chnames.py:149
 msgid "right bracket"
-msgstr ""
+msgstr "parentesi cuadre sierade"
 
 #. Translators: this is the spoken word for the character '^' (U+005e)
 #.
 #: ../src/orca/chnames.py:153
 msgid "caret"
-msgstr ""
+msgstr "circonflès"
 
 #. Translators: this is the spoken word for the character '_' (U+005f)
 #.
 #: ../src/orca/chnames.py:157
 msgid "underline"
-msgstr ""
+msgstr "sotlineadure"
 
 #. Translators: this is the spoken word for the character '`' (U+0060)
 #.
@@ -791,25 +791,25 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:161 ../src/orca/keynames.py:255
 msgid "grave"
-msgstr ""
+msgstr "acent grivi"
 
 #. Translators: this is the spoken word for the character '{' (U+007b)
 #.
 #: ../src/orca/chnames.py:165
 msgid "left brace"
-msgstr ""
+msgstr "parentesi a grafe vierte"
 
 #. Translators: this is the spoken word for the character '|' (U+007c)
 #.
 #: ../src/orca/chnames.py:169
 msgid "vertical bar"
-msgstr ""
+msgstr "sbare verticâl"
 
 #. Translators: this is the spoken word for the character '}' (U+007d)
 #.
 #: ../src/orca/chnames.py:173
 msgid "right brace"
-msgstr ""
+msgstr "parentesi a grafe sierade"
 
 #. Translators: this is the spoken word for the character '~' (U+007e)
 #.
@@ -818,7 +818,7 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:177 ../src/orca/keynames.py:270
 msgid "tilde"
-msgstr ""
+msgstr "tilde"
 
 #. Translators: this is the spoken character for the no break space
 #. character (e.g., "&nbsp;" in HTML -- U+00a0)
