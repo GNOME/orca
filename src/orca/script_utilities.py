@@ -2958,7 +2958,7 @@ class Utilities:
                 return True
             if lastKey == "Return" and event.any_data != "\n":
                 return True
-            if lastKey in ["Up", "Down"]:
+            if lastKey in ["Up", "Down", "Page_Up", "Page_Down"]:
                 return self.isEditableDescendantOfComboBox(event.source)
 
         return False
@@ -4248,6 +4248,9 @@ class Utilities:
     def lastInputEventWasPageNav(self):
         keyString, mods = self.lastKeyAndModifiers()
         if not keyString in ["Page_Up", "Page_Down"]:
+            return False
+
+        if self.isEditableDescendantOfComboBox(orca_state.locusOfFocus):
             return False
 
         return not (mods & keybindings.CTRL_MODIFIER_MASK)
