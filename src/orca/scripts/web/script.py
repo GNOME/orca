@@ -869,7 +869,11 @@ class Script(default.Script):
             return
 
         line = self.getNewBrailleLine(clearBraille=True, addLine=True)
-        regions, focusedRegion = self.brailleGenerator.generateContents(contents)
+        contents = self.brailleGenerator.generateContents(contents)
+        if not contents:
+            return
+
+        regions, focusedRegion = contents
         for region in regions:
             self.addBrailleRegionsToLine(region, line)
 
