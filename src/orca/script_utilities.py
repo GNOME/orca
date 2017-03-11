@@ -4233,6 +4233,9 @@ class Utilities:
         if not keyString in ["Up", "Down"]:
             return False
 
+        if self.isEditableDescendantOfComboBox(event.source):
+            return False
+
         return not (mods & keybindings.CTRL_MODIFIER_MASK)
 
     def lastInputEventWasLineBoundaryNav(self):
