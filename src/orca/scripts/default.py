@@ -2561,7 +2561,7 @@ class Script(script.Script):
 
         self.utilities.handleUndoTextEvent(event)
 
-        if event.source == orca_state.locusOfFocus:
+        if event.source == orca_state.locusOfFocus and self.utilities.isAutoTextEvent(event):
             self._saveFocusedObjectInfo(event.source)
         orca.setLocusOfFocus(event, event.source, False)
         self.updateBraille(event.source)
