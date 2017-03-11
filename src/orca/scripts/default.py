@@ -2387,11 +2387,11 @@ class Script(script.Script):
         """Callback for object:selection-changed accessibility events."""
 
         obj = event.source
+        state = obj.getState()
 
         if self.utilities.handlePasteLocusOfFocusChange():
             orca.setLocusOfFocus(event, event.source, False)
         else:
-            state = obj.getState()
             if state.contains(pyatspi.STATE_MANAGES_DESCENDANTS):
                 return
 
@@ -2403,6 +2403,12 @@ class Script(script.Script):
         keyString, mods = self.utilities.lastKeyAndModifiers()
         if keyString == "space":
             return
+
+        role = obj.getRole()
+        if role == pyatspi.ROLE_COMBO_BOX and not state.contains(pyatspi.STATE_EXPANDED):
+            entry = self.utilities.getEntryForEditableComboBox(event.source)
+            if entry and entry.getState().contains(pyatspi.STATE_FOCUSED):
+                return
  
         selectedChildren = self.utilities.selectedChildren(obj)
         for child in selectedChildren:
