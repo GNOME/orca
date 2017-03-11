@@ -903,6 +903,8 @@ class StructuralNavigation:
         if not newObj:
             document = self._script.utilities.getDocumentForObject(obj)
             newObj = self._script.utilities.getNextObjectInDocument(obj, document)
+        elif pyatspi.findAncestor(container, lambda x: x == newObj):
+            newObj, newOffset = self._script.utilities.nextContext(newObj, newOffset)
 
         newContainer = self.getContainerForObject(newObj)
         if newObj and newContainer != container:
