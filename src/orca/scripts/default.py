@@ -2441,14 +2441,8 @@ class Script(script.Script):
             return
 
         window = self.utilities.topLevelObject(obj)
-        if window:
-            try:
-                iconified = window.getState().contains(pyatspi.STATE_ICONIFIED)
-            except:
-                return
-
-            if iconified:
-                return
+        if not self.utilities.canBeActiveWindow(window):
+            return
 
         try:
             childCount = obj.childCount
