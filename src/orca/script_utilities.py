@@ -2958,6 +2958,8 @@ class Utilities:
                 return True
             if lastKey == "Return" and event.any_data != "\n":
                 return True
+            if lastKey in ["Up", "Down"]:
+                return self.isEditableDescendantOfComboBox(event.source)
 
         return False
 
