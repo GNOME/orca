@@ -4233,7 +4233,7 @@ class Utilities:
         if not keyString in ["Up", "Down"]:
             return False
 
-        if self.isEditableDescendantOfComboBox(event.source):
+        if self.isEditableDescendantOfComboBox(orca_state.locusOfFocus):
             return False
 
         return not (mods & keybindings.CTRL_MODIFIER_MASK)
