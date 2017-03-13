@@ -2440,8 +2440,8 @@ class Script(script.Script):
         if not state.contains(pyatspi.STATE_FOCUSED):
             return
 
-        window = self.utilities.topLevelObject(obj)
-        if not self.utilities.canBeActiveWindow(window):
+        window, dialog = self.utilities.frameAndDialog(obj)
+        if not self.utilities.canBeActiveWindow(window) and not dialog:
             return
 
         try:
