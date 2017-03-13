@@ -899,6 +899,9 @@ class Utilities(script_utilities.Utilities):
             rangeStart, rangeEnd = spans[0][0], spans[-1][1] + 1
             string = allText[rangeStart:rangeEnd]
 
+        if not (rangeStart <= offset <= rangeEnd):
+            return allText[start:end], start, end
+
         return string, rangeStart, rangeEnd
 
     def _attemptBrokenTextRecovery(self, obj, **args):
