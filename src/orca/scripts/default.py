@@ -2441,7 +2441,7 @@ class Script(script.Script):
             return
 
         window, dialog = self.utilities.frameAndDialog(obj)
-        if not self.utilities.canBeActiveWindow(window) and not dialog:
+        if window and not self.utilities.canBeActiveWindow(window) and not dialog:
             return
 
         try:
