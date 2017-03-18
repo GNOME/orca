@@ -1,7 +1,7 @@
 # Danish translation of orca
 # Copyright (C) 2007-2016 Free Software Foundation, Inc.
 # This file is distributed under the same license as the orca package.
-# Kenneth Nielsen <k.nielsen81@gmail.com>, 2007-2016
+# Kenneth Nielsen <k.nielsen81@gmail.com>, 2007-2017
 # scootergrisen, 2016.
 #
 # Konventioner:
@@ -24,10 +24,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.gnome-2-22\n"
-"Report-Msgid-Bugs-To: "
-"http://bugzilla.gnome.org/enter_bug.cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2017-02-06 15:57+0000\n"
-"PO-Revision-Date: 2017-02-16 13:09+0100\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=orca&keywords=I18N+L10N&component=i18n\n"
+"POT-Creation-Date: 2017-03-09 09:12+0000\n"
+"PO-Revision-Date: 2017-03-18 21:51+0100\n"
 "Last-Translator: Kenneth Nielsen <k.nielsen81@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -2226,8 +2226,7 @@ msgstr "Angiver slutningen af en tekstmarkering."
 #. have a handler.
 #: ../src/orca/cmdnames.py:389
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr ""
-"Går i indlæringstilstand. Tryk esc for at afslutte indlæringstilstand."
+msgstr "Går i indlæringstilstand. Tryk esc for at afslutte indlæringstilstand."
 
 # jeg har skrevet med en af udviklerne for at prøve at finde ud af om de steder hvor der står speech
 # om de altid bare skal oversættes til tale, eller om man bør bruge læse nogle steder (idet den jo
@@ -2838,19 +2837,15 @@ msgstr "Går til næste kombinationsboks."
 #. to the start of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
 #: ../src/orca/cmdnames.py:823
-#, fuzzy
-#| msgid "Goes to the top of the file."
 msgid "Goes to start of container."
-msgstr "Går til starten af filen."
+msgstr "Går til starten af beholderen."
 
 #. Translators: This string describes a document navigation command which moves
 #. to the end of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
 #: ../src/orca/cmdnames.py:828
-#, fuzzy
-#| msgid "Goes to the end of the line."
 msgid "Goes to end of container."
-msgstr "Går til slutningen af linjen."
+msgstr "Går til slutningen af beholderen."
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: ../src/orca/cmdnames.py:831
@@ -8293,20 +8288,16 @@ msgstr "Gør chatrumspecifik beskedhistorik tilgængelig."
 #. instead present this message as an indication that the container was not
 #. exited as expected.
 #: ../src/orca/messages.py:396
-#, fuzzy
-#| msgid "End of table"
 msgid "End of container."
-msgstr "Slutning af tabel"
+msgstr "Slutning af beholder."
 
 #. Translators: This is for navigating document content by moving to the start
 #. or end of a container. Examples of containers include tables, lists, and
 #. blockquotes. If the user attempts to use this command in an object which is
 #. not a container, this message will be presented.
 #: ../src/orca/messages.py:402
-#, fuzzy
-#| msgid "Not in a table."
 msgid "Not in a container."
-msgstr "Ikke i en tabel."
+msgstr "Ikke i en beholder."
 
 #. Translators: The "default" button in a dialog box is the button that gets
 #. activated when Enter is pressed anywhere within that dialog box.
@@ -9193,115 +9184,90 @@ msgstr ""
 #. Translators: This message is presented when a user is navigating within a
 #. blockquote and then navigates out of it.
 #: ../src/orca/messages.py:1054
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving blockquote."
-msgstr "forlader tabel."
+msgstr "forlader blokcitat."
 
 #. Translators: This message is presented when a user is navigating within a
 #. form and then navigates out of it.
 #: ../src/orca/messages.py:1058
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving form."
-msgstr "forlader tabel."
+msgstr "forlader formular."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1064
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving banner."
-msgstr "forlader tabel."
+msgstr "forlader banner."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1070
-#, fuzzy
-#| msgctxt "role"
-#| msgid "complementary content"
 msgctxt "role"
 msgid "leaving complementary content."
-msgstr "supplerende indhold"
+msgstr "forlader supplerende indhold."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1076
-#, fuzzy
-#| msgctxt "role"
-#| msgid "information"
 msgctxt "role"
 msgid "leaving information."
-msgstr "information"
+msgstr "forlader information."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1082
-#, fuzzy
-#| msgctxt "role"
-#| msgid "main content"
 msgctxt "role"
 msgid "leaving main content."
-msgstr "hovedindhold"
+msgstr "forlader hovedindhold."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1088
-#, fuzzy
-#| msgid "Page Navigation"
 msgctxt "role"
 msgid "leaving navigation."
-msgstr "Side navigation"
+msgstr "forlader navigation."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1094
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving region."
-msgstr "forlader tabel."
+msgstr "forlader region."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1100
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving search."
-msgstr "forlader tabel."
+msgstr "forlader søgning."
 
 #. Translators: This message is presented when a user is navigating within a
 #. list and then navigates out of it.
 #: ../src/orca/messages.py:1104
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving list."
-msgstr "forlader tabel."
+msgstr "forlader liste."
 
 #. Translators: This message is presented when a user is navigating within a
 #. panel and then navigates out of it. A panel is a generic container of
 #. objects, such as a group of related form fields.
 #: ../src/orca/messages.py:1109
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving panel."
-msgstr "forlader tabel."
+msgstr "forlader panel."
 
 #. Translators: This message is presented when a user is navigating within a
 #. table and then navigates out of it.
@@ -10753,22 +10719,20 @@ msgstr[1] "%d elementer fundet"
 #. series of nested blockquotes, such as can be seen in deep email threads,
 #. and then navigates out of several levels at once.
 #: ../src/orca/messages.py:2156
-#, fuzzy, python-format
-#| msgid "No more blockquotes."
+#, python-format
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
-msgstr[0] "Ikke flere blokcitater."
-msgstr[1] "Ikke flere blokcitater."
+msgstr[0] "Forlader %d blokcitat."
+msgstr[1] "Forlader %d blokcitater."
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
 #: ../src/orca/messages.py:2161
-#, fuzzy, python-format
-#| msgid "Leaving flat review."
+#, python-format
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
-msgstr[0] "Forlader flad visning."
-msgstr[1] "Forlader flad visning."
+msgstr[0] "Forlader %d liste."
+msgstr[1] "Forlader %d lister."
 
 #. Translators: This message describes a bulleted or numbered list.
 #: ../src/orca/messages.py:2165
@@ -11088,11 +11052,9 @@ msgstr "lodret opdeler"
 #. The "switch" role is a "light switch" style toggle, such as can be seen in
 #. https://developer.gnome.org/gtk3/stable/GtkSwitch.html
 #: ../src/orca/object_properties.py:146
-#, fuzzy
-#| msgid "mode switch"
 msgctxt "role"
 msgid "switch"
-msgstr "tilstandsskift"
+msgstr "kontakt"
 
 #. Translators: This is an alternative name for the parent object of a series
 #. of icons.
@@ -11187,9 +11149,8 @@ msgstr "besøgt link"
 #. A menu button is button widget that causes a menu to appear when the user
 #. activates the button.
 #: ../src/orca/object_properties.py:215
-#, fuzzy
 msgid "menu button"
-msgstr "snurreknap"
+msgstr "menuknap"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
@@ -11347,11 +11308,9 @@ msgstr "flervalgsliste"
 #. as a form field, has an error. The following string is spoken when all we
 #. know is that an error has occurred, but not the type of error.
 #: ../src/orca/object_properties.py:318
-#, fuzzy
-#| msgid "invalid"
 msgctxt "error"
 msgid "invalid entry"
-msgstr "ugyldig"
+msgstr "ugyldig indtastning"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is displayed in braille
@@ -11367,12 +11326,9 @@ msgstr "ugyldig"
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to spelling.
 #: ../src/orca/object_properties.py:330
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "spelling"
 msgctxt "error"
 msgid "invalid spelling"
-msgstr "stavning"
+msgstr "ugyldig stavning"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is displayed in braille
@@ -11387,11 +11343,9 @@ msgstr "stavning"
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to grammar.
 #: ../src/orca/object_properties.py:341
-#, fuzzy
-#| msgid "invalid"
 msgctxt "error"
 msgid "invalid grammar"
-msgstr "ugyldig"
+msgstr "ugyldig grammatik"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is displayed in braille
@@ -11400,7 +11354,7 @@ msgstr "ugyldig"
 #: ../src/orca/object_properties.py:347
 msgctxt "error"
 msgid "grammar"
-msgstr ""
+msgstr "grammatik"
 
 #: ../src/orca/orca-find.ui.h:1
 msgid "Find"
@@ -11610,32 +11564,32 @@ msgstr "Del oplæsning _efter:"
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a blockquote has been entered before speaking the text. At the end of the text, Orca will announce that the blockquote is being exited.
 #: ../src/orca/orca-setup.ui.h:56
 msgid "Announce block_quotes in Say All"
-msgstr ""
+msgstr "Annoncér blok_citater i læs alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a list with x items has been entered before speaking the content of that list. At the end of the list content, Orca will announce that the list is being exited.
 #: ../src/orca/orca-setup.ui.h:58
 msgid "Announce li_sts in Say All"
-msgstr ""
+msgstr "Annoncér li_ster i læs alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a table with x rows and y columns has been entered before speaking the content of that table. At the end of the table content, Orca will announce that the table is being exited.
 #: ../src/orca/orca-setup.ui.h:60
 msgid "Announce _tables in Say All"
-msgstr ""
+msgstr "Annoncér _tabeller i læs alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a panel has been entered before speaking the new location. At the end of the panel contents, Orca will announce that the panel is being exited. A panel is a generic container of objects, such as a group of related form fields.
 #: ../src/orca/orca-setup.ui.h:62
 msgid "Announce _panels in Say All"
-msgstr ""
+msgstr "Annoncér _paneler i læs alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a form has been entered before speaking the contents of that form. At the end of the form, Orca will announce that the form is being exited.
 #: ../src/orca/orca-setup.ui.h:64
 msgid "Announce _forms in Say All"
-msgstr ""
+msgstr "Annoncér _formularer i læs alt"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce when an ARIA landmark has been entered or exited. ARIA landmarks are the W3C defined HTML tag attribute
 #: ../src/orca/orca-setup.ui.h:66
 msgid "Announce land_marks in Say All"
-msgstr ""
+msgstr "Annoncér land_mærker i læs alt"
 
 #: ../src/orca/orca-setup.ui.h:67
 msgid "Say All"
@@ -11763,24 +11717,18 @@ msgstr "_Læs farver som navne"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a blockquote has been entered as the user arrows into it and before speaking the text. Upon navigating out of the blockquote, Orca will announce that the blockquote has been exited prior to speaking the new location.
 #: ../src/orca/orca-setup.ui.h:112
-#, fuzzy
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Announce block_quotes during navigation"
-msgstr "Automatisk fokustilstand under markørnavigation"
+msgstr "Annoncér blok_citater under navigation"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a list with x items has been entered as the user arrows into it and before speaking the list content. Upon navigating out of the list, Orca will announce that the list has been exited prior to speaking the new location.
 #: ../src/orca/orca-setup.ui.h:114
-#, fuzzy
-#| msgid "Enable _structural navigation"
 msgid "Announce _lists during navigation"
-msgstr "Slå _strukturbaseret navigation til"
+msgstr "Annoncér _lister under navigation"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a table with x rows and y columns has been entered as the user arrows into it and before speaking the table content. Upon navigating out of the table, Orca will announce that the table has been exited prior to speaking the new location.
 #: ../src/orca/orca-setup.ui.h:116
-#, fuzzy
-#| msgid "Enable _structural navigation"
 msgid "Announce _tables during navigation"
-msgstr "Slå _strukturbaseret navigation til"
+msgstr "Annoncér _tabeller under navigation"
 
 #. Translators: The misspelled-word indicator is the red squiggly line that appears underneath misspelled words in editable text fields. If this setting is enabled, when a user first moves into a word with this indicator, or types a misspelled word causing this indicator to appear, Orca will announce that the word is misspelled.
 #: ../src/orca/orca-setup.ui.h:118
@@ -11790,27 +11738,22 @@ msgstr "Indikator for Læs ord med _stavefejl"
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a panel has been entered as the user arrows into it and before speaking the new location. Upon navigating out of the panel, Orca will announce that the panel has been exited prior to speaking the new location. A panel is a generic container of objects, such as a group of related form fields.
 #: ../src/orca/orca-setup.ui.h:120
 msgid "Announce _panels during navigation"
-msgstr ""
+msgstr "Annoncér _paneler under navigation"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce the ARIA landmark that has been entered as the user arrows into it and before speaking the text. Upon navigating out of the landmark, Orca will announce that the landmark has been exited prior to speaking the new location. ARIA landmarks are the W3C defined HTML tag attribute
 #: ../src/orca/orca-setup.ui.h:122
 msgid "Announce land_marks during navigation"
-msgstr ""
+msgstr "Annoncér land_mærker under navigation"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content. If this checkbox is checked, Orca will announce that a form has been entered as the user arrows into it and before speaking the new location. Upon navigating out of the form, Orca will announce that the form has been exited prior to speaking the new location.
 #: ../src/orca/orca-setup.ui.h:124
-#, fuzzy
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Announce _forms during navigation"
-msgstr "Automatisk fokustilstand under markørnavigation"
+msgstr "Annoncér _formularer under navigation"
 
 #. Translators: If this checkbox is checked, Orca will speak the accessible description of an object. Whereas the accessible name of an object tends to be short and typically corresponds to what is displayed on screen, the contents of the accessible description tend to be longer, e.g. matching the text of the tooltip, and are sometimes redundant to the accessible name. Therefore, we allow the user to opt out of this additional information.
 #: ../src/orca/orca-setup.ui.h:126
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Description"
 msgid "Speak _description"
-msgstr "Beskrivelse"
+msgstr "Læs _beskrivelse"
 
 #. Translators: This checkbox is associated with the setting that determines what happens if a user presses Up or Down arrow to move row by row in a spreadsheet. If this setting is enabled, Orca will speak the entire row; if it is disabled, Orca will only speak the cell with focus.
 #: ../src/orca/orca-setup.ui.h:128
@@ -13186,15 +13129,15 @@ msgstr ""
 #~ msgid "Enable key echo?  Enter y or n: "
 #~ msgstr "Slå tegnvis ekko til?  Tast j eller n: "
 
-#~ # bindestreg
+# bindestreg
 #~ msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
 #~ msgstr "Slå til for alfanumeriske og tegnsætningstaster?  Tast j eller n: "
 
-#~ # bindestreg
+# bindestreg
 #~ msgid "Enable modifier keys?  Enter y or n: "
 #~ msgstr "Slå til for modificeringstaster?  Tast j eller n: "
 
-#~ # bindestreg
+# bindestreg
 #~ msgid "Enable function keys?  Enter y or n: "
 #~ msgstr "Slå til for funktionstaster?  tast j eller n: "
 
@@ -13216,18 +13159,18 @@ msgstr ""
 #~ msgid "Select desired keyboard layout."
 #~ msgstr "Vælg det ønskede tastaturlayout."
 
-#~ # Eftersom næste streng er Laptop går jeg ud fra et der her menes en stationær computer
+# Eftersom næste streng er Laptop går jeg ud fra et der her menes en stationær computer
 #~ msgid "1. Desktop"
 #~ msgstr "1. Stationær"
 
 #~ msgid "2. Laptop"
 #~ msgstr "2. Bærbar"
 
-#~ # tale^^
+# tale^^
 #~ msgid "Select desired speech server."
 #~ msgstr "Vælg den ønskede taleserver."
 
-#~ # tale^^
+# tale^^
 #~ msgid "Select desired speech system:"
 #~ msgstr "Vælg det ønskede talesystem:"
 
@@ -13240,7 +13183,7 @@ msgstr ""
 #~ msgid "No voices available.\n"
 #~ msgstr "Ingen stemmer tilgængelige.\n"
 
-#~ # tale^^
+# tale^^
 #~ msgid "Speech will not be used.\n"
 #~ msgstr "Tale vil ikke blive brugt.\n"
 
@@ -13294,8 +13237,8 @@ msgstr ""
 #~ msgid "n-ary union"
 #~ msgstr "n-ær foreningsmængde"
 
-#~ # Dette her er lidt en fortolkning, men jeg tror det er ok
-#~ #
+# Dette her er lidt en fortolkning, men jeg tror det er ok
+#
 #~ msgid "comparison unknown"
 #~ msgstr "sammenligning ikke mulig"
 
@@ -13394,7 +13337,7 @@ msgstr ""
 #~ msgid "Use Orca _Structural Navigation"
 #~ msgstr "Brug Orcas _Strukturbaserede navigation"
 
-#~ # bindestreg. Der er undladt - i ISO-niveau af hensyn til udtalen fra skærmoplæseren. Her bliver for mange - nemt irriterende at høre på og brugen af disse bør derfor minimeres.
+# bindestreg. Der er undladt - i ISO-niveau af hensyn til udtalen fra skærmoplæseren. Her bliver for mange - nemt irriterende at høre på og brugen af disse bør derfor minimeres.
 #~ msgid "ISO level 3 shift"
 #~ msgstr "ISO niveau 3 skift"
 
@@ -13463,8 +13406,8 @@ msgstr ""
 #~ "A free, open source scriptable screen reader, which provides access to "
 #~ "applications and toolkits that support AT-SPI (e.g., the GNOME desktop)."
 #~ msgstr ""
-#~ "En fri, scriptbar skærmoplæser baseret på åben kildekode, som giver adgang "
-#~ "til programmer og værktøjssæt (toolkits) som bruger AT-SPI (f.eks. "
+#~ "En fri, scriptbar skærmoplæser baseret på åben kildekode, som giver "
+#~ "adgang til programmer og værktøjssæt (toolkits) som bruger AT-SPI (f.eks. "
 #~ "skrivebordsmiljøet GNOME)."
 
 #~ msgid ""
@@ -13538,11 +13481,11 @@ msgstr ""
 #~ msgstr "Ingen Orca genvejstaster for %s fundet."
 
 #~ msgid ""
-#~ "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the "
-#~ "current application. Press escape to exit."
+#~ "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for "
+#~ "the current application. Press escape to exit."
 #~ msgstr ""
-#~ "Tryk 1 for Orcas standard genvejstaster. Tryk 2 for Orcas genvejstaster til "
-#~ "den aktuelle applikation. Tryk escape for at afslutte."
+#~ "Tryk 1 for Orcas standard genvejstaster. Tryk 2 for Orcas genvejstaster "
+#~ "til den aktuelle applikation. Tryk escape for at afslutte."
 
 #~ msgid "Show Orca _main window"
 #~ msgstr "Vis _hovedvindue for Orca"
@@ -13609,21 +13552,24 @@ msgstr ""
 #~ msgstr "Tegner og udskriver de synlige zoner i det aktive vindue."
 
 #~ msgid "Reports information on current script."
-#~ msgstr "Rapportérer information om det på nuværende tidspunkt aktive skript."
-
-#~ msgid "Enters list shortcuts mode.  Press escape to exit list shortcuts mode."
 #~ msgstr ""
-#~ "Går i tilstanden vis genvejstaster. Tryk esc for at afslutte tilstanden vis "
-#~ "genvejstaster."
+#~ "Rapportérer information om det på nuværende tidspunkt aktive skript."
 
 #~ msgid ""
-#~ "Prints a debug listing of all known applications to the console where Orca "
-#~ "is running."
+#~ "Enters list shortcuts mode.  Press escape to exit list shortcuts mode."
 #~ msgstr ""
-#~ "Udskriver en fejlfindingsliste, over alle kendte programmer, til konsollen "
-#~ "hvor Orca kører."
+#~ "Går i tilstanden vis genvejstaster. Tryk esc for at afslutte tilstanden "
+#~ "vis genvejstaster."
 
-#~ msgid "Prints debug information about the ancestry of the object with focus."
+#~ msgid ""
+#~ "Prints a debug listing of all known applications to the console where "
+#~ "Orca is running."
+#~ msgstr ""
+#~ "Udskriver en fejlfindingsliste, over alle kendte programmer, til "
+#~ "konsollen hvor Orca kører."
+
+#~ msgid ""
+#~ "Prints debug information about the ancestry of the object with focus."
 #~ msgstr ""
 #~ "Udskriver fejlfindingsinformation om ophavet for det objekt som har fokus."
 
@@ -13634,8 +13580,8 @@ msgstr ""
 #~ "Entering learn mode.  Press any key to hear its function.  To exit learn "
 #~ "mode, press the escape key."
 #~ msgstr ""
-#~ "Går i indlæringstilstand. Tryk en tast for at høre dens funktion. Tryk esc "
-#~ "for at afslutte indlæringstilstand."
+#~ "Går i indlæringstilstand. Tryk en tast for at høre dens funktion. Tryk "
+#~ "esc for at afslutte indlæringstilstand."
 
 #~ msgid "Exiting list shortcuts mode."
 #~ msgstr "Afslutter tilstanden vis genvejstaster."
@@ -13648,7 +13594,7 @@ msgstr ""
 #~ msgstr[0] "%d procent"
 #~ msgstr[1] "%d procent"
 
-#~ # tale^^
+# tale^^
 #~ msgid "Emacspeak Speech Services"
 #~ msgstr "Emacspeak taletjenester"
 
@@ -13675,8 +13621,8 @@ msgstr ""
 #~ "Report bugs to orca-list@gnome.org."
 #~ msgstr ""
 #~ "Hvis Orca ikke tidligere er blevet sat op af en bruger,\n"
-#~ "vil Orca automatisk starte opsætning af indstillinger. Dette kan undgås ved "
-#~ "at give tilvalget -n eller --no-setup.\n"
+#~ "vil Orca automatisk starte opsætning af indstillinger. Dette kan undgås "
+#~ "ved at give tilvalget -n eller --no-setup.\n"
 #~ "\n"
 #~ "Rapporter fejl til orca-list@gnome.org."
 
@@ -13713,66 +13659,66 @@ msgstr ""
 #~ msgid "Invalid"
 #~ msgstr "Ugyldig"
 
-#~ # I alle de følgende sæt af tre strenge er forkortelsen en der skal
-#~ # vises på en blindeskrifts-skærm. Der er derfor ingen regler for
-#~ # hvordan forkortelserne skal laves andet end at de skal holdes korte
-#~ # fordi der ikke er så meget plads på sådan et display. For at gøre
-#~ # forkortelserne så brugbare som muligt har jeg tænkte mig at lave et
-#~ # system for hvordan man danner dem. Derfor har jeg her nedenunder lavet
-#~ # en liste over alle de ord der skal sættes sammen med andre og hvordan
-#~ # de forkortes alt efter hvor i forkortelsen de står. Alle de ord der
-#~ # kun optræder alene er forkortet med unikke trebogstavs forkortelser.
-#~ #
-#~ # 		Forkortelse afhængigt af hvor i det
-#~ # 		Sammensatte ord det står
-#~ # Dansk ord       Først		Midt		Sidst	Alene
-#~ # ======================================================================
-#~ # afkrydsnings-	ak
-#~ # animation						anim
-#~ # advarsel						advr							alrm
-#~ # billed		bl					bld
-#~ # bjælke						bj
-#~ # boks						b
-#~ # celle							cll
-#~ # element			e		el
-#~ # farve		fa
-#~ # felt						f
-#~ # fil		fil
-#~ # faneblads-	fb
-#~ # glas		gl
-#~ # indstillings-	ins
-#~ # intern		in
-#~ # ikon							ikn
-#~ # knap						kn
-#~ # kombinations-	km
-#~ # kolonne	kol
-#~ # lag-		lag
-#~ # linje						l
-#~ # liste		lst				lst	lst
-#~ # mappe		ma
-#~ # menu		mnu		mnu		m	mnu
-#~ # område						om
-#~ # overskift					os	os
-#~ # panel						p	pnl
-#~ # pop-op		pop
-#~ # radio		rad
-#~ # ramme						rm
-#~ # redigerings-	reg
-#~ # rod		rod
-#~ # rulle		rl
-#~ # række		rk
-#~ # side							sid
-#~ # skifte-	skf
-#~ # skrifttype	st
-#~ # split		spl
-#~ # status		stat
-#~ # tabel						ta
-#~ # tekst						te	tek
-#~ # træ		tr
-#~ # va		va
-#~ # visnings	vsn
-#~ # vælger						v
-#~ # værktøjs	vrk
+# I alle de følgende sæt af tre strenge er forkortelsen en der skal
+# vises på en blindeskrifts-skærm. Der er derfor ingen regler for
+# hvordan forkortelserne skal laves andet end at de skal holdes korte
+# fordi der ikke er så meget plads på sådan et display. For at gøre
+# forkortelserne så brugbare som muligt har jeg tænkte mig at lave et
+# system for hvordan man danner dem. Derfor har jeg her nedenunder lavet
+# en liste over alle de ord der skal sættes sammen med andre og hvordan
+# de forkortes alt efter hvor i forkortelsen de står. Alle de ord der
+# kun optræder alene er forkortet med unikke trebogstavs forkortelser.
+#
+# 		Forkortelse afhængigt af hvor i det
+# 		Sammensatte ord det står
+# Dansk ord       Først		Midt		Sidst	Alene
+# ======================================================================
+# afkrydsnings-	ak
+# animation						anim
+# advarsel						advr							alrm
+# billed		bl					bld
+# bjælke						bj
+# boks						b
+# celle							cll
+# element			e		el
+# farve		fa
+# felt						f
+# fil		fil
+# faneblads-	fb
+# glas		gl
+# indstillings-	ins
+# intern		in
+# ikon							ikn
+# knap						kn
+# kombinations-	km
+# kolonne	kol
+# lag-		lag
+# linje						l
+# liste		lst				lst	lst
+# mappe		ma
+# menu		mnu		mnu		m	mnu
+# område						om
+# overskift					os	os
+# panel						p	pnl
+# pop-op		pop
+# radio		rad
+# ramme						rm
+# redigerings-	reg
+# rod		rod
+# rulle		rl
+# række		rk
+# side							sid
+# skifte-	skf
+# skrifttype	st
+# split		spl
+# status		stat
+# tabel						ta
+# tekst						te	tek
+# træ		tr
+# va		va
+# visnings	vsn
+# vælger						v
+# værktøjs	vrk
 #~ msgid "acc"
 #~ msgstr "acc"
 
@@ -13914,11 +13860,11 @@ msgstr ""
 #~ msgid "heading"
 #~ msgstr "overskrift"
 
-#~ # bindestreg
+# bindestreg
 #~ msgid "HtmlContainer"
 #~ msgstr "Html felt"
 
-#~ # bindestreg
+# bindestreg
 #~ msgid "h t m l container"
 #~ msgstr "h t m l felt"
 
@@ -13985,11 +13931,11 @@ msgstr ""
 #~ msgid "password"
 #~ msgstr "adgangskode"
 
-#~ # bindestreg
+# bindestreg
 #~ msgid "PopupMenu"
 #~ msgstr "Pop op menu"
 
-#~ # bindestreg
+# bindestreg
 #~ msgid "popup menu"
 #~ msgstr "pop op menu"
 
@@ -14065,7 +14011,7 @@ msgstr ""
 #~ msgid "TearOffMenuItem"
 #~ msgstr "TagAfMenuelement"
 
-#~ # bindestreg
+# bindestreg
 #~ msgid "tear off menu item"
 #~ msgstr "tag af menuelement"
 
@@ -14120,21 +14066,21 @@ msgstr ""
 #~ msgid "window"
 #~ msgstr "vindue"
 
-#~ # Jeg skrev til udviklerne for at finde ud af om dette var overskrift eller sidehoved
-#~ # han var ikke sikker men mente sidehoved
+# Jeg skrev til udviklerne for at finde ud af om dette var overskrift eller sidehoved
+# han var ikke sikker men mente sidehoved
 #~ msgid "Header"
 #~ msgstr "Sidehoved"
 
-#~ # Jeg skrev til udviklerne for at finde ud af om dette var overskrift eller sidehoved
-#~ # han var ikke sikker men mente sidehoved
+# Jeg skrev til udviklerne for at finde ud af om dette var overskrift eller sidehoved
+# han var ikke sikker men mente sidehoved
 #~ msgid "header"
 #~ msgstr "sidehoved"
 
-#~ # Samme kommantar som med header
+# Samme kommantar som med header
 #~ msgid "Footer"
 #~ msgstr "Sidefod"
 
-#~ # Samme kommantar som med header
+# Samme kommantar som med header
 #~ msgid "footer"
 #~ msgstr "sidefod"
 
@@ -14204,7 +14150,7 @@ msgstr ""
 #~ "Præsenter information på skærmen som tale eller braille, eller forstør "
 #~ "skærmen"
 
-#~ # tale^^
+# tale^^
 #~ msgid "GNOME Speech Services"
 #~ msgstr "GNOME taletjenester"
 
@@ -14220,7 +14166,7 @@ msgstr ""
 #~ msgid "Color enhancements enabled."
 #~ msgstr "Farveforbedringer slået til."
 
-#~ # tale^^
+# tale^^
 #~ msgid "Full Screen mode unavailable"
 #~ msgstr "Fuldskærmstilstand ikke tilgængelig"
 
@@ -14303,7 +14249,7 @@ msgstr ""
 #~ msgid "Warning"
 #~ msgstr "Advarsel"
 
-#~ # bindestreg
+# bindestreg
 #~ msgid ""
 #~ "<b><big>Quit Orca?</big></b>\n"
 #~ "\n"
@@ -14437,18 +14383,18 @@ msgstr ""
 #~ msgid "Toggles mouse enhancements."
 #~ msgstr "Slå museforbedringer til eller fra."
 
-#~ # tale^^
+# tale^^
 #~ msgid "Increases the magnification level."
 #~ msgstr "Hæv forstørrelsesniveauet."
 
-#~ # jeg har skrevet med en af udviklerne for at prøve at finde ud af om de steder hvor der står speech
-#~ # om de altid bare skal oversættes til tale, eller om man bør bruge læse nogle steder (idet den jo
-#~ # nogle gange bruges til at læse tekst fra et dokument op med). Konklusionen var at der stort set alle
-#~ # steder skal bruges tale. Jeg knytter en tale^^ kommentar til de pågældende beskeder
+# jeg har skrevet med en af udviklerne for at prøve at finde ud af om de steder hvor der står speech
+# om de altid bare skal oversættes til tale, eller om man bør bruge læse nogle steder (idet den jo
+# nogle gange bruges til at læse tekst fra et dokument op med). Konklusionen var at der stort set alle
+# steder skal bruges tale. Jeg knytter en tale^^ kommentar til de pågældende beskeder
 #~ msgid "Decreases the magnification level."
 #~ msgstr "Sænk forstørrelsesniveauet."
 
-#~ # tale^^
+# tale^^
 #~ msgid "Toggles the magnifier."
 #~ msgstr "Slår forstørrelsesglas til eller fra."
 
@@ -14458,7 +14404,7 @@ msgstr ""
 #~ msgid "Open TTS"
 #~ msgstr "Open TTS"
 
-#~ # bindestreg
+# bindestreg
 #~ msgid ""
 #~ "WARNING: suspending Orca, e.g. by pressing Control-Z, from\n"
 #~ "an AT-SPI enabled shell (such as gnome-terminal), can also\n"
@@ -14490,7 +14436,7 @@ msgstr ""
 #~ msgid "Mail/News"
 #~ msgstr "E-mail/Nyheder"
 
-#~ # bindestreg
+# bindestreg
 #~ msgid "bug-buddy"
 #~ msgstr "Fejl Frede"
 
@@ -14671,7 +14617,8 @@ msgstr ""
 #~ msgstr "objekt %d af %d"
 
 #~ msgid "Starting Orca Preferences for %s. This may take a while."
-#~ msgstr "Starter Orca-indstillinger for %s. Dette kan godt tage et stykke tid."
+#~ msgstr ""
+#~ "Starter Orca-indstillinger for %s. Dette kan godt tage et stykke tid."
 
 #~ msgid "Exits learn mode."
 #~ msgstr "Afslutter indlæringstilstand."
@@ -14735,4 +14682,3 @@ msgstr ""
 
 #~ msgid "Text Document"
 #~ msgstr "Tekstdokument"
-
