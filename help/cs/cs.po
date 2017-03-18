@@ -1,15 +1,15 @@
 # Czech translation for orca.
 # Copyright (C) 2011 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
-# Marek Černocký <marek@manet.cz>, 2015, 2016.
+# Marek Černocký <marek@manet.cz>, 2015, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"POT-Creation-Date: 2016-08-21 20:26+0000\n"
-"PO-Revision-Date: 2016-09-04 07:22+0200\n"
+"POT-Creation-Date: 2017-03-09 09:13+0000\n"
+"PO-Revision-Date: 2017-03-18 09:27+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
-"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2381,6 +2381,15 @@ msgstr ""
 "Zobrazit seznam obrázků: <keyseq><key>Alt</key><key>Shift</key><key>G</key></"
 "keyseq>"
 
+#. (itstool) path: item/p
+#: C/commands_structural_navigation.page:435
+msgid ""
+"Start and end of current container: <keyseq><key>Shift</key><key>comma</"
+"key></keyseq> and <keyseq><key>comma</key></keyseq>"
+msgstr ""
+"Začátek a konec aktuálního kentejneru: <keyseq><key>Shift</key><key>,</key></"
+"keyseq> a <keyseq><key>,</key></keyseq>"
+
 #. (itstool) path: info/title
 #: C/commands_table.page:6
 msgctxt "sort"
@@ -3809,7 +3818,7 @@ msgstr "Jak spravovat více nastavení"
 
 #. (itstool) path: page/title
 #. (itstool) path: section/title
-#: C/howto_profiles.page:15 C/preferences_general.page:146
+#: C/howto_profiles.page:15 C/preferences_general.page:175
 msgid "Profiles"
 msgstr "Profily"
 
@@ -5163,12 +5172,12 @@ msgstr ""
 #: C/preferences_gecko.page:58 C/preferences_gecko.page:100
 #: C/preferences_gecko.page:182 C/preferences_general.page:52
 #: C/preferences_general.page:70 C/preferences_general.page:119
-#: C/preferences_general.page:199 C/preferences_general.page:210
+#: C/preferences_general.page:228 C/preferences_general.page:239
 #: C/preferences_key_echo.page:112 C/preferences_key_echo.page:122
 #: C/preferences_key_echo.page:157 C/preferences_key_echo.page:179
 #: C/preferences_speech.page:105 C/preferences_speech.page:135
-#: C/preferences_speech.page:147 C/preferences_speech.page:158
-#: C/preferences_speech.page:170 C/preferences_speech.page:231
+#: C/preferences_speech.page:160 C/preferences_speech.page:171
+#: C/preferences_speech.page:183 C/preferences_speech.page:343
 #: C/preferences_table_navigation.page:65 C/preferences_voice.page:122
 #: C/preferences_voice.page:133
 msgid "Default value: not checked"
@@ -5351,14 +5360,18 @@ msgstr ""
 #: C/preferences_braille.page:129 C/preferences_braille.page:142
 #: C/preferences_gecko.page:35 C/preferences_gecko.page:78
 #: C/preferences_gecko.page:142 C/preferences_gecko.page:170
-#: C/preferences_general.page:188 C/preferences_key_echo.page:28
-#: C/preferences_key_echo.page:37 C/preferences_key_echo.page:47
-#: C/preferences_key_echo.page:57 C/preferences_key_echo.page:67
-#: C/preferences_key_echo.page:77 C/preferences_key_echo.page:87
-#: C/preferences_key_echo.page:99 C/preferences_speech.page:26
-#: C/preferences_speech.page:123 C/preferences_speech.page:183
-#: C/preferences_speech.page:195 C/preferences_speech.page:207
-#: C/preferences_speech.page:219 C/preferences_speech.page:244
+#: C/preferences_general.page:140 C/preferences_general.page:217
+#: C/preferences_key_echo.page:28 C/preferences_key_echo.page:37
+#: C/preferences_key_echo.page:47 C/preferences_key_echo.page:57
+#: C/preferences_key_echo.page:67 C/preferences_key_echo.page:77
+#: C/preferences_key_echo.page:87 C/preferences_key_echo.page:99
+#: C/preferences_speech.page:26 C/preferences_speech.page:123
+#: C/preferences_speech.page:148 C/preferences_speech.page:195
+#: C/preferences_speech.page:208 C/preferences_speech.page:220
+#: C/preferences_speech.page:234 C/preferences_speech.page:251
+#: C/preferences_speech.page:265 C/preferences_speech.page:279
+#: C/preferences_speech.page:293 C/preferences_speech.page:307
+#: C/preferences_speech.page:319 C/preferences_speech.page:331
 #: C/preferences_spellcheck.page:41 C/preferences_spellcheck.page:51
 #: C/preferences_spellcheck.page:61 C/preferences_table_navigation.page:34
 #: C/preferences_table_navigation.page:44
@@ -6043,8 +6056,71 @@ msgstr ""
 "<key>T</key></keyseq> pokračovat ve čtení od následující/předchozí tabulky, "
 "apod."
 
-#. (itstool) path: info/desc
+#. (itstool) path: section/title
+#: C/preferences_general.page:124
+msgid "Announce Contextual Information in Say All"
+msgstr "Při čtení všeho oznamovat kontextové informace"
+
+#. (itstool) path: section/p
 #: C/preferences_general.page:125
+msgid ""
+"<app>Orca</app> can optionally provide more information about the document "
+"content being spoken, such as announcing when you are entering and leaving a "
+"blockquote, list, table, or other container. Whether or not these "
+"announcements are made can be configured independently through the following "
+"checkboxes:"
+msgstr ""
+"<app>Orca</app> může volitelně poskytovat informace o obsahu čteného "
+"dokumentu, jako třeba oznamovat, když je vstoupili do citace, seznamu, "
+"tabulky nebo nějakého jiného kontejneru, nebo jej opouštíte. Jestli se mají "
+"tyto věci oznamovat, se dá nezávisle nastavit pomocí následujících "
+"zaškrtávacích políček:"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:133
+msgid "Announce blockquotes in Say All"
+msgstr "Při čtení všeho oznamovat citace"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:134
+msgid "Announce forms in Say All"
+msgstr "Při čtení všeho oznamovat formuláře"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:135
+msgid "Announce landmarks in Say All"
+msgstr "Při čtení všeho oznamovat záchytné body"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:136
+msgid "Announce lists in Say All"
+msgstr "Při čtení všeho oznamovat seznamy"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:137
+msgid "Announce panels in Say All"
+msgstr "Při čtení všeho oznamovat panely"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:138
+msgid "Announce tables in Say All"
+msgstr "Při čtení všeho oznamovat tabulky"
+
+#. (itstool) path: note/p
+#: C/preferences_general.page:144
+msgid ""
+"Whether or not <app>Orca</app> makes these announcements during navigation "
+"is also configurable. You will find similar checkboxes on the <gui>Speech</"
+"gui> page. For more information, see <link xref="
+"\"preferences_speech#spoken_context\">Spoken Context</link>."
+msgstr ""
+"Dá se nastavit i to, jestli má <app>Orca</app> oznamovat tyto věci při "
+"pohybu v dokumentu. K tomu najdete obdobná zaškrtávací políčka na stránce "
+"<gui>Řeč</gui>. Více informací viz <link xref="
+"\"preferences_speech#spoken_context\">Čtení kontextu</link>."
+
+#. (itstool) path: info/desc
+#: C/preferences_general.page:154
 msgid ""
 "Preferences dialog box option for customizing <app>Orca</app>'s Say All "
 "presentation."
@@ -6053,12 +6129,12 @@ msgstr ""
 "přezentování formou plynulého čtení ve čtečce <app>Orca</app>."
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:130
+#: C/preferences_general.page:159
 msgid "Say All By"
 msgstr "Plynulé čtení po"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:131
+#: C/preferences_general.page:160
 msgid ""
 "The <gui>Say All By</gui> combo box allows you to specify whether <app>Orca</"
 "app> speaks a sentence at a time or a line at a time when doing a \"Say All"
@@ -6068,19 +6144,19 @@ msgstr ""
 "<app>Orca</app> číst věty nebo řádky, když má dokument „číst plynule“."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:136
+#: C/preferences_general.page:165
 msgid "Default value: <gui>Sentence</gui>"
 msgstr "Výchozí hodnota: <gui>Větách</gui>"
 
 #. (itstool) path: info/desc
-#: C/preferences_general.page:142
+#: C/preferences_general.page:171
 msgid "Preferences dialog box options for managing settings profiles."
 msgstr ""
 "Volby v dialogovém okně s předvolbami sloužící ke správě profilů s "
 "nastavením."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:147
+#: C/preferences_general.page:176
 msgid ""
 "The <gui>Profiles</gui> group of controls, which appear at the bottom of the "
 "<gui>General</gui> page, make it possible for you to maintain and use "
@@ -6090,7 +6166,7 @@ msgstr ""
 "<gui>Obecné</gui> a umožňuje vám spravovat a používat vícero nastavení."
 
 #. (itstool) path: item/p
-#: C/preferences_general.page:154
+#: C/preferences_general.page:183
 msgid ""
 "The <gui>Active Profile</gui> combo box displays the current profile and "
 "allows you to select a different profile to load."
@@ -6099,7 +6175,7 @@ msgstr ""
 "umožňuje vám vybrat jiný, který se má načíst."
 
 #. (itstool) path: item/p
-#: C/preferences_general.page:160
+#: C/preferences_general.page:189
 msgid ""
 "The <gui>Load</gui> button will cause <app>Orca</app> to load the profile "
 "indicated in the <gui>Active Profile</gui> combo box."
@@ -6108,7 +6184,7 @@ msgstr ""
 "v rozbalovacím seznamu <gui>Aktivní profil</gui>."
 
 #. (itstool) path: item/p
-#: C/preferences_general.page:166
+#: C/preferences_general.page:195
 msgid ""
 "The <gui>Save As</gui> button allows you to save the current set of options "
 "from the preferences dialog box to a named profile."
@@ -6117,7 +6193,7 @@ msgstr ""
 "dialogového okna předvoleb do pojmenovaného profilu."
 
 #. (itstool) path: item/p
-#: C/preferences_general.page:172
+#: C/preferences_general.page:201
 msgid ""
 "The <gui>Start-up Profile</gui> combo box allows you to select the profile "
 "which should be automatically loaded each time you launch <app>Orca</app>."
@@ -6126,17 +6202,17 @@ msgstr ""
 "který by se měl automaticky načíst pokaždé, když se <app>Orca</app> spustí."
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:181
+#: C/preferences_general.page:210
 msgid "Progress Bar Updates"
 msgstr "Aktualizace ukazatele průběhu"
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:183
+#: C/preferences_general.page:212
 msgid "Speak updates"
 msgstr "Číst průběh"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:184
+#: C/preferences_general.page:213
 msgid ""
 "If the <gui>Speak updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically speak the status of progress bars."
@@ -6145,12 +6221,12 @@ msgstr ""
 "<app>Orca</app> pravidelně číst stav ukazatele průběhu."
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:193
+#: C/preferences_general.page:222
 msgid "Braille updates"
 msgstr "Zobrazovat průběh na braillském řádku"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:194
+#: C/preferences_general.page:223
 msgid ""
 "If the <gui>Braille updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically display the status of progress bars on your refreshable braille "
@@ -6161,12 +6237,12 @@ msgstr ""
 "průběhu na braillském řádku."
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:204
+#: C/preferences_general.page:233
 msgid "Beep updates"
 msgstr "Pípat průběh"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:205
+#: C/preferences_general.page:234
 msgid ""
 "If the <gui>Beep updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically emit beeps which increase in pitch as the value of the progress "
@@ -6177,27 +6253,27 @@ msgstr ""
 "hodnoty, které ukazatel průběhu dosáhl."
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:215
+#: C/preferences_general.page:244
 msgid "Frequency (secs)"
 msgstr "Četnost (v sekundách)"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:216
+#: C/preferences_general.page:245
 msgid "This spin button determines how often updates are presented."
 msgstr "Tento číselník určuje, jak často je postup prezentován."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:219
+#: C/preferences_general.page:248
 msgid "Default value: 10"
 msgstr "Výchozí hodnota: 10"
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:224
+#: C/preferences_general.page:253
 msgid "Restrict to"
 msgstr "Omezit na"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:225
+#: C/preferences_general.page:254
 msgid ""
 "This combo box allows you to control which progress bars should be "
 "presented, assuming the presentation of progress bar updates has been "
@@ -6210,7 +6286,7 @@ msgstr ""
 "<gui>Okno</gui>."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:231
+#: C/preferences_general.page:260
 msgid ""
 "Choosing <gui>All</gui> will result in <app>Orca</app> presenting updates "
 "for all progress bars, regardless of where the progress bars are located."
@@ -6219,7 +6295,7 @@ msgstr ""
 "aktualizace všech ukazatelů průběhu, bez ohledu na to, kde se nachází."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:236
+#: C/preferences_general.page:265
 msgid ""
 "Choosing <gui>Application</gui> will result in <app>Orca</app> presenting "
 "updates from progress bars in the active application, even if they are not "
@@ -6230,7 +6306,7 @@ msgstr ""
 "třeba v neaktivním okně."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:241
+#: C/preferences_general.page:270
 msgid ""
 "Choosing <gui>Window</gui> will result in <app>Orca</app> only presenting "
 "updates for progress bars in the active window."
@@ -6239,7 +6315,7 @@ msgstr ""
 "aktualizace ukazatelů průběhu, které se nachází v aktivním okně."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:245
+#: C/preferences_general.page:274
 msgid "Default value: <gui>Application</gui>"
 msgstr "Výchozí hodnota: <gui>Aplikace</gui>"
 
@@ -7083,11 +7159,31 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:140
+msgid "Speak misspelled-word indicator"
+msgstr "Oznamovat označení pravopisně chybných slov"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:141
+msgid ""
+"The misspelled-word indicator is the red squiggly line that appears "
+"underneath misspelled words in editable text fields. If <gui>Speak "
+"misspelled-word indicator</gui> is checked, when you navigate into a word "
+"with this indicator, or type a word incorrectly causing this indicator to "
+"appear, <app>Orca</app> will speak \"misspelled.\""
+msgstr ""
+"V polích pro úpravu textu bývají pravopisně chybná slova označena podtržením "
+"červenou vlnovkou. Když je zaškrtnuto <gui>Oznamovat označení pravopisně "
+"chybných slov</gui> a na takovéto slovo se přemístíte, nebo slovo chybně "
+"napíšete, takže se pod ním označení objeví, oznámí vám to <app>Orca</app> "
+"slovem „překlep“."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:153
 msgid "Speak object mnemonics"
 msgstr "Číst horké klávesy objektů"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:141
+#: C/preferences_speech.page:154
 msgid ""
 "If the <gui>Speak object mnemonics</gui> checkbox is checked, <app>Orca</"
 "app> will announce the mnemonic associated with the object with focus (such "
@@ -7099,12 +7195,12 @@ msgstr ""
 "<gui>Budiž</gui>)."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:152
+#: C/preferences_speech.page:165
 msgid "Speak child position"
 msgstr "Uvádět pořadová čísla položek"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:153
+#: C/preferences_speech.page:166
 msgid ""
 "Checking the <gui>Speak child position</gui> checkbox will cause <app>Orca</"
 "app> to announce the position of the focused item in menus, lists, and trees "
@@ -7115,29 +7211,45 @@ msgstr ""
 "seznamech a stromech (např. „9 z 16“)."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:163
+#: C/preferences_speech.page:176
 msgid "Speak tutorial messages"
 msgstr "Číst výukové zprávy"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:164
+#: C/preferences_speech.page:177
 msgid ""
 "If the <gui>Speak tutorial messages</gui> checkbox is checked, as you move "
 "amongst objects in an interface, <app>Orca</app> will provide additional "
 "information, such as how to interact with the currently-focused object."
 msgstr ""
 "Když je zaškrtnuté políčko <gui>Číst výukové zprávy</gui> a budete se "
-"přesouvat mezi objekty v uživatelském rozhraní, bude <app>Orca</app> "
+"pohybovat mezi objekty v uživatelském rozhraní, bude <app>Orca</app> "
 "poskytovat dodatečné informace, jako například, jak pracovat s právě "
 "zaměřeným objektem."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:175
+#: C/preferences_speech.page:188
+msgid "Speak description"
+msgstr "Číst popisy"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:189
+msgid ""
+"If the <gui>Speak description</gui> checkbox is checked, as you move amongst "
+"objects in an interface, <app>Orca</app> will speak the accessible "
+"description in addition to the accessible name of the object."
+msgstr ""
+"Když je zaškrtnuté políčko <gui>Číst popisy</gui> a budete se pohybovat mezi "
+"objekty v uživatelském rozhraní, bude <app>Orca</app> navíc k názvu "
+"zpřístupnění objektu číst i jeho popis zpřístupnění."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:200
 msgid "System messages are detailed"
 msgstr "Systémové zprávy jsou podrobné"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:176
+#: C/preferences_speech.page:201
 msgid ""
 "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> will "
 "present detailed messages to you in speech. For instance, if you use "
@@ -7153,12 +7265,12 @@ msgstr ""
 "zaškrtnuté."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:188
+#: C/preferences_speech.page:213
 msgid "Speak colors as names"
 msgstr "Číst barvy jako názvy"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:189
+#: C/preferences_speech.page:214
 msgid ""
 "If <gui>Speak colors as names</gui> is checked, <app>Orca</app> will "
 "describe colors, looking for the closest approximate. For instance, RGB 0, "
@@ -7171,12 +7283,144 @@ msgstr ""
 "přesné hodnoty RGB, měli byste toto políčko nechat nezaškrtnuté."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:200
+#: C/preferences_speech.page:225
+msgid "Announce blockquotes during navigation"
+msgstr "Při pohybu v dokumentu oznamovat citace"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:226
+msgid ""
+"If <gui>Announce blockquotes during navigation</gui> is checked, <app>Orca</"
+"app> will tell you when you navigate into or out of a blockquote. Note that "
+"this setting is independent of whether or not this announcement is made "
+"during Say All. See <link xref=\"preferences_general#say_all_announce_context"
+"\">Announce Contextual Information in Say All</link> for more information."
+msgstr ""
+"Když je zaškrtnuté <gui>Při pohybu v dokumentu oznamovat citace</gui>, bude "
+"vám <app>Orca</app> říkat, když se dostanete do citace, nebo ji opustíte. "
+"Upozorňujeme, že toto nastavení je nezávislé na tom, jestli to je, či není, "
+"oznamováno při čtení všeho. Více informací viz <link xref="
+"\"preferences_general#say_all_announce_context\">Při čtení všeho oznamovat "
+"kontextové informace</link>."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:239
+msgid "Announce forms during navigation"
+msgstr "Při pohybu v dokumentu oznamovat formuláře"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:240
+msgid ""
+"If <gui>Announce forms during navigation</gui> is checked, <app>Orca</app> "
+"will tell you when you navigate into or out of a form. Note that this "
+"setting is specific to forms which are not ARIA landmarks. You can configure "
+"the presentation of ARIA landmarks through the <gui>Announce landmarks "
+"during navigation</gui> checkbox. In addition, note that this setting is "
+"independent of whether or not this announcement is made during Say All. See "
+"<link xref=\"preferences_general#say_all_announce_context\">Announce "
+"Contextual Information in Say All</link> for more information."
+msgstr ""
+"Když je zaškrtnuté <gui>Při pohybu v dokumentu oznamovat citace</gui>, bude "
+"vám <app>Orca</app> říkat, když se dostanete do formuláře, nebo jej "
+"opustíte. Upozorňujeme, že toto nastavení je vyhraněné pro formuláře, které "
+"nejsou záchytnými body ARIA. Oznamování záchytných bodů ARIA můžete nastavit "
+"zvlášť pomocí zaškrtávacího políčka <gui>Při pohybu v dokumentu oznamovat "
+"záchytné body</gui>. Ještě upozorňujeme, že toto nastavení je nezávislé na "
+"tom, jestli to je, či není, oznamováno při čtení všeho. Více informací viz "
+"<link xref=\"preferences_general#say_all_announce_context\">Při čtení všeho "
+"oznamovat kontextové informace</link>."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:256
+msgid "Announce landmarks during navigation"
+msgstr "Při pohybu v dokumentu oznamovat záchytné body"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:257
+msgid ""
+"If <gui>Announce landmarks during navigation</gui> is checked, <app>Orca</"
+"app> will tell you when you navigate into or out of an ARIA landmark. Note "
+"that this setting is independent of whether or not this announcement is made "
+"during Say All. See <link xref=\"preferences_general#say_all_announce_context"
+"\">Announce Contextual Information in Say All</link> for more information."
+msgstr ""
+"Když je zaškrtnuté <gui>Při pohybu v dokumentu oznamovat citace</gui>, bude "
+"vám <app>Orca</app> říkat, když se dostanete do záchytného bodu ARIA, nebo "
+"jej opustíte. Upozorňujeme, že toto nastavení je nezávislé na tom, jestli to "
+"je, či není, oznamováno při čtení všeho. Více informací viz <link xref="
+"\"preferences_general#say_all_announce_context\">Při čtení všeho oznamovat "
+"kontextové informace</link>."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:270
+msgid "Announce lists during navigation"
+msgstr "Při pohybu v dokumentu oznamovat seznamy"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:271
+msgid ""
+"If <gui>Announce lists during navigation</gui> is checked, <app>Orca</app> "
+"will tell you when you navigate into or out of a list. Note that this "
+"setting is independent of whether or not this announcement is made during "
+"Say All. See <link xref=\"preferences_general#say_all_announce_context"
+"\">Announce Contextual Information in Say All</link> for more information."
+msgstr ""
+"Když je zaškrtnuté <gui>Při pohybu v dokumentu oznamovat citace</gui>, bude "
+"vám <app>Orca</app> říkat, když se dostanete do seznamu, nebo jej opustíte. "
+"Upozorňujeme, že toto nastavení je nezávislé na tom, jestli to je, či není, "
+"oznamováno při čtení všeho. Více informací viz <link xref="
+"\"preferences_general#say_all_announce_context\">Při čtení všeho oznamovat "
+"kontextové informace</link>."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:284
+msgid "Announce panels during navigation"
+msgstr "Při pohybu v dokumentu oznamovat panely"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:285
+msgid ""
+"If <gui>Announce panels during navigation</gui> is checked, <app>Orca</app> "
+"will tell you when you navigate into or out of a panel. Note that this "
+"setting is independent of whether or not this announcement is made during "
+"Say All. See <link xref=\"preferences_general#say_all_announce_context"
+"\">Announce Contextual Information in Say All</link> for more information."
+msgstr ""
+"Když je zaškrtnuté <gui>Při pohybu v dokumentu oznamovat citace</gui>, bude "
+"vám <app>Orca</app> říkat, když se dostanete do panelu, nebo jej opustíte. "
+"Upozorňujeme, že toto nastavení je nezávislé na tom, jestli to je, či není, "
+"oznamováno při čtení všeho. Více informací viz <link xref="
+"\"preferences_general#say_all_announce_context\">Při čtení všeho oznamovat "
+"kontextové informace</link>."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:298
+msgid "Announce tables during navigation"
+msgstr "Při pohybu v dokumentu oznamovat tabulky"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:299
+msgid ""
+"If <gui>Announce tables during navigation</gui> is checked, <app>Orca</app> "
+"will tell you when you navigate into or out of a table. Note that this "
+"setting is independent of whether or not this announcement is made during "
+"Say All. See <link xref=\"preferences_general#say_all_announce_context"
+"\">Announce Contextual Information in Say All</link> for more information."
+msgstr ""
+"Když je zaškrtnuté <gui>Při pohybu v dokumentu oznamovat citace</gui>, bude "
+"vám <app>Orca</app> říkat, když se dostanete do tabulky, nebo ji opustíte. "
+"Upozorňujeme, že toto nastavení je nezávislé na tom, jestli to je, či není, "
+"oznamováno při čtení všeho. Více informací viz <link xref="
+"\"preferences_general#say_all_announce_context\">Při čtení všeho oznamovat "
+"kontextové informace</link>."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:312
 msgid "Read full row in GUI tables"
 msgstr "Číst celé řádky tabulek v uživatelském rozhraní"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:201
+#: C/preferences_speech.page:313
 msgid ""
 "If <gui>Read full row in GUI tables</gui> is checked, as you arrow up and "
 "down in application tables such as the list of messages in your Inbox, "
@@ -7190,12 +7434,12 @@ msgstr ""
 "zaměřená, neměli byste mít toto políčko zaškrtnuté."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:212
+#: C/preferences_speech.page:324
 msgid "Read full row in document tables"
 msgstr "Číst celé řádky tabulek v dokumentech"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:213
+#: C/preferences_speech.page:325
 msgid ""
 "If <gui>Read full row in document tables</gui> is checked, as you arrow up "
 "and down in tables such as those found in <app>Writer</app> and web "
@@ -7209,12 +7453,12 @@ msgstr ""
 "právě zaměřená, neměli byste mít toto políčko zaškrtnuté."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:224
+#: C/preferences_speech.page:336
 msgid "Read full row in spreadsheets"
 msgstr "Číst celé řádky tabulek v tabulkových kalkulátorech"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:225
+#: C/preferences_speech.page:337
 msgid ""
 "If <gui>Read full row in spreadsheets</gui> is checked, as you arrow up and "
 "down in spreadsheets, <app>Orca</app> will speak the entire row. If you "
@@ -7226,26 +7470,6 @@ msgstr ""
 "kalkulátoru, bude <app>Orca</app> číst celé řádky. Jestli dáváte přednost "
 "čtení jen jediné buňky, která je právě zaměřená, neměli byste mít toto "
 "políčko zaškrtnuté."
-
-#. (itstool) path: section/title
-#: C/preferences_speech.page:236
-msgid "Speak misspelled-word indicator"
-msgstr "Oznamovat označení pravopisně chybných slov"
-
-#. (itstool) path: section/p
-#: C/preferences_speech.page:237
-msgid ""
-"The misspelled-word indicator is the red squiggly line that appears "
-"underneath misspelled words in editable text fields. If <gui>Speak "
-"misspelled-word indicator</gui> is checked, when you navigate into a word "
-"with this indicator, or type a word incorrectly causing this indicator to "
-"appear, <app>Orca</app> will speak \"misspelled.\""
-msgstr ""
-"V polích pro úpravu textu bývají pravopisně chybná slova označena podtržením "
-"červenou vlnovkou. Když je zaškrtnuto <gui>Oznamovat označení pravopisně "
-"chybných slov</gui> a na takovéto slovo se přemístíte, nebo slovo chybně "
-"napíšete, takže se pod ním označení objeví, oznámí vám to <app>Orca</app> "
-"slovem „překlep“."
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:4
