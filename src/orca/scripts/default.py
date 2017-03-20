@@ -2074,7 +2074,12 @@ class Script(script.Script):
     def onActiveChanged(self, event):
         """Callback for object:state-changed:active accessibility events."""
 
-        if event.source.getRole() == pyatspi.ROLE_FRAME:
+        frames = [pyatspi.ROLE_FRAME,
+                  pyatspi.ROLE_DIALOG,
+                  pyatspi.ROLE_FILE_CHOOSER,
+                  pyatspi.ROLE_COLOR_CHOOSER]
+
+        if event.source.getRole() in frames:
             if event.detail1 and not self.utilities.canBeActiveWindow(event.source):
                 return
 
