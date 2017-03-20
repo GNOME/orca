@@ -1,3 +1,39 @@
+3.24.0 - 20 March 2017
+
+Web:
+
+ * Fix issue in new command to move to the end of the current container.
+
+ * Fix instance in which we were failing to present contenteditable
+   content.
+
+ * Sanity check our attempt to hack around broken text from Gecko.
+
+General:
+
+ * Improve presentation of Gtk+ editable combo boxes.
+
+ * Attempt to handle children-changed:add event flood from menus.
+
+MATE:
+
+ * Filter out focus events from widgets in windows which claim to be
+   active, but actually are not.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                 Marek Černocký
+    da            Danish                Kenneth Nielsen
+    de            German                Mario Blättermann
+    fr            French                Claude Paroz
+    fur           Friulian              Fabio Tomat
+    hu            Hungarian             Attila Hammer
+    id            Indonesian            Andika Triwidada
+    it            Italian               Milo Casagrande
+    sk            Slovak                Peter Vágner
+
+=========
+
 3.23.91 - 27 February 2017
 
 Web:
