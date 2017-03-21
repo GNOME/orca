@@ -1337,6 +1337,18 @@ class SpeechGenerator(generator.Generator):
         if children:
             result.append(messages.itemCount(children))
             result.extend(acss)
+            return result
+
+        role = args.get('role', obj.getRole())
+        if role in [pyatspi.ROLE_LIST, pyatspi.ROLE_LIST_BOX]:
+            children = [x for x in obj if x.getRole() == pyatspi.ROLE_LIST_ITEM]
+            setsize = len(children)
+            if not setsize:
+                return []
+
+            result = [messages.listItemCount(setsize)]
+            result.extend(acss)
+
         return result
 
     def _generateNoShowingChildren(self, obj, **args):
