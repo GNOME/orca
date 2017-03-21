@@ -86,6 +86,16 @@ class Script(web.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onActiveChanged(self, event)
 
+    def onActiveDescendantChanged(self, event):
+        """Callback for object:active-descendant-changed accessibility events."""
+
+        if super().onActiveDescendantChanged(event):
+            return
+
+        msg = "GECKO: Passing along event to default script"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        default.Script.onActiveDescendantChanged(self, event)
+
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 

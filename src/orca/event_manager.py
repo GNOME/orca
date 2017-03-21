@@ -549,7 +549,6 @@ class EventManager:
             debug.println(debug.LEVEL_WARNING, msg, True)
         else:
             skipCheck = [
-                "object:active-descendant-changed",
                 "object:children-changed",
                 "object:column-reordered",
                 "object:row-reordered",
