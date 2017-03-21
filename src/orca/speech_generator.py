@@ -1968,6 +1968,7 @@ class SpeechGenerator(generator.Generator):
                        pyatspi.ROLE_PUSH_BUTTON,
                        pyatspi.ROLE_RADIO_BUTTON,
                        pyatspi.ROLE_SLIDER,
+                       pyatspi.ROLE_TEXT,
                        pyatspi.ROLE_TOGGLE_BUTTON]
         isWidget = lambda x: x and x.getRole() in widgetRoles
         result = []
