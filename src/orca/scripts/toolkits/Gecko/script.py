@@ -177,41 +177,14 @@ class Script(web.Script):
         if self.utilities.inDocumentContent(event.source):
             return
 
-        # NOTE: This event type is deprecated and Orca should no longer use it.
-        # This callback remains just to handle bugs in applications and toolkits
-        # in which object:state-changed:focused events are missing.
-
-        role = event.source.getRole()
-
-        # Unfiled. When a context menu pops up, we seem to get a focus: event,
-        # but no object:state-changed:focused event from Gecko.
-        if role == pyatspi.ROLE_MENU:
-            orca.setLocusOfFocus(event, event.source)
+        if self.utilities.isLayoutOnly(event.source):
             return
 
-        # Unfiled. When the Thunderbird 'do you want to replace this file'
-        # attachment dialog pops up, the 'Replace' button emits a focus:
-        # event, but we only seem to get the object:state-changed:focused
-        # event when it gives up focus.
-        if role == pyatspi.ROLE_PUSH_BUTTON:
-            orca.setLocusOfFocus(event, event.source)
-
-        # Some of the dialogs used by Thunderbird (and perhaps Firefox?) seem
-        # to be using Gtk+ 2, along with its associated focused-event issues.
-        # Unfortunately, because Gtk+ 2 doesn't expose a per-object toolkit,
-        # we cannot know that a given widget is Gtk+ 2. Therefore, we'll put
-        # our Gtk+ 2 toolkit script hacks here as well just to be safe.
-        if role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_PASSWORD_TEXT]:
-            orca.setLocusOfFocus(event, event.source)
-
-        if role == pyatspi.ROLE_COMBO_BOX:
-            orca.setLocusOfFocus(event, event.source)
-
-        if role == pyatspi.ROLE_PAGE_TAB:
-            orca.setLocusOfFocus(event, event.source)
-
-        if role == pyatspi.ROLE_RADIO_BUTTON:
-            orca.setLocusOfFocus(event, event.source)
+        # NOTE: This event type is deprecated and Orca should no longer use it.
+        # This callback remains just to handle bugs in applications and toolkits
+        # in which object:state-changed:focused events are missing. And in the
+        # case of Gecko dialogs, that seems to happen a lot.
+        orca.setLocusOfFocus(event, event.source)
 
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""

@@ -1230,6 +1230,12 @@ class Utilities:
             layoutOnly = False
         elif role == pyatspi.ROLE_FORM:
             layoutOnly = False
+        elif role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_TOGGLE_BUTTON]:
+            layoutOnly = False
+        elif role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_PASSWORD_TEXT, pyatspi.ROLE_ENTRY]:
+            layoutOnly = False
+        elif role == pyatspi.ROLE_LIST_ITEM and parentRole == pyatspi.ROLE_LIST_BOX:
+            layoutOnly = False
         elif self.isTableRow(obj):
             state = obj.getState()
             layoutOnly = not (state.contains(pyatspi.STATE_FOCUSABLE) \
