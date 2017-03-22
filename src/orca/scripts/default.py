@@ -3491,6 +3491,13 @@ class Script(script.Script):
                     [lineString, startOffset, endOffset] = \
                         text.getTextAtOffset(offset, mode)
 
+                if endOffset > text.characterCount:
+                    msg = "WARNING: endOffset: %i > characterCount: %i " \
+                          " resulting from text.getTextAtOffset(%i, %s) for %s" \
+                          % (endOffset, text.characterCount, offset, mode, obj)
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    endOffset = text.characterCount
+
                 # [[[WDW - HACK: this is here because getTextAtOffset
                 # tends not to be implemented consistently across toolkits.
                 # Sometimes it behaves properly (i.e., giving us an endOffset
