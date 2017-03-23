@@ -71,79 +71,11 @@ class Script(default.Script):
 
         # NOTE: This event type is deprecated and Orca should no longer use it.
         # This callback remains just to handle bugs in applications and toolkits
-        # during the remainder of the unstable (3.11) development cycle.
-
-        role = event.source.getRole()
-
-        # https://bugzilla.gnome.org/show_bug.cgi?id=711397
-        if role == pyatspi.ROLE_COMBO_BOX:
-            orca.setLocusOfFocus(event, event.source)
+        # that fail to reliably emit object:state-changed:focused events.
+        if self.utilities.isLayoutOnly(event.source):
             return
 
-        # The above issue also seems to happen with spin buttons.
-        if role == pyatspi.ROLE_SPIN_BUTTON:
-            orca.setLocusOfFocus(event, event.source)
-            return
-
-        # https://bugzilla.gnome.org/show_bug.cgi?id=720987
-        if role == pyatspi.ROLE_TABLE_COLUMN_HEADER:
-            orca.setLocusOfFocus(event, event.source)
-            return
-
-        # https://bugzilla.gnome.org/show_bug.cgi?id=720989
-        if role == pyatspi.ROLE_MENU == event.source.parent.getRole():
-            orca.setLocusOfFocus(event, event.source)
-            return
-
-        # Unfiled. But this happens when you are in gtk-demo's application demo,
-        # get into a menu and then press Escape. The text widget emits a focus:
-        # event, but not a state-changed:focused event.
-        #
-        # A similar issue can be seen when a text widget starts out having
-        # focus, such as in the old gnome-screensaver dialog.
-        if role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_PASSWORD_TEXT]:
-            orca.setLocusOfFocus(event, event.source)
-            return
-
-        # Unfiled. When a context menu first appears and an item is already
-        # selected, we get a focus: event for that menu item, but there is
-        # not a state-changed event for that item, nor a selection-changed
-        # event for the menu.
-        menuItems = [pyatspi.ROLE_CHECK_MENU_ITEM,
-                     pyatspi.ROLE_MENU_ITEM,
-                     pyatspi.ROLE_RADIO_MENU_ITEM]
-        if role in menuItems:
-            if orca_state.locusOfFocus \
-               and orca_state.locusOfFocus.parent != event.source.parent:
-                orca.setLocusOfFocus(event, event.source)
-            return
-
-        # Unfiled, but in at least some dialogs, the first time a push
-        # button gains focus, we only get a focus: event for it.
-        # Seems to happen for checkboxes too. This is why we can't have
-        # nice things.
-        if role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_CHECK_BOX]:
-            orca.setLocusOfFocus(event, event.source)
-            return
-
-        # Unfiled, but yet another case of only getting a focus: event.
-        # Seems to happen mainly when selecting.
-        if role == pyatspi.ROLE_ICON:
-            topLevelObject = self.utilities.topLevelObject(event.source)
-            if topLevelObject == orca_state.activeWindow:
-                orca.setLocusOfFocus(event, event.source)
-                return
-
-        # Unfiled, but yet another case of only getting a focus: event when
-        # a widget appears in a parent container and is already focused.
-        if role == pyatspi.ROLE_TABLE:
-            obj = event.source
-            selectedChildren = self.utilities.selectedChildren(obj)
-            if selectedChildren:
-                obj = selectedChildren[0]
-
-            orca.setLocusOfFocus(event, obj)
-            return
+        orca.setLocusOfFocus(event, event.source)
 
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
