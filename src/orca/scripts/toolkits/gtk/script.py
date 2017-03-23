@@ -112,92 +112,15 @@ class Script(default.Script):
 
         # NOTE: This event type is deprecated and Orca should no longer use it.
         # This callback remains just to handle bugs in applications and toolkits
-        # during the remainder of the unstable (3.11) development cycle.
+        # that fail to reliably emit object:state-changed:focused events.
 
-        role = event.source.getRole()
-
-        # https://bugzilla.gnome.org/show_bug.cgi?id=711397
-        if role == pyatspi.ROLE_COMBO_BOX:
-            orca.setLocusOfFocus(event, event.source)
+        if self.utilities.eventIsCanvasNoise(event):
             return
 
-        # The above issue also seems to happen with spin buttons.
-        if role == pyatspi.ROLE_SPIN_BUTTON:
-            orca.setLocusOfFocus(event, event.source)
+        if self.utilities.isLayoutOnly(event.source):
             return
 
-        # And with sliders.
-        if role == pyatspi.ROLE_SLIDER:
-            orca.setLocusOfFocus(event, event.source)
-            return
-
-        # https://bugzilla.gnome.org/show_bug.cgi?id=720987
-        if role == pyatspi.ROLE_TABLE_COLUMN_HEADER:
-            orca.setLocusOfFocus(event, event.source)
-            return
-
-        # https://bugzilla.gnome.org/show_bug.cgi?id=720989
-        if role == pyatspi.ROLE_MENU == event.source.parent.getRole():
-            if event.source.name:
-                orca.setLocusOfFocus(event, event.source)
-            else:
-                msg = "GTK: Nameless menu with parent %s" % event.source.parent
-                debug.println(debug.LEVEL_INFO, msg, True)
-            return
-
-        # Unfiled, but a similar case of the above issue with combo boxes.
-        # Seems to happen for checkboxes too. This is why we can't have
-        # nice things.
-        if role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_CHECK_BOX]:
-            orca.setLocusOfFocus(event, event.source)
-            return
-
-        # Unfiled. Happens in Evolution, but for what seems to be a generic
-        # Gtk+ toggle button. So we'll handle it here.
-        if role == pyatspi.ROLE_TOGGLE_BUTTON:
-            orca.setLocusOfFocus(event, event.source)
-            return
-
-        # Unfiled. But this happens when you are in Gedit, get into a menu
-        # and then press Escape. The text widget emits a focus: event, but
-        # not a state-changed:focused event.
-        #
-        # A similar issue can be seen when a text widget starts out having
-        # focus, such as in the old gnome-screensaver dialog.
-        if role in [pyatspi.ROLE_TEXT, pyatspi.ROLE_PASSWORD_TEXT]:
-            orca.setLocusOfFocus(event, event.source)
-            return
-
-        # Unfiled. When a context menu first appears and an item is already
-        # selected, we get a focus: event for that menu item, but there is
-        # not a state-changed event for that item, nor a selection-changed
-        # event for the menu.
-        menuItems = [pyatspi.ROLE_CHECK_MENU_ITEM,
-                     pyatspi.ROLE_MENU_ITEM,
-                     pyatspi.ROLE_RADIO_MENU_ITEM]
-        if role in menuItems:
-            if orca_state.locusOfFocus \
-               and orca_state.locusOfFocus.parent != event.source.parent:
-                orca.setLocusOfFocus(event, event.source)
-            return
-
-        # Unfiled. When a canvas item gets focus but is not selected, we
-        # are only getting a focus event. This happens in Nautilus.
-        if role == pyatspi.ROLE_CANVAS and not self.utilities.eventIsCanvasNoise(event):
-            orca.setLocusOfFocus(event, event.source)
-            return
-
-        # Unfiled, but yet another case of only getting a focus: event when
-        # a widget appears in a parent container and is already focused.
-        # An example of this particular case is the list of elements dialogs.
-        if role == pyatspi.ROLE_TABLE:
-            obj = event.source
-            selectedChildren = self.utilities.selectedChildren(obj)
-            if selectedChildren:
-                obj = selectedChildren[0]
-
-            orca.setLocusOfFocus(event, obj)
-            return
+        orca.setLocusOfFocus(event, event.source)
 
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
