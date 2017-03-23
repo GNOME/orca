@@ -54,7 +54,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Up",
     ["BRAILLE LINE:  '< > Not (negate this whole chart) check box'",
-     "     VISIBLE:  '< > Not \(negate this whole chart', cursor=1",
+     "     VISIBLE:  '< > Not \\(negate this whole chart', cursor=1",
      "SPEECH OUTPUT: 'Not (negate this whole chart) check box not checked.'"]))
 
 sequence.append(utils.StartRecordingAction())

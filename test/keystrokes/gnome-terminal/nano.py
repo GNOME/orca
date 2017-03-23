@@ -15,7 +15,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Launch Nano",
     ["BRAILLE LINE:  ''",
      "     VISIBLE:  '', cursor=1",
-     "SPEECH OUTPUT: '  nano [\d\.]+\s+New Buffer\s*",
+     "SPEECH OUTPUT: '  nano [\\d\\.]+\\s+New Buffer\\s*",
      "",
      "'"]))
 

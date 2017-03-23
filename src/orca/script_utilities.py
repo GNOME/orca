@@ -75,7 +75,7 @@ class Utilities:
          '\u2085', '\u2086', '\u2087', '\u2088', '\u2089']
 
     flags = re.UNICODE
-    WORDS_RE = re.compile("(\W+)", flags)
+    WORDS_RE = re.compile(r"(\W+)", flags)
     SUPERSCRIPTS_RE = re.compile("[%s]+" % "".join(SUPERSCRIPT_DIGITS), flags)
     SUBSCRIPTS_RE = re.compile("[%s]+" % "".join(SUBSCRIPT_DIGITS), flags)
 
@@ -2998,7 +2998,7 @@ class Utilities:
         """
 
         return character in self._script.whitespace \
-               or character in '!*+,-./:;<=>?@[\]^_{|}' \
+               or character in r'!*+,-./:;<=>?@[\]^_{|}' \
                or character == self._script.NO_BREAK_SPACE_CHARACTER
 
     def intersectingRegion(self, obj1, obj2, coordType=None):
@@ -3467,7 +3467,7 @@ class Utilities:
         return False
 
     def rgbFromString(self, attributeValue):
-        regex = re.compile("rgb|[^\w,]", re.IGNORECASE)
+        regex = re.compile(r"rgb|[^\w,]", re.IGNORECASE)
         string = re.sub(regex, "", attributeValue)
         red, green, blue = string.split(",")
 
@@ -4586,7 +4586,7 @@ class Utilities:
             return False
         if event.any_data == contents:
             return True
-        if bool(re.search("\w", event.any_data)) != bool(re.search("\w", contents)):
+        if bool(re.search(r"\w", event.any_data)) != bool(re.search(r"\w", contents)):
             return False
 
         # HACK: If the application treats each paragraph as a separate object,

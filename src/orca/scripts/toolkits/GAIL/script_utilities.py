@@ -56,7 +56,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def rgbFromString(self, attributeValue):
-        regex = re.compile("rgb|[^\w,]", re.IGNORECASE)
+        regex = re.compile(r"rgb|[^\w,]", re.IGNORECASE)
         string = re.sub(regex, "", attributeValue)
         red, green, blue = string.split(",")
 

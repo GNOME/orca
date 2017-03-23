@@ -121,18 +121,18 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Down"))
 sequence.append(utils.AssertPresentationAction(
     "12. Shift Down",
-    ["BRAILLE LINE:  'problems in other components, is maintained in Bugzilla \(please see our notes on how'",
+    ["BRAILLE LINE:  'problems in other components, is maintained in Bugzilla \\(please see our notes on how'",
      "     VISIBLE:  'r components, is maintained in B', cursor=32",
-     "SPEECH OUTPUT: 'problems in other components, is maintained in Bugzilla  \(please see our'",
+     "SPEECH OUTPUT: 'problems in other components, is maintained in Bugzilla  \\(please see our'",
      "SPEECH OUTPUT: 'selected' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Down"))
 sequence.append(utils.AssertPresentationAction(
     "13. Shift Down",
-    ["BRAILLE LINE:  'we use Bugzilla\).'",
-     "     VISIBLE:  'we use Bugzilla\).', cursor=1",
-     "SPEECH OUTPUT: 'notes on how we use Bugzilla \).'",
+    ["BRAILLE LINE:  'we use Bugzilla\\).'",
+     "     VISIBLE:  'we use Bugzilla\\).', cursor=1",
+     "SPEECH OUTPUT: 'notes on how we use Bugzilla \\).'",
      "SPEECH OUTPUT: 'selected' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())

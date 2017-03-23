@@ -873,7 +873,7 @@ class Utilities(script_utilities.Utilities):
         spans = []
         charCount = text.characterCount
         if boundary == pyatspi.TEXT_BOUNDARY_SENTENCE_START:
-            spans = [m.span() for m in re.finditer("\S*[^\.\?\!]+((?<!\w)[\.\?\!]+(?!\w)|\S*)", allText)]
+            spans = [m.span() for m in re.finditer(r"\S*[^\.\?\!]+((?<!\w)[\.\?\!]+(?!\w)|\S*)", allText)]
         elif boundary is not None:
             spans = [m.span() for m in re.finditer("[^\n\r]+", allText)]
         if not spans:
@@ -889,7 +889,7 @@ class Utilities(script_utilities.Utilities):
         if string and boundary in [pyatspi.TEXT_BOUNDARY_SENTENCE_START, None]:
             return string, rangeStart, rangeEnd
 
-        words = [m.span() for m in re.finditer("[^\s\-\ufffc]+", string)]
+        words = [m.span() for m in re.finditer("[^\\s\\-\ufffc]+", string)]
         words = list(map(lambda x: (x[0] + rangeStart, x[1] + rangeStart), words))
         if boundary == pyatspi.TEXT_BOUNDARY_WORD_START:
             spans = list(filter(_inThisSpan, words))
@@ -942,7 +942,7 @@ class Utilities(script_utilities.Utilities):
             and not obj.getState().contains(pyatspi.STATE_EDITABLE):
             allText = text.getText(0, -1)
             if obj.getRole() in [pyatspi.ROLE_LIST_ITEM, pyatspi.ROLE_HEADING] \
-               or not (re.search("\w", allText) and self.isTextBlockElement(obj)):
+               or not (re.search(r"\w", allText) and self.isTextBlockElement(obj)):
                 string, start, end = allText, 0, text.characterCount
                 s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
                 msg = "WEB: Results for text at offset %i for %s using %s:\n" \
@@ -1093,7 +1093,7 @@ class Utilities(script_utilities.Utilities):
             if 0 <= xStart <= 5:
                 xString = " ".join(xString.split()[1:])
 
-            match = re.search("\S[\.\!\?]+(\s|\Z)", xString)
+            match = re.search(r"\S[\.\!\?]+(\s|\Z)", xString)
             return match is not None
 
         # Check for things in the same sentence before this object.
@@ -1482,7 +1482,7 @@ class Utilities(script_utilities.Utilities):
         if not text:
             return False
 
-        return bool(re.search("\w", text.getText(0, -1)))
+        return bool(re.search(r"\w", text.getText(0, -1)))
 
     def updateCachedTextSelection(self, obj):
         if not self.inDocumentContent(obj):

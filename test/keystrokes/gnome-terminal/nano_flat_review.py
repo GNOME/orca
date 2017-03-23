@@ -131,9 +131,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "12. Review next line",
-    ["BRAILLE LINE:  '^X Exit      ^R Read File ^\ Replace   ^U Uncut Text^T To Spell  ^_ Go To Line $l'",
-     "     VISIBLE:  '^X Exit      ^R Read File ^\ Rep', cursor=1",
-     "SPEECH OUTPUT: '^X Exit      ^R Read File ^\ Replace   ^U Uncut Text^T To Spell  ^_ Go To Line",
+    ["BRAILLE LINE:  '^X Exit      ^R Read File ^\\ Replace   ^U Uncut Text^T To Spell  ^_ Go To Line $l'",
+     "     VISIBLE:  '^X Exit      ^R Read File ^\\ Rep', cursor=1",
+     "SPEECH OUTPUT: '^X Exit      ^R Read File ^\\ Replace   ^U Uncut Text^T To Spell  ^_ Go To Line",
      "'"]))
 
 sequence.append(utils.AssertionSummaryAction())

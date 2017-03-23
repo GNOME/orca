@@ -47,8 +47,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "4. Review previous line",
-    ["BRAILLE LINE:  '00 ∶ 04 ∶ 5[0-9] \$l'",
-     "     VISIBLE:  '00 ∶ 04 ∶ 5[0-9] \$l', cursor=1",
+    ["BRAILLE LINE:  '00 ∶ 04 ∶ 5[0-9] \\$l'",
+     "     VISIBLE:  '00 ∶ 04 ∶ 5[0-9] \\$l', cursor=1",
      "SPEECH OUTPUT: '00 ∶ 04 ∶ 5[0-9]'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -65,8 +65,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "6. Review next line",
-    ["BRAILLE LINE:  '00 ∶ 04 ∶ 4[0-9] \$l'",
-     "     VISIBLE:  '00 ∶ 04 ∶ 4[0-9] \$l', cursor=1",
+    ["BRAILLE LINE:  '00 ∶ 04 ∶ 4[0-9] \\$l'",
+     "     VISIBLE:  '00 ∶ 04 ∶ 4[0-9] \\$l', cursor=1",
      "SPEECH OUTPUT: '00 ∶ 04 ∶ 4[0-9]'"]))
 
 sequence.append(PauseAction(5000))
@@ -75,8 +75,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
 sequence.append(utils.AssertPresentationAction(
     "7. Review current line",
-    ["BRAILLE LINE:  '00 ∶ 04 ∶ 3[0-9] \$l'",
-     "     VISIBLE:  '00 ∶ 04 ∶ 3[0-9] \$l', cursor=1",
+    ["BRAILLE LINE:  '00 ∶ 04 ∶ 3[0-9] \\$l'",
+     "     VISIBLE:  '00 ∶ 04 ∶ 3[0-9] \\$l', cursor=1",
      "SPEECH OUTPUT: '00 ∶ 04 ∶ 3[0-9]'"]))
 
 sequence.append(PauseAction(5000))
@@ -85,8 +85,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
 sequence.append(utils.AssertPresentationAction(
     "8. Review current line",
-    ["BRAILLE LINE:  '00 ∶ 04 ∶ 2[0-9] \$l'",
-     "     VISIBLE:  '00 ∶ 04 ∶ 2[0-9] \$l', cursor=1",
+    ["BRAILLE LINE:  '00 ∶ 04 ∶ 2[0-9] \\$l'",
+     "     VISIBLE:  '00 ∶ 04 ∶ 2[0-9] \\$l', cursor=1",
      "SPEECH OUTPUT: '00 ∶ 04 ∶ 2[0-9]'"]))
 
 sequence.append(utils.AssertionSummaryAction())

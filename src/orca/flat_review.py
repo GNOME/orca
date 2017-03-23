@@ -123,7 +123,7 @@ class Word:
 class Zone:
     """Represents text that is a portion of a single horizontal line."""
 
-    WORDS_RE = re.compile("(\S+\s*)", re.UNICODE)
+    WORDS_RE = re.compile(r"(\S+\s*)", re.UNICODE)
 
     def __init__(self, accessible, string, x, y, width, height, role=None):
         """Creates a new Zone.

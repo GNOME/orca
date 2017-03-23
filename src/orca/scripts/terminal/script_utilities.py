@@ -179,7 +179,7 @@ class Utilities(script_utilities.Utilities):
 
             keyString, mods = self.lastKeyAndModifiers()
             if keyString in ["Return", "Tab", "space", " "]:
-                return re.search("[^\d\s]", event.any_data)
+                return re.search(r"[^\d\s]", event.any_data)
             if mods & keybindings.ALT_MODIFIER_MASK:
                 return True
             if len(event.any_data) > 1 and self.lastInputEventWasPrintableKey():

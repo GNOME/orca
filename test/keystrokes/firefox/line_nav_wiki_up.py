@@ -459,9 +459,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "47. Line Up",
-    ["BRAILLE LINE:  'Layout\) for more information on Orca-specific keyboard commands. The Orca'",
-     "     VISIBLE:  'Layout\) for more information on ', cursor=1",
-     "SPEECH OUTPUT: 'Layout\)'",
+    ["BRAILLE LINE:  'Layout\\) for more information on Orca-specific keyboard commands. The Orca'",
+     "     VISIBLE:  'Layout\\) for more information on ', cursor=1",
+     "SPEECH OUTPUT: 'Layout\\)'",
      "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: 'for more information on Orca-specific keyboard commands. The'",
      "SPEECH OUTPUT: 'Orca'",
@@ -471,12 +471,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "48. Line Up",
-    ["BRAILLE LINE:  'using flat review mode to examine a window. Refer to Orca Keyboard Commands \(Laptop'",
+    ["BRAILLE LINE:  'using flat review mode to examine a window. Refer to Orca Keyboard Commands \\(Laptop'",
      "     VISIBLE:  'using flat review mode to examin', cursor=1",
      "SPEECH OUTPUT: 'using flat review mode to examine a window. Refer to'",
      "SPEECH OUTPUT: 'Orca Keyboard Commands'",
      "SPEECH OUTPUT: 'link.'",
-     "SPEECH OUTPUT: '\(Laptop'",
+     "SPEECH OUTPUT: '\\(Laptop'",
      "SPEECH OUTPUT: 'link.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -701,22 +701,22 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "72. Line Up",
-    ["BRAILLE LINE:  'we use Bugzilla\).'",
-     "     VISIBLE:  'we use Bugzilla\).', cursor=1",
+    ["BRAILLE LINE:  'we use Bugzilla\\).'",
+     "     VISIBLE:  'we use Bugzilla\\).', cursor=1",
      "SPEECH OUTPUT: 'we use Bugzilla'",
      "SPEECH OUTPUT: 'link.'",
-     "SPEECH OUTPUT: '\).'"]))
+     "SPEECH OUTPUT: '\\).'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "73. Line Up",
-    ["BRAILLE LINE:  'problems in other components, is maintained in Bugzilla \(please see our notes on how'",
+    ["BRAILLE LINE:  'problems in other components, is maintained in Bugzilla \\(please see our notes on how'",
      "     VISIBLE:  'problems in other components, is', cursor=1",
      "SPEECH OUTPUT: 'problems in other components, is maintained in'",
      "SPEECH OUTPUT: 'Bugzilla'",
      "SPEECH OUTPUT: 'link.'",
-     "SPEECH OUTPUT: '\(please see our'",
+     "SPEECH OUTPUT: '\\(please see our'",
      "SPEECH OUTPUT: 'notes on how'",
      "SPEECH OUTPUT: 'link.'"]))
 
@@ -934,11 +934,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "97. Line Up",
-    ["BRAILLE LINE:  'Archives\) | FAQ | DocIndex'",
-     "     VISIBLE:  'Archives\) | FAQ | DocIndex', cursor=1",
+    ["BRAILLE LINE:  'Archives\\) | FAQ | DocIndex'",
+     "     VISIBLE:  'Archives\\) | FAQ | DocIndex', cursor=1",
      "SPEECH OUTPUT: 'Archives'",
      "SPEECH OUTPUT: 'link.'",
-     "SPEECH OUTPUT: '\) |'",
+     "SPEECH OUTPUT: '\\) |'",
      "SPEECH OUTPUT: 'FAQ'",
      "SPEECH OUTPUT: 'link.'",
      "SPEECH OUTPUT: '|'",
@@ -949,7 +949,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "98. Line Up",
-    ["BRAILLE LINE:  'Home | Download/Installation | Configuration/Use | Accessible Applications | Mailing List \('",
+    ["BRAILLE LINE:  'Home | Download/Installation | Configuration/Use | Accessible Applications | Mailing List \\('",
      "     VISIBLE:  'Home | Download/Installation | C', cursor=1",
      "SPEECH OUTPUT: 'Home'",
      "SPEECH OUTPUT: 'link.'",

@@ -40,9 +40,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "4. Review previous line",
-    ["BRAILLE LINE:  '00‎∶04\.[0-9] \$l'",
-     "     VISIBLE:  '00‎∶04\.[0-9] \$l', cursor=1",
-     "SPEECH OUTPUT: '00‎∶04\.[0-9]'"]))
+    ["BRAILLE LINE:  '00‎∶04\\.[0-9] \\$l'",
+     "     VISIBLE:  '00‎∶04\\.[0-9] \\$l', cursor=1",
+     "SPEECH OUTPUT: '00‎∶04\\.[0-9]'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
@@ -56,9 +56,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "6. Review next line",
-    ["BRAILLE LINE:  '00‎∶0(8|9)\.[0-9] \$l'",
-     "     VISIBLE:  '00‎∶0(8|9)\.[0-9] \$l', cursor=1",
-     "SPEECH OUTPUT: '00‎∶0(8|9)\.[0-9]'"]))
+    ["BRAILLE LINE:  '00‎∶0(8|9)\\.[0-9] \\$l'",
+     "     VISIBLE:  '00‎∶0(8|9)\\.[0-9] \\$l', cursor=1",
+     "SPEECH OUTPUT: '00‎∶0(8|9)\\.[0-9]'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Subtract"))
@@ -81,9 +81,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "8. Review previous line",
-    ["BRAILLE LINE:  '00‎∶(13|14)\.[0-9] \$l'",
-     "     VISIBLE:  '00‎∶(13|14)\.[0-9] \$l', cursor=1",
-     "SPEECH OUTPUT: '00‎∶(13|14)\.[0-9]'"]))
+    ["BRAILLE LINE:  '00‎∶(13|14)\\.[0-9] \\$l'",
+     "     VISIBLE:  '00‎∶(13|14)\\.[0-9] \\$l', cursor=1",
+     "SPEECH OUTPUT: '00‎∶(13|14)\\.[0-9]'"]))
 
 sequence.append(PauseAction(3000))
 
@@ -91,9 +91,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
 sequence.append(utils.AssertPresentationAction(
     "9. Review current line",
-    ["BRAILLE LINE:  '00‎∶(19|20)\.[0-9] \$l'",
-     "     VISIBLE:  '00‎∶(19|20)\.[0-9] \$l', cursor=1",
-     "SPEECH OUTPUT: '00‎∶(19|20)\.[0-9]'"]))
+    ["BRAILLE LINE:  '00‎∶(19|20)\\.[0-9] \\$l'",
+     "     VISIBLE:  '00‎∶(19|20)\\.[0-9] \\$l', cursor=1",
+     "SPEECH OUTPUT: '00‎∶(19|20)\\.[0-9]'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()
