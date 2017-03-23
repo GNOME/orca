@@ -161,8 +161,8 @@ class Generator:
 
     def generate(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the complete presentatin for the
-        object.  The presentatin to be generated depends highly upon the
+        specifications) that represent the complete presentation for the
+        object.  The presentation to be generated depends highly upon the
         formatting strings in formatting.py.
 
         args is a dictionary that may contain any of the following:
@@ -1006,7 +1006,7 @@ class Generator:
 
     def _generateApplicationName(self, obj, **args):
         """Returns an array of strings for use by speech and braille that
-        represents the name of the applicaton for the object.
+        represents the name of the application for the object.
         """
         result = []
         try:

@@ -896,10 +896,10 @@ class Formatting(dict):
                      and isinstance(val, str):
                     self[key] = val
                 else:
-                    # exception or such like, we are trying to murge
+                    # exception or such like, we are trying to merge
                     # incompatible trees.
                     # throw an exception?
-                    print("an error has occured, cant murge dicts.")
+                    print("an error has occurred, cant merge dicts.")
             else:
                 self[key] = val
 

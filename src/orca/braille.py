@@ -99,7 +99,7 @@ if louis and not tablesdir:
 #
 _monitor = None
 
-# brlapi keys which are not allowed to interupt speech:
+# brlapi keys which are not allowed to interrupt speech:
 #
 dontInteruptSpeechKeys = []
 if _brlAPIAvailable:

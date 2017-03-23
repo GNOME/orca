@@ -671,7 +671,7 @@ class StructuralNavigation:
 
     def structuralNavigationObjectCreator(self, name):
         """This convenience method creates a StructuralNavigationObject
-        with the specified name and associated characterists. (See the
+        with the specified name and associated characteristics. (See the
         "Objects" section of code near the end of this class. Creators
         of StructuralNavigationObject's can still do things the old
         fashioned way should they so choose, by creating the instance
@@ -682,7 +682,7 @@ class StructuralNavigation:
         """
 
         # We're going to assume bindings.  After all, a structural
-        # navigation object is by defintion an object which one can
+        # navigation object is by definition an object which one can
         # navigate to using the associated keybindings. For similar
         # reasons we'll also assume a predicate and a presentation
         # method.  (See the Objects section towards the end of this

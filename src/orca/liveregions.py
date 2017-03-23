@@ -360,7 +360,7 @@ class LiveRegionManager:
             self.monitoring = True  
 
     def generateLiveRegionDescription(self, obj, **args):
-        """Used in conjuction with whereAmI to output description and 
+        """Used in conjunction with whereAmI to output description and 
         politeness of the given live region object"""
         objectid = self._getObjectId(obj)
         uri = self._script.bookmarks.getURIKey()

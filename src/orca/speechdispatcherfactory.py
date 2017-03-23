@@ -100,7 +100,7 @@ class SpeechServer(speechserver.SpeechServer):
         """
         if serverId not in cls._active_servers:
             cls(serverId)
-        # Don't return the instance, unless it is succesfully added
+        # Don't return the instance, unless it is successfully added
         # to `_active_Servers'.
         return cls._active_servers.get(serverId)
 

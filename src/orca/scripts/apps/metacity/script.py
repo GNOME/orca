@@ -55,7 +55,7 @@ class Script(default.Script):
         #
         speech.stop()
 
-        # If the window was iconified, then obj.name will be surronded by
+        # If the window was iconified, then obj.name will be surrounded by
         # brackets. If this is the case, remove them before comparing the
         # name against the various window names. See bug #522797 for more
         # details.

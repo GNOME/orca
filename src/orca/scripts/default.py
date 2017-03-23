@@ -1104,7 +1104,7 @@ class Script(script.Script):
         """Pans the braille display to the right.  If panAmount is non-zero,
         the display is panned by that many cells.  If it is 0, the display
         is panned one full display width.  In flat review mode, panning
-        beyond the end will take you to the begininng of the next line.
+        beyond the end will take you to the beginning of the next line.
 
         In focus tracking mode, the cursor stays at its logical position.
         In flat review mode, the review cursor moves to character
@@ -3353,7 +3353,7 @@ class Script(script.Script):
     def updateBrailleReview(self, targetCursorCell=0):
         """Obtains the braille regions for the current flat review line
         and displays them on the braille display.  If the targetCursorCell
-        is non-0, then an attempt will be made to postion the review cursor
+        is non-0, then an attempt will be made to position the review cursor
         at that cell.  Otherwise, we will pan in display-sized increments
         to show the review cursor."""
 
@@ -4217,7 +4217,7 @@ class Script(script.Script):
 
     def speakUnicodeCharacter(self, character):
         """ Speaks some information about an unicode character.
-        At the Momment it just anounces the character unicode number but
+        At the moment it just announces the character unicode number but
         this information may be changed in the future
 
         Arguments:

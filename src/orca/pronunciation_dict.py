@@ -31,7 +31,7 @@ def getPronunciation(word, pronunciations=None):
     sounds like. Note: This code does not handle the pronunciation
     of character names. If you want a character name to be spoken,
     treat it as a punctuation character at LEVEL_NONE in
-    puncutation_settings.py. See, for example, the left_arrow and
+    punctuation_settings.py. See, for example, the left_arrow and
     right_arrow characters.
 
     Arguments:

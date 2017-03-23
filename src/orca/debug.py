@@ -45,7 +45,7 @@ LEVEL_OFF = 10000
 #
 LEVEL_SEVERE = 1000
 
-# Used to decribe events of interest to end users or system managers or which
+# Used to describe events of interest to end users or system managers or which
 # indicate potential problems, but which Orca can deal with without crashing.
 #
 LEVEL_WARNING = 900
@@ -62,7 +62,7 @@ LEVEL_INFO = 800
 # problems that may be associated with a particular configuration.
 #
 # For the purposes of Orca, LEVEL_CONFIGURATION means display the various
-# apsects of whether a particular feature (e.g., speech, braille, etc.)
+# aspects of whether a particular feature (e.g., speech, braille, etc.)
 # is enabled or not as well as details about that feature.
 #
 LEVEL_CONFIGURATION = 700

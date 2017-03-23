@@ -419,7 +419,7 @@ def _showPreferencesUI(script, prefs):
     orca_state.orcaOS.showGUI()
 
 def showAppPreferencesGUI(script=None, inputEvent=None):
-    """Displays the user interace to configure the settings for a
+    """Displays the user interface to configure the settings for a
     specific applications within Orca and set up those app-specific
     user preferences using a GUI.
 
@@ -436,7 +436,7 @@ def showAppPreferencesGUI(script=None, inputEvent=None):
     return True
 
 def showPreferencesGUI(script=None, inputEvent=None):
-    """Displays the user interace to configure Orca and set up
+    """Displays the user interface to configure Orca and set up
     user preferences using a GUI.
 
     Returns True to indicate the input event has been consumed.
@@ -474,7 +474,7 @@ def quitOrca(script=None, inputEvent=None):
     return True
 
 def showFindGUI(script=None, inputEvent=None):
-    """Displays the user interace to perform an Orca Find.
+    """Displays the user interface to perform an Orca Find.
 
     Returns True to indicate the input event has been consumed.
     """
