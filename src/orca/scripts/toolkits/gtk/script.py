@@ -120,7 +120,13 @@ class Script(default.Script):
         if self.utilities.isLayoutOnly(event.source):
             return
 
-        if pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source):
+        ancestor = pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source)
+        if not ancestor:
+            orca.setLocusOfFocus(event, event.source)
+            return
+
+        isMenu = lambda x: x and x.getRole() == pyatspi.ROLE_MENU
+        if isMenu(ancestor) and not pyatspi.findAncestor(ancestor, isMenu):
             return
 
         orca.setLocusOfFocus(event, event.source)
