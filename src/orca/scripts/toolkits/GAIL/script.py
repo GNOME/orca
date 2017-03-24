@@ -75,6 +75,9 @@ class Script(default.Script):
         if self.utilities.isLayoutOnly(event.source):
             return
 
+        if pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == event.source):
+            return
+
         orca.setLocusOfFocus(event, event.source)
 
     def onSelectionChanged(self, event):
