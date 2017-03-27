@@ -631,6 +631,9 @@ class Utilities:
 
         return toolbar is not None
 
+    def isAnchor(self, obj):
+        return False
+
     def isComboBoxWithToggleDescendant(self, obj):
         return False
 
@@ -702,19 +705,10 @@ class Utilities:
     def isMathFenced(self, obj):
         return False
 
-    def isMathFraction(self, obj):
-        return False
-
     def isMathFractionWithoutBar(self, obj):
         return False
 
     def isMathPhantom(self, obj):
-        return False
-
-    def isMathRoot(self, obj):
-        return False
-
-    def isMathNthRoot(self, obj):
         return False
 
     def isMathMultiScript(self, obj):
@@ -1078,17 +1072,6 @@ class Utilities:
             return _settingsManager.getSetting('readFullRowInSpreadSheet')
 
         return _settingsManager.getSetting('readFullRowInDocumentTable')
-
-    def isStatic(self, obj):
-        role = obj.getRole()
-        try:
-            isStatic = role == pyatspi.ROLE_STATIC
-        except:
-            isStatic = False
-
-        if not isStatic and role == pyatspi.ROLE_TEXT:
-            isStatic = not obj.getState().contains(pyatspi.STATE_FOCUSABLE)
-        return isStatic
 
     def isFocusableLabel(self, obj):
         try:

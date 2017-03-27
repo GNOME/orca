@@ -1600,14 +1600,9 @@ class Utilities(script_utilities.Utilities):
                  pyatspi.ROLE_PARAGRAPH,
                  pyatspi.ROLE_ROW_HEADER,
                  pyatspi.ROLE_SECTION,
+                 pyatspi.ROLE_STATIC,
                  pyatspi.ROLE_TEXT,
                  pyatspi.ROLE_TABLE_CELL]
-
-        # TODO - JD: This protection won't be needed once we bump dependencies to 2.16.
-        try:
-            roles.append(pyatspi.ROLE_STATIC)
-        except:
-            pass
 
         return roles
 
@@ -1797,11 +1792,14 @@ class Utilities(script_utilities.Utilities):
     def isMathFenced(self, obj):
         return self._getTag(obj) == 'mfenced'
 
-    def isMathFraction(self, obj):
-        return self._getTag(obj) == 'mfrac'
-
     def isMathFractionWithoutBar(self, obj):
-        if not self.isMathFraction(obj):
+        try:
+            role = obj.getRole()
+        except:
+            msg = "ERROR: Exception getting role for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        if role != pyatspi.ROLE_MATH_FRACTION:
             return False
 
         try:
@@ -1821,12 +1819,6 @@ class Utilities(script_utilities.Utilities):
 
     def isMathPhantom(self, obj):
         return self._getTag(obj) == 'mphantom'
-
-    def isMathRoot(self, obj):
-        return self.isMathSquareRoot(obj) or self.isMathNthRoot(obj)
-
-    def isMathNthRoot(self, obj):
-        return self._getTag(obj) == 'mroot'
 
     def isMathMultiScript(self, obj):
         return self._getTag(obj) == 'mmultiscripts'
@@ -1886,30 +1878,33 @@ class Utilities(script_utilities.Utilities):
         return pyatspi.findAncestor(obj, self.isMathTopLevel)
 
     def getMathDenominator(self, obj):
-        if not self.isMathFraction(obj):
-            return None
+        try:
+            return obj[1]
+        except:
+            pass
 
-        return obj[1]
+        return None
 
     def getMathNumerator(self, obj):
-        if not self.isMathFraction(obj):
-            return None
+        try:
+            return obj[0]
+        except:
+            pass
 
-        return obj[0]
+        return None
 
     def getMathRootBase(self, obj):
-        if self.isMathNthRoot(obj):
-            return obj[0]
-
         if self.isMathSquareRoot(obj):
             return obj
+
+        try:
+            return obj[0]
+        except:
+            pass
 
         return None
 
     def getMathRootIndex(self, obj):
-        if not self.isMathNthRoot(obj):
-            return None
-
         try:
             return obj[1]
         except:
@@ -2459,17 +2454,9 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         role = obj.getRole()
-
-        # TODO - JD: This protection won't be needed once we bump dependencies to 2.16.
-        try:
-            if role == pyatspi.ROLE_STATIC:
-                role = pyatspi.ROLE_TEXT
-        except:
-            pass
-
         if role == pyatspi.ROLE_LINK and not self.isAnchor(obj):
             rv = True
-        elif role == pyatspi.ROLE_TEXT \
+        elif role == pyatspi.ROLE_STATIC \
            and obj.parent.getRole() == pyatspi.ROLE_LINK \
            and obj.name and obj.name == obj.parent.name:
             rv = True

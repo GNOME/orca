@@ -59,9 +59,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             return [roledescription]
 
         doNotDisplay = [pyatspi.ROLE_FORM,
-                        pyatspi.ROLE_SECTION,
                         pyatspi.ROLE_PARAGRAPH,
-                        'ROLE_STATIC',
+                        pyatspi.ROLE_STATIC,
+                        pyatspi.ROLE_SECTION,
                         pyatspi.ROLE_UNKNOWN]
 
         state = obj.getState()
@@ -161,9 +161,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.isClickableElement(obj) \
            or self._script.utilities.isLink(obj):
             oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
-        elif self._script.utilities.isStatic(obj) \
-             or self._script.utilities.isAnchor(obj):
-            oldRole = self._overrideRole('ROLE_STATIC', args)
+        elif self._script.utilities.isAnchor(obj):
+            oldRole = self._overrideRole(pyatspi.ROLE_STATIC, args)
         elif self._script.utilities.treatAsDiv(obj, offset=args.get('startOffset')):
             oldRole = self._overrideRole(pyatspi.ROLE_SECTION, args)
 

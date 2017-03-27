@@ -267,13 +267,10 @@ formatting = {
         'ROLE_MATH_FENCED': {
             'unfocused': 'fencedStart + pause + fencedContents + pause + fencedEnd',
         },
-        # TODO - JD: When we bump dependencies to 2.16, remove this fake role and use the real one.
-        'ROLE_MATH_FRACTION': {
+        pyatspi.ROLE_MATH_FRACTION: {
             'unfocused': 'fractionStart + pause + fractionNumerator + fractionLine + fractionDenominator + pause + fractionEnd + pause',
         },
-        # TODO - JD: When we bump dependencies to 2.16, remove this fake role and use the real one
-        # (assuming, of course, we've solved the square root/nth root identification problem too).
-        'ROLE_MATH_ROOT': {
+        pyatspi.ROLE_MATH_ROOT: {
             'unfocused': 'rootStart + rootBase + pause + rootEnd + pause',
         },
         # TODO - JD: When we bump dependencies to TBD, remove this fake role and use the real one.
@@ -389,10 +386,7 @@ formatting = {
             'unfocused': 'labelAndName + roleName + value + availability + ' + MNEMONIC,
             'basicWhereAmI' : 'labelAndName + roleName + value'
             },
-        # TODO - JD: There is now an actual ROLE_STATIC in ATK and AT-SPI2. Next
-        # time we need to bump dependencies for more significant things, we need
-        # to remove this fake role and use it instead.
-        'ROLE_STATIC': {
+        pyatspi.ROLE_STATIC: {
             'unfocused': '(displayedText or name) + roleName',
         },
         'ROLE_SWITCH': {

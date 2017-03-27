@@ -1164,10 +1164,6 @@ class Generator:
 
     def _getAlternativeRole(self, obj, **args):
         if self._script.utilities.isMath(obj):
-            if self._script.utilities.isMathFraction(obj):
-                return 'ROLE_MATH_FRACTION'
-            if self._script.utilities.isMathRoot(obj):
-                return 'ROLE_MATH_ROOT'
             if self._script.utilities.isMathSubOrSuperScript(obj):
                 return 'ROLE_MATH_SCRIPT_SUBSUPER'
             if self._script.utilities.isMathUnderOrOverScript(obj):
@@ -1182,10 +1178,10 @@ class Generator:
                 return 'ROLE_MATH_TABLE'
             if self._script.utilities.isMathTableRow(obj):
                 return 'ROLE_MATH_TABLE_ROW'
-        if self._script.utilities.isStatic(obj):
-            return 'ROLE_STATIC'
         if self._script.utilities.isSwitch(obj):
             return 'ROLE_SWITCH'
+        if self._script.utilities.isAnchor(obj):
+            return pyatspi.ROLE_STATIC
         if self._script.utilities.isBlockquote(obj):
             return pyatspi.ROLE_BLOCK_QUOTE
         if self._script.utilities.isLandmark(obj):
