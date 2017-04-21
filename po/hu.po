@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-09 06:32+0100\n"
-"PO-Revision-Date: 2017-03-10 08:42+0100\n"
+"PO-Revision-Date: 2017-04-21 09:26+0200\n"
 "Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -797,7 +797,7 @@ msgstr "aláhúzás"
 #.
 #: ../src/orca/chnames.py:161 ../src/orca/keynames.py:255
 msgid "grave"
-msgstr "tompa"
+msgstr "tompa ékezet"
 
 #. Translators: this is the spoken word for the character '{' (U+007b)
 #.
@@ -11569,7 +11569,7 @@ msgstr "ű_rlapok bejelentése felolvasás közben"
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce when an ARIA landmark has been entered or exited. ARIA landmarks are the W3C defined HTML tag attribute
 #: ../src/orca/orca-setup.ui.h:66
 msgid "Announce land_marks in Say All"
-msgstr "_Táblázatok bejelentése felolvasás közben"
+msgstr "_Jelölők bejelentése felolvasás közben"
 
 #: ../src/orca/orca-setup.ui.h:67
 msgid "Say All"
