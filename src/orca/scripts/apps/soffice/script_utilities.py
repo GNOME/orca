@@ -706,7 +706,7 @@ class Utilities(script_utilities.Utilities):
 
         # Things only seem broken for certain tables, e.g. the Paths table.
         # TODO - JD: File the LibreOffice bugs and reference them here.
-        if role != pyatspi.ROLE_TABLE or self.isSpreadSheetCell(obj):
+        if role != pyatspi.ROLE_TABLE or self.isSpreadSheetTable(obj):
             return super().selectedChildren(obj)
 
         try:
