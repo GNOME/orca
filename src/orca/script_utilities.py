@@ -1159,7 +1159,7 @@ class Utilities:
 
         layoutOnly = False
 
-        if obj and self.isZombie(obj):
+        if self.isDead(obj) or self.isZombie(obj):
             return True
 
         try:
