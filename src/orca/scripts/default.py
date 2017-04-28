@@ -2676,9 +2676,21 @@ class Script(script.Script):
 
         obj = event.source
         role = obj.getRole()
-        value = obj.queryValue()
+
+        try:
+            value = obj.queryValue()
+            currentValue = value.currentValue
+        except NotImplementedError:
+            msg = "ERROR: %s doesn't implement AtspiValue" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+        except:
+            msg = "ERROR: Exception getting current value for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if "oldValue" in self.pointOfReference \
-           and (value.currentValue == self.pointOfReference["oldValue"]):
+           and (currentValue == self.pointOfReference["oldValue"]):
             return
 
         isProgressBarUpdate, msg = self.utilities.isProgressBarUpdate(obj, event)
@@ -2690,7 +2702,7 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        self.pointOfReference["oldValue"] = value.currentValue
+        self.pointOfReference["oldValue"] = currentValue
         self.updateBraille(obj, isProgressBarUpdate=isProgressBarUpdate)
         speech.speak(self.speechGenerator.generateSpeech(
             obj, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
