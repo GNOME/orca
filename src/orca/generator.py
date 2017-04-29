@@ -181,6 +181,12 @@ class Generator:
         - forceTutorial: boolean (default=False) which says if we
           should force a tutorial to be spoken or not
         """
+
+        if self._script.utilities.isDead(obj):
+            msg = 'ERROR: Cannot generate presentation dead obj'
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
         startTime = time.time()
         result = []
         globalsDict = {}
