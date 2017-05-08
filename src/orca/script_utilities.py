@@ -86,7 +86,6 @@ class Utilities:
     KEY_BINDING = 'keyBinding'
     NESTING_LEVEL = 'nestingLevel'
     NODE_LEVEL = 'nodeLevel'
-    REAL_ACTIVE_DESCENDANT = 'realActiveDescendant'
 
     def __init__(self, script):
         """Creates an instance of the Utilities class.
@@ -1794,39 +1793,14 @@ class Utilities:
         if self.isDead(obj):
             return None
 
-        try:
-            return self._script.\
-                generatorCache[self.REAL_ACTIVE_DESCENDANT][obj]
-        except:
-            if self.REAL_ACTIVE_DESCENDANT not in self._script.\
-                    generatorCache:
-                self._script.generatorCache[self.REAL_ACTIVE_DESCENDANT] = {}
-            activeDescendant = None
+        if obj.getRole() != pyatspi.ROLE_TABLE_CELL:
+            return obj
 
-        # If obj is a table cell and all of it's children are table cells
-        # (probably cell renderers), then return the first child which has
-        # a non zero length text string. If no such object is found, just
-        # fall through and use the default approach below. See bug #376791
-        # for more details.
-        #
-        if obj.getRole() == pyatspi.ROLE_TABLE_CELL and obj.childCount:
-            nonTableCellFound = False
-            for child in obj:
-                if child.getRole() != pyatspi.ROLE_TABLE_CELL:
-                    nonTableCellFound = True
-            if not nonTableCellFound:
-                for child in obj:
-                    try:
-                        text = child.queryText()
-                    except NotImplementedError:
-                        continue
-                    else:
-                        if text.getText(0, -1).strip():
-                            activeDescendant = child
+        hasContent = [x for x in obj if self.displayedText(x).strip()]
+        if len(hasContent) == 1:
+            return hasContent[0]
 
-        self._script.generatorCache[self.REAL_ACTIVE_DESCENDANT][obj] = \
-            activeDescendant or obj
-        return self._script.generatorCache[self.REAL_ACTIVE_DESCENDANT][obj]
+        return obj
 
     def statusBar(self, obj):
         """Returns the status bar in the window which contains obj.

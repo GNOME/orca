@@ -1083,7 +1083,12 @@ class Generator:
         """
         result = []
         rad = self._script.utilities.realActiveDescendant(obj)
-        return self._generateDisplayedText(rad, **args)
+
+        if not (rad.getRole() == pyatspi.ROLE_TABLE_CELL and rad.childCount):
+            return self._generateDisplayedText(rad, **args)
+
+        content = [self._script.utilities.displayedText(x).strip() for x in rad]
+        return [" ".join(filter(lambda x: x, content))]
 
     def _generateRealActiveDescendantRoleName(self, obj, **args ):
         """Objects, such as tables and trees, can represent individual cells
