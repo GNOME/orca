@@ -249,6 +249,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return super().getLocalizedRoleName(obj, **args)
 
+    def _generateRealActiveDescendantDisplayedText(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateRealActiveDescendantDisplayedText(obj, **args)
+
+        return self._generateDisplayedText(obj, **args)
+
     def _generateRoleName(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateRoleName(obj, **args)
