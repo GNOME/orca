@@ -2,21 +2,21 @@
 # Copyright (C) 2010-2016 Free Software Foundation, Inc.
 # This file is distributed under the same license as the orca help.
 #
-# Gabor Kelemen <kelemeng at gnome dot hu>, 2010, 2011, 2012, 2013, 2014, 2015, 2016.
-# Attila Hammer <hammera at pickup dot hu>, 2010, 2013, 2014, 2015, 2016.
+# Gabor Kelemen <kelemeng at gnome dot hu>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017.
+# Attila Hammer <hammera at pickup dot hu>, 2010, 2013, 2014, 2015, 2016, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca_help master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-13 10:52+0000\n"
-"PO-Revision-Date: 2016-08-19 22:25+0200\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"POT-Creation-Date: 2017-04-21 07:33+0000\n"
+"PO-Revision-Date: 2017-05-22 00:07+0200\n"
+"Last-Translator: Gabor Kelemen <kelemeng at ubuntu dot com>\n"
 "Language-Team: Hungarian <openscope at gmail dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.2\n"
+"X-Generator: Lokalize 1.5\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
@@ -1684,8 +1684,8 @@ msgid ""
 "Enable \"sticky\" browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (triple-clicked)"
 msgstr ""
-"A rögzített böngészőmód engedélyezése: <keyseq><key>Orka módosító</key><key>"
-"A</key></keyseq> (háromszor gyorsan megnyomva)"
+"A rögzített böngészőmód engedélyezése: <keyseq><key>Orka módosító</"
+"key><key>A</key></keyseq> (háromszor gyorsan megnyomva)"
 
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
@@ -2418,6 +2418,16 @@ msgid ""
 msgstr ""
 "Képek listájának megjelenítése: <keyseq><key>Alt</key><key>Shift</"
 "key><key>G</key></keyseq>"
+
+# Megjegyzés: a fordítást kiegészítettem, az ent szót ebben az esetben szerkesztőmezőnek fordítottuk.
+#. (itstool) path: item/p
+#: C/commands_structural_navigation.page:435
+msgid ""
+"Start and end of current container: <keyseq><key>Shift</key><key>comma</"
+"key></keyseq> and <keyseq><key>comma</key></keyseq>"
+msgstr ""
+"Ugrás az aktuális elemblokk elejére vagy végére: <keyseq><key>Shift</"
+"key><key>vessző</key></keyseq> és <keyseq><key>vessző</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_table.page:6
@@ -3925,7 +3935,7 @@ msgstr "Több konfiguráció fenntartása"
 
 #. (itstool) path: page/title
 #. (itstool) path: section/title
-#: C/howto_profiles.page:15 C/preferences_general.page:146
+#: C/howto_profiles.page:15 C/preferences_general.page:175
 msgid "Profiles"
 msgstr "Profilok"
 
@@ -5361,12 +5371,12 @@ msgstr ""
 #: C/preferences_gecko.page:58 C/preferences_gecko.page:100
 #: C/preferences_gecko.page:182 C/preferences_general.page:52
 #: C/preferences_general.page:70 C/preferences_general.page:119
-#: C/preferences_general.page:199 C/preferences_general.page:210
+#: C/preferences_general.page:228 C/preferences_general.page:239
 #: C/preferences_key_echo.page:112 C/preferences_key_echo.page:122
 #: C/preferences_key_echo.page:157 C/preferences_key_echo.page:179
 #: C/preferences_speech.page:105 C/preferences_speech.page:135
-#: C/preferences_speech.page:147 C/preferences_speech.page:158
-#: C/preferences_speech.page:170 C/preferences_speech.page:231
+#: C/preferences_speech.page:160 C/preferences_speech.page:171
+#: C/preferences_speech.page:183 C/preferences_speech.page:343
 #: C/preferences_table_navigation.page:65 C/preferences_voice.page:122
 #: C/preferences_voice.page:133
 msgid "Default value: not checked"
@@ -5561,14 +5571,18 @@ msgstr ""
 #: C/preferences_braille.page:129 C/preferences_braille.page:142
 #: C/preferences_gecko.page:35 C/preferences_gecko.page:78
 #: C/preferences_gecko.page:142 C/preferences_gecko.page:170
-#: C/preferences_general.page:188 C/preferences_key_echo.page:28
-#: C/preferences_key_echo.page:37 C/preferences_key_echo.page:47
-#: C/preferences_key_echo.page:57 C/preferences_key_echo.page:67
-#: C/preferences_key_echo.page:77 C/preferences_key_echo.page:87
-#: C/preferences_key_echo.page:99 C/preferences_speech.page:26
-#: C/preferences_speech.page:123 C/preferences_speech.page:183
-#: C/preferences_speech.page:195 C/preferences_speech.page:207
-#: C/preferences_speech.page:219 C/preferences_speech.page:244
+#: C/preferences_general.page:140 C/preferences_general.page:217
+#: C/preferences_key_echo.page:28 C/preferences_key_echo.page:37
+#: C/preferences_key_echo.page:47 C/preferences_key_echo.page:57
+#: C/preferences_key_echo.page:67 C/preferences_key_echo.page:77
+#: C/preferences_key_echo.page:87 C/preferences_key_echo.page:99
+#: C/preferences_speech.page:26 C/preferences_speech.page:123
+#: C/preferences_speech.page:148 C/preferences_speech.page:195
+#: C/preferences_speech.page:208 C/preferences_speech.page:220
+#: C/preferences_speech.page:234 C/preferences_speech.page:251
+#: C/preferences_speech.page:265 C/preferences_speech.page:279
+#: C/preferences_speech.page:293 C/preferences_speech.page:307
+#: C/preferences_speech.page:319 C/preferences_speech.page:331
 #: C/preferences_spellcheck.page:41 C/preferences_spellcheck.page:51
 #: C/preferences_spellcheck.page:61 C/preferences_table_navigation.page:34
 #: C/preferences_table_navigation.page:44
@@ -6277,8 +6291,73 @@ msgstr ""
 "<keyseq><key>Shift</key><key>T</key></keyseq> folytatja a felolvasást a "
 "következő vagy előző táblázattól stb."
 
-#. (itstool) path: info/desc
+#. (itstool) path: section/title
+#: C/preferences_general.page:124
+msgid "Announce Contextual Information in Say All"
+msgstr ""
+"A szövegkörnyezettel kapcsolatos információk bejelentése a felolvasás közben"
+
+#. (itstool) path: section/p
 #: C/preferences_general.page:125
+msgid ""
+"<app>Orca</app> can optionally provide more information about the document "
+"content being spoken, such as announcing when you are entering and leaving a "
+"blockquote, list, table, or other container. Whether or not these "
+"announcements are made can be configured independently through the following "
+"checkboxes:"
+msgstr ""
+"Az <app>Orka</app> a használt beállításoktól függően több információt tud "
+"kimondani a dokumentumtartalom felolvasása közben, például amikor rálép vagy "
+"elhagy egy idézetblokkot, listát, táblázatot, vagy egy más típusú elemet. A "
+"bejelentésekkel kapcsolatos beállítások egymástól függetlenül megadhatók a "
+"következő jelölőnégyzetek segítségével:"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:133
+msgid "Announce blockquotes in Say All"
+msgstr "Idézetblokkok bejelentése felolvasás közben"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:134
+msgid "Announce forms in Say All"
+msgstr "Űrlapok bejelentése felolvasás közben"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:135
+msgid "Announce landmarks in Say All"
+msgstr "Jelölők bejelentése felolvasás közben"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:136
+msgid "Announce lists in Say All"
+msgstr "Listák bejelentése felolvasás közben"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:137
+msgid "Announce panels in Say All"
+msgstr "Panelek bejelentése felolvasás közben"
+
+#. (itstool) path: item/p
+#: C/preferences_general.page:138
+msgid "Announce tables in Say All"
+msgstr "Táblázatok bejelentése felolvasás közben"
+
+#. (itstool) path: note/p
+#: C/preferences_general.page:144
+msgid ""
+"Whether or not <app>Orca</app> makes these announcements during navigation "
+"is also configurable. You will find similar checkboxes on the <gui>Speech</"
+"gui> page. For more information, see <link xref="
+"\"preferences_speech#spoken_context\">Spoken Context</link>."
+msgstr ""
+" Ezeknek az információknak a bejelentése navigálás közben szintén "
+"beállítható. A beállítások megadásához hasonló jelölőnégyzeteket fog találni "
+"a <gui>Beszéd</gui> lapon. Ha bővebb információra van szüksége, olvassa el a "
+"<link xref=\"preferences_speech#spoken_context\">Kimondott szövegkörnyezet</"
+"link> című fejezetet."
+
+#. (itstool) path: info/desc
+#: C/preferences_general.page:154
 msgid ""
 "Preferences dialog box option for customizing <app>Orca</app>'s Say All "
 "presentation."
@@ -6286,12 +6365,12 @@ msgstr ""
 "Beállítás a mondat vagy teljes sor kimondása közti váltásra felolvasáskor."
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:130
+#: C/preferences_general.page:159
 msgid "Say All By"
 msgstr "Kimondás"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:131
+#: C/preferences_general.page:160
 msgid ""
 "The <gui>Say All By</gui> combo box allows you to specify whether <app>Orca</"
 "app> speaks a sentence at a time or a line at a time when doing a \"Say All"
@@ -6302,17 +6381,17 @@ msgstr ""
 "felolvasás parancsot."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:136
+#: C/preferences_general.page:165
 msgid "Default value: <gui>Sentence</gui>"
 msgstr "Alapbeállítás: <gui>Mondat</gui>"
 
 #. (itstool) path: info/desc
-#: C/preferences_general.page:142
+#: C/preferences_general.page:171
 msgid "Preferences dialog box options for managing settings profiles."
 msgstr "Megadhatja a különböző profilokkal kapcsolatos beállításokat."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:147
+#: C/preferences_general.page:176
 msgid ""
 "The <gui>Profiles</gui> group of controls, which appear at the bottom of the "
 "<gui>General</gui> page, make it possible for you to maintain and use "
@@ -6323,7 +6402,7 @@ msgstr ""
 "létrehozására és karbantartására."
 
 #. (itstool) path: item/p
-#: C/preferences_general.page:154
+#: C/preferences_general.page:183
 msgid ""
 "The <gui>Active Profile</gui> combo box displays the current profile and "
 "allows you to select a different profile to load."
@@ -6332,7 +6411,7 @@ msgstr ""
 "profilt, valamint lehetővé teszi egy másik betöltendő profil kiválasztását."
 
 #. (itstool) path: item/p
-#: C/preferences_general.page:160
+#: C/preferences_general.page:189
 msgid ""
 "The <gui>Load</gui> button will cause <app>Orca</app> to load the profile "
 "indicated in the <gui>Active Profile</gui> combo box."
@@ -6341,7 +6420,7 @@ msgstr ""
 "<gui>Aktív profil</gui> kombinált listamezőben korábban kiválasztott profilt."
 
 #. (itstool) path: item/p
-#: C/preferences_general.page:166
+#: C/preferences_general.page:195
 msgid ""
 "The <gui>Save As</gui> button allows you to save the current set of options "
 "from the preferences dialog box to a named profile."
@@ -6351,7 +6430,7 @@ msgstr ""
 "profilba."
 
 #. (itstool) path: item/p
-#: C/preferences_general.page:172
+#: C/preferences_general.page:201
 msgid ""
 "The <gui>Start-up Profile</gui> combo box allows you to select the profile "
 "which should be automatically loaded each time you launch <app>Orca</app>."
@@ -6360,17 +6439,17 @@ msgstr ""
 "<app>Orka</app> minden indításakor automatikusan betöltendő profilt."
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:181
+#: C/preferences_general.page:210
 msgid "Progress Bar Updates"
 msgstr "Folyamatjelző frissítésének felolvasása"
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:183
+#: C/preferences_general.page:212
 msgid "Speak updates"
 msgstr "Folyamatjelző frissítésének kimondása"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:184
+#: C/preferences_general.page:213
 msgid ""
 "If the <gui>Speak updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically speak the status of progress bars."
@@ -6380,12 +6459,12 @@ msgstr ""
 "folyamatjelzők állapotváltozását."
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:193
+#: C/preferences_general.page:222
 msgid "Braille updates"
 msgstr "Folyamatjelző frissítésének megjelenítése a Braille-kijelzőn"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:194
+#: C/preferences_general.page:223
 msgid ""
 "If the <gui>Braille updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically display the status of progress bars on your refreshable braille "
@@ -6397,12 +6476,12 @@ msgstr ""
 "állapotváltozását."
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:204
+#: C/preferences_general.page:233
 msgid "Beep updates"
 msgstr "Hangjelzés a folyamatjelző frissülésekor"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:205
+#: C/preferences_general.page:234
 msgid ""
 "If the <gui>Beep updates</gui> checkbox is checked <app>Orca</app> will "
 "periodically emit beeps which increase in pitch as the value of the progress "
@@ -6414,29 +6493,29 @@ msgstr ""
 "növekszik."
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:215
+#: C/preferences_general.page:244
 msgid "Frequency (secs)"
 msgstr "Gyakoriság másodpercben"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:216
+#: C/preferences_general.page:245
 msgid "This spin button determines how often updates are presented."
 msgstr ""
 "Ezzel a léptetőgombbal megadhatja, hogy az <app>Orka</app> milyen gyakran "
 "jelenítse meg a folyamatjelzők állapotváltozását."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:219
+#: C/preferences_general.page:248
 msgid "Default value: 10"
 msgstr "Alapbeállítás: 10"
 
 #. (itstool) path: section/title
-#: C/preferences_general.page:224
+#: C/preferences_general.page:253
 msgid "Restrict to"
 msgstr "Korlátozás erre"
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:225
+#: C/preferences_general.page:254
 msgid ""
 "This combo box allows you to control which progress bars should be "
 "presented, assuming the presentation of progress bar updates has been "
@@ -6449,7 +6528,7 @@ msgstr ""
 "gui>, <gui>Alkalmazás</gui>, és <gui>Ablak</gui>."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:231
+#: C/preferences_general.page:260
 msgid ""
 "Choosing <gui>All</gui> will result in <app>Orca</app> presenting updates "
 "for all progress bars, regardless of where the progress bars are located."
@@ -6458,7 +6537,7 @@ msgstr ""
 "folyamatjelző-állapotváltozást ki fog mondani, függetlenül azok helyétől."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:236
+#: C/preferences_general.page:265
 msgid ""
 "Choosing <gui>Application</gui> will result in <app>Orca</app> presenting "
 "updates from progress bars in the active application, even if they are not "
@@ -6469,7 +6548,7 @@ msgstr ""
 "állapotváltozásait, függetlenül attól, hogy az alkalmazás ablaka aktív-e."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:241
+#: C/preferences_general.page:270
 msgid ""
 "Choosing <gui>Window</gui> will result in <app>Orca</app> only presenting "
 "updates for progress bars in the active window."
@@ -6478,7 +6557,7 @@ msgstr ""
 "aktív ablak folyamatjelző-állapotváltozásait fogja kimondani."
 
 #. (itstool) path: section/p
-#: C/preferences_general.page:245
+#: C/preferences_general.page:274
 msgid "Default value: <gui>Application</gui>"
 msgstr "Alapbeállítás: <gui>Alkalmazás</gui>"
 
@@ -7355,11 +7434,31 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:140
+msgid "Speak misspelled-word indicator"
+msgstr "A hibásan írt szó jelzés felolvasása"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:141
+msgid ""
+"The misspelled-word indicator is the red squiggly line that appears "
+"underneath misspelled words in editable text fields. If <gui>Speak "
+"misspelled-word indicator</gui> is checked, when you navigate into a word "
+"with this indicator, or type a word incorrectly causing this indicator to "
+"appear, <app>Orca</app> will speak \"misspelled.\""
+msgstr ""
+"A hibásan írt szó jelölés a cikk-cakkos piros vonal, mely a hibásan írt "
+"szavak alatt jelenik meg a szerkeszthető szövegmezőkben. Ha be van jelölve "
+"<gui>A hibásan írt szó jelzés felolvasása</gui> jelölőnégyzet, amikor egy "
+"hibásan írt szóra navigál vagy elgépel egy szót, és megjelenik ez a jelölés, "
+"az <app>Orka</app> a „Hibásan írt szó” üzenetet fogja kimondani."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:153
 msgid "Speak object mnemonics"
 msgstr "Gyorsbillentyűk felolvasása"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:141
+#: C/preferences_speech.page:154
 msgid ""
 "If the <gui>Speak object mnemonics</gui> checkbox is checked, <app>Orca</"
 "app> will announce the mnemonic associated with the object with focus (such "
@@ -7372,7 +7471,7 @@ msgstr ""
 "gui> gomb. <keyseq><key>Alt</key><key>O</key></keyseq>”."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:152
+#: C/preferences_speech.page:165
 msgid "Speak child position"
 msgstr "Pozícióadatok kimondásának engedélyezése"
 
@@ -7380,7 +7479,7 @@ msgstr "Pozícióadatok kimondásának engedélyezése"
 # ablakban is végül így fordítottuk ezt a jelölőnégyzetet. Szószerinti
 # fordításban gyermekpozíciók kimondása lenne a fordítás.
 #. (itstool) path: section/p
-#: C/preferences_speech.page:153
+#: C/preferences_speech.page:166
 msgid ""
 "Checking the <gui>Speak child position</gui> checkbox will cause <app>Orca</"
 "app> to announce the position of the focused item in menus, lists, and trees "
@@ -7394,12 +7493,12 @@ msgstr ""
 "választógombok, kombinált listamezők, menük, listák, lapfülek, stb."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:163
+#: C/preferences_speech.page:176
 msgid "Speak tutorial messages"
 msgstr "Oktatói üzenetek kimondásának engedélyezése"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:164
+#: C/preferences_speech.page:177
 msgid ""
 "If the <gui>Speak tutorial messages</gui> checkbox is checked, as you move "
 "amongst objects in an interface, <app>Orca</app> will provide additional "
@@ -7410,13 +7509,30 @@ msgstr ""
 "dolgozhat egy fókuszban levő komponenssel."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:175
+#: C/preferences_speech.page:188
+msgid "Speak description"
+msgstr "Leírás felolvasása"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:189
+msgid ""
+"If the <gui>Speak description</gui> checkbox is checked, as you move amongst "
+"objects in an interface, <app>Orca</app> will speak the accessible "
+"description in addition to the accessible name of the object."
+msgstr ""
+"Ha a <gui>Leírás felolvasása</gui> jelölőnégyzet be van jelölve és mozog a "
+"kezelőfelület komponensei között, az <app>Orka</app> az objektum "
+"akadálymentes nevével együtt felolvassa az objektum akadálymentes leírását "
+"is."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:200
 msgid "System messages are detailed"
 msgstr "Részletes rendszerüzenetek engedélyezése"
 
 # Megjegyzés: itt kicsit hosszabb fordítást használtam és eltértem az eredeti üzenettől, így jobban érthető szerintem ennek a beállításnak a haszna.
 #. (itstool) path: section/p
-#: C/preferences_speech.page:176
+#: C/preferences_speech.page:201
 msgid ""
 "If <gui>System messages are detailed</gui> is checked, <app>Orca</app> will "
 "present detailed messages to you in speech. For instance, if you use "
@@ -7434,12 +7550,12 @@ msgstr ""
 "engedélyezése</gui> jelölőnégyzetből."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:188
+#: C/preferences_speech.page:213
 msgid "Speak colors as names"
 msgstr "A színek kimondása színnevekkel"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:189
+#: C/preferences_speech.page:214
 msgid ""
 "If <gui>Speak colors as names</gui> is checked, <app>Orca</app> will "
 "describe colors, looking for the closest approximate. For instance, RGB 0, "
@@ -7453,12 +7569,157 @@ msgstr ""
 "jelölést ebből a jelölőnégyzetből."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:200
+#: C/preferences_speech.page:225
+msgid "Announce blockquotes during navigation"
+msgstr "Idézetblokkok bejelentése navigálás közben"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:226
+msgid ""
+"If <gui>Announce blockquotes during navigation</gui> is checked, <app>Orca</"
+"app> will tell you when you navigate into or out of a blockquote. Note that "
+"this setting is independent of whether or not this announcement is made "
+"during Say All. See <link xref=\"preferences_general#say_all_announce_context"
+"\">Announce Contextual Information in Say All</link> for more information."
+msgstr ""
+"Ha az <gui>Idézetblokkok bejelentése navigálás közben</gui> jelölőnégyzet be "
+"van jelölve, az <app>Orka</app> be fogja jelenteni, amikor rálép egy "
+"idézetblokkra, vagy elhagyja azt. Megjegyzés: ez a beállítás független "
+"attól, hogy ez a bejelentés megtörténjen-e a felolvasás közben vagy sem. Ha "
+"bővebb információra kíváncsi, olvassa el a <link xref="
+"\"preferences_general#say_all_announce_context\">Szövegkörnyezettel "
+"kapcsolatos információk bejelentése a felolvasás közben</link> című "
+"fejezetet."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:239
+msgid "Announce forms during navigation"
+msgstr "Űrlapok bejelentése navigálás közben"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:240
+msgid ""
+"If <gui>Announce forms during navigation</gui> is checked, <app>Orca</app> "
+"will tell you when you navigate into or out of a form. Note that this "
+"setting is specific to forms which are not ARIA landmarks. You can configure "
+"the presentation of ARIA landmarks through the <gui>Announce landmarks "
+"during navigation</gui> checkbox. In addition, note that this setting is "
+"independent of whether or not this announcement is made during Say All. See "
+"<link xref=\"preferences_general#say_all_announce_context\">Announce "
+"Contextual Information in Say All</link> for more information."
+msgstr ""
+"Ha az <gui>Űrlapok bejelentése navigálás közben</gui> jelölőnégyzet be van "
+"jelölve, az <app>Orka</app> ki fogja mondani, amikor belép egy űrlapba, vagy "
+"elhagyja azt. Ne feledje, hogy ez a beállítás csak olyan űrlapokra "
+"vonatkozik, amelyek nem tartalmaznak ARIA jelölőket. Az ARIA jelölők "
+"bejelentésével kapcsolatos beállítást a <gui>Jelölők "
+"bejelentése navigálás közben</gui> jelölőnégyzet segítségével "
+"konfigurálhatja. Ezen kívül "
+"vegye figyelembe, hogy ez a beállítás független attól, hogy a bejelentés a "
+"felolvasás alatt megtörténik-e vagy sem. Ha bővebb információra kíváncsi, "
+"olvassa el a <link xref=\"preferences_general#say_all_announce_context"
+"\">Szövegkörnyezettel kapcsolatos információk bejelentése a felolvasás "
+"közben</link> című fejezetet."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:256
+msgid "Announce landmarks during navigation"
+msgstr "Jelölők bejelentése navigálás közben"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:257
+msgid ""
+"If <gui>Announce landmarks during navigation</gui> is checked, <app>Orca</"
+"app> will tell you when you navigate into or out of an ARIA landmark. Note "
+"that this setting is independent of whether or not this announcement is made "
+"during Say All. See <link xref=\"preferences_general#say_all_announce_context"
+"\">Announce Contextual Information in Say All</link> for more information."
+msgstr ""
+"Ha a <gui>Jelölők bejelentése navigálás közben</gui> jelölőnégyzet be van "
+"jelölve, az <app>Orka</app> ki fogja mondani, amikor egy ARIA jelölőre "
+"navigál, vagy elhagyja azt. Megjegyzés: ez a beállítás független attól, hogy "
+"a jelölők bejelentése a felolvasás közben megtörténik-e vagy sem. Ha bővebb "
+"információra kíváncsi, olvassa el a <link xref="
+"\"preferences_general#say_all_announce_context\">Szövegkörnyezettel "
+"kapcsolatos információk bejelentése a felolvasás közben</link> című "
+"fejezetet."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:270
+msgid "Announce lists during navigation"
+msgstr "Listák bejelentése navigálás közben"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:271
+msgid ""
+"If <gui>Announce lists during navigation</gui> is checked, <app>Orca</app> "
+"will tell you when you navigate into or out of a list. Note that this "
+"setting is independent of whether or not this announcement is made during "
+"Say All. See <link xref=\"preferences_general#say_all_announce_context"
+"\">Announce Contextual Information in Say All</link> for more information."
+msgstr ""
+"Ha a <gui>Listák bejelentése navigálás közben</gui> jelölőnégyzet be van "
+"jelölve, az <app>Orka</app> ki fogja mondani, amikor egy listára navigál, "
+"vagy elhagyja azt. Megjegyzés: ez a beállítás független attól, hogy a listák "
+"bejelentése a felolvasás közben megtörténik-e vagy sem. Ha bővebb "
+"információra kíváncsi, olvassa el a <link xref="
+"\"preferences_general#say_all_announce_context\">Szövegkörnyezettel "
+"kapcsolatos információk bejelentése a felolvasás közben</link> című "
+"fejezetet."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:284
+msgid "Announce panels during navigation"
+msgstr "Panelek bejelentése navigálás közben"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:285
+msgid ""
+"If <gui>Announce panels during navigation</gui> is checked, <app>Orca</app> "
+"will tell you when you navigate into or out of a panel. Note that this "
+"setting is independent of whether or not this announcement is made during "
+"Say All. See <link xref=\"preferences_general#say_all_announce_context"
+"\">Announce Contextual Information in Say All</link> for more information."
+msgstr ""
+"Ha a <gui>Panelek bejelentése navigálás közben</gui> jelölőnégyzet be van "
+"jelölve, az <app>Orka</app> ki fogja mondani, amikor egy panelre navigál, "
+"vagy elhagyja azt. Megjegyzés: ez a beállítás független attól, hogy ez a "
+"bejelentés megtörténik-e a felolvasás közben vagy sem. Ha bővebb "
+"információra kíváncsi, olvassa el a <link xref="
+"\"preferences_general#say_all_announce_context\">Szövegkörnyezettel "
+"kapcsolatos információk bejelentése a felolvasás közben</link> című "
+"fejezetet."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:298
+msgid "Announce tables during navigation"
+msgstr "Táblázatok bejelentése navigálás közben"
+
+#. (itstool) path: section/p
+#: C/preferences_speech.page:299
+msgid ""
+"If <gui>Announce tables during navigation</gui> is checked, <app>Orca</app> "
+"will tell you when you navigate into or out of a table. Note that this "
+"setting is independent of whether or not this announcement is made during "
+"Say All. See <link xref=\"preferences_general#say_all_announce_context"
+"\">Announce Contextual Information in Say All</link> for more information."
+msgstr ""
+"Ha a <gui>Táblázatok bejelentése navigálás közben</gui> jelölőnégyzet be van "
+"jelölve, az <app>Orka</app> ki fogja mondani, amikor egy táblázatra navigál, "
+"vagy elhagyja azt. Megjegyzés: ez a beállítás független attól, hogy a "
+"táblázatok bejelentése a felolvasás közben megtörténik-e vagy sem. Ha bővebb "
+"információra kíváncsi, olvassa el a <link xref="
+"\"preferences_general#say_all_announce_context\">Szövegkörnyezettel "
+"kapcsolatos információk bejelentése a felolvasás közben</link> című "
+"fejezetet."
+
+#. (itstool) path: section/title
+#: C/preferences_speech.page:312
 msgid "Read full row in GUI tables"
 msgstr "A teljes sor kimondása a grafikus táblázatokban"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:201
+#: C/preferences_speech.page:313
 msgid ""
 "If <gui>Read full row in GUI tables</gui> is checked, as you arrow up and "
 "down in application tables such as the list of messages in your Inbox, "
@@ -7473,12 +7734,12 @@ msgstr ""
 "jelölőnégyzetből."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:212
+#: C/preferences_speech.page:324
 msgid "Read full row in document tables"
 msgstr "A teljes sor kimondása a dokumentum táblázatokban"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:213
+#: C/preferences_speech.page:325
 msgid ""
 "If <gui>Read full row in document tables</gui> is checked, as you arrow up "
 "and down in tables such as those found in <app>Writer</app> and web "
@@ -7493,12 +7754,12 @@ msgstr ""
 "jelölőnégyzetből."
 
 #. (itstool) path: section/title
-#: C/preferences_speech.page:224
+#: C/preferences_speech.page:336
 msgid "Read full row in spreadsheets"
 msgstr "A teljes sor kimondása a táblázatkezelőkben"
 
 #. (itstool) path: section/p
-#: C/preferences_speech.page:225
+#: C/preferences_speech.page:337
 msgid ""
 "If <gui>Read full row in spreadsheets</gui> is checked, as you arrow up and "
 "down in spreadsheets, <app>Orca</app> will speak the entire row. If you "
@@ -7510,26 +7771,6 @@ msgstr ""
 "táblázatban, az <app>Orka</app> a táblázat teljes sorát ki fogja mondani. Ha "
 "inkább csak a fókuszban levő cella tartalmát szeretné hallani, törölje a "
 "jelölést ebből a jelölőnégyzetből."
-
-#. (itstool) path: section/title
-#: C/preferences_speech.page:236
-msgid "Speak misspelled-word indicator"
-msgstr "A hibásan írt szó jelzés felolvasása"
-
-#. (itstool) path: section/p
-#: C/preferences_speech.page:237
-msgid ""
-"The misspelled-word indicator is the red squiggly line that appears "
-"underneath misspelled words in editable text fields. If <gui>Speak "
-"misspelled-word indicator</gui> is checked, when you navigate into a word "
-"with this indicator, or type a word incorrectly causing this indicator to "
-"appear, <app>Orca</app> will speak \"misspelled.\""
-msgstr ""
-"A hibásan írt szó jelölés a cikk-cakkos piros vonal, mely a hibásan írt "
-"szavak alatt jelenik meg a szerkeszthető szövegmezőkben. Ha be van jelölve "
-"<gui>A hibásan írt szó jelzés felolvasása</gui> jelölőnégyzet, amikor egy "
-"hibásan írt szóra navigál vagy elgépel egy szót, és megjelenik ez a jelölés, "
-"az <app>Orka</app> a „Hibásan írt szó” üzenetet fogja kimondani."
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:4
