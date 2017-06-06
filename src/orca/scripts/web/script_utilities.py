@@ -2545,7 +2545,7 @@ class Utilities(script_utilities.Utilities):
             image = obj.queryImage()
             if image.imageDescription:
                 rv = False
-            else:
+            elif not self.hasExplicitName(obj):
                 width, height = image.getImageSize()
                 if width > 25 and height > 25:
                     rv = False
