@@ -3032,6 +3032,8 @@ class Utilities(script_utilities.Utilities):
                         pyatspi.ROLE_MENU_BAR,
                         pyatspi.ROLE_MENU,
                         pyatspi.ROLE_MENU_ITEM,
+                        pyatspi.ROLE_CHECK_BOX,
+                        pyatspi.ROLE_RADIO_BUTTON,
                         pyatspi.ROLE_PUSH_BUTTON,
                         pyatspi.ROLE_TOGGLE_BUTTON,
                         pyatspi.ROLE_TOOL_BAR,
