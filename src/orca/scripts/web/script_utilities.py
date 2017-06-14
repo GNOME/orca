@@ -58,6 +58,7 @@ class Utilities(script_utilities.Utilities):
         self._isTextBlockElement = {}
         self._isContentEditableWithEmbeddedObjects = {}
         self._isGridDescendant = {}
+        self._isLabelDescendant = {}
         self._isMenuDescendant = {}
         self._isToolBarDescendant = {}
         self._isLayoutOnly = {}
@@ -118,6 +119,7 @@ class Utilities(script_utilities.Utilities):
         self._isTextBlockElement = {}
         self._isContentEditableWithEmbeddedObjects = {}
         self._isGridDescendant = {}
+        self._isLabelDescendant = {}
         self._isMenuDescendant = {}
         self._isToolBarDescendant = {}
         self._isLayoutOnly = {}
@@ -2088,6 +2090,19 @@ class Utilities(script_utilities.Utilities):
         self._isGridDescendant[hash(obj)] = rv
         return rv
 
+    def isLabelDescendant(self, obj):
+        if not obj:
+            return False
+
+        rv = self._isLabelDescendant.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        isLabel = lambda x: x and x.getRole() == pyatspi.ROLE_LABEL
+        rv = pyatspi.findAncestor(obj, isLabel) is not None
+        self._isLabelDescendant[hash(obj)] = rv
+        return rv
+
     def isMenuDescendant(self, obj):
         if not obj:
             return False
@@ -2274,6 +2289,20 @@ class Utilities(script_utilities.Utilities):
 
         for acc, start, end, string in contents:
             if hash(acc) in targets:
+                return True
+
+        if not self.isTextBlockElement(obj):
+            return False
+
+        if not self.isLabelDescendant(obj):
+            return False
+
+        for acc, start, end, string in contents:
+            if not self.isLabelDescendant(acc) or self.isTextBlockElement(acc):
+                continue
+
+            ancestor = self.commonAncestor(acc, obj)
+            if ancestor and ancestor.getRole() == pyatspi.ROLE_LABEL:
                 return True
 
         return False
