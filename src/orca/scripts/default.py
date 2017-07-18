@@ -2727,25 +2727,18 @@ class Script(script.Script):
         self.pointOfReference = {}
 
         self.windowActivateTime = time.time()
-        orca.setLocusOfFocus(event, event.source)
-
-        # We keep track of the active window to handle situations where
-        # we get window activated and window deactivated events out of
-        # order (see onWindowDeactivated).
-        #
-        # For example, events can be:
-        #
-        #    window:activate   (w1)
-        #    window:activate   (w2)
-        #    window:deactivate (w1)
-        #
-        # as well as:
-        #
-        #    window:activate   (w1)
-        #    window:deactivate (w1)
-        #    window:activate   (w2)
-        #
         orca_state.activeWindow = event.source
+
+        try:
+            childCount = event.source.childCount
+            childRole = event.source[0].getRole()
+        except:
+            pass
+        else:
+            if childCount == 1 and childRole == pyatspi.ROLE_MENU:
+                orca.setLocusOfFocus(event, event.source[0])
+            else:
+                orca.setLocusOfFocus(event, event.source)
 
     def onWindowCreated(self, event):
         """Callback for window:create accessibility events."""
