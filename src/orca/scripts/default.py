@@ -2737,8 +2737,9 @@ class Script(script.Script):
         else:
             if childCount == 1 and childRole == pyatspi.ROLE_MENU:
                 orca.setLocusOfFocus(event, event.source[0])
-            else:
-                orca.setLocusOfFocus(event, event.source)
+                return
+
+        orca.setLocusOfFocus(event, event.source)
 
     def onWindowCreated(self, event):
         """Callback for window:create accessibility events."""
