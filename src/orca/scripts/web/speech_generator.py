@@ -431,9 +431,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if obj.getRole() in menuRoles:
             return super()._generatePositionInList(obj, **args)
 
-        if self._script.utilities.isTextBlockElement(obj):
-            return []
-
         if self._script.utilities.isEditableComboBox(obj):
             return []
 
