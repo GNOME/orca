@@ -132,6 +132,10 @@ formatting = {
         pyatspi.ROLE_ANIMATION: {
             'unfocused': 'labelAndName'
             },
+        pyatspi.ROLE_ARTICLE: {
+            'focused': 'labelOrName + roleName',
+            'unfocused': 'labelOrName + roleName + pause + currentLineText + allTextSelection',
+            },
         pyatspi.ROLE_BLOCK_QUOTE: {
             'focused' : 'leaving or (roleName + pause + nestingLevel)',
             'unfocused': 'roleName + pause + nestingLevel + pause + displayedText',
@@ -510,6 +514,11 @@ formatting = {
         pyatspi.ROLE_ANIMATION: {
             'unfocused': '[Component(obj,\
                                      asString(label + displayedText + roleName + (description and space(": ") + description)))]',
+            },
+        pyatspi.ROLE_ARTICLE: {
+            'unfocused': '((substring and ' + BRAILLE_TEXT + ')\
+                          or ([Component(obj, asString(labelAndName + roleName))]\
+                             + (childWidget and ([Region(" ")] + childWidget))))'
             },
         #pyatspi.ROLE_ARROW: 'default'
         pyatspi.ROLE_CANVAS: {

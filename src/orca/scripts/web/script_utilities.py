@@ -1590,7 +1590,8 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def _textBlockElementRoles(self):
-        roles = [pyatspi.ROLE_CAPTION,
+        roles = [pyatspi.ROLE_ARTICLE,
+                 pyatspi.ROLE_CAPTION,
                  pyatspi.ROLE_COLUMN_HEADER,
                  pyatspi.ROLE_DOCUMENT_FRAME,
                  pyatspi.ROLE_DOCUMENT_WEB,

@@ -603,6 +603,7 @@ class StructuralNavigation:
                     pyatspi.ROLE_TABLE_CELL,
                     pyatspi.ROLE_TEXT,
                     pyatspi.ROLE_SECTION,
+                    pyatspi.ROLE_ARTICLE,
                     pyatspi.ROLE_DOCUMENT_EMAIL,
                     pyatspi.ROLE_DOCUMENT_FRAME,
                     pyatspi.ROLE_DOCUMENT_PRESENTATION,
@@ -1654,15 +1655,24 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        if obj and obj.getRole() in self.OBJECT_ROLES:
-            text = self._script.utilities.queryNonEmptyText(obj)
-            if not (text and text.characterCount > settings.largeObjectTextLength):
-                return False
+        if not obj:
+            return False
 
-            string = text.getText(0, -1)
-            eocs = string.count(self._script.EMBEDDED_OBJECT_CHARACTER)
-            if eocs/text.characterCount < 0.05:
-                return True
+        role = obj.getRole()
+        if role not in self.OBJECT_ROLES:
+            return False
+
+        if role == pyatspi.ROLE_ARTICLE:
+            return True
+
+        text = self._script.utilities.queryNonEmptyText(obj)
+        if not (text and text.characterCount > settings.largeObjectTextLength):
+            return False
+
+        string = text.getText(0, -1)
+        eocs = string.count(self._script.EMBEDDED_OBJECT_CHARACTER)
+        if eocs/text.characterCount < 0.05:
+            return True
 
         return False
 
