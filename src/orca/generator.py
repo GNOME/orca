@@ -1241,6 +1241,12 @@ class Generator:
                 if isVertical:
                     return object_properties.ROLE_SPLITTER_HORIZONTAL
 
+        if self._script.utilities.isFeed(obj):
+            return object_properties.ROLE_FEED
+
+        if self._script.utilities.isFigure(obj):
+            return object_properties.ROLE_FIGURE
+
         if self._script.utilities.isMenuButton(obj):
             return object_properties.ROLE_MENU_BUTTON
 

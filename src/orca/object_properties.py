@@ -74,6 +74,20 @@ ROLE_EDITABLE_COMBO_BOX = _("editable combo box")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# The feed role is a scrollable list of articles where scrolling may cause
+# articles to be added to or removed from either end of the list.
+# http://rawgit.com/w3c/aria/master/aria/aria.html#feed
+ROLE_FEED = C_("role", "feed")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# The figure role is a perceivable section of content that typically contains a
+# graphical document, images, code snippets, or example text.
+# http://rawgit.com/w3c/aria/master/aria/aria.html#figure
+ROLE_FIGURE = C_("role", "figure")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # This role refers to the abstract in a digitally-published document.
 # https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-abstract
 ROLE_ABSTRACT = C_("role", "abstract")

@@ -1053,6 +1053,18 @@ LEARN_MODE_START_SPEECH = \
 # blockquote and then navigates out of it.
 LEAVING_BLOCKQUOTE = _("leaving blockquote.")
 
+# Translators: This message is presented when a user is navigating within
+# an object and then navigates out of it. The word or phrase that follows
+# "leaving" should be consistent with the translation provided for the
+# corresponding term with context "role" found in object_properties.py
+LEAVING_FEED = C_("role", "leaving feed.")
+
+# Translators: This message is presented when a user is navigating within
+# an object and then navigates out of it. The word or phrase that follows
+# "leaving" should be consistent with the translation provided for the
+# corresponding term with context "role" found in object_properties.py
+LEAVING_FIGURE = C_("role", "leaving figure.")
+
 # Translators: This message is presented when a user is navigating within a
 # form and then navigates out of it.
 LEAVING_FORM = _("leaving form.")

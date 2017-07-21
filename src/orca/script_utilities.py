@@ -764,6 +764,12 @@ class Utilities:
     def isDPubToc(self, obj):
         return False
 
+    def isFeed(self, obj):
+        return False
+
+    def isFigure(self, obj):
+        return False
+
     def isLandmark(self, obj):
         return False
 

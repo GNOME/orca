@@ -2155,6 +2155,10 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif self.isDPub(obj):
             rv = False
+        elif self.isFeed(obj):
+            rv = False
+        elif self.isFigure(obj):
+            rv = False
         else:
             rv = super().isLayoutOnly(obj)
 
@@ -2539,6 +2543,12 @@ class Utilities(script_utilities.Utilities):
 
     def isDPubToc(self, obj):
         return 'doc-toc' in self._getXMLRoles(obj)
+
+    def isFeed(self, obj):
+        return 'feed' in self._getXMLRoles(obj)
+
+    def isFigure(self, obj):
+        return 'figure' in self._getXMLRoles(obj)
 
     def isLandmark(self, obj):
         if not (obj and self.inDocumentContent(obj)):

@@ -1548,8 +1548,13 @@ class SpeechGenerator(generator.Generator):
                 result.append(messages.leavingNLists(count))
             else:
                 result.append(messages.LEAVING_LIST)
-        elif role == pyatspi.ROLE_PANEL and self._script.utilities.isDocumentPanel(obj):
-            result.append(messages.LEAVING_PANEL)
+        elif role == pyatspi.ROLE_PANEL:
+            if self._script.utilities.isFeed(obj):
+                result.append(messages.LEAVING_FEED)
+            elif self._script.utilities.isFigure(obj):
+                result.append(messages.LEAVING_FIGURE)
+            elif self._script.utilities.isDocumentPanel(obj):
+                result.append(messages.LEAVING_PANEL)
         elif role == pyatspi.ROLE_TABLE and self._script.utilities.isTextDocumentTable(obj):
             result.append(messages.LEAVING_TABLE)
         elif role == 'ROLE_DPUB_LANDMARK':
