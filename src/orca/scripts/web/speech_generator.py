@@ -147,7 +147,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return []
 
     def _generateLabelOrName(self, obj, **args):
-        if self._script.utilities.isTextBlockElement(obj):
+        if self._script.utilities.isTextBlockElement(obj) \
+           and not self._script.utilities.isLandmark(obj) \
+           and not self._script.utilities.isDPub(obj):
             return []
 
         if self._script.utilities.inDocumentContent(obj) and obj.name:
@@ -159,7 +161,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateName(self, obj, **args):
         if self._script.utilities.isTextBlockElement(obj) \
-           and not self._script.utilities.isLandmark(obj):
+           and not self._script.utilities.isLandmark(obj) \
+           and not self._script.utilities.isDPub(obj):
             return []
 
         # TODO - JD: Once the formatting strings are vastly cleaned up

@@ -1489,6 +1489,8 @@ class SpeechGenerator(generator.Generator):
         allRoles = [pyatspi.ROLE_BLOCK_QUOTE,
                     pyatspi.ROLE_FORM,
                     pyatspi.ROLE_LANDMARK,
+                    'ROLE_DPUB_LANDMARK',
+                    'ROLE_DPUB_SECTION',
                     pyatspi.ROLE_LIST,
                     pyatspi.ROLE_PANEL,
                     pyatspi.ROLE_TABLE]
@@ -1498,11 +1500,11 @@ class SpeechGenerator(generator.Generator):
             if _settingsManager.getSetting('sayAllContextBlockquote'):
                 enabled.append(pyatspi.ROLE_BLOCK_QUOTE)
             if _settingsManager.getSetting('sayAllContextLandmark'):
-                enabled.append(pyatspi.ROLE_LANDMARK)
+                enabled.extend([pyatspi.ROLE_LANDMARK, 'ROLE_DPUB_LANDMARK'])
             if _settingsManager.getSetting('sayAllContextList'):
                 enabled.append(pyatspi.ROLE_LIST)
             if _settingsManager.getSetting('sayAllContextPanel'):
-                enabled.append(pyatspi.ROLE_PANEL)
+                enabled.extend([pyatspi.ROLE_PANEL, 'ROLE_DPUB_SECTION'])
             if _settingsManager.getSetting('sayAllContextNonLandmarkForm'):
                 enabled.append(pyatspi.ROLE_FORM)
             if _settingsManager.getSetting('sayAllContextTable'):
@@ -1511,11 +1513,11 @@ class SpeechGenerator(generator.Generator):
             if _settingsManager.getSetting('speakContextBlockquote'):
                 enabled.append(pyatspi.ROLE_BLOCK_QUOTE)
             if _settingsManager.getSetting('speakContextLandmark'):
-                enabled.append(pyatspi.ROLE_LANDMARK)
+                enabled.extend([pyatspi.ROLE_LANDMARK, 'ROLE_DPUB_LANDMARK'])
             if _settingsManager.getSetting('speakContextList'):
                 enabled.append(pyatspi.ROLE_LIST)
             if _settingsManager.getSetting('speakContextPanel'):
-                enabled.append(pyatspi.ROLE_PANEL)
+                enabled.extend([pyatspi.ROLE_PANEL, 'ROLE_DPUB_SECTION'])
             if _settingsManager.getSetting('speakContextNonLandmarkForm'):
                 enabled.append(pyatspi.ROLE_FORM)
             if _settingsManager.getSetting('speakContextTable'):
@@ -1550,22 +1552,78 @@ class SpeechGenerator(generator.Generator):
             result.append(messages.LEAVING_PANEL)
         elif role == pyatspi.ROLE_TABLE and self._script.utilities.isTextDocumentTable(obj):
             result.append(messages.LEAVING_TABLE)
+        elif role == 'ROLE_DPUB_LANDMARK':
+            if self._script.utilities.isDPubAcknowledgments(obj):
+                result.append(messages.LEAVING_ACKNOWLEDGMENTS)
+            elif self._script.utilities.isDPubAfterword(obj):
+                result.append(messages.LEAVING_AFTERWORD)
+            elif self._script.utilities.isDPubAppendix(obj):
+                result.append(messages.LEAVING_APPENDIX)
+            elif self._script.utilities.isDPubBibliography(obj):
+                result.append(messages.LEAVING_BIBLIOGRAPHY)
+            elif self._script.utilities.isDPubChapter(obj):
+                result.append(messages.LEAVING_CHAPTER)
+            elif self._script.utilities.isDPubConclusion(obj):
+                result.append(messages.LEAVING_CONCLUSION)
+            elif self._script.utilities.isDPubCredits(obj):
+                result.append(messages.LEAVING_CREDITS)
+            elif self._script.utilities.isDPubEndnotes(obj):
+                result.append(messages.LEAVING_ENDNOTES)
+            elif self._script.utilities.isDPubEpilogue(obj):
+                result.append(messages.LEAVING_EPILOGUE)
+            elif self._script.utilities.isDPubErrata(obj):
+                result.append(messages.LEAVING_ERRATA)
+            elif self._script.utilities.isDPubForeword(obj):
+                result.append(messages.LEAVING_FOREWORD)
+            elif self._script.utilities.isDPubGlossary(obj):
+                result.append(messages.LEAVING_GLOSSARY)
+            elif self._script.utilities.isDPubIndex(obj):
+                result.append(messages.LEAVING_INDEX)
+            elif self._script.utilities.isDPubIntroduction(obj):
+                result.append(messages.LEAVING_INTRODUCTION)
+            elif self._script.utilities.isDPubPagelist(obj):
+                result.append(messages.LEAVING_PAGELIST)
+            elif self._script.utilities.isDPubPart(obj):
+                result.append(messages.LEAVING_PART)
+            elif self._script.utilities.isDPubPreface(obj):
+                result.append(messages.LEAVING_PREFACE)
+            elif self._script.utilities.isDPubPrologue(obj):
+                result.append(messages.LEAVING_PROLOGUE)
+            elif self._script.utilities.isDPubToc(obj):
+                result.append(messages.LEAVING_TOC)
+        elif role == 'ROLE_DPUB_SECTION':
+            if self._script.utilities.isDPubAbstract(obj):
+                result.append(messages.LEAVING_ABSTRACT)
+            elif self._script.utilities.isDPubColophon(obj):
+                result.append(messages.LEAVING_COLOPHON)
+            elif self._script.utilities.isDPubCredit(obj):
+                result.append(messages.LEAVING_CREDIT)
+            elif self._script.utilities.isDPubDedication(obj):
+                result.append(messages.LEAVING_DEDICATION)
+            elif self._script.utilities.isDPubEpigraph(obj):
+                result.append(messages.LEAVING_EPIGRAPH)
+            elif self._script.utilities.isDPubExample(obj):
+                result.append(messages.LEAVING_EXAMPLE)
+            elif self._script.utilities.isDPubPullquote(obj):
+                result.append(messages.LEAVING_PULLQUOTE)
+            elif self._script.utilities.isDPubQna(obj):
+                result.append(messages.LEAVING_QNA)
         elif self._script.utilities.isLandmark(obj):
             if self._script.utilities.isLandmarkBanner(obj):
                 result.append(messages.LEAVING_LANDMARK_BANNER)
-            if self._script.utilities.isLandmarkComplementary(obj):
+            elif self._script.utilities.isLandmarkComplementary(obj):
                 result.append(messages.LEAVING_LANDMARK_COMPLEMENTARY)
-            if self._script.utilities.isLandmarkContentInfo(obj):
+            elif self._script.utilities.isLandmarkContentInfo(obj):
                 result.append(messages.LEAVING_LANDMARK_CONTENTINFO)
-            if self._script.utilities.isLandmarkMain(obj):
+            elif self._script.utilities.isLandmarkMain(obj):
                 result.append(messages.LEAVING_LANDMARK_MAIN)
-            if self._script.utilities.isLandmarkNavigation(obj):
+            elif self._script.utilities.isLandmarkNavigation(obj):
                 result.append(messages.LEAVING_LANDMARK_NAVIGATION)
-            if self._script.utilities.isLandmarkRegion(obj):
+            elif self._script.utilities.isLandmarkRegion(obj):
                 result.append(messages.LEAVING_LANDMARK_REGION)
-            if self._script.utilities.isLandmarkSearch(obj):
+            elif self._script.utilities.isLandmarkSearch(obj):
                 result.append(messages.LEAVING_LANDMARK_SEARCH)
-            if self._script.utilities.isLandmarkForm(obj):
+            elif self._script.utilities.isLandmarkForm(obj):
                 result.append(messages.LEAVING_FORM)
         elif role == pyatspi.ROLE_FORM:
             result.append(messages.LEAVING_FORM)
@@ -1692,6 +1750,8 @@ class SpeechGenerator(generator.Generator):
         args['includeOnly'] = [pyatspi.ROLE_BLOCK_QUOTE,
                                pyatspi.ROLE_FORM,
                                pyatspi.ROLE_LANDMARK,
+                               'ROLE_DPUB_LANDMARK',
+                               'ROLE_DPUB_SECTION',
                                pyatspi.ROLE_LIST,
                                pyatspi.ROLE_PANEL,
                                pyatspi.ROLE_TABLE]

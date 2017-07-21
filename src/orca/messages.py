@@ -1112,6 +1112,168 @@ LEAVING_PANEL = _("leaving panel.")
 # table and then navigates out of it.
 LEAVING_TABLE = _("leaving table.")
 
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_ABSTRACT = C_("role", "leaving abstract.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_ACKNOWLEDGMENTS = C_("role", "leaving acknowledgments.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_AFTERWORD = C_("role", "leaving afterword.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_APPENDIX = C_("role", "leaving appendix.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_BIBLIOGRAPHY = C_("role", "leaving bibliography.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_CHAPTER = C_("role", "leaving chapter.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_COLOPHON = C_("role", "leaving colophon.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_CONCLUSION = C_("role", "leaving conclusion.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_CREDIT = C_("role", "leaving credit.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_CREDITS = C_("role", "leaving credits.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_DEDICATION = C_("role", "leaving dedication.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_ENDNOTES = C_("role", "leaving endnotes.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_EPIGRAPH = C_("role", "leaving epigraph.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_EPILOGUE = C_("role", "leaving epilogue.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_ERRATA = C_("role", "leaving errata.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_EXAMPLE = C_("role", "leaving example.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_FOREWORD = C_("role", "leaving foreword.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_GLOSSARY = C_("role", "leaving glossary.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_INDEX = C_("role", "leaving index.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_INTRODUCTION = C_("role", "leaving introduction.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_PAGELIST = C_("role", "leaving page list.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_PART = C_("role", "leaving part.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_PREFACE = C_("role", "leaving preface.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_PROLOGUE = C_("role", "leaving prologue.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_PULLQUOTE = C_("role", "leaving pullquote.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_QNA = C_("role", "leaving QNA.")
+
+# Translators: This message is presented when a user is navigating within
+# a type of landmark and then navigates out of it. The word or phrase that
+# follows "leaving" should be consistent with the translation provided for
+# the corresponding term with context "role" found in object_properties.py
+LEAVING_TOC = C_("role", "leaving table of contents.")
+
 # Translators: when the user selects (highlights) or unselects text in a
 # document, Orca will speak information about what they have selected or
 # unselected. This message is presented when the user selects from the

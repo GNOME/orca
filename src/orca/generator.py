@@ -1189,6 +1189,13 @@ class Generator:
                 return 'ROLE_MATH_TABLE'
             if self._script.utilities.isMathTableRow(obj):
                 return 'ROLE_MATH_TABLE_ROW'
+        if self._script.utilities.isDPub(obj):
+            if self._script.utilities.isDPubFootnote(obj):
+                return 'ROLE_FOOTNOTE'
+            if self._script.utilities.isLandmark(obj):
+                return 'ROLE_DPUB_LANDMARK'
+            if obj.getRole() == pyatspi.ROLE_SECTION:
+                return 'ROLE_DPUB_SECTION'
         if self._script.utilities.isSwitch(obj):
             return 'ROLE_SWITCH'
         if self._script.utilities.isAnchor(obj):
@@ -1239,6 +1246,78 @@ class Generator:
 
         if self._script.utilities.isSwitch(obj):
             return object_properties.ROLE_SWITCH
+
+        if self._script.utilities.isDPub(obj):
+            if self._script.utilities.isLandmark(obj):
+                if self._script.utilities.isDPubAcknowledgments(obj):
+                    return object_properties.ROLE_ACKNOWLEDGMENTS
+                if self._script.utilities.isDPubAfterword(obj):
+                    return object_properties.ROLE_AFTERWORD
+                if self._script.utilities.isDPubAppendix(obj):
+                    return object_properties.ROLE_APPENDIX
+                if self._script.utilities.isDPubBibliography(obj):
+                    return object_properties.ROLE_BIBLIOGRAPHY
+                if self._script.utilities.isDPubChapter(obj):
+                    return object_properties.ROLE_CHAPTER
+                if self._script.utilities.isDPubConclusion(obj):
+                    return object_properties.ROLE_CONCLUSION
+                if self._script.utilities.isDPubCredits(obj):
+                    return object_properties.ROLE_CREDITS
+                if self._script.utilities.isDPubEndnotes(obj):
+                    return object_properties.ROLE_ENDNOTES
+                if self._script.utilities.isDPubEpilogue(obj):
+                    return object_properties.ROLE_EPILOGUE
+                if self._script.utilities.isDPubErrata(obj):
+                    return object_properties.ROLE_ERRATA
+                if self._script.utilities.isDPubForeword(obj):
+                    return object_properties.ROLE_FOREWORD
+                if self._script.utilities.isDPubGlossary(obj):
+                    return object_properties.ROLE_GLOSSARY
+                if self._script.utilities.isDPubIndex(obj):
+                    return object_properties.ROLE_INDEX
+                if self._script.utilities.isDPubIntroduction(obj):
+                    return object_properties.ROLE_INTRODUCTION
+                if self._script.utilities.isDPubPagelist(obj):
+                    return object_properties.ROLE_PAGELIST
+                if self._script.utilities.isDPubPart(obj):
+                    return object_properties.ROLE_PART
+                if self._script.utilities.isDPubPreface(obj):
+                    return object_properties.ROLE_PREFACE
+                if self._script.utilities.isDPubPrologue(obj):
+                    return object_properties.ROLE_PROLOGUE
+                if self._script.utilities.isDPubToc(obj):
+                    return object_properties.ROLE_TOC
+            elif role == "ROLE_DPUB_SECTION":
+                if self._script.utilities.isDPubAbstract(obj):
+                    return object_properties.ROLE_ABSTRACT
+                if self._script.utilities.isDPubColophon(obj):
+                    return object_properties.ROLE_COLOPHON
+                if self._script.utilities.isDPubCredit(obj):
+                    return object_properties.ROLE_CREDIT
+                if self._script.utilities.isDPubDedication(obj):
+                    return object_properties.ROLE_DEDICATION
+                if self._script.utilities.isDPubEpigraph(obj):
+                    return object_properties.ROLE_EPIGRAPH
+                if self._script.utilities.isDPubExample(obj):
+                    return object_properties.ROLE_EXAMPLE
+                if self._script.utilities.isDPubPullquote(obj):
+                    return object_properties.ROLE_PULLQUOTE
+                if self._script.utilities.isDPubQna(obj):
+                    return object_properties.ROLE_QNA
+            elif role == pyatspi.ROLE_LIST_ITEM:
+                if self._script.utilities.isDPubBiblioentry(obj):
+                    return object_properties.ROLE_BIBLIOENTRY
+                if self._script.utilities.isDPubEndnote(obj):
+                    return object_properties.ROLE_ENDNOTE
+            else:
+                if self._script.utilities.isDPubCover(obj):
+                    return object_properties.ROLE_COVER
+                if self._script.utilities.isDPubFootnote(obj):
+                    return object_properties.ROLE_FOOTNOTE
+                if self._script.utilities.isDPubPagebreak(obj):
+                    return object_properties.ROLE_PAGEBREAK
+                if self._script.utilities.isDPubSubtitle(obj):
+                    return object_properties.ROLE_SUBTITLE
 
         if self._script.utilities.isLandmark(obj):
             if self._script.utilities.isLandmarkBanner(obj):

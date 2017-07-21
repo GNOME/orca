@@ -62,6 +62,7 @@ class Utilities(script_utilities.Utilities):
         self._isMenuDescendant = {}
         self._isToolBarDescendant = {}
         self._isLayoutOnly = {}
+        self._isDPub = {}
         self._isMath = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
@@ -123,6 +124,7 @@ class Utilities(script_utilities.Utilities):
         self._isMenuDescendant = {}
         self._isToolBarDescendant = {}
         self._isLayoutOnly = {}
+        self._isDPub = {}
         self._isMath = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
@@ -2151,6 +2153,8 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif self.isLandmark(obj):
             rv = False
+        elif self.isDPub(obj):
+            rv = False
         else:
             rv = super().isLayoutOnly(obj)
 
@@ -2414,6 +2418,127 @@ class Utilities(script_utilities.Utilities):
 
         self._isEditableComboBox[hash(obj)] = rv
         return rv
+
+    def isDPub(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isDPub.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        roles = self._getXMLRoles(obj)
+        rv = bool(list(filter(lambda x: x.startswith("doc-"), roles)))
+        self._isDPub[hash(obj)] = rv
+        return rv
+
+    def isDPubAbstract(self, obj):
+        return 'doc-abstract' in self._getXMLRoles(obj)
+
+    def isDPubAcknowledgments(self, obj):
+        return 'doc-acknowledgments' in self._getXMLRoles(obj)
+
+    def isDPubAfterword(self, obj):
+        return 'doc-afterword' in self._getXMLRoles(obj)
+
+    def isDPubAppendix(self, obj):
+        return 'doc-appendix' in self._getXMLRoles(obj)
+
+    def isDPubBacklink(self, obj):
+        return 'doc-backlink' in self._getXMLRoles(obj)
+
+    def isDPubBiblioref(self, obj):
+        return 'doc-biblioref' in self._getXMLRoles(obj)
+
+    def isDPubBibliography(self, obj):
+        return 'doc-bibliography' in self._getXMLRoles(obj)
+
+    def isDPubChapter(self, obj):
+        return 'doc-chapter' in self._getXMLRoles(obj)
+
+    def isDPubColophon(self, obj):
+        return 'doc-colophon' in self._getXMLRoles(obj)
+
+    def isDPubConclusion(self, obj):
+        return 'doc-conclusion' in self._getXMLRoles(obj)
+
+    def isDPubCover(self, obj):
+        return 'doc-cover' in self._getXMLRoles(obj)
+
+    def isDPubCredit(self, obj):
+        return 'doc-credit' in self._getXMLRoles(obj)
+
+    def isDPubCredits(self, obj):
+        return 'doc-credits' in self._getXMLRoles(obj)
+
+    def isDPubDedication(self, obj):
+        return 'doc-dedication' in self._getXMLRoles(obj)
+
+    def isDPubEndnote(self, obj):
+        return 'doc-endnote' in self._getXMLRoles(obj)
+
+    def isDPubEndnotes(self, obj):
+        return 'doc-endnotes' in self._getXMLRoles(obj)
+
+    def isDPubEpigraph(self, obj):
+        return 'doc-epigraph' in self._getXMLRoles(obj)
+
+    def isDPubEpilogue(self, obj):
+        return 'doc-epilogue' in self._getXMLRoles(obj)
+
+    def isDPubErrata(self, obj):
+        return 'doc-errata' in self._getXMLRoles(obj)
+
+    def isDPubExample(self, obj):
+        return 'doc-example' in self._getXMLRoles(obj)
+
+    def isDPubFootnote(self, obj):
+        return 'doc-footnote' in self._getXMLRoles(obj)
+
+    def isDPubForeword(self, obj):
+        return 'doc-foreword' in self._getXMLRoles(obj)
+
+    def isDPubGlossary(self, obj):
+        return 'doc-glossary' in self._getXMLRoles(obj)
+
+    def isDPubGlossref(self, obj):
+        return 'doc-glossref' in self._getXMLRoles(obj)
+
+    def isDPubIndex(self, obj):
+        return 'doc-index' in self._getXMLRoles(obj)
+
+    def isDPubIntroduction(self, obj):
+        return 'doc-introduction' in self._getXMLRoles(obj)
+
+    def isDPubNoteref(self, obj):
+        return 'doc-noteref' in self._getXMLRoles(obj)
+
+    def isDPubPagelist(self, obj):
+        return 'doc-pagelist' in self._getXMLRoles(obj)
+
+    def isDPubPagebreak(self, obj):
+        return 'doc-pagebreak' in self._getXMLRoles(obj)
+
+    def isDPubPart(self, obj):
+        return 'doc-part' in self._getXMLRoles(obj)
+
+    def isDPubPreface(self, obj):
+        return 'doc-preface' in self._getXMLRoles(obj)
+
+    def isDPubPrologue(self, obj):
+        return 'doc-prologue' in self._getXMLRoles(obj)
+
+    def isDPubPullquote(self, obj):
+        return 'doc-pullquote' in self._getXMLRoles(obj)
+
+    def isDPubQna(self, obj):
+        return 'doc-qna' in self._getXMLRoles(obj)
+
+    def isDPubSubtitle(self, obj):
+        return 'doc-subtitle' in self._getXMLRoles(obj)
+
+    def isDPubToc(self, obj):
+        return 'doc-toc' in self._getXMLRoles(obj)
 
     def isLandmark(self, obj):
         if not (obj and self.inDocumentContent(obj)):

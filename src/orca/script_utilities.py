@@ -656,6 +656,114 @@ class Utilities:
     def isHidden(self, obj):
         return False
 
+    def isDPub(self, obj):
+        return False
+
+    def isDPubAbstract(self, obj):
+        return False
+
+    def isDPubAcknowledgments(self, obj):
+        return False
+
+    def isDPubAfterword(self, obj):
+        return False
+
+    def isDPubAppendix(self, obj):
+        return False
+
+    def isDPubBibliography(self, obj):
+        return False
+
+    def isDPubBacklink(self, obj):
+        return False
+
+    def isDPubBiblioref(self, obj):
+        return False
+
+    def isDPubChapter(self, obj):
+        return False
+
+    def isDPubColophon(self, obj):
+        return False
+
+    def isDPubConclusion(self, obj):
+        return False
+
+    def isDPubCover(self, obj):
+        return False
+
+    def isDPubCredit(self, obj):
+        return False
+
+    def isDPubCredits(self, obj):
+        return False
+
+    def isDPubDedication(self, obj):
+        return False
+
+    def isDPubEndnote(self, obj):
+        return False
+
+    def isDPubEndnotes(self, obj):
+        return False
+
+    def isDPubEpigraph(self, obj):
+        return False
+
+    def isDPubEpilogue(self, obj):
+        return False
+
+    def isDPubErrata(self, obj):
+        return False
+
+    def isDPubExample(self, obj):
+        return False
+
+    def isDPubFootnote(self, obj):
+        return False
+
+    def isDPubForeword(self, obj):
+        return False
+
+    def isDPubGlossary(self, obj):
+        return False
+
+    def isDPubGlossref(self, obj):
+        return False
+
+    def isDPubIndex(self, obj):
+        return False
+
+    def isDPubIntroduction(self, obj):
+        return False
+
+    def isDPubPagelist(self, obj):
+        return False
+
+    def isDPubPagebreak(self, obj):
+        return False
+
+    def isDPubPart(self, obj):
+        return False
+
+    def isDPubPreface(self, obj):
+        return False
+
+    def isDPubPrologue(self, obj):
+        return False
+
+    def isDPubPullquote(self, obj):
+        return False
+
+    def isDPubQna(self, obj):
+        return False
+
+    def isDPubSubtitle(self, obj):
+        return False
+
+    def isDPubToc(self, obj):
+        return False
+
     def isLandmark(self, obj):
         return False
 
@@ -675,6 +783,9 @@ class Utilities:
         return False
 
     def isLandmarkNavigation(self, obj):
+        return False
+
+    def isDPubNoteref(self, obj):
         return False
 
     def isLandmarkRegion(self, obj):
@@ -786,6 +897,25 @@ class Utilities:
         return ["banner",
                 "complementary",
                 "contentinfo",
+                "doc-acknowledgments",
+                "doc-afterword",
+                "doc-appendix",
+                "doc-bibliography",
+                "doc-chapter",
+                "doc-conclusion",
+                "doc-credits",
+                "doc-endnotes",
+                "doc-epilogue",
+                "doc-errata",
+                "doc-foreword",
+                "doc-glossary",
+                "doc-index",
+                "doc-introduction",
+                "doc-pagelist",
+                "doc-part",
+                "doc-preface",
+                "doc-prologue",
+                "doc-toc",
                 "form",
                 "main",
                 "navigation",

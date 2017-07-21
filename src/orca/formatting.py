@@ -172,6 +172,10 @@ formatting = {
             'unfocused': 'labelAndName + roleName + pause + (currentLineText + anyTextSelection or positionInList) + ' + MNEMONIC + ' + accelerator',
             'basicWhereAmI': 'label + roleName + pause + name + (currentLineText + anyTextSelection or positionInList) + ' + MNEMONIC + ' + accelerator'
             },
+        pyatspi.ROLE_COMMENT: {
+            'focused': 'labelOrName + roleName',
+            'unfocused': 'labelOrName + roleName + pause + currentLineText + allTextSelection',
+            },
         pyatspi.ROLE_DIAL: {
             'focused': 'value',
             'unfocused': 'labelOrName + roleName + value + required + availability + ' + MNEMONIC,
@@ -186,6 +190,14 @@ formatting = {
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
             'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
             },
+        'ROLE_DPUB_LANDMARK': {
+            'focused': 'leaving or labelOrName',
+            'unfocused': 'labelOrName + currentLineText + allTextSelection'
+            },
+        'ROLE_DPUB_SECTION': {
+            'focused': 'leaving or (labelOrName + roleName)',
+            'unfocused': 'labelOrName + currentLineText + allTextSelection'
+            },
         pyatspi.ROLE_EMBEDDED: {
             'focused': 'labelOrName + roleName',
             'unfocused': '(expandedEOCs or (labelOrName + unrelatedLabels)) + roleName'
@@ -195,6 +207,9 @@ formatting = {
             'unfocused': 'labelOrName + readOnly + textRole + (currentLineText or placeholderText) + allTextSelection + required + pause + invalid + ' + MNEMONIC,
             'basicWhereAmI': 'labelOrName + readOnly + textRole + (textContent or placeholderText) + anyTextSelection + required + pause + invalid + ' + MNEMONIC,
             'detailedWhereAmI': 'labelOrName + readOnly + textRole + (textContentWithAttributes or placeholderText) + anyTextSelection + required + pause + invalid + ' + MNEMONIC,
+            },
+        'ROLE_FOOTNOTE': {
+            'unfocused': 'labelOrName + roleName + pause + currentLineText + allTextSelection',
             },
         pyatspi.ROLE_FOOTER: {
             'unfocused': '(displayedText or name) + roleName',
