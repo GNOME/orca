@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2017-07-21 10:44+0000\n"
-"PO-Revision-Date: 2017-07-24 12:53+0200\n"
+"POT-Creation-Date: 2017-07-24 12:54+0000\n"
+"PO-Revision-Date: 2017-07-24 16:01+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -9128,7 +9128,6 @@ msgstr "saliendo de la cita."
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1060
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving feed."
 msgstr "saliendo del proveedor."
@@ -9138,7 +9137,6 @@ msgstr "saliendo del proveedor."
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1066
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving figure."
 msgstr "saliendo de la figura."
@@ -9232,286 +9230,246 @@ msgid "leaving table."
 msgstr "saliendo de la tabla."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1131
-#| msgctxt "role"
-#| msgid "leaving search."
 msgctxt "role"
 msgid "leaving abstract."
 msgstr "saliendo del resumen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1137
-#| msgctxt "role"
-#| msgid "leaving main content."
 msgctxt "role"
 msgid "leaving acknowledgments."
 msgstr "saliendo de los agradecimientos."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1143
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving afterword."
 msgstr "saliendo del posfijo."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1149
-#| msgid "leaving panel."
 msgctxt "role"
 msgid "leaving appendix."
 msgstr "saliendo del apéndice."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1155
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving bibliography."
 msgstr "saliendo de la bibliografía."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1161
-#| msgctxt "role"
-#| msgid "leaving banner."
 msgctxt "role"
 msgid "leaving chapter."
 msgstr "saliendo del capítulo."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1167
-#| msgid "leaving panel."
 msgctxt "role"
 msgid "leaving colophon."
 msgstr "saliendo del colofón."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1173
-#| msgctxt "role"
-#| msgid "leaving region."
 msgctxt "role"
 msgid "leaving conclusion."
 msgstr "saliendo de la conclusión."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1179
-#| msgctxt "role"
-#| msgid "leaving region."
 msgctxt "role"
 msgid "leaving credit."
 msgstr "saliendo del reconocimiento."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1185
-#| msgctxt "role"
-#| msgid "leaving region."
 msgctxt "role"
 msgid "leaving credits."
 msgstr "saliendo de los créditos."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1191
-#| msgctxt "role"
-#| msgid "leaving navigation."
 msgctxt "role"
 msgid "leaving dedication."
 msgstr "saliendo de la dedicatoria."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1197
-#| msgctxt "role"
-#| msgid "leaving banner."
 msgctxt "role"
 msgid "leaving endnotes."
 msgstr "saliendo de las notas finales."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1203
-#| msgctxt "role"
-#| msgid "leaving search."
 msgctxt "role"
 msgid "leaving epigraph."
 msgstr "saliendo del epígrafe."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1209
-#| msgctxt "role"
-#| msgid "leaving region."
 msgctxt "role"
 msgid "leaving epilogue."
 msgstr "saliendo del epílogo."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1215
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving errata."
 msgstr "saliendo de la errata."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1221
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving example."
 msgstr "saliendo del ejemplo."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1227
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving foreword."
 msgstr "saliendo del prefacio."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1233
-#| msgctxt "role"
-#| msgid "leaving search."
 msgctxt "role"
 msgid "leaving glossary."
 msgstr "saliendo del glosario."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1239
-#| msgid "leaving panel."
 msgctxt "role"
 msgid "leaving index."
 msgstr "saliendo del índice."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1245
-#| msgctxt "role"
-#| msgid "leaving information."
 msgctxt "role"
 msgid "leaving introduction."
 msgstr "saliendo de la introducción."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1251
-#| msgid "leaving list."
 msgctxt "role"
 msgid "leaving page list."
 msgstr "saliendo de la lista de páginas."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1257
-#| msgid "leaving panel."
 msgctxt "role"
 msgid "leaving part."
 msgstr "saliendo de la parte."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1263
-#| msgid "leaving panel."
 msgctxt "role"
 msgid "leaving preface."
 msgstr "saliendo del prefacio."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1269
-#| msgid "leaving blockquote."
 msgctxt "role"
 msgid "leaving prologue."
 msgstr "saliendo del prólogo."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1275
-#, fuzzy
 #| msgid "leaving blockquote."
 msgctxt "role"
 msgid "leaving pullquote."
-msgstr "saliendo de la cita."
+msgstr "saliendo del sumario."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1281
-#, fuzzy
 #| msgid "leaving form."
 msgctxt "role"
 msgid "leaving QNA."
-msgstr "saliendo del formulario."
+msgstr "saliendo de preguntas y respuestas."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1287
-#| msgctxt "role"
-#| msgid "leaving main content."
 msgctxt "role"
 msgid "leaving table of contents."
 msgstr "saliendo de la tabla de contenidos."
@@ -11232,8 +11190,6 @@ msgstr "resumen"
 #. This role refers to the acknowledgments in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-acknowledgments
 #: ../src/orca/object_properties.py:99
-#| msgctxt "math symbol"
-#| msgid "complement"
 msgctxt "role"
 msgid "acknowledgments"
 msgstr "agradecimentos"
@@ -11243,8 +11199,6 @@ msgstr "agradecimentos"
 #. This role refers to the afterword in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-afterword
 #: ../src/orca/object_properties.py:105
-#| msgctxt "key echo"
-#| msgid "word"
 msgctxt "role"
 msgid "afterword"
 msgstr "posfijo"
@@ -11290,7 +11244,6 @@ msgstr "capítulo"
 #. This role refers to the colophon in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-colophon
 #: ../src/orca/object_properties.py:135
-#| msgid "colon"
 msgctxt "role"
 msgid "colophon"
 msgstr "colofón"
@@ -11309,8 +11262,6 @@ msgstr "conclusión"
 #. This role refers to the cover in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-cover
 #: ../src/orca/object_properties.py:147
-#| msgctxt "math fraction"
-#| msgid "over"
 msgctxt "role"
 msgid "cover"
 msgstr "cubierta"
@@ -11338,8 +11289,6 @@ msgstr "créditos"
 #. This role refers to the dedication in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-dedication
 #: ../src/orca/object_properties.py:165
-#| msgctxt "textattr"
-#| msgid "direction"
 msgctxt "role"
 msgid "dedication"
 msgstr "dedicatoria"
@@ -11367,7 +11316,6 @@ msgstr "notas finales"
 #. This role refers to the epigraph in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-epigraph
 #: ../src/orca/object_properties.py:183
-#| msgid "paragraph"
 msgctxt "role"
 msgid "epigraph"
 msgstr "epígrafe"
@@ -11404,7 +11352,6 @@ msgstr "ejemplo"
 #. This role refers to a single footnote in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-footnote
 #: ../src/orca/object_properties.py:207
-#| msgid "footer"
 msgctxt "role"
 msgid "footnote"
 msgstr "nota al pie"
@@ -11414,8 +11361,6 @@ msgstr "nota al pie"
 #. This role refers to the foreword in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-foreword
 #: ../src/orca/object_properties.py:213
-#| msgctxt "key echo"
-#| msgid "word"
 msgctxt "role"
 msgid "foreword"
 msgstr "prefacio"
@@ -11434,8 +11379,6 @@ msgstr "glosario"
 #. This role refers to the index in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-index
 #: ../src/orca/object_properties.py:225
-#| msgctxt "textattr"
-#| msgid "indent"
 msgctxt "role"
 msgid "index"
 msgstr "índice"
@@ -11445,8 +11388,6 @@ msgstr "índice"
 #. This role refers to the introduction in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-introduction
 #: ../src/orca/object_properties.py:231
-#| msgctxt "math symbol"
-#| msgid "intersection"
 msgctxt "role"
 msgid "introduction"
 msgstr "introducción"
@@ -11465,7 +11406,6 @@ msgstr "salto de página"
 #. This role refers to a page list in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pagelist
 #: ../src/orca/object_properties.py:243
-#| msgid "tab list"
 msgctxt "role"
 msgid "page list"
 msgstr "lista de páginas"
@@ -11502,11 +11442,10 @@ msgstr "prólogo"
 #. This role refers to a pullquote in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pullquote
 #: ../src/orca/object_properties.py:267
-#, fuzzy
 #| msgid "quote"
 msgctxt "role"
 msgid "pullquote"
-msgstr "comillas"
+msgstr "sumario"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11518,7 +11457,7 @@ msgstr "comillas"
 #: ../src/orca/object_properties.py:276
 msgctxt "role"
 msgid "QNA"
-msgstr ""
+msgstr "Preguntas y respuestas"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11534,7 +11473,6 @@ msgstr "subtítulo"
 #. This role refers to the table of contents in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-toc
 #: ../src/orca/object_properties.py:288
-#| msgid "Enable layout mode for content"
 msgctxt "role"
 msgid "table of contents"
 msgstr "tabla de contenidos"
