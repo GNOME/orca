@@ -15,8 +15,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2017-02-06 16:00+0000\n"
-"PO-Revision-Date: 2017-02-13 13:10+0100\n"
+"POT-Creation-Date: 2017-06-28 17:19+0000\n"
+"PO-Revision-Date: 2017-07-26 10:14+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -2335,7 +2335,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:435
-#, fuzzy
 #| msgid ""
 #| "Report information on the currently active script: <keyseq><key>Ctrl</"
 #| "key><key>Alt</key><key>Orca Modifier</key> <key>Home</key></keyseq>"
@@ -2343,9 +2342,8 @@ msgid ""
 "Start and end of current container: <keyseq><key>Shift</key><key>comma</"
 "key></keyseq> and <keyseq><key>comma</key></keyseq>"
 msgstr ""
-"Proporcionar información sobre el script activo actualmente: "
-"<keyseq><key>Ctrl</key><key>Alt</key><key>Modificador de Orca</"
-"key><key>Inicio</key></keyseq>"
+"Principio o final del contenedor actual: <keyseq><key>Mayús</key><key>coma</"
+"key></keyseq> y <keyseq><key>coma</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_table.page:6
@@ -6089,6 +6087,11 @@ msgid ""
 "announcements are made can be configured independently through the following "
 "checkboxes:"
 msgstr ""
+"<app>Orca</app> puede opcionalmente proporcionar más información sobre el "
+"contenido del documento que se está hablando, como anunciar cuando entra o "
+"sale de un bloque, lista, tabla u otro contenedor. Si estos anuncios se "
+"hacen o no se puede configurar de manera independiente mediante las "
+"siguientes casillas:"
 
 #. (itstool) path: item/p
 #: C/preferences_general.page:133
@@ -6128,6 +6131,10 @@ msgid ""
 "gui> page. For more information, see <link xref="
 "\"preferences_speech#spoken_context\">Spoken Context</link>."
 msgstr ""
+"Indica si los anuncios que hace <app>Orca</app> durante la navegación son "
+"configurables o no. Encontrará casillas similares en la página <gui>Hablar</"
+"gui>. Consulte el <link xref=\"preferences_speech#spoken_context\">Contexto "
+"hablado</link> para obtener más información."
 
 #. (itstool) path: info/desc
 #: C/preferences_general.page:154
@@ -7248,13 +7255,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:188
-#| msgid "Speak child position"
 msgid "Speak description"
 msgstr "Hablar descripción"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:189
-#, fuzzy
 #| msgid ""
 #| "If the <gui>Speak tutorial messages</gui> checkbox is checked, as you "
 #| "move amongst objects in an interface, <app>Orca</app> will provide "
@@ -7265,9 +7270,9 @@ msgid ""
 "objects in an interface, <app>Orca</app> will speak the accessible "
 "description in addition to the accessible name of the object."
 msgstr ""
-"Si la casilla <gui>Leer mensajes de aprendizaje</gui> está marcada, "
-"<app>Orca</app> proporcionará información adicional, como la forma de "
-"interactuar con el objeto que actualmente tiene el foco."
+"Si la casilla <gui>Leer descripción</gui> está marcada, según se mueva entre "
+"los objetos de una interfaz, <app>Orca</app> leerá la descripción accesible "
+"además del nombre accesible del objeto."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:200
@@ -7310,7 +7315,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:225
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Announce blockquotes during navigation"
 msgstr "Anunciar citas durante la navegación"
 
@@ -7323,10 +7327,15 @@ msgid ""
 "during Say All. See <link xref=\"preferences_general#say_all_announce_context"
 "\">Announce Contextual Information in Say All</link> for more information."
 msgstr ""
+"Si las casilla <gui>Anunciar bloques durante la navegación</gui> está "
+"marcada, <app>Orca</app> le dirá cuando navega dentro o fuera de un bloque. "
+"Tenga en cuenta que esta opción es independiente de si este anuncio se hace "
+"o no al hablar todo. Consulte la <link xref="
+"\"preferences_general#say_all_announce_context\">Información contextual de "
+"anuncios al hablar todo</link> para obtener más información."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:239
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Announce forms during navigation"
 msgstr "Anunciar formularios durante la navegación"
 
@@ -7342,6 +7351,15 @@ msgid ""
 "<link xref=\"preferences_general#say_all_announce_context\">Announce "
 "Contextual Information in Say All</link> for more information."
 msgstr ""
+"Si las casilla <gui>Anunciar formularios durante la navegación</gui> está "
+"marcada, <app>Orca</app> le dirá cuando navega dentro o fuera de un "
+"formulario. Tenga en cuenta que esta opción es específica de formularios que "
+"no son marcadores ARIA. Puede configurar la presentación de marcas ARIA "
+"mediante la casilla <gui>Anunciar marcas durante la navegación</gui>. "
+"Además, está opción es independiente de si este anuncio se hace o no al "
+"hablar todo. Consulte la <link xref="
+"\"preferences_general#say_all_announce_context\">Información contextual de "
+"anuncios al hablar todo</link> para obtener más información."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:256
@@ -7357,10 +7375,15 @@ msgid ""
 "during Say All. See <link xref=\"preferences_general#say_all_announce_context"
 "\">Announce Contextual Information in Say All</link> for more information."
 msgstr ""
+"Si las casilla <gui>Anunciar marcas durante la navegación</gui> está "
+"marcada, <app>Orca</app> le dirá cuando navega dentro o fuera de una marca "
+"ARIA. Tenga en cuenta que esta opción es independiente de si este anuncio se "
+"hace o no al hablar todo. Consulte la <link xref="
+"\"preferences_general#say_all_announce_context\">Información contextual de "
+"anuncios al hablar todo</link> para obtener más información."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:270
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Announce lists during navigation"
 msgstr "Anunciar listas durante la navegación"
 
@@ -7373,6 +7396,12 @@ msgid ""
 "Say All. See <link xref=\"preferences_general#say_all_announce_context"
 "\">Announce Contextual Information in Say All</link> for more information."
 msgstr ""
+"Si las casilla <gui>Anunciar listas durante la navegación</gui> está "
+"marcada, <app>Orca</app> le dirá cuando navega dentro o fuera de una lista. "
+"Tenga en cuenta que esta opción es independiente de si este anuncio se hace "
+"o no al hablar todo. Consulte la <link xref="
+"\"preferences_general#say_all_announce_context\">Información contextual de "
+"anuncios al hablar todo</link> para obtener más información."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:284
@@ -7388,10 +7417,15 @@ msgid ""
 "Say All. See <link xref=\"preferences_general#say_all_announce_context"
 "\">Announce Contextual Information in Say All</link> for more information."
 msgstr ""
+"Si las casilla <gui>Anunciar paneles durante la navegación</gui> está "
+"marcada, <app>Orca</app> le dirá cuando navega dentro o fuera de un panel. "
+"Tenga en cuenta que esta opción es independiente de si este anuncio se hace "
+"o no al hablar todo. Consulte la <link xref="
+"\"preferences_general#say_all_announce_context\">Información contextual de "
+"anuncios al hablar todo</link> para obtener más información."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:298
-#| msgid "Enable structural navigation"
 msgid "Announce tables during navigation"
 msgstr "Anunciar tablas durante la navegación"
 
@@ -7404,6 +7438,12 @@ msgid ""
 "Say All. See <link xref=\"preferences_general#say_all_announce_context"
 "\">Announce Contextual Information in Say All</link> for more information."
 msgstr ""
+"Si las casilla <gui>Anunciar tablas durante la navegación</gui> está "
+"marcada, <app>Orca</app> le dirá cuando navega dentro o fuera de una tabla. "
+"Tenga en cuenta que esta opción es independiente de si este anuncio se hace "
+"o no al hablar todo. Consulte la <link xref="
+"\"preferences_general#say_all_announce_context\">Información contextual de "
+"anuncios al hablar todo</link> para obtener más información."
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:312
