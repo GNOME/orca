@@ -2352,7 +2352,11 @@ class Utilities(script_utilities.Utilities):
         if not self.isChromeAlert(obj):
             return False
 
-        return obj.parent.getRole() == pyatspi.ROLE_FRAME
+        parent = obj.parent
+        while parent and self.isLayoutOnly(parent):
+            parent = parent.parent
+
+        return parent.getRole() == pyatspi.ROLE_FRAME
 
     def isClickableElement(self, obj):
         if not (obj and self.inDocumentContent(obj)):
