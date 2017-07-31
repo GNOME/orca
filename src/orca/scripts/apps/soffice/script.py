@@ -788,10 +788,6 @@ class Script(default.Script):
                 orca.setLocusOfFocus(event, event.source, False)
                 return
 
-        # We should present this in response to active-descendant-changed events
-        if event.source.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS):
-            return
-
         default.Script.onFocusedChanged(self, event)
 
     def onCaretMoved(self, event):
