@@ -1,3 +1,67 @@
+3.25.4 - 31 July 2017
+
+Web:
+
+ * Add support for DPub ARIA roles
+
+ * Add custom localized role names for ARIA feed and figure roles
+
+ * Treat articles as "large objects" for the purpose of structural
+   navigation
+
+ * Ensure we present infobar-like widgets with role of alert
+
+ * Eliminate double presentation of name of widgets which descend from
+   label element
+
+ * Fix presentation of checkboxes and radio buttons with descendants
+   when using caret navigation
+
+ * Work around Gecko not pruning alt="" images from accessibility tree
+
+LibreOffice:
+
+ * Fix bug in presentation of selected item in comboboxes
+
+ * Ensure we present focus claims from lists which manage descendants
+
+ * Fix performance issue presenting selection changes in spreadsheet
+
+General:
+
+ * Work around missing events for popup menus, submenus, and dialogs
+
+ * Work around missing state-changed:focused events for Gtk+ apps
+
+ * Update locusOfFocus to active window even in the case of broken
+   hierarchy
+
+ * Fix presentation of cells with multiple renderers
+
+ * Handle more instances of dead accessible objects and non-responsive
+   applications
+
+ * Eliminate chattiness resulting from events coming from ancestor of
+   locusOfFocus
+
+ * Improve presentation of newly-focused listboxes
+
+ * Sanity-check values app provides in response to getTextAtOffset()
+
+ * Address Python 3.6 invalid escape sequence deprecation
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es            Spanish               Daniel Mustieles
+    fr            French                Claude Paroz
+    hu            Hungarian             Attila Hammer
+    id            Indonesian            Andika Triwidada
+    kk            Kazakh                Baurzhan Muftakhidinov
+    lv            Latvian               Rūdolfs Mazurs
+    ne            Nepali                Pawan Chitrakar
+
+=========
+
 3.24.0 - 20 March 2017
 
 Web:
