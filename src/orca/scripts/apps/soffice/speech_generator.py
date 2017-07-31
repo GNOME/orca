@@ -129,7 +129,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # TODO - JD: This should be the behavior by default because many
         # toolkits use the label for the name.
         result = []
-        label = self._script.utilities.displayedLabel(obj)
+        label = self._script.utilities.displayedLabel(obj) or obj.name
         if label:
             result.append(label)
             result.extend(self.voice(speech_generator.DEFAULT))           
