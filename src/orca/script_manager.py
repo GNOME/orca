@@ -268,7 +268,7 @@ class ScriptManager:
             toolkitScripts = self.toolkitScripts.get(app, {})
             toolkitScript = toolkitScripts.get(objToolkit)
             if not toolkitScript:
-                toolkitScript = self._createScript(app, obj)
+                toolkitScript = self._newNamedScript(app, objToolkit)
                 toolkitScripts[objToolkit] = toolkitScript
             self.toolkitScripts[app] = toolkitScripts
 
