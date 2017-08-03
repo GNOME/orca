@@ -2525,6 +2525,12 @@ class Utilities:
     def getError(self, obj):
         return obj.getState().contains(pyatspi.STATE_INVALID_ENTRY)
 
+    def getErrorMessage(self, obj):
+        return ""
+
+    def isErrorMessage(self, obj):
+        return False
+
     def getCharacterAtOffset(self, obj, offset=None):
         text = self.queryNonEmptyText(obj)
         if text:

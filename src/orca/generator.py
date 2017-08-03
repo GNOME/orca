@@ -487,11 +487,18 @@ class Generator:
         indicators = self._script.formatting.getString(**args)
 
         if error == 'spelling':
-            result.append(indicators[1])
+            indicator = indicators[1]
         elif error == 'grammar':
-            result.append(indicators[2])
+            indicator = indicators[2]
         else:
-            result.append(indicators[0])
+            indicator = indicators[0]
+
+        errorMessage = self._script.utilities.getErrorMessage(obj)
+        if errorMessage:
+            result.append("%s: %s" % (indicator, errorMessage))
+        else:
+            result.append(indicator)
+
         return result
 
     def _generateRequired(self, obj, **args):

@@ -75,6 +75,7 @@ class Utilities(script_utilities.Utilities):
         self._isAnchor = {}
         self._isEditableComboBox = {}
         self._isEditableDescendantOfComboBox = {}
+        self._isErrorMessage = {}
         self._isLandmark = {}
         self._isLiveRegion = {}
         self._isLink = {}
@@ -137,6 +138,7 @@ class Utilities(script_utilities.Utilities):
         self._isAnchor = {}
         self._isEditableComboBox = {}
         self._isEditableDescendantOfComboBox = {}
+        self._isErrorMessage = {}
         self._isLandmark = {}
         self._isLiveRegion = {}
         self._isLink = {}
@@ -2059,6 +2061,7 @@ class Utilities(script_utilities.Utilities):
                or self.isHidden(obj) \
                or self.isOffScreenLabel(obj) \
                or self.isUselessImage(obj) \
+               or self.isErrorForContents(obj, contents) \
                or self.isLabellingContents(obj, contents):
                 rv = False
 
@@ -2560,6 +2563,26 @@ class Utilities(script_utilities.Utilities):
 
     def isDPubToc(self, obj):
         return 'doc-toc' in self._getXMLRoles(obj)
+
+    def isErrorMessage(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isErrorMessage(obj)
+
+        rv = self._isErrorMessage.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        # Remove this when we bump dependencies to 2.26
+        try:
+            relationType = pyatspi.RELATION_ERROR_FOR
+        except:
+            rv = False
+        else:
+            isMessage = lambda r: r.getRelationType() == relationType
+            rv = bool(list(filter(isMessage, obj.getRelationSet())))
+
+        self._isErrorMessage[hash(obj)] = rv
+        return rv
 
     def isFeed(self, obj):
         return 'feed' in self._getXMLRoles(obj)
@@ -3168,6 +3191,39 @@ class Utilities(script_utilities.Utilities):
             return True
 
         return error
+
+    def _getErrorMessageContainer(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return None
+
+        if not self.getError(obj):
+            return None
+
+        # Remove this when we bump dependencies to 2.26
+        try:
+            relationType = pyatspi.RELATION_ERROR_MESSAGE
+        except:
+            return None
+
+        isMessage = lambda r: r.getRelationType() == relationType
+        relations = list(filter(isMessage, obj.getRelationSet()))
+        if not relations:
+            return None
+
+        return relations[0].getTarget(0)
+
+    def getErrorMessage(self, obj):
+        return self.expandEOCs(self._getErrorMessageContainer(obj))
+
+    def isErrorForContents(self, obj, contents=[]):
+        if not self.isErrorMessage(obj):
+            return False
+
+        for acc, start, end, string in contents:
+            if self._getErrorMessageContainer(acc) == obj:
+                return True
+
+        return False
 
     def hasNoSize(self, obj):
         if not (obj and self.inDocumentContent(obj)):
