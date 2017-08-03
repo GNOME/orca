@@ -1611,6 +1611,19 @@ class Utilities(script_utilities.Utilities):
 
         return roles
 
+    def mnemonicShortcutAccelerator(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().mnemonicShortcutAccelerator(obj)
+
+        try:
+            attrs = dict([attr.split(":", 1) for attr in obj.getAttributes()])
+        except:
+            return ["", "", ""]
+
+        keys = map(lambda x: x.replace("+", " "), attrs.get("keyshortcuts", "").split(" "))
+        keys = map(lambda x: x.replace(" ", "+"), map(self.labelFromKeySequence, keys))
+        return ["", " ".join(keys), ""]
+
     def unrelatedLabels(self, root, onlyShowing=True):
         if not (root and self.inDocumentContent(root)):
             return super().unrelatedLabels(root, onlyShowing)
