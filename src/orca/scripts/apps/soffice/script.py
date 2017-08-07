@@ -824,6 +824,11 @@ class Script(default.Script):
             default.Script.onCheckedChanged(self, event)
             return
  
+        sourceWindow = self.utilities.topLevelObject(obj)
+        focusWindow = self.utilities.topLevelObject(orca_state.locusOfFocus)
+        if sourceWindow != focusWindow:
+            return
+
         # Announce when the toolbar buttons are toggled if we just toggled
         # them; not if we navigated to some text.
         weToggledIt = False
