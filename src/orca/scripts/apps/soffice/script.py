@@ -887,6 +887,10 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
+        if event.source != orca_state.locusOfFocus \
+           and event.source.getState().contains(pyatspi.STATE_FOCUSED):
+            orca.setLocusOfFocus(event, event.source, True)
+
         super().onTextSelectionChanged(event)
 
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
