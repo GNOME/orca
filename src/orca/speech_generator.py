@@ -1751,6 +1751,10 @@ class SpeechGenerator(generator.Generator):
            or pyatspi.findAncestor(obj, lambda x: x == priorObj):
             return []
 
+        frame, dialog = self._script.utilities.frameAndDialog(obj)
+        if dialog:
+            return []
+
         args['leaving'] = True
         args['includeOnly'] = [pyatspi.ROLE_BLOCK_QUOTE,
                                pyatspi.ROLE_FORM,

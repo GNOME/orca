@@ -481,10 +481,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.isSpreadSheetCell(priorObj):
             return []
 
-        frame, dialog = self._script.utilities.frameAndDialog(obj)
-        if dialog:
-            return []
-
         return super()._generateOldAncestors(obj, **args)
 
     def _generateUnselectedCell(self, obj, **args):
