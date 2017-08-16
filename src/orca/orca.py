@@ -548,14 +548,9 @@ def start(registry, cacheValues):
     if cacheValues:
         pyatspi.setCacheLevel(pyatspi.CACHE_PROPERTIES)
 
-    try:
-        Gdk.notify_startup_complete()
-    except:
-        msg = 'ERROR: Exception calling Gdk.notification_startup_complete()'
-        debug.println(debug.LEVEL_INFO, msg, True)
-    else:
-        msg = 'ORCA: Startup complete notification made'
-        debug.println(debug.LEVEL_INFO, msg, True)
+    Gdk.notify_startup_complete()
+    msg = 'ORCA: Startup complete notification made'
+    debug.println(debug.LEVEL_INFO, msg, True)
 
     debug.println(debug.LEVEL_INFO, 'ORCA: Starting registry', True)
     registry.start(gil=False)
