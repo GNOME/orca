@@ -6,19 +6,20 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=orca&k"
-"eywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2017-08-03 10:33+0000\n"
-"PO-Revision-Date: 2017-08-16 17:50+0200\n"
-"Last-Translator: Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=orca&keywords=I18N+L10N&component=i18n\n"
+"POT-Creation-Date: 2017-08-28 01:25+0000\n"
+"PO-Revision-Date: 2017-08-29 05:11+0200\n"
+"Last-Translator: Marko M. Kostić <marko.m.kostic@gmail.com>\n"
 "Language-Team: srpski <gnome-sr@googlegroups.org>\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : "
-"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Project-Style: gnome\n"
+"X-Generator: Poedit 2.0.3\n"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -9102,18 +9103,15 @@ msgstr "napuštam blok citata."
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1060
-#, fuzzy
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving feed."
-msgstr "napuštam formular."
+msgstr "napuštam dovod."
 
 #. Translators: This message is presented when a user is navigating within
 #. an object and then navigates out of it. The word or phrase that follows
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1066
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving figure."
 msgstr "napuštam figuru."
@@ -9212,12 +9210,9 @@ msgstr "napuštam tabelu."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1131
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving search."
 msgctxt "role"
 msgid "leaving abstract."
-msgstr "napuštam pretragu."
+msgstr "napuštam sažetak."
 
 # bug: colon?
 #. Translators: This message is presented when a user is navigating within
@@ -9225,41 +9220,33 @@ msgstr "napuštam pretragu."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1137
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving main content."
 msgctxt "role"
 msgid "leaving acknowledgments."
-msgstr "napuštam glavni sadržaj."
+msgstr "napuštam zahvalnice."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1143
-#, fuzzy
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving afterword."
-msgstr "napuštam formular."
+msgstr "napuštam pogovor."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1149
-#, fuzzy
-#| msgid "leaving panel."
 msgctxt "role"
 msgid "leaving appendix."
-msgstr "napuštam panel."
+msgstr "napuštam dodatak."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1155
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving bibliography."
 msgstr "napuštam bibliografiju."
@@ -9269,8 +9256,6 @@ msgstr "napuštam bibliografiju."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1161
-#| msgctxt "role"
-#| msgid "leaving banner."
 msgctxt "role"
 msgid "leaving chapter."
 msgstr "napuštam poglavlje."
@@ -9280,20 +9265,15 @@ msgstr "napuštam poglavlje."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1167
-#, fuzzy
-#| msgid "leaving panel."
 msgctxt "role"
 msgid "leaving colophon."
-msgstr "napuštam panel."
+msgstr "napuštam znak štampara."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1173
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving region."
 msgctxt "role"
 msgid "leaving conclusion."
 msgstr "napuštam zaključak."
@@ -9303,69 +9283,51 @@ msgstr "napuštam zaključak."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1179
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving region."
 msgctxt "role"
 msgid "leaving credit."
-msgstr "napuštam oblast."
+msgstr "napuštam zaslugu."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1185
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving region."
 msgctxt "role"
 msgid "leaving credits."
-msgstr "napuštam oblast."
+msgstr "napuštam zasluge."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1191
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving navigation."
 msgctxt "role"
 msgid "leaving dedication."
-msgstr "napuštam navigaciju."
+msgstr "napuštam posvetu."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1197
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving banner."
 msgctxt "role"
 msgid "leaving endnotes."
-msgstr "napuštam vrpcu."
+msgstr "napuštam beleške na kraju."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1203
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving search."
 msgctxt "role"
 msgid "leaving epigraph."
-msgstr "napuštam pretragu."
+msgstr "napuštam epigraf."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1209
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving region."
 msgctxt "role"
 msgid "leaving epilogue."
 msgstr "napuštam epilog."
@@ -9375,18 +9337,15 @@ msgstr "napuštam epilog."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1215
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving errata."
-msgstr "napuštam tabelu."
+msgstr "napuštam štamparske greške."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1221
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving example."
 msgstr "napuštam primer."
@@ -9396,19 +9355,15 @@ msgstr "napuštam primer."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1227
-#, fuzzy
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving foreword."
-msgstr "napuštam formular."
+msgstr "napuštam predgovor."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1233
-#| msgctxt "role"
-#| msgid "leaving search."
 msgctxt "role"
 msgid "leaving glossary."
 msgstr "napuštam pojmovnik."
@@ -9418,7 +9373,6 @@ msgstr "napuštam pojmovnik."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1239
-#| msgid "leaving panel."
 msgctxt "role"
 msgid "leaving index."
 msgstr "napuštam indeks."
@@ -9428,8 +9382,6 @@ msgstr "napuštam indeks."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1245
-#| msgctxt "role"
-#| msgid "leaving information."
 msgctxt "role"
 msgid "leaving introduction."
 msgstr "napuštam uvod."
@@ -9439,7 +9391,6 @@ msgstr "napuštam uvod."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1251
-#| msgid "leaving list."
 msgctxt "role"
 msgid "leaving page list."
 msgstr "napuštam spisak stranica."
@@ -9449,29 +9400,24 @@ msgstr "napuštam spisak stranica."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1257
-#, fuzzy
-#| msgid "leaving panel."
 msgctxt "role"
 msgid "leaving part."
-msgstr "napuštam panel."
+msgstr "napuštam deo."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1263
-#, fuzzy
-#| msgid "leaving panel."
 msgctxt "role"
 msgid "leaving preface."
-msgstr "napuštam panel."
+msgstr "napuštam uvod."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1269
-#| msgid "leaving blockquote."
 msgctxt "role"
 msgid "leaving prologue."
 msgstr "napuštam prolog."
@@ -9481,22 +9427,18 @@ msgstr "napuštam prolog."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1275
-#, fuzzy
-#| msgid "leaving blockquote."
 msgctxt "role"
 msgid "leaving pullquote."
-msgstr "napuštam blok citata."
+msgstr "napuštam citat."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1281
-#, fuzzy
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving QNA."
-msgstr "napuštam formular."
+msgstr "napuštam pitanja i odgovore."
 
 # bug: colon?
 #. Translators: This message is presented when a user is navigating within
@@ -9504,8 +9446,6 @@ msgstr "napuštam formular."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1287
-#| msgctxt "role"
-#| msgid "leaving main content."
 msgctxt "role"
 msgid "leaving table of contents."
 msgstr "napuštam tabelu sadržaja."
@@ -11260,7 +11200,7 @@ msgstr "izborno prozorče je za uređivanje"
 #: ../src/orca/object_properties.py:80
 msgctxt "role"
 msgid "feed"
-msgstr ""
+msgstr "dovod"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11270,7 +11210,7 @@ msgstr ""
 #: ../src/orca/object_properties.py:87
 msgctxt "role"
 msgid "figure"
-msgstr ""
+msgstr "figura"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11279,30 +11219,25 @@ msgstr ""
 #: ../src/orca/object_properties.py:93
 msgctxt "role"
 msgid "abstract"
-msgstr ""
+msgstr "sažetak"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the acknowledgments in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-acknowledgments
 #: ../src/orca/object_properties.py:99
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "complement"
 msgctxt "role"
 msgid "acknowledgments"
-msgstr "komplement"
+msgstr "zasluge"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the afterword in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-afterword
 #: ../src/orca/object_properties.py:105
-#| msgctxt "key echo"
-#| msgid "word"
 msgctxt "role"
 msgid "afterword"
-msgstr ""
+msgstr "pogovor"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11311,7 +11246,7 @@ msgstr ""
 #: ../src/orca/object_properties.py:111
 msgctxt "role"
 msgid "appendix"
-msgstr ""
+msgstr "dodatak"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11320,7 +11255,7 @@ msgstr ""
 #: ../src/orca/object_properties.py:117
 msgctxt "role"
 msgid "bibliography entry"
-msgstr ""
+msgstr "bibliografski unos"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11346,11 +11281,9 @@ msgstr "poglavlje"
 #. This role refers to the colophon in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-colophon
 #: ../src/orca/object_properties.py:135
-#, fuzzy
-#| msgid "colon"
 msgctxt "role"
 msgid "colophon"
-msgstr "dve tačke"
+msgstr "znak štampara"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11359,18 +11292,16 @@ msgstr "dve tačke"
 #: ../src/orca/object_properties.py:141
 msgctxt "role"
 msgid "conclusion"
-msgstr ""
+msgstr "zaključak"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the cover in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-cover
 #: ../src/orca/object_properties.py:147
-#| msgctxt "math fraction"
-#| msgid "over"
 msgctxt "role"
 msgid "cover"
-msgstr ""
+msgstr "naslovnica"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11379,7 +11310,7 @@ msgstr ""
 #: ../src/orca/object_properties.py:153
 msgctxt "role"
 msgid "credit"
-msgstr ""
+msgstr "zasluga"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11388,19 +11319,16 @@ msgstr ""
 #: ../src/orca/object_properties.py:159
 msgctxt "role"
 msgid "credits"
-msgstr ""
+msgstr "zasluge"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the dedication in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-dedication
 #: ../src/orca/object_properties.py:165
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "direction"
 msgctxt "role"
 msgid "dedication"
-msgstr "usmerenje"
+msgstr "posveta"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11409,7 +11337,7 @@ msgstr "usmerenje"
 #: ../src/orca/object_properties.py:171
 msgctxt "role"
 msgid "endnote"
-msgstr ""
+msgstr "beleška na kraju"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11418,7 +11346,7 @@ msgstr ""
 #: ../src/orca/object_properties.py:177
 msgctxt "role"
 msgid "endnotes"
-msgstr ""
+msgstr "beleške na kraju"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11427,7 +11355,7 @@ msgstr ""
 #: ../src/orca/object_properties.py:183
 msgctxt "role"
 msgid "epigraph"
-msgstr ""
+msgstr "epigraf"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11445,7 +11373,7 @@ msgstr "epilog"
 #: ../src/orca/object_properties.py:195
 msgctxt "role"
 msgid "errata"
-msgstr ""
+msgstr "štamparske greške"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11463,19 +11391,16 @@ msgstr "primer"
 #: ../src/orca/object_properties.py:207
 msgctxt "role"
 msgid "footnote"
-msgstr ""
+msgstr "fusnota"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the foreword in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-foreword
 #: ../src/orca/object_properties.py:213
-#, fuzzy
-#| msgctxt "key echo"
-#| msgid "word"
 msgctxt "role"
 msgid "foreword"
-msgstr "reč"
+msgstr "predgovor"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11484,15 +11409,13 @@ msgstr "reč"
 #: ../src/orca/object_properties.py:219
 msgctxt "role"
 msgid "glossary"
-msgstr ""
+msgstr "rečnik"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the index in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-index
 #: ../src/orca/object_properties.py:225
-#| msgctxt "textattr"
-#| msgid "indent"
 msgctxt "role"
 msgid "index"
 msgstr "indeks"
@@ -11502,8 +11425,6 @@ msgstr "indeks"
 #. This role refers to the introduction in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-introduction
 #: ../src/orca/object_properties.py:231
-#| msgctxt "math symbol"
-#| msgid "intersection"
 msgctxt "role"
 msgid "introduction"
 msgstr "uvod"
@@ -11522,7 +11443,6 @@ msgstr "prelom stranice"
 #. This role refers to a page list in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pagelist
 #: ../src/orca/object_properties.py:243
-#| msgid "leaving list."
 msgctxt "role"
 msgid "page list"
 msgstr "spisak stranica"
@@ -11534,7 +11454,7 @@ msgstr "spisak stranica"
 #: ../src/orca/object_properties.py:249
 msgctxt "role"
 msgid "part"
-msgstr ""
+msgstr "deo"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11543,7 +11463,7 @@ msgstr ""
 #: ../src/orca/object_properties.py:255
 msgctxt "role"
 msgid "preface"
-msgstr ""
+msgstr "uvod"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11559,11 +11479,9 @@ msgstr "prolog"
 #. This role refers to a pullquote in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pullquote
 #: ../src/orca/object_properties.py:267
-#, fuzzy
-#| msgid "quote"
 msgctxt "role"
 msgid "pullquote"
-msgstr "navodnik"
+msgstr "citat"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11575,7 +11493,7 @@ msgstr "navodnik"
 #: ../src/orca/object_properties.py:276
 msgctxt "role"
 msgid "QNA"
-msgstr ""
+msgstr "pitanja i odgovori"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11591,7 +11509,6 @@ msgstr "podnaslov"
 #. This role refers to the table of contents in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-toc
 #: ../src/orca/object_properties.py:288
-#| msgid "Enable layout mode for content"
 msgctxt "role"
 msgid "table of contents"
 msgstr "tabela sadržaja"
