@@ -1804,7 +1804,7 @@ msgstr "Pronuncia el document sencer."
 #. which causes Orca to speak the entire contents of the window using flat review.
 #: ../src/orca/cmdnames.py:67
 msgid "Speaks entire window using flat review."
-msgstr "Pronuncia la finestra completa usant la revisió plana"
+msgstr "Pronuncia la finestra completa usant la revisió plana."
 
 #. Translators: the "Where am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
@@ -3514,7 +3514,7 @@ msgstr "blanc floral"
 #: ../src/orca/colornames.py:250
 msgctxt "color name"
 msgid "forest green"
-msgstr "verd floresta"
+msgstr "verd bosc"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -6792,7 +6792,7 @@ msgstr "no més gran que"
 #: ../src/orca/mathsymbols.py:1699
 msgctxt "math symbol"
 msgid "neither less than nor equal to"
-msgstr "ni més petit que ni ígual a"
+msgstr "ni més petit que ni igual a"
 
 #. Translators: this is the spoken representation for the character '≱' (U+2271)
 #: ../src/orca/mathsymbols.py:1702
@@ -7058,7 +7058,7 @@ msgstr "operador asterisc encerclat"
 #: ../src/orca/mathsymbols.py:1831
 msgctxt "math symbol"
 msgid "circled equals"
-msgstr "igual encerclcat"
+msgstr "igual encerclat"
 
 #. Translators: this is the spoken representation for the character '⊝' (U+229d)
 #: ../src/orca/mathsymbols.py:1834
@@ -7628,7 +7628,7 @@ msgstr "conte petit amb barra a sobre"
 #: ../src/orca/mathsymbols.py:2128
 msgctxt "math symbol"
 msgid "z notation bag membership"
-msgstr "afiliació bossa de notazió z"
+msgstr "afiliació bossa de notació z"
 
 #. Translators: this is the spoken representation for the character '⌈' (U+2308)
 #: ../src/orca/mathsymbols.py:2131
