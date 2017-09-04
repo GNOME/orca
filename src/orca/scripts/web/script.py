@@ -849,6 +849,7 @@ class Script(default.Script):
 
         if not self._lastCommandWasCaretNav \
            and not self._lastCommandWasStructNav \
+           and not self.utilities.isPlainText() \
            and not self.utilities.isContentEditableWithEmbeddedObjects(obj) \
            and not self.utilities.lastInputEventWasCaretNavWithSelection():
             msg = "WEB: updating braille for unhandled navigation type %s" % obj
@@ -1377,7 +1378,7 @@ class Script(default.Script):
             msg = "WEB: Event handled: Caret moved due to scrolling"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(obj, offset)
-            orca.setLocusOfFocus(event, obj)
+            orca.setLocusOfFocus(event, obj, force=self.utilities.isPlainText())
             return True
 
         if self.utilities.isContentEditableWithEmbeddedObjects(event.source):

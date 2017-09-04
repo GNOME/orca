@@ -88,6 +88,7 @@ class Utilities(script_utilities.Utilities):
         self._actualLabels = {}
         self._labelTargets = {}
         self._displayedLabelText = {}
+        self._mimeType = {}
         self._roleDescription = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
@@ -151,6 +152,7 @@ class Utilities(script_utilities.Utilities):
         self._actualLabels = {}
         self._labelTargets = {}
         self._displayedLabelText = {}
+        self._mimeType = {}
         self._roleDescription = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
@@ -291,6 +293,31 @@ class Utilities(script_utilities.Utilities):
                 return document.getAttributeValue('DocURL')
 
         return None
+
+    def isPlainText(self, documentFrame=None):
+        return self.mimeType(documentFrame) == "text/plain"
+
+    def mimeType(self, documentFrame=None):
+        documentFrame = documentFrame or self.documentFrame()
+        rv = self._mimeType.get(hash(documentFrame))
+        if rv is not None:
+            return rv
+
+        try:
+            document = documentFrame.queryDocument()
+            attrs = dict([attr.split(":", 1) for attr in document.getAttributes()])
+        except NotImplementedError:
+            msg = "WEB: %s does not implement document interface" % documentFrame
+            debug.println(debug.LEVEL_INFO, msg, True)
+        except:
+            msg = "ERROR: Exception getting document attributes of %s" % documentFrame
+            debug.println(debug.LEVEL_INFO, msg, True)
+        else:
+            rv = attrs.get("MimeType")
+            msg = "WEB: MimeType of %s is '%s'" % (documentFrame, rv)
+            self._mimeType[hash(documentFrame)] = rv
+
+        return rv
 
     def grabFocusWhenSettingCaret(self, obj):
         try:
