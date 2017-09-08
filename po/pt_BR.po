@@ -17,18 +17,18 @@
 # Antonio Fernandes C. Neto <fernandesn@gnome.org>, 2011, 2012.
 # José Vilmar Estácio de Souza <vilmar@informal.com.br>, 2013.
 # Júnior Pires <juniorpiresupe@gmail.com>, 2013.
-# Tiago Melo Casal <tcasal@intervox.nce.ufrj.br>, 2007-2009, 2015.
 # Raniere Gaia <raniere@ime.unicamp.br>, 2015.
 # Rafael Gazoni <rafael.moreira@ifms.edu.br>, 2016.
 # Enrico Nicoletto <liverig@gmail.com>, 2013, 2014, 2015, 2016.
+# Tiago Melo Casal <tcasal@intervox.nce.ufrj.br>, 2007, 2008, 2009, 2015, 2017.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2013, 2014, 2015, 2016, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=orca&k"
-"eywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2017-08-03 10:33+0000\n"
-"PO-Revision-Date: 2017-08-23 01:10-0200\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=orca&keywords=I18N+L10N&component=i18n\n"
+"POT-Creation-Date: 2017-08-28 01:25+0000\n"
+"PO-Revision-Date: 2017-09-08 00:10-0300\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -36,7 +36,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Virtaal 1.0.0-beta1\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Project-Style: gnome\n"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
@@ -6201,7 +6201,7 @@ msgstr "conjunto vazio"
 #: ../src/orca/mathsymbols.py:1381
 msgctxt "math symbol"
 msgid "increment"
-msgstr "delta"
+msgstr "incremento"
 
 #. Translators: this is the spoken representation for the character '∇' (U+2207)
 #: ../src/orca/mathsymbols.py:1384
@@ -9145,7 +9145,6 @@ msgstr "deixando a citação."
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1060
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving feed."
 msgstr "deixando o feed."
@@ -9155,7 +9154,6 @@ msgstr "deixando o feed."
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1066
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving figure."
 msgstr "deixando a figura."
@@ -9253,8 +9251,6 @@ msgstr "deixando a tabela."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1131
-#| msgctxt "role"
-#| msgid "leaving search."
 msgctxt "role"
 msgid "leaving abstract."
 msgstr "deixando o abstrato."
@@ -9264,8 +9260,6 @@ msgstr "deixando o abstrato."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1137
-#| msgctxt "role"
-#| msgid "leaving main content."
 msgctxt "role"
 msgid "leaving acknowledgments."
 msgstr "deixando os agradecimentos."
@@ -9275,7 +9269,6 @@ msgstr "deixando os agradecimentos."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1143
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving afterword."
 msgstr "deixando o posfácio."
@@ -9285,7 +9278,6 @@ msgstr "deixando o posfácio."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1149
-#| msgid "leaving panel."
 msgctxt "role"
 msgid "leaving appendix."
 msgstr "deixando o apêndice."
@@ -9295,7 +9287,6 @@ msgstr "deixando o apêndice."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1155
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving bibliography."
 msgstr "deixando a bibliografia."
@@ -9305,8 +9296,6 @@ msgstr "deixando a bibliografia."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1161
-#| msgctxt "role"
-#| msgid "leaving banner."
 msgctxt "role"
 msgid "leaving chapter."
 msgstr "deixando o capítulo."
@@ -9316,7 +9305,6 @@ msgstr "deixando o capítulo."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1167
-#| msgid "leaving panel."
 msgctxt "role"
 msgid "leaving colophon."
 msgstr "deixando o cólofon."
@@ -9326,8 +9314,6 @@ msgstr "deixando o cólofon."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1173
-#| msgctxt "role"
-#| msgid "leaving region."
 msgctxt "role"
 msgid "leaving conclusion."
 msgstr "deixando a conclusão."
@@ -9337,8 +9323,6 @@ msgstr "deixando a conclusão."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1179
-#| msgctxt "role"
-#| msgid "leaving region."
 msgctxt "role"
 msgid "leaving credit."
 msgstr "deixando o crédito."
@@ -9348,8 +9332,6 @@ msgstr "deixando o crédito."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1185
-#| msgctxt "role"
-#| msgid "leaving region."
 msgctxt "role"
 msgid "leaving credits."
 msgstr "deixando os créditos."
@@ -9359,8 +9341,6 @@ msgstr "deixando os créditos."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1191
-#| msgctxt "role"
-#| msgid "leaving navigation."
 msgctxt "role"
 msgid "leaving dedication."
 msgstr "deixando a dedicação."
@@ -9370,8 +9350,6 @@ msgstr "deixando a dedicação."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1197
-#| msgctxt "role"
-#| msgid "leaving banner."
 msgctxt "role"
 msgid "leaving endnotes."
 msgstr "deixando as notas finais."
@@ -9381,8 +9359,6 @@ msgstr "deixando as notas finais."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1203
-#| msgctxt "role"
-#| msgid "leaving search."
 msgctxt "role"
 msgid "leaving epigraph."
 msgstr "deixando o epígrafo."
@@ -9392,8 +9368,6 @@ msgstr "deixando o epígrafo."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1209
-#| msgctxt "role"
-#| msgid "leaving region."
 msgctxt "role"
 msgid "leaving epilogue."
 msgstr "deixando o epílogo."
@@ -9403,7 +9377,6 @@ msgstr "deixando o epílogo."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1215
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving errata."
 msgstr "deixando a errata."
@@ -9413,7 +9386,6 @@ msgstr "deixando a errata."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1221
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving example."
 msgstr "deixando o exemplo."
@@ -9423,7 +9395,6 @@ msgstr "deixando o exemplo."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1227
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving foreword."
 msgstr "deixando o preâmbulo."
@@ -9433,8 +9404,6 @@ msgstr "deixando o preâmbulo."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1233
-#| msgctxt "role"
-#| msgid "leaving search."
 msgctxt "role"
 msgid "leaving glossary."
 msgstr "deixando o glossário."
@@ -9444,7 +9413,6 @@ msgstr "deixando o glossário."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1239
-#| msgid "leaving panel."
 msgctxt "role"
 msgid "leaving index."
 msgstr "deixando o índice."
@@ -9454,8 +9422,6 @@ msgstr "deixando o índice."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1245
-#| msgctxt "role"
-#| msgid "leaving information."
 msgctxt "role"
 msgid "leaving introduction."
 msgstr "deixando a introdução."
@@ -9465,7 +9431,6 @@ msgstr "deixando a introdução."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1251
-#| msgid "leaving list."
 msgctxt "role"
 msgid "leaving page list."
 msgstr "deixando a lista de páginas."
@@ -9475,7 +9440,6 @@ msgstr "deixando a lista de páginas."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1257
-#| msgid "leaving panel."
 msgctxt "role"
 msgid "leaving part."
 msgstr "deixando a parte."
@@ -9485,7 +9449,6 @@ msgstr "deixando a parte."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1263
-#| msgid "leaving panel."
 msgctxt "role"
 msgid "leaving preface."
 msgstr "deixando o prefácio."
@@ -9495,7 +9458,6 @@ msgstr "deixando o prefácio."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1269
-#| msgid "leaving blockquote."
 msgctxt "role"
 msgid "leaving prologue."
 msgstr "deixando o prólogo."
@@ -9505,7 +9467,6 @@ msgstr "deixando o prólogo."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1275
-#| msgid "leaving blockquote."
 msgctxt "role"
 msgid "leaving pullquote."
 msgstr "deixando a citação."
@@ -9515,7 +9476,6 @@ msgstr "deixando a citação."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1281
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving QNA."
 msgstr "deixando P&R."
@@ -9525,8 +9485,6 @@ msgstr "deixando P&R."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1287
-#| msgctxt "role"
-#| msgid "leaving main content."
 msgctxt "role"
 msgid "leaving table of contents."
 msgstr "deixando a tabela de conteúdo."
@@ -11244,8 +11202,6 @@ msgstr "abstrato"
 #. This role refers to the acknowledgments in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-acknowledgments
 #: ../src/orca/object_properties.py:99
-#| msgctxt "math symbol"
-#| msgid "complement"
 msgctxt "role"
 msgid "acknowledgments"
 msgstr "agradecimentos"
@@ -11255,8 +11211,6 @@ msgstr "agradecimentos"
 #. This role refers to the afterword in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-afterword
 #: ../src/orca/object_properties.py:105
-#| msgctxt "key echo"
-#| msgid "word"
 msgctxt "role"
 msgid "afterword"
 msgstr "posfácio"
@@ -11302,7 +11256,6 @@ msgstr "capítulo"
 #. This role refers to the colophon in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-colophon
 #: ../src/orca/object_properties.py:135
-#| msgid "colon"
 msgctxt "role"
 msgid "colophon"
 msgstr "cólofon"
@@ -11321,8 +11274,6 @@ msgstr "conclusão"
 #. This role refers to the cover in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-cover
 #: ../src/orca/object_properties.py:147
-#| msgctxt "math fraction"
-#| msgid "over"
 msgctxt "role"
 msgid "cover"
 msgstr "capa"
@@ -11350,8 +11301,6 @@ msgstr "créditos"
 #. This role refers to the dedication in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-dedication
 #: ../src/orca/object_properties.py:165
-#| msgctxt "textattr"
-#| msgid "direction"
 msgctxt "role"
 msgid "dedication"
 msgstr "dedicação"
@@ -11424,8 +11373,6 @@ msgstr "nota de rodapé"
 #. This role refers to the foreword in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-foreword
 #: ../src/orca/object_properties.py:213
-#| msgctxt "key echo"
-#| msgid "word"
 msgctxt "role"
 msgid "foreword"
 msgstr "preâmbulo"
@@ -11444,8 +11391,6 @@ msgstr "glossário"
 #. This role refers to the index in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-index
 #: ../src/orca/object_properties.py:225
-#| msgctxt "textattr"
-#| msgid "indent"
 msgctxt "role"
 msgid "index"
 msgstr "índice"
@@ -11455,8 +11400,6 @@ msgstr "índice"
 #. This role refers to the introduction in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-introduction
 #: ../src/orca/object_properties.py:231
-#| msgctxt "math symbol"
-#| msgid "intersection"
 msgctxt "role"
 msgid "introduction"
 msgstr "introdução"
@@ -11475,7 +11418,6 @@ msgstr "quebra de página"
 #. This role refers to a page list in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pagelist
 #: ../src/orca/object_properties.py:243
-#| msgid "leaving list."
 msgctxt "role"
 msgid "page list"
 msgstr "lista de páginas"
@@ -11512,7 +11454,6 @@ msgstr "prólogo"
 #. This role refers to a pullquote in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pullquote
 #: ../src/orca/object_properties.py:267
-#| msgid "quote"
 msgctxt "role"
 msgid "pullquote"
 msgstr "citação"
@@ -11543,7 +11484,6 @@ msgstr "subtítulo"
 #. This role refers to the table of contents in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-toc
 #: ../src/orca/object_properties.py:288
-#| msgid "Enable layout mode for content"
 msgctxt "role"
 msgid "table of contents"
 msgstr "tabela de conteúdo"
@@ -12433,7 +12373,7 @@ msgstr "Habilitar eco de _tecla"
 
 #: ../src/orca/orca-setup.ui.h:161
 msgid "Enable _alphabetic keys"
-msgstr "Habilitar teclas de _alfabéticas"
+msgstr "Habilitar teclas _alfabéticas"
 
 #: ../src/orca/orca-setup.ui.h:162
 msgid "Enable n_umeric keys"
