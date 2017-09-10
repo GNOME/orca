@@ -22,16 +22,16 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2017-07-21 10:44+0000\n"
-"PO-Revision-Date: 2017-07-31 21:59+0200\n"
-"Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
+"POT-Creation-Date: 2017-08-20 18:11+0000\n"
+"PO-Revision-Date: 2017-09-10 10:37+0200\n"
+"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Project-Style: gnome\n"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
@@ -8446,7 +8446,7 @@ msgstr "Die Übersicht betreten."
 #. let the user know he/she just entered flat review.
 #: ../src/orca/messages.py:523
 msgid "Leaving flat review."
-msgstr "Die Übersicht verlassen."
+msgstr "Die Übersicht wird verlassen."
 
 #. Translators: this means a particular cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
@@ -9150,18 +9150,16 @@ msgstr ""
 #. blockquote and then navigates out of it.
 #: ../src/orca/messages.py:1054
 msgid "leaving blockquote."
-msgstr "Zitat verlassen."
+msgstr "Zitat wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
 #. an object and then navigates out of it. The word or phrase that follows
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1060
-#, fuzzy
-#| msgid "leaving form."
 msgctxt "role"
 msgid "leaving feed."
-msgstr "Formular verlassen."
+msgstr "Artikelliste wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
 #. an object and then navigates out of it. The word or phrase that follows
@@ -9176,7 +9174,7 @@ msgstr "Abbildung wird verlassen."
 #. form and then navigates out of it.
 #: ../src/orca/messages.py:1070
 msgid "leaving form."
-msgstr "Formular verlassen."
+msgstr "Formular wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9185,7 +9183,7 @@ msgstr "Formular verlassen."
 #: ../src/orca/messages.py:1076
 msgctxt "role"
 msgid "leaving banner."
-msgstr "Banner verlassen."
+msgstr "Banner wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9194,7 +9192,7 @@ msgstr "Banner verlassen."
 #: ../src/orca/messages.py:1082
 msgctxt "role"
 msgid "leaving complementary content."
-msgstr "Ergänzenden Inhalt verlassen."
+msgstr "Ergänzender Inhalt wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9203,7 +9201,7 @@ msgstr "Ergänzenden Inhalt verlassen."
 #: ../src/orca/messages.py:1088
 msgctxt "role"
 msgid "leaving information."
-msgstr "Information verlassen."
+msgstr "Information wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9212,7 +9210,7 @@ msgstr "Information verlassen."
 #: ../src/orca/messages.py:1094
 msgctxt "role"
 msgid "leaving main content."
-msgstr "Hauptinhalt verlassen."
+msgstr "Hauptinhalt wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9221,7 +9219,7 @@ msgstr "Hauptinhalt verlassen."
 #: ../src/orca/messages.py:1100
 msgctxt "role"
 msgid "leaving navigation."
-msgstr "Navigation verlassen."
+msgstr "Navigation wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9230,7 +9228,7 @@ msgstr "Navigation verlassen."
 #: ../src/orca/messages.py:1106
 msgctxt "role"
 msgid "leaving region."
-msgstr "Bereich verlassen."
+msgstr "Bereich wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9239,265 +9237,265 @@ msgstr "Bereich verlassen."
 #: ../src/orca/messages.py:1112
 msgctxt "role"
 msgid "leaving search."
-msgstr "Suche verlassen."
+msgstr "Suche wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within a
 #. list and then navigates out of it.
 #: ../src/orca/messages.py:1116
 msgid "leaving list."
-msgstr "Liste verlassen."
+msgstr "Liste wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within a
 #. panel and then navigates out of it. A panel is a generic container of
 #. objects, such as a group of related form fields.
 #: ../src/orca/messages.py:1121
 msgid "leaving panel."
-msgstr "Panel verlassen."
+msgstr "Panel wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within a
 #. table and then navigates out of it.
 #: ../src/orca/messages.py:1125
 msgid "leaving table."
-msgstr "Tabelle verlassen."
+msgstr "Tabelle wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1131
 msgctxt "role"
 msgid "leaving abstract."
 msgstr "Zusammenfassung wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1137
 msgctxt "role"
 msgid "leaving acknowledgments."
 msgstr "Danksagungen werden verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1143
 msgctxt "role"
 msgid "leaving afterword."
 msgstr "Nachwort wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1149
 msgctxt "role"
 msgid "leaving appendix."
 msgstr "Anhang wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1155
 msgctxt "role"
 msgid "leaving bibliography."
 msgstr "Bibliografie wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1161
 msgctxt "role"
 msgid "leaving chapter."
 msgstr "Kapitel wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1167
 msgctxt "role"
 msgid "leaving colophon."
 msgstr "Schlussschrift wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1173
 msgctxt "role"
 msgid "leaving conclusion."
 msgstr "Schlussfolgerung wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1179
 msgctxt "role"
 msgid "leaving credit."
 msgstr "Danksagung wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1185
 msgctxt "role"
 msgid "leaving credits."
 msgstr "Danksagung wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1191
 msgctxt "role"
 msgid "leaving dedication."
 msgstr "Widmung wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1197
 msgctxt "role"
 msgid "leaving endnotes."
 msgstr "Endnoten werden verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1203
 msgctxt "role"
 msgid "leaving epigraph."
 msgstr "Epigraph wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1209
 msgctxt "role"
 msgid "leaving epilogue."
 msgstr "Epilog wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1215
 msgctxt "role"
 msgid "leaving errata."
 msgstr "Errata werden verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1221
 msgctxt "role"
 msgid "leaving example."
 msgstr "Beispiel wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1227
 msgctxt "role"
 msgid "leaving foreword."
 msgstr "Vorwort wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1233
 msgctxt "role"
 msgid "leaving glossary."
 msgstr "Glossar wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1239
 msgctxt "role"
 msgid "leaving index."
 msgstr "Index wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1245
 msgctxt "role"
 msgid "leaving introduction."
 msgstr "Einführung wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1251
 msgctxt "role"
 msgid "leaving page list."
 msgstr "Seitenliste wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1257
 msgctxt "role"
 msgid "leaving part."
 msgstr "Teil wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1263
 msgctxt "role"
 msgid "leaving preface."
 msgstr "Einleitung wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1269
 msgctxt "role"
 msgid "leaving prologue."
 msgstr "Prolog wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1275
 msgctxt "role"
 msgid "leaving pullquote."
 msgstr "Zitat wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1281
 msgctxt "role"
 msgid "leaving QNA."
 msgstr "Fragen und Antworten werden verlassen."
 
 #. Translators: This message is presented when a user is navigating within
-#. a type of landmark and then navigates out of it. The word or phrase that
-#. follows "leaving" should be consistent with the translation provided for
-#. the corresponding term with context "role" found in object_properties.py
+#. a document container and then navigates out of it. The word or phrase
+#. that follows "leaving" should be consistent with the translation provided
+#. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1287
 msgctxt "role"
 msgid "leaving table of contents."
@@ -11191,7 +11189,7 @@ msgstr "Bearbeitbares Auswahlfeld"
 #: ../src/orca/object_properties.py:80
 msgctxt "role"
 msgid "feed"
-msgstr ""
+msgstr "Artikelliste"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11406,8 +11404,6 @@ msgstr "Glossar"
 #. This role refers to the index in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-index
 #: ../src/orca/object_properties.py:225
-#| msgctxt "textattr"
-#| msgid "indent"
 msgctxt "role"
 msgid "index"
 msgstr "Index"
