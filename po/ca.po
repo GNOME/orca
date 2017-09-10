@@ -2,7 +2,7 @@
 # Copyright © 2006, 2007, 2008 Free Software Foundation, Inc.
 # This file is distributed under the same license as the orca package.
 # Gil Forcada <gilforcada@guifi.net>, 2006-2014.
-# Jordi Serratosa <jordis@softcatala.cat>, 2012.
+# Jordi Serratosa <jordis@softcatala.cat>, 2012, 2017.
 # Walter Garcia-Fontes <walter.garcia@upf.edu>, 2016.
 #
 # per veure els símbols als quals s'ha de posar noms vegeu:
@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2017-08-30 16:40+0000\n"
+"POT-Creation-Date: 2017-09-03 08:04+0000\n"
 "PO-Revision-Date: 2017-09-03 01:16+0200\n"
 "Last-Translator: Jordi Mas <jmas@softcatala.org>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -1777,7 +1777,7 @@ msgstr "Mou el punter fins a l'element actual."
 #. Left click means to generate a left mouse button click on the current item.
 #: ../src/orca/cmdnames.py:45
 msgid "Performs left click on current flat review item."
-msgstr "Fa clic amb el botó secundari a l'element actual de la revisió plana."
+msgstr "Fa clic amb el botó esquerre a l'element actual de la revisió plana."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1787,7 +1787,7 @@ msgstr "Fa clic amb el botó secundari a l'element actual de la revisió plana."
 #. Right click means to generate a right mouse button click on the current item.
 #: ../src/orca/cmdnames.py:53
 msgid "Performs right click on current flat review item."
-msgstr "Fa clic amb el botó principal a l'element actual de la revisió plana."
+msgstr "Fa clic amb el botó dret a l'element actual de la revisió plana."
 
 #. Translators: the Orca "SayAll" command allows the user to press a key and have
 #. the entire document in a window be automatically spoken to the user. If the
@@ -4596,7 +4596,7 @@ msgstr "Opcions de cerca"
 #. which contained the last match.
 #: ../src/orca/guilabels.py:239
 msgid "Onl_y speak changed lines during find"
-msgstr "Pronuncia només les línies diferents mentre es _cerca"
+msgstr "Pronuncia només les línies diferents durant la _cerca"
 
 #. Translators: This is the label for a checkbox. This option controls whether or
 #. not Orca will automatically speak the line that contains the match while the
@@ -4604,7 +4604,7 @@ msgstr "Pronuncia només les línies diferents mentre es _cerca"
 #. Firefox.
 #: ../src/orca/guilabels.py:245
 msgid "Speak results during _find"
-msgstr "Pronuncia els resultats mentre es _cerca"
+msgstr "Pronuncia els resultats durant la _cerca"
 
 #. Translators: Function is a table column header where the cells in the column
 #. are a sentence that briefly describes what action Orca will take if and when
@@ -6131,7 +6131,7 @@ msgstr "línia vertical doble"
 #: ../src/orca/mathsymbols.py:1360
 msgctxt "math symbol"
 msgid "horizontal ellipsis"
-msgstr "el·lipse horitzontal"
+msgstr "el·lipsi horitzontal"
 
 #. Translators: this is the spoken representation for the character '∀' (U+2200)
 #: ../src/orca/mathsymbols.py:1363
@@ -6651,7 +6651,7 @@ msgstr "igual dos punts"
 #: ../src/orca/mathsymbols.py:1621
 msgctxt "math symbol"
 msgid "ring in equal to"
-msgstr "igual a amb anell adins"
+msgstr "igual a amb anell a dins"
 
 #. Translators: this is the spoken representation for the character '≗' (U+2257)
 #: ../src/orca/mathsymbols.py:1624
@@ -7541,25 +7541,25 @@ msgstr "no conté com a subgrup normal o igual"
 #: ../src/orca/mathsymbols.py:2077
 msgctxt "math symbol"
 msgid "vertical ellipsis"
-msgstr "el·lipse vertical"
+msgstr "el·lipsi vertical"
 
 #. Translators: this is the spoken representation for the character '⋯' (U+22ef)
 #: ../src/orca/mathsymbols.py:2080
 msgctxt "math symbol"
 msgid "midline horizontal ellipsis"
-msgstr "el·lipse horitzontal de línia mitjana"
+msgstr "el·lipsi horitzontal de línia mitjana"
 
 #. Translators: this is the spoken representation for the character '⋰' (U+22f0)
 #: ../src/orca/mathsymbols.py:2083
 msgctxt "math symbol"
 msgid "up right diagonal ellipsis"
-msgstr "el·lipse diagonal cap amunt a la dreta"
+msgstr "el·lipsi diagonal cap amunt a la dreta"
 
 #. Translators: this is the spoken representation for the character '⋱' (U+22f1)
 #: ../src/orca/mathsymbols.py:2086
 msgctxt "math symbol"
 msgid "down right diagonal ellipsis"
-msgstr "el·lipse diagonal cap avall a la dreta"
+msgstr "el·lipsi diagonal cap avall a la dreta"
 
 #. Translators: this is the spoken representation for the character '⋲' (U+22f2)
 #: ../src/orca/mathsymbols.py:2089
@@ -7619,7 +7619,7 @@ msgstr "conté amb línia horitzontal llarga"
 #: ../src/orca/mathsymbols.py:2116
 msgctxt "math symbol"
 msgid "contains with vertical bar at end of horizontal stroke"
-msgstr "conte amb barra vertical al final de la línia horitzontal"
+msgstr "conté amb barra vertical al final de la línia horitzontal"
 
 #. Translators: this is the spoken representation for the character '⋼' (U+22fc)
 #: ../src/orca/mathsymbols.py:2119
@@ -7637,7 +7637,7 @@ msgstr "conté amb barra a sobre"
 #: ../src/orca/mathsymbols.py:2125
 msgctxt "math symbol"
 msgid "small contains with overbar"
-msgstr "conte petit amb barra a sobre"
+msgstr "conté petit amb barra a sobre"
 
 #. Translators: this is the spoken representation for the character '⋿' (U+22ff)
 #: ../src/orca/mathsymbols.py:2128
@@ -8093,7 +8093,7 @@ msgstr "Informeu d'errors a orca-list@gnome.org"
 #. is the full/verbose indication.
 #: ../src/orca/messages.py:275
 msgid "Cut selection to clipboard."
-msgstr "Talla la selecció al porta-retalls."
+msgstr "Retalla la selecció al porta-retalls."
 
 #. Translators: Orca normal speaks the text which was just deleted from a
 #. document via command. Depending on the circumstances, that might be a
@@ -8104,7 +8104,7 @@ msgstr "Talla la selecció al porta-retalls."
 #: ../src/orca/messages.py:283
 msgctxt "clipboard"
 msgid "cut"
-msgstr "talla"
+msgstr "retalla"
 
 #. Translators: This message is the detailed message presented when the contents
 #. of the clipboard have changed and match the current selection.
@@ -10586,7 +10586,7 @@ msgstr "Pronuncia la fila"
 #. in which at least one table cell occupies more than one row and/or column.
 #: ../src/orca/messages.py:2104
 msgid "Non-uniform"
-msgstr "no uniforme"
+msgstr "No uniforme"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. If the user gives a table navigation command but is not in a
