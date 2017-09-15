@@ -1,3 +1,54 @@
+3.26.0 - 15 September 2017
+
+Web:
+
+ * Add support for aria-errormessage
+
+ * Add support for aria-keyshortcuts
+
+ * Fix several issues related to presentation of plain text content
+
+LibreOffice:
+
+ * Filter out checked event from window which isn't active
+
+ * Work around event-ordering issue
+
+General:
+
+ * Fix incorrect presentation of old ancestors
+
+ * Fix issue related to presentation of status bars
+
+ * Remove unneeded try/except around Gdk.notify_startup_complete()
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca            Catalan               Jordi Mas
+    cs            Czech                 Marek Cernocky
+    da            Danish                Kenneth Nielsen
+    de            German                Christian Kirbach,
+                                        Mario Blättermann
+    fi            Finnish               Jiri Grönroos
+    fr            French                Alain Lojewski
+    fur           Friulian              Fabio Tomat
+    gl            Galician              Fran Dieguez
+    hu            Hungarian             Attila Hammer
+    it            Italian               Milo Casagrande
+    lt            Lithuanian            Aurimas Černius
+    lv            Latvian               Rūdolfs Mazurs
+    ml            Malayalam             Anish Sheela
+    pl            Polish                Piotr Drąg
+    pt_BR         Brazilian Portuguese  Rafael Fontenelle,
+                                        Tiago Casal
+    sl            Slovenian             Matej Urbančič
+    sr            Serbian               Марко Костић
+    sr@latin      Serbian               Милош Поповић
+    sv            Swedish               Anders Jonsson
+    tr            Turkish               Emin Tufan Çetin
+
+=========
+
 3.25.4 - 31 July 2017
 
 Web:
