@@ -80,7 +80,7 @@
       <p>
         Depending on where you are, it may be necessary for you to explicitly
         toggle Structural Navigation on before you can use it. To learn more, read
-        <link type="seealso" xref="howto_structural_navigation#toggling_required">
+        <link xref="howto_structural_navigation#toggling_required">
         when toggling Structural Navigation on is required.</link>
       </p>
     </note>
