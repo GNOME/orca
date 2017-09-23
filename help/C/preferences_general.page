@@ -208,7 +208,7 @@
   </section>
   <section id="progress_bar_updates">
     <title>Progress Bar Updates</title>
-    <section>
+    <section id="progress_bar_updates_speak">
       <title>Speak updates</title>
       <p>
         If the <gui>Speak updates</gui> checkbox is checked <app>Orca</app> will
@@ -218,7 +218,7 @@
         Default value: checked
       </p>
     </section>
-    <section>
+    <section id="progress_bar_updates_braille">
       <title>Braille updates</title>
       <p>
         If the <gui>Braille updates</gui> checkbox is checked <app>Orca</app> will
@@ -229,7 +229,7 @@
         Default value: not checked
       </p>
     </section>
-    <section>
+    <section id="progress_bar_updates_beep">
       <title>Beep updates</title>
       <p>
         If the <gui>Beep updates</gui> checkbox is checked <app>Orca</app> will
@@ -240,7 +240,7 @@
         Default value: not checked
       </p>
     </section>
-    <section>
+    <section id="progress_bar_updates_frequency">
       <title>Frequency (secs)</title>
       <p>
         This spin button determines how often updates are presented.
@@ -249,7 +249,7 @@
         Default value: 10
       </p>
     </section>
-    <section>
+    <section id="progress_bar_updates_restrict">
       <title>Restrict to</title>
       <p>
          This combo box allows you to control which progress bars should be

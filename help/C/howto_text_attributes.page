@@ -20,7 +20,7 @@
     and other formatting associated with a given character or series of
     characters.
   </p>
-  <section>
+  <section id="obtaining">
     <title>Obtaining Formatting Information</title>
     <p>
       When you press <keyseq><key>Orca Modifier</key><key>F</key>
@@ -44,7 +44,7 @@
       application you use.
     </p>
   </section>
-  <section>
+  <section id="identifying_misspelled_words">
     <title>Identifying Misspelled Words</title>
     <p>
       Most applications and toolkits indicate that a word is misspelled by

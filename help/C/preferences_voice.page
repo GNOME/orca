@@ -18,7 +18,7 @@
   <title>Voice Preferences</title>
   <section id="voice_type_settings">
     <title>Voice Type Settings</title>
-    <section>
+    <section id="voice_type">
       <title>Voice type</title>
       <p>
         This combo box makes it possible for you to use different voices so that
@@ -35,21 +35,21 @@
         </p>
       </note>
     </section>
-    <section>
+    <section id="speech_system">
       <title>Speech system</title>
       <p>
         This combo box allows you to select your preferred speech system from
         those you have installed, such as Speech Dispatcher.
       </p>
     </section>
-    <section>
+    <section id="speech_synthesizer">
       <title>Speech synthesizer</title>
       <p>
         This combo box allows you to select the speech synthesizer to be used
         with your chosen Speech system.
       </p>
     </section>
-    <section>
+    <section id="person">
       <title>Person</title>
       <p>
         This combo box allows you to choose which "person" or "speaker" should
@@ -59,7 +59,7 @@
         speech synthesizers you have installed.
       </p>
     </section>
-    <section>
+    <section id="capitalization_style">
       <title>Capitalization style</title>
       <p>
        This combo box allows you to choose which Speech Dispatcher capitalization
@@ -84,7 +84,7 @@
       Default value: none
     </p>
     </section>
-    <section>
+    <section id="rate_pitch_and_volume">
       <title>Rate, Pitch, and Volume</title>
       <p>
         These three left-right sliders allow you to further customize the sound

@@ -119,7 +119,7 @@
         <app>Orca</app> has several settings you can use to control flash message
         presentation.
     </p>
-    <section>
+    <section id="flashMessageSettings_enable">
       <title>Enable flash messages</title>
       <p>
         If <gui>Enable flash messages</gui> is checked, <app>Orca</app> will
@@ -130,7 +130,7 @@
         Default value: checked
       </p>
     </section>
-    <section>
+    <section id="flashMessageSettings_detailed">
       <title>Messages are detailed</title>
       <p>
         If <gui>Messages are detailed</gui> is checked, <app>Orca</app> will
@@ -143,7 +143,7 @@
         Default value: checked
       </p>
     </section>
-    <section>
+    <section id="flashMessageSettings_persistent">
       <title>Messages are persistent</title>
       <p>
         As stated above, flash messages are only shown for a brief period of time.
@@ -155,7 +155,7 @@
         Default value: not checked
       </p>
     </section>
-    <section>
+    <section id="flashMessageSettings_duration">
       <title>Message duration (secs)</title>
       <p>
         The amount of time <app>Orca</app> will wait before removing the message and

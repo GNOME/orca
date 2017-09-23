@@ -28,7 +28,7 @@
     <p>
       Default value: checked
     </p>  
-    <section>
+    <section id="keyecho_enable_alphanumeric">
       <title>Enable alphabetic keys</title>
       <p>
         This option controls whether or not keys like <key>a</key>,
@@ -38,7 +38,7 @@
         Default value: checked
       </p>
     </section>
-    <section>
+    <section id="keyecho_enable_numeric">
       <title>Enable numeric keys</title>
       <p>
         This option controls whether or not keys like <key>1</key>,
@@ -48,7 +48,7 @@
         Default value: checked
       </p>
     </section>
-    <section>
+    <section id="keyecho_enable_punctuation">
       <title>Enable punctuation keys</title>
       <p>
         This option controls whether or not keys like <key>%</key>,
@@ -58,7 +58,7 @@
         Default value: checked
       </p>
     </section>
-    <section>
+    <section id="keyecho_enable_space">
       <title>Enable space</title>
       <p>
         This option controls whether or not <key>space</key> should be
@@ -68,7 +68,7 @@
         Default value: checked
       </p>
     </section>
-    <section>
+    <section id="keyecho_enable_modifier">
       <title>Enable modifier keys</title>
       <p>
         This option controls whether or not <key>Shift</key>, <key>Ctrl</key>,
@@ -78,7 +78,7 @@
         Default value: checked
       </p>
     </section>
-    <section>
+    <section id="keyecho_enable_function">
       <title>Enable function keys</title>
       <p>
         This option controls whether or not <key>F1</key> through <key>F12</key>
@@ -88,7 +88,7 @@
         Default value: checked
       </p>
     </section>
-    <section>
+    <section id="keyecho_enable_action">
       <title>Enable action keys</title>
       <p>
         This option controls whether or not <key>BackSpace</key>, <key>Delete
@@ -100,7 +100,7 @@
         Default value: checked
       </p>
     </section>
-    <section>
+    <section id="keyecho_enable_navigation">
       <title>Enable navigation keys</title>
       <p>
         This option controls whether or not <key>Left</key>, <key>Right</key>,
@@ -113,7 +113,7 @@
         Default value: not checked
       </p>
     </section>
-    <section>
+    <section id="keyecho_enable_diacritical">
       <title>Enable non-spacing diacritical keys</title>
       <p>
         This option controls whether or not "dead keys" used to generate

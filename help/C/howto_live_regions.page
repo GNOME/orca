@@ -23,7 +23,7 @@
     regions are encountered less often. This problem is actively being
     addressed by a number of organizations.
   </p>
-  <section>
+  <section id="politeness_levels">
     <title>Live Region Politeness Levels</title>
     <p>
       Live regions have an associated "politeness" level which is set by the
@@ -33,7 +33,7 @@
       "aggressive" to the point of being "rude."
     </p>
   </section>
-  <section>
+  <section id="orca_support">
     <title><app>Orca</app>'s Support for Live Regions</title>
     <p>
       Because you might not agree with the politeness level specified by the

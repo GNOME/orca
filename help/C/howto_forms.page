@@ -21,7 +21,7 @@
     document. <app>Orca</app>'s browse and focus modes let you switch between
     reading and filling out forms.
   </p>
-  <section>
+  <section id="navigating_amongst_form_fields">
     <title>Navigating Amongst Form Fields</title>
     <p>
       To navigate amongst form fields, you have several options:
@@ -55,7 +55,7 @@
      </p>
    </note>
   </section>
-  <section>
+  <section id="exiting_form_fields">
     <title>Exiting Form Fields</title>
     <p>
       To exit a form field, you have several options:

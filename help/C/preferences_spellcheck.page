@@ -32,7 +32,7 @@
       options were enabled.
     </p>
   </note>
-  <section>
+  <section id="spell_error">
     <title>Spell error</title>
     <p>
       If this checkbox is checked, <app>Orca</app> will spell out the misspelled
@@ -42,7 +42,7 @@
        Default value: checked
     </p>
   </section>
-  <section>
+  <section id="spell_suggestion">
     <title>Spell suggestion</title>
     <p>
       If this checkbox is checked, <app>Orca</app> will spell out the suggested
@@ -52,7 +52,7 @@
        Default value: checked
     </p>
   </section>
-  <section>
+  <section id="error_context">
     <title>Present context of error</title>
     <p>
       If this checkbox is checked, <app>Orca</app> will speak the sentence or

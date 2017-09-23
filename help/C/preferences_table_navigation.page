@@ -25,7 +25,7 @@
     <link xref="howto_structural_navigation">Structural-Navigation</link>-enabled
     applications.
   </p>
-  <section>
+  <section id="speak_cell_coordinates">
     <title>Speak cell coordinates</title>
     <p>
       If this checkbox is checked, <app>Orca</app> will announce the coordinates
@@ -35,7 +35,7 @@
        Default value: checked
     </p>
   </section>
-  <section>
+  <section id="speak_multiple_cell_spans">
     <title>Speak multiple cell spans</title>
     <p>
       If this checkbox is checked, <app>Orca</app> will announce how many rows
@@ -45,7 +45,7 @@
        Default value: checked
     </p>
   </section>
-  <section>
+  <section id="announce_cell_header">
     <title>Announce cell header</title>
     <p>
       If this checkbox is checked, <app>Orca</app> will announce changes in the
@@ -55,7 +55,7 @@
        Default value: checked
     </p>
   </section>
-  <section>
+  <section id="skip_blank_cells">
     <title>Skip blank cells</title>
     <p>
       If this checkbox is checked, <app>Orca</app> will skip blank cells when

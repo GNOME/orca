@@ -51,7 +51,7 @@
     <p>
       Default value: <gui>Most</gui>
     </p>
-    <section>
+    <section id="punctuation_level_none">
       <title>None</title>
       <p>
         Choosing a punctuation level of <gui>None</gui> would, as you expect,
@@ -61,7 +61,7 @@
         these types of symbols punctuation.
       </p>
     </section>
-    <section>
+    <section id="punctuation_level_some">
       <title>Some</title>
       <p>
         Choosing a punctuation level of <gui>Some</gui> causes all of the
@@ -70,7 +70,7 @@
         "/", "&amp;", "#".
       </p>
     </section>
-    <section>
+    <section id="punctuation_level_most">
       <title>Most</title>
       <p>
         Choosing a punctuation level of <gui>Most</gui> causes all of the
@@ -79,7 +79,7 @@
         "'", ",", ".", "?".
       </p>
     </section>
-    <section>
+    <section id="punctuation_level_all">
       <title>All</title>
       <p>
         Choosing a punctuation level of <gui>All</gui>, as expected, causes

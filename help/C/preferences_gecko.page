@@ -24,7 +24,7 @@
       to customize how <app>Orca</app> presents, and allow you to interact with,
       text and other content.
     </p>
-    <section>
+    <section id="page_navigation_control_caret">
       <title>Control caret navigation</title>
       <p>
         This checkbox toggles <app>Orca</app>'s caret navigation on and off.
@@ -43,7 +43,7 @@
         </p>
        </note>
     </section>
-    <section>
+    <section id="page_navigation_focus_caret">
       <title>Automatic focus mode during caret navigation</title>
       <p>
         If this checkbox is checked, <app>Orca</app> will automatically turn on
@@ -67,7 +67,7 @@
         </p>
        </note>
     </section>
-    <section>
+    <section id="page_navigation_structural">
       <title>Enable structural navigation</title>
       <p>
         This checkbox toggles <app>Orca</app>'s
@@ -86,7 +86,7 @@
         </p>
        </note>
     </section>
-    <section>
+    <section id="page_navigation_focus_structural">
       <title>Automatic focus mode during structural navigation</title>
       <p>
         If this checkbox is checked, <app>Orca</app> will automatically turn on
@@ -109,7 +109,7 @@
         </p>
        </note>
     </section>
-    <section>
+    <section id="page_navigation_speak">
       <title>Automatically start speaking a page when it is first loaded</title>
       <p>
         If this checkbox is checked, <app>Orca</app> will perform a Say All on
@@ -119,7 +119,7 @@
         Default value: checked for Firefox; not checked for Thunderbird
       </p>
     </section>
-    <section>
+    <section id="page_navigation_summary">
       <title>Present summary of a page when it is first loaded</title>
       <p>
         If this checkbox is checked, <app>Orca</app> will summarize details about the
@@ -130,7 +130,7 @@
         Default value: checked for Firefox; not checked for Thunderbird
       </p>
     </section>
-    <section>
+    <section id="page_navigation_layout_mode">
       <title>Enable layout mode for content</title>
       <p>
         If this checkbox is checked, <app>Orca</app>'s caret navigation will respect
@@ -161,7 +161,7 @@
       customize how <app>Orca</app> presents the results of a search conducted
       using the application's built-in search functionality.
     </p>
-    <section>
+    <section id="find_options_speak_during_find">
       <title>Speak results during find</title>
       <p>
          If this checkbox is checked, <app>Orca</app> will read the line which
@@ -171,7 +171,7 @@
          Default value: checked
       </p>
     </section>
-    <section>
+    <section id="find_options_speak_changed_lines_during_find">
       <title>Only speak changed lines during find</title>
       <p>
           If this checkbox is checked, <app>Orca</app> will not present the
@@ -183,7 +183,7 @@
          Default value: not checked
       </p>
     </section>
-    <section>
+    <section id="find_options_minimum_match_length">
       <title>Minimum length of matched text</title>
       <p>
         This editable spin button is where you can specify the number of

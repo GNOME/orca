@@ -21,7 +21,7 @@
     behaves when providing access to instant messaging and internet
     relay chat clients.
   </p>
-  <section>
+  <section id="speak_name">
     <title>Speak Chat Room name</title>
     <p>
       If this checkbox is checked, <app>Orca</app> will prefix incoming messages
@@ -32,7 +32,7 @@
        Default value: not checked
     </p>
   </section>
-  <section>
+  <section id="announce_typing">
     <title>Announce when your buddies are typing</title>
     <p>
       If this checkbox is checked, and if <app>Orca</app> has sufficient
@@ -43,7 +43,7 @@
        Default value: not checked
     </p>
   </section>
-  <section>
+  <section id="message_histories">
     <title>Provide chat room specific message histories</title>
     <p>
       If this checkbox is checked, <app>Orca</app>'s commands for reviewing
@@ -55,7 +55,7 @@
        Default value: not checked
     </p>
   </section>
-  <section>
+  <section id="speak_messages_from">
     <title>Speak messages from</title>
     <p>
       This group of radio buttons allows you to control under what circumstances
