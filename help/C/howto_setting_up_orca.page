@@ -17,7 +17,7 @@
     </license>
   </info>
   <title>Orca Configuration</title>
-    <section id="configuring_orca">
+
       <p>
         If you want to configure <app>Orca</app>, get into the
         <link xref="preferences">Preferences</link> dialog by pressing
@@ -27,5 +27,4 @@
         in a terminal window or within the <gui>Run</gui> dialog and then press
         <key>Return</key>.
       </p>
-    </section>
 </page>
