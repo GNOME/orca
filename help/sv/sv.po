@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2017-02-06 16:00+0000\n"
-"PO-Revision-Date: 2017-02-12 00:43+0100\n"
+"POT-Creation-Date: 2017-09-15 14:18+0000\n"
+"PO-Revision-Date: 2017-10-01 23:27+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -2327,9 +2327,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:435
-#| msgid ""
-#| "Next and previous entry: <keyseq><key>E</key></keyseq> and "
-#| "<keyseq><key>Shift</key><key>E</key></keyseq>"
 msgid ""
 "Start and end of current container: <keyseq><key>Shift</key><key>comma</"
 "key></keyseq> and <keyseq><key>comma</key></keyseq>"
@@ -2548,7 +2545,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:62
 msgid "Present the title bar:"
-msgstr "Presentera titellisten:"
+msgstr "Presentera namnlisten:"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:65
@@ -4685,7 +4682,7 @@ msgid ""
 "a significant amount of information you may wish to know, but likely will "
 "not wish to know all of the time."
 msgstr ""
-"Förutom speciella kommandon för att läsa titellisten och statusraden så "
+"Förutom speciella kommandon för att läsa namnlisten och statusraden så "
 "tillhandahåller Orca två sammanhangskänsliga ”Var är jag”-kommandon: "
 "grundläggande ”Var är jag” och detaljerad ”Var är jag”. Grundläggande ”Var "
 "är jag” är implementerat för alla objekt. Detaljerad ”Var är jag” är "
