@@ -6,18 +6,18 @@
 # Baris Cicek <baris@teamforce.name.tr>, 2008, 2009.
 # Gökhan Gurbetoğlu <ggurbet@gmail.com>, 2015.
 # Neriman Kara <nerimankaraa@gmail.com>, 2016.
-# Muhammet Kara <muhammetk@gmail.com>, 2011, 2014, 2015, 2016.
 # Olcay Aşçı <olcay.ashchi@gmail.com>, 2017.
 # Emin Tufan Çetin <etcetin@gmail.com>, 2017.
+# Muhammet Kara <muhammetk@gmail.com>, 2011, 2014, 2015, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2017-09-08 06:49+0000\n"
-"PO-Revision-Date: 2017-09-09 22:56+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2017-10-15 11:32+0000\n"
+"PO-Revision-Date: 2017-10-22 23:35+0300\n"
+"Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -2180,7 +2180,7 @@ msgstr "Klavyenin odaklandığı nesneye döner."
 #. and uncontracted.
 #: ../src/orca/cmdnames.py:371
 msgid "Turns contracted braille on and off."
-msgstr "Daraltılmış Braille’i açar ve kapatır."
+msgstr "Kısaltmalı Braille’i açar ve kapatır."
 
 #. Translators: hardware braille displays often have buttons near each braille
 #. cell. These are called cursor routing keys and are a way for a user to tell
@@ -2225,13 +2225,13 @@ msgstr "Konuşma hızını arttırır."
 #. speech synthesis engine will generate speech.
 #: ../src/orca/cmdnames.py:401
 msgid "Decreases the speech pitch."
-msgstr "Konuşma adımını azaltır."
+msgstr "Konuşma perdesini düşürür."
 
 #. Translators: the speech pitch is how high or low in pitch/frequency the
 #. speech synthesis engine will generate speech.
 #: ../src/orca/cmdnames.py:405
 msgid "Increases the speech pitch."
-msgstr "Konuşma adımını arttırır."
+msgstr "Konuşma perdesini yükseltir."
 
 #. Translators: the speech volume is how high or low in gain/volume the
 #. speech synthesis engine will generate speech.
@@ -2805,7 +2805,6 @@ msgstr "Sonraki çoklu kutuya gider."
 #. to the start of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
 #: ../src/orca/cmdnames.py:823
-#| msgid "Goes to the top of the file."
 msgid "Goes to start of container."
 msgstr "Taşıyıcının başına gider."
 
@@ -2813,7 +2812,6 @@ msgstr "Taşıyıcının başına gider."
 #. to the end of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
 #: ../src/orca/cmdnames.py:828
-#| msgid "Goes to the end of the line."
 msgid "Goes to end of container."
 msgstr "Taşıyıcının sonuna gider."
 
@@ -7993,9 +7991,6 @@ msgstr "Ayarlar yöneticisi etkinleştirilemiyor. Çıkılıyor."
 #. Translators: This message is presented to the user when he/she tries to launch
 #. Orca, but Orca is already running.
 #: ../src/orca/messages.py:213
-#| msgid ""
-#| "Another screen reader process is already running for this session.\n"
-#| "Run \"orca --replace\" to replace that process with a new one."
 msgid ""
 "Another screen reader process is already running for this session.\n"
 "Run “orca --replace” to replace that process with a new one."
@@ -8221,7 +8216,6 @@ msgstr "Sohbet odasına özel ileti geçmişlerini sağla."
 #. instead present this message as an indication that the container was not
 #. exited as expected.
 #: ../src/orca/messages.py:396
-#| msgid "End of table"
 msgid "End of container."
 msgstr "Taşıyıcının sonu."
 
@@ -8230,7 +8224,6 @@ msgstr "Taşıyıcının sonu."
 #. blockquotes. If the user attempts to use this command in an object which is
 #. not a container, this message will be presented.
 #: ../src/orca/messages.py:402
-#| msgid "Not in a table."
 msgid "Not in a container."
 msgstr "Bir taşıyıcıda değil."
 
@@ -9084,12 +9077,6 @@ msgstr "Öğrenme kipi. Çıkış için kaçış tuşuna basın."
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
 #: ../src/orca/messages.py:1045
-#| msgid ""
-#| "Entering learn mode.  Press any key to hear its function.  To view the "
-#| "screen reader's documentation, press F1. To get a list of the screen "
-#| "reader's default shortcuts, press F2. To get a list of the screen "
-#| "reader's shortcuts for the current application, press F3. To exit learn "
-#| "mode, press the escape key."
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the "
 "screen reader’s documentation, press F1. To get a list of the screen "
@@ -9106,7 +9093,6 @@ msgstr ""
 #. Translators: This message is presented when a user is navigating within a
 #. blockquote and then navigates out of it.
 #: ../src/orca/messages.py:1054
-#| msgid "leaving table."
 msgid "leaving blockquote."
 msgstr "blok alıntıdan çıkılıyor."
 
@@ -9115,7 +9101,6 @@ msgstr "blok alıntıdan çıkılıyor."
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1060
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving feed."
 msgstr "beslemeden çıkılıyor."
@@ -9125,7 +9110,6 @@ msgstr "beslemeden çıkılıyor."
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1066
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving figure."
 msgstr "figürden çıkılıyor."
@@ -9133,7 +9117,6 @@ msgstr "figürden çıkılıyor."
 #. Translators: This message is presented when a user is navigating within a
 #. form and then navigates out of it.
 #: ../src/orca/messages.py:1070
-#| msgid "leaving table."
 msgid "leaving form."
 msgstr "formdan çıkılıyor."
 
@@ -9142,7 +9125,6 @@ msgstr "formdan çıkılıyor."
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1076
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving banner."
 msgstr "afişten çıkılıyor."
@@ -9152,8 +9134,6 @@ msgstr "afişten çıkılıyor."
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1082
-#| msgctxt "role"
-#| msgid "complementary content"
 msgctxt "role"
 msgid "leaving complementary content."
 msgstr "tamamlayıcı içerikten çıkılıyor."
@@ -9163,8 +9143,6 @@ msgstr "tamamlayıcı içerikten çıkılıyor."
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1088
-#| msgctxt "role"
-#| msgid "information"
 msgctxt "role"
 msgid "leaving information."
 msgstr "bilgiden çıkılıyor."
@@ -9192,7 +9170,6 @@ msgstr "gezintiden çıkılıyor"
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1106
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving region."
 msgstr "bölgeden çıkılıyor."
@@ -9202,7 +9179,6 @@ msgstr "bölgeden çıkılıyor."
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1112
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving search."
 msgstr "aramadan çıkılıyor."
@@ -9217,7 +9193,6 @@ msgstr "listeden çıkılıyor"
 #. panel and then navigates out of it. A panel is a generic container of
 #. objects, such as a group of related form fields.
 #: ../src/orca/messages.py:1121
-#| msgid "leaving table."
 msgid "leaving panel."
 msgstr "panelden çıkılıyor."
 
@@ -9232,7 +9207,6 @@ msgstr "tablodan çıkılıyor."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1131
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving abstract."
 msgstr "soyuttan çıkılıyor."
@@ -9242,7 +9216,6 @@ msgstr "soyuttan çıkılıyor."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1137
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving acknowledgments."
 msgstr "teşekkürlerden çıkılıyor."
@@ -9252,7 +9225,6 @@ msgstr "teşekkürlerden çıkılıyor."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1143
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving afterword."
 msgstr "son sözden çıkılıyor."
@@ -9262,7 +9234,6 @@ msgstr "son sözden çıkılıyor."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1149
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving appendix."
 msgstr "eklentilerden çıkılıyor."
@@ -9272,7 +9243,6 @@ msgstr "eklentilerden çıkılıyor."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1155
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving bibliography."
 msgstr "kaynakçadan çıkılıyor."
@@ -9282,7 +9252,6 @@ msgstr "kaynakçadan çıkılıyor."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1161
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving chapter."
 msgstr "bölümden çıkılıyor."
@@ -9292,7 +9261,6 @@ msgstr "bölümden çıkılıyor."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1167
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving colophon."
 msgstr "baskı bilgisinden çıkılıyor."
@@ -9365,7 +9333,6 @@ msgstr "son yazıdan çıkılıyor."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1215
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving errata."
 msgstr "düzeltmelerden çıkılıyor."
@@ -9474,7 +9441,6 @@ msgstr "QNA’dan çıkılıyor."
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: ../src/orca/messages.py:1287
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving table of contents."
 msgstr "içerikler tablosundan çıkılıyor."
@@ -10903,7 +10869,6 @@ msgstr[0] "%d öge bulundu"
 #. and then navigates out of several levels at once.
 #: ../src/orca/messages.py:2330
 #, python-format
-#| msgid "No more blockquotes."
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
 msgstr[0] "%d blok alıntıdan çıkılıyor."
@@ -11157,8 +11122,6 @@ msgstr "soyut"
 #. This role refers to the acknowledgments in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-acknowledgments
 #: ../src/orca/object_properties.py:99
-#| msgctxt "math symbol"
-#| msgid "complement"
 msgctxt "role"
 msgid "acknowledgments"
 msgstr "teşekkürler"
@@ -11168,8 +11131,6 @@ msgstr "teşekkürler"
 #. This role refers to the afterword in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-afterword
 #: ../src/orca/object_properties.py:105
-#| msgctxt "key echo"
-#| msgid "word"
 msgctxt "role"
 msgid "afterword"
 msgstr "son söz"
@@ -11215,7 +11176,6 @@ msgstr "bölüm"
 #. This role refers to the colophon in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-colophon
 #: ../src/orca/object_properties.py:135
-#| msgid "colon"
 msgctxt "role"
 msgid "colophon"
 msgstr "baskı bilgisi"
@@ -11234,8 +11194,6 @@ msgstr "sonuç"
 #. This role refers to the cover in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-cover
 #: ../src/orca/object_properties.py:147
-#| msgctxt "math fraction"
-#| msgid "over"
 msgctxt "role"
 msgid "cover"
 msgstr "kapak"
@@ -11263,8 +11221,6 @@ msgstr "kredi"
 #. This role refers to the dedication in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-dedication
 #: ../src/orca/object_properties.py:165
-#| msgctxt "textattr"
-#| msgid "direction"
 msgctxt "role"
 msgid "dedication"
 msgstr "ithaf"
@@ -11337,8 +11293,6 @@ msgstr "dipnot"
 #. This role refers to the foreword in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-foreword
 #: ../src/orca/object_properties.py:213
-#| msgctxt "key echo"
-#| msgid "word"
 msgctxt "role"
 msgid "foreword"
 msgstr "ön söz"
@@ -11357,8 +11311,6 @@ msgstr "sözlük"
 #. This role refers to the index in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-index
 #: ../src/orca/object_properties.py:225
-#| msgctxt "textattr"
-#| msgid "indent"
 msgctxt "role"
 msgid "index"
 msgstr "indeks"
@@ -11368,8 +11320,6 @@ msgstr "indeks"
 #. This role refers to the introduction in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-introduction
 #: ../src/orca/object_properties.py:231
-#| msgctxt "math symbol"
-#| msgid "intersection"
 msgctxt "role"
 msgid "introduction"
 msgstr "giriş"
@@ -11388,7 +11338,6 @@ msgstr "sayfa sonu"
 #. This role refers to a page list in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pagelist
 #: ../src/orca/object_properties.py:243
-#| msgid "page up"
 msgctxt "role"
 msgid "page list"
 msgstr "sayfa listesi"
@@ -11425,7 +11374,6 @@ msgstr "girizgâh"
 #. This role refers to a pullquote in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pullquote
 #: ../src/orca/object_properties.py:267
-#| msgid "quote"
 msgctxt "role"
 msgid "pullquote"
 msgstr "tanıtım"
@@ -11456,7 +11404,6 @@ msgstr "alt yazı"
 #. This role refers to the table of contents in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-toc
 #: ../src/orca/object_properties.py:288
-#| msgid "Enable layout mode for content"
 msgctxt "role"
 msgid "table of contents"
 msgstr "içerikler tablosu"
@@ -11551,7 +11498,6 @@ msgstr "dikey ayraç"
 #. The "switch" role is a "light switch" style toggle, such as can be seen in
 #. https://developer.gnome.org/gtk3/stable/GtkSwitch.html
 #: ../src/orca/object_properties.py:361
-#| msgid "mode switch"
 msgctxt "role"
 msgid "switch"
 msgstr "değiştir"
@@ -11649,7 +11595,6 @@ msgstr "ziyaret edilmiş bağlantı"
 #. A menu button is button widget that causes a menu to appear when the user
 #. activates the button.
 #: ../src/orca/object_properties.py:430
-#| msgid "No more buttons."
 msgid "menu button"
 msgstr "menü düğmesi"
 
@@ -11706,7 +11651,6 @@ msgstr "işaretli değil"
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
 #: ../src/orca/object_properties.py:466
-#| msgid "on"
 msgctxt "switch"
 msgid "on"
 msgstr "açık"
@@ -11714,7 +11658,6 @@ msgstr "açık"
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
 #: ../src/orca/object_properties.py:470
-#| msgid "off"
 msgctxt "switch"
 msgid "off"
 msgstr "kapalı"
@@ -12105,7 +12048,7 @@ msgstr "Ses yüksek_liği:"
 
 #: ../src/orca/orca-setup.ui.h:70
 msgid "Pi_tch:"
-msgstr "Karak_ter sıklığı:"
+msgstr "P_erde:"
 
 #: ../src/orca/orca-setup.ui.h:71
 msgid "_Rate:"
@@ -12117,7 +12060,7 @@ msgstr "_Kişi:"
 
 #: ../src/orca/orca-setup.ui.h:73
 msgid "Speech synthesi_zer:"
-msgstr "Konuşma sürüc_üsü:"
+msgstr "S_entezleyici:"
 
 #: ../src/orca/orca-setup.ui.h:74
 msgid "Speech _system:"
@@ -12249,8 +12192,6 @@ msgstr "Gezinti sırasında _formları bildir"
 
 #. Translators: If this checkbox is checked, Orca will speak the accessible description of an object. Whereas the accessible name of an object tends to be short and typically corresponds to what is displayed on screen, the contents of the accessible description tend to be longer, e.g. matching the text of the tooltip, and are sometimes redundant to the accessible name. Therefore, we allow the user to opt out of this additional information.
 #: ../src/orca/orca-setup.ui.h:126
-#| msgctxt "structural navigation"
-#| msgid "Description"
 msgid "Speak _description"
 msgstr "_Açıklamayı seslendir"
 
