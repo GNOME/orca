@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2017-02-06 16:00+0000\n"
-"PO-Revision-Date: 2017-02-12 00:43+0100\n"
+"POT-Creation-Date: 2017-10-22 20:46+0000\n"
+"PO-Revision-Date: 2017-10-25 22:11+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -2327,9 +2327,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:435
-#| msgid ""
-#| "Next and previous entry: <keyseq><key>E</key></keyseq> and "
-#| "<keyseq><key>Shift</key><key>E</key></keyseq>"
 msgid ""
 "Start and end of current container: <keyseq><key>Shift</key><key>comma</"
 "key></keyseq> and <keyseq><key>comma</key></keyseq>"
@@ -3934,7 +3931,7 @@ msgstr "Konfigurera <app>Orca</app>"
 msgid "Orca Configuration"
 msgstr "Konfiguration av Orca"
 
-#. (itstool) path: section/p
+#. (itstool) path: page/p
 #: C/howto_setting_up_orca.page:21
 msgid ""
 "If you want to configure <app>Orca</app>, get into the <link xref="
@@ -4285,13 +4282,13 @@ msgstr ""
 msgid ""
 "Depending on where you are, it may be necessary for you to explicitly toggle "
 "Structural Navigation on before you can use it. To learn more, read <link "
-"type=\"seealso\" xref=\"howto_structural_navigation#toggling_required\"> "
-"when toggling Structural Navigation on is required.</link>"
+"xref=\"howto_structural_navigation#toggling_required\"> when toggling "
+"Structural Navigation on is required.</link>"
 msgstr ""
 "Beroende på var du är kan det vara nödvändigt för dig att explicit slå på "
 "strukturell navigering innan du kan använda den. För att få veta mer, läs "
-"<link type=\"seealso\" xref=\"howto_structural_navigation#toggling_required"
-"\"> när strukturell navigering behöver slås på.</link>"
+"<link xref=\"howto_structural_navigation#toggling_required\"> när "
+"strukturell navigering behöver slås på.</link>"
 
 #. (itstool) path: section/title
 #: C/howto_tables.page:89
