@@ -1842,6 +1842,11 @@ class Script(default.Script):
 
         obj, offset = self.utilities.getCaretContext(getZombieReplicant=False)
         if self.utilities.isZombie(obj):
+            if self.utilities.isLink(obj):
+                msg = "WEB: Focused link deleted. Taking no further action."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+
             obj, offset = self.utilities.getCaretContext(getZombieReplicant=True)
             if obj:
                 orca.setLocusOfFocus(event, obj, notifyScript=False)
