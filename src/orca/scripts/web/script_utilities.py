@@ -83,6 +83,7 @@ class Utilities(script_utilities.Utilities):
         self._isNonEntryTextWidget = {}
         self._isImageMap = {}
         self._isUselessImage = {}
+        self._isNonNavigableEmbeddedDocument = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
         self._actualLabels = {}
@@ -147,6 +148,7 @@ class Utilities(script_utilities.Utilities):
         self._isNonEntryTextWidget = {}
         self._isImageMap = {}
         self._isUselessImage = {}
+        self._isNonNavigableEmbeddedDocument = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
         self._actualLabels = {}
@@ -851,6 +853,8 @@ class Utilities(script_utilities.Utilities):
             if rv and excludeNonEntryTextWidgets and self.isNonEntryTextWidget(obj):
                 rv = None
             if rv and (self.isHidden(obj) or self.isOffScreenLabel(obj)):
+                rv = None
+            if rv and self.isNonNavigableEmbeddedDocument(obj):
                 rv = None
             if rv and role == pyatspi.ROLE_LINK \
                and (self.hasExplicitName(obj) or self.hasUselessCanvasDescendant(obj)):
@@ -2751,6 +2755,23 @@ class Utilities(script_utilities.Utilities):
         self._isImageMap[hash(obj)] = rv
         return rv
 
+    def isNonNavigableEmbeddedDocument(self, obj):
+        rv = self._isNonNavigableEmbeddedDocument.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = False
+        if self.isDocument(obj) and self.getDocumentForObject(obj):
+            try:
+                name = obj.name
+            except:
+                rv = True
+            else:
+                rv = "doubleclick" in name
+
+        self._isNonNavigableEmbeddedDocument[hash(obj)] = rv
+        return rv
+
     def isUselessImage(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -3275,6 +3296,9 @@ class Utilities(script_utilities.Utilities):
             return True
 
         if self.isHidden(obj) or self.isOffScreenLabel(obj):
+            return True
+
+        if self.isNonNavigableEmbeddedDocument(obj):
             return True
 
         role = obj.getRole()
