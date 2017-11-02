@@ -1092,11 +1092,6 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if oldFocus and self.utilities.isZombie(oldFocus):
-            msg = "WEB: Old focus is Zombie: %s. Clearing oldFocus." % oldFocus
-            debug.println(debug.LEVEL_INFO, msg, True)
-            oldFocus = None
-
         caretOffset = 0
         if not oldFocus or self.utilities.inFindToolbar(oldFocus):
             contextObj, contextOffset = self.utilities.getCaretContext()
