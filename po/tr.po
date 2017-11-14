@@ -11,10 +11,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2016-09-02 14:51+0000\n"
-"PO-Revision-Date: 2016-09-04 20:49+0300\n"
+"POT-Creation-Date: 2017-03-01 07:49+0000\n"
+"PO-Revision-Date: 2016-12-21 14:16+0300\n"
 "Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Poedit 1.8.7\n"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -641,7 +641,7 @@ msgstr "alıntı"
 #.
 #: ../src/orca/chnames.py:61
 msgid "number"
-msgstr "nümerik"
+msgstr "rakam"
 
 #. Translators: this is the spoken word for the character '$' (U+0024)
 #.
@@ -671,13 +671,13 @@ msgstr "kesme işareti"
 #.
 #: ../src/orca/chnames.py:81
 msgid "left paren"
-msgstr "sol parantez"
+msgstr "aç parantez"
 
 #. Translators: this is the spoken word for the character ')' (U+0029)
 #.
 #: ../src/orca/chnames.py:85
 msgid "right paren"
-msgstr "sağ parantez"
+msgstr "kapaparantez"
 
 #. Translators: this is the spoken word for the character '*' (U+002a)
 #.
@@ -703,7 +703,7 @@ msgstr "virgül"
 #.
 #: ../src/orca/chnames.py:101
 msgid "dash"
-msgstr "çizgi"
+msgstr "tire"
 
 #. Translators: this is the spoken word for the character '.' (U+002e)
 #.
@@ -715,7 +715,7 @@ msgstr "nokta"
 #.
 #: ../src/orca/chnames.py:109
 msgid "slash"
-msgstr "eğik çizgi"
+msgstr "bölü"
 
 #. Translators: this is the spoken word for the character ':' (U+003a)
 #.
@@ -757,25 +757,25 @@ msgstr "soru işareti"
 #.
 #: ../src/orca/chnames.py:137
 msgid "at"
-msgstr "at"
+msgstr "et"
 
 #. Translators: this is the spoken word for the character '[' (U+005b)
 #.
 #: ../src/orca/chnames.py:141
 msgid "left bracket"
-msgstr "sol köşeli parantez"
+msgstr "aç köşeli parantez"
 
 #. Translators: this is the spoken word for the character '\' (U+005c)
 #.
 #: ../src/orca/chnames.py:145
 msgid "backslash"
-msgstr "ters eğik çizgi"
+msgstr "ters bölü"
 
 #. Translators: this is the spoken word for the character ']' (U+005d)
 #.
 #: ../src/orca/chnames.py:149
 msgid "right bracket"
-msgstr "sağ köşeli parantez"
+msgstr "kapa köşeli parantez"
 
 #. Translators: this is the spoken word for the character '^' (U+005e)
 #.
@@ -814,7 +814,7 @@ msgstr "dik çizgi"
 #.
 #: ../src/orca/chnames.py:173
 msgid "right brace"
-msgstr "sağ parantez"
+msgstr "kapa parantez"
 
 #. Translators: this is the spoken word for the character '~' (U+007e)
 #.
@@ -887,7 +887,7 @@ msgstr "ses değiştirme işareti"
 #.
 #: ../src/orca/chnames.py:218
 msgid "copyright"
-msgstr "telif hakkı"
+msgstr "kopyahakkı"
 
 #. Translators: this is the spoken word for the character 'ª' (U+00aa)
 #.
@@ -1079,7 +1079,7 @@ msgstr "A E"
 #.
 #: ../src/orca/chnames.py:342
 msgid "C CEDILLA"
-msgstr "Çengelli C"
+msgstr "çe"
 
 #. Translators: this is the spoken word for the character 'È' (U+00c8)
 #.
@@ -1169,7 +1169,7 @@ msgstr "O TİLDA"
 #.
 #: ../src/orca/chnames.py:402
 msgid "O UMLAUT"
-msgstr "O UMLAUT"
+msgstr "öö"
 
 #. Translators: this is the spoken word for the character '×' (U+00d7)
 #.
@@ -1205,7 +1205,7 @@ msgstr "DÜZELTME İŞARETLİ U"
 #.
 #: ../src/orca/chnames.py:426
 msgid "U UMLAUT"
-msgstr "U UMLAUT"
+msgstr "üü"
 
 #. Translators: this is the spoken word for the character 'Ý' (U+00dd)
 #.
@@ -1265,7 +1265,7 @@ msgstr "a e"
 #.
 #: ../src/orca/chnames.py:466
 msgid "c cedilla"
-msgstr "çengelli c"
+msgstr "çe"
 
 #. Translators: this is the spoken word for the character 'è' (U+00e8)
 #.
@@ -1355,7 +1355,7 @@ msgstr "o tilda"
 #.
 #: ../src/orca/chnames.py:526
 msgid "o umlaut"
-msgstr "o umlaut"
+msgstr "ö"
 
 #. Translators: this is the spoken word for the character '÷' (U+00f7)
 #.
@@ -1397,7 +1397,7 @@ msgstr "düzeltme işaretli u"
 #.
 #: ../src/orca/chnames.py:554
 msgid "u umlaut"
-msgstr "u umlaut"
+msgstr "ü"
 
 #. Translators: this is the spoken word for the character 'ý' (U+00fd)
 #.
@@ -1531,7 +1531,7 @@ msgstr "avro"
 #.
 #: ../src/orca/chnames.py:644
 msgid "trademark"
-msgstr "tescilli marka"
+msgstr "marka işareti"
 
 #. Translators: this is the spoken word for the character '✓' (U+2713)
 #. It can be used as a bullet in a list.
@@ -1762,7 +1762,7 @@ msgstr "nesne değiştirme karakteri"
 #. without clicking on it.
 #: ../src/orca/cmdnames.py:37
 msgid "Routes the pointer to the current item."
-msgstr "İşaretçiyi şimdiki öğeye yönlendirir."
+msgstr "işaretçiyi şuanki öğeye taşır"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1772,7 +1772,7 @@ msgstr "İşaretçiyi şimdiki öğeye yönlendirir."
 #. Left click means to generate a left mouse button click on the current item.
 #: ../src/orca/cmdnames.py:45
 msgid "Performs left click on current flat review item."
-msgstr "Şimdiki düz görünüm ögesi üzerinde sol tıklama gerçekleştirir."
+msgstr "mevcut öğe üzerinde sol tıklar"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1782,7 +1782,7 @@ msgstr "Şimdiki düz görünüm ögesi üzerinde sol tıklama gerçekleştirir.
 #. Right click means to generate a right mouse button click on the current item.
 #: ../src/orca/cmdnames.py:53
 msgid "Performs right click on current flat review item."
-msgstr "Şimdiki düz görünüm ögesi üzerinde sağ tıklama gerçekleştirir."
+msgstr "mevcut öğe üzerinde sağ tıklar"
 
 #. Translators: the Orca "SayAll" command allows the user to press a key and have
 #. the entire document in a window be automatically spoken to the user. If the
@@ -1800,7 +1800,7 @@ msgstr "Tüm belgeyi seslendir."
 #. which causes Orca to speak the entire contents of the window using flat review.
 #: ../src/orca/cmdnames.py:67
 msgid "Speaks entire window using flat review."
-msgstr "Düz inceleme kullanarak tüm pencereyi seslendirir."
+msgstr "inceleme imlecini kullanarak tüm pencereyi seslendirir."
 
 #. Translators: the "Where am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
@@ -1808,7 +1808,7 @@ msgstr "Düz inceleme kullanarak tüm pencereyi seslendirir."
 #. with focus as well as its mnemonic.
 #: ../src/orca/cmdnames.py:73
 msgid "Performs the basic where am I operation."
-msgstr "Basit neredeyim işlemini gerçekleştirir."
+msgstr "birincil işlemi gerçekleştirir"
 
 #. Translators: the "Where am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
@@ -1816,7 +1816,7 @@ msgstr "Basit neredeyim işlemini gerçekleştirir."
 #. with focus as well as its mnemonic.
 #: ../src/orca/cmdnames.py:79
 msgid "Performs the detailed where am I operation."
-msgstr "Detaylı neredeyim işlemini gerçekleştir."
+msgstr "ikincil işlemi gerçekleştirir."
 
 #. Translators: This is the description of a dedicated command to speak the
 #. selected text (if any) in a document.
@@ -1846,7 +1846,7 @@ msgstr "Başlık çubuğunu seslendir."
 #. the "OK" button.
 #: ../src/orca/cmdnames.py:99
 msgid "Opens the Find dialog."
-msgstr "Arama iletişim penceresini açar."
+msgstr "arama penceresini açar."
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text. For example, they may want to find
@@ -1871,7 +1871,7 @@ msgstr "Bir dizginin önceki görüldüğü yeri arar."
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: ../src/orca/cmdnames.py:118
 msgid "Enters and exits flat review mode."
-msgstr "Düz görünüm kipine girer ve çıkar."
+msgstr "inceleme imlecine girer ve çıkar."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1881,7 +1881,7 @@ msgstr "Düz görünüm kipine girer ve çıkar."
 #. The home position is the beginning of the content in the window.
 #: ../src/orca/cmdnames.py:126
 msgid "Moves flat review to the home position."
-msgstr "Düz görünümü başlangıç konumuna taşır."
+msgstr "inceleme imlecini başlangıç konumuna taşır"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1891,7 +1891,7 @@ msgstr "Düz görünümü başlangıç konumuna taşır."
 #. The home position is the last bit of information in the window.
 #: ../src/orca/cmdnames.py:134
 msgid "Moves flat review to the end position."
-msgstr "Düz görünümü bitiş konumuna taşır."
+msgstr "inceleme imlecini sona taşır."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1900,7 +1900,7 @@ msgstr "Düz görünümü bitiş konumuna taşır."
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: ../src/orca/cmdnames.py:142
 msgid "Moves flat review to the beginning of the previous line."
-msgstr "Düz görünümü önceki satırın başlangıcına taşı."
+msgstr "inceleme imlecini önceki satıra taşır."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1909,7 +1909,7 @@ msgstr "Düz görünümü önceki satırın başlangıcına taşı."
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: ../src/orca/cmdnames.py:149
 msgid "Speaks the current flat review line."
-msgstr "Şimdiki düz görünüm satırını seslendir."
+msgstr "mevcut satırı seslendirir."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1920,7 +1920,7 @@ msgstr "Şimdiki düz görünüm satırını seslendir."
 #. by character.
 #: ../src/orca/cmdnames.py:158
 msgid "Spells the current flat review line."
-msgstr "Şimdiki düz görünüm satırını hecele."
+msgstr "mevcut satırı hecele"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1931,7 +1931,7 @@ msgstr "Şimdiki düz görünüm satırını hecele."
 #. by character phonetically, saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: ../src/orca/cmdnames.py:168
 msgid "Phonetically spells the current flat review line."
-msgstr "Şimdiki düz görünüm satırını fonetik olarak hecele."
+msgstr "mevcut satırı kodlayarak oku."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1940,7 +1940,7 @@ msgstr "Şimdiki düz görünüm satırını fonetik olarak hecele."
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: ../src/orca/cmdnames.py:175
 msgid "Moves flat review to the beginning of the next line."
-msgstr "Düz görünümü sonraki satırın başına taşır."
+msgstr "inceleme imlecini sonraki satıra taşır."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1951,7 +1951,7 @@ msgstr "Düz görünümü sonraki satırın başına taşır."
 #. will wrap across lines if necessary).
 #: ../src/orca/cmdnames.py:184
 msgid "Moves flat review to the previous item or word."
-msgstr "Düz görünümü önceki öge veya kelimeye taşır."
+msgstr "inceleme imlecini önceki öğeye yada kelimeye taşır."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1961,7 +1961,7 @@ msgstr "Düz görünümü önceki öge veya kelimeye taşır."
 #. This command will speak the current word or item.
 #: ../src/orca/cmdnames.py:192
 msgid "Speaks the current flat review item or word."
-msgstr "Şimdiki düz görünüm öge veya kelimesini seslendirir."
+msgstr "mevcut öğe yuada kelimeyi seslendirir."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1972,7 +1972,7 @@ msgstr "Şimdiki düz görünüm öge veya kelimesini seslendirir."
 #. character by character.
 #: ../src/orca/cmdnames.py:201
 msgid "Spells the current flat review item or word."
-msgstr "Şimdiki düz görünüm öge veya kelimesini heceler."
+msgstr "mevcut öğe yada kelimeyi heceler."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1984,7 +1984,7 @@ msgstr "Şimdiki düz görünüm öge veya kelimesini heceler."
 #. and so on.
 #: ../src/orca/cmdnames.py:212
 msgid "Phonetically spells the current flat review item or word."
-msgstr "Fonetik olarak şimdiki düz görünüm öge veya kelimesini heceler."
+msgstr "mevcut öğe yada kelimeyi kodlayarak okur."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1995,7 +1995,7 @@ msgstr "Fonetik olarak şimdiki düz görünüm öge veya kelimesini heceler."
 #. will wrap across lines if necessary).
 #: ../src/orca/cmdnames.py:221
 msgid "Moves flat review to the next item or word."
-msgstr "Düz görünümü sonraki öge veya kelimeye taşır."
+msgstr "inceleme imlecini sonraki kelimeye yada öğeye taşır."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2006,7 +2006,7 @@ msgstr "Düz görünümü sonraki öge veya kelimeye taşır."
 #. line upward on the screen.
 #: ../src/orca/cmdnames.py:230
 msgid "Moves flat review to the word above the current word."
-msgstr "Düz görünümü şimdiki kelimenin üstündeki kelimeye taşır."
+msgstr "inceleme imlecini bir üst nesneye taşır."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2018,7 +2018,7 @@ msgstr "Düz görünümü şimdiki kelimenin üstündeki kelimeye taşır."
 #. will speak the text associated with the object.
 #: ../src/orca/cmdnames.py:240
 msgid "Speaks the current flat review object."
-msgstr "Şimdiki düz gözden geçirme nesnesini seslendir."
+msgstr "mevcut nesneyi seslendirir."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2029,7 +2029,7 @@ msgstr "Şimdiki düz gözden geçirme nesnesini seslendir."
 #. line downward on the screen.
 #: ../src/orca/cmdnames.py:249
 msgid "Moves flat review to the word below the current word."
-msgstr "Düz görünümü şimdiki kelimenin altındaki kelimeye taşır."
+msgstr "inceleme imlecini bi alt nesneyue taşır."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2040,7 +2040,7 @@ msgstr "Düz görünümü şimdiki kelimenin altındaki kelimeye taşır."
 #. will wrap across lines if necessary).
 #: ../src/orca/cmdnames.py:258
 msgid "Moves flat review to the previous character."
-msgstr "Düz görünümü önceki karaktere taşı."
+msgstr "inceleme imlecini önceki karaktere taşır."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2050,7 +2050,7 @@ msgstr "Düz görünümü önceki karaktere taşı."
 #. This command will speak the current character
 #: ../src/orca/cmdnames.py:266
 msgid "Speaks the current flat review character."
-msgstr "Şimdiki düz görünüm karakterini seslendirir."
+msgstr "mevcut karakteri seslendirir."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2061,7 +2061,7 @@ msgstr "Şimdiki düz görünüm karakterini seslendirir."
 #. saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: ../src/orca/cmdnames.py:276
 msgid "Phonetically speaks the current flat review character."
-msgstr "Fonetik olarak şimdiki düz görünüm karakterini seslendirir."
+msgstr "mevcut karakter kodlanarak okunur."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2072,7 +2072,7 @@ msgstr "Fonetik olarak şimdiki düz görünüm karakterini seslendirir."
 #. value.
 #: ../src/orca/cmdnames.py:286
 msgid "Speaks unicode value of the current flat review character."
-msgstr "Mevcut yassı gözden geçirme karakterinin unikod değerini konuşur."
+msgstr "mevcut karakterin unikod değeri okunur."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2083,7 +2083,7 @@ msgstr "Mevcut yassı gözden geçirme karakterinin unikod değerini konuşur."
 #. will wrap across lines if necessary).
 #: ../src/orca/cmdnames.py:295
 msgid "Moves flat review to the next character."
-msgstr "Düz görünümü sonraki karaktere taşır."
+msgstr "inceleme imlecini sonraki karaktere taşır."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2093,7 +2093,7 @@ msgstr "Düz görünümü sonraki karaktere taşır."
 #. This command will move to and present the end of the line.
 #: ../src/orca/cmdnames.py:303
 msgid "Moves flat review to the end of the line."
-msgstr "Düz görünümü satırın sonuna taşır."
+msgstr "inceleme imlecini satır sonuna taşır."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2103,7 +2103,7 @@ msgstr "Düz görünümü satırın sonuna taşır."
 #. The bottom left is the bottom left of the window currently being reviewed.
 #: ../src/orca/cmdnames.py:311
 msgid "Moves flat review to the bottom left."
-msgstr "Düz gözden geçirmeyi sol alta taşı."
+msgstr "inceleme nesne dolaşımını sol alt tarafa taşır."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2114,7 +2114,7 @@ msgstr "Düz gözden geçirmeyi sol alta taşı."
 #. clipboard.
 #: ../src/orca/cmdnames.py:320
 msgid "Copies the contents under flat review to the clipboard."
-msgstr "Yassı gözden geçirme altındaki içeriği panoya kopyalar."
+msgstr "inceleme imleci altındaki içeriği panoya kopyalar"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2125,22 +2125,20 @@ msgstr "Yassı gözden geçirme altındaki içeriği panoya kopyalar."
 #. the existing contents of the clipboard.
 #: ../src/orca/cmdnames.py:330
 msgid "Appends the contents under flat review to the clipboard."
-msgstr "Yassı gözden geçirme altındaki içeriği panoya ekler."
+msgstr "inceleme imleci altındaki veriyi panoya ekler."
 
 #. Translators: when users are navigating a table, they sometimes want the
 #. entire row of a table read; other times they just want the current cell
 #. to be presented to them.
 #: ../src/orca/cmdnames.py:336
 msgid "Toggles whether to read just the current table cell or the whole row."
-msgstr ""
-"Sadece şu anki tablo hücresinin ya da tüm satırının okunup okunmayacağını."
-"açar/kapatır."
+msgstr "sadece mevcut satır hücresini oku ayarını aç kapa."
 
 #. Translators: the attributes being presented are the text attributes, such as
 #. bold, italic, font name, font size, etc.
 #: ../src/orca/cmdnames.py:341
 msgid "Reads the attributes associated with the current text character."
-msgstr "Şimdiki metin karakteri ile ilişkilendirilmiş öznitelikleri okur."
+msgstr "öznitelikler seslendirilir."
 
 #. Translators: a refreshable braille display is an external hardware device that
 #. presents braille characters to the user. There are a limited number of cells
@@ -2149,7 +2147,7 @@ msgstr "Şimdiki metin karakteri ile ilişkilendirilmiş öznitelikleri okur."
 #. so they can pan left and right over this line.
 #: ../src/orca/cmdnames.py:348
 msgid "Pans the braille display to the left."
-msgstr "Braille görüntüsünü sola doğru kaydır."
+msgstr "Braille görüntüyü sola kaydır."
 
 #. Translators: a refreshable braille display is an external hardware device that
 #. presents braille characters to the user. There are a limited number of cells
@@ -2158,7 +2156,7 @@ msgstr "Braille görüntüsünü sola doğru kaydır."
 #. so they can pan left and right over this line.
 #: ../src/orca/cmdnames.py:355
 msgid "Pans the braille display to the right."
-msgstr "Braille görüntüsünü sağa doğru kaydır."
+msgstr "braille görüntüyü sağa kaydır."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2170,7 +2168,7 @@ msgstr "Braille görüntüsünü sağa doğru kaydır."
 #. will return the flat review to the object with focus.
 #: ../src/orca/cmdnames.py:365
 msgid "Returns to object with keyboard focus."
-msgstr "Klavyenin odaklandığı nesneye döner."
+msgstr "klavyenin odak nesnesine döner."
 
 #. Translators: braille can be displayed in many ways. Contracted braille
 #. provides a more efficient means to represent text, especially long
@@ -2178,7 +2176,7 @@ msgstr "Klavyenin odaklandığı nesneye döner."
 #. and uncontracted.
 #: ../src/orca/cmdnames.py:371
 msgid "Turns contracted braille on and off."
-msgstr "Daraltılmış braille'i açar ve kapatır."
+msgstr "kısaltmalı braille'ı açar kapatır."
 
 #. Translators: hardware braille displays often have buttons near each braille
 #. cell. These are called cursor routing keys and are a way for a user to tell
@@ -2190,12 +2188,12 @@ msgstr "İmleç yönlendirme tuşunu işler."
 #. Translators: this is used to indicate the start point of a text selection.
 #: ../src/orca/cmdnames.py:379
 msgid "Marks the beginning of a text selection."
-msgstr "Bir metin seçiminin başlangıcını işaretler."
+msgstr "metin seçimi için başlangıç konumu işaretler."
 
 #. Translators: this is used to indicate the end point of a text selection.
 #: ../src/orca/cmdnames.py:382
 msgid "Marks the end of a text selection."
-msgstr "Bir metin seçiminin bitimini işaretler."
+msgstr "metin seçimi için bitiş konumu işaretler."
 
 #. Translators: Orca has a "Learn Mode" that will allow the user to type any key
 #. on the keyboard and hear what the effects of that key would be. The effects
@@ -2204,8 +2202,7 @@ msgstr "Bir metin seçiminin bitimini işaretler."
 #. have a handler.
 #: ../src/orca/cmdnames.py:389
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr ""
-"Öğrenme kipine girer.  Öğrenme kipinden çıkmak için kaçış tuşuna basın."
+msgstr "deneme modu açıldı, bu moddan çıkmak için eskeyp'e basın."
 
 #. Translators: the speech rate is how fast the speech synthesis engine will
 #. generate speech.
@@ -2247,7 +2244,7 @@ msgstr "Konuşma ses düzeyini azaltır."
 #. We call it 'silencing'.
 #: ../src/orca/cmdnames.py:417
 msgid "Toggles the silencing of speech."
-msgstr "Konuşmanın sezsizliğini açar ya da kapatır."
+msgstr "konuşma açık ve kapalı arasında geçiş yapar."
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -2267,19 +2264,19 @@ msgstr "Ekran okuyucuyu kapatır"
 #. users to set their preferences for Orca.
 #: ../src/orca/cmdnames.py:431
 msgid "Displays the preferences configuration dialog."
-msgstr "Tercihler yapılandırma penceresini göster."
+msgstr "tercihler penceresini açar."
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for a specific application within Orca.
 #: ../src/orca/cmdnames.py:436
 msgid "Displays the application preferences configuration dialog."
-msgstr "Uygulama tercihlerini yapılandırma penceresini gösterir."
+msgstr "uygulamaya özel tercih penceresini açar."
 
 #. Translators: Orca allows the user to enable/disable speaking of indentation
 #. and justification.
 #: ../src/orca/cmdnames.py:441
 msgid "Toggles the speaking of indentation and justification."
-msgstr "Girintileme ve yaslamanın konuşulmasını belirler."
+msgstr "girintileme ve yaslama seviyesinin bildirilmesini açıp kapatır."
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -2287,13 +2284,13 @@ msgstr "Girintileme ve yaslamanın konuşulmasını belirler."
 #. toggling between the two options.
 #: ../src/orca/cmdnames.py:447
 msgid "Changes spoken number style."
-msgstr "Sayı seslendirme biçemini değiştirir."
+msgstr "sayıların seslendirilme biçimini değiştirir."
 
 #. Translators: Orca allows users to cycle through punctuation levels. None,
 #. some, most, or all, punctuation will be spoken.
 #: ../src/orca/cmdnames.py:451
 msgid "Cycles to the next speaking of punctuation level."
-msgstr "Sonraki noktalama konuşma seviyesine geçiş yapar."
+msgstr "noktalama bildirim seviyesinideğiştirir."
 
 #. Translators: Orca has a feature whereby users can set up different "profiles,"
 #. which are collection of settings which apply to a given task, such as a
@@ -2303,7 +2300,7 @@ msgstr "Sonraki noktalama konuşma seviyesine geçiş yapar."
 #. their saved profiles without having to get into a GUI.
 #: ../src/orca/cmdnames.py:459
 msgid "Cycles to the next settings profile."
-msgstr "Sonraki ayarlar profiline geçiş yapar."
+msgstr "tercih profilleri arasında geçiş yapar."
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via text-
 #. to-speech. Speech Dispatcher has a feature to control how capital letters are
@@ -2314,7 +2311,7 @@ msgstr "Sonraki ayarlar profiline geçiş yapar."
 #. to get into a GUI.
 #: ../src/orca/cmdnames.py:468
 msgid "Cycles to the next capitalization style."
-msgstr "Sonraki büyük harf biçemine geçiş yapar."
+msgstr "sonraki büyük harf bildirme biçimine geçer."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -2328,14 +2325,14 @@ msgstr "Sonraki büyük harf biçemine geçiş yapar."
 #. choose which type of echo is being used.
 #: ../src/orca/cmdnames.py:480
 msgid "Cycles to the next key echo level."
-msgstr "Sonraki yansıma seviyesine geçiş yapar."
+msgstr "sonraki geribildirim seviyesine geçer."
 
 #. Translators: this is a debug message that Orca users will not normally see. It
 #. describes a debug routine that allows the user to adjust the level of debug
 #. information that Orca generates at run time.
 #: ../src/orca/cmdnames.py:485
 msgid "Cycles the debug level at run time."
-msgstr "Çalıştırma sırasında hata ayıklama seviyesini döndür. "
+msgstr "çalışırken, hata ayıklama sürecini çalıştır."
 
 #. Translators: this command announces information regarding the relationship of
 #. the given bookmark to the current position. Note that in this context, the
@@ -2343,7 +2340,7 @@ msgstr "Çalıştırma sırasında hata ayıklama seviyesini döndür. "
 #. page.
 #: ../src/orca/cmdnames.py:492
 msgid "Bookmark where am I with respect to current position."
-msgstr "Şimdiki konuma göre nerede olduğumu yer imi yap."
+msgstr "mevcut odağın konumunu bildir."
 
 #. Translators: this event handler cycles through the registered bookmarks and
 #. takes the user to the previous bookmark location. Note that in this context,
@@ -2351,14 +2348,14 @@ msgstr "Şimdiki konuma göre nerede olduğumu yer imi yap."
 #. a web page.
 #: ../src/orca/cmdnames.py:498
 msgid "Go to previous bookmark location."
-msgstr "Önceki yer imi konumuna git."
+msgstr "önceki yerinine git."
 
 #. Translators: this command moves the user to the location stored at the bookmark.
 #. Note that in this context, the "bookmark" is storing the location of an
 #. accessible object, typically on a web page.
 #: ../src/orca/cmdnames.py:503
 msgid "Go to bookmark."
-msgstr "Yer imine git."
+msgstr "yer inine git."
 
 #. Translators: this event handler cycles through the registered bookmarks and
 #. takes the user to the next bookmark location. Note that in this context, the
@@ -2366,37 +2363,37 @@ msgstr "Yer imine git."
 #. page.
 #: ../src/orca/cmdnames.py:509
 msgid "Go to next bookmark location."
-msgstr "Sonraki yer imi konumuna git."
+msgstr "sonraki yer inine git."
 
 #. Translators: this event handler binds an in-page accessible object location to
 #. the given input key command.
 #: ../src/orca/cmdnames.py:513
 msgid "Add bookmark."
-msgstr "Yer imi ekle."
+msgstr "yer ini ekle."
 
 #. Translators: this event handler saves all bookmarks for the current application
 #. to disk.
 #: ../src/orca/cmdnames.py:517
 msgid "Save bookmarks."
-msgstr "Yer imlerini kaydet."
+msgstr "yer inlerini kaydet."
 
 #. Translators: Orca allows the item under the pointer to be spoken. This toggles
 #. the feature without the need to get into a GUI.
 #: ../src/orca/cmdnames.py:521
 msgid "Toggle mouse review mode."
-msgstr "Fare gözden geçirme kipini açar/kapar."
+msgstr "fare izleme modunu açıp kapatır."
 
 #. Translators: Orca has a command to present the current time in speech and in
 #. braille.
 #: ../src/orca/cmdnames.py:525
 msgid "Present current time."
-msgstr "Geçerli saati sun."
+msgstr "saati söyle"
 
 #. Translators: Orca has a command to present the current date in speech and in
 #. braille.
 #: ../src/orca/cmdnames.py:529
 msgid "Present current date."
-msgstr "Geçerli tarihi sun."
+msgstr "TARİHİ SÖYLE."
 
 #. Translators: Orca normally intercepts all keyboard commands and only passes
 #. them along to the current application when they are not Orca commands. This
@@ -2404,14 +2401,14 @@ msgstr "Geçerli tarihi sun."
 #. application, bypassing Orca's interception of it.
 #: ../src/orca/cmdnames.py:536
 msgid "Passes the next command on to the current application."
-msgstr "Mevcut uygulamaya sonraki komnutunu geçer."
+msgstr "MEVCUT UYGULAMANIN SONRAKİ KONUMUNU SÖYLER."
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. This string to be translated is associated with the
 #. keyboard commands used to review those previous messages.
 #: ../src/orca/cmdnames.py:541
 msgid "Speak and braille a previous chat room message."
-msgstr "Önceki sohbet odası mesajını seslendir ve braille ile belirt."
+msgstr "ÖNCEKİ MESAJI SESLENDİR VE BRAİLLE GÖRÜNTÜLE."
 
 #. Translators: In chat applications, it is often possible to see that a "buddy"
 #. is typing currently (e.g. via a keyboard icon or status text). Some users like
@@ -2420,7 +2417,7 @@ msgstr "Önceki sohbet odası mesajını seslendir ve braille ile belirt."
 #. is associated with the command to toggle typing status presentation on or off.
 #: ../src/orca/cmdnames.py:549
 msgid "Toggle whether we announce when our buddies are typing."
-msgstr "Arkadaşlarınız yazarken bunun duyurulmasını aç/kapat."
+msgstr "YAZIYOR BİLDİRİMLERİNİ AÇ KAPAT."
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. Some users prefer to have this message history combined
@@ -2431,7 +2428,7 @@ msgstr "Arkadaşlarınız yazarken bunun duyurulmasını aç/kapat."
 #. or off.
 #: ../src/orca/cmdnames.py:559
 msgid "Toggle whether we provide chat room specific message histories."
-msgstr "Sohbet odasına yönelik mesajların geçmişlerinin sağlanmasını aç/kapat."
+msgstr "MESAJ GEÇMİŞİNİN GÖSTERİLMESİNİ AÇ KAPA."
 
 #. Translators: In chat applications, Orca automatically presents incoming
 #. messages in speech and braille. If a user is in multiple conversations or
@@ -2452,35 +2449,35 @@ msgstr ""
 #. button, the display scrolls to the left.
 #: ../src/orca/cmdnames.py:576
 msgid "Line Left"
-msgstr "Sola Kaydır"
+msgstr "SOLDAKİ SATIR."
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the right.
 #: ../src/orca/cmdnames.py:581
 msgid "Line Right"
-msgstr "Sağa kaydır"
+msgstr "SAĞDAKİ SATIR."
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls up.
 #: ../src/orca/cmdnames.py:586
 msgid "Line Up"
-msgstr "Yukarı Kaydır"
+msgstr "ÜST SATIR."
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls down.
 #: ../src/orca/cmdnames.py:591
 msgid "Line Down"
-msgstr "Aşağı Kaydır"
+msgstr "ALT SATIR."
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, it instructs the braille display to freeze.
 #: ../src/orca/cmdnames.py:596
 msgid "Freeze"
-msgstr "Dondur"
+msgstr "SABİTLE."
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
@@ -2541,54 +2538,54 @@ msgstr "Satır Kes"
 #. notification message.
 #: ../src/orca/cmdnames.py:641
 msgid "Present last notification message."
-msgstr "En son bildirim iletisini sun."
+msgstr "SON BİLDİRİM MESAJINI SÖYLE."
 
 #. Translators: this is a command which causes Orca to present a list of all the
 #. notification messages received.
 #: ../src/orca/cmdnames.py:645
 msgid "Present notification messages list"
-msgstr "Bildirim iletileri listesini sun."
+msgstr "BİLDİRİM MESAJLARINI LİSTELE."
 
 #. Translators: this is a command which causes Orca to present the previous
 #. notification message.
 #: ../src/orca/cmdnames.py:649
 msgid "Present previous notification message."
-msgstr "Önceki bildirim iletisini sun."
+msgstr "ÖNCEKİ BİLDİRİM MESAJINI SÖYLE."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:652
 msgid "Goes to next character."
-msgstr "Sonraki karaktere gider."
+msgstr "SONRAKİ KARAKTER."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:655
 msgid "Goes to previous character."
-msgstr "Önceki karaktere gider."
+msgstr "ÖNCEKİ KARAKTER."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:658
 msgid "Goes to next word."
-msgstr "Sonraki kelimeye gider."
+msgstr "SONRAKİ KELİME."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:661
 msgid "Goes to previous word."
-msgstr "Önceki kelimeye gider."
+msgstr "önceki kelime."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:664
 msgid "Goes to next line."
-msgstr "Sonraki satıra gider."
+msgstr "sonraki satır."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:667
 msgid "Goes to previous line."
-msgstr "Önceki satıra gider."
+msgstr "önceki satır."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:670
 msgid "Goes to the top of the file."
-msgstr "Dosyanın en üstüne gider."
+msgstr "dosyanın üstünme  gider."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:673
@@ -2598,28 +2595,28 @@ msgstr "Dosyanın en altına gider."
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:676
 msgid "Goes to the beginning of the line."
-msgstr "Satırın başına gider."
+msgstr "satır başına gider"
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:679
 msgid "Goes to the end of the line."
-msgstr "Satırın sonuna gider."
+msgstr "satır sonuna gider."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:682
 msgid "Goes to the next object."
-msgstr "Sonraki nesneye gider."
+msgstr "sonraki nesne"
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:685
 msgid "Goes to the previous object."
-msgstr "Önceki nesneye gider."
+msgstr "önceki nesne."
 
 #. Translators: this is for causing a collapsed combo box which was reached
 #. by Orca's caret navigation to be expanded.
 #: ../src/orca/cmdnames.py:690
 msgid "Causes the current combo box to be expanded."
-msgstr "Şimdiki birleşik giriş kutusunun genişlemesini sağlar."
+msgstr "seçim kutusunu genişletir."
 
 #. Translators: Gecko native caret navigation is where Firefox (or Thunderbird)
 #. itself controls how the arrow keys move the caret around HTML content. It's
@@ -2627,7 +2624,7 @@ msgstr "Şimdiki birleşik giriş kutusunun genişlemesini sağlar."
 #. the user the ability to toggle which application is controlling the caret.
 #: ../src/orca/cmdnames.py:697
 msgid "Switches between native and screen-reader caret navigation."
-msgstr "Yerel ve ekran okuyucu düzeltme imleri arasında geçiş yapar."
+msgstr "sistem, ve ekran okuyucu gezinme modları arasında geçiş yapar."
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -2638,7 +2635,7 @@ msgstr "Yerel ve ekran okuyucu düzeltme imleri arasında geçiş yapar."
 #. to cycle through the different "politeness" levels.
 #: ../src/orca/cmdnames.py:706
 msgid "Advance live region politeness setting."
-msgstr "Değişken bölge yumuşaklığını arttır."
+msgstr "değişken bölgenin saydamlığını değiştir."
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -2649,7 +2646,7 @@ msgstr "Değişken bölge yumuşaklığını arttır."
 #. to turn off live regions by default.
 #: ../src/orca/cmdnames.py:716
 msgid "Set default live region politeness level to off."
-msgstr "Öntanımlı değişken bölge yumuşaklığını kapat"
+msgstr "varsayılan değişken böylge saydamlığını değiştir."
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -2657,7 +2654,7 @@ msgstr "Öntanımlı değişken bölge yumuşaklığını kapat"
 #. messages.
 #: ../src/orca/cmdnames.py:722
 msgid "Review live region announcement."
-msgstr "Değişken bölge duyurusunu gözden geçir."
+msgstr "değişken bölge bildirimlerini ayarla."
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -2670,7 +2667,7 @@ msgstr "Değişken bölge duyurusunu gözden geçir."
 #. enabled.
 #: ../src/orca/cmdnames.py:733
 msgid "Monitor live regions."
-msgstr "Değişken bölgeleri izle."
+msgstr "değişken bölgeleri izle."
 
 #. Translators: hovering the mouse over certain objects on a web page causes a
 #. new object to appear such as a pop-up menu. This command will move the user
@@ -2679,14 +2676,14 @@ msgstr "Değişken bölgeleri izle."
 #. mouse over and return the user to the object he/she was in.
 #: ../src/orca/cmdnames.py:740
 msgid "Moves focus into and away from the current mouse over."
-msgstr "Odağı mevcut fare konumu altına getirir veya çeker."
+msgstr "odağı fare altındaki öğeye götürür ve seçer."
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This string refers to
 #. the command to set the row.
 #: ../src/orca/cmdnames.py:745
 msgid "Set the row to use as dynamic column headers."
-msgstr "Dinamik sütun başlığı olarak kullanılacak satırı ayarla."
+msgstr "sütun başlığı olarak ayarla."
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This string refers to
@@ -2694,7 +2691,7 @@ msgstr "Dinamik sütun başlığı olarak kullanılacak satırı ayarla."
 #. column headers.
 #: ../src/orca/cmdnames.py:751
 msgid "Clears the dynamic column headers."
-msgstr "Dinamik sütun başlıklarını temizler."
+msgstr "sütun başlıklarını temizle."
 
 #. Translators: Orca allows you to dynamically define which column of a
 #. spreadsheet or table should be treated as containing row headers. This
@@ -2715,7 +2712,7 @@ msgstr "Dinamik satır başlıklarını temizler."
 #. to the place where one enters formulas for a spreadsheet.
 #: ../src/orca/cmdnames.py:766
 msgid "Presents the contents of the input line."
-msgstr "Girdi satırının içeriklerini sunar."
+msgstr "girdi satır içeriğini bildir."
 
 #. Translators: the structural navigation keys are designed to move the caret
 #. around the document content by object type. Thus H moves you to the next
@@ -2724,7 +2721,7 @@ msgstr "Girdi satırının içeriklerini sunar."
 #. writing functions.
 #: ../src/orca/cmdnames.py:773
 msgid "Toggles structural navigation keys."
-msgstr "Yapısal dolaşım tuşlarını açar/kapatır."
+msgstr "yapısal dolaşım tuşlarını aç kapa."
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: ../src/orca/cmdnames.py:776
@@ -2739,115 +2736,115 @@ msgstr "Sonraki blok alıntıya gider."
 #. Translators: this is for navigating among blockquotes in a document.
 #: ../src/orca/cmdnames.py:782
 msgid "Displays a list of blockquotes."
-msgstr "Bir öbek listesi gösterir."
+msgstr "alıntıları listele."
 
 #. Translators: this is for navigating among buttons in a document.
 #: ../src/orca/cmdnames.py:785
 msgid "Goes to previous button."
-msgstr "Önceki düğmeye gider."
+msgstr "önceki düğme."
 
 #. Translators: this is for navigating among buttons in a document.
 #: ../src/orca/cmdnames.py:788
 msgid "Goes to next button."
-msgstr "Sonraki düğmeye gider."
+msgstr "sonraki düğme."
 
 #. Translators: this is for navigating among buttons in a document.
 #: ../src/orca/cmdnames.py:791
 msgid "Displays a list of buttons."
-msgstr "Bir düğme listesi gösterir."
+msgstr "düğmeleri listeler."
 
 #. Translators: this is for navigating among check boxes in a document.
 #: ../src/orca/cmdnames.py:794
 msgid "Goes to previous check box."
-msgstr "Önceki kontrol kutusuna gider."
+msgstr "önceki onay kutusu."
 
 #. Translators: this is for navigating among check boxes in a document.
 #: ../src/orca/cmdnames.py:797
 msgid "Goes to next check box."
-msgstr "Sonraki kontrol kutusuna gider."
+msgstr "sonraki onay kutusu."
 
 #. Translators: this is for navigating among check boxes in a document.
 #: ../src/orca/cmdnames.py:800
 msgid "Displays a list of check boxes."
-msgstr "Bir işaret kutusu listesi gösterir."
+msgstr "onay kutularınılisteler."
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: ../src/orca/cmdnames.py:804
 msgid "Goes to previous clickable."
-msgstr "Önceki tıklanabilir ögeye gider."
+msgstr "önceki tıklanır bölge."
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: ../src/orca/cmdnames.py:808
 msgid "Goes to next clickable."
-msgstr "Sonraki tıklanabilir ögeye gider."
+msgstr "sonraki tıklanır bölge."
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: ../src/orca/cmdnames.py:812
 msgid "Displays a list of clickables."
-msgstr "Bir tıklanabilir ögeler listesi gösterir."
+msgstr "tıklanır bölgeleri listeler."
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: ../src/orca/cmdnames.py:815
 msgid "Goes to previous combo box."
-msgstr "Önceki çoklu kutuya gider."
+msgstr "önceki seçim kutusu."
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: ../src/orca/cmdnames.py:818
 msgid "Goes to next combo box."
-msgstr "Sonraki çoklu kutuya gider."
+msgstr "sonraki seçim kutusu"
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: ../src/orca/cmdnames.py:821
 msgid "Displays a list of combo boxes."
-msgstr "Bir açılır kutu listesi gösterir."
+msgstr "seçim kutularını listeler."
 
 #. Translators: this is for navigating among entries in a document.
 #: ../src/orca/cmdnames.py:824
 msgid "Goes to previous entry."
-msgstr "Önceki girişe gider."
+msgstr "önceki giriş kutusu"
 
 #. Translators: this is for navigating among entries in a document.
 #: ../src/orca/cmdnames.py:827
 msgid "Goes to next entry."
-msgstr "Sonraki girişe gider."
+msgstr "sonraki giriş kutusu"
 
 #. Translators: this is for navigating among entries in a document.
 #: ../src/orca/cmdnames.py:830
 msgid "Displays a list of entries."
-msgstr "Bir girdiler listesi gösterir."
+msgstr "giriş kutularının listelerini gösterir."
 
 #. Translators: this is for navigating among form fields in a document.
 #: ../src/orca/cmdnames.py:833
 msgid "Goes to previous form field."
-msgstr "Önceki form alanına gider."
+msgstr "önceki form alanı"
 
 #. Translators: this is for navigating among form fields in a document.
 #: ../src/orca/cmdnames.py:836
 msgid "Goes to next form field."
-msgstr "Sonraki form alanına gider."
+msgstr "sonraki form alanı"
 
 #. Translators: this is for navigating among form fields in a document.
 #: ../src/orca/cmdnames.py:839
 msgid "Displays a list of form fields."
-msgstr "Bir form alanı listesi gösterir."
+msgstr "form alanlarını listeler."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: ../src/orca/cmdnames.py:842
 msgid "Goes to previous heading."
-msgstr "Önceki başlığa gider."
+msgstr "önceki başlık"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: ../src/orca/cmdnames.py:845
 msgid "Goes to next heading."
-msgstr "Sonraki başlığa gider."
+msgstr "sonrakibaşlık."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: ../src/orca/cmdnames.py:848
 msgid "Displays a list of headings."
-msgstr "Bir başlık listesi gösterir."
+msgstr "başlıkları listeler."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
@@ -2868,43 +2865,43 @@ msgstr "Seviye %d durumunda bulunan sonraki başlığa gider."
 #: ../src/orca/cmdnames.py:860
 #, python-format
 msgid "Displays a list of headings at level %d."
-msgstr "Bir %d seviyesindeki başlıklar listesi gösterir."
+msgstr "%d seviyesindeki başlıkları listeler"
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:863
 msgid "Goes to previous image."
-msgstr "Önceki resme gider."
+msgstr "önceki grafik"
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:866
 msgid "Goes to next image."
-msgstr "Sonraki resme gider."
+msgstr "sonraki grafik"
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:869
 msgid "Displays a list of images."
-msgstr "Resimlerin listesini gösterir."
+msgstr "grafikleri listeler"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: ../src/orca/cmdnames.py:874
 msgid "Goes to previous landmark."
-msgstr "Önceki sınır işaretine gider."
+msgstr "önceki sınır ini"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: ../src/orca/cmdnames.py:879
 msgid "Goes to next landmark."
-msgstr "Sonraki sınır işaretine gider."
+msgstr "sonraki sınır ini"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: ../src/orca/cmdnames.py:884
 msgid "Displays a list of landmarks."
-msgstr "Sınır işaretlerinin listesini gösterir."
+msgstr "sınır inlerini listeler"
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
@@ -2955,7 +2952,7 @@ msgstr "Sonraki listeye gider."
 #. Translators: this is for navigating among lists in a document.
 #: ../src/orca/cmdnames.py:917
 msgid "Displays a list of lists."
-msgstr "Listelerin listesini gösterir."
+msgstr "listeleri listeler"
 
 #. Translators: this is for navigating among list items in a document.
 #: ../src/orca/cmdnames.py:920
@@ -2970,7 +2967,7 @@ msgstr "Sonraki liste ögesine gider."
 #. Translators: this is for navigating among list items in a document.
 #: ../src/orca/cmdnames.py:926
 msgid "Displays a list of list items."
-msgstr "Liste ögelerinin listesini gösterir."
+msgstr "liste öğelerini listeler"
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
@@ -2996,59 +2993,59 @@ msgstr "Duyuru yapmış son canlı bölgeye gider."
 #. Translators: this is for navigating among paragraphs in a document.
 #: ../src/orca/cmdnames.py:944
 msgid "Goes to previous paragraph."
-msgstr "Önceki paragrafa gider."
+msgstr "önceki paragraf"
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: ../src/orca/cmdnames.py:947
 msgid "Goes to next paragraph."
-msgstr "Sonraki paragrafa gider."
+msgstr "sonraki paragraf"
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: ../src/orca/cmdnames.py:950
 msgid "Displays a list of paragraphs."
-msgstr "Paragrafların listesini gösterir."
+msgstr "paragrafları listeler"
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: ../src/orca/cmdnames.py:953
 msgid "Goes to previous radio button."
-msgstr "Önceki radyo düğmesine gider."
+msgstr "önceki radyo düğmesi"
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: ../src/orca/cmdnames.py:956
 msgid "Goes to next radio button."
-msgstr "Sonraki radyo düğmesine gider."
+msgstr "sonraki radyo düğmesi"
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: ../src/orca/cmdnames.py:959
 msgid "Displays a list of radio buttons."
-msgstr "Radyo düğmelerinin listesini gösterir."
+msgstr "radyo düğmelerini listeler"
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
 #: ../src/orca/cmdnames.py:963
 msgid "Goes to previous separator."
-msgstr "Önceki ayraça gider."
+msgstr "önceki ayraç"
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
 #: ../src/orca/cmdnames.py:967
 msgid "Goes to next separator."
-msgstr "Sonraki ayraça gider."
+msgstr "sonraki ayraç"
 
 #. Translators: this is for navigating among tables in a document.
 #: ../src/orca/cmdnames.py:970
 msgid "Goes to previous table."
-msgstr "Önceki tabloya gider."
+msgstr "önceki tablo"
 
 #. Translators: this is for navigating among tables in a document.
 #: ../src/orca/cmdnames.py:973
 msgid "Goes to next table."
-msgstr "Sonraki tabloya gider."
+msgstr "sonraki tablo"
 
 #. Translators: this is for navigating among tables in a document.
 #: ../src/orca/cmdnames.py:976
 msgid "Displays a list of tables."
-msgstr "Tabloların listesini gösterir."
+msgstr "tabloları listeler"
 
 #. Translators: this is for navigating among table cells in a document.
 #: ../src/orca/cmdnames.py:979
@@ -3096,7 +3093,7 @@ msgstr "Bir hücre yukarı gider."
 #. between these two modes.
 #: ../src/orca/cmdnames.py:1010
 msgid "Switches between browse mode and focus mode."
-msgstr "Gözatma kipiyle odaklanma kipi arasında geçiş yapar."
+msgstr "tarama ve odak kipleri arasında geçiş yapar."
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -3109,7 +3106,7 @@ msgstr "Gözatma kipiyle odaklanma kipi arasında geçiş yapar."
 #. This string is associated with the Orca command to enable sticky focus mode.
 #: ../src/orca/cmdnames.py:1021
 msgid "Enables sticky focus mode."
-msgstr "Yapışkan odaklanma kipini etkinleştirir."
+msgstr "otomatik odakkipini etkinleştirir"
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -3122,37 +3119,37 @@ msgstr "Yapışkan odaklanma kipini etkinleştirir."
 #. This string is associated with the Orca command to enable sticky browse mode.
 #: ../src/orca/cmdnames.py:1032
 msgid "Enables sticky browse mode."
-msgstr "Yapışkan gözatma kipini etkinleştirir."
+msgstr "otomatik tarama kipini etkinleştiri"
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: ../src/orca/cmdnames.py:1035
 msgid "Goes to previous unvisited link."
-msgstr "Önceki ziyaret edilmemiş bağlantıya gider."
+msgstr "önceki ziyaret edilmemiş bağlantı"
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: ../src/orca/cmdnames.py:1038
 msgid "Goes to next unvisited link."
-msgstr "Sonraki ziyaret edilmemiş bağlantıya gider."
+msgstr "sonraki ziyaret edilmemiş bağlantı"
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: ../src/orca/cmdnames.py:1041
 msgid "Displays a list of unvisited links."
-msgstr "Ziyaret edilmemiş bağlantıların listesini gösterir."
+msgstr "ziyaret edilmemiş bağlantıları listeler"
 
 #. Translators: this is for navigating among visited links in a document.
 #: ../src/orca/cmdnames.py:1044
 msgid "Goes to previous visited link."
-msgstr "Önceki ziyaret edilmiş bağlantıya gider."
+msgstr "önceki ziyaret edilmiş bağlantı"
 
 #. Translators: this is for navigating among visited links in a document.
 #: ../src/orca/cmdnames.py:1047
 msgid "Goes to next visited link."
-msgstr "Sonraki ziyaret edilmiş bağlantıya gider."
+msgstr "sonraki ziyaret edilmiş bağlantı"
 
 #. Translators: this is for navigating among visited links in a document.
 #: ../src/orca/cmdnames.py:1050
 msgid "Displays a list of visited links."
-msgstr "Ziyaret edilmiş bağlantıların listesini gösterir."
+msgstr "ziyaret edilmiş bağlantıları listeler"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4294,7 +4291,7 @@ msgstr "_Aktifleştir"
 #. a navigation command to move amongst entries.
 #: ../src/orca/guilabels.py:58
 msgid "Automatic focus mode during structural navigation"
-msgstr "Yapısal gezinme sırasında otomatik odaklama kipi"
+msgstr "gezinirken odak kipi otomatik."
 
 #. Translators: Orca has a number of commands that override the default behavior
 #. within an application. For instance, if you are at the bottom of an entry and
@@ -4593,7 +4590,7 @@ msgstr "İşlevi"
 #. commands.
 #: ../src/orca/guilabels.py:255
 msgid "Key Binding"
-msgstr "Anahtar Bağı"
+msgstr "kısayol tuşu"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. can be used in any setting, task, or application. They are not specific
@@ -4601,7 +4598,7 @@ msgstr "Anahtar Bağı"
 #: ../src/orca/guilabels.py:260
 msgctxt "keybindings"
 msgid "Default"
-msgstr "Öntanımlı"
+msgstr "varsayılan"
 
 #. Translators: An external braille device has buttons on it that permit the
 #. user to create input gestures from the braille device. The braille bindings
@@ -4894,7 +4891,7 @@ msgstr "Başlık"
 #: ../src/orca/guilabels.py:463
 msgctxt "structural navigation"
 msgid "Image"
-msgstr "Resim"
+msgstr "grafik"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5251,7 +5248,7 @@ msgstr "%s öntanımlı ses"
 #: ../src/orca/guilabels.py:700
 msgctxt "VoiceType"
 msgid "Default"
-msgstr "Öntanımlı"
+msgstr "varsayılan"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is part of a hyperlink.
@@ -5313,7 +5310,7 @@ msgstr "Yazım _tavsiyesi"
 #. typically the sentence or line) in which the mistake occurred.
 #: ../src/orca/guilabels.py:742
 msgid "Present _context of error"
-msgstr "Hatanın _içeriğini sun"
+msgstr "hata içeriğini söyle"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spread sheet cell. Coordinates are
@@ -5380,7 +5377,7 @@ msgstr "Düzeltme imi dolaşımını kontrol et"
 #. of a checkbox in which users can indicate their default preference.
 #: ../src/orca/guilabels.py:789
 msgid "Enable _structural navigation"
-msgstr "_Yapısal dolaşımı etkinleştir"
+msgstr "gezinmeyi etkinleştir"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
@@ -5473,7 +5470,7 @@ msgstr "büyük harf kilidi"
 #.
 #: ../src/orca/keynames.py:94
 msgid "scroll lock"
-msgstr "scroll lock"
+msgstr "kaydırma kilidi"
 
 #. Translators: this is how someone would speak the name of the page up key
 #.
@@ -5595,19 +5592,19 @@ msgstr "insert"
 #.
 #: ../src/orca/keynames.py:226 ../src/orca/keynames.py:230
 msgid "delete"
-msgstr "delete"
+msgstr "sil"
 
 #. Translators: this is how someone would speak the name of the home key
 #.
 #: ../src/orca/keynames.py:234 ../src/orca/keynames.py:238
 msgid "home"
-msgstr "home"
+msgstr "baş"
 
 #. Translators: this is how someone would speak the name of the end key
 #.
 #: ../src/orca/keynames.py:242 ../src/orca/keynames.py:246
 msgid "end"
-msgstr "end"
+msgstr "son"
 
 #. Translators: this is how someone would speak the name of the begin key
 #.
@@ -5690,7 +5687,7 @@ msgstr "Alt_L"
 #.
 #: ../src/orca/keybindings.py:178
 msgid "Ctrl"
-msgstr "Ctrl"
+msgstr "kontrol"
 
 #. Translators: this is presented in a GUI to represent the
 #. "shift " modifier.
@@ -7964,7 +7961,8 @@ msgstr "Profil yüklenemiyor: %s"
 #: ../src/orca/messages.py:203
 msgid ""
 "Cannot start the screen reader because it cannot connect to the Desktop."
-msgstr "Masaüstüne bağlanamadığı için ekran okuyucu başlatılamıyor."
+msgstr ""
+"ekran okuyucunun çalışabilmesi için masaüstü yazılımına ulaşılması gerekir."
 
 #. Translators: This message is presented to the user who attempts to launch Orca
 #. but the launch fails due to an error related to the settings manager.
@@ -8342,7 +8340,7 @@ msgstr "Panoya kopyalanmış içerikler."
 #. not using flat review.
 #: ../src/orca/messages.py:494
 msgid "Not using flat review."
-msgstr "Yassı gözden geçirme kullanmıyor."
+msgstr "gözden geçirme çalışmıyor."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -8351,7 +8349,7 @@ msgstr "Yassı gözden geçirme kullanmıyor."
 #. let the user know he/she just entered flat review.
 #: ../src/orca/messages.py:501
 msgid "Entering flat review."
-msgstr "Yassı gözden geçirmeye giriliyor."
+msgstr "gözden geçirme açılıyor."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -8360,7 +8358,7 @@ msgstr "Yassı gözden geçirmeye giriliyor."
 #. let the user know he/she just entered flat review.
 #: ../src/orca/messages.py:508
 msgid "Leaving flat review."
-msgstr "Yassı gözden geçirmeden çıkılıyor."
+msgstr "gözden geçirmeden çıkılıyor"
 
 #. Translators: this means a particular cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
@@ -8375,7 +8373,7 @@ msgstr "formülü"
 #. and examples.
 #: ../src/orca/messages.py:519
 msgid "image map link"
-msgstr "resim haritası bağı"
+msgstr "grafik haritası"
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. that the key combination (e.g., Ctrl+Alt+f) they just entered has already been
@@ -8384,7 +8382,7 @@ msgstr "resim haritası bağı"
 #: ../src/orca/messages.py:525
 #, python-format
 msgid "The key entered is already bound to %s"
-msgstr "Girilen anahtar zaten %s ile bağlı"
+msgstr "bu kısayol zaten %s ile bağlı"
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. that Orca has recorded a new key combination (e.g. Alt+Ctrl+g) as a result of
@@ -8392,7 +8390,7 @@ msgstr "Girilen anahtar zaten %s ile bağlı"
 #: ../src/orca/messages.py:530
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
-msgstr "Anahtar alındı: %s. Onaylamak için giriş tuşuna basın."
+msgstr "kısayol alındı: %s. Onaylamak için giriş tuşuna basın."
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. that Orca has assigned a new key combination (e.g. Alt+Ctrl+g) as a result of
@@ -8400,28 +8398,28 @@ msgstr "Anahtar alındı: %s. Onaylamak için giriş tuşuna basın."
 #: ../src/orca/messages.py:535
 #, python-format
 msgid "The new key is: %s"
-msgstr "Yeni anahtar: %s"
+msgstr "Yeni kısayol: %s"
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. Orca is about to delete an existing key combination (e.g. Alt+Ctrl+g) as a
 #. result of their input.
 #: ../src/orca/messages.py:540
 msgid "Key binding deleted. Press enter to confirm."
-msgstr "Anahtar bağı silindi. Onaylamak için giriş tuşuna basın."
+msgstr "kısayol silinecek, onaylamak için giriş tuşuna basın."
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. Orca has deleted an existing key combination (e.g. Alt+Ctrl+g) as a result of
 #. their input.
 #: ../src/orca/messages.py:545
 msgid "The keybinding has been removed."
-msgstr "Anahtar bağı kaldırıldı."
+msgstr "kısayol kaldırıldı"
 
 #. Translators: This is a spoken and/or brailled message asking the user to press
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new key binding for an
 #. Orca command.
 #: ../src/orca/messages.py:550
 msgid "enter new key"
-msgstr "yeni anahtar girin"
+msgstr "yeni tuşlara basın"
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8438,7 +8436,7 @@ msgstr "yeni anahtar girin"
 #: ../src/orca/messages.py:564
 msgctxt "key echo"
 msgid "key"
-msgstr "anahtar"
+msgstr "tuş"
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8452,7 +8450,7 @@ msgstr "anahtar"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:576
 msgid "Key echo set to key."
-msgstr "Tuş yankısı tuş olarak ayarlandı."
+msgstr "Tuş geribildirimi tuş olarak ayarlandı."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8483,7 +8481,7 @@ msgstr "Hiçbiri"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:602
 msgid "Key echo set to None."
-msgstr "Tuş yankısı hiçbiri olarak ayarlandı."
+msgstr "Tuş geribildirimi hiçbiri olarak ayarlandı."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8500,7 +8498,7 @@ msgstr "Tuş yankısı hiçbiri olarak ayarlandı."
 #: ../src/orca/messages.py:616
 msgctxt "key echo"
 msgid "key and word"
-msgstr "anahtar ve kelime"
+msgstr "tuş ve kelime"
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8514,7 +8512,7 @@ msgstr "anahtar ve kelime"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:628
 msgid "Key echo set to key and word."
-msgstr "Tuş yankısı tuş ve kelime olarak ayarlandı."
+msgstr "Tuş geribildirimi tuş ve kelime olarak ayarlandı."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8545,7 +8543,7 @@ msgstr "cümle"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:654
 msgid "Key echo set to sentence."
-msgstr "Tuş yankısı cümle olarak ayarlandı."
+msgstr "Tuş geribildirimi cümle olarak ayarlandı."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8576,7 +8574,7 @@ msgstr "kelime"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:680
 msgid "Key echo set to word."
-msgstr "Tuş yankısı kelime olarak ayarlandı."
+msgstr "Tuş geribildirimi kelime olarak ayarlandı."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8607,7 +8605,7 @@ msgstr "kelime ve cümle"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:706
 msgid "Key echo set to word and sentence."
-msgstr "Tuş yankısı kelime ve cümle olarak ayarlandı."
+msgstr "Tuş geribildirimi kelime ve cümle olarak ayarlandı."
 
 #. Translators: This phrase is spoken to inform the user of all of the MathML
 #. enclosure notations associated with a given mathematical expression. For
@@ -9368,7 +9366,7 @@ msgstr "İçerik %s"
 #. This string is the message presented when Orca switches to browse mode.
 #: ../src/orca/messages.py:1272
 msgid "Browse mode"
-msgstr "Göz atma kipi"
+msgstr "tarama kipi"
 
 #. Translators: Orca has a number of commands that override the default
 #. behavior within an application. For instance, on a web page, "h" moves
@@ -9420,7 +9418,7 @@ msgstr "Odak kipini etkinleştirmek için %s tuşuna basın"
 #. This string is the message presented when Orca switches to sticky focus mode.
 #: ../src/orca/messages.py:1317
 msgid "Focus mode is sticky."
-msgstr "Odak kipi yapışkan."
+msgstr "odak modu otomatik."
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -9433,7 +9431,7 @@ msgstr "Odak kipi yapışkan."
 #. This string is the message presented when Orca switches to sticky browse mode.
 #: ../src/orca/messages.py:1328
 msgid "Browse mode is sticky."
-msgstr "Gözatma kipi yapışkan."
+msgstr "tarama kipi otomatik."
 
 #. Translators: Hovering the mouse over certain objects on a web page causes a
 #. new object to appear such as a pop-up menu. Orca has a command will move the
@@ -9447,7 +9445,6 @@ msgstr "Fare altındaki nesne bulunamadı."
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled off via command.
 #: ../src/orca/messages.py:1339
-#| msgid "Toggle mouse review mode."
 msgid "Mouse review disabled."
 msgstr "Fare gözden geçirme devre dışı."
 
@@ -9455,7 +9452,6 @@ msgstr "Fare gözden geçirme devre dışı."
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled on via command.
 #: ../src/orca/messages.py:1344
-#| msgid "Speech enabled."
 msgid "Mouse review enabled."
 msgstr "Fare gözden geçirme etkin."
 
@@ -9474,7 +9470,7 @@ msgstr "Hata: Nesnelerin listesi oluşturulamıyor."
 #: ../src/orca/messages.py:1356 ../src/orca/object_properties.py:51
 #, python-format
 msgid "Nesting level %d"
-msgstr "Dallanma seviyesi %d"
+msgstr "ağaç seviyesi %d"
 
 #. Translators: Orca has a command that moves the mouse pointer to the current
 #. location on a web page. If moving the mouse pointer caused an item to appear
@@ -9573,7 +9569,7 @@ msgstr "%d seviyesinde başka başlık yok."
 #. if no more images can be found.
 #: ../src/orca/messages.py:1426
 msgid "No more images."
-msgstr "Başka bir resim yok."
+msgstr "Başka grafik yok."
 
 #. Translators: this is for navigating to the previous ARIA role landmark.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
@@ -9588,7 +9584,7 @@ msgstr "Sınır işareti bulunamadı."
 #. presented to the user if no more links can be found.
 #: ../src/orca/messages.py:1437
 msgid "No more links."
-msgstr "Başka bir bağ yok."
+msgstr "Başka bağlantı yok."
 
 #. Translators: This is for navigating document content by moving from bulleted/
 #. numbered list to bulleted/numbered list. This is a detailed message which will
@@ -9686,7 +9682,7 @@ msgstr "Alt"
 #. notifications mode is being exited.
 #: ../src/orca/messages.py:1506
 msgid "Exiting list notification messages mode."
-msgstr "Bildirim mesajlarını listeleme kipinden çıkılıyor."
+msgstr "bildirim mesajları listesinden çıkılıyor."
 
 #. Translators: This is a brief message presented to the user when the top of the
 #. list of notifications is reached.
@@ -10129,7 +10125,7 @@ msgstr "dizgi bulunamadı"
 #. of Orca. It should be a brief informative message.
 #: ../src/orca/messages.py:1814
 msgid "Structural navigation keys off."
-msgstr "Yapısal dolaşım tuşları kapalı."
+msgstr "gezinme kapalı"
 
 #. Translators: The structural navigation keys are designed to move the caret
 #. around document content by object type. H moves you to the next heading,
@@ -10139,7 +10135,7 @@ msgstr "Yapısal dolaşım tuşları kapalı."
 #. of Orca. It should be a brief informative message.
 #: ../src/orca/messages.py:1822
 msgid "Structural navigation keys on."
-msgstr "Yapısal dolaşım anahtarları açık."
+msgstr "gezinme tuşları açık"
 
 #. Translators: Orca has a command that allows the user to move to the next
 #. structural navigation object. In Orca, "structural navigation" refers to
@@ -10712,8 +10708,6 @@ msgstr "%(role)s seviye %(level)d"
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
 #: ../src/orca/object_properties.py:91
-#| msgctxt "math enclosure"
-#| msgid "a horizontal strike"
 msgid "horizontal scroll bar"
 msgstr "yatay kaydırma çubuğu"
 
@@ -10723,7 +10717,6 @@ msgstr "yatay kaydırma çubuğu"
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
 #: ../src/orca/object_properties.py:98
-#| msgid "vertical bar"
 msgid "vertical scroll bar"
 msgstr "dikey kaydırma çubuğu"
 
@@ -10735,8 +10728,6 @@ msgstr "dikey kaydırma çubuğu"
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
 #: ../src/orca/object_properties.py:107
-#| msgctxt "math enclosure"
-#| msgid "a horizontal strike"
 msgid "horizontal slider"
 msgstr "yatay kaydırıcı"
 
@@ -10748,8 +10739,6 @@ msgstr "yatay kaydırıcı"
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
 #: ../src/orca/object_properties.py:116
-#| msgctxt "textattr"
-#| msgid "vertical align"
 msgid "vertical slider"
 msgstr "dikey kaydırıcı"
 
@@ -10764,8 +10753,6 @@ msgstr "dikey kaydırıcı"
 #. as part of the role is because in some applications and toolkits, it can
 #. dictate which keyboard keys should be used to modify the value of the widget.
 #: ../src/orca/object_properties.py:128
-#| msgctxt "math enclosure"
-#| msgid "a horizontal strike"
 msgid "horizontal splitter"
 msgstr "yatay ayraç"
 
@@ -10780,8 +10767,6 @@ msgstr "yatay ayraç"
 #. as part of the role is because in some applications and toolkits, it can
 #. dictate which keyboard keys should be used to modify the value of the widget.
 #: ../src/orca/object_properties.py:140
-#| msgctxt "textattr"
-#| msgid "vertical align"
 msgid "vertical splitter"
 msgstr "dikey ayraç"
 
@@ -10789,7 +10774,7 @@ msgstr "dikey ayraç"
 #. of icons.
 #: ../src/orca/object_properties.py:144
 msgid "Icon panel"
-msgstr "Simge paneli"
+msgstr "simgesel dizilim"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -10808,8 +10793,6 @@ msgstr "afiş"
 #. similar level in the DOM hierarchy, but remains meaningful when separated from
 #. the main content." See https://www.w3.org/TR/wai-aria-1.1/#complementary
 #: ../src/orca/object_properties.py:159
-#| msgctxt "math symbol"
-#| msgid "complement"
 msgctxt "role"
 msgid "complementary content"
 msgstr "tamamlayıcı içerik"
@@ -10821,8 +10804,6 @@ msgstr "tamamlayıcı içerik"
 #. Examples of information included in this region of the page are copyrights and
 #. links to privacy statements." See https://www.w3.org/TR/wai-aria-1.1/#contentinfo
 #: ../src/orca/object_properties.py:167
-#| msgctxt "math symbol"
-#| msgid "ratio"
 msgctxt "role"
 msgid "information"
 msgstr "bilgi"
@@ -10832,8 +10813,6 @@ msgstr "bilgi"
 #. The "main" role is defined in the ARIA specification as "The main content of
 #. a document." See https://www.w3.org/TR/wai-aria-1.1/#main
 #: ../src/orca/object_properties.py:173
-#| msgctxt "textattr"
-#| msgid "semi condensed"
 msgctxt "role"
 msgid "main content"
 msgstr "ana içerik"
@@ -10844,7 +10823,6 @@ msgstr "ana içerik"
 #. navigational elements (usually links) for navigating the document or related
 #. documents." See https://www.w3.org/TR/wai-aria-1.1/#navigation
 #: ../src/orca/object_properties.py:180
-#| msgid "Page Navigation"
 msgctxt "role"
 msgid "navigation"
 msgstr "gezinti"
@@ -10867,7 +10845,6 @@ msgstr "bölge"
 #. that contains a collection of items and objects that, as a whole, combine to
 #. create a search facility." See https://www.w3.org/TR/wai-aria-1.1/#search
 #: ../src/orca/object_properties.py:196
-#| msgid "Searching."
 msgctxt "role"
 msgid "search"
 msgstr "arama"
@@ -10885,14 +10862,14 @@ msgstr "ziyaret edilmiş bağlantı"
 #. which have an "onClick" action.
 #: ../src/orca/object_properties.py:207
 msgid "clickable"
-msgstr "tıklanabilir"
+msgstr "tıklanır"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
 #: ../src/orca/object_properties.py:212
 msgid "collapsed"
-msgstr "kapanmış"
+msgstr "daraltılmış"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
@@ -11077,11 +11054,11 @@ msgstr "Sadece tüm k_elimeyi eşleştir"
 
 #: ../src/orca/orca-find.ui.h:18
 msgid "Results must:"
-msgstr "Sonuçlar şunları yapmalı:"
+msgstr "sonuçlar:"
 
 #: ../src/orca/orca-setup.ui.h:1
 msgid "Default"
-msgstr "Öntanımlı"
+msgstr "varsayılan"
 
 #: ../src/orca/orca-setup.ui.h:2
 msgid "Uppercase"
@@ -11115,7 +11092,7 @@ msgstr "_Yardım"
 #. Translators: This is the label for a button in a dialog.
 #: ../src/orca/orca-setup.ui.h:15
 msgid "_Apply"
-msgstr "_Uygula"
+msgstr "uygula"
 
 #: ../src/orca/orca-setup.ui.h:21
 msgid "_Laptop"
@@ -11174,12 +11151,12 @@ msgstr "Saat ve Tarih"
 #. Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if rewind and fast forward is enabled, Up Arrow and Down Arrow can be used within Say All to quickly move within the document to re-hear something which was just read or skip past something of no interest.
 #: ../src/orca/orca-setup.ui.h:37
 msgid "Enable _rewind and fast forward in Say All"
-msgstr "Tümünü Seslendirmede _başa sarma ve ileri sarmayı etkinleştir"
+msgstr "tümü seslendirirken ileri geri sarmaya izin ver"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Normally, pressing any key will interrupt Say All presentation. However, if structural navigation is enabled for Say All, users can use commands such as H/Shift+H to jump to the next/previous heading, P/Shift+P to jump to the next/previous paragraph, T/Shift+T to jump to the next/previous table, and so on. Thus this setting is like fast forward and rewind, but with semantic awareness for web documents and similar content.
 #: ../src/orca/orca-setup.ui.h:39
 msgid "Enable _structural navigation in Say All"
-msgstr "Tümünü Seslendirmede _yapısal gezinmeyi etkinleştir"
+msgstr "Tümünü seslendirirken atalamaya izin ver"
 
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and say all by line.  If Orca were speaking a work of fiction, it would probably be best to do say all by sentence so it sounds more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: ../src/orca/orca-setup.ui.h:41
@@ -11218,7 +11195,7 @@ msgstr "Şununla sınırlandır:"
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically emit beeps which increase in pitch as the value of the progress bar increases.
 #: ../src/orca/orca-setup.ui.h:53
 msgid "Bee_p updates"
-msgstr "Güncellemelerde bi_ple"
+msgstr "bip sesi ile bildir"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
 #: ../src/orca/orca-setup.ui.h:55
@@ -11231,7 +11208,7 @@ msgstr "Genel"
 
 #: ../src/orca/orca-setup.ui.h:57
 msgid "Vo_lume:"
-msgstr "S_es:"
+msgstr "ses yüksekliği"
 
 #: ../src/orca/orca-setup.ui.h:58
 msgid "Pi_tch:"
@@ -11239,24 +11216,24 @@ msgstr "Karak_ter sıklığı:"
 
 #: ../src/orca/orca-setup.ui.h:59
 msgid "_Rate:"
-msgstr "O_ran:"
+msgstr "hız"
 
 #: ../src/orca/orca-setup.ui.h:60
 msgid "_Person:"
-msgstr "K_işi:"
+msgstr "kişi"
 
 #: ../src/orca/orca-setup.ui.h:61
 msgid "Speech synthesi_zer:"
-msgstr "Konuşma _bireştiricisi:"
+msgstr "Konuşmacı"
 
 #: ../src/orca/orca-setup.ui.h:62
 msgid "Speech _system:"
-msgstr "Konuşma _sistemi:"
+msgstr "sentezleyici"
 
 #. Translators: Having multiple voice types in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available voice types in Orca include: default, uppercase, hyperlink, and system -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.
 #: ../src/orca/orca-setup.ui.h:64
 msgid "_Voice type:"
-msgstr "_Ses türü:"
+msgstr "_ses türü:"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via text-to-speech. Speech Dispatcher has a feature to control how capital letters are presented: Do nothing at all; say the word
 #: ../src/orca/orca-setup.ui.h:66
@@ -11300,7 +11277,7 @@ msgstr "Ayrıntı Seviyesi"
 
 #: ../src/orca/orca-setup.ui.h:85
 msgid "_All"
-msgstr "He_psi"
+msgstr "tümü"
 
 #: ../src/orca/orca-setup.ui.h:86
 msgid "Punctuation Level"
@@ -11317,16 +11294,16 @@ msgstr "Boş satırları seslendir"
 
 #: ../src/orca/orca-setup.ui.h:90
 msgid "Speak _indentation and justification"
-msgstr "G_irintili yazma ve yaslamaları seslendir"
+msgstr "girintilemeleri ve yaslamaları söyle"
 
 #: ../src/orca/orca-setup.ui.h:91
 msgid "Spea_k object mnemonics"
-msgstr "Nesne hatırlatıcılarını _oku"
+msgstr "nesne ipuçlarını seslendir"
 
 #. Translators: This checkbox toggles whether or not Orca says the child position (e.g., item 6 of 7).
 #: ../src/orca/orca-setup.ui.h:93
 msgid "Speak child p_osition"
-msgstr "Çocuk k_onumunu konuş"
+msgstr "yavru nesne konumunu söyle"
 
 #: ../src/orca/orca-setup.ui.h:94
 msgid "Speak tutorial messages"
@@ -11384,12 +11361,12 @@ msgstr "_Satır sonu sembolünü kapat"
 
 #: ../src/orca/orca-setup.ui.h:112
 msgid "_Enable Contracted Braille"
-msgstr "Daraltılmış Braille'yi _Etkinleştir"
+msgstr "kısaltmalı braille'i etkinleştir"
 
 #. Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille contractions get used. Contractions are shorter forms of commonly-used letter combinations and words. For instance in English there is a single braille symbol for ing (dots 3-4-6), and the letter e (dots 1-5) all by itself represents the word every. The list of rules which dictate what contractions should be used and whether or not they can be used in a particular context are stored in tables provided by liblouis.
 #: ../src/orca/orca-setup.ui.h:114
 msgid "Contraction _Table:"
-msgstr "Daraltma _Tablosu"
+msgstr "kısaltma tablosu"
 
 #: ../src/orca/orca-setup.ui.h:115
 msgid "Display Settings"
@@ -11440,7 +11417,7 @@ msgstr "Braille"
 
 #: ../src/orca/orca-setup.ui.h:134
 msgid "Enable _key echo"
-msgstr "_Tuş yankısını etkinleştir"
+msgstr "tuş geribildirimini etkinleştir"
 
 #: ../src/orca/orca-setup.ui.h:135
 msgid "Enable _alphabetic keys"
@@ -11456,43 +11433,43 @@ msgstr "_Noktalama tuşlarını etkinleştir"
 
 #: ../src/orca/orca-setup.ui.h:138
 msgid "Enable _space"
-msgstr "Bo_şluk tuşunu etkinleştir"
+msgstr "boşluk tuşunu etkinleştir"
 
 #: ../src/orca/orca-setup.ui.h:139
 msgid "Enable _modifier keys"
-msgstr "_Düzenleyici tuşları etkinleştir"
+msgstr "düzenleme tuşlarını etkinleştir"
 
 #: ../src/orca/orca-setup.ui.h:140
 msgid "Enable _function keys"
-msgstr "İş_lev anahtarlarını etkinleştir"
+msgstr "işlev tuşlarını bildir"
 
 #: ../src/orca/orca-setup.ui.h:141
 msgid "Enable ac_tion keys"
-msgstr "Eylem _tuşlarını etkinleştir"
+msgstr "eylem tuşlarını bildir"
 
 #: ../src/orca/orca-setup.ui.h:142
 msgid "Enable _navigation keys"
-msgstr "Yö_n tuşlarını etkinleştir"
+msgstr "yön tuşlarını bildir"
 
 #: ../src/orca/orca-setup.ui.h:147
 msgid "Enable echo by _word"
-msgstr "_Kelime ile yankıyı etkinleştir"
+msgstr "kelime geribildirimi"
 
 #: ../src/orca/orca-setup.ui.h:148
 msgid "Enable echo by _sentence"
-msgstr "_Cümle ile yankıyı etkinleştir"
+msgstr "cümle geribildirimi"
 
 #: ../src/orca/orca-setup.ui.h:149
 msgid "Key Echo"
-msgstr "Anahtar Yankısı"
+msgstr "tuş geri bildirimi"
 
 #: ../src/orca/orca-setup.ui.h:150
 msgid "Screen Reader _Modifier Key(s):"
-msgstr "Ekran Okuyucusu _Dönüştürücü Tuşu/Tuşları:"
+msgstr "ekran okuyucu girişken tuşu"
 
 #: ../src/orca/orca-setup.ui.h:151
 msgid "Key Bindings"
-msgstr "Anahtar Bağları"
+msgstr "kısayollar"
 
 #: ../src/orca/orca-setup.ui.h:152
 msgid "Pronunciation Dictionary"
@@ -12348,7 +12325,7 @@ msgstr "eğik"
 #: ../src/orca/text_attribute_names.py:585
 msgctxt "textattr"
 msgid "Default"
-msgstr "Öntanımlı"
+msgstr "varsayılan"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "paragraph-style".
@@ -12584,32 +12561,31 @@ msgstr "Lütfen seçim için boşluğa basın."
 #: ../src/orca/tutorialgenerator.py:188
 msgid "Press space to expand, and use up and down to select an item."
 msgstr ""
-"Lütfen genişletmek için boşluğa basın, ve bir öğe seçmek için yukarı ve "
-"aşağı tuşlarını kullanın."
+"genişletmek için boşluğa, ardından bir öğe seçmek için ok tuşlarına basın."
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
 #: ../src/orca/tutorialgenerator.py:219
 msgid "Press alt+f6 to give focus to child windows."
-msgstr "Lütfen alt pencereleri odaklamak için alt+f6 tuşlarına basın."
+msgstr "alt pencerelere odaklanmak için alt ile birlikte f6 tuşlarına basın"
 
 #. Translators: this gives tips on how to navigate items in a
 #. layered pane.
 #: ../src/orca/tutorialgenerator.py:283
 msgid "To move to items, use either the arrow keys or type ahead searching."
 msgstr ""
-"Öğeleri taşımak için ya ok tuşlarını kullanın ya da arama için direk yazın."
+"öğeleri taşımak için ok tuşlarını kullanın yada aramak için doğrudan yazın"
 
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, describing how to access the system menus.
 #: ../src/orca/tutorialgenerator.py:289
 msgid "To get to the system menus press the alt+f1 key."
-msgstr "Sistem menüsünü almak için alt+f1 tuşlarına bakın."
+msgstr "sistem menüsü için alt iloe birlikte f1"
 
 #. Translators: this is the tutorial string when navigating lists.
 #: ../src/orca/tutorialgenerator.py:326
 msgid "Use up and down to select an item."
-msgstr "Bir öğe seçmek için yukarı ve aşağı kullanın."
+msgstr "bir öğe seçmek için ok tuşlarını kuyllanın"
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
@@ -12617,7 +12593,7 @@ msgstr "Bir öğe seçmek için yukarı ve aşağı kullanın."
 #. this string informs the user how to collapse the node.
 #: ../src/orca/tutorialgenerator.py:356 ../src/orca/tutorialgenerator.py:536
 msgid "To collapse, press shift plus left."
-msgstr "Katlamak için lütfen shift ile sola basın."
+msgstr "daraltmak için şiftile beraber sol ok"
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
@@ -12625,7 +12601,7 @@ msgstr "Katlamak için lütfen shift ile sola basın."
 #. this string informs the user how to expand the node.
 #: ../src/orca/tutorialgenerator.py:362 ../src/orca/tutorialgenerator.py:542
 msgid "To expand, press shift plus right."
-msgstr "Açmak için lütfen shift ile sağa basın."
+msgstr "genişletmek için şift ile birlikte sağ ok"
 
 #. Translators: this is the tutorial string for activating a menu item
 #: ../src/orca/tutorialgenerator.py:394
@@ -12643,21 +12619,19 @@ msgstr "Metin içine yaz."
 #. user how to navigate these.
 #: ../src/orca/tutorialgenerator.py:452
 msgid "Use left and right to view other tabs."
-msgstr "Diğer sekmeleri görüntülemek için sol ve sağ kullan."
+msgstr "diğer sekmeleri görüntülemek için yön tuşlarını kullanın"
 
 #. Translators: this is the tutorial string for activating a push button.
 #: ../src/orca/tutorialgenerator.py:477
 msgid "To activate press space."
-msgstr "Etkinleştirmek için boşluğa basın."
+msgstr "etkinleştirmek için boşluk"
 
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
 #: ../src/orca/tutorialgenerator.py:505
 msgid ""
 "Use up or down arrow to select value. Or type in the desired numerical value."
-msgstr ""
-"Değer seçmek için yukarı ya da aşağı okları kullanın. Ya da istenen rakamsal "
-"değeri yazın."
+msgstr "bir değer seçmek için ok tuşlarını kullanın yada rakamsal değer girin."
 
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
 #: ../src/orca/tutorialgenerator.py:668
@@ -12670,14 +12644,14 @@ msgid ""
 "To navigate, press left or right arrow. To move through items press up or "
 "down arrow."
 msgstr ""
-"Gezmek için, lütfen sol ya da sağ ok. Öğeler arasında geçmek için yukarı ya "
-"da aşağı oka basın."
+"gezinmek için ok tuşlarını, öğeler arasında geçmek için yukarıve aşağı ok "
+"tuşlarını kullanın"
 
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menus.
 #: ../src/orca/tutorialgenerator.py:698
 msgid "To enter sub menu, press right arrow."
-msgstr "Alt menüye girmek için, lütfen sağ ok."
+msgstr "açmak için sağ oka basın"
 
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
@@ -12686,8 +12660,8 @@ msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
 msgstr ""
-"Azaltmak için lütfen sol ok, arttırmak için ise sağ ok. En aza gitmek için "
-"home ve en fazlaya gitmek için end."
+"azaltmak ve atrımak için sağ ve sol ok tuşlarını, en fazla ve en az için hom "
+"ve end tuşlarını kullanın."
 
 #~ msgid "Screen Reader"
 #~ msgstr "Ekran Okuyucusu"
