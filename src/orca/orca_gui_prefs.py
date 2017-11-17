@@ -1614,7 +1614,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         
         combobox = self.get_widget("sayAllStyle")
         self.populateComboBox(combobox, [guilabels.SAY_ALL_STYLE_LINE,
-                                         guilabels.SAY_ALL_STYLE_SENTENCE])
+                                         guilabels.SAY_ALL_STYLE_SENTENCE,
+                                         guilabels.SAY_ALL_STYLE_SENTENCE_FULL_STOP])
         combobox.set_active(prefs["sayAllStyle"])
         self.get_widget("rewindAndFastForwardInSayAllCheckButton").set_active(
             prefs.get("rewindAndFastForwardInSayAll", settings.rewindAndFastForwardInSayAll))
@@ -2454,6 +2455,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.prefsDict["sayAllStyle"] = settings.SAYALL_STYLE_LINE
         elif sayAllStyle == guilabels.SAY_ALL_STYLE_SENTENCE:
             self.prefsDict["sayAllStyle"] = settings.SAYALL_STYLE_SENTENCE
+        elif sayAllStyle == guilabels.SAY_ALL_STYLE_SENTENCE_FULL_STOP:
+            self.prefsDict["sayAllStyle"] = settings.SAYALL_STYLE_SENTENCE_FULL_STOP
 
     def dateFormatChanged(self, widget):
         """Signal handler for the "changed" signal for the dateFormat

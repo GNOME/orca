@@ -408,6 +408,10 @@ SAY_ALL_STYLE_LINE = _("Line")
 # document, Orca will pause at the end of each sentence.
 SAY_ALL_STYLE_SENTENCE = _("Sentence")
 
+# Translators: If this setting is chosen and the user is reading over an entire
+# document, Orca will pause at the end of each sentence using full stop as limit
+SAY_ALL_STYLE_SENTENCE_FULL_STOP = _("Sentence(Using full stop)")
+
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they
 # could with native keyboard navigation. This is the title for a column which
