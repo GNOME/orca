@@ -3472,6 +3472,8 @@ class Script(script.Script):
             mode = pyatspi.TEXT_BOUNDARY_SENTENCE_START
         elif sayAllStyle == settings.SAYALL_STYLE_LINE:
             mode = pyatspi.TEXT_BOUNDARY_LINE_START
+        elif sayAllStyle == settings.SAYALL_STYLE_SENTENCE_FULL_STOP:
+            mode = pyatspi.TEXT_BOUNDARY_WORD_START
         else:
             mode = pyatspi.TEXT_BOUNDARY_LINE_START
 
@@ -3485,8 +3487,24 @@ class Script(script.Script):
 
             lastEndOffset = -1
             while offset < length:
-                [lineString, startOffset, endOffset] = text.getTextAtOffset(
-                    offset, mode)
+                if (sayAllStyle == settings.SAYALL_STYLE_SENTENCE_FULL_STOP):
+                     # Get text word by word till a full stop found.
+                     # If no full stop found, stop at minimum of 1000 more chars or length
+                     offset_max = min(offset + 1000,length);
+                     lineString = ""
+                     # Full Stop for English,  Devanagari, Sinhala, Chinese/Japanese, Urudu
+                     while( '\u002e' not in lineString \
+                     and '\u0964' not in lineString \
+                     and '\u0df4' not in lineString \
+                     and '\u3002' not in lineString \
+                     and '\u06d4' not in lineString \
+                     and offset < offset_max):
+                         [lineString_new, startOffset, endOffset] = text.getTextAtOffset(offset, mode)
+                         offset = endOffset;
+                         lineString = lineString + lineString_new;
+                else:
+                    [lineString, startOffset, endOffset] = text.getTextAtOffset(
+					offset, mode)
 
                 # Some applications that don't support sentence boundaries
                 # will provide the line boundary results instead; others
