@@ -54,7 +54,7 @@ class Utilities(script_utilities.Utilities):
 
         # Present GtkLabel children inside a GtkListBox row.
         if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
-            labels = self.unrelatedLabels(obj, onlyShowing=False)
+            labels = self.unrelatedLabels(obj)
             displayedText = " ".join(map(self.displayedText, labels))
 
         self._script.generatorCache[self.DISPLAYED_TEXT][obj] = displayedText
