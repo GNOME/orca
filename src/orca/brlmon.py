@@ -55,13 +55,13 @@ class BrlDot(Gtk.Alignment):
           an 8-dot braille cell, using traditional braille dot values.
         """
 
-        Gtk.Alignment.__init__(self)
+        super().__init__()
         if dotNumber in [1, 2, 3, 7]:
             self.set(1.0, 0.5, 0.0, 0.0)
-            self.set_padding(0, 0, 3, 0)
+            self.set_padding(3, 0, 0, 3)
         else:
             self.set(0.0, 0.5, 0.0, 0.0)
-            self.set_padding(0, 0, 0, 3)
+            self.set_padding(3, 0, 3, 0)
 
         self.label = Gtk.Label()
         self.add(self.label)
@@ -78,7 +78,7 @@ class BrlDot(Gtk.Alignment):
         self.set(0.5, 0.5, 0, 0)
         self.label.set_markup(self.MARKUP_NORMAL % self.SYMBOL_LOWERED)
 
-class BrlCell(Gtk.Grid):
+class BrlCell(Gtk.Button):
     """A single graphical braille cell with cursor routing capability."""
 
     MARKUP_NORMAL      = '<tt><big>%s</big></tt>'
@@ -91,25 +91,20 @@ class BrlCell(Gtk.Grid):
         - position: The location of the cell with respect to the monitor.
         """
 
-        Gtk.Grid.__init__(self)
+        Gtk.Button.__init__(self)
+        self.set_size_request(30, 45)
         self._position = position
+        self._displayedChar = Gtk.Label()
+        self._dot7 = BrlDot(7)
+        self._dot8 = BrlDot(8)
 
-        # For now, we display the char in print, like we always have. Use
-        # (merge) dots 1-6 for this purpose. Also make the button a means
-        # by which developers can work on cursor routing.
-        self._displayedChar = Gtk.Button()
-        self._displayedChar.set_size_request(30, 40)
-        self._displayedChar.add(Gtk.Label())
-        self.attach(self._displayedChar, 0, 0, 2, 3)
-        self._displayedChar.connect("clicked", self._onCellClicked)
+        grid = Gtk.Grid()
+        grid.attach(self._displayedChar, 0, 0, 2, 3)
+        grid.attach(self._dot7, 0, 3, 1, 1)
+        grid.attach(self._dot8, 1, 3, 1, 1)
+        self.add(grid)
 
-        # Create a more braille-like representation for dots 7-8 so that we
-        # do not have to remember/guess what pango underline type goes with
-        # what dot(s).
-        self.dot7 = BrlDot(7)
-        self.dot8 = BrlDot(8)
-        self.attach(self.dot7, 0, 3, 1, 1)
-        self.attach(self.dot8, 1, 3, 1, 1)
+        self.connect("clicked", self._onCellClicked)
 
     def _onCellClicked(self, widget):
         """Callback for the 'clicked' signal on the push button. Synthesizes
@@ -129,14 +124,9 @@ class BrlCell(Gtk.Grid):
     def clear(self):
         """Clears the braille cell."""
 
-        try:
-            label, = self._displayedChar.get_children()
-        except ValueError:
-            return
-
-        label.set_markup("")
-        self.dot7.lowerDot()
-        self.dot8.lowerDot()
+        self._displayedChar.set_markup("")
+        self._dot7.lowerDot()
+        self._dot8.lowerDot()
 
     def display(self, char, mask=None, isCursorCell=False):
         """Displays the specified character in the cell.
@@ -157,13 +147,12 @@ class BrlCell(Gtk.Grid):
         markup = self.MARKUP_NORMAL
         if isCursorCell:
             markup = markup % self.MARKUP_CURSOR_CELL
-        label, = self._displayedChar.get_children()
-        label.set_markup(markup % char)
+        self._displayedChar.set_markup(markup % char)
 
         if mask in [DOT_7, DOTS_78]:
-            self.dot7.raiseDot()
+            self._dot7.raiseDot()
         if mask in [DOT_8, DOTS_78]:
-            self.dot8.raiseDot()
+            self._dot8.raiseDot()
 
 class BrlMon(Gtk.Window):
     """Displays a GUI braille monitor that mirrors what would be displayed
@@ -179,7 +168,7 @@ class BrlMon(Gtk.Window):
         - numCells: how many braille cells to make
         """
 
-        Gtk.Window.__init__(self)
+        super().__init__()
         self.set_title("Braille Monitor")
 
         grid = Gtk.Grid()
