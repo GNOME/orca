@@ -39,7 +39,6 @@ class WhereAmI:
         about the current object of interest.
         """
         self._script = script
-        self._lastAttributeString = ""
 
     def _adjustObject(self, obj):
         """We want to treat text objects inside list items and table cells as
