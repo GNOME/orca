@@ -26,7 +26,6 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
-from . import debug
 from . import speech
 
 # [[[TODO: WDW - need to handle the old _speakText functionality that changes
@@ -40,7 +39,6 @@ class WhereAmI:
         about the current object of interest.
         """
         self._script = script
-        self._debugLevel = debug.LEVEL_FINEST
         self._lastAttributeString = ""
 
     def _adjustObject(self, obj):

@@ -290,14 +290,6 @@ class Script(default.Script):
         prefs.update(self.spellcheck.getPreferencesFromGUI())
         return prefs
 
-    def doWhereAmI(self, inputEvent, basicOnly):
-        """Performs the whereAmI operation."""
-
-        if self.spellcheck.isActive():
-            self.spellcheck.presentErrorDetails(not basicOnly)
-
-        super().doWhereAmI(inputEvent, basicOnly)
-
     def presentObject(self, obj, **args):
         if not self._lastCommandWasStructNav:
             super().presentObject(obj, **args)

@@ -119,14 +119,6 @@ class Script(Gecko.Script):
 
         return prefs
 
-    def doWhereAmI(self, inputEvent, basicOnly):
-        """Performs the whereAmI operation."""
-
-        if self.spellcheck.isActive():
-            self.spellcheck.presentErrorDetails(not basicOnly)
-
-        super().doWhereAmI(inputEvent, basicOnly)
-
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
         """Handles changes of focus of interest to the script."""
 

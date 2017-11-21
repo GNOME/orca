@@ -1995,6 +1995,9 @@ class Script(script.Script):
         - inputEvent:     The original inputEvent
         """
 
+        if self.spellcheck and self.spellcheck.isActive():
+            self.spellcheck.presentErrorDetails(not basicOnly)
+
         obj = orca_state.locusOfFocus
         self.updateBraille(obj)
 
