@@ -55,7 +55,6 @@ from . import settings_manager
 from . import sound_generator
 from . import speech_generator
 from . import structural_navigation
-from . import where_am_I
 from . import bookmarks
 from . import tutorialgenerator
 
@@ -115,7 +114,6 @@ class Script:
         self.speechGenerator = self.getSpeechGenerator()
         self.generatorCache = {}
         self.eventCache = {}
-        self.whereAmI = self.getWhereAmI()
         self.spellcheck = self.getSpellCheck()
         self.tutorialGenerator = self.getTutorialGenerator()
 
@@ -232,11 +230,6 @@ class Script:
         e.g. in a form field.
         """
         return self.structuralNavigation.enabled
-
-    def getWhereAmI(self):
-        """Returns the "where am I" class for this script.
-        """
-        return where_am_I.WhereAmI(self)
 
     def getBookmarks(self):
         """Returns the "bookmarks" class for this script.

@@ -1916,6 +1916,21 @@ class Utilities:
 
         return False
 
+    def realActiveAncestor(self, obj):
+        if obj.getState().contains(pyatspi.STATE_FOCUSED):
+            return obj
+
+        roles = [pyatspi.ROLE_TABLE_CELL,
+                 pyatspi.ROLE_COLUMN_HEADER,
+                 pyatspi.ROLE_ROW_HEADER,
+                 pyatspi.ROLE_LIST_ITEM]
+
+        ancestor = pyatspi.findAncestor(obj, lambda x: x and x.getRole() in roles)
+        if ancestor and not self._script.utilities.isLayoutOnly(ancestor.parent):
+            obj = ancestor
+
+        return obj
+
     def realActiveDescendant(self, obj):
         """Given an object that should be a child of an object that
         manages its descendants, return the child that is the real

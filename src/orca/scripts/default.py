@@ -1999,9 +1999,24 @@ class Script(script.Script):
             self.spellcheck.presentErrorDetails(not basicOnly)
 
         obj = orca_state.locusOfFocus
+        if not obj:
+            return False
+
         self.updateBraille(obj)
 
-        return self.whereAmI.whereAmI(obj, basicOnly)
+        if basicOnly:
+            formatType = 'basicWhereAmI'
+        else:
+            formatType = 'detailedWhereAmI'
+        speech.speak(self.speechGenerator.generateSpeech(
+            self.utilities.realActiveAncestor(obj),
+            alreadyFocused=True,
+            formatType=formatType,
+            forceMnemonic=True,
+            forceList=True,
+            forceTutorial=True))
+
+        return True
 
     def whereAmIBasic(self, inputEvent):
         """Speaks basic information about the current object of interest.
