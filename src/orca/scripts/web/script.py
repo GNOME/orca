@@ -610,11 +610,14 @@ class Script(default.Script):
         if not (text and text.getNSelections()):
             return
 
-        context = self.utilities.getCaretContext(documentFrame=None)
+        document = self.utilities.getDocumentForObject(obj)
+        if not document:
+            return
 
+        context = self.utilities.getCaretContext(documentFrame=document)
         start, end = text.getSelection(0)
         offset = max(offset, start)
-        self.utilities.setCaretContext(obj, offset, documentFrame=None)
+        self.utilities.setCaretContext(obj, offset, documentFrame=document)
         if end - start < _settingsManager.getSetting('findResultsMinimumLength'):
             return
 
@@ -624,7 +627,7 @@ class Script(default.Script):
 
         if self._madeFindAnnouncement \
            and verbosity == settings.FIND_SPEAK_IF_LINE_CHANGED \
-           and not self.utilities.contextsAreOnSameLine(context, (obj, offset)):
+           and self.utilities.contextsAreOnSameLine(context, (obj, offset)):
             return
 
         contents = self.utilities.getLineContentsAtOffset(obj, offset)
@@ -1338,14 +1341,10 @@ class Script(default.Script):
             return True
 
         if self.utilities.inFindToolbar():
-            if not self._madeFindAnnouncement:
-                msg = "WEB: Event handled: Presenting find results"
-                debug.println(debug.LEVEL_INFO, msg, True)
-                self.presentFindResults(event.source, event.detail1)
-            else:
-                self.utilities.setCaretContext(event.source, event.detail1)
-                msg = "WEB: Event handled: Setting context to source and offset"
-                debug.println(debug.LEVEL_INFO, msg, True)
+            msg = "WEB: Event handled: Presenting find results"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.presentFindResults(event.source, event.detail1)
+            self._saveFocusedObjectInfo(orca_state.locusOfFocus)
             return True
 
         if self.utilities.eventIsAutocompleteNoise(event):
@@ -1958,13 +1957,6 @@ class Script(default.Script):
             msg = "WEB: Event source is not in document content"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
-
-        if self.utilities.inFindToolbar():
-            msg = "WEB: Event handled: Presenting find results"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            self.presentFindResults(event.source, -1)
-            self._saveFocusedObjectInfo(orca_state.locusOfFocus)
-            return True
 
         if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
             msg = "WEB: Event ignored: locusOfFocus (%s) is not in document content" \
