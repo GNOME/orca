@@ -553,10 +553,6 @@ class Utilities(script_utilities.Utilities):
         if self.inDocumentContent(obj):
             return False
 
-        if obj and obj.parent \
-           and obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
-            return False
-
         return super().inFindToolbar(obj)
 
     def isEmpty(self, obj):
