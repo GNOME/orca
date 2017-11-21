@@ -1650,9 +1650,10 @@ class Script(default.Script):
 
             obj, offset = self.utilities.searchForCaretContext(event.source)
             if obj:
+                notify = self.utilities.inFindToolbar(orca_state.locusOfFocus)
                 msg = "WEB: Updating focus and context to %s, %i" % (obj, offset)
                 debug.println(debug.LEVEL_INFO, msg, True)
-                orca.setLocusOfFocus(event, obj, False)
+                orca.setLocusOfFocus(event, obj, notify)
                 self.utilities.setCaretContext(obj, offset)
             else:
                 msg = "WEB: Search for caret context failed"
