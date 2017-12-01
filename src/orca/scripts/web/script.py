@@ -485,6 +485,15 @@ class Script(default.Script):
             if event.source.getRole() == pyatspi.ROLE_LINK:
                 return False
 
+        if event.type.startswith('object:children-changed'):
+            try:
+                role = event.any_data.getRole()
+            except:
+                pass
+            else:
+                if role == pyatspi.ROLE_DIALOG:
+                    return False
+
         return super().skipObjectEvent(event)
 
     def consumesKeyboardEvent(self, keyboardEvent):
