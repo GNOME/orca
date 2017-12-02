@@ -1411,7 +1411,8 @@ class Script(default.Script):
             msg = "WEB: In content editable with embedded objects"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(obj, offset)
-            orca.setLocusOfFocus(event, event.source, True)
+            notify = not self.utilities.lastInputEventWasCharNav()
+            orca.setLocusOfFocus(event, event.source, notify)
             return False
 
         text = self.utilities.queryNonEmptyText(event.source)
