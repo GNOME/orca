@@ -1879,8 +1879,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             self.structuralNavigation.clearCache(document)
 
-        state = event.source.getState()
-        if not state.contains(pyatspi.STATE_EDITABLE):
+        if not self.utilities.isContentEditableWithEmbeddedObjects(event.source):
             if self._inMouseOverObject \
                and self.utilities.isZombie(self._lastMouseOverObject):
                 msg = "WEB: Restoring pre-mouseover context"

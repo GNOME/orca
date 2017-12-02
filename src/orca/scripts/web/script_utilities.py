@@ -1615,6 +1615,9 @@ class Utilities(script_utilities.Utilities):
            or self.isToolBarDescendant(obj):
             return True
 
+        if self.isContentEditableWithEmbeddedObjects(obj):
+            return True
+
         return False
 
     def _textBlockElementRoles(self):
@@ -3141,8 +3144,12 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return rv
 
+        isTextBlockRole = role in self._textBlockElementRoles() or self.isLink(obj)
         if state.contains(pyatspi.STATE_EDITABLE):
-            rv = role in self._textBlockElementRoles() or self.isLink(obj)
+            rv = isTextBlockRole
+        elif not self.isDocument(obj):
+            document = self.getDocumentForObject(obj)
+            rv = self.isContentEditableWithEmbeddedObjects(document)
 
         self._isContentEditableWithEmbeddedObjects[hash(obj)] = rv
         return rv
