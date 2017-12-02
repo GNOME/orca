@@ -845,6 +845,16 @@ class Script(default.Script):
         self.displayContents(contents)
         self.speakContents(contents, priorObj=priorObj)
  
+    def updateBrailleForNewCaretPosition(self, obj):
+        """Try to reposition the cursor without having to do a full update."""
+
+        text = self.utilities.queryNonEmptyText(obj)
+        if text and self.EMBEDDED_OBJECT_CHARACTER in text.getText(0, -1):
+            self.updateBraille(obj)
+            return
+
+        super().updateBrailleForNewCaretPosition(obj)
+
     def updateBraille(self, obj, **args):
         """Updates the braille display to show the given object."""
 
