@@ -1121,8 +1121,12 @@ class Script(default.Script):
 
         self.utilities.setCaretContext(newFocus, caretOffset)
         self.updateBraille(newFocus)
-
-        if self.utilities.isAnchor(newFocus):
+        if self.utilities.isContentEditableWithEmbeddedObjects(newFocus):
+            msg = "WEB: New focus %s content editable. Generating line contents." % newFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
+            contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
+            utterances = self.speechGenerator.generateContents(contents)
+        elif self.utilities.isAnchor(newFocus):
             msg = "WEB: New focus %s is anchor. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
