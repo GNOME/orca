@@ -859,10 +859,12 @@ class Script(default.Script):
             super().updateBraille(obj, **args)
             return
 
+        isContentEditable = self.utilities.isContentEditableWithEmbeddedObjects(obj)
+
         if not self._lastCommandWasCaretNav \
            and not self._lastCommandWasStructNav \
+           and not isContentEditable \
            and not self.utilities.isPlainText() \
-           and not self.utilities.isContentEditableWithEmbeddedObjects(obj) \
            and not self.utilities.lastInputEventWasCaretNavWithSelection():
             msg = "WEB: updating braille for unhandled navigation type %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -870,6 +872,10 @@ class Script(default.Script):
             return
 
         obj, offset = self.utilities.getCaretContext(documentFrame=None)
+        if offset > 0 and isContentEditable:
+            text = self.utilities.queryNonEmptyText(obj)
+            offset = min(offset, text.characterCount)
+
         contents = self.utilities.getLineContentsAtOffset(obj, offset)
         self.displayContents(contents)
 
