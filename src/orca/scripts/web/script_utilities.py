@@ -3527,6 +3527,13 @@ class Utilities(script_utilities.Utilities):
             return obj, 0
 
         if offset >= text.characterCount:
+            if self.isLink(obj) and self.isContentEditableWithEmbeddedObjects(obj):
+                nextObj, nextOffset = self.nextContext(obj, text.characterCount)
+                if nextObj:
+                    msg = "WEB: First caret context for %s, %i is %s, %i" % (obj, offset, nextObj, nextOffset)
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    return nextObj, nextOffset
+
             msg = "WEB: First caret context for %s, %i is %s, %i" % (obj, offset, obj, text.characterCount)
             debug.println(debug.LEVEL_INFO, msg, True)
             return obj, text.characterCount
