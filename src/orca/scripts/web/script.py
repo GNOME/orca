@@ -1138,9 +1138,7 @@ class Script(default.Script):
         self.utilities.setCaretContext(newFocus, caretOffset)
         self.updateBraille(newFocus)
 
-        oldContext = self.utilities.lastContext(oldFocus)
-        if self.utilities.isContentEditableWithEmbeddedObjects(newFocus) \
-           and not self.utilities.contextsAreOnSameLine(oldContext, (newFocus, caretOffset)):
+        if self.utilities.isContentEditableWithEmbeddedObjects(newFocus):
             msg = "WEB: New focus %s content editable. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
