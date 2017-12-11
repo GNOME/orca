@@ -1,3 +1,37 @@
+3.27.3 - 11 December 2017
+
+Web + Email:
+
+ * Fixed several issues in presentation of editable content
+
+ * Hack around lack of window:activate events for ARIA dialogs
+
+ * Fix presentation of find results in new version of Firefox
+
+ * Improve handling of focused elements getting destroyed when activated
+
+ * Attempt to identify and navigate around non-navigable embedded documents
+
+General:
+
+ * Fix chattiness issue caused by off-screen labels in Gtk+ listboxes
+
+ * Eliminate incorrect presentation of previous panel
+
+ * Fix issues to pass 'yelp-check validate'
+
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca@valencia   Catalan (Valencian)   Xavi Ivars
+    cs            Czech                 Marek Černocký
+    ne            Nepali                Pawan Chitrakar
+    no            Norwegian bokmål      Kjartan Maraas
+    sv            Swedish               Anders Jonsson
+    tr            Turkish               Muhammet Kara, Olcay Aşcı
+
+=========
+
 3.26.0 - 15 September 2017
 
 Web:
