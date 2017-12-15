@@ -597,13 +597,19 @@ class StructuralNavigation:
     # or "chunks." Note that this refers to AT-SPI roles.
     #
     OBJECT_ROLES = [pyatspi.ROLE_HEADING,
-                    pyatspi.ROLE_LIST,
+                    pyatspi.ROLE_LIST_ITEM,
+                    pyatspi.ROLE_MATH,
                     pyatspi.ROLE_PARAGRAPH,
-                    pyatspi.ROLE_TABLE,
+                    pyatspi.ROLE_STATIC,
+                    pyatspi.ROLE_COLUMN_HEADER,
+                    pyatspi.ROLE_ROW_HEADER,
                     pyatspi.ROLE_TABLE_CELL,
+                    pyatspi.ROLE_TABLE_ROW,
                     pyatspi.ROLE_TEXT,
                     pyatspi.ROLE_SECTION,
                     pyatspi.ROLE_ARTICLE,
+                    pyatspi.ROLE_DESCRIPTION_TERM,
+                    pyatspi.ROLE_DESCRIPTION_VALUE,
                     pyatspi.ROLE_DOCUMENT_EMAIL,
                     pyatspi.ROLE_DOCUMENT_FRAME,
                     pyatspi.ROLE_DOCUMENT_PRESENTATION,
@@ -612,11 +618,14 @@ class StructuralNavigation:
                     pyatspi.ROLE_DOCUMENT_WEB]
 
     CONTAINER_ROLES = [pyatspi.ROLE_BLOCK_QUOTE,
+                       pyatspi.ROLE_DESCRIPTION_LIST,
                        pyatspi.ROLE_FORM,
                        pyatspi.ROLE_FOOTER,
                        pyatspi.ROLE_HEADER,
                        pyatspi.ROLE_LANDMARK,
+                       pyatspi.ROLE_LOG,
                        pyatspi.ROLE_LIST,
+                       pyatspi.ROLE_MARQUEE,
                        pyatspi.ROLE_PANEL,
                        pyatspi.ROLE_SECTION,
                        pyatspi.ROLE_TABLE]
@@ -1638,7 +1647,7 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        role = self.OBJECT_ROLES
+        role = self.OBJECT_ROLES + self.CONTAINER_ROLES
         roleMatch = collection.MATCH_ANY
         return MatchCriteria(collection,
                              roles=role,
