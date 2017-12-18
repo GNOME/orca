@@ -19,7 +19,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2017-09-03 08:04+0000\n"
-"PO-Revision-Date: 2017-09-07 17:51+0200\n"
+"PO-Revision-Date: 2017-12-18 20:48+0100\n"
 "Last-Translator: Alain Lojewski <allomervan@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -27,7 +27,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
-"X-Generator: Poedit 1.8.11\n"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -90,7 +89,7 @@ msgstr "têtecol"
 #. Translators: short braille for the rolename of a combo box.
 #: ../src/orca/braille_rolenames.py:74
 msgid "cbo"
-msgstr "cbo"
+msgstr "lstd"
 
 #. Translators: short braille for the rolename of a date editor.
 #: ../src/orca/braille_rolenames.py:77
@@ -2634,7 +2633,7 @@ msgstr "Va à l’objet précédent."
 #. by Orca's caret navigation to be expanded.
 #: ../src/orca/cmdnames.py:690
 msgid "Causes the current combo box to be expanded."
-msgstr "Provoque le déroulement de la boîte combinée actuelle."
+msgstr "Provoque le déroulement de la liste déroulante actuelle."
 
 #. Translators: Gecko native caret navigation is where Firefox (or Thunderbird)
 #. itself controls how the arrow keys move the caret around HTML content. It's
@@ -2811,12 +2810,12 @@ msgstr "Affiche une liste des éléments cliquables."
 #. Translators: this is for navigating among combo boxes in a document.
 #: ../src/orca/cmdnames.py:815
 msgid "Goes to previous combo box."
-msgstr "Va à la boîte combinée précédente."
+msgstr "Va à la liste déroulante précédente."
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: ../src/orca/cmdnames.py:818
 msgid "Goes to next combo box."
-msgstr "Va à la boîte combinée suivante."
+msgstr "Va à la liste déroulante suivante."
 
 #. Translators: This string describes a document navigation command which moves
 #. to the start of the current container. Examples of containers include tables,
@@ -2835,7 +2834,7 @@ msgstr "Va à la fin du conteneur."
 #. Translators: this is for navigating among combo boxes in a document.
 #: ../src/orca/cmdnames.py:831
 msgid "Displays a list of combo boxes."
-msgstr "Affiche la liste des boîtes combinées."
+msgstr "Affiche la liste des listes déroulantes."
 
 #. Translators: this is for navigating among entries in a document.
 #: ../src/orca/cmdnames.py:834
@@ -4901,7 +4900,7 @@ msgstr "Élément cliquable"
 #: ../src/orca/guilabels.py:445
 msgctxt "structural navigation"
 msgid "Combo Box"
-msgstr "Boîte combinée"
+msgstr "Liste déroulante"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5109,7 +5108,7 @@ msgstr "Éléments cliquables"
 #: ../src/orca/guilabels.py:584
 msgctxt "structural navigation"
 msgid "Combo Boxes"
-msgstr "Boîtes combinées"
+msgstr "Listes déroulantes"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -9951,7 +9950,7 @@ msgstr "Plus aucun élément cliquable."
 #. user if no more combo boxes can be found.
 #: ../src/orca/messages.py:1652
 msgid "No more combo boxes."
-msgstr "Plus aucune boîte combinée."
+msgstr "Plus aucune liste déroulante."
 
 #. Translators: This is for navigating document content by moving from entry
 #. to entry. This is a detailed message which will be presented to the user
@@ -11147,7 +11146,7 @@ msgstr "NIVEAU DE L’ARBORESCENCE %d"
 #. typed or arrowed to.
 #: ../src/orca/object_properties.py:73
 msgid "editable combo box"
-msgstr "boîte combinée modifiable"
+msgstr "liste déroulante modifiable"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
