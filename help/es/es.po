@@ -15,8 +15,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2017-06-28 17:19+0000\n"
-"PO-Revision-Date: 2017-07-26 10:14+0200\n"
+"POT-Creation-Date: 2017-11-20 14:09+0000\n"
+"PO-Revision-Date: 2017-12-15 12:04+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -2335,9 +2335,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:435
-#| msgid ""
-#| "Report information on the currently active script: <keyseq><key>Ctrl</"
-#| "key><key>Alt</key><key>Orca Modifier</key> <key>Home</key></keyseq>"
 msgid ""
 "Start and end of current container: <keyseq><key>Shift</key><key>comma</"
 "key></keyseq> and <keyseq><key>comma</key></keyseq>"
@@ -3967,7 +3964,7 @@ msgstr "Configurar <app>Orca</app>"
 msgid "Orca Configuration"
 msgstr "Configuración de Orca"
 
-#. (itstool) path: section/p
+#. (itstool) path: page/p
 #: C/howto_setting_up_orca.page:21
 msgid ""
 "If you want to configure <app>Orca</app>, get into the <link xref="
@@ -4321,15 +4318,21 @@ msgstr ""
 
 #. (itstool) path: note/p
 #: C/howto_tables.page:80
+#| msgid ""
+#| "Depending on where you are, it may be necessary for you to explicitly "
+#| "toggle Structural Navigation on before you can use it. To learn more, "
+#| "read <link type=\"seealso\" xref="
+#| "\"howto_structural_navigation#toggling_required\"> when toggling "
+#| "Structural Navigation on is required.</link>"
 msgid ""
 "Depending on where you are, it may be necessary for you to explicitly toggle "
 "Structural Navigation on before you can use it. To learn more, read <link "
-"type=\"seealso\" xref=\"howto_structural_navigation#toggling_required\"> "
-"when toggling Structural Navigation on is required.</link>"
+"xref=\"howto_structural_navigation#toggling_required\"> when toggling "
+"Structural Navigation on is required.</link>"
 msgstr ""
 "Dependiendo de donde se encuentre, puede ser necesario activar "
 "explícitamente la navegación estructural antes de que pueda usarla. Para "
-"obtener más información, lea <link type=\"seealso\" xref="
+"obtener más información, lea <link xref="
 "\"howto_structural_navigation#toggling_required\">cuándo es necesario "
 "activar la navegación estructural</link>."
 
@@ -7260,11 +7263,6 @@ msgstr "Hablar descripción"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:189
-#| msgid ""
-#| "If the <gui>Speak tutorial messages</gui> checkbox is checked, as you "
-#| "move amongst objects in an interface, <app>Orca</app> will provide "
-#| "additional information, such as how to interact with the currently-"
-#| "focused object."
 msgid ""
 "If the <gui>Speak description</gui> checkbox is checked, as you move amongst "
 "objects in an interface, <app>Orca</app> will speak the accessible "
