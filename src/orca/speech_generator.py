@@ -2046,7 +2046,8 @@ class SpeechGenerator(generator.Generator):
         if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
             widgets = pyatspi.findAllDescendants(obj, isWidget)
             for widget in widgets:
-                result.append(self.generate(widget, includeContext=False))
+                if self._script.utilities.isShowingAndVisible(widget):
+                    result.append(self.generate(widget, includeContext=False))
 
         return result
 

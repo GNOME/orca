@@ -456,17 +456,11 @@ class Utilities:
             except (LookupError, RuntimeError):
                 pass
 
-        # [[[WDW - HACK because push buttons can have labels as their
-        # children.  An example of this is the Font: button on the General
-        # tab in the Editing Profile dialog in gnome-terminal.
-        #
-        if not displayedText and role == pyatspi.ROLE_PUSH_BUTTON:
-            for child in obj:
-                if child.getRole() == pyatspi.ROLE_LABEL:
-                    childText = self.displayedText(child)
-                    if childText and len(childText):
-                        displayedText = \
-                            self.appendString(displayedText, childText)
+        if not displayedText and role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_LIST_ITEM]:
+            labels = self.unrelatedLabels(obj)
+            if not labels:
+                labels = self.unrelatedLabels(obj, onlyShowing=False)
+            displayedText = " ".join(map(self.displayedText, labels))
 
         if self.DISPLAYED_TEXT not in self._script.generatorCache:
             self._script.generatorCache[self.DISPLAYED_TEXT] = {}

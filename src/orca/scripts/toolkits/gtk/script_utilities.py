@@ -47,21 +47,6 @@ class Utilities(script_utilities.Utilities):
         self._isTypeahead = {}
         self._isUselessPanel = {}
 
-    def displayedText(self, obj):
-        displayedText = script_utilities.Utilities.displayedText(self, obj)
-        if displayedText:
-            return displayedText
-
-        # Present GtkLabel children inside a GtkListBox row.
-        if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
-            labels = self.unrelatedLabels(obj)
-            if not labels:
-                labels = self.unrelatedLabels(obj, onlyShowing=False)
-            displayedText = " ".join(map(self.displayedText, labels))
-
-        self._script.generatorCache[self.DISPLAYED_TEXT][obj] = displayedText
-        return displayedText
-
     def infoBar(self, root):
         isInfoBar = lambda x: x and x.getRole() == pyatspi.ROLE_INFO_BAR
         return pyatspi.findDescendant(root, isInfoBar)
