@@ -1774,8 +1774,10 @@ class Script(default.Script):
             return True
 
         if self.utilities.eventIsChromePageSwitchNoise(event):
-            msg = "WEB: Ignoring event believed to be chrome page switch noise"
+            msg = "WEB: Event believed to be chrome page switch"
             debug.println(debug.LEVEL_INFO, msg, True)
+            if event.detail1:
+                self.presentObject(event.source)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
