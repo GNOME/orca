@@ -354,10 +354,6 @@ class Region:
         else:
             mode = louis.compbrlAtCursor
 
-        msg = "BRAILLE: '%s', cursorPos: %i, mode: %s (%s)" % \
-              (line, mode, cursorOffset, self.contractionTable)
-        debug.println(debug.LEVEL_INFO, msg, True)
-
         contracted, inPos, outPos, cursorPos = \
             louis.translate([self.contractionTable],
                             line,
