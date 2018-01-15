@@ -261,6 +261,15 @@ class Utilities(script_utilities.Utilities):
                 if parentRole == pyatspi.ROLE_COMBO_BOX:
                     return True
 
+        if role == pyatspi.ROLE_FRAME and name:
+            try:
+                windowName = orca_state.activeWindow.name
+            except:
+                msg = "SOFFICE: Exception getting name of active window"
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                return name == windowName
+
         return super().isLayoutOnly(obj)
 
     def isAnInputLine(self, obj):
