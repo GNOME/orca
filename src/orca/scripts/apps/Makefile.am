@@ -11,7 +11,6 @@ SUBDIRS = \
 	gedit \
 	gnome-documents \
 	gnome-keyring-ask \
-	gnome-mud \
 	gnome-panel \
 	gnome-screensaver-dialog \
 	gnome-shell \
@@ -19,13 +18,11 @@ SUBDIRS = \
 	gnome-window-properties \
 	gtk-window-decorator \
 	Instantbird \
-	liferea \
 	metacity \
 	notification-daemon \
 	notify-osd \
 	Mozilla \
 	pidgin \
-	planner \
 	rhythmbox \
 	soffice \
 	SeaMonkey \
