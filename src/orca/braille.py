@@ -33,6 +33,7 @@ __license__   = "LGPL"
 
 import signal
 import os
+import re
 
 from gi.repository import GLib
 
@@ -840,12 +841,13 @@ class Line:
           include knowning that we will fail and/or it taking an
           unreasonable amount of time (AKA Gecko).
 
-        Returns [string, offsetIndex, attributeMask]
+        Returns [string, offsetIndex, attributeMask, ranges]
         """
 
         string = ""
         focusOffset = -1
         attributeMask = ""
+        ranges = []
         for region in self.regions:
             if region == _regionWithFocus:
                 focusOffset = len(string)
@@ -854,7 +856,24 @@ class Line:
             mask = region.getAttributeMask(getLinkMask)
             attributeMask += mask
 
-        return [string, focusOffset, attributeMask]
+        words = [word.span() for word in re.finditer(r"(^\s+|\S+\s*)", string)]
+        span = []
+        for start, end in words:
+            if span and end - span[0] > _displaySize[0]:
+                ranges.append(span)
+                span = []
+            if not span:
+                span = [start, end]
+            else:
+                span[1] = end
+            if end == focusOffset:
+                ranges.append(span)
+                span = []
+        else:
+            if span:
+                ranges.append(span)
+
+        return [string, focusOffset, attributeMask, ranges]
 
     def getRegionAtOffset(self, offset):
         """Finds the Region at the given 0-based offset in this line.
@@ -1012,7 +1031,7 @@ def setFocus(region, panToFocus=True, getLinkMask=True):
             lineNum += 1
 
     line = _lines[viewport[1]]
-    [string, offset, attributeMask] = line.getLineInfo(getLinkMask)
+    [string, offset, attributeMask, ranges] = line.getLineInfo(getLinkMask)
 
     # If the cursor is too far right, we scroll the viewport
     # so the cursor will be on the last cell of the display.
@@ -1125,7 +1144,7 @@ def refresh(panToCursor=True,
     # actually is in the string.
     #
     line = _lines[viewport[1]]
-    [string, focusOffset, attributeMask] = line.getLineInfo(getLinkMask)
+    [string, focusOffset, attributeMask, ranges] = line.getLineInfo(getLinkMask)
     cursorOffset = -1
     if focusOffset >= 0:
         cursorOffset = focusOffset + _regionWithFocus.cursorOffset
@@ -1144,9 +1163,11 @@ def refresh(panToCursor=True,
             viewport[0] = max(0, cursorOffset)
         elif cursorOffset >= (viewport[0] + _displaySize[0]):
             viewport[0] = max(0, cursorOffset - _displaySize[0] + 1)
+        else:
+            viewport[0] = max(0, cursorOffset)
 
-    startPos = int(viewport[0])
-    endPos = startPos + _displaySize[0]
+    startPos, endPos = _adjustForWordWrap()
+    viewport[0] = startPos
 
     # Now normalize the cursor position to BrlTTY, which uses 1 as
     # the first cursor position as opposed to 0.
@@ -1360,6 +1381,29 @@ def displayKeyEvent(event):
         msg = "%s %s" % (keyname, lockingStateString)
         displayMessage(msg, flashTime=settings.brailleFlashTime)
 
+def _adjustForWordWrap():
+    startPos = viewport[0]
+    endPos = startPos + _displaySize[0]
+
+    if not _lines or not settings.enableBrailleWordWrap:
+        return startPos, endPos
+
+    line = _lines[viewport[1]]
+    lineString, focusOffset, attributeMask, ranges = line.getLineInfo()
+    ranges = list(filter(lambda x: x[0] <= startPos < x[1], ranges))
+    if ranges:
+        startPos, endPos = ranges[0][0], ranges[-1][1]
+
+    return startPos, endPos
+
+def _getRangeForOffset(offset):
+    string, focusOffset, attributeMask, ranges = _lines[viewport[1]].getLineInfo()
+    for r in ranges:
+        if r[0] <= offset < r[1]:
+            return r
+
+    return [0, 0]
+
 def panLeft(panAmount=0):
     """Pans the display to the left, limiting the pan to the beginning
     of the line being displayed.
@@ -1372,13 +1416,12 @@ def panLeft(panAmount=0):
     """
 
     oldX = viewport[0]
-
     if panAmount == 0:
-        panAmount = _displaySize[0]
+        oldStart, oldEnd = _getRangeForOffset(oldX)
+        newStart, newEnd = _getRangeForOffset(oldStart - 1)
+        panAmount = max(0, min(oldStart - newStart, _displaySize[0]))
 
-    if viewport[0] > 0:
-        viewport[0] = max(0, viewport[0] - panAmount)
-
+    viewport[0] = max(0, viewport[0] - panAmount)
     return oldX != viewport[0]
 
 def panRight(panAmount=0):
@@ -1393,17 +1436,10 @@ def panRight(panAmount=0):
     """
 
     oldX = viewport[0]
-
     if panAmount == 0:
         panAmount = _displaySize[0]
 
-    if len(_lines) > 0:
-        lineNum = viewport[1]
-        newX = viewport[0] + panAmount
-        [string, focusOffset, attributeMask] = _lines[lineNum].getLineInfo()
-        if newX < len(string):
-            viewport[0] = newX
-
+    viewport[0] += panAmount
     return oldX != viewport[0]
 
 def panToOffset(offset):

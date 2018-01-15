@@ -399,3 +399,4 @@ structNavInSayAll = False
 # N.B. The following are experimental and may change or go away at any time.
 enableSadPidginHack = False
 presentChatRoomLast = False
+enableBrailleWordWrap = False
