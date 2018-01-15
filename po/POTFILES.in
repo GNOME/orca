@@ -17,9 +17,5 @@ src/orca/object_properties.py
 [type: gettext/glade]src/orca/orca-find.ui
 [type: gettext/glade]src/orca/orca-setup.ui
 src/orca/phonnames.py
-src/orca/scripts/apps/gnome-mud/script.py
-src/orca/scripts/apps/liferea/script.py
-src/orca/scripts/apps/planner/braille_generator.py
-src/orca/scripts/apps/planner/speech_generator.py
 src/orca/text_attribute_names.py
 src/orca/tutorialgenerator.py
