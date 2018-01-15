@@ -113,15 +113,19 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return []
 
     def _generateDescription(self, obj, **args):
-        if self._script.utilities.isZombie(obj) \
-           or obj != orca_state.locusOfFocus:
+        if self._script.utilities.isZombie(obj):
+            return []
+
+        role = args.get('role', obj.getRole())
+        if obj != orca_state.locusOfFocus:
+            if role in [pyatspi.ROLE_ALERT, pyatspi.ROLE_DIALOG]:
+                return super()._generateDescription(obj, **args)
             return []
 
         formatType = args.get('formatType')
         if formatType == 'basicWhereAmI' and self._script.utilities.isLiveRegion(obj):
             return self._script.liveRegionManager.generateLiveRegionDescription(obj, **args)
 
-        role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_TEXT and formatType != 'basicWhereAmI':
             return []
 

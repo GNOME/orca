@@ -127,7 +127,7 @@ formatting = {
             'detailedWhereAmI' : 'pageSummary'
             },
         pyatspi.ROLE_ALERT: {
-            'unfocused': 'labelOrName + roleName + pause + (expandedEOCs or unrelatedLabels)'
+            'unfocused': 'labelOrName + roleName + pause + (expandedEOCs or unrelatedLabels or description)'
             },
         pyatspi.ROLE_ANIMATION: {
             'unfocused': 'labelAndName'
@@ -182,8 +182,8 @@ formatting = {
             'basicWhereAmI': 'labelOrName + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
             },
         pyatspi.ROLE_DIALOG: {
-            'focused': 'labelOrName + roleName',
-            'unfocused': 'expandedEOCs or (labelOrName + unrelatedLabels)'
+            'focused': 'labelOrName + roleName + description',
+            'unfocused': 'expandedEOCs or (labelOrName + (unrelatedLabels or description))'
             },
         pyatspi.ROLE_DOCUMENT_FRAME: {
             'unfocused': 'label + readOnly + textRole + currentLineText + anyTextSelection + ' + MNEMONIC,
