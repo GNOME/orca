@@ -4571,6 +4571,9 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        if self.isTypeahead(event.source):
+            return state.contains(pyatspi.STATE_FOCUSED)
+
         if role == pyatspi.ROLE_PASSWORD_TEXT and state.contains(pyatspi.STATE_FOCUSED):
             return True
 
