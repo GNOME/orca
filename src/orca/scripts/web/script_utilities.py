@@ -1065,8 +1065,7 @@ class Utilities(script_utilities.Utilities):
             return self._getContentsForObj(obj[0], 0, boundary)
 
         string, start, end = self._getTextAtOffset(obj, offset, boundary)
-        # Check for ROLE_SECTION due to https://bugzilla.mozilla.org/show_bug.cgi?id=1210630
-        if not string or (self.isLandmark(obj) and role != pyatspi.ROLE_SECTION):
+        if not string:
             return [[obj, start, end, string]]
 
         stringOffset = offset - start
