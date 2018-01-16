@@ -2720,6 +2720,9 @@ class Script(script.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
+        if role == pyatspi.ROLE_SPIN_BUTTON:
+            self._saveFocusedObjectInfo(event.source)
+
         self.pointOfReference["oldValue"] = currentValue
         self.updateBraille(obj, isProgressBarUpdate=isProgressBarUpdate)
         speech.speak(self.speechGenerator.generateSpeech(
