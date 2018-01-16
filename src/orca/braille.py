@@ -1164,7 +1164,8 @@ def refresh(panToCursor=True,
         elif cursorOffset >= (viewport[0] + _displaySize[0]):
             viewport[0] = max(0, cursorOffset - _displaySize[0] + 1)
         else:
-            viewport[0] = max(0, cursorOffset)
+            rangeForOffset = _getRangeForOffset(cursorOffset)
+            viewport[0] = max(0, rangeForOffset[0])
 
     startPos, endPos = _adjustForWordWrap()
     viewport[0] = startPos
