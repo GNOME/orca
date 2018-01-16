@@ -1338,6 +1338,8 @@ class Utilities:
             layoutOnly = False
         elif role == pyatspi.ROLE_MENU:
             layoutOnly = parentRole == pyatspi.ROLE_COMBO_BOX
+        elif role == pyatspi.ROLE_COMBO_BOX:
+            layoutOnly = False
         elif role == pyatspi.ROLE_LIST:
             layoutOnly = False
         elif role == pyatspi.ROLE_FORM:
