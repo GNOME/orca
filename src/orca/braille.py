@@ -1384,6 +1384,8 @@ def displayKeyEvent(event):
 def _adjustForWordWrap():
     startPos = viewport[0]
     endPos = startPos + _displaySize[0]
+    msg = "BRAILLE: Current range: (%i, %i)." % (startPos, endPos)
+    debug.println(debug.LEVEL_INFO, msg, True)
 
     if not _lines or not settings.enableBrailleWordWrap:
         return startPos, endPos
@@ -1392,7 +1394,13 @@ def _adjustForWordWrap():
     lineString, focusOffset, attributeMask, ranges = line.getLineInfo()
     ranges = list(filter(lambda x: x[0] <= startPos < x[1], ranges))
     if ranges:
-        startPos, endPos = ranges[0][0], ranges[-1][1]
+        msg = "BRAILLE: Adjusted range: (%i, %i)" % (ranges[0][0], ranges[-1][1])
+        debug.println(debug.LEVEL_INFO, msg, True)
+        if ranges[-1][1] - ranges[0][0] > _displaySize[0]:
+            msg = "BRAILLE: Not adjusting range which is greater than display size"
+            debug.println(debug.LEVEL_INFO, msg, True)
+        else:
+            startPos, endPos = ranges[0][0], ranges[-1][1]
 
     return startPos, endPos
 
