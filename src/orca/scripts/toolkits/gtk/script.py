@@ -125,6 +125,9 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
+        if ancestor and "Table" in pyatspi.listInterfaces(ancestor):
+            return
+
         isMenu = lambda x: x and x.getRole() == pyatspi.ROLE_MENU
         if isMenu(ancestor) and not pyatspi.findAncestor(ancestor, isMenu):
             return
