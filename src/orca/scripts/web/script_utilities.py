@@ -885,7 +885,7 @@ class Utilities(script_utilities.Utilities):
         allText = text.getText(0, -1)
         if boundary == pyatspi.TEXT_BOUNDARY_CHAR:
             string = allText[offset]
-            return string, offset, offset + len(string.encode())
+            return string, offset, offset + 1
 
         extents = list(text.getRangeExtents(offset, offset + 1, 0))
 
