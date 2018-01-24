@@ -883,6 +883,10 @@ class Utilities(script_utilities.Utilities):
         # We can't have nice things.
 
         allText = text.getText(0, -1)
+        if boundary == pyatspi.TEXT_BOUNDARY_CHAR:
+            string = allText[offset]
+            return string, offset, offset + len(string.encode())
+
         extents = list(text.getRangeExtents(offset, offset + 1, 0))
 
         def _inThisSpan(span):
@@ -951,14 +955,6 @@ class Utilities(script_utilities.Utilities):
                   % (offset, obj, boundary)
             debug.println(debug.LEVEL_INFO, msg, True)
             return '', 0, 1
-
-        if boundary == pyatspi.TEXT_BOUNDARY_CHAR:
-            string, start, end = text.getText(offset, offset + 1), offset, offset + 1
-            s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
-            msg = "WEB: Results for text at offset %i for %s using %s:\n" \
-                  "     String: '%s', Start: %i, End: %i." % (offset, obj, boundary, s, start, end)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return string, start, end
 
         if boundary is None:
             string, start, end = text.getText(offset, -1), offset, text.characterCount
