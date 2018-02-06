@@ -93,6 +93,7 @@ userCustomizableSettings = [
     "progressBarUpdateInterval",
     "progressBarVerbosity",
     "ignoreStatusBarProgressBars",
+    "enableBrailleWordWrap",
     "enableContractedBraille",
     "brailleContractionTable",
     "enableMouseReview",
@@ -262,6 +263,7 @@ enableFlashMessages            = True
 brailleFlashTime               = 5000
 flashIsPersistent              = False
 flashIsDetailed                = True
+enableBrailleWordWrap          = False
 enableContractedBraille        = False
 brailleContractionTable        = ''
 disableBrailleEOL              = False
@@ -399,4 +401,3 @@ structNavInSayAll = False
 # N.B. The following are experimental and may change or go away at any time.
 enableSadPidginHack = False
 presentChatRoomLast = False
-enableBrailleWordWrap = False

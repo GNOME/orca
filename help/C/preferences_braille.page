@@ -34,6 +34,18 @@
       </p>
     </note>
   </section>
+  <section id="braillewordwrap">
+    <title>Enable word wrap</title>
+    <p>
+      If <gui>Enable word wrap</gui> is checked, <app>Orca</app> will adjust the
+      text so that only full words are shown on the braille display. If it is not
+      checked, <app>Orca</app> will use all of the cells on the display so that
+      more text can be shown at once.
+    </p>
+    <p>
+      Default value: not checked
+    </p>
+  </section>
   <section id="contractedbraille">
     <title>Enable Contracted Braille</title>
     <p>

@@ -1523,6 +1523,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         else:
             self.get_widget("brailleVerboseButton").set_active(True)
 
+        self.get_widget("enableBrailleWordWrapCheckButton").set_active(
+            prefs.get("enableBrailleWordWrap", settings.speakContextPanel))
+
         selectionIndicator = prefs["brailleSelectorIndicator"]
         if selectionIndicator == settings.BRAILLE_UNDERLINE_7:
             self.get_widget("brailleSelection7Button").set_active(True)
