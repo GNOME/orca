@@ -208,6 +208,9 @@ class LabelInference:
                        pyatspi.ROLE_PUSH_BUTTON]
 
         isWidget = obj.getRole() in widgetRoles
+        if not isWidget and obj.getState().contains(pyatspi.STATE_EDITABLE):
+            isWidget = True
+
         self._isWidgetCache[hash(obj)] = isWidget
         return isWidget
 
@@ -406,6 +409,9 @@ class LabelInference:
             return None, []
 
         prevObj, start, end, string = prevLine[0]
+        if self._cannotLabel(prevObj):
+            return None, []
+
         if string.strip():
             x, y, width, height = self._getExtents(prevObj, start, end)
             objX, objY, objWidth, objHeight = self._getExtents(obj)
@@ -446,6 +452,9 @@ class LabelInference:
             return None, []
 
         nextObj, start, end, string = nextLine[0]
+        if self._cannotLabel(nextObj):
+            return None, []
+
         if string.strip():
             x, y, width, height = self._getExtents(nextObj, start, end)
             objX, objY, objWidth, objHeight = self._getExtents(obj)
