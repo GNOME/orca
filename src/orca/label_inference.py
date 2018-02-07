@@ -87,9 +87,6 @@ class LabelInference:
         if not result:
             result, objects = obj.name, []
             debug.println(debug.LEVEL_FINE, "INFER - Name: %s" % result)
-        if not result:
-            result, objects = obj.description, []
-            debug.println(debug.LEVEL_FINE, "INFER - Description: %s" % result)
         if result:
             result = result.strip()
             result = result.replace("\n", " ")
