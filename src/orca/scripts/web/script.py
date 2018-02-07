@@ -1362,7 +1362,8 @@ class Script(default.Script):
             msg = "WEB: Event handled: Last command was mouse button"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(event.source, event.detail1)
-            orca.setLocusOfFocus(event, event.source)
+            notify = not self.utilities.isEntryDescendant(event.source)
+            orca.setLocusOfFocus(event, event.source, notify)
             return True
 
         if self.utilities.inFindToolbar():
@@ -1409,7 +1410,8 @@ class Script(default.Script):
             msg = "WEB: In content editable with embedded objects"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(obj, offset)
-            notify = not self.utilities.lastInputEventWasCharNav()
+            notify = not self.utilities.lastInputEventWasCharNav() \
+                     and not self.utilities.isEntryDescendant(obj)
             orca.setLocusOfFocus(event, event.source, notify)
             return False
 

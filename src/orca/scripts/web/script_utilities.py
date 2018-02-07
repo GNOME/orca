@@ -57,6 +57,7 @@ class Utilities(script_utilities.Utilities):
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
         self._isContentEditableWithEmbeddedObjects = {}
+        self._isEntryDescendant = {}
         self._isGridDescendant = {}
         self._isLabelDescendant = {}
         self._isMenuDescendant = {}
@@ -122,6 +123,7 @@ class Utilities(script_utilities.Utilities):
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
         self._isContentEditableWithEmbeddedObjects = {}
+        self._isEntryDescendant = {}
         self._isGridDescendant = {}
         self._isLabelDescendant = {}
         self._isMenuDescendant = {}
@@ -2129,6 +2131,19 @@ class Utilities(script_utilities.Utilities):
 
         rv = pyatspi.findAncestor(obj, self.supportsSelectionAndTable) is not None
         self._isGridDescendant[hash(obj)] = rv
+        return rv
+
+    def isEntryDescendant(self, obj):
+        if not obj:
+            return False
+
+        rv = self._isEntryDescendant.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        isEntry = lambda x: x and x.getRole() == pyatspi.ROLE_ENTRY
+        rv = pyatspi.findAncestor(obj, isEntry) is not None
+        self._isEntryDescendant[hash(obj)] = rv
         return rv
 
     def isLabelDescendant(self, obj):
