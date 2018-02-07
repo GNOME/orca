@@ -74,6 +74,12 @@ ROLE_EDITABLE_COMBO_BOX = _("editable combo box")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+# This role is to describe elements in web content which have the contenteditable
+# attribute set to true, indicating that the element can be edited by the user.
+ROLE_EDITABLE_CONTENT = _("editable content")
+
+# Translators: This string should be treated as a role describing an object.
+# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # The feed role is a scrollable list of articles where scrolling may cause
 # articles to be added to or removed from either end of the list.
 # http://rawgit.com/w3c/aria/master/aria/aria.html#feed

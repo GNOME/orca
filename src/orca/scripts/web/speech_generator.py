@@ -315,8 +315,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 text = self._script.utilities.queryNonEmptyText(obj)
                 if text and end not in [None, text.characterCount]:
                     return []
-            if role not in doNotSpeak:
+            if role in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PASSWORD_TEXT]:
                 result.append(self.getLocalizedRoleName(obj, **args))
+            elif obj.parent and not obj.parent.getState().contains(pyatspi.STATE_EDITABLE):
+                result.append(object_properties.ROLE_EDITABLE_CONTENT)
+            elif role not in doNotSpeak:
+                result.append(self.getLocalizedRoleName(obj, **args))
+            if result:
                 result.extend(acss)
 
         elif role == pyatspi.ROLE_HEADING:
