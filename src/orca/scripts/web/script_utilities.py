@@ -3550,7 +3550,7 @@ class Utilities(script_utilities.Utilities):
 
         allText = text.getText(0, -1)
         offset = max (0, offset)
-        if allText[offset] != self.EMBEDDED_OBJECT_CHARACTER:
+        if allText[offset] != self.EMBEDDED_OBJECT_CHARACTER or role == pyatspi.ROLE_ENTRY:
             msg = "WEB: First caret context for %s, %i is %s, %i" % (obj, offset, obj, offset)
             debug.println(debug.LEVEL_INFO, msg, True)
             return obj, offset

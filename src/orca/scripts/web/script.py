@@ -840,6 +840,12 @@ class Script(default.Script):
         if self._lastCommandWasCaretNav or args.get("includeContext"):
             priorObj, priorOffset = self.utilities.getPriorContext()
 
+        if obj.getRole() == pyatspi.ROLE_ENTRY:
+            utterances = self.speechGenerator.generateSpeech(obj, priorObj=priorObj)
+            speech.speak(utterances)
+            self.updateBraille(obj)
+            return
+
         offset = args.get("offset", 0)
         contents = self.utilities.getObjectContentsAtOffset(obj, offset)
         self.displayContents(contents)
