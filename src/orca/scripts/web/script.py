@@ -890,7 +890,8 @@ class Script(default.Script):
         obj, offset = self.utilities.getCaretContext(documentFrame=None)
         if offset > 0 and isContentEditable:
             text = self.utilities.queryNonEmptyText(obj)
-            offset = min(offset, text.characterCount)
+            if text:
+                offset = min(offset, text.characterCount)
 
         contents = self.utilities.getLineContentsAtOffset(obj, offset)
         self.displayContents(contents)
