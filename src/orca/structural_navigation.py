@@ -1829,12 +1829,6 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        role = [pyatspi.ROLE_DOCUMENT_FRAME,
-                pyatspi.ROLE_COMBO_BOX,
-                pyatspi.ROLE_ENTRY,
-                pyatspi.ROLE_PASSWORD_TEXT,
-                pyatspi.ROLE_TEXT]
-        roleMatch = collection.MATCH_ANY
         state = [pyatspi.STATE_FOCUSABLE,
                  pyatspi.STATE_SENSITIVE,
                  pyatspi.STATE_EDITABLE]
@@ -1842,8 +1836,6 @@ class StructuralNavigation:
         return MatchCriteria(collection,
                              states=state,
                              matchStates=stateMatch,
-                             roles=role,
-                             matchRoles=roleMatch,
                              applyPredicate=True)
 
     def _entryPredicate(self, obj, arg=None):
@@ -1856,18 +1848,10 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        isMatch = False
-        if obj and obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
-                                     pyatspi.ROLE_COMBO_BOX,
-                                     pyatspi.ROLE_ENTRY,
-                                     pyatspi.ROLE_PASSWORD_TEXT,
-                                     pyatspi.ROLE_TEXT]:
-            state = obj.getState()
-            isMatch = state.contains(pyatspi.STATE_FOCUSABLE) \
-                  and state.contains(pyatspi.STATE_SENSITIVE) \
-                  and state.contains(pyatspi.STATE_EDITABLE)
+        if not obj and obj.parent:
+            return False
 
-        return isMatch
+        return not obj.parent.getState().contains(pyatspi.STATE_EDITABLE)
 
     def _entryPresentation(self, obj, arg=None):
         """Presents the entry or indicates that one was not found.
