@@ -724,6 +724,26 @@ class SpeechGenerator(generator.Generator):
     #                                                                   #
     #####################################################################
 
+    def _generateColumnHeader(self, obj, **args):
+        if self._script.inSayAll():
+            return []
+
+        result = super()._generateColumnHeader(obj, **args)
+        if result:
+            result.extend(self.voice(DEFAULT))
+
+        return result
+
+    def _generateRowHeader(self, obj, **args):
+        if self._script.inSayAll():
+            return []
+
+        result = super()._generateRowHeader(obj, **args)
+        if result:
+            result.extend(self.voice(DEFAULT))
+
+        return result
+
     def _generateNewRowHeader(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the row header for an object
