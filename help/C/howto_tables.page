@@ -112,7 +112,7 @@
       </item>
     </steps>
     <steps>
-      <title>Set Row Headers</title>
+      <title>Setting Row Headers</title>
       <item>
         <p>
           Move to the column which contains all of the row headers.

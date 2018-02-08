@@ -56,7 +56,7 @@
       <p>
         Choosing a punctuation level of <gui>None</gui> would, as you expect,
         cause no punctuation to be spoken. Note, however, that special symbols
-        such as subscripted and superscripted numbers, unicode fractions, and
+        such as subscripted and superscripted numbers, Unicode fractions, and
         bullets are still spoken at this level, even though some might consider
         these types of symbols punctuation.
       </p>
@@ -107,7 +107,7 @@
       </p>
       <note style="note">
         <p>
-          The follow items will not be available for configuration if
+          The following items will not be available for configuration if
           the <gui>Only speak displayed text</gui> checkbox is checked.
         </p>
       </note>

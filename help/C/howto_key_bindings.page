@@ -90,9 +90,8 @@
     <title>Restoring Original Bindings</title>
     <item>
       <p>
-        Get into the <link xref="preferences">Orca Preferences</link>
-        dialog by pressing <keyseq><key>Orca Modifier</key><key>Space</key>
-        </keyseq>.
+        Get into the <link xref="preferences">Orca Preferences</link> dialog by
+        pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>.
       </p>
     </item>
     <item>
@@ -112,9 +111,8 @@
     <title>Unbinding Bound Commands</title>
     <item>
       <p>
-        Get into the <link xref="preferences">Orca Preferences</link>
-        dialog by pressing <keyseq><key>Orca Modifier</key><key>Space</key>
-        </keyseq>.
+        Get into the <link xref="preferences">Orca Preferences</link> dialog by
+        pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>.
       </p>
     </item>
     <item>

@@ -43,7 +43,7 @@
         <p>
           <gui>Speak</gui>: Check this checkbox if you would like
           <app>Orca</app> to speak this attribute when you press
-          <keyseq><key>Orca</key><key>F</key></keyseq>.
+          <keyseq><key>Orca Modifier</key><key>F</key></keyseq>.
         </p>
       </item>
       <item>

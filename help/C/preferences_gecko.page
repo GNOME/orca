@@ -148,7 +148,7 @@
     <title>Table Options</title>
     <note>
       <p>
-        To learn more about <app>Orca's</app> options for navigating within
+        To learn more about <app>Orca</app>'s options for navigating within
         tables, please see <link xref="preferences_table_navigation">Table
 	Navigation Preferences</link>.
       </p>
@@ -189,8 +189,8 @@
         This editable spin button is where you can specify the number of
         characters which much match before <app>Orca</app> announces the
         matching line. This option is also designed to prevent "chattiness"
-        as there are many matches when you first begin typing string for
-        which you are searching.
+        as there are many matches when you first begin typing the string
+        for which you are searching.
       </p>
       <p>
         Default value: 4

@@ -60,7 +60,7 @@
   </p>
   <p>
     Finally, in order to have <app>Orca</app> speak the entire document from your
-    present location, use the SayAll command. It, along with a more complete
+    present location, use the Say All command. It, along with a more complete
     listing of <app>Orca</app>'s commands for accessing document text, can
     be found in the <link xref="commands_reading">Reading Commands</link> guide.
   </p>
