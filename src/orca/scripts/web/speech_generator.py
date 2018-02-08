@@ -318,7 +318,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if role in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PASSWORD_TEXT]:
                 result.append(self.getLocalizedRoleName(obj, **args))
             elif obj.parent and not obj.parent.getState().contains(pyatspi.STATE_EDITABLE):
-                result.append(object_properties.ROLE_EDITABLE_CONTENT)
+                if lastKey not in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
+                    result.append(object_properties.ROLE_EDITABLE_CONTENT)
             elif role not in doNotSpeak:
                 result.append(self.getLocalizedRoleName(obj, **args))
             if result:
