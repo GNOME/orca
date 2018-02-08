@@ -542,6 +542,9 @@ class Utilities:
 
         return results
 
+    def presentEventFromNonShowingObject(self, event):
+        return False
+
     def grabFocusBeforeRouting(self, obj, offset):
         """Whether or not we should perform a grabFocus before routing
         the cursor via the braille cursor routing keys.

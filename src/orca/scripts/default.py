@@ -2189,7 +2189,8 @@ class Script(script.Script):
         if not state.contains(pyatspi.STATE_SHOWING):
             msg = "DEFAULT: Event source is not showing"
             debug.println(debug.LEVEL_INFO, msg, True)
-            return
+            if not self.utilities.presentEventFromNonShowingObject(event):
+                return
 
         if event.source != orca_state.locusOfFocus \
            and state.contains(pyatspi.STATE_FOCUSED):

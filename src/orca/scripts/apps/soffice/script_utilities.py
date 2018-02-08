@@ -745,3 +745,6 @@ class Utilities(script_utilities.Utilities):
             return False
 
         return self.cellRowChanged(obj)
+
+    def presentEventFromNonShowingObject(self, event):
+        return self.inDocumentContent(event.source)
