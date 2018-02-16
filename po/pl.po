@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-08 01:15+0100\n"
-"PO-Revision-Date: 2018-02-08 01:18+0100\n"
+"POT-Creation-Date: 2018-02-16 02:01+0100\n"
+"PO-Revision-Date: 2018-02-16 02:02+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1538,14 +1538,14 @@ msgstr "znak handlowy"
 #.
 #: ../src/orca/chnames.py:649
 msgid "check mark"
-msgstr "znak zaznaczenia"
+msgstr "znak wyboru"
 
 #. Translators: this is the spoken word for the character '✔' (U+2714)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:654
 msgid "heavy check mark"
-msgstr "symbol zaznaczenia"
+msgstr "wytłuszczony znak wyboru"
 
 #. Translators: this is the spoken word for the character 'x' (U+2717)
 #. This symbol is included here because it can be used as a bullet in
