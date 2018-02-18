@@ -16,22 +16,23 @@
 # Hendrik Knackstedt <kn.hendrik@gmail.com>, 2012.
 # Benjamin Steinwender <b@stbe.at>, 2014.
 # Christian Kirbach <christian.kirbach@gmail.com>, 2009-2013, 2017.
+# Tim Sabsch <tim@sabsch.com>, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2017-08-20 18:11+0000\n"
-"PO-Revision-Date: 2017-09-10 10:37+0200\n"
-"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
+"POT-Creation-Date: 2018-02-08 19:43+0000\n"
+"PO-Revision-Date: 2018-02-14 22:24+0100\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Project-Style: gnome\n"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
@@ -1651,7 +1652,7 @@ msgstr "hoch n"
 #.
 #: ../src/orca/chnames.py:719
 msgid "subscript 0"
-msgstr "tief 0 "
+msgstr "tief 0"
 
 #. Translators: this is the spoken word for the character '₁' (U+2081)
 #.
@@ -2311,7 +2312,7 @@ msgstr "Ändert die Art und Weise, wie Zahlen vorgelesen werden."
 #. some, most, or all, punctuation will be spoken.
 #: ../src/orca/cmdnames.py:451
 msgid "Cycles to the next speaking of punctuation level."
-msgstr "Wechselt zur nächsten Stufe der Satzzeichenansage."
+msgstr "Wechselt zur nächsten Stufe der Sonderzeichenansage."
 
 #. Translators: Orca has a feature whereby users can set up different "profiles,"
 #. which are collection of settings which apply to a given task, such as a
@@ -3131,7 +3132,7 @@ msgstr "Eine Zelle nach oben bewegen."
 #. between these two modes.
 #: ../src/orca/cmdnames.py:1020
 msgid "Switches between browse mode and focus mode."
-msgstr "Wechseln zwischen Stöbern-Modus und Fokus-Modus"
+msgstr "Wechseln zwischen Stöbern-Modus und Fokus-Modus."
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -4350,13 +4351,13 @@ msgstr "Automatischer Fokus-Modus während Strukturnavigation"
 #. of the entry.
 #: ../src/orca/guilabels.py:76
 msgid "Automatic focus mode during caret navigation"
-msgstr "Automatischer Fokus-Modus während Bildschirmleser-Navigation"
+msgstr "Automatischer Fokus-Modus während Caret-Navigation"
 
 #. Translators: A single braille cell on a refreshable braille display consists
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
 #. this option, Dot 7 will be used to 'underline' text of interest, e.g. when
 #. "marking"/indicating that a given word is bold.
-#: ../src/orca/guilabels.py:82 ../src/orca/orca-setup.ui.h:144
+#: ../src/orca/guilabels.py:82 ../src/orca/orca-setup.ui.h:146
 msgid "Dot _7"
 msgstr "Punkt _7"
 
@@ -4364,7 +4365,7 @@ msgstr "Punkt _7"
 #. of 8 dots. Dot 8 is the dot in the bottom right corner. If the user selects
 #. this option, Dot 8 will be used to 'underline' text of interest,  e.g. when
 #. "marking"/indicating that a given word is bold.
-#: ../src/orca/guilabels.py:88 ../src/orca/orca-setup.ui.h:145
+#: ../src/orca/guilabels.py:88 ../src/orca/orca-setup.ui.h:147
 msgid "Dot _8"
 msgstr "Punkt _8"
 
@@ -4372,7 +4373,7 @@ msgstr "Punkt _8"
 #. of 8 dots. Dots 7-8 are the dots at the bottom. If the user selects this
 #. option, Dots 7-8 will be used to 'underline' text of interest,  e.g. when
 #. "marking"/indicating that a given word is bold.
-#: ../src/orca/guilabels.py:94 ../src/orca/orca-setup.ui.h:146
+#: ../src/orca/guilabels.py:94 ../src/orca/orca-setup.ui.h:148
 msgid "Dots 7 an_d 8"
 msgstr "Punkte 7 un_d 8"
 
@@ -4408,7 +4409,7 @@ msgstr "_OK"
 #: ../src/orca/guilabels.py:111 ../src/orca/messages.py:87
 msgctxt "capitalization style"
 msgid "icon"
-msgstr "Symbol"
+msgstr "Klangsymbol"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -4446,7 +4447,7 @@ msgstr "kein"
 #: ../src/orca/guilabels.py:127 ../src/orca/messages.py:127
 msgctxt "capitalization style"
 msgid "spell"
-msgstr "Rechtschreibung"
+msgstr "Buchstabieren"
 
 #. Translators: If this checkbox is checked, then Orca will tell you when one of
 #. your buddies is typing a message.
@@ -4568,7 +4569,7 @@ msgstr "Ersatzausdruck"
 #. being pressed, "character echo" presents the character/string of length 1 that
 #. is inserted as a result of the keypress.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/guilabels.py:213 ../src/orca/orca-setup.ui.h:172
+#: ../src/orca/guilabels.py:213 ../src/orca/orca-setup.ui.h:174
 msgid "Enable echo by cha_racter"
 msgstr "Zeichenweises Echo aktivie_ren"
 
@@ -4576,7 +4577,7 @@ msgstr "Zeichenweises Echo aktivie_ren"
 #. by the user. This string refers to a "key echo" option. When this option is
 #. enabled, dead keys will be announced when pressed.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/guilabels.py:218 ../src/orca/orca-setup.ui.h:170
+#: ../src/orca/guilabels.py:218 ../src/orca/orca-setup.ui.h:172
 msgid "Enable non-spacing _diacritical keys"
 msgstr "_Diakritische Tasten sprechen"
 
@@ -5269,7 +5270,7 @@ msgstr "Zusammenfassung einer Seite beim _ersten Laden"
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is encountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
 #: ../src/orca/guilabels.py:688 ../src/orca/orca-setup.ui.h:82
 msgid "Break speech into ch_unks between pauses"
-msgstr "Sprache zwischen Pausen in einzelne Blöcke aufteilen"
+msgstr "Sprache zwischen Pausen in einzelne _Blöcke aufteilen"
 
 #. Translators: This string will appear in the list of available voices for the
 #. current speech engine. "%s" will be replaced by the name of the current speech
@@ -5325,7 +5326,7 @@ msgstr "Speech Dispatcher"
 #: ../src/orca/guilabels.py:724
 msgctxt "OptionGroup"
 msgid "Spell Check"
-msgstr "Rechtschreibung"
+msgstr "Rechtschreibprüfung"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will spell out the current error in addition
@@ -5409,7 +5410,7 @@ msgstr "Attributname"
 #. label of a checkbox in which users can indicate their default preference.
 #: ../src/orca/guilabels.py:784
 msgid "Control caret navigation"
-msgstr "Caret Navigation verwenden"
+msgstr "Caret-Navigation verwenden"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
@@ -7910,7 +7911,7 @@ msgstr "Taschenrechneranzeige kann nicht ermittelt werden."
 #. to get into a GUI.
 #: ../src/orca/messages.py:97
 msgid "Capitalization style set to icon."
-msgstr "Großschreibungsstil auf Symbol gesetzt."
+msgstr "Großschreibungsstil auf Klangsymbol gesetzt."
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -7934,7 +7935,7 @@ msgstr "Großschreibungsstil auf nichts gesetzt."
 #. to get into a GUI.
 #: ../src/orca/messages.py:137
 msgid "Capitalization style set to spell."
-msgstr "Großschreibungsstil auf Rechtschreibung gesetzt."
+msgstr "Großschreibungsstil auf Buchstabieren gesetzt."
 
 #. Translators: Native application caret navigation does not always work as the
 #. Orca user wants. As such, Orca offers the user the ability to toggle between
@@ -10374,7 +10375,7 @@ msgstr "Alle"
 #. spoken, or Some will be spoken.
 #: ../src/orca/messages.py:1927
 msgid "Punctuation level set to all."
-msgstr "Ansage der Satzzeichen eingestellt auf alle."
+msgstr "Ansage der Sonderzeichen eingestellt auf alle."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -10391,7 +10392,7 @@ msgstr "Die meisten"
 #. spoken, or Some will be spoken.
 #: ../src/orca/messages.py:1939
 msgid "Punctuation level set to most."
-msgstr "Ansage der Satzzeichen eingestellt auf meiste."
+msgstr "Ansage der Sonderzeichen eingestellt auf meiste."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -10408,7 +10409,7 @@ msgstr "Keine"
 #. spoken, or Some will be spoken.
 #: ../src/orca/messages.py:1951
 msgid "Punctuation level set to none."
-msgstr "Ansage der Satzzeichen auf keine gesetzt."
+msgstr "Ansage der Sonderzeichen auf keine gesetzt."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -10425,7 +10426,7 @@ msgstr "Einige"
 #. spoken, or Some will be spoken.
 #: ../src/orca/messages.py:1963
 msgid "Punctuation level set to some."
-msgstr "Ansage der Satzzeichen eingestellt auf einige."
+msgstr "Ansage der Sonderzeichen eingestellt auf einige."
 
 #. Translators: This message is presented to indicate that a search has begun
 #. or is still taking place.
@@ -11183,10 +11184,18 @@ msgstr "Bearbeitbares Auswahlfeld"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+#. This role is to describe elements in web content which have the contenteditable
+#. attribute set to true, indicating that the element can be edited by the user.
+#: ../src/orca/object_properties.py:79
+msgid "editable content"
+msgstr "Bearbeitbarer Inhalt"
+
+#. Translators: This string should be treated as a role describing an object.
+#. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. The feed role is a scrollable list of articles where scrolling may cause
 #. articles to be added to or removed from either end of the list.
 #. http://rawgit.com/w3c/aria/master/aria/aria.html#feed
-#: ../src/orca/object_properties.py:80
+#: ../src/orca/object_properties.py:86
 msgctxt "role"
 msgid "feed"
 msgstr "Artikelliste"
@@ -11196,7 +11205,7 @@ msgstr "Artikelliste"
 #. The figure role is a perceivable section of content that typically contains a
 #. graphical document, images, code snippets, or example text.
 #. http://rawgit.com/w3c/aria/master/aria/aria.html#figure
-#: ../src/orca/object_properties.py:87
+#: ../src/orca/object_properties.py:93
 msgctxt "role"
 msgid "figure"
 msgstr "Abbildung"
@@ -11205,7 +11214,7 @@ msgstr "Abbildung"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the abstract in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-abstract
-#: ../src/orca/object_properties.py:93
+#: ../src/orca/object_properties.py:99
 msgctxt "role"
 msgid "abstract"
 msgstr "Zusammenfassung"
@@ -11214,7 +11223,7 @@ msgstr "Zusammenfassung"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the acknowledgments in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-acknowledgments
-#: ../src/orca/object_properties.py:99
+#: ../src/orca/object_properties.py:105
 msgctxt "role"
 msgid "acknowledgments"
 msgstr "Danksagungen"
@@ -11223,7 +11232,7 @@ msgstr "Danksagungen"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the afterword in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-afterword
-#: ../src/orca/object_properties.py:105
+#: ../src/orca/object_properties.py:111
 msgctxt "role"
 msgid "afterword"
 msgstr "Nachwort"
@@ -11232,7 +11241,7 @@ msgstr "Nachwort"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the appendix in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-appendix
-#: ../src/orca/object_properties.py:111
+#: ../src/orca/object_properties.py:117
 msgctxt "role"
 msgid "appendix"
 msgstr "Anhang"
@@ -11241,7 +11250,7 @@ msgstr "Anhang"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a bibliography entry in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-biblioentry
-#: ../src/orca/object_properties.py:117
+#: ../src/orca/object_properties.py:123
 msgctxt "role"
 msgid "bibliography entry"
 msgstr "Bibliografischer Eintrag"
@@ -11250,7 +11259,7 @@ msgstr "Bibliografischer Eintrag"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the bibliography in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-bibliography
-#: ../src/orca/object_properties.py:123
+#: ../src/orca/object_properties.py:129
 msgctxt "role"
 msgid "bibliography"
 msgstr "Bibliografie"
@@ -11259,7 +11268,7 @@ msgstr "Bibliografie"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a chapter in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-chapter
-#: ../src/orca/object_properties.py:129
+#: ../src/orca/object_properties.py:135
 msgctxt "role"
 msgid "chapter"
 msgstr "Kapitel"
@@ -11268,7 +11277,7 @@ msgstr "Kapitel"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the colophon in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-colophon
-#: ../src/orca/object_properties.py:135
+#: ../src/orca/object_properties.py:141
 msgctxt "role"
 msgid "colophon"
 msgstr "Schlussschrift"
@@ -11277,7 +11286,7 @@ msgstr "Schlussschrift"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the conclusion in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-conclusion
-#: ../src/orca/object_properties.py:141
+#: ../src/orca/object_properties.py:147
 msgctxt "role"
 msgid "conclusion"
 msgstr "Schlussfolgerung"
@@ -11286,7 +11295,7 @@ msgstr "Schlussfolgerung"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the cover in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-cover
-#: ../src/orca/object_properties.py:147
+#: ../src/orca/object_properties.py:153
 msgctxt "role"
 msgid "cover"
 msgstr "Titelseite"
@@ -11295,7 +11304,7 @@ msgstr "Titelseite"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a single credit in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-credit
-#: ../src/orca/object_properties.py:153
+#: ../src/orca/object_properties.py:159
 msgctxt "role"
 msgid "credit"
 msgstr "Danksagung"
@@ -11304,7 +11313,7 @@ msgstr "Danksagung"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the credits in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-credits
-#: ../src/orca/object_properties.py:159
+#: ../src/orca/object_properties.py:165
 msgctxt "role"
 msgid "credits"
 msgstr "Danksagungen"
@@ -11313,7 +11322,7 @@ msgstr "Danksagungen"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the dedication in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-dedication
-#: ../src/orca/object_properties.py:165
+#: ../src/orca/object_properties.py:171
 msgctxt "role"
 msgid "dedication"
 msgstr "Widmung"
@@ -11322,7 +11331,7 @@ msgstr "Widmung"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a single endnote in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-endnote
-#: ../src/orca/object_properties.py:171
+#: ../src/orca/object_properties.py:177
 msgctxt "role"
 msgid "endnote"
 msgstr "Endnote"
@@ -11331,7 +11340,7 @@ msgstr "Endnote"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the endnotes in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-endnotes
-#: ../src/orca/object_properties.py:177
+#: ../src/orca/object_properties.py:183
 msgctxt "role"
 msgid "endnotes"
 msgstr "Endnoten"
@@ -11340,7 +11349,7 @@ msgstr "Endnoten"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the epigraph in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-epigraph
-#: ../src/orca/object_properties.py:183
+#: ../src/orca/object_properties.py:189
 msgctxt "role"
 msgid "epigraph"
 msgstr "Epigraph"
@@ -11349,7 +11358,7 @@ msgstr "Epigraph"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the epilogue in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-epilogue
-#: ../src/orca/object_properties.py:189
+#: ../src/orca/object_properties.py:195
 msgctxt "role"
 msgid "epilogue"
 msgstr "Epilog"
@@ -11358,7 +11367,7 @@ msgstr "Epilog"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the errata in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-errata
-#: ../src/orca/object_properties.py:195
+#: ../src/orca/object_properties.py:201
 msgctxt "role"
 msgid "errata"
 msgstr "Errata"
@@ -11367,7 +11376,7 @@ msgstr "Errata"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to an example in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-example
-#: ../src/orca/object_properties.py:201
+#: ../src/orca/object_properties.py:207
 msgctxt "role"
 msgid "example"
 msgstr "Beispiel"
@@ -11376,7 +11385,7 @@ msgstr "Beispiel"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a single footnote in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-footnote
-#: ../src/orca/object_properties.py:207
+#: ../src/orca/object_properties.py:213
 msgctxt "role"
 msgid "footnote"
 msgstr "Fußnote"
@@ -11385,7 +11394,7 @@ msgstr "Fußnote"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the foreword in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-foreword
-#: ../src/orca/object_properties.py:213
+#: ../src/orca/object_properties.py:219
 msgctxt "role"
 msgid "foreword"
 msgstr "Vorwort"
@@ -11394,7 +11403,7 @@ msgstr "Vorwort"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the glossary in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-glossary
-#: ../src/orca/object_properties.py:219
+#: ../src/orca/object_properties.py:225
 msgctxt "role"
 msgid "glossary"
 msgstr "Glossar"
@@ -11403,7 +11412,7 @@ msgstr "Glossar"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the index in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-index
-#: ../src/orca/object_properties.py:225
+#: ../src/orca/object_properties.py:231
 msgctxt "role"
 msgid "index"
 msgstr "Index"
@@ -11412,7 +11421,7 @@ msgstr "Index"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the introduction in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-introduction
-#: ../src/orca/object_properties.py:231
+#: ../src/orca/object_properties.py:237
 msgctxt "role"
 msgid "introduction"
 msgstr "Einführung"
@@ -11421,7 +11430,7 @@ msgstr "Einführung"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a pagebreak in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pagebreak
-#: ../src/orca/object_properties.py:237
+#: ../src/orca/object_properties.py:243
 msgctxt "role"
 msgid "page break"
 msgstr "Seitenumbruch"
@@ -11430,7 +11439,7 @@ msgstr "Seitenumbruch"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a page list in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pagelist
-#: ../src/orca/object_properties.py:243
+#: ../src/orca/object_properties.py:249
 msgctxt "role"
 msgid "page list"
 msgstr "Seitenliste"
@@ -11439,7 +11448,7 @@ msgstr "Seitenliste"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a named part in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-part
-#: ../src/orca/object_properties.py:249
+#: ../src/orca/object_properties.py:255
 msgctxt "role"
 msgid "part"
 msgstr "Teil"
@@ -11448,7 +11457,7 @@ msgstr "Teil"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the preface in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-preface
-#: ../src/orca/object_properties.py:255
+#: ../src/orca/object_properties.py:261
 msgctxt "role"
 msgid "preface"
 msgstr "Einleitung"
@@ -11457,7 +11466,7 @@ msgstr "Einleitung"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the prologue in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-prologue
-#: ../src/orca/object_properties.py:261
+#: ../src/orca/object_properties.py:267
 msgctxt "role"
 msgid "prologue"
 msgstr "Prolog"
@@ -11466,7 +11475,7 @@ msgstr "Prolog"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a pullquote in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pullquote
-#: ../src/orca/object_properties.py:267
+#: ../src/orca/object_properties.py:273
 msgctxt "role"
 msgid "pullquote"
 msgstr "Zitat"
@@ -11478,7 +11487,7 @@ msgstr "Zitat"
 #. In English, "QNA" is generally recognized by native speakers. If your language
 #. lacks the equivalent, please prefer the shortest phrase which clearly conveys
 #. the meaning.
-#: ../src/orca/object_properties.py:276
+#: ../src/orca/object_properties.py:282
 msgctxt "role"
 msgid "QNA"
 msgstr "Fragen und Antworten"
@@ -11487,7 +11496,7 @@ msgstr "Fragen und Antworten"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the subtitle in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-subtitle
-#: ../src/orca/object_properties.py:282
+#: ../src/orca/object_properties.py:288
 msgctxt "role"
 msgid "subtitle"
 msgstr "Untertitel"
@@ -11496,7 +11505,7 @@ msgstr "Untertitel"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the table of contents in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-toc
-#: ../src/orca/object_properties.py:288
+#: ../src/orca/object_properties.py:294
 msgctxt "role"
 msgid "table of contents"
 msgstr "Inhaltsverzeichnis"
@@ -11505,7 +11514,7 @@ msgstr "Inhaltsverzeichnis"
 #. content that you might find in something such as HTML content (e.g., <h1>).
 #. The translated form is meant to be a single character followed by a numeric
 #. heading level, where the single character is to indicate 'heading'.
-#: ../src/orca/object_properties.py:294
+#: ../src/orca/object_properties.py:300
 #, python-format
 msgid "h%d"
 msgstr "h%d"
@@ -11513,7 +11522,7 @@ msgstr "h%d"
 #. Translators: The %(level)d is in reference to a heading level in HTML (e.g.,
 #. For <h3>, the level is 3) and the %(role)s is in reference to a previously
 #. translated rolename for the heading.
-#: ../src/orca/object_properties.py:299
+#: ../src/orca/object_properties.py:305
 #, python-format
 msgid "%(role)s level %(level)d"
 msgstr "%(role)s Ebene %(level)d"
@@ -11523,7 +11532,7 @@ msgstr "%(role)s Ebene %(level)d"
 #. The reason we include the orientation as part of the role is because in some
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
-#: ../src/orca/object_properties.py:306
+#: ../src/orca/object_properties.py:312
 msgid "horizontal scroll bar"
 msgstr "Horizontale Bildlaufleiste"
 
@@ -11532,7 +11541,7 @@ msgstr "Horizontale Bildlaufleiste"
 #. The reason we include the orientation as part of the role is because in some
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
-#: ../src/orca/object_properties.py:313
+#: ../src/orca/object_properties.py:319
 msgid "vertical scroll bar"
 msgstr "Vertikale Bildlaufleiste"
 
@@ -11543,7 +11552,7 @@ msgstr "Vertikale Bildlaufleiste"
 #. The reason we include the orientation as part of the role is because in some
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
-#: ../src/orca/object_properties.py:322
+#: ../src/orca/object_properties.py:328
 msgid "horizontal slider"
 msgstr "Horizontaler Schieberegler"
 
@@ -11554,7 +11563,7 @@ msgstr "Horizontaler Schieberegler"
 #. The reason we include the orientation as part of the role is because in some
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
-#: ../src/orca/object_properties.py:331
+#: ../src/orca/object_properties.py:337
 msgid "vertical slider"
 msgstr "Vertikaler Schieberegler"
 
@@ -11568,7 +11577,7 @@ msgstr "Vertikaler Schieberegler"
 #. resize these containers is the splitter. The reason we include the orientation
 #. as part of the role is because in some applications and toolkits, it can
 #. dictate which keyboard keys should be used to modify the value of the widget.
-#: ../src/orca/object_properties.py:343
+#: ../src/orca/object_properties.py:349
 msgid "horizontal splitter"
 msgstr "Horizontaler Trenner"
 
@@ -11582,7 +11591,7 @@ msgstr "Horizontaler Trenner"
 #. resize these containers is the splitter. The reason we include the orientation
 #. as part of the role is because in some applications and toolkits, it can
 #. dictate which keyboard keys should be used to modify the value of the widget.
-#: ../src/orca/object_properties.py:355
+#: ../src/orca/object_properties.py:361
 msgid "vertical splitter"
 msgstr "Vertikaler Trenner"
 
@@ -11590,14 +11599,14 @@ msgstr "Vertikaler Trenner"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. The "switch" role is a "light switch" style toggle, such as can be seen in
 #. https://developer.gnome.org/gtk3/stable/GtkSwitch.html
-#: ../src/orca/object_properties.py:361
+#: ../src/orca/object_properties.py:367
 msgctxt "role"
 msgid "switch"
 msgstr "Wechseln"
 
 #. Translators: This is an alternative name for the parent object of a series
 #. of icons.
-#: ../src/orca/object_properties.py:365
+#: ../src/orca/object_properties.py:371
 msgid "Icon panel"
 msgstr "Symbolleiste"
 
@@ -11606,7 +11615,7 @@ msgstr "Symbolleiste"
 #. The "banner" role is defined in the ARIA specification as "A region that
 #. contains mostly site-oriented content, rather than page-specific content."
 #. See https://www.w3.org/TR/wai-aria-1.1/#banner
-#: ../src/orca/object_properties.py:372
+#: ../src/orca/object_properties.py:378
 msgctxt "role"
 msgid "banner"
 msgstr "Banner"
@@ -11617,7 +11626,7 @@ msgstr "Banner"
 #. section of the document, designed to be complementary to the main content at a
 #. similar level in the DOM hierarchy, but remains meaningful when separated from
 #. the main content." See https://www.w3.org/TR/wai-aria-1.1/#complementary
-#: ../src/orca/object_properties.py:380
+#: ../src/orca/object_properties.py:386
 msgctxt "role"
 msgid "complementary content"
 msgstr "Ergänzender Inhalt"
@@ -11628,7 +11637,7 @@ msgstr "Ergänzender Inhalt"
 #. perceivable region that contains information about the parent document.
 #. Examples of information included in this region of the page are copyrights and
 #. links to privacy statements." See https://www.w3.org/TR/wai-aria-1.1/#contentinfo
-#: ../src/orca/object_properties.py:388
+#: ../src/orca/object_properties.py:394
 msgctxt "role"
 msgid "information"
 msgstr "Information"
@@ -11637,7 +11646,7 @@ msgstr "Information"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. The "main" role is defined in the ARIA specification as "The main content of
 #. a document." See https://www.w3.org/TR/wai-aria-1.1/#main
-#: ../src/orca/object_properties.py:394
+#: ../src/orca/object_properties.py:400
 msgctxt "role"
 msgid "main content"
 msgstr "Hauptinhalt"
@@ -11647,7 +11656,7 @@ msgstr "Hauptinhalt"
 #. The "navigation" role is defined in the ARIA specification as "A collection of
 #. navigational elements (usually links) for navigating the document or related
 #. documents." See https://www.w3.org/TR/wai-aria-1.1/#navigation
-#: ../src/orca/object_properties.py:401
+#: ../src/orca/object_properties.py:407
 msgctxt "role"
 msgid "navigation"
 msgstr "Navigation"
@@ -11659,7 +11668,7 @@ msgstr "Navigation"
 #. purpose and sufficiently important that users will likely want to be able to
 #. navigate to the section easily and to have it listed in a summary of the page."
 #. See https://www.w3.org/TR/wai-aria-1.1/#region
-#: ../src/orca/object_properties.py:410
+#: ../src/orca/object_properties.py:416
 msgctxt "role"
 msgid "region"
 msgstr "Bereich"
@@ -11669,7 +11678,7 @@ msgstr "Bereich"
 #. The "search" role is defined in the ARIA specification as "A landmark region
 #. that contains a collection of items and objects that, as a whole, combine to
 #. create a search facility." See https://www.w3.org/TR/wai-aria-1.1/#search
-#: ../src/orca/object_properties.py:417
+#: ../src/orca/object_properties.py:423
 msgctxt "role"
 msgid "search"
 msgstr "Suchen"
@@ -11679,7 +11688,7 @@ msgstr "Suchen"
 #. The reason for including the visited state as part of the role is to make it
 #. possible for users to quickly identify if the link is associated with content
 #. already read.
-#: ../src/orca/object_properties.py:424
+#: ../src/orca/object_properties.py:430
 msgid "visited link"
 msgstr "besuchter Link"
 
@@ -11687,125 +11696,125 @@ msgstr "besuchter Link"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. A menu button is button widget that causes a menu to appear when the user
 #. activates the button.
-#: ../src/orca/object_properties.py:430
+#: ../src/orca/object_properties.py:436
 msgid "menu button"
 msgstr "Menüknopf"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
-#: ../src/orca/object_properties.py:434
+#: ../src/orca/object_properties.py:440
 msgid "clickable"
 msgstr "klickbar"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:439
+#: ../src/orca/object_properties.py:445
 msgid "collapsed"
 msgstr "eingeklappt"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:444
+#: ../src/orca/object_properties.py:450
 msgid "expanded"
 msgstr "ausgeklappt"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
-#: ../src/orca/object_properties.py:448
+#: ../src/orca/object_properties.py:454
 msgid "has long description"
 msgstr "hat lange Beschreibung"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:452
+#: ../src/orca/object_properties.py:458
 msgid "horizontal"
 msgstr "horizontal"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:456
+#: ../src/orca/object_properties.py:462
 msgid "vertical"
 msgstr "vertikal"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:459
+#: ../src/orca/object_properties.py:465
 msgctxt "checkbox"
 msgid "checked"
 msgstr "ausgewählt"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:462
+#: ../src/orca/object_properties.py:468
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "nicht ausgewählt"
 
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
-#: ../src/orca/object_properties.py:466
+#: ../src/orca/object_properties.py:472
 msgctxt "switch"
 msgid "on"
 msgstr "an"
 
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
-#: ../src/orca/object_properties.py:470
+#: ../src/orca/object_properties.py:476
 msgctxt "switch"
 msgid "off"
 msgstr "aus"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:473
+#: ../src/orca/object_properties.py:479
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "teilweise ausgewählt"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:476
+#: ../src/orca/object_properties.py:482
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "gedrückt"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:479
+#: ../src/orca/object_properties.py:485
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "nicht gedrückt"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:482
+#: ../src/orca/object_properties.py:488
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "ausgewählt"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:485
+#: ../src/orca/object_properties.py:491
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "nicht ausgewählt"
 
 #. Translators: This is a state which applies to a table cell.
-#: ../src/orca/object_properties.py:488
+#: ../src/orca/object_properties.py:494
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "nicht ausgewählt"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:491
+#: ../src/orca/object_properties.py:497
 msgctxt "link state"
 msgid "visited"
 msgstr "besucht"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:494
+#: ../src/orca/object_properties.py:500
 msgctxt "link state"
 msgid "unvisited"
 msgstr "nicht besucht"
 
 #. Translators: This state represents an item on the screen that has been set
 #. insensitive (or grayed out).
-#: ../src/orca/object_properties.py:498 ../src/orca/object_properties.py:502
+#: ../src/orca/object_properties.py:504 ../src/orca/object_properties.py:508
 msgid "grayed"
 msgstr "ausgegraut"
 
@@ -11814,7 +11823,7 @@ msgstr "ausgegraut"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the spoken
 #. version.
-#: ../src/orca/object_properties.py:509
+#: ../src/orca/object_properties.py:515
 msgctxt "text"
 msgid "read only"
 msgstr "nur lesbar"
@@ -11824,27 +11833,27 @@ msgstr "nur lesbar"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the braille
 #. version. (Because braille displays have limited real estate, we abbreviate.)
-#: ../src/orca/object_properties.py:516
+#: ../src/orca/object_properties.py:522
 msgctxt "text"
 msgid "rdonly"
 msgstr "nur lesbar"
 
 #. Translators: Certain objects (such as form controls on web pages) can have
 #. STATE_REQUIRED set to inform the user that this field must be filled out.
-#: ../src/orca/object_properties.py:520 ../src/orca/object_properties.py:524
+#: ../src/orca/object_properties.py:526 ../src/orca/object_properties.py:530
 msgid "required"
 msgstr "Eingabe erforderlich"
 
 #. Translators: "multi-select" refers to a web form list in which more than
 #. one item can be selected at a time.
-#: ../src/orca/object_properties.py:528
+#: ../src/orca/object_properties.py:534
 msgid "multi-select"
 msgstr "Mehrfachauswahl"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when all we
 #. know is that an error has occurred, but not the type of error.
-#: ../src/orca/object_properties.py:533
+#: ../src/orca/object_properties.py:539
 msgctxt "error"
 msgid "invalid entry"
 msgstr "ungültiger Eintrag"
@@ -11854,7 +11863,7 @@ msgstr "ungültiger Eintrag"
 #. when all we know is that an error has occurred, but not the type of error.
 #. We prefer a smaller string than in speech because braille displays have a
 #. limited size.
-#: ../src/orca/object_properties.py:540
+#: ../src/orca/object_properties.py:546
 msgctxt "error"
 msgid "invalid"
 msgstr "ungültig"
@@ -11862,7 +11871,7 @@ msgstr "ungültig"
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to spelling.
-#: ../src/orca/object_properties.py:545
+#: ../src/orca/object_properties.py:551
 msgctxt "error"
 msgid "invalid spelling"
 msgstr "fehlerhafte Rechtschreibung"
@@ -11871,7 +11880,7 @@ msgstr "fehlerhafte Rechtschreibung"
 #. as a form field, has an error. The following string is displayed in braille
 #. when the error is related to spelling. We prefer a smaller string than in
 #. speech because braille displays have a limited size.
-#: ../src/orca/object_properties.py:551
+#: ../src/orca/object_properties.py:557
 msgctxt "error"
 msgid "spelling"
 msgstr "Rechtschreibung"
@@ -11879,7 +11888,7 @@ msgstr "Rechtschreibung"
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to grammar.
-#: ../src/orca/object_properties.py:556
+#: ../src/orca/object_properties.py:562
 msgctxt "error"
 msgid "invalid grammar"
 msgstr "fehlerhafte Grammatik"
@@ -11888,7 +11897,7 @@ msgstr "fehlerhafte Grammatik"
 #. as a form field, has an error. The following string is displayed in braille
 #. when the error is related to grammar. We prefer a smaller string than in
 #. speech because braille displays have a limited size.
-#: ../src/orca/object_properties.py:562
+#: ../src/orca/object_properties.py:568
 msgctxt "error"
 msgid "grammar"
 msgstr "Grammatik"
@@ -12162,7 +12171,7 @@ msgstr "_Sprachsystem:"
 #. Translators: Having multiple voice types in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available voice types in Orca include: default, uppercase, hyperlink, and system -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.
 #: ../src/orca/orca-setup.ui.h:76
 msgid "_Voice type:"
-msgstr "_Stimmtyp:"
+msgstr "Stimm_typ:"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via text-to-speech. Speech Dispatcher has a feature to control how capital letters are presented: Do nothing at all; say the word
 #: ../src/orca/orca-setup.ui.h:78
@@ -12177,7 +12186,7 @@ msgstr "Typ der Sprachausgabe"
 #. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
 #: ../src/orca/orca-setup.ui.h:84
 msgid "Speak multicase strings as wor_ds"
-msgstr "Zusammengesetzte Wörter einzeln vorlesen"
+msgstr "Zusammengesetzte _Wörter einzeln vorlesen"
 
 #. Translators: If this setting is enabled, 123 will be spoken as the individual digits 1 2 3; otherwise, it will be sent to the synthesizer and (likely) spoken as one hundred and twenty three.
 #: ../src/orca/orca-setup.ui.h:86
@@ -12210,7 +12219,7 @@ msgstr "_Alle"
 
 #: ../src/orca/orca-setup.ui.h:98
 msgid "Punctuation Level"
-msgstr "Interpunktionsgrad"
+msgstr "Stufe der Sonderzeichenansage"
 
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. checkbox) or its state (e.g. not checked) or say misspelled to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
 #: ../src/orca/orca-setup.ui.h:100
@@ -12227,12 +12236,12 @@ msgstr "_Einrückungen und Ausrichtung vorlesen"
 
 #: ../src/orca/orca-setup.ui.h:103
 msgid "Spea_k object mnemonics"
-msgstr "Tasten_kombination eines Objektes vorlesen"
+msgstr "Menü_kürzelbuchstaben eines Objektes vorlesen"
 
 #. Translators: This checkbox toggles whether or not Orca says the child position (e.g., item 6 of 7).
 #: ../src/orca/orca-setup.ui.h:105
 msgid "Speak child p_osition"
-msgstr "Kindposition sprechen"
+msgstr "Kind_position sprechen"
 
 #: ../src/orca/orca-setup.ui.h:106
 msgid "Speak tutorial messages"
@@ -12323,181 +12332,186 @@ msgstr "_Abgekürzte Rollennamen"
 msgid "Disable _end of line symbol"
 msgstr "Zeilen_ende-Symbol nicht anzeigen"
 
-#: ../src/orca/orca-setup.ui.h:138
-msgid "_Enable Contracted Braille"
-msgstr "Blindenkurzschrift _aktivieren"
-
 #. Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille contractions get used. Contractions are shorter forms of commonly-used letter combinations and words. For instance in English there is a single braille symbol for ing (dots 3-4-6), and the letter e (dots 1-5) all by itself represents the word every. The list of rules which dictate what contractions should be used and whether or not they can be used in a particular context are stored in tables provided by liblouis.
-#: ../src/orca/orca-setup.ui.h:140
+#: ../src/orca/orca-setup.ui.h:139
 msgid "Contraction _Table:"
 msgstr "Kurzschrift_tabelle:"
 
-#: ../src/orca/orca-setup.ui.h:141
+#: ../src/orca/orca-setup.ui.h:140
+msgid "_Enable Contracted Braille"
+msgstr "Blindenkurzschrift _aktivieren"
+
+#. Translators: If this option is enabled, Orca will adjust the text shown on the braille display so that only full words are shown. If it is not enabled, Orca uses all of the cells on the display, but some words might not be fully shown requiring the user to scroll to see the remainder.
+#: ../src/orca/orca-setup.ui.h:142
+msgid "Enable _word wrap"
+msgstr "Zeilen_umbrüche aktivieren"
+
+#: ../src/orca/orca-setup.ui.h:143
 msgid "Display Settings"
 msgstr "Anzeigeeinstellungen"
 
 #. Translators: This option refers to the dot or dots in braille which will be used to underline certain characters.
-#: ../src/orca/orca-setup.ui.h:143
+#: ../src/orca/orca-setup.ui.h:145
 msgctxt "braille dots"
 msgid "_None"
 msgstr "_Keine"
 
-#: ../src/orca/orca-setup.ui.h:147
+#: ../src/orca/orca-setup.ui.h:149
 msgid "Selection Indicator"
 msgstr "Auswahlindikator"
 
-#: ../src/orca/orca-setup.ui.h:148
+#: ../src/orca/orca-setup.ui.h:150
 msgid "Hyperlink Indicator"
 msgstr "Link-Braillemarkierung"
 
 # Siehe Übersetzung von "Enable space?  Enter y or n: "
 #. Translators: Braille flash messages are similar in nature to notifications or announcements in that they are temporarily shown on the refreshable braille display. Upon removal of the message, the original contents of the braille display are restored. This checkbox allows the user to toggle this feature.
-#: ../src/orca/orca-setup.ui.h:150
+#: ../src/orca/orca-setup.ui.h:152
 msgid "Enable flash _messages"
 msgstr "_Meldungseinblendung aktivieren"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. This label is for the spin button through which a user can customize how long (in seconds) these temporary messages should be displayed.
-#: ../src/orca/orca-setup.ui.h:152
+#: ../src/orca/orca-setup.ui.h:154
 msgid "Messa_ge duration (secs):"
 msgstr "Meldun_gsdauer (Sekunden):"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. Some users, however, would prefer to have the message remain displayed until they explicitly dismiss it. This can be accomplished by making flash messages persistent by checking this checkbox.
-#: ../src/orca/orca-setup.ui.h:154
+#: ../src/orca/orca-setup.ui.h:156
 msgid "Messages are _persistent"
 msgstr "Meldungen sind _dauerhaft"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. In instances where the message to be displayed is long/detailed, Orca provides a brief alternative. Users who prefer the brief alternative can uncheck this checkbox.
-#: ../src/orca/orca-setup.ui.h:156
+#: ../src/orca/orca-setup.ui.h:158
 msgid "Messages are _detailed"
 msgstr "Meldungen sind deta_illiert"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored.
-#: ../src/orca/orca-setup.ui.h:158
+#: ../src/orca/orca-setup.ui.h:160
 msgid "Flash Message Settings"
 msgstr "Einstellungen für Meldungseinblendung"
 
-#: ../src/orca/orca-setup.ui.h:159
+#: ../src/orca/orca-setup.ui.h:161
 msgid "Braille"
 msgstr "Braille"
 
-#: ../src/orca/orca-setup.ui.h:160
+#: ../src/orca/orca-setup.ui.h:162
 msgid "Enable _key echo"
 msgstr "Tastatur_echo aktivieren"
 
-#: ../src/orca/orca-setup.ui.h:161
+#: ../src/orca/orca-setup.ui.h:163
 msgid "Enable _alphabetic keys"
 msgstr "_Alphabetische Tasten aktivieren"
 
-#: ../src/orca/orca-setup.ui.h:162
+#: ../src/orca/orca-setup.ui.h:164
 msgid "Enable n_umeric keys"
 msgstr "N_umerische Tasten aktivieren"
 
-#: ../src/orca/orca-setup.ui.h:163
+#: ../src/orca/orca-setup.ui.h:165
 msgid "Enable _punctuation keys"
 msgstr "Inter_punktionstasten aktivieren"
 
 # Siehe Übersetzung von "Enable space?  Enter y or n: "
-#: ../src/orca/orca-setup.ui.h:164
+#: ../src/orca/orca-setup.ui.h:166
 msgid "Enable _space"
 msgstr "_Leertaste aktivieren"
 
-#: ../src/orca/orca-setup.ui.h:165
+#: ../src/orca/orca-setup.ui.h:167
 msgid "Enable _modifier keys"
 msgstr "_Modustasten aktivieren"
 
-#: ../src/orca/orca-setup.ui.h:166
+#: ../src/orca/orca-setup.ui.h:168
 msgid "Enable _function keys"
 msgstr "_Funktionstasten aktivieren"
 
-#: ../src/orca/orca-setup.ui.h:167
+#: ../src/orca/orca-setup.ui.h:169
 msgid "Enable ac_tion keys"
 msgstr "_Aktionstasten aktivieren"
 
-#: ../src/orca/orca-setup.ui.h:168
+#: ../src/orca/orca-setup.ui.h:170
 msgid "Enable _navigation keys"
 msgstr "_Navigationstasten aktivieren"
 
-#: ../src/orca/orca-setup.ui.h:173
+#: ../src/orca/orca-setup.ui.h:175
 msgid "Enable echo by _word"
 msgstr "_Wortweises Echo aktivieren"
 
-#: ../src/orca/orca-setup.ui.h:174
+#: ../src/orca/orca-setup.ui.h:176
 msgid "Enable echo by _sentence"
 msgstr "_Satzweises Echo aktivieren"
 
-#: ../src/orca/orca-setup.ui.h:175
+#: ../src/orca/orca-setup.ui.h:177
 msgid "Key Echo"
 msgstr "Tastaturecho"
 
-#: ../src/orca/orca-setup.ui.h:176
+#: ../src/orca/orca-setup.ui.h:178
 msgid "Screen Reader _Modifier Key(s):"
 msgstr "Bildschirmleser-_Modustasten:"
 
-#: ../src/orca/orca-setup.ui.h:177
+#: ../src/orca/orca-setup.ui.h:179
 msgid "Key Bindings"
 msgstr "Tastenkombinationen"
 
-#: ../src/orca/orca-setup.ui.h:178
+#: ../src/orca/orca-setup.ui.h:180
 msgid "Pronunciation Dictionary"
 msgstr "Aussprachewörterbuch"
 
-#: ../src/orca/orca-setup.ui.h:179
+#: ../src/orca/orca-setup.ui.h:181
 msgid "_New entry"
 msgstr "_Neuer Eintrag"
 
-#: ../src/orca/orca-setup.ui.h:180
+#: ../src/orca/orca-setup.ui.h:182
 msgid "_Delete"
 msgstr "_Löschen"
 
-#: ../src/orca/orca-setup.ui.h:181
+#: ../src/orca/orca-setup.ui.h:183
 msgid "Pronunciation"
 msgstr "Aussprache"
 
-#: ../src/orca/orca-setup.ui.h:182
+#: ../src/orca/orca-setup.ui.h:184
 msgid "_Speak all"
 msgstr "_Alles vorlesen"
 
-#: ../src/orca/orca-setup.ui.h:183
+#: ../src/orca/orca-setup.ui.h:185
 msgid "Speak _none"
 msgstr "_Nichts vorlesen"
 
-#: ../src/orca/orca-setup.ui.h:184
+#: ../src/orca/orca-setup.ui.h:186
 msgid "_Reset"
 msgstr "_Zurücksetzen"
 
-#: ../src/orca/orca-setup.ui.h:185
+#: ../src/orca/orca-setup.ui.h:187
 msgid "Text attributes"
 msgstr "Textattribute"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:187
+#: ../src/orca/orca-setup.ui.h:189
 msgid "Move to _bottom"
 msgstr "Nach _unten verschieben"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:189
+#: ../src/orca/orca-setup.ui.h:191
 msgid "Move _down one"
 msgstr "Eins nach u_nten verschieben"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:191
+#: ../src/orca/orca-setup.ui.h:193
 msgid "Move _up one"
 msgstr "Eins nach o_ben verschieben"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:193
+#: ../src/orca/orca-setup.ui.h:195
 msgid "Move to _top"
 msgstr "Nach _oben verschieben"
 
-#: ../src/orca/orca-setup.ui.h:194
+#: ../src/orca/orca-setup.ui.h:196
 msgid "Adjust selected attributes"
 msgstr "Ausgewählte Attribute anpassen"
 
-#: ../src/orca/orca-setup.ui.h:195
+#: ../src/orca/orca-setup.ui.h:197
 msgid "Braille Indicator"
-msgstr "Braille Indikator"
+msgstr "Braille-Indikator"
 
-#: ../src/orca/orca-setup.ui.h:196
+#: ../src/orca/orca-setup.ui.h:198
 msgid "Text Attributes"
 msgstr "Textattribute"
 
@@ -12535,19 +12549,6 @@ msgstr ""
 "Martha, n : Nordpol, o : Otto, p : Paula, q : Quelle, r : Richard, s : "
 "Siegfried, t : Theodor, u : Ulrich, v : Viktor, w : Wilhelm, x : Xantippe, "
 "y : Ypsilon, z : Zeppelin, ä : Ärger, ö : Ökonom, ü : Übermut, ß : Eszett"
-
-#: ../src/orca/scripts/apps/gnome-mud/script.py:118
-msgid "Read the latest n messages in the incoming messages text area."
-msgstr "n letzte Nachrichten im Empfangsfeld vorlesen."
-
-#: ../src/orca/scripts/apps/liferea/script.py:122
-msgid "Work online / offline"
-msgstr "Angemeldet / abgemeldet arbeiten"
-
-#: ../src/orca/scripts/apps/planner/braille_generator.py:67
-#: ../src/orca/scripts/apps/planner/speech_generator.py:63
-msgid "Display more options"
-msgstr "Weitere Optionen anzeigen"
 
 #. Translators: this attribute specifies the background color of the text.
 #. The value is an RGB value of the format "u,u,u".
@@ -13636,3 +13637,12 @@ msgid ""
 msgstr ""
 "Zum Verringern Links-Pfeiltaste oder zum Erhöhen Rechts-Pfeiltaste benutzen. "
 "Mit Pos1 wird zum Minimum und mit Ende zum Maximum gewechselt."
+
+#~ msgid "Read the latest n messages in the incoming messages text area."
+#~ msgstr "n letzte Nachrichten im Empfangsfeld vorlesen."
+
+#~ msgid "Work online / offline"
+#~ msgstr "Angemeldet / abgemeldet arbeiten"
+
+#~ msgid "Display more options"
+#~ msgstr "Weitere Optionen anzeigen"
