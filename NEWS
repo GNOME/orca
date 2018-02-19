@@ -1,3 +1,61 @@
+3.27.91 - 19 February 2018
+
+Web + Email:
+
+ * Improve navigation among, and presentation of, editable elements with
+   descendants
+
+ * Fix bug in which Orca went silent due to text elements failing to
+   support the accessible text interface
+
+ * Eliminate double presentation of visual labels which also provide the
+   accessible description
+
+ * Fix issue causing Orca to skip over certain table content in SayAll
+
+ * Improve presentation of displayed text in ARIA dialogs
+
+ * Re-enable announcement of page tab switches in Firefox
+
+LibreOffice:
+
+ * Work around https://bugs.documentfoundation.org/show_bug.cgi?id=109398
+
+ * Eliminate double presentation of redundant frames
+
+General:
+
+ * Implement initial support for braille "word wrap"
+
+ * Improve presentation of locations in file chooser dialog
+
+ * Only present text changes from type-ahead entries if they are focused
+
+ * Eliminate some chattiness resulting from redundant focus claims from
+   Gtk+ tables
+
+ * Eliminate double-presentation of spin button value changes
+
+ * Fix bug causing nameless, valueless comboboxes to not be presented
+
+ * Fix issues in Orca's documentation
+
+ * Bump minimum version of AT-SPI2
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de            German                Tim Sabsch
+    eo            Esperanto             Kristjan SCHMIDT
+    es            Spanish               Daniel Mustieles
+    fr            French                Claude Paroz
+    gl            Galician              Fran Dieguez
+    id            Indonesian            Kukuh Syafaat
+    po            Polish                Piotr Drąg
+    pt_BR         Brazilian Portuguese  Enrico Nicoletto
+    uk            Ukrainian             Андрій Бандура
+
+=========
+
 3.27.3 - 11 December 2017
 
 Web + Email:
