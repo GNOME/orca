@@ -7,17 +7,18 @@
 # Gökhan Gurbetoğlu <ggurbet@gmail.com>, 2015.
 # Neriman Kara <nerimankaraa@gmail.com>, 2016.
 # Olcay Aşçı <olcay.ashchi@gmail.com>, 2017.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2017.
 # Muhammet Kara <muhammetk@gmail.com>, 2011, 2014, 2015, 2016, 2017.
+# Hanifi Çakmak <hanifi0507@gmail.com>, 2018.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2017, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2017-10-22 20:43+0000\n"
-"PO-Revision-Date: 2017-10-22 23:44+0300\n"
-"Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
+"POT-Creation-Date: 2018-02-16 01:05+0000\n"
+"PO-Revision-Date: 2018-02-25 12:56+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -1764,7 +1765,7 @@ msgstr "nesne değiştirme karakteri"
 #. without clicking on it.
 #: ../src/orca/cmdnames.py:37
 msgid "Routes the pointer to the current item."
-msgstr "İşaretçiyi mevcut ögeye taşır."
+msgstr "İşaretçiyi geçerli ögeye taşır."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1774,7 +1775,7 @@ msgstr "İşaretçiyi mevcut ögeye taşır."
 #. Left click means to generate a left mouse button click on the current item.
 #: ../src/orca/cmdnames.py:45
 msgid "Performs left click on current flat review item."
-msgstr "Mevcut öge üzerinde sol tıklama gerçekleştirir."
+msgstr "Geçerli öge üzerinde sol tıklama gerçekleştirir."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1784,7 +1785,7 @@ msgstr "Mevcut öge üzerinde sol tıklama gerçekleştirir."
 #. Right click means to generate a right mouse button click on the current item.
 #: ../src/orca/cmdnames.py:53
 msgid "Performs right click on current flat review item."
-msgstr "Mevcut öge üzerinde sağ tıklama gerçekleştir"
+msgstr "Geçerli öge üzerinde sağ tıklama gerçekleştir"
 
 #. Translators: the Orca "SayAll" command allows the user to press a key and have
 #. the entire document in a window be automatically spoken to the user. If the
@@ -1911,7 +1912,7 @@ msgstr "İnceleme imlecini önceki satırın başına taşır."
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: ../src/orca/cmdnames.py:149
 msgid "Speaks the current flat review line."
-msgstr "Mevcut satırı seslendir."
+msgstr "Geçerli satırı seslendir."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1922,7 +1923,7 @@ msgstr "Mevcut satırı seslendir."
 #. by character.
 #: ../src/orca/cmdnames.py:158
 msgid "Spells the current flat review line."
-msgstr "Mevcut satırı harf harf oku."
+msgstr "Geçerli satırı harf harf oku."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1933,7 +1934,7 @@ msgstr "Mevcut satırı harf harf oku."
 #. by character phonetically, saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: ../src/orca/cmdnames.py:168
 msgid "Phonetically spells the current flat review line."
-msgstr "Mevcut satırı fonetik olarak hecele."
+msgstr "Geçerli satırı fonetik olarak hecele."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1953,7 +1954,7 @@ msgstr "İnceleme imlecini sonraki satırın başına taşır."
 #. will wrap across lines if necessary).
 #: ../src/orca/cmdnames.py:184
 msgid "Moves flat review to the previous item or word."
-msgstr "İnceleme imlecini önceki nesne yada kelimeye taşır."
+msgstr "İnceleme imlecini önceki nesne yada sözcüğe taşır."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1963,7 +1964,7 @@ msgstr "İnceleme imlecini önceki nesne yada kelimeye taşır."
 #. This command will speak the current word or item.
 #: ../src/orca/cmdnames.py:192
 msgid "Speaks the current flat review item or word."
-msgstr "Mevcut nesne yada kelimeyi okur."
+msgstr "Geçerli nesne yada sözcüğü okur."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1974,7 +1975,7 @@ msgstr "Mevcut nesne yada kelimeyi okur."
 #. character by character.
 #: ../src/orca/cmdnames.py:201
 msgid "Spells the current flat review item or word."
-msgstr "Mevcut nesne yada kelimeyi harf harf okur."
+msgstr "Geçerli nesne yada sözcüğü harf harf okur."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1986,7 +1987,7 @@ msgstr "Mevcut nesne yada kelimeyi harf harf okur."
 #. and so on.
 #: ../src/orca/cmdnames.py:212
 msgid "Phonetically spells the current flat review item or word."
-msgstr "Mevcut nesneyi yada kelimeyi fonetik olarak okur."
+msgstr "Geçerli nesneyi yada sözcüğü fonetik olarak okur."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1997,7 +1998,7 @@ msgstr "Mevcut nesneyi yada kelimeyi fonetik olarak okur."
 #. will wrap across lines if necessary).
 #: ../src/orca/cmdnames.py:221
 msgid "Moves flat review to the next item or word."
-msgstr "İnceleme imlecini bir sonraki nesne veya kelimeye taşır."
+msgstr "İnceleme imlecini bir sonraki nesne veya sözcüğe taşır."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2020,7 +2021,7 @@ msgstr "İnceleme imlecini bir üst nesneye taşır."
 #. will speak the text associated with the object.
 #: ../src/orca/cmdnames.py:240
 msgid "Speaks the current flat review object."
-msgstr "İnceleme imleci ile mevcut nesneyi seslendirir."
+msgstr "İnceleme imleci ile geçerli nesneyi seslendirir."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2052,7 +2053,7 @@ msgstr "İnceleme imlecini önceki karaktere taşır."
 #. This command will speak the current character
 #: ../src/orca/cmdnames.py:266
 msgid "Speaks the current flat review character."
-msgstr "İnceleme imleci ile mevcut karakteri seslendirir."
+msgstr "İnceleme imleci ile geçerli karakteri seslendirir."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2063,7 +2064,7 @@ msgstr "İnceleme imleci ile mevcut karakteri seslendirir."
 #. saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: ../src/orca/cmdnames.py:276
 msgid "Phonetically speaks the current flat review character."
-msgstr "Mevcut karakteri fonetik olarak seslendirir."
+msgstr "Geçerli karakteri fonetik olarak seslendirir."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2074,7 +2075,7 @@ msgstr "Mevcut karakteri fonetik olarak seslendirir."
 #. value.
 #: ../src/orca/cmdnames.py:286
 msgid "Speaks unicode value of the current flat review character."
-msgstr "Mevcut karakterin uni kod değerini okur."
+msgstr "Geçerli karakterin uni kod değerini okur."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2135,14 +2136,14 @@ msgstr "Gözden geçirme imleci altındaki içeriği panoya ekler."
 #: ../src/orca/cmdnames.py:336
 msgid "Toggles whether to read just the current table cell or the whole row."
 msgstr ""
-"Yalnızca şu anki tablo hücresinin ya da tüm satırının okunup okunmayacağını."
+"Yalnızca geçerli tablo hücresinin ya da tüm satırının okunup okunmayacağını."
 "açar/kapatır."
 
 #. Translators: the attributes being presented are the text attributes, such as
 #. bold, italic, font name, font size, etc.
 #: ../src/orca/cmdnames.py:341
 msgid "Reads the attributes associated with the current text character."
-msgstr "Şimdiki metin karakteri ile ilişkilendirilmiş öznitelikleri okur."
+msgstr "Geçerli metin karakteri ile ilişkilendirilmiş öznitelikleri okur."
 
 #. Translators: a refreshable braille display is an external hardware device that
 #. presents braille characters to the user. There are a limited number of cells
@@ -2257,7 +2258,7 @@ msgstr "Konuşmanın sezsizliğini açar ya da kapatır."
 #. This string describes that command.
 #: ../src/orca/cmdnames.py:423
 msgid "Toggles speech verbosity level."
-msgstr "Konuşma ayrıntı seviyesini belirler."
+msgstr "Konuşma ayrıntı düzeyini belirler."
 
 #. Translators: this string is associated with the keyboard shortcut to quit
 #. Orca.
@@ -2295,7 +2296,7 @@ msgstr "Sayı seslendirme biçemini değiştirir."
 #. some, most, or all, punctuation will be spoken.
 #: ../src/orca/cmdnames.py:451
 msgid "Cycles to the next speaking of punctuation level."
-msgstr "Sonraki noktalama konuşma seviyesine geçiş yapar."
+msgstr "Sonraki noktalama konuşma düzeyine geçiş yapar."
 
 #. Translators: Orca has a feature whereby users can set up different "profiles,"
 #. which are collection of settings which apply to a given task, such as a
@@ -2330,14 +2331,14 @@ msgstr "Sonraki büyük harf biçemine geçiş yapar."
 #. choose which type of echo is being used.
 #: ../src/orca/cmdnames.py:480
 msgid "Cycles to the next key echo level."
-msgstr "Sonraki yansıma seviyesine geçiş yapar."
+msgstr "Sonraki yansıma düzeyine geçiş yapar."
 
 #. Translators: this is a debug message that Orca users will not normally see. It
 #. describes a debug routine that allows the user to adjust the level of debug
 #. information that Orca generates at run time.
 #: ../src/orca/cmdnames.py:485
 msgid "Cycles the debug level at run time."
-msgstr "Çalıştırma sırasında hata ayıklama seviyesini döndür. "
+msgstr "Çalıştırma sırasında hata ayıklama düzeyini döndür. "
 
 #. Translators: this command announces information regarding the relationship of
 #. the given bookmark to the current position. Note that in this context, the
@@ -2345,7 +2346,7 @@ msgstr "Çalıştırma sırasında hata ayıklama seviyesini döndür. "
 #. page.
 #: ../src/orca/cmdnames.py:492
 msgid "Bookmark where am I with respect to current position."
-msgstr "Şimdiki konuma göre nerede olduğumu yer imi yap."
+msgstr "Geçerli konuma göre nerede olduğumu yer imi yap."
 
 #. Translators: this event handler cycles through the registered bookmarks and
 #. takes the user to the previous bookmark location. Note that in this context,
@@ -2406,14 +2407,14 @@ msgstr "Geçerli tarihi sun."
 #. application, bypassing Orca's interception of it.
 #: ../src/orca/cmdnames.py:536
 msgid "Passes the next command on to the current application."
-msgstr "Mevcut uygulamaya sonraki komnutunu geçer."
+msgstr "Geçerli uygulamaya sonraki komutu geçirir."
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. This string to be translated is associated with the
 #. keyboard commands used to review those previous messages.
 #: ../src/orca/cmdnames.py:541
 msgid "Speak and braille a previous chat room message."
-msgstr "Önceki sohbet odası mesajını seslendir ve braille ile belirt."
+msgstr "Önceki sohbet odası iletisini seslendir ve braille ile belirt."
 
 #. Translators: In chat applications, it is often possible to see that a "buddy"
 #. is typing currently (e.g. via a keyboard icon or status text). Some users like
@@ -2433,7 +2434,7 @@ msgstr "Arkadaşlarınız yazarken bunun duyurulmasını aç/kapat."
 #. or off.
 #: ../src/orca/cmdnames.py:559
 msgid "Toggle whether we provide chat room specific message histories."
-msgstr "Sohbet odasına yönelik mesajların geçmişlerinin sağlanmasını aç/kapat."
+msgstr "Sohbet odasına yönelik iletilerin geçmişlerinin sağlanmasını aç/kapat."
 
 #. Translators: In chat applications, Orca automatically presents incoming
 #. messages in speech and braille. If a user is in multiple conversations or
@@ -2446,7 +2447,7 @@ msgstr "Sohbet odasına yönelik mesajların geçmişlerinin sağlanmasını aç
 msgid ""
 "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr ""
-"Sohbet odası mesajlarına sohbet odasının adının önek olarak eklenmesini aç/"
+"Sohbet odası iletilerine sohbet odasının adının önek olarak eklenmesini aç/"
 "kapat."
 
 #. Translators: this is a command for a button on a refreshable braille display
@@ -2570,12 +2571,12 @@ msgstr "Önceki karaktere gider."
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:658
 msgid "Goes to next word."
-msgstr "Sonraki kelimeye gider."
+msgstr "Sonraki sözcüğe gider."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:661
 msgid "Goes to previous word."
-msgstr "Önceki kelimeye gider."
+msgstr "Önceki sözcüğe gider."
 
 #. Translators: this is a command related to navigating within a document.
 #: ../src/orca/cmdnames.py:664
@@ -2621,7 +2622,7 @@ msgstr "Önceki nesneye gider."
 #. by Orca's caret navigation to be expanded.
 #: ../src/orca/cmdnames.py:690
 msgid "Causes the current combo box to be expanded."
-msgstr "Şimdiki birleşik giriş kutusunun genişlemesini sağlar."
+msgstr "Geçerli birleşik giriş kutusunun genişlemesini sağlar."
 
 #. Translators: Gecko native caret navigation is where Firefox (or Thunderbird)
 #. itself controls how the arrow keys move the caret around HTML content. It's
@@ -2681,7 +2682,7 @@ msgstr "Değişken bölgeleri izle."
 #. mouse over and return the user to the object he/she was in.
 #: ../src/orca/cmdnames.py:740
 msgid "Moves focus into and away from the current mouse over."
-msgstr "Odağı mevcut fare konumu altına getirir veya çeker."
+msgstr "Odağı geçerli fare konumu altına getirir veya çeker."
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This string refers to
@@ -2761,12 +2762,12 @@ msgstr "Bir düğme listesi gösterir."
 #. Translators: this is for navigating among check boxes in a document.
 #: ../src/orca/cmdnames.py:794
 msgid "Goes to previous check box."
-msgstr "Önceki kontrol kutusuna gider."
+msgstr "Önceki onay kutusuna gider."
 
 #. Translators: this is for navigating among check boxes in a document.
 #: ../src/orca/cmdnames.py:797
 msgid "Goes to next check box."
-msgstr "Sonraki kontrol kutusuna gider."
+msgstr "Sonraki onay kutusuna gider."
 
 #. Translators: this is for navigating among check boxes in a document.
 #: ../src/orca/cmdnames.py:800
@@ -2870,21 +2871,21 @@ msgstr "Bir başlık listesi gösterir."
 #: ../src/orca/cmdnames.py:862
 #, python-format
 msgid "Goes to previous heading at level %d."
-msgstr "Seviye %d durumunda bulunan önceki başlığa gider."
+msgstr "Düzey %d durumunda bulunan önceki başlığa gider."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: ../src/orca/cmdnames.py:866
 #, python-format
 msgid "Goes to next heading at level %d."
-msgstr "Seviye %d durumunda bulunan sonraki başlığa gider."
+msgstr "Düzey %d durumunda bulunan sonraki başlığa gider."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: ../src/orca/cmdnames.py:870
 #, python-format
 msgid "Displays a list of headings at level %d."
-msgstr "Bir %d seviyesindeki başlıklar listesi gösterir."
+msgstr "%d düzeyindeki başlıklar listesini gösterir."
 
 #. Translators: this is for navigating among images in a document.
 #: ../src/orca/cmdnames.py:873
@@ -4336,7 +4337,7 @@ msgstr "Klavyeyle gezinme sırasında otomatik odaklama kipi"
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
 #. this option, Dot 7 will be used to 'underline' text of interest, e.g. when
 #. "marking"/indicating that a given word is bold.
-#: ../src/orca/guilabels.py:82 ../src/orca/orca-setup.ui.h:144
+#: ../src/orca/guilabels.py:82 ../src/orca/orca-setup.ui.h:146
 msgid "Dot _7"
 msgstr "Nokta _7"
 
@@ -4344,7 +4345,7 @@ msgstr "Nokta _7"
 #. of 8 dots. Dot 8 is the dot in the bottom right corner. If the user selects
 #. this option, Dot 8 will be used to 'underline' text of interest,  e.g. when
 #. "marking"/indicating that a given word is bold.
-#: ../src/orca/guilabels.py:88 ../src/orca/orca-setup.ui.h:145
+#: ../src/orca/guilabels.py:88 ../src/orca/orca-setup.ui.h:147
 msgid "Dot _8"
 msgstr "Nokta _8"
 
@@ -4352,7 +4353,7 @@ msgstr "Nokta _8"
 #. of 8 dots. Dots 7-8 are the dots at the bottom. If the user selects this
 #. option, Dots 7-8 will be used to 'underline' text of interest,  e.g. when
 #. "marking"/indicating that a given word is bold.
-#: ../src/orca/guilabels.py:94 ../src/orca/orca-setup.ui.h:146
+#: ../src/orca/guilabels.py:94 ../src/orca/orca-setup.ui.h:148
 msgid "Dots 7 an_d 8"
 msgstr "Nokta 7 v_e 8"
 
@@ -4439,7 +4440,7 @@ msgstr "_Arkadaşlarınız yazarken bunu duyur"
 #. contains the latest messages from all the chat rooms that they are in.
 #: ../src/orca/guilabels.py:136
 msgid "Provide chat room specific _message histories"
-msgstr "Sohbet odasına özel _mesaj geçmişlerini sağla"
+msgstr "Sohbet odasına özel _ileti geçmişlerini sağla"
 
 #. Translators: This is the label of a panel holding options for how messages in
 #. this application's chat rooms should be spoken. The options are: Speak messages
@@ -4448,7 +4449,7 @@ msgstr "Sohbet odasına özel _mesaj geçmişlerini sağla"
 #. any channel, but only if the chat application has focus.
 #: ../src/orca/guilabels.py:143
 msgid "Speak messages from"
-msgstr "Gelen mesajları seslendir"
+msgstr "Gelen iletileri seslendir"
 
 #. Translators: This is the label of a radio button. If it is selected, Orca will
 #. speak all new chat messages as they appear irrespective of whether or not the
@@ -4548,7 +4549,7 @@ msgstr "Okunuş Dizgisi"
 #. being pressed, "character echo" presents the character/string of length 1 that
 #. is inserted as a result of the keypress.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/guilabels.py:213 ../src/orca/orca-setup.ui.h:172
+#: ../src/orca/guilabels.py:213 ../src/orca/orca-setup.ui.h:174
 msgid "Enable echo by cha_racter"
 msgstr "Ka_rakter geri bildirimini etkinleştir"
 
@@ -4556,7 +4557,7 @@ msgstr "Ka_rakter geri bildirimini etkinleştir"
 #. by the user. This string refers to a "key echo" option. When this option is
 #. enabled, dead keys will be announced when pressed.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/guilabels.py:218 ../src/orca/orca-setup.ui.h:170
+#: ../src/orca/guilabels.py:218 ../src/orca/orca-setup.ui.h:172
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Boşluksuz _aksanlı tuşları etkinleştir"
 
@@ -4829,7 +4830,7 @@ msgstr "Satır"
 #. document, Orca will pause at the end of each sentence.
 #: ../src/orca/guilabels.py:409 ../src/orca/orca-setup.ui.h:6
 msgid "Sentence"
-msgstr "Cümle"
+msgstr "Tümce"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5374,7 +5375,7 @@ msgstr "Hü_cre koordinatlarını seslendir"
 #. a particular table cell spans in a table).
 #: ../src/orca/guilabels.py:773
 msgid "Speak _multiple cell spans"
-msgstr "_Birden fazla kapsayan hücreleri seslendir"
+msgstr "_Çoklu hücre aralığını seslendir"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
@@ -5389,7 +5390,7 @@ msgstr "Öznitelik Adı"
 #. label of a checkbox in which users can indicate their default preference.
 #: ../src/orca/guilabels.py:784
 msgid "Control caret navigation"
-msgstr "Düzeltme imi dolaşımını kontrol et"
+msgstr "Düzeltme imi dolaşımını denetle"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
@@ -5423,7 +5424,7 @@ msgstr "Alt"
 #: ../src/orca/keynames.py:50
 msgctxt "keyboard"
 msgid "Control"
-msgstr "Control"
+msgstr "Kontrol"
 
 #. Translators: this is how someone would speak the name of the left shift key
 #.
@@ -7895,7 +7896,7 @@ msgstr "Büyük harf ayarlama biçemi olarak heceleme ayarlandı."
 #. active / not being overridden by Orca.
 #: ../src/orca/messages.py:144
 msgid "The application is controlling the caret."
-msgstr "Düzenleme imini uygulama kontrol ediyor."
+msgstr "Düzenleme imini uygulama denetliyor."
 
 #. Translators: Gecko native caret navigation is where Firefox (or Thunderbird)
 #. itself controls how the arrow keys move the caret around HTML content. It's
@@ -7903,7 +7904,7 @@ msgstr "Düzenleme imini uygulama kontrol ediyor."
 #. the user the ability to toggle which application is controlling the caret.
 #: ../src/orca/messages.py:150
 msgid "The screen reader is controlling the caret."
-msgstr "Düzenleme imini ekran okuyucu kontrol ediyor."
+msgstr "Düzenleme imini ekran okuyucu denetliyor."
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #: ../src/orca/messages.py:153
@@ -8155,7 +8156,7 @@ msgstr "arkadaşlarınız yazarken duyur."
 #: ../src/orca/messages.py:329
 #, python-format
 msgid "Message from chat room %s"
-msgstr "Sohbet odasından mesaj %s"
+msgstr "%s sohbet odasından ileti"
 
 #. Translators: This message is presented to inform the user that a new chat
 #. conversation has been added to the existing conversations. The "tab" here
@@ -8535,7 +8536,7 @@ msgstr "Tuş geri bildirimi hiçbiri olarak ayarlandı."
 #: ../src/orca/messages.py:631
 msgctxt "key echo"
 msgid "key and word"
-msgstr "tuş ve kelime"
+msgstr "tuş ve sözcük"
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8549,7 +8550,7 @@ msgstr "tuş ve kelime"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:643
 msgid "Key echo set to key and word."
-msgstr "Tuş geri bildirimi tuş ve kelime olarak ayarlandı."
+msgstr "Tuş geri bildirimi tuş ve sözcük olarak ayarlandı."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8566,7 +8567,7 @@ msgstr "Tuş geri bildirimi tuş ve kelime olarak ayarlandı."
 #: ../src/orca/messages.py:657
 msgctxt "key echo"
 msgid "sentence"
-msgstr "cümle"
+msgstr "tümce"
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8580,7 +8581,7 @@ msgstr "cümle"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:669
 msgid "Key echo set to sentence."
-msgstr "Tuş geri bildirimi cümle olarak ayarlandı."
+msgstr "Tuş geri bildirimi tümce olarak ayarlandı."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8597,7 +8598,7 @@ msgstr "Tuş geri bildirimi cümle olarak ayarlandı."
 #: ../src/orca/messages.py:683
 msgctxt "key echo"
 msgid "word"
-msgstr "kelime"
+msgstr "sözcük"
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8611,7 +8612,7 @@ msgstr "kelime"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:695
 msgid "Key echo set to word."
-msgstr "Tuş geri bildirimi kelime olarak ayarlandı."
+msgstr "Tuş geri bildirimi sözcük olarak ayarlandı."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8628,7 +8629,7 @@ msgstr "Tuş geri bildirimi kelime olarak ayarlandı."
 #: ../src/orca/messages.py:709
 msgctxt "key echo"
 msgid "word and sentence"
-msgstr "kelime ve cümle"
+msgstr "sözcük ve tümce"
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -8642,7 +8643,7 @@ msgstr "kelime ve cümle"
 #. echo and can cycle through the various levels quickly via a command.
 #: ../src/orca/messages.py:721
 msgid "Key echo set to word and sentence."
-msgstr "Tuş geri bildirimi kelime ve cümle olarak ayarlandı."
+msgstr "Tuş geri bildirimi sözcük ve tümce olarak ayarlandı."
 
 #. Translators: This phrase is spoken to inform the user of all of the MathML
 #. enclosure notations associated with a given mathematical expression. For
@@ -9087,8 +9088,8 @@ msgstr ""
 "Öğrenme kipine giriliyor. İşlevini öğrenmek için bir tuşa basın. Ekran "
 "okuyucusunun belgelendirmesini görüntülemek için F1’e basın. Ekran "
 "okuyucusunun öntanımlı kısayollarının bir listesini almak için F2’ye basın. "
-"Ekran okuyucusunun mevcut uygulama için tanımlı kısayollarının bir listesini "
-"almak için F3’e basın. Öğrenme kipinden çıkmak için Esc’ye basın."
+"Ekran okuyucusunun geçerli uygulama için tanımlı kısayollarının bir "
+"listesini almak için F3’e basın. Öğrenme kipinden çıkmak için Esc’ye basın."
 
 #. Translators: This message is presented when a user is navigating within a
 #. blockquote and then navigates out of it.
@@ -9580,7 +9581,7 @@ msgstr "Tüm değişken bölgeler kapatıldı"
 #. regions has been restored to their original values.
 #: ../src/orca/messages.py:1386
 msgid "live regions politeness levels restored"
-msgstr "değişken bölgelerin yumuşaklık seviyeleri geri alındı"
+msgstr "değişken bölgelerin yumuşaklık düzeyleri geri alındı"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -9592,7 +9593,7 @@ msgstr "değişken bölgelerin yumuşaklık seviyeleri geri alındı"
 #: ../src/orca/messages.py:1395
 #, python-format
 msgid "politeness level %s"
-msgstr "yumuşaklık seviyesi %s"
+msgstr "yumuşaklık düzeyi %s"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -9675,7 +9676,7 @@ msgstr "Değişken bölgeleri izleme açık"
 #. the current live region.
 #: ../src/orca/messages.py:1464
 msgid "no live message saved"
-msgstr "kayıtlı canlı mesaj yok"
+msgstr "kayıtlı canlı ileti yok"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -9733,7 +9734,7 @@ msgstr "yazım hatalı"
 #: ../src/orca/messages.py:1504
 #, python-format
 msgid "Misspelled word: %s"
-msgstr "Yanlış yazılmış kelime: %s"
+msgstr "Yanlış yazılmış sözcük: %s"
 
 #. Translators: Orca tries to provide more compelling output of the spell check
 #. dialog in some applications. The second thing it does is give the phrase
@@ -9862,7 +9863,7 @@ msgstr "Hata: Nesnelerin listesi oluşturulamıyor."
 #: ../src/orca/messages.py:1608 ../src/orca/object_properties.py:51
 #, python-format
 msgid "Nesting level %d"
-msgstr "Dallanma seviyesi %d"
+msgstr "Dallanma düzeyi %d"
 
 #. Translators: Orca has a command that moves the mouse pointer to the current
 #. location on a web page. If moving the mouse pointer caused an item to appear
@@ -9902,7 +9903,7 @@ msgstr "Başka düğme yok."
 #. user if no more check boxes can be found.
 #: ../src/orca/messages.py:1636
 msgid "No more check boxes."
-msgstr "Başka kontrol kutusu yok."
+msgstr "Başka onay kutusu yok."
 
 #. Translators: This is for navigating document content by moving from 'large
 #. object' to 'large object'. A 'large object' is a logical chunk of text,
@@ -9954,7 +9955,7 @@ msgstr "Başka başlık yok."
 #: ../src/orca/messages.py:1673
 #, python-format
 msgid "No more headings at level %d."
-msgstr "%d seviyesinde başka başlık yok."
+msgstr "%d düzeyinde başka başlık yok."
 
 #. Translators: This is for navigating document content by moving from image
 #. to image. This is a detailed message which will be presented to the user
@@ -10074,7 +10075,7 @@ msgstr "Alt"
 #. notifications mode is being exited.
 #: ../src/orca/messages.py:1758
 msgid "Exiting list notification messages mode."
-msgstr "Bildirim mesajlarını listeleme kipinden çıkılıyor."
+msgstr "Bildirim iletilerini listeleme kipinden çıkılıyor."
 
 #. Translators: This is a brief message presented to the user when the top of the
 #. list of notifications is reached.
@@ -10099,7 +10100,7 @@ msgid ""
 msgstr ""
 "Listede gezinmek için Yukarı, Aşağı, Home ya da End tuşlarını kullanın.\n"
 "Çıkış için Esc tuşuna basın.\n"
-"Okunan son iletiyi tekrarlamak için Boşluk tuşuna basın.\n"
+"Okunan son iletiyi yinelemek için Boşluk tuşuna basın.\n"
 "Belirli bir iletiyi okumak için bir rakama basın.\n"
 
 #. Translators: This message is presented to the user when the notifications list
@@ -10135,7 +10136,7 @@ msgstr "Sayıları rakam olarak seslendir."
 #: ../src/orca/messages.py:1798
 msgctxt "number style"
 msgid "words"
-msgstr "kelimeler"
+msgstr "sözcükler"
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -10144,7 +10145,7 @@ msgstr "kelimeler"
 #. the user has enabled speaking numbers as words.
 #: ../src/orca/messages.py:1805
 msgid "Speak numbers as words."
-msgstr "Sayıları kelime olarak seslendir."
+msgstr "Sayıları sözcük olarak seslendir."
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
@@ -10316,7 +10317,7 @@ msgstr "Tümü"
 #. spoken, or Some will be spoken.
 #: ../src/orca/messages.py:1927
 msgid "Punctuation level set to all."
-msgstr "Noktalama seviyesi tümü olarak ayarlandı."
+msgstr "Noktalama düzeyi tümü olarak ayarlandı."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -10333,7 +10334,7 @@ msgstr "Çoğu"
 #. spoken, or Some will be spoken.
 #: ../src/orca/messages.py:1939
 msgid "Punctuation level set to most."
-msgstr "Noktalama seviyesi çoğu olarak ayarlandı."
+msgstr "Noktalama düzeyi çoğu olarak ayarlandı."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -10350,7 +10351,7 @@ msgstr "Hiçbiri"
 #. spoken, or Some will be spoken.
 #: ../src/orca/messages.py:1951
 msgid "Punctuation level set to none."
-msgstr "Noktalama seviyesi hiç olarak ayarlandı."
+msgstr "Noktalama düzeyi hiç olarak ayarlandı."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -10367,7 +10368,7 @@ msgstr "Birazı"
 #. spoken, or Some will be spoken.
 #: ../src/orca/messages.py:1963
 msgid "Punctuation level set to some."
-msgstr "Noktalama seviyesi birazı olarak ayarlandı."
+msgstr "Noktalama düzeyi birazı olarak ayarlandı."
 
 #. Translators: This message is presented to indicate that a search has begun
 #. or is still taking place.
@@ -10466,7 +10467,7 @@ msgstr "daha yumuşak."
 #: ../src/orca/messages.py:2030
 msgctxt "Speech"
 msgid "Verbosity level: brief"
-msgstr "Ayrıntı seviyesi: kısa ve öz"
+msgstr "Ayrıntı düzeyi: kısa ve öz"
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -10476,7 +10477,7 @@ msgstr "Ayrıntı seviyesi: kısa ve öz"
 #: ../src/orca/messages.py:2037
 msgctxt "Speech"
 msgid "Verbosity level: verbose"
-msgstr "Ayrıntı seviyesi: ayrıntılı"
+msgstr "Ayrıntı düzeyi: ayrıntılı"
 
 #. Translators: We replace the ellipses (both manual and UTF-8) with a spoken
 #. string. The extra space you see at the beginning is because we need the
@@ -11070,7 +11071,7 @@ msgstr "SEVİYE %d"
 #: ../src/orca/object_properties.py:62
 #, python-format
 msgid "tree level %d"
-msgstr "ağaç seviyesi %d"
+msgstr "ağaç düzeyi %d"
 
 #. Translators: This represents the depth of a node in a TreeView (i.e. how many
 #. ancestors the node has). This is the braille version.
@@ -11090,10 +11091,18 @@ msgstr "düzenlenebilir çoklu kutu"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+#. This role is to describe elements in web content which have the contenteditable
+#. attribute set to true, indicating that the element can be edited by the user.
+#: ../src/orca/object_properties.py:79
+msgid "editable content"
+msgstr "düzenlenebilir içerik"
+
+#. Translators: This string should be treated as a role describing an object.
+#. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. The feed role is a scrollable list of articles where scrolling may cause
 #. articles to be added to or removed from either end of the list.
 #. http://rawgit.com/w3c/aria/master/aria/aria.html#feed
-#: ../src/orca/object_properties.py:80
+#: ../src/orca/object_properties.py:86
 msgctxt "role"
 msgid "feed"
 msgstr "besleme"
@@ -11103,7 +11112,7 @@ msgstr "besleme"
 #. The figure role is a perceivable section of content that typically contains a
 #. graphical document, images, code snippets, or example text.
 #. http://rawgit.com/w3c/aria/master/aria/aria.html#figure
-#: ../src/orca/object_properties.py:87
+#: ../src/orca/object_properties.py:93
 msgctxt "role"
 msgid "figure"
 msgstr "şekil"
@@ -11112,7 +11121,7 @@ msgstr "şekil"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the abstract in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-abstract
-#: ../src/orca/object_properties.py:93
+#: ../src/orca/object_properties.py:99
 msgctxt "role"
 msgid "abstract"
 msgstr "soyut"
@@ -11121,7 +11130,7 @@ msgstr "soyut"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the acknowledgments in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-acknowledgments
-#: ../src/orca/object_properties.py:99
+#: ../src/orca/object_properties.py:105
 msgctxt "role"
 msgid "acknowledgments"
 msgstr "teşekkürler"
@@ -11130,7 +11139,7 @@ msgstr "teşekkürler"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the afterword in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-afterword
-#: ../src/orca/object_properties.py:105
+#: ../src/orca/object_properties.py:111
 msgctxt "role"
 msgid "afterword"
 msgstr "son söz"
@@ -11139,7 +11148,7 @@ msgstr "son söz"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the appendix in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-appendix
-#: ../src/orca/object_properties.py:111
+#: ../src/orca/object_properties.py:117
 msgctxt "role"
 msgid "appendix"
 msgstr "eklentiler"
@@ -11148,7 +11157,7 @@ msgstr "eklentiler"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a bibliography entry in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-biblioentry
-#: ../src/orca/object_properties.py:117
+#: ../src/orca/object_properties.py:123
 msgctxt "role"
 msgid "bibliography entry"
 msgstr "kaynakçanın girişi"
@@ -11157,7 +11166,7 @@ msgstr "kaynakçanın girişi"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the bibliography in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-bibliography
-#: ../src/orca/object_properties.py:123
+#: ../src/orca/object_properties.py:129
 msgctxt "role"
 msgid "bibliography"
 msgstr "kaynakça"
@@ -11166,7 +11175,7 @@ msgstr "kaynakça"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a chapter in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-chapter
-#: ../src/orca/object_properties.py:129
+#: ../src/orca/object_properties.py:135
 msgctxt "role"
 msgid "chapter"
 msgstr "bölüm"
@@ -11175,7 +11184,7 @@ msgstr "bölüm"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the colophon in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-colophon
-#: ../src/orca/object_properties.py:135
+#: ../src/orca/object_properties.py:141
 msgctxt "role"
 msgid "colophon"
 msgstr "baskı bilgisi"
@@ -11184,7 +11193,7 @@ msgstr "baskı bilgisi"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the conclusion in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-conclusion
-#: ../src/orca/object_properties.py:141
+#: ../src/orca/object_properties.py:147
 msgctxt "role"
 msgid "conclusion"
 msgstr "sonuç"
@@ -11193,7 +11202,7 @@ msgstr "sonuç"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the cover in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-cover
-#: ../src/orca/object_properties.py:147
+#: ../src/orca/object_properties.py:153
 msgctxt "role"
 msgid "cover"
 msgstr "kapak"
@@ -11202,7 +11211,7 @@ msgstr "kapak"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a single credit in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-credit
-#: ../src/orca/object_properties.py:153
+#: ../src/orca/object_properties.py:159
 msgctxt "role"
 msgid "credit"
 msgstr "jenerik"
@@ -11211,7 +11220,7 @@ msgstr "jenerik"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the credits in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-credits
-#: ../src/orca/object_properties.py:159
+#: ../src/orca/object_properties.py:165
 msgctxt "role"
 msgid "credits"
 msgstr "kredi"
@@ -11220,7 +11229,7 @@ msgstr "kredi"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the dedication in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-dedication
-#: ../src/orca/object_properties.py:165
+#: ../src/orca/object_properties.py:171
 msgctxt "role"
 msgid "dedication"
 msgstr "ithaf"
@@ -11229,7 +11238,7 @@ msgstr "ithaf"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a single endnote in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-endnote
-#: ../src/orca/object_properties.py:171
+#: ../src/orca/object_properties.py:177
 msgctxt "role"
 msgid "endnote"
 msgstr "son not"
@@ -11238,7 +11247,7 @@ msgstr "son not"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the endnotes in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-endnotes
-#: ../src/orca/object_properties.py:177
+#: ../src/orca/object_properties.py:183
 msgctxt "role"
 msgid "endnotes"
 msgstr "son notlar"
@@ -11247,7 +11256,7 @@ msgstr "son notlar"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the epigraph in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-epigraph
-#: ../src/orca/object_properties.py:183
+#: ../src/orca/object_properties.py:189
 msgctxt "role"
 msgid "epigraph"
 msgstr "yazıt"
@@ -11256,7 +11265,7 @@ msgstr "yazıt"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the epilogue in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-epilogue
-#: ../src/orca/object_properties.py:189
+#: ../src/orca/object_properties.py:195
 msgctxt "role"
 msgid "epilogue"
 msgstr "son söz"
@@ -11265,7 +11274,7 @@ msgstr "son söz"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the errata in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-errata
-#: ../src/orca/object_properties.py:195
+#: ../src/orca/object_properties.py:201
 msgctxt "role"
 msgid "errata"
 msgstr "düzeltmeler"
@@ -11274,7 +11283,7 @@ msgstr "düzeltmeler"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to an example in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-example
-#: ../src/orca/object_properties.py:201
+#: ../src/orca/object_properties.py:207
 msgctxt "role"
 msgid "example"
 msgstr "örnek"
@@ -11283,7 +11292,7 @@ msgstr "örnek"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a single footnote in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-footnote
-#: ../src/orca/object_properties.py:207
+#: ../src/orca/object_properties.py:213
 msgctxt "role"
 msgid "footnote"
 msgstr "dipnot"
@@ -11292,7 +11301,7 @@ msgstr "dipnot"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the foreword in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-foreword
-#: ../src/orca/object_properties.py:213
+#: ../src/orca/object_properties.py:219
 msgctxt "role"
 msgid "foreword"
 msgstr "ön söz"
@@ -11301,7 +11310,7 @@ msgstr "ön söz"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the glossary in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-glossary
-#: ../src/orca/object_properties.py:219
+#: ../src/orca/object_properties.py:225
 msgctxt "role"
 msgid "glossary"
 msgstr "sözlük"
@@ -11310,7 +11319,7 @@ msgstr "sözlük"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the index in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-index
-#: ../src/orca/object_properties.py:225
+#: ../src/orca/object_properties.py:231
 msgctxt "role"
 msgid "index"
 msgstr "indeks"
@@ -11319,7 +11328,7 @@ msgstr "indeks"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the introduction in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-introduction
-#: ../src/orca/object_properties.py:231
+#: ../src/orca/object_properties.py:237
 msgctxt "role"
 msgid "introduction"
 msgstr "giriş"
@@ -11328,7 +11337,7 @@ msgstr "giriş"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a pagebreak in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pagebreak
-#: ../src/orca/object_properties.py:237
+#: ../src/orca/object_properties.py:243
 msgctxt "role"
 msgid "page break"
 msgstr "sayfa sonu"
@@ -11337,7 +11346,7 @@ msgstr "sayfa sonu"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a page list in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pagelist
-#: ../src/orca/object_properties.py:243
+#: ../src/orca/object_properties.py:249
 msgctxt "role"
 msgid "page list"
 msgstr "sayfa listesi"
@@ -11346,7 +11355,7 @@ msgstr "sayfa listesi"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a named part in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-part
-#: ../src/orca/object_properties.py:249
+#: ../src/orca/object_properties.py:255
 msgctxt "role"
 msgid "part"
 msgstr "bölüm"
@@ -11355,7 +11364,7 @@ msgstr "bölüm"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the preface in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-preface
-#: ../src/orca/object_properties.py:255
+#: ../src/orca/object_properties.py:261
 msgctxt "role"
 msgid "preface"
 msgstr "ön söz"
@@ -11364,7 +11373,7 @@ msgstr "ön söz"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the prologue in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-prologue
-#: ../src/orca/object_properties.py:261
+#: ../src/orca/object_properties.py:267
 msgctxt "role"
 msgid "prologue"
 msgstr "girizgâh"
@@ -11373,7 +11382,7 @@ msgstr "girizgâh"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a pullquote in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-pullquote
-#: ../src/orca/object_properties.py:267
+#: ../src/orca/object_properties.py:273
 msgctxt "role"
 msgid "pullquote"
 msgstr "tanıtım"
@@ -11385,7 +11394,7 @@ msgstr "tanıtım"
 #. In English, "QNA" is generally recognized by native speakers. If your language
 #. lacks the equivalent, please prefer the shortest phrase which clearly conveys
 #. the meaning.
-#: ../src/orca/object_properties.py:276
+#: ../src/orca/object_properties.py:282
 msgctxt "role"
 msgid "QNA"
 msgstr "QNA"
@@ -11394,7 +11403,7 @@ msgstr "QNA"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the subtitle in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-subtitle
-#: ../src/orca/object_properties.py:282
+#: ../src/orca/object_properties.py:288
 msgctxt "role"
 msgid "subtitle"
 msgstr "alt yazı"
@@ -11403,7 +11412,7 @@ msgstr "alt yazı"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the table of contents in a digitally-published document.
 #. https://rawgit.com/w3c/aria/master/aria/dpub.html#doc-toc
-#: ../src/orca/object_properties.py:288
+#: ../src/orca/object_properties.py:294
 msgctxt "role"
 msgid "table of contents"
 msgstr "içerikler tablosu"
@@ -11412,7 +11421,7 @@ msgstr "içerikler tablosu"
 #. content that you might find in something such as HTML content (e.g., <h1>).
 #. The translated form is meant to be a single character followed by a numeric
 #. heading level, where the single character is to indicate 'heading'.
-#: ../src/orca/object_properties.py:294
+#: ../src/orca/object_properties.py:300
 #, python-format
 msgid "h%d"
 msgstr "h%d"
@@ -11420,17 +11429,17 @@ msgstr "h%d"
 #. Translators: The %(level)d is in reference to a heading level in HTML (e.g.,
 #. For <h3>, the level is 3) and the %(role)s is in reference to a previously
 #. translated rolename for the heading.
-#: ../src/orca/object_properties.py:299
+#: ../src/orca/object_properties.py:305
 #, python-format
 msgid "%(role)s level %(level)d"
-msgstr "%(role)s seviye %(level)d"
+msgstr "%(role)s düzey %(level)d"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. The reason we include the orientation as part of the role is because in some
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
-#: ../src/orca/object_properties.py:306
+#: ../src/orca/object_properties.py:312
 msgid "horizontal scroll bar"
 msgstr "yatay kaydırma çubuğu"
 
@@ -11439,7 +11448,7 @@ msgstr "yatay kaydırma çubuğu"
 #. The reason we include the orientation as part of the role is because in some
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
-#: ../src/orca/object_properties.py:313
+#: ../src/orca/object_properties.py:319
 msgid "vertical scroll bar"
 msgstr "dikey kaydırma çubuğu"
 
@@ -11450,7 +11459,7 @@ msgstr "dikey kaydırma çubuğu"
 #. The reason we include the orientation as part of the role is because in some
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
-#: ../src/orca/object_properties.py:322
+#: ../src/orca/object_properties.py:328
 msgid "horizontal slider"
 msgstr "yatay kaydırıcı"
 
@@ -11461,7 +11470,7 @@ msgstr "yatay kaydırıcı"
 #. The reason we include the orientation as part of the role is because in some
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
-#: ../src/orca/object_properties.py:331
+#: ../src/orca/object_properties.py:337
 msgid "vertical slider"
 msgstr "dikey kaydırıcı"
 
@@ -11475,7 +11484,7 @@ msgstr "dikey kaydırıcı"
 #. resize these containers is the splitter. The reason we include the orientation
 #. as part of the role is because in some applications and toolkits, it can
 #. dictate which keyboard keys should be used to modify the value of the widget.
-#: ../src/orca/object_properties.py:343
+#: ../src/orca/object_properties.py:349
 msgid "horizontal splitter"
 msgstr "yatay ayraç"
 
@@ -11489,7 +11498,7 @@ msgstr "yatay ayraç"
 #. resize these containers is the splitter. The reason we include the orientation
 #. as part of the role is because in some applications and toolkits, it can
 #. dictate which keyboard keys should be used to modify the value of the widget.
-#: ../src/orca/object_properties.py:355
+#: ../src/orca/object_properties.py:361
 msgid "vertical splitter"
 msgstr "dikey ayraç"
 
@@ -11497,14 +11506,14 @@ msgstr "dikey ayraç"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. The "switch" role is a "light switch" style toggle, such as can be seen in
 #. https://developer.gnome.org/gtk3/stable/GtkSwitch.html
-#: ../src/orca/object_properties.py:361
+#: ../src/orca/object_properties.py:367
 msgctxt "role"
 msgid "switch"
 msgstr "değiştir"
 
 #. Translators: This is an alternative name for the parent object of a series
 #. of icons.
-#: ../src/orca/object_properties.py:365
+#: ../src/orca/object_properties.py:371
 msgid "Icon panel"
 msgstr "Simge paneli"
 
@@ -11513,7 +11522,7 @@ msgstr "Simge paneli"
 #. The "banner" role is defined in the ARIA specification as "A region that
 #. contains mostly site-oriented content, rather than page-specific content."
 #. See https://www.w3.org/TR/wai-aria-1.1/#banner
-#: ../src/orca/object_properties.py:372
+#: ../src/orca/object_properties.py:378
 msgctxt "role"
 msgid "banner"
 msgstr "afiş"
@@ -11524,7 +11533,7 @@ msgstr "afiş"
 #. section of the document, designed to be complementary to the main content at a
 #. similar level in the DOM hierarchy, but remains meaningful when separated from
 #. the main content." See https://www.w3.org/TR/wai-aria-1.1/#complementary
-#: ../src/orca/object_properties.py:380
+#: ../src/orca/object_properties.py:386
 msgctxt "role"
 msgid "complementary content"
 msgstr "tamamlayıcı içerik"
@@ -11535,7 +11544,7 @@ msgstr "tamamlayıcı içerik"
 #. perceivable region that contains information about the parent document.
 #. Examples of information included in this region of the page are copyrights and
 #. links to privacy statements." See https://www.w3.org/TR/wai-aria-1.1/#contentinfo
-#: ../src/orca/object_properties.py:388
+#: ../src/orca/object_properties.py:394
 msgctxt "role"
 msgid "information"
 msgstr "bilgi"
@@ -11544,7 +11553,7 @@ msgstr "bilgi"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. The "main" role is defined in the ARIA specification as "The main content of
 #. a document." See https://www.w3.org/TR/wai-aria-1.1/#main
-#: ../src/orca/object_properties.py:394
+#: ../src/orca/object_properties.py:400
 msgctxt "role"
 msgid "main content"
 msgstr "ana içerik"
@@ -11554,7 +11563,7 @@ msgstr "ana içerik"
 #. The "navigation" role is defined in the ARIA specification as "A collection of
 #. navigational elements (usually links) for navigating the document or related
 #. documents." See https://www.w3.org/TR/wai-aria-1.1/#navigation
-#: ../src/orca/object_properties.py:401
+#: ../src/orca/object_properties.py:407
 msgctxt "role"
 msgid "navigation"
 msgstr "gezinti"
@@ -11566,7 +11575,7 @@ msgstr "gezinti"
 #. purpose and sufficiently important that users will likely want to be able to
 #. navigate to the section easily and to have it listed in a summary of the page."
 #. See https://www.w3.org/TR/wai-aria-1.1/#region
-#: ../src/orca/object_properties.py:410
+#: ../src/orca/object_properties.py:416
 msgctxt "role"
 msgid "region"
 msgstr "bölge"
@@ -11576,7 +11585,7 @@ msgstr "bölge"
 #. The "search" role is defined in the ARIA specification as "A landmark region
 #. that contains a collection of items and objects that, as a whole, combine to
 #. create a search facility." See https://www.w3.org/TR/wai-aria-1.1/#search
-#: ../src/orca/object_properties.py:417
+#: ../src/orca/object_properties.py:423
 msgctxt "role"
 msgid "search"
 msgstr "arama"
@@ -11586,7 +11595,7 @@ msgstr "arama"
 #. The reason for including the visited state as part of the role is to make it
 #. possible for users to quickly identify if the link is associated with content
 #. already read.
-#: ../src/orca/object_properties.py:424
+#: ../src/orca/object_properties.py:430
 msgid "visited link"
 msgstr "ziyaret edilmiş bağlantı"
 
@@ -11594,125 +11603,125 @@ msgstr "ziyaret edilmiş bağlantı"
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. A menu button is button widget that causes a menu to appear when the user
 #. activates the button.
-#: ../src/orca/object_properties.py:430
+#: ../src/orca/object_properties.py:436
 msgid "menu button"
 msgstr "menü düğmesi"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
-#: ../src/orca/object_properties.py:434
+#: ../src/orca/object_properties.py:440
 msgid "clickable"
 msgstr "tıklanabilir"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:439
+#: ../src/orca/object_properties.py:445
 msgid "collapsed"
 msgstr "daraltılmış"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: ../src/orca/object_properties.py:444
+#: ../src/orca/object_properties.py:450
 msgid "expanded"
 msgstr "genişletilmiş"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
-#: ../src/orca/object_properties.py:448
+#: ../src/orca/object_properties.py:454
 msgid "has long description"
 msgstr "uzun açıklaması var"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:452
+#: ../src/orca/object_properties.py:458
 msgid "horizontal"
 msgstr "yatay"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: ../src/orca/object_properties.py:456
+#: ../src/orca/object_properties.py:462
 msgid "vertical"
 msgstr "dikey"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:459
+#: ../src/orca/object_properties.py:465
 msgctxt "checkbox"
 msgid "checked"
 msgstr "işaretli"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:462
+#: ../src/orca/object_properties.py:468
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "işaretli değil"
 
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
-#: ../src/orca/object_properties.py:466
+#: ../src/orca/object_properties.py:472
 msgctxt "switch"
 msgid "on"
 msgstr "açık"
 
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
-#: ../src/orca/object_properties.py:470
+#: ../src/orca/object_properties.py:476
 msgctxt "switch"
 msgid "off"
 msgstr "kapalı"
 
 #. Translators: This is a state which applies to a check box.
-#: ../src/orca/object_properties.py:473
+#: ../src/orca/object_properties.py:479
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "kısmen işaretli"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:476
+#: ../src/orca/object_properties.py:482
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "basılı"
 
 #. Translators: This is a state which applies to a toggle button.
-#: ../src/orca/object_properties.py:479
+#: ../src/orca/object_properties.py:485
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "basılı değil"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:482
+#: ../src/orca/object_properties.py:488
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "seçili"
 
 #. Translators: This is a state which applies to a radio button.
-#: ../src/orca/object_properties.py:485
+#: ../src/orca/object_properties.py:491
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "seçili değil"
 
 #. Translators: This is a state which applies to a table cell.
-#: ../src/orca/object_properties.py:488
+#: ../src/orca/object_properties.py:494
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "seçili değil"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:491
+#: ../src/orca/object_properties.py:497
 msgctxt "link state"
 msgid "visited"
 msgstr "ziyaret edilmiş"
 
 #. Translators: This is a state which applies to a link.
-#: ../src/orca/object_properties.py:494
+#: ../src/orca/object_properties.py:500
 msgctxt "link state"
 msgid "unvisited"
 msgstr "ziyaret edilmemiş"
 
 #. Translators: This state represents an item on the screen that has been set
 #. insensitive (or grayed out).
-#: ../src/orca/object_properties.py:498 ../src/orca/object_properties.py:502
+#: ../src/orca/object_properties.py:504 ../src/orca/object_properties.py:508
 msgid "grayed"
 msgstr "soluk"
 
@@ -11721,7 +11730,7 @@ msgstr "soluk"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the spoken
 #. version.
-#: ../src/orca/object_properties.py:509
+#: ../src/orca/object_properties.py:515
 msgctxt "text"
 msgid "read only"
 msgstr "salt okunur"
@@ -11731,27 +11740,27 @@ msgstr "salt okunur"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the braille
 #. version. (Because braille displays have limited real estate, we abbreviate.)
-#: ../src/orca/object_properties.py:516
+#: ../src/orca/object_properties.py:522
 msgctxt "text"
 msgid "rdonly"
 msgstr "saltokunur"
 
 #. Translators: Certain objects (such as form controls on web pages) can have
 #. STATE_REQUIRED set to inform the user that this field must be filled out.
-#: ../src/orca/object_properties.py:520 ../src/orca/object_properties.py:524
+#: ../src/orca/object_properties.py:526 ../src/orca/object_properties.py:530
 msgid "required"
 msgstr "gerekli"
 
 #. Translators: "multi-select" refers to a web form list in which more than
 #. one item can be selected at a time.
-#: ../src/orca/object_properties.py:528
+#: ../src/orca/object_properties.py:534
 msgid "multi-select"
 msgstr "çoklu-seçim"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when all we
 #. know is that an error has occurred, but not the type of error.
-#: ../src/orca/object_properties.py:533
+#: ../src/orca/object_properties.py:539
 msgctxt "error"
 msgid "invalid entry"
 msgstr "geçersiz girdi"
@@ -11761,7 +11770,7 @@ msgstr "geçersiz girdi"
 #. when all we know is that an error has occurred, but not the type of error.
 #. We prefer a smaller string than in speech because braille displays have a
 #. limited size.
-#: ../src/orca/object_properties.py:540
+#: ../src/orca/object_properties.py:546
 msgctxt "error"
 msgid "invalid"
 msgstr "geçersiz"
@@ -11769,7 +11778,7 @@ msgstr "geçersiz"
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to spelling.
-#: ../src/orca/object_properties.py:545
+#: ../src/orca/object_properties.py:551
 msgctxt "error"
 msgid "invalid spelling"
 msgstr "yazım hatası"
@@ -11778,7 +11787,7 @@ msgstr "yazım hatası"
 #. as a form field, has an error. The following string is displayed in braille
 #. when the error is related to spelling. We prefer a smaller string than in
 #. speech because braille displays have a limited size.
-#: ../src/orca/object_properties.py:551
+#: ../src/orca/object_properties.py:557
 msgctxt "error"
 msgid "spelling"
 msgstr "yazım"
@@ -11786,7 +11795,7 @@ msgstr "yazım"
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to grammar.
-#: ../src/orca/object_properties.py:556
+#: ../src/orca/object_properties.py:562
 msgctxt "error"
 msgid "invalid grammar"
 msgstr "geçersiz dil bilgisi"
@@ -11795,7 +11804,7 @@ msgstr "geçersiz dil bilgisi"
 #. as a form field, has an error. The following string is displayed in braille
 #. when the error is related to grammar. We prefer a smaller string than in
 #. speech because braille displays have a limited size.
-#: ../src/orca/object_properties.py:562
+#: ../src/orca/object_properties.py:568
 msgctxt "error"
 msgid "grammar"
 msgstr "dil bilgisi"
@@ -11856,7 +11865,7 @@ msgstr "Eşleş_me durumu"
 
 #: ../src/orca/orca-find.ui.h:17
 msgid "Match _entire word only"
-msgstr "Yalnızca _tam kelime eşleştir"
+msgstr "Yalnızca _tam sözcüğü eşleştir"
 
 #: ../src/orca/orca-find.ui.h:18
 msgid "Results must:"
@@ -12084,7 +12093,7 @@ msgstr "Ses Türü Ayarları"
 #. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
 #: ../src/orca/orca-setup.ui.h:84
 msgid "Speak multicase strings as wor_ds"
-msgstr "Değişik büyüklükteki dizgilleri _kelime olarak oku"
+msgstr "Değişik büyüklükteki dizgilleri _sözcük olarak oku"
 
 #. Translators: If this setting is enabled, 123 will be spoken as the individual digits 1 2 3; otherwise, it will be sent to the synthesizer and (likely) spoken as one hundred and twenty three.
 #: ../src/orca/orca-setup.ui.h:86
@@ -12109,7 +12118,7 @@ msgstr "_Detay"
 
 #: ../src/orca/orca-setup.ui.h:92
 msgid "Verbosity"
-msgstr "Ayrıntı Seviyesi"
+msgstr "Ayrıntı Düzeyi"
 
 #: ../src/orca/orca-setup.ui.h:97
 msgid "_All"
@@ -12117,7 +12126,7 @@ msgstr "_Tümü"
 
 #: ../src/orca/orca-setup.ui.h:98
 msgid "Punctuation Level"
-msgstr "Noktalama Seviyesi"
+msgstr "Noktalama Düzeyi"
 
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. checkbox) or its state (e.g. not checked) or say misspelled to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
 #: ../src/orca/orca-setup.ui.h:100
@@ -12230,179 +12239,184 @@ msgstr "Kıs_altılmış rol adları"
 msgid "Disable _end of line symbol"
 msgstr "_Satır sonu sembolünü kapat"
 
-#: ../src/orca/orca-setup.ui.h:138
-msgid "_Enable Contracted Braille"
-msgstr "Kısaltmalı Braille’i _Etkinleştir"
-
 #. Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille contractions get used. Contractions are shorter forms of commonly-used letter combinations and words. For instance in English there is a single braille symbol for ing (dots 3-4-6), and the letter e (dots 1-5) all by itself represents the word every. The list of rules which dictate what contractions should be used and whether or not they can be used in a particular context are stored in tables provided by liblouis.
-#: ../src/orca/orca-setup.ui.h:140
+#: ../src/orca/orca-setup.ui.h:139
 msgid "Contraction _Table:"
 msgstr "Kısaltma _Tablosu:"
 
-#: ../src/orca/orca-setup.ui.h:141
+#: ../src/orca/orca-setup.ui.h:140
+msgid "_Enable Contracted Braille"
+msgstr "Kısaltmalı Braille’i _Etkinleştir"
+
+#. Translators: If this option is enabled, Orca will adjust the text shown on the braille display so that only full words are shown. If it is not enabled, Orca uses all of the cells on the display, but some words might not be fully shown requiring the user to scroll to see the remainder.
+#: ../src/orca/orca-setup.ui.h:142
+msgid "Enable _word wrap"
+msgstr "_Sözcük kaydırmayı etkinleştir"
+
+#: ../src/orca/orca-setup.ui.h:143
 msgid "Display Settings"
 msgstr "Görüntü Ayarları"
 
 #. Translators: This option refers to the dot or dots in braille which will be used to underline certain characters.
-#: ../src/orca/orca-setup.ui.h:143
+#: ../src/orca/orca-setup.ui.h:145
 msgctxt "braille dots"
 msgid "_None"
 msgstr "_Hiçbiri"
 
-#: ../src/orca/orca-setup.ui.h:147
+#: ../src/orca/orca-setup.ui.h:149
 msgid "Selection Indicator"
 msgstr "Seçim Göstergesi"
 
-#: ../src/orca/orca-setup.ui.h:148
+#: ../src/orca/orca-setup.ui.h:150
 msgid "Hyperlink Indicator"
 msgstr "Hiperbağ Göstergesi"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements in that they are temporarily shown on the refreshable braille display. Upon removal of the message, the original contents of the braille display are restored. This checkbox allows the user to toggle this feature.
-#: ../src/orca/orca-setup.ui.h:150
+#: ../src/orca/orca-setup.ui.h:152
 msgid "Enable flash _messages"
-msgstr "Flaş _mesajları göster"
+msgstr "Flaş _iletileri göster"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. This label is for the spin button through which a user can customize how long (in seconds) these temporary messages should be displayed.
-#: ../src/orca/orca-setup.ui.h:152
+#: ../src/orca/orca-setup.ui.h:154
 msgid "Messa_ge duration (secs):"
 msgstr "Mesa_jın ekranda kalma süresi (saniye)"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. Some users, however, would prefer to have the message remain displayed until they explicitly dismiss it. This can be accomplished by making flash messages persistent by checking this checkbox.
-#: ../src/orca/orca-setup.ui.h:154
+#: ../src/orca/orca-setup.ui.h:156
 msgid "Messages are _persistent"
-msgstr "_Kalıcı mesajlar"
+msgstr "_Kalıcı iletiler"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. In instances where the message to be displayed is long/detailed, Orca provides a brief alternative. Users who prefer the brief alternative can uncheck this checkbox.
-#: ../src/orca/orca-setup.ui.h:156
+#: ../src/orca/orca-setup.ui.h:158
 msgid "Messages are _detailed"
-msgstr "_Ayrıtılı mesajlar"
+msgstr "_Ayrıtılı iletiler"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored.
-#: ../src/orca/orca-setup.ui.h:158
+#: ../src/orca/orca-setup.ui.h:160
 msgid "Flash Message Settings"
-msgstr "Flaş Mesaj Ayarları"
+msgstr "Flaş İleti Ayarları"
 
-#: ../src/orca/orca-setup.ui.h:159
+#: ../src/orca/orca-setup.ui.h:161
 msgid "Braille"
 msgstr "Braille"
 
-#: ../src/orca/orca-setup.ui.h:160
+#: ../src/orca/orca-setup.ui.h:162
 msgid "Enable _key echo"
 msgstr "_Tuş geri bildirimini etkinleştir"
 
-#: ../src/orca/orca-setup.ui.h:161
+#: ../src/orca/orca-setup.ui.h:163
 msgid "Enable _alphabetic keys"
 msgstr "_Alfabetik tuşları söyle"
 
-#: ../src/orca/orca-setup.ui.h:162
+#: ../src/orca/orca-setup.ui.h:164
 msgid "Enable n_umeric keys"
 msgstr "_Sayısal tuşları söyle"
 
-#: ../src/orca/orca-setup.ui.h:163
+#: ../src/orca/orca-setup.ui.h:165
 msgid "Enable _punctuation keys"
 msgstr "_Noktalama tuşlarını söyle"
 
-#: ../src/orca/orca-setup.ui.h:164
+#: ../src/orca/orca-setup.ui.h:166
 msgid "Enable _space"
 msgstr "Bo_şluk tuşunu söyle"
 
-#: ../src/orca/orca-setup.ui.h:165
+#: ../src/orca/orca-setup.ui.h:167
 msgid "Enable _modifier keys"
 msgstr "_Düzenleyici tuşları söyle"
 
-#: ../src/orca/orca-setup.ui.h:166
+#: ../src/orca/orca-setup.ui.h:168
 msgid "Enable _function keys"
 msgstr "_Fonksiyon tuşlarını söyle"
 
-#: ../src/orca/orca-setup.ui.h:167
+#: ../src/orca/orca-setup.ui.h:169
 msgid "Enable ac_tion keys"
 msgstr "Eylem _tuşlarını söyle"
 
-#: ../src/orca/orca-setup.ui.h:168
+#: ../src/orca/orca-setup.ui.h:170
 msgid "Enable _navigation keys"
 msgstr "Yö_n tuşlarını söyle"
 
-#: ../src/orca/orca-setup.ui.h:173
-msgid "Enable echo by _word"
-msgstr "_Kelime geri bildirimini etkinleştir"
-
-#: ../src/orca/orca-setup.ui.h:174
-msgid "Enable echo by _sentence"
-msgstr "_Cümle geri bildirimini etkinleştir"
-
 #: ../src/orca/orca-setup.ui.h:175
+msgid "Enable echo by _word"
+msgstr "_Sözcük geri bildirimini etkinleştir"
+
+#: ../src/orca/orca-setup.ui.h:176
+msgid "Enable echo by _sentence"
+msgstr "_Tümce geri bildirimini etkinleştir"
+
+#: ../src/orca/orca-setup.ui.h:177
 msgid "Key Echo"
 msgstr "Tuş Geri Bildirimi"
 
-#: ../src/orca/orca-setup.ui.h:176
+#: ../src/orca/orca-setup.ui.h:178
 msgid "Screen Reader _Modifier Key(s):"
 msgstr "Ekran Okuyucu _Girişken Tuşu/Tuşları:"
 
-#: ../src/orca/orca-setup.ui.h:177
+#: ../src/orca/orca-setup.ui.h:179
 msgid "Key Bindings"
 msgstr "Kısayol Tuşları"
 
-#: ../src/orca/orca-setup.ui.h:178
+#: ../src/orca/orca-setup.ui.h:180
 msgid "Pronunciation Dictionary"
 msgstr "Telaffuz Sözlüğü"
 
-#: ../src/orca/orca-setup.ui.h:179
+#: ../src/orca/orca-setup.ui.h:181
 msgid "_New entry"
 msgstr "Ye_ni girdi"
 
-#: ../src/orca/orca-setup.ui.h:180
+#: ../src/orca/orca-setup.ui.h:182
 msgid "_Delete"
 msgstr "_Sil"
 
-#: ../src/orca/orca-setup.ui.h:181
+#: ../src/orca/orca-setup.ui.h:183
 msgid "Pronunciation"
 msgstr "Telaffuz"
 
-#: ../src/orca/orca-setup.ui.h:182
+#: ../src/orca/orca-setup.ui.h:184
 msgid "_Speak all"
-msgstr "Hepsini _seslendir"
+msgstr "Tümünü _seslendir"
 
-#: ../src/orca/orca-setup.ui.h:183
+#: ../src/orca/orca-setup.ui.h:185
 msgid "Speak _none"
 msgstr "Hiçbiri_ni seslendirme"
 
-#: ../src/orca/orca-setup.ui.h:184
+#: ../src/orca/orca-setup.ui.h:186
 msgid "_Reset"
 msgstr "Sıfı_rla"
 
-#: ../src/orca/orca-setup.ui.h:185
+#: ../src/orca/orca-setup.ui.h:187
 msgid "Text attributes"
 msgstr "Metin öznitelikleri"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:187
+#: ../src/orca/orca-setup.ui.h:189
 msgid "Move to _bottom"
 msgstr "En a_lta taşı"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:189
+#: ../src/orca/orca-setup.ui.h:191
 msgid "Move _down one"
 msgstr "Bir _aşağı taşı"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:191
+#: ../src/orca/orca-setup.ui.h:193
 msgid "Move _up one"
 msgstr "Bir y_ukarı taşı"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:193
+#: ../src/orca/orca-setup.ui.h:195
 msgid "Move to _top"
 msgstr "_Üste taşı"
 
-#: ../src/orca/orca-setup.ui.h:194
+#: ../src/orca/orca-setup.ui.h:196
 msgid "Adjust selected attributes"
 msgstr "Seçili nitelikleri ayarla"
 
-#: ../src/orca/orca-setup.ui.h:195
+#: ../src/orca/orca-setup.ui.h:197
 msgid "Braille Indicator"
 msgstr "Braille İmleci"
 
-#: ../src/orca/orca-setup.ui.h:196
+#: ../src/orca/orca-setup.ui.h:198
 msgid "Text Attributes"
 msgstr "Metin Öznitelikleri"
 
@@ -12440,19 +12454,6 @@ msgstr ""
 "november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
 "u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 
-#: ../src/orca/scripts/apps/gnome-mud/script.py:118
-msgid "Read the latest n messages in the incoming messages text area."
-msgstr "Gelen mesajlar metin alanında en son n tane mesajı oku."
-
-#: ../src/orca/scripts/apps/liferea/script.py:122
-msgid "Work online / offline"
-msgstr "Çevrimiçi / çevrimdışı çalış"
-
-#: ../src/orca/scripts/apps/planner/braille_generator.py:67
-#: ../src/orca/scripts/apps/planner/speech_generator.py:63
-msgid "Display more options"
-msgstr "Daha fazla seçenek göster"
-
 #. Translators: this attribute specifies the background color of the text.
 #. The value is an RGB value of the format "u,u,u".
 #. See:
@@ -12461,7 +12462,7 @@ msgstr "Daha fazla seçenek göster"
 #: ../src/orca/text_attribute_names.py:61
 msgctxt "textattr"
 msgid "background color"
-msgstr "arkaplan rengi"
+msgstr "arka plan rengi"
 
 #. Translators: this attribute specifies whether to make the background
 #. color for each character the height of the highest font used on the
@@ -12473,7 +12474,7 @@ msgstr "arkaplan rengi"
 #: ../src/orca/text_attribute_names.py:70
 msgctxt "textattr"
 msgid "background full height"
-msgstr "arkaplan tam yüksekliği"
+msgstr "arka plan tam yüksekliği"
 
 #. Translators: this attribute specifies whether a GdkBitmap is set for
 #. stippling the background color. It will be a "true" or "false" value.
@@ -12483,7 +12484,7 @@ msgstr "arkaplan tam yüksekliği"
 #: ../src/orca/text_attribute_names.py:77
 msgctxt "textattr"
 msgid "background stipple"
-msgstr "arkaplan çizgileri"
+msgstr "arka plan çizgileri"
 
 #. Translators: this attribute specifies the direction of the text.
 #. Values are "none", "ltr" or "rtl".
@@ -12532,7 +12533,7 @@ msgstr "ön alan rengi"
 #: ../src/orca/text_attribute_names.py:111
 msgctxt "textattr"
 msgid "foreground stipple"
-msgstr "önalan çizgileri"
+msgstr "ön alan çizgileri"
 
 #. Translators: this attribute specifies the effect applied to the font
 #. used by the text.
@@ -12543,7 +12544,7 @@ msgstr "önalan çizgileri"
 #: ../src/orca/text_attribute_names.py:119
 msgctxt "textattr"
 msgid "font effect"
-msgstr "yazıtipi etkisi"
+msgstr "yazı tipi etkisi"
 
 #. Translators: this attribute specifies the indentation of the text
 #. (in pixels).
@@ -12984,7 +12985,7 @@ msgstr "karakter"
 #: ../src/orca/text_attribute_names.py:436
 msgctxt "textattr"
 msgid "word"
-msgstr "kelime"
+msgstr "sözcük"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "wrap mode." It corresponds to GTK_WRAP_WORD_CHAR,
@@ -12997,7 +12998,7 @@ msgstr "kelime"
 #: ../src/orca/text_attribute_names.py:446
 msgctxt "textattr"
 msgid "word char"
-msgstr "kelime karakteri"
+msgstr "sözcük karakteri"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "direction".
@@ -13536,6 +13537,15 @@ msgid ""
 msgstr ""
 "Azaltmak için sol, artırmak için sağ ok tuşlarını kullanın. Değeri en az ve "
 "en çok olarak ayarlamak için, home ve end tuşlarını kullanın."
+
+#~ msgid "Read the latest n messages in the incoming messages text area."
+#~ msgstr "Gelen mesajlar metin alanında en son n tane mesajı oku."
+
+#~ msgid "Work online / offline"
+#~ msgstr "Çevrimiçi / çevrimdışı çalış"
+
+#~ msgid "Display more options"
+#~ msgstr "Daha fazla seçenek göster"
 
 #~ msgid "Screen Reader"
 #~ msgstr "Ekran Okuyucusu"
