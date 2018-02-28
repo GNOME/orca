@@ -61,8 +61,11 @@ class SpellCheck(spellcheck.SpellCheck):
             child = self._findChildDialog(window[0])
             if child and child.getRole() == pyatspi.ROLE_DIALOG:
                 isPageTabList = lambda x: x and x.getRole() == pyatspi.ROLE_PAGE_TAB_LIST
-                if not pyatspi.findDescendant(child, isPageTabList):
-                    return True
+                if pyatspi.findDescendant(child, isPageTabList):
+                    return False
+
+                isComboBox = lambda x: x and x.getRole() == pyatspi.ROLE_COMBO_BOX
+                return pyatspi.findDescendant(child, isComboBox)
 
         return False
 
