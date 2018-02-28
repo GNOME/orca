@@ -263,7 +263,7 @@ formatting = {
             'basicWhereAmI': 'linkInfo + pause + siteDescription + pause + fileSize + pause + ' + MNEMONIC
             },
         pyatspi.ROLE_LIST: {
-            'focused' : 'leaving or (numberOfChildren + pause + nestingLevel)',
+            'focused' : 'leaving or (labelOrName + pause + numberOfChildren + pause + nestingLevel)',
             'unfocused': 'labelOrName + pause + focusedItem + pause + multiselectableState + numberOfChildren + pause'
             },
         pyatspi.ROLE_LIST_BOX: {
