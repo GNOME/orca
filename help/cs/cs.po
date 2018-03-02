@@ -1,13 +1,13 @@
 # Czech translation for orca.
 # Copyright (C) 2011 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
-# Marek Černocký <marek@manet.cz>, 2015, 2016, 2017.
+# Marek Černocký <marek@manet.cz>, 2015, 2016, 2017, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"POT-Creation-Date: 2017-09-17 12:42+0000\n"
-"PO-Revision-Date: 2017-10-29 22:13+0100\n"
+"POT-Creation-Date: 2018-02-08 19:45+0000\n"
+"PO-Revision-Date: 2018-03-02 17:47+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -1499,7 +1499,7 @@ msgstr "Foneticky přečíst aktuální znak:"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:139
-msgid "Speak the unicode value of current character:"
+msgid "Speak the Unicode value of current character:"
 msgstr "Říct hodnotu Unikódu pro aktuální znak:"
 
 #. (itstool) path: section/title
@@ -2812,7 +2812,7 @@ msgstr ""
 #: C/howto_documents.page:61
 msgid ""
 "Finally, in order to have <app>Orca</app> speak the entire document from "
-"your present location, use the SayAll command. It, along with a more "
+"your present location, use the Say All command. It, along with a more "
 "complete listing of <app>Orca</app>'s commands for accessing document text, "
 "can be found in the <link xref=\"commands_reading\">Reading Commands</link> "
 "guide."
@@ -3073,6 +3073,7 @@ msgstr "Přiřazení příkazu bez klávesové zkratky"
 
 #. (itstool) path: item/p
 #: C/howto_key_bindings.page:23 C/howto_key_bindings.page:60
+#: C/howto_key_bindings.page:92 C/howto_key_bindings.page:113
 #: C/howto_keyboard_layout.page:45 C/howto_the_orca_modifier.page:53
 msgid ""
 "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
@@ -3084,7 +3085,7 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_key_bindings.page:29 C/howto_key_bindings.page:66
-#: C/howto_key_bindings.page:99 C/howto_key_bindings.page:121
+#: C/howto_key_bindings.page:98 C/howto_key_bindings.page:119
 #: C/howto_the_orca_modifier.page:59
 msgid "Move to the <gui>Key Bindings</gui> page."
 msgstr "Přejděte na stránku <gui>Klávesové zkratky</gui>."
@@ -3125,7 +3126,7 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_key_bindings.page:54 C/howto_key_bindings.page:86
-#: C/howto_key_bindings.page:108 C/howto_key_bindings.page:140
+#: C/howto_key_bindings.page:107 C/howto_key_bindings.page:138
 #: C/howto_keyboard_layout.page:59 C/howto_the_orca_modifier.page:73
 msgid "Press the <gui>Apply</gui> button."
 msgstr "Zmáčkněte tlačítko <gui>Použít</gui>."
@@ -3150,31 +3151,22 @@ msgid "Restoring Original Bindings"
 msgstr "Obnovení původních klávesových zkratek"
 
 #. (itstool) path: item/p
-#: C/howto_key_bindings.page:92 C/howto_key_bindings.page:114
-msgid ""
-"Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
-"pressing <keyseq><key>Orca Modifier</key><key>Space</key> </keyseq>."
-msgstr ""
-"Vstupte do dialogového okna <link xref=\"preferences\">Předvolby Orca</link> "
-"zmáčknutím <keyseq><key>Modifikátor Orca</key> <key>mezerník</key></keyseq>."
-
-#. (itstool) path: item/p
-#: C/howto_key_bindings.page:102
+#: C/howto_key_bindings.page:101
 msgid "Arrow to the modified column associated with the key binding."
 msgstr "Vyberte sloupec <gui>Změněno</gui> patřící klávesové zkratce."
 
 #. (itstool) path: item/p
-#: C/howto_key_bindings.page:105
+#: C/howto_key_bindings.page:104
 msgid "Uncheck the checkbox by pressing <key>Space</key>."
 msgstr "Pomocí <key>mezerníku</key> zrušte zaškrtnutí políčka."
 
 #. (itstool) path: steps/title
-#: C/howto_key_bindings.page:112
+#: C/howto_key_bindings.page:111
 msgid "Unbinding Bound Commands"
 msgstr "Zrušení přiřazení klávesové zkratky příkazu"
 
 #. (itstool) path: item/p
-#: C/howto_key_bindings.page:124
+#: C/howto_key_bindings.page:122
 msgid ""
 "Arrow to the cell which contains the binding you which to delete and press "
 "<key>Return</key>."
@@ -3183,7 +3175,7 @@ msgstr ""
 "zmáčkněte <key>Enter</key>."
 
 #. (itstool) path: item/p
-#: C/howto_key_bindings.page:130
+#: C/howto_key_bindings.page:128
 msgid ""
 "When prompted for the new keybinding, press <key>Delete</key> or "
 "<key>BackSpace</key>. You will be told that the key binding has been removed."
@@ -3192,7 +3184,7 @@ msgstr ""
 "nebo <key>BackSpace</key>. Tím řeknete, že se má klávesová zkratka odstranit."
 
 #. (itstool) path: item/p
-#: C/howto_key_bindings.page:137
+#: C/howto_key_bindings.page:135
 msgid "Press <key>Return</key> to confirm."
 msgstr "Zmáčknutím <key>Enter</key> potvrďte."
 
@@ -3384,7 +3376,7 @@ msgid ""
 "Live regions have an associated \"politeness\" level which is set by the "
 "author as a means to convey the importance of the information and to suggest "
 "when users should be informed by their assistive technology of updates made "
-"within that region. Live regions can be \"off\", \"polite\", or \"aggressive"
+"within that region. Live regions can be \"off\", \"polite\", or \"assertive"
 "\" to the point of being \"rude.\""
 msgstr ""
 "Živé oblasti mají přiřazenu úroveň „chování“, kterou jim nastavil autor, aby "
@@ -3981,7 +3973,7 @@ msgstr "Jak nastavit čtečku <app>Orca</app>"
 msgid "Orca Configuration"
 msgstr "Nastavení čtečky Orca"
 
-#. (itstool) path: section/p
+#. (itstool) path: page/p
 #: C/howto_setting_up_orca.page:21
 msgid ""
 "If you want to configure <app>Orca</app>, get into the <link xref="
@@ -4389,7 +4381,7 @@ msgstr ""
 
 #. (itstool) path: steps/title
 #: C/howto_tables.page:115
-msgid "Set Row Headers"
+msgid "Setting Row Headers"
 msgstr "Nastavení záhlaví řádků"
 
 #. (itstool) path: item/p
@@ -5165,21 +5157,21 @@ msgstr ""
 "app> bez problémů vyrovnat a nekomunikovat s ním."
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:27 C/preferences_braille.page:50
-#: C/preferences_braille.page:63 C/preferences_braille.page:73
-#: C/preferences_braille.page:154 C/preferences_chat.page:31
-#: C/preferences_chat.page:42 C/preferences_chat.page:54
-#: C/preferences_gecko.page:58 C/preferences_gecko.page:100
-#: C/preferences_gecko.page:182 C/preferences_general.page:52
-#: C/preferences_general.page:70 C/preferences_general.page:119
-#: C/preferences_general.page:228 C/preferences_general.page:239
-#: C/preferences_key_echo.page:112 C/preferences_key_echo.page:122
-#: C/preferences_key_echo.page:157 C/preferences_key_echo.page:179
-#: C/preferences_speech.page:105 C/preferences_speech.page:135
-#: C/preferences_speech.page:160 C/preferences_speech.page:171
-#: C/preferences_speech.page:183 C/preferences_speech.page:343
-#: C/preferences_table_navigation.page:65 C/preferences_voice.page:122
-#: C/preferences_voice.page:133
+#: C/preferences_braille.page:27 C/preferences_braille.page:45
+#: C/preferences_braille.page:62 C/preferences_braille.page:75
+#: C/preferences_braille.page:85 C/preferences_braille.page:166
+#: C/preferences_chat.page:31 C/preferences_chat.page:42
+#: C/preferences_chat.page:54 C/preferences_gecko.page:58
+#: C/preferences_gecko.page:100 C/preferences_gecko.page:182
+#: C/preferences_general.page:52 C/preferences_general.page:70
+#: C/preferences_general.page:119 C/preferences_general.page:228
+#: C/preferences_general.page:239 C/preferences_key_echo.page:112
+#: C/preferences_key_echo.page:122 C/preferences_key_echo.page:157
+#: C/preferences_key_echo.page:179 C/preferences_speech.page:105
+#: C/preferences_speech.page:135 C/preferences_speech.page:160
+#: C/preferences_speech.page:171 C/preferences_speech.page:183
+#: C/preferences_speech.page:343 C/preferences_table_navigation.page:65
+#: C/preferences_voice.page:122 C/preferences_voice.page:133
 msgid "Default value: not checked"
 msgstr "Výchozí hodnota: nezaškrtnuto"
 
@@ -5194,11 +5186,30 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:38
+msgid "Enable word wrap"
+msgstr "Povolit zalamování podle slov"
+
+#. (itstool) path: section/p
+#: C/preferences_braille.page:39
+msgid ""
+"If <gui>Enable word wrap</gui> is checked, <app>Orca</app> will adjust the "
+"text so that only full words are shown on the braille display. If it is not "
+"checked, <app>Orca</app> will use all of the cells on the display so that "
+"more text can be shown at once."
+msgstr ""
+"Když je zašktnuté políčko <gui>Povolit zalamování slov</gui>, bude <app>Orca"
+"</app> přizpůsobovat text tak, aby se na braillském řádu zobrazovala vždy "
+"celá slova. Když zaškrtnuté není, bude <app>Orca</app> využívat k zobrazení "
+"všechny buňky, takže může zobrazit více textu, ale za cenu, že na konci "
+"může být slovo oříznuté."
+
+#. (itstool) path: section/title
+#: C/preferences_braille.page:50
 msgid "Enable Contracted Braille"
 msgstr "Zapnout zkratkopis u Braillu"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:39
+#: C/preferences_braille.page:51
 msgid ""
 "Orca supports contracted braille via the liblouis project. Because many "
 "distros include liblouis, you will likely automatically have access to "
@@ -5209,7 +5220,7 @@ msgstr ""
 "app> k podpoře braillského zkratkopisu pravděpodobně automaticky přístup."
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:44
+#: C/preferences_braille.page:56
 msgid ""
 "To enable contracted braille on a system where liblouis has been installed, "
 "be sure that the <gui>Enable Contracted Braille</gui> checkbox is checked. "
@@ -5222,12 +5233,12 @@ msgstr ""
 "<gui>Tabulka zkratkopisu</gui>."
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:55
+#: C/preferences_braille.page:67
 msgid "Abbreviated Role Names"
 msgstr "Stručné názvy prvků"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:56
+#: C/preferences_braille.page:68
 msgid ""
 "This check box determines the manner in which role names are displayed and "
 "can be used to help conserve real estate on the braille display. For "
@@ -5241,12 +5252,12 @@ msgstr ""
 "případě, že stručné názvy nejsou zaškrtnuté a „tlač“, když jsou zaškrtnuté."
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:68
+#: C/preferences_braille.page:80
 msgid "Disable end of line symbol"
 msgstr "Zakázat znak konce řádku"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:69
+#: C/preferences_braille.page:81
 msgid ""
 "Checking this checkbox tells <app>Orca</app> to not present the \"$l\" "
 "string at the end of a line of text."
@@ -5255,12 +5266,12 @@ msgstr ""
 "prezentovat řetězec „$1“ na konci řádku s textem."
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:78 C/preferences_speech.page:31
+#: C/preferences_braille.page:90 C/preferences_speech.page:31
 msgid "Verbosity"
 msgstr "Výřečnost"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:79
+#: C/preferences_braille.page:91
 msgid ""
 "This radio button group determines the amount of information that will be "
 "brailled in certain situations. For example, if it is set to verbose, "
@@ -5273,17 +5284,17 @@ msgstr ""
 "režimu tyto informace zobrazovány nejsou."
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:85 C/preferences_speech.page:39
+#: C/preferences_braille.page:97 C/preferences_speech.page:39
 msgid "Default value: <gui>Verbose</gui>"
 msgstr "Výchozí hodnota: <gui>Výřečný</gui>"
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:90
+#: C/preferences_braille.page:102
 msgid "Selection and Hyperlink Indicators"
 msgstr "Ukazatele výběru a hypertextových odkazů"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:91
+#: C/preferences_braille.page:103
 msgid ""
 "The <gui>Selection Indicator</gui> and <gui>Hyperlink Indicator</gui> radio "
 "button groups allow you to configure <app>Orca</app>'s behavior when "
@@ -5300,17 +5311,17 @@ msgstr ""
 "neprezentovat."
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:100
+#: C/preferences_braille.page:112
 msgid "Default value: <gui>Dots 7 and 8</gui>"
 msgstr "Výchozí hodnota: <gui>Body 7 a 8</gui>"
 
 #. (itstool) path: note/title
-#: C/preferences_braille.page:104
+#: C/preferences_braille.page:116
 msgid "Text Attribute Indicators"
 msgstr "Ukazatele vlastností textu"
 
 #. (itstool) path: note/p
-#: C/preferences_braille.page:105
+#: C/preferences_braille.page:117
 msgid ""
 "You can also optionally have text attributes indicated in braille. Enabling "
 "this feature and choosing which attributes are of interest is done on the "
@@ -5323,12 +5334,12 @@ msgstr ""
 "gui></link> v dialogovém okně s předvolbami."
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:114
+#: C/preferences_braille.page:126
 msgid "Flash Message Settings"
 msgstr "Nastavení bleskových zpráv"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:115
+#: C/preferences_braille.page:127
 msgid ""
 "Flash messages are similar in nature to notifications or announcements: They "
 "are shown on your refreshable braille display for a brief time, after which "
@@ -5341,12 +5352,12 @@ msgstr ""
 "k ovládání prezentace bleskových zpráv."
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:123
+#: C/preferences_braille.page:135
 msgid "Enable flash messages"
 msgstr "Povolit bleskové zprávy"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:124
+#: C/preferences_braille.page:136
 msgid ""
 "If <gui>Enable flash messages</gui> is checked, <app>Orca</app> will present "
 "messages to you in braille. If you prefer to only have <app>Orca</app>'s "
@@ -5357,7 +5368,7 @@ msgstr ""
 "byly zprávy jen čteny, neměli byste mít toto políčko zaškrtnuté."
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:129 C/preferences_braille.page:142
+#: C/preferences_braille.page:141 C/preferences_braille.page:154
 #: C/preferences_gecko.page:35 C/preferences_gecko.page:78
 #: C/preferences_gecko.page:142 C/preferences_gecko.page:170
 #: C/preferences_general.page:140 C/preferences_general.page:217
@@ -5380,12 +5391,12 @@ msgid "Default value: checked"
 msgstr "Výchozí hodnota: zaškrtnuto"
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:134
+#: C/preferences_braille.page:146
 msgid "Messages are detailed"
 msgstr "Zprávy jsou podrobné"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:135
+#: C/preferences_braille.page:147
 msgid ""
 "If <gui>Messages are detailed</gui> is checked, <app>Orca</app> will present "
 "detailed messages to you in braille. For instance, if you use <app>Orca</"
@@ -5400,12 +5411,12 @@ msgstr ""
 "zprávám, jako je prosté „slovo“, neměli byste mít toto políčko zaškrtnuté."
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:147
+#: C/preferences_braille.page:159
 msgid "Messages are persistent"
 msgstr "Zprávy jsou trvalé"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:148
+#: C/preferences_braille.page:160
 msgid ""
 "As stated above, flash messages are only shown for a brief period of time. "
 "If you would prefer messages remain displayed until you perform an action "
@@ -5418,12 +5429,12 @@ msgstr ""
 "jsou trvalé</gui>."
 
 #. (itstool) path: section/title
-#: C/preferences_braille.page:159
+#: C/preferences_braille.page:171
 msgid "Message duration (secs)"
 msgstr "Doba prezentování zprávy (v sekundách)"
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:160
+#: C/preferences_braille.page:172
 msgid ""
 "The amount of time <app>Orca</app> will wait before removing the message and "
 "restoring the original contents of your display can be set in the <gui> "
@@ -5436,7 +5447,7 @@ msgstr ""
 "bleskové zprávy, bude hodnota tohoto nastavení ignorována."
 
 #. (itstool) path: section/p
-#: C/preferences_braille.page:166
+#: C/preferences_braille.page:178
 msgid "Default value: 5"
 msgstr "Výchozí hodnota: 5"
 
@@ -5448,7 +5459,7 @@ msgstr "3. Diskuze"
 
 #. (itstool) path: info/desc
 #: C/preferences_chat.page:7
-msgid "Configuring <app>Orca's</app> support for IM and IRC"
+msgid "Configuring <app>Orca</app>'s support for IM and IRC"
 msgstr ""
 "Jak nastavit čtečku <app>Orca</app> pro podporu rychlé komunikace a IRC"
 
@@ -5782,13 +5793,13 @@ msgstr "Volby pro tabulky"
 #. (itstool) path: note/p
 #: C/preferences_gecko.page:150
 msgid ""
-"To learn more about <app>Orca's</app> options for navigating within tables, "
+"To learn more about <app>Orca</app>'s options for navigating within tables, "
 "please see <link xref=\"preferences_table_navigation\">Table Navigation "
 "Preferences</link>."
 msgstr ""
-"Více o volbách čtečky <app>Orca</app> týkajících se pohybu po tabulkách "
-"najdete v kapitole <link xref=\"preferences_table_navigation\">Předvolby pro "
-"pohyb v tabulkách</link>."
+"Více o volbách čtečky <app>Orca</app>, které se týkají se pohybu po "
+"tabulkách, najdete v kapitole <link xref=\"preferences_table_navigation\">"
+"Předvolby pro pohyb v tabulkách</link>."
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:158
@@ -5849,7 +5860,7 @@ msgid ""
 "This editable spin button is where you can specify the number of characters "
 "which much match before <app>Orca</app> announces the matching line. This "
 "option is also designed to prevent \"chattiness\" as there are many matches "
-"when you first begin typing string for which you are searching."
+"when you first begin typing the string for which you are searching."
 msgstr ""
 "V tomto číselníku můžete určit počet znaků, které se musí shodovat, než "
 "začne <app>Orca</app> oznamovat shodné řádky. Rovněž tato volba je určena k "
@@ -7020,7 +7031,7 @@ msgstr "Žádná"
 msgid ""
 "Choosing a punctuation level of <gui>None</gui> would, as you expect, cause "
 "no punctuation to be spoken. Note, however, that special symbols such as "
-"subscripted and superscripted numbers, unicode fractions, and bullets are "
+"subscripted and superscripted numbers, Unicode fractions, and bullets are "
 "still spoken at this level, even though some might consider these types of "
 "symbols punctuation."
 msgstr ""
@@ -7116,7 +7127,7 @@ msgstr ""
 #. (itstool) path: note/p
 #: C/preferences_speech.page:109
 msgid ""
-"The follow items will not be available for configuration if the <gui>Only "
+"The following items will not be available for configuration if the <gui>Only "
 "speak displayed text</gui> checkbox is checked."
 msgstr ""
 "Následující položky nejsou dostupné k nastavení, když je zaškrtnuté políčko "
@@ -7485,7 +7496,7 @@ msgstr "Kontrola pravopisu"
 
 #. (itstool) path: info/desc
 #: C/preferences_spellcheck.page:6
-msgid "Configuring <app>Orca's</app> support for Spell Check"
+msgid "Configuring <app>Orca</app>'s support for Spell Check"
 msgstr "Jak nastavit podporu pro kontrolu pravopisu ve čtečce <app>Orca</app>"
 
 #. (itstool) path: page/title
@@ -7589,7 +7600,7 @@ msgstr "Předvolby pro pohyb v tabulkách"
 #. (itstool) path: page/p
 #: C/preferences_table_navigation.page:22
 msgid ""
-"The following option allows you to customize how <app>Orca</app> behaves "
+"The following options allow you to customize how <app>Orca</app> behaves "
 "when navigating within a table in <link xref=\"howto_structural_navigation"
 "\">Structural-Navigation</link>-enabled applications."
 msgstr ""
@@ -7719,12 +7730,12 @@ msgstr "<gui>Název vlastnosti</gui>: Název vlastnosti textu"
 #: C/preferences_text_attributes.page:43
 msgid ""
 "<gui>Speak</gui>: Check this checkbox if you would like <app>Orca</app> to "
-"speak this attribute when you press <keyseq><key>Orca</key><key>F</key></"
-"keyseq>."
+"speak this attribute when you press <keyseq><key>Orca Modifier</key><key>F</"
+"key></keyseq>."
 msgstr ""
 "<gui>Říci</gui>: Toto políčko zaškrtněte, pokud si přejete, aby <app>Orca</"
-"app> oznamovala tuto vlastnost, když zmáčknete <keyseq><key>Orca</"
-"key><key>F</key></keyseq>."
+"app> oznamovala tuto vlastnost, když zmáčknete <keyseq><key>Modifikátor Orca"
+"</key><key>F</key></keyseq>."
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:50
