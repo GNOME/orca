@@ -6267,7 +6267,7 @@ msgid ""
 "The <gui>Active Profile</gui> combo box displays the current profile and "
 "allows you to select a different profile to load."
 msgstr ""
-"Das Auswahlfeld <gui>Aktives Profil<gui> zeigt das derzeitige Profil an und "
+"Das Auswahlfeld <gui>Aktives Profil</gui> zeigt das derzeitige Profil an und "
 "ermöglicht das Laden eines anderen Profils."
 
 #. (itstool) path: item/p
@@ -6294,7 +6294,7 @@ msgid ""
 "The <gui>Start-up Profile</gui> combo box allows you to select the profile "
 "which should be automatically loaded each time you launch <app>Orca</app>."
 msgstr ""
-"Das Auswahlfeld <gui>Profil beim Start</ui> erlaubt Ihnen, das Profil "
+"Das Auswahlfeld <gui>Profil beim Start</gui> erlaubt Ihnen, das Profil "
 "auszuwählen, das automatisch beim Start von <app>Orca</app> geladen wird."
 
 #. (itstool) path: section/title
