@@ -336,6 +336,10 @@ class Utilities(script_utilities.Utilities):
         if role == pyatspi.ROLE_ENTRY:
             return False
 
+        if role == pyatspi.ROLE_IMAGE:
+            isLink = lambda x: x and x.getRole() == pyatspi.ROLE_LINK
+            return pyatspi.utils.findAncestor(obj, isLink) is not None
+
         return state.contains(pyatspi.STATE_FOCUSABLE)
 
     def grabFocus(self, obj):
