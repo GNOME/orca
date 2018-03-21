@@ -708,6 +708,9 @@ class EventManager:
             return
 
         setNewActiveScript, reason = self._isActivatableEvent(event, script)
+        msg = 'EVENT MANAGER: Change active script: %s (%s)' % (setNewActiveScript, reason)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
         if setNewActiveScript:
             try:
                 app = event.host_application or event.source.getApplication()
@@ -728,6 +731,18 @@ class EventManager:
             msg = 'ERROR: Could not process %s' % event.type
             debug.println(debug.LEVEL_INFO, msg, True)
             debug.printException(debug.LEVEL_INFO)
+
+        msg = 'EVENT MANAGER: locusOfFocus: %s activeScript: %s' % \
+              (orca_state.locusOfFocus, orca_state.activeScript)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        if not orca_state.activeScript:
+            return
+
+        attributes = orca_state.activeScript.getTransferableAttributes()
+        for key, value in attributes.items():
+            msg = 'EVENT MANAGER: %s: %s' % (key, value)
+            debug.println(debug.LEVEL_INFO, msg, True)
 
     def _processKeyboardEvent(self, event):
         keyboardEvent = input_event.KeyboardEvent(event)
