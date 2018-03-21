@@ -651,7 +651,7 @@ class EventManager:
                 debug.printException(debug.LEVEL_WARNING)
                 return
 
-        if eType.startswith("window"):
+        if eType.startswith("window:") and not eType.endswith("create"):
             _scriptManager.reclaimScripts()
 
         if eType.startswith("object:state-changed:active"):
