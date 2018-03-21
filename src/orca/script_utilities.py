@@ -34,6 +34,7 @@ import locale
 import math
 import pyatspi
 import re
+import subprocess
 import time
 from gi.repository import Gdk
 from gi.repository import Gtk
@@ -120,9 +121,31 @@ class Utilities:
 
         return state.contains(pyatspi.STATE_SHOWING)
 
+    @staticmethod
+    def _getAppCommandLine(app):
+        if not app:
+            return ""
+
+        pid = app.get_process_id()
+
+        try:
+            cmdline = subprocess.getoutput("cat /proc/%s/cmdline" % pid)
+        except:
+            return ""
+
+        return cmdline.replace("\x00", " ")
+
     def canBeActiveWindow(self, window):
         if not window:
             return False
+
+        try:
+            app = window.getApplication()
+        except:
+            app = None
+
+        msg = "INFO: Looking at %s from %s %s" % (window, app, self._getAppCommandLine(app))
+        debug.println(debug.LEVEL_INFO, msg, True)
 
         window.clearCache()
         if not self._isActiveAndShowingAndNotIconified(window):
