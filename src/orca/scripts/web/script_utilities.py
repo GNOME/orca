@@ -352,13 +352,15 @@ class Utilities(script_utilities.Utilities):
         if self._script.flatReviewContext:
             self._script.toggleFlatReviewMode()
 
+        grabFocus = self.grabFocusWhenSettingCaret(obj)
+
         obj, offset = self.findFirstCaretContext(obj, offset)
         self.setCaretContext(obj, offset, documentFrame)
         if self._script.focusModeIsSticky():
             return
 
         orca.setLocusOfFocus(None, obj, notifyScript=False)
-        if self.grabFocusWhenSettingCaret(obj):
+        if grabFocus:
             self.grabFocus(obj)
 
         text = self.queryNonEmptyText(obj)
