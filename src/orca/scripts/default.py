@@ -2503,7 +2503,7 @@ class Script(script.Script):
                and not _settingsManager.getSetting('presentToolTips'):
                 return
             if event.detail1:
-                self.presentToolTip(obj)
+                self.presentObject(obj)
                 return
  
             if orca_state.locusOfFocus and keyString == "F1":
@@ -3155,29 +3155,6 @@ class Script(script.Script):
         word = self.utilities.adjustForRepeats(word)
         speech.speak(word, voice)
         return True
-
-    def presentToolTip(self, obj):
-        """
-        Speaks the tooltip for the current object of interest.
-        """
-
-        # The tooltip is generally the accessible description. If
-        # the description is not set, present the text that is
-        # spoken when the object receives keyboard focus.
-        #
-        speechResult = brailleResult = None
-        text = ""
-        if obj.description:
-            speechResult = brailleResult = obj.description
-        else:
-            speechResult = self.whereAmI.getWhereAmI(obj, True)
-            if speechResult:
-                brailleResult = speechResult[0]
-
-        if speechResult:
-            speech.speak(speechResult)
-        if brailleResult:
-            self.displayBrailleMessage(brailleResult)
 
     def sayCharacter(self, obj):
         """Speak the character at the caret.
