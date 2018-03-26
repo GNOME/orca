@@ -663,15 +663,6 @@ class EventManager:
                 if role == pyatspi.ROLE_FRAME:
                     _scriptManager.reclaimScripts()
 
-        # Clean up any flat review context so that Orca does not get
-        # confused (see bgo#609633)
-        #
-        if eType.startswith("window:deactivate") \
-           and orca_state.activeScript \
-           and orca_state.activeScript.flatReviewContext \
-           and orca_state.activeScript.app == event.host_application:
-            orca_state.activeScript.flatReviewContext = None
-
         try:
             state = event.source.getState()
         except (LookupError, RuntimeError):
