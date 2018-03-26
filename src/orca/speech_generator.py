@@ -373,6 +373,9 @@ class SpeechGenerator(generator.Generator):
         if role == pyatspi.ROLE_MENU and parentRole == pyatspi.ROLE_COMBO_BOX:
             return self._generateRoleName(obj.parent)
 
+        if role == pyatspi.ROLE_PANEL and obj.getState().contains(pyatspi.STATE_SELECTED):
+            return []
+
         # egg-list-box, e.g. privacy panel in gnome-control-center
         if parentRole == pyatspi.ROLE_LIST_BOX:
             doNotPresent.append(obj.getRole())
