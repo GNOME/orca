@@ -210,3 +210,9 @@ class Script(clutter.Script):
             return False
 
         return super().echoPreviousWord(obj, offset)
+
+    def isActivatableEvent(self, event):
+        if event.type.startswith('object:state-changed:selected') and event.detail1:
+            return True
+
+        return super().isActivatableEvent(event)
