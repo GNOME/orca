@@ -376,6 +376,7 @@ class EventManager:
                     fullMessage = messages.NO_FOCUS
                     defaultScript = _scriptManager.getDefaultScript()
                     defaultScript.presentMessage(fullMessage, '')
+                    _scriptManager.setActiveScript(defaultScript, 'No focus')
                 self._gidleId = 0
                 rerun = False # destroy and don't call again
             self._gidleLock.release()
