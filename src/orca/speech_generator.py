@@ -449,6 +449,10 @@ class SpeechGenerator(generator.Generator):
         labels = self._script.utilities.unrelatedLabels(obj, visibleOnly)
         for label in labels:
             name = self._generateName(label, **args)
+            if name[0] and len(name[0]) == 1:
+                charname = chnames.getCharacterName(name[0])
+                if charname:
+                    name[0] = charname
             result.extend(name)
         if result:
             result.extend(acss)
