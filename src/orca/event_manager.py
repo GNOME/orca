@@ -612,8 +612,7 @@ class EventManager:
             return True, "window:activate event"
 
         if eType.startswith('focus') \
-           or (eType.startswith('object:state-changed:focused') \
-               or eType.startswith('object:state-changed:selected') \
+           or (eType.startswith('object:state-changed:focused')
                and event.detail1):
             return True, "Event source claimed focus."
 
