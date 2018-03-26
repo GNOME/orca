@@ -1,3 +1,41 @@
+3.28.0 - 26 March 2018
+
+Web + Email:
+
+ * Ensure focus is grabbed on image links when navigating
+
+ * Fix bug causing notifications to trigger browse mode
+
+LibreOffice:
+
+ * Improve heuristic to identify spellcheck dialog
+
+General:
+
+ * Ensure list name is presented for ancestor lists
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                  Marek Černocký
+    da            Danish                 Alan Mortensen
+    de            German                 Tim Sabsch
+    es            Spanish                Daniel Mustieles
+    fi            Finnish                Jiri Grönroos
+    fr            French                 Claude Paroz
+    hu            Hungarian              Gábor Kelemen, Balázs Úr
+    it            Italian                Milo Casagrande
+    lt            Lithuanian             Aurimas Černius
+    lv            Latvian                Rūdolfs Mazurs
+    nl            Dutch                  Nathan Follens
+    sl            Slovenian              Matej Urbančič
+    sr            Serbian                Марко Костић
+    sr@latin      Serbian Latin          Милош Поповић
+    sv            Swedish                Anders Jonsson
+    tr            Turkish                Emin Tufan Çetin
+    zh_CN         Chinese (China)        Mingcong Bai
+
+=========
+
 3.27.91 - 19 February 2018
 
 Web + Email:
