@@ -2825,6 +2825,7 @@ class Script(script.Script):
         if event.source == orca_state.activeWindow:
             orca.setLocusOfFocus(event, None)
             orca_state.activeWindow = None
+            orca_state.activeScript = None
             self.flatReviewContext = None
 
         # disable list notification  messages mode
