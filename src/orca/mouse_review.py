@@ -112,12 +112,24 @@ class _ItemContext:
         self._frame = frame
         self._script = script
         self._string = self._getStringContext()
+        self._time = time.time()
 
     def __eq__(self, other):
         return other is not None \
             and self._frame == other._frame \
             and self._obj == other._obj \
             and self._string == other._string
+
+    def _treatAsDuplicate(self, prior):
+        if self._obj != prior._obj or self._frame != prior._frame:
+            return False
+
+        if self._time - prior._time > 0.1:
+            return False
+
+        msg = "MOUSE REVIEW: Treating as duplicate"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return True
 
     def _getStringContext(self):
         """Returns the _StringContext associated with the specified point."""
@@ -145,7 +157,7 @@ class _ItemContext:
     def present(self, prior):
         """Presents this context to the user."""
 
-        if self == prior:
+        if self == prior or self._treatAsDuplicate(prior):
             return False
 
         interrupt = self._obj and self._obj != prior._obj \
