@@ -208,7 +208,7 @@ def speak(content, acss=None, interrupt=True):
             newVoice = ACSS(acss)
             newItemsToSpeak = []
             if isinstance(element, speech_generator.Pause):
-                if not toSpeak[-1].endswith('.'):
+                if toSpeak[-1] and toSpeak[-1][-1].isalnum():
                     toSpeak[-1] += '.'
             elif isinstance(element, ACSS):
                 newVoice.update(element)
