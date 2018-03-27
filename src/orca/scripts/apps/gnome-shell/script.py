@@ -136,6 +136,7 @@ class Script(clutter.Script):
         """Callback for object:state-changed:selected accessibility events."""
         try:
             state = event.source.getState()
+            role = event.source.getRole()
         except:
             return
 
@@ -146,6 +147,12 @@ class Script(clutter.Script):
         # we'll stop doing so and hope we are right.
 
         if event.detail1:
+            if role == pyatspi.ROLE_PANEL:
+                try:
+                    event.source.clearCache()
+                except:
+                    pass
+
             if state.contains(pyatspi.STATE_SELECTED):
                 orca.setLocusOfFocus(event, event.source)
             return
