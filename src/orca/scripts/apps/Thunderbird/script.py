@@ -193,6 +193,9 @@ class Script(Gecko.Script):
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
+        if self.utilities.isEditableMessage(event.source):
+            return
+
         obj = event.source
         if self.utilities.isDocument(obj) and not event.detail1:
             try:
