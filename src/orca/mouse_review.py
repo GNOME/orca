@@ -291,7 +291,11 @@ class MouseReviewer:
             return None
 
         app = None
-        pid = window.get_application().get_pid()
+        windowApp = window.get_application()
+        if not windowApp:
+            return None
+
+        pid = windowApp.get_pid()
         for a in pyatspi.Registry.getDesktop(0):
             if a.get_process_id() == pid:
                 app = a

@@ -70,6 +70,7 @@ from . import event_manager
 from . import keybindings
 from . import logger
 from . import messages
+from . import mouse_review
 from . import notification_messages
 from . import orca_state
 from . import orca_platform
@@ -376,6 +377,11 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
             debug.printException(debug.LEVEL_WARNING)
             msg = 'ORCA: Could not initialize connection to braille.'
             debug.println(debug.LEVEL_WARNING, msg, True)
+
+    if _settingsManager.getSetting('enableMouseReview'):
+        mouse_review.reviewer.activate()
+    else:
+        mouse_review.reviewer.deactivate()
 
     if _settingsManager.getSetting('enableSound'):
         player.init()
