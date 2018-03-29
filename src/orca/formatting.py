@@ -259,7 +259,7 @@ formatting = {
             'detailedWhereAmI': 'labelAndName + pause + roleName + pause + selectedItemCount + pause + selectedItems + pause'
             },
         pyatspi.ROLE_LINK: {
-            'unfocused': '(displayedText or name) + roleName + pause + expandableState + availability + ' + MNEMONIC,
+            'unfocused': '(name or displayedText) + roleName + pause + expandableState + availability + ' + MNEMONIC,
             'basicWhereAmI': 'linkInfo + pause + siteDescription + pause + fileSize + pause + ' + MNEMONIC
             },
         pyatspi.ROLE_LIST: {
