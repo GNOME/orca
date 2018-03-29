@@ -1671,7 +1671,7 @@ class StructuralNavigation:
         if role not in self.OBJECT_ROLES:
             return False
 
-        if role == pyatspi.ROLE_ARTICLE:
+        if role in [pyatspi.ROLE_ARTICLE, pyatspi.ROLE_HEADING]:
             return True
 
         text = self._script.utilities.queryNonEmptyText(obj)
