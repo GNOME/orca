@@ -1189,6 +1189,10 @@ def refresh(panToCursor=True,
     log.info(logLine)
 
     substring = string[startPos:endPos]
+    if attributeMask:
+        submask = attributeMask[startPos:endPos]
+    else:
+        submask = '\x00' * (endPos - startPos)
     if not _brlAPIRunning:
         init(_callback, settings.tty)
     if _brlAPIRunning:
@@ -1198,7 +1202,7 @@ def refresh(panToCursor=True,
         while writeStruct.regionSize < _displaySize[0]:
             substring += " "
             if attributeMask:
-                attributeMask += '\x00'
+                submask += '\x00'
             writeStruct.regionSize += 1
         writeStruct.text = substring
         writeStruct.cursor = cursorCell
@@ -1219,7 +1223,7 @@ def refresh(panToCursor=True,
         #writeStruct.attrOr = myUnderline
 
         if attributeMask:
-            writeStruct.attrOr = attributeMask[startPos:endPos]
+            writeStruct.attrOr = submask
 
         if not _brlAPIRunning:
             init(_callback, settings.tty)
