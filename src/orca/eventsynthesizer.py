@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2018 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -17,133 +18,115 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Provides support for synthesizing keyboard and mouse events."""
+"""Provides support for synthesizing accessible input events."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
+                "Copyright (c) 2018 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
 from . import debug
 
-def generateMouseEvent(x, y, eventName):
-    """Synthesize a mouse event at a specific screen coordinate.
-    Most AT clients should use the #AccessibleAction interface when
-    tempted to generate mouse events, rather than this method.
+def _generateMouseEvent(x, y, event):
+    """Synthesize a mouse event at a specific screen coordinate."""
 
-    Event names: b1p = button 1 press; b2r = button 2 release;
-                 b3c = button 3 click; b2d = button 2 double-click;
-                 abs = absolute motion; rel = relative motion.
+    msg = "EVENT SYNTHESIZER: Generating %s mouse event at %d,%d" % (event, x, y)
+    debug.println(debug.LEVEL_INFO, msg, True)
+    pyatspi.Registry.generateMouseEvent(x, y, event)
 
-    Arguments:
-    - x: the x screen coordinate
-    - y: the y screen coordinate
-    - eventName: the event name string (as described above)
-    """
+def _mouseEventOnCharacter(obj, event):
+    """Performs the specified mouse event on the current character in obj."""
 
-    debug.println(debug.LEVEL_FINER,
-                  "SYNTHESIZING MOUSE EVENT: (%d, %d) %s"\
-                  % (x, y, eventName))
-
-    pyatspi.Registry.generateMouseEvent(x, y, eventName)
-
-def routeToCharacter(obj):
-    """Moves the mouse pointer to the given character
-
-    Arguments:
-    - obj: the Accessible which implements the accessible text
-      interface
-    """
     text = obj.queryText()
-    # We try to move to the left of center.  This is to
-    # handle toolkits that will offset the caret position to
-    # the right if you click dead on center of a character.
-    #
-    extents = text.getCharacterExtents(text.caretOffset,
-                                       pyatspi.DESKTOP_COORDS)
+    extents = text.getCharacterExtents(text.caretOffset, pyatspi.DESKTOP_COORDS)
     x = max(extents[0], extents[0] + (extents[2] / 2) - 1)
     y = extents[1] + extents[3] / 2
-    routeToPoint(x, y, "abs")
+    _generateMouseEvent(x, y, event)
 
-def routeToObject(obj):
-    """Moves the mouse pointer to the given Accessible.
+def _mouseEventOnObject(obj, event):
+    """Performs the specified mouse event on obj."""
 
-    Arguments:
-    - obj: the Accessible
-    """
-    extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
-    x = extents.x + extents.width / 2
-    y = extents.y + extents.height / 2
-    routeToPoint(x, y, "abs")
-
-def routeToPoint(x, y, eventName="abs"):
-    """Moves the mouse pointer to the given point.
-
-    Arguments:
-    - x, y: the point
-    - eventName: absolute("abs") or relative("rel")
-    """
-    generateMouseEvent(x, y, eventName)
-
-def clickCharacter(obj, button):
-    """Performs a button click on the current character
-
-    Arguments:
-    - obj: the Accessible which implements the accessible text
-      interface
-    - button: an integer representing the mouse button number
-    """
-    text = obj.queryText()
-    # We try to click to the left of center.  This is to
-    # handle toolkits that will offset the caret position to
-    # the right if you click dead on center of a character.
-    #
-    extents = text.getCharacterExtents(text.caretOffset,
-                                       pyatspi.DESKTOP_COORDS)
-    x = max(extents[0], extents[0] + (extents[2] / 2) - 1)
-    y = extents[1] + extents[3] / 2
-    generateMouseEvent(x, y, "b%dc" % button)
-
-def clickObject(obj, button):
-    """Performs a button click on the given Accessible.
-
-    Arguments:
-    - obj: the Accessible
-    - button: an integer representing the mouse button number
-    """
     extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
     x = extents.x + extents.width/2
     y = extents.y + extents.height/2
-    generateMouseEvent(x, y, "b%dc" % button)
+    _generateMouseEvent(x, y, event)
 
-def clickPoint(x, y, button):
-    """Performs a button click on the given point.
+def routeToCharacter(obj):
+    """Routes the pointer to the current character in obj."""
 
-    Arguments:
-    - obj: the Accessible
-    - x, y: the point
-    - button: an integer representing the mouse button number
-    """
+    _mouseEventOnCharacter(obj, "abs")
 
-    generateMouseEvent(x, y, "b%dc" % button)
+def routeToObject(obj):
+    """Moves the mouse pointer to the center of obj."""
 
-def generateKeyboardEvent(keycode, keystring, eventType):
-    """Generates a keyboard event.
+    _mouseEventOnObject(obj, "abs")
 
-    Arguments:
-    - keyval: a long integer indicating the keycode or keysym of the key event
-              being synthesized.
-    - keystring: an (optional) UTF-8 string which, if keyval is NULL,
-              indicates a 'composed' keyboard input string which is
-              being synthesized; this type of keyboard event synthesis does
-              not emulate hardware keypresses but injects the string
-              as though a composing input method (such as XIM) were used.
-    - eventType: an AccessibleKeySynthType flag indicating whether keyval
-              is to be interpreted as a keysym rather than a keycode
-              (pyatspi.KEY_SYM), or whether to synthesize
-              KEY_PRESS, KEY_RELEASE, or both (KEY_PRESSRELEASE).
-    """
+def routeToPoint(x, y):
+    """Routes the pointer to the specified coordinates."""
 
-    pyatspi.Registry.generateKeyboardEvent(keycode, keystring, eventType)
+    _generateMouseEvent(x, y, "abs")
+
+def clickCharacter(obj, button=1):
+    """Single click on the current character in obj using the specified button."""
+
+    _mouseEventOnCharacter(obj, "b%dc" % button)
+
+def clickObject(obj, button=1):
+    """Single click on obj using the specified button."""
+
+    _mouseEventOnObject(obj, "b%dc" % button)
+
+def clickPoint(x, y, button=1):
+    """Single click on the given point using the specified button."""
+
+    _generateMouseEvent(x, y, "b%dc" % button)
+
+def doubleClickCharacter(obj, button=1):
+    """Double click on the current character in obj using the specified button."""
+
+    _mouseEventOnCharacter(obj, "b%dd" % button)
+
+def doubleClickObject(obj, button=1):
+    """Double click on obj using the specified button."""
+
+    _mouseEventOnObject(obj, "b%dd" % button)
+
+def doubleClickPoint(x, y, button=1):
+    """Double click on the given point using the specified button."""
+
+    _generateMouseEvent(x, y, "b%dd" % button)
+
+def pressAtCharacter(obj, button=1):
+    """Performs a press on the current character in obj using the specified button."""
+
+    _mouseEventOnCharacter(obj, "b%dp" % button)
+
+def pressAtObject(obj, button=1):
+    """Performs a press on obj using the specified button."""
+
+    _mouseEventOnObject(obj, "b%dp" % button)
+
+def pressAtPoint(x, y, button=1):
+    """Performs a press on the given point using the specified button."""
+
+    _generateMouseEvent(x, y, "b%dp" % button)
+
+def releaseAtCharacter(obj, button=1):
+    """Performs a release on the current character in obj using the specified button."""
+
+    _mouseEventOnCharacter(obj, "b%dr" % button)
+
+def releaseAtObject(obj, button=1):
+    """Performs a release on obj using the specified button."""
+
+    _mouseEventOnObject(obj, "b%dr" % button)
+
+def releaseAtPoint(x, y, button=1):
+    """Performs a release on the given point using the specified button."""
+
+    _generateMouseEvent(x, y, "b%dr" % button)
+
+

@@ -912,7 +912,7 @@ class Context:
         if x < 0 or y < 0:
             return False
 
-        eventsynthesizer.routeToPoint(x, y, "abs")
+        eventsynthesizer.routeToPoint(x, y)
         return True
 
     def clickCurrent(self, button=1):
