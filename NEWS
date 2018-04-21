@@ -1,3 +1,26 @@
+3.28.1 - 21 April 2018
+
+Web + Email:
+
+ * Fix Orca-triggered focus change in Thunderbird message composition
+   window
+
+General:
+
+ * Handle event floods from Caja and Nautilus more efficiently
+
+Braille:
+
+ * Release device when braille is deactivated for some applications
+
+ * Fix bogus dots appearing after text
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    sv            Swedish                Anders Jonsson
+
+=========
+
 3.28.0 - 26 March 2018
 
 Web + Email:
