@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"POT-Creation-Date: 2018-02-08 19:45+0000\n"
-"PO-Revision-Date: 2018-03-02 17:47+0100\n"
+"POT-Creation-Date: 2018-04-14 12:03+0000\n"
+"PO-Revision-Date: 2018-04-24 18:05+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -5197,11 +5197,11 @@ msgid ""
 "checked, <app>Orca</app> will use all of the cells on the display so that "
 "more text can be shown at once."
 msgstr ""
-"Když je zašktnuté políčko <gui>Povolit zalamování slov</gui>, bude <app>Orca"
-"</app> přizpůsobovat text tak, aby se na braillském řádu zobrazovala vždy "
-"celá slova. Když zaškrtnuté není, bude <app>Orca</app> využívat k zobrazení "
-"všechny buňky, takže může zobrazit více textu, ale za cenu, že na konci "
-"může být slovo oříznuté."
+"Když je zašktnuté políčko <gui>Povolit zalamování slov</gui>, bude "
+"<app>Orca</app> přizpůsobovat text tak, aby se na braillském řádu "
+"zobrazovala vždy celá slova. Když zaškrtnuté není, bude <app>Orca</app> "
+"využívat k zobrazení všechny buňky, takže může zobrazit více textu, ale za "
+"cenu, že na konci může být slovo oříznuté."
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:50
@@ -5798,8 +5798,8 @@ msgid ""
 "Preferences</link>."
 msgstr ""
 "Více o volbách čtečky <app>Orca</app>, které se týkají se pohybu po "
-"tabulkách, najdete v kapitole <link xref=\"preferences_table_navigation\">"
-"Předvolby pro pohyb v tabulkách</link>."
+"tabulkách, najdete v kapitole <link xref=\"preferences_table_navigation"
+"\">Předvolby pro pohyb v tabulkách</link>."
 
 #. (itstool) path: section/title
 #: C/preferences_gecko.page:158
@@ -5858,7 +5858,7 @@ msgstr "Minimální délka nalezeného textu"
 #: C/preferences_gecko.page:188
 msgid ""
 "This editable spin button is where you can specify the number of characters "
-"which much match before <app>Orca</app> announces the matching line. This "
+"which must match before <app>Orca</app> announces the matching line. This "
 "option is also designed to prevent \"chattiness\" as there are many matches "
 "when you first begin typing the string for which you are searching."
 msgstr ""
@@ -7734,8 +7734,8 @@ msgid ""
 "key></keyseq>."
 msgstr ""
 "<gui>Říci</gui>: Toto políčko zaškrtněte, pokud si přejete, aby <app>Orca</"
-"app> oznamovala tuto vlastnost, když zmáčknete <keyseq><key>Modifikátor Orca"
-"</key><key>F</key></keyseq>."
+"app> oznamovala tuto vlastnost, když zmáčknete <keyseq><key>Modifikátor "
+"Orca</key><key>F</key></keyseq>."
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:50
