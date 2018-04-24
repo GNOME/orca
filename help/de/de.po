@@ -7153,7 +7153,7 @@ msgid ""
 msgstr ""
 "Ist die Sonderzeichenansage auf <gui>Einige</gui> gesetzt, werden alle "
 "bereits erwähnten Symbole vorgelesen. Zusätzlich wird <app>Orca</app> "
-"bekannte mathematische Symbole, Währungssymbole und »^«, »@«, »/«, »&« und "
+"bekannte mathematische Symbole, Währungssymbole und »^«, »@«, »/«, »&amp;« und "
 "»#« ansagen."
 
 #. (itstool) path: section/title
