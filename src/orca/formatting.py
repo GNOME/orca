@@ -530,6 +530,10 @@ formatting = {
             'unfocused': '[Component(obj,\
                                      asString(label + displayedText + roleName + (description and space(": ") + description)))]',
             },
+        pyatspi.ROLE_APPLICATION: {
+            'focused':   '[Component(obj, asString(name + roleName))]',
+            'unfocused': '[Component(obj, asString(name + roleName))]',
+            },
         pyatspi.ROLE_ARTICLE: {
             'unfocused': '((substring and ' + BRAILLE_TEXT + ')\
                           or ([Component(obj, asString(labelAndName + roleName))]\
