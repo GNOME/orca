@@ -584,9 +584,9 @@ formatting = {
             },
         pyatspi.ROLE_FRAME: {
             'focused':   '[Component(obj,\
-                                     asString(((label + displayedText) or name) + value + roleName + alertAndDialogCount))]',
+                                     asString(labelOrName + roleName + alertAndDialogCount))]',
             'unfocused': '[Component(obj,\
-                                     asString(((label + displayedText) or name) + value + roleName + alertAndDialogCount))]'
+                                     asString(labelOrName + roleName + alertAndDialogCount))]',
             },
         pyatspi.ROLE_HEADING: {
             'unfocused': '[Text(obj, asString(placeholderText), "", startOffset, endOffset)]\
