@@ -1831,8 +1831,12 @@ class SpeechGenerator(generator.Generator):
         if priorObj == obj:
             return []
 
+        role = args.get('role', obj.getRole())
+        if role in [pyatspi.ROLE_FRAME, pyatspi.ROLE_WINDOW]:
+            return []
+
         result = []
-        if obj.getRole() == pyatspi.ROLE_MENU_ITEM \
+        if role == pyatspi.ROLE_MENU_ITEM \
            and (not priorObj or priorObj.getRole() == pyatspi.ROLE_WINDOW):
             return result
 
