@@ -2465,7 +2465,8 @@ class Script(script.Script):
             return
 
         window, dialog = self.utilities.frameAndDialog(obj)
-        if window and not self.utilities.canBeActiveWindow(window) and not dialog:
+        clearCache = window != orca_state.activeWindow
+        if window and not self.utilities.canBeActiveWindow(window, clearCache) and not dialog:
             return
 
         try:

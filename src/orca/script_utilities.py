@@ -135,7 +135,7 @@ class Utilities:
 
         return cmdline.replace("\x00", " ")
 
-    def canBeActiveWindow(self, window):
+    def canBeActiveWindow(self, window, clearCache=True):
         if not window:
             return False
 
@@ -147,7 +147,9 @@ class Utilities:
         msg = "INFO: Looking at %s from %s %s" % (window, app, self._getAppCommandLine(app))
         debug.println(debug.LEVEL_INFO, msg, True)
 
-        window.clearCache()
+        if clearCache:
+            window.clearCache()
+
         if not self._isActiveAndShowingAndNotIconified(window):
             msg = "INFO: %s is not active and showing, or is iconified" % window
             debug.println(debug.LEVEL_INFO, msg, True)
