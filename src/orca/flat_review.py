@@ -817,6 +817,11 @@ class Context:
         for o in objs:
             zones = self.getZonesFromAccessible(o, boundingbox)
             if not zones:
+                descendant = self.script.utilities.realActiveDescendant(o)
+                if descendant:
+                    zones = self.getZonesFromAccessible(descendant, boundingbox)
+
+            if not zones:
                 continue
 
             allZones.extend(zones)
