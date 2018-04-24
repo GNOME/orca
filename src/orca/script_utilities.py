@@ -3849,6 +3849,7 @@ class Utilities:
                     debug.println(debug.LEVEL_INFO, msg, True)
                     if cell:
                         return cell
+                    return child
 
         for child in root:
             obj = self.descendantAtPoint(child, x, y, coordType)
