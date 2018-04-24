@@ -1093,7 +1093,8 @@ def refresh(panToCursor=True,
     if stopFlash:
         killFlash(restoreSaved=False)
 
-    if not _settingsManager.getSetting('enableBraille'):
+    if not _settingsManager.getSetting('enableBraille') \
+       and not _settingsManager.getSetting('enableBrailleMonitor'):
         if _brlAPIRunning:
             try:
                 _brlAPI.writeText("", 0)
