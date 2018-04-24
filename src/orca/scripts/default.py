@@ -2739,7 +2739,7 @@ class Script(script.Script):
         - event: the Event
         """
 
-        if not self.utilities.canBeActiveWindow(event.source):
+        if not self.utilities.canBeActiveWindow(event.source, False):
             return
 
         if self.utilities.isSameObject(event.source, orca_state.activeWindow):
