@@ -1172,6 +1172,8 @@ class Utilities:
             return False
 
         cellRoles = [pyatspi.ROLE_TABLE_CELL,
+                     pyatspi.ROLE_TABLE_COLUMN_HEADER,
+                     pyatspi.ROLE_TABLE_ROW_HEADER,
                      pyatspi.ROLE_COLUMN_HEADER,
                      pyatspi.ROLE_ROW_HEADER]
         if not role in cellRoles:
@@ -1191,6 +1193,8 @@ class Utilities:
             return False
 
         cellRoles = [pyatspi.ROLE_TABLE_CELL,
+                     pyatspi.ROLE_TABLE_COLUMN_HEADER,
+                     pyatspi.ROLE_TABLE_ROW_HEADER,
                      pyatspi.ROLE_COLUMN_HEADER,
                      pyatspi.ROLE_ROW_HEADER]
         if not role in cellRoles:
@@ -1932,6 +1936,8 @@ class Utilities:
             return False
 
         isCell = lambda x: x and x.getRole() in [pyatspi.ROLE_TABLE_CELL,
+                                                 pyatspi.ROLE_TABLE_COLUMN_HEADER,
+                                                 pyatspi.ROLE_TABLE_ROW_HEADER,
                                                  pyatspi.ROLE_ROW_HEADER,
                                                  pyatspi.ROLE_COLUMN_HEADER]
         cellChildren = list(filter(isCell, [x for x in obj]))
@@ -1945,6 +1951,8 @@ class Utilities:
             return obj
 
         roles = [pyatspi.ROLE_TABLE_CELL,
+                 pyatspi.ROLE_TABLE_COLUMN_HEADER,
+                 pyatspi.ROLE_TABLE_ROW_HEADER,
                  pyatspi.ROLE_COLUMN_HEADER,
                  pyatspi.ROLE_ROW_HEADER,
                  pyatspi.ROLE_LIST_ITEM]
@@ -3724,6 +3732,8 @@ class Utilities:
 
     def coordinatesForCell(self, obj):
         roles = [pyatspi.ROLE_TABLE_CELL,
+                 pyatspi.ROLE_TABLE_COLUMN_HEADER,
+                 pyatspi.ROLE_TABLE_ROW_HEADER,
                  pyatspi.ROLE_COLUMN_HEADER,
                  pyatspi.ROLE_ROW_HEADER]
         if not (obj and obj.getRole() in roles):
