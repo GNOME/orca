@@ -302,6 +302,7 @@ class Generator:
         needed a _generateDescription for whereAmI. :-) See below.
         """
         result = []
+        self._script.pointOfReference['usedDescriptionForName'] = False
         name = self._script.utilities.displayedText(obj)
         if obj.getRole() == pyatspi.ROLE_COMBO_BOX:
             children = self._script.utilities.selectedChildren(obj)
