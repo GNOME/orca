@@ -825,7 +825,7 @@ class Context:
                 continue
 
             allZones.extend(zones)
-            if not focusZone and zones and (o == self.focusObj or o in self.focusObj):
+            if not focusZone and zones and self.focusObj and self.focusObj in [o, o.parent]:
                 zones = list(filter(lambda z: z.hasCaret(), zones)) or zones
                 focusZone = zones[0]
 
