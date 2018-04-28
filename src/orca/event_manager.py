@@ -61,6 +61,7 @@ class EventManager:
         self._ignoredEvents = ['object:bounds-changed',
                                'object:state-changed:defunct',
                                'object:property-change:accessible-parent']
+        self._parentsOfDefunctDescendants = []
         debug.println(debug.LEVEL_INFO, 'Event manager initialized', True)
 
     def activate(self):
@@ -196,6 +197,11 @@ class EventManager:
                 msg = 'EVENT MANAGER: Ignoring event type due to role'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
+        elif event.type.startswith('object:selection-changed'):
+            if event.source in self._parentsOfDefunctDescendants:
+                msg = 'EVENT MANAGER: Ignoring event from parent of defunct descendants'
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
 
         if event.type.startswith('object:children-changed:add') \
            or event.type.startswith('object:active-descendant-changed'):
@@ -216,10 +222,18 @@ class EventManager:
                 msg = 'ERROR: Event any_data contains potentially-defunct child/descendant'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
+
             if childState.contains(pyatspi.STATE_DEFUNCT):
+                if state.contains(pyatspi.STATE_MANAGES_DESCENDANTS) \
+                   and event.source not in self._parentsOfDefunctDescendants:
+                    self._parentsOfDefunctDescendants.append(event.source)
+
                 msg = 'ERROR: Event any_data contains defunct child/descendant'
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
+
+            if event.source in self._parentsOfDefunctDescendants:
+                self._parentsOfDefunctDescendants.remove(event.source)
 
             # This should be safe. We do not have a reason to present a newly-added,
             # but not focused image. We do not need to update live regions for images.
