@@ -1750,6 +1750,10 @@ class Script(script.Script):
 
     def sayAll(self, inputEvent, obj=None, offset=None):
         obj = obj or orca_state.locusOfFocus
+        if not obj or self.utilities.isDead(obj):
+            self.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
+            return True
+
         try:
             text = obj.queryText()
         except NotImplementedError:
@@ -1999,8 +2003,9 @@ class Script(script.Script):
             self.spellcheck.presentErrorDetails(not basicOnly)
 
         obj = orca_state.locusOfFocus
-        if not obj:
-            return False
+        if not obj or self.utilities.isDead(obj):
+            self.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
+            return True
 
         self.updateBraille(obj)
 
