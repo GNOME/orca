@@ -713,6 +713,12 @@ class EventManager:
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
+        if eType.startswith('object:selection-changed') \
+           and event.source in self._parentsOfDefunctDescendants:
+            msg = 'EVENT MANAGER: Ignoring event from parent of defunct descendants'
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if not debug.eventDebugFilter or debug.eventDebugFilter.match(eType) \
            and not eType.startswith("mouse:"):
             debug.printDetails(debug.LEVEL_INFO, ' ' * 11, event.source)
