@@ -414,6 +414,12 @@ class Generator:
             desc = obj.description.lower()
             if not (desc in name.lower() or desc in label.lower()):
                 result.append(obj.description)
+
+        if not result:
+            desc = self._script.utilities.displayedDescription(obj)
+            if desc:
+                result.append(desc)
+
         return result
 
     def _generateLabel(self, obj, **args):

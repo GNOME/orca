@@ -82,6 +82,7 @@ class Utilities:
 
     # generatorCache
     #
+    DISPLAYED_DESCRIPTION = 'displayedDescription'
     DISPLAYED_LABEL = 'displayedLabel'
     DISPLAYED_TEXT = 'displayedText'
     KEY_BINDING = 'keyBinding'
@@ -435,6 +436,33 @@ class Utilities:
 
         self._script.generatorCache[self.DISPLAYED_LABEL][obj] = labelString
         return self._script.generatorCache[self.DISPLAYED_LABEL][obj]
+
+    def descriptionsForObject(self, obj):
+        """Return a list of objects describing obj."""
+
+        try:
+            relations = obj.getRelationSet()
+        except (LookupError, RuntimeError):
+            msg = 'ERROR: Exception getting relationset for %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
+        describedBy = lambda x: x.getRelationType() == pyatspi.RELATION_DESCRIBED_BY
+        relation = filter(describedBy, relations)
+        return [r.getTarget(i) for r in relation for i in range(r.getNTargets())]
+
+    def displayedDescription(self, obj):
+        """Returns the text being displayed for the object describing obj."""
+
+        try:
+            return self._script.generatorCache[self.DISPLAYED_DESCRIPTION][obj]
+        except:
+            if self.DISPLAYED_DESCRIPTION not in self._script.generatorCache:
+                self._script.generatorCache[self.DISPLAYED_DESCRIPTION] = {}
+
+        string = " ".join(map(self.displayedText, self.descriptionsForObject(obj)))
+        self._script.generatorCache[self.DISPLAYED_DESCRIPTION][obj] = string
+        return self._script.generatorCache[self.DISPLAYED_DESCRIPTION][obj]
 
     def displayedText(self, obj):
         """Returns the text being displayed for an object.
