@@ -337,7 +337,7 @@ formatting = {
             'basicWhereAmI': 'parentRoleName + pause + labelOrName + roleName + pause + positionInList + ' + MNEMONIC + ' + accelerator'
             },
         pyatspi.ROLE_PANEL: {
-            'focused': 'leaving or (labelAndName + roleName)',
+            'focused': 'leaving or (labelAndName + roleName + pause + unrelatedLabels)',
             'unfocused': '((substring and currentLineText) or labelAndName) + roleName + pause + unrelatedLabels'
             },
         pyatspi.ROLE_PARAGRAPH: {
