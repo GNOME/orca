@@ -203,6 +203,13 @@ class EventManager:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return True
 
+            try:
+                _name = event.source.name
+            except:
+                msg = 'EVENT MANAGER: Ignoring event from dead source'
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+
         if event.type.startswith('object:children-changed:add') \
            or event.type.startswith('object:active-descendant-changed'):
             if role in [pyatspi.ROLE_MENU,
