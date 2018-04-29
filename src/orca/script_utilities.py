@@ -2271,12 +2271,17 @@ class Utilities:
         except:
             return []
 
-        # Eliminate duplicates
+        rootName = root.name
+
+        # Eliminate duplicates and things suspected to be labels for widgets
         d = {}
         for label in labels:
-            if label.name and label.name in [root.name, label.parent.name]:
+            name = label.name
+            if name and name in [rootName, label.parent.name]:
                 continue
-            d[label.name] = label
+            if len(name.split()) < 3:
+                continue
+            d[name] = label
         labels = list(d.values())
 
         return sorted(labels, key=functools.cmp_to_key(self.spatialComparison))
