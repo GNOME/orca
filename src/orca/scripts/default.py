@@ -1741,7 +1741,8 @@ class Script(script.Script):
 
         while True:
             [wordString, x, y, width, height] = context.getCurrent(flat_review.Context.ZONE)
-            speech.speak(wordString)
+            if wordString is not None:
+                speech.speak(wordString)
             moved = context.goNext(flat_review.Context.ZONE, flat_review.Context.WRAP_LINE)
             if not moved:
                 break
