@@ -2012,6 +2012,9 @@ class Script(script.Script):
             self.spellcheck.presentErrorDetails(not basicOnly)
 
         obj = orca_state.locusOfFocus
+        if self.utilities.isDead(obj):
+            obj = orca_state.activeWindow
+
         if not obj or self.utilities.isDead(obj):
             self.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
             return True
