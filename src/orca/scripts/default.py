@@ -1251,7 +1251,15 @@ class Script(script.Script):
     def presentTitle(self, inputEvent):
         """Speaks and brailles the title of the window with focus."""
 
-        title = self.speechGenerator.generateTitle(orca_state.locusOfFocus)
+        obj = orca_state.locusOfFocus
+        if self.utilities.isDead(obj):
+            obj = orca_state.activeWindow
+
+        if not obj or self.utilities.isDead(obj):
+            self.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
+            return True
+
+        title = self.speechGenerator.generateTitle(obj)
         for (string, voice) in title:
             self.presentMessage(string, voice=voice)
 

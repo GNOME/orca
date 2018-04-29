@@ -584,6 +584,9 @@ class Utilities:
 
         results = [None, None]
 
+        if obj.getRole() == pyatspi.ROLE_FRAME:
+            results[0] = obj
+
         parent = obj.parent
         while parent and (parent.parent != parent):
             if parent.getRole() == pyatspi.ROLE_FRAME:
