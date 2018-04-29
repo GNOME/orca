@@ -449,7 +449,7 @@ class SpeechGenerator(generator.Generator):
 
         minimumWords = 1
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_DIALOG:
+        if role in [pyatspi.ROLE_DIALOG, pyatspi.ROLE_PANEL]:
             minimumWords = 3
 
         labels = self._script.utilities.unrelatedLabels(obj, visibleOnly, minimumWords)
