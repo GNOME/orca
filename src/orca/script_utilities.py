@@ -2366,7 +2366,7 @@ class Utilities:
     def findPreviousObject(self, obj):
         """Finds the object before this one."""
 
-        if not obj:
+        if not obj or self.isZombie(obj):
             return None
 
         for relation in obj.getRelationSet():
@@ -2391,7 +2391,7 @@ class Utilities:
     def findNextObject(self, obj):
         """Finds the object after this one."""
 
-        if not obj:
+        if not obj or self.isZombie(obj):
             return None
 
         for relation in obj.getRelationSet():
