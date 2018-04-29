@@ -512,7 +512,7 @@ class Utilities:
         if not displayedText and role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_LIST_ITEM]:
             labels = self.unrelatedLabels(obj)
             if not labels:
-                labels = self.unrelatedLabels(obj, onlyShowing=False)
+                labels = self.unrelatedLabels(obj, onlyShowing=False, minimumWords=1)
             displayedText = " ".join(map(self.displayedText, labels))
 
         if self.DISPLAYED_TEXT not in self._script.generatorCache:
@@ -2240,7 +2240,7 @@ class Utilities:
 
         return False
 
-    def unrelatedLabels(self, root, onlyShowing=True):
+    def unrelatedLabels(self, root, onlyShowing=True, minimumWords=3):
         """Returns a list containing all the unrelated (i.e., have no
         relations to anything and are not a fundamental element of a
         more atomic component like a combo box) labels under the given
@@ -2279,7 +2279,7 @@ class Utilities:
             name = label.name
             if name and name in [rootName, label.parent.name]:
                 continue
-            if len(name.split()) < 3:
+            if len(name.split()) < minimumWords:
                 continue
             d[name] = label
         labels = list(d.values())

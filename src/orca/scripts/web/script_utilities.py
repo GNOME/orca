@@ -1656,9 +1656,9 @@ class Utilities(script_utilities.Utilities):
         keys = map(lambda x: x.replace(" ", "+"), map(self.labelFromKeySequence, keys))
         return ["", " ".join(keys), ""]
 
-    def unrelatedLabels(self, root, onlyShowing=True):
+    def unrelatedLabels(self, root, onlyShowing=True, minimumWords=3):
         if not (root and self.inDocumentContent(root)):
-            return super().unrelatedLabels(root, onlyShowing)
+            return super().unrelatedLabels(root, onlyShowing, minimumWords)
 
         return []
 
