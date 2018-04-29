@@ -510,7 +510,7 @@ class Utilities:
                 pass
 
         if not displayedText and role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_LIST_ITEM]:
-            labels = self.unrelatedLabels(obj)
+            labels = self.unrelatedLabels(obj, minimumWords=1)
             if not labels:
                 labels = self.unrelatedLabels(obj, onlyShowing=False, minimumWords=1)
             displayedText = " ".join(map(self.displayedText, labels))

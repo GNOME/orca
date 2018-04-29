@@ -446,7 +446,13 @@ class SpeechGenerator(generator.Generator):
         result = []
         acss = self.voice(DEFAULT)
         visibleOnly = not self._script.utilities.isStatusBarNotification(obj)
-        labels = self._script.utilities.unrelatedLabels(obj, visibleOnly)
+
+        minimumWords = 1
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_DIALOG:
+            minimumWords = 3
+
+        labels = self._script.utilities.unrelatedLabels(obj, visibleOnly, minimumWords)
         for label in labels:
             name = self._generateName(label, **args)
             if name and len(name[0]) == 1:
