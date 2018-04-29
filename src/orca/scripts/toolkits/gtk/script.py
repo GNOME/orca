@@ -207,6 +207,26 @@ class Script(default.Script):
 
         super().onShowingChanged(event)
 
+    def onTextDeleted(self, event):
+        """Callback for object:text-changed:delete accessibility events."""
+
+        if not self.utilities.isShowingAndVisible(event.source):
+            msg = "GTK: %s is not showing and visible" % event.source
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        super().onTextDeleted(event)
+
+    def onTextInserted(self, event):
+        """Callback for object:text-changed:insert accessibility events."""
+
+        if not self.utilities.isShowingAndVisible(event.source):
+            msg = "GTK: %s is not showing and visible" % event.source
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        super().onTextInserted(event)
+
     def onTextSelectionChanged(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
