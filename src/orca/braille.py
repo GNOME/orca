@@ -107,6 +107,7 @@ _monitor = None
 dontInteruptSpeechKeys = []
 if _brlAPIAvailable:
     dontInteruptSpeechKeys = [brlapi.KEY_CMD_FWINLT, brlapi.KEY_CMD_FWINRT, \
+        brlapi.KEY_CMD_FWINLTSKIP, brlapi.KEY_CMD_FWINRTSKIP, \
         brlapi.KEY_CMD_LNUP, brlapi.KEY_CMD_LNDN]
 
 # Common names for most used BrlTTY commands, to be shown in the GUI:
@@ -115,18 +116,20 @@ if _brlAPIAvailable:
 command_name = {}
 
 if _brlAPIAvailable:
-    command_name[brlapi.KEY_CMD_FWINLT]   = cmdnames.BRAILLE_LINE_LEFT
-    command_name[brlapi.KEY_CMD_FWINRT]   = cmdnames.BRAILLE_LINE_RIGHT
-    command_name[brlapi.KEY_CMD_LNUP]     = cmdnames.BRAILLE_LINE_UP
-    command_name[brlapi.KEY_CMD_LNDN]     = cmdnames.BRAILLE_LINE_DOWN
-    command_name[brlapi.KEY_CMD_FREEZE]   = cmdnames.BRAILLE_FREEZE
-    command_name[brlapi.KEY_CMD_TOP_LEFT] = cmdnames.BRAILLE_TOP_LEFT
-    command_name[brlapi.KEY_CMD_BOT_LEFT] = cmdnames.BRAILLE_BOTTOM_LEFT
-    command_name[brlapi.KEY_CMD_HOME]     = cmdnames.BRAILLE_HOME
-    command_name[brlapi.KEY_CMD_SIXDOTS]  = cmdnames.BRAILLE_SIX_DOTS
-    command_name[brlapi.KEY_CMD_ROUTE]    = cmdnames.BRAILLE_ROUTE_CURSOR
-    command_name[brlapi.KEY_CMD_CUTBEGIN] = cmdnames.BRAILLE_CUT_BEGIN
-    command_name[brlapi.KEY_CMD_CUTLINE]  = cmdnames.BRAILLE_CUT_LINE
+    command_name[brlapi.KEY_CMD_FWINLT]     = cmdnames.BRAILLE_LINE_LEFT
+    command_name[brlapi.KEY_CMD_FWINLTSKIP] = cmdnames.BRAILLE_LINE_LEFT
+    command_name[brlapi.KEY_CMD_FWINRT]     = cmdnames.BRAILLE_LINE_RIGHT
+    command_name[brlapi.KEY_CMD_FWINRTSKIP] = cmdnames.BRAILLE_LINE_RIGHT
+    command_name[brlapi.KEY_CMD_LNUP]       = cmdnames.BRAILLE_LINE_UP
+    command_name[brlapi.KEY_CMD_LNDN]       = cmdnames.BRAILLE_LINE_DOWN
+    command_name[brlapi.KEY_CMD_FREEZE]     = cmdnames.BRAILLE_FREEZE
+    command_name[brlapi.KEY_CMD_TOP_LEFT]   = cmdnames.BRAILLE_TOP_LEFT
+    command_name[brlapi.KEY_CMD_BOT_LEFT]   = cmdnames.BRAILLE_BOTTOM_LEFT
+    command_name[brlapi.KEY_CMD_HOME]       = cmdnames.BRAILLE_HOME
+    command_name[brlapi.KEY_CMD_SIXDOTS]    = cmdnames.BRAILLE_SIX_DOTS
+    command_name[brlapi.KEY_CMD_ROUTE]      = cmdnames.BRAILLE_ROUTE_CURSOR
+    command_name[brlapi.KEY_CMD_CUTBEGIN]   = cmdnames.BRAILLE_CUT_BEGIN
+    command_name[brlapi.KEY_CMD_CUTLINE]    = cmdnames.BRAILLE_CUT_LINE
 
 # The size of the physical display (width, height).  The coordinate system of
 # the display is set such that the upper left is (0,0), x values increase from

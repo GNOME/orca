@@ -676,29 +676,33 @@ class Script(script.Script):
         """
         brailleBindings = script.Script.getBrailleBindings(self)
         try:
-            brailleBindings[braille.brlapi.KEY_CMD_FWINLT]   = \
+            brailleBindings[braille.brlapi.KEY_CMD_FWINLT]     = \
                 self.inputEventHandlers["panBrailleLeftHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_FWINRT]   = \
+            brailleBindings[braille.brlapi.KEY_CMD_FWINLTSKIP] = \
+                self.inputEventHandlers["panBrailleLeftHandler"]
+            brailleBindings[braille.brlapi.KEY_CMD_FWINRT]     = \
                 self.inputEventHandlers["panBrailleRightHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_LNUP]     = \
+            brailleBindings[braille.brlapi.KEY_CMD_FWINRTSKIP] = \
+                self.inputEventHandlers["panBrailleRightHandler"]
+            brailleBindings[braille.brlapi.KEY_CMD_LNUP]       = \
                 self.inputEventHandlers["reviewAboveHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_LNDN]     = \
+            brailleBindings[braille.brlapi.KEY_CMD_LNDN]       = \
                 self.inputEventHandlers["reviewBelowHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_FREEZE]   = \
+            brailleBindings[braille.brlapi.KEY_CMD_FREEZE]     = \
                 self.inputEventHandlers["toggleFlatReviewModeHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_TOP_LEFT] = \
+            brailleBindings[braille.brlapi.KEY_CMD_TOP_LEFT]   = \
                 self.inputEventHandlers["reviewHomeHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_BOT_LEFT] = \
+            brailleBindings[braille.brlapi.KEY_CMD_BOT_LEFT]   = \
                 self.inputEventHandlers["reviewBottomLeftHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_HOME]     = \
+            brailleBindings[braille.brlapi.KEY_CMD_HOME]       = \
                 self.inputEventHandlers["goBrailleHomeHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_SIXDOTS]   = \
+            brailleBindings[braille.brlapi.KEY_CMD_SIXDOTS]     = \
                 self.inputEventHandlers["contractedBrailleHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_ROUTE]   = \
+            brailleBindings[braille.brlapi.KEY_CMD_ROUTE]     = \
                 self.inputEventHandlers["processRoutingKeyHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_CUTBEGIN] = \
+            brailleBindings[braille.brlapi.KEY_CMD_CUTBEGIN]   = \
                 self.inputEventHandlers["processBrailleCutBeginHandler"]
-            brailleBindings[braille.brlapi.KEY_CMD_CUTLINE] = \
+            brailleBindings[braille.brlapi.KEY_CMD_CUTLINE]   = \
                 self.inputEventHandlers["processBrailleCutLineHandler"]
         except AttributeError:
             msg = 'DEFAULT: Braille bindings unavailable in %s' % self
