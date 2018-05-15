@@ -303,6 +303,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 doNotSpeak.append(pyatspi.ROLE_LIST)
             if (start or end):
                 doNotSpeak.append(pyatspi.ROLE_DOCUMENT_FRAME)
+                doNotSpeak.append(pyatspi.ROLE_DOCUMENT_WEB)
                 doNotSpeak.append(pyatspi.ROLE_ALERT)
             if self._script.utilities.isAnchor(obj):
                 doNotSpeak.append(obj.getRole())
