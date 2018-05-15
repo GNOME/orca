@@ -190,6 +190,11 @@ formatting = {
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
             'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
             },
+        pyatspi.ROLE_DOCUMENT_WEB: {
+            'unfocused': 'label + readOnly + textRole + currentLineText + anyTextSelection + ' + MNEMONIC,
+            'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + ' + MNEMONIC,
+            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
+            },
         'ROLE_DPUB_LANDMARK': {
             'focused': 'leaving or labelOrName',
             'unfocused': 'labelOrName + currentLineText + allTextSelection'
