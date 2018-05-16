@@ -141,8 +141,8 @@ formatting = {
             'unfocused': 'roleName + pause + nestingLevel + pause + displayedText',
             },
         pyatspi.ROLE_CANVAS: {
-            'focused': 'labelAndName + imageDescription + roleName + pause + positionInList',
-            'unfocused': 'labelAndName + imageDescription + roleName + pause + positionInList',
+            'focused': 'labelAndName + (imageDescription or roleName) + pause + positionInList',
+            'unfocused': 'labelAndName + (imageDescription or roleName) + pause + positionInList',
             'basicWhereAmI': 'parentRoleName + pause + labelAndName + pause + selectedItemCount + pause',
             'detailedWhereAmI': 'parentRoleName + pause + labelAndName + pause + selectedItemCount + pause + selectedItems + pause'
             },
@@ -237,8 +237,8 @@ formatting = {
             'detailedWhereAmI': 'label + readOnly + textRole + pause + textContentWithAttributes + anyTextSelection + ' + MNEMONIC
             },
         pyatspi.ROLE_ICON: {
-            'focused': 'labelAndName + imageDescription + roleName + pause + positionInList',
-            'unfocused': 'labelAndName + imageDescription + roleName + pause + positionInList',
+            'focused': 'labelAndName + (imageDescription or roleName) + pause + positionInList',
+            'unfocused': 'labelAndName + (imageDescription or roleName) + pause + positionInList',
             'basicWhereAmI': 'parentRoleName + pause + labelAndName + pause + selectedItemCount + pause',
             'detailedWhereAmI': 'parentRoleName + pause + labelAndName + pause + selectedItemCount + pause + selectedItems + pause'
             },
