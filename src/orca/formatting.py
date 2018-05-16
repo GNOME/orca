@@ -258,10 +258,10 @@ formatting = {
             'unfocused': '((substring and currentLineText) or labelAndName) + roleName + pause + unrelatedLabels'
             },
         pyatspi.ROLE_LAYERED_PANE: {
-            'focused': 'labelAndName + roleName + availability + noShowingChildren',
-            'unfocused': 'labelAndName + roleName + availability + noShowingChildren',
-            'basicWhereAmI': 'labelAndName + pause + roleName + pause + selectedItemCount + pause',
-            'detailedWhereAmI': 'labelAndName + pause + roleName + pause + selectedItemCount + pause + selectedItems + pause'
+            'focused': '(labelAndName or roleName) + availability + noShowingChildren',
+            'unfocused': '(labelAndName or roleName) + availability + noShowingChildren',
+            'basicWhereAmI': '(labelAndName or roleName) + pause + selectedItemCount + pause',
+            'detailedWhereAmI': '(labelAndName or roleName) + pause + roleName + pause + selectedItemCount + pause + selectedItems + pause'
             },
         pyatspi.ROLE_LINK: {
             'unfocused': '(name or displayedText) + roleName + pause + expandableState + availability + ' + MNEMONIC,
