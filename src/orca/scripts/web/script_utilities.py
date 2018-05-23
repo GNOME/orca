@@ -3699,7 +3699,23 @@ class Utilities(script_utilities.Utilities):
         if not _settingsManager.getSetting('inferLiveRegions'):
             return False
 
-        return self.isLiveRegion(event.source)
+        if not self.isLiveRegion(event.source):
+            return False
+
+        if isinstance(event.any_data, pyatspi.Accessible):
+            try:
+                role = event.any_data.getRole()
+            except:
+                msg = "WEB: Exception getting role for %s" % event.any_data
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+
+            if role == pyatspi.ROLE_UNKNOWN and not self._getTag(event.any_data):
+                msg = "WEB: Child has unknown role and no tag %s" % event.any_data
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return False
+
+        return True
 
     def getPageObjectCount(self, obj):
         result = {'landmarks': 0,
