@@ -4666,6 +4666,9 @@ class Utilities:
         if not event.type.startswith("object:text-changed:delete"):
             return False
 
+        if self.isHidden(event.source):
+            return False
+
         keyString, mods = self.lastKeyAndModifiers()
         if keyString == "BackSpace":
             return True
