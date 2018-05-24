@@ -762,7 +762,7 @@ class Utilities(script_utilities.Utilities):
                     continue
 
                 childText = ""
-                if not self._preserveTree(child):
+                if True or not self._preserveTree(child):
                     childText = self.expandEOCs(child)
                 else:
                     utterances = self._script.speechGenerator.generateSpeech(child)
