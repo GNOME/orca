@@ -169,6 +169,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and not self._script.utilities.isDPub(obj):
             return []
 
+        if obj.parent and obj.name == obj.parent.name:
+            return []
+
         # TODO - JD: Once the formatting strings are vastly cleaned up
         # or simply removed, hacks like this won't be needed.
         role = args.get('role', obj.getRole())
