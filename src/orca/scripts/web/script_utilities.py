@@ -743,8 +743,11 @@ class Utilities(script_utilities.Utilities):
         if not text:
             return ""
 
-        string = text.getText(startOffset, endOffset)
+        if self._preserveTree(obj):
+            utterances = self._script.speechGenerator.generateSpeech(obj)
+            return self._script.speechGenerator.utterancesToString(utterances)
 
+        string = text.getText(startOffset, endOffset)
         if self.EMBEDDED_OBJECT_CHARACTER in string:
             # If we're not getting the full text of this object, but
             # rather a substring, we need to figure out the offset of
@@ -758,19 +761,12 @@ class Utilities(script_utilities.Utilities):
             toBuild = list(string)
             count = toBuild.count(self.EMBEDDED_OBJECT_CHARACTER)
             for i in range(count):
-                index = toBuild.index(self.EMBEDDED_OBJECT_CHARACTER)
                 try:
                     child = obj[i + childOffset]
                 except:
                     continue
-
-                childText = ""
-                if not self._preserveTree(child):
-                    childText = self.expandEOCs(child)
-                else:
-                    utterances = self._script.speechGenerator.generateSpeech(child)
-                    childText = self._script.speechGenerator.utterancesToString(utterances)
-                toBuild[index] = "%s " % childText
+                index = toBuild.index(self.EMBEDDED_OBJECT_CHARACTER)
+                toBuild[index] = "%s " % self.expandEOCs(child)
 
             string = "".join(toBuild).strip()
 
