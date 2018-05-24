@@ -727,6 +727,9 @@ class Utilities(script_utilities.Utilities):
         return [ext.x, ext.y, ext.width, ext.height]
 
     def _preserveTree(self, obj):
+        if not (obj and obj.childCount):
+            return False
+
         if self.isMathTopLevel(obj):
             return True
 
@@ -762,7 +765,7 @@ class Utilities(script_utilities.Utilities):
                     continue
 
                 childText = ""
-                if True or not self._preserveTree(child):
+                if not self._preserveTree(child):
                     childText = self.expandEOCs(child)
                 else:
                     utterances = self._script.speechGenerator.generateSpeech(child)
