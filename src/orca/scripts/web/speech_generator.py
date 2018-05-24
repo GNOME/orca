@@ -352,6 +352,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.append(self.getLocalizedRoleName(obj, **args))
             result.extend(acss)
 
+        if self._script.utilities.isMath(obj) and not self._script.utilities.isMathTopLevel(obj):
+            return result
+
         index = args.get('index', 0)
         total = args.get('total', 1)
         ancestorRoles = [pyatspi.ROLE_HEADING, pyatspi.ROLE_LINK]
