@@ -1754,6 +1754,9 @@ class Utilities(script_utilities.Utilities):
             if string and string != self.EMBEDDED_OBJECT_CHARACTER:
                 return True
 
+        if role == pyatspi.ROLE_PANEL and not childCount:
+            return True
+
         rv = self._treatAsDiv.get(hash(obj))
         if rv is not None:
             return rv
