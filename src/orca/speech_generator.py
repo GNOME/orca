@@ -2552,3 +2552,13 @@ class SpeechGenerator(generator.Generator):
                 voice.update(override)
 
         return [voice]
+
+    def utterancesToString(self, utterances):
+        string = ""
+        for u in utterances:
+            if isinstance(u, str):
+                string += " %s" % u
+            elif isinstance(u, Pause) and string and string[-1].isalnum():
+                string += "."
+
+        return string.strip()

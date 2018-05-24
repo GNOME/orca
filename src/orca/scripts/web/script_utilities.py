@@ -726,6 +726,12 @@ class Utilities(script_utilities.Utilities):
 
         return [ext.x, ext.y, ext.width, ext.height]
 
+    def _preserveTree(self, obj):
+        if self.isMathTopLevel(obj):
+            return True
+
+        return False
+
     def expandEOCs(self, obj, startOffset=0, endOffset=-1):
         if not self.inDocumentContent(obj):
             return super().expandEOCs(obj, startOffset, endOffset)
@@ -754,9 +760,13 @@ class Utilities(script_utilities.Utilities):
                     child = obj[i + childOffset]
                 except:
                     continue
-                childText = self.expandEOCs(child)
-                if not childText:
-                    childText = ""
+
+                childText = ""
+                if not self._preserveTree(child):
+                    childText = self.expandEOCs(child)
+                else:
+                    utterances = self._script.speechGenerator.generateSpeech(child)
+                    childText = self._script.speechGenerator.utterancesToString(utterances)
                 toBuild[index] = "%s " % childText
 
             string = "".join(toBuild).strip()
