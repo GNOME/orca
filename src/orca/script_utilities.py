@@ -2890,7 +2890,6 @@ class Utilities:
         """
 
         from . import punctuation_settings
-        from . import chnames
 
         style = settings.verbalizePunctuationStyle
         isPunctChar = True
@@ -2997,6 +2996,11 @@ class Utilities:
         if settings.speakNumbersAsDigits:
             words = self.WORDS_RE.split(line)
             line = ''.join(map(self._convertWordToDigits, words))
+
+        if len(line) == 1:
+            charname = chnames.getCharacterName(line)
+            if charname != line:
+                return charname
 
         if not settings.usePronunciationDictionary:
             return line
