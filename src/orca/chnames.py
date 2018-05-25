@@ -800,7 +800,7 @@ chnames['\ue00c'] = _("black diamond")
 #
 chnames['\ufffc'] = _("object replacement character")
 
-def getCharacterName(character):
+def getCharacterName(character, preferMath=False):
     """Given a character, return its name as people might refer to it
     in ordinary conversation.
 
@@ -814,7 +814,7 @@ def getCharacterName(character):
     charName = chnames.get(character)
     if not (charName or mathName):
         return character
-    if mathName and not charName:
+    if mathName and (not charName or preferMath):
         return mathName
     if charName and not mathName:
         return charName

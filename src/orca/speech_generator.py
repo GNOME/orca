@@ -992,7 +992,7 @@ class SpeechGenerator(generator.Generator):
         if result:
             string = result[0].strip()
             if len(string) == 1 and self._script.utilities.isMath(obj):
-                charname = chnames.getCharacterName(string)
+                charname = chnames.getCharacterName(string, preferMath=True)
                 if charname != string:
                     result[0] = charname
 
