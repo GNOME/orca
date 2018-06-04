@@ -169,7 +169,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and not self._script.utilities.isDPub(obj):
             return []
 
-        if obj.parent and obj.name and obj.name == obj.parent.name:
+        if obj.parent and obj.name and obj.name == obj.parent.name \
+           and obj != orca_state.locusOfFocus:
             return []
 
         # TODO - JD: Once the formatting strings are vastly cleaned up
