@@ -1413,6 +1413,8 @@ class Utilities:
             layoutOnly = True
         elif role == pyatspi.ROLE_SCROLL_PANE:
             layoutOnly = True
+        elif role == pyatspi.ROLE_LAYERED_PANE:
+            layoutOnly = self.isDesktop(self.topLevelObject(obj))
         elif role == pyatspi.ROLE_AUTOCOMPLETE:
             layoutOnly = True
         elif role in [pyatspi.ROLE_TEAROFF_MENU_ITEM, pyatspi.ROLE_SEPARATOR]:
