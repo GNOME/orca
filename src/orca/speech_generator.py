@@ -357,6 +357,9 @@ class SpeechGenerator(generator.Generator):
         if self._script.utilities.isStatusBarNotification(obj):
             return []
 
+        if self._script.utilities.isDesktop(obj):
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         role = args.get('role', obj.getRole())

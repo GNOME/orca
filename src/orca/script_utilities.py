@@ -686,6 +686,26 @@ class Utilities:
     def isAnchor(self, obj):
         return False
 
+    def isDesktop(self, obj):
+        try:
+            role = obj.getRole()
+        except:
+            msg = 'ERROR: Exception getting role of %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role != pyatspi.ROLE_FRAME:
+            return False
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            msg = 'ERROR: Exception getting attributes of %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return attrs.get('is-desktop') == 'true'
+
     def isComboBoxWithToggleDescendant(self, obj):
         return False
 
