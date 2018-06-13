@@ -341,7 +341,7 @@ class KeyboardEvent(InputEvent):
         if not self.event_string in lockingKeys:
             return False
 
-        if not orca_state.bypassNextCommand:
+        if not orca_state.bypassNextCommand and not self._bypassOrca:
             return not self.event_string in settings.orcaModifierKeys
 
         return True
@@ -635,6 +635,11 @@ class KeyboardEvent(InputEvent):
         """Processes this input event."""
 
         if self._bypassOrca:
+            if self.event_string == "Caps_Lock" \
+               and self.type == pyatspi.KEY_PRESSED_EVENT:
+                    self._lock_mod()
+                    self.keyType = KeyboardEvent.TYPE_LOCKING
+                    self._present()
             return False, 'Bypassed orca modifier'
 
         orca_state.lastInputEvent = self
@@ -674,6 +679,25 @@ class KeyboardEvent(InputEvent):
             return True, 'Will be consumed'
 
         return False, 'Unaddressed case'
+
+    def _lock_mod(self):
+        def lock_mod(modifiers):
+            def lockit():
+                try:
+                    modifier = (1 << pyatspi.MODIFIER_SHIFTLOCK)
+                    if modifiers & modifier:
+                        lock = pyatspi.KEY_UNLOCKMODIFIERS
+                        debug.println(debug.LEVEL_INFO, "locking capslock", True)
+                    else:
+                        lock = pyatspi.KEY_LOCKMODIFIERS
+                        debug.println(debug.LEVEL_INFO, "unlocking capslock", True)
+                    pyatspi.Registry.generateKeyboardEvent(modifier, None, lock)
+                    debug.println(debug.LEVEL_INFO, "done with capslock", True)
+                except:
+                    pass
+            return lockit
+        debug.println(debug.LEVEL_INFO, "scheduling capslock", True)
+        GLib.timeout_add(1, lock_mod(self.modifiers))
 
     def _consume(self):
         startTime = time.time()
