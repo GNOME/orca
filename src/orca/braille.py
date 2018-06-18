@@ -585,6 +585,9 @@ class Text(Region):
         True.  Otherwise, return False.
         """
 
+        if not _regionWithFocus:
+            return False
+
         [string, caretOffset, lineOffset] = \
                  orca_state.activeScript.getTextLineAtCaret(self.accessible,
                                                             self.startOffset)
