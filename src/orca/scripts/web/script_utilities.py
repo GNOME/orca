@@ -801,6 +801,9 @@ class Utilities(script_utilities.Utilities):
         match = [x for x in matches if x[1] <= offset < x[2]]
         if match and match[0] and match[0] in contents:
             return contents.index(match[0])
+        match = [x for x in matches if offset == x[2]]
+        if match and match[0] and match[0] in contents:
+            return contents.index(match[0])
 
         if not self.isTextBlockElement(obj):
             return -1
