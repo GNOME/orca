@@ -1437,6 +1437,9 @@ def _getRangeForOffset(offset):
     for r in ranges:
         if r[0] <= offset < r[1]:
             return r
+    for r in ranges:
+        if offset == r[1]:
+            return r
 
     return [0, 0]
 
