@@ -530,7 +530,7 @@ class Text(Region):
         if orca_state.activeScript and self.accessible:
             [string, self.caretOffset, self.lineOffset] = \
                  orca_state.activeScript.getTextLineAtCaret(
-                     self.accessible, startOffset=startOffset, endOffset=endOffset)
+                     self.accessible, offset=startOffset, startOffset=startOffset, endOffset=endOffset)
         else:
             string = ""
             self.caretOffset = 0
@@ -589,8 +589,7 @@ class Text(Region):
             return False
 
         [string, caretOffset, lineOffset] = \
-                 orca_state.activeScript.getTextLineAtCaret(self.accessible,
-                                                            self.startOffset)
+                 orca_state.activeScript.getTextLineAtCaret(self.accessible)
 
         cursorOffset = min(caretOffset - lineOffset, len(string))
 
