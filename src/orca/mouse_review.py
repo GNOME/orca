@@ -154,6 +154,14 @@ class _ItemContext:
 
         return _StringContext(self._obj, self._script, string, start, end)
 
+    def _getContainer(self):
+        roles = [pyatspi.ROLE_DIALOG,
+                 pyatspi.ROLE_FRAME,
+                 pyatspi.ROLE_PAGE_TAB,
+                 pyatspi.ROLE_WINDOW]
+        isContainer = lambda x: x and x.getRole() in roles
+        return pyatspi.findAncestor(self._obj, isContainer)
+
     def present(self, prior):
         """Presents this context to the user."""
 
@@ -173,7 +181,8 @@ class _ItemContext:
             return True
 
         if self._obj and self._obj != prior._obj:
-            self._script.presentObject(self._obj)
+            priorObj = prior._obj or self._getContainer()
+            self._script.presentObject(self._obj, priorObj=priorObj)
 
         return True
 
