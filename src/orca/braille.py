@@ -530,7 +530,7 @@ class Text(Region):
         if orca_state.activeScript and self.accessible:
             [string, self.caretOffset, self.lineOffset] = \
                  orca_state.activeScript.getTextLineAtCaret(
-                     self.accessible, startOffset=startOffset, endOffset=endOffset)
+                     self.accessible, offset=startOffset, startOffset=startOffset, endOffset=endOffset)
         else:
             string = ""
             self.caretOffset = 0
@@ -585,9 +585,11 @@ class Text(Region):
         True.  Otherwise, return False.
         """
 
+        if not _regionWithFocus:
+            return False
+
         [string, caretOffset, lineOffset] = \
-                 orca_state.activeScript.getTextLineAtCaret(self.accessible,
-                                                            self.startOffset)
+                 orca_state.activeScript.getTextLineAtCaret(self.accessible)
 
         cursorOffset = min(caretOffset - lineOffset, len(string))
 
@@ -1175,7 +1177,7 @@ def refresh(panToCursor=True,
     # right of the display if we need to pan right.
     #
     if panToCursor and (cursorOffset >= 0):
-        if len(string) <= _displaySize[0]:
+        if cursorOffset < _displaySize[0]:
             viewport[0] = 0
         elif targetCursorCell:
             viewport[0] = max(0, cursorOffset - targetCursorCell + 1)
@@ -1186,6 +1188,8 @@ def refresh(panToCursor=True,
         else:
             rangeForOffset = _getRangeForOffset(cursorOffset)
             viewport[0] = max(0, rangeForOffset[0])
+            if cursorOffset >= (viewport[0] + _displaySize[0]):
+                viewport[0] = max(0, cursorOffset - _displaySize[0] + 1)
 
     startPos, endPos = _adjustForWordWrap()
     viewport[0] = startPos
@@ -1433,6 +1437,9 @@ def _getRangeForOffset(offset):
     string, focusOffset, attributeMask, ranges = _lines[viewport[1]].getLineInfo()
     for r in ranges:
         if r[0] <= offset < r[1]:
+            return r
+    for r in ranges:
+        if offset == r[1]:
             return r
 
     return [0, 0]
