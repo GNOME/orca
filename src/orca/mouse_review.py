@@ -292,6 +292,9 @@ class MouseReviewer:
 
         window = None
         for w in self._windows:
+            if w.is_minimized():
+                continue
+
             x, y, width, height = w.get_geometry()
             if x <= pX <= x + width and y <= pY <= y + height:
                 window = w
