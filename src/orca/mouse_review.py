@@ -157,6 +157,7 @@ class _ItemContext:
     def _getContainer(self):
         roles = [pyatspi.ROLE_DIALOG,
                  pyatspi.ROLE_FRAME,
+                 pyatspi.ROLE_LAYERED_PANE,
                  pyatspi.ROLE_PAGE_TAB,
                  pyatspi.ROLE_WINDOW]
         isContainer = lambda x: x and x.getRole() in roles
