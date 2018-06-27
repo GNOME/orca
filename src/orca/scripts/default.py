@@ -3591,10 +3591,7 @@ class Script(script.Script):
         except NotImplementedError:
             return ["", 0, 0]
 
-        if offset is None:
-            offset = max(0, text.caretOffset)
-
-        # The offset might be positioned at the very end of the text area.
+        # The caret might be positioned at the very end of the text area.
         # In these cases, calling text.getTextAtOffset on an offset that's
         # not positioned to a character can yield unexpected results.  In
         # particular, we'll see the Gecko toolkit return a start and end
@@ -3608,16 +3605,17 @@ class Script(script.Script):
         # to see if that character is a newline - if it is, we'll treat it
         # as the line.
         #
-        if offset == text.characterCount:
-            offset = max(0, offset - 1)
-            character = text.getText(offset, offset + 1)
+        if text.caretOffset == text.characterCount:
+            caretOffset = max(0, text.caretOffset - 1)
+            character = text.getText(caretOffset, caretOffset + 1)
         else:
+            caretOffset = text.caretOffset
             character = None
 
-        if (offset == text.characterCount) \
+        if (text.caretOffset == text.characterCount) \
             and (character == "\n"):
             lineString = ""
-            startOffset = offset
+            startOffset = caretOffset
         else:
             # Get the line containing the caret.  [[[TODO: HACK WDW - If
             # there's only 1 character in the string, well, we get it.  We
@@ -3625,14 +3623,14 @@ class Script(script.Script):
             # is broken if there is just one character in the string.]]]
             #
             if (text.characterCount == 1):
-                lineString = text.getText(offset, offset + 1)
-                startOffset = offset
+                lineString = text.getText(caretOffset, caretOffset + 1)
+                startOffset = caretOffset
             else:
-                if offset == -1:
-                    offset = text.characterCount
+                if caretOffset == -1:
+                    caretOffset = text.characterCount
                 try:
                     [lineString, startOffset, endOffset] = text.getTextAtOffset(
-                        offset, pyatspi.TEXT_BOUNDARY_LINE_START)
+                        caretOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
                 except:
                     return ["", 0, 0]
 
