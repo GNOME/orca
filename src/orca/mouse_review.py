@@ -131,14 +131,23 @@ class _ItemContext:
         debug.println(debug.LEVEL_INFO, msg, True)
         return True
 
+    def _treatAsSingleObject(self):
+        interfaces = pyatspi.listInterfaces(self._obj)
+        if "Text" not in interfaces:
+            return True
+
+        if self._obj.getRole() == pyatspi.ROLE_LABEL:
+            return True
+
+        return False
+
     def _getStringContext(self):
         """Returns the _StringContext associated with the specified point."""
 
         if not (self._script and self._obj):
             return _StringContext(self._obj)
 
-        interfaces = pyatspi.listInterfaces(self._obj)
-        if "Text" not in interfaces:
+        if self._treatAsSingleObject():
             return _StringContext(self._obj, self._script)
 
         state = self._obj.getState()
