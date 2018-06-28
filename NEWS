@@ -1,3 +1,26 @@
+3.28.2 - 28 June 2018
+
+Web + Email:
+
+ * Update Orca to handle "document web" role now used in Gecko
+
+General:
+
+ * Fix bug causing certain combo boxes to not be presented
+
+Braille:
+
+ * Fix braille word wrap being incorrectly enabled
+
+ * Fix brlmon regression introduced by 71b63379f
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                 Marek Cernocky
+    de            German                Tim Sabsch
+
+=========
+
 3.28.1 - 21 April 2018
 
 Web + Email:
