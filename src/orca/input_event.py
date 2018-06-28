@@ -68,6 +68,11 @@ class KeyboardEvent(InputEvent):
     duplicateCount = 0
     orcaModifierPressed = False
 
+    # Whether last press of the Orca modifier was alone
+    lastOrcaModifierAlone = False
+    # Whether the current press of the Orca modifier is alone
+    currentOrcaModifierAlone = False
+
     TYPE_UNKNOWN          = "unknown"
     TYPE_PRINTABLE        = "printable"
     TYPE_MODIFIER         = "modifier"
@@ -109,6 +114,7 @@ class KeyboardEvent(InputEvent):
         self._consume_reason = None
         self._did_consume = None
         self._result_reason = None
+        self._bypassOrca = None
 
         if self._script:
             self._script.checkKeyboardEventData(self)
@@ -145,6 +151,12 @@ class KeyboardEvent(InputEvent):
             role = None
         _mayEcho = _isPressed or role == pyatspi.ROLE_TERMINAL
 
+        if not self.isOrcaModifier():
+            if KeyboardEvent.orcaModifierPressed:
+                KeyboardEvent.currentOrcaModifierAlone = False
+            else:
+                KeyboardEvent.lastOrcaModifierAlone = False
+
         if self.isNavigationKey():
             self.keyType = KeyboardEvent.TYPE_NAVIGATION
             self.shouldEcho = _mayEcho and settings.enableNavigationKeys
@@ -155,7 +167,17 @@ class KeyboardEvent(InputEvent):
             self.keyType = KeyboardEvent.TYPE_MODIFIER
             self.shouldEcho = _mayEcho and settings.enableModifierKeys
             if self.isOrcaModifier():
-                KeyboardEvent.orcaModifierPressed = _isPressed
+                if KeyboardEvent.lastOrcaModifierAlone:
+                    # double-orca, let the real action happen
+                    self._bypassOrca = True
+                    if not _isPressed:
+                        KeyboardEvent.lastOrcaModifierAlone = False
+                else:
+                    KeyboardEvent.orcaModifierPressed = _isPressed
+                    if _isPressed:
+                        KeyboardEvent.currentOrcaModifierAlone = True
+                    else:
+                        KeyboardEvent.lastOrcaModifierAlone = KeyboardEvent.currentOrcaModifierAlone
         elif self.isFunctionKey():
             self.keyType = KeyboardEvent.TYPE_FUNCTION
             self.shouldEcho = _mayEcho and settings.enableFunctionKeys
@@ -611,6 +633,9 @@ class KeyboardEvent(InputEvent):
 
     def _process(self):
         """Processes this input event."""
+
+        if self._bypassOrca:
+            return False, 'Bypassed orca modifier'
 
         orca_state.lastInputEvent = self
         if not self.isModifierKey():
