@@ -356,7 +356,14 @@ class MouseReviewer:
         if not script:
             return
 
-        obj = script.utilities.descendantAtPoint(window, pX, pY)
+        isMenu = lambda x: x and x.getRole() == pyatspi.ROLE_MENU
+        if isMenu(orca_state.locusOfFocus):
+            menu = orca_state.locusOfFocus
+        else:
+            menu = pyatspi.findAncestor(orca_state.locusOfFocus, isMenu)
+
+        obj = script.utilities.descendantAtPoint(menu, pX, pY) \
+            or script.utilities.descendantAtPoint(window, pX, pY)
         msg = "MOUSE REVIEW: Object at (%i, %i) is %s" % (pX, pY, obj)
         debug.println(debug.LEVEL_INFO, msg, True)
 
