@@ -18,7 +18,9 @@
     impacts which key is used as the Orca Modifier. If you are using the Laptop
     layout, the default Orca Modifier will be <key>CapsLock</key>. If you are
     using <app>Orca</app>'s Laptop Layout and want to lock or unlock
-    <key>CapsLock</key>, you can do so by performing the following steps:
+    <key>CapsLock</key>, you can do so by either typing <key>CapsLock</key>
+    twice (requires at-spi2 version 2.30 or later), or by performing the
+    following steps:
   </p>
   <steps>
     <title>Toggling CapsLock in Laptop Layout</title>
