@@ -3614,6 +3614,32 @@ class Utilities:
 
         return self.popupMenuFor(obj) is not None
 
+    def inContextMenu(self, obj=None):
+        obj = obj or orca_state.locusOfFocus
+        if not obj:
+            return False
+
+        roles = [pyatspi.ROLE_MENU,
+                 pyatspi.ROLE_MENU_ITEM,
+                 pyatspi.ROLE_CHECK_MENU_ITEM,
+                 pyatspi.ROLE_RADIO_MENU_ITEM,
+                 pyatspi.ROLE_TEAROFF_MENU_ITEM,
+                 pyatspi.ROLE_PANEL,
+                 pyatspi.ROLE_SEPARATOR]
+        if obj.getRole() not in roles:
+            return False
+
+        return pyatspi.findAncestor(obj, self.isContextMenu) is not None
+
+    def _contextMenuParentRoles(self):
+        return pyatspi.ROLE_FRAME, pyatspi.ROLE_WINDOW
+
+    def isContextMenu(self, obj):
+        if not (obj and obj.getRole() == pyatspi.ROLE_MENU):
+            return False
+
+        return obj.parent and obj.parent.getRole() in self._contextMenuParentRoles()
+
     def isEntryCompletionPopupItem(self, obj):
         return False
 
