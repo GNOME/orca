@@ -2455,12 +2455,19 @@ class Script(script.Script):
             if entry and entry.getState().contains(pyatspi.STATE_FOCUSED):
                 return
  
+        mouseReviewItem = mouse_review.reviewer.getCurrentItem()
         selectedChildren = self.utilities.selectedChildren(obj)
         for child in selectedChildren:
             if pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == child):
                 msg = "DEFAULT: Child %s is ancestor of locusOfFocus" % child
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return
+
+            if child == mouseReviewItem:
+                msg = "DEFAULT: Child %s is current mouse review item" % child
+                debug.println(debug.LEVEL_INFO, msg, True)
+                continue
+
             if not self.utilities.isLayoutOnly(child):
                 orca.setLocusOfFocus(event, child)
                 break

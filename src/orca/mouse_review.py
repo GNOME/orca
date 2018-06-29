@@ -172,6 +172,11 @@ class _ItemContext:
         isContainer = lambda x: x and x.getRole() in roles
         return pyatspi.findAncestor(self._obj, isContainer)
 
+    def getObject(self):
+        """Returns the accessible object associated with this context."""
+
+        return self._obj
+
     def present(self, prior):
         """Presents this context to the user."""
 
@@ -247,6 +252,14 @@ class MouseReviewer:
         for key, value in self._handlerIds.items():
             value.disconnect(key)
         self._handlerIds = {}
+
+    def getCurrentItem(self):
+        """Returns the accessible object being reviewed."""
+
+        if not _mouseReviewCapable:
+            return None
+
+        return self._currentMouseOver.getObject()
 
     def toggle(self, script=None, event=None):
         """Toggle mouse reviewing on or off."""

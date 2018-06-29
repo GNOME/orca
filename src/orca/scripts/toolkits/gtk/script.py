@@ -29,6 +29,7 @@ import pyatspi
 import time
 
 import orca.debug as debug
+import orca.mouse_review as mouse_review
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.default as default
@@ -118,6 +119,11 @@ class Script(default.Script):
             return
 
         if self.utilities.isLayoutOnly(event.source):
+            return
+
+        if event.source == mouse_review.reviewer.getCurrentItem():
+            msg = "GTK: Event source is current mouse review item"
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         if self.utilities.isTypeahead(orca_state.locusOfFocus) \
