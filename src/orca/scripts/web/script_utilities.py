@@ -792,7 +792,7 @@ class Utilities(script_utilities.Utilities):
 
         return attrs
 
-    def findObjectInContents(self, obj, offset, contents):
+    def findObjectInContents(self, obj, offset, contents, usingCache=False):
         if not obj or not contents:
             return -1
 
@@ -801,6 +801,10 @@ class Utilities(script_utilities.Utilities):
         match = [x for x in matches if x[1] <= offset < x[2]]
         if match and match[0] and match[0] in contents:
             return contents.index(match[0])
+        if not usingCache:
+            match = [x for x in matches if offset == x[2]]
+            if match and match[0] and match[0] in contents:
+                return contents.index(match[0])
 
         if not self.isTextBlockElement(obj):
             return -1
@@ -1113,7 +1117,7 @@ class Utilities(script_utilities.Utilities):
         offset = max(0, offset)
 
         if useCache:
-            if self.findObjectInContents(obj, offset, self._currentSentenceContents) != -1:
+            if self.findObjectInContents(obj, offset, self._currentSentenceContents, usingCache=True) != -1:
                 return self._currentSentenceContents
 
         boundary = pyatspi.TEXT_BOUNDARY_SENTENCE_START
@@ -1181,7 +1185,7 @@ class Utilities(script_utilities.Utilities):
         offset = max(0, offset)
 
         if useCache:
-            if self.findObjectInContents(obj, offset, self._currentCharacterContents) != -1:
+            if self.findObjectInContents(obj, offset, self._currentCharacterContents, usingCache=True) != -1:
                 return self._currentCharacterContents
 
         boundary = pyatspi.TEXT_BOUNDARY_CHAR
@@ -1198,7 +1202,7 @@ class Utilities(script_utilities.Utilities):
         offset = max(0, offset)
 
         if useCache:
-            if self.findObjectInContents(obj, offset, self._currentWordContents) != -1:
+            if self.findObjectInContents(obj, offset, self._currentWordContents, usingCache=True) != -1:
                 return self._currentWordContents
 
         boundary = pyatspi.TEXT_BOUNDARY_WORD_START
@@ -1268,7 +1272,7 @@ class Utilities(script_utilities.Utilities):
         offset = max(0, offset)
 
         if useCache:
-            if self.findObjectInContents(obj, offset, self._currentObjectContents) != -1:
+            if self.findObjectInContents(obj, offset, self._currentObjectContents, usingCache=True) != -1:
                 return self._currentObjectContents
 
         objIsLandmark = self.isLandmark(obj)
@@ -1329,7 +1333,7 @@ class Utilities(script_utilities.Utilities):
         offset = max(0, offset)
 
         if useCache:
-            if self.findObjectInContents(obj, offset, self._currentLineContents) != -1:
+            if self.findObjectInContents(obj, offset, self._currentLineContents, usingCache=True) != -1:
                 return self._currentLineContents
 
         if layoutMode is None:
