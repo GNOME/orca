@@ -177,6 +177,11 @@ class _ItemContext:
 
         return self._obj
 
+    def getTime(self):
+        """Returns the time associated with this context."""
+
+        return self._time
+
     def present(self, prior):
         """Presents this context to the user."""
 
@@ -259,7 +264,14 @@ class MouseReviewer:
         if not _mouseReviewCapable:
             return None
 
-        return self._currentMouseOver.getObject()
+        obj = self._currentMouseOver.getObject()
+
+        if time.time() - self._currentMouseOver.getTime() > 0.1:
+            msg = "MOUSE REVIEW: Treating %s as stale" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        return obj
 
     def toggle(self, script=None, event=None):
         """Toggle mouse reviewing on or off."""
