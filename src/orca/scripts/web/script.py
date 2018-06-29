@@ -1382,6 +1382,11 @@ class Script(default.Script):
             self._saveFocusedObjectInfo(orca_state.locusOfFocus)
             return True
 
+        if self.utilities.inContextMenu():
+            msg = "WEB: Event ignored: In context menu"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         if self.utilities.eventIsAutocompleteNoise(event):
             msg = "WEB: Event ignored: Autocomplete noise"
             debug.println(debug.LEVEL_INFO, msg, True)
