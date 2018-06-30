@@ -74,7 +74,6 @@ userCustomizableSettings = [
     "playSoundForState",
     "playSoundForPositionInSet",
     "playSoundForValue",
-    "enableBrailleMonitor",
     "verbalizePunctuationStyle",
     "presentToolTips",
     "sayAllStyle",
