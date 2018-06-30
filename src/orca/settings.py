@@ -96,7 +96,6 @@ userCustomizableSettings = [
     "enableContractedBraille",
     "brailleContractionTable",
     "enableMouseReview",
-    "mouseDwellDelay",
     "speakCellCoordinates",
     "speakSpreadsheetCoordinates",
     "speakCellSpan",
