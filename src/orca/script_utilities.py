@@ -3898,6 +3898,9 @@ class Utilities:
         if not obj:
             return False
 
+        if self.hasNoSize(obj):
+            return False
+
         roles = [pyatspi.ROLE_MENU,
                  pyatspi.ROLE_PAGE_TAB]
 
