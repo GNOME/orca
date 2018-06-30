@@ -3959,10 +3959,20 @@ class Utilities:
                         return cell
                     return child
 
+        candidates = []
         for child in root:
             obj = self.descendantAtPoint(child, x, y, coordType)
             if obj:
                 return obj
+            if not self.containsPoint(child, x, y, coordType):
+                continue
+            if self.queryNonEmptyText(child):
+                string = child.queryText().getText(0, -1)
+                if re.search("[^\ufffc\s]", string):
+                    candidates.append(child)
+
+        if len(candidates) == 1:
+            return candidates[0]
 
         return None
 
