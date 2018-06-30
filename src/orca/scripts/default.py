@@ -2126,6 +2126,11 @@ class Script(script.Script):
                 event.source, orca_state.activeWindow)
 
             if sourceIsActiveWindow and not event.detail1:
+                if self.utilities.inMenu():
+                    msg = "DEFAULT: Ignoring event. In menu."
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    return
+
                 msg = "DEFAULT: Event is for active window. Clearing state."
                 debug.println(debug.LEVEL_INFO, msg, True)
                 orca_state.activeWindow = None
@@ -2806,21 +2811,10 @@ class Script(script.Script):
 
         self.pointOfReference = {}
 
-        menuRoles = [pyatspi.ROLE_MENU,
-                     pyatspi.ROLE_MENU_ITEM,
-                     pyatspi.ROLE_CHECK_MENU_ITEM,
-                     pyatspi.ROLE_RADIO_MENU_ITEM]
-
-        # If we get into a popup menu, the parent application will likely
-        # emit a window-deactivate event. But functionally we're still in
-        # the same window. In this case, we do not want to update anything.
-        try:
-            role = orca_state.locusOfFocus.getRole()
-        except:
-            pass
-        else:
-            if role in menuRoles:
-                return
+        if self.utilities.inMenu():
+            msg = "DEFAULT: Ignoring event. In menu."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
 
         # If we receive a "window:deactivate" event for the object that
         # currently has focus, then stop the current speech output.

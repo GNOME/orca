@@ -3614,19 +3614,34 @@ class Utilities:
 
         return self.popupMenuFor(obj) is not None
 
-    def inContextMenu(self, obj=None):
+    def inMenu(self, obj=None):
         obj = obj or orca_state.locusOfFocus
         if not obj:
             return False
 
-        roles = [pyatspi.ROLE_MENU,
-                 pyatspi.ROLE_MENU_ITEM,
-                 pyatspi.ROLE_CHECK_MENU_ITEM,
-                 pyatspi.ROLE_RADIO_MENU_ITEM,
-                 pyatspi.ROLE_TEAROFF_MENU_ITEM,
-                 pyatspi.ROLE_PANEL,
-                 pyatspi.ROLE_SEPARATOR]
-        if obj.getRole() not in roles:
+        try:
+            role = obj.getRole()
+        except:
+            msg = "ERROR: Exception getting role for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        menuRoles = [pyatspi.ROLE_MENU,
+                     pyatspi.ROLE_MENU_ITEM,
+                     pyatspi.ROLE_CHECK_MENU_ITEM,
+                     pyatspi.ROLE_RADIO_MENU_ITEM,
+                     pyatspi.ROLE_TEAROFF_MENU_ITEM]
+        if role in menuRoles:
+            return True
+
+        if role in [pyatspi.ROLE_PANEL, pyatspi.ROLE_SEPARATOR]:
+            return obj.parent and obj.parent.getRole() in menuRoles
+
+        return False
+
+    def inContextMenu(self, obj=None):
+        obj = obj or orca_state.locusOfFocus
+        if not self.inMenu(obj):
             return False
 
         return pyatspi.findAncestor(obj, self.isContextMenu) is not None
