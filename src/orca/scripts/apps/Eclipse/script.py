@@ -96,6 +96,13 @@ class Script(GAIL.Script):
             orca.setLocusOfFocus(event, event.source)
             return
 
+        if role == pyatspi.ROLE_TEXT \
+           and self.utilities.lastInputEventWasUnmodifiedArrow() \
+           and self.utilities.inMenu():
+            msg = "ECLIPSE: Ignoring event. In menu."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         super().onFocus(event)
 
     def onTextInserted(self, event):

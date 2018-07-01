@@ -4487,6 +4487,13 @@ class Utilities:
         keyString, mods = self.lastKeyAndModifiers()
         return mods & keybindings.CTRL_MODIFIER_MASK
 
+    def lastInputEventWasUnmodifiedArrow(self):
+        keyString, mods = self.lastKeyAndModifiers()
+        if not keyString in ["Left", "Right", "Up", "Down"]:
+            return False
+
+        return not mods
+
     def lastInputEventWasCharNav(self):
         keyString, mods = self.lastKeyAndModifiers()
         if not keyString in ["Left", "Right"]:
