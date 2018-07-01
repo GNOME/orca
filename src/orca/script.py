@@ -347,7 +347,7 @@ class Script:
         if not cachedEvent or cachedEvent == event:
             return False
 
-        focus    = ["object:state-changed:focused", "focus:"]
+        focus    = ["object:state-changed:focused"]
         typing   = ["object:text-changed:insert", "object:text-changed:delete"]
         arrowing = ["object:text-caret-moved", "object:text-selection-changed",
                     "object:selection-changed", "object:active-descendant-changed"]
