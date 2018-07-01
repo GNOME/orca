@@ -84,14 +84,6 @@ class Script(GAIL.Script):
 
         role = event.source.getRole()
 
-        menuItems = [pyatspi.ROLE_CHECK_MENU_ITEM,
-                     pyatspi.ROLE_MENU,
-                     pyatspi.ROLE_MENU_ITEM,
-                     pyatspi.ROLE_RADIO_MENU_ITEM]
-        if role in menuItems:
-            orca.setLocusOfFocus(event, event.source)
-            return
-
         if role == pyatspi.ROLE_PANEL:
             orca.setLocusOfFocus(event, event.source)
             return
