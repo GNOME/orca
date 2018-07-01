@@ -3592,8 +3592,9 @@ class Script(script.Script):
         except NotImplementedError:
             return ["", 0, 0]
 
-        if startOffset is None:
-            startOffset = max(0, text.caretOffset)
+        targetOffset = startOffset
+        if targetOffset is None:
+            targetOffset = max(0, text.caretOffset)
 
         # The offset might be positioned at the very end of the text area.
         # In these cases, calling text.getTextAtOffset on an offset that's
@@ -3609,15 +3610,17 @@ class Script(script.Script):
         # to see if that character is a newline - if it is, we'll treat it
         # as the line.
         #
-        if startOffset == text.characterCount:
-            startOffset = max(0, startOffset - 1)
-            character = text.getText(startOffset, startOffset + 1)
+        if targetOffset == text.characterCount:
+            fixedTargetOffset = max(0, targetOffset - 1)
+            character = text.getText(fixedTargetOffset, fixedTargetOffset + 1)
         else:
+            fixedTargetOffset = targetOffset
             character = None
 
-        if (startOffset == text.characterCount) \
+        if (targetOffset == text.characterCount) \
             and (character == "\n"):
             lineString = ""
+            startOffset = fixedTargetOffset
         else:
             # Get the line containing the caret.  [[[TODO: HACK WDW - If
             # there's only 1 character in the string, well, we get it.  We
@@ -3625,13 +3628,14 @@ class Script(script.Script):
             # is broken if there is just one character in the string.]]]
             #
             if (text.characterCount == 1):
-                lineString = text.getText(startOffset, startOffset + 1)
+                lineString = text.getText(fixedTargetOffset, fixedTargetOffset + 1)
+                startOffset = fixedTargetOffset
             else:
-                if startOffset == -1:
-                    startOffset = text.characterCount
+                if fixedTargetOffset == -1:
+                    fixedTargetOffset = text.characterCount
                 try:
                     [lineString, startOffset, endOffset] = text.getTextAtOffset(
-                        startOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
+                        fixedTargetOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
                 except:
                     return ["", 0, 0]
 
