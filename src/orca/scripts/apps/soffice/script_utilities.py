@@ -32,6 +32,7 @@ import pyatspi
 
 import orca.debug as debug
 import orca.keybindings as keybindings
+import orca.messages as messages
 import orca.orca_state as orca_state
 import orca.script_utilities as script_utilities
 
@@ -51,6 +52,9 @@ class Utilities(script_utilities.Utilities):
         """
 
         script_utilities.Utilities.__init__(self, script)
+
+        self._calcSelectedRows = []
+        self._calcSelectedColumns = []
 
     #########################################################################
     #                                                                       #
@@ -709,8 +713,14 @@ class Utilities(script_utilities.Utilities):
 
         # Things only seem broken for certain tables, e.g. the Paths table.
         # TODO - JD: File the LibreOffice bugs and reference them here.
-        if role != pyatspi.ROLE_TABLE or self.isSpreadSheetTable(obj):
+        if role != pyatspi.ROLE_TABLE:
             return super().selectedChildren(obj)
+
+        # We will need to special case this due to the possibility of there
+        # being lots of children (which may also prove to be zombie objects).
+        # This is why we can't have nice things.
+        if self.isSpreadSheetTable(obj):
+            return []
 
         try:
             selection = obj.querySelection()
@@ -748,3 +758,77 @@ class Utilities(script_utilities.Utilities):
 
     def presentEventFromNonShowingObject(self, event):
         return self.inDocumentContent(event.source)
+
+    def columnConvert(self, column):
+        """ Convert a spreadsheet column into it's column label."""
+
+        base26 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+        if column <= len(base26):
+            return base26[column-1]
+
+        res = ""
+        while column > 0:
+            digit = column % len(base26)
+            res = " " + base26[digit-1] + res
+            column = int(column / len(base26))
+
+        return res
+
+    def handleRowAndColumnSelectionChange(self, obj):
+        interfaces = pyatspi.listInterfaces(obj)
+        if not ("Table" in interfaces and "Selection" in interfaces):
+            return True
+
+        table = obj.queryTable()
+        cols = set(table.getSelectedColumns())
+        rows = set(table.getSelectedRows())
+
+        selectedCols = sorted(cols.difference(set(self._calcSelectedColumns)))
+        unselectedCols = sorted(set(self._calcSelectedColumns).difference(cols))
+        convert = lambda x: self.columnConvert(x+1)
+        selectedCols = list(map(convert, selectedCols))
+        unselectedCols = list(map(convert, unselectedCols))
+
+        selectedRows = sorted(rows.difference(set(self._calcSelectedRows)))
+        unselectedRows = sorted(set(self._calcSelectedRows).difference(rows))
+        convert = lambda x: x + 1
+        selectedRows = list(map(convert, selectedRows))
+        unselectedRows = list(map(convert, unselectedRows))
+
+        self._calcSelectedColumns = list(cols)
+        self._calcSelectedRows = list(rows)
+
+        if len(cols) == table.nColumns:
+            self._script.speakMessage(messages.DOCUMENT_SELECTED_ALL)
+            return True
+
+        if not len(cols) and len(unselectedCols) == table.nColumns:
+            self._script.speakMessage(messages.DOCUMENT_UNSELECTED_ALL)
+            return True
+
+        msgs = []
+        if len(unselectedCols) == 1:
+            msgs.append(messages.TABLE_COLUMN_UNSELECTED % unselectedCols[0])
+        elif len(unselectedCols) > 1:
+            msgs.append(messages.TABLE_COLUMN_RANGE_UNSELECTED % (unselectedCols[0], unselectedCols[-1]))
+
+        if len(unselectedRows) == 1:
+            msgs.append(messages.TABLE_ROW_UNSELECTED % unselectedRows[0])
+        elif len(unselectedRows) > 1:
+            msgs.append(messages.TABLE_ROW_RANGE_UNSELECTED % (unselectedRows[0], unselectedRows[-1]))
+
+        if len(selectedCols) == 1:
+            msgs.append(messages.TABLE_COLUMN_SELECTED % selectedCols[0])
+        elif len(selectedCols) > 1:
+            msgs.append(messages.TABLE_COLUMN_RANGE_SELECTED % (selectedCols[0], selectedCols[-1]))
+
+        if len(selectedRows) == 1:
+            msgs.append(messages.TABLE_ROW_SELECTED % selectedRows[0])
+        elif len(selectedRows) > 1:
+            msgs.append(messages.TABLE_ROW_RANGE_SELECTED % (selectedRows[0], selectedRows[-1]))
+
+        for msg in msgs:
+            self._script.speakMessage(msg, interrupt=False)
+
+        return bool(len(msgs))

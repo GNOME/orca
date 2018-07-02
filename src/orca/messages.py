@@ -425,6 +425,13 @@ DOCUMENT_SELECTED_ALL = _("entire document selected")
 
 # Translators: when the user selects (highlights) or unselects text in a
 # document, Orca will speak information about what they have selected or
+# unselected. This message is presented when the entire document had been
+# selected but the user presses a key (e.g. an arrow key) causing the
+# selection to be completely removed.
+DOCUMENT_UNSELECTED_ALL = _("entire document unselected")
+
+# Translators: when the user selects (highlights) or unselects text in a
+# document, Orca will speak information about what they have selected or
 # unselected. This message is presented when the user selects from the
 # current location to the end of the document by pressing Ctrl+Shift+End.
 DOCUMENT_SELECTED_DOWN = _("document selected from cursor position")
@@ -2134,6 +2141,30 @@ TABLE_COLUMN_BOTTOM = _("Bottom of column.")
 # the cell above the current cell and is already in the first row.
 TABLE_COLUMN_TOP = _("Top of column.")
 
+# Translators: this message is spoken to announce that a table column just became
+# selected (e.g as a result of navigation via Shift + Arrows). The string substitution
+# is the column label (e.g. "B").
+TABLE_COLUMN_SELECTED = _("Column %s selected")
+
+# Translators: this message is spoken to announce that multiple table columns just
+# became selected (e.g as a result of navigation via Shift + Arrows). The first
+# string substitution is the label of the first column in the range. The second string
+# substitution is the label in the last column in the range. An example message for
+# Calc would be "Columns B through F selected".
+TABLE_COLUMN_RANGE_SELECTED = _("Columns %s through %s selected")
+
+# Translators: this message is spoken to announce that multiple table columns just
+# became unselected (e.g as a result of navigation via Shift + Arrows). The first
+# string substitution is the label of the first column in the range. The second string
+# substitution is the label in the last column in the range. An example message for
+# Calc would be "Columns B through F unselected".
+TABLE_COLUMN_RANGE_UNSELECTED = _("Columns %s through %s unselected")
+
+# Translators: this message is spoken to announce that a table column just became
+# unselected (e.g as a result of navigation via Shift + Arrows). The string substitution
+# is the column label (e.g. "B").
+TABLE_COLUMN_UNSELECTED = _("Column %s unselected")
+
 # Translators: this is in reference to a row in a table. The substitution is
 # the index (e.g. the first row is "row 1").
 TABLE_ROW = _("row %d")
@@ -2168,6 +2199,30 @@ TABLE_ROW_INSERTED = _("Row inserted.")
 # inserted a table row at the end of the table. This typically happens when the
 # user presses Tab from within the last cell of the table.
 TABLE_ROW_INSERTED_AT_END = _("Row inserted at the end of the table.")
+
+# Translators: this message is spoken to announce that a table row just became selected
+# (e.g as a result of navigation via Shift + Arrows). The string substitution is the row
+# label (e.g. "2").
+TABLE_ROW_SELECTED = _("Row %s selected")
+
+# Translators: this message is spoken to announce that multiple table rows just
+# became selected (e.g as a result of navigation via Shift + Arrows). The first
+# string substitution is the label of the first row in the range. The second string
+# substitution is the label of the last row in the range. An example message for
+# Calc would be "Rows 2 through 10 selected".
+TABLE_ROW_RANGE_SELECTED = _("Rows %s through %s selected")
+
+# Translators: this message is spoken to announce that multiple table rows just
+# became unselected (e.g as a result of navigation via Shift + Arrows). The first
+# string substitution is the label of the first row in the range. The second string
+# substitution is the label of the last row in the range. An example message for
+# Calc would be "Rows 2 through 10 unselected".
+TABLE_ROW_RANGE_UNSELECTED = _("Rows %s through %s unselected")
+
+# Translators: this message is spoken to announce that a table row just became
+# unselected (e.g as a result of navigation via Shift + Arrows). The string
+# substitution is the row label (e.g. "2").
+TABLE_ROW_UNSELECTED = _("Row %s unselected")
 
 # Translators: when the user selects (highlights) text in a document, Orca lets
 # them know.

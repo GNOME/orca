@@ -427,28 +427,6 @@ class Script(default.Script):
 
         return True
 
-    def columnConvert(self, column):
-        """ Convert a spreadsheet column into it's column label
-
-        Arguments:
-        - column: the column number to convert.
-
-        Returns a string representing the spread sheet column.
-        """
-
-        base26 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-        if column <= len(base26):
-            return base26[column-1]
-
-        res = ""
-        while column > 0:
-            digit = column % len(base26)
-            res = " " + base26[digit-1] + res
-            column /= len(base26)
-
-        return res
-
     def setDynamicRowHeaders(self, inputEvent):
         """Set the column for the dynamic header rows to use when speaking
         calc cell entries. In order to set the column, the user should first
@@ -470,7 +448,7 @@ class Script(default.Script):
         if table:
             self.dynamicRowHeaders[hash(table)] = column
             self.presentMessage(
-                messages.DYNAMIC_ROW_HEADER_SET % self.columnConvert(column+1))
+                messages.DYNAMIC_ROW_HEADER_SET % self.utilities.columnConvert(column+1))
 
         return True
 
@@ -862,6 +840,11 @@ class Script(default.Script):
 
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
+
+        if self.utilities.isSpreadSheetTable(event.source):
+            if not _settingsManager.getSetting('onlySpeakDisplayedText'):
+                self.utilities.handleRowAndColumnSelectionChange(event.source)
+            return
 
         if not self.utilities.isComboBoxSelectionChange(event):
             super().onSelectionChanged(event)
