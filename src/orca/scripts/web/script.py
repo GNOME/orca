@@ -1144,7 +1144,7 @@ class Script(default.Script):
             newFocus, offset = self.utilities.findFirstCaretContext(newFocus, 0)
 
         text = self.utilities.queryNonEmptyText(newFocus)
-        if text and (0 <= text.caretOffset < text.characterCount):
+        if text and (0 <= text.caretOffset <= text.characterCount):
             caretOffset = text.caretOffset
 
         self.utilities.setCaretContext(newFocus, caretOffset)
