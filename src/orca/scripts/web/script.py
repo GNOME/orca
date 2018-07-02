@@ -1422,7 +1422,7 @@ class Script(default.Script):
             msg = "WEB: Event handled: Caret moved due to scrolling"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(obj, offset)
-            orca.setLocusOfFocus(event, obj, force=self.utilities.isPlainText())
+            orca.setLocusOfFocus(event, obj, force=True)
             return True
 
         if self.utilities.isContentEditableWithEmbeddedObjects(event.source):
