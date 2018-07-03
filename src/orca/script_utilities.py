@@ -2283,7 +2283,7 @@ class Utilities:
         if self._script.spellcheck and self._script.spellcheck.isCheckWindow(root):
             return []
 
-        hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_LABEL
+        hasRole = lambda x: x and x.getRole() in [pyatspi.ROLE_LABEL, pyatspi.ROLE_STATIC]
         try:
             allLabels = pyatspi.findAllDescendants(root, hasRole)
         except:
