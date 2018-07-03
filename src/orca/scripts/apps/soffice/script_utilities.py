@@ -843,6 +843,9 @@ class Utilities(script_utilities.Utilities):
             cell2 = self._getCellNameForCoordinates(obj, *selected[-1], True)
             msgs.append(messages.CELL_RANGE_SELECTED % (cell1, cell2))
 
+        if msgs:
+            self._script.presentationInterrupt()
+
         for msg in msgs:
             self._script.speakMessage(msg, interrupt=False)
 
@@ -900,6 +903,9 @@ class Utilities(script_utilities.Utilities):
             msgs.append(messages.TABLE_ROW_SELECTED % selectedRows[0])
         elif len(selectedRows) > 1:
             msgs.append(messages.TABLE_ROW_RANGE_SELECTED % (selectedRows[0], selectedRows[-1]))
+
+        if msgs:
+            self._script.presentationInterrupt()
 
         for msg in msgs:
             self._script.speakMessage(msg, interrupt=False)
