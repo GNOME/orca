@@ -842,8 +842,11 @@ class Script(default.Script):
         """Callback for object:selection-changed accessibility events."""
 
         if self.utilities.isSpreadSheetTable(event.source):
-            if not _settingsManager.getSetting('onlySpeakDisplayedText'):
-                self.utilities.handleRowAndColumnSelectionChange(event.source)
+            if _settingsManager.getSetting('onlySpeakDisplayedText'):
+                return
+            if self.utilities.handleRowAndColumnSelectionChange(event.source):
+                return
+            self.utilities.handleCellSelectionChange(event.source)
             return
 
         if not self.utilities.isComboBoxSelectionChange(event):

@@ -53,6 +53,7 @@ class Utilities(script_utilities.Utilities):
 
         script_utilities.Utilities.__init__(self, script)
 
+        self._calcSelectedCells = []
         self._calcSelectedRows = []
         self._calcSelectedColumns = []
 
@@ -774,6 +775,73 @@ class Utilities(script_utilities.Utilities):
             column = int(column / len(base26))
 
         return res
+
+    def _getCellNameForCoordinates(self, obj, row, col):
+        try:
+            table = obj.queryTable()
+        except:
+            msg = "SOFFICE: Exception querying Table interface of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        try:
+            cell = table.getAccessibleAt(row, col)
+        except:
+            msg = "SOFFICE: Exception getting cell (%i,%i) of %s" % (row, col, obj)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        return self.spreadSheetCellName(cell)
+
+    def handleCellSelectionChange(self, obj):
+        interfaces = pyatspi.listInterfaces(obj)
+        if not ("Table" in interfaces and "Selection" in interfaces):
+            return True
+
+        table = obj.queryTable()
+        count = self.selectedChildCount(obj)
+        first, last = self.firstAndLastSelectedChildren(obj)
+        firstCoords = self.coordinatesForCell(first)
+        lastCoords = self.coordinatesForCell(last)
+        focusCoords = tuple(self.coordinatesForCell(orca_state.locusOfFocus))
+
+        current = []
+        for r in range(firstCoords[0], lastCoords[0]+1):
+            current.extend((r, c) for c in range(firstCoords[1], lastCoords[1]+1))
+
+        current = set(current)
+        previous = set(self._calcSelectedCells)
+        current.discard((-1, -1))
+        previous.discard((-1, -1))
+
+        unselected = sorted(previous.difference(current))
+        selected = sorted(current.difference(previous))
+        if focusCoords in selected:
+            selected.remove(focusCoords)
+
+        self._calcSelectedCells = sorted(current)
+
+        msgs = []
+        if len(unselected) == 1:
+            cell = self._getCellNameForCoordinates(obj, *unselected[0])
+            msgs.append(messages.CELL_UNSELECTED % cell)
+        elif len(unselected) > 1:
+            cell1 = self._getCellNameForCoordinates(obj, *unselected[0])
+            cell2 = self._getCellNameForCoordinates(obj, *unselected[-1])
+            msgs.append(messages.CELL_RANGE_UNSELECTED % (cell1, cell2))
+
+        if len(selected) == 1:
+            cell = self._getCellNameForCoordinates(obj, *selected[0])
+            msgs.append(messages.CELL_SELECTED % cell)
+        elif len(selected) > 1:
+            cell1 = self._getCellNameForCoordinates(obj, *selected[0])
+            cell2 = self._getCellNameForCoordinates(obj, *selected[-1])
+            msgs.append(messages.CELL_RANGE_SELECTED % (cell1, cell2))
+
+        for msg in msgs:
+            self._script.speakMessage(msg, interrupt=False)
+
+        return bool(len(msgs))
 
     def handleRowAndColumnSelectionChange(self, obj):
         interfaces = pyatspi.listInterfaces(obj)

@@ -152,6 +152,32 @@ CARET_CONTROL_ORCA = _("The screen reader is controlling the caret.")
 # Translators: this is the name of a cell in a spreadsheet.
 CELL = _("Cell %s")
 
+# Translators: this message is spoken to announce that a table cell just became
+# selected (e.g as a result of navigation via Shift + Arrows). The string
+# substitution is the cell name. In the case of a spreadsheet the cell name
+# will be something like "B3".
+CELL_SELECTED = C_("cell", "%s selected")
+
+# Translators: this message is spoken to announce that multiple table cells just
+# became selected (e.g as a result of navigation via Shift + Arrows). The first
+# string substitution is the name of the first cell in the range. The second string
+# substitution is for the name of the last cell in the range. An example message
+# for Calc would be "A1 through A30 selected".
+CELL_RANGE_SELECTED = C_("cell", "%s through %s selected")
+
+# Translators: this message is spoken to announce that multiple table cells just
+# became unselected (e.g as a result of navigation via Shift + Arrows). The first
+# string substitution is the name of the first cell in the range. The second string
+# substitution is for the name of the last cell in the range. An example message
+# for Calc would be "A1 through A30 unselected".
+CELL_RANGE_UNSELECTED = C_("cell", "%s through %s unselected")
+
+# Translators: this message is spoken to announce that a table cell just became
+# unselected (e.g as a result of navigation via Shift + Arrows). The string
+# substitution is the cell name. In the case of a spreadsheet the cell name
+# will be something like "B3".
+CELL_UNSELECTED = C_("cell", "%s unselected")
+
 # Translators: This is the description of command line option '-d, --disable'
 # which allows the user to specify an option to disable as Orca is started.
 CLI_DISABLE_OPTION = _("Prevent use of option")
