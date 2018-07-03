@@ -165,3 +165,19 @@ class Utilities(web.Utilities):
         msg = "GECKO: Editable %s not in an editable document" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
+
+    def isNotRealDocument(self, obj):
+        try:
+            name = obj.name
+        except:
+            msg = "GECKO: Exception getting name for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if name.startswith("moz-extension"):
+            return True
+
+        if "self-repair.mozilla.org" in name:
+            return True
+
+        return False
