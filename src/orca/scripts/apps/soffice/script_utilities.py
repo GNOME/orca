@@ -776,7 +776,7 @@ class Utilities(script_utilities.Utilities):
 
         return res
 
-    def _getCellNameForCoordinates(self, obj, row, col):
+    def _getCellNameForCoordinates(self, obj, row, col, includeContents=False):
         try:
             table = obj.queryTable()
         except:
@@ -791,7 +791,12 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        return self.spreadSheetCellName(cell)
+        name = self.spreadSheetCellName(cell)
+        if includeContents:
+            text = self.displayedText(cell)
+            name = "%s %s" % (text, name)
+
+        return name.strip()
 
     def handleCellSelectionChange(self, obj):
         interfaces = pyatspi.listInterfaces(obj)
@@ -823,19 +828,19 @@ class Utilities(script_utilities.Utilities):
 
         msgs = []
         if len(unselected) == 1:
-            cell = self._getCellNameForCoordinates(obj, *unselected[0])
+            cell = self._getCellNameForCoordinates(obj, *unselected[0], True)
             msgs.append(messages.CELL_UNSELECTED % cell)
         elif len(unselected) > 1:
-            cell1 = self._getCellNameForCoordinates(obj, *unselected[0])
-            cell2 = self._getCellNameForCoordinates(obj, *unselected[-1])
+            cell1 = self._getCellNameForCoordinates(obj, *unselected[0], True)
+            cell2 = self._getCellNameForCoordinates(obj, *unselected[-1], True)
             msgs.append(messages.CELL_RANGE_UNSELECTED % (cell1, cell2))
 
         if len(selected) == 1:
-            cell = self._getCellNameForCoordinates(obj, *selected[0])
+            cell = self._getCellNameForCoordinates(obj, *selected[0], True)
             msgs.append(messages.CELL_SELECTED % cell)
         elif len(selected) > 1:
-            cell1 = self._getCellNameForCoordinates(obj, *selected[0])
-            cell2 = self._getCellNameForCoordinates(obj, *selected[-1])
+            cell1 = self._getCellNameForCoordinates(obj, *selected[0], True)
+            cell2 = self._getCellNameForCoordinates(obj, *selected[-1], True)
             msgs.append(messages.CELL_RANGE_SELECTED % (cell1, cell2))
 
         for msg in msgs:
