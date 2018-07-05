@@ -103,7 +103,8 @@ class Utilities(web.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not(role1 == role2 == pyatspi.ROLE_FRAME):
+        roles = self._topLevelRoles()
+        if not (role1 in roles and role2 in roles):
             return False
 
         try:
