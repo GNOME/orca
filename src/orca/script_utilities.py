@@ -3929,7 +3929,9 @@ class Utilities:
             return True
 
         role = obj.getRole()
-        if role == pyatspi.ROLE_TABLE_ROW:
+        roles = [pyatspi.ROLE_AUTOCOMPLETE,
+                 pyatspi.ROLE_TABLE_ROW]
+        if role in roles:
             return False
 
         state = obj.getState()
