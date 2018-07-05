@@ -857,6 +857,9 @@ class Utilities(script_utilities.Utilities):
             if not characterCount:
                 rv = None
 
+        if self._treatTextObjectAsWhole(obj):
+            rv = None
+
         if not self.isLiveRegion(obj):
             doNotQuery = [pyatspi.ROLE_TABLE_ROW,
                           pyatspi.ROLE_TOOL_BAR]
@@ -3598,6 +3601,8 @@ class Utilities(script_utilities.Utilities):
                 allText = text.getText(0, -1)
                 for i in range(offset + 1, len(allText)):
                     child = self.getChildAtOffset(obj, i)
+                    if child and self._treatTextObjectAsWhole(child):
+                        return child, 0
                     if child and not self.isZombie(child) and not self.isEmptyAnchor(child) \
                        and not self.isUselessImage(child):
                         return self.findNextCaretInOrder(child, -1)
@@ -3662,6 +3667,8 @@ class Utilities(script_utilities.Utilities):
                     offset = len(allText)
                 for i in range(offset - 1, -1, -1):
                     child = self.getChildAtOffset(obj, i)
+                    if child and self._treatTextObjectAsWhole(child):
+                        return child, 0
                     if child and not self.isZombie(child) and not self.isEmptyAnchor(child) \
                        and not self.isUselessImage(child):
                         return self.findPreviousCaretInOrder(child, -1)
