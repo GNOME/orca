@@ -854,7 +854,7 @@ class Script(default.Script):
         offset = args.get("offset", 0)
         contents = self.utilities.getObjectContentsAtOffset(obj, offset)
         self.displayContents(contents)
-        self.speakContents(contents, priorObj=priorObj)
+        self.speakContents(contents, **args)
  
     def updateBrailleForNewCaretPosition(self, obj):
         """Try to reposition the cursor without having to do a full update."""
