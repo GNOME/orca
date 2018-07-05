@@ -139,6 +139,9 @@ class _ItemContext:
         if self._obj.getRole() == pyatspi.ROLE_LABEL:
             return True
 
+        if self._obj.name:
+            return True
+
         return False
 
     def _getStringContext(self):
