@@ -176,6 +176,7 @@ class _ItemContext:
                  pyatspi.ROLE_LAYERED_PANE,
                  pyatspi.ROLE_MENU,
                  pyatspi.ROLE_PAGE_TAB,
+                 pyatspi.ROLE_TOOL_BAR,
                  pyatspi.ROLE_WINDOW]
         isContainer = lambda x: x and x.getRole() in roles
         return pyatspi.findAncestor(self._obj, isContainer)
