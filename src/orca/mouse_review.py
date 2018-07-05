@@ -136,10 +136,14 @@ class _ItemContext:
         if "Text" not in interfaces:
             return True
 
-        if self._obj.getRole() == pyatspi.ROLE_LABEL:
+        roles = [pyatspi.ROLE_ENTRY,
+                 pyatspi.ROLE_LABEL,
+                 pyatspi.ROLE_PASSWORD_TEXT]
+
+        if self._obj.getRole() in roles:
             return True
 
-        if self._obj.name:
+        if self._obj.name and not "EditableText" in pyatspi.listInterfaces(self._obj):
             return True
 
         return False
