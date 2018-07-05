@@ -707,6 +707,14 @@ def main(cacheValues=True):
     if script:
         window = script.utilities.activeWindow()
         if window and not orca_state.locusOfFocus:
+            try:
+                app = window.getApplication()
+            except:
+                msg = "ORCA: Exception getting app for %s" % window
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                script = _scriptManager.getScript(app, window)
+                _scriptManager.setActiveScript(script, "Launching.")
             setLocusOfFocus(None, window)
 
     try:
