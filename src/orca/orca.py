@@ -716,6 +716,9 @@ def main(cacheValues=True):
                 script = _scriptManager.getScript(app, window)
                 _scriptManager.setActiveScript(script, "Launching.")
             setLocusOfFocus(None, window)
+            focusedObject = script.utilities.focusedObject(window)
+            if focusedObject:
+                setLocusOfFocus(None, focusedObject)
 
     try:
         start(pyatspi.Registry, cacheValues) # waits until we stop the registry
