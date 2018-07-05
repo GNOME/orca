@@ -447,6 +447,8 @@ formatting = {
             },
         pyatspi.ROLE_TABLE_ROW: {
             'focused': 'expandableState',
+            'unfocused': '(labelOrName or displayedText) + pause + expandableState + pause + positionInList',
+            'basicWhereAmI': '(labelOrName or displayedText) + roleName + pause + positionInList + pause + expandableState + (nodeLevel or nestingLevel)'
             },
         pyatspi.ROLE_TEAROFF_MENU_ITEM: {
             'focused': '[]',
