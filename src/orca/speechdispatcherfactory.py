@@ -352,6 +352,7 @@ class SpeechServer(speechserver.SpeechServer):
             markedtext += text[i]
             if text[i] == ' ' or text[i] == '\u00a0':
                 markedtext += '<mark name="%u"/>' % (i+1)
+        text = markedtext
 
         text = self.__addVerbalizedPunctuation(text)
         if orca_state.activeScript:
@@ -369,8 +370,8 @@ class SpeechServer(speechserver.SpeechServer):
         text = text.replace('\n.', '\n')
 
         self._apply_acss(acss)
-        self._debug_sd_values("Speaking '%s' " % markedtext)
-        self._send_command(self._client.speak, markedtext, **kwargs)
+        self._debug_sd_values("Speaking '%s' " % text)
+        self._send_command(self._client.speak, text, **kwargs)
 
     def _say_all(self, iterator, orca_callback):
         """Process another sayAll chunk.
