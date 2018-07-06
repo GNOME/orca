@@ -841,6 +841,10 @@ class Script(default.Script):
         self.speakContents(contents, priorObj=priorObj)
 
     def presentObject(self, obj, **args):
+        if not self.utilities.inDocumentContent(obj):
+            super().presentObject(obj, **args)
+            return
+
         priorObj = args.get("priorObj")
         if self._lastCommandWasCaretNav or args.get("includeContext"):
             priorObj, priorOffset = self.utilities.getPriorContext()
