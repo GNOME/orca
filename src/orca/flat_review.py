@@ -230,6 +230,10 @@ class Zone:
             if offset >= 0:
                 return word, offset
 
+        if self.length == charOffset and self.words:
+            lastWord = self.words[-1]
+            return lastWord, lastWord.length
+
         return None, -1
 
     def hasCaret(self):
@@ -879,7 +883,10 @@ class Context:
         elif zone.words:
             current = zone.words[self.wordIndex]
             if flatReviewType == Context.CHAR and current.chars:
-                current = current.chars[self.charIndex]
+                try:
+                    current = current.chars[self.charIndex]
+                except:
+                    return None, -1, -1, -1, -1
 
         return current.string, current.x, current.y, current.width, current.height
 
