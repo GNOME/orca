@@ -2979,11 +2979,6 @@ class Script(script.Script):
         return True
 
     def __sayAllProgressCallback(self, context, progressType):
-        # [[[TODO: WDW - this needs work.  Need to be able to manage
-        # the monitoring of progress and couple that with both updating
-        # the visual progress of what is being spoken as well as
-        # positioning the cursor when speech has stopped.]]]
-        #
         try:
             text = context.obj.queryText()
             char = text.getText(context.currentOffset, context.currentOffset+1)
@@ -2996,6 +2991,8 @@ class Script(script.Script):
             return
 
         if progressType == speechserver.SayAllContext.PROGRESS:
+            orca.setLocusOfFocus(None, context.obj, notifyScript=False)
+            text.setCaretOffset(context.currentOffset)
             return
         elif progressType == speechserver.SayAllContext.INTERRUPTED:
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):

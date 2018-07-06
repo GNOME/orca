@@ -552,9 +552,6 @@ class Script(default.Script):
         self._sayAllContexts = []
 
     def __sayAllProgressCallback(self, context, progressType):
-        if progressType == speechserver.SayAllContext.PROGRESS:
-            return
-
         obj = context.obj
         orca.setLocusOfFocus(None, obj, notifyScript=False)
 
