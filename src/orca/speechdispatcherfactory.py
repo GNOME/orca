@@ -369,6 +369,8 @@ class SpeechServer(speechserver.SpeechServer):
         #
         text = text.replace('\n.', '\n')
 
+        text = "<speak>" + text + "</speak>"
+
         self._apply_acss(acss)
         self._debug_sd_values("Speaking '%s' " % text)
         self._send_command(self._client.speak, text, **kwargs)
