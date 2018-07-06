@@ -540,6 +540,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             utterance = self.generateSpeech(
                 obj, startOffset=start, endOffset=end, string=string,
                 index=i, total=len(contents), **args)
+            if isinstance(utterance, list):
+                isNotEmptyList = lambda x: not (isinstance(x, list) and not x)
+                utterance = list(filter(isNotEmptyList, utterance))
             if utterance and utterance[0]:
                 result.append(utterance)
                 args['priorObj'] = obj
