@@ -91,3 +91,15 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
 
         return string, start, end
+
+    def unrelatedLabels(self, root, onlyShowing=True, minimumWords=3):
+        if not root:
+            return []
+
+        isDialog = lambda x: x and x.getRole() == pyatspi.ROLE_DIALOG
+        if not isDialog(root) and pyatspi.findAncestor(root, isDialog) is None:
+            msg = "GNOME SHELL: Not seeking unrelated labels for non-dialog"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
+        return super().unrelatedLabels(root, onlyShowing, minimumWords)
