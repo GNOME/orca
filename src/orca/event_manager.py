@@ -353,6 +353,24 @@ class EventManager:
         if debug.debugEventQueue:
             self._enqueueCount -= 1
 
+    def _isNoFocus(self):
+        if orca_state.locusOfFocus or orca_state.activeWindow or orca_state.activeScript:
+            return False
+
+        msg = 'EVENT MANAGER: No focus'
+        debug.println(debug.LEVEL_SEVERE, msg, True)
+        return True
+
+    def _onNoFocus(self):
+        if not self._isNoFocus():
+            return False
+
+        fullMessage = messages.NO_FOCUS
+        defaultScript = _scriptManager.getDefaultScript()
+        defaultScript.presentMessage(fullMessage, '')
+        _scriptManager.setActiveScript(defaultScript, 'No focus')
+        return False
+
     def _dequeue(self):
         """Handles all events destined for scripts. Called by the GTK
         idle thread."""
@@ -389,25 +407,9 @@ class EventManager:
                                   % event.type)
                 debug.objEvent = None
 
-            # [[[TODO: HACK - it would seem logical to only do this if we
-            # discover the queue is empty, but this inroduces a hang for
-            # some reason if done inside an acquire/release block for a
-            # lock.  So...we do it here.]]]
-            #
-            try:
-                noFocus = not (orca_state.activeScript or orca_state.locusOfFocus)
-            except:
-                noFocus = True
-
             self._gidleLock.acquire()
             if self._eventQueue.empty():
-                if noFocus:
-                    if self._gilSleepTime:
-                        time.sleep(self._gilSleepTime)
-                    fullMessage = messages.NO_FOCUS
-                    defaultScript = _scriptManager.getDefaultScript()
-                    defaultScript.presentMessage(fullMessage, '')
-                    _scriptManager.setActiveScript(defaultScript, 'No focus')
+                GLib.timeout_add(2500, self._onNoFocus)
                 self._gidleId = 0
                 rerun = False # destroy and don't call again
             self._gidleLock.release()
