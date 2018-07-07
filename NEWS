@@ -1,3 +1,122 @@
+3.29.3 - 7 July 2018
+
+Web + Email:
+
+ * Stop Orca from descending into widget elements it should not descend
+
+ * Fix bug preventing Orca from presenting the current object
+
+ * Fix chattiness problem due to creation of bogus window accessibles
+
+ * Filter out bogus load events from Firefox extensions
+
+ * Correcly update caret position when Page Up/Down used in editable text
+
+ * Fix focus mode staying toggled off after leaving context menu
+
+ * Don't exit focus mode when navigating to/amongst radio buttons
+
+ * Eliminate double-presentation of name when name comes from contents
+
+ * Improve MathML presentation
+
+LibreOffice:
+
+ * Present Calc cell selection changes
+
+General:
+
+ * Fix many bugs and improve performance of Mouse Review
+
+ * Handle starting flat review when offset is after final character
+
+ * Do a better job of determining the focused object upon launch
+
+ * Ensure the expanded state of tree rows is annnounced
+
+ * Support synthesizing caps lock for double-orca support
+   (requires AT-SPI2 2.30 or later)
+
+ * Make double-orca presses perform the underlying key action
+
+ * Reduce chattiness in icon views
+
+ * Ensure buttons with single-character names get spoken
+
+ * Fix several issues in Orca's presentation of unrelated labels
+
+ * Improve behavior/presentation when current object becomes defunct
+
+ * Fall back on described-by relation to get description
+
+ * Ignore various bogus events from apps and toolkits
+
+Speech:
+
+ * Respect SSML norm
+
+ * Add progress marking support
+
+Braille:
+
+ * Fix braille updating when backspacing text on long lines
+
+ * braille: only set viewport[0] to 0 when the string fits
+
+ * Update braille when caret moves in web page due to mouse click
+
+ * Support CMD_FWINLTSKIP and CMD_FWINRTSKIP from brltty
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es            Spanish                 Daniel Mustieles
+
+=========
+
+3.28.2 - 28 June 2018
+
+Web + Email:
+
+ * Update Orca to handle "document web" role now used in Gecko
+
+General:
+
+ * Fix bug causing certain combo boxes to not be presented
+
+Braille:
+
+ * Fix braille word wrap being incorrectly enabled
+
+ * Fix brlmon regression introduced by 71b63379f
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                 Marek Cernocky
+    de            German                Tim Sabsch
+
+=========
+
+3.28.1 - 21 April 2018
+
+Web + Email:
+
+ * Fix Orca-triggered focus change in Thunderbird message composition
+   window
+
+General:
+
+ * Handle event floods from Caja and Nautilus more efficiently
+
+Braille:
+
+ * Release device when braille is deactivated for some applications
+
+ * Fix bogus dots appearing after text
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    sv            Swedish                Anders Jonsson
+
 3.28.0 - 26 March 2018
 
 Web + Email:
