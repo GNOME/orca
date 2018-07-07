@@ -148,7 +148,7 @@ class SpeechServer(speechserver.SpeechServer):
             speechd.CallbackType.BEGIN: speechserver.SayAllContext.PROGRESS,
             speechd.CallbackType.CANCEL: speechserver.SayAllContext.INTERRUPTED,
             speechd.CallbackType.END: speechserver.SayAllContext.COMPLETED,
-           #speechd.CallbackType.INDEX_MARK:speechserver.SayAllContext.PROGRESS,
+            speechd.CallbackType.INDEX_MARK:speechserver.SayAllContext.PROGRESS,
             }
 
         self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % serverId
@@ -172,6 +172,7 @@ class SpeechServer(speechserver.SpeechServer):
         self._current_voice_properties = {}
         mode = self._PUNCTUATION_MODE_MAP[settings.verbalizePunctuationStyle]
         client.set_punctuation(mode)
+        client.set_data_mode(speechd.DataMode.SSML)
 
     def updateCapitalizationStyle(self):
         """Updates the capitalization style used by the speech server."""
@@ -343,6 +344,30 @@ class SpeechServer(speechserver.SpeechServer):
     def _speak(self, text, acss, **kwargs):
         if isinstance(text, ACSS):
             text = ''
+
+        # Mark beginning of words with U+E000 (private use) and record the
+        # string offsets
+        # Note: we need to do this before disturbing the text offsets
+        marks_offsets = []
+        marked_text = ""
+
+        for i in range(len(text)):
+            c = text[i]
+            if c == '\ue000':
+                # Original text already contains U+E000. But syntheses will not
+                # know what to do of it anyway, so discard it
+                continue
+            marked_text += c
+
+            if (c == ' ' or c == '\u00a0') \
+               and i < len(text) - 1 \
+               and text[i + 1] != ' ' and text[i + 1] != '\u00a0':
+                # Word separation, add a mark
+                marks_offsets.append(i + 1)
+                marked_text += '\ue000'
+
+        text = marked_text
+
         text = self.__addVerbalizedPunctuation(text)
         if orca_state.activeScript:
             text = orca_state.activeScript.\
@@ -358,9 +383,37 @@ class SpeechServer(speechserver.SpeechServer):
         #
         text = text.replace('\n.', '\n')
 
+        # Transcribe to SSML, translating U+E000 into marks
+        # Note: we need to do this after all mangling otherwise the ssml markup
+        # would get mangled too
+        ssml = "<speak>"
+        i = 0
+        for c in text:
+            if c == '\ue000':
+                if i >= len(marks_offsets):
+                    # This is really not supposed to happen
+                    msg = "%uth U+E000 does not have corresponding index" % i
+                    debug.println(debug.LEVEL_WARNING, msg, True)
+                else:
+                    ssml += '<mark name="%u"/>' % marks_offsets[i]
+                i += 1
+            elif c == '"':
+              ssml += '&quot;'
+            elif c == "'":
+              ssml += '&apos;'
+            elif c == '<':
+              ssml += '&lt;'
+            elif c == '>':
+              ssml += '&gt;'
+            elif c == '&':
+              ssml += '&amp;'
+            else:
+              ssml += c
+        ssml += "</speak>"
+
         self._apply_acss(acss)
-        self._debug_sd_values("Speaking '%s' " % text)
-        self._send_command(self._client.speak, text, **kwargs)
+        self._debug_sd_values("Speaking '%s' " % ssml)
+        self._send_command(self._client.speak, ssml, **kwargs)
 
     def _say_all(self, iterator, orca_callback):
         """Process another sayAll chunk.
