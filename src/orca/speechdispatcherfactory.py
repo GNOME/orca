@@ -148,7 +148,7 @@ class SpeechServer(speechserver.SpeechServer):
             speechd.CallbackType.BEGIN: speechserver.SayAllContext.PROGRESS,
             speechd.CallbackType.CANCEL: speechserver.SayAllContext.INTERRUPTED,
             speechd.CallbackType.END: speechserver.SayAllContext.COMPLETED,
-            speechd.CallbackType.INDEX_MARK:speechserver.SayAllContext.PROGRESS,
+           #speechd.CallbackType.INDEX_MARK:speechserver.SayAllContext.PROGRESS,
             }
 
         self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % serverId
@@ -172,7 +172,6 @@ class SpeechServer(speechserver.SpeechServer):
         self._current_voice_properties = {}
         mode = self._PUNCTUATION_MODE_MAP[settings.verbalizePunctuationStyle]
         client.set_punctuation(mode)
-        client.set_data_mode(speechd.DataMode.SSML)
 
     def updateCapitalizationStyle(self):
         """Updates the capitalization style used by the speech server."""
@@ -344,16 +343,6 @@ class SpeechServer(speechserver.SpeechServer):
     def _speak(self, text, acss, **kwargs):
         if isinstance(text, ACSS):
             text = ''
-
-        # Mark words to get speech progression feedback.
-        # Note: we need to do it before disturbing the text offsets
-        markedtext = ""
-        for i in range(len(text)):
-            markedtext += text[i]
-            if text[i] == ' ' or text[i] == '\u00a0':
-                markedtext += '<mark name="%u"/>' % (i+1)
-        text = markedtext
-
         text = self.__addVerbalizedPunctuation(text)
         if orca_state.activeScript:
             text = orca_state.activeScript.\
@@ -368,8 +357,6 @@ class SpeechServer(speechserver.SpeechServer):
         # this seems to crash sd, see bgo#618334.
         #
         text = text.replace('\n.', '\n')
-
-        text = "<speak>" + text + "</speak>"
 
         self._apply_acss(acss)
         self._debug_sd_values("Speaking '%s' " % text)
