@@ -192,8 +192,8 @@ class Utilities(script_utilities.Utilities):
                 return re.search(r"[^\d\s]", event.any_data)
             if mods & keybindings.ALT_MODIFIER_MASK:
                 return True
-            if len(event.any_data) > 1 and self.lastInputEventWasPrintableKey():
-                return True
+            if self.lastInputEventWasPrintableKey():
+                return len(event.any_data) > 1
             if self.insertionEndsAtCaret(event):
                 return True
 
