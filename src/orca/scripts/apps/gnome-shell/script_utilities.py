@@ -96,9 +96,11 @@ class Utilities(script_utilities.Utilities):
         if not root:
             return []
 
-        isDialog = lambda x: x and x.getRole() == pyatspi.ROLE_DIALOG
-        if not isDialog(root) and pyatspi.findAncestor(root, isDialog) is None:
-            msg = "GNOME SHELL: Not seeking unrelated labels for non-dialog"
+        roles = [pyatspi.ROLE_DIALOG, pyatspi.ROLE_NOTIFICATION]
+
+        hasRole = lambda x: x and x.getRole() in roles
+        if not hasRole(root) and pyatspi.findAncestor(root, hasRole) is None:
+            msg = "GNOME SHELL: Not seeking unrelated labels for %s" % root
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
