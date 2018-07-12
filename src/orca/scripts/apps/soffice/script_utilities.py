@@ -798,17 +798,37 @@ class Utilities(script_utilities.Utilities):
 
         return name.strip()
 
-    def handleCellSelectionChange(self, obj):
+    def _getCoordinatesForSelectedRange(self, obj):
         interfaces = pyatspi.listInterfaces(obj)
         if not ("Table" in interfaces and "Selection" in interfaces):
-            return True
+            return (-1, -1), (-1, -1)
 
-        table = obj.queryTable()
-        count = self.selectedChildCount(obj)
         first, last = self.firstAndLastSelectedChildren(obj)
         firstCoords = self.coordinatesForCell(first)
         lastCoords = self.coordinatesForCell(last)
-        focusCoords = tuple(self.coordinatesForCell(orca_state.locusOfFocus))
+        return firstCoords, lastCoords
+
+    def speakSelectedCellRange(self, obj):
+        firstCoords, lastCoords = self._getCoordinatesForSelectedRange(obj)
+        if firstCoords == (-1, -1) or lastCoords == (-1, -1):
+            return True
+
+        self._script.presentationInterrupt()
+
+        if firstCoords == lastCoords:
+            cell = self._getCellNameForCoordinates(obj, *firstCoords, True)
+            self._script.speakMessage(messages.CELL_SELECTED % cell)
+            return True
+
+        cell1 = self._getCellNameForCoordinates(obj, *firstCoords, True)
+        cell2 = self._getCellNameForCoordinates(obj, *lastCoords, True)
+        self._script.speakMessage(messages.CELL_RANGE_SELECTED % (cell1, cell2))
+        return True
+
+    def handleCellSelectionChange(self, obj):
+        firstCoords, lastCoords = self._getCoordinatesForSelectedRange(obj)
+        if firstCoords == (-1, -1) or lastCoords == (-1, -1):
+            return True
 
         current = []
         for r in range(firstCoords[0], lastCoords[0]+1):
@@ -821,6 +841,7 @@ class Utilities(script_utilities.Utilities):
 
         unselected = sorted(previous.difference(current))
         selected = sorted(current.difference(previous))
+        focusCoords = tuple(self.coordinatesForCell(orca_state.locusOfFocus))
         if focusCoords in selected:
             selected.remove(focusCoords)
 

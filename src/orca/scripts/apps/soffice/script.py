@@ -844,6 +844,9 @@ class Script(default.Script):
         if self.utilities.isSpreadSheetTable(event.source):
             if _settingsManager.getSetting('onlySpeakDisplayedText'):
                 return
+            if _settingsManager.getSetting('alwaysSpeakSelectedSpreadsheetRange'):
+                self.utilities.speakSelectedCellRange(event.source)
+                return
             if self.utilities.handleRowAndColumnSelectionChange(event.source):
                 return
             self.utilities.handleCellSelectionChange(event.source)
