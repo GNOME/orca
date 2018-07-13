@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orcaorca/issues\n"
-"POT-Creation-Date: 2018-07-03 18:42+0000\n"
-"PO-Revision-Date: 2018-07-06 12:53+0200\n"
+"POT-Creation-Date: 2018-07-06 11:05+0000\n"
+"PO-Revision-Date: 2018-07-13 13:11+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -7941,8 +7941,6 @@ msgstr "Celda %s"
 #. will be something like "B3".
 #: ../src/orca/messages.py:159
 #, python-format
-#| msgctxt "text"
-#| msgid "selected"
 msgctxt "cell"
 msgid "%s selected"
 msgstr "%s seleccionada"
@@ -7956,7 +7954,7 @@ msgstr "%s seleccionada"
 #, python-format
 msgctxt "cell"
 msgid "%s through %s selected"
-msgstr ""
+msgstr "Seleccionado de %s a %s"
 
 #. Translators: this message is spoken to announce that multiple table cells just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -7967,7 +7965,7 @@ msgstr ""
 #, python-format
 msgctxt "cell"
 msgid "%s through %s unselected"
-msgstr ""
+msgstr "No seleccionado de %s a %s"
 
 #. Translators: this message is spoken to announce that a table cell just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
@@ -7975,8 +7973,6 @@ msgstr ""
 #. will be something like "B3".
 #: ../src/orca/messages.py:179
 #, python-format
-#| msgctxt "text"
-#| msgid "unselected"
 msgctxt "cell"
 msgid "%s unselected"
 msgstr "%s no seleccionada"
@@ -8338,7 +8334,6 @@ msgstr "todo el documento seleccionado"
 #. selected but the user presses a key (e.g. an arrow key) causing the
 #. selection to be completely removed.
 #: ../src/orca/messages.py:457
-#| msgid "entire document selected"
 msgid "entire document unselected"
 msgstr "todo el documento no seleccionado"
 
@@ -10709,8 +10704,6 @@ msgstr "Inicio de la columna."
 #. is the column label (e.g. "B").
 #: ../src/orca/messages.py:2173
 #, python-format
-#| msgctxt "text"
-#| msgid "unselected"
 msgid "Column %s selected"
 msgstr "Columna %s seleccionada"
 
@@ -10722,7 +10715,7 @@ msgstr "Columna %s seleccionada"
 #: ../src/orca/messages.py:2180
 #, python-format
 msgid "Columns %s through %s selected"
-msgstr ""
+msgstr "Columnas %s a %s seleccionadas"
 
 #. Translators: this message is spoken to announce that multiple table columns just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -10732,15 +10725,13 @@ msgstr ""
 #: ../src/orca/messages.py:2187
 #, python-format
 msgid "Columns %s through %s unselected"
-msgstr ""
+msgstr "Columnas %s a %s no seleccionadas"
 
 #. Translators: this message is spoken to announce that a table column just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
 #: ../src/orca/messages.py:2192
 #, python-format
-#| msgctxt "text"
-#| msgid "unselected"
 msgid "Column %s unselected"
 msgstr "Columna %s no seleccionada"
 
@@ -10802,7 +10793,6 @@ msgstr "Fila insertada al final de la tabla."
 #. label (e.g. "2").
 #: ../src/orca/messages.py:2232
 #, python-format
-#| msgid "Row deleted."
 msgid "Row %s selected"
 msgstr "Fila %s seleccionada"
 
@@ -10814,7 +10804,7 @@ msgstr "Fila %s seleccionada"
 #: ../src/orca/messages.py:2239
 #, python-format
 msgid "Rows %s through %s selected"
-msgstr ""
+msgstr "Filas %s a %s seleccionadas"
 
 #. Translators: this message is spoken to announce that multiple table rows just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -10831,8 +10821,6 @@ msgstr "Filas %s a %s no seleccionadas"
 #. substitution is the row label (e.g. "2").
 #: ../src/orca/messages.py:2251
 #, python-format
-#| msgctxt "text"
-#| msgid "unselected"
 msgid "Row %s unselected"
 msgstr "Fila %s no seleccionada"
 
