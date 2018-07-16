@@ -98,6 +98,7 @@ userCustomizableSettings = [
     "enableMouseReview",
     "speakCellCoordinates",
     "speakSpreadsheetCoordinates",
+    "alwaysSpeakSelectedSpreadsheetRange",
     "speakCellSpan",
     "speakCellHeaders",
     "skipBlankCells",
@@ -227,6 +228,7 @@ speakCellCoordinates         = True
 speakCellSpan                = True
 speakCellHeaders             = True
 speakSpreadsheetCoordinates  = True
+alwaysSpeakSelectedSpreadsheetRange = False
 speakMultiCaseStringsAsWords = False
 speakNumbersAsDigits         = False
 speakMisspelledIndicator     = True
@@ -397,6 +399,5 @@ rewindAndFastForwardInSayAll = False
 structNavInSayAll = False
 
 # N.B. The following are experimental and may change or go away at any time.
-alwaysSpeakSelectedSpreadsheetRange = False
 enableSadPidginHack = False
 presentChatRoomLast = False
