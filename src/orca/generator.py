@@ -367,6 +367,11 @@ class Generator:
         result = []
         label = self._generateLabel(obj, **args)
         name = self._generateName(obj, **args)
+        role = args.get('role', obj.role)
+        if not (label or name) and role == pyatspi.ROLE_TABLE_CELL:
+            descendant = self._script.utilities.realActiveDescendant(obj)
+            name = self._generateName(descendant)
+
         result.extend(label)
         if not len(label):
             result.extend(name)

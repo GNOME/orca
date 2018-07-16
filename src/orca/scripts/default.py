@@ -2086,14 +2086,33 @@ class Script(script.Script):
             speech.speak(self.speechGenerator.generateLinkInfo(link))
         return True
 
-    def whereAmISelection(self, inputEvent=None, obj=None):
-        obj = obj or orca_state.locusOfFocus
+    def _whereAmISelectedText(self, inputEvent, obj):
         text, startOffset, endOffset = self.utilities.allSelectedText(obj)
         if not text:
             msg = messages.NO_SELECTED_TEXT
         else:
             msg = messages.SELECTED_TEXT_IS % text
         self.speakMessage(msg)
+        return True
+
+    def whereAmISelection(self, inputEvent=None, obj=None):
+        obj = obj or orca_state.locusOfFocus
+        if not obj:
+            return True
+
+        container = obj
+        if "Selection" in pyatspi.listInterfaces(container.parent):
+            container = obj.parent
+
+        if "Selection" not in pyatspi.listInterfaces(container):
+            return self._whereAmISelectedText(inputEvent, obj)
+
+        count = self.utilities.selectedChildCount(container)
+        if not count:
+            return True
+
+        utterances = self.speechGenerator.generateSelectedItems(container)
+        speech.speak(utterances)
         return True
 
     ########################################################################

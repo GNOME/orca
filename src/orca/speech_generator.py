@@ -1495,6 +1495,9 @@ class SpeechGenerator(generator.Generator):
         selectedItems = self._script.utilities.selectedChildren(container)
         return list(map(self._generateLabelAndName, selectedItems))
 
+    def generateSelectedItems(self, obj, **args):
+        return self._generateSelectedItems(obj, **args)
+
     def _generateUnfocusedDialogCount(self, obj,  **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that says how many unfocused alerts and
