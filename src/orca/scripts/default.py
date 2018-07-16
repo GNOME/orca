@@ -172,10 +172,10 @@ class Script(script.Script):
                 Script.whereAmILink,
                 cmdnames.WHERE_AM_I_LINK)
 
-        self.inputEventHandlers["whereAmISelectedTextHandler"] = \
+        self.inputEventHandlers["whereAmISelectionHandler"] = \
             input_event.InputEventHandler(
-                Script.whereAmISelectedText,
-                cmdnames.WHERE_AM_I_SELECTED_TEXT)
+                Script.whereAmISelection,
+                cmdnames.WHERE_AM_I_SELECTION)
 
         self.inputEventHandlers["getTitleHandler"] = \
             input_event.InputEventHandler(
@@ -2086,7 +2086,7 @@ class Script(script.Script):
             speech.speak(self.speechGenerator.generateLinkInfo(link))
         return True
 
-    def whereAmISelectedText(self, inputEvent=None, obj=None):
+    def whereAmISelection(self, inputEvent=None, obj=None):
         obj = obj or orca_state.locusOfFocus
         text, startOffset, endOffset = self.utilities.allSelectedText(obj)
         if not text:

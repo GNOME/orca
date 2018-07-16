@@ -165,10 +165,10 @@ class Script(default.Script):
                 cmdnames.PAN_BRAILLE_RIGHT,
                 False) # Do not enable learn mode for this action
 
-        self.inputEventHandlers["whereAmISelectedTextHandler"] = \
+        self.inputEventHandlers["whereAmISelectionHandler"] = \
             input_event.InputEventHandler(
-                Script.whereAmISelectedText,
-                cmdnames.WHERE_AM_I_SELECTED_TEXT)
+                Script.whereAmISelection,
+                cmdnames.WHERE_AM_I_SELECTION)
 
     def getAppKeyBindings(self):
         """Returns the application-specific keybindings for this script."""
@@ -925,9 +925,9 @@ class Script(default.Script):
         super().onWindowDeactivated(event)
         self.spellcheck.deactivate()
 
-    def whereAmISelectedText(self, inputEvent=None, obj=None):
+    def whereAmISelection(self, inputEvent=None, obj=None):
         obj = obj or orca_state.locusOfFocus
         if not self.utilities.isSpreadSheetCell(obj):
-            return super().whereAmISelectedText(inputEvent, obj)
+            return super().whereAmISelection(inputEvent, obj)
 
         return self.utilities.speakSelectedCellRange(self.utilities.getTable(obj))

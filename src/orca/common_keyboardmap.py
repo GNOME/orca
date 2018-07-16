@@ -69,6 +69,9 @@ keymap = (
     ("t", defaultModifierMask, ORCA_MODIFIER_MASK,
     "presentDateHandler", 2),
 
+    ("Up", defaultModifierMask, ORCA_SHIFT_MODIFIER_MASK,
+    "whereAmISelectionHandler"),
+
     #####################################################################
     #                                                                   #
     #  Bookmark key bindings                                            #
@@ -193,9 +196,6 @@ keymap = (
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
     "shutdownHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "whereAmISelectedTextHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
     "whereAmILinkHandler"),

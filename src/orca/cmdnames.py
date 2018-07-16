@@ -79,8 +79,11 @@ WHERE_AM_I_BASIC = _("Performs the basic where am I operation.")
 WHERE_AM_I_DETAILED = _("Performs the detailed where am I operation.")
 
 # Translators: This is the description of a dedicated command to speak the
-# selected text (if any) in a document.
-WHERE_AM_I_SELECTED_TEXT = _("Speaks the selected text.")
+# current selection / highlighted object(s). For instance, in a text object,
+# "selection" refers to the selected/highlighted text. In a spreadsheet, it
+# refers to the selected/highlighted cells. In an file manager, it refers to
+# the selected/highlighted icons. Etc.
+WHERE_AM_I_SELECTION = _("Speaks the current selection.")
 
 # Translators: This is the description of a dedicated command to speak details
 # about a link, such as the uri and type of link.

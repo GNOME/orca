@@ -176,11 +176,9 @@
       <app>Orca</app> has a dedicated command for obtaining the attributes of the
       text at the caret location. In addition, if you use <app>Orca</app>'s
       Where Am I commands from within a text object in which text has been
-      selected, <app>Orca</app> will announce the selected text. If you would
-      instead prefer a dedicated command for this purpose, you can bind
-      <app>Orca</app>'s Speak Selected Text command to a keystroke. Please see
-      <link xref="howto_key_bindings">Modifying Keybindings</link> for information
-      on how to do so.
+      selected, <app>Orca</app> will announce the selected text. <app>Orca</app>'s
+      command to speak the current selection will also perform this function in a
+      text object.
     </p>
     <list>
       <item>
@@ -221,7 +219,10 @@
       </list>
     </item>
     <item>
-      <p>Speak the selected text: (Unbound)</p>
+      <p>
+        Speak current selection:
+        <keyseq><key>Orca Modifier</key><key>Shift</key><key>Up</key></keyseq>
+      </p>
     </item>
   </list>
   </section>
