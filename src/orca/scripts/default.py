@@ -2105,6 +2105,8 @@ class Script(script.Script):
             container = obj.parent
 
         if "Selection" not in pyatspi.listInterfaces(container):
+            msg = "INFO: %s and %s don't implement selection interface" % (obj, obj.parent)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return self._whereAmISelectedText(inputEvent, obj)
 
         count = self.utilities.selectedChildCount(container)
