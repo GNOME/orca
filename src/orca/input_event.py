@@ -70,8 +70,10 @@ class KeyboardEvent(InputEvent):
 
     # Whether last press of the Orca modifier was alone
     lastOrcaModifierAlone = False
+    lastOrcaModifierAloneTime = None
     # Whether the current press of the Orca modifier is alone
     currentOrcaModifierAlone = False
+    currentOrcaModifierAloneTime = None
 
     TYPE_UNKNOWN          = "unknown"
     TYPE_PRINTABLE        = "printable"
@@ -154,8 +156,10 @@ class KeyboardEvent(InputEvent):
         if not self.isOrcaModifier():
             if KeyboardEvent.orcaModifierPressed:
                 KeyboardEvent.currentOrcaModifierAlone = False
+                KeyboardEvent.currentOrcaModifierAloneTime = None
             else:
                 KeyboardEvent.lastOrcaModifierAlone = False
+                KeyboardEvent.lastOrcaModifierAloneTime = None
 
         if self.isNavigationKey():
             self.keyType = KeyboardEvent.TYPE_NAVIGATION
@@ -167,17 +171,22 @@ class KeyboardEvent(InputEvent):
             self.keyType = KeyboardEvent.TYPE_MODIFIER
             self.shouldEcho = _mayEcho and settings.enableModifierKeys
             if self.isOrcaModifier():
-                if KeyboardEvent.lastOrcaModifierAlone:
+                now = time.time()
+                if KeyboardEvent.lastOrcaModifierAlone \
+                    and now < KeyboardEvent.lastOrcaModifierAloneTime + 0.5:
                     # double-orca, let the real action happen
                     self._bypassOrca = True
                     if not _isPressed:
                         KeyboardEvent.lastOrcaModifierAlone = False
+                        KeyboardEvent.lastOrcaModifierAloneTime = False
                 else:
                     KeyboardEvent.orcaModifierPressed = _isPressed
                     if _isPressed:
                         KeyboardEvent.currentOrcaModifierAlone = True
+                        KeyboardEvent.currentOrcaModifierAloneTime = now
                     else:
                         KeyboardEvent.lastOrcaModifierAlone = KeyboardEvent.currentOrcaModifierAlone
+                        KeyboardEvent.lastOrcaModifierAloneTime = KeyboardEvent.currentOrcaModifierAloneTime
         elif self.isFunctionKey():
             self.keyType = KeyboardEvent.TYPE_FUNCTION
             self.shouldEcho = _mayEcho and settings.enableFunctionKeys
