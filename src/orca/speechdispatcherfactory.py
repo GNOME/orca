@@ -435,6 +435,8 @@ class SpeechServer(speechserver.SpeechServer):
                 if t == speechserver.SayAllContext.PROGRESS:
                     if index_mark:
                         context.currentOffset = int(index_mark)
+                        msg = "SPEECH DISPATCHER: Got mark %d" % context.currentOffset
+                        debug.println(debug.LEVEL_INFO, msg, True)
                     else:
                         context.currentOffset = context.startOffset
                 elif t == speechserver.SayAllContext.COMPLETED:
