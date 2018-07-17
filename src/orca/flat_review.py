@@ -807,6 +807,15 @@ class Context:
 
         return zones
 
+    def _isOrIsIn(self, child, parent):
+        if not (child and parent):
+            return False
+
+        if child == parent:
+            return True
+
+        return pyatspi.findAncestor(child, lambda x: x == parent)
+
     def getShowingZones(self, root, boundingbox=None):
         """Returns an unsorted list of all the zones under root and the focusZone."""
 
@@ -829,7 +838,7 @@ class Context:
                 continue
 
             allZones.extend(zones)
-            if not focusZone and zones and self.focusObj and self.focusObj in [o, o.parent]:
+            if not focusZone and zones and self.focusObj and self._isOrIsIn(o, self.focusObj):
                 zones = list(filter(lambda z: z.hasCaret(), zones)) or zones
                 focusZone = zones[0]
 
