@@ -398,10 +398,11 @@ class SpeechServer(speechserver.SpeechServer):
                 else:
                     ssml += '<mark name="%u"/>' % marks_offsets[i]
                 i += 1
-            elif c == '"':
-              ssml += '&quot;'
-            elif c == "'":
-              ssml += '&apos;'
+            # Disable for now, until speech dispatcher properly parses them (version 0.8.9 or later)
+            #elif c == '"':
+            #  ssml += '&quot;'
+            #elif c == "'":
+            #  ssml += '&apos;'
             elif c == '<':
               ssml += '&lt;'
             elif c == '>':
