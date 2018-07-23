@@ -434,8 +434,8 @@ class SpeechServer(speechserver.SpeechServer):
                 t = self._CALLBACK_TYPE_MAP[callbackType]
                 if t == speechserver.SayAllContext.PROGRESS:
                     if index_mark:
-                        context.currentOffset = int(index_mark)
-                        msg = "SPEECH DISPATCHER: Got mark %d" % context.currentOffset
+                        context.currentOffset = context.startOffset + int(index_mark)
+                        msg = "SPEECH DISPATCHER: Got mark %d / %d-%d" % (context.currentOffset, context.startOffset, context.endOffset)
                         debug.println(debug.LEVEL_INFO, msg, True)
                     else:
                         context.currentOffset = context.startOffset
