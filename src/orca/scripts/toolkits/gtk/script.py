@@ -34,6 +34,7 @@ import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.default as default
 import orca.speech as speech
+import orca.messages as messages
 
 from .script_utilities import Utilities
 
@@ -179,6 +180,18 @@ class Script(default.Script):
         role = event.source.getRole()
         if role == pyatspi.ROLE_COMBO_BOX and not isFocused:
             return
+
+        if (role == pyatspi.ROLE_TABLE or role == pyatspi.ROLE_TREE_TABLE) \
+           and self.utilities.lastInputEventWasSelectAll():
+            try:
+                table = event.source.queryTable()
+                if len(table.getSelectedRows()) == table.nRows:
+                    msg = "DEFAULT: selected all children"
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    speech.speak(messages.TABLE_SELECTED_ALL)
+                    return
+            except:
+                pass
 
         if not isFocused and self.utilities.isTypeahead(orca_state.locusOfFocus):
             msg = "GTK: locusOfFocus believed to be typeahead. Presenting change."

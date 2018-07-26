@@ -503,6 +503,10 @@ DYNAMIC_ROW_HEADER_SET = _("Dynamic row header set for column %s")
 # treated as if it contained row headers.
 DYNAMIC_ROW_HEADER_CLEARED = _("Dynamic row header cleared.")
 
+# Translators: This message is presented when the user selects the entire
+# set of entries in a table by pressing Ctrl+A.
+TABLE_SELECTED_ALL = _("all entries selected")
+
 # Translators: this is used to announce that the current input line in a
 # spreadsheet is blank/empty.
 EMPTY = _("empty")

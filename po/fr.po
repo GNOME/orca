@@ -8316,6 +8316,12 @@ msgstr "document sélectionné jusqu’à la position du curseur"
 msgid "document unselected to cursor position"
 msgstr "document désélectionné jusqu’à la position du curseur"
 
+#. Translators: This message is presented when the user selects the entire
+#. set of entries in a table by pressing Ctrl+A.
+#: ../src/orca/messages.py:508
+msgid "all entries selected"
+msgstr "toutes les entrées sélectionnées"
+
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This message is
 #. presented when the user sets the row to a particular row number.
