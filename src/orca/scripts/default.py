@@ -2462,6 +2462,8 @@ class Script(script.Script):
 
         if self.utilities.handlePasteLocusOfFocusChange():
             orca.setLocusOfFocus(event, event.source, False)
+        elif self.utilities.handleContainerSelectionChange(event.source):
+            return
         else:
             if state.contains(pyatspi.STATE_MANAGES_DESCENDANTS):
                 return

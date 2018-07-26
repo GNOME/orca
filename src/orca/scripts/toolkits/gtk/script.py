@@ -166,6 +166,11 @@ class Script(default.Script):
                 orca.setLocusOfFocus(event, None)
                 return
 
+        role = event.source.getRole()
+        if role in [pyatspi.ROLE_CANVAS, pyatspi.ROLE_ICON] \
+           and self.utilities.handleContainerSelectionChange(event.source.parent):
+            return
+
         super().onSelectedChanged(event)
 
     def onSelectionChanged(self, event):

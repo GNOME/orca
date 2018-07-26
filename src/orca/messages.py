@@ -427,6 +427,10 @@ CONTAINER_END = _("End of container.")
 # not a container, this message will be presented.
 CONTAINER_NOT_IN_A = _("Not in a container.")
 
+# Translators: This message is presented when the user selects all of the items
+# in a container that supports selection, such as a GUI table or a list of icons.
+CONTAINER_SELECTED_ALL = _("all items selected")
+
 # Translators: The "default" button in a dialog box is the button that gets
 # activated when Enter is pressed anywhere within that dialog box.
 DEFAULT_BUTTON_IS = _("Default button is %s")

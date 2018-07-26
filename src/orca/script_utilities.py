@@ -4974,6 +4974,37 @@ class Utilities:
             return True
         return False
 
+    def allItemsSelected(self, obj):
+        interfaces = pyatspi.listInterfaces(obj)
+        if "Selection" not in interfaces:
+            return False
+
+        if self.selectedChildCount(obj) == obj.childCount:
+            return True
+
+        if "Table" not in interfaces:
+            return False
+
+        table = obj.queryTable()
+        if table.nSelectedRows == table.nRows or table.nSelectedColumns == table.nColumns:
+            return True
+
+        return False
+
+    def handleContainerSelectionChange(self, obj):
+        allAlreadySelected = self._script.pointOfReference.get('allItemsSelected')
+        allCurrentlySelected = self.allItemsSelected(obj)
+        if allAlreadySelected and allCurrentlySelected:
+            return True
+
+        self._script.pointOfReference['allItemsSelected'] = allCurrentlySelected
+        if self.lastInputEventWasSelectAll() and allCurrentlySelected:
+            self._script.presentMessage(messages.CONTAINER_SELECTED_ALL)
+            orca.setLocusOfFocus(None, obj, False)
+            return True
+
+        return False
+
     def handleTextSelectionChange(self, obj):
         # Note: This guesswork to figure out what actually changed with respect
         # to text selection will get eliminated once the new text-selection API
