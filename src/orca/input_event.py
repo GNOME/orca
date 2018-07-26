@@ -721,9 +721,16 @@ class KeyboardEvent(InputEvent):
         debug.println(debug.LEVEL_INFO, msg, False)
 
         if self._consumer:
+            msg = 'INFO: Consumer is %s' % self._consumer.__name__
+            debug.println(debug.LEVEL_INFO, msg, True)
             self._consumer(self)
         elif self._handler.function:
+            msg = 'INFO: Handler is %s' % self._handler.description
+            debug.println(debug.LEVEL_INFO, msg, True)
             self._handler.function(self._script, self)
+        else:
+            msg = 'INFO: No handler or consumer'
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         msg = 'TOTAL PROCESSING TIME: %.4f' % (time.time() - startTime)
         debug.println(debug.LEVEL_INFO, msg, True)
