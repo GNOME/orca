@@ -576,6 +576,34 @@ class Utilities(script_utilities.Utilities):
             return False
         return attrs.get('hidden', False)
 
+    def _isOrIsIn(self, child, parent):
+        if not (child and parent):
+            return False
+
+        if child == parent:
+            return True
+
+        return pyatspi.findAncestor(child, lambda x: x == parent)
+
+    def isShowingAndVisible(self, obj):
+        rv = super().isShowingAndVisible(obj)
+        if rv or not self.inDocumentContent(obj):
+            return rv
+
+        if not self._isOrIsIn(orca_state.locusOfFocus, obj):
+            return rv
+
+        msg = "WEB: %s contains locusOfFocus but not showing and visible" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        obj.clearCache()
+        rv = super().isShowingAndVisible(obj)
+        if rv:
+            msg = "WEB: Clearing cache fixed state of %s. Missing event?" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        return rv
+
     def isTextArea(self, obj):
         if self.isLink(obj):
             return False
