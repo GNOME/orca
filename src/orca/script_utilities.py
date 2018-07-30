@@ -2229,6 +2229,9 @@ class Utilities:
         if not obj:
             return False
 
+        if obj.getRole() == pyatspi.ROLE_APPLICATION:
+            return False
+
         try:
             extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
         except:
