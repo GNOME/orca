@@ -1,3 +1,42 @@
+3.29.4 - 30 July 2018
+
+General:
+
+ * Announce when all items in a container have been selected
+
+ * Rename selected-text command, bind it to a keystroke, and make it work in
+   spreadsheets and other containers
+
+ * Check additional ancestry when trying to find current flat review location
+
+ * Limit double-orca caps lock synthesis to within 0.5s
+
+ * Minimize looking for unrelated labels in gnome-shell (performance)
+
+ * Add brief delay before announcing "no focus"
+
+Terminal:
+
+ * Treat terminal insertions which end at the caret as presentable
+
+ * Prevent double-echoing of typed characters
+
+LibreOffice:
+
+ * Add option to always speak full selected range in spreadsheet
+
+Speech:
+
+ * Fix issues in recently-added progress marking and SSML support
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca            Catalan                 Xavi Ivars
+    de            German                  Tim Sabsch
+    es            Spanish                 Daniel Mustieles
+
+=========
+
 3.29.3 - 7 July 2018
 
 Web + Email:
