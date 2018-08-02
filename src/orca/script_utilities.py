@@ -4982,6 +4982,15 @@ class Utilities:
         if "Selection" not in interfaces:
             return False
 
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EXPANDABLE) \
+           and not state.contains(pyatspi.STATE_EXPANDED):
+            return False
+
+        role = obj.getRole()
+        if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_MENU]:
+            return False
+
         if self.selectedChildCount(obj) == obj.childCount:
             return True
 
