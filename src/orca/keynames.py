@@ -89,6 +89,11 @@ __keynames["Num_Lock"]     = _("num lock")
 #
 __keynames["Caps_Lock"]    = _("caps lock")
 
+# Translators: this is how someone would speak the name of the shift lock key
+# There is no reason to make it different from the translation for "caps lock"
+#
+__keynames["Shift_Lock"]    = _("shift lock")
+
 # Translators: this is how someone would speak the name of the scroll lock key
 #
 __keynames["Scroll_Lock"]  = _("scroll lock")
