@@ -350,7 +350,7 @@ class KeyboardEvent(InputEvent):
         if self.keyType:
             return self.keyType in KeyboardEvent.TYPE_LOCKING
 
-        lockingKeys = ["Caps_Lock", "Num_Lock", "Scroll_Lock"]
+        lockingKeys = ["Caps_Lock", "Shift_Lock", "Num_Lock", "Scroll_Lock"]
         if not self.event_string in lockingKeys:
             return False
 
@@ -470,6 +470,8 @@ class KeyboardEvent(InputEvent):
 
         if self.event_string == "Caps_Lock":
             mod = pyatspi.MODIFIER_SHIFTLOCK
+        elif self.event_string == "Shift_Lock":
+            mod = pyatspi.MODIFIER_SHIFT
         elif self.event_string == "Num_Lock":
             mod = pyatspi.MODIFIER_NUMLOCK
         else:
@@ -649,6 +651,7 @@ class KeyboardEvent(InputEvent):
 
         if self._bypassOrca:
             if self.event_string == "Caps_Lock" \
+               or self.event_string == "Shift_Lock" \
                and self.type == pyatspi.KEY_PRESSED_EVENT:
                     self._lock_mod()
                     self.keyType = KeyboardEvent.TYPE_LOCKING
@@ -694,10 +697,9 @@ class KeyboardEvent(InputEvent):
         return False, 'Unaddressed case'
 
     def _lock_mod(self):
-        def lock_mod(modifiers):
+        def lock_mod(modifiers, modifier):
             def lockit():
                 try:
-                    modifier = (1 << pyatspi.MODIFIER_SHIFTLOCK)
                     if modifiers & modifier:
                         lock = pyatspi.KEY_UNLOCKMODIFIERS
                         debug.println(debug.LEVEL_INFO, "Locking capslock", True)
@@ -711,8 +713,16 @@ class KeyboardEvent(InputEvent):
                         "at-spi2-core >= 2.30 is needed for triggering capslock", True)
                     pass
             return lockit
+        if self.event_string == "Caps_Lock":
+            modifier = pyatspi.MODIFIER_SHIFTLOCK
+        elif self.event_string == "Shift_Lock":
+            modifier = pyatspi.MODIFIER_SHIFT
+        else:
+            msg = "Unknown locking key %s" % self.event_string
+            debug.println(debug.LEVEL_WARNING, msg, False)
+            return
         debug.println(debug.LEVEL_INFO, "Scheduling capslock", True)
-        GLib.timeout_add(1, lock_mod(self.modifiers))
+        GLib.timeout_add(1, lock_mod(self.modifiers, modifier))
 
     def _consume(self):
         startTime = time.time()
