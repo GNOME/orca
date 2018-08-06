@@ -86,7 +86,7 @@
         <col id="0">Insert</col>
       </row>
       <row>
-        <col id="0">Caps_Lock</col>
+        <col id="0">Caps_Lock, Shift_Lock</col>
       </row>
     </data>
   </object>

@@ -147,6 +147,12 @@ def getModifierNames(mods):
         # "caps lock" modifier.
         #
         text += _("Caps_Lock") + "+"
+    elif mods & (1 << pyatspi.MODIFIER_SHIFT):
+        # Translators: this is presented in a GUI to represent the
+        # "shift lock" modifier. There is no reason to make it different from
+        # the translation for "Caps_Lock"
+        #
+        text += _("Shift_Lock") + "+"
     #if mods & (1 << pyatspi.MODIFIER_NUMLOCK):
     #    text += _("Num_Lock") + "+"
     if mods & 128:
