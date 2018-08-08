@@ -2303,7 +2303,7 @@ class Utilities:
         # Eliminate duplicates and things suspected to be labels for widgets
         d = {}
         for label in labels:
-            name = label.name
+            name = label.name or self.displayedText(label)
             if name and name in [rootName, label.parent.name]:
                 continue
             if len(name.split()) < minimumWords:
