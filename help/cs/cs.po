@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"POT-Creation-Date: 2018-04-14 12:03+0000\n"
-"PO-Revision-Date: 2018-04-24 18:05+0200\n"
+"POT-Creation-Date: 2018-08-26 13:19+0000\n"
+"PO-Revision-Date: 2018-08-31 06:28+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -1538,22 +1538,18 @@ msgid ""
 "<app>Orca</app> has a dedicated command for obtaining the attributes of the "
 "text at the caret location. In addition, if you use <app>Orca</app>'s Where "
 "Am I commands from within a text object in which text has been selected, "
-"<app>Orca</app> will announce the selected text. If you would instead prefer "
-"a dedicated command for this purpose, you can bind <app>Orca</app>'s Speak "
-"Selected Text command to a keystroke. Please see <link xref="
-"\"howto_key_bindings\">Modifying Keybindings</link> for information on how "
-"to do so."
+"<app>Orca</app> will announce the selected text. <app>Orca</app>'s command "
+"to speak the current selection will also perform this function in a text "
+"object."
 msgstr ""
 "<app>Orca</app> má zvláštní příkazy pro získávání vlastností textu v místě "
 "kurzoru. Navíc, když použijete příkaz čtečky <app>Orca</app> „Kde se "
 "nacházím“ pro textový objekt, ve kterém je vybrán text, oznámí vám "
-"<app>Orca</app> tento vybraný text. Pokud byste pro tento účel měli raději "
-"vyhrazený příkaz, můžete navázat příkaz „Přečíst vybraný text“ na klávesovou "
-"zkratku. Jak to udělat, najdete v kapitole <link xref=\"howto_key_bindings"
-"\">Změna klávesových zkratek</link>."
+"<app>Orca</app> tento vybraný text. Příkaz pro čtení aktuálního výběru "
+"provádí tu samou funkci také na texových objektech."
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:187
+#: C/commands_reading.page:185
 msgid ""
 "Present the text attributes: <keyseq><key>Orca Modifier</key><key>F</key></"
 "keyseq>"
@@ -1562,36 +1558,36 @@ msgstr ""
 "key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:193 C/commands_where_am_i.page:31
+#: C/commands_reading.page:191 C/commands_where_am_i.page:31
 msgid "Perform basic where am I:"
 msgstr "Zjištění základních informací o tom, kde se nacházíte:"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:196 C/commands_where_am_i.page:34
+#: C/commands_reading.page:194 C/commands_where_am_i.page:34
 msgid "Desktop: <key>KP Enter</key>"
 msgstr "Stolní počítač: <key>KP Enter</key> (Enter na numerické klávesnici)"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:201 C/commands_where_am_i.page:37
+#: C/commands_reading.page:199 C/commands_where_am_i.page:37
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>"
 msgstr ""
 "Přenosný počítač: <keyseq><key>Modifikátor Orca</key><key>Enter</key></"
 "keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:208 C/commands_where_am_i.page:42
+#: C/commands_reading.page:206 C/commands_where_am_i.page:42
 msgid "Perform detailed where am I:"
 msgstr "Zjištění podrobných informací o tom, kde se nacházíte:"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:211 C/commands_where_am_i.page:45
+#: C/commands_reading.page:209 C/commands_where_am_i.page:45
 msgid "Desktop: <key>KP Enter</key> (double-clicked)"
 msgstr ""
 "Stolní počítač: <key>KP Enter</key> (Enter na numerické klávesnici, dvojité "
 "zmáčknutí)"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:216 C/commands_where_am_i.page:48
+#: C/commands_reading.page:214 C/commands_where_am_i.page:48
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq> (double-"
 "clicked)"
@@ -1600,17 +1596,21 @@ msgstr ""
 "keyseq> (dvojité zmáčknutí)"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:224
-msgid "Speak the selected text: (Unbound)"
-msgstr "Přečíst vybraný text: (bez klávesové zkratky)"
+#: C/commands_reading.page:222
+msgid ""
+"Speak current selection: <keyseq><key>Orca Modifier</key><key>Shift</"
+"key><key>Up</key></keyseq>"
+msgstr ""
+"Číst aktuální býběr: <keyseq><key>Modifikátor Orca</key><key>Shift</key>"
+"<key>↑</key></keyseq>"
 
 #. (itstool) path: section/title
-#: C/commands_reading.page:229
+#: C/commands_reading.page:230
 msgid "Link Details"
 msgstr "Podrobnosti k odkazu"
 
 #. (itstool) path: section/p
-#: C/commands_reading.page:230
+#: C/commands_reading.page:231
 msgid ""
 "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be used "
 "to announce the details associated with the link such as the link type, if "
@@ -1628,17 +1628,17 @@ msgstr ""
 "kapitole <link xref=\"howto_key_bindings\">Změna klávesových zkratek</link>."
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:240
+#: C/commands_reading.page:241
 msgid "Speak the link details: (Unbound)"
 msgstr "Přečíst podrobnosti k odkazu: (bez klávesové zkratky)"
 
 #. (itstool) path: section/title
-#: C/commands_reading.page:245
+#: C/commands_reading.page:246
 msgid "Browse and Focus Modes"
 msgstr "Režimy procházení a zaměřování"
 
 #. (itstool) path: section/p
-#: C/commands_reading.page:246
+#: C/commands_reading.page:247
 msgid ""
 "<app>Orca</app>'s Browse and Focus modes let you switch between reading and "
 "interacting with web content."
@@ -1647,7 +1647,7 @@ msgstr ""
 "mezi čtením nebo interakcí s webovým obsahem."
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:252
+#: C/commands_reading.page:253
 msgid ""
 "Switch between browse mode and focus mode: <keyseq><key>Orca Modifier</"
 "key><key>A</key></keyseq>"
@@ -1656,7 +1656,7 @@ msgstr ""
 "Orca</key><key>A</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:258
+#: C/commands_reading.page:259
 msgid ""
 "Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (double-clicked)"
@@ -1665,7 +1665,7 @@ msgstr ""
 "key><key>A</key></keyseq> (dvojité zmáčknutí)"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:264
+#: C/commands_reading.page:265
 msgid ""
 "Enable \"sticky\" browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (triple-clicked)"
@@ -4669,22 +4669,26 @@ msgid ""
 "impacts which key is used as the Orca Modifier. If you are using the Laptop "
 "layout, the default Orca Modifier will be <key>CapsLock</key>. If you are "
 "using <app>Orca</app>'s Laptop Layout and want to lock or unlock "
-"<key>CapsLock</key>, you can do so by performing the following steps:"
+"<key>CapsLock</key>, you can do so by either typing <key>CapsLock</key> "
+"twice (requires at-spi2 version 2.30 or later), or by performing the "
+"following steps:"
 msgstr ""
 "Orca má dvě rozložení klávesnice: Stolní počítač a Přenosný počítač. To, "
 "které rozložení zvolíte, má vliv na klávesy, které používá Orca jako "
 "modifikátory. Pokud používáte rozložení Přenosný počítač, výchozím "
 "modifikátorem Orca bude <key>CapsLock</key>. Pokud používáte ve čtečce "
 "<app>Orca</app> rozložení Notebook a chcete zamknout nebo odemknout "
-"<key>CapsLock</key>, můžete tak učinit následujícími kroky:"
+"<key>CapsLock</key>, můžete tak učinit buďto zmáčknutím <key>CapsLock</key> "
+"dvakrát po sobě (vyžaduje at-spi2 verze 2.30 nebo novější) nebo provedením "
+"následujících kroků:"
 
 #. (itstool) path: steps/title
-#: C/howto_toggling_caps_lock.page:24
+#: C/howto_toggling_caps_lock.page:26
 msgid "Toggling CapsLock in Laptop Layout"
 msgstr "Přepínání zámku CapsLock v rozložení Přenosný počítač"
 
 #. (itstool) path: item/p
-#: C/howto_toggling_caps_lock.page:26
+#: C/howto_toggling_caps_lock.page:28
 msgid ""
 "Press the Bypass command, <keyseq><key>Orca Modifier</key><key>BackSpace</"
 "key> </keyseq>, to tell <app>Orca</app> that the next command should be "
@@ -4695,7 +4699,7 @@ msgstr ""
 "následující příkaz by měl být ignorován."
 
 #. (itstool) path: item/p
-#: C/howto_toggling_caps_lock.page:32
+#: C/howto_toggling_caps_lock.page:34
 msgid "Press <key>CapsLock</key> to toggle its locked state."
 msgstr "Přepněte stav zámku zmáčknutím <key>CapsLock</key>."
 
@@ -8113,3 +8117,6 @@ msgstr ""
 "Zaškrtnutí <gui>Číst čísla po číslicích</gui> způsobí, že <app>Orca</app> "
 "rozdělí číslo, například „123“, před jeho odesláním do hlasového výstupu na "
 "jednotlivé číslice („1“, „2“ a „3“)."
+
+#~ msgid "Speak the selected text: (Unbound)"
+#~ msgstr "Přečíst vybraný text: (bez klávesové zkratky)"
