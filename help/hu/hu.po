@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the orca help.
 #
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018.
-# Attila Hammer <hammera at pickup dot hu>, 2010, 2013, 2014, 2015, 2016, 2017.
+# Attila Hammer <hammera at pickup dot hu>, 2010, 2013, 2014, 2015, 2016, 2017, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca_help master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-08 19:45+0000\n"
+"POT-Creation-Date: 2018-07-16 13:18+0000\n"
 "PO-Revision-Date: 2018-03-05 00:14+0100\n"
-"Last-Translator: Gabor Kelemen <kelemeng at ubuntu dot com>\n"
+"Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -1507,7 +1507,6 @@ msgstr "Az aktuális karakter fonetikus betűztetése:"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:139
-#| msgid "Speak the unicode value of current character:"
 msgid "Speak the Unicode value of current character:"
 msgstr "Az aktuális karakter Unicode kódjának kimondatása:"
 
@@ -1544,15 +1543,22 @@ msgstr "Szövegattribútumokkal és a kijelölt szöveggel kapcsolatos parancsok
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:175
+#| msgid ""
+#| "<app>Orca</app> has a dedicated command for obtaining the attributes of "
+#| "the text at the caret location. In addition, if you use <app>Orca</app>'s "
+#| "Where Am I commands from within a text object in which text has been "
+#| "selected, <app>Orca</app> will announce the selected text. If you would "
+#| "instead prefer a dedicated command for this purpose, you can bind "
+#| "<app>Orca</app>'s Speak Selected Text command to a keystroke. Please see "
+#| "<link xref=\"howto_key_bindings\">Modifying Keybindings</link> for "
+#| "information on how to do so."
 msgid ""
 "<app>Orca</app> has a dedicated command for obtaining the attributes of the "
 "text at the caret location. In addition, if you use <app>Orca</app>'s Where "
 "Am I commands from within a text object in which text has been selected, "
-"<app>Orca</app> will announce the selected text. If you would instead prefer "
-"a dedicated command for this purpose, you can bind <app>Orca</app>'s Speak "
-"Selected Text command to a keystroke. Please see <link xref="
-"\"howto_key_bindings\">Modifying Keybindings</link> for information on how "
-"to do so."
+"<app>Orca</app> will announce the selected text. <app>Orca</app>'s command "
+"to speak the current selection will also perform this function in a text "
+"object."
 msgstr ""
 "Az <app>Orka</app> rendelkezik egy billentyűparanccsal a kurzor pillanatnyi "
 "helyénél található szöveg attribútumainak felolvastatásához. Ha az "
@@ -1565,7 +1571,7 @@ msgstr ""
 "módosítása</link> című fejezetet."
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:187
+#: C/commands_reading.page:185
 msgid ""
 "Present the text attributes: <keyseq><key>Orca Modifier</key><key>F</key></"
 "keyseq>"
@@ -1574,33 +1580,33 @@ msgstr ""
 "key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:193 C/commands_where_am_i.page:31
+#: C/commands_reading.page:191 C/commands_where_am_i.page:31
 msgid "Perform basic where am I:"
 msgstr "Egyszerű hol vagyok művelet végrehajtása:"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:196 C/commands_where_am_i.page:34
+#: C/commands_reading.page:194 C/commands_where_am_i.page:34
 msgid "Desktop: <key>KP Enter</key>"
 msgstr "Asztali kiosztás: <key>Numpad Enter</key>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:201 C/commands_where_am_i.page:37
+#: C/commands_reading.page:199 C/commands_where_am_i.page:37
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>"
 msgstr ""
 "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Enter</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:208 C/commands_where_am_i.page:42
+#: C/commands_reading.page:206 C/commands_where_am_i.page:42
 msgid "Perform detailed where am I:"
 msgstr "Részletesebb hol vagyok művelet végrehajtása:"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:211 C/commands_where_am_i.page:45
+#: C/commands_reading.page:209 C/commands_where_am_i.page:45
 msgid "Desktop: <key>KP Enter</key> (double-clicked)"
 msgstr "Asztali kiosztás: <key>Numpad Enter</key> (kétszer gyorsan megnyomva)"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:216 C/commands_where_am_i.page:48
+#: C/commands_reading.page:214 C/commands_where_am_i.page:48
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq> (double-"
 "clicked)"
@@ -1609,19 +1615,25 @@ msgstr ""
 "(kétszer gyorsan megnyomva)"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:224
-msgid "Speak the selected text: (Unbound)"
+#: C/commands_reading.page:222
+#| msgid ""
+#| "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>U</key></"
+#| "keyseq>"
+msgid ""
+"Speak current selection: <keyseq><key>Orca Modifier</key><key>Shift</"
+"key><key>Up</key></keyseq>"
 msgstr ""
-"Kimondja a kijelölt szöveget: Ehhez a parancshoz nincs előre definiált "
-"billentyűtársítás"
+"A jelenleg kijelölt objektum kimondása: "
+"<keyseq><key>Orka módosító</key><key>Shift</"
+"key><key>Felfelé nyíl</key></keyseq>"
 
 #. (itstool) path: section/title
-#: C/commands_reading.page:229
+#: C/commands_reading.page:230
 msgid "Link Details"
 msgstr "Részletes információ egy hivatkozásról"
 
 #. (itstool) path: section/p
-#: C/commands_reading.page:230
+#: C/commands_reading.page:231
 msgid ""
 "If you are on a link, <app>Orca</app>'s Basic Where Am I command can be used "
 "to announce the details associated with the link such as the link type, if "
@@ -1641,19 +1653,19 @@ msgstr ""
 "\"howto_key_bindings\">Billentyűtársítások módosítása</link> című fejezetet."
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:240
+#: C/commands_reading.page:241
 msgid "Speak the link details: (Unbound)"
 msgstr ""
 "Kimondja a hivatkozás részleteit: Ehhez a parancshoz nincs előre definiált "
 "billentyűtársítás"
 
 #. (itstool) path: section/title
-#: C/commands_reading.page:245
+#: C/commands_reading.page:246
 msgid "Browse and Focus Modes"
 msgstr "A böngészőmód és a fókuszmód"
 
 #. (itstool) path: section/p
-#: C/commands_reading.page:246
+#: C/commands_reading.page:247
 msgid ""
 "<app>Orca</app>'s Browse and Focus modes let you switch between reading and "
 "interacting with web content."
@@ -1662,7 +1674,7 @@ msgstr ""
 "weboldalakon az olvasási és űrlapmód között."
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:252
+#: C/commands_reading.page:253
 msgid ""
 "Switch between browse mode and focus mode: <keyseq><key>Orca Modifier</"
 "key><key>A</key></keyseq>"
@@ -1671,7 +1683,7 @@ msgstr ""
 "key><key>A</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:258
+#: C/commands_reading.page:259
 msgid ""
 "Enable \"sticky\" focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (double-clicked)"
@@ -1680,7 +1692,7 @@ msgstr ""
 "key></keyseq> (kétszer gyorsan megnyomva)"
 
 #. (itstool) path: item/p
-#: C/commands_reading.page:264
+#: C/commands_reading.page:265
 msgid ""
 "Enable \"sticky\" browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (triple-clicked)"
@@ -2864,12 +2876,6 @@ msgstr ""
 
 #. (itstool) path: page/p
 #: C/howto_documents.page:61
-#| msgid ""
-#| "Finally, in order to have <app>Orca</app> speak the entire document from "
-#| "your present location, use the SayAll command. It, along with a more "
-#| "complete listing of <app>Orca</app>'s commands for accessing document "
-#| "text, can be found in the <link xref=\"commands_reading\">Reading "
-#| "Commands</link> guide."
 msgid ""
 "Finally, in order to have <app>Orca</app> speak the entire document from "
 "your present location, use the Say All command. It, along with a more "
@@ -3466,12 +3472,6 @@ msgstr "Az élő régiók udvariassági szintjei"
 
 #. (itstool) path: section/p
 #: C/howto_live_regions.page:28
-#| msgid ""
-#| "Live regions have an associated \"politeness\" level which is set by the "
-#| "author as a means to convey the importance of the information and to "
-#| "suggest when users should be informed by their assistive technology of "
-#| "updates made within that region. Live regions can be \"off\", \"polite\", "
-#| "or \"aggressive\" to the point of being \"rude.\""
 msgid ""
 "Live regions have an associated \"politeness\" level which is set by the "
 "author as a means to convey the importance of the information and to suggest "
@@ -4484,12 +4484,6 @@ msgstr ""
 
 #. (itstool) path: note/p
 #: C/howto_tables.page:80
-#| msgid ""
-#| "Depending on where you are, it may be necessary for you to explicitly "
-#| "toggle Structural Navigation on before you can use it. To learn more, "
-#| "read <link type=\"seealso\" xref="
-#| "\"howto_structural_navigation#toggling_required\"> when toggling "
-#| "Structural Navigation on is required.</link>"
 msgid ""
 "Depending on where you are, it may be necessary for you to explicitly toggle "
 "Structural Navigation on before you can use it. To learn more, read <link "
@@ -4498,9 +4492,9 @@ msgid ""
 msgstr ""
 "Attól függően, hogy éppen hol tartózkodik, szükséges lehet az <app>Orka</"
 "app> strukturált navigációjának bekapcsolása. További információkért olvassa "
-"el az <link xref="
-"\"howto_structural_navigation#toggling_required\">Amikor mindenképpen "
-"szükséges a strukturált Orka navigáció bekapcsolása</link> című fejezetet."
+"el az <link xref=\"howto_structural_navigation#toggling_required\">Amikor "
+"mindenképpen szükséges a strukturált Orka navigáció bekapcsolása</link> című "
+"fejezetet."
 
 #. (itstool) path: section/title
 #: C/howto_tables.page:89
@@ -4552,7 +4546,6 @@ msgstr ""
 
 #. (itstool) path: steps/title
 #: C/howto_tables.page:115
-#| msgid "Set Row Headers"
 msgid "Setting Row Headers"
 msgstr "Sorfejlécek beállítása"
 
@@ -4857,22 +4850,30 @@ msgstr "A nagybetűzár az Orka laptop kiosztásnál"
 
 #. (itstool) path: page/p
 #: C/howto_toggling_caps_lock.page:16
+#| msgid ""
+#| "Orca has two keyboard layouts: Desktop and Laptop. The layout you choose "
+#| "impacts which key is used as the Orca Modifier. If you are using the "
+#| "Laptop layout, the default Orca Modifier will be <key>CapsLock</key>. If "
+#| "you are using <app>Orca</app>'s Laptop Layout and want to lock or unlock "
+#| "<key>CapsLock</key>, you can do so by performing the following steps:"
 msgid ""
 "Orca has two keyboard layouts: Desktop and Laptop. The layout you choose "
 "impacts which key is used as the Orca Modifier. If you are using the Laptop "
 "layout, the default Orca Modifier will be <key>CapsLock</key>. If you are "
 "using <app>Orca</app>'s Laptop Layout and want to lock or unlock "
-"<key>CapsLock</key>, you can do so by performing the following steps:"
+"<key>CapsLock</key>, you can do so by either typing <key>CapsLock</key> "
+"twice (requires at-spi2 version 2.30 or later), or by performing the "
+"following steps:"
 msgstr ""
 "Az Orka két billentyűzetkiosztással rendelkezik: asztali és laptop. Az Ön "
 "által választott billentyűzetkiosztás hatással van az alapértelmezetten "
 "használható Orka módosítóbillentyűre. Ha a laptop billentyűzetkiosztást "
 "használja, az alapértelmezett Orka módosítóbillentyű a <key>Nagybetűzár</"
 "key> lesz. Ha az <app>Orka</app> laptopkiosztását használja, de szeretné "
-"változtatni a <key>Nagybetűzár</key> állapotát, tegye a következőket:"
+"változtatni a <key>Nagybetűzár</key> állapotát, üsse le kétszer a <key>Nagybetű zár</key> billentyűt (ehhez az at-spi2 2.30-as vagy újabb verziója szükséges), vagy tegye a következőket:"
 
 #. (itstool) path: steps/title
-#: C/howto_toggling_caps_lock.page:24
+#: C/howto_toggling_caps_lock.page:26
 msgid "Toggling CapsLock in Laptop Layout"
 msgstr "A nagybetűzár átváltása az Orka laptop kiosztásnál"
 
@@ -4880,7 +4881,7 @@ msgstr "A nagybetűzár átváltása az Orka laptop kiosztásnál"
 # "A következő billentyűparancs átadása az aktuális alkalmazásnak"
 # Így viszont túl hosszú lenne a szöveg.
 #. (itstool) path: item/p
-#: C/howto_toggling_caps_lock.page:26
+#: C/howto_toggling_caps_lock.page:28
 msgid ""
 "Press the Bypass command, <keyseq><key>Orca Modifier</key><key>BackSpace</"
 "key> </keyseq>, to tell <app>Orca</app> that the next command should be "
@@ -4891,7 +4892,7 @@ msgstr ""
 "következő billentyűlenyomást hagyja figyelmen kívül."
 
 #. (itstool) path: item/p
-#: C/howto_toggling_caps_lock.page:32
+#: C/howto_toggling_caps_lock.page:34
 msgid "Press <key>CapsLock</key> to toggle its locked state."
 msgstr ""
 "A nagybetűzár állapotának átváltásához nyomja meg a <key>Nagybetűzár</key> "
@@ -5404,16 +5405,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:38
-#| msgid "Enable Contracted Braille"
 msgid "Enable word wrap"
 msgstr "Szótörés engedélyezése"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:39
-#| msgid ""
-#| "If the <gui>Speak blank lines</gui> checkbox is checked, <app>Orca</app> "
-#| "will say \"blank\" each time you arrow to a blank line. If it is "
-#| "unchecked, <app>Orca</app> will say nothing when you move to a blank line."
 msgid ""
 "If <gui>Enable word wrap</gui> is checked, <app>Orca</app> will adjust the "
 "text so that only full words are shown on the braille display. If it is not "
@@ -5421,9 +5417,9 @@ msgid ""
 "more text can be shown at once."
 msgstr ""
 "Ha a <gui>Szótörés engedélyezése</gui> jelölőnégyzet be van jelölve, az "
-"<app>Orka</app> csak teljes szavakat fog megjeleníteni a Braille-kijelzőn. Ha "
-"ez a jelölőnégyzet nincs bejelölve, az <app>Orka</app> minden cellát fel fog "
-"használni, így egyszerre több szöveg jeleníthető meg."
+"<app>Orka</app> csak teljes szavakat fog megjeleníteni a Braille-kijelzőn. "
+"Ha ez a jelölőnégyzet nincs bejelölve, az <app>Orka</app> minden cellát fel "
+"fog használni, így egyszerre több szöveg jeleníthető meg."
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:50
@@ -5700,7 +5696,6 @@ msgstr "3. Csevegés"
 
 #. (itstool) path: info/desc
 #: C/preferences_chat.page:7
-#| msgid "Configuring <app>Orca's</app> support for IM and IRC"
 msgid "Configuring <app>Orca</app>'s support for IM and IRC"
 msgstr "Az <app>Orka</app> azonnaliüzenő- és IRC-támogatásának konfigurálása"
 
@@ -6049,10 +6044,6 @@ msgstr "Táblázatnavigáció beállításai"
 
 #. (itstool) path: note/p
 #: C/preferences_gecko.page:150
-#| msgid ""
-#| "To learn more about <app>Orca's</app> options for navigating within "
-#| "tables, please see <link xref=\"preferences_table_navigation\">Table "
-#| "Navigation Preferences</link>."
 msgid ""
 "To learn more about <app>Orca</app>'s options for navigating within tables, "
 "please see <link xref=\"preferences_table_navigation\">Table Navigation "
@@ -6122,11 +6113,11 @@ msgstr "A keresett szöveg minimális hossza"
 #| "This editable spin button is where you can specify the number of "
 #| "characters which much match before <app>Orca</app> announces the matching "
 #| "line. This option is also designed to prevent \"chattiness\" as there are "
-#| "many matches when you first begin typing string for which you are "
+#| "many matches when you first begin typing the string for which you are "
 #| "searching."
 msgid ""
 "This editable spin button is where you can specify the number of characters "
-"which much match before <app>Orca</app> announces the matching line. This "
+"which must match before <app>Orca</app> announces the matching line. This "
 "option is also designed to prevent \"chattiness\" as there are many matches "
 "when you first begin typing the string for which you are searching."
 msgstr ""
@@ -7335,12 +7326,6 @@ msgstr "Nincs"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:56
-#| msgid ""
-#| "Choosing a punctuation level of <gui>None</gui> would, as you expect, "
-#| "cause no punctuation to be spoken. Note, however, that special symbols "
-#| "such as subscripted and superscripted numbers, unicode fractions, and "
-#| "bullets are still spoken at this level, even though some might consider "
-#| "these types of symbols punctuation."
 msgid ""
 "Choosing a punctuation level of <gui>None</gui> would, as you expect, cause "
 "no punctuation to be spoken. Note, however, that special symbols such as "
@@ -7441,9 +7426,6 @@ msgstr ""
 
 #. (itstool) path: note/p
 #: C/preferences_speech.page:109
-#| msgid ""
-#| "The follow items will not be available for configuration if the <gui>Only "
-#| "speak displayed text</gui> checkbox is checked."
 msgid ""
 "The following items will not be available for configuration if the <gui>Only "
 "speak displayed text</gui> checkbox is checked."
@@ -7839,7 +7821,6 @@ msgstr "Helyesírás-ellenőrzés"
 
 #. (itstool) path: info/desc
 #: C/preferences_spellcheck.page:6
-#| msgid "Configuring <app>Orca's</app> support for Spell Check"
 msgid "Configuring <app>Orca</app>'s support for Spell Check"
 msgstr "Az <app>Orka</app> helyesírás-ellenőrzés támogatásának konfigurálása"
 
@@ -7948,10 +7929,6 @@ msgstr "A táblázatnavigáció beállításai"
 
 #. (itstool) path: page/p
 #: C/preferences_table_navigation.page:22
-#| msgid ""
-#| "The following option allows you to customize how <app>Orca</app> behaves "
-#| "when navigating within a table in <link xref=\"howto_structural_navigation"
-#| "\">Structural-Navigation</link>-enabled applications."
 msgid ""
 "The following options allow you to customize how <app>Orca</app> behaves "
 "when navigating within a table in <link xref=\"howto_structural_navigation"
@@ -8085,19 +8062,15 @@ msgstr "<gui>Attribútumnév</gui>: A szöveges attribútum neve."
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:43
-#| msgid ""
-#| "<gui>Speak</gui>: Check this checkbox if you would like <app>Orca</app> "
-#| "to speak this attribute when you press <keyseq><key>Orca</key><key>F</"
-#| "key></keyseq>."
 msgid ""
 "<gui>Speak</gui>: Check this checkbox if you would like <app>Orca</app> to "
 "speak this attribute when you press <keyseq><key>Orca Modifier</key><key>F</"
 "key></keyseq>."
 msgstr ""
 "<gui>Felolvasás</gui>: Jelölje be ezt a jelölőnégyzetet, ha azt szeretné, "
-"hogy az <app>Orka</app> az <keyseq><key>Orka módosító</key><key>F</key><"
-"/keyseq> "
-"billentyűkombináció lenyomásakor felolvassa ezt a szöveges attribútumot."
+"hogy az <app>Orka</app> az <keyseq><key>Orka módosító</key><key>F</key></"
+"keyseq> billentyűkombináció lenyomásakor felolvassa ezt a szöveges "
+"attribútumot."
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:50
@@ -8501,6 +8474,11 @@ msgstr ""
 "Ha be van jelölve a <gui>Számok kimondása számjegyenként</gui> "
 "jelölőnégyzet, az <app>Orka</app> például az „123” számot különálló "
 "számjegyenként, „1”, „2”, „3” alakban adja át a beszédszintetizátornak."
+
+#~ msgid "Speak the selected text: (Unbound)"
+#~ msgstr ""
+#~ "Kimondja a kijelölt szöveget: Ehhez a parancshoz nincs előre definiált "
+#~ "billentyűtársítás"
 
 #~ msgid ""
 #~ "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
