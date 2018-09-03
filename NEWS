@@ -1,3 +1,38 @@
+3.29.92 - 3 September 2018
+
+General:
+
+ * Fall back on displayed text for labels which lack an accessible name
+
+ * Fix regression resulting from presentation of all selected items
+
+ * Always treat ROLE_APPLICATION objects as having size
+
+Web:
+
+ * Clear cache to work around missing state-changed event
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                 Marek Cernocky
+    da            Danish                Ask Hjorth Larsen
+    de            German                Tim Sabsch
+    fr            French                Claude Paroz
+    gl            Galician              Fran Dieguez
+    hu            Hungarian             Attila Hammer
+    id            Indonesian            Kukuh Syafaat
+    it            Italian               Milo Casagrande
+    lt            Lithuanian            Aurimas Černius
+    lv            Latvian               Rūdolfs Mazurs
+    po            Polish                Piotr Drąg
+    pt_BR         Brazilian Portuguese  Rafael Fontenelle
+    ro            Romanian              Daniel Șerbănescu
+    sl            Slovenian             Matej Urbančič
+    sv            Swedish               Anders Jonsson
+    tr            Turkish               Emin Tufan Çetin
+
+=========
+
 3.29.4 - 30 July 2018
 
 General:
