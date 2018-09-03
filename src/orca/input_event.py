@@ -708,7 +708,7 @@ class KeyboardEvent(InputEvent):
                     debug.println(debug.LEVEL_INFO, "Done with capslock", True)
                 except:
                     debug.println(debug.LEVEL_INFO, "Could not trigger capslock, " \
-                        "at-spi2-core >= 2.30 is needed for triggering capslock", True)
+                        "at-spi2-core >= 2.32 is needed for triggering capslock", True)
                     pass
             return lockit
         debug.println(debug.LEVEL_INFO, "Scheduling capslock", True)
