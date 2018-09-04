@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2018-07-16 13:18+0000\n"
-"PO-Revision-Date: 2018-08-07 15:28+0200\n"
+"POT-Creation-Date: 2018-09-04 11:59+0000\n"
+"PO-Revision-Date: 2018-09-04 22:36+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.9\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -4612,6 +4612,7 @@ msgstr "Växla den då den är <key>Orca-modifieraren</key>"
 msgid "CapsLock in Laptop Layout"
 msgstr "CapsLock vid bärbar dator-layout"
 
+# TODO: Typing? Not pressing, pushing or some other choise of word?
 #. (itstool) path: page/p
 #: C/howto_toggling_caps_lock.page:16
 msgid ""
@@ -4620,7 +4621,7 @@ msgid ""
 "layout, the default Orca Modifier will be <key>CapsLock</key>. If you are "
 "using <app>Orca</app>'s Laptop Layout and want to lock or unlock "
 "<key>CapsLock</key>, you can do so by either typing <key>CapsLock</key> "
-"twice (requires at-spi2 version 2.30 or later), or by performing the "
+"twice (requires at-spi2 version 2.32 or later), or by performing the "
 "following steps:"
 msgstr ""
 "Orca har två tangentbordslayouter: Stationär dator och Bärbar dator. "
@@ -4629,7 +4630,7 @@ msgstr ""
 "<key>CapsLock</key>. Om du använder <app>Orca</app>s layout för bärbar dator "
 "och vill låsa eller låsa upp <key>CapsLock</key> kan du göra det antingen "
 "genom att trycka på <key>CapsLock</key> två gånger (kräver at-spi2 version "
-"2.30 eller senare), eller genom att utföra följande steg:"
+"2.32 eller senare), eller genom att utföra följande steg:"
 
 #. (itstool) path: steps/title
 #: C/howto_toggling_caps_lock.page:26
