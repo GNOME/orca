@@ -2316,6 +2316,10 @@ class Script(script.Script):
         speech.speak(self.speechGenerator.generateSpeech(obj, alreadyFocused=True))
         self.pointOfReference['expandedChange'] = hash(obj), event.detail1
 
+        details = self.utilities.detailsContentForObject(obj)
+        for detail in details:
+            self.speakMessage(detail, interrupt=False)
+
     def onIndeterminateChanged(self, event):
         """Callback for object:state-changed:indeterminate accessibility events."""
 

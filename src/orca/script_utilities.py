@@ -451,6 +451,40 @@ class Utilities:
         relation = filter(describedBy, relations)
         return [r.getTarget(i) for r in relation for i in range(r.getNTargets())]
 
+    def detailsContentForObject(self, obj):
+        details = self.detailsForObject(obj)
+        return list(map(self.displayedText, details))
+
+    def detailsForObject(self, obj, textOnly=True):
+        """Return a list of objects containing details for obj."""
+
+        try:
+            relations = obj.getRelationSet()
+            role = obj.getRole()
+            state = obj.getState()
+        except (LookupError, RuntimeError):
+            msg = 'ERROR: Exception getting relationset, role, and state for %s' % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
+        if not state.contains(pyatspi.STATE_EXPANDED):
+            return []
+
+        hasDetails = lambda x: x.getRelationType() == pyatspi.RELATION_DETAILS
+        relation = filter(hasDetails, relations)
+        details = [r.getTarget(i) for r in relation for i in range(r.getNTargets())]
+        if not details and role == pyatspi.ROLE_TOGGLE_BUTTON:
+            details = [child for child in obj]
+
+        if not textOnly:
+            return details
+
+        textObjects = []
+        for detail in details:
+            textObjects.extend(pyatspi.findAllDescendants(detail, self.queryNonEmptyText))
+
+        return textObjects
+
     def displayedDescription(self, obj):
         """Returns the text being displayed for the object describing obj."""
 
