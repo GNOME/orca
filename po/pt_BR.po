@@ -19,24 +19,24 @@
 # Júnior Pires <juniorpiresupe@gmail.com>, 2013.
 # Raniere Gaia <raniere@ime.unicamp.br>, 2015.
 # Rafael Gazoni <rafael.moreira@ifms.edu.br>, 2016.
-# Tiago Melo Casal <tcasal@intervox.nce.ufrj.br>, 2007-2009, 2015, 2017.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2013-2018.
 # Enrico Nicoletto <liverig@gmail.com>, 2013-2016, 2018.
 # Bruno Lopes da Silva <brunolopesbldsb@gmail.com>, 2018.
+# Tiago Melo Casal <tcasal@intervox.nce.ufrj.br>, 2007-2009, 2015, 2017-2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orcaorca/issues\n"
-"POT-Creation-Date: 2018-07-26 14:39+0000\n"
-"PO-Revision-Date: 2018-09-01 08:16-0200\n"
-"Last-Translator: Bruno Lopes da Silva <brunolopesbldsb@gmail.com>\n"
+"POT-Creation-Date: 2018-09-01 11:32+0000\n"
+"PO-Revision-Date: 2018-09-08 20:18-0300\n"
+"Last-Translator: Tiago Melo Casal <tcasal@intervox.nce.ufrj.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"X-Generator: Poedit 1.6.11\n"
 "X-Project-Style: gnome\n"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
@@ -69,10 +69,11 @@ msgstr "sta"
 msgid "cal"
 msgstr "cal"
 
+# área de gráficos
 #. Translators: short braille for the rolename of a canvas widget.
 #: ../src/orca/braille_rolenames.py:55
 msgid "cnv"
-msgstr "cnv"
+msgstr "ágrf"
 
 #. Translators: short braille for the rolename of a caption (e.g.,
 #. table caption).
@@ -80,11 +81,12 @@ msgstr "cnv"
 msgid "cptn"
 msgstr "lgnd"
 
+# caixa de seleção | item de menu de seleção
 #. Translators: short braille for the rolename of a checkbox.
 #. Translators: short braille for the rolename of a check menu item.
 #: ../src/orca/braille_rolenames.py:62 ../src/orca/braille_rolenames.py:65
 msgid "chk"
-msgstr "vrf"
+msgstr "slç"
 
 #. Translators: short braille for the rolename of a color chooser.
 #: ../src/orca/braille_rolenames.py:68
@@ -95,12 +97,12 @@ msgstr "slcor"
 #. Translators: short braille for the rolename of a table column header.
 #: ../src/orca/braille_rolenames.py:71 ../src/orca/braille_rolenames.py:230
 msgid "colhdr"
-msgstr "cbcl"
+msgstr "cbçcol"
 
 #. Translators: short braille for the rolename of a combo box.
 #: ../src/orca/braille_rolenames.py:74
 msgid "cbo"
-msgstr "cxcb"
+msgstr "cxc"
 
 #. Translators: short braille for the rolename of a date editor.
 #: ../src/orca/braille_rolenames.py:77
@@ -119,6 +121,7 @@ msgstr "ícn"
 msgid "frm"
 msgstr "qdr"
 
+# seletor
 #. Translators: short braille for the rolename of a dial.
 #. You should attempt to treat it as an abbreviation of
 #. the translated word for "dial".  It is OK to use an
@@ -126,7 +129,7 @@ msgstr "qdr"
 #: ../src/orca/braille_rolenames.py:89
 msgctxt "shortbraille"
 msgid "dial"
-msgstr "dcar"
+msgstr "sltr"
 
 #. Translators: short braille for the rolename of a dialog.
 #: ../src/orca/braille_rolenames.py:92
@@ -136,7 +139,7 @@ msgstr "dlg"
 #. Translators: short braille for the rolename of a directory pane.
 #: ../src/orca/braille_rolenames.py:95
 msgid "dip"
-msgstr "pndr"
+msgstr "pndir"
 
 #. Translators: short braille for the rolename of an HTML document frame.
 #. Translators: short braille for the rolename of an html container.
@@ -147,14 +150,14 @@ msgstr "html"
 #. Translators: short braille for the rolename of a drawing area.
 #: ../src/orca/braille_rolenames.py:101
 msgid "draw"
-msgstr "desenhar"
+msgstr "desenh"
 
 #. Translators: short braille for the rolename of a file chooser.
 #: ../src/orca/braille_rolenames.py:104
 msgid "fchsr"
 msgstr "slarq"
 
-# encher
+# preenchedor
 #. Translators: short braille for the rolename of a filler.
 #: ../src/orca/braille_rolenames.py:107
 msgid "flr"
@@ -175,12 +178,13 @@ msgctxt "shortbraille"
 msgid "form"
 msgstr "form"
 
+# painel transparente
 #. Translators: short braille for the rolename of a glass pane.
 #: ../src/orca/braille_rolenames.py:122
 msgid "gpn"
-msgstr "pnvd"
+msgstr "transpa"
 
-# cabeçalho
+# título
 #. Translators: short braille for the rolename of a heading.
 #: ../src/orca/braille_rolenames.py:125
 msgid "hdng"
@@ -196,16 +200,17 @@ msgstr "img"
 msgid "ifrm"
 msgstr "qdri"
 
+# rótulo
 #. Translators: short braille for the rolename of a label.
 #: ../src/orca/braille_rolenames.py:140
 msgid "lbl"
 msgstr "rtl"
 
-# painel em camadas
+# painel sobreposto
 #. Translators: short braille for the rolename of a layered pane.
 #: ../src/orca/braille_rolenames.py:143
 msgid "lyrdpn"
-msgstr "pncm"
+msgstr "pnspost"
 
 #. Translators: short braille for the rolename of a link.
 #: ../src/orca/braille_rolenames.py:146
@@ -241,17 +246,19 @@ msgstr "itmmnu"
 #. Translators: short braille for the rolename of an option pane.
 #: ../src/orca/braille_rolenames.py:164
 msgid "optnpn"
-msgstr "oppn"
+msgstr "pnopç"
 
+# aba de página
 #. Translators: short braille for the rolename of a page tab.
 #: ../src/orca/braille_rolenames.py:167
 msgid "pgt"
-msgstr "pgn"
+msgstr "apg"
 
+# lista de abas de página
 #. Translators: short braille for the rolename of a page tab list.
 #: ../src/orca/braille_rolenames.py:170
 msgid "tblst"
-msgstr "lstab"
+msgstr "lstabas"
 
 #. Translators: short braille for the rolename of a panel.
 #: ../src/orca/braille_rolenames.py:173
@@ -263,10 +270,11 @@ msgstr "pn"
 msgid "pwd"
 msgstr "snh"
 
+# menu de contexto
 #. Translators: short braille for the rolename of a popup menu.
 #: ../src/orca/braille_rolenames.py:179
 msgid "popmnu"
-msgstr "mnctx"
+msgstr "mnuctx"
 
 # barra de progresso
 #. Translators: short braille for the rolename of a progress bar.
@@ -277,18 +285,21 @@ msgstr "brprg"
 #. Translators: short braille for the rolename of a push button.
 #: ../src/orca/braille_rolenames.py:185
 msgid "btn"
-msgstr "bot"
+msgstr "bt"
 
+# botão de opção
 #. Translators: short braille for the rolename of a radio button.
 #: ../src/orca/braille_rolenames.py:188
 msgid "radio"
-msgstr "opção"
+msgstr "btopç"
 
+# ítem de menu de opções
 #. Translators: short braille for the rolename of a radio menu item.
 #: ../src/orca/braille_rolenames.py:191
 msgid "rdmnuitm"
-msgstr "itmmnuop"
+msgstr "itmmnuopç"
 
+# painel raiz
 #. Translators: short braille for the rolename of a root pane.
 #: ../src/orca/braille_rolenames.py:194
 msgid "rtpn"
@@ -298,19 +309,19 @@ msgstr "pnrz"
 #. Translators: short braille for the rolename of a table row header.
 #: ../src/orca/braille_rolenames.py:197 ../src/orca/braille_rolenames.py:233
 msgid "rwhdr"
-msgstr "cbln"
+msgstr "cbçln"
 
-# barra de rolamento
+# barra de rolagem
 #. Translators: short braille for the rolename of a scroll bar.
 #: ../src/orca/braille_rolenames.py:200
 msgid "scbr"
-msgstr "brrl"
+msgstr "brrlg"
 
 # painel de rolagem
 #. Translators: short braille for the rolename of a scroll pane.
 #: ../src/orca/braille_rolenames.py:203
 msgid "scpn"
-msgstr "pnrl"
+msgstr "pnrlg"
 
 # seção
 #. Translators: short braille for the rolename of a section (e.g., in html).
@@ -332,12 +343,13 @@ msgstr "dslz"
 #. Translators: short braille for the rolename of a split pane.
 #: ../src/orca/braille_rolenames.py:215
 msgid "spltpn"
-msgstr "pnajs"
+msgstr "pnajus"
 
+# botão do seletor numérico
 #. Translators: short braille for the rolename of a spin button.
 #: ../src/orca/braille_rolenames.py:218
 msgid "spin"
-msgstr "btrt"
+msgstr "btslnum"
 
 #. Translators: short braille for the rolename of a statusbar.
 #: ../src/orca/braille_rolenames.py:221
@@ -354,6 +366,7 @@ msgstr "tbl"
 msgid "cll"
 msgstr "cél"
 
+# item de menu destacável
 #. Translators: short braille for the rolename of a tear off menu item.
 #: ../src/orca/braille_rolenames.py:236
 msgid "tomnuitm"
@@ -369,15 +382,17 @@ msgstr "term"
 msgid "txt"
 msgstr "txt"
 
+# botão de alternância
 #. Translators: short braille for the rolename of a toggle button.
 #: ../src/orca/braille_rolenames.py:245
 msgid "tglbtn"
 msgstr "btaltr"
 
+# barra de ferramentas
 #. Translators: short braille for the rolename of a toolbar.
 #: ../src/orca/braille_rolenames.py:248
 msgid "tbar"
-msgstr "brfrm"
+msgstr "brfer"
 
 #. Translators: short braille for the rolename of a tooltip.
 #: ../src/orca/braille_rolenames.py:251
@@ -392,7 +407,7 @@ msgstr "árv"
 #. Translators: short braille for the rolename of a tree table.
 #: ../src/orca/braille_rolenames.py:257
 msgid "trtbl"
-msgstr "tblarv"
+msgstr "tblárv"
 
 #. Translators: short braille for when the rolename of an object is unknown.
 #: ../src/orca/braille_rolenames.py:260
@@ -422,10 +437,11 @@ msgstr "cbç"
 msgid "ftr"
 msgstr "rdp"
 
+# parágrafo
 #. Translators: short braille for the rolename of a paragraph.
 #: ../src/orca/braille_rolenames.py:275
 msgid "para"
-msgstr "para"
+msgstr "pará"
 
 #. Translators: short braille for the rolename of a application.
 #: ../src/orca/braille_rolenames.py:278
@@ -442,10 +458,11 @@ msgstr "auto"
 msgid "edtbr"
 msgstr "bredt"
 
+# componente embutido
 #. Translators: short braille for the rolename of an embedded component.
 #: ../src/orca/braille_rolenames.py:287
 msgid "emb"
-msgstr "itg"
+msgstr "emb"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
@@ -613,7 +630,7 @@ msgstr "Hindi grau 1"
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: ../src/orca/brltablenames.py:144
 msgid "Hungarian 8 dot computer"
-msgstr "Ordem braille para 8 pontos húngaro"
+msgstr "húngaro de 8 pontos informático"
 
 #. Translators: These is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
@@ -695,17 +712,19 @@ msgstr "e comercial"
 msgid "apostrophe"
 msgstr "apóstrofo"
 
+# abre parêntesis
 #. Translators: this is the spoken word for the character '(' (U+0028)
 #.
 #: ../src/orca/chnames.py:81
 msgid "left paren"
-msgstr "abre parêntese"
+msgstr "abre parêntesis"
 
+# fecha parêntesis
 #. Translators: this is the spoken word for the character ')' (U+0029)
 #.
 #: ../src/orca/chnames.py:85
 msgid "right paren"
-msgstr "parêntese direito"
+msgstr "fecha parêntesis"
 
 #. Translators: this is the spoken word for the character '*' (U+002a)
 #.
@@ -787,11 +806,12 @@ msgstr "interrogação"
 msgid "at"
 msgstr "arroba"
 
+# abre colchete
 #. Translators: this is the spoken word for the character '[' (U+005b)
 #.
 #: ../src/orca/chnames.py:141
 msgid "left bracket"
-msgstr "colchete esquerdo"
+msgstr "abre colchete"
 
 #. Translators: this is the spoken word for the character '\' (U+005c)
 #.
@@ -799,17 +819,18 @@ msgstr "colchete esquerdo"
 msgid "backslash"
 msgstr "barra invertida"
 
+# fecha colchete
 #. Translators: this is the spoken word for the character ']' (U+005d)
 #.
 #: ../src/orca/chnames.py:149
 msgid "right bracket"
-msgstr "colchete direito"
+msgstr "fecha colchete"
 
 #. Translators: this is the spoken word for the character '^' (U+005e)
 #.
 #: ../src/orca/chnames.py:153
 msgid "caret"
-msgstr "acento circunflexo"
+msgstr "circunflexo"
 
 #. Translators: this is the spoken word for the character '_' (U+005f)
 #.
@@ -826,11 +847,12 @@ msgstr "sublinha"
 msgid "grave"
 msgstr "grave"
 
+# abre chave
 #. Translators: this is the spoken word for the character '{' (U+007b)
 #.
 #: ../src/orca/chnames.py:165
 msgid "left brace"
-msgstr "chave esquerda"
+msgstr "abre chave"
 
 #. Translators: this is the spoken word for the character '|' (U+007c)
 #.
@@ -838,11 +860,12 @@ msgstr "chave esquerda"
 msgid "vertical bar"
 msgstr "barra vertical"
 
+# fecha chave
 #. Translators: this is the spoken word for the character '}' (U+007d)
 #.
 #: ../src/orca/chnames.py:173
 msgid "right brace"
-msgstr "chave direita"
+msgstr "fecha chave"
 
 #. Translators: this is the spoken word for the character '~' (U+007e)
 #.
@@ -923,11 +946,12 @@ msgstr "copyright"
 msgid "superscript a"
 msgstr "ordinal feminino"
 
+# abre aspas angulares
 #. Translators: this is the spoken word for the character '«' (U+00ab)
 #.
 #: ../src/orca/chnames.py:226
 msgid "left double angle bracket"
-msgstr "aspa angular dupla esquerda"
+msgstr "abre aspas angulares"
 
 #. Translators: this is the spoken word for the character '¬' (U+00ac)
 #.
@@ -986,11 +1010,12 @@ msgstr "3 sobrescrito"
 msgid "acute"
 msgstr "agudo"
 
+# micro
 #. Translators: this is the spoken word for the character 'µ' (U+00b5)
 #.
 #: ../src/orca/chnames.py:266
 msgid "mu"
-msgstr "mí"
+msgstr "micro"
 
 #. Translators: this is the spoken word for the character '¶' (U+00b6)
 #.
@@ -1025,11 +1050,12 @@ msgstr "1 sobrescrito"
 msgid "ordinal"
 msgstr "ordinal"
 
+# fecha aspas angulares
 #. Translators: this is the spoken word for the character '»' (U+00bb)
 #.
 #: ../src/orca/chnames.py:290
 msgid "right double angle bracket"
-msgstr "aspa angular dupla direita"
+msgstr "fecha aspas angulares"
 
 #. Translators: this is the spoken word for the character '¼' (U+00bc)
 #.
@@ -1452,25 +1478,28 @@ msgstr "Y TREMA"
 msgid "florin"
 msgstr "florim"
 
+# traço
 #. Translators: this is the spoken word for the character '–' (U+2013)
 #.
 #: ../src/orca/chnames.py:574
 msgid "en dash"
-msgstr "meia risca"
+msgstr "traço"
 
+# [apóstrofo de abertura]
 #. Translators: this is the spoken word for the left single quote: ‘
 #. (U+2018)
 #.
 #: ../src/orca/chnames.py:579
 msgid "left single quote"
-msgstr "aspas simples esquerda"
+msgstr "apóstrofo esquerdo"
 
+# [verdadeiro apóstrofo]
 #. Translators: this is the spoken word for the right single quote: ’
 #. (U+2019)
 #.
 #: ../src/orca/chnames.py:584
 msgid "right single quote"
-msgstr "aspas simples direita"
+msgstr "Apóstrofo direito"
 
 #. Translators: this is the spoken word for the character '‚' (U+201a)
 #.
@@ -1482,13 +1511,14 @@ msgstr "aspas simples de citação"
 #.
 #: ../src/orca/chnames.py:592
 msgid "left double quote"
-msgstr "aspa dupla esquerda"
+msgstr "abre aspas"
 
+# fecha aspas
 #. Translators: this is the spoken word for the character '”' (U+201d)
 #.
 #: ../src/orca/chnames.py:596
 msgid "right double quote"
-msgstr "aspa dupla direita"
+msgstr "fecha aspas"
 
 #. Translators: this is the spoken word for the character '„' (U+201e)
 #.
@@ -1508,11 +1538,12 @@ msgstr "cruz"
 msgid "double dagger"
 msgstr "cruz dupla"
 
+# bolinha
 #. Translators: this is the spoken word for the character '•' (U+2022)
 #.
 #: ../src/orca/chnames.py:612
 msgid "bullet"
-msgstr "marcador redondo"
+msgstr "bolinha"
 
 #. Translators: this is the spoken word for the character '‣' (U+2023)
 #.
@@ -1574,7 +1605,7 @@ msgstr "marca de seleção"
 #.
 #: ../src/orca/chnames.py:654
 msgid "heavy check mark"
-msgstr "marca de seleção em negrito"
+msgstr "marca de seleção realçada"
 
 #. Translators: this is the spoken word for the character 'x' (U+2717)
 #. This symbol is included here because it can be used as a bullet in
@@ -1853,7 +1884,6 @@ msgstr "Executa a operação detalhada onde eu estou."
 #. refers to the selected/highlighted cells. In an file manager, it refers to
 #. the selected/highlighted icons. Etc.
 #: ../src/orca/cmdnames.py:86
-#| msgid "Speaks the current flat review line."
 msgid "Speaks the current selection."
 msgstr "Lê a seleção atual."
 
@@ -5374,7 +5404,6 @@ msgstr "Apresentar _contexto do erro"
 #. should speak the coordinates of the current spreadsheet cell. Coordinates are
 #. the row and column position within the spreadsheet (i.e. A1, B1, C2 ...)
 #: ../src/orca/guilabels.py:747
-#| msgid "Speak spread sheet cell coordinates"
 msgid "Speak spreadsheet cell coordinates"
 msgstr "Ler as coordenadas de célula da planilha"
 
@@ -6359,11 +6388,12 @@ msgctxt "math symbol"
 msgid "infinity"
 msgstr "infinito"
 
+# ângulo reto
 #. Translators: this is the spoken representation for the character '∟' (U+221f)
 #: ../src/orca/mathsymbols.py:1456
 msgctxt "math symbol"
 msgid "right angle"
-msgstr "ângulo direito"
+msgstr "ângulo reto"
 
 #. Translators: this is the spoken representation for the character '∠' (U+2220)
 #: ../src/orca/mathsymbols.py:1459
@@ -7809,7 +7839,7 @@ msgstr "círculo negro"
 #: ../src/orca/mathsymbols.py:2192
 msgctxt "math symbol"
 msgid "white bullet"
-msgstr "marcador branco"
+msgstr "bolinha branca"
 
 #. Translators: this is the spoken representation for the character '◾' (U+25fe)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
@@ -8332,8 +8362,6 @@ msgstr "Não em um contêiner."
 #. Translators: This message is presented when the user selects all of the items
 #. in a container that supports selection, such as a GUI table or a list of icons.
 #: ../src/orca/messages.py:432
-#| msgctxt "cell"
-#| msgid "%s selected"
 msgid "all items selected"
 msgstr "todos itens selecionados"
 
