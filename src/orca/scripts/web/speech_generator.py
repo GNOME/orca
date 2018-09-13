@@ -291,6 +291,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         force = args.get('force', False)
         start = args.get('startOffset')
         end = args.get('endOffset')
+        total = args.get('total', 1)
 
         if not force:
             doNotSpeak = [pyatspi.ROLE_FOOTER,
@@ -315,6 +316,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 doNotSpeak.append(pyatspi.ROLE_ALERT)
             if self._script.utilities.isAnchor(obj):
                 doNotSpeak.append(obj.getRole())
+            if total > 1:
+                doNotSpeak.append(pyatspi.ROLE_ROW_HEADER)
 
         if obj.getState().contains(pyatspi.STATE_EDITABLE):
             lastKey, mods = self._script.utilities.lastKeyAndModifiers()
