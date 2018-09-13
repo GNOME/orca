@@ -633,6 +633,9 @@ class Utilities:
         return results
 
     def presentEventFromNonShowingObject(self, event):
+        if event.source == orca_state.locusOfFocus:
+            return True
+
         return False
 
     def grabFocusBeforeRouting(self, obj, offset):
