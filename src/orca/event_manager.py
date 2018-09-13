@@ -365,6 +365,7 @@ class EventManager:
         if not self._isNoFocus():
             return False
 
+        defaultScript = _scriptManager.getDefaultScript()
         _scriptManager.setActiveScript(defaultScript, 'No focus')
         return False
 
