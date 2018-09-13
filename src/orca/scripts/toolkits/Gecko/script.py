@@ -182,6 +182,11 @@ class Script(web.Script):
         if self.utilities.isLayoutOnly(event.source):
             return
 
+        if event.source == orca_state.activeWindow:
+            msg = "GECKO: Ignoring event for active window."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         # NOTE: This event type is deprecated and Orca should no longer use it.
         # This callback remains just to handle bugs in applications and toolkits
         # in which object:state-changed:focused events are missing. And in the
