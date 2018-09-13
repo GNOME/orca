@@ -365,9 +365,6 @@ class EventManager:
         if not self._isNoFocus():
             return False
 
-        fullMessage = messages.NO_FOCUS
-        defaultScript = _scriptManager.getDefaultScript()
-        defaultScript.presentMessage(fullMessage, '')
         _scriptManager.setActiveScript(defaultScript, 'No focus')
         return False
 
