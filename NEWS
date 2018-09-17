@@ -1,3 +1,38 @@
+3.30.0 - 17 September 2018
+
+General:
+
+ * Present event for non-showing object if it's focused
+
+ * Don't present unselected-cell message for text objects
+
+ * Don't speak "no focus" even when there is no accessible application
+   focused (it annoys users more than it helps them)
+
+ * Automatically present details content upon expansion of controlling
+   widget
+
+ * Bump version for availability of simulating modifiers in at-spi
+
+Web:
+
+ * Ignore bogus focus event for active window from Gecko
+
+ * Don't speak row header role with multiple objects are on the same line
+
+ * Only prefer the name of links when it's author-provided
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                 Marek Cernocky
+    de            German                Tim Sabsch
+    hu            Hungarian             Balázs Úr
+    pt_BR         Brazilian Portuguese  Tiago Casal
+    sk            Slovak                Peter Vágner
+    sv            Swedish               Anders Jonsson
+
+=========
+
 3.29.92 - 3 September 2018
 
 General:
