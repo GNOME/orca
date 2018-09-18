@@ -43,21 +43,22 @@ class Backend:
         self.settingsFile = os.path.join(prefsDir, "user-settings.conf")
         self.appPrefsDir = os.path.join(prefsDir, "app-settings")
 
+        self._defaultProfiles = {'default': { 'profile':  settings.profile,
+                                                          'pronunciations': {},
+                                                          'keybindings': {}
+                                            }
+                                }
+
     def saveDefaultSettings(self, general, pronunciations, keybindings):
         """ Save default settings for all the properties from
             orca.settings. """
-        defaultProfiles = {'default': { 'profile':  settings.profile,
-                                                    'pronunciations': {},
-                                                    'keybindings': {}
-                                      }
-                          }
         prefs = {'general': general,
-                 'profiles': defaultProfiles,
+                 'profiles': self._defaultProfiles,
                  'pronunciations': pronunciations,
                  'keybindings': keybindings}
 
         self.general = general
-        self.profiles = defaultProfiles
+        self.profiles = self._defaultProfiles
         self.pronunciations = pronunciations
         self.keybindings = keybindings
 
@@ -192,3 +193,23 @@ class Backend:
             profiles.append(profileDict.get('profile'))
 
         return profiles
+
+    def removeProfile(self, profile):
+        """Remove an existing profile"""
+        def removeProfileFrom(dict):
+            del dict[profile]
+            # if we removed the last profile, restore the default ones
+            if len(dict) == 0:
+                for profileName in self._defaultProfiles:
+                    dict[profileName] = self._defaultProfiles[profileName].copy()
+
+        if profile in self.profiles:
+            removeProfileFrom(self.profiles)
+
+        with open(self.settingsFile, 'r+') as settingsFile:
+            prefs = load(settingsFile)
+            if profile in prefs['profiles']:
+                removeProfileFrom(prefs['profiles'])
+                settingsFile.seek(0)
+                settingsFile.truncate()
+                dump(prefs, settingsFile, indent=4)

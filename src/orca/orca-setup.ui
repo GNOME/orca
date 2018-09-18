@@ -403,6 +403,23 @@
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkButton" id="removeProfileButton">
+                                <property name="label" translatable="yes" comments="Translators: This is the label for a button in a dialog.">_Remove</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="use_underline">True</property>
+                                <signal name="clicked" handler="removeProfileButtonClicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left_attach">4</property>
+                                <property name="top_attach">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
                               <placeholder/>
                             </child>
                             <child>
