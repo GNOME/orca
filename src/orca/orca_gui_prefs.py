@@ -3164,7 +3164,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         else:
             if profileToSave is not None:
                 message = guilabels.PROFILE_CONFLICT_MESSAGE % \
-                    ("<b>%s</b>" % profileToSaveLabel)
+                    ("<b>%s</b>" % GLib.markup_escape_text(profileToSaveLabel))
                 dialog = Gtk.MessageDialog(None,
                         Gtk.DialogFlags.MODAL,
                         type=Gtk.MessageType.INFO,
