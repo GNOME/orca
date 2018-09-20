@@ -118,11 +118,15 @@ class Backend:
         self.keybindings = prefs['keybindings']
         self.profiles = prefs['profiles'].copy()
 
-    def getGeneral(self, profile='default'):
+    def getGeneral(self, profile=None):
         """ Get general settings from default settings and
             override with profile values. """
         self._getSettings()
         generalSettings = self.general.copy()
+        defaultProfile = generalSettings.get('startingProfile',
+                                             ['Default', 'default'])
+        if profile is None:
+            profile = defaultProfile[1]
         profileSettings = self.profiles[profile].copy()
         for key, value in profileSettings.items():
             if key == 'voices':
@@ -133,7 +137,7 @@ class Backend:
         try:
             generalSettings['activeProfile'] = profileSettings['profile']
         except KeyError:
-            generalSettings['activeProfile'] = ["Default", "default"] 
+            generalSettings['activeProfile'] = defaultProfile
         return generalSettings
 
     def getPronunciations(self, profile='default'):
