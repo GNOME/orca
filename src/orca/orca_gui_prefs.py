@@ -103,6 +103,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         orca_gtkbuilder.GtkBuilderWrapper.__init__(self, fileName, windowName)
         self.prefsDict = prefsDict
 
+        self._defaultProfile = ['Default', 'default']
+
         # Initialize variables to None to keep pylint happy.
         #
         self.bbindings = None
@@ -1651,15 +1653,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         availableProfiles = self.__getAvailableProfiles()
         self.profilesComboModel.clear()
 
-        defaultValue = ['Default', 'default']
         if not len(availableProfiles):
-            self.profilesComboModel.append(defaultValue)
+            self.profilesComboModel.append(self._defaultProfile)
         else:
             for profile in availableProfiles:
                 self.profilesComboModel.append(profile)
 
-        activeProfile = self.prefsDict.get('activeProfile') or defaultValue
-        startingProfile = self.prefsDict.get('startingProfile') or defaultValue
+        activeProfile = self.prefsDict.get('activeProfile') or self._defaultProfile
+        startingProfile = self.prefsDict.get('startingProfile') or self._defaultProfile
 
         activeProfileIter = self.getComboBoxIndex(self.profilesCombo,
                                                   activeProfile[0])
@@ -3159,7 +3160,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if isinstance(profileToSave, str) \
                 and profileToSave != '' \
                 and not profileToSave in availableProfiles \
-                and profileToSave != 'default':
+                and profileToSave != self._defaultProfile[1]:
             saveActiveProfile()
         else:
             if profileToSave is not None:
@@ -3179,6 +3180,54 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 else:
                     dialog.destroy()
                 
+
+    def removeProfileButtonClicked(self, widget):
+        """Remove profile button clicked handler
+
+        If we removed the last profile, a default one will automatically get
+        added back by the settings manager.
+        """
+
+        oldProfile = self.getComboBoxList(self.profilesCombo)
+
+        message = guilabels.PROFILE_REMOVE_MESSAGE % \
+            ("<b>%s</b>" % GLib.markup_escape_text(oldProfile[0]))
+        dialog = Gtk.MessageDialog(self.window, Gtk.DialogFlags.MODAL,
+                                   type=Gtk.MessageType.INFO,
+                                   buttons=Gtk.ButtonsType.YES_NO)
+        dialog.set_markup("<b>%s</b>" % guilabels.PROFILE_REMOVE_LABEL)
+        dialog.format_secondary_markup(message)
+        dialog.set_title(guilabels.PROFILE_REMOVE_TITLE)
+        if dialog.run() == Gtk.ResponseType.YES:
+            # If we remove the currently used starting profile, fallback on
+            # the first listed profile, or the default one if there's
+            # nothing better
+            newStartingProfile = self.prefsDict.get('startingProfile')
+            if not newStartingProfile or newStartingProfile == oldProfile:
+                newStartingProfile = self._defaultProfile
+                for row in self.profilesComboModel:
+                    rowProfile = row[:]
+                    if rowProfile != oldProfile:
+                        newStartingProfile = rowProfile
+                        break
+            # Update the current profile to the active profile unless we're
+            # removing that one, in which case we use the new starting
+            # profile
+            newProfile = self.prefsDict.get('activeProfile')
+            if not newProfile or newProfile == oldProfile:
+                newProfile = newStartingProfile
+
+            _settingsManager.removeProfile(oldProfile[1])
+            self.loadProfile(newProfile)
+
+            # Make sure nothing is referencing the removed profile anymore
+            startingProfile = self.prefsDict.get('startingProfile')
+            if not startingProfile or startingProfile == oldProfile:
+                self.prefsDict['startingProfile'] = newStartingProfile
+                _settingsManager.setStartingProfile(newStartingProfile)
+                self.writeUserPreferences()
+
+        dialog.destroy()
 
     def loadProfileButtonClicked(self, widget):
         """Load profile button clicked handler"""
@@ -3203,12 +3252,17 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
     def loadSelectedProfile(self):
         """Load selected profile"""
 
+        activeProfile = self.getComboBoxList(self.profilesCombo)
+        self.loadProfile(activeProfile)
+
+    def loadProfile(self, profile):
+        """Load profile"""
+
         self.saveBasicSettings()
 
-        activeProfile = self.getComboBoxList(self.profilesCombo)
-        self.prefsDict['activeProfile'] = activeProfile
-        _settingsManager.setProfile(activeProfile[1])
-        self.prefsDict = _settingsManager.getGeneralSettings(activeProfile[1])
+        self.prefsDict['activeProfile'] = profile
+        _settingsManager.setProfile(profile[1])
+        self.prefsDict = _settingsManager.getGeneralSettings(profile[1])
 
         orca.loadUserSettings(skipReloadMessage=True)
 

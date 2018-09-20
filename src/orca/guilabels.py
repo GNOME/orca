@@ -371,6 +371,33 @@ PROFILE_SAVE_AS_TITLE = _("Save Profile As")
 # name of a new settings profile being saved via the 'Save Profile As' dialog.
 PROFILE_NAME_LABEL = _("_Profile Name:")
 
+# Translators: Profiles in Orca make it possible for users to quickly switch
+# amongst a group of pre-defined settings (e.g. an 'English' profile for reading
+# text written in English using an English-language speech synthesizer and
+# braille rules, and a similar 'Spanish' profile for reading Spanish text.
+# The following is a title in a dialog informing the user that he/she
+# is about to remove a user profile, and action that cannot be undone.
+PROFILE_REMOVE_TITLE = _("Remove User Profile")
+
+# Translators: Profiles in Orca make it possible for users to quickly switch
+# amongst a group of pre-defined settings (e.g. an 'English' profile for reading
+# text written in English using an English-language speech synthesizer and
+# braille rules, and a similar 'Spanish' profile for reading Spanish text.
+# The following is a label in a dialog informing the user that he/she
+# is about to remove a user profile, and action that cannot be undone.
+PROFILE_REMOVE_LABEL = _("Remove user profile")
+
+# Translators: Profiles in Orca make it possible for users to quickly switch
+# amongst a group of pre-defined settings (e.g. an 'English' profile for reading
+# text written in English using an English-language speech synthesizer and
+# braille rules, and a similar 'Spanish' profile for reading Spanish text.
+# The following is a message in a dialog informing the user that he/she
+# is about to remove a user profile, an action that cannot be undone.
+PROFILE_REMOVE_MESSAGE = _("You are about to remove profile %s. " \
+                           "All unsaved settings and settings saved in this " \
+                           "profile will be lost. Do you want to continue " \
+                           "and remove this profile and all related settings?")
+
 # Translators: Orca has a setting which determines which progress bar updates
 # should be announced. Choosing "All" means that Orca will present progress bar
 # updates regardless of what application and window they happen to be in.

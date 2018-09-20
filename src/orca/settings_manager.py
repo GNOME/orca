@@ -369,6 +369,9 @@ class SettingsManager(object):
             orca_i18n.setLocaleForMessages(newVoiceLocale)
             orca_i18n.setLocaleForGUI(newVoiceLocale)
 
+    def removeProfile(self, profile):
+        self._backend.removeProfile(profile)
+
     def _setSettingsRuntime(self, settingsDict):
         for key, value in settingsDict.items():
             setattr(settings, str(key), value)
