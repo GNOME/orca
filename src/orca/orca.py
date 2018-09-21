@@ -668,6 +668,11 @@ def shutdownOnSignal(signum, frame):
     if not cleanExit:
         die(EXIT_CODE_HANG)
 
+def crashOnSignal(signum, frame):
+    signal.signal(signum, signal.SIG_DFL)
+    _restoreXmodmap(_orcaModifiers)
+    os.kill(os.getpid(), signum)
+
 def main(cacheValues=True):
     """The main entry point for Orca.  The exit codes for Orca will
     loosely be based on signals, where the exit code will be the
@@ -690,6 +695,7 @@ def main(cacheValues=True):
     signal.signal(signal.SIGINT, shutdownOnSignal)
     signal.signal(signal.SIGTERM, shutdownOnSignal)
     signal.signal(signal.SIGQUIT, shutdownOnSignal)
+    signal.signal(signal.SIGSEGV, crashOnSignal)
 
     if not _settingsManager.isAccessibilityEnabled():
         _settingsManager.setAccessibility(True)
