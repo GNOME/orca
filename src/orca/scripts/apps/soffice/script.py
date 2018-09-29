@@ -937,6 +937,10 @@ class Script(default.Script):
     def whereAmISelection(self, inputEvent=None, obj=None):
         obj = obj or orca_state.locusOfFocus
         if not self.utilities.isSpreadSheetCell(obj):
+            if self.utilities.inDocumentContent(obj):
+                # Because for some reason, the document implements the selection
+                # interface as if it were a spreadsheet or listbox. *sigh*
+                return super()._whereAmISelectedText(inputEvent, obj)
             return super().whereAmISelection(inputEvent, obj)
 
         return self.utilities.speakSelectedCellRange(self.utilities.getTable(obj))
