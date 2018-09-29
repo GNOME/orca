@@ -49,6 +49,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateAncestors(obj, **args)
 
+        if self._script.inSayAll() and obj == orca_state.locusOfFocus:
+            return []
+
         result = []
         priorObj = args.get('priorObj')
         if priorObj and self._script.utilities.inDocumentContent(priorObj):
@@ -252,6 +255,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     # TODO - JD: Yet another dumb generator method we should kill.
     def _generateTextRole(self, obj, **args):
+        if self._script.inSayAll():
+            return []
+
         return self._generateRoleName(obj, **args)
 
     def getLocalizedRoleName(self, obj, **args):
