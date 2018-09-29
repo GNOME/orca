@@ -26,6 +26,7 @@ SUBDIRS = \
 	rhythmbox \
 	soffice \
 	SeaMonkey \
+	smuxi-frontend-gnome \
 	Thunderbird \
 	xfwm4
 

@@ -28,5 +28,6 @@ __all__ = ['Banshee',
            'rhythmbox',
            'soffice',
            'SeaMonkey',
+           'smuxi-frontend-gnome',
            'Thunderbird',
            'xfwm4']
