@@ -3127,7 +3127,7 @@ class Script(script.Script):
             sentence = self.utilities.substring(obj, sentenceStartOffset + 1,
                                          sentenceEndOffset + 1)
 
-        voice = self.speechGenerator.voice(string=voice)
+        voice = self.speechGenerator.voice(string=sentence)
         sentence = self.utilities.adjustForRepeats(sentence)
         speech.speak(sentence, voice)
         return True
