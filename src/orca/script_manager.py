@@ -54,6 +54,7 @@ class ScriptManager:
              'marco':            'metacity',
              'Nereid':           'Banshee',
              'mate-notification-daemon': 'notification-daemon',
+             'pluma':            'gedit',
             }
 
         self.setActiveScript(None, "__init__")
