@@ -1,16 +1,16 @@
 # Norwegian bokmål translation of orca.
 # Copyright (C) 2003-2004 Free Software Foundation, Inc.
 # Sigurd Gartmann <sigurdga@yahoo-inc.com>, 2003-2006.
-# Kjartan Maraas <kmaraas@gnome.org>, 2003-2017.
+# Kjartan Maraas <kmaraas@gnome.org>, 2003-2018.
 # Sigurd Gartmann <sigurdga@yahoo-inc.com>, 2007.
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: orca 3.26.x\n"
+"Project-Id-Version: orca 3.30.x\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2017-09-15 14:17+0000\n"
-"PO-Revision-Date: 2017-11-08 20:48+0100\n"
+"PO-Revision-Date: 2018-10-07 11:20+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -6139,13 +6139,13 @@ msgstr ""
 #: ../src/orca/mathsymbols.py:1372
 msgctxt "math symbol"
 msgid "there exists"
-msgstr ""
+msgstr "eksisterer"
 
 #. Translators: this is the spoken representation for the character '∄' (U+2204)
 #: ../src/orca/mathsymbols.py:1375
 msgctxt "math symbol"
 msgid "there does not exist"
-msgstr ""
+msgstr "eksisterer ikke"
 
 #. Translators: this is the spoken representation for the character '∅' (U+2205)
 #: ../src/orca/mathsymbols.py:1378
@@ -6665,10 +6665,9 @@ msgstr "vinkelmessig lik"
 
 #. Translators: this is the spoken representation for the character '≛' (U+225b)
 #: ../src/orca/mathsymbols.py:1636
-#, fuzzy
 msgctxt "math symbol"
 msgid "star equals"
-msgstr "er lik"
+msgstr "stjerne lik"
 
 #. Translators: this is the spoken representation for the character '≜' (U+225c)
 #: ../src/orca/mathsymbols.py:1639
@@ -7655,17 +7654,15 @@ msgstr ""
 
 #. Translators: this is the spoken representation for the character '⌈' (U+2308)
 #: ../src/orca/mathsymbols.py:2131
-#, fuzzy
 msgctxt "math symbol"
 msgid "left ceiling"
-msgstr "venstre parantes"
+msgstr "venstre tak"
 
 #. Translators: this is the spoken representation for the character '⌉' (U+2309)
 #: ../src/orca/mathsymbols.py:2134
-#, fuzzy
 msgctxt "math symbol"
 msgid "right ceiling"
-msgstr "høyre parantes"
+msgstr "høyre tak"
 
 #. Translators: this is the spoken representation for the character '⌊' (U+230a)
 #: ../src/orca/mathsymbols.py:2137
@@ -11458,7 +11455,7 @@ msgstr "del"
 #: ../src/orca/object_properties.py:255
 msgctxt "role"
 msgid "preface"
-msgstr ""
+msgstr "forord"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11553,9 +11550,8 @@ msgstr "vertikalt rullefelt"
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
 #: ../src/orca/object_properties.py:322
-#, fuzzy
 msgid "horizontal slider"
-msgstr "horisontal"
+msgstr "horisontalt rullefelt"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11565,11 +11561,8 @@ msgstr "horisontal"
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
 #: ../src/orca/object_properties.py:331
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "vertical align"
 msgid "vertical slider"
-msgstr "vertikal justering"
+msgstr "vertikalt rullefelt"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12381,7 +12374,7 @@ msgstr "Indikator for hyperlenke"
 #. Translators: Braille flash messages are similar in nature to notifications or announcements in that they are temporarily shown on the refreshable braille display. Upon removal of the message, the original contents of the braille display are restored. This checkbox allows the user to toggle this feature.
 #: ../src/orca/orca-setup.ui.h:150
 msgid "Enable flash _messages"
-msgstr ""
+msgstr "Slå på korte _meldinger"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored. This label is for the spin button through which a user can customize how long (in seconds) these temporary messages should be displayed.
 #: ../src/orca/orca-setup.ui.h:152
@@ -12400,10 +12393,8 @@ msgstr "Meldinger er _detaljerte"
 
 #. Translators: Braille flash messages are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via braille, such as confirming the toggling of an Orca setting via command. The reason they are called flash messages by screen readers is that they are shown on the refreshable braille display for only a brief time, after which the original contents of the display are restored.
 #: ../src/orca/orca-setup.ui.h:158
-#, fuzzy
-#| msgid "Global Voice Settings"
 msgid "Flash Message Settings"
-msgstr "Globale stemmeinnstillinger"
+msgstr "Innstillinger for korte meldinger"
 
 #: ../src/orca/orca-setup.ui.h:159
 msgid "Braille"
