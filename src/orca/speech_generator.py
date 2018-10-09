@@ -807,7 +807,8 @@ class SpeechGenerator(generator.Generator):
         oldRole = self._overrideRole('REAL_ROLE_TABLE_CELL', args)
         result.extend(self.generate(obj, **args))
         self._restoreRole(oldRole, args)
-        if not result and _settingsManager.getSetting('speakBlankLines') \
+        if not (result and result[0]) \
+           and _settingsManager.getSetting('speakBlankLines') \
            and not args.get('readingRow', False):
             result.append(messages.BLANK)
             if result:
