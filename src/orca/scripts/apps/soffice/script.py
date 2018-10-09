@@ -655,6 +655,9 @@ class Script(default.Script):
             if activeRow < 0 or activeCol < 0:
                 return
 
+            if self.utilities.isDead(orca_state.locusOfFocus):
+                orca.setLocusOfFocus(event, event.source, False)
+
             self.utilities.handleUndoTextEvent(event)
             rowCount, colCount = self.utilities.rowAndColumnCount(event.source)
             if activeRow == rowCount:
