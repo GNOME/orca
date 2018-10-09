@@ -467,6 +467,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not priorObj or priorObj.getRoleName() == 'text frame':
             return []
 
+        if self._script.utilities.isSpreadSheetCell(obj) \
+           and self._script.utilities.isDocumentPanel(priorObj.parent):
+            return []
+
         return super()._generateNewAncestors(obj, **args)
 
     def _generateOldAncestors(self, obj, **args):
