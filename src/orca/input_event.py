@@ -63,7 +63,21 @@ class InputEvent:
 
         pass
 
+def _getXkbStickyKeysState():
+    from subprocess import check_output, CalledProcessError
+
+    try:
+        output = check_output(['xkbset', 'q'])
+        for line in output.decode('ASCII', errors='ignore').split('\n'):
+            if line.startswith('Sticky-Keys = '):
+                return line.endswith('On')
+    except (FileNotFoundError, CalledProcessError):
+        pass
+    return False
+
 class KeyboardEvent(InputEvent):
+
+    stickyKeys = _getXkbStickyKeysState()
 
     duplicateCount = 0
     orcaModifierPressed = False
@@ -155,6 +169,17 @@ class KeyboardEvent(InputEvent):
             role = None
         _mayEcho = _isPressed or role == pyatspi.ROLE_TERMINAL
 
+        _stickyOrcaModifier = False
+        if KeyboardEvent.stickyKeys and not self.isOrcaModifier():
+            if KeyboardEvent.lastOrcaModifierAlone:
+                _stickyOrcaModifier = True
+            else:
+                doubleEvent = self._getDoubleClickCandidate()
+                if doubleEvent and \
+                   doubleEvent.modifiers & keybindings.ORCA_MODIFIER_MASK:
+                    # this is a double-click that had the modifier, keep it
+                    _stickyOrcaModifier = True
+
         if not self.isOrcaModifier():
             if KeyboardEvent.orcaModifierPressed:
                 KeyboardEvent.currentOrcaModifierAlone = False
@@ -232,22 +257,28 @@ class KeyboardEvent(InputEvent):
         if orca_state.bypassNextCommand and _isPressed:
             KeyboardEvent.orcaModifierPressed = False
 
-        if KeyboardEvent.orcaModifierPressed:
+        if KeyboardEvent.orcaModifierPressed or _stickyOrcaModifier:
             self.modifiers |= keybindings.ORCA_MODIFIER_MASK
 
         self._should_consume, self._consume_reason = self.shouldConsume()
 
+    def _getDoubleClickCandidate(self):
+        lastEvent = orca_state.lastNonModifierKeyEvent
+        if isinstance(lastEvent, KeyboardEvent) \
+           and lastEvent.event_string == self.event_string \
+           and self.time - lastEvent.time <= settings.doubleClickTimeout:
+            return lastEvent
+        return None
+
     def setClickCount(self):
         """Updates the count of the number of clicks a user has made."""
 
-        lastEvent = orca_state.lastNonModifierKeyEvent
-        if not isinstance(lastEvent, KeyboardEvent) \
-           or lastEvent.event_string != self.event_string \
-           or self.time - lastEvent.time > settings.doubleClickTimeout:
+        doubleEvent = self._getDoubleClickCandidate()
+        if not doubleEvent:
             self._clickCount = 1
             return
 
-        self._clickCount = lastEvent.getClickCount()
+        self._clickCount = doubleEvent.getClickCount()
         if self.is_duplicate:
             return
 
