@@ -4762,6 +4762,26 @@ class Utilities:
 
         return role in roles
 
+    def isPresentableExpandedChangedEvent(self, event):
+        if self.isSameObject(event.source, orca_state.locusOfFocus):
+            return True
+
+        try:
+            role = event.source.getRole()
+            state = event.source.getState()
+        except:
+            msg = "ERROR: Exception getting role and state of %s" % event.source
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role in [pyatspi.ROLE_TABLE_ROW, pyatspi.ROLE_COMBO_BOX]:
+            return True
+
+        if role == pyatspi.ROLE_PUSH_BUTTON:
+            return state.contains(pyatspi.STATE_FOCUSED)
+
+        return False
+
     def isPresentableTextChangedEventForLocusOfFocus(self, event):
         if not event.type.startswith("object:text-changed:") \
            and not event.type.startswith("object:text-attributes-changed"):
