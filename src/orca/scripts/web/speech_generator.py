@@ -333,7 +333,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 text = self._script.utilities.queryNonEmptyText(obj)
                 if text and end not in [None, text.characterCount]:
                     return []
-            if role in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PASSWORD_TEXT]:
+            if role in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PASSWORD_TEXT, pyatspi.ROLE_SPIN_BUTTON]:
                 result.append(self.getLocalizedRoleName(obj, **args))
             elif obj.parent and not obj.parent.getState().contains(pyatspi.STATE_EDITABLE):
                 if lastKey not in ["Home", "End", "Up", "Down", "Left", "Right", "Page_Up", "Page_Down"]:
