@@ -586,6 +586,12 @@ formatting = {
                           + (readOnly and [Region(" " + asString(readOnly))])',
             'unfocused': BRAILLE_TEXT
             },
+        pyatspi.ROLE_DOCUMENT_WEB: {
+            'focused': '[Text(obj, asString(placeholderText), asString(eol), startOffset, endOffset)]\
+                          + (required and [Region(" " + asString(required))])\
+                          + (readOnly and [Region(" " + asString(readOnly))])',
+            'unfocused': BRAILLE_TEXT
+            },
         pyatspi.ROLE_ENTRY: {
             'unfocused': BRAILLE_TEXT
             },
