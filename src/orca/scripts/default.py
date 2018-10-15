@@ -2302,11 +2302,10 @@ class Script(script.Script):
     def onExpandedChanged(self, event):
         """Callback for object:state-changed:expanded accessibility events."""
 
-        obj = event.source
-        role = obj.getRole()
         if not self.utilities.isPresentableExpandedChangedEvent(event):
             return
 
+        obj = event.source
         oldObj, oldState = self.pointOfReference.get('expandedChange', (None, 0))
         if hash(oldObj) == hash(obj) and oldState == event.detail1:
             return
