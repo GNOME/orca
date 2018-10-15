@@ -1474,6 +1474,8 @@ class Utilities:
             layoutOnly = False
         elif role == pyatspi.ROLE_LIST_ITEM and parentRole == pyatspi.ROLE_LIST_BOX:
             layoutOnly = False
+        elif role in [pyatspi.ROLE_REDUNDANT_OBJECT, pyatspi.ROLE_UNKNOWN]:
+            layoutOnly = True
         elif self.isTableRow(obj):
             state = obj.getState()
             layoutOnly = not (state.contains(pyatspi.STATE_FOCUSABLE) \
@@ -1980,7 +1982,7 @@ class Utilities:
             if visibleCells:
                 return visibleCells
 
-        nonText = [pyatspi.ROLE_STATUS_BAR, pyatspi.ROLE_UNKNOWN]
+        nonText = [pyatspi.ROLE_STATUS_BAR, pyatspi.ROLE_UNKNOWN, pyatspi.ROLE_REDUNDANT_OBJECT]
         objects = []
         if (role == pyatspi.ROLE_PAGE_TAB and root.name) \
            or (role not in nonText and "Text" in pyatspi.listInterfaces(root)):

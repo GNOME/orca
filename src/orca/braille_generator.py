@@ -56,6 +56,8 @@ class BrailleGenerator(generator.Generator):
     SKIP_CONTEXT_ROLES = (pyatspi.ROLE_MENU,
                           pyatspi.ROLE_MENU_BAR,
                           pyatspi.ROLE_PAGE_TAB_LIST,
+                          pyatspi.ROLE_REDUNDANT_OBJECT,
+                          pyatspi.ROLE_UNKNOWN,
                           pyatspi.ROLE_COMBO_BOX)
 
     def __init__(self, script):
@@ -140,6 +142,7 @@ class BrailleGenerator(generator.Generator):
         verbosityLevel = _settingsManager.getSetting('brailleVerbosityLevel')
 
         doNotPresent = [pyatspi.ROLE_UNKNOWN,
+                        pyatspi.ROLE_REDUNDANT_OBJECT,
                         pyatspi.ROLE_FILLER,
                         pyatspi.ROLE_EXTENDED,
                         pyatspi.ROLE_LINK]

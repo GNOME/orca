@@ -365,6 +365,7 @@ class SpeechGenerator(generator.Generator):
         role = args.get('role', obj.getRole())
 
         doNotPresent = [pyatspi.ROLE_UNKNOWN,
+                        pyatspi.ROLE_REDUNDANT_OBJECT,
                         pyatspi.ROLE_FILLER,
                         pyatspi.ROLE_EXTENDED]
 

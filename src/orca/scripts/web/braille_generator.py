@@ -62,6 +62,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                         pyatspi.ROLE_PARAGRAPH,
                         pyatspi.ROLE_STATIC,
                         pyatspi.ROLE_SECTION,
+                        pyatspi.ROLE_REDUNDANT_OBJECT,
                         pyatspi.ROLE_UNKNOWN]
 
         state = obj.getState()

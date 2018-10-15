@@ -305,6 +305,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                           pyatspi.ROLE_MENU_ITEM,
                           pyatspi.ROLE_PARAGRAPH,
                           pyatspi.ROLE_SECTION,
+                          pyatspi.ROLE_REDUNDANT_OBJECT,
                           pyatspi.ROLE_UNKNOWN]
         else:
             doNotSpeak = [pyatspi.ROLE_UNKNOWN]
