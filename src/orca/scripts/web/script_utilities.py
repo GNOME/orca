@@ -542,13 +542,13 @@ class Utilities(script_utilities.Utilities):
 
     def _getXMLRoles(self, obj):
         rv = self._xmlRoles.get(hash(obj))
-        if rv is not None:
+        if rv:
             return rv
 
         try:
             attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
         except:
-            return None
+            return []
 
         rv = attrs.get('xml-roles', '').split()
         self._xmlRoles[hash(obj)] = rv
