@@ -233,8 +233,16 @@ class LabelInference:
                 extents = text.getRangeExtents(startOffset, endOffset, 0)
 
         if not (extents[2] and extents[3]):
-            ext = obj.queryComponent().getExtents(0)
-            extents = ext.x, ext.y, ext.width, ext.height
+            try:
+                ext = obj.queryComponent().getExtents(0)
+            except NotImplementedError:
+                msg = "INFO: %s does not implement the component interface" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+            except:
+                msg = "ERROR: Exception getting extents for %s" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                extents = ext.x, ext.y, ext.width, ext.height
 
         self._extentsCache[(hash(obj), startOffset, endOffset)] = extents
         return extents
