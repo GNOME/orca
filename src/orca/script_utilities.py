@@ -4774,7 +4774,7 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if role in [pyatspi.ROLE_TABLE_ROW, pyatspi.ROLE_COMBO_BOX]:
+        if role in [pyatspi.ROLE_TABLE_ROW, pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST_BOX]:
             return True
 
         if role == pyatspi.ROLE_PUSH_BUTTON:
