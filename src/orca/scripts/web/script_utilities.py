@@ -717,7 +717,7 @@ class Utilities(script_utilities.Utilities):
 
         try:
             text = obj.queryText()
-            if text.characterCount:
+            if text.characterCount and 0 <= startOffset < endOffset:
                 return list(text.getRangeExtents(startOffset, endOffset, 0))
         except NotImplementedError:
             pass
