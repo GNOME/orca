@@ -727,7 +727,13 @@ class Utilities(script_utilities.Utilities):
             return [0, 0, 0, 0]
 
         role = obj.getRole()
-        parentRole = obj.parent.getRole()
+        try:
+            parentRole = obj.parent.getRole()
+        except:
+            msg = "WEB: Exception getting role of parent (%s) of %s" % (obj.parent, obj)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            parentRole = None
+
         if role in [pyatspi.ROLE_MENU, pyatspi.ROLE_LIST_ITEM] \
            and parentRole in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST_BOX]:
             try:
