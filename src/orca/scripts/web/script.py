@@ -1269,6 +1269,7 @@ class Script(default.Script):
         self.utilities.clearCachedObjects()
 
         if _settingsManager.getSetting('pageSummaryOnLoad') and shouldPresent:
+            obj = obj or event.source
             msg = "WEB: Getting page summary for obj %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             summary = self.utilities.getPageSummary(obj)
