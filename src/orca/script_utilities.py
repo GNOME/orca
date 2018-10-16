@@ -3639,7 +3639,14 @@ class Utilities:
         return child
 
     def popupMenuFor(self, obj):
-        if not obj and obj.childCount:
+        if not obj:
+            return None
+
+        try:
+            childCount = obj.childCount
+        except:
+            msg = "ERROR: Exception getting childCount for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return None
 
         menus = [child for child in obj if child.getRole() == pyatspi.ROLE_MENU]
