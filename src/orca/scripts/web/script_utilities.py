@@ -3786,7 +3786,6 @@ class Utilities(script_utilities.Utilities):
         docframe = self.documentFrame(obj)
         msg = "WEB: Could not get document frame for %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
-        return result
 
         col = docframe.queryCollection()
         stateset = pyatspi.StateSet()
