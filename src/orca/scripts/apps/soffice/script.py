@@ -434,7 +434,7 @@ class Script(default.Script):
         row, column, table = self.utilities.getRowColumnAndTable(cell)
         try:
             del self.dynamicColumnHeaders[hash(table)]
-            speech.stop()
+            self.presentationInterrupt()
             self.presentMessage(messages.DYNAMIC_COLUMN_HEADER_CLEARED)
         except:
             pass
@@ -480,7 +480,7 @@ class Script(default.Script):
         row, column, table = self.utilities.getRowColumnAndTable(cell)
         try:
             del self.dynamicRowHeaders[hash(table)]
-            speech.stop()
+            self.presentationInterrupt()
             self.presentMessage(messages.DYNAMIC_ROW_HEADER_CLEARED)
         except:
             pass

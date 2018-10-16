@@ -1807,7 +1807,8 @@ class Script(script.Script):
 
         Returns True to indicate the input event has been consumed.
         """
-        speech.stop()
+
+        self.presentationInterrupt()
         if _settingsManager.getSetting('silenceSpeech'):
             _settingsManager.setSetting('silenceSpeech', False)
             self.presentMessage(messages.SPEECH_ENABLED)
@@ -2179,7 +2180,7 @@ class Script(script.Script):
             return
 
         if self.stopSpeechOnActiveDescendantChanged(event):
-            speech.stop()
+            self.presentationInterrupt()
 
         orca.setLocusOfFocus(event, event.any_data)
 
@@ -2354,7 +2355,7 @@ class Script(script.Script):
             orca_state.activeWindow = window
             orca.setLocusOfFocus(None, window, False)
 
-        speech.stop()
+        self.presentationInterrupt()
         obj = mouseEvent.obj
         if obj and obj.getState().contains(pyatspi.STATE_FOCUSED):
             orca.setLocusOfFocus(None, obj, windowChanged)
@@ -2847,9 +2848,8 @@ class Script(script.Script):
         # commands running in gnome-terminal.
         #
         if orca_state.locusOfFocus and \
-          (orca_state.locusOfFocus.getApplication() == \
-             event.source.getApplication()):
-            speech.stop()
+           orca_state.locusOfFocus.getApplication() == event.source.getApplication():
+            self.presentationInterrupt()
 
             # Clear the braille display just in case we are about to give
             # focus to an inaccessible application. See bug #519901 for
@@ -3751,6 +3751,8 @@ class Script(script.Script):
         """Convenience method to interrupt presentation of whatever is being
         presented at the moment."""
 
+        msg = "DEFAULT: Interrupting presentation"
+        debug.println(debug.LEVEL_INFO, msg, True)
         speech.stop()
         braille.killFlash()
 

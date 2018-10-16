@@ -52,8 +52,7 @@ class Script(default.Script):
 
         # We have to stop speech, as Metacity has a key grab and we're not
         # getting keys
-        #
-        speech.stop()
+        self.presentationInterrupt()
 
         # If the window was iconified, then obj.name will be surrounded by
         # brackets. If this is the case, remove them before comparing the

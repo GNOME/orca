@@ -83,8 +83,8 @@ class Script(default.Script):
         if not found:
             text += ". " + messages.INACCESSIBLE
 
+        self.presentationInterrupt()
         self.displayBrailleMessage(text)
-        speech.stop()
         speech.speak(text)
 
     def onNameChanged(self, event):
