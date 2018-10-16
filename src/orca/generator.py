@@ -411,7 +411,12 @@ class Generator:
         if role == pyatspi.ROLE_ICON:
             name = self._script.utilities.displayedText(obj) or ""
         else:
-            name = obj.name or ""
+            try:
+                name = obj.name
+            except:
+                msg = "ERROR: Exception getting name for %s" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                name = ""
 
         result = []
         if obj.description:
