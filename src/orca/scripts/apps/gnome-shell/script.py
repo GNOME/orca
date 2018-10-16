@@ -176,6 +176,11 @@ class Script(clutter.Script):
         if role == pyatspi.ROLE_DIALOG:
             return
 
+        # We're getting a spurious focus claim from the gnome-shell window after
+        # the window switcher is used.
+        if role == pyatspi.ROLE_WINDOW:
+            return
+
         if role == pyatspi.ROLE_MENU_ITEM and not name \
            and not self.utilities.labelsForObject(obj):
             isRealFocus = lambda x: x and x.getRole() == pyatspi.ROLE_SLIDER
