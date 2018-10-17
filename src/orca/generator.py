@@ -676,11 +676,13 @@ class Generator:
         args['stringType'] = 'expansion'
         indicators = self._script.formatting.getString(**args)
         state = obj.getState()
-        if state.contains(pyatspi.STATE_EXPANDABLE):
-            if state.contains(pyatspi.STATE_EXPANDED):
-                result.append(indicators[1])
-            else:
-                result.append(indicators[0])
+        if state.contains(pyatspi.STATE_COLLAPSED):
+            result.append(indicators[0])
+        elif state.contains(pyatspi.STATE_EXPANDED):
+            result.append(indicators[1])
+        elif state.contains(pyatspi.STATE_EXPANDABLE):
+            result.append(indicators[0])
+
         return result
 
     def _generateMultiselectableState(self, obj, **args):
