@@ -446,6 +446,11 @@ class KeyboardEvent(InputEvent):
 
         return self.event_string in ["space", " "]
 
+    def isFromApplication(self, app):
+        """Return True if this is associated with the specified app."""
+
+        return self._app == app
+
     def isCharacterEchoable(self):
         """Returns True if the script will echo this event as part of
         character echo. We do this to not double-echo a given printable
