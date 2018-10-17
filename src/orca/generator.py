@@ -413,15 +413,17 @@ class Generator:
         else:
             try:
                 name = obj.name
+                description = obj.description
             except:
-                msg = "ERROR: Exception getting name for %s" % obj
+                msg = "ERROR: Exception getting name and description for %s" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 name = ""
+                description = ""
 
         result = []
-        if obj.description:
+        if description:
             label = self._script.utilities.displayedLabel(obj) or ""
-            desc = obj.description.lower()
+            desc = description.lower()
             if not (desc in name.lower() or desc in label.lower()):
                 result.append(obj.description)
 
