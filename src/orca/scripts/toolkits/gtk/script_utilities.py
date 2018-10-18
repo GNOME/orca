@@ -92,7 +92,10 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isTypeahead(self, obj):
-        if not (obj and obj.getRole() == pyatspi.ROLE_TEXT):
+        if not obj or self.isDead(obj):
+            return False
+
+        if obj.getRole() != pyatspi.ROLE_TEXT:
             return False
 
         rv = self._isTypeahead.get(hash(obj))
