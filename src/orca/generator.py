@@ -1115,7 +1115,7 @@ class Generator:
         if not (rad.getRole() == pyatspi.ROLE_TABLE_CELL and rad.childCount):
             return self._generateDisplayedText(rad, **args)
 
-        content = [self._script.utilities.displayedText(x).strip() for x in rad]
+        content = set([self._script.utilities.displayedText(x).strip() for x in rad])
         return [" ".join(filter(lambda x: x, content))]
 
     def _generateRealActiveDescendantRoleName(self, obj, **args ):
