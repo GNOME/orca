@@ -2111,6 +2111,7 @@ class Script(script.Script):
             return self._whereAmISelectedText(inputEvent, obj)
 
         count = self.utilities.selectedChildCount(container)
+        self.presentMessage(messages.selectedItemsCount(count, container.childCount))
         if not count:
             return True
 
