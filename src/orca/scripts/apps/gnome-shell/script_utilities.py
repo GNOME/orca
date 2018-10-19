@@ -96,7 +96,7 @@ class Utilities(script_utilities.Utilities):
         if not root:
             return []
 
-        roles = [pyatspi.ROLE_DIALOG, pyatspi.ROLE_NOTIFICATION]
+        roles = [pyatspi.ROLE_DIALOG, pyatspi.ROLE_NOTIFICATION, pyatspi.ROLE_MENU_ITEM]
 
         hasRole = lambda x: x and x.getRole() in roles
         if not hasRole(root) and pyatspi.findAncestor(root, hasRole) is None:
