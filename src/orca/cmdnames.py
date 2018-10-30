@@ -1006,6 +1006,19 @@ TABLE_CELL_RIGHT = _("Goes right one cell.")
 # Translators: this is for navigating among table cells in a document.
 TABLE_CELL_UP = _("Goes up one cell.")
 
+# Translators: When presenting the content of a line on a web page, Orca by
+# default presents the full line, including any links or form fields on that
+# line, in order to reflect the on-screen layout as seen by sighted users.
+# Not all users like this presentation, however, and prefer to have objects
+# treated as if they were on individual lines, such as is done by Windows
+# screen readers, so that unrelated objects (e.g. links in a navbar) are not
+# all jumbled together. As a result, this is now configurable. If layout mode
+# is enabled, Orca will present the full line as it appears on the screen; if
+# it is disabled, Orca will treat each object as if it were on a separate line,
+# both for presentation and navigation. This string is associated with the Orca
+# command to manually toggle layout mode on/off.
+TOGGLE_LAYOUT_MODE = _("Toggles layout mode.")
+
 # Translators: Orca has a number of commands that override the default
 # behavior within an application. For instance, on a web page, "h" moves
 # you to the next heading. What should happen when you press an "h" in

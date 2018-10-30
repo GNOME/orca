@@ -1616,6 +1616,33 @@ MODE_FOCUS_IS_STICKY = _("Focus mode is sticky.")
 # This string is the message presented when Orca switches to sticky browse mode.
 MODE_BROWSE_IS_STICKY = _("Browse mode is sticky.")
 
+# Translators: When presenting the content of a line on a web page, Orca by
+# default presents the full line, including any links or form fields on that
+# line, in order to reflect the on-screen layout as seen by sighted users.
+# Not all users like this presentation, however, and prefer to have objects
+# treated as if they were on individual lines, such as is done by Windows
+# screen readers, so that unrelated objects (e.g. links in a navbar) are not
+# all jumbled together. As a result, this is now configurable. If layout mode
+# is enabled, Orca will present the full line as it appears on the screen; if
+# it is disabled, Orca will treat each object as if it were on a separate line,
+# both for presentation and navigation. This string is presented when the user
+# switches to layout mode via an Orca command.
+MODE_LAYOUT = _("Layout mode.")
+
+# Translators: When presenting the content of a line on a web page, Orca by
+# default presents the full line, including any links or form fields on that
+# line, in order to reflect the on-screen layout as seen by sighted users.
+# Not all users like this presentation, however, and prefer to have objects
+# treated as if they were on individual lines, such as is done by Windows
+# screen readers, so that unrelated objects (e.g. links in a navbar) are not
+# all jumbled together. As a result, this is now configurable. If layout mode
+# is enabled, Orca will present the full line as it appears on the screen; if
+# it is disabled, Orca will treat each object as if it were on a separate line,
+# both for presentation and navigation. This string is presented when the user
+# toggles layout mode off via an Orca command and switches to the aforementioned
+# object-based presentation.
+MODE_OBJECT = _("Object mode.")
+
 # Translators: Hovering the mouse over certain objects on a web page causes a 
 # new object to appear such as a pop-up menu. Orca has a command will move the
 # user to the object which just appeared as a result of the user hovering the

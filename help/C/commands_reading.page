@@ -269,4 +269,26 @@
       </item>
     </list>
   </section>
+  <section id="toggling_layout_mode">
+    <title>Toggling Layout Mode</title>
+    <p>
+      When Layout mode is enabled, <app>Orca</app>'s caret navigation will respect
+      the on-screen layout of the content and present the full line, including any
+      links or form fields on that line. When Layout mode is disabled, <app>Orca</app>
+      will treat objects such as links and form fields as if they were on separate
+      lines, both for presentation and navigation.
+    </p>
+    <p>
+      <app>Orca</app> provides a command to switch between Layout mode and Object mode.
+      This command is unbound by default. Please see <link xref="howto_key_bindings">Modifying
+      Keybindings</link> for information on how to bind unbound commands.
+    </p>
+    <list>
+      <item>
+        <p>
+          Switch between Layout mode and Object mode: (Unbound)
+        </p>
+      </item>
+    </list>
+  </section>
 </page>
