@@ -1960,6 +1960,9 @@ class Utilities:
         if role == pyatspi.ROLE_COMBO_BOX:
             return [root]
 
+        if role == pyatspi.ROLE_PUSH_BUTTON:
+            return [root]
+
         if role == pyatspi.ROLE_MENU_BAR:
             self._selectedMenuBarMenu[hash(root)] = self.selectedMenuBarMenu(root)
 
