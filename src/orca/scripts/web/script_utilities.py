@@ -1704,7 +1704,11 @@ class Utilities(script_utilities.Utilities):
 
         keys = map(lambda x: x.replace("+", " "), attrs.get("keyshortcuts", "").split(" "))
         keys = map(lambda x: x.replace(" ", "+"), map(self.labelFromKeySequence, keys))
-        return ["", " ".join(keys), ""]
+        rv = ["", " ".join(keys), ""]
+        if list(filter(lambda x: x, rv)):
+            return rv
+
+        return super().mnemonicShortcutAccelerator(obj)
 
     def unrelatedLabels(self, root, onlyShowing=True, minimumWords=3):
         if not (root and self.inDocumentContent(root)):
