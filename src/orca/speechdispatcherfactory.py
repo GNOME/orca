@@ -341,7 +341,7 @@ class SpeechServer(speechserver.SpeechServer):
 
         return newText
 
-    def _speak(self, text, acss, **kwargs):
+    def _speak(self, text, acss, sayAs=None, **kwargs):
         if isinstance(text, ACSS):
             text = ''
 
@@ -387,7 +387,12 @@ class SpeechServer(speechserver.SpeechServer):
         # Transcribe to SSML, translating U+E000 into marks
         # Note: we need to do this after all mangling otherwise the ssml markup
         # would get mangled too
+        if sayAs is not None:
+            ssmlSayAs = ('<say-as interpret-as="'+sayAs+'">', '</say-as>')
+        else:
+            ssmlSayAs = ('', '')
         ssml = "<speak>"
+        ssml += ssmlSayAs[0]
         i = 0
         for c in text:
             if c == '\ue000':
@@ -396,7 +401,9 @@ class SpeechServer(speechserver.SpeechServer):
                     msg = "%uth U+E000 does not have corresponding index" % i
                     debug.println(debug.LEVEL_WARNING, msg, True)
                 else:
+                    ssml += ssmlSayAs[1]
                     ssml += '<mark name="%u"/>' % marks_offsets[i]
+                    ssml += ssmlSayAs[0]
                 i += 1
             # Disable for now, until speech dispatcher properly parses them (version 0.8.9 or later)
             #elif c == '"':
@@ -411,6 +418,7 @@ class SpeechServer(speechserver.SpeechServer):
               ssml += '&amp;'
             else:
               ssml += c
+        ssml += ssmlSayAs[1]
         ssml += "</speak>"
 
         self._apply_acss(acss)
@@ -523,7 +531,7 @@ class SpeechServer(speechserver.SpeechServer):
                     for name, lang, dialect in voices]
         return families
 
-    def speak(self, text=None, acss=None, interrupt=True):
+    def speak(self, text=None, acss=None, interrupt=True, sayAs=None):
         #if interrupt:
         #    self._cancel()
 
@@ -535,7 +543,7 @@ class SpeechServer(speechserver.SpeechServer):
             interrupt = interrupt and (time.time() - self._lastKeyEchoTime) > 0.5
 
         if text:
-            self._speak(text, acss)
+            self._speak(text, acss, sayAs=sayAs)
 
     def speakUtterances(self, utteranceList, acss=None, interrupt=True):
         #if interrupt:
@@ -561,7 +569,12 @@ class SpeechServer(speechserver.SpeechServer):
         if orca_state.activeScript:
             name = orca_state.activeScript.\
                 utilities.adjustForPronunciation(name)
-        self.speak(name, acss)
+
+        if name == character:
+            sayAs = 'characters'
+        else:
+            sayAs = None
+        self.speak(name, acss, sayAs=sayAs)
 
     def speakKeyEvent(self, event, acss=None):
         event_string = event.getKeyName()
