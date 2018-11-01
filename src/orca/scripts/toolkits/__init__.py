@@ -1,4 +1,5 @@
 __all__ = ['clutter',
+           'Chromium',
            'gtk',
            'GAIL',
            'Gecko',

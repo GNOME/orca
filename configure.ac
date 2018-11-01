@@ -122,6 +122,7 @@ src/orca/scripts/apps/xfwm4/Makefile
 src/orca/scripts/terminal/Makefile
 src/orca/scripts/web/Makefile
 src/orca/scripts/toolkits/Makefile
+src/orca/scripts/toolkits/Chromium/Makefile
 src/orca/scripts/toolkits/Gecko/Makefile
 src/orca/scripts/toolkits/J2SE-access-bridge/Makefile
 src/orca/scripts/toolkits/clutter/Makefile
