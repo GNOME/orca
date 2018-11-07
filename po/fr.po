@@ -12,20 +12,22 @@
 # Julien Hardelin <jhardlin@orange.fr>, 2011, 2015.
 # Frédéric Wang <fred.wang@free.fr>, 2015
 # Alain Lojewski <allomervan@gmail.com>, 2017.
+# Charles Monzat <charles.monzat@numericable.fr>, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orcaorca/issues\n"
-"POT-Creation-Date: 2018-07-26 14:39+0000\n"
-"PO-Revision-Date: 2018-08-10 10:09+0200\n"
-"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
-"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
+"POT-Creation-Date: 2018-09-20 16:50+0000\n"
+"PO-Revision-Date: 2018-11-07 21:39+0100\n"
+"Last-Translator: Charles Monzat <charles.monzat@numericable.fr>\n"
+"Language-Team: français <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n>1;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -4481,7 +4483,7 @@ msgstr "Tous les ca_naux"
 #: ../src/orca/guilabels.py:153
 #, python-format
 msgid "All channels when an_y %s window is active"
-msgstr "Tous les canaux quand n'im_porte quelle fenêtre %s est active"
+msgstr "Tous les canaux quand n’im_porte quelle fenêtre %s est active"
 
 #. Translators: This is the label of a radio button. If it is selected, Orca will
 #. only speak new chat messages for the currently active channel, irrespective of
@@ -4568,7 +4570,7 @@ msgstr "Chaîne de remplacement"
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
 #: ../src/orca/guilabels.py:213 ../src/orca/orca-setup.ui.h:174
 msgid "Enable echo by cha_racter"
-msgstr "Active_r l'écho par caractère"
+msgstr "Active_r l’écho par caractère"
 
 #. Translators: Orca has an "echo" feature to present text as it is being written
 #. by the user. This string refers to a "key echo" option. When this option is
@@ -8101,7 +8103,7 @@ msgstr "RÉPERTOIRE"
 #. which tells Orca to replace any existing Orca process that might be running.
 #: ../src/orca/messages.py:258
 msgid "Replace a currently running instance of this screen reader"
-msgstr "Remplace une instance actuellement lancée de ce lecteur d'écran"
+msgstr "Remplace une instance actuellement lancée de ce lecteur d’écran"
 
 #. Translators: this is the description of command line option '-h, --help'
 #. which lists all the available command line options.
