@@ -583,8 +583,13 @@ class SpeechServer(speechserver.SpeechServer):
                 utilities.adjustForPronunciation(event_string)
 
         lockingStateString = event.getLockingStateString()
-        event_string = "%s %s" % (event_string, lockingStateString)
-        self.speak(event_string, acss=acss)
+        if len(event_string) == 1 and not (lockingStateString and
+                                           len(lockingStateString)):
+            sayAs = 'characters'
+        else:
+            event_string = "%s %s" % (event_string, lockingStateString)
+            sayAs = None
+        self.speak(event_string, acss=acss, sayAs=sayAs)
         self._lastKeyEchoTime = time.time()
 
     def increaseSpeechRate(self, step=5):
