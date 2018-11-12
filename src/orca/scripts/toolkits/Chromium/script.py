@@ -158,6 +158,11 @@ class Script(web.Script):
     def onBusyChanged(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
+        if self.utilities.hasNoSize(event.source):
+            msg = "CHROMIUM: Ignoring event from page with no size."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if super().onBusyChanged(event):
             return
 
