@@ -90,8 +90,9 @@ class Utilities(web.Utilities):
         if not super().isZombie(obj):
             return False
 
-        # Things (so far) seem to work as expected for document content.
-        if self.inDocumentContent(obj):
+        # Things (so far) seem to work as expected for document content -- except the
+        # document frame itself.
+        if not self.isDocument(obj) and self.inDocumentContent(obj):
             return True
 
         # HACK for other items, including (though possibly not limited to) menu items
