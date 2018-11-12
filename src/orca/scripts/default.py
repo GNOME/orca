@@ -3022,7 +3022,7 @@ class Script(script.Script):
             return
 
         if progressType == speechserver.SayAllContext.PROGRESS:
-            return
+            text.setCaretOffset(context.currentOffset)
         elif progressType == speechserver.SayAllContext.INTERRUPTED:
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
                 self._sayAllIsInterrupted = True
