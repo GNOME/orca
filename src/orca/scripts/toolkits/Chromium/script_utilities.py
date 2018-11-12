@@ -157,3 +157,9 @@ class Utilities(web.Utilities):
             return state.contains(pyatspi.STATE_HAS_POPUP)
 
         return False
+
+    def grabFocusWhenSettingCaret(self, obj):
+        # HACK: Remove this when setting the caret updates focus.
+        msg = "CHROMIUM: HACK: Doing focus grab when setting caret on %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return True
