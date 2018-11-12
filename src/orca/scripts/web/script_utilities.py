@@ -294,7 +294,7 @@ class Utilities(script_utilities.Utilities):
                 msg = "ERROR: Exception querying document interface of %s" % documentFrame
                 debug.println(debug.LEVEL_INFO, msg, True)
             else:
-                return document.getAttributeValue('DocURL')
+                return document.getAttributeValue('DocURL') or document.getAttributeValue('URI')
 
         return None
 
