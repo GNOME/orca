@@ -164,3 +164,22 @@ class Utilities(web.Utilities):
         msg = "CHROMIUM: HACK: Doing focus grab when setting caret on %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return True
+
+    def topLevelObject(self, obj):
+        # HACK: Remove this once we can ascend ancestry and get top level
+        # object from within web content.
+        topLevel = super().topLevelObject(obj)
+        if not topLevel or topLevel.getRole() in self._topLevelRoles():
+            return topLevel
+
+        msg = "CHROMIUM: ERROR: Top level object for %s is %s" % (obj, topLevel)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        if self.isDocument(topLevel) and orca_state.activeWindow \
+           and orca_state.activeWindow.getApplication() == self._script.app:
+            if pyatspi.findDescendant(topLevel, lambda x: x == topLevel):
+                msg = "CHROMIUM: HACK: Returning %s as top level" % orca_state.activeWindow
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return orca_state.activeWindow
+
+        return topLevel

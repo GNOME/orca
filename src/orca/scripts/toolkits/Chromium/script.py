@@ -276,9 +276,6 @@ class Script(web.Script):
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
-        if super().onSelectedChanged(event):
-            return
-
         # Other apps and toolkits implement the selection interface, which is
         # what we use to present active-descendanty selection changes, leaving
         # state-changed:selected for notifications related to toggling the
@@ -292,6 +289,9 @@ class Script(web.Script):
             msg = "CHROMIUM: NO SELECTION IFACE HACK: Setting %s to locusOfFocus" % event.source
             debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, event.source)
+            return
+
+        if super().onSelectedChanged(event):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
