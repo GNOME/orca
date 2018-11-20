@@ -1480,7 +1480,13 @@ def panRight(panAmount=0):
     if panAmount == 0:
         panAmount = _displaySize[0]
 
-    viewport[0] += panAmount
+    if len(_lines) > 0:
+        lineNum = viewport[1]
+        newX = viewport[0] + panAmount
+        string, focusOffset, attributeMask, ranges = _lines[lineNum].getLineInfo()
+        if newX < len(string):
+            viewport[0] = newX
+
     return oldX != viewport[0]
 
 def panToOffset(offset):
