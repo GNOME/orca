@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 import orca.messages as messages
 import orca.scripts.default as default
-import orca.speech as speech
 import pyatspi
 
 ########################################################################
@@ -50,27 +49,8 @@ class Script(default.Script):
     def presentStatusBar(self, obj):
         """Presents information about the metacity status bar."""
 
-        # We have to stop speech, as Metacity has a key grab and we're not
-        # getting keys
         self.presentationInterrupt()
-
-        # If the window was iconified, then obj.name will be surrounded by
-        # brackets. If this is the case, remove them before comparing the
-        # name against the various window names. See bug #522797 for more
-        # details.
-        #
-        objName = obj.name
-        if objName and len(objName):
-            if objName[0] == "[" and objName[-1] == "]":
-                objName = objName[1:-1]
-
-        try:
-            text = obj.name
-        except:
-            text = objName
-
-        self.displayBrailleMessage(text)
-        speech.speak(text)
+        self.presentMessage(obj.name)
 
     def onNameChanged(self, event):
         """The status bar in metacity tells us what toplevel window

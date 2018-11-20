@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 import orca.messages as messages
 import orca.scripts.default as default
-import orca.speech as speech
 import pyatspi
 
 ########################################################################
@@ -55,37 +54,8 @@ class Script(default.Script):
         - obj: the accessible status bar.
         """
 
-        objName = obj.name
-        if not (objName and len(objName)):
-            return
-
-        # gtk-window-decorator sometimes abbreviates the names, placing
-        # '...' at the end.  Strip the ending off so that we can compare
-        # the beginning of the window names with the objName.
-        #
-        index = objName.rfind('...')
-        if index >= 0:
-            objName = objName[0:index]
-
-        # Do we know about this window?  Traverse through our list of apps
-        # and go through the toplevel windows in each to see if we know
-        # about this one.  If we do, it's accessible.  If we don't, it is
-        # not.
-        #
-        found = False
-        for app in self.utilities.knownApplications():
-            for child in app:
-                if child.name.startswith(objName):
-                    found = True
-                    break
-
-        text = obj.name
-        if not found:
-            text += ". " + messages.INACCESSIBLE
-
         self.presentationInterrupt()
-        self.displayBrailleMessage(text)
-        speech.speak(text)
+        self.presentMessage(obj.name)
 
     def onNameChanged(self, event):
         """The status bar in gtk-window-decorator tells us what toplevel
