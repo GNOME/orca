@@ -2490,6 +2490,10 @@ class Utilities(script_utilities.Utilities):
                 names = [action.getName(i) for i in range(action.nActions)]
             except NotImplementedError:
                 rv = False
+            except:
+                msg = "WEB: Exception getting actions for %s" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return False
             else:
                 rv = "click" in names
 
