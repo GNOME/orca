@@ -362,3 +362,7 @@ class Script(web.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onWindowDeactivated(self, event)
 
+    def sayAll(self, inputEvent, obj=None, offset=None):
+        msg = "CHROMIUM: SayAll not supported yet."
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return True
