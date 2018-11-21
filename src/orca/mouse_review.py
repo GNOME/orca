@@ -259,6 +259,8 @@ class MouseReviewer:
             i = screen.connect("window-stacking-changed", self._on_stacking_changed)
             self._handlerIds[i] = screen
 
+        self._active = True
+
     def deactivate(self):
         """Deactivates mouse review."""
 
@@ -267,10 +269,15 @@ class MouseReviewer:
             value.disconnect(key)
         self._handlerIds = {}
 
+        self._active = False
+
     def getCurrentItem(self):
         """Returns the accessible object being reviewed."""
 
         if not _mouseReviewCapable:
+            return None
+
+        if not self._active:
             return None
 
         obj = self._currentMouseOver.getObject()
