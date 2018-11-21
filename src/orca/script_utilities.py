@@ -136,7 +136,7 @@ class Utilities:
 
         return cmdline.replace("\x00", " ")
 
-    def canBeActiveWindow(self, window, clearCache=True):
+    def canBeActiveWindow(self, window, clearCache=False):
         if not window:
             return False
 

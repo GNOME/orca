@@ -124,7 +124,7 @@ class Utilities(web.Utilities):
         child = pyatspi.findDescendant(frame, lambda x: x and x.getRole() in roles)
         return child and not self.inDocumentContent(child)
 
-    def canBeActiveWindow(self, window, clearCache=True):
+    def canBeActiveWindow(self, window, clearCache=False):
         if super().canBeActiveWindow(window, clearCache):
             return True
 
