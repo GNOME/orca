@@ -2383,7 +2383,13 @@ class Utilities(script_utilities.Utilities):
         rv = False
 
         isLabel = lambda r: r.getRelationType() == pyatspi.RELATION_LABEL_FOR
-        relations = list(filter(isLabel, obj.getRelationSet()))
+        try:
+            relations = list(filter(isLabel, obj.getRelationSet()))
+        except:
+            msg = "WEB: Exception getting relations of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
         if not relations:
             return []
 

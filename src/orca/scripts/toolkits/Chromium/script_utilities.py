@@ -121,7 +121,13 @@ class Utilities(web.Utilities):
             return False
 
         roles = [pyatspi.ROLE_LIST_BOX, pyatspi.ROLE_MENU]
-        child = pyatspi.findDescendant(frame, lambda x: x and x.getRole() in roles)
+        try:
+            child = pyatspi.findDescendant(frame, lambda x: x and x.getRole() in roles)
+        except:
+            msg = "CHROMIUM: Exception finding descendant of %s" % frame
+            debug.println(debug.LEVEL_INFO, msg, True)
+            child = None
+
         return child and not self.inDocumentContent(child)
 
     def canBeActiveWindow(self, window, clearCache=False):
