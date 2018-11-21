@@ -2284,7 +2284,21 @@ class Utilities:
         return not (extents.width and extents.height)
 
     def _findAllDescendants(self, root, includeIf, excludeIf, matches):
-        for child in root:
+        try:
+            childCount = root.childCount
+        except:
+            msg = "ERROR: Exception getting childCount for %s" % root
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        for i in range(childCount):
+            try:
+                child = root[i]
+            except:
+                msg = "ERROR: Exception getting %i child for %s" % (i, root)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return
+
             if excludeIf and excludeIf(child):
                 continue
             if includeIf and includeIf(child):
