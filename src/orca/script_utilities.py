@@ -2283,31 +2283,18 @@ class Utilities:
 
         return not (extents.width and extents.height)
 
-    def _hasNonDescendableDescendant(self, root):
-        roles = [pyatspi.ROLE_PAGE_TAB_LIST,
-                 pyatspi.ROLE_SPLIT_PANE,
-                 pyatspi.ROLE_TABLE]
+    def _findAllDescendants(self, root, includeIf, excludeIf, matches):
+        for child in root:
+            if excludeIf and excludeIf(child):
+                continue
+            if includeIf and includeIf(child):
+                matches.append(child)
+            self._findAllDescendants(child, includeIf, excludeIf, matches)
 
-        def isMatch(x):
-            if not x:
-                return False
-
-            if x.getRole() in roles:
-                return True
-
-            if 'Table' in pyatspi.listInterfaces(x):
-                return x.childCount > 50
-
-            if 'Document' in pyatspi.listInterfaces(x):
-                return True
-
-        match = pyatspi.findDescendant(root, isMatch)
-        if match:
-            msg = "INFO: %s has descendant %s" % (root, match)
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
-        return False
+    def findAllDescendants(self, root, includeIf=None, excludeIf=None):
+        matches = []
+        self._findAllDescendants(root, includeIf, excludeIf, matches)
+        return matches
 
     def unrelatedLabels(self, root, onlyShowing=True, minimumWords=3):
         """Returns a list containing all the unrelated (i.e., have no
@@ -2322,23 +2309,38 @@ class Utilities:
         Returns a list of unrelated labels under the given root.
         """
 
-        if self._hasNonDescendableDescendant(root):
-            return []
-
         if self._script.spellcheck and self._script.spellcheck.isCheckWindow(root):
             return []
 
-        hasRole = lambda x: x and x.getRole() in [pyatspi.ROLE_LABEL, pyatspi.ROLE_STATIC]
-        try:
-            allLabels = pyatspi.findAllDescendants(root, hasRole)
-        except:
-            return []
-        try:
-            labels = [x for x in allLabels if not x.getRelationSet()]
-            if onlyShowing:
-                labels = [x for x in labels if x.getState().contains(pyatspi.STATE_SHOWING)]
-        except:
-            return []
+        labelRoles = [pyatspi.ROLE_LABEL, pyatspi.ROLE_STATIC]
+        skipRoles = [pyatspi.ROLE_COMBO_BOX,
+                     pyatspi.ROLE_LIST_BOX,
+                     pyatspi.ROLE_MENU,
+                     pyatspi.ROLE_MENU_BAR,
+                     pyatspi.ROLE_SCROLL_PANE,
+                     pyatspi.ROLE_SPLIT_PANE,
+                     pyatspi.ROLE_TABLE,
+                     pyatspi.ROLE_TREE,
+                     pyatspi.ROLE_TREE_TABLE]
+
+        def _include(x):
+            if not (x and x.getRole() in labelRoles):
+                return False
+            if x.getRelationSet():
+                return False
+            if onlyShowing and not x.getState().contains(pyatspi.STATE_SHOWING):
+                return False
+            return True
+
+        def _exclude(x):
+            if not x or x.getRole() in skipRoles:
+                return True
+            if onlyShowing and not x.getState().contains(pyatspi.STATE_SHOWING):
+                return True
+            return False
+
+        excludeIf = lambda x: x and x.getRole() in skipRoles
+        labels = self.findAllDescendants(root, _include, _exclude)
 
         rootName = root.name
 
