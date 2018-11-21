@@ -48,26 +48,6 @@ class Utilities(web.Utilities):
         super().clearCachedObjects()
         self._documentsEmbeddedBy = {} # Needed for HACK
 
-    # So far, this is only needed by _getDocumentsEmbeddedBy. Hopefully we
-    # can remove this method once we remove the other one.
-    def _isTopLevelDocument(self, obj):
-        if not obj or self.isDead(obj):
-            return False
-
-        if not self.isDocument(obj):
-            return False
-
-        if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
-            return False
-
-        if obj.parent and obj.parent.getRole() == pyatspi.ROLE_INTERNAL_FRAME:
-            return False
-
-        if not self.isShowingAndVisible(obj):
-            return False
-
-        return True
-
     def _getDocumentsEmbeddedBy(self, frame):
         result = super()._getDocumentsEmbeddedBy(frame)
         if result:
@@ -76,10 +56,20 @@ class Utilities(web.Utilities):
         # HACK: This tree dive is not efficient and should be removed once Chromium
         # implements support for the embeds/embedded-by relation pair.
         cached = self._documentsEmbeddedBy.get(hash(frame), [])
-        result = list(filter(self._isTopLevelDocument, cached))
+        result = list(filter(self.isShowingAndVisible, cached))
         if not result:
-            documents = pyatspi.findAllDescendants(frame, self.isDocument)
-            result = list(filter(self._isTopLevelDocument, documents))
+            def _include(x):
+                if x and x.getRole() == pyatspi.ROLE_DOCUMENT_WEB:
+                    return self.isShowingAndVisible(x)
+                return False
+
+            def _exclude(x):
+                roles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_INTERNAL_FRAME]
+                if not x or x.getRole() in roles:
+                    return True
+                return False
+
+            result = self.findAllDescendants(frame, _include, _exclude)
             msg = "CHROMIUM: NO EMBEDDED RELATION HACK: %s has %i docs." % (frame, len(result))
             debug.println(debug.LEVEL_INFO, msg, True)
 
