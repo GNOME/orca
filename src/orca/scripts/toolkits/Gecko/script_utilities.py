@@ -182,3 +182,8 @@ class Utilities(web.Utilities):
             return True
 
         return False
+
+    def canBeActiveWindow(self, window, clearCache=False):
+        # We apparently having missing events from Gecko requiring
+        # we update the cache. This is not performant. :(
+        return super().canBeActiveWindow(window, True)
