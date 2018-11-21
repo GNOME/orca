@@ -32,6 +32,7 @@ __copyright__ = "Copyright (c) 2018 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
+import time
 
 from orca import debug
 from orca import orca
@@ -130,8 +131,10 @@ class Script(web.Script):
 
         # HACK: Remove this once Chromium emits focus changes after window activation.
         if event.detail1 and role == pyatspi.ROLE_FRAME:
+            startTime = time.time()
             focusedObject = self.utilities.focusedObject(event.source)
-            msg = "CHROMIUM: NO INITIAL FOCUS HACK. Focused object: %s" % focusedObject
+            msg = "CHROMIUM: NO INITIAL FOCUS HACK. Focused object: %s - %.4fs" % \
+                (focusedObject, time.time()-startTime)
             debug.println(debug.LEVEL_INFO, msg, True)
             if focusedObject:
                 orca.setLocusOfFocus(event, focusedObject)

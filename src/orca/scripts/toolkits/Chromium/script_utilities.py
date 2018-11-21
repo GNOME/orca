@@ -32,6 +32,7 @@ __copyright__ = "Copyright (c) 2018 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
+import time
 
 from orca import debug
 from orca import orca_state
@@ -69,8 +70,9 @@ class Utilities(web.Utilities):
                     return True
                 return False
 
+            startTime = time.time()
             result = self.findAllDescendants(frame, _include, _exclude)
-            msg = "CHROMIUM: NO EMBEDDED RELATION HACK: %s has %i docs." % (frame, len(result))
+            msg = "CHROMIUM: NO EMBEDDED RELATION HACK - %.4fs" % (time.time()-startTime)
             debug.println(debug.LEVEL_INFO, msg, True)
 
         self._documentsEmbeddedBy[hash(frame)] = result
@@ -128,12 +130,16 @@ class Utilities(web.Utilities):
             return False
 
         # HACK: Remove this once Chromium adds active state to popup frames.
-        if self._isFrameContainerForBrowserUIPopUp(window):
+        startTime = time.time()
+        result = self._isFrameContainerForBrowserUIPopUp(window)
+        msg = "CHROMIUM: _isFrameContainerForBrowser() - %.4fs" % (time.time()-startTime)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        if result:
             msg = "CHROMIUM: POPUP MISSING STATE ACTIVE HACK: %s can be active window" % window
             debug.println(debug.LEVEL_INFO, msg, True)
-            return True
 
-        return False
+        return result
 
     def treatAsMenu(self, obj):
         if not obj:
@@ -173,7 +179,10 @@ class Utilities(web.Utilities):
 
         if self.isDocument(topLevel) and orca_state.activeWindow \
            and orca_state.activeWindow.getApplication() == self._script.app:
-            if pyatspi.findDescendant(topLevel, lambda x: x == topLevel):
+            startTime = time.time()
+            descendant = pyatspi.findDescendant(topLevel, lambda x: x == topLevel)
+            msg = "CHROMIUM: findDescendant() - %.4fs" % (time.time()-startTime)
+            if descendant:
                 msg = "CHROMIUM: HACK: Returning %s as top level" % orca_state.activeWindow
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return orca_state.activeWindow
