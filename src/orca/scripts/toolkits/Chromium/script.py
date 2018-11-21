@@ -106,15 +106,6 @@ class Script(web.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             newFocus.clearCache()
 
-        # HACK: Remove this once Chromium has support for input events.
-        if oldFocus and newFocus \
-           and oldFocus.getRole() != pyatspi.ROLE_FRAME \
-           and oldFocus.getApplication() == newFocus.getApplication() == self.app \
-           and not self.utilities.lastInputEventCameFromThisApp():
-            msg = "CHROMIUM: NO INPUT EVENT PRESENTATION INTERRUPT HACK"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            self.presentationInterrupt()
-
         if super().locusOfFocusChanged(event, oldFocus, newFocus):
             return
 
