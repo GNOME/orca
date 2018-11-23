@@ -298,7 +298,7 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "20. Insert+KP_9 to flat review end",
     ["BRAILLE LINE:  'Cursor at row 1 column 0 - 60 chars in document $l'",
-     "     VISIBLE:  'ars in document $l', cursor=15",
+     "     VISIBLE:  'chars in document $l', cursor=17",
      "SPEECH OUTPUT: 'Cursor at row 1 column 0 - 60 chars in document'"]))
 
 sequence.append(utils.StartRecordingAction())

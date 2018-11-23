@@ -32,7 +32,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  '1. This is a short list item.'",
      "     VISIBLE:  '1. This is a short list item.', cursor=1",
-     "SPEECH OUTPUT: 'List with 2 items'",
+     "SPEECH OUTPUT: 'List with 2 items.'",
      "SPEECH OUTPUT: '1. This is a short list item.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -73,8 +73,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["BRAILLE LINE:  '• This is a short list item.'",
-     "     VISIBLE:  '• This is a short list item.', cursor=1",
-     "SPEECH OUTPUT: 'List with 2 items'",
+     "     VISIBLE:  '• This is a short list item.', cursor=30",
+     "SPEECH OUTPUT: 'List with 2 items.'",
      "SPEECH OUTPUT: '• This is a short list item.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -124,7 +124,7 @@ sequence.append(utils.AssertPresentationAction(
     "14. Line Up",
     ["BRAILLE LINE:  'should probably be put out of its misery.'",
      "     VISIBLE:  'should probably be put out of it', cursor=1",
-     "SPEECH OUTPUT: 'List with 2 items'",
+     "SPEECH OUTPUT: 'List with 2 items.'",
      "SPEECH OUTPUT: 'should probably be put out of its misery.'"]))
 
 sequence.append(utils.StartRecordingAction())

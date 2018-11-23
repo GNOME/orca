@@ -7,6 +7,7 @@ from macaroon.playback import *
 sequence = MacroSequence()
 import utils
 
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Control>b"))
 sequence.append(TypeAction("Bold"))
 sequence.append(KeyComboAction("<Control>b"))
@@ -16,6 +17,7 @@ sequence.append(TypeAction("Italic"))
 sequence.append(KeyComboAction("<Control>i"))
 sequence.append(TypeAction(" Normal"))
 sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -30,6 +32,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'foreground color: black' voice=system",
      "SPEECH OUTPUT: 'background color: white' voice=system"]))
 
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -44,6 +47,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'foreground color: black' voice=system",
      "SPEECH OUTPUT: 'background color: white' voice=system"]))
 
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

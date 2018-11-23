@@ -85,8 +85,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Row 3, column 4.', cursor=0",
      "BRAILLE LINE:  'Cell spans 2 columns'",
      "     VISIBLE:  'Cell spans 2 columns', cursor=0",
-     "SPEECH OUTPUT: '6",
-     "7.'",
+     "SPEECH OUTPUT: '6 7.'",
      "SPEECH OUTPUT: 'Row 3, column 4.' voice=system",
      "SPEECH OUTPUT: 'Cell spans 2 columns' voice=system"]))
 
@@ -94,7 +93,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Up"))
 sequence.append(utils.AssertPresentationAction(
     "7. Alt Shift Up.",
-    ["BRAILLE LINE:  '6 $l'",
+    ["KNOWN ISSUE: We're not presenting the 'blank'",
+     "BRAILLE LINE:  '6 $l'",
      "     VISIBLE:  '6 $l', cursor=1",
      "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
@@ -130,7 +130,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>End"))
 sequence.append(utils.AssertPresentationAction(
     "10. Alt Shift End.",
-    ["BRAILLE LINE:  'Wed $l'",
+    ["KNOWN ISSUE: We're not presenting the 'blank'",
+     "BRAILLE LINE:  'Wed $l'",
      "     VISIBLE:  'Wed $l', cursor=1",
      "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
@@ -188,7 +189,7 @@ sequence.append(utils.AssertPresentationAction(
     "15. Up Arrow out of table.",
     ["BRAILLE LINE:  'Sun $l'",
      "     VISIBLE:  'Sun $l', cursor=1",
-     "BRAILLE LINE:  'table-sample2.odt - LibreOffice Writer frame table-sample2.odt - LibreOffice Writer root pane table-sample2 - LibreOffice Document This is a test. $l'",
+     "BRAILLE LINE:  'soffice application table-sample2.odt - LibreOffice Writer root pane table-sample2 - LibreOffice Document This is a test. $l'",
      "     VISIBLE:  'This is a test. $l', cursor=16",
      "SPEECH OUTPUT: 'leaving table.'",
      "SPEECH OUTPUT: 'This is a test.'"]))
@@ -207,7 +208,7 @@ sequence.append(KeyComboAction("z"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "17. Toggle structural navigation off",
-    ["BRAILLE LINE:  'table-sample2.odt - LibreOffice Writer frame table-sample2.odt - LibreOffice Writer root pane table-sample2 - LibreOffice Document This is a test. $l'",
+    ["BRAILLE LINE:  'soffice application table-sample2.odt - LibreOffice Writer root pane table-sample2 - LibreOffice Document This is a test. $l'",
      "     VISIBLE:  'This is a test. $l', cursor=16",
      "BRAILLE LINE:  'Structural navigation keys off.'",
      "     VISIBLE:  'Structural navigation keys off.', cursor=0",

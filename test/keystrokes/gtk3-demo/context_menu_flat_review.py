@@ -72,7 +72,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "8. Review next line",
-    [""]))
+    ["BRAILLE LINE:  'Insert Emoji $l'",
+     "     VISIBLE:  'Insert Emoji $l', cursor=1",
+     "SPEECH OUTPUT: 'Insert Emoji'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

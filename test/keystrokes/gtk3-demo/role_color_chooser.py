@@ -37,6 +37,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Left"))
 sequence.append(KeyComboAction("space"))
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(PauseAction(3000))
 

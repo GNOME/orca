@@ -29,7 +29,6 @@ sequence.append(utils.AssertPresentationAction(
     "2. Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Application Window frame Color menu'",
      "     VISIBLE:  'Color menu', cursor=1",
-     "SPEECH OUTPUT: 'Application Window frame'",
      "SPEECH OUTPUT: 'Preferences menu'",
      "SPEECH OUTPUT: 'Color menu.'",
      "SPEECH OUTPUT: '1 of 4.'",

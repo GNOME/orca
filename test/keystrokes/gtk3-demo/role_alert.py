@@ -8,6 +8,7 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(KeyComboAction("<Control>f"))
+sequence.append(PauseAction(1000))
 sequence.append(TypeAction("Dialog and Message Boxes"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(PauseAction(3000))
@@ -21,7 +22,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk3-demo application Dialogs and Message Boxes frame Dialogs panel Message Dialog push button'",
      "     VISIBLE:  'Message Dialog push button', cursor=1",
      "SPEECH OUTPUT: 'Dialogs and Message Boxes frame'",
-     "SPEECH OUTPUT: 'Dialogs panel'",
+     "SPEECH OUTPUT: 'Dialogs panel.'",
      "SPEECH OUTPUT: 'Message Dialog push button'"]))
 
 sequence.append(utils.StartRecordingAction())

@@ -23,14 +23,16 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "1. Status bar Where Am I",
-    ["BRAILLE LINE:  'Application Class'",
+    ["KNOWN ISSUE: We might not want the 'frame' visible",
+     "BRAILLE LINE:  'Application Class'",
      "     VISIBLE:  'Application Class', cursor=0",
      "BRAILLE LINE:  'gtk3-demo-application application Application Class frame  $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+     "     VISIBLE:  'frame  $l', cursor=7",
      "BRAILLE LINE:  'gtk3-demo-application application Application Class frame  $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+     "     VISIBLE:  'frame  $l', cursor=7",
      "SPEECH OUTPUT: 'Application Class'",
-     "SPEECH OUTPUT: 'Cursor at row 0 column 0 - 0 chars in document'"]))
+     "SPEECH OUTPUT: 'Cursor at row 0 column 0 - 0 chars in document'",
+     "SPEECH OUTPUT: 'Information'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

@@ -46,7 +46,6 @@ sequence.append(utils.AssertPresentationAction(
     "4. Where Am I",
     ["BRAILLE LINE:  'gtk3-demo-application application Application Class frame Color menu'",
      "     VISIBLE:  'Color menu', cursor=1",
-     "SPEECH OUTPUT: 'Application Class frame'",
      "SPEECH OUTPUT: 'Preferences menu'",
      "SPEECH OUTPUT: 'Color menu.'",
      "SPEECH OUTPUT: '3 of 5.'",

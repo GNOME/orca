@@ -19,7 +19,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Tab to first checkbox",
     ["BRAILLE LINE:  'gtk3-demo application Paned Widgets frame Horizontal panel < > Resize check box'",
      "     VISIBLE:  '< > Resize check box', cursor=1",
-     "SPEECH OUTPUT: 'Horizontal panel'",
+     "SPEECH OUTPUT: 'Horizontal panel.'",
      "SPEECH OUTPUT: 'Resize check box not checked.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -66,7 +66,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Tab to first checkbox in next panel",
     ["BRAILLE LINE:  'gtk3-demo application Paned Widgets frame Vertical panel < > Resize check box'",
      "     VISIBLE:  '< > Resize check box', cursor=1",
-     "SPEECH OUTPUT: 'Vertical panel'",
+     "SPEECH OUTPUT: 'Vertical panel.'",
      "SPEECH OUTPUT: 'Resize check box not checked.'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))

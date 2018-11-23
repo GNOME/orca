@@ -26,8 +26,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'This popup is created as a div i', cursor=0",
      "BRAILLE LINE:  'close'",
      "     VISIBLE:  'close', cursor=1",
-     "BRAILLE LINE:  'close'",
-     "     VISIBLE:  'close', cursor=1",
      "SPEECH OUTPUT: 'This popup is created as a div in the HTML content, rather than being created in the DOM at the time of use. The display style is changed from \"none\" to \"block\" to hide and show it. '",
      "SPEECH OUTPUT: 'close'",
      "SPEECH OUTPUT: 'link.'",     

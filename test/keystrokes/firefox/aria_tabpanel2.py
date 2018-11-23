@@ -20,10 +20,9 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '&=y Thick and cheesy radio butto', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",
-     "SPEECH OUTPUT: 'List with 4 items'",
+     "SPEECH OUTPUT: 'List with 4 items.'",
      "SPEECH OUTPUT: 'Thick and cheesy.'",
-     "SPEECH OUTPUT: 'selected radio button'",
-     "SPEECH OUTPUT: 'Browse mode' voice=system"]))
+     "SPEECH OUTPUT: 'selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Page_Down"))

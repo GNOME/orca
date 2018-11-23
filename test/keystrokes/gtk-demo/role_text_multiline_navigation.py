@@ -37,6 +37,7 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(TypeAction("time in the lab and not enough time"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(TypeAction("in the wild."))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -91,7 +92,7 @@ sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(utils.AssertPresentationAction(
     "7. Ctrl+Left to beginning of 'time' at end of previous line",
     ["BRAILLE LINE:  'time in the lab and not enough time $l'",
-     "     VISIBLE:  'time in the lab and not enough t', cursor=32",
+     "     VISIBLE:  'time $l', cursor=1",
      "SPEECH OUTPUT: 'newline'",
      "SPEECH OUTPUT: 'time",
      "'"]))
@@ -255,7 +256,7 @@ sequence.append(TypeAction("f"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "27. Insert+f for text attributes",
-    ["SPEECH OUTPUT: 'size: 11' voice=system",
+    ["SPEECH OUTPUT: 'size: 10' voice=system",
      "SPEECH OUTPUT: 'family name: Cantarell' voice=system",
      "SPEECH OUTPUT: 'foreground color: black' voice=system",
      "SPEECH OUTPUT: 'background color: white' voice=system"]))

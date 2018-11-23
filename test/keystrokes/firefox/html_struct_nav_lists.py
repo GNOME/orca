@@ -29,7 +29,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  '6. And use roman numerals,'",
      "     VISIBLE:  '6. And use roman numerals,', cursor=1",
      "SPEECH OUTPUT: 'List with 6 items' voice=system",
-     "SPEECH OUTPUT: '6. And use roman numerals,.'"]))
+     "SPEECH OUTPUT: '6. And use roman numerals,'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("l"))
@@ -180,7 +180,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  '6. And use roman numerals,'",
      "     VISIBLE:  '6. And use roman numerals,', cursor=1",
      "SPEECH OUTPUT: 'List with 6 items' voice=system",
-     "SPEECH OUTPUT: '6. And use roman numerals,.'"]))
+     "SPEECH OUTPUT: '6. And use roman numerals,'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))

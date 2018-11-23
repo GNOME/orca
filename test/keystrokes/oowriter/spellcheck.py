@@ -19,9 +19,24 @@ sequence.append(KeyComboAction("F7"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "1. Enter F7 to bring up the spell checking dialog",
-    ["KNOWN ISSUE: LibreOffice broke accessibility for multiline text fields so we don't present the error.",
-     "SPEECH OUTPUT: 'Spelling: English (USA) frame'",
-     "SPEECH OUTPUT: 'Spelling: English (USA)'",
+    ["SPEECH OUTPUT: 'Spelling: English (USA) frame'",
+     "SPEECH OUTPUT: 'Misspelled word: quuuiick'",
+     "SPEECH OUTPUT: 'q'",
+     "SPEECH OUTPUT: 'u'",
+     "SPEECH OUTPUT: 'u'",
+     "SPEECH OUTPUT: 'u'",
+     "SPEECH OUTPUT: 'i'",
+     "SPEECH OUTPUT: 'i'",
+     "SPEECH OUTPUT: 'c'",
+     "SPEECH OUTPUT: 'k'",
+     "SPEECH OUTPUT: 'Suggestions quick'",
+     "SPEECH OUTPUT: 'q'",
+     "SPEECH OUTPUT: 'u'",
+     "SPEECH OUTPUT: 'i'",
+     "SPEECH OUTPUT: 'c'",
+     "SPEECH OUTPUT: 'k'",
+     "SPEECH OUTPUT: 'Context is The quuuiick brown fox'",
+     "SPEECH OUTPUT: 'Spelling: English (USA) dialog'",
      "SPEECH OUTPUT: 'Correct push button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -29,10 +44,13 @@ sequence.append(KeyComboAction("<Alt>I"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "2. Alt I to ignore the first error and present the next",
-    ["SPEECH OUTPUT: 'Suggestions'",
-     "SPEECH OUTPUT: 'overt.'"]))
+    ["SPEECH OUTPUT: 'Suggestions overt'",
+     "SPEECH OUTPUT: 'o'",
+     "SPEECH OUTPUT: 'v'",
+     "SPEECH OUTPUT: 'e'",
+     "SPEECH OUTPUT: 'r'",
+     "SPEECH OUTPUT: 't'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
-
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

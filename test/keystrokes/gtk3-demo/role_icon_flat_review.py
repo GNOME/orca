@@ -20,7 +20,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. bin icon",
-    ["BRAILLE LINE:  'gtk3-demo application Icon View Basics frame bin icon'",
+    ["BRAILLE LINE:  'gtk3-demo application Icon View Basics frame layered pane bin icon'",
      "     VISIBLE:  'bin icon', cursor=1",
      "SPEECH OUTPUT: 'bin icon.'"]))
 

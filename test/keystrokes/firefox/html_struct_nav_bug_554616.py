@@ -24,7 +24,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Snapshot version', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.' voice=system",
      "SPEECH OUTPUT: 'table with 4 rows 3 columns' voice=system",
-     "SPEECH OUTPUT: 'Snapshot version column header'"]))
+     "SPEECH OUTPUT: 'Snapshot version'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Down"))
@@ -68,23 +68,22 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'installer (10190 KB) portable ar', cursor=1",
      "BRAILLE LINE:  'Row 2, column 3.'",
      "     VISIBLE:  'Row 2, column 3.', cursor=0",
-     "BRAILLE LINE:  'installer (10190 KB)'",
-     "     VISIBLE:  'installer (10190 KB)', cursor=1",
      "SPEECH OUTPUT: 'Download'",
      "SPEECH OUTPUT: 'installer'",
      "SPEECH OUTPUT: 'link.'",
-     "SPEECH OUTPUT: '(10190 KB).'",
+     "SPEECH OUTPUT: 'Download column header (10190 KB)'",
      "SPEECH OUTPUT: 'portable archive'",
      "SPEECH OUTPUT: 'link.'",
-     "SPEECH OUTPUT: '(9154 KB).'",
-     "SPEECH OUTPUT: 'Row 2, column 3.' voice=system",
-     "SPEECH OUTPUT: 'blank' voice=system"]))
+     "SPEECH OUTPUT: 'Download column header (9154 KB)'",
+     "SPEECH OUTPUT: 'Row 2, column 3.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Alt Shift Down",
-    ["BRAILLE LINE:  'installer (10193 KB)'",
+    ["BRAILLE LINE:  'installer (10190 KB) portable archive (9154 KB)'",
+     "     VISIBLE:  'installer (10190 KB) portable ar', cursor=1",
+     "BRAILLE LINE:  'installer (10193 KB)'",
      "     VISIBLE:  'installer (10193 KB)', cursor=1",
      "BRAILLE LINE:  'installer (10193 KB) portable archive (9149 KB)'",
      "     VISIBLE:  'installer (10193 KB) portable ar', cursor=1",
@@ -92,10 +91,10 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Row 3, column 3.', cursor=0",
      "SPEECH OUTPUT: 'installer'",
      "SPEECH OUTPUT: 'link.'",
-     "SPEECH OUTPUT: '(10193 KB).'",
+     "SPEECH OUTPUT: 'Download column header (10193 KB)'",
      "SPEECH OUTPUT: 'portable archive'",
      "SPEECH OUTPUT: 'link.'",
-     "SPEECH OUTPUT: '(9149 KB).'",
+     "SPEECH OUTPUT: 'Download column header (9149 KB)'",
      "SPEECH OUTPUT: 'Row 3, column 3.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -144,10 +143,10 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Download'",
      "SPEECH OUTPUT: 'installer'",
      "SPEECH OUTPUT: 'link.'",
-     "SPEECH OUTPUT: '(10186 KB).'",
+     "SPEECH OUTPUT: 'Download column header (10186 KB)'",
      "SPEECH OUTPUT: 'portable archive'",
      "SPEECH OUTPUT: 'link.'",
-     "SPEECH OUTPUT: '(9146 KB).'",
+     "SPEECH OUTPUT: 'Download column header (9146 KB)'",
      "SPEECH OUTPUT: 'Row 4, column 3.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())

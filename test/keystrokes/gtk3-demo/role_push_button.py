@@ -21,8 +21,8 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk3-demo application Button Boxes frame Horizontal Button Boxes panel Spread panel OK push button'",
      "     VISIBLE:  'OK push button', cursor=1",
      "SPEECH OUTPUT: 'Button Boxes frame'",
-     "SPEECH OUTPUT: 'Horizontal Button Boxes panel'",
-     "SPEECH OUTPUT: 'Spread panel'",
+     "SPEECH OUTPUT: 'Horizontal Button Boxes panel.'",
+     "SPEECH OUTPUT: 'Spread panel.'",
      "SPEECH OUTPUT: 'OK push button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -49,7 +49,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. OK Edge button",
     ["BRAILLE LINE:  'gtk3-demo application Button Boxes frame Horizontal Button Boxes panel Edge panel OK push button'",
      "     VISIBLE:  'OK push button', cursor=1",
-     "SPEECH OUTPUT: 'Edge panel'",
+     "SPEECH OUTPUT: 'Edge panel.'",
      "SPEECH OUTPUT: 'OK push button'"]))
 
 sequence.append(KeyComboAction("<Alt>F4", 500))

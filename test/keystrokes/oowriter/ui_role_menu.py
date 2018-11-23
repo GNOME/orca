@@ -14,9 +14,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("w"))
 sequence.append(utils.AssertPresentationAction(
     "1. Open the Wizards submenu",
-    ["BRAILLE LINE:  'soffice application Untitled 1 - LibreOffice Writer frame Wizards menu'",
-     "     VISIBLE:  'Wizards menu', cursor=1",
-     "BRAILLE LINE:  'soffice application Untitled 1 - LibreOffice Writer frame File menu Letter...'",
+    ["BRAILLE LINE:  'soffice application Wizards menu'",
+     "     VISIBLE:  'soffice application Wizards menu', cursor=21",
+     "BRAILLE LINE:  'soffice application File menu Letter...'",
      "     VISIBLE:  'Letter...', cursor=1",
      "SPEECH OUTPUT: 'Wizards menu.'",
      "SPEECH OUTPUT: 'Letter...'"]))

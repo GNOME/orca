@@ -21,7 +21,7 @@ sequence.append(KeyComboAction("h"))
 sequence.append(utils.AssertPresentationAction(
     "1. h for next heading",
     ["BRAILLE LINE:  'line 2 h1'",
-     "     VISIBLE:  'line 2 h1', cursor=0",
+     "     VISIBLE:  'line 2 h1', cursor=1",
      "SPEECH OUTPUT: 'line 2 heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -29,7 +29,7 @@ sequence.append(KeyComboAction("h"))
 sequence.append(utils.AssertPresentationAction(
     "2. h for next heading",
     ["BRAILLE LINE:  'line 3 h1'",
-     "     VISIBLE:  'line 3 h1', cursor=0",
+     "     VISIBLE:  'line 3 h1', cursor=1",
      "SPEECH OUTPUT: 'line 3 heading level 1'"]))
 
 sequence.append(utils.StartRecordingAction())

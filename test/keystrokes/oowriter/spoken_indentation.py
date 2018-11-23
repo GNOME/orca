@@ -9,6 +9,7 @@ sequence = MacroSequence()
 
 sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("<Control>Home"))
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(TypeAction("   This is a test."))

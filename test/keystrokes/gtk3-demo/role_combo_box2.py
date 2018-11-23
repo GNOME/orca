@@ -25,7 +25,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Combo box",
     ["BRAILLE LINE:  'gtk3-demo application Print dialog Page Setup page tab Layout panel Only print: All sheets combo box'",
      "     VISIBLE:  'Only print: All sheets combo box', cursor=13",
-     "SPEECH OUTPUT: 'Layout panel'",
+     "SPEECH OUTPUT: 'Layout panel.'",
      "SPEECH OUTPUT: 'Only print: All sheets combo box.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -52,9 +52,9 @@ sequence.append(utils.AssertPresentationAction(
     "4. Where Am I",
     ["BRAILLE LINE:  'gtk3-demo application Print dialog Page Setup page tab Layout panel Only print: Even sheets combo box Even sheets'",
      "     VISIBLE:  'Even sheets', cursor=1",
-     "SPEECH OUTPUT: 'Print'",
+     "SPEECH OUTPUT: 'Print dialog'",
      "SPEECH OUTPUT: 'Page Setup page tab.'",
-     "SPEECH OUTPUT: 'Layout panel'",
+     "SPEECH OUTPUT: 'Layout panel.'",
      "SPEECH OUTPUT: 'Even sheets.'",
      "SPEECH OUTPUT: '2 of 3'"]))
 

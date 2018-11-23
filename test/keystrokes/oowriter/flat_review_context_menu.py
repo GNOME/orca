@@ -34,14 +34,6 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "4. Review next line",
-    ["BRAILLE LINE:  'Paste Special $l'",
-     "     VISIBLE:  'Paste Special $l', cursor=1",
-     "SPEECH OUTPUT: 'Paste Special'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_9"))
-sequence.append(utils.AssertPresentationAction(
-    "5. Review next line",
     ["BRAILLE LINE:  'separator $l'",
      "     VISIBLE:  'separator $l', cursor=1",
      "SPEECH OUTPUT: 'separator'"]))
@@ -49,7 +41,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
-    "6. Review next line",
+    "5. Review next line",
     ["BRAILLE LINE:  'Character... $l'",
      "     VISIBLE:  'Character... $l', cursor=1",
      "SPEECH OUTPUT: 'Character...'"]))
@@ -57,7 +49,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
-    "7. Review next line",
+    "6. Review next line",
     ["BRAILLE LINE:  'Paragraph... $l'",
      "     VISIBLE:  'Paragraph... $l', cursor=1",
      "SPEECH OUTPUT: 'Paragraph...'"]))
@@ -65,7 +57,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
-    "8. Review next line",
+    "7. Review next line",
     ["BRAILLE LINE:  'Bullets and Numbering... $l'",
      "     VISIBLE:  'Bullets and Numbering... $l', cursor=1",
      "SPEECH OUTPUT: 'Bullets and Numbering...'"]))
@@ -73,7 +65,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
-    "9. Review next line",
+    "8. Review next line",
     ["BRAILLE LINE:  'Page... $l'",
      "     VISIBLE:  'Page... $l', cursor=1",
      "SPEECH OUTPUT: 'Page...'"]))
@@ -81,7 +73,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
-    "10. Review next line",
+    "9. Review next line",
     ["BRAILLE LINE:  'separator $l'",
      "     VISIBLE:  'separator $l', cursor=1",
      "SPEECH OUTPUT: 'separator'"]))
@@ -89,15 +81,15 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
-    "11. Review next line",
-    ["BRAILLE LINE:  'Edit Style... $l'",
-     "     VISIBLE:  'Edit Style... $l', cursor=1",
-     "SPEECH OUTPUT: 'Edit Style...'"]))
+    "10. Review next line",
+    ["BRAILLE LINE:  'Styles $l'",
+     "     VISIBLE:  'Styles $l', cursor=1",
+     "SPEECH OUTPUT: 'Styles'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
-    "12. Review next line",
+    "11. Review next line",
     [""]))
 
 sequence.append(KeyComboAction("<Alt>F4"))

@@ -37,7 +37,6 @@ sequence.append(utils.AssertPresentationAction(
     "3. Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Application Window frame Preferences menu <x> Red check menu item(Ctrl+R)'",
      "     VISIBLE:  '<x> Red check menu item(Ctrl+R)', cursor=1",
-     "SPEECH OUTPUT: 'Application Window frame'",
      "SPEECH OUTPUT: 'Preferences menu'",
      "SPEECH OUTPUT: 'Color menu'",
      "SPEECH OUTPUT: 'Red check menu item checked.'",

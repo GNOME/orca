@@ -36,8 +36,6 @@ sequence.append(utils.AssertPresentationAction(
     "3. Tab to the Bar link",
     ["BRAILLE LINE:  'Bar'",
      "     VISIBLE:  'Bar', cursor=1",
-     "BRAILLE LINE:  'Bar'",
-     "     VISIBLE:  'Bar', cursor=1",
      "SPEECH OUTPUT: 'Bar link.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -45,8 +43,6 @@ sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.AssertPresentationAction(
     "4. Shift Tab back to the Foo link",
     ["BRAILLE LINE:  'Foo'",
-     "     VISIBLE:  'Foo', cursor=1",
-     "BRAILLE LINE:  'Foo'",
      "     VISIBLE:  'Foo', cursor=1",
      "SPEECH OUTPUT: 'Foo link.'"]))
 

@@ -76,7 +76,9 @@ sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
     ["BRAILLE LINE:  'Summary: contains all of the words/strings combo box $l Search push button'",
      "     VISIBLE:  'Summary: contains all of the wor', cursor=1",
-     "SPEECH OUTPUT: 'Summary: row header'",
+     "SPEECH OUTPUT: 'form'",
+     "SPEECH OUTPUT: 'table with 5 rows 4 columns'",
+     "SPEECH OUTPUT: 'Summary:'",
      "SPEECH OUTPUT: 'contains all of the words/strings combo box.'",
      "SPEECH OUTPUT: 'entry.'",
      "SPEECH OUTPUT: 'Search push button'"]))
@@ -87,6 +89,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
     ["BRAILLE LINE:  'Classification:'",
      "     VISIBLE:  'Classification:', cursor=1",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Classification: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -103,6 +106,8 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
     ["BRAILLE LINE:  'Product:'",
      "     VISIBLE:  'Product:', cursor=1",
+     "SPEECH OUTPUT: 'leaving table.'",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Product: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -137,6 +142,8 @@ sequence.append(utils.AssertPresentationAction(
     "11. Line Down",
     ["BRAILLE LINE:  'Version:'",
      "     VISIBLE:  'Version:', cursor=1",
+     "SPEECH OUTPUT: 'leaving table.'",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Version: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -153,6 +160,8 @@ sequence.append(utils.AssertPresentationAction(
     "13. Line Down",
     ["BRAILLE LINE:  'Target Milestone:'",
      "     VISIBLE:  'Target Milestone:', cursor=1",
+     "SPEECH OUTPUT: 'leaving table.'",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Target Milestone: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -169,7 +178,8 @@ sequence.append(utils.AssertPresentationAction(
     "15. Line Down",
     ["BRAILLE LINE:  'A Comment: contains the string combo box $l'",
      "     VISIBLE:  'A Comment: contains the string c', cursor=1",
-     "SPEECH OUTPUT: 'A Comment: row header'",
+     "SPEECH OUTPUT: 'leaving table.'",
+     "SPEECH OUTPUT: 'A Comment:'",
      "SPEECH OUTPUT: 'contains the string combo box.'",
      "SPEECH OUTPUT: 'entry.'"]))
 
@@ -179,7 +189,7 @@ sequence.append(utils.AssertPresentationAction(
     "16. Line Down",
     ["BRAILLE LINE:  'Whiteboard: contains all of the words/strings combo box $l'",
      "     VISIBLE:  'Whiteboard: contains all of the ', cursor=1",
-     "SPEECH OUTPUT: 'Whiteboard: row header'",
+     "SPEECH OUTPUT: 'Whiteboard:'",
      "SPEECH OUTPUT: 'contains all of the words/strings combo box.'",
      "SPEECH OUTPUT: 'entry.'"]))
 
@@ -191,7 +201,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Keywords: contains all of the ke', cursor=1",
      "SPEECH OUTPUT: 'Keywords'",
      "SPEECH OUTPUT: 'link.'",
-     "SPEECH OUTPUT: ': row header'",
+     "SPEECH OUTPUT: ':'",
      "SPEECH OUTPUT: 'contains all of the keywords combo box.'",
      "SPEECH OUTPUT: 'entry.'"]))
 
@@ -201,6 +211,7 @@ sequence.append(utils.AssertPresentationAction(
     "18. Line Down",
     ["BRAILLE LINE:  'separator'",
      "     VISIBLE:  'separator', cursor=1",
+     "SPEECH OUTPUT: 'leaving table.'",
      "SPEECH OUTPUT: 'separator'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -209,6 +220,7 @@ sequence.append(utils.AssertPresentationAction(
     "19. Line Down",
     ["BRAILLE LINE:  'Status:'",
      "     VISIBLE:  'Status:', cursor=1",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Status: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -227,6 +239,8 @@ sequence.append(utils.AssertPresentationAction(
     "21. Line Down",
     ["BRAILLE LINE:  'Resolution:'",
      "     VISIBLE:  'Resolution:', cursor=1",
+     "SPEECH OUTPUT: 'leaving table.'",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Resolution: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -243,6 +257,8 @@ sequence.append(utils.AssertPresentationAction(
     "23. Line Down",
     ["BRAILLE LINE:  'Severity:'",
      "     VISIBLE:  'Severity:', cursor=1",
+     "SPEECH OUTPUT: 'leaving table.'",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Severity: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -259,6 +275,8 @@ sequence.append(utils.AssertPresentationAction(
     "25. Line Down",
     ["BRAILLE LINE:  'Priority:'",
      "     VISIBLE:  'Priority:', cursor=1",
+     "SPEECH OUTPUT: 'leaving table.'",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'Priority: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -275,6 +293,8 @@ sequence.append(utils.AssertPresentationAction(
     "27. Line Down",
     ["BRAILLE LINE:  'OS:'",
      "     VISIBLE:  'OS:', cursor=1",
+     "SPEECH OUTPUT: 'leaving table.'",
+     "SPEECH OUTPUT: 'table with 2 rows 1 column'",
      "SPEECH OUTPUT: 'OS: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -291,7 +311,8 @@ sequence.append(utils.AssertPresentationAction(
     "29. Line Down",
     ["BRAILLE LINE:  'Email and Numbering'",
      "     VISIBLE:  'Email and Numbering', cursor=1",
-     "SPEECH OUTPUT: 'Email and Numbering'"]))
+     "SPEECH OUTPUT: 'leaving table.'",
+     "SPEECH OUTPUT: 'Email and Numbering panel.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -299,7 +320,7 @@ sequence.append(utils.AssertPresentationAction(
     "30. Line Down",
     ["BRAILLE LINE:  'Any one of:'",
      "     VISIBLE:  'Any one of:', cursor=1",
-     "SPEECH OUTPUT: 'Any one of:.'"]))
+     "SPEECH OUTPUT: 'Any one of:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -363,7 +384,7 @@ sequence.append(utils.AssertPresentationAction(
     "38. Line Down",
     ["BRAILLE LINE:  'Any one of:'",
      "     VISIBLE:  'Any one of:', cursor=1",
-     "SPEECH OUTPUT: 'Any one of:.'"]))
+     "SPEECH OUTPUT: 'Any one of:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -436,7 +457,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Only include combo box bugs numbered:  $l'",
      "     VISIBLE:  'Only include combo box bugs numb', cursor=1",
      "SPEECH OUTPUT: 'Only include combo box.'",
-     "SPEECH OUTPUT: 'bugs numbered:.'",
+     "SPEECH OUTPUT: 'bugs numbered:'",
      "SPEECH OUTPUT: 'entry.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -445,7 +466,7 @@ sequence.append(utils.AssertPresentationAction(
     "48. Line Down",
     ["BRAILLE LINE:  '(comma-separated list)'",
      "     VISIBLE:  '(comma-separated list)', cursor=1",
-     "SPEECH OUTPUT: '(comma-separated list).'"]))
+     "SPEECH OUTPUT: '(comma-separated list)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -453,7 +474,7 @@ sequence.append(utils.AssertPresentationAction(
     "49. Line Down",
     ["BRAILLE LINE:  'Bug Changes'",
      "     VISIBLE:  'Bug Changes', cursor=1",
-     "SPEECH OUTPUT: 'Bug Changes'"]))
+     "SPEECH OUTPUT: 'Bug Changes panel.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

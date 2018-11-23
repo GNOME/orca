@@ -17,8 +17,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'text 1 Hello wurld $l spelling', cursor=19",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "BRAILLE LINE:  'text 1 Hello wurld $l spelling'",
-     "     VISIBLE:  'text 1 Hello wurld $l spelling', cursor=19",
      "SPEECH OUTPUT: 'text 1 entry Hello wurld selected.'",
      "SPEECH OUTPUT: 'invalid spelling'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
@@ -29,6 +27,8 @@ sequence.append(utils.AssertPresentationAction(
     "2. WhereAmI",
     ["BRAILLE LINE:  'text 1 Hello wurld $l spelling'",
      "     VISIBLE:  'text 1 Hello wurld $l spelling', cursor=19",
+     "BRAILLE LINE:  'text 1 Hello wurld $l spelling'",
+     "     VISIBLE:  'text 1 Hello wurld $l spelling', cursor=19",
      "SPEECH OUTPUT: 'text 1 entry Hello wurld selected.'",
      "SPEECH OUTPUT: 'invalid spelling'"]))
 
@@ -37,8 +37,6 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "3. Tab",
     ["BRAILLE LINE:  'text 2 World hello $l grammar'",
-     "     VISIBLE:  'text 2 World hello $l grammar', cursor=19",
-     "BRAILLE LINE:  'text 2 World hello $l grammar'",
      "     VISIBLE:  'text 2 World hello $l grammar', cursor=19",
      "SPEECH OUTPUT: 'text 2 entry World hello selected.'",
      "SPEECH OUTPUT: 'invalid grammar'"]))
@@ -58,8 +56,6 @@ sequence.append(utils.AssertPresentationAction(
     "5. Tab",
     ["BRAILLE LINE:  'text 3 1234 $l invalid'",
      "     VISIBLE:  'text 3 1234 $l invalid', cursor=12",
-     "BRAILLE LINE:  'text 3 1234 $l invalid'",
-     "     VISIBLE:  'text 3 1234 $l invalid', cursor=12",
      "SPEECH OUTPUT: 'text 3 entry 1234 selected.'",
      "SPEECH OUTPUT: 'invalid entry'"]))
 
@@ -77,8 +73,6 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "7. Tab",
     ["BRAILLE LINE:  'text 4 Good $l'",
-     "     VISIBLE:  'text 4 Good $l', cursor=12",
-     "BRAILLE LINE:  'text 4 Good $l'",
      "     VISIBLE:  'text 4 Good $l', cursor=12",
      "SPEECH OUTPUT: 'text 4 entry Good selected.'"]))
 
@@ -139,8 +133,6 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "13. Tab",
     ["BRAILLE LINE:  'time 2 11:30 PM $l invalid'",
-     "     VISIBLE:  'time 2 11:30 PM $l invalid', cursor=16",
-     "BRAILLE LINE:  'time 2 11:30 PM $l invalid'",
      "     VISIBLE:  'time 2 11:30 PM $l invalid', cursor=16",
      "SPEECH OUTPUT: 'time 2 entry 11:30 PM selected.'",
      "SPEECH OUTPUT: 'invalid entry'"]))

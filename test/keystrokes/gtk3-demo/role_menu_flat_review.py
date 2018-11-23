@@ -60,7 +60,7 @@ sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "6. Review next word",
     ["BRAILLE LINE:  '< > Hide Titlebar when maximized $l'",
-     "     VISIBLE:  '< > Hide Titlebar when maximized', cursor=5",
+     "     VISIBLE:  'Hide Titlebar when maximized $l', cursor=1",
      "SPEECH OUTPUT: 'Hide '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -68,7 +68,7 @@ sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "7. Review next word",
     ["BRAILLE LINE:  '< > Hide Titlebar when maximized $l'",
-     "     VISIBLE:  '< > Hide Titlebar when maximized', cursor=10",
+     "     VISIBLE:  'Hide Titlebar when maximized $l', cursor=6",
      "SPEECH OUTPUT: 'Titlebar '"]))
 
 sequence.append(utils.StartRecordingAction())

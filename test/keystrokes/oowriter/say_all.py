@@ -20,7 +20,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. Return to top of document",
-    ["BRAILLE LINE:  'Untitled 1 - LibreOffice Writer frame Untitled 1 - LibreOffice Writer root pane Untitled1 - LibreOffice Document Line 1 $l'",
+    ["BRAILLE LINE:  'soffice application Untitled 1 - LibreOffice Writer root pane Untitled 1 - LibreOffice Document Line 1 $l'",
      "     VISIBLE:  'Line 1 $l', cursor=1",
      "SPEECH OUTPUT: 'Line 1'"]))
 

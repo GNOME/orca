@@ -7,14 +7,14 @@ sequence = MacroSequence()
 
 #sequence.append(WaitForDocLoad())
 sequence.append(PauseAction(5000))
-sequence.append(KeyComboAction("Tab"))
-sequence.append(KeyComboAction("<Shift>Tab"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Tab to slider 1",
-    ["BRAILLE LINE:  '30 horizontal slider'",
+    ["BRAILLE LINE:  'embedded'",
+     "     VISIBLE:  'embedded', cursor=1",
+     "BRAILLE LINE:  '30 horizontal slider'",
      "     VISIBLE:  '30 horizontal slider', cursor=1",
      "SPEECH OUTPUT: 'horizontal slider 30.'"]))
 

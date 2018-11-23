@@ -46,7 +46,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Where Am I",
     ["BRAILLE LINE:  'gtk-demo application Print dialog Page Setup page tab Only print: Even sheets combo box Even sheets'",
      "     VISIBLE:  'Even sheets', cursor=1",
-     "SPEECH OUTPUT: 'Print'",
+     "SPEECH OUTPUT: 'Print dialog'",
      "SPEECH OUTPUT: 'Page Setup page tab.'",
      "SPEECH OUTPUT: 'Even sheets.'",
      "SPEECH OUTPUT: '2 of 3'"]))

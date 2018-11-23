@@ -17,9 +17,11 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "1. Title bar",
-    ["BRAILLE LINE:  'GNOME Bug Tracking System - Nightly'",
-     "     VISIBLE:  'GNOME Bug Tracking System - Nigh', cursor=0",
-     "SPEECH OUTPUT: 'GNOME Bug Tracking System - Nightly'"]))
+    ["BRAILLE LINE:  'Product summary'",
+     "     VISIBLE:  'Product summary', cursor=1",
+     "BRAILLE LINE:  'GNOME Bug Tracking System - Firefox Nightly'",
+     "     VISIBLE:  'GNOME Bug Tracking System - Fire', cursor=0",
+     "SPEECH OUTPUT: 'GNOME Bug Tracking System - Firefox Nightly'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -42,9 +44,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "3. Title bar",
-    ["BRAILLE LINE:  'GNOME Bug Tracking System - Nightly'",
-     "     VISIBLE:  'GNOME Bug Tracking System - Nigh', cursor=0",
-     "SPEECH OUTPUT: 'GNOME Bug Tracking System - Nightly'"]))
+    ["BRAILLE LINE:  'GNOME Bug Tracking System - Firefox Nightly'",
+     "     VISIBLE:  'GNOME Bug Tracking System - Fire', cursor=0",
+     "SPEECH OUTPUT: 'GNOME Bug Tracking System - Firefox Nightly'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))

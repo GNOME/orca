@@ -18,7 +18,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'My slider 10% horizontal slider', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'My slider horizontal slider 10%.'",
+     "SPEECH OUTPUT: 'My slider horizontal slider 10%'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())

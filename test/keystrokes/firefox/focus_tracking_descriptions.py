@@ -17,8 +17,6 @@ sequence.append(utils.AssertPresentationAction(
     "1. Tab",
     ["BRAILLE LINE:  'Foo'",
      "     VISIBLE:  'Foo', cursor=1",
-     "BRAILLE LINE:  'Foo'",
-     "     VISIBLE:  'Foo', cursor=1",
      "SPEECH OUTPUT: 'Foo link.'",
      "SPEECH OUTPUT: 'Title of the Foo link.'"]))
 
@@ -28,8 +26,6 @@ sequence.append(utils.AssertPresentationAction(
     "2. Tab",
     ["BRAILLE LINE:  'Bar'",
      "     VISIBLE:  'Bar', cursor=1",
-     "BRAILLE LINE:  'Bar'",
-     "     VISIBLE:  'Bar', cursor=1",
      "SPEECH OUTPUT: 'Bar link.'",
      "SPEECH OUTPUT: 'ARIA description text.'"]))
 
@@ -38,8 +34,6 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "3. Tab",
     ["BRAILLE LINE:  'Baz'",
-     "     VISIBLE:  'Baz', cursor=1",
-     "BRAILLE LINE:  'Baz'",
      "     VISIBLE:  'Baz', cursor=1",
      "SPEECH OUTPUT: 'Baz link.'",
      "SPEECH OUTPUT: 'Title of the Baz link.'"]))

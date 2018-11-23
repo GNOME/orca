@@ -13,9 +13,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>v"))
 sequence.append(utils.AssertPresentationAction(
     "1. Initial menu and menu item",
-    ["BRAILLE LINE:  'Firefox application Nightly frame Menu Bar tool bar Application menu bar Toolbars menu'",
+    ["BRAILLE LINE:  'Firefox application Firefox Nightly frame Menu Bar tool bar Application menu bar Toolbars menu'",
      "     VISIBLE:  'Toolbars menu', cursor=1",
-     "SPEECH OUTPUT: 'Menu Bar tool bar'",
      "SPEECH OUTPUT: 'View menu'",
      "SPEECH OUTPUT: 'Toolbars menu.'"]))
 
@@ -25,7 +24,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Down",
-    ["BRAILLE LINE:  'Firefox application Nightly frame Menu Bar tool bar Application menu bar Sidebar menu'",
+    ["BRAILLE LINE:  'Firefox application Firefox Nightly frame Menu Bar tool bar Application menu bar Sidebar menu'",
      "     VISIBLE:  'Sidebar menu', cursor=1",
      "SPEECH OUTPUT: 'Sidebar menu.'"]))
 

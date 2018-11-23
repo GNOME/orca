@@ -16,18 +16,15 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '&=y Radio Maria radio button', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",
-     "SPEECH OUTPUT: 'Lunch Options panel'",
+     "SPEECH OUTPUT: 'Lunch Options panel.'",
      "SPEECH OUTPUT: 'Radio Maria.'",
-     "SPEECH OUTPUT: 'selected radio button'",
-     "SPEECH OUTPUT: 'Browse mode' voice=system"]))
+     "SPEECH OUTPUT: 'selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic whereamI",
     ["BRAILLE LINE:  '&=y Radio Maria radio button'",
-     "     VISIBLE:  '&=y Radio Maria radio button', cursor=1",
-     "BRAILLE LINE:  '&=y Radio Maria radio button'",
      "     VISIBLE:  '&=y Radio Maria radio button', cursor=1",
      "SPEECH OUTPUT: 'Lunch Options.'",
      "SPEECH OUTPUT: 'Radio Maria radio button.'",
@@ -55,10 +52,11 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "5. Move to next line",
-    ["BRAILLE LINE:  'Drink Options h3'",
-     "     VISIBLE:  'Drink Options h3', cursor=1",
-     "SPEECH OUTPUT: 'Drink Options heading level 3'"]))
+    "5. Down arrow within radio group",
+    ["BRAILLE LINE:  '&=y Thai radio button'",
+     "     VISIBLE:  '&=y Thai radio button', cursor=1",
+     "SPEECH OUTPUT: 'Thai.'",
+     "SPEECH OUTPUT: 'selected radio button'"]
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -66,7 +64,8 @@ sequence.append(utils.AssertPresentationAction(
     "6. Tab to second radio group",
     ["BRAILLE LINE:  '&=y Water radio button'",
      "     VISIBLE:  '&=y Water radio button', cursor=1",
-     "SPEECH OUTPUT: 'Drink Options panel'",
+     "SPEECH OUTPUT: 'leaving panel.'",
+     "SPEECH OUTPUT: 'Drink Options panel.'",
      "SPEECH OUTPUT: 'Water.'",
      "SPEECH OUTPUT: 'selected radio button'"]))
 

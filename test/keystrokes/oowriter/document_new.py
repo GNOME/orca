@@ -6,17 +6,17 @@ from macaroon.playback import *
 import utils
 
 sequence = MacroSequence()
-sequence.append(PauseAction(3000))
+sequence.append(PauseAction(5000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>N"))
-sequence.append(PauseAction(3000))
+sequence.append(PauseAction(5000))
 sequence.append(utils.AssertPresentationAction(
     "New text document",
     ["BRAILLE LINE:  'soffice application Untitled 2 - LibreOffice Writer frame'",
      "     VISIBLE:  'Untitled 2 - LibreOffice Writer ', cursor=1",
-     "BRAILLE LINE:  'Untitled 2 - LibreOffice Writer frame Untitled 2 - LibreOffice Writer root pane Untitled2 - LibreOffice Document  $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+     "BRAILLE LINE:  'soffice application Untitled 2 - LibreOffice Writer root pane Untitled 2 - LibreOffice Document  $l'",
+     "     VISIBLE:  'Document  $l', cursor=10",
      "SPEECH OUTPUT: 'Untitled 2 - LibreOffice Writer frame'",
      "SPEECH OUTPUT: 'blank'"]))
 

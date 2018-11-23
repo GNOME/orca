@@ -63,7 +63,7 @@ sequence.append(KeyComboAction("<Control>End"))
 sequence.append(utils.AssertPresentationAction(
     "7. End of file", 
     ["BRAILLE LINE:  'Here's another normal paragraph.'",
-     "     VISIBLE:  'Here's another normal paragraph.', cursor=0",
+     "     VISIBLE:  'ere's another normal paragraph.', cursor=32",
      "SPEECH OUTPUT: 'Here's another normal paragraph.'"]))
 
 sequence.append(utils.StartRecordingAction())

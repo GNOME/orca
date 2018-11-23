@@ -18,8 +18,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. Tab to tree",
     ["BRAILLE LINE:  'embedded'",
      "     VISIBLE:  'embedded', cursor=1",
-     "BRAILLE LINE:  'Fruits expanded list item'",
-     "     VISIBLE:  'Fruits expanded list item', cursor=1",
+     "BRAILLE LINE:  'Fruits expanded'",
+     "     VISIBLE:  'Fruits expanded', cursor=1",
      "SPEECH OUTPUT: 'Fruits.'",
      "SPEECH OUTPUT: 'expanded.'",
      "SPEECH OUTPUT: 'tree level 1'"]))
@@ -28,8 +28,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic whereAmI",
-    ["BRAILLE LINE:  'Fruits expanded list item'",
-     "     VISIBLE:  'Fruits expanded list item', cursor=1",
+    ["BRAILLE LINE:  'Fruits expanded'",
+     "     VISIBLE:  'Fruits expanded', cursor=1",
      "SPEECH OUTPUT: 'list item.'",
      "SPEECH OUTPUT: 'Fruits.'",
      "SPEECH OUTPUT: '1 of 2.'",
@@ -56,8 +56,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Down arrow to apples",
-    ["BRAILLE LINE:  'Apples collapsed list item'",
-     "     VISIBLE:  'Apples collapsed list item', cursor=1",
+    ["BRAILLE LINE:  'Apples collapsed'",
+     "     VISIBLE:  'Apples collapsed', cursor=1",
      "SPEECH OUTPUT: 'Apples.'",
      "SPEECH OUTPUT: 'collapsed.'"]))
 
@@ -65,8 +65,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "6. Expand apples",
-    ["BRAILLE LINE:  'Apples expanded list item'",
-     "     VISIBLE:  'Apples expanded list item', cursor=1",
+    ["BRAILLE LINE:  'Apples expanded'",
+     "     VISIBLE:  'Apples expanded', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -82,8 +82,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "8. Down arrow to granny smith",
-    ["BRAILLE LINE:  'Granny Smith collapsed list item'",
-     "     VISIBLE:  'Granny Smith collapsed list item', cursor=1",
+    ["BRAILLE LINE:  'Granny Smith collapsed'",
+     "     VISIBLE:  'Granny Smith collapsed', cursor=1",
      "SPEECH OUTPUT: 'Granny Smith.'",
      "SPEECH OUTPUT: 'collapsed.'"]))
 
@@ -91,8 +91,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "9. Expand granny smith",
-    ["BRAILLE LINE:  'Granny Smith expanded list item'",
-     "     VISIBLE:  'Granny Smith expanded list item', cursor=1",
+    ["BRAILLE LINE:  'Granny Smith expanded'",
+     "     VISIBLE:  'Granny Smith expanded', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -150,8 +150,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "16. Down arrow to vegetables",
-    ["BRAILLE LINE:  'Vegetables expanded list item'",
-     "     VISIBLE:  'Vegetables expanded list item', cursor=1",
+    ["BRAILLE LINE:  'Vegetables expanded'",
+     "     VISIBLE:  'Vegetables expanded', cursor=1",
      "SPEECH OUTPUT: 'Vegetables.'",
      "SPEECH OUTPUT: 'expanded.'",
      "SPEECH OUTPUT: 'tree level 1'"]))
@@ -160,8 +160,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "17. Collapse vegetables",
-    ["BRAILLE LINE:  'Vegetables collapsed list item'",
-     "     VISIBLE:  'Vegetables collapsed list item', cursor=1",
+    ["BRAILLE LINE:  'Vegetables collapsed'",
+     "     VISIBLE:  'Vegetables collapsed', cursor=1",
      "SPEECH OUTPUT: 'collapsed'"]))
 
 sequence.append(utils.AssertionSummaryAction())

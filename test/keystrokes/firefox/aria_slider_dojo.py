@@ -18,6 +18,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'slider 1 10 horizontal slider', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
+     "SPEECH OUTPUT: 'form'",
      "SPEECH OUTPUT: 'slider 1 horizontal slider 10.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
@@ -61,8 +62,6 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "6. Move to entry",
     ["BRAILLE LINE:  'Slider1 Value: 10.[0-9]% rdonly'",
-     "     VISIBLE:  'Slider1 Value: 10.[0-9]% rdonly', cursor=21",
-     "BRAILLE LINE:  'Slider1 Value: 10.[0-9]% rdonly'",
      "     VISIBLE:  'Slider1 Value: 10.[0-9]% rdonly', cursor=21",
      "SPEECH OUTPUT: 'Slider1 Value: read only entry 10.[0-9]% selected.'"]))
 

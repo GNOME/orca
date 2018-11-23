@@ -91,7 +91,7 @@ sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(utils.AssertPresentationAction(
     "7. Ctrl+Left to beginning of 'time' at end of previous line",
     ["BRAILLE LINE:  'time in the lab and not enough time $l'",
-     "     VISIBLE:  'time in the lab and not enough t', cursor=32",
+     "     VISIBLE:  'time $l', cursor=1",
      "SPEECH OUTPUT: 'newline'",
      "SPEECH OUTPUT: 'time",
      "'"]))
@@ -255,7 +255,7 @@ sequence.append(TypeAction("f"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "27. Insert+f for text attributes",
-    ["SPEECH OUTPUT: 'size: 11' voice=system",
+    ["SPEECH OUTPUT: 'size: 10' voice=system",
      "SPEECH OUTPUT: 'family name: Cantarell' voice=system",
      "SPEECH OUTPUT: 'foreground color: white' voice=system",
      "SPEECH OUTPUT: 'background color: dark slate gray' voice=system"]))
@@ -346,6 +346,8 @@ sequence.append(utils.AssertPresentationAction(
     "38. BackSpace '.' after 'test'",
     ["BRAILLE LINE:  'This is only a test $l'",
      "     VISIBLE:  'This is only a test $l', cursor=20",
+     "BRAILLE LINE:  'This is only a test $l'",
+     "     VISIBLE:  'This is only a test $l', cursor=20",
      "SPEECH OUTPUT: 'dot'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -363,6 +365,8 @@ sequence.append(KeyComboAction("<Control>BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "40. Ctrl+BackSpace to delete 'a'",
     ["BRAILLE LINE:  'This is only  $l'",
+     "     VISIBLE:  'This is only  $l', cursor=14",
+     "BRAILLE LINE:  'This is only  $l'",
      "     VISIBLE:  'This is only  $l', cursor=14",
      "SPEECH OUTPUT: 'a '"]))
 

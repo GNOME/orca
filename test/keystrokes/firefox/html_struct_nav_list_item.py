@@ -28,7 +28,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  '6. And use roman numerals,'",
      "     VISIBLE:  '6. And use roman numerals,', cursor=1",
      "SPEECH OUTPUT: 'List with 6 items' voice=system",
-     "SPEECH OUTPUT: '6. And use roman numerals,.'"]))
+     "SPEECH OUTPUT: '6. And use roman numerals,'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("l"))
@@ -92,7 +92,7 @@ sequence.append(KeyComboAction("i"))
 sequence.append(utils.AssertPresentationAction(
     "10. i to next list item, which is nested (3.1.2.1)",
     ["BRAILLE LINE:  '◦ if your TYPE is circle'",
-     "     VISIBLE:  '◦ if your TYPE is circle', cursor=1",
+     "     VISIBLE:  '◦ if your TYPE is circle', cursor=25",
      "SPEECH OUTPUT: '◦ if your TYPE is circle.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -116,7 +116,7 @@ sequence.append(KeyComboAction("i"))
 sequence.append(utils.AssertPresentationAction(
     "13. i to next list item which is nested (3.2.1)",
     ["BRAILLE LINE:  '◦ was a composer who was not square'",
-     "     VISIBLE:  '◦ was a composer who was not squ', cursor=1",
+     "     VISIBLE:  'square', cursor=7",
      "SPEECH OUTPUT: '◦ was a composer who was not square.'"]))
 
 sequence.append(utils.StartRecordingAction())

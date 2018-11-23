@@ -6,7 +6,7 @@ import utils
 sequence = MacroSequence()
 
 sequence.append(PauseAction(3000))
-sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("F10"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))

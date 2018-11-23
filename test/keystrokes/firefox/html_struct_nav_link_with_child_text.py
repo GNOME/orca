@@ -15,8 +15,6 @@ sequence.append(utils.AssertPresentationAction(
     "1. k for next link",
     ["BRAILLE LINE:  'line 2'",
      "     VISIBLE:  'line 2', cursor=1",
-     "BRAILLE LINE:  'line 2'",
-     "     VISIBLE:  'line 2', cursor=1",
      "SPEECH OUTPUT: 'line 2'",
      "SPEECH OUTPUT: 'link.'"]))
 

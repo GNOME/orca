@@ -36,7 +36,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. OK Edge button",
     ["BRAILLE LINE:  'gtk-demo application Button Boxes frame Horizontal Button Boxes panel Edge panel OK push button'",
      "     VISIBLE:  'OK push button', cursor=1",
-     "SPEECH OUTPUT: 'Edge panel'",
+     "SPEECH OUTPUT: 'Edge panel.'",
      "SPEECH OUTPUT: 'OK push button'"]))
 
 sequence.append(KeyComboAction("<Alt>F4", 500))

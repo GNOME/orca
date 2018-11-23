@@ -19,8 +19,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Spinbox #1: 900 $l', cursor=16",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "BRAILLE LINE:  'Spinbox #1: 900 $l'",
-     "     VISIBLE:  'Spinbox #1: 900 $l', cursor=16",
+     "SPEECH OUTPUT: 'form'",
      "SPEECH OUTPUT: 'Spinbox #1: 900 selected spin button.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
@@ -29,6 +28,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Decrement first spinner",
     ["BRAILLE LINE:  'Spinbox #1: 899 $l'",
+     "     VISIBLE:  'Spinbox #1: 899 $l', cursor=16",
+     "BRAILLE LINE:  'Spinbox #1: 899 $l'",
      "     VISIBLE:  'Spinbox #1: 899 $l', cursor=16",
      "SPEECH OUTPUT: '899'"]))
 

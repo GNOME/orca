@@ -17,33 +17,33 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("F8"))
 sequence.append(utils.AssertPresentationAction(
     "1. vertical splitter",
-    ["BRAILLE LINE:  'gtk3-demo application Paned Widgets frame 88 vertical splitter'",
-     "     VISIBLE:  '88 vertical splitter', cursor=1",
-     "SPEECH OUTPUT: 'vertical splitter 88'"]))
+    ["BRAILLE LINE:  'gtk3-demo application Paned Widgets frame 84 vertical splitter'",
+     "     VISIBLE:  '84 vertical splitter', cursor=1",
+     "SPEECH OUTPUT: 'vertical splitter 84'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "2. vertical splitter increment value",
-    ["BRAILLE LINE:  'gtk3-demo application Paned Widgets frame 89 vertical splitter'",
-     "     VISIBLE:  '89 vertical splitter', cursor=1",
-     "SPEECH OUTPUT: '89'"]))
+    ["BRAILLE LINE:  'gtk3-demo application Paned Widgets frame 85 vertical splitter'",
+     "     VISIBLE:  '85 vertical splitter', cursor=1",
+     "SPEECH OUTPUT: '85'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "3. vertical splitter Where Am I",
-    ["BRAILLE LINE:  'gtk3-demo application Paned Widgets frame 89 vertical splitter'",
-     "     VISIBLE:  '89 vertical splitter', cursor=1",
-     "SPEECH OUTPUT: 'vertical splitter 89'"]))
+    ["BRAILLE LINE:  'gtk3-demo application Paned Widgets frame 85 vertical splitter'",
+     "     VISIBLE:  '85 vertical splitter', cursor=1",
+     "SPEECH OUTPUT: 'vertical splitter 85'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "4. vertical splitter decrement value",
-    ["BRAILLE LINE:  'gtk3-demo application Paned Widgets frame 88 vertical splitter'",
-     "     VISIBLE:  '88 vertical splitter', cursor=1",
-     "SPEECH OUTPUT: '88'"]))
+    ["BRAILLE LINE:  'gtk3-demo application Paned Widgets frame 84 vertical splitter'",
+     "     VISIBLE:  '84 vertical splitter', cursor=1",
+     "SPEECH OUTPUT: '84'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("F8"))

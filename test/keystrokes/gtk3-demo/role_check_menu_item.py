@@ -25,6 +25,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Escape"))
 sequence.append(KeyComboAction("<Alt>p"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -37,6 +38,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(KeyComboAction("Return"))
 sequence.append(KeyComboAction("Escape"))
 sequence.append(KeyComboAction("<Alt>p"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

@@ -15,7 +15,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "1. Dialog automatic reading",
-    ["BRAILLE LINE:  'gtk3-demo application Error alert'",
+    ["BRAILLE LINE:  'gtk3-demo application window Expander $l'",
+     "     VISIBLE:  'Expander $l', cursor=1",
+     "BRAILLE LINE:  'gtk3-demo application Error alert'",
      "     VISIBLE:  'Error alert', cursor=1",
      "BRAILLE LINE:  'gtk3-demo application Error alert & y Details: collapsed toggle button'",
      "     VISIBLE:  '& y Details: collapsed toggle bu', cursor=1",

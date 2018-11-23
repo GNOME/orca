@@ -16,6 +16,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Move to the menu",
     ["BRAILLE LINE:  'Edit menu'",
      "     VISIBLE:  'Edit menu', cursor=1",
+     "SPEECH OUTPUT: 'leaving table.'",
      "SPEECH OUTPUT: 'Edit menu.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -42,6 +43,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Move to Themes",
     ["BRAILLE LINE:  'Themes          > menu'",
      "     VISIBLE:  'Themes          > menu', cursor=1",
+     "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'Themes          > menu.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -50,6 +52,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Move to basic grey",
     ["BRAILLE LINE:  'Basic Grey'",
      "     VISIBLE:  'Basic Grey', cursor=1",
+     "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'Basic Grey.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -122,6 +125,7 @@ sequence.append(utils.AssertPresentationAction(
     "14. Move to one",
     ["BRAILLE LINE:  'one'",
      "     VISIBLE:  'one', cursor=1",
+     "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'one.'"]))
 
 sequence.append(utils.StartRecordingAction())

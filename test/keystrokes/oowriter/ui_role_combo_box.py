@@ -30,7 +30,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "1. Move to Strikethrough",
-    ["BRAILLE LINE:  'Character dialog Font Effects page tab Strikethrough: (Without) combo box'",
+    ["BRAILLE LINE:  'soffice application Character dialog Font Effects page tab Strikethrough: (Without) combo box'",
      "     VISIBLE:  'Strikethrough: (Without) combo b', cursor=16",
      "SPEECH OUTPUT: 'Strikethrough: (Without) combo box.'"]))
 
@@ -38,17 +38,20 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Down Arrow",
-    ["BRAILLE LINE:  'Character dialog Font Effects page tab Strikethrough: Single combo box Single list item'",
+    ["KNOWN ISSUE: We seem to be presenting extra context here",
+     "BRAILLE LINE:  'soffice application Character dialog Font Effects page tab Strikethrough: Single combo box Single list item'",
      "     VISIBLE:  'Single list item', cursor=1",
+     "SPEECH OUTPUT: 'Character dialog'",
+     "SPEECH OUTPUT: 'Font Effects page tab.'",
      "SPEECH OUTPUT: 'Single.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Up Arrow",
-    ["BRAILLE LINE:  'Character dialog Font Effects page tab Strikethrough: (Without) combo box (Without) list item'",
+    ["BRAILLE LINE:  'soffice application Character dialog Font Effects page tab Strikethrough: (Without) combo box (Without) list item'",
      "     VISIBLE:  '(Without) list item', cursor=1",
-     "SPEECH OUTPUT: '(Without).'"]))
+     "SPEECH OUTPUT: '(Without)'"]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 

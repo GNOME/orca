@@ -42,8 +42,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Priority', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",
-     "BRAILLE LINE:  'Priority'",
-     "     VISIBLE:  'Priority', cursor=1",
      "SPEECH OUTPUT: 'Priority link.'",
      "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
@@ -51,7 +49,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "4. Tab to Priority combo box",
-    ["BRAILLE LINE:  'Priority: Normal combo box'",
+    ["BRAILLE LINE:  'Priority'",
+     "     VISIBLE:  'Priority', cursor=1",
+     "BRAILLE LINE:  'Priority: Normal combo box'",
      "     VISIBLE:  'Priority: Normal combo box', cursor=11",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
@@ -88,15 +88,20 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>Down"))
 sequence.append(utils.AssertPresentationAction(
     "8. Alt Down to Expand",
-    ["KNOWN ISSUE: We are presenting nothing here because we don't get the needed event from Gecko",
-     ""]))
+    ["BRAILLE LINE:  'Firefox application Combo Box Regression Test - Firefox Nightly frame FIXED combo box FIXED'",
+     "     VISIBLE:  'FIXED', cursor=1",
+     "BRAILLE LINE:  'Firefox application Combo Box Regression Test - Firefox Nightly frame FIXED combo box'",
+     "     VISIBLE:  'FIXED combo box', cursor=1",
+     "SPEECH OUTPUT: 'expanded'",
+     "SPEECH OUTPUT: 'FIXED.'",
+     "SPEECH OUTPUT: 'expanded'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "9. Change selection Down: WONTFIX",
-    ["BRAILLE LINE:  'Resolution: WONTFIX combo box'",
-     "     VISIBLE:  'Resolution: WONTFIX combo box', cursor=13",
+    ["BRAILLE LINE:  'Firefox application Combo Box Regression Test - Firefox Nightly frame FIXED combo box WONTFIX'",
+     "     VISIBLE:  'WONTFIX', cursor=1",
      "SPEECH OUTPUT: 'WONTFIX.'"]))
 
 sequence.append(utils.StartRecordingAction())

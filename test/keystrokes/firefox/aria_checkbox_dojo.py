@@ -17,6 +17,7 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE: We are not presenting this in Nightly; we do with stable",
      "BRAILLE LINE:  '<x> cb0: Vanilla (non-dojo) checkbox (for comparison purposes) check box'",
      "     VISIBLE:  '<x> cb0: Vanilla (non-dojo) chec', cursor=1",
+     "SPEECH OUTPUT: 'form'",
      "SPEECH OUTPUT: 'cb0: Vanilla (non-dojo) checkbox (for comparison purposes) check box checked.'"]))
 
 sequence.append(utils.StartRecordingAction())

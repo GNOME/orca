@@ -18,7 +18,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Tab to Volume Horizontal Slider",
     ["BRAILLE LINE:  'Volume 0 % horizontal slider'",
      "     VISIBLE:  'Volume 0 % horizontal slider', cursor=1",
-     "SPEECH OUTPUT: 'Volume horizontal slider 0 %.'"]))
+     "SPEECH OUTPUT: 'Volume horizontal slider 0 %'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))

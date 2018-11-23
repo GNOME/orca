@@ -32,7 +32,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Shift+Ctrl+Page_Up to select text to beginning of line",
     ["BRAILLE LINE:  'This is only a test. $l'",
      "     VISIBLE:  'This is only a test. $l', cursor=1",
-     "SPEECH OUTPUT: 'line selected from start to previous cursor position'"]))
+     "SPEECH OUTPUT: 'line selected from start to previous cursor position' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift><Control>Page_Down"))

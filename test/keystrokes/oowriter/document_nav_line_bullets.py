@@ -44,7 +44,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "4. Up to previous bulleted line",
-    ["BRAILLE LINE:  'Untitled 1 - LibreOffice Writer frame Untitled 1 - LibreOffice Writer root pane Untitled1 - LibreOffice Document • Line 1 $l'",
+    ["BRAILLE LINE:  'soffice application Untitled 1 - LibreOffice Writer root pane Untitled 1 - LibreOffice Document • Line 1 $l'",
      "     VISIBLE:  '• Line 1 $l', cursor=3",
      "SPEECH OUTPUT: '• Line 1'"]))
 

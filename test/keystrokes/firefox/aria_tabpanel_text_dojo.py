@@ -47,8 +47,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'ipsum dolor sit amet', cursor=1",
      "BRAILLE LINE:  'Browse mode'",
      "     VISIBLE:  'Browse mode', cursor=0",
-     "BRAILLE LINE:  'ipsum dolor sit amet'",
-     "     VISIBLE:  'ipsum dolor sit amet', cursor=1",
      "SPEECH OUTPUT: 'ipsum dolor sit amet link.'",
      "SPEECH OUTPUT: 'Browse mode' voice=system"]))
 
@@ -56,7 +54,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Down Arrow in Browse Mode",
-    ["BRAILLE LINE:  'semper sagittis velit. Cras in mi. Duis porta mauris ut ligula. Proin porta rutrum'",
+    ["BRAILLE LINE:  'ipsum dolor sit amet'",
+     "     VISIBLE:  'ipsum dolor sit amet', cursor=1",
+     "BRAILLE LINE:  'semper sagittis velit. Cras in mi. Duis porta mauris ut ligula. Proin porta rutrum'",
      "     VISIBLE:  'semper sagittis velit. Cras in m', cursor=1",
      "SPEECH OUTPUT: 'semper sagittis velit. Cras in mi. Duis porta mauris ut ligula. Proin porta rutrum'"]))
 

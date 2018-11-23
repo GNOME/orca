@@ -82,6 +82,8 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'yankee'",
      "SPEECH OUTPUT: ':'"]))
 
+sequence.append(KeyComboAction("KP_6"))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
@@ -175,6 +177,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
      "SPEECH OUTPUT: 'NOBODY '"]))
+
+sequence.append(KeyComboAction("KP_4"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_4"))

@@ -17,8 +17,6 @@ sequence.append(utils.AssertPresentationAction(
     "1. Press 3 to move to the heading at level 3",
     ["BRAILLE LINE:  'Anchors2.html h3'",
      "     VISIBLE:  'Anchors2.html h3', cursor=1",
-     "BRAILLE LINE:  'Anchors2.html h3'",
-     "     VISIBLE:  'Anchors2.html h3', cursor=1",
      "SPEECH OUTPUT: 'Anchors2.html'",
      "SPEECH OUTPUT: 'link heading level 3.'"]))
 
@@ -26,12 +24,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "2. Press Return to active the link",
-    ["BRAILLE LINE:  'Finished loading Links to test files.'",
-     "     VISIBLE:  'Finished loading Links to test f', cursor=0",
-     "BRAILLE LINE:  'Page has 16 unvisited links.'",
-     "     VISIBLE:  'Page has 16 unvisited links.', cursor=0",
-     "BRAILLE LINE:  'Here are some of our local test files:'",
-     "     VISIBLE:  'Here are some of our local test ', cursor=1",
+   ["BRAILLE LINE:  'Finished loading Links to test files.'",
+    "     VISIBLE:  'Finished loading Links to test f', cursor=0",
+    "BRAILLE LINE:  'Page has 16 unvisited links.'",
+    "     VISIBLE:  'Page has 16 unvisited links.', cursor=0",
+    "BRAILLE LINE:  'Here are some of our local test files:'",
+    "     VISIBLE:  'Here are some of our local test ', cursor=1",
+    "BRAILLE LINE:  'Here are some of our local test files:'",
+    "     VISIBLE:  'Here are some of our local test ', cursor=1",
     "SPEECH OUTPUT: 'Finished loading Links to test files.' voice=system",
     "SPEECH OUTPUT: 'Page has 16 unvisited links.' voice=system",
     "SPEECH OUTPUT: 'Here are some of our local test files:'",
@@ -83,7 +83,8 @@ sequence.append(utils.AssertPresentationAction(
     "SPEECH OUTPUT: 'link'",
     "SPEECH OUTPUT: '•'",
     "SPEECH OUTPUT: 'textattributes.html'",
-    "SPEECH OUTPUT: 'link'"]))
+    "SPEECH OUTPUT: 'link'",
+    "SPEECH OUTPUT: 'Here are some of our local test files:'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

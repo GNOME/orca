@@ -9,17 +9,14 @@ sequence = MacroSequence()
 
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(TypeAction("Expander"))
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "1. Dialog automatic reading",
-    ["BRAILLE LINE:  'gtk-demo application window  $l'",
-     "     VISIBLE:  'gtk-demo application window  $l', cursor=29",
-     "BRAILLE LINE:  'gtk-demo application window  $l'",
-     "     VISIBLE:  'gtk-demo application window  $l', cursor=29",
-     "BRAILLE LINE:  'gtk-demo application window  $l'",
-     "     VISIBLE:  'gtk-demo application window  $l', cursor=29",
+    ["BRAILLE LINE:  'gtk-demo application window Expander $l'",
+     "     VISIBLE:  'Expander $l', cursor=1",
      "BRAILLE LINE:  'gtk-demo application GtkExpander dialog'",
      "     VISIBLE:  'GtkExpander dialog', cursor=1",
      "BRAILLE LINE:  'gtk-demo application GtkExpander dialog & y Details collapsed toggle button'",

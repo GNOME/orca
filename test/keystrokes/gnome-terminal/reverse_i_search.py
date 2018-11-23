@@ -54,11 +54,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "5. BackSpace",
-    ["BRAILLE LINE:  '(reverse-i-search)`': cat foo'",
-     "     VISIBLE:  '(reverse-i-search)`': cat foo', cursor=23",
-     "BRAILLE LINE:  '(reverse-i-search)`': cat foo'",
-     "     VISIBLE:  '(reverse-i-search)`': cat foo', cursor=23",
-     "SPEECH OUTPUT: 'c'"]))
+    ["BRAILLE LINE:  '(failed reverse-i-search)`': cat foo'",
+     "     VISIBLE:  '(failed reverse-i-search)`': cat', cursor=30",
+     "BRAILLE LINE:  '(failed reverse-i-search)`': cat foo'",
+     "     VISIBLE:  '(failed reverse-i-search)`': cat', cursor=30",
+     "BRAILLE LINE:  '(failed reverse-i-search)`': cat foo'",
+     "     VISIBLE:  '(failed reverse-i-search)`': cat', cursor=30",
+     "SPEECH OUTPUT: 'reverse-i-search)`c'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("e"))
@@ -66,7 +68,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Type 'e'",
     ["BRAILLE LINE:  '(reverse-i-search)`e': echo goodbye world'",
      "     VISIBLE:  'verse-i-search)`e': echo goodbye', cursor=32",
-     "SPEECH OUTPUT: 'e': echo goodbye world'"]))
+     "SPEECH OUTPUT: 'reverse-i-search)`e': echo goodbye world'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("cho "))

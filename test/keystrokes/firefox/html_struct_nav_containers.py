@@ -161,7 +161,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Cell 3 Cell 4 (it's the last one)'",
      "     VISIBLE:  'Cell 3 Cell 4 (it's the last one', cursor=1",
      "SPEECH OUTPUT: 'Cell 3.'",
-     "SPEECH OUTPUT: 'Cell 4 (it's the last one).'"]))
+     "SPEECH OUTPUT: 'Cell 4 (it's the last one)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>comma"))

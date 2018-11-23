@@ -7,24 +7,25 @@ import utils
 
 sequence = MacroSequence()
 
-sequence.append(PauseAction(3000))
+sequence.append(PauseAction(5000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>v"))
 sequence.append(utils.AssertPresentationAction(
     "1. Initial menu and menu item",
-    ["BRAILLE LINE:  'soffice application Untitled 1 - LibreOffice Writer frame View menu'",
-     "     VISIBLE:  'View menu', cursor=1",
-     "BRAILLE LINE:  'soffice application Untitled 1 - LibreOffice Writer frame &=y Normal radio menu item'",
+    ["BRAILLE LINE:  'soffice application View menu'",
+     "     VISIBLE:  'soffice application View menu', cursor=21",
+     "BRAILLE LINE:  'soffice application View menu &=y Normal radio menu item'",
      "     VISIBLE:  '&=y Normal radio menu item', cursor=1",
      "SPEECH OUTPUT: 'View menu.'",
+     "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'Normal selected radio menu item'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Down",
-    ["BRAILLE LINE:  'soffice application Untitled 1 - LibreOffice Writer frame & y Web radio menu item'",
+    ["BRAILLE LINE:  'soffice application View menu & y Web radio menu item'",
      "     VISIBLE:  '& y Web radio menu item', cursor=1",
      "SPEECH OUTPUT: 'Web not selected radio menu item'"]))
 
@@ -43,6 +44,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'separator $l'",
      "     VISIBLE:  'separator $l', cursor=1",
      "SPEECH OUTPUT: 'separator'"]))
+
+sequence.append(KeyComboAction("KP_9"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))

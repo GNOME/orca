@@ -85,13 +85,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "10. Open drop down menu on Create",
-    ["BRAILLE LINE:  'save options menu button'",
-     "     VISIBLE:  'save options menu button', cursor=1",
+    ["BRAILLE LINE:  'push button'",
+     "     VISIBLE:  'push button', cursor=1",
      "BRAILLE LINE:  'Create blank'",
      "     VISIBLE:  'Create blank', cursor=1",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "SPEECH OUTPUT: 'Create ▼ menu'",
+     "SPEECH OUTPUT: 'expanded'",
+     "SPEECH OUTPUT: 'Create save options menu'",
      "SPEECH OUTPUT: 'Create blank.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
@@ -242,7 +243,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'white table cell', cursor=1",
      "BRAILLE LINE:  'white white lime lime green green blue blue table row'",
      "     VISIBLE:  'white white lime lime green gree', cursor=1",
-     "SPEECH OUTPUT: 'white white lime lime green green blue blue table row.'"]))
+     "SPEECH OUTPUT: 'white white lime lime green green blue blue.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Escape"))

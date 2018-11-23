@@ -17,8 +17,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '0 $l', cursor=2",
      "BRAILLE LINE:  'Focus mode'",
      "     VISIBLE:  'Focus mode', cursor=0",
-     "BRAILLE LINE:  '0 $l'",
-     "     VISIBLE:  '0 $l', cursor=2",
      "SPEECH OUTPUT: 'entry 0 selected.'",
      "SPEECH OUTPUT: 'Focus mode' voice=system"]))
 
@@ -26,7 +24,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Down",
-    ["BRAILLE LINE:  '-1 $l'",
+    ["BRAILLE LINE:  '0 $l'",
+     "     VISIBLE:  '0 $l', cursor=2",
+     "BRAILLE LINE:  '-1 $l'",
      "     VISIBLE:  '-1 $l', cursor=3",
      "BRAILLE LINE:  '-1 $l'",
      "     VISIBLE:  '-1 $l', cursor=3",

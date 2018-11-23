@@ -51,11 +51,11 @@ sequence.append(KeyComboAction("<Alt>a"))
 sequence.append(PauseAction(5000))
 sequence.append(utils.AssertPresentationAction(
     "4. Alt+a for Activate button",
-    ["BRAILLE LINE:  'Firefox application Nightly frame'",
-     "     VISIBLE:  'Nightly frame', cursor=1",
+    ["BRAILLE LINE:  'Firefox application Firefox Nightly frame'",
+     "     VISIBLE:  'Firefox Nightly frame', cursor=1",
      "BRAILLE LINE:  'Goodbye cruel'",
      "     VISIBLE:  'Goodbye cruel', cursor=1",
-     "SPEECH OUTPUT: 'Nightly frame'",
+     "SPEECH OUTPUT: 'Firefox Nightly frame'",
      "SPEECH OUTPUT: 'Hello clickable'"]))
 
 sequence.append(utils.AssertionSummaryAction())

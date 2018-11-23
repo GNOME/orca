@@ -21,7 +21,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>a"))
 sequence.append(utils.AssertPresentationAction(
     "1. Select all'",
-    ["BRAILLE LINE:  'gtk3-demo application Hypertext frame Some text to show that simple hyper text can easily be realized  $l'",
+    ["BRAILLE LINE:  'gtk3-demo application Hypertext frame Some text to show that simple hyper text can easily be realized with  $l'",
      "     VISIBLE:  'Some text to show that simple hy', cursor=1",
      "SPEECH OUTPUT: 'entire document selected' voice=system"]))
 
@@ -33,6 +33,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' $l', cursor=1",
      "BRAILLE LINE:  'Selection deleted.'",
      "     VISIBLE:  'Selection deleted.', cursor=0",
+     "BRAILLE LINE:  'gtk3-demo application Hypertext frame  $l'",
+     "     VISIBLE:  'frame  $l', cursor=7",
      "SPEECH OUTPUT: 'Selection deleted.' voice=system"]))
 
 sequence.append(TypeAction("This is a test."))
@@ -123,14 +125,15 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' $l', cursor=1",
      "BRAILLE LINE:  'Cut selection to clipboard.'",
      "     VISIBLE:  'Cut selection to clipboard.', cursor=0",
+     "BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Cut selection to clipboard.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>x"))
 sequence.append(utils.AssertPresentationAction(
     "11. Cut with nothing selected",
-    ["BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1"]))
+    [""]))
 
 sequence.append(KeyComboAction("<Alt>F4"))
 sequence.append(utils.AssertionSummaryAction())

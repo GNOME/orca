@@ -26,7 +26,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• In a paragraph'",
      "     VISIBLE:  '• In a paragraph', cursor=1",
      "SPEECH OUTPUT: 'list item.'",
-     "SPEECH OUTPUT: '• In a paragraph.'"]))
+     "SPEECH OUTPUT: '• In a paragraph.'",
+     "SPEECH OUTPUT: '2 of 4.'"]))
 
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.StartRecordingAction())
@@ -36,7 +37,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• In a section'",
      "     VISIBLE:  '• In a section', cursor=1",
      "SPEECH OUTPUT: 'list item.'",
-     "SPEECH OUTPUT: '• In a section.'"]))
+     "SPEECH OUTPUT: '• In a section.'",
+     "SPEECH OUTPUT: '3 of 4.'"]))
 
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.StartRecordingAction())
@@ -47,6 +49,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '1. A nested list item, not in a ', cursor=1",
      "SPEECH OUTPUT: 'list item.'",
      "SPEECH OUTPUT: '1. A nested list item, not in a paragraph.'",
+     "SPEECH OUTPUT: '1 of 3.'",
      "SPEECH OUTPUT: 'Nesting level 1.'"]))
 
 sequence.append(KeyComboAction("Down"))
@@ -58,6 +61,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '2. A nested list item, in a para', cursor=1",
      "SPEECH OUTPUT: 'list item.'",
      "SPEECH OUTPUT: '2. A nested list item, in a paragraph.'",
+     "SPEECH OUTPUT: '2 of 3.'",
      "SPEECH OUTPUT: 'Nesting level 1.'"]))
 
 sequence.append(KeyComboAction("Down"))
@@ -69,6 +73,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '3. A nested list item, in a sect', cursor=1",
      "SPEECH OUTPUT: 'list item.'",
      "SPEECH OUTPUT: '3. A nested list item, in a section.'",
+     "SPEECH OUTPUT: '3 of 3.'",
      "SPEECH OUTPUT: 'Nesting level 1.'"]))
 
 sequence.append(KeyComboAction("Down"))
@@ -79,7 +84,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• In a paragraph that's in a section'",
      "     VISIBLE:  '• In a paragraph that's in a sec', cursor=1",
      "SPEECH OUTPUT: 'list item.'",
-     "SPEECH OUTPUT: '• In a paragraph that's in a section.'"]))
+     "SPEECH OUTPUT: '• In a paragraph that's in a section.'",
+     "SPEECH OUTPUT: '4 of 4.'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

@@ -15,8 +15,6 @@ sequence.append(utils.AssertPresentationAction(
     "1. Tab to a div with no roledescription",
     ["BRAILLE LINE:  'Focus me 1'",
      "     VISIBLE:  'Focus me 1', cursor=1",
-     "BRAILLE LINE:  'Focus me 1'",
-     "     VISIBLE:  'Focus me 1', cursor=1",
      "SPEECH OUTPUT: 'Focus me 1'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -24,8 +22,6 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "2. Tab to a div with only a roledescription",
     ["BRAILLE LINE:  'Focus me 2 kill switch'",
-     "     VISIBLE:  'Focus me 2 kill switch', cursor=1",
-     "BRAILLE LINE:  'Focus me 2 kill switch'",
      "     VISIBLE:  'Focus me 2 kill switch', cursor=1",
      "SPEECH OUTPUT: 'Focus me 2 kill switch'"]))
 
@@ -91,6 +87,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Second Quarter 2015 slide', cursor=1",
      "BRAILLE LINE:  'Second Quarter 2015 h1'",
      "     VISIBLE:  'Second Quarter 2015 h1', cursor=1",
+     "SPEECH OUTPUT: 'leaving region.'",
      "SPEECH OUTPUT: 'Second Quarter 2015 slide'",
      "SPEECH OUTPUT: 'Second Quarter 2015 heading level 1'"]))
 

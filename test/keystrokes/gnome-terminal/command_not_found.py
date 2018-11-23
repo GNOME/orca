@@ -13,10 +13,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Return after typing 'foo'",
     ["BRAILLE LINE:  ''",
      "     VISIBLE:  '', cursor=1",
-     "BRAILLE LINE:  '$ '",
-     "     VISIBLE:  '$ ', cursor=3",
-     "SPEECH OUTPUT: 'bash: foo: command not found...'",
-     "SPEECH OUTPUT: '$ '"]))
+     "SPEECH OUTPUT: 'bash: foo: command not found...'"]))
 
 sequence.append(utils.AssertionSummaryAction())
 sequence.start()

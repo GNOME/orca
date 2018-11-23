@@ -15,7 +15,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Launch Nano",
     ["BRAILLE LINE:  ''",
      "     VISIBLE:  '', cursor=1",
-     "SPEECH OUTPUT: '  nano [\\d\\.]+\\s+New Buffer\\s*",
+     "SPEECH OUTPUT: '  GNU nano [\d\.]+\s+New Buffer\s*",
      "",
      "'"]))
 
@@ -29,8 +29,7 @@ sequence.append(TypeAction("Done."))
 sequence.append(utils.AssertPresentationAction(
     "2.Typing text",
     ["KNOWN ISSUE: We should be able to do less braille updating here",
-     "BRAILLE LINE:  'D'",
-     "     VISIBLE:  'D', cursor=2",
+     "KNOWN ISSUE: We're speaking the initial D due to imperfect heuristics",
      "BRAILLE LINE:  'D'",
      "     VISIBLE:  'D', cursor=2",
      "BRAILLE LINE:  'Do'",
@@ -48,7 +47,8 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Done.'",
      "     VISIBLE:  'Done.', cursor=6",
      "BRAILLE LINE:  'Done.'",
-     "     VISIBLE:  'Done.', cursor=6"]))
+     "     VISIBLE:  'Done.', cursor=6",
+     "SPEECH OUTPUT: 'D'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))

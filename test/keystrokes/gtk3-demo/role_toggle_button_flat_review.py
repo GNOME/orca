@@ -121,7 +121,7 @@ sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "14. Review next word",
     ["BRAILLE LINE:  'Here are some more details but not the full story. $l'",
-     "     VISIBLE:  'Here are some more details but n', cursor=32",
+     "     VISIBLE:  'not the full story. $l', cursor=1",
      "SPEECH OUTPUT: 'not '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -129,7 +129,7 @@ sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "15. Review next word",
     ["BRAILLE LINE:  'Here are some more details but not the full story. $l'",
-     "     VISIBLE:  'ot the full story. $l', cursor=4",
+     "     VISIBLE:  'not the full story. $l', cursor=5",
      "SPEECH OUTPUT: 'the '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -137,7 +137,7 @@ sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "16. Review next word",
     ["BRAILLE LINE:  'Here are some more details but not the full story. $l'",
-     "     VISIBLE:  'ot the full story. $l', cursor=8",
+     "     VISIBLE:  'not the full story. $l', cursor=9",
      "SPEECH OUTPUT: 'full '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -145,7 +145,7 @@ sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "17. Review next word",
     ["BRAILLE LINE:  'Here are some more details but not the full story. $l'",
-     "     VISIBLE:  'ot the full story. $l', cursor=13",
+     "     VISIBLE:  'not the full story. $l', cursor=14",
      "SPEECH OUTPUT: 'story.'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -153,12 +153,12 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "18. Tab to change focus",
     ["KNOWN ISSUE: This is not on screen. But we don't control focus.",
-     "BRAILLE LINE:  'already ! $l rdonly'",
-     "     VISIBLE:  'already ! $l rdonly', cursor=10",
-     "BRAILLE LINE:  'already ! $l rdonly'",
-     "     VISIBLE:  'already ! $l rdonly', cursor=10",
+     "BRAILLE LINE:  'the window. Do it already ! $l rdonly'",
+     "     VISIBLE:  'the window. Do it already ! $l r', cursor=28",
+     "BRAILLE LINE:  'the window. Do it already ! $l rdonly'",
+     "     VISIBLE:  'the window. Do it already ! $l r', cursor=28",
      "SPEECH OUTPUT: 'read only text.'",
-     "SPEECH OUTPUT: 'already !'"]))
+     "SPEECH OUTPUT: 'the window. Do it already !'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))

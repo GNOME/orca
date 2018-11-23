@@ -26,7 +26,9 @@ sequence.append(utils.AssertPresentationAction(
     "2. Toggle button state changed to expanded",
     ["BRAILLE LINE:  'gtk3-demo application Error alert &=y Details: expanded toggle button'",
      "     VISIBLE:  '&=y Details: expanded toggle but', cursor=1",
-     "SPEECH OUTPUT: 'expanded'"]))
+     "SPEECH OUTPUT: 'expanded'",
+     "SPEECH OUTPUT: 'Finally, the full story with all details. And all the inside information, including error codes, etc etc. Pages of information, you might have to scroll down to read it all, or even resize the window - it works !",
+     "A second paragraph will contain even more innuendo, just to make you scroll down or resize the window. Do it already !' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
