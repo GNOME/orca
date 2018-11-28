@@ -41,6 +41,9 @@ class OrcaNavListGUI:
         self._gui = self._createNavListDialog(columnHeaders, rows, selectedRow)
         self._gui.set_title(title)
         self._gui.set_modal(True)
+        self._gui.set_keep_above(True)
+        self._gui.set_focus_on_map(True)
+        self._gui.set_accept_focus(True)
         self._script = orca_state.activeScript
         self._document = None
         self.showGUI()
