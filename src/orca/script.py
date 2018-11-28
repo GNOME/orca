@@ -398,6 +398,11 @@ class Script:
         except:
             msg = 'ERROR: Exception getting keyval_name for id: %d' % keyboardEvent.id
             debug.println(debug.LEVEL_INFO, msg, True)
+        else:
+            if keyboardEvent.event_string == '':
+                msg = 'INFO: Setting event_string to: %s' % keyboardEvent.keyval_name
+                debug.println(debug.LEVEL_INFO, msg, True)
+                keyboardEvent.event_string = keyboardEvent.keyval_name
 
     def consumesKeyboardEvent(self, keyboardEvent):
         """Called when a key is pressed on the keyboard.
