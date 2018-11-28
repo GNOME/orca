@@ -2267,6 +2267,16 @@ class Utilities:
 
         return rv
 
+    def getBoundingBox(self, obj):
+        try:
+            extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+        except:
+            msg = "ERROR: Exception getting extents of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return -1, -1, 0, 0
+
+        return extents.x, extents.y, extents.width, extents.height
+
     def hasNoSize(self, obj):
         if not obj:
             return False

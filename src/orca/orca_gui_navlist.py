@@ -109,6 +109,10 @@ class OrcaNavListGUI:
 
     def showGUI(self):
         self._document = self._script.utilities.documentFrame()
+        x, y, width, height = self._script.utilities.getBoundingBox(self._document)
+        if (width and height):
+            self._gui.move(x + 100, y + 100)
+
         self._gui.show_all()
         ts = orca_state.lastInputEvent.timestamp
         if ts == 0:
