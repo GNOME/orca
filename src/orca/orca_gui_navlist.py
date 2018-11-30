@@ -46,7 +46,6 @@ class OrcaNavListGUI:
         self._gui.set_accept_focus(True)
         self._script = orca_state.activeScript
         self._document = None
-        self.showGUI()
 
     def _createNavListDialog(self, columnHeaders, rows, selectedRow):
         dialog = Gtk.Dialog()
