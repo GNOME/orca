@@ -150,26 +150,38 @@ class OrcaNavListGUI:
     def _onActivateClicked(self, widget):
         obj, offset = self._getSelectedAccessibleAndOffset()
         self._gui.destroy()
+        if not obj:
+            return
+
         self._script.utilities.setCaretPosition(obj, offset)
         try:
             action = obj.queryAction()
+        except NotImplementedError:
+            msg = "ERROR: Action interface not implemented for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
         except:
-            debug.println(
-                debug.LEVEL_FINE, 'Could not perform action on %s' % obj)
+            msg = "ERROR: Exception getting action interface for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
         else:
             action.doAction(0)
 
     def _getSelectedAccessibleAndOffset(self):
         if not self._tree:
-            return None
+            msg = "ERROR: Could not get navlist tree"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None, -1
 
         selection = self._tree.get_selection()
         if not selection:
-            return None
+            msg = "ERROR: Could not get selection for navlist tree"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None, -1
 
         model, paths = selection.get_selected_rows()
         if not paths:
-            return None
+            msg = "ERROR: Could not get paths for navlist tree"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None, -1
 
         obj = model.get_value(model.get_iter(paths[0]), 0)
         offset = model.get_value(model.get_iter(paths[0]), 1)
