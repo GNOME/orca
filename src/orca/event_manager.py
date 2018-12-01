@@ -190,6 +190,7 @@ class EventManager:
             if role not in [pyatspi.ROLE_ALERT,
                             pyatspi.ROLE_ANIMATION,
                             pyatspi.ROLE_INFO_BAR,
+                            pyatspi.ROLE_MENU,
                             pyatspi.ROLE_NOTIFICATION,
                             pyatspi.ROLE_PANEL,
                             pyatspi.ROLE_STATUS_BAR,

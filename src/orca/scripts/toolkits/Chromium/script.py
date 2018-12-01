@@ -36,6 +36,7 @@ import time
 
 from orca import debug
 from orca import orca
+from orca import orca_state
 from orca.scripts import default
 from orca.scripts import web
 from .braille_generator import BrailleGenerator
@@ -304,6 +305,13 @@ class Script(web.Script):
 
     def onShowingChanged(self, event):
         """Callback for object:state-changed:showing accessibility events."""
+
+        if event.detail1 and self.utilities.isMenuWithNoSelectedChild(event.source):
+            topLevel = self.utilities.topLevelObject(event.source)
+            if self.utilities.canBeActiveWindow(topLevel):
+                orca_state.activeWindow = topLevel
+                orca.setLocusOfFocus(event, event.source)
+            return
 
         if super().onShowingChanged(event):
             return

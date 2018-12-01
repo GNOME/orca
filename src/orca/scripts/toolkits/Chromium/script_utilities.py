@@ -103,6 +103,39 @@ class Utilities(web.Utilities):
 
         return True
 
+    def selectedChildCount(self, obj):
+        count = super().selectedChildCount(obj)
+        if count or "Selection" in pyatspi.listInterfaces(obj):
+            return count
+
+        # HACK: Ideally, we'd use the selection interface to get the selected
+        # children and then only present this menu if there isn't a selected
+        # child. But that interface is not implemented yet. This hackaround
+        # is extremely non-performant.
+        for child in obj:
+            if child.getState().contains(pyatspi.STATE_SELECTED):
+                count += 1
+
+        msg = "CHROMIUM: NO SELECTION INTERFACE HACK: Selected children: %i" % count
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return count
+
+    def isMenuWithNoSelectedChild(self, obj):
+        if not obj:
+            return False
+
+        try:
+            role = obj.getRole()
+        except:
+            msg = "CHROMIUM: Exception getting role for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role != pyatspi.ROLE_MENU:
+            return False
+
+        return not self.selectedChildCount(obj)
+
     def _isFrameContainerForBrowserUIPopUp(self, frame):
         if not frame or self.isDead(frame):
             return False
@@ -149,7 +182,7 @@ class Utilities(web.Utilities):
             role = obj.getRole()
             state = obj.getState()
         except:
-            msg = "ERROR: Exception getting role and state for %s" % obj
+            msg = "CHROMIUM: Exception getting role and state for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
