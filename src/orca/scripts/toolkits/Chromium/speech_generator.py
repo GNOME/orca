@@ -43,6 +43,17 @@ class SpeechGenerator(web.SpeechGenerator):
     def __init__(self, script):
         super().__init__(script)
 
+    def _generateNewAncestors(self, obj, **args):
+        # Likely a refocused submenu whose functional child was just collapsed.
+        # The new ancestors might technically be new, but they are not as far
+        # as the user is concerned.
+        if self._script.utilities.treatAsMenu(obj):
+            msg = "CHROMIUM: Not generating new ancestors for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
+        return super()._generateAncestors(obj, **args)
+
     def generateSpeech(self, obj, **args):
         if self._script.utilities.inDocumentContent(obj):
             return super().generateSpeech(obj, **args)

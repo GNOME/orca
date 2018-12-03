@@ -310,7 +310,8 @@ class Script(web.Script):
             topLevel = self.utilities.topLevelObject(event.source)
             if self.utilities.canBeActiveWindow(topLevel):
                 orca_state.activeWindow = topLevel
-                orca.setLocusOfFocus(event, event.source)
+                notify = not self.utilities.isPopupMenuForCurrentItem(event.source)
+                orca.setLocusOfFocus(event, event.source, notify)
             return
 
         if super().onShowingChanged(event):
@@ -354,6 +355,24 @@ class Script(web.Script):
         """Callback for window:activate accessibility events."""
 
         if not self.utilities.canBeActiveWindow(event.source):
+            return
+
+        if not event.source.name:
+            orca_state.activeWindow = event.source
+
+        # If this is a frame for a popup menu, we don't want to treat
+        # it like a proper window:activate event because it's not as
+        # far as the end-user experience is concerned.
+        activeItem = self.utilities.popupMenuForFrame(event.source)
+        if activeItem:
+            selected = self.utilities.selectedChildren(activeItem)
+            if len(selected) == 1:
+                activeItem = selected[0]
+
+            msg = "CHROMIUM: Setting locusOfFocus to %s" % activeItem
+            orca_state.activeWindow = event.source
+            orca.setLocusOfFocus(event, activeItem)
+            debug.println(debug.LEVEL_INFO, msg, True)
             return
 
         if super().onWindowActivated(event):

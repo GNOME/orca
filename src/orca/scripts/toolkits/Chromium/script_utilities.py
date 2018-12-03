@@ -109,8 +109,7 @@ class Utilities(web.Utilities):
             return count
 
         # HACK: Ideally, we'd use the selection interface to get the selected
-        # children and then only present this menu if there isn't a selected
-        # child. But that interface is not implemented yet. This hackaround
+        # child count. But that interface is not implemented yet. This hackaround
         # is extremely non-performant.
         for child in obj:
             if child.getState().contains(pyatspi.STATE_SELECTED):
@@ -119,6 +118,20 @@ class Utilities(web.Utilities):
         msg = "CHROMIUM: NO SELECTION INTERFACE HACK: Selected children: %i" % count
         debug.println(debug.LEVEL_INFO, msg, True)
         return count
+
+    def selectedChildren(self, obj):
+        result = super().selectedChildren(obj)
+        if result or "Selection" in pyatspi.listInterfaces(obj):
+            return result
+
+        # HACK: Ideally, we'd use the selection interface to get the selected
+        # children. But that interface is not implemented yet. This hackaround
+        # is extremely non-performant.
+        for child in obj:
+            if child.getState().contains(pyatspi.STATE_SELECTED):
+                result.append(child)
+
+        return result
 
     def isMenuWithNoSelectedChild(self, obj):
         if not obj:
@@ -193,6 +206,55 @@ class Utilities(web.Utilities):
             return state.contains(pyatspi.STATE_HAS_POPUP)
 
         return False
+
+    def isPopupMenuForCurrentItem(self, obj):
+        # When a submenu is closed, it has role menu item. But when that submenu
+        # is opened/expanded, a menu with that same name appears. It would be
+        # nice if there were a connection (parent/child or an accessible relation)
+        # between the two....
+        if not self.treatAsMenu(orca_state.locusOfFocus):
+            return False
+
+        if obj.name and obj.name == orca_state.locusOfFocus.name:
+            return obj.getRole() == pyatspi.ROLE_MENU
+
+        return False
+
+    def isFrameForPopupMenu(self, obj):
+        try:
+            name = obj.name
+            role = obj.getRole()
+            childCount = obj.childCount
+        except:
+            msg = "CHROMIUM: Exception getting properties of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        # The ancestry of a popup menu appears to be a menu bar (even though
+        # one is not actually showing) contained in a nameless frame. It would
+        # be nice if these things were pruned from the accessibility tree....
+        if name or role != pyatspi.ROLE_FRAME or childCount != 1:
+            return False
+
+        if obj[0].getRole() == pyatspi.ROLE_MENU_BAR:
+            return True
+
+        return False
+
+    def popupMenuForFrame(self, obj):
+        if not self.isFrameForPopupMenu(obj):
+            return None
+
+        try:
+            menu = pyatspi.findDescendant(obj, lambda x: x and x.getRole() == pyatspi.ROLE_MENU)
+        except:
+            msg = "CHROMIUM: Exception finding descendant of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        msg = "CHROMIUM: HACK: Popup menu for %s: %s" % (obj, menu)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return menu
 
     def grabFocusWhenSettingCaret(self, obj):
         # HACK: Remove this when setting the caret updates focus.
