@@ -151,9 +151,9 @@ class Parser(argparse.ArgumentParser):
         return opts, invalid
 
 def setProcessName(name):
-    """Attempts to set the process name to 'orca'."""
+    """Attempts to set the process name to the specified name."""
 
-    sys.argv[0] = 'orca'
+    sys.argv[0] = name
 
     # Disabling the import error of setproctitle.
     # pylint: disable-msg=F0401
