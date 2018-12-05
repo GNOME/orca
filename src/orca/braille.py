@@ -1216,8 +1216,10 @@ def refresh(panToCursor=True,
     substring = string[startPos:endPos]
     if attributeMask:
         submask = attributeMask[startPos:endPos]
-    else:
-        submask = '\x00' * (endPos - startPos)
+    else
+        submask = ""
+
+    submask += '\x00' * (len(substring) - len(submask))
     if not _brlAPIRunning:
         init(_callback, settings.tty)
     if _brlAPIRunning:
