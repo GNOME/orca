@@ -1216,7 +1216,7 @@ def refresh(panToCursor=True,
     substring = string[startPos:endPos]
     if attributeMask:
         submask = attributeMask[startPos:endPos]
-    else
+    else:
         submask = ""
 
     submask += '\x00' * (len(substring) - len(submask))
