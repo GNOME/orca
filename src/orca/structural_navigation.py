@@ -1478,8 +1478,8 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        role = [pyatspi.ROLE_PUSH_BUTTON]
-        state = [pyatspi.STATE_FOCUSABLE, pyatspi.STATE_SENSITIVE]
+        role = [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_TOGGLE_BUTTON]
+        state = [pyatspi.STATE_SENSITIVE]
         stateMatch = collection.MATCH_ALL
         return MatchCriteria(collection,
                              states=state,
@@ -1497,10 +1497,9 @@ class StructuralNavigation:
         """
 
         isMatch = False
-        if obj and obj.getRole() == pyatspi.ROLE_PUSH_BUTTON:
+        if obj and obj.getRole() in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_TOGGLE_BUTTON]:
             state = obj.getState()
-            isMatch = state.contains(pyatspi.STATE_FOCUSABLE) \
-                  and state.contains(pyatspi.STATE_SENSITIVE)
+            isMatch = state.contains(pyatspi.STATE_SENSITIVE)
 
         return isMatch
 
