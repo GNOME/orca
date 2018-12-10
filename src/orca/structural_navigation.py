@@ -585,7 +585,6 @@ class StructuralNavigation:
                   pyatspi.ROLE_RADIO_BUTTON,
                   pyatspi.ROLE_COMBO_BOX,
                   pyatspi.ROLE_DOCUMENT_FRAME, # rich text editing
-                  pyatspi.ROLE_LIST,
                   pyatspi.ROLE_LIST_BOX,
                   pyatspi.ROLE_ENTRY,
                   pyatspi.ROLE_PASSWORD_TEXT,
@@ -1562,7 +1561,7 @@ class StructuralNavigation:
         """
 
         role = [pyatspi.ROLE_CHECK_BOX]
-        state = [pyatspi.STATE_FOCUSABLE, pyatspi.STATE_SENSITIVE]
+        state = [pyatspi.STATE_SENSITIVE]
         stateMatch = collection.MATCH_ALL
         return MatchCriteria(collection,
                              states=state,
@@ -1582,8 +1581,7 @@ class StructuralNavigation:
         isMatch = False
         if obj and obj.getRole() == pyatspi.ROLE_CHECK_BOX:
             state = obj.getState()
-            isMatch = state.contains(pyatspi.STATE_FOCUSABLE) \
-                  and state.contains(pyatspi.STATE_SENSITIVE)
+            isMatch = state.contains(pyatspi.STATE_SENSITIVE)
 
         return isMatch
 
@@ -1744,7 +1742,7 @@ class StructuralNavigation:
         """
 
         role = [pyatspi.ROLE_COMBO_BOX]
-        state = [pyatspi.STATE_FOCUSABLE, pyatspi.STATE_SENSITIVE]
+        state = [pyatspi.STATE_SENSITIVE]
         stateMatch = collection.MATCH_ALL
         return MatchCriteria(collection,
                              states=state,
@@ -1764,8 +1762,7 @@ class StructuralNavigation:
         isMatch = False
         if obj and obj.getRole() == pyatspi.ROLE_COMBO_BOX:
             state = obj.getState()
-            isMatch = state.contains(pyatspi.STATE_FOCUSABLE) \
-                  and state.contains(pyatspi.STATE_SENSITIVE)
+            isMatch = state.contains(pyatspi.STATE_SENSITIVE)
 
         return isMatch
 
@@ -1828,9 +1825,7 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        state = [pyatspi.STATE_FOCUSABLE,
-                 pyatspi.STATE_SENSITIVE,
-                 pyatspi.STATE_EDITABLE]
+        state = [pyatspi.STATE_SENSITIVE]
         stateMatch = collection.MATCH_ALL
         return MatchCriteria(collection,
                              states=state,
@@ -1850,7 +1845,7 @@ class StructuralNavigation:
         if not obj and obj.parent:
             return False
 
-        return not obj.parent.getState().contains(pyatspi.STATE_EDITABLE)
+        return state.contains(pyatspi.STATE_SENSITIVE)
 
     def _entryPresentation(self, obj, arg=None):
         """Presents the entry or indicates that one was not found.
@@ -1915,7 +1910,7 @@ class StructuralNavigation:
 
         role = self.FORM_ROLES
         roleMatch = collection.MATCH_ANY
-        state = [pyatspi.STATE_FOCUSABLE, pyatspi.STATE_SENSITIVE]
+        state = [pyatspi.STATE_SENSITIVE]
         stateMatch = collection.MATCH_ALL
         return MatchCriteria(collection,
                              states=state,
@@ -1942,8 +1937,7 @@ class StructuralNavigation:
             return False
 
         state = obj.getState()
-        isMatch = state.contains(pyatspi.STATE_FOCUSABLE) \
-                  and state.contains(pyatspi.STATE_SENSITIVE)
+        isMatch = state.contains(pyatspi.STATE_SENSITIVE)
 
         if role == pyatspi.ROLE_DOCUMENT_FRAME:
             isMatch = isMatch and state.contains(pyatspi.STATE_EDITABLE)
@@ -2638,7 +2632,7 @@ class StructuralNavigation:
         """
 
         role = [pyatspi.ROLE_RADIO_BUTTON]
-        state = [pyatspi.STATE_FOCUSABLE, pyatspi.STATE_SENSITIVE]
+        state = [pyatspi.STATE_SENSITIVE]
         stateMatch = collection.MATCH_ALL
         return MatchCriteria(collection,
                              states=state,
@@ -2658,8 +2652,7 @@ class StructuralNavigation:
         isMatch = False
         if obj and obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
             state = obj.getState()
-            isMatch = state.contains(pyatspi.STATE_FOCUSABLE) \
-                  and state.contains(pyatspi.STATE_SENSITIVE)
+            isMatch = state.contains(pyatspi.STATE_SENSITIVE)
 
         return isMatch
 
