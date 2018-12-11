@@ -1825,7 +1825,8 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        state = [pyatspi.STATE_SENSITIVE]
+        state = [pyatspi.STATE_SENSITIVE,
+                 pyatspi.STATE_EDITABLE]
         stateMatch = collection.MATCH_ALL
         return MatchCriteria(collection,
                              states=state,
@@ -1845,7 +1846,7 @@ class StructuralNavigation:
         if not obj and obj.parent:
             return False
 
-        return state.contains(pyatspi.STATE_SENSITIVE)
+        return not obj.parent.getState().contains(pyatspi.STATE_EDITABLE)
 
     def _entryPresentation(self, obj, arg=None):
         """Presents the entry or indicates that one was not found.
