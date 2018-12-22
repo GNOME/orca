@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2018-09-04 11:59+0000\n"
-"PO-Revision-Date: 2018-09-04 22:36+0200\n"
+"POT-Creation-Date: 2018-10-30 15:50+0000\n"
+"PO-Revision-Date: 2018-12-23 00:44+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -1617,6 +1617,45 @@ msgid ""
 msgstr ""
 "Aktivera ”klistrigt” bläddringsläge: <keyseq><key>Orca-modifierare</"
 "key><key>A</key></keyseq> (trippelklickat)"
+
+#. (itstool) path: section/title
+#: C/commands_reading.page:273
+msgid "Toggling Layout Mode"
+msgstr "Växla layoutläge"
+
+#. (itstool) path: section/p
+#: C/commands_reading.page:274
+msgid ""
+"When Layout mode is enabled, <app>Orca</app>'s caret navigation will respect "
+"the on-screen layout of the content and present the full line, including any "
+"links or form fields on that line. When Layout mode is disabled, <app>Orca</"
+"app> will treat objects such as links and form fields as if they were on "
+"separate lines, both for presentation and navigation."
+msgstr ""
+"När layoutläge är aktiverat kommer <app>Orca</app>s markörnavigering "
+"respektera innehållets layout på skärmen och presentera hela raden, "
+"inkluderande alla länkar och formulärfält på den raden. När layoutläge är "
+"inaktiverat kommer <app>Orca</app> behandla objekt som exempelvis länkar och "
+"formulärfält som om de var på separata rader, både för presentation och "
+"navigering."
+
+#. (itstool) path: section/p
+#: C/commands_reading.page:281
+msgid ""
+"<app>Orca</app> provides a command to switch between Layout mode and Object "
+"mode. This command is unbound by default. Please see <link xref="
+"\"howto_key_bindings\">Modifying Keybindings</link> for information on how "
+"to bind unbound commands."
+msgstr ""
+"<app>Orca</app> tillhandahåller ett kommando för att växla mellan layoutläge "
+"och objektläge. Detta kommando är obundet som standard. Se <link xref="
+"\"howto_key_bindings\">Ändra tangentbindningar</link> för information om hur "
+"du kan binda obundna kommandon."
+
+#. (itstool) path: item/p
+#: C/commands_reading.page:288
+msgid "Switch between Layout mode and Object mode: (Unbound)"
+msgstr "Växla mellan layoutläge och objektläge: (Inte bunden)"
 
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
