@@ -1694,6 +1694,15 @@ def init(callback=None, tty=7):
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Could not initialize BrlTTY:")
         debug.printException(debug.LEVEL_CONFIGURATION)
+        try:
+            _brlAPI.leaveTtyMode()
+        except:
+            pass
+        try:
+            _brlAPI.closeConnection()
+        except:
+            pass
+        _brlAPI = None
         _brlAPIRunning = False
         return False
 
