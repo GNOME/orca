@@ -775,6 +775,7 @@ class SpeechGenerator(generator.Generator):
         if not self._script.utilities.cellRowChanged(obj):
             return []
 
+        args['newOnly'] = True
         return self._generateRowHeader(obj, **args)
 
     def _generateNewColumnHeader(self, obj, **args):
@@ -794,6 +795,7 @@ class SpeechGenerator(generator.Generator):
         if args.get('readingRow'):
             return []
 
+        args['newOnly'] = True
         return self._generateColumnHeader(obj, **args)
 
     def _generateRealTableCell(self, obj, **args):
