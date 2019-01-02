@@ -1683,6 +1683,16 @@ def init(callback=None, tty=7):
                 debug.println(
                     debug.LEVEL_CONFIGURATION,
                     "Braille module has been initialized using tty=%d" % tty)
+
+        # [[[TODO: WDW - For some reason, BrlTTY wants to say the height of the
+        # Vario is 40 so we hardcode it to 1 for now.]]]
+        #
+        #_displaySize = (brl.getDisplayWidth(), brl.getDisplayHeight())
+        (x, y) = _brlAPI.displaySize
+        if x == 0:
+            # Braille device not plugged yet
+            raise Exception
+
         _brlAPISourceId = GLib.io_add_watch(_brlAPI.fileDescriptor,
                                             GLib.PRIORITY_DEFAULT,
                                             GLib.IO_IN,
@@ -1706,11 +1716,6 @@ def init(callback=None, tty=7):
         _brlAPIRunning = False
         return False
 
-    # [[[TODO: WDW - For some reason, BrlTTY wants to say the height of the
-    # Vario is 40 so we hardcode it to 1 for now.]]]
-    #
-    #_displaySize = (brl.getDisplayWidth(), brl.getDisplayHeight())
-    (x, y) = _brlAPI.displaySize
     _displaySize = [x, 1]
 
     # The monitor will be created in refresh if needed.
