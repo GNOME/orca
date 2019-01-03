@@ -1184,8 +1184,12 @@ class Utilities(script_utilities.Utilities):
         # Check for things in the same sentence before this object.
         firstObj, firstStart, firstEnd, firstString = objects[0]
         while firstObj and firstString:
-            if firstStart == 0 and self.isTextBlockElement(firstObj):
-                break
+            if self.isTextBlockElement(firstObj):
+                if firstStart == 0:
+                    break
+            elif self.isTextBlockElement(firstObj.parent):
+                if self.characterOffsetInParent(firstObj) == 0:
+                    break
 
             prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
             onLeft = self._getContentsForObj(prevObj, pOffset, boundary)
