@@ -65,6 +65,7 @@ class Utilities(script_utilities.Utilities):
         self._isLayoutOnly = {}
         self._isDPub = {}
         self._isMath = {}
+        self._isFocusableWithMathChild = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
         self._hasExplicitName = {}
@@ -131,6 +132,7 @@ class Utilities(script_utilities.Utilities):
         self._isLayoutOnly = {}
         self._isDPub = {}
         self._isMath = {}
+        self._isFocusableWithMathChild = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
         self._hasExplicitName = {}
@@ -1715,6 +1717,44 @@ class Utilities(script_utilities.Utilities):
             return super().unrelatedLabels(root, onlyShowing, minimumWords)
 
         return []
+
+    def isFocusableWithMathChild(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isFocusableWithMathChild.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            state = obj.getState()
+        except:
+            msg = "WEB: Exception getting state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        rv = False
+        if state.contains(pyatspi.STATE_FOCUSABLE) and not self.isDocument(obj):
+            for child in obj:
+                if self.isMathTopLevel(child):
+                    rv = True
+                    break
+
+        self._isFocusableWithMathChild[hash(obj)] = rv
+        return rv
+
+    def isFocusedWithMathChild(self, obj):
+        if not self.isFocusableWithMathChild(obj):
+            return False
+
+        try:
+            state = obj.getState()
+        except:
+            msg = "WEB: Exception getting state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return state.contains(pyatspi.STATE_FOCUSED)
 
     def isTextBlockElement(self, obj):
         if not (obj and self.inDocumentContent(obj)):

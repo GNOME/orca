@@ -1191,6 +1191,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
             utterances = self.speechGenerator.generateContents(contents)
+        elif self.utilities.isFocusedWithMathChild(newFocus):
+            msg = "WEB: New focus %s has math child. Generating line contents." % newFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
+            contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
+            utterances = self.speechGenerator.generateContents(contents)
         elif newFocus.getRole() == pyatspi.ROLE_HEADING:
             msg = "WEB: New focus %s is heading. Generating object contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
