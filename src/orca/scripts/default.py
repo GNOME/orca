@@ -2154,6 +2154,11 @@ class Script(script.Script):
                     debug.println(debug.LEVEL_INFO, msg, True)
                     return
 
+                if not self.utilities.eventIsUserTriggered(event):
+                    msg = "DEFAULT: Not clearing state. Event is not user triggered."
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    return
+
                 msg = "DEFAULT: Event is for active window. Clearing state."
                 debug.println(debug.LEVEL_INFO, msg, True)
                 orca_state.activeWindow = None
@@ -2872,6 +2877,11 @@ class Script(script.Script):
         # an event from the current activeWindow.
         #
         if event.source == orca_state.activeWindow:
+            if not self.utilities.eventIsUserTriggered(event):
+                msg = "DEFAULT: Not clearing state. Event is not user triggered."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return
+
             orca.setLocusOfFocus(event, None)
             orca_state.activeWindow = None
             orca_state.activeScript = None

@@ -5072,6 +5072,20 @@ class Utilities:
 
         return False
 
+    def eventIsUserTriggered(self, event):
+        if not orca_state.lastInputEvent:
+            msg = "INFO: Not user triggered: No last input event."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        delta = time.time() - orca_state.lastInputEvent.time
+        if delta > 1:
+            msg = "INFO: Not user triggered: Last input event %.2fs ago." % delta
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return True
+
     def presentFocusChangeReason(self):
         if self.handleUndoLocusOfFocusChange():
             return True
