@@ -516,6 +516,11 @@ class Script(script.Script):
                 Script.bypassNextCommand,
                 cmdnames.BYPASS_NEXT_COMMAND)
 
+        self.inputEventHandlers["presentSizeAndPositionHandler"] = \
+            input_event.InputEventHandler(
+                Script.presentSizeAndPosition,
+                cmdnames.PRESENT_SIZE_AND_POSITION)
+
         self.inputEventHandlers.update(notification_messages.inputEventHandlers)
 
     def getInputEventHandlerKey(self, inputEventHandler):
@@ -4310,4 +4315,24 @@ class Script(script.Script):
         dateFormat = _settingsManager.getSetting('presentDateFormat')
         message = time.strftime(dateFormat, time.localtime())
         self.presentMessage(message)
+        return True
+
+    def presentSizeAndPosition(self, inputEvent):
+        """ Presents the size and position of the locusOfFocus. """
+
+        if self.flatReviewContext:
+            obj = self.flatReviewContext.getCurrentAccessible()
+        else:
+            obj = orca_state.locusOfFocus
+
+        x, y, width, height = self.utilities.getBoundingBox(obj)
+        if (x, y, width, height) == (-1, -1, 0, 0):
+            full = messages.LOCATION_NOT_FOUND_FULL
+            brief = messages.LOCATION_NOT_FOUND_BRIEF
+            self.presentMessage(full, brief)
+            return True
+
+        full = messages.SIZE_AND_POSITION_FULL % (width, height, x, y)
+        brief = messages.SIZE_AND_POSITION_BRIEF % (width, height, x, y)
+        self.presentMessage(full, brief)
         return True

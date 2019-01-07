@@ -531,6 +531,11 @@ PRESENT_CURRENT_TIME = _("Present current time.")
 # braille.
 PRESENT_CURRENT_DATE = _("Present current date.")
 
+# Translators: Orca has a command to present the pixel size and location of
+# the current object. This string is how this command is described in the list
+# of keyboard shortcuts.
+PRESENT_SIZE_AND_POSITION = _("Present size and location of current object.")
+
 # Translators: Orca normally intercepts all keyboard commands and only passes
 # them along to the current application when they are not Orca commands. This
 # command causes the next command issued to be passed along to the current

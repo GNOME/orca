@@ -55,7 +55,7 @@
   </list>
   <p>
     In addition to the dedicated Where Am I commands, <app>Orca</app> has
-    two additional commands related to obtaining your present location:
+    additional commands related to obtaining information about your present location:
   </p>
   <list>
     <item>
@@ -87,6 +87,9 @@
             Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq>
             (double-clicked)
           </p>
+        </item>
+        <item>
+          <p>Present size and location of current object in pixels: (Unbound)</p>
         </item>
       </list>
     </item>

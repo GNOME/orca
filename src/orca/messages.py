@@ -2060,6 +2060,18 @@ SELECTION_DELETED = _("Selection deleted.")
 # which was just inserted.
 SELECTION_RESTORED = _("Selection restored.")
 
+# Translators: Orca has a command which presents the size and position of the
+# current object in pixels. This string refers to the brief/non-verbose output
+# presented in response to the command. The string substitutions are all for
+# quantities (in pixels).
+SIZE_AND_POSITION_BRIEF = _("Size: %d, %d. Location: %d, %d.")
+
+# Translators: Orca has a command which presents the size and position of the
+# current object in pixels. This string refers to the full/verbose output
+# presented in response to the command. The string substitutions are all for
+# quantities (in pixels).
+SIZE_AND_POSITION_FULL = _("Width: %d. Height: %d. %d from left. %d from top.")
+
 # Translators: This message is presented to the user when speech synthesis
 # has been temporarily turned off.
 SPEECH_DISABLED = _("Speech disabled.")

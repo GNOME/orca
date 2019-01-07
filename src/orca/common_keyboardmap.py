@@ -199,4 +199,7 @@ keymap = (
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
     "whereAmILinkHandler"),
+
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
+    "presentSizeAndPositionHandler"),
 )
