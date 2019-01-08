@@ -137,6 +137,13 @@ class Script(web.Script):
             msg = "CHROMIUM: NO INITIAL FOCUS HACK. Focused object: %s - %.4fs" % \
                 (focusedObject, time.time()-startTime)
             debug.println(debug.LEVEL_INFO, msg, True)
+
+            if self.utilities.isDocument(focusedObject) \
+               and not self.utilities.documentFrameURI(focusedObject):
+                msg = "CHROMIUM: Ignoring focused object (document with no URI)."
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return
+
             if focusedObject:
                 orca.setLocusOfFocus(event, focusedObject)
 
@@ -260,6 +267,12 @@ class Script(web.Script):
 
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
+
+        if self.utilities.isDocument(event.source) \
+           and not self.utilities.documentFrameURI(event.source):
+            msg = "CHROMIUM: Ignoring event from document with no URI."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
 
         if super().onFocusedChanged(event):
             return
