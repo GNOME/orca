@@ -367,6 +367,13 @@ class Script(web.Script):
 
         if not event.source.name:
             orca_state.activeWindow = event.source
+        else:
+            oldName = event.source.name
+            event.source.clearCache()
+            newName = event.source.name
+            if oldName != newName:
+                msg = "CHROMIUM: NO NAME CHANGE HACK: (name should be: '%s')" % newName
+                debug.println(debug.LEVEL_INFO, msg, True)
 
         # If this is a frame for a popup menu, we don't want to treat
         # it like a proper window:activate event because it's not as
