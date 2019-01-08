@@ -11,14 +11,14 @@
 # 
 # Miguel Rodríguez Núñez <bokerones.fritos@gmail.com>, 2015.
 # 
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010-2018, 2018.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010-2018, 2018, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orcaorca/issues\n"
-"POT-Creation-Date: 2018-10-30 15:48+0000\n"
-"PO-Revision-Date: 2018-12-04 16:03+0100\n"
+"POT-Creation-Date: 2019-01-07 20:31+0000\n"
+"PO-Revision-Date: 2019-01-08 16:01+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -2406,18 +2406,26 @@ msgstr "Presentar la hora actual."
 msgid "Present current date."
 msgstr "Presentar la fecha actual."
 
+#. Translators: Orca has a command to present the pixel size and location of
+#. the current object. This string is how this command is described in the list
+#. of keyboard shortcuts.
+#: ../src/orca/cmdnames.py:537
+#| msgid "Reports information on current script."
+msgid "Present size and location of current object."
+msgstr "Informar acerca del tamaño y la ubicación del objeto actual."
+
 #. Translators: Orca normally intercepts all keyboard commands and only passes
 #. them along to the current application when they are not Orca commands. This
 #. command causes the next command issued to be passed along to the current
 #. application, bypassing Orca's interception of it.
-#: ../src/orca/cmdnames.py:539
+#: ../src/orca/cmdnames.py:544
 msgid "Passes the next command on to the current application."
 msgstr "Envía el siguiente comando a la aplicación activa."
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. This string to be translated is associated with the
 #. keyboard commands used to review those previous messages.
-#: ../src/orca/cmdnames.py:544
+#: ../src/orca/cmdnames.py:549
 msgid "Speak and braille a previous chat room message."
 msgstr "Hablar y braille de un mensaje anterior de una sala de chat."
 
@@ -2426,7 +2434,7 @@ msgstr "Hablar y braille de un mensaje anterior de una sala de chat."
 #. to have this typing status announced by Orca; others find that announcement
 #. unpleasant. Therefore, it is a setting in Orca. This string to be translated
 #. is associated with the command to toggle typing status presentation on or off.
-#: ../src/orca/cmdnames.py:552
+#: ../src/orca/cmdnames.py:557
 msgid "Toggle whether we announce when our buddies are typing."
 msgstr "Conmutar si se anuncia cuando nuestros amigos están tecleando."
 
@@ -2437,7 +2445,7 @@ msgstr "Conmutar si se anuncia cuando nuestros amigos están tecleando."
 #. messages from #a11y). Therefore, this is a setting in Orca. This string to be
 #. translated is associated with the command to toggle specific room history on
 #. or off.
-#: ../src/orca/cmdnames.py:562
+#: ../src/orca/cmdnames.py:567
 msgid "Toggle whether we provide chat room specific message histories."
 msgstr ""
 "Conmutar si se proporcionan históricos de mensajes de cada sala de chat."
@@ -2449,7 +2457,7 @@ msgstr ""
 #. has an option to present the name of the room first ("#a11y <joanie> hello!"
 #. instead of "<joanie> hello!"). This string to be translated is associated with
 #. the command to toggle room name presentation on or off.
-#: ../src/orca/cmdnames.py:573
+#: ../src/orca/cmdnames.py:578
 msgid ""
 "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr ""
@@ -2459,63 +2467,63 @@ msgstr ""
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the left.
-#: ../src/orca/cmdnames.py:579
+#: ../src/orca/cmdnames.py:584
 msgid "Line Left"
 msgstr "Línea izquierda"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the right.
-#: ../src/orca/cmdnames.py:584
+#: ../src/orca/cmdnames.py:589
 msgid "Line Right"
 msgstr "Línea derecha"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls up.
-#: ../src/orca/cmdnames.py:589
+#: ../src/orca/cmdnames.py:594
 msgid "Line Up"
 msgstr "Línea arriba"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls down.
-#: ../src/orca/cmdnames.py:594
+#: ../src/orca/cmdnames.py:599
 msgid "Line Down"
 msgstr "Línea abajo"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, it instructs the braille display to freeze.
-#: ../src/orca/cmdnames.py:599
+#: ../src/orca/cmdnames.py:604
 msgid "Freeze"
 msgstr "Desactivar"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the top left of the window.
-#: ../src/orca/cmdnames.py:604
+#: ../src/orca/cmdnames.py:609
 msgid "Top Left"
 msgstr "Arriba Izquierda"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the bottom left of the window.
-#: ../src/orca/cmdnames.py:609
+#: ../src/orca/cmdnames.py:614
 msgid "Bottom Left"
 msgstr "Abajo a la izquierda"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to position containing the cursor.
-#: ../src/orca/cmdnames.py:614
+#: ../src/orca/cmdnames.py:619
 msgid "Cursor Position"
 msgstr "Posición del cursor"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display toggles between six-dot braille and eight-dot braille.
-#: ../src/orca/cmdnames.py:619
+#: ../src/orca/cmdnames.py:624
 msgid "Six Dots"
 msgstr "Seis puntos"
 
@@ -2524,7 +2532,7 @@ msgstr "Seis puntos"
 #. represents a whole set of buttons known as cursor routing keys and are a way
 #. for a user to move the application's caret to the position indicated on the
 #. display.
-#: ../src/orca/cmdnames.py:626
+#: ../src/orca/cmdnames.py:631
 msgid "Cursor Routing"
 msgstr "Enrutado del cursor"
 
@@ -2533,7 +2541,7 @@ msgstr "Enrutado del cursor"
 #. represents the start of a selection operation. It is called "Cut Begin" to map
 #. to what BrlTTY users are used to: in character cell mode operation on virtual
 #. consoles, the act of copying text is erroneously called a "cut" operation.
-#: ../src/orca/cmdnames.py:633
+#: ../src/orca/cmdnames.py:638
 msgid "Cut Begin"
 msgstr "Inicio del corte"
 
@@ -2542,91 +2550,91 @@ msgstr "Inicio del corte"
 #. represents marking the endpoint of a selection. It is called "Cut Line" to map
 #. to what BrlTTY users are used to: in character cell mode operation on virtual
 #. consoles, the act of copying text is erroneously called a "cut" operation.
-#: ../src/orca/cmdnames.py:640
+#: ../src/orca/cmdnames.py:645
 msgid "Cut Line"
 msgstr "Línea cortada"
 
 #. Translators: this is a command which causes Orca to present the last received
 #. notification message.
-#: ../src/orca/cmdnames.py:644
+#: ../src/orca/cmdnames.py:649
 msgid "Present last notification message."
 msgstr "Presentar el último mensaje de notificación."
 
 #. Translators: this is a command which causes Orca to present a list of all the
 #. notification messages received.
-#: ../src/orca/cmdnames.py:648
+#: ../src/orca/cmdnames.py:653
 msgid "Present notification messages list"
 msgstr "Presentar la lista de mensajes de notificación"
 
 #. Translators: this is a command which causes Orca to present the previous
 #. notification message.
-#: ../src/orca/cmdnames.py:652
+#: ../src/orca/cmdnames.py:657
 msgid "Present previous notification message."
 msgstr "Presentar el mensaje anterior de notificación."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:655
+#: ../src/orca/cmdnames.py:660
 msgid "Goes to next character."
 msgstr "Va al siguiente carácter."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:658
+#: ../src/orca/cmdnames.py:663
 msgid "Goes to previous character."
 msgstr "Va al carácter anterior."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:661
+#: ../src/orca/cmdnames.py:666
 msgid "Goes to next word."
 msgstr "Va a la siguiente palabra."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:664
+#: ../src/orca/cmdnames.py:669
 msgid "Goes to previous word."
 msgstr "Va a la palabra anterior."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:667
+#: ../src/orca/cmdnames.py:672
 msgid "Goes to next line."
 msgstr "Va a la siguiente línea."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:670
+#: ../src/orca/cmdnames.py:675
 msgid "Goes to previous line."
 msgstr "Va a la línea anterior."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:673
+#: ../src/orca/cmdnames.py:678
 msgid "Goes to the top of the file."
 msgstr "Va al principio del archivo."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:676
+#: ../src/orca/cmdnames.py:681
 msgid "Goes to the bottom of the file."
 msgstr "Va al final del archivo."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:679
+#: ../src/orca/cmdnames.py:684
 msgid "Goes to the beginning of the line."
 msgstr "Va al comienzo de la línea."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:682
+#: ../src/orca/cmdnames.py:687
 msgid "Goes to the end of the line."
 msgstr "Va al final de la línea."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:685
+#: ../src/orca/cmdnames.py:690
 msgid "Goes to the next object."
 msgstr "Va al siguiente objeto."
 
 #. Translators: this is a command related to navigating within a document.
-#: ../src/orca/cmdnames.py:688
+#: ../src/orca/cmdnames.py:693
 msgid "Goes to the previous object."
 msgstr "Va al anterior objeto."
 
 #. Translators: this is for causing a collapsed combo box which was reached
 #. by Orca's caret navigation to be expanded.
-#: ../src/orca/cmdnames.py:693
+#: ../src/orca/cmdnames.py:698
 msgid "Causes the current combo box to be expanded."
 msgstr "Hace que se expanda el cuadro combinado actual."
 
@@ -2634,7 +2642,7 @@ msgstr "Hace que se expanda el cuadro combinado actual."
 #. itself controls how the arrow keys move the caret around HTML content. It's
 #. often broken, so Orca needs to provide its own support. As such, Orca offers
 #. the user the ability to toggle which application is controlling the caret.
-#: ../src/orca/cmdnames.py:700
+#: ../src/orca/cmdnames.py:705
 msgid "Switches between native and screen-reader caret navigation."
 msgstr ""
 "Cambia entre la navegación del cursor del lector de pantalla y la nativa de "
@@ -2647,7 +2655,7 @@ msgstr ""
 #. idle ("polite"), and when there is a change ("assertive"). Orca has several
 #. features to facilitate accessing live regions. This string refers to a command
 #. to cycle through the different "politeness" levels.
-#: ../src/orca/cmdnames.py:709
+#: ../src/orca/cmdnames.py:714
 msgid "Advance live region politeness setting."
 msgstr "Adelantar la configuración de comportamiento de la región activa."
 
@@ -2658,7 +2666,7 @@ msgstr "Adelantar la configuración de comportamiento de la región activa."
 #. idle ("polite"), and when there is a change ("assertive"). Orca has several
 #. features to facilitate accessing live regions. This string refers to a command
 #. to turn off live regions by default.
-#: ../src/orca/cmdnames.py:719
+#: ../src/orca/cmdnames.py:724
 msgid "Set default live region politeness level to off."
 msgstr ""
 "Establecer el nivel predeterminado de comportamiento de las regiones activas "
@@ -2668,7 +2676,7 @@ msgstr ""
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #. This string refers to a command for reviewing up to nine stored previous live
 #. messages.
-#: ../src/orca/cmdnames.py:725
+#: ../src/orca/cmdnames.py:730
 msgid "Review live region announcement."
 msgstr "Revisar anuncio de región activa."
 
@@ -2681,7 +2689,7 @@ msgstr "Revisar anuncio de región activa."
 #. level of "off") and still manually review recent updates to live regions via
 #. Orca commands for doing so -- as long as the monitoring of live regions is
 #. enabled.
-#: ../src/orca/cmdnames.py:736
+#: ../src/orca/cmdnames.py:741
 msgid "Monitor live regions."
 msgstr "Monitorizar regiones activas."
 
@@ -2690,14 +2698,14 @@ msgstr "Monitorizar regiones activas."
 #. to the object which just appeared as a result of the user hovering the mouse.
 #. If the user is already in the mouse over object, this command will hide the
 #. mouse over and return the user to the object he/she was in.
-#: ../src/orca/cmdnames.py:743
+#: ../src/orca/cmdnames.py:748
 msgid "Moves focus into and away from the current mouse over."
 msgstr "Mueve el foco hacia o lejos del actual posición del ratón."
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This string refers to
 #. the command to set the row.
-#: ../src/orca/cmdnames.py:748
+#: ../src/orca/cmdnames.py:753
 msgid "Set the row to use as dynamic column headers."
 msgstr "Establece la fila que usar como cabeceras dinámicas de columnas ."
 
@@ -2705,14 +2713,14 @@ msgstr "Establece la fila que usar como cabeceras dinámicas de columnas ."
 #. or table should be treated as containing column headers. This string refers to
 #. the command to unset the row so it is no longer treated as if it contained
 #. column headers.
-#: ../src/orca/cmdnames.py:754
+#: ../src/orca/cmdnames.py:759
 msgid "Clears the dynamic column headers."
 msgstr "Limpia las cabeceras dinámicas de columna."
 
 #. Translators: Orca allows you to dynamically define which column of a
 #. spreadsheet or table should be treated as containing row headers. This
 #. string refers to the command to set the column.
-#: ../src/orca/cmdnames.py:759
+#: ../src/orca/cmdnames.py:764
 msgid "Set the column to use as dynamic row headers."
 msgstr "Establece la columna que usar como cabeceras dinámicas de fila."
 
@@ -2720,13 +2728,13 @@ msgstr "Establece la columna que usar como cabeceras dinámicas de fila."
 #. spreadsheet or table should be treated as containing column headers. This
 #. string refers to the command to unset the column so it is no longer treated
 #. as if it contained row headers.
-#: ../src/orca/cmdnames.py:765
+#: ../src/orca/cmdnames.py:770
 msgid "Clears the dynamic row headers"
 msgstr "Limpia las cabeceras dinámicas de fila"
 
 #. Translators: This string refers to an Orca command. The "input line" refers
 #. to the place where one enters formulas for a spreadsheet.
-#: ../src/orca/cmdnames.py:769
+#: ../src/orca/cmdnames.py:774
 msgid "Presents the contents of the input line."
 msgstr "Presenta el contenido de la línea de entrada."
 
@@ -2735,375 +2743,375 @@ msgstr "Presenta el contenido de la línea de entrada."
 #. heading, Shift H to the previous heading, T to the next table, and so on.
 #. This feature needs to be toggle-able so that it does not interfere with normal
 #. writing functions.
-#: ../src/orca/cmdnames.py:776
+#: ../src/orca/cmdnames.py:781
 msgid "Toggles structural navigation keys."
 msgstr "Activa o desactiva las teclas de navegación estructural."
 
 #. Translators: this is for navigating among blockquotes in a document.
-#: ../src/orca/cmdnames.py:779
+#: ../src/orca/cmdnames.py:784
 msgid "Goes to previous blockquote."
 msgstr "Va a la cita anterior."
 
 #. Translators: this is for navigating among blockquotes in a document.
-#: ../src/orca/cmdnames.py:782
+#: ../src/orca/cmdnames.py:787
 msgid "Goes to next blockquote."
 msgstr "Va a la siguiente cita."
 
 #. Translators: this is for navigating among blockquotes in a document.
-#: ../src/orca/cmdnames.py:785
+#: ../src/orca/cmdnames.py:790
 msgid "Displays a list of blockquotes."
 msgstr "Muestra una lista de bloques."
 
 #. Translators: this is for navigating among buttons in a document.
-#: ../src/orca/cmdnames.py:788
+#: ../src/orca/cmdnames.py:793
 msgid "Goes to previous button."
 msgstr "Va al botón anterior."
 
 #. Translators: this is for navigating among buttons in a document.
-#: ../src/orca/cmdnames.py:791
+#: ../src/orca/cmdnames.py:796
 msgid "Goes to next button."
 msgstr "Va al siguiente botón."
 
 #. Translators: this is for navigating among buttons in a document.
-#: ../src/orca/cmdnames.py:794
+#: ../src/orca/cmdnames.py:799
 msgid "Displays a list of buttons."
 msgstr "Muestra una lista de botones."
 
 #. Translators: this is for navigating among check boxes in a document.
-#: ../src/orca/cmdnames.py:797
+#: ../src/orca/cmdnames.py:802
 msgid "Goes to previous check box."
 msgstr "Va a la casilla anterior."
 
 #. Translators: this is for navigating among check boxes in a document.
-#: ../src/orca/cmdnames.py:800
+#: ../src/orca/cmdnames.py:805
 msgid "Goes to next check box."
 msgstr "Va a la siguiente casilla."
 
 #. Translators: this is for navigating among check boxes in a document.
-#: ../src/orca/cmdnames.py:803
+#: ../src/orca/cmdnames.py:808
 msgid "Displays a list of check boxes."
 msgstr "Muestra una lista de casillas."
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
-#: ../src/orca/cmdnames.py:807
+#: ../src/orca/cmdnames.py:812
 msgid "Goes to previous clickable."
 msgstr "Va al anterior elemento que se puede pulsar."
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
-#: ../src/orca/cmdnames.py:811
+#: ../src/orca/cmdnames.py:816
 msgid "Goes to next clickable."
 msgstr "Va al siguiente elemento que se puede pulsar."
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
-#: ../src/orca/cmdnames.py:815
+#: ../src/orca/cmdnames.py:820
 msgid "Displays a list of clickables."
 msgstr "Muestra una lista de elementos que se pueden pulsar."
 
 #. Translators: this is for navigating among combo boxes in a document.
-#: ../src/orca/cmdnames.py:818
+#: ../src/orca/cmdnames.py:823
 msgid "Goes to previous combo box."
 msgstr "Va al cuadro combinado anterior."
 
 #. Translators: this is for navigating among combo boxes in a document.
-#: ../src/orca/cmdnames.py:821
+#: ../src/orca/cmdnames.py:826
 msgid "Goes to next combo box."
 msgstr "Va al siguiente cuadro combinado."
 
 #. Translators: This string describes a document navigation command which moves
 #. to the start of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
-#: ../src/orca/cmdnames.py:826
+#: ../src/orca/cmdnames.py:831
 msgid "Goes to start of container."
 msgstr "Va al principio del contenedor."
 
 #. Translators: This string describes a document navigation command which moves
 #. to the end of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
-#: ../src/orca/cmdnames.py:831
+#: ../src/orca/cmdnames.py:836
 msgid "Goes to end of container."
 msgstr "Va al final del contenedor."
 
 #. Translators: this is for navigating among combo boxes in a document.
-#: ../src/orca/cmdnames.py:834
+#: ../src/orca/cmdnames.py:839
 msgid "Displays a list of combo boxes."
 msgstr "Muestra una lista de cajas combinadas."
 
 #. Translators: this is for navigating among entries in a document.
-#: ../src/orca/cmdnames.py:837
+#: ../src/orca/cmdnames.py:842
 msgid "Goes to previous entry."
 msgstr "Va a la entrada anterior."
 
 #. Translators: this is for navigating among entries in a document.
-#: ../src/orca/cmdnames.py:840
+#: ../src/orca/cmdnames.py:845
 msgid "Goes to next entry."
 msgstr "Va a la siguiente entrada."
 
 #. Translators: this is for navigating among entries in a document.
-#: ../src/orca/cmdnames.py:843
+#: ../src/orca/cmdnames.py:848
 msgid "Displays a list of entries."
 msgstr "Muestra una lista de entradas."
 
 #. Translators: this is for navigating among form fields in a document.
-#: ../src/orca/cmdnames.py:846
+#: ../src/orca/cmdnames.py:851
 msgid "Goes to previous form field."
 msgstr "Va al campo de formulario anterior."
 
 #. Translators: this is for navigating among form fields in a document.
-#: ../src/orca/cmdnames.py:849
+#: ../src/orca/cmdnames.py:854
 msgid "Goes to next form field."
 msgstr "Va al siguiente campo de formulario."
 
 #. Translators: this is for navigating among form fields in a document.
-#: ../src/orca/cmdnames.py:852
+#: ../src/orca/cmdnames.py:857
 msgid "Displays a list of form fields."
 msgstr "Muestra una lista de campos de un formulario."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
-#: ../src/orca/cmdnames.py:855
+#: ../src/orca/cmdnames.py:860
 msgid "Goes to previous heading."
 msgstr "Va al encabezado anterior."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
-#: ../src/orca/cmdnames.py:858
+#: ../src/orca/cmdnames.py:863
 msgid "Goes to next heading."
 msgstr "Va al siguiente encabezado."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
-#: ../src/orca/cmdnames.py:861
+#: ../src/orca/cmdnames.py:866
 msgid "Displays a list of headings."
 msgstr "Muestra una lista de encabezados."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
-#: ../src/orca/cmdnames.py:865
+#: ../src/orca/cmdnames.py:870
 #, python-format
 msgid "Goes to previous heading at level %d."
 msgstr "Va al encabezado anterior de nivel %d."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
-#: ../src/orca/cmdnames.py:869
+#: ../src/orca/cmdnames.py:874
 #, python-format
 msgid "Goes to next heading at level %d."
 msgstr "Va al siguiente encabezado de nivel %d."
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
-#: ../src/orca/cmdnames.py:873
+#: ../src/orca/cmdnames.py:878
 #, python-format
 msgid "Displays a list of headings at level %d."
 msgstr "Muestra una lista de encabezados de nivel %d."
 
 #. Translators: this is for navigating among images in a document.
-#: ../src/orca/cmdnames.py:876
+#: ../src/orca/cmdnames.py:881
 msgid "Goes to previous image."
 msgstr "Va a la imagen anterior."
 
 #. Translators: this is for navigating among images in a document.
-#: ../src/orca/cmdnames.py:879
+#: ../src/orca/cmdnames.py:884
 msgid "Goes to next image."
 msgstr "Va a la siguiente imagen."
 
 #. Translators: this is for navigating among images in a document.
-#: ../src/orca/cmdnames.py:882
+#: ../src/orca/cmdnames.py:887
 msgid "Displays a list of images."
 msgstr "Muestra una lista de imágenes."
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
-#: ../src/orca/cmdnames.py:887
+#: ../src/orca/cmdnames.py:892
 msgid "Goes to previous landmark."
 msgstr "Va al anterior punto de referencia."
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
-#: ../src/orca/cmdnames.py:892
+#: ../src/orca/cmdnames.py:897
 msgid "Goes to next landmark."
 msgstr "Va al siguiente punto de referencia."
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
-#: ../src/orca/cmdnames.py:897
+#: ../src/orca/cmdnames.py:902
 msgid "Displays a list of landmarks."
 msgstr "Muestra una lista de marcas."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/cmdnames.py:902
+#: ../src/orca/cmdnames.py:907
 msgid "Goes to previous large object."
 msgstr "Va al objeto grande anterior."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/cmdnames.py:907
+#: ../src/orca/cmdnames.py:912
 msgid "Goes to next large object."
 msgstr "Va al siguiente objeto grande."
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: ../src/orca/cmdnames.py:912
+#: ../src/orca/cmdnames.py:917
 msgid "Displays a list of large objects."
 msgstr "Muestra una lista de objetos grandes."
 
 #. Translators: this is for navigating among links in a document.
-#: ../src/orca/cmdnames.py:915
+#: ../src/orca/cmdnames.py:920
 msgid "Goes to previous link."
 msgstr "Va al enlace anterior."
 
 #. Translators: this is for navigating among links in a document.
-#: ../src/orca/cmdnames.py:918
+#: ../src/orca/cmdnames.py:923
 msgid "Goes to next link."
 msgstr "Va al siguiente enlace."
 
 #. Translators: this is for navigating among links in a document.
-#: ../src/orca/cmdnames.py:921
+#: ../src/orca/cmdnames.py:926
 msgid "Displays a list of links."
 msgstr "Muestra una lista de enlaces."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:924
+#: ../src/orca/cmdnames.py:929
 msgid "Goes to previous list."
 msgstr "Va a la lista anterior."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:927
+#: ../src/orca/cmdnames.py:932
 msgid "Goes to next list."
 msgstr "Va a la siguiente lista."
 
 #. Translators: this is for navigating among lists in a document.
-#: ../src/orca/cmdnames.py:930
+#: ../src/orca/cmdnames.py:935
 msgid "Displays a list of lists."
 msgstr "Muestra una lista de listas."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:933
+#: ../src/orca/cmdnames.py:938
 msgid "Goes to previous list item."
 msgstr "Va al anterior elemento de lista."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:936
+#: ../src/orca/cmdnames.py:941
 msgid "Goes to next list item."
 msgstr "Va al siguiente elemento de lista."
 
 #. Translators: this is for navigating among list items in a document.
-#: ../src/orca/cmdnames.py:939
+#: ../src/orca/cmdnames.py:944
 msgid "Displays a list of list items."
 msgstr "Muestra una lista de elementos de lista."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:944
+#: ../src/orca/cmdnames.py:949
 msgid "Goes to previous live region."
 msgstr "Va a la anterior región activa."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:949
+#: ../src/orca/cmdnames.py:954
 msgid "Goes to next live region."
 msgstr "Va a la siguiente región activa."
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: ../src/orca/cmdnames.py:954
+#: ../src/orca/cmdnames.py:959
 msgid "Goes to the last live region which made an announcement."
 msgstr "Va a la última región activa que hizo un anuncio."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:957
+#: ../src/orca/cmdnames.py:962
 msgid "Goes to previous paragraph."
 msgstr "Va al párrafo anterior.."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:960
+#: ../src/orca/cmdnames.py:965
 msgid "Goes to next paragraph."
 msgstr "Va al siguiente párrafo."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: ../src/orca/cmdnames.py:963
+#: ../src/orca/cmdnames.py:968
 msgid "Displays a list of paragraphs."
 msgstr "Muestra una lista de párrafos."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:966
+#: ../src/orca/cmdnames.py:971
 msgid "Goes to previous radio button."
 msgstr "Va al anterior botón de radio."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:969
+#: ../src/orca/cmdnames.py:974
 msgid "Goes to next radio button."
 msgstr "Va al siguiente botón de radio."
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: ../src/orca/cmdnames.py:972
+#: ../src/orca/cmdnames.py:977
 msgid "Displays a list of radio buttons."
 msgstr "Muestra una lista de botones de radio."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:976
+#: ../src/orca/cmdnames.py:981
 msgid "Goes to previous separator."
 msgstr "Va al anterior separador."
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: ../src/orca/cmdnames.py:980
+#: ../src/orca/cmdnames.py:985
 msgid "Goes to next separator."
 msgstr "Va al siguiente separador."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:983
+#: ../src/orca/cmdnames.py:988
 msgid "Goes to previous table."
 msgstr "Va a la anterior tabla."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:986
+#: ../src/orca/cmdnames.py:991
 msgid "Goes to next table."
 msgstr "Va a la siguiente tabla."
 
 #. Translators: this is for navigating among tables in a document.
-#: ../src/orca/cmdnames.py:989
+#: ../src/orca/cmdnames.py:994
 msgid "Displays a list of tables."
 msgstr "Muestra una lista de tablas."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:992
+#: ../src/orca/cmdnames.py:997
 msgid "Goes down one cell."
 msgstr "Va una celda abajo."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:995
+#: ../src/orca/cmdnames.py:1000
 msgid "Goes to the first cell in a table."
 msgstr "Va a la primera celda de una tabla."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:998
+#: ../src/orca/cmdnames.py:1003
 msgid "Goes to the last cell in a table."
 msgstr "Va a la última celda de una tabla."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:1001
+#: ../src/orca/cmdnames.py:1006
 msgid "Goes left one cell."
 msgstr "Va una celda a la izquierda."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:1004
+#: ../src/orca/cmdnames.py:1009
 msgid "Goes right one cell."
 msgstr "Va una celda a la derecha."
 
 #. Translators: this is for navigating among table cells in a document.
-#: ../src/orca/cmdnames.py:1007
+#: ../src/orca/cmdnames.py:1012
 msgid "Goes up one cell."
 msgstr "Va una celda arriba."
 
@@ -3118,8 +3126,7 @@ msgstr "Va una celda arriba."
 #. it is disabled, Orca will treat each object as if it were on a separate line,
 #. both for presentation and navigation. This string is associated with the Orca
 #. command to manually toggle layout mode on/off.
-#: ../src/orca/cmdnames.py:1020
-#| msgid "Toggle mouse review mode."
+#: ../src/orca/cmdnames.py:1025
 msgid "Toggles layout mode."
 msgstr "Conmutar el modo de distribución."
 
@@ -3137,7 +3144,7 @@ msgstr "Conmutar el modo de distribución."
 #. key presses as something that should be handled by the focused widget.
 #. This string is associated with the Orca command to manually switch
 #. between these two modes.
-#: ../src/orca/cmdnames.py:1036
+#: ../src/orca/cmdnames.py:1041
 msgid "Switches between browse mode and focus mode."
 msgstr "Cambia entre modo navegación y modo foco."
 
@@ -3150,7 +3157,7 @@ msgstr "Cambia entre modo navegación y modo foco."
 #. navigation and use interaction model. As a result, Orca has a command which
 #. enables setting a "sticky" focus mode which disables all automatic toggling.
 #. This string is associated with the Orca command to enable sticky focus mode.
-#: ../src/orca/cmdnames.py:1047
+#: ../src/orca/cmdnames.py:1052
 msgid "Enables sticky focus mode."
 msgstr "Activa el modo de foco pegajoso."
 
@@ -3163,37 +3170,37 @@ msgstr "Activa el modo de foco pegajoso."
 #. navigation and use interaction model. As a result, Orca has a command which
 #. enables setting a "sticky" browse mode which disables all automatic toggling.
 #. This string is associated with the Orca command to enable sticky browse mode.
-#: ../src/orca/cmdnames.py:1058
+#: ../src/orca/cmdnames.py:1063
 msgid "Enables sticky browse mode."
 msgstr "Activa el modo de navegación pegajoso."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:1061
+#: ../src/orca/cmdnames.py:1066
 msgid "Goes to previous unvisited link."
 msgstr "Va al anterior enlace no visitado."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:1064
+#: ../src/orca/cmdnames.py:1069
 msgid "Goes to next unvisited link."
 msgstr "Va al siguiente enlace no visitado."
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: ../src/orca/cmdnames.py:1067
+#: ../src/orca/cmdnames.py:1072
 msgid "Displays a list of unvisited links."
 msgstr "Muestra una lista de enlaces no visitados."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:1070
+#: ../src/orca/cmdnames.py:1075
 msgid "Goes to previous visited link."
 msgstr "Va al anterior enlace visitado."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:1073
+#: ../src/orca/cmdnames.py:1078
 msgid "Goes to next visited link."
 msgstr "Va al siguiente enlace visitado."
 
 #. Translators: this is for navigating among visited links in a document.
-#: ../src/orca/cmdnames.py:1076
+#: ../src/orca/cmdnames.py:1081
 msgid "Displays a list of visited links."
 msgstr "Muestra una lista de enlaces visitados."
 
@@ -4806,7 +4813,6 @@ msgstr "Nombre del _perfil:"
 #. The following is a title in a dialog informing the user that he/she
 #. is about to remove a user profile, and action that cannot be undone.
 #: ../src/orca/guilabels.py:380
-#| msgid "Load user profile"
 msgid "Remove User Profile"
 msgstr "Quitar perfil de usuario"
 
@@ -4817,7 +4823,6 @@ msgstr "Quitar perfil de usuario"
 #. The following is a label in a dialog informing the user that he/she
 #. is about to remove a user profile, and action that cannot be undone.
 #: ../src/orca/guilabels.py:388
-#| msgid "Load user profile"
 msgid "Remove user profile"
 msgstr "Quitar perfil de usuario"
 
@@ -9991,7 +9996,6 @@ msgstr "El modo de navegación es pegajoso."
 #. both for presentation and navigation. This string is presented when the user
 #. switches to layout mode via an Orca command.
 #: ../src/orca/messages.py:1630
-#| msgid "Focus mode"
 msgid "Layout mode."
 msgstr "Modo distribución."
 
@@ -10008,8 +10012,6 @@ msgstr "Modo distribución."
 #. toggles layout mode off via an Orca command and switches to the aforementioned
 #. object-based presentation.
 #: ../src/orca/messages.py:1644
-#| msgctxt "structural navigation"
-#| msgid "Object"
 msgid "Object mode."
 msgstr "Modo de objeto."
 
@@ -10604,45 +10606,63 @@ msgstr "Selección eliminada."
 msgid "Selection restored."
 msgstr "Selección restaurada."
 
+#. Translators: Orca has a command which presents the size and position of the
+#. current object in pixels. This string refers to the brief/non-verbose output
+#. presented in response to the command. The string substitutions are all for
+#. quantities (in pixels).
+#: ../src/orca/messages.py:2067
+#, python-format
+msgid "Size: %d, %d. Location: %d, %d."
+msgstr "Tamaño: %d, %d. Ubicación: %d, %d."
+
+#. Translators: Orca has a command which presents the size and position of the
+#. current object in pixels. This string refers to the full/verbose output
+#. presented in response to the command. The string substitutions are all for
+#. quantities (in pixels).
+#: ../src/orca/messages.py:2073
+#, python-format
+msgid "Width: %d. Height: %d. %d from left. %d from top."
+msgstr "Anchura: %d. Altura: %d. %d de izquierda. %d desde arriba."
+
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
-#: ../src/orca/messages.py:2065
+#: ../src/orca/messages.py:2077
 msgid "Speech disabled."
 msgstr "Lee desactivada."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been turned back on.
-#: ../src/orca/messages.py:2069
+#: ../src/orca/messages.py:2081
 msgid "Speech enabled."
 msgstr "Lee activada."
 
 #. Translators: This string announces speech rate change.
-#: ../src/orca/messages.py:2072
+#: ../src/orca/messages.py:2084
 msgid "faster."
 msgstr "más rápido."
 
 #. Translators: This string announces speech rate change.
-#: ../src/orca/messages.py:2075
+#: ../src/orca/messages.py:2087
 msgid "slower."
 msgstr "más lento."
 
 #. Translators: This string announces speech pitch change.
-#: ../src/orca/messages.py:2078
+#: ../src/orca/messages.py:2090
 msgid "higher."
 msgstr "más alto."
 
 #. Translators: This string announces speech pitch change.
-#: ../src/orca/messages.py:2081
+#: ../src/orca/messages.py:2093
 msgid "lower."
 msgstr "más bajo."
 
 #. Translators: This string announces speech volume change.
-#: ../src/orca/messages.py:2084
+#: ../src/orca/messages.py:2096
 msgid "louder."
 msgstr "más fuerte."
 
 #. Translators: This string announces speech volume change.
-#: ../src/orca/messages.py:2087
+#: ../src/orca/messages.py:2099
 msgid "softer."
 msgstr "más suave."
 
@@ -10651,7 +10671,7 @@ msgstr "más suave."
 #. applications and reads content. The two levels are "brief" and "verbose".
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
-#: ../src/orca/messages.py:2094
+#: ../src/orca/messages.py:2106
 msgctxt "Speech"
 msgid "Verbosity level: brief"
 msgstr "Nivel de detalle: breve"
@@ -10661,7 +10681,7 @@ msgstr "Nivel de detalle: breve"
 #. applications and reads content. The two levels are "brief" and "verbose".
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
-#: ../src/orca/messages.py:2101
+#: ../src/orca/messages.py:2113
 msgctxt "Speech"
 msgid "Verbosity level: verbose"
 msgstr "Nivel de detalle: detallado"
@@ -10670,22 +10690,22 @@ msgstr "Nivel de detalle: detallado"
 #. string. The extra space you see at the beginning is because we need the
 #. speech synthesis engine to speak the new string well. For example, "Open..."
 #. turns into "Open dot dot dot".
-#: ../src/orca/messages.py:2107
+#: ../src/orca/messages.py:2119
 msgid " dot dot dot"
 msgstr "punto punto punto"
 
 #. Translators: This message is presented to the user when Orca is launched.
-#: ../src/orca/messages.py:2110
+#: ../src/orca/messages.py:2122
 msgid "Screen reader on."
 msgstr "Lector de pantalla activado."
 
 #. Translators: This message is presented to the user when Orca is quit.
-#: ../src/orca/messages.py:2113
+#: ../src/orca/messages.py:2125
 msgid "Screen reader off."
 msgstr "Lector de pantalla desactivado."
 
 #. Translators: This message means speech synthesis is not installed or working.
-#: ../src/orca/messages.py:2116
+#: ../src/orca/messages.py:2128
 msgid "Speech is unavailable."
 msgstr "La voz no está disponible."
 
@@ -10693,7 +10713,7 @@ msgstr "La voz no está disponible."
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: ../src/orca/messages.py:2122
+#: ../src/orca/messages.py:2134
 msgid "string not found"
 msgstr "cadena no encontrada"
 
@@ -10703,7 +10723,7 @@ msgstr "cadena no encontrada"
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: ../src/orca/messages.py:2130
+#: ../src/orca/messages.py:2142
 msgid "Structural navigation keys off."
 msgstr "Teclas de navegación estructural desactivadas."
 
@@ -10713,7 +10733,7 @@ msgstr "Teclas de navegación estructural desactivadas."
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: ../src/orca/messages.py:2138
+#: ../src/orca/messages.py:2150
 msgid "Structural navigation keys on."
 msgstr "Teclas de navegación estructural activadas."
 
@@ -10723,73 +10743,73 @@ msgstr "Teclas de navegación estructural activadas."
 #. type, such as from link to link, or from heading to heading, or from form
 #. field to form field. This is a brief message which will be presented to the
 #. user if the desired structural navigation object could not be found.
-#: ../src/orca/messages.py:2146
+#: ../src/orca/messages.py:2158
 msgctxt "structural navigation"
 msgid "Not found"
 msgstr "No encontrado"
 
 #. Translators: This message describes the (row, col) position of a table cell.
-#: ../src/orca/messages.py:2149
+#: ../src/orca/messages.py:2161
 #, python-format
 msgid "Row %(row)d, column %(column)d."
 msgstr "Fila %(row)d, columna %(column)d."
 
 #. Translators: This message is presented to indicate the user is in the last
 #. cell of a table in a document.
-#: ../src/orca/messages.py:2153
+#: ../src/orca/messages.py:2165
 msgid "End of table"
 msgstr "Final de tabla"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: ../src/orca/messages.py:2158
+#: ../src/orca/messages.py:2170
 msgid "Speak cell"
 msgstr "Hablar celda"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: ../src/orca/messages.py:2163
+#: ../src/orca/messages.py:2175
 msgid "Speak row"
 msgstr "Hablar fila"
 
 #. Translators: a uniform table is one in which each table cell occupies one row
 #. and one column (i.e. a perfect grid). In contrast, a non-uniform table is one
 #. in which at least one table cell occupies more than one row and/or column.
-#: ../src/orca/messages.py:2168
+#: ../src/orca/messages.py:2180
 msgid "Non-uniform"
 msgstr "No-uniforme"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. If the user gives a table navigation command but is not in a
 #. table, presents this message.
-#: ../src/orca/messages.py:2173
+#: ../src/orca/messages.py:2185
 msgid "Not in a table."
 msgstr "No está en una tabla."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
-#: ../src/orca/messages.py:2177
+#: ../src/orca/messages.py:2189
 msgid "Columns reordered"
 msgstr "Columnas reordenadas"
 
 #. Translators: This is a message presented to users when the rows in a table
 #. have been reordered.
-#: ../src/orca/messages.py:2181
+#: ../src/orca/messages.py:2193
 msgid "Rows reordered"
 msgstr "Filas reordenadas"
 
 #. Translators: this is in reference to a column in a table. The substitution
 #. is the index (e.g. the first column is "column 1").
-#: ../src/orca/messages.py:2185
+#: ../src/orca/messages.py:2197
 #, python-format
 msgid "column %d"
 msgstr "columna %d"
 
 #. Translators: this is in reference to a column in a table. If the user is in
 #. the first column of a table with five columns, the position is "column 1 of 5"
-#: ../src/orca/messages.py:2189
+#: ../src/orca/messages.py:2201
 #, python-format
 msgid "column %(index)d of %(total)d"
 msgstr "columna %(index)d de %(total)d"
@@ -10797,21 +10817,21 @@ msgstr "columna %(index)d de %(total)d"
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell below the current cell and is already in the last row.
-#: ../src/orca/messages.py:2194
+#: ../src/orca/messages.py:2206
 msgid "Bottom of column."
 msgstr "Final de la columna."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell above the current cell and is already in the first row.
-#: ../src/orca/messages.py:2199
+#: ../src/orca/messages.py:2211
 msgid "Top of column."
 msgstr "Inicio de la columna."
 
 #. Translators: this message is spoken to announce that a table column just became
 #. selected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
-#: ../src/orca/messages.py:2204
+#: ../src/orca/messages.py:2216
 #, python-format
 msgid "Column %s selected"
 msgstr "Columna %s seleccionada"
@@ -10821,7 +10841,7 @@ msgstr "Columna %s seleccionada"
 #. string substitution is the label of the first column in the range. The second string
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F selected".
-#: ../src/orca/messages.py:2211
+#: ../src/orca/messages.py:2223
 #, python-format
 msgid "Columns %s through %s selected"
 msgstr "Columnas %s a %s seleccionadas"
@@ -10831,7 +10851,7 @@ msgstr "Columnas %s a %s seleccionadas"
 #. string substitution is the label of the first column in the range. The second string
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F unselected".
-#: ../src/orca/messages.py:2218
+#: ../src/orca/messages.py:2230
 #, python-format
 msgid "Columns %s through %s unselected"
 msgstr "Columnas %s a %s no seleccionadas"
@@ -10839,21 +10859,21 @@ msgstr "Columnas %s a %s no seleccionadas"
 #. Translators: this message is spoken to announce that a table column just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
-#: ../src/orca/messages.py:2223
+#: ../src/orca/messages.py:2235
 #, python-format
 msgid "Column %s unselected"
 msgstr "Columna %s no seleccionada"
 
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
-#: ../src/orca/messages.py:2227
+#: ../src/orca/messages.py:2239
 #, python-format
 msgid "row %d"
 msgstr "fila %d"
 
 #. Translators: this is in reference to a row in a table. If the user is in the
 #. the first row of a table with five rows, the position is "row 1 of 5"
-#: ../src/orca/messages.py:2231
+#: ../src/orca/messages.py:2243
 #, python-format
 msgid "row %(index)d of %(total)d"
 msgstr "fila %(index)d de %(total)d"
@@ -10861,46 +10881,46 @@ msgstr "fila %(index)d de %(total)d"
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the left of the current cell and is already in the first column.
-#: ../src/orca/messages.py:2236
+#: ../src/orca/messages.py:2248
 msgid "Beginning of row."
 msgstr "Comienzo de la fila."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the right of the current cell and is already in the last column.
-#: ../src/orca/messages.py:2241
+#: ../src/orca/messages.py:2253
 msgid "End of row."
 msgstr "Final de la fila."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted a table row.
-#: ../src/orca/messages.py:2245
+#: ../src/orca/messages.py:2257
 msgid "Row deleted."
 msgstr "Fila eliminada."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted the last row of a table.
-#: ../src/orca/messages.py:2249
+#: ../src/orca/messages.py:2261
 msgid "Last row deleted."
 msgstr "Última fila eliminada."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row.
-#: ../src/orca/messages.py:2253
+#: ../src/orca/messages.py:2265
 msgid "Row inserted."
 msgstr "Fila insertada."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row at the end of the table. This typically happens when the
 #. user presses Tab from within the last cell of the table.
-#: ../src/orca/messages.py:2258
+#: ../src/orca/messages.py:2270
 msgid "Row inserted at the end of the table."
 msgstr "Fila insertada al final de la tabla."
 
 #. Translators: this message is spoken to announce that a table row just became selected
 #. (e.g as a result of navigation via Shift + Arrows). The string substitution is the row
 #. label (e.g. "2").
-#: ../src/orca/messages.py:2263
+#: ../src/orca/messages.py:2275
 #, python-format
 msgid "Row %s selected"
 msgstr "Fila %s seleccionada"
@@ -10910,7 +10930,7 @@ msgstr "Fila %s seleccionada"
 #. string substitution is the label of the first row in the range. The second string
 #. substitution is the label of the last row in the range. An example message for
 #. Calc would be "Rows 2 through 10 selected".
-#: ../src/orca/messages.py:2270
+#: ../src/orca/messages.py:2282
 #, python-format
 msgid "Rows %s through %s selected"
 msgstr "Filas %s a %s seleccionadas"
@@ -10920,7 +10940,7 @@ msgstr "Filas %s a %s seleccionadas"
 #. string substitution is the label of the first row in the range. The second string
 #. substitution is the label of the last row in the range. An example message for
 #. Calc would be "Rows 2 through 10 unselected".
-#: ../src/orca/messages.py:2277
+#: ../src/orca/messages.py:2289
 #, python-format
 msgid "Rows %s through %s unselected"
 msgstr "Filas %s a %s no seleccionadas"
@@ -10928,21 +10948,21 @@ msgstr "Filas %s a %s no seleccionadas"
 #. Translators: this message is spoken to announce that a table row just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
 #. substitution is the row label (e.g. "2").
-#: ../src/orca/messages.py:2282
+#: ../src/orca/messages.py:2294
 #, python-format
 msgid "Row %s unselected"
 msgstr "Fila %s no seleccionada"
 
 #. Translators: when the user selects (highlights) text in a document, Orca lets
 #. them know.
-#: ../src/orca/messages.py:2286
+#: ../src/orca/messages.py:2298
 msgctxt "text"
 msgid "selected"
 msgstr "seleccionado"
 
 #. Translators: when the user unselects (un-highlights) text in a document, Orca
 #. lets them know.
-#: ../src/orca/messages.py:2290
+#: ../src/orca/messages.py:2302
 msgctxt "text"
 msgid "unselected"
 msgstr "no seleccionado"
@@ -10950,47 +10970,47 @@ msgstr "no seleccionado"
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: ../src/orca/messages.py:2301
+#: ../src/orca/messages.py:2313
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%H horas, %M minutos y %S segundos."
 
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: ../src/orca/messages.py:2306
+#: ../src/orca/messages.py:2318
 msgid "%H hours and %M minutes."
 msgstr "%H horas y %M minutos."
 
 #. Translators: this is information about a unicode character reported to the
 #. user.  The value is the unicode number value of this character in hex.
-#: ../src/orca/messages.py:2310
+#: ../src/orca/messages.py:2322
 #, python-format
 msgid "Unicode %s"
 msgstr "Unicode %s"
 
 #. Translators: This string is presented when an application's undo command is
 #. used in a document resulting in a change to that document's contents.
-#: ../src/orca/messages.py:2314
+#: ../src/orca/messages.py:2326
 msgctxt "command"
 msgid "undo"
 msgstr "deshacer"
 
 #. Translators: This string is presented when an application's redo command is
 #. used in a document resulting in a change to that document's contents.
-#: ../src/orca/messages.py:2318
+#: ../src/orca/messages.py:2330
 msgctxt "command"
 msgid "redo"
 msgstr "rehacer"
 
 #. Translators: This message presents the Orca version number.
-#: ../src/orca/messages.py:2321
+#: ../src/orca/messages.py:2333
 #, python-format
 msgid "Screen reader version %s."
 msgstr "Versión %s del lector de pantalla."
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
-#: ../src/orca/messages.py:2325
+#: ../src/orca/messages.py:2337
 msgid "white space"
 msgstr "espacio en blanco"
 
@@ -10998,7 +11018,7 @@ msgstr "espacio en blanco"
 #. top of a page or list is reached without that object being found, we "wrap" to
 #. the bottom and continue looking upwards. We need to inform the user when this
 #. is taking place.
-#: ../src/orca/messages.py:2331
+#: ../src/orca/messages.py:2343
 msgid "Wrapping to bottom."
 msgstr "Saltando al final."
 
@@ -11006,21 +11026,21 @@ msgstr "Saltando al final."
 #. bottom of a page or list is reached without that object being found, we "wrap"
 #. to the top and continue looking downwards. We need to inform the user when
 #. this is taking place.
-#: ../src/orca/messages.py:2337
+#: ../src/orca/messages.py:2349
 msgid "Wrapping to top."
 msgstr "Saltando al principio."
 
 #. Translators, normally layered panes and tables have items in them. Thus it is
 #. noteworthy when this is not the case. This message is presented to the user to
 #. indicate the current layered pane or table contains zero items.
-#: ../src/orca/messages.py:2342
+#: ../src/orca/messages.py:2354
 msgid "0 items"
 msgstr "0 elementos"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: ../src/orca/messages.py:2350 ../src/orca/messages.py:2369
+#: ../src/orca/messages.py:2362 ../src/orca/messages.py:2381
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
@@ -11028,7 +11048,7 @@ msgstr[0] "Celda abarca %d fila"
 msgstr[1] "Celda abarca %d filas"
 
 #. Translators: this represents the number of columns in a table.
-#: ../src/orca/messages.py:2355
+#: ../src/orca/messages.py:2367
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
@@ -11038,7 +11058,7 @@ msgstr[1] " %d columnas"
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: ../src/orca/messages.py:2362
+#: ../src/orca/messages.py:2374
 #, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
@@ -11048,7 +11068,7 @@ msgstr[1] "Celda abarca %d columnas"
 #. Translators: People can enter a string of text that is too wide to be
 #. fully displayed in a spreadsheet cell. This message will be spoken if
 #. such a cell is encountered.
-#: ../src/orca/messages.py:2379
+#: ../src/orca/messages.py:2391
 #, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
@@ -11058,7 +11078,7 @@ msgstr[1] "%d caracteres demasiado grandes"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a braille message containing the app which just claimed focus.
-#: ../src/orca/messages.py:2387
+#: ../src/orca/messages.py:2399
 #, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
@@ -11068,7 +11088,7 @@ msgstr[1] "(%d diálogos)"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a spoken message containing the app which just claimed focus.
-#: ../src/orca/messages.py:2393
+#: ../src/orca/messages.py:2405
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -11076,7 +11096,7 @@ msgstr[0] "%d diálogo sin foco"
 msgstr[1] "%d diálogos sin foco"
 
 #. Translators: This is the size of a file in bytes
-#: ../src/orca/messages.py:2397
+#: ../src/orca/messages.py:2409
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -11085,7 +11105,7 @@ msgstr[1] "%d bytes"
 
 #. Translators: This message informs the user who many files were found as
 #. a result of a search.
-#: ../src/orca/messages.py:2402
+#: ../src/orca/messages.py:2414
 #, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
@@ -11093,7 +11113,7 @@ msgstr[0] "%d archivo encontrado"
 msgstr[1] "%d archivos encontrados"
 
 #. Translators: This message presents the number of forms in a document.
-#: ../src/orca/messages.py:2409
+#: ../src/orca/messages.py:2421
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
@@ -11101,7 +11121,7 @@ msgstr[0] "%d formulario"
 msgstr[1] "%d formularios"
 
 #. Translators: This message presents the number of headings in a document.
-#: ../src/orca/messages.py:2416
+#: ../src/orca/messages.py:2428
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -11110,7 +11130,7 @@ msgstr[1] "%d encabezados"
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
-#: ../src/orca/messages.py:2421
+#: ../src/orca/messages.py:2433
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -11120,7 +11140,7 @@ msgstr[1] "%d elementos"
 #. Translators: This message presents the number of landmarks in a document.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
-#: ../src/orca/messages.py:2430
+#: ../src/orca/messages.py:2442
 #, python-format
 msgid "%d landmark"
 msgid_plural "%d landmarks"
@@ -11130,7 +11150,7 @@ msgstr[1] "%d marcas"
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
 #. presented to the user to indicate how many matching items were found.
-#: ../src/orca/messages.py:2436
+#: ../src/orca/messages.py:2448
 #, python-format
 msgid "%d item found"
 msgid_plural "%d items found"
@@ -11140,7 +11160,7 @@ msgstr[1] "%d elementos encontrados"
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested blockquotes, such as can be seen in deep email threads,
 #. and then navigates out of several levels at once.
-#: ../src/orca/messages.py:2442
+#: ../src/orca/messages.py:2454
 #, python-format
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
@@ -11149,7 +11169,7 @@ msgstr[1] "Saliendo de %d citas."
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
-#: ../src/orca/messages.py:2447
+#: ../src/orca/messages.py:2459
 #, python-format
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
@@ -11157,7 +11177,7 @@ msgstr[0] "Saliendo de %d lista."
 msgstr[1] "Saliendo de %d listas."
 
 #. Translators: This message describes a bulleted or numbered list.
-#: ../src/orca/messages.py:2451
+#: ../src/orca/messages.py:2463
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -11166,7 +11186,7 @@ msgstr[1] "Lista con %d elementos"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: ../src/orca/messages.py:2456
+#: ../src/orca/messages.py:2468
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
@@ -11179,8 +11199,8 @@ msgstr[1] "tabla matemática con %d filas"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: ../src/orca/messages.py:2461 ../src/orca/messages.py:2477
-#: ../src/orca/messages.py:2561
+#: ../src/orca/messages.py:2473 ../src/orca/messages.py:2489
+#: ../src/orca/messages.py:2573
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -11190,7 +11210,7 @@ msgstr[1] "%d columnas"
 #. Translators: this represents the number of rows in a mathematical table
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: ../src/orca/messages.py:2471
+#: ../src/orca/messages.py:2483
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
@@ -11199,7 +11219,7 @@ msgstr[1] "tabla matemática anidada con %d filas"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: ../src/orca/messages.py:2486
+#: ../src/orca/messages.py:2498
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -11208,7 +11228,7 @@ msgstr[1] "%d mensajes.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: ../src/orca/messages.py:2491
+#: ../src/orca/messages.py:2503
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -11218,7 +11238,7 @@ msgstr[1] "%d porciento."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: ../src/orca/messages.py:2497
+#: ../src/orca/messages.py:2509
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -11227,7 +11247,7 @@ msgstr[1] "leído %d por ciento del documento"
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
-#: ../src/orca/messages.py:2504
+#: ../src/orca/messages.py:2516
 #, python-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
@@ -11237,7 +11257,7 @@ msgstr[1] "%d píxeles"
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
 #. %s is the spoken word for the character.
-#: ../src/orca/messages.py:2510
+#: ../src/orca/messages.py:2522
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -11246,7 +11266,7 @@ msgstr[1] "%(count)d caracteres %(repeatChar)s"
 
 #. Translators: This message is presented to indicate the number of selected
 #. objects (e.g. icons) and the total number of those objects.
-#: ../src/orca/messages.py:2517
+#: ../src/orca/messages.py:2529
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -11257,7 +11277,7 @@ msgstr[1] "%(index)d de %(total)d elementos seleccionados"
 #. shortcuts associated with Orca commands which are not specific to the
 #. current application. It appears as the title of the dialog containing
 #. the list.
-#: ../src/orca/messages.py:2526
+#: ../src/orca/messages.py:2538
 #, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
@@ -11267,7 +11287,7 @@ msgstr[1] "Se encontraron %d atajos predeterminados del lector de pantalla."
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
 #. application. It appears as the title of the dialog containing the list.
-#: ../src/orca/messages.py:2534
+#: ../src/orca/messages.py:2546
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
@@ -11280,7 +11300,7 @@ msgstr[1] ""
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: ../src/orca/messages.py:2541
+#: ../src/orca/messages.py:2553
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -11289,7 +11309,7 @@ msgstr[1] "%d espacios"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: ../src/orca/messages.py:2546
+#: ../src/orca/messages.py:2558
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -11297,7 +11317,7 @@ msgstr[0] "%d tabulador"
 msgstr[1] "%d tabuladores"
 
 #. Translators: This message presents the number of tables in a document.
-#: ../src/orca/messages.py:2553
+#: ../src/orca/messages.py:2565
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -11305,7 +11325,7 @@ msgstr[0] "%d tabla"
 msgstr[1] "%d tablas"
 
 #. Translators: this represents the number of rows in a table.
-#: ../src/orca/messages.py:2557
+#: ../src/orca/messages.py:2569
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -11314,7 +11334,7 @@ msgstr[1] "tabla con %d filas"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: ../src/orca/messages.py:2573
+#: ../src/orca/messages.py:2585
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -11323,7 +11343,7 @@ msgstr[1] "%d enlaces no visitados"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: ../src/orca/messages.py:2581
+#: ../src/orca/messages.py:2593
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
@@ -14237,9 +14257,6 @@ msgstr ""
 
 #~ msgid "Paints and prints the visible zones in the active window."
 #~ msgstr "Pinta e imprime las zonas visibles en la ventana activa."
-
-#~ msgid "Reports information on current script."
-#~ msgstr "Da información acerca del script actual."
 
 #~ msgid ""
 #~ "Prints a debug listing of all known applications to the console where "
