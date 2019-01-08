@@ -158,6 +158,11 @@ class Script(web.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
+        if not self.utilities.documentFrameURI(event.source):
+            msg = "CHROMIUM: Ignoring event from page with no URI."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if super().onBusyChanged(event):
             return
 
