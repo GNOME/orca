@@ -274,13 +274,19 @@ class Utilities(script_utilities.Utilities):
         orca_state.activeWindow = window
         return True
 
+    def activeDocument(self):
+        isShowing = lambda x: x and x.getState().contains(pyatspi.STATE_SHOWING)
+        documents = self._getDocumentsEmbeddedBy(orca_state.activeWindow)
+        documents = list(filter(isShowing, documents))
+        if len(documents) == 1:
+            return documents[0]
+        return None
+
     def documentFrame(self, obj=None):
         if self.sanityCheckActiveWindow():
-            isShowing = lambda x: x and x.getState().contains(pyatspi.STATE_SHOWING)
-            documents = self._getDocumentsEmbeddedBy(orca_state.activeWindow)
-            documents = list(filter(isShowing, documents))
-            if len(documents) == 1:
-                return documents[0]
+            document = self.activeDocument()
+            if document:
+                return document
 
         return self.getDocumentForObject(obj or orca_state.locusOfFocus)
 

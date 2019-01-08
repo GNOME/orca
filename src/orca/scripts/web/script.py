@@ -1273,8 +1273,6 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        self._loadingDocumentContent = event.detail1
-
         obj, offset = self.utilities.getCaretContext()
         if not obj or self.utilities.isZombie(obj):
             self.utilities.clearCaretContext()
@@ -1289,6 +1287,13 @@ class Script(default.Script):
             else:
                 self.presentMessage(messages.PAGE_LOADING_END)
 
+        activeDocument = self.utilities.activeDocument()
+        if activeDocument and activeDocument != event.source:
+            msg = "WEB: Ignoring: Event source is not active document"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        self._loadingDocumentContent = event.detail1
         if event.detail1:
             return True
 
