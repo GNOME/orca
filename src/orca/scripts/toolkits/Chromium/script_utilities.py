@@ -275,7 +275,7 @@ class Utilities(web.Utilities):
         if self.isDocument(topLevel) and orca_state.activeWindow \
            and orca_state.activeWindow.getApplication() == self._script.app:
             startTime = time.time()
-            descendant = pyatspi.findDescendant(topLevel, lambda x: x == topLevel)
+            descendant = pyatspi.findDescendant(orca_state.activeWindow, lambda x: x == topLevel)
             msg = "CHROMIUM: findDescendant() - %.4fs" % (time.time()-startTime)
             debug.println(debug.LEVEL_INFO, msg, True)
             if descendant:
