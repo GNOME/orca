@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2018-10-30 15:50+0000\n"
-"PO-Revision-Date: 2018-12-23 00:44+0100\n"
+"POT-Creation-Date: 2019-01-07 20:33+0000\n"
+"PO-Revision-Date: 2019-01-08 11:23+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -2575,12 +2575,13 @@ msgstr "<app>Orca</app> tillhandahåller följande ”Var är jag”-kommandon:"
 #. (itstool) path: page/p
 #: C/commands_where_am_i.page:56
 msgid ""
-"In addition to the dedicated Where Am I commands, <app>Orca</app> has two "
-"additional commands related to obtaining your present location:"
+"In addition to the dedicated Where Am I commands, <app>Orca</app> has "
+"additional commands related to obtaining information about your present "
+"location:"
 msgstr ""
 "Förutom de två speciellt avsedda ”Var är jag”-kommandona har <app>Orca</app> "
-"två ytterligare kommandon som är relaterade till att erhålla din aktuella "
-"position:"
+"ytterligare kommandon som är relaterade till att erhålla information om din "
+"aktuella position:"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:62
@@ -2623,6 +2624,12 @@ msgid ""
 msgstr ""
 "Bärbar dator: <keyseq><key>Orca-modifierare</key><key>Snedstreck</key></"
 "keyseq> (dubbelklickat)"
+
+#. (itstool) path: item/p
+#: C/commands_where_am_i.page:92
+msgid "Present size and location of current object in pixels: (Unbound)"
+msgstr ""
+"Presentera storlek och plats för aktuellt objekt i bildpunkter: (Inte bunden)"
 
 #. (itstool) path: info/title
 #: C/howto_bookmarks.page:4
