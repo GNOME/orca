@@ -271,6 +271,14 @@ class Script(web.Script):
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
+        if event.source.getRole() == pyatspi.ROLE_PAGE_TAB and event.detail1:
+            oldName = event.source.name
+            event.source.clearCache()
+            newName = event.source.name
+            if oldName != newName:
+                msg = "CHROMIUM: NO NAME CHANGE HACK: (name should be: '%s')" % newName
+                debug.println(debug.LEVEL_INFO, msg, True)
+
         # Other apps and toolkits implement the selection interface, which is
         # what we use to present active-descendanty selection changes, leaving
         # state-changed:selected for notifications related to toggling the
