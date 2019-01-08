@@ -203,6 +203,11 @@ class Script(web.Script):
     def onDocumentLoadComplete(self, event):
         """Callback for document:load-complete accessibility events."""
 
+        if not self.utilities.documentFrameURI(event.source):
+            msg = "CHROMIUM: Ignoring event from page with no URI."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if super().onDocumentLoadComplete(event):
             return
 
@@ -213,6 +218,11 @@ class Script(web.Script):
     def onDocumentLoadStopped(self, event):
         """Callback for document:load-stopped accessibility events."""
 
+        if not self.utilities.documentFrameURI(event.source):
+            msg = "CHROMIUM: Ignoring event from page with no URI."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if super().onDocumentLoadStopped(event):
             return
 
@@ -222,6 +232,11 @@ class Script(web.Script):
 
     def onDocumentReload(self, event):
         """Callback for document:reload accessibility events."""
+
+        if not self.utilities.documentFrameURI(event.source):
+            msg = "CHROMIUM: Ignoring event from page with no URI."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
 
         if super().onDocumentReload(event):
             return
