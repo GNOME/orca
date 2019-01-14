@@ -130,23 +130,6 @@ class Script(web.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onActiveChanged(self, event)
 
-        # HACK: Remove this once Chromium emits focus changes after window activation.
-        if event.detail1 and role == pyatspi.ROLE_FRAME:
-            startTime = time.time()
-            focusedObject = self.utilities.focusedObject(event.source)
-            msg = "CHROMIUM: NO INITIAL FOCUS HACK. Focused object: %s - %.4fs" % \
-                (focusedObject, time.time()-startTime)
-            debug.println(debug.LEVEL_INFO, msg, True)
-
-            if self.utilities.isDocument(focusedObject) \
-               and not self.utilities.documentFrameURI(focusedObject):
-                msg = "CHROMIUM: Ignoring focused object (document with no URI)."
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return
-
-            if focusedObject:
-                orca.setLocusOfFocus(event, focusedObject)
-
     def onActiveDescendantChanged(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
