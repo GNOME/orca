@@ -1,3 +1,78 @@
+3.31.4 - 14 January 2019
+
+New Commands:
+
+ * Add unbound command to present current object's size and position
+
+ * Add an unbound command to switch between layout mode and object mode
+
+Web:
+
+ * Ignore page loads for non-active documents
+
+ * Fix presentation of focusable text with MathML children
+
+ * Eliminate some chattiness with MathML embedded in links and headings
+
+ * Improve finding sentence start in contents with embedded objects
+
+ * Make toggle buttons and non-focusable buttons reachable via "b"
+
+ * Improve consistency in placement of navlist
+
+ * Fallback on access key when there is no aria-keyshortcuts value
+
+ * Check 'URI' in addition to 'DocURL' when getting URL of document
+
+ * Add initial Chromium script. Please note: ATK support in Chromium
+   needs much work. Until that work has been done, Orca will not be able
+   to provide access to Chromium. The current support is very much a work
+   in progress and not yet ready for end-user testing.
+
+LibreOffice:
+
+ * Ensure we fall back on native headers when dynamic headers aren't set
+
+Braille:
+
+ * Fail initialization if device is not plugged yet
+
+ * On initialization error, make sure to clean BrlAPI connection
+
+ * Ensure we don't pan beyond the length of the line being displayed
+
+ * Make sure the attribute mask is as long as the text string
+
+General:
+
+ * Ignore window deactivations we believe are not user-triggered
+   (Reduces chattiness when using certain window-manager shortcuts)
+
+ * Improve performance searching the accessibility tree for needed
+   information
+
+ * Don't clear the cache of non-Gecko windows by default (improves
+   performance)
+
+ * Don't bother checking the mousereview item when mousereview is not
+   active (improves performance)
+
+ * Fix bug in flat review say all causing us to cut off information
+
+ * Fall back on rolename when presenting title of nameless frames
+
+ * Ensure we use keyval_name when event_string is absent for keyboard
+   events
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es            Spanish                 Daniel Mustieles
+    fr            French                  Charles Monzat
+    sl            Slovenian               Matej Urbančič
+    sv            Swedish                 Anders Jonsson
+
+=========
+
 3.31.1 - 19 Octoboer 2018
 
 General:
