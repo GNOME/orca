@@ -506,7 +506,7 @@ class SettingsManager(object):
                 bindingTuple = self._adjustBindingTupleValues(bindingTuple)
                 keysym, mask, mods, clicks = bindingTuple
                 newBinding = KeyBinding(keysym, mask, mods, handler, clicks)
-                scriptKeyBindings.add(newBinding)
+                scriptKeyBindings.add(newBinding, exclusive=True)
 
         return scriptKeyBindings
 

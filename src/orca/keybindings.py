@@ -284,10 +284,16 @@ class KeyBindings:
         result += "]"
         return result
     
-    def add(self, keyBinding):
+    def add(self, keyBinding, exclusive=False):
         """Adds the given KeyBinding instance to this set of keybindings.
+
+           if exclusive is True, other keybindings using the same combo will
+           be unbound.
         """
 
+        if exclusive and len(keyBinding.keysymstring) > 0:
+            self.unbind(keyBinding.keysymstring, keyBinding.modifiers,
+                        keyBinding.click_count)
         self.keyBindings.append(keyBinding)
 
     def remove(self, keyBinding):
@@ -309,6 +315,15 @@ class KeyBindings:
             if self.keyBindings[i - 1].handler == handler:
                 del self.keyBindings[i - 1]
             i = i - 1
+
+    def unbind(self, keysym, mods, clicks):
+        for kb in self.keyBindings:
+            if kb.keysymstring == keysym \
+               and kb.modifiers == mods \
+               and kb.click_count == clicks:
+                kb.keysymstring = ''
+                kb.modifiers = 0
+                kb.click_count = 0
 
     def hasKeyBinding (self, newKeyBinding, typeOfSearch="strict"):
         """Return True if keyBinding is already in self.keyBindings.
