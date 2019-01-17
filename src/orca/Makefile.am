@@ -59,6 +59,7 @@ orca_python_PYTHON = \
 	script_utilities.py \
 	settings.py \
 	settings_manager.py \
+	settings_migration.py \
 	sound.py \
 	sound_generator.py \
 	speech.py \
