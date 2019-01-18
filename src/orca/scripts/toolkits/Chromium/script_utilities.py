@@ -236,19 +236,3 @@ class Utilities(web.Utilities):
         msg = "CHROMIUM: HACK: Doing focus grab when setting caret on %s" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return True
-
-    def frameAndDialog(self, obj):
-        # HACK: Remove this once we can ascend the ancestry.
-        frame, dialog = super().frameAndDialog(obj)
-        if frame or dialog:
-            return frame, dialog
-
-        frame = self.topLevelObject(obj)
-        if not frame and not self.inDocumentContent(obj) \
-           and self.canBeActiveWindow(orca_state.activeWindow) \
-           and orca_state.activeWindow.getApplication() == self._script.app:
-            frame = orca_state.activeWindow
-
-        msg = "CHROMIUM: CAN'T ASCEND TREE HACK: Returning %s as frame" % frame
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return frame, dialog
