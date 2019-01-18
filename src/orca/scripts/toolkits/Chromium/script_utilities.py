@@ -78,31 +78,6 @@ class Utilities(web.Utilities):
         self._documentsEmbeddedBy[hash(frame)] = result
         return result
 
-    def isZombie(self, obj):
-        if not super().isZombie(obj):
-            return False
-
-        # Things (so far) seem to work as expected for document content -- except the
-        # document frame itself.
-        if not self.isDocument(obj) and self.inDocumentContent(obj):
-            return True
-
-        # HACK for other items, including (though possibly not limited to) menu items
-        # (e.g. when you press Alt+F and arrow) and the location bar popup.
-        try:
-            index = obj.getIndexInParent()
-        except:
-            msg = "CHROMIUM: Exception getting index in parent for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if index == -1 and self.isShowingAndVisible(obj):
-            msg = "CHROMIUM: INDEX IN PARENT OF -1 HACK: Ignoring bad index of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return False
-
-        return True
-
     def selectedChildCount(self, obj):
         count = super().selectedChildCount(obj)
         if count or "Selection" in pyatspi.listInterfaces(obj):
