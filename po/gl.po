@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: orca-master-po-gl-70969.merged\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orcaorca/issues\n"
 "POT-Creation-Date: 2019-01-07 20:31+0000\n"
-"PO-Revision-Date: 2019-01-21 21:39+0200\n"
+"PO-Revision-Date: 2019-01-21 21:43+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician\n"
 "Language: gl\n"
@@ -2411,7 +2411,7 @@ msgstr "Presenta a data actual."
 #: ../src/orca/cmdnames.py:537
 #| msgid "Reports information on current script."
 msgid "Present size and location of current object."
-msgstr "Tamaño e localización presente para o obxecto actual."
+msgstr "Tamaño e localización neste momento do obxecto actual."
 
 #. Translators: Orca normally intercepts all keyboard commands and only passes
 #. them along to the current application when they are not Orca commands. This
@@ -3124,7 +3124,6 @@ msgstr "Vai arriba unha cela."
 #. both for presentation and navigation. This string is associated with the Orca
 #. command to manually toggle layout mode on/off.
 #: ../src/orca/cmdnames.py:1025
-#, fuzzy
 #| msgid "Toggle mouse review mode."
 msgid "Toggles layout mode."
 msgstr "Cambiar o modo de disposición."
@@ -4825,7 +4824,7 @@ msgstr "Eliminar o perfil de usuario"
 #: ../src/orca/guilabels.py:388
 #| msgid "Load user profile"
 msgid "Remove user profile"
-msgstr "Eliminar o perfíl de usuario"
+msgstr "Eliminar o perfil de usuario"
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -4840,7 +4839,7 @@ msgid ""
 "in this profile will be lost. Do you want to continue and remove this "
 "profile and all related settings?"
 msgstr ""
-"Esta a piques de eliminar o perfíl %s. Todas as preferencias gardadas e sen "
+"Está a piques de eliminar o perfil %s. Todas as preferencias gardadas e sen "
 "gardar neste perfil perderanse. Ten certeza que quere continuar e eliminar "
 "este perfil e todas as preferencias relacionadas?"
 
