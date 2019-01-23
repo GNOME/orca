@@ -933,7 +933,8 @@ class Utilities(script_utilities.Utilities):
                  pyatspi.ROLE_RADIO_MENU_ITEM,
                  pyatspi.ROLE_RADIO_BUTTON,
                  pyatspi.ROLE_PUSH_BUTTON,
-                 pyatspi.ROLE_TOGGLE_BUTTON]
+                 pyatspi.ROLE_TOGGLE_BUTTON,
+                 pyatspi.ROLE_TREE]
 
         role = obj.getRole()
         if role in roles:
