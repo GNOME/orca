@@ -1862,6 +1862,14 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
+        msg = "INFO: Extents for %s are: %s" % (obj, box)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        if box.x > 10000 or box.y > 10000:
+            msg = "INFO: %s seems to have bogus coordinates" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
         if box.x < 0 and box.y < 0:
             msg = "INFO: %s has negative coordinates" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
