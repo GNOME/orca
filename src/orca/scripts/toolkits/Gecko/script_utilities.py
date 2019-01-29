@@ -181,6 +181,10 @@ class Utilities(web.Utilities):
         if "self-repair.mozilla.org" in name:
             return True
 
+        uri = self.documentFrameURI(obj)
+        if uri.startswith("moz-extension"):
+            return True
+
         return False
 
     def canBeActiveWindow(self, window, clearCache=False):
