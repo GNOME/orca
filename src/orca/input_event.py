@@ -90,6 +90,8 @@ class KeyboardEvent(InputEvent):
     currentOrcaModifierAloneTime = None
     # When the second orca press happened
     secondOrcaModifierTime = None
+    # Sticky modifiers state
+    orcaStickyModifiers = 0
 
     TYPE_UNKNOWN          = "unknown"
     TYPE_PRINTABLE        = "printable"
@@ -169,16 +171,13 @@ class KeyboardEvent(InputEvent):
             role = None
         _mayEcho = _isPressed or role == pyatspi.ROLE_TERMINAL
 
-        _stickyOrcaModifier = False
-        if KeyboardEvent.stickyKeys and not self.isOrcaModifier():
-            if KeyboardEvent.lastOrcaModifierAlone:
-                _stickyOrcaModifier = True
-            else:
-                doubleEvent = self._getDoubleClickCandidate()
-                if doubleEvent and \
-                   doubleEvent.modifiers & keybindings.ORCA_MODIFIER_MASK:
-                    # this is a double-click that had the modifier, keep it
-                    _stickyOrcaModifier = True
+        if KeyboardEvent.stickyKeys and not self.isOrcaModifier() \
+           and not KeyboardEvent.lastOrcaModifierAlone:
+            doubleEvent = self._getDoubleClickCandidate()
+            if doubleEvent and \
+               doubleEvent.modifiers & keybindings.ORCA_MODIFIER_MASK:
+                # this is a double-click that had the modifier, keep it
+                KeyboardEvent.orcaStickyModifiers = doubleEvent.modifiers
 
         if not self.isOrcaModifier():
             if KeyboardEvent.orcaModifierPressed:
@@ -257,8 +256,17 @@ class KeyboardEvent(InputEvent):
         if orca_state.bypassNextCommand and _isPressed:
             KeyboardEvent.orcaModifierPressed = False
 
-        if KeyboardEvent.orcaModifierPressed or _stickyOrcaModifier:
+        if KeyboardEvent.orcaModifierPressed:
             self.modifiers |= keybindings.ORCA_MODIFIER_MASK
+
+        if KeyboardEvent.stickyKeys:
+            self.modifiers |= KeyboardEvent.orcaStickyModifiers
+            if self.isModifierKey():
+                KeyboardEvent.orcaStickyModifiers |= self.modifiers
+            else:
+                # multiple clicks are managed earlier in this function,
+                # using the previous click's modifiers.
+                KeyboardEvent.orcaStickyModifiers = 0
 
         self._should_consume, self._consume_reason = self.shouldConsume()
 
