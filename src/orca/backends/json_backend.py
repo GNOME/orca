@@ -126,6 +126,8 @@ class Backend:
         m = settings_migration.SettingsMigration(version, settings.settingsVersion)
         if 'general' in prefs:
             prefs['general'] = m.migrateGeneral(prefs['general'])
+        if 'keybindings' in prefs:
+            prefs['keybindings'] = m.migrateKeybindings(prefs['keybindings'])
         for profileName in prefs['profiles'].keys():
             if not isAppSettings:
                 prefs['profiles'][profileName] = \
@@ -133,6 +135,9 @@ class Backend:
             elif 'general' in prefs['profiles'][profileName]:
                 prefs['profiles'][profileName]['general'] = \
                     m.migrateGeneral(prefs['profiles'][profileName]['general'])
+            if 'keybindings' in prefs['profiles'][profileName]:
+                prefs['profiles'][profileName]['keybindings'] = \
+                    m.migrateKeybindings(prefs['profiles'][profileName]['keybindings'])
 
         prefs['version'] = settings.settingsVersion
 

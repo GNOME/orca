@@ -51,16 +51,22 @@ class SettingsMigration(object):
         self.fromVersion = fromVersion
         self.toVersion = toVersion
 
-    def migrateGeneral(self, general):
+    def _doMigration(self, dct, groupName, methodPrefix):
         if self.fromVersion != self.toVersion:
             debug.println(debug.LEVEL_CONFIGURATION,
                           "CONFIGURATION MIGRATION: " +
-                          "Migrating general settings from v%s to v%s" %
-                          (self.fromVersion, self.toVersion))
-            for name in general:
-                migratorName = '_migrate' + name[0].upper() + name[1:]
+                          "Migrating %s settings from v%s to v%s" %
+                          (groupName, self.fromVersion, self.toVersion))
+            for name in dct:
+                migratorName = methodPrefix + name[0].upper() + name[1:]
                 migrator = getattr(self, migratorName, None)
                 if migrator:
-                    general = migrator(general, name)
+                    dct = migrator(dct, name)
 
-        return general
+        return dct
+
+    def migrateGeneral(self, general):
+        return self._doMigration(general, 'general', '_migrate')
+
+    def migrateKeybindings(self, keybindings):
+        return self._doMigration(keybindings, 'keybindings', '_migrateKeybinding')
