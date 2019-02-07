@@ -1387,7 +1387,7 @@ class Utilities(script_utilities.Utilities):
                 return self._currentLineContents
 
         if layoutMode is None:
-            layoutMode = _settingsManager.getSetting('layoutMode')
+            layoutMode = _settingsManager.getSetting('layoutMode') or self._script.inFocusMode()
 
         objects = []
         extents = self.getExtents(obj, offset, offset + 1)
