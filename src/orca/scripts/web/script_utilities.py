@@ -73,11 +73,14 @@ class Utilities(script_utilities.Utilities):
         self._hasLongDesc = {}
         self._hasUselessCanvasDescendant = {}
         self._id = {}
+        self._displayStyle = {}
         self._isClickableElement = {}
         self._isAnchor = {}
         self._isEditableComboBox = {}
         self._isEditableDescendantOfComboBox = {}
         self._isErrorMessage = {}
+        self._isInlineListItem = {}
+        self._isInlineListDescendant = {}
         self._isLandmark = {}
         self._isLiveRegion = {}
         self._isLink = {}
@@ -140,11 +143,14 @@ class Utilities(script_utilities.Utilities):
         self._hasLongDesc = {}
         self._hasUselessCanvasDescendant = {}
         self._id = {}
+        self._displayStyle = {}
         self._isClickableElement = {}
         self._isAnchor = {}
         self._isEditableComboBox = {}
         self._isEditableDescendantOfComboBox = {}
         self._isErrorMessage = {}
+        self._isInlineListItem = {}
+        self._isInlineListDescendant = {}
         self._isLandmark = {}
         self._isLiveRegion = {}
         self._isLink = {}
@@ -532,6 +538,19 @@ class Utilities(script_utilities.Utilities):
 
         rv = attrs.get('id')
         self._id[hash(obj)] = rv
+        return rv
+
+    def _getDisplayStyle(self, obj):
+        if hash(obj) in self._displayStyle:
+            return self._displayStyle.get(hash(obj))
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return None
+
+        rv = attrs.get('display')
+        self._displayStyle[hash(obj)] = rv
         return rv
 
     def _getTag(self, obj):
@@ -2745,6 +2764,47 @@ class Utilities(script_utilities.Utilities):
 
         self._isErrorMessage[hash(obj)] = rv
         return rv
+
+    def isInlineListItem(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isInlineListItem.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        if obj.getRole() != pyatspi.ROLE_LIST_ITEM:
+            rv = False
+        else:
+            displayStyle = self._getDisplayStyle(obj)
+            rv = displayStyle and "inline" in displayStyle
+
+        self._isInlineListItem[hash(obj)] = rv
+        return rv
+
+    def isInlineListDescendant(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isInlineListDescendant.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        if self.isInlineListItem(obj):
+            rv = True
+        else:
+            ancestor = pyatspi.findAncestor(obj, self.isInlineListItem)
+            rv = ancestor is not None
+
+        self._isInlineListDescendant[hash(obj)] = rv
+        return rv
+
+    def listForInlineListDescendant(self, obj):
+        if not self.isInlineListDescendant(obj):
+            return None
+
+        isList = lambda x: x and x.getRole() == pyatspi.ROLE_LIST
+        return pyatspi.findAncestor(obj, isList)
 
     def isFeed(self, obj):
         return 'feed' in self._getXMLRoles(obj)
