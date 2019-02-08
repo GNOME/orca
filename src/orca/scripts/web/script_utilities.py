@@ -283,7 +283,7 @@ class Utilities(script_utilities.Utilities):
         return None
 
     def documentFrame(self, obj=None):
-        if self.sanityCheckActiveWindow():
+        if not obj and self.sanityCheckActiveWindow():
             document = self.activeDocument()
             if document:
                 return document
