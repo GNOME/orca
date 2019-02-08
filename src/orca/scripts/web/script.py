@@ -1465,6 +1465,11 @@ class Script(default.Script):
         if self.utilities.isContentEditableWithEmbeddedObjects(event.source):
             msg = "WEB: In content editable with embedded objects"
             debug.println(debug.LEVEL_INFO, msg, True)
+            if not self.utilities.eventIsFromLocusOfFocusDocument(event):
+                msg = "WEB: Event ignored: Not from locus of focus document"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+
             self.utilities.setCaretContext(obj, offset)
             notify = not self.utilities.lastInputEventWasCharNav() \
                      and not self.utilities.isEntryDescendant(obj)
@@ -1871,6 +1876,11 @@ class Script(default.Script):
         if not self.utilities.inDocumentContent(orca_state.locusOfFocus):
             msg = "WEB: Event ignored: locusOfFocus (%s) is not in document content" \
                   % orca_state.locusOfFocus
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if not self.utilities.eventIsFromLocusOfFocusDocument(event):
+            msg = "WEB: Event ignored: Not from locus of focus document"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
