@@ -3199,6 +3199,14 @@ class Utilities(script_utilities.Utilities):
 
         return True
 
+    def eventIsFromLocusOfFocusDocument(self, event):
+        source = self.getDocumentForObject(event.source)
+        focus = self.getDocumentForObject(orca_state.locusOfFocus)
+        rv = source and focus and source == focus
+        msg = "WEB: Event doc %s is same as focus doc %s: %s" % (source, focus, rv)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return rv
+
     def textEventIsDueToInsertion(self, event):
         if not event.type.startswith("object:text-"):
             return False
