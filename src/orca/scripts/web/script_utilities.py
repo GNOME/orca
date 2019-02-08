@@ -1410,6 +1410,10 @@ class Utilities(script_utilities.Utilities):
 
         objects = []
         extents = self.getExtents(obj, offset, offset + 1)
+        if self.isInlineListDescendant(obj):
+            container = self.listForInlineListDescendant(obj)
+            if container:
+                extents = self.getExtents(container, 0, 1)
 
         def _include(x):
             if x in objects:
