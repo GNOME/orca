@@ -182,7 +182,7 @@ class SpeechGenerator(generator.Generator):
             if name:
                 result.append(name)
                 result.extend(acss)
-        if not result and obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
+        if not result and obj.parent and obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
             result = self._generateLabelOrName(obj.parent, **args)
 
         return result
