@@ -343,8 +343,9 @@ class Utilities(script_utilities.Utilities):
         try:
             role = obj.getRole()
             state = obj.getState()
+            childCount = obj.childCount
         except:
-            msg = "WEB: Exception getting role and state for %s" % obj
+            msg = "WEB: Exception getting role, state, and childCount for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -355,6 +356,9 @@ class Utilities(script_utilities.Utilities):
         if role == pyatspi.ROLE_IMAGE:
             isLink = lambda x: x and x.getRole() == pyatspi.ROLE_LINK
             return pyatspi.utils.findAncestor(obj, isLink) is not None
+
+        if role == pyatspi.ROLE_HEADING and childCount == 1:
+            return self.isLink(obj[0])
 
         return state.contains(pyatspi.STATE_FOCUSABLE)
 
