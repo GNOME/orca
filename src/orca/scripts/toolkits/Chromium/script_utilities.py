@@ -43,40 +43,9 @@ class Utilities(web.Utilities):
 
     def __init__(self, script):
         super().__init__(script)
-        self._documentsEmbeddedBy = {} # Needed for HACK
 
     def clearCachedObjects(self):
         super().clearCachedObjects()
-        self._documentsEmbeddedBy = {} # Needed for HACK
-
-    def _getDocumentsEmbeddedBy(self, frame):
-        result = super()._getDocumentsEmbeddedBy(frame)
-        if result:
-            return result
-
-        # HACK: This tree dive is not efficient and should be removed once Chromium
-        # implements support for the embeds/embedded-by relation pair.
-        cached = self._documentsEmbeddedBy.get(hash(frame), [])
-        result = list(filter(self.isShowingAndVisible, cached))
-        if not result:
-            def _include(x):
-                if x and x.getRole() == pyatspi.ROLE_DOCUMENT_WEB:
-                    return self.isShowingAndVisible(x)
-                return False
-
-            def _exclude(x):
-                roles = [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_INTERNAL_FRAME]
-                if not x or x.getRole() in roles:
-                    return True
-                return False
-
-            startTime = time.time()
-            result = self.findAllDescendants(frame, _include, _exclude)
-            msg = "CHROMIUM: NO EMBEDDED RELATION HACK - %.4fs" % (time.time()-startTime)
-            debug.println(debug.LEVEL_INFO, msg, True)
-
-        self._documentsEmbeddedBy[hash(frame)] = result
-        return result
 
     def selectedChildCount(self, obj):
         count = super().selectedChildCount(obj)
