@@ -138,7 +138,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.preferDescriptionOverName(obj):
             return [obj.description]
 
-        return super()._generateDescription(obj, **args)
+        return super()._generateName(obj, **args)
 
     def _generateExpandedEOCs(self, obj, **args):
         """Returns the expanded embedded object characters for an object."""
