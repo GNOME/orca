@@ -840,13 +840,13 @@ class Script(default.Script):
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
 
-        if not (self._lastCommandWasCaretNav or self._lastCommandWasStructNav) \
-           and not self.utilities.isContentEditableWithEmbeddedObjects(obj):
+        isEditable = self.utilities.isContentEditableWithEmbeddedObjects(obj)
+        if not (self._lastCommandWasCaretNav or self._lastCommandWasStructNav) and not isEditable:
             super().sayLine(obj)
             return
 
         priorObj = None
-        if self._lastCommandWasCaretNav:
+        if self._lastCommandWasCaretNav or isEditable:
             priorObj, priorOffset = self.utilities.getPriorContext()
 
         obj, offset = self.utilities.getCaretContext(documentFrame=None)
