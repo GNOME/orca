@@ -128,6 +128,18 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return super()._generateLabelAndName(obj, **args)
 
+    def _generateDescription(self, obj, **args):
+        if self._script.utilities.preferDescriptionOverName(obj):
+            return []
+
+        return super()._generateDescription(obj, **args)
+
+    def _generateName(self, obj, **args):
+        if self._script.utilities.preferDescriptionOverName(obj):
+            return [obj.description]
+
+        return super()._generateDescription(obj, **args)
+
     def _generateExpandedEOCs(self, obj, **args):
         """Returns the expanded embedded object characters for an object."""
         result = []

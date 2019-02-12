@@ -119,6 +119,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.isZombie(obj):
             return []
 
+        if self._script.utilities.preferDescriptionOverName(obj):
+            return []
+
         role = args.get('role', obj.getRole())
         if obj != orca_state.locusOfFocus:
             if role in [pyatspi.ROLE_ALERT, pyatspi.ROLE_DIALOG]:
@@ -187,7 +190,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         if self._script.utilities.inDocumentContent(obj) and obj.name:
-            result = [obj.name]
+            if self._script.utilities.preferDescriptionOverName(obj):
+                result = [obj.description]
+            else:
+                result = [obj.name]
             result.extend(self.voice(speech_generator.DEFAULT))
             return result
 

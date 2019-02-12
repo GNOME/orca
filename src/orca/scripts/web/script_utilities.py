@@ -96,6 +96,7 @@ class Utilities(script_utilities.Utilities):
         self._displayedLabelText = {}
         self._mimeType = {}
         self._roleDescription = {}
+        self._preferDescriptionOverName = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
         self._text = {}
@@ -166,6 +167,7 @@ class Utilities(script_utilities.Utilities):
         self._displayedLabelText = {}
         self._mimeType = {}
         self._roleDescription = {}
+        self._preferDescriptionOverName = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
         self._tag = {}
@@ -3974,6 +3976,29 @@ class Utilities(script_utilities.Utilities):
             return ""
 
         return messages.PAGE_SUMMARY_PREFIX % ", ".join(result)
+
+    def preferDescriptionOverName(self, obj):
+        if not self.inDocumentContent(obj):
+            return super().preferDescriptionOverName(obj)
+
+        rv = self._preferDescriptionOverName.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            role = obj.getRole()
+            name = obj.name
+            description = obj.description
+        except:
+            msg = "WEB: Exception getting name, description, and role for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            rv = False
+        else:
+            roles = [pyatspi.ROLE_PUSH_BUTTON]
+            rv = role in roles and len(name) == 1 and description
+
+        self._preferDescriptionOverName[hash(obj)] = rv
+        return rv
 
     def _getCtrlShiftSelectionsStrings(self):
         """Hacky and to-be-obsoleted method."""

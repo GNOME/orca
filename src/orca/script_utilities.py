@@ -437,6 +437,9 @@ class Utilities:
         self._script.generatorCache[self.DISPLAYED_LABEL][obj] = labelString
         return self._script.generatorCache[self.DISPLAYED_LABEL][obj]
 
+    def preferDescriptionOverName(self, obj):
+        return False
+
     def descriptionsForObject(self, obj):
         """Return a list of objects describing obj."""
 
