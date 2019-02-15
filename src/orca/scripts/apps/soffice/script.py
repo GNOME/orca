@@ -887,7 +887,7 @@ class Script(default.Script):
 
         if event.source != orca_state.locusOfFocus \
            and event.source.getState().contains(pyatspi.STATE_FOCUSED):
-            orca.setLocusOfFocus(event, event.source, True)
+            orca.setLocusOfFocus(event, event.source, False)
 
         super().onTextSelectionChanged(event)
 
