@@ -3546,6 +3546,7 @@ class Script(script.Script):
         #
         done = False
         while not done:
+            eventsynthesizer.scrollIntoView(obj)
             speech.speak(self.speechGenerator.generateContext(obj, priorObj=priorObj))
 
             lastEndOffset = -1
