@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright 2005-2008 Sun Microsystems Inc.
-# Copyright 2018 Igalia, S.L.
+# Copyright 2018-2019 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -29,6 +29,11 @@ __license__   = "LGPL"
 
 import pyatspi
 from . import debug
+
+try:
+    _canScrollTo = pyatspi.Component.scrollTo is not None
+except:
+    _canScrollTo = False
 
 def _generateMouseEvent(x, y, event):
     """Synthesize a mouse event at a specific screen coordinate."""
@@ -129,4 +134,113 @@ def releaseAtPoint(x, y, button=1):
 
     _generateMouseEvent(x, y, "b%dr" % button)
 
+def scrollToPoint(obj, x, y):
+    """Attemps to scroll obj to the specified point."""
 
+    if not _canScrollTo:
+        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return
+
+    try:
+        component = obj.queryComponent()
+    except:
+        msg = "ERROR: Exception querying component of %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return
+
+    before = component.getExtents(pyatspi.WINDOW_COORDS)
+    try:
+        component.scrollToPoint(pyatspi.WINDOW_COORDS, x, y)
+    except:
+        msg = "ERROR: Exception scrolling %s to %i,%i." % (obj, x, y)
+        debug.println(debug.LEVEL_INFO, msg, True)
+    else:
+        msg = "INFO: Attemped to scroll %s to %i,%i" % (obj, x, y)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+    after = component.getExtents(pyatspi.WINDOW_COORDS)
+    msg = "EVENT SYNTHESIZER: Before scroll: %i,%i. After scroll: %i,%i." % \
+          (before[0], before[1], after[0], after[1])
+    debug.println(debug.LEVEL_INFO, msg, True)
+
+def _scrollToLocation(obj, location):
+    """Attemps to scroll obj to the specified location."""
+
+    try:
+        component = obj.queryComponent()
+    except:
+        msg = "ERROR: Exception querying component of %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return
+
+    before = component.getExtents(pyatspi.WINDOW_COORDS)
+    try:
+        component.scrollTo(location)
+    except:
+        msg = "ERROR: Exception scrolling %s to %s." % (obj, location)
+        debug.println(debug.LEVEL_INFO, msg, True)
+    else:
+        msg = "INFO: Attemped to scroll %s to %s" % (obj, location)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+    after = component.getExtents(pyatspi.WINDOW_COORDS)
+    msg = "EVENT SYNTHESIZER: Before scroll: %i,%i. After scroll: %i,%i." % \
+          (before[0], before[1], after[0], after[1])
+    debug.println(debug.LEVEL_INFO, msg, True)
+
+def scrollIntoView(obj):
+    if not _canScrollTo:
+        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return
+
+    _scrollToLocation(obj, pyatspi.SCROLL_ANYWHERE)
+
+def scrollToTopEdge(obj):
+    if not _canScrollTo:
+        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return
+
+    _scrollToLocation(obj, pyatspi.SCROLL_TOP_EDGE)
+
+def scrollToTopLeft(obj):
+    if not _canScrollTo:
+        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return
+
+    _scrollToLocation(obj, pyatspi.SCROLL_TOP_LEFT)
+
+def scrollToLeftEdge(obj):
+    if not _canScrollTo:
+        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return
+
+    _scrollToLocation(obj, pyatspi.SCROLL_LEFT_EDGE)
+
+def scrollToBottomEdge(obj):
+    if not _canScrollTo:
+        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return
+
+    _scrollToLocation(obj, pyatspi.SCROLL_BOTTOM_EDGE)
+
+def scrollToBottomRight(obj):
+    if not _canScrollTo:
+        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return
+
+    _scrollToLocation(obj, pyatspi.SCROLL_BOTTOM_RIGHT)
+
+def scrollToRightEdge(obj):
+    if not _canScrollTo:
+        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return
+
+    _scrollToLocation(obj, pyatspi.SCROLL_RIGHT_EDGE)
