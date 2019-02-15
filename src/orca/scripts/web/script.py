@@ -596,6 +596,7 @@ class Script(default.Script):
                     continue
 
                 obj, startOffset, endOffset, text = content
+                eventsynthesizer.scrollIntoView(obj)
                 utterances = self.speechGenerator.generateContents(
                     [content], eliminatePauses=True, priorObj=priorObj)
                 priorObj = obj
