@@ -31,6 +31,7 @@ import pyatspi
 
 from . import cmdnames
 from . import debug
+from . import eventsynthesizer
 from . import guilabels
 from . import input_event
 from . import keybindings
@@ -1243,6 +1244,7 @@ class StructuralNavigation:
         if self._presentWithSayAll(obj, offset):
             return
 
+        eventsynthesizer.scrollToTopEdge(obj)
         self._script.presentObject(obj, offset=offset, includeContext=includeContext)
 
     def _presentWithSayAll(self, obj, offset):
