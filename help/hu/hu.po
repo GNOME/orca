@@ -1,29 +1,30 @@
 # Hungarian translation for orca help.
-# Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018 Free Software Foundation, Inc.
+# Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019 Free Software Foundation, Inc.
 # This file is distributed under the same license as the orca help.
 #
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018.
 # Attila Hammer <hammera at pickup dot hu>, 2010, 2013, 2014, 2015, 2016, 2017, 2018.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca-help master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-04 11:59+0000\n"
-"PO-Revision-Date: 2018-09-13 23:24+0100\n"
-"Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
-"Language-Team: Hungarian <openscope at googlegroups dot com>\n"
+"POT-Creation-Date: 2019-01-07 20:33+0000\n"
+"PO-Revision-Date: 2019-02-22 00:04+0100\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
+"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 2.0\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
 msgid "translator-credits"
 msgstr ""
-"Hammer Attila <hammera at pickup dot hu>, 2011, 2012, 2013, 2014, 2015, 2016"
+"Hammer Attila <hammera at pickup dot hu>, 2011, 2012, 2013, 2014, 2015, 2016."
 
 #. (itstool) path: info/title
 #: C/commands_bookmarks.page:6
@@ -305,22 +306,22 @@ msgstr ""
 #: C/commands_chat.page:36
 msgid "Enable/disable announcement of room name with messages: (Unbound)"
 msgstr ""
-"A csatorna nevének a csevegőüzenetek elé illesztése be/ki: Ez a funkció nem "
-"rendelkezik előre definiált billentyűtársítással"
+"A csatorna nevének a csevegőüzenetek elé illesztése be/ki: nincs előre "
+"meghatározott billentyűtársítás"
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:41
 msgid "Enable/disable announcement of buddy typing status: (Unbound)"
 msgstr ""
-"Partner gépelési állapotának közlése be/ki: Ez a funkció nem rendelkezik "
-"előre definiált billentyűtársítással"
+"Partner gépelési állapotának közlése be/ki: nincs előre meghatározott "
+"billentyűtársítás"
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:44
 msgid "Enable/disable room-specific histories: (Unbound)"
 msgstr ""
-"A csevegőszoba üzenetelőzményeinek megjelenítése be/ki: Ez a funkció nem "
-"rendelkezik előre definiált billentyűtársítással"
+"A csevegőszoba üzenetelőzményeinek megjelenítése be/ki: nincs előre "
+"meghatározott billentyűtársítás"
 
 #. (itstool) path: info/title
 #: C/commands_controlling_orca.page:5
@@ -381,12 +382,12 @@ msgid ""
 "for information on how to bind unbound commands."
 msgstr ""
 "Ha az <app>Orka</app> képernyőolvasót olyan asztali környezettel használja, "
-"amelyben nincs beépített billentyűparancs a képernyőolvasó be- és "
-"kikapcsolására, akkor hasznos lehet a kilépés a <app>Képernyőolvasóból</app> "
-"parancs. Ehhez a parancshoz nincs alapértelmezetten definiált "
-"billentyűtársítás. Ha billentyűtársítást szeretne rendelni egy parancshoz, "
-"akkor olvassa el a <link xref=\"howto_key_bindings\">Billentyűtársítások "
-"módosítása</link> című fejezetet."
+"amelyben nincs beépített billentyűparancs az <app>Orka</app> képernyőolvasó "
+"be- és kikapcsolására, akkor hasznos lehet a kilépés az <app>Orka</app> "
+"képernyőolvasóból parancs. Ehhez a parancshoz nincs alapértelmezetten "
+"definiált billentyűtársítás. Ha billentyűtársítást szeretne rendelni egy "
+"parancshoz, akkor olvassa el a <link xref=\"howto_key_bindings\""
+">Billentyűtársítások módosítása</link> című fejezetet."
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:44
@@ -430,11 +431,10 @@ msgid ""
 "to. In this mode, you can also get a list of shortcuts containing all the "
 "<app>Orca</app> commands you can use."
 msgstr ""
-"A tanuló és billentyűparancs-listázó módok segítségével elsajátíthatja az "
-"<app>Orka</app> parancsait. A tanuló módban az <app>Orka</app> kimondja az "
-"Ön által lenyomott billentyűkombinációkat és a hozzájuk társított <app>Orka</"
-"app> parancsokat. Ezen kívül, a billentyűparancs-listázó mód segítségével az "
-"összes használható <app>Orka</app> parancsot egy listában áttekintheti."
+"A tanuló módban az <app>Orka</app> kimondja az Ön által lenyomott "
+"billentyűkombinációkat és a hozzájuk társított <app>Orka</app> parancsokat. "
+"Ezen kívül, a billentyűparancs-listázó mód segítségével az összes "
+"használható <app>Orka</app> parancsot egy listában áttekintheti."
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:73
@@ -489,8 +489,8 @@ msgstr ""
 #: C/commands_debugging.page:26
 msgid "Cycle to the next debug level: (Unbound)"
 msgstr ""
-"Váltás a következő hibakövetési szintre: Ehhez a parancshoz nincs előre "
-"definiált billentyűtársítás"
+"Váltás a következő hibakövetési szintre: nincs előre meghatározott "
+"billentyűtársítás"
 
 #. (itstool) path: info/title
 #: C/commands_find.page:6
@@ -1081,15 +1081,15 @@ msgstr ""
 #: C/commands_flat_review.page:188
 msgid "Copy the contents under flat review to the clipboard: (Unbound)"
 msgstr ""
-"Az egyszerű áttekintés által kijelölt tartalom másolása a vágólapra: Ehhez a "
-"parancshoz nincs definiálva billentyűtársítás"
+"Az egyszerű áttekintés által kijelölt tartalom másolása a vágólapra: nincs "
+"előre meghatározott billentyűtársítás"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:193
 msgid "Append the contents under flat review to the clipboard: (Unbound)"
 msgstr ""
 "Az egyszerű áttekintés által kijelölt tartalom hozzáfűzése a vágólaphoz: "
-"Ehhez a parancshoz nincs definiálva billentyűtársítás"
+"nincs előre meghatározott billentyűtársítás"
 
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:6
@@ -1302,8 +1302,8 @@ msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>0</key></keyse
 #: C/commands_mouse.page:69
 msgid "Enable/disable mouse review mode: (Unbound)"
 msgstr ""
-"Az áttekintés egérrel mód be- vagy kikapcsolása: Ehhez a parancshoz nincs "
-"előre definiálva billentyűtársítás"
+"Az áttekintés egérrel mód be- vagy kikapcsolása: nincs előre meghatározott "
+"billentyűtársítás"
 
 #. (itstool) path: info/title
 #: C/commands.page:5
@@ -1400,8 +1400,7 @@ msgstr ""
 #: C/commands_profiles.page:30
 msgid "Cycle to the next profile: (Unbound)"
 msgstr ""
-"Váltás a következő profilra: Ehhez a parancshoz nincs előre definiált "
-"billentyűtársítás"
+"Váltás a következő profilra: nincs előre meghatározott billentyűtársítás"
 
 #. (itstool) path: info/title
 #: C/commands_reading.page:8
@@ -1643,8 +1642,7 @@ msgstr ""
 #: C/commands_reading.page:241
 msgid "Speak the link details: (Unbound)"
 msgstr ""
-"Kimondja a hivatkozás részleteit: Ehhez a parancshoz nincs előre definiált "
-"billentyűtársítás"
+"Kimondja a hivatkozás részleteit: nincs előre meghatározott billentyűtársítás"
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:246
@@ -1686,6 +1684,48 @@ msgid ""
 msgstr ""
 "A rögzített böngészőmód engedélyezése: <keyseq><key>Orka módosító</"
 "key><key>A</key></keyseq> (háromszor gyorsan megnyomva)"
+
+#. (itstool) path: section/title
+#: C/commands_reading.page:273
+msgid "Toggling Layout Mode"
+msgstr "Elrendezésmód be- és kikapcsolása"
+
+#. (itstool) path: section/p
+#: C/commands_reading.page:274
+msgid ""
+"When Layout mode is enabled, <app>Orca</app>'s caret navigation will respect "
+"the on-screen layout of the content and present the full line, including any "
+"links or form fields on that line. When Layout mode is disabled, <app>Orca</"
+"app> will treat objects such as links and form fields as if they were on "
+"separate lines, both for presentation and navigation."
+msgstr ""
+"Ha az elrendezésmód engedélyezve van, az <app>Orka</app> mutatónavigációja a "
+"képernyő-elrendezés szerinti teljes sort fogja megjeleníteni, az adott "
+"sorban szereplő hivatkozásokkal és űrlapmezőkkel együtt. Ha ez a "
+"jelölőnégyzet nincs bejelölve, az <app>Orka</app> különálló sorként fogja "
+"kezelni a hivatkozásokat és az űrlapmezőket, a megjelenítéskor és a "
+"navigációkor egyaránt."
+
+#. (itstool) path: section/p
+#: C/commands_reading.page:281
+msgid ""
+"<app>Orca</app> provides a command to switch between Layout mode and Object "
+"mode. This command is unbound by default. Please see <link xref="
+"\"howto_key_bindings\">Modifying Keybindings</link> for information on how "
+"to bind unbound commands."
+msgstr ""
+"Az <app>Orka</app> parancsot ad az elrendezésmód és az objektummód közötti "
+"váltáshoz. Ehhez a parancshoz nincs alapértelmezetten definiált "
+"billentyűtársítás. Ha billentyűtársítást szeretne rendelni egy parancshoz, "
+"akkor olvassa el a <link xref=\"howto_key_bindings\">Billentyűtársítások "
+"módosítása</link> című fejezetet."
+
+#. (itstool) path: item/p
+#: C/commands_reading.page:288
+msgid "Switch between Layout mode and Object mode: (Unbound)"
+msgstr ""
+"Váltás az elrendezésmód és az objektummód között: nincs előre meghatározott "
+"billentyűtársítás"
 
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
@@ -1753,73 +1793,74 @@ msgstr ""
 #: C/commands_speech_settings.page:46
 msgid "Enable/disable speaking of indentation and justification: (Unbound)"
 msgstr ""
-"A behúzás és igazítás felolvasásának be- vagy kikapcsolása: Ehhez a "
-"parancshoz nincs előre definiált billentyűtársítás"
+"A behúzás és igazítás felolvasásának be- vagy kikapcsolása: nincs előre "
+"meghatározott billentyűtársítás"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:51
 msgid "Change the spoken number style: (Unbound)"
 msgstr ""
-"Megváltoztatja a kimondott szám stílusát: Ehhez a parancshoz nincs előre "
-"definiált billentyűtársítás"
+"Megváltoztatja a kimondott szám stílusát: nincs előre meghatározott "
+"billentyűtársítás"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:54
 msgid "Cycle to the next spoken punctuation level: (Unbound)"
 msgstr ""
-"Váltás a következő központozási szintre: Ehhez a parancshoz nincs előre "
-"definiált billentyűtársítás"
+"Váltás a következő központozási szintre: nincs előre meghatározott "
+"billentyűtársítás"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:57
 msgid "Cycle to the next key echo level: (Unbound)"
 msgstr ""
-"Váltás a következő billentyűvisszhang-szintre: Ehhez a parancshoz nincs "
-"előre definiált billentyűtársítás"
+"Váltás a következő billentyűvisszhang-szintre: nincs előre meghatározott "
+"billentyűtársítás"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:60
 msgid "Cycle to the next capitalization style: (Unbound)"
 msgstr ""
-"Váltás a következő nagybetű stílusra: Ehhez a parancshoz nincs előre "
-"definiált billentyűtársítás"
+"Váltás a következő nagybetű stílusra: nincs előre meghatározott "
+"billentyűtársítás"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:63
 msgid "Decrease the rate: (Unbound)"
 msgstr ""
-"A beszéd sebességének csökkentése: nincs előre definiált billentyűtársítás"
+"A beszéd sebességének csökkentése: nincs előre meghatározott billentyűtársítás"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:66
 msgid "Increase the rate: (Unbound)"
 msgstr ""
-"A beszéd sebességének növelése: nincs előre definiált billentyűtársítás"
+"A beszéd sebességének növelése: nincs előre meghatározott billentyűtársítás"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:69
 msgid "Decrease the pitch: (Unbound)"
 msgstr ""
-"A beszéd hangmagasságának csökkentése: Ehhez a parancshoz nincs előre "
-"definiált billentyűtársítás"
+"A beszéd hangmagasságának csökkentése: nincs előre meghatározott "
+"billentyűtársítás"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:72
 msgid "Increase the pitch: (Unbound)"
 msgstr ""
-"A beszéd hangmagasságának növelése: nincs előre definiált billentyűtársítás"
+"A beszéd hangmagasságának növelése: nincs előre meghatározott "
+"billentyűtársítás"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:75
 msgid "Decrease the volume: (Unbound)"
 msgstr ""
-"A beszéd hangerejének csökkentése: nincs előre definiált billentyűtársítás"
+"A beszéd hangerejének csökkentése: nincs előre meghatározott billentyűtársítás"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:78
 msgid "Increase the volume: (Unbound)"
 msgstr ""
-"A beszéd hangerejének növelése: nincs előre definiált billentyűtársítás"
+"A beszéd hangerejének növelése: nincs előre meghatározott billentyűtársítás"
 
 #. (itstool) path: info/title
 #: C/commands_structural_navigation.page:6
@@ -2573,20 +2614,20 @@ msgstr ""
 #: C/commands_time_date_notifications.page:50
 msgid "Present the last (most recent) notification message: (Unbound)"
 msgstr ""
-"Az utolsó értesítés megjelenítése: nincs előre definiált billentyűtársítás"
+"Az utolsó értesítés megjelenítése: nincs előre meghatározott billentyűtársítás"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:53
 msgid "Present the previous notification message: (Unbound)"
 msgstr ""
-"Az előző értesítés megjelenítése: nincs előre definiált billentyűtársítás"
+"Az előző értesítés megjelenítése: nincs előre meghatározott billentyűtársítás"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:56
 msgid "Present list of all notification messages: (Unbound)"
 msgstr ""
-"Az értesítések listájának megjelenítése: Ehhez a parancshoz nincs előre "
-"definiált billentyűtársítás"
+"Az értesítések listájának megjelenítése: nincs előre meghatározott "
+"billentyűtársítás"
 
 #. (itstool) path: info/title
 #: C/commands_where_am_i.page:6
@@ -2636,12 +2677,13 @@ msgstr "Az <app>Orka</app> a következő hol vagyok parancsokat biztosítja:"
 #. (itstool) path: page/p
 #: C/commands_where_am_i.page:56
 msgid ""
-"In addition to the dedicated Where Am I commands, <app>Orca</app> has two "
-"additional commands related to obtaining your present location:"
+"In addition to the dedicated Where Am I commands, <app>Orca</app> has "
+"additional commands related to obtaining information about your present "
+"location:"
 msgstr ""
 "A fenti hol vagyok műveletek billentyűparancsain kívül az <app>Orka</app> "
-"további két billentyűparanccsal rendelkezik a pillanatnyi objektum "
-"azonosításához:"
+"további billentyűparancsokkal rendelkezik a pillanatnyi helyzet "
+"információinak beszerzéséhez:"
 
 # Megjegyzés: itt átírtam a bekezdést, így jobban néz ki a felületi fordítás helyett.
 #. (itstool) path: item/p
@@ -2685,6 +2727,13 @@ msgid ""
 msgstr ""
 "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Per</key></keyseq> "
 "(kétszer gyorsan megnyomva)"
+
+#. (itstool) path: item/p
+#: C/commands_where_am_i.page:92
+msgid "Present size and location of current object in pixels: (Unbound)"
+msgstr ""
+"Az aktuális objektum jelenlegi mérete és helye képpontban: nincs előre "
+"meghatározott billentyűtársítás"
 
 #. (itstool) path: info/title
 #: C/howto_bookmarks.page:4
@@ -3977,7 +4026,9 @@ msgstr ""
 #: C/howto_profiles.page:42
 msgid ""
 "Press the <gui>OK</gui> button in the <gui>Save Profile As</gui> dialog box."
-msgstr "Ha végzett, nyomja meg az <gui>OK</gui> gombot."
+msgstr ""
+"Nyomja meg az <gui>OK</gui> gombot a <gui>Profil mentése másként</gui> "
+"párbeszédablakon."
 
 #. (itstool) path: steps/title
 #: C/howto_profiles.page:49
@@ -5222,7 +5273,7 @@ msgid ""
 "terminal window or within the <gui>Run</gui> dialog:"
 msgstr ""
 "Az <app>Orka</app> elindításakor a következő opciókat használhatja a "
-"terminál alkalmazásban és a Futtatás párbeszédablakban:"
+"terminál alkalmazásban és a <gui>Futtatás</gui> párbeszédablakban:"
 
 #. (itstool) path: item/p
 #: C/introduction.page:68
@@ -6362,8 +6413,8 @@ msgid ""
 "is also configurable. You will find similar checkboxes on the <gui>Speech</"
 "gui> page. For more information, see <link xref="
 "\"preferences_speech#spoken_context\">Spoken Context</link>."
-msgstr ""
-" Ezeknek az információknak a bejelentése navigálás közben szintén "
+msgstr " "
+"Ezeknek az információknak a bejelentése navigálás közben szintén "
 "beállítható. A beállítások megadásához hasonló jelölőnégyzeteket fog találni "
 "a <gui>Beszéd</gui> lapon. Ha bővebb információra van szüksége, olvassa el a "
 "<link xref=\"preferences_speech#spoken_context\">Kimondott szövegkörnyezet</"
@@ -6712,7 +6763,8 @@ msgstr ""
 msgid ""
 "<gui>KP_Insert</gui> (the same key as the <key>0</key> on the numeric keypad)"
 msgstr ""
-"<gui>KP_Insert</gui>: Egyenértékű a numerikus billentyűzet 0 billentyűjével."
+"<gui>KP_Insert</gui>: Egyenértékű a numerikus billentyűzet <key>0</key> "
+"billentyűjével."
 
 #. (itstool) path: item/p
 #: C/preferences_key_bindings.page:32
