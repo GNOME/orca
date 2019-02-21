@@ -1,3 +1,60 @@
+3.31.91 - 21 February 2019
+
+Web:
+
+ * Ensure web contents are scrolled into view during SayAll
+
+ * Scroll the current object to the top edge when using structural
+   navigation
+
+ * Prevent extra context being presented in contenteditable elements
+
+ * Work around YouTube focus issue when navigating by heading
+
+ * Improve presentation of graphical/icon-based push buttons
+
+ * Increase the likelihood that inline list items will be presented as
+   one line
+
+ * Attempt to identify and ignore bogus events from background etherpad
+
+ * Fix issue presenting text with links when using etherpad in object
+   mode
+
+ * Don't do SayAll for URIs starting with "moz-extension"
+
+ * Improve interaction and presentation of focusable trees
+
+LibreOffice:
+
+ * Fix presentation of text selection spanning multiple, partial
+   lines in a list
+
+General:
+
+ * Fix hang resulting from building flat review context from objects
+   claiming a bogus, huge bounding box
+
+ * Handle broken accessibility tree when generating labelOrName
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                 Marek Cernocky
+    da            Danish                Alan Mortensen
+    de            German                Tim Sabsch
+    gl            Galician              Fran Diéguez
+    hu            Hungarian             Balázs Úr
+    id            Indonesian            Kukuh Syafaat
+    kk            Kazakh                Baurzhan Muftakhidinov
+    lt            Lithuanian            Aurimas Černius
+    po            Polish                Piotr Drąg
+    pt_BR         Brazilian Portuguese  Rafael Fontenelle
+    sl            Slovenian             Matej Urbančič
+    sv            Swedish               Anders Jonsson
+    tr            Turkish               Sabri Ünal
+
+=========
+
 3.31.4 - 14 January 2019
 
 New Commands:
