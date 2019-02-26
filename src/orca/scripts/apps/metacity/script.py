@@ -27,6 +27,8 @@ __license__   = "LGPL"
 
 import orca.messages as messages
 import orca.scripts.default as default
+import orca.orca as orca
+import orca.orca_state as orca_state
 import pyatspi
 
 ########################################################################
@@ -76,6 +78,11 @@ class Script(default.Script):
         # If the status bar is suddenly showing, we need to handle it here
         # because we typically do not get onTextInserted events at that time.
         if role == pyatspi.ROLE_STATUS_BAR and event.detail1:
+            # prevent a window:deactivate from the "current" window to stop
+            # our speaking.
+            if orca_state.locusOfFocus:
+                orca.setLocusOfFocus(event, None)
+
             self.presentStatusBar(obj)
             return
 

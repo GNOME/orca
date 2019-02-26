@@ -27,6 +27,8 @@ __license__   = "LGPL"
 
 import orca.messages as messages
 import orca.scripts.default as default
+import orca.orca as orca
+import orca.orca_state as orca_state
 import pyatspi
 
 ########################################################################
@@ -81,7 +83,12 @@ class Script(default.Script):
         """
 
         if event.source.getRole() != pyatspi.ROLE_STATUS_BAR:
-            default.Script.onTextInserted(self, event)
+            return default.Script.onTextInserted(self, event)
+
+        # prevent a window:deactivate from the "current" window to stop
+        # our speaking.
+        if orca_state.locusOfFocus:
+            orca.setLocusOfFocus(event, None)
 
         self.presentStatusBar(event.source)
 
