@@ -18,16 +18,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orcaorca/issues\n"
-"POT-Creation-Date: 2018-09-20 16:50+0000\n"
-"PO-Revision-Date: 2018-11-07 21:39+0100\n"
+"POT-Creation-Date: 2018-11-17 15:12+0000\n"
+"PO-Revision-Date: 2019-02-23 15:16+0100\n"
 "Last-Translator: Charles Monzat <charles.monzat@numericable.fr>\n"
-"Language-Team: français <gnomefr@traduc.org>\n"
+"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Generator: Gtranslator 3.30.0\n"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -726,13 +726,13 @@ msgstr "barre oblique"
 #.
 #: ../src/orca/chnames.py:113
 msgid "colon"
-msgstr "deux points"
+msgstr "deux-points"
 
 #. Translators: this is the spoken word for the character ';' (U+003b)
 #.
 #: ../src/orca/chnames.py:117
 msgid "semicolon"
-msgstr "point virgule"
+msgstr "point-virgule"
 
 #. Translators: this is the spoken word for the character '< ' (U+003c)
 #.
@@ -1814,7 +1814,7 @@ msgstr "Lit la fenêtre entière avec le curseur de balayage."
 #. with focus as well as its mnemonic.
 #: ../src/orca/cmdnames.py:73
 msgid "Performs the basic where am I operation."
-msgstr "Effectue l’opération « où suis-je » de base."
+msgstr "Effectue l’opération « Où suis-je ? » de base."
 
 #. Translators: the "Where am I" feature of Orca allows a user to press a key and
 #. then have information about their current context spoken and brailled to them.
@@ -1822,7 +1822,7 @@ msgstr "Effectue l’opération « où suis-je » de base."
 #. with focus as well as its mnemonic.
 #: ../src/orca/cmdnames.py:79
 msgid "Performs the detailed where am I operation."
-msgstr "Effectue l’opération « où suis-je » détaillée."
+msgstr "Effectue l’opération « Où suis-je ? » détaillée."
 
 #. Translators: This is the description of a dedicated command to speak the
 #. current selection / highlighted object(s). For instance, in a text object,
@@ -2017,7 +2017,7 @@ msgstr "Déplace le curseur de balayage au prochain élément ou mot."
 #. line upward on the screen.
 #: ../src/orca/cmdnames.py:233
 msgid "Moves flat review to the word above the current word."
-msgstr "Déplace le curseur de balayage au dessus du mot actuel."
+msgstr "Déplace le curseur de balayage au-dessus du mot actuel."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2359,7 +2359,7 @@ msgstr "Affiche successivement les niveaux de débogage à l’exécution."
 #. page.
 #: ../src/orca/cmdnames.py:495
 msgid "Bookmark where am I with respect to current position."
-msgstr "Placer un signer à l’endroit où je suis actuellement."
+msgstr "Placer un signet à l’endroit où je suis actuellement."
 
 #. Translators: this event handler cycles through the registered bookmarks and
 #. takes the user to the previous bookmark location. Note that in this context,
@@ -4532,7 +4532,7 @@ msgstr "double-clic"
 #.
 #: ../src/orca/guilabels.py:184 ../src/orca/keybindings.py:201
 msgid "triple click"
-msgstr "triple clic"
+msgstr "triple-clic"
 
 #. Translators: This is a label which will appear in the list of available speech
 #. engines as a special item. It refers to the default engine configured within
@@ -5638,11 +5638,12 @@ msgstr "changement de mode"
 msgid "escape"
 msgstr "échap"
 
+# Plutôt que inser ou inser. qui poseraient des problèmes de prononciation
 #. Translators: this is how someone would speak the name of the insert key
 #.
 #: ../src/orca/keynames.py:218 ../src/orca/keynames.py:222
 msgid "insert"
-msgstr "inser."
+msgstr "insert"
 
 #. Translators: this is how someone would speak the name of the delete key
 #.
@@ -6464,13 +6465,13 @@ msgstr "intégrale dans le sens horaire"
 #: ../src/orca/mathsymbols.py:1513
 msgctxt "math symbol"
 msgid "clockwise contour integral"
-msgstr "intégrale de contour dans le sens antihoraire"
+msgstr "intégrale de contour dans le sens horaire"
 
 #. Translators: this is the spoken representation for the character '∳' (U+2233)
 #: ../src/orca/mathsymbols.py:1516
 msgctxt "math symbol"
 msgid "anticlockwise contour integral"
-msgstr "intégrale de contour dans le sens horaire"
+msgstr "intégrale de contour dans le sens antihoraire"
 
 #. Translators: this is the spoken representation for the character '∴' (U+2234)
 #: ../src/orca/mathsymbols.py:1519
@@ -6758,7 +6759,7 @@ msgstr "non identique à"
 #: ../src/orca/mathsymbols.py:1660
 msgctxt "math symbol"
 msgid "strictly equivalent to"
-msgstr "stictement équivalent à"
+msgstr "strictement équivalent à"
 
 #. Translators: this is the spoken representation for the character '≤' (U+2264)
 #: ../src/orca/mathsymbols.py:1663
@@ -8020,7 +8021,7 @@ msgstr "Paramètres facultatifs"
 #. It is followed by a brief list of Orca's optional command-line arguments.
 #: ../src/orca/messages.py:200
 msgid "Usage: "
-msgstr "Usage : "
+msgstr "Utilisation : "
 
 #. Translators: This message is displayed when the user starts Orca from the
 #. command line and includes an invalid option or argument. After the message,
@@ -8497,7 +8498,7 @@ msgstr "Désactivation du curseur de balayage."
 #. (e.g., "=sum(a1:d1)")
 #: ../src/orca/messages.py:564
 msgid "has formula"
-msgstr " contient une formule"
+msgstr "contient une formule"
 
 #. Translators: The following string is spoken to let the user know that he/she
 #. is on a link within an image map. An image map is an image/graphic which has
@@ -9782,7 +9783,7 @@ msgstr "aucun message dynamique enregistré"
 #. turned off.
 #: ../src/orca/messages.py:1508
 msgid "Live region support is off"
-msgstr "La prise en charge des zones dynamiques est déactivée"
+msgstr "La prise en charge des zones dynamiques est désactivée"
 
 #. Translators: Orca has a command that allows the user to move the mouse pointer
 #. to the current object. This is a brief message which will be presented if for
@@ -10195,7 +10196,7 @@ msgid ""
 "Press Space to repeat the last message read.\n"
 "Press one digit to read a specific message.\n"
 msgstr ""
-"Utilisez Haut, Bas, Début ou Fin pour parcourir la liste.\n"
+"Utilisez Haut, Bas, Origine ou Fin pour parcourir la liste.\n"
 "Appuyez sur Échap pour quitter.\n"
 "Appuyez sur la barre d’espace pour répéter le dernier message lu.\n"
 "Appuyez sur un chiffre pour lire un message spécifique.\n"
@@ -10457,7 +10458,7 @@ msgstr "Niveau de ponctuation défini à aucun."
 #: ../src/orca/messages.py:1994
 msgctxt "spoken punctuation"
 msgid "Some"
-msgstr "Quelques-uns"
+msgstr "Quelques"
 
 #. Translators: This detailed message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -10465,7 +10466,7 @@ msgstr "Quelques-uns"
 #. spoken, or Some will be spoken.
 #: ../src/orca/messages.py:2000
 msgid "Punctuation level set to some."
-msgstr "Niveau de ponctuation défini à quelques-uns."
+msgstr "Niveau de ponctuation défini à quelques."
 
 #. Translators: This message is presented to indicate that a search has begun
 #. or is still taking place.
@@ -10564,7 +10565,7 @@ msgstr "moins fort."
 #: ../src/orca/messages.py:2067
 msgctxt "Speech"
 msgid "Verbosity level: brief"
-msgstr "Niveau de verbosité : concis"
+msgstr "Niveau de verbosité : court"
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -11181,7 +11182,7 @@ msgstr[1] "%d raccourcis par défaut du lecteur d’écran trouvés."
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
-msgstr[0] "%(count)d raccourci du lecteur d’ércan pour %(application)s trouvé."
+msgstr[0] "%(count)d raccourci du lecteur d’écran pour %(application)s trouvé."
 msgstr[1] ""
 "%(count)d raccourcis du lecteur d’écran pour %(application)s trouvés."
 
@@ -12215,7 +12216,7 @@ msgstr "Activer la navigation par structure en mode tout lire"
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and say all by line.  If Orca were speaking a work of fiction, it would probably be best to do say all by sentence so it sounds more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: ../src/orca/orca-setup.ui.h:54
 msgid "Say All B_y:"
-msgstr "Lire to_ut par :"
+msgstr "To_ut lire par :"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a blockquote has been entered before speaking the text. At the end of the text, Orca will announce that the blockquote is being exited.
 #: ../src/orca/orca-setup.ui.h:56
@@ -12349,10 +12350,11 @@ msgstr "Lire l’_indentation et la justification"
 msgid "Spea_k object mnemonics"
 msgstr "Lire le ra_ccourci des objets"
 
+# Proposé par un formateur hypra.fr
 #. Translators: This checkbox toggles whether or not Orca says the child position (e.g., item 6 of 7).
 #: ../src/orca/orca-setup.ui.h:105
 msgid "Speak child p_osition"
-msgstr "Lire la p_osition fille"
+msgstr "Lire le _rang d’un élément dans une liste"
 
 #: ../src/orca/orca-setup.ui.h:106
 msgid "Speak tutorial messages"
@@ -12435,9 +12437,10 @@ msgstr "Synthèse vocale"
 msgid "Enable Braille _support"
 msgstr "Activer la _prise en charge du braille"
 
+# Proposé par un formateur hypra.fr
 #: ../src/orca/orca-setup.ui.h:136
 msgid "_Abbreviated role names"
-msgstr "Noms de rôle _abrégés"
+msgstr "Descriptions des objets _abrégés"
 
 #: ../src/orca/orca-setup.ui.h:137
 msgid "Disable _end of line symbol"
@@ -12531,7 +12534,7 @@ msgstr "Activer les touches de _modification"
 
 #: ../src/orca/orca-setup.ui.h:168
 msgid "Enable _function keys"
-msgstr "Activer les touches de _fonctions"
+msgstr "Activer les touches de _fonction"
 
 #: ../src/orca/orca-setup.ui.h:169
 msgid "Enable ac_tion keys"
