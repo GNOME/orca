@@ -46,6 +46,14 @@ class Script(default.Script):
 
         return Utilities(self)
 
+    def isActivatableEvent(self, event):
+        """Returns True if this event should activate this script."""
+
+        if self.utilities.isSwitcherSelectionChangeEventType(event):
+            return True
+
+        return super().isActivatableEvent(event)
+
     def _handleSwitcherEvent(self, event):
         """Presents the currently selected item, if appropriate."""
 
