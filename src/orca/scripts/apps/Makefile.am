@@ -16,9 +16,7 @@ SUBDIRS = \
 	gnome-shell \
 	gnome-search-tool \
 	gnome-window-properties \
-	gtk-window-decorator \
 	Instantbird \
-	metacity \
 	notification-daemon \
 	notify-osd \
 	Mozilla \

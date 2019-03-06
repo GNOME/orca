@@ -47,14 +47,16 @@ class ScriptManager:
              "orca.scripts.apps",
              "orca.scripts.toolkits"]
         self._appNames = \
-            {'Firefox':          'Mozilla',
-             'Icedove':          'Thunderbird',
-             'empathy-chat':     'empathy',
+            {'Firefox': 'Mozilla',
+             'Icedove': 'Thunderbird',
+             'Nereid': 'Banshee',
+             'empathy-chat': 'empathy',
              'gnome-calculator': 'gcalctool',
-             'marco':            'metacity',
-             'Nereid':           'Banshee',
+             'gtk-window-decorator': 'switcher',
+             'marco': 'switcher',
              'mate-notification-daemon': 'notification-daemon',
-             'pluma':            'gedit',
+             'metacity': 'switcher',
+             'pluma': 'gedit',
             }
 
         self.setActiveScript(None, "__init__")

@@ -1,4 +1,4 @@
-SUBDIRS = apps toolkits terminal web
+SUBDIRS = apps toolkits switcher terminal web
 
 orca_python_PYTHON = \
 	__init__.py \

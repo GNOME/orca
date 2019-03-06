@@ -106,9 +106,7 @@ src/orca/scripts/apps/gnome-screensaver-dialog/Makefile
 src/orca/scripts/apps/gnome-search-tool/Makefile
 src/orca/scripts/apps/gnome-shell/Makefile
 src/orca/scripts/apps/gnome-window-properties/Makefile
-src/orca/scripts/apps/gtk-window-decorator/Makefile
 src/orca/scripts/apps/Instantbird/Makefile
-src/orca/scripts/apps/metacity/Makefile
 src/orca/scripts/apps/notification-daemon/Makefile
 src/orca/scripts/apps/notify-osd/Makefile
 src/orca/scripts/apps/Mozilla/Makefile
@@ -119,6 +117,7 @@ src/orca/scripts/apps/SeaMonkey/Makefile
 src/orca/scripts/apps/smuxi-frontend-gnome/Makefile
 src/orca/scripts/apps/Thunderbird/Makefile
 src/orca/scripts/apps/xfwm4/Makefile
+src/orca/scripts/switcher/Makefile
 src/orca/scripts/terminal/Makefile
 src/orca/scripts/web/Makefile
 src/orca/scripts/toolkits/Makefile
