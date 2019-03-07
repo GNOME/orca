@@ -158,6 +158,8 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
         return
 
     if orca_state.activeScript:
+        msg = "ORCA: Active script is: %s" % orca_state.activeScript
+        debug.println(debug.LEVEL_INFO, msg, True)
         if orca_state.activeScript.utilities.isZombie(obj):
             msg = "ERROR: New locusOfFocus (%s) is zombie. Not updating." % obj
             debug.println(debug.LEVEL_INFO, msg, True)
