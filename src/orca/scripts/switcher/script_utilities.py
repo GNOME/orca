@@ -73,6 +73,8 @@ class Utilities(script_utilities.Utilities):
         if index >= 0:
             return True
 
+        obj.clearCache()
+
         if self.isShowingAndVisible(obj):
             msg = "SWITCHER: Ignoring bad index of %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
