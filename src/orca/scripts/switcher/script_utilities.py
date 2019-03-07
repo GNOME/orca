@@ -26,6 +26,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
+from orca import debug
 from orca import script_utilities
 
 
@@ -57,3 +58,26 @@ class Utilities(script_utilities.Utilities):
             return container.name
 
         return ""
+
+    def isZombie(self, obj):
+        if not super().isZombie(obj):
+            return False
+
+        try:
+            index = obj.getIndexInParent()
+        except:
+            msg = "SWITCHER: Exception getting index in parent for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if index >= 0:
+            return True
+
+        if self.isShowingAndVisible(obj):
+            msg = "SWITCHER: Ignoring bad index of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        msg = "SWITCHER: %s has bad index and isn't showing and visible" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return True
