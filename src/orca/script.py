@@ -542,6 +542,11 @@ class Script:
         """
         return True
 
+    def forceScriptActivation(self, event):
+        """Allows scripts to insist that they should become active."""
+
+        return False
+
     def activate(self):
         """Called when this script is activated."""
         pass

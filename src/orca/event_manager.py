@@ -639,6 +639,9 @@ class EventManager:
         if not script.isActivatableEvent(event):
             return False, "The script says not to activate for this event."
 
+        if script.forceScriptActivation(event):
+            return True, "The script insists it should be activated for this event."
+
         eType = event.type
         if eType.startswith('window:activate'):
             return True, "window:activate event"
