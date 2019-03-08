@@ -1,3 +1,25 @@
+3.31.92 - 8 March 2019
+
+General:
+
+ * Create generic switcher script and use it for all non-gnome-shell
+   switchers
+
+ * Improve presentation when initially getting into the Compiz and
+   MATE switchers
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    fr            French                Claude Paroz
+    hu            Hungarian             Balázs Úr
+    it            Italian               Milo Casagrande
+    lv            Latvian               Rūdolfs Mazurs
+    nl            Dutch                 Nathan Follens
+    ro            Romanian              Daniel Șerbănescu
+    sr            Serbian               Марко Костић
+
+=========
+
 3.31.91 - 21 February 2019
 
 Web:
