@@ -19,13 +19,13 @@
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2011-2012, 2018.
 # Christian Kirbach <Christian.Kirbach@googlemail.com>, 2011, 2017.
 # Sascha Manns <Sascha.Manns@mailbox.org>, 2017.
-# Tim Sabsch <tim@sabsch.com>, 2018.
+# Tim Sabsch <tim@sabsch.com>, 2018-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca help master\n"
-"POT-Creation-Date: 2018-09-04 11:59+0000\n"
-"PO-Revision-Date: 2018-09-04 18:59+0200\n"
+"POT-Creation-Date: 2019-01-07 20:33+0000\n"
+"PO-Revision-Date: 2019-03-12 10:08+0100\n"
 "Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -33,7 +33,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-Bookmarks: 562,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
@@ -44,7 +44,7 @@ msgstr ""
 "Christian Kirbach <Christian.Kirbach@googlemail.com>, 2011, 2016, 2017, "
 "2018\n"
 "Sascha Manns <Sascha.Manns@mailbox.org>, 2017\n"
-"Tim Sabsch <tim@sabsch.com>, 2018"
+"Tim Sabsch <tim@sabsch.com>, 2018-2019"
 
 #. (itstool) path: info/title
 #: C/commands_bookmarks.page:6
@@ -1648,6 +1648,46 @@ msgstr ""
 "Dauerhaften Stöber-Modus aktivieren: <keyseq><key>Orca-Zusatztaste</"
 "key><key>A</key></keyseq> (Dreifachklick)"
 
+#. (itstool) path: section/title
+#: C/commands_reading.page:273
+msgid "Toggling Layout Mode"
+msgstr "Layout-Modus ein-/ausschalten"
+
+#. (itstool) path: section/p
+#: C/commands_reading.page:274
+msgid ""
+"When Layout mode is enabled, <app>Orca</app>'s caret navigation will respect "
+"the on-screen layout of the content and present the full line, including any "
+"links or form fields on that line. When Layout mode is disabled, <app>Orca</"
+"app> will treat objects such as links and form fields as if they were on "
+"separate lines, both for presentation and navigation."
+msgstr ""
+"Ist der Layout-Modus eingeschaltet, wird <app>Orca</app>s Caret-Navigation "
+"das Layout des sichtbaren Inhalts berücksichtigen und die ganze Zeile, "
+"einschließlich jeglicher Links oder Formularfelder in dieser Zeile vorlesen. "
+"Ist der Layout-Modus ausgeschaltet, wird <app>Orca</app> Objekte wie Links "
+"und Formularfelder beim Vorlesen und Navigieren so behandeln, als wären Sie "
+"auf eigenen Zeilen."
+
+#. (itstool) path: section/p
+#: C/commands_reading.page:281
+msgid ""
+"<app>Orca</app> provides a command to switch between Layout mode and Object "
+"mode. This command is unbound by default. Please see <link xref="
+"\"howto_key_bindings\">Modifying Keybindings</link> for information on how "
+"to bind unbound commands."
+msgstr ""
+"<app>Orca</app> stellt einen Befehl zur Verfügung, um zwischen Layout- und "
+"Objektmodus umzuschalten. Dieser Befehl ist standardmäßig nicht zugewiesen. "
+"Bitte klicken Sie auf <link xref=\"howto_key_bindings\">Tastenkombinationen "
+"verändern</link>, um Informationen darüber zu erhalten, wie Sie nicht "
+"zugewiesenen Befehlen Tastenkombinationen zuweisen."
+
+#. (itstool) path: item/p
+#: C/commands_reading.page:288
+msgid "Switch between Layout mode and Object mode: (Unbound)"
+msgstr "Zwischen Layout- und Objektmodus umschalten: (Nicht zugewiesen)"
+
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
 msgctxt "sort"
@@ -2581,11 +2621,12 @@ msgstr "<app>Orca</app> unterstützt die folgenden Wo bin ich Befehle:"
 #. (itstool) path: page/p
 #: C/commands_where_am_i.page:56
 msgid ""
-"In addition to the dedicated Where Am I commands, <app>Orca</app> has two "
-"additional commands related to obtaining your present location:"
+"In addition to the dedicated Where Am I commands, <app>Orca</app> has "
+"additional commands related to obtaining information about your present "
+"location:"
 msgstr ""
 "Zusätzlich zu den vorgesehenen »Wo bin ich«-Befehlen hat <app>Orca</app> "
-"zwei zusätzliche Befehle, die von der aktuellen Position abhängig sind:"
+"weitere Befehle, um Informationen zur aktuellen Position zu erhalten:"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:62
@@ -2627,6 +2668,13 @@ msgid ""
 msgstr ""
 "Laptop: <keyseq><key>Orca-Zusatztaste</key><key>Schrägstrich</key></keyseq> "
 "(Doppelklick)"
+
+#. (itstool) path: item/p
+#: C/commands_where_am_i.page:92
+msgid "Present size and location of current object in pixels: (Unbound)"
+msgstr ""
+"Größe und Position des aktuellen Objekts in Pixeln vorlesen: (Nicht "
+"zugewiesen)"
 
 #. (itstool) path: info/title
 #: C/howto_bookmarks.page:4
