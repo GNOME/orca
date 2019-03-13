@@ -76,6 +76,14 @@ class Script(default.Script):
         self.presentMessage(self.utilities.getSelectionName(event.source))
         return True
 
+    def onFocusedChanged(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
+
+        if self._handleSwitcherEvent(event):
+            return
+
+        super().onFocusedChanged(event)
+
     def onNameChanged(self, event):
         """Callback for object:property-change:accessible-name events."""
 

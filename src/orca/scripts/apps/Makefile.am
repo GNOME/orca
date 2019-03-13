@@ -17,6 +17,7 @@ SUBDIRS = \
 	gnome-search-tool \
 	gnome-window-properties \
 	Instantbird \
+	kwin \
 	notification-daemon \
 	notify-osd \
 	Mozilla \
