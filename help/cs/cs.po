@@ -1,13 +1,13 @@
 # Czech translation for orca.
 # Copyright (C) 2011 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
-# Marek Černocký <marek@manet.cz>, 2015, 2016, 2017, 2018.
+# Marek Černocký <marek@manet.cz>, 2015, 2016, 2017, 2018, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"POT-Creation-Date: 2018-09-04 11:59+0000\n"
-"PO-Revision-Date: 2018-09-05 09:24+0200\n"
+"POT-Creation-Date: 2019-01-07 20:33+0000\n"
+"PO-Revision-Date: 2019-03-13 10:05+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -372,7 +372,7 @@ msgstr ""
 "Pokud používáte čtečku <app>Orca</app> v jiném pracovním prostředí, ve "
 "kterém není žádný příkaz pro její zapnutí a vypnutí, může se vám hodit "
 "příkaz pro její ukončení. Ve výchozím stavu nemá tento příkaz přidělenou "
-"žádnou klávesovou zkratku. Jak mu ji přidělit najdete v kapitole <link xref="
+"žádnou klávesovou zkratku. Jak mu ji přidělit, najdete v kapitole <link xref="
 "\"howto_key_bindings\">Změna klávesových zkratek</link>."
 
 #. (itstool) path: item/p
@@ -1673,6 +1673,46 @@ msgstr ""
 "Zapnout „přichytávací“ režim zaměřování: <keyseq><key>Modifikátor Orca</"
 "key><key>A</key></keyseq> (trojité zmáčknutí)"
 
+#. (itstool) path: section/title
+#: C/commands_reading.page:273
+msgid "Toggling Layout Mode"
+msgstr "Přepínání režimu rozvržení"
+
+#. (itstool) path: section/p
+#: C/commands_reading.page:274
+msgid ""
+"When Layout mode is enabled, <app>Orca</app>'s caret navigation will respect "
+"the on-screen layout of the content and present the full line, including any "
+"links or form fields on that line. When Layout mode is disabled, <app>Orca</"
+"app> will treat objects such as links and form fields as if they were on "
+"separate lines, both for presentation and navigation."
+msgstr ""
+"Když je režim rozvržení zapnutý, bude <app>Orca</app> při ovládání kurzoru "
+"vždy respektovat rozvržení obsahu na obrazovce a prezentovat celé řádky, "
+"včetně případných odkazů nebo formulářových polí na daném řádku. Když režim "
+"rozvržení zapnutý není, bude <app>Orca</app> zacházet s objekty, jako jsou "
+"odkazy nebo formulářová pole, jak by to byly samostatné řádky, o to jak při "
+"prezentování, tak při navigaci."
+
+#. (itstool) path: section/p
+#: C/commands_reading.page:281
+msgid ""
+"<app>Orca</app> provides a command to switch between Layout mode and Object "
+"mode. This command is unbound by default. Please see <link xref="
+"\"howto_key_bindings\">Modifying Keybindings</link> for information on how "
+"to bind unbound commands."
+msgstr ""
+"<app>Orca</app> poskytuje příkaz pro přepínání mezi režimem rozvržení a "
+"objektovým režimem. Tento příkaz ve výchozím stavu nemá přiřazenou klávesovou "
+"zkratku. Jak mu ji přidělit, najdete v kapitole <link xref=\"howto_key_bindings"
+"\">Změna klávesových zkratek</link>."
+
+#. (itstool) path: item/p
+#: C/commands_reading.page:288
+msgid "Switch between Layout mode and Object mode: (Unbound)"
+msgstr ""
+"Přepnout mezi režimem rozvržení a objektovým režimem: (bez klávesové zkratky)"
+
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
 msgctxt "sort"
@@ -2593,11 +2633,13 @@ msgstr "<app>Orca</app> poskytuje následující příkazy „Kde se nacházím�
 #. (itstool) path: page/p
 #: C/commands_where_am_i.page:56
 msgid ""
-"In addition to the dedicated Where Am I commands, <app>Orca</app> has two "
-"additional commands related to obtaining your present location:"
+"In addition to the dedicated Where Am I commands, <app>Orca</app> has "
+"additional commands related to obtaining information about your present "
+"location:"
 msgstr ""
 "Mimo příkazů přímo sloužících pro „Kde se nacházím“ má <app>Orca</app> dva "
-"doplňující příkazy vztahující se k prezentování vašeho místa:"
+"doplňující příkazy vztahující se k získání informací o prezentování místa, "
+"kde se nacházíte:"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:62
@@ -2639,6 +2681,13 @@ msgid ""
 msgstr ""
 "Přenosný počítač: <keyseq><key>Modifikátor Orca</key> <key>/</key></keyseq> "
 "(dvojité zmáčknutí)"
+
+#. (itstool) path: item/p
+#: C/commands_where_am_i.page:92
+msgid "Present size and location of current object in pixels: (Unbound)"
+msgstr ""
+"Prezentovat velikost a umístění aktuálního objektu v pixelech: (bez klávesové "
+"zkratky)"
 
 #. (itstool) path: info/title
 #: C/howto_bookmarks.page:4
