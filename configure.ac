@@ -19,7 +19,8 @@ AM_INIT_AUTOMAKE([1.11 tar-ustar no-dist-gzip dist-xz])
 AM_MAINTAINER_MODE([enable])
 
 dnl Gettext stuff
-IT_PROG_INTLTOOL([0.50.0])
+AM_GNU_GETTEXT_VERSION([0.19.8])
+AM_GNU_GETTEXT([external])
 
 GETTEXT_PACKAGE=AC_PACKAGE_TARNAME
 AC_SUBST(GETTEXT_PACKAGE)
@@ -77,7 +78,7 @@ case "${PLATFORM}" in
 esac
 AC_SUBST(PLATFORM_PATH)
 
-AC_OUTPUT([ 
+AC_OUTPUT([
 run_pylint.sh
 Makefile
 docs/Makefile

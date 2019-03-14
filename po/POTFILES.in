@@ -1,6 +1,5 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
-[encoding: UTF-8]
 orca-autostart.desktop.in
 src/orca/braille_rolenames.py
 src/orca/brltablenames.py
@@ -14,8 +13,8 @@ src/orca/mathsymbols.py
 src/orca/messages.py
 src/orca/notification_messages.py
 src/orca/object_properties.py
-[type: gettext/glade]src/orca/orca-find.ui
-[type: gettext/glade]src/orca/orca-setup.ui
+src/orca/orca-find.ui
+src/orca/orca-setup.ui
 src/orca/phonnames.py
 src/orca/text_attribute_names.py
 src/orca/tutorialgenerator.py
