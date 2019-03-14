@@ -27,11 +27,6 @@ aclocal --install || {
         exit 1
 }
 
-intltoolize --force --copy --automake || {
-        echo "Try installing the 'intltool' package."
-        exit 1
-}
-
 autoreconf --verbose --force --install -Wno-portability  || {
         echo "Try installing the 'autoconf' package."
         exit 1
