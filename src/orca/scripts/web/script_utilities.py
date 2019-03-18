@@ -976,7 +976,11 @@ class Utilities(script_utilities.Utilities):
 
         allText = text.getText(0, -1)
         if boundary == pyatspi.TEXT_BOUNDARY_CHAR:
-            string = allText[offset]
+            try:
+                string = allText[offset]
+            except IndexError:
+                string = ""
+
             return string, offset, offset + 1
 
         extents = list(text.getRangeExtents(offset, offset + 1, 0))
