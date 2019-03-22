@@ -2282,7 +2282,7 @@ class Script(script.Script):
             return
 
         self._saveLastCursorPosition(event.source, text.caretOffset)
-        if text.getNSelections():
+        if text.getNSelections() > 0:
             msg = "DEFAULT: Event source has text selections"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.utilities.handleTextSelectionChange(event.source)
@@ -3056,7 +3056,7 @@ class Script(script.Script):
 
         # If there is a selection, clear it. See bug #489504 for more details.
         #
-        if text.getNSelections():
+        if text.getNSelections() > 0:
             text.setSelection(0, context.currentOffset, context.currentOffset)
 
     def inSayAll(self):

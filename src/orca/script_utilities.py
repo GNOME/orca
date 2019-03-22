@@ -2464,7 +2464,7 @@ class Utilities:
         except:
             return
 
-        if not text.getNSelections():
+        if text.getNSelections() <= 0:
             caretOffset = text.caretOffset
             startOffset = min(offset, caretOffset)
             endOffset = max(offset, caretOffset)
