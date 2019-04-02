@@ -93,44 +93,6 @@ class Utilities(web.Utilities):
 
         return not self.selectedChildCount(obj)
 
-    def _isFrameContainerForBrowserUIPopUp(self, frame):
-        if not frame or self.isDead(frame):
-            return False
-
-        # So far, the frame containers which lack the active state also lack names.
-        # Tree diving can be expensive....
-        if frame.name:
-            return False
-
-        roles = [pyatspi.ROLE_LIST_BOX, pyatspi.ROLE_MENU]
-        try:
-            child = pyatspi.findDescendant(frame, lambda x: x and x.getRole() in roles)
-        except:
-            msg = "CHROMIUM: Exception finding descendant of %s" % frame
-            debug.println(debug.LEVEL_INFO, msg, True)
-            child = None
-
-        return child and not self.inDocumentContent(child)
-
-    def canBeActiveWindow(self, window, clearCache=False):
-        if super().canBeActiveWindow(window, clearCache):
-            return True
-
-        if window and window.toolkitName != "Chromium":
-            return False
-
-        # HACK: Remove this once Chromium adds active state to popup frames.
-        startTime = time.time()
-        result = self._isFrameContainerForBrowserUIPopUp(window)
-        msg = "CHROMIUM: _isFrameContainerForBrowser() - %.4fs" % (time.time()-startTime)
-        debug.println(debug.LEVEL_INFO, msg, True)
-
-        if result:
-            msg = "CHROMIUM: POPUP MISSING STATE ACTIVE HACK: %s can be active window" % window
-            debug.println(debug.LEVEL_INFO, msg, True)
-
-        return result
-
     def treatAsMenu(self, obj):
         if not obj:
             return False
