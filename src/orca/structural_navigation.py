@@ -1062,6 +1062,12 @@ class StructuralNavigation:
         if obj and not isCell(obj):
             obj = pyatspi.utils.findAncestor(obj, isCell)
 
+        while obj and self._script.utilities.isLayoutOnly(self.getTableForCell(obj)):
+            cell = pyatspi.utils.findAncestor(obj, isCell)
+            if not cell:
+                break
+            obj = cell
+
         return obj
 
     def _isContainer(self, obj):
