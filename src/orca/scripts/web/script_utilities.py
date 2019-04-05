@@ -2238,11 +2238,11 @@ class Utilities(script_utilities.Utilities):
                 rv = False
             elif obj.getRole() == pyatspi.ROLE_TABLE_ROW:
                 rv = self.hasExplicitName(obj)
-
-            widget = self.isInferredLabelForContents(x, contents)
-            alwaysFilter = [pyatspi.ROLE_RADIO_BUTTON, pyatspi.ROLE_CHECK_BOX]
-            if widget and (inferLabels or widget.getRole() in alwaysFilter):
-                rv = False
+            else:
+                widget = self.isInferredLabelForContents(x, contents)
+                alwaysFilter = [pyatspi.ROLE_RADIO_BUTTON, pyatspi.ROLE_CHECK_BOX]
+                if widget and (inferLabels or widget.getRole() in alwaysFilter):
+                    rv = False
 
             self._shouldFilter[hash(obj)] = rv
             return rv
