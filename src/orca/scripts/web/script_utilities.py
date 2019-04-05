@@ -2236,6 +2236,8 @@ class Utilities(script_utilities.Utilities):
                or self.isErrorForContents(obj, contents) \
                or self.isLabellingContents(obj, contents):
                 rv = False
+            elif obj.getRole() == pyatspi.ROLE_TABLE_ROW:
+                rv = self.hasExplicitName(obj)
 
             widget = self.isInferredLabelForContents(x, contents)
             alwaysFilter = [pyatspi.ROLE_RADIO_BUTTON, pyatspi.ROLE_CHECK_BOX]
