@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.gnome-2-22\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orcaorca/issues\n"
-"POT-Creation-Date: 2019-01-07 20:31+0000\n"
+"POT-Creation-Date: 2019-03-31 10:28+0000\n"
 "PO-Revision-Date: 2019-02-11 19:32+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -2229,7 +2229,8 @@ msgstr "Angiver slutningen af en tekstmarkering."
 #. have a handler.
 #: ../src/orca/cmdnames.py:392
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr "Går i indlæringstilstand. Tryk esc for at afslutte indlæringstilstand."
+msgstr ""
+"Går i indlæringstilstand. Tryk esc for at afslutte indlæringstilstand."
 
 # jeg har skrevet med en af udviklerne for at prøve at finde ud af om de steder hvor der står speech
 # om de altid bare skal oversættes til tale, eller om man bør bruge læse nogle steder (idet den jo
@@ -13982,15 +13983,15 @@ msgstr ""
 #~ msgid "Enable key echo?  Enter y or n: "
 #~ msgstr "Slå tegnvis ekko til?  Tast j eller n: "
 
-# bindestreg
+#~ # bindestreg
 #~ msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
 #~ msgstr "Slå til for alfanumeriske og tegnsætningstaster?  Tast j eller n: "
 
-# bindestreg
+#~ # bindestreg
 #~ msgid "Enable modifier keys?  Enter y or n: "
 #~ msgstr "Slå til for modificeringstaster?  Tast j eller n: "
 
-# bindestreg
+#~ # bindestreg
 #~ msgid "Enable function keys?  Enter y or n: "
 #~ msgstr "Slå til for funktionstaster?  tast j eller n: "
 
@@ -14012,18 +14013,18 @@ msgstr ""
 #~ msgid "Select desired keyboard layout."
 #~ msgstr "Vælg det ønskede tastaturlayout."
 
-# Eftersom næste streng er Laptop går jeg ud fra et der her menes en stationær computer
+#~ # Eftersom næste streng er Laptop går jeg ud fra et der her menes en stationær computer
 #~ msgid "1. Desktop"
 #~ msgstr "1. Stationær"
 
 #~ msgid "2. Laptop"
 #~ msgstr "2. Bærbar"
 
-# tale^^
+#~ # tale^^
 #~ msgid "Select desired speech server."
 #~ msgstr "Vælg den ønskede taleserver."
 
-# tale^^
+#~ # tale^^
 #~ msgid "Select desired speech system:"
 #~ msgstr "Vælg det ønskede talesystem:"
 
@@ -14036,7 +14037,7 @@ msgstr ""
 #~ msgid "No voices available.\n"
 #~ msgstr "Ingen stemmer tilgængelige.\n"
 
-# tale^^
+#~ # tale^^
 #~ msgid "Speech will not be used.\n"
 #~ msgstr "Tale vil ikke blive brugt.\n"
 
@@ -14090,8 +14091,8 @@ msgstr ""
 #~ msgid "n-ary union"
 #~ msgstr "n-ær foreningsmængde"
 
-# Dette her er lidt en fortolkning, men jeg tror det er ok
-#
+#~ # Dette her er lidt en fortolkning, men jeg tror det er ok
+#~ #
 #~ msgid "comparison unknown"
 #~ msgstr "sammenligning ikke mulig"
 
@@ -14190,7 +14191,7 @@ msgstr ""
 #~ msgid "Use Orca _Structural Navigation"
 #~ msgstr "Brug Orcas _Strukturbaserede navigation"
 
-# bindestreg. Der er undladt - i ISO-niveau af hensyn til udtalen fra skærmoplæseren. Her bliver for mange - nemt irriterende at høre på og brugen af disse bør derfor minimeres.
+#~ # bindestreg. Der er undladt - i ISO-niveau af hensyn til udtalen fra skærmoplæseren. Her bliver for mange - nemt irriterende at høre på og brugen af disse bør derfor minimeres.
 #~ msgid "ISO level 3 shift"
 #~ msgstr "ISO niveau 3 skift"
 
@@ -14259,8 +14260,8 @@ msgstr ""
 #~ "A free, open source scriptable screen reader, which provides access to "
 #~ "applications and toolkits that support AT-SPI (e.g., the GNOME desktop)."
 #~ msgstr ""
-#~ "En fri, scriptbar skærmoplæser baseret på åben kildekode, som giver "
-#~ "adgang til programmer og værktøjssæt (toolkits) som bruger AT-SPI (f.eks. "
+#~ "En fri, scriptbar skærmoplæser baseret på åben kildekode, som giver adgang "
+#~ "til programmer og værktøjssæt (toolkits) som bruger AT-SPI (f.eks. "
 #~ "skrivebordsmiljøet GNOME)."
 
 #~ msgid ""
@@ -14288,8 +14289,9 @@ msgstr ""
 #~ msgstr ""
 #~ "Kenneth Nielsen\n"
 #~ "\n"
-#~ "Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
-#~ "Mere info: http://www.dansk-gruppen.dk"
+#~ "Dansk-gruppen\n"
+#~ "Websted <http://dansk-gruppen.dk>\n"
+#~ "E-mail <dansk@dansk-gruppen.dk>"
 
 #~ msgid ""
 #~ "Orca is free software; you can redistribute it and/or\n"
@@ -14334,11 +14336,11 @@ msgstr ""
 #~ msgstr "Ingen Orca genvejstaster for %s fundet."
 
 #~ msgid ""
-#~ "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for "
-#~ "the current application. Press escape to exit."
+#~ "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the "
+#~ "current application. Press escape to exit."
 #~ msgstr ""
-#~ "Tryk 1 for Orcas standard genvejstaster. Tryk 2 for Orcas genvejstaster "
-#~ "til den aktuelle applikation. Tryk escape for at afslutte."
+#~ "Tryk 1 for Orcas standard genvejstaster. Tryk 2 for Orcas genvejstaster til "
+#~ "den aktuelle applikation. Tryk escape for at afslutte."
 
 #~ msgid "Show Orca _main window"
 #~ msgstr "Vis _hovedvindue for Orca"
@@ -14404,21 +14406,19 @@ msgstr ""
 #~ msgid "Paints and prints the visible zones in the active window."
 #~ msgstr "Tegner og udskriver de synlige zoner i det aktive vindue."
 
-#~ msgid ""
-#~ "Enters list shortcuts mode.  Press escape to exit list shortcuts mode."
+#~ msgid "Enters list shortcuts mode.  Press escape to exit list shortcuts mode."
 #~ msgstr ""
-#~ "Går i tilstanden vis genvejstaster. Tryk esc for at afslutte tilstanden "
-#~ "vis genvejstaster."
+#~ "Går i tilstanden vis genvejstaster. Tryk esc for at afslutte tilstanden vis "
+#~ "genvejstaster."
 
 #~ msgid ""
-#~ "Prints a debug listing of all known applications to the console where "
-#~ "Orca is running."
+#~ "Prints a debug listing of all known applications to the console where Orca "
+#~ "is running."
 #~ msgstr ""
-#~ "Udskriver en fejlfindingsliste, over alle kendte programmer, til "
-#~ "konsollen hvor Orca kører."
+#~ "Udskriver en fejlfindingsliste, over alle kendte programmer, til konsollen "
+#~ "hvor Orca kører."
 
-#~ msgid ""
-#~ "Prints debug information about the ancestry of the object with focus."
+#~ msgid "Prints debug information about the ancestry of the object with focus."
 #~ msgstr ""
 #~ "Udskriver fejlfindingsinformation om ophavet for det objekt som har fokus."
 
@@ -14429,8 +14429,8 @@ msgstr ""
 #~ "Entering learn mode.  Press any key to hear its function.  To exit learn "
 #~ "mode, press the escape key."
 #~ msgstr ""
-#~ "Går i indlæringstilstand. Tryk en tast for at høre dens funktion. Tryk "
-#~ "esc for at afslutte indlæringstilstand."
+#~ "Går i indlæringstilstand. Tryk en tast for at høre dens funktion. Tryk esc "
+#~ "for at afslutte indlæringstilstand."
 
 #~ msgid "Exiting list shortcuts mode."
 #~ msgstr "Afslutter tilstanden vis genvejstaster."
@@ -14443,7 +14443,7 @@ msgstr ""
 #~ msgstr[0] "%d procent"
 #~ msgstr[1] "%d procent"
 
-# tale^^
+#~ # tale^^
 #~ msgid "Emacspeak Speech Services"
 #~ msgstr "Emacspeak taletjenester"
 
@@ -14470,8 +14470,8 @@ msgstr ""
 #~ "Report bugs to orca-list@gnome.org."
 #~ msgstr ""
 #~ "Hvis Orca ikke tidligere er blevet sat op af en bruger,\n"
-#~ "vil Orca automatisk starte opsætning af indstillinger. Dette kan undgås "
-#~ "ved at give tilvalget -n eller --no-setup.\n"
+#~ "vil Orca automatisk starte opsætning af indstillinger. Dette kan undgås ved "
+#~ "at give tilvalget -n eller --no-setup.\n"
 #~ "\n"
 #~ "Rapporter fejl til orca-list@gnome.org."
 
@@ -14508,66 +14508,66 @@ msgstr ""
 #~ msgid "Invalid"
 #~ msgstr "Ugyldig"
 
-# I alle de følgende sæt af tre strenge er forkortelsen en der skal
-# vises på en blindeskrifts-skærm. Der er derfor ingen regler for
-# hvordan forkortelserne skal laves andet end at de skal holdes korte
-# fordi der ikke er så meget plads på sådan et display. For at gøre
-# forkortelserne så brugbare som muligt har jeg tænkte mig at lave et
-# system for hvordan man danner dem. Derfor har jeg her nedenunder lavet
-# en liste over alle de ord der skal sættes sammen med andre og hvordan
-# de forkortes alt efter hvor i forkortelsen de står. Alle de ord der
-# kun optræder alene er forkortet med unikke trebogstavs forkortelser.
-#
-# 		Forkortelse afhængigt af hvor i det
-# 		Sammensatte ord det står
-# Dansk ord       Først		Midt		Sidst	Alene
-# ======================================================================
-# afkrydsnings-	ak
-# animation						anim
-# advarsel						advr							alrm
-# billed		bl					bld
-# bjælke						bj
-# boks						b
-# celle							cll
-# element			e		el
-# farve		fa
-# felt						f
-# fil		fil
-# faneblads-	fb
-# glas		gl
-# indstillings-	ins
-# intern		in
-# ikon							ikn
-# knap						kn
-# kombinations-	km
-# kolonne	kol
-# lag-		lag
-# linje						l
-# liste		lst				lst	lst
-# mappe		ma
-# menu		mnu		mnu		m	mnu
-# område						om
-# overskift					os	os
-# panel						p	pnl
-# pop-op		pop
-# radio		rad
-# ramme						rm
-# redigerings-	reg
-# rod		rod
-# rulle		rl
-# række		rk
-# side							sid
-# skifte-	skf
-# skrifttype	st
-# split		spl
-# status		stat
-# tabel						ta
-# tekst						te	tek
-# træ		tr
-# va		va
-# visnings	vsn
-# vælger						v
-# værktøjs	vrk
+#~ # I alle de følgende sæt af tre strenge er forkortelsen en der skal
+#~ # vises på en blindeskrifts-skærm. Der er derfor ingen regler for
+#~ # hvordan forkortelserne skal laves andet end at de skal holdes korte
+#~ # fordi der ikke er så meget plads på sådan et display. For at gøre
+#~ # forkortelserne så brugbare som muligt har jeg tænkte mig at lave et
+#~ # system for hvordan man danner dem. Derfor har jeg her nedenunder lavet
+#~ # en liste over alle de ord der skal sættes sammen med andre og hvordan
+#~ # de forkortes alt efter hvor i forkortelsen de står. Alle de ord der
+#~ # kun optræder alene er forkortet med unikke trebogstavs forkortelser.
+#~ #
+#~ # 		Forkortelse afhængigt af hvor i det
+#~ # 		Sammensatte ord det står
+#~ # Dansk ord       Først		Midt		Sidst	Alene
+#~ # ======================================================================
+#~ # afkrydsnings-	ak
+#~ # animation						anim
+#~ # advarsel						advr							alrm
+#~ # billed		bl					bld
+#~ # bjælke						bj
+#~ # boks						b
+#~ # celle							cll
+#~ # element			e		el
+#~ # farve		fa
+#~ # felt						f
+#~ # fil		fil
+#~ # faneblads-	fb
+#~ # glas		gl
+#~ # indstillings-	ins
+#~ # intern		in
+#~ # ikon							ikn
+#~ # knap						kn
+#~ # kombinations-	km
+#~ # kolonne	kol
+#~ # lag-		lag
+#~ # linje						l
+#~ # liste		lst				lst	lst
+#~ # mappe		ma
+#~ # menu		mnu		mnu		m	mnu
+#~ # område						om
+#~ # overskift					os	os
+#~ # panel						p	pnl
+#~ # pop-op		pop
+#~ # radio		rad
+#~ # ramme						rm
+#~ # redigerings-	reg
+#~ # rod		rod
+#~ # rulle		rl
+#~ # række		rk
+#~ # side							sid
+#~ # skifte-	skf
+#~ # skrifttype	st
+#~ # split		spl
+#~ # status		stat
+#~ # tabel						ta
+#~ # tekst						te	tek
+#~ # træ		tr
+#~ # va		va
+#~ # visnings	vsn
+#~ # vælger						v
+#~ # værktøjs	vrk
 #~ msgid "acc"
 #~ msgstr "acc"
 
@@ -14709,11 +14709,11 @@ msgstr ""
 #~ msgid "heading"
 #~ msgstr "overskrift"
 
-# bindestreg
+#~ # bindestreg
 #~ msgid "HtmlContainer"
 #~ msgstr "Html felt"
 
-# bindestreg
+#~ # bindestreg
 #~ msgid "h t m l container"
 #~ msgstr "h t m l felt"
 
@@ -14777,11 +14777,11 @@ msgstr ""
 #~ msgid "password"
 #~ msgstr "adgangskode"
 
-# bindestreg
+#~ # bindestreg
 #~ msgid "PopupMenu"
 #~ msgstr "Pop op menu"
 
-# bindestreg
+#~ # bindestreg
 #~ msgid "popup menu"
 #~ msgstr "pop op menu"
 
@@ -14857,7 +14857,7 @@ msgstr ""
 #~ msgid "TearOffMenuItem"
 #~ msgstr "TagAfMenuelement"
 
-# bindestreg
+#~ # bindestreg
 #~ msgid "tear off menu item"
 #~ msgstr "tag af menuelement"
 
@@ -14912,17 +14912,17 @@ msgstr ""
 #~ msgid "window"
 #~ msgstr "vindue"
 
-# Jeg skrev til udviklerne for at finde ud af om dette var overskrift eller sidehoved
-# han var ikke sikker men mente sidehoved
+#~ # Jeg skrev til udviklerne for at finde ud af om dette var overskrift eller sidehoved
+#~ # han var ikke sikker men mente sidehoved
 #~ msgid "Header"
 #~ msgstr "Sidehoved"
 
-# Jeg skrev til udviklerne for at finde ud af om dette var overskrift eller sidehoved
-# han var ikke sikker men mente sidehoved
+#~ # Jeg skrev til udviklerne for at finde ud af om dette var overskrift eller sidehoved
+#~ # han var ikke sikker men mente sidehoved
 #~ msgid "header"
 #~ msgstr "sidehoved"
 
-# Samme kommantar som med header
+#~ # Samme kommantar som med header
 #~ msgid "Footer"
 #~ msgstr "Sidefod"
 
@@ -14989,7 +14989,7 @@ msgstr ""
 #~ "Præsenter information på skærmen som tale eller braille, eller forstør "
 #~ "skærmen"
 
-# tale^^
+#~ # tale^^
 #~ msgid "GNOME Speech Services"
 #~ msgstr "GNOME taletjenester"
 
@@ -15005,7 +15005,7 @@ msgstr ""
 #~ msgid "Color enhancements enabled."
 #~ msgstr "Farveforbedringer slået til."
 
-# tale^^
+#~ # tale^^
 #~ msgid "Full Screen mode unavailable"
 #~ msgstr "Fuldskærmstilstand ikke tilgængelig"
 
@@ -15088,7 +15088,7 @@ msgstr ""
 #~ msgid "Warning"
 #~ msgstr "Advarsel"
 
-# bindestreg
+#~ # bindestreg
 #~ msgid ""
 #~ "<b><big>Quit Orca?</big></b>\n"
 #~ "\n"
@@ -15219,18 +15219,18 @@ msgstr ""
 #~ msgid "Toggles mouse enhancements."
 #~ msgstr "Slå museforbedringer til eller fra."
 
-# tale^^
+#~ # tale^^
 #~ msgid "Increases the magnification level."
 #~ msgstr "Hæv forstørrelsesniveauet."
 
-# jeg har skrevet med en af udviklerne for at prøve at finde ud af om de steder hvor der står speech
-# om de altid bare skal oversættes til tale, eller om man bør bruge læse nogle steder (idet den jo
-# nogle gange bruges til at læse tekst fra et dokument op med). Konklusionen var at der stort set alle
-# steder skal bruges tale. Jeg knytter en tale^^ kommentar til de pågældende beskeder
+#~ # jeg har skrevet med en af udviklerne for at prøve at finde ud af om de steder hvor der står speech
+#~ # om de altid bare skal oversættes til tale, eller om man bør bruge læse nogle steder (idet den jo
+#~ # nogle gange bruges til at læse tekst fra et dokument op med). Konklusionen var at der stort set alle
+#~ # steder skal bruges tale. Jeg knytter en tale^^ kommentar til de pågældende beskeder
 #~ msgid "Decreases the magnification level."
 #~ msgstr "Sænk forstørrelsesniveauet."
 
-# tale^^
+#~ # tale^^
 #~ msgid "Toggles the magnifier."
 #~ msgstr "Slår forstørrelsesglas til eller fra."
 
@@ -15240,7 +15240,7 @@ msgstr ""
 #~ msgid "Open TTS"
 #~ msgstr "Open TTS"
 
-# bindestreg
+#~ # bindestreg
 #~ msgid ""
 #~ "WARNING: suspending Orca, e.g. by pressing Control-Z, from\n"
 #~ "an AT-SPI enabled shell (such as gnome-terminal), can also\n"
@@ -15272,7 +15272,7 @@ msgstr ""
 #~ msgid "Mail/News"
 #~ msgstr "E-mail/Nyheder"
 
-# bindestreg
+#~ # bindestreg
 #~ msgid "bug-buddy"
 #~ msgstr "Fejl Frede"
 
@@ -15453,8 +15453,7 @@ msgstr ""
 #~ msgstr "objekt %d af %d"
 
 #~ msgid "Starting Orca Preferences for %s. This may take a while."
-#~ msgstr ""
-#~ "Starter Orca-indstillinger for %s. Dette kan godt tage et stykke tid."
+#~ msgstr "Starter Orca-indstillinger for %s. Dette kan godt tage et stykke tid."
 
 #~ msgid "Exits learn mode."
 #~ msgstr "Afslutter indlæringstilstand."
@@ -15515,3 +15514,4 @@ msgstr ""
 
 #~ msgid "Text Document"
 #~ msgstr "Tekstdokument"
+
