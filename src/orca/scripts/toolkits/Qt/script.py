@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright (C) 2013 Igalia, S.L.
+# Copyright (C) 2013-2019 Igalia, S.L.
 #
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
@@ -22,18 +22,29 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2013 Igalia, S.L."
+__copyright__ = "Copyright (c) 2013-2019 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
 
+import orca.debug as debug
 import orca.orca as orca
 import orca.scripts.default as default
 
 class Script(default.Script):
 
     def __init__(self, app):
-        default.Script.__init__(self, app)
+        super().__init__(app)
+
+    def onCaretMoved(self, event):
+        """Callback for object:text-caret-moved accessibility events."""
+
+        if event.source.getRole() == pyatspi.ROLE_ACCELERATOR_LABEL:
+            msg = "QT: Ignoring event due to role."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        super().onCaretMoved(event)
 
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
@@ -41,8 +52,16 @@ class Script(default.Script):
         if not event.detail1:
             return
 
-        # HACK: Although we get object:state-changed:focused events, the
-        # object emitting them might not claim state focusable or state
-        # focused. For now, assume that we won't get bogus focus claims.
+        if event.source.getRole() == pyatspi.ROLE_ACCELERATOR_LABEL:
+            msg = "QT: Ignoring event due to role."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        state = event.source.getState()
+        if state.contains(pyatspi.STATE_FOCUSED) and state.contains(pyatspi.STATE_FOCUSABLE):
+            super().onFocusedChanged(event)
+            return
+
+        msg = "QT: WARNING - source states lack focused and/or focusable"
+        debug.println(debug.LEVEL_INFO, msg, True)
         orca.setLocusOfFocus(event, event.source)
-        return
