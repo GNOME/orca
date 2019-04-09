@@ -312,7 +312,7 @@ class Utilities(script_utilities.Utilities):
             else:
                 return document.getAttributeValue('DocURL') or document.getAttributeValue('URI')
 
-        return None
+        return ""
 
     def isPlainText(self, documentFrame=None):
         return self.mimeType(documentFrame) == "text/plain"
