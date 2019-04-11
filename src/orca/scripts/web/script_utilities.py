@@ -62,6 +62,7 @@ class Utilities(script_utilities.Utilities):
         self._isLabelDescendant = {}
         self._isMenuDescendant = {}
         self._isToolBarDescendant = {}
+        self._isWebAppDescendant = {}
         self._isLayoutOnly = {}
         self._isDPub = {}
         self._isMath = {}
@@ -133,6 +134,7 @@ class Utilities(script_utilities.Utilities):
         self._isLabelDescendant = {}
         self._isMenuDescendant = {}
         self._isToolBarDescendant = {}
+        self._isWebAppDescendant = {}
         self._isLayoutOnly = {}
         self._isDPub = {}
         self._isMath = {}
@@ -2333,6 +2335,19 @@ class Utilities(script_utilities.Utilities):
         isToolBar = lambda x: x and x.getRole() == pyatspi.ROLE_TOOL_BAR
         rv = pyatspi.findAncestor(obj, isToolBar) is not None
         self._isToolBarDescendant[hash(obj)] = rv
+        return rv
+
+    def isWebAppDescendant(self, obj):
+        if not obj:
+            return False
+
+        rv = self._isWebAppDescendant.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        isEmbedded = lambda x: x and x.getRole() == pyatspi.ROLE_EMBEDDED
+        rv = pyatspi.findAncestor(obj, isEmbedded) is not None
+        self._isWebAppDescendant[hash(obj)] = rv
         return rv
 
     def isLayoutOnly(self, obj):

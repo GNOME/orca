@@ -788,6 +788,11 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
+        if self._inFocusMode and self.utilities.isWebAppDescendant(obj):
+            msg = "WEB: Staying in focus mode because we're inside a web application"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         msg = "WEB: Not using focus mode for %s due to lack of cause" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return False
