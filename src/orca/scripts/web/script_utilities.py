@@ -2330,8 +2330,8 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        isMenu = lambda x: x and x.getRole() == pyatspi.ROLE_TOOL_BAR
-        rv = pyatspi.findAncestor(obj, isMenu) is not None
+        isToolBar = lambda x: x and x.getRole() == pyatspi.ROLE_TOOL_BAR
+        rv = pyatspi.findAncestor(obj, isToolBar) is not None
         self._isToolBarDescendant[hash(obj)] = rv
         return rv
 
