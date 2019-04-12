@@ -551,7 +551,6 @@ class SpeechServer(speechserver.SpeechServer):
         self._apply_acss(acss)
         if character == '\n':
             self._send_command(self._client.sound_icon, 'end-of-line')
-            return
 
         name = chnames.getCharacterName(character)
         if not name:
