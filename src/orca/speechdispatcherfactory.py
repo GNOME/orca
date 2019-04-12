@@ -553,7 +553,7 @@ class SpeechServer(speechserver.SpeechServer):
             self._send_command(self._client.sound_icon, 'end-of-line')
 
         name = chnames.getCharacterName(character)
-        if not name:
+        if not name or name == character:
             self._send_command(self._client.char, character)
             return
 
