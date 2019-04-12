@@ -34,7 +34,6 @@ import time
 
 import pyatspi
 import orca.braille as braille
-import orca.chnames as chnames
 import orca.cmdnames as cmdnames
 import orca.debug as debug
 import orca.eventsynthesizer as eventsynthesizer
@@ -4237,8 +4236,7 @@ class Script(script.Script):
         method rather than calling speech.speakCharacter directly."""
 
         voice = self.speechGenerator.voice(string=character)
-        spokenCharacter = chnames.getCharacterName(character)
-        speech.speakCharacter(spokenCharacter, voice)
+        speech.speakCharacter(character, voice)
 
     def speakMessage(self, string, voice=None, interrupt=True, resetStyles=True):
         """Method to speak a single string. Scripts should use this
