@@ -1436,7 +1436,7 @@ class Utilities:
             else:
                 if not (table.nRows and table.nColumns):
                     layoutOnly = not obj.getState().contains(pyatspi.STATE_FOCUSED)
-                elif attrs.get('xml-roles') == 'table':
+                elif attrs.get('xml-roles') == 'table' or attrs.get('tag') == 'table':
                     layoutOnly = False
                 elif not (obj.name or self.displayedLabel(obj)):
                     layoutOnly = not (table.getColumnHeader(0) or table.getRowHeader(0))
