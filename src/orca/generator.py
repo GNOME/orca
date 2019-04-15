@@ -335,7 +335,7 @@ class Generator:
                     link = obj.parent
                 if link:
                     basename = self._script.utilities.linkBasename(link)
-                    if basename:
+                    if basename and basename.isalpha():
                         result.append(basename)
         # To make the unlabeled icons in gnome-panel more accessible.
         try:
