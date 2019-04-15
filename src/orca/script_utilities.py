@@ -1954,6 +1954,9 @@ class Utilities:
 
         return pyatspi.findAncestor(obj, inSelectedMenu) is not None
 
+    def isStaticTextLeaf(self, obj):
+        return False
+
     def getOnScreenObjects(self, root, extents=None):
         if not self.isOnScreen(root, extents):
             return []
@@ -2003,7 +2006,8 @@ class Utilities:
             objects.append(root)
 
         for child in root:
-            objects.extend(self.getOnScreenObjects(child, extents))
+            if not self.isStaticTextLeaf(child):
+                objects.extend(self.getOnScreenObjects(child, extents))
 
         if role == pyatspi.ROLE_MENU_BAR:
             self._selectedMenuBarMenu[hash(root)] = None

@@ -47,6 +47,20 @@ class Utilities(web.Utilities):
     def clearCachedObjects(self):
         super().clearCachedObjects()
 
+    def isStaticTextLeaf(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isStaticTextLeaf(obj)
+
+        if obj.getRole() != pyatspi.ROLE_TEXT:
+            return False
+
+        if self._getTag(obj):
+            return False
+
+        msg = "CHROMIUM: %s believed to be static text leaf" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return True
+
     def selectedChildCount(self, obj):
         count = super().selectedChildCount(obj)
         if count or "Selection" in pyatspi.listInterfaces(obj):
