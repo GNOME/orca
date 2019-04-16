@@ -1021,7 +1021,7 @@ class Utilities(script_utilities.Utilities):
         if string and boundary in [pyatspi.TEXT_BOUNDARY_SENTENCE_START, None]:
             return string, rangeStart, rangeEnd
 
-        words = [m.span() for m in re.finditer("[^\\s\\-\ufffc]+", string)]
+        words = [m.span() for m in re.finditer("[^\\s\ufffc]+", string)]
         words = list(map(lambda x: (x[0] + rangeStart, x[1] + rangeStart), words))
         if boundary == pyatspi.TEXT_BOUNDARY_WORD_START:
             spans = list(filter(_inThisSpan, words))
