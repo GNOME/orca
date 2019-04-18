@@ -1,3 +1,52 @@
+3.33.1 - 18 April 2019
+
+Web:
+
+ * Fix issue navigating to and around multibyte characters
+
+ * Fix issue related to our workaround for broken Gecko text
+
+ * Improve presentation of nameless links with non-meaningful URL
+
+ * Fix bug causing us to get stuck in a nested layout tables when
+   using table navigation on the non-layout parent
+
+ * Don't exit focus mode when navigating among text in a web app
+
+ * Only do the work to filter inferred labels if we have to
+
+ * Eliminate duplicate presentation of table-row content
+
+ * Fix bug in going to the beginning/end of a container via structural
+   navigation
+
+Speech:
+
+ * When we don't have a custom char name, use speech-dispatcher's API
+   to speak characters so that letters are not presented as words
+
+Qt:
+
+ * Ignore events from accelerator labels
+
+LibreOffice:
+
+ * Do not announce selection changes from unfocused combo boxes
+
+General:
+
+ * Handle the reported number of text selections being -1
+
+ * Migrate from intltool to gettext
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    da            Danish                Ask Hjorth Larsen
+    fi            Finnish               Jiri Grönroos
+    fr            French                Guillaume Bernard
+
+=========
+
 3.32.0 - 13 March 2019
 
 New and updated translations (THANKS EVERYONE!!!):
