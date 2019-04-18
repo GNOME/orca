@@ -1128,6 +1128,14 @@ class Utilities(script_utilities.Utilities):
                   % (offset, obj, boundary, s1, start, end)
             debug.println(debug.LEVEL_INFO, msg, True)
             needSadHack = True
+        elif boundary == pyatspi.TEXT_BOUNDARY_CHAR and string == "\ufffd":
+            msg = "FAIL: Bad results for text at offset %i for %s using %s:\n" \
+                  "      String: '%s', Start: %i, End: %i.\n" \
+                  "      The bug is that we didn't seem to get a valid character.\n" \
+                  "      This very likely needs to be fixed by the toolkit." \
+                  % (offset, obj, boundary, string, start, end)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            needSadHack = True
 
         if needSadHack:
             sadString, sadStart, sadEnd = self.__findRange(text, offset, start, end, boundary)
