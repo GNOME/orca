@@ -3813,7 +3813,7 @@ class Utilities(script_utilities.Utilities):
                     if child and not self.isZombie(child) and not self.isEmptyAnchor(child) \
                        and not self.isUselessImage(child):
                         return self.findNextCaretInOrder(child, -1)
-                    if allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
+                    if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
             elif not self.doNotDescendForCaret(obj) and obj.childCount:
                 return self.findNextCaretInOrder(obj[0], -1)
@@ -3879,7 +3879,7 @@ class Utilities(script_utilities.Utilities):
                     if child and not self.isZombie(child) and not self.isEmptyAnchor(child) \
                        and not self.isUselessImage(child):
                         return self.findPreviousCaretInOrder(child, -1)
-                    if allText[i] != self.EMBEDDED_OBJECT_CHARACTER:
+                    if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
             elif not self.doNotDescendForCaret(obj) and obj.childCount:
                 return self.findPreviousCaretInOrder(obj[obj.childCount - 1], -1)

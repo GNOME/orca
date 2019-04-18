@@ -68,6 +68,7 @@ class Utilities:
     _desktop = pyatspi.Registry.getDesktop(0)
 
     EMBEDDED_OBJECT_CHARACTER = '\ufffc'
+    ZERO_WIDTH_NO_BREAK_SPACE = '\ufeff'
     SUPERSCRIPT_DIGITS = \
         ['\u2070', '\u00b9', '\u00b2', '\u00b3', '\u2074',
          '\u2075', '\u2076', '\u2077', '\u2078', '\u2079']
