@@ -5123,13 +5123,22 @@ class Utilities:
             return False
 
         if self.selectedChildCount(obj) == obj.childCount:
+            msg = "INFO: All %i children believed to be selected" % obj.childCount
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         if "Table" not in interfaces:
             return False
 
         table = obj.queryTable()
-        if table.nSelectedRows == table.nRows or table.nSelectedColumns == table.nColumns:
+        if table.nSelectedRows == table.nRows:
+            msg = "INFO: All %i rows believed to be selected" % table.nRows
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if table.nSelectedColumns == table.nColumns:
+            msg = "INFO: All %i columns believed to be selected" % table.nColumns
+            debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
