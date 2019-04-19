@@ -2502,6 +2502,7 @@ class Script(script.Script):
             if pyatspi.findAncestor(orca_state.locusOfFocus, lambda x: x == child):
                 msg = "DEFAULT: Child %s is ancestor of locusOfFocus" % child
                 debug.println(debug.LEVEL_INFO, msg, True)
+                self._saveFocusedObjectInfo(orca_state.locusOfFocus)
                 return
 
             if child == mouseReviewItem:
