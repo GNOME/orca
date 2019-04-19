@@ -385,6 +385,7 @@ class Utilities(script_utilities.Utilities):
         if self._script.focusModeIsSticky():
             return
 
+        self.clearTextSelection(orca_state.locusOfFocus)
         orca.setLocusOfFocus(None, obj, notifyScript=False)
         if grabFocus:
             self.grabFocus(obj)
@@ -3661,6 +3662,14 @@ class Utilities(script_utilities.Utilities):
             rv = start
 
         return rv
+
+    def clearTextSelection(self, obj):
+        super().clearTextSelection(obj)
+        if self.isDocument(obj):
+            return
+
+        for child in obj:
+            self.clearTextSelection(child)
 
     def clearCaretContext(self, documentFrame=None):
         self.clearContentCache()

@@ -2634,8 +2634,7 @@ class Utilities:
 
         return offset
 
-    @staticmethod
-    def clearTextSelection(obj):
+    def clearTextSelection(self, obj):
         """Clears the text selection if the object supports it.
 
         Arguments:
@@ -2648,7 +2647,7 @@ class Utilities:
             return
 
         for i in range(text.getNSelections()):
-            text.removeSelection(0)
+            text.removeSelection(i)
 
     def expandEOCs(self, obj, startOffset=0, endOffset=-1):
         """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
