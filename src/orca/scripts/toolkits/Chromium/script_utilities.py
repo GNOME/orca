@@ -176,6 +176,36 @@ class Utilities(web.Utilities):
         debug.println(debug.LEVEL_INFO, msg, True)
         return menu
 
+    def isBrowserAutocompletePopup(self, obj):
+        if not obj or self.inDocumentContent(obj):
+            return False
+
+        # If we clear the cache, other objects (like the listbox parent as well as the
+        # selected list item) then claim to have role of redundant-object. Re-test after
+        # we get children-changed events.
+        if obj.getRole() == pyatspi.ROLE_REDUNDANT_OBJECT:
+            msg = "CHROMIUM: WARNING: Suspected bogus role on %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        popupFor = lambda r: r.getRelationType() == pyatspi.RELATION_POPUP_FOR
+        relations = list(filter(popupFor, obj.getRelationSet()))
+        if not relations:
+            return False
+
+        target = relations[0].getTarget(0)
+        return target and target.getRole() == pyatspi.ROLE_AUTOCOMPLETE
+
+    def isRedundantAutocompleteEvent(self, event):
+        if event.source.getRole() != pyatspi.ROLE_AUTOCOMPLETE:
+            return False
+
+        if event.type.startswith("object:text-caret-moved"):
+            lastKey, mods = self.lastKeyAndModifiers()
+            if lastKey in ["Down", "Up"]:
+                return True
+
+        return False
+
     def grabFocusWhenSettingCaret(self, obj):
         # HACK: Remove this when setting the caret updates focus.
         msg = "CHROMIUM: HACK: Doing focus grab when setting caret on %s" % obj

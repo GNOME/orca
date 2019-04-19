@@ -163,6 +163,11 @@ class Script(web.Script):
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
+        if self.utilities.isRedundantAutocompleteEvent(event):
+            msg = "CHROMIUM: Ignoring redundant autocomplete event"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if super().onCaretMoved(event):
             return
 
@@ -287,31 +292,16 @@ class Script(web.Script):
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
-        if event.source.getRole() == pyatspi.ROLE_PAGE_TAB and event.detail1:
-            oldName = event.source.name
-            event.source.clearCache()
-            newName = event.source.name
-            if oldName != newName:
-                msg = "CHROMIUM: NO NAME CHANGE HACK: (name should be: '%s')" % newName
-                debug.println(debug.LEVEL_INFO, msg, True)
-
-        # Other apps and toolkits implement the selection interface, which is
-        # what we use to present active-descendanty selection changes, leaving
-        # state-changed:selected for notifications related to toggling the
-        # selected state of the currently-focused item (e.g. pressing ctrl+space
-        # in a file explorer). While handling active-descendanty changes here is
-        # not technically a HACK, once Chromium implements the selection interface,
-        # we should remove this code and defer to Orca's default handling.
-        if event.detail1 and not self.utilities.isLayoutOnly(event.source) \
-           and not "Selection" in pyatspi.listInterfaces(event.source.parent) \
-           and self.utilities.canBeActiveWindow(self.utilities.topLevelObject(event.source)):
-            msg = "CHROMIUM: NO SELECTION IFACE HACK: Setting %s to locusOfFocus" % event.source
-            debug.println(debug.LEVEL_INFO, msg, True)
-            orca.setLocusOfFocus(event, event.source)
-            return
-
         if super().onSelectedChanged(event):
             return
+
+        # HACK: Remove this -- or more likely move this -- when we start getting
+        # selection-changed events from the omnibox popup.
+        if event.source.getRole() == pyatspi.ROLE_LIST_ITEM \
+           and self.utilities.isBrowserAutocompletePopup(event.source.parent):
+            msg = "CHROMIUM: NO SELECTION EVENT HACK: Setting locusOfFocus to %s" % event.source
+            debug.println(debug.LEVEL_INFO, msg, True)
+            orca.setLocusOfFocus(event, event.source)
 
         msg = "CHROMIUM: Passing along event to default script"
         debug.println(debug.LEVEL_INFO, msg, True)
