@@ -1487,6 +1487,8 @@ class Utilities:
         elif role == pyatspi.ROLE_PANEL and obj.childCount and firstChild \
              and firstChild.getRole() in ignorePanelParent:
             layoutOnly = True
+        elif role == pyatspi.ROLE_PANEL and obj.name == obj.getApplication().name:
+            layoutOnly = True
         elif obj.childCount == 1 and obj.name and obj.name == firstChild.name:
             layoutOnly = True
         elif self.isHidden(obj):
