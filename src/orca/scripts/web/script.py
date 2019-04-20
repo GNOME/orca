@@ -1846,7 +1846,7 @@ class Script(default.Script):
             msg = "WEB: Event believed to be chrome page switch"
             debug.println(debug.LEVEL_INFO, msg, True)
             if event.detail1:
-                self.presentObject(event.source)
+                self.presentObject(event.source, priorObj=orca_state.locusOfFocus)
             return True
 
         if not self.utilities.inDocumentContent(event.source):

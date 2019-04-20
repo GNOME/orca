@@ -92,6 +92,15 @@ class Utilities(web.Utilities):
                 return int(attr[6:]) - 1
         return -1
 
+    def isLayoutOnly(self, obj):
+        if super().isLayoutOnly(obj):
+            return True
+
+        if obj.getRole() == pyatspi.ROLE_TOOL_BAR and obj.childCount:
+            return obj[0] and obj[0].getRole() == pyatspi.ROLE_PAGE_TAB_LIST
+
+        return False
+
     def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False):
         if super().isSameObject(obj1, obj2, comparePaths, ignoreNames):
             return True

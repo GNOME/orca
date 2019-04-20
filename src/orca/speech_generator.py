@@ -1795,6 +1795,9 @@ class SpeechGenerator(generator.Generator):
         if not priorObj or obj == priorObj:
             return []
 
+        if obj.getRole() == pyatspi.ROLE_PAGE_TAB:
+            return []
+
         if obj.getApplication() != priorObj.getApplication() \
            or pyatspi.findAncestor(obj, lambda x: x == priorObj):
             return []
