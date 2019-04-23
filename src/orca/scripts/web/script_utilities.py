@@ -69,6 +69,7 @@ class Utilities(script_utilities.Utilities):
         self._isFocusableWithMathChild = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
+        self._isOffScreenLink = {}
         self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
@@ -140,6 +141,7 @@ class Utilities(script_utilities.Utilities):
         self._isFocusableWithMathChild = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
+        self._isOffScreenLink = {}
         self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
@@ -1165,12 +1167,18 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return []
 
-        if boundary == pyatspi.TEXT_BOUNDARY_LINE_START and self.isMath(obj):
-            if self.isMathTopLevel(obj):
-                math = obj
-            else:
-                math = self.getMathAncestor(obj)
-            return [[math, 0, 1, '']]
+        if boundary == pyatspi.TEXT_BOUNDARY_LINE_START:
+            if self.isMath(obj):
+                if self.isMathTopLevel(obj):
+                    math = obj
+                else:
+                    math = self.getMathAncestor(obj)
+                return [[math, 0, 1, '']]
+
+            if self.isOffScreenLink(obj) and self.queryNonEmptyText(obj) and obj.name:
+                msg = "WEB: Returning name as contents for %s (is off-screen)" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return [[obj, 0, len(obj.name), obj.name]]
 
         role = obj.getRole()
         if role == pyatspi.ROLE_INTERNAL_FRAME and obj.childCount == 1:
@@ -2399,6 +2407,25 @@ class Utilities(script_utilities.Utilities):
             rv = super().isLayoutOnly(obj)
 
         self._isLayoutOnly[hash(obj)] = rv
+        return rv
+
+    def isOffScreenLink(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isOffScreenLink.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = False
+        if self.isLink(obj):
+            x, y, width, height = self.getExtents(obj, 0, -1)
+            if x < 0 or y < 0:
+                msg = "WEB: %s is off-screen link (%i, %i)" % (obj, x, y)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                rv = True
+
+        self._isOffScreenLink[hash(obj)] = rv
         return rv
 
     def isOffScreenLabel(self, obj):
