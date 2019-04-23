@@ -931,12 +931,7 @@ class Utilities(script_utilities.Utilities):
             rv = None
 
         if not self.isLiveRegion(obj):
-            doNotQuery = [pyatspi.ROLE_TABLE_ROW,
-                          pyatspi.ROLE_TOOL_BAR]
-
-            if not self._script.browseModeIsSticky():
-                doNotQuery.append(pyatspi.ROLE_EMBEDDED)
-
+            doNotQuery = [pyatspi.ROLE_TABLE_ROW]
             role = obj.getRole()
             if rv and role in doNotQuery:
                 rv = None
