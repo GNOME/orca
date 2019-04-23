@@ -927,7 +927,7 @@ class Utilities(script_utilities.Utilities):
             if not characterCount:
                 rv = None
 
-        if self._treatTextObjectAsWhole(obj):
+        if self._treatObjectAsWhole(obj):
             rv = None
 
         if not self.isLiveRegion(obj):
@@ -953,22 +953,41 @@ class Utilities(script_utilities.Utilities):
         self._text[hash(obj)] = rv
         return rv
 
-    def _treatTextObjectAsWhole(self, obj):
+    def _treatObjectAsWhole(self, obj):
         roles = [pyatspi.ROLE_CHECK_BOX,
                  pyatspi.ROLE_CHECK_MENU_ITEM,
+                 pyatspi.ROLE_IMAGE,
+                 pyatspi.ROLE_IMAGE_MAP,
+                 pyatspi.ROLE_LIST_BOX,
                  pyatspi.ROLE_MENU,
+                 pyatspi.ROLE_MENU_BAR,
                  pyatspi.ROLE_MENU_ITEM,
                  pyatspi.ROLE_RADIO_MENU_ITEM,
                  pyatspi.ROLE_RADIO_BUTTON,
                  pyatspi.ROLE_PUSH_BUTTON,
                  pyatspi.ROLE_TOGGLE_BUTTON,
-                 pyatspi.ROLE_TREE]
+                 pyatspi.ROLE_TOOL_BAR,
+                 pyatspi.ROLE_TOOL_TIP,
+                 pyatspi.ROLE_TREE,
+                 pyatspi.ROLE_TREE_TABLE]
 
         role = obj.getRole()
         if role in roles:
             return True
 
-        if role == pyatspi.ROLE_TABLE_CELL and self.isFocusModeWidget(obj):
+        if role == pyatspi.ROLE_TABLE_CELL:
+            return self.isFocusModeWidget(obj)
+
+        if role == pyatspi.ROLE_COMBO_BOX:
+            return not self.isEditableComboBox(obj)
+
+        if role == pyatspi.ROLE_EMBEDDED:
+            return not self._script.browseModeIsSticky()
+
+        if role == pyatspi.ROLE_LINK:
+            return self.hasExplicitName(obj) or self.hasUselessCanvasDescendant(obj)
+
+        if self.isNonNavigableEmbeddedDocument(obj):
             return True
 
         return False
@@ -3326,7 +3345,7 @@ class Utilities(script_utilities.Utilities):
         if not event.type.startswith("object:text-"):
             return False
 
-        return self._treatTextObjectAsWhole(event.source)
+        return self._treatObjectAsWhole(event.source)
 
     # TODO - JD: As an experiment, we're stopping these at the event manager.
     # If that works, this can be removed.
@@ -3572,56 +3591,6 @@ class Utilities(script_utilities.Utilities):
 
         return True
 
-    def doNotDescendForCaret(self, obj):
-        if not obj or self.isZombie(obj):
-            return True
-
-        try:
-            childCount = obj.childCount
-        except:
-            msg = "WEB: Exception getting childCount for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-        if not childCount or self.isParentOfNullChild(obj):
-            return True
-
-        if self.isHidden(obj) or self.isOffScreenLabel(obj):
-            return True
-
-        if self.isNonNavigableEmbeddedDocument(obj):
-            return True
-
-        role = obj.getRole()
-        if role == pyatspi.ROLE_LINK \
-           and (self.hasExplicitName(obj) or self.hasUselessCanvasDescendant(obj)):
-            return True
-
-        if self.isTextBlockElement(obj):
-            return False
-
-        if self.isImageMap(obj):
-            return False
-
-        doNotDescend = [pyatspi.ROLE_COMBO_BOX,
-                        pyatspi.ROLE_IMAGE,
-                        pyatspi.ROLE_LIST_BOX,
-                        pyatspi.ROLE_MENU_BAR,
-                        pyatspi.ROLE_MENU,
-                        pyatspi.ROLE_MENU_ITEM,
-                        pyatspi.ROLE_CHECK_BOX,
-                        pyatspi.ROLE_RADIO_BUTTON,
-                        pyatspi.ROLE_PUSH_BUTTON,
-                        pyatspi.ROLE_TOGGLE_BUTTON,
-                        pyatspi.ROLE_TOOL_BAR,
-                        pyatspi.ROLE_TOOL_TIP,
-                        pyatspi.ROLE_TREE,
-                        pyatspi.ROLE_TREE_TABLE]
-
-        if not self._script.browseModeIsSticky():
-            doNotDescend.append(pyatspi.ROLE_EMBEDDED)
-
-        return role in doNotDescend
-
     def searchForCaretContext(self, obj):
         contextObj, contextOffset = None, -1
         while obj:
@@ -3861,14 +3830,14 @@ class Utilities(script_utilities.Utilities):
                 allText = text.getText(0, -1)
                 for i in range(offset + 1, len(allText)):
                     child = self.getChildAtOffset(obj, i)
-                    if child and self._treatTextObjectAsWhole(child):
+                    if child and self._treatObjectAsWhole(child):
                         return child, 0
                     if self._canHaveCaretContext(child):
                         return self.findNextCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
             elif self._canHaveCaretContext(obj):
-                if not self.doNotDescendForCaret(obj) and obj.childCount:
+                if obj.childCount and not self._treatObjectAsWhole(obj):
                     return self.findNextCaretInOrder(obj[0], -1)
                 elif offset < 0 and not self.isTextBlockElement(obj):
                     return obj, 0
@@ -3926,14 +3895,14 @@ class Utilities(script_utilities.Utilities):
                     offset = len(allText)
                 for i in range(offset - 1, -1, -1):
                     child = self.getChildAtOffset(obj, i)
-                    if child and self._treatTextObjectAsWhole(child):
+                    if child and self._treatObjectAsWhole(child):
                         return child, 0
                     if self._canHaveCaretContext(child):
                         return self.findPreviousCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
             elif self._canHaveCaretContext(obj):
-                if not self.doNotDescendForCaret(obj) and obj.childCount:
+                if obj.childCount and not self._treatObjectAsWhole(obj):
                     return self.findPreviousCaretInOrder(obj[obj.childCount - 1], -1)
                 elif offset < 0 and not self.isTextBlockElement(obj):
                     return obj, 0
