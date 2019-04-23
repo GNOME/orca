@@ -1631,6 +1631,9 @@ class Utilities(script_utilities.Utilities):
         return contents
 
     def hasPresentableText(self, obj):
+        if self.isStaticTextLeaf(obj):
+            return False
+
         text = self.queryNonEmptyText(obj)
         if not text:
             return False
@@ -1653,7 +1656,7 @@ class Utilities(script_utilities.Utilities):
             return True
 
         handled = False
-        descendants = pyatspi.findAllDescendants(obj, lambda x: self.hasPresentableText)
+        descendants = self.findAllDescendants(obj, self.hasPresentableText)
         for descendant in descendants:
             if handled:
                 super().updateCachedTextSelection(descendant)
