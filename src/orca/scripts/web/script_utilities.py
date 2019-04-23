@@ -87,7 +87,6 @@ class Utilities(script_utilities.Utilities):
         self._isLink = {}
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
-        self._isImageMap = {}
         self._isUselessImage = {}
         self._isNonNavigableEmbeddedDocument = {}
         self._isParentOfNullChild = {}
@@ -159,7 +158,6 @@ class Utilities(script_utilities.Utilities):
         self._isLink = {}
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
-        self._isImageMap = {}
         self._isUselessImage = {}
         self._isNonNavigableEmbeddedDocument = {}
         self._isParentOfNullChild = {}
@@ -2983,22 +2981,6 @@ class Utilities(script_utilities.Utilities):
             return super().isSwitch(obj)
 
         return 'switch' in self._getXMLRoles(obj)
-
-    def isImageMap(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return False
-
-        rv = self._isImageMap.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        role = obj.getRole()
-        rv = role == pyatspi.ROLE_IMAGE_MAP
-        if rv == False and role == pyatspi.ROLE_IMAGE:
-            rv = obj.childCount and obj[0].getRole() == pyatspi.ROLE_LINK
-
-        self._isImageMap[hash(obj)] = rv
-        return rv
 
     def isNonNavigableEmbeddedDocument(self, obj):
         rv = self._isNonNavigableEmbeddedDocument.get(hash(obj))
