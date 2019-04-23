@@ -43,23 +43,27 @@ class Utilities(web.Utilities):
 
     def __init__(self, script):
         super().__init__(script)
+        self._isStaticTextLeaf = {}
 
     def clearCachedObjects(self):
         super().clearCachedObjects()
+        self._isStaticTextLeaf = {}
 
     def isStaticTextLeaf(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return super().isStaticTextLeaf(obj)
 
-        if obj.getRole() != pyatspi.ROLE_TEXT:
-            return False
+        rv = self._isStaticTextLeaf.get(hash(obj))
+        if rv is not None:
+            return rv
 
-        if self._getTag(obj):
-            return False
+        rv = obj.getRole() == pyatspi.ROLE_TEXT and not self._getTag(obj)
+        if rv:
+            msg = "CHROMIUM: %s believed to be static text leaf" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
 
-        msg = "CHROMIUM: %s believed to be static text leaf" % obj
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return True
+        self._isStaticTextLeaf[hash(obj)] = rv
+        return rv
 
     def selectedChildCount(self, obj):
         count = super().selectedChildCount(obj)
