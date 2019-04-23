@@ -1729,7 +1729,6 @@ class Utilities(script_utilities.Utilities):
                           pyatspi.ROLE_SPIN_BUTTON,
                           pyatspi.ROLE_TOOL_BAR,
                           pyatspi.ROLE_TABLE_CELL,
-                          pyatspi.ROLE_TABLE_ROW,
                           pyatspi.ROLE_TABLE,
                           pyatspi.ROLE_TREE_ITEM,
                           pyatspi.ROLE_TREE_TABLE,
