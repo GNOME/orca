@@ -3561,6 +3561,14 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: Empty anchor cannot have caret context %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
+        if self.hasNoSize(obj):
+            msg = "WEB: Sizeless object cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+        if self.isParentOfNullChild(obj):
+            msg = "WEB: Parent of null child cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
 
         return True
 
@@ -3861,8 +3869,7 @@ class Utilities(script_utilities.Utilities):
                         return obj, i
             elif not self.doNotDescendForCaret(obj) and obj.childCount:
                 return self.findNextCaretInOrder(obj[0], -1)
-            elif offset < 0 and not self.isTextBlockElement(obj) and not self.hasNoSize(obj) \
-                 and not self.isUselessImage(obj) and not self.isParentOfNullChild(obj):
+            elif offset < 0 and not self.isTextBlockElement(obj) and self._canHaveCaretContext(obj):
                 return obj, 0
 
         # If we're here, start looking up the the tree, up to the document.
@@ -3926,8 +3933,7 @@ class Utilities(script_utilities.Utilities):
                         return obj, i
             elif not self.doNotDescendForCaret(obj) and obj.childCount:
                 return self.findPreviousCaretInOrder(obj[obj.childCount - 1], -1)
-            elif offset < 0 and not self.isTextBlockElement(obj) and not self.hasNoSize(obj) \
-                 and not self.isUselessImage(obj) and not self.isParentOfNullChild(obj):
+            elif offset < 0 and not self.isTextBlockElement(obj) and self._canHaveCaretContext(obj):
                 return obj, 0
 
         # If we're here, start looking up the the tree, up to the document.
