@@ -941,9 +941,6 @@ class Utilities(script_utilities.Utilities):
                 rv = None
             if rv and self.isNonNavigableEmbeddedDocument(obj):
                 rv = None
-            if rv and role == pyatspi.ROLE_LINK \
-               and (self.hasExplicitName(obj) or self.hasUselessCanvasDescendant(obj)):
-                rv = None
 
         self._text[hash(obj)] = rv
         return rv
