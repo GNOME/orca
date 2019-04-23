@@ -3529,11 +3529,37 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def _canHaveCaretContext(self, obj):
+        if not obj:
+            msg = "WEB: Null object cannot have caret context"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+        if self.isDead(obj):
+            msg = "WEB: Dead object cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+        if self.isZombie(obj):
+            msg = "WEB: Zombie object cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
         if self.isHidden(obj):
+            msg = "WEB: Hidden object cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
         if self.isOffScreenLabel(obj):
+            msg = "WEB: Off-screen label cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
         if self.isNonNavigablePopup(obj):
+            msg = "WEB: Non-navigable popup cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+        if self.isUselessImage(obj):
+            msg = "WEB: Useless image cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+        if self.isEmptyAnchor(obj):
+            msg = "WEB: Empty anchor cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         return True
@@ -3829,8 +3855,7 @@ class Utilities(script_utilities.Utilities):
                     child = self.getChildAtOffset(obj, i)
                     if child and self._treatTextObjectAsWhole(child):
                         return child, 0
-                    if child and not self.isZombie(child) and not self.isEmptyAnchor(child) \
-                       and not self.isUselessImage(child):
+                    if self._canHaveCaretContext(child):
                         return self.findNextCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
@@ -3895,8 +3920,7 @@ class Utilities(script_utilities.Utilities):
                     child = self.getChildAtOffset(obj, i)
                     if child and self._treatTextObjectAsWhole(child):
                         return child, 0
-                    if child and not self.isZombie(child) and not self.isEmptyAnchor(child) \
-                       and not self.isUselessImage(child):
+                    if self._canHaveCaretContext(child):
                         return self.findPreviousCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
