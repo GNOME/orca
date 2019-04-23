@@ -3464,15 +3464,25 @@ class Utilities(script_utilities.Utilities):
         return hypertext.getLinkIndex(offset)
 
     def getChildAtOffset(self, obj, offset):
-        index = self.getChildIndex(obj, offset)
+        try:
+            hypertext = obj.queryHypertext()
+        except NotImplementedError:
+            msg = "WEB: %s does not implement the hypertext interface" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+        except:
+            msg = "WEB: Exception querying hypertext interface for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
+        index = hypertext.getLinkIndex(offset)
         if index == -1:
             return None
 
-        try:
-            child = obj[index]
-        except:
-            return None
-
+        hyperlink = hypertext.getLink(index)
+        child = hyperlink.getObject(0)
+        msg = "WEB: Hyperlink object at index %i for %s is %s" % (index, obj, child)
+        debug.println(debug.LEVEL_INFO, msg, True)
         return child
 
     def getError(self, obj):
@@ -3550,8 +3560,6 @@ class Utilities(script_utilities.Utilities):
 
     def _canHaveCaretContext(self, obj):
         if not obj:
-            msg = "WEB: Null object cannot have caret context"
-            debug.println(debug.LEVEL_INFO, msg, True)
             return False
         if self.isDead(obj):
             msg = "WEB: Dead object cannot have caret context %s" % obj
