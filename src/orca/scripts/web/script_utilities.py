@@ -3867,10 +3867,11 @@ class Utilities(script_utilities.Utilities):
                         return self.findNextCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
-            elif not self.doNotDescendForCaret(obj) and obj.childCount:
-                return self.findNextCaretInOrder(obj[0], -1)
-            elif offset < 0 and not self.isTextBlockElement(obj) and self._canHaveCaretContext(obj):
-                return obj, 0
+            elif self._canHaveCaretContext(obj):
+                if not self.doNotDescendForCaret(obj) and obj.childCount:
+                    return self.findNextCaretInOrder(obj[0], -1)
+                elif offset < 0 and not self.isTextBlockElement(obj):
+                    return obj, 0
 
         # If we're here, start looking up the the tree, up to the document.
         documentFrame = self.documentFrame()
@@ -3931,10 +3932,11 @@ class Utilities(script_utilities.Utilities):
                         return self.findPreviousCaretInOrder(child, -1)
                     if allText[i] not in (self.EMBEDDED_OBJECT_CHARACTER, self.ZERO_WIDTH_NO_BREAK_SPACE):
                         return obj, i
-            elif not self.doNotDescendForCaret(obj) and obj.childCount:
-                return self.findPreviousCaretInOrder(obj[obj.childCount - 1], -1)
-            elif offset < 0 and not self.isTextBlockElement(obj) and self._canHaveCaretContext(obj):
-                return obj, 0
+            elif self._canHaveCaretContext(obj):
+                if not self.doNotDescendForCaret(obj) and obj.childCount:
+                    return self.findPreviousCaretInOrder(obj[obj.childCount - 1], -1)
+                elif offset < 0 and not self.isTextBlockElement(obj):
+                    return obj, 0
 
         # If we're here, start looking up the the tree, up to the document.
         documentFrame = self.documentFrame()
