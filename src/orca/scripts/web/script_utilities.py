@@ -3528,6 +3528,16 @@ class Utilities(script_utilities.Utilities):
         self._hasNoSize[hash(obj)] = rv
         return rv
 
+    def _canHaveCaretContext(self, obj):
+        if self.isHidden(obj):
+            return False
+        if self.isOffScreenLabel(obj):
+            return False
+        if self.isNonNavigablePopup(obj):
+            return False
+
+        return True
+
     def doNotDescendForCaret(self, obj):
         if not obj or self.isZombie(obj):
             return True
@@ -3811,7 +3821,7 @@ class Utilities(script_utilities.Utilities):
         if not obj or not self.inDocumentContent(obj):
             return None, -1
 
-        if not (self.isHidden(obj) or self.isOffScreenLabel(obj) or self.isNonNavigablePopup(obj)):
+        if self._canHaveCaretContext(obj):
             text = self.queryNonEmptyText(obj)
             if text:
                 allText = text.getText(0, -1)
@@ -3875,7 +3885,7 @@ class Utilities(script_utilities.Utilities):
         if not obj or not self.inDocumentContent(obj):
             return None, -1
 
-        if not (self.isHidden(obj) or self.isOffScreenLabel(obj) or self.isNonNavigablePopup(obj)):
+        if self._canHaveCaretContext(obj):
             text = self.queryNonEmptyText(obj)
             if text:
                 allText = text.getText(0, -1)
