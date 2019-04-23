@@ -504,7 +504,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         isRow = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_ROW
         row = pyatspi.findAncestor(obj, isRow)
-        if row and row.name:
+        if row and row.name and not self._script.utilities.isLayoutOnly(row):
             return self.generate(row)
 
         return super()._generateTableCellRow(obj, **args)

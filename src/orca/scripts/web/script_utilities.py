@@ -100,6 +100,7 @@ class Utilities(script_utilities.Utilities):
         self._preferDescriptionOverName = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
+        self._shouldReadFullRow = {}
         self._text = {}
         self._tag = {}
         self._xmlRoles = {}
@@ -172,6 +173,7 @@ class Utilities(script_utilities.Utilities):
         self._preferDescriptionOverName = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
+        self._shouldReadFullRow = {}
         self._tag = {}
         self._xmlRoles = {}
         self._treatAsDiv = {}
@@ -2310,6 +2312,32 @@ class Utilities(script_utilities.Utilities):
         self._isGridDescendant[hash(obj)] = rv
         return rv
 
+    def shouldReadFullRow(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().shouldReadFullRow(obj)
+
+        rv = self._shouldReadFullRow.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            role = obj.getRole()
+            state = obj.getState()
+        except:
+            msg = "ERROR: Exception getting role and state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role == pyatspi.ROLE_TABLE_CELL and state.contains(pyatspi.STATE_FOCUSABLE):
+            msg = "WEB: Should not read full row: focusable cell %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            rv = False
+        else:
+            rv = super().shouldReadFullRow(obj)
+
+        self._shouldReadFullRow[hash(obj)] = rv
+        return rv
+
     def isEntryDescendant(self, obj):
         if not obj:
             return False
@@ -2381,6 +2409,9 @@ class Utilities(script_utilities.Utilities):
 
         rv = self._isLayoutOnly.get(hash(obj))
         if rv is not None:
+            if rv:
+                msg = "WEB: %s is deemed to be layout only" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
             return rv
 
         try:
@@ -2402,8 +2433,14 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif self.isFigure(obj):
             rv = False
+        elif role == pyatspi.ROLE_TABLE_ROW:
+            rv = not self.hasExplicitName(obj)
         else:
             rv = super().isLayoutOnly(obj)
+
+        if rv:
+            msg = "WEB: %s is deemed to be layout only" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
 
         self._isLayoutOnly[hash(obj)] = rv
         return rv

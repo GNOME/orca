@@ -1182,7 +1182,8 @@ class Script(default.Script):
         self.utilities.setCaretContext(newFocus, caretOffset)
         self.updateBraille(newFocus)
 
-        if self.utilities.isContentEditableWithEmbeddedObjects(newFocus):
+        if self.utilities.isContentEditableWithEmbeddedObjects(newFocus) \
+           and not (newFocus.getRole() == pyatspi.ROLE_TABLE_CELL and newFocus.name):
             msg = "WEB: New focus %s content editable. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)

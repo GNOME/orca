@@ -152,6 +152,12 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return result
 
+    def _generateRealActiveDescendantDisplayedText(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateRealActiveDescendantDisplayedText(obj, **args)
+
+        return self._generateDisplayedText(obj, **args)
+
     def _generateTableCellRow(self, obj, **args):
         if not self._script.inFocusMode():
             return super()._generateTableCellRow(obj, **args)
@@ -161,7 +167,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         isRow = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_ROW
         row = pyatspi.findAncestor(obj, isRow)
-        if row and row.name:
+        if row and row.name and not self._script.utilities.isLayoutOnly(row):
             return self.generate(row, includeContext=False)
 
         return super()._generateTableCellRow(obj, **args)
