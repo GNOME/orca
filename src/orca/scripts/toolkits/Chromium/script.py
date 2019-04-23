@@ -163,6 +163,11 @@ class Script(web.Script):
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
+        if self.utilities.isStaticTextLeaf(obj):
+            msg = "CHROMIUM: Ignoring event from static-text leaf"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if self.utilities.isRedundantAutocompleteEvent(event):
             msg = "CHROMIUM: Ignoring redundant autocomplete event"
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -357,6 +362,11 @@ class Script(web.Script):
 
     def onTextSelectionChanged(self, event):
         """Callback for object:text-selection-changed accessibility events."""
+
+        if self.utilities.isStaticTextLeaf(obj):
+            msg = "CHROMIUM: Ignoring event from static-text leaf"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
 
         if super().onTextSelectionChanged(event):
             return
