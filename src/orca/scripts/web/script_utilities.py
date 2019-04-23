@@ -1195,12 +1195,8 @@ class Utilities(script_utilities.Utilities):
             pass
         else:
             if char == self.EMBEDDED_OBJECT_CHARACTER:
-                childIndex = self.getChildIndex(obj, offset)
-                try:
-                    child = obj[childIndex]
-                except:
-                    pass
-                else:
+                child = self.getChildAtOffset(obj, offset)
+                if child:
                     return self._getContentsForObj(child, 0, boundary)
 
         ranges = [m.span() for m in re.finditer("[^\ufffc]+", string)]
@@ -3448,21 +3444,6 @@ class Utilities(script_utilities.Utilities):
         start, end = self.getHyperlinkRange(obj)
         return start, end, text.characterCount
 
-    @staticmethod
-    def getChildIndex(obj, offset):
-        try:
-            hypertext = obj.queryHypertext()
-        except NotImplementedError:
-            msg = "WEB: %s does not implement the hypertext interface" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return -1
-        except:
-            msg = "WEB: Exception querying hypertext interface for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return -1
-
-        return hypertext.getLinkIndex(offset)
-
     def getChildAtOffset(self, obj, offset):
         try:
             hypertext = obj.queryHypertext()
@@ -3609,9 +3590,9 @@ class Utilities(script_utilities.Utilities):
                 obj = None
             else:
                 contextObj, contextOffset = obj, offset
-                childIndex = self.getChildIndex(obj, offset)
-                if childIndex >= 0 and obj.childCount:
-                    obj = obj[childIndex]
+                child = self.getChildAtOffset(obj, offset)
+                if child:
+                    obj = child
                 else:
                     break
 
