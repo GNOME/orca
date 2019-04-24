@@ -2635,6 +2635,9 @@ class Utilities(script_utilities.Utilities):
         return None
 
     def isLabellingContents(self, obj, contents=[]):
+        if self.isFocusModeWidget(obj):
+            return False
+
         targets = self.labelTargets(obj)
         if not contents:
             return bool(targets)
