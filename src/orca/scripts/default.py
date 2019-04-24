@@ -2846,56 +2846,36 @@ class Script(script.Script):
         - event: the Event
         """
 
-        self.pointOfReference = {}
-
         if self.utilities.inMenu():
             msg = "DEFAULT: Ignoring event. In menu."
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        # If we receive a "window:deactivate" event for the object that
-        # currently has focus, then stop the current speech output.
-        # This is very useful for terminating long speech output from
-        # commands running in gnome-terminal.
-        #
-        if orca_state.locusOfFocus and \
-           orca_state.locusOfFocus.getApplication() == event.source.getApplication():
-            self.presentationInterrupt()
+        if event.source != orca_state.activeWindow:
+            msg = "DEFAULT: Ignoring event. Not for active window."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
 
-            # Clear the braille display just in case we are about to give
-            # focus to an inaccessible application. See bug #519901 for
-            # more details.
-            #
-            self.clearBraille()
+        self.presentationInterrupt()
+        self.clearBraille()
 
-            # Hide the flat review window and reset it so that it will be
-            # recreated.
-            #
-            if self.flatReviewContext:
-                self.flatReviewContext = None
-                self.updateBraille(orca_state.locusOfFocus)
-
-        # Because window activated and deactivated events may be
-        # received in any order when switching from one application to
-        # another, locusOfFocus and activeWindow, we really only change
-        # the locusOfFocus and activeWindow when we are dealing with
-        # an event from the current activeWindow.
-        #
-        if event.source == orca_state.activeWindow:
-            if not self.utilities.eventIsUserTriggered(event):
-                msg = "DEFAULT: Not clearing state. Event is not user triggered."
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return
-
-            orca.setLocusOfFocus(event, None)
-            orca_state.activeWindow = None
-            orca_state.activeScript = None
+        if self.flatReviewContext:
             self.flatReviewContext = None
 
-        # disable list notification  messages mode
-        orca_state.listNotificationsModeEnabled = False
+        self.pointOfReference = {}
 
-        # disable learn mode
+        if not self.utilities.eventIsUserTriggered(event):
+            msg = "DEFAULT: Not clearing state. Event is not user triggered."
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
+        msg = "DEFAULT: Clearing state."
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        orca.setLocusOfFocus(event, None)
+        orca_state.activeWindow = None
+        orca_state.activeScript = None
+        orca_state.listNotificationsModeEnabled = False
         orca_state.learnModeEnabled = False
 
     def onClipboardContentsChanged(self, *args):
