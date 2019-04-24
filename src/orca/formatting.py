@@ -254,8 +254,8 @@ formatting = {
             'basicWhereAmI': 'label + displayedText + allTextSelection + roleName'
             },
         pyatspi.ROLE_LANDMARK: {
-            'focused': 'leaving or (labelAndName + roleName)',
-            'unfocused': '((substring and currentLineText) or labelAndName) + roleName + pause + unrelatedLabels'
+            'focused': 'leaving or (roleName + labelAndName)',
+            'unfocused': 'roleName + (labelAndName or (substring and currentLineText)) + pause + unrelatedLabels'
             },
         pyatspi.ROLE_LAYERED_PANE: {
             'focused': '(labelAndName or roleName) + availability + noShowingChildren',
