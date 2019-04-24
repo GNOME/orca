@@ -70,6 +70,7 @@ class Utilities(script_utilities.Utilities):
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
         self._isOffScreenLink = {}
+        self._isOffScreenTextBlockElement = {}
         self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
@@ -143,6 +144,7 @@ class Utilities(script_utilities.Utilities):
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
         self._isOffScreenLink = {}
+        self._isOffScreenTextBlockElement = {}
         self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
@@ -1177,10 +1179,17 @@ class Utilities(script_utilities.Utilities):
                     math = self.getMathAncestor(obj)
                 return [[math, 0, 1, '']]
 
+            # Because user agents will give us this text word at a time.
             if self.isOffScreenLink(obj) and self.queryNonEmptyText(obj) and obj.name:
                 msg = "WEB: Returning name as contents for %s (is off-screen)" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return [[obj, 0, len(obj.name), obj.name]]
+
+            # Because user agents will give us this text word at a time.
+            if self.isOffScreenTextBlockElement(obj) and self.queryNonEmptyText(obj):
+                msg = "WEB: Returning all text as contents for %s (is off-screen)" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                boundary = None
 
         role = obj.getRole()
         if role == pyatspi.ROLE_INTERNAL_FRAME and obj.childCount == 1:
@@ -2444,6 +2453,29 @@ class Utilities(script_utilities.Utilities):
         self._isLayoutOnly[hash(obj)] = rv
         return rv
 
+    def isOffScreenTextBlockElement(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isOffScreenTextBlockElement.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = False
+        if self.isTextBlockElement(obj):
+            x, y, width, height = self.getExtents(obj, 0, -1)
+            if x < 0 or y < 0:
+                msg = "WEB: %s is off-screen text block (%i, %i)" % (obj, x, y)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                rv = True
+            elif width == 1 or height == 1:
+                msg = "WEB: %s is off-screen text block (%i x %i)" % (obj, width, height)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                rv = True
+
+        self._isOffScreenTextBlockElement[hash(obj)] = rv
+        return rv
+
     def isOffScreenLink(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -2457,6 +2489,10 @@ class Utilities(script_utilities.Utilities):
             x, y, width, height = self.getExtents(obj, 0, -1)
             if x < 0 or y < 0:
                 msg = "WEB: %s is off-screen link (%i, %i)" % (obj, x, y)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                rv = True
+            elif width == 1 or height == 1:
+                msg = "WEB: %s is off-screen link (%i x %i)" % (obj, width, height)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 rv = True
 
