@@ -1468,6 +1468,9 @@ class Utilities(script_utilities.Utilities):
             if xStart == xEnd:
                 return False
 
+            if self.isLandmark(obj) and self.isLandmark(xObj) and obj != xObj:
+                return False
+
             xExtents = self.getExtents(xObj, xStart, xStart + 1)
             if self.isMathTopLevel(xObj) or self.isMath(obj):
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents, extents[3])
