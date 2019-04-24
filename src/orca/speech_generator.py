@@ -1707,6 +1707,9 @@ class SpeechGenerator(generator.Generator):
         else:
               priorObj = args.get('priorObj')
 
+        if priorObj and self._script.utilities.isDead(priorObj):
+            return []
+
         if priorObj and priorObj.getRole() == pyatspi.ROLE_TOOL_TIP:
             return []
 

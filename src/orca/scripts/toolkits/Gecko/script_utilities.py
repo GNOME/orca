@@ -77,7 +77,7 @@ class Utilities(web.Utilities):
         the object attribute 'level'.  To be consistent with the default
         nodeLevel() this value is 0-based (Gecko return is 1-based) """
 
-        if obj is None or obj.getRole() == pyatspi.ROLE_HEADING \
+        if obj is None or self.isDead(obj) or obj.getRole() == pyatspi.ROLE_HEADING \
            or (obj.parent and obj.parent.getRole() == pyatspi.ROLE_MENU):
             return -1
 
