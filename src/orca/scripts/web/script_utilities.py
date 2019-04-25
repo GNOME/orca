@@ -3752,8 +3752,11 @@ class Utilities(script_utilities.Utilities):
         if self.isDocument(obj):
             return
 
-        for child in obj:
-            self.clearTextSelection(child)
+        try:
+            for child in obj:
+                self.clearTextSelection(child)
+        except:
+            pass
 
     def clearCaretContext(self, documentFrame=None):
         self.clearContentCache()
