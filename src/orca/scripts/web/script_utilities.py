@@ -1008,7 +1008,8 @@ class Utilities(script_utilities.Utilities):
             start, end = span
             startExtents = list(text.getRangeExtents(start, start + 1, 0))
             endExtents = list(text.getRangeExtents(end - 1, end, 0))
-            if not self.extentsAreOnSameLine(startExtents, endExtents):
+            delta = max(startExtents[3], endExtents[3])
+            if not self.extentsAreOnSameLine(startExtents, endExtents, delta):
                 msg = "FAIL: Start %s and end %s of '%s' not on same line" \
                       % (startExtents, endExtents, allText[start:end])
                 debug.println(debug.LEVEL_INFO, msg, True)
