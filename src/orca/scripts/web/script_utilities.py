@@ -952,8 +952,6 @@ class Utilities(script_utilities.Utilities):
     def _treatObjectAsWhole(self, obj):
         roles = [pyatspi.ROLE_CHECK_BOX,
                  pyatspi.ROLE_CHECK_MENU_ITEM,
-                 pyatspi.ROLE_IMAGE,
-                 pyatspi.ROLE_IMAGE_MAP,
                  pyatspi.ROLE_LIST_BOX,
                  pyatspi.ROLE_MENU,
                  pyatspi.ROLE_MENU_BAR,
