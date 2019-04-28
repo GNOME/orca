@@ -3651,9 +3651,9 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
         if self.hasNoSize(obj):
-            msg = "WEB: Sizeless object cannot have caret context %s" % obj
+            msg = "WEB: Allowing sizeless object to have caret context %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-            return False
+            return True
         if self.isParentOfNullChild(obj):
             msg = "WEB: Parent of null child cannot have caret context %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
