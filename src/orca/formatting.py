@@ -176,6 +176,12 @@ formatting = {
             'focused': 'labelOrName + roleName',
             'unfocused': 'labelOrName + roleName + pause + currentLineText + allTextSelection',
             },
+        pyatspi.ROLE_DESCRIPTION_TERM: {
+            'unfocused': '(labelOrName or (displayedText + allTextSelection))',
+            },
+        pyatspi.ROLE_DESCRIPTION_VALUE: {
+            'unfocused': '(labelOrName or (displayedText + allTextSelection))',
+            },
         pyatspi.ROLE_DIAL: {
             'focused': 'value',
             'unfocused': 'labelOrName + roleName + value + required + availability + ' + MNEMONIC,
