@@ -168,7 +168,7 @@ formatting = {
             'unfocused': '((substring and currentLineText) or labelAndName) + roleName'
             },
         pyatspi.ROLE_COMBO_BOX: {
-            'focused': 'expandableState',
+            'focused': 'labelAndName + roleName + expandableState',
             'unfocused': 'labelAndName + roleName + pause + (currentLineText + anyTextSelection or positionInList) + ' + MNEMONIC + ' + accelerator',
             'basicWhereAmI': 'label + roleName + pause + name + (currentLineText + anyTextSelection or positionInList) + ' + MNEMONIC + ' + accelerator'
             },
