@@ -3541,6 +3541,11 @@ class Utilities(script_utilities.Utilities):
             return None
 
         hyperlink = hypertext.getLink(index)
+        if not hyperlink:
+            msg = "ERROR: No hyperlink object at index %i for %s" % (index, obj)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return None
+
         child = hyperlink.getObject(0)
         msg = "WEB: Hyperlink object at index %i for %s is %s" % (index, obj, child)
         debug.println(debug.LEVEL_INFO, msg, True)
