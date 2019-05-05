@@ -172,6 +172,16 @@ class Script(web.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onDocumentReload(self, event)
 
+    def onExpandedChanged(self, event):
+        """Callback for object:state-changed:expanded accessibility events."""
+
+        if super().onExpandedChanged(event):
+            return
+
+        msg = "GECKO: Passing along event to default script"
+        debug.println(debug.LEVEL_INFO, msg, True)
+        default.Script.onExpandedChanged(self, event)
+
     def onFocus(self, event):
         """Callback for focus: accessibility events."""
 

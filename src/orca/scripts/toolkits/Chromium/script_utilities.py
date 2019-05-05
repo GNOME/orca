@@ -86,11 +86,19 @@ class Utilities(web.Utilities):
         if result or "Selection" in pyatspi.listInterfaces(obj):
             return result
 
+        try:
+            childCount = obj.childCount
+        except:
+            msg = "CHROMIUM: Exception getting child count of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return result
+
         # HACK: Ideally, we'd use the selection interface to get the selected
         # children. But that interface is not implemented yet. This hackaround
         # is extremely non-performant.
-        for child in obj:
-            if child.getState().contains(pyatspi.STATE_SELECTED):
+        for i in range(childCount):
+            child = obj[i]
+            if child and child.getState().contains(pyatspi.STATE_SELECTED):
                 result.append(child)
 
         return result

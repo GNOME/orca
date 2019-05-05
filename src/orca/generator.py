@@ -306,9 +306,15 @@ class Generator:
         name = self._script.utilities.displayedText(obj)
         if obj.getRole() == pyatspi.ROLE_COMBO_BOX:
             children = self._script.utilities.selectedChildren(obj)
-            if not children and obj.childCount:
-                children = self._script.utilities.selectedChildren(obj[0])
-            children = children or [child for child in obj]
+            if not children:
+                try:
+                    children = self._script.utilities.selectedChildren(obj[0])
+                except:
+                    pass
+            try:
+                children = children or [child for child in obj]
+            except:
+                pass
             names = map(self._script.utilities.displayedText, children)
             names = list(filter(lambda x: x, names))
             if len(names) == 1:

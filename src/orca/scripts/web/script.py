@@ -1692,6 +1692,21 @@ class Script(default.Script):
         self._loadingDocumentContent = True
         return True
 
+    def onExpandedChanged(self, event):
+        """Callback for object:state-changed:expanded accessibility events."""
+
+        if self.utilities.isZombie(event.source):
+            msg = "WEB: Event source is Zombie"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if not self.utilities.inDocumentContent(event.source):
+            msg = "WEB: Event source is not in document content"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return False
+
     def onFocusedChanged(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
