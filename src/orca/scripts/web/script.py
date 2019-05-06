@@ -1645,6 +1645,11 @@ class Script(default.Script):
 
         childRole = event.any_data.getRole()
         if childRole == pyatspi.ROLE_ALERT:
+            if event.any_data == self.utilities.lastQueuedLiveRegion():
+                msg = "WEB: Ignoring %s (is last queued live region)" % event.any_data
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return True
+
             msg = "WEB: Presenting event.any_data"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.presentObject(event.any_data)

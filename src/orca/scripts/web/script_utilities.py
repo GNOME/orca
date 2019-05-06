@@ -113,6 +113,7 @@ class Utilities(script_utilities.Utilities):
         self._currentLineContents = None
         self._currentWordContents = None
         self._currentCharacterContents = None
+        self._lastQueuedLiveRegionEvent = None
 
         self._validChildRoles = {pyatspi.ROLE_LIST: [pyatspi.ROLE_LIST_ITEM]}
 
@@ -185,6 +186,7 @@ class Utilities(script_utilities.Utilities):
         self._contextPathsRolesAndNames = {}
         self._cleanupContexts()
         self._priorContexts = {}
+        self._lastQueuedLiveRegionEvent = None
 
     def clearContentCache(self):
         self._currentObjectContents = None
@@ -4021,6 +4023,18 @@ class Utilities(script_utilities.Utilities):
 
         return None, -1
 
+    def lastQueuedLiveRegion(self):
+        if self._lastQueuedLiveRegionEvent is None:
+            return None
+
+        if self._lastQueuedLiveRegionEvent.type.startswith("object:text-changed:insert"):
+            return self._lastQueuedLiveRegionEvent.source
+
+        if self._lastQueuedLiveRegionEvent.type.startswith("object:children-changed:add"):
+            return self._lastQueuedLiveRegionEvent.any_data
+
+        return None
+
     def handleAsLiveRegion(self, event):
         if not _settingsManager.getSetting('inferLiveRegions'):
             return False
@@ -4034,7 +4048,7 @@ class Utilities(script_utilities.Utilities):
             except:
                 msg = "WEB: Exception getting role for %s" % event.any_data
                 debug.println(debug.LEVEL_INFO, msg, True)
-                return True
+                return False
 
             if role in [pyatspi.ROLE_UNKNOWN, pyatspi.ROLE_REDUNDANT_OBJECT] \
                and not self._getTag(event.any_data):
@@ -4042,6 +4056,13 @@ class Utilities(script_utilities.Utilities):
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
 
+            if self.lastQueuedLiveRegion() == event.any_data \
+               and self._lastQueuedLiveRegionEvent.type != event.type:
+                msg = "WEB: Event is believed to be redundant live region notification"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return False
+
+        self._lastQueuedLiveRegionEvent = event
         return True
 
     def getPageObjectCount(self, obj):
