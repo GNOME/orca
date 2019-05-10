@@ -551,7 +551,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        contents = self._script.utilities.filterContentsForPresentation(contents, False)
+        contents = self._script.utilities.filterContentsForPresentation(contents, True)
         msg = "WEB: Generating speech contents (length: %i)" % len(contents)
         debug.println(debug.LEVEL_INFO, msg, True)
         for i, content in enumerate(contents):
