@@ -3666,8 +3666,15 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: Parent of null child cannot have caret context %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
+        if self.isPseudoElement(obj):
+            msg = "WEB: Pseudo element cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
 
         return True
+
+    def isPseudoElement(self, obj):
+        return False
 
     def searchForCaretContext(self, obj):
         contextObj, contextOffset = None, -1

@@ -44,10 +44,12 @@ class Utilities(web.Utilities):
     def __init__(self, script):
         super().__init__(script)
         self._isStaticTextLeaf = {}
+        self._isPseudoElement = {}
 
     def clearCachedObjects(self):
         super().clearCachedObjects()
         self._isStaticTextLeaf = {}
+        self._isPseudoElement = {}
 
     def isStaticTextLeaf(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -64,6 +66,22 @@ class Utilities(web.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
 
         self._isStaticTextLeaf[hash(obj)] = rv
+        return rv
+
+    def isPseudoElement(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().isPseudoElement(obj)
+
+        rv = self._isPseudoElement.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = self._getTag(obj) in ["<pseudo:before>", "<pseudo:after>"]
+        if rv:
+            msg = "CHROMIUM: %s believed to be pseudo element" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        self._isPseudoElement[hash(obj)] = rv
         return rv
 
     def selectedChildCount(self, obj):
