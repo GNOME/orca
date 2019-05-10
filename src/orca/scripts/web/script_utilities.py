@@ -2268,7 +2268,7 @@ class Utilities(script_utilities.Utilities):
                 return rv
 
             rv = True
-            if (self.isTextBlockElement(obj) and not string.strip()) \
+            if ((self.isTextBlockElement(obj) or self.isLink(obj)) and not string.strip()) \
                or self.isEmptyAnchor(obj) \
                or (self.hasNoSize(obj) and not string.strip()) \
                or self.isHidden(obj) \
