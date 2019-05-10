@@ -3670,6 +3670,10 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: Pseudo element cannot have caret context %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
+        if self.isStaticTextLeaf(obj):
+            msg = "WEB: Static text leaf cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
 
         return True
 
