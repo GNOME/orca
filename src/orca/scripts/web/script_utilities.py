@@ -1481,7 +1481,7 @@ class Utilities(script_utilities.Utilities):
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
         objects = self._getContentsForObj(obj, offset, boundary)
-        if not layoutMode:
+        if not layoutMode or self.isOffScreenLink(obj):
             if useCache:
                 self._currentLineContents = objects
             return objects
