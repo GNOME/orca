@@ -52,7 +52,7 @@ class SpeechGenerator(web.SpeechGenerator):
             debug.println(debug.LEVEL_INFO, msg, True)
             return []
 
-        return super()._generateAncestors(obj, **args)
+        return super()._generateNewAncestors(obj, **args)
 
     def generateSpeech(self, obj, **args):
         if self._script.utilities.inDocumentContent(obj):
