@@ -1495,11 +1495,12 @@ class Utilities(script_utilities.Utilities):
             lastObj, lastEnd = self.lastContext(lastObj)
             lastEnd += 1
 
+        document = self.getDocumentForObject(obj)
         prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
         nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
 
         # Check for things on the same line to the left of this object.
-        while prevObj:
+        while prevObj and self.getDocumentForObject(prevObj) == document:
             text = self.queryNonEmptyText(prevObj)
             if text and text.getText(pOffset, pOffset + 1) in [" ", "\xa0"]:
                 prevObj, pOffset = self.findPreviousCaretInOrder(prevObj, pOffset)
@@ -1517,7 +1518,7 @@ class Utilities(script_utilities.Utilities):
             prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
 
         # Check for things on the same line to the right of this object.
-        while nextObj:
+        while nextObj and self.getDocumentForObject(nextObj) == document:
             text = self.queryNonEmptyText(nextObj)
             if text and text.getText(nOffset, nOffset + 1) in [" ", "\xa0"]:
                 nextObj, nOffset = self.findNextCaretInOrder(nextObj, nOffset)
