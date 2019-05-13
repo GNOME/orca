@@ -1072,7 +1072,7 @@ class Utilities(script_utilities.Utilities):
             return '', 0, 1
 
         if boundary is None:
-            string, start, end = text.getText(offset, -1), offset, text.characterCount
+            string, start, end = text.getText(0, -1), 0, text.characterCount
             s = string.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
             msg = "WEB: Results for text at offset %i for %s using %s:\n" \
                   "     String: '%s', Start: %i, End: %i." % (offset, obj, boundary, s, start, end)
