@@ -91,6 +91,7 @@ class Utilities(script_utilities.Utilities):
         self._isNonEntryTextWidget = {}
         self._isUselessImage = {}
         self._isUselessEmptyElement = {}
+        self._hasNameAndActionAndNoUsefulChildren = {}
         self._isNonNavigableEmbeddedDocument = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
@@ -167,6 +168,7 @@ class Utilities(script_utilities.Utilities):
         self._isNonEntryTextWidget = {}
         self._isUselessImage = {}
         self._isUselessEmptyElement = {}
+        self._hasNameAndActionAndNoUsefulChildren = {}
         self._isNonNavigableEmbeddedDocument = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
@@ -956,6 +958,29 @@ class Utilities(script_utilities.Utilities):
         self._text[hash(obj)] = rv
         return rv
 
+    def hasNameAndActionAndNoUsefulChildren(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._hasNameAndActionAndNoUsefulChildren.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = False
+        if self.hasExplicitName(obj) and "Action" in pyatspi.listInterfaces(obj):
+            for child in obj:
+                if not self.isUselessEmptyElement(child) or self.isUselessImage(child):
+                    break
+            else:
+                rv = True
+
+        if rv:
+            msg = "WEB: %s has name and action and no useful children" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        self._hasNameAndActionAndNoUsefulChildren[hash(obj)] = rv
+        return rv
+
     def _treatObjectAsWhole(self, obj):
         roles = [pyatspi.ROLE_CHECK_BOX,
                  pyatspi.ROLE_CHECK_MENU_ITEM,
@@ -979,11 +1004,8 @@ class Utilities(script_utilities.Utilities):
         if role == pyatspi.ROLE_TABLE_CELL:
             if self.isFocusModeWidget(obj):
                 return True
-
-            interfaces = pyatspi.listInterfaces(obj)
-            if self.hasExplicitName(obj) and "Action" in interfaces and "Text" in interfaces:
-                if obj.queryText().getText(0, -1) == self.EMBEDDED_OBJECT_CHARACTER:
-                    return self.isUselessEmptyElement(obj[0])
+            if self.hasNameAndActionAndNoUsefulChildren(obj):
+                return True
 
         if role == pyatspi.ROLE_COMBO_BOX:
             return not self.isEditableComboBox(obj)
@@ -1760,7 +1782,8 @@ class Utilities(script_utilities.Utilities):
                           pyatspi.ROLE_TREE]
 
         if role in focusModeRoles \
-           and not self.isTextBlockElement(obj):
+           and not self.isTextBlockElement(obj) \
+           and not self.hasNameAndActionAndNoUsefulChildren(obj):
             return True
 
         if self.isGridDescendant(obj) \
@@ -1883,7 +1906,7 @@ class Utilities(script_utilities.Utilities):
         elif role in [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_DOCUMENT_WEB]:
             rv = True
         elif not state.contains(pyatspi.STATE_FOCUSABLE) and not state.contains(pyatspi.STATE_FOCUSED):
-            rv = True
+            rv = not self.hasNameAndActionAndNoUsefulChildren(obj)
         else:
             rv = False
 
