@@ -609,6 +609,9 @@ class Utilities(script_utilities.Utilities):
         if not self.isTextBlockElement(obj):
             return False
 
+        if obj.name:
+            return False
+
         return self.queryNonEmptyText(obj, False) is None
 
     def isHidden(self, obj):
