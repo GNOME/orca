@@ -1306,14 +1306,17 @@ class Script(script.Script):
 
         if self.flatReviewContext:
             self.flatReviewContext.clickCurrent(1)
-        else:
-            try:
-                eventsynthesizer.clickCharacter(orca_state.locusOfFocus, 1)
-            except:
-                try:
-                    eventsynthesizer.clickObject(orca_state.locusOfFocus, 1)
-                except:
-                    self.speakMessage(messages.LOCATION_NOT_FOUND_FULL)
+            return True
+
+        if self.utilities.queryNonEmptyText(orca_state.locusOfFocus):
+            eventsynthesizer.clickCharacter(orca_state.locusOfFocus, 1)
+            return True
+
+        try:
+            eventsynthesizer.clickObject(orca_state.locusOfFocus, 1)
+        except:
+            self.speakMessage(messages.LOCATION_NOT_FOUND_FULL)
+
         return True
 
     def rightClickReviewItem(self, inputEvent=None):
