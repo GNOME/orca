@@ -2585,13 +2585,7 @@ class Utilities(script_utilities.Utilities):
     def iframeForDetachedDocument(self, obj, root=None):
         root = root or self.documentFrame()
         isIframe = lambda x: x and x.getRole() == pyatspi.ROLE_INTERNAL_FRAME
-        try:
-            iframes = pyatspi.findAllDescendants(root, isIframe)
-        except:
-            msg = "WEB: Exception getting descendant iframes of %s" % root
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return None
-
+        iframes = self.findAllDescendants(root, isIframe)
         for iframe in iframes:
             if obj in iframe:
                 # We won't change behavior, but we do want to log all bogosity.
@@ -3109,14 +3103,8 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         isCanvas = lambda x: x and x.getRole() == pyatspi.ROLE_CANVAS
-        try:
-            canvases = pyatspi.findAllDescendants(obj, isCanvas)
-        except:
-            msg = "WEB: Exception getting descendant canvases of %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            rv = False
-        else:
-            rv = len(list(filter(self.isUselessImage, canvases))) > 0
+        canvases = self.findAllDescendants(obj, isCanvas)
+        rv = len(list(filter(self.isUselessImage, canvases))) > 0
 
         self._hasUselessCanvasDescendant[hash(obj)] = rv
         return rv
