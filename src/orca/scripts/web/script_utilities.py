@@ -1857,6 +1857,7 @@ class Utilities(script_utilities.Utilities):
         try:
             role = obj.getRole()
             state = obj.getState()
+            interfaces = pyatspi.listInterfaces(obj)
         except:
             msg = "WEB: Exception getting role and state for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
@@ -1864,6 +1865,10 @@ class Utilities(script_utilities.Utilities):
 
         textBlockElements = self._textBlockElementRoles()
         if not role in textBlockElements:
+            rv = False
+        elif not "Text" in interfaces:
+            rv = False
+        elif not obj.queryText().characterCount:
             rv = False
         elif state.contains(pyatspi.STATE_EDITABLE):
             rv = False
