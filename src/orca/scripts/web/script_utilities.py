@@ -90,6 +90,7 @@ class Utilities(script_utilities.Utilities):
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
         self._isUselessImage = {}
+        self._isUselessEmptyElement = {}
         self._isNonNavigableEmbeddedDocument = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
@@ -165,6 +166,7 @@ class Utilities(script_utilities.Utilities):
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
         self._isUselessImage = {}
+        self._isUselessEmptyElement = {}
         self._isNonNavigableEmbeddedDocument = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
@@ -975,7 +977,13 @@ class Utilities(script_utilities.Utilities):
             return True
 
         if role == pyatspi.ROLE_TABLE_CELL:
-            return self.isFocusModeWidget(obj)
+            if self.isFocusModeWidget(obj):
+                return True
+
+            interfaces = pyatspi.listInterfaces(obj)
+            if self.hasExplicitName(obj) and "Action" in interfaces and "Text" in interfaces:
+                if obj.queryText().getText(0, -1) == self.EMBEDDED_OBJECT_CHARACTER:
+                    return self.isUselessEmptyElement(obj[0])
 
         if role == pyatspi.ROLE_COMBO_BOX:
             return not self.isEditableComboBox(obj)
@@ -3146,6 +3154,41 @@ class Utilities(script_utilities.Utilities):
         self._isUselessImage[hash(obj)] = rv
         return rv
 
+    def isUselessEmptyElement(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isUselessEmptyElement.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        try:
+            role = obj.getRole()
+            state = obj.getState()
+            interfaces = pyatspi.listInterfaces(obj)
+        except:
+            msg = "WEB: Exception getting role, state, and interfaces for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role not in [pyatspi.ROLE_SECTION, pyatspi.ROLE_STATIC]:
+            rv = False
+        elif state.contains(pyatspi.STATE_FOCUSABLE) or state.contains(pyatspi.STATE_FOCUSED):
+            rv = False
+        elif state.contains(pyatspi.STATE_EDITABLE):
+            rv = False
+        elif obj.name or obj.description or obj.childCount:
+            rv = False
+        elif "Text" in interfaces and obj.queryText().characterCount:
+            rv = False
+        elif "Action" in interfaces and obj.queryAction().nActions:
+            rv = False
+        else:
+            rv = True
+
+        self._isUselessEmptyElement[hash(obj)] = rv
+        return rv
+
     def isParentOfNullChild(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -3660,6 +3703,10 @@ class Utilities(script_utilities.Utilities):
             return False
         if self.isUselessImage(obj):
             msg = "WEB: Useless image cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+        if self.isUselessEmptyElement(obj):
+            msg = "WEB: Useless empty element cannot have caret context %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
         if self.isEmptyAnchor(obj):
