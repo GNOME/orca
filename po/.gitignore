@@ -11,8 +11,10 @@ missing
 notexist
 po2tbl.sed
 po2tbl.sed.in
+remove-potcdate.sed
 stamp-cat-id
 stamp-it
+stamp-po
 Makevars.template
 Rules-quot
 boldquot.sed
