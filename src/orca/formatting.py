@@ -398,8 +398,8 @@ formatting = {
             'basicWhereAmI': 'labelOrName + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
             },
         pyatspi.ROLE_SECTION: {
-            'focused': 'labelOrName + currentLineText + allTextSelection + roleName',
-            'unfocused': 'labelOrName + currentLineText + allTextSelection + roleName + ' + MNEMONIC,
+            'focused': '(labelOrName or (currentLineText + allTextSelection)) + roleName',
+            'unfocused': '(labelOrName or (currentLineText + allTextSelection)) + roleName + ' + MNEMONIC,
             },
         pyatspi.ROLE_SLIDER: {
             'focused': 'value',
