@@ -2743,6 +2743,19 @@ class Utilities(script_utilities.Utilities):
 
         return parent.getRole() == pyatspi.ROLE_FRAME
 
+    def _getActionNames(self, obj):
+        try:
+            action = obj.queryAction()
+            names = [action.getName(i) for i in range(action.nActions)]
+        except NotImplementedError:
+            return []
+        except:
+            msg = "WEB: Exception getting actions for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
+        return list(filter(lambda x: x, names))
+
     def isClickableElement(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -2754,17 +2767,8 @@ class Utilities(script_utilities.Utilities):
         rv = False
         if not obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
            and not self.isFocusModeWidget(obj):
-            try:
-                action = obj.queryAction()
-                names = [action.getName(i) for i in range(action.nActions)]
-            except NotImplementedError:
-                rv = False
-            except:
-                msg = "WEB: Exception getting actions for %s" % obj
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return False
-            else:
-                rv = "click" in names
+            names = self._getActionNames(obj)
+            rv = "click" in names
 
         self._isClickableElement[hash(obj)] = rv
         return rv
@@ -3196,7 +3200,7 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif "Text" in interfaces and obj.queryText().characterCount:
             rv = False
-        elif "Action" in interfaces and obj.queryAction().nActions:
+        elif "Action" in interfaces and self._getActionNames(obj):
             rv = False
         else:
             rv = True
@@ -3252,13 +3256,8 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        try:
-            action = obj.queryAction()
-        except NotImplementedError:
-            rv = False
-        else:
-            names = [action.getName(i) for i in range(action.nActions)]
-            rv = "showlongdesc" in names
+        names = self._getActionNames(obj)
+        rv = "showlongdesc" in names
 
         self._hasLongDesc[hash(obj)] = rv
         return rv
