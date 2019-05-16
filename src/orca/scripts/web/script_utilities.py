@@ -1760,26 +1760,30 @@ class Utilities(script_utilities.Utilities):
            or state.contains(pyatspi.STATE_EXPANDABLE):
             return True
 
-        focusModeRoles = [pyatspi.ROLE_COMBO_BOX,
-                          pyatspi.ROLE_EMBEDDED,
-                          pyatspi.ROLE_ENTRY,
-                          pyatspi.ROLE_LIST_BOX,
+        alwaysFocusModeRoles = [pyatspi.ROLE_COMBO_BOX,
+                                pyatspi.ROLE_ENTRY,
+                                pyatspi.ROLE_LIST_BOX,
+                                pyatspi.ROLE_MENU,
+                                pyatspi.ROLE_MENU_ITEM,
+                                pyatspi.ROLE_CHECK_MENU_ITEM,
+                                pyatspi.ROLE_RADIO_MENU_ITEM,
+                                pyatspi.ROLE_PAGE_TAB,
+                                pyatspi.ROLE_PASSWORD_TEXT,
+                                pyatspi.ROLE_PROGRESS_BAR,
+                                pyatspi.ROLE_SLIDER,
+                                pyatspi.ROLE_SPIN_BUTTON,
+                                pyatspi.ROLE_TOOL_BAR,
+                                pyatspi.ROLE_TREE_ITEM,
+                                pyatspi.ROLE_TREE_TABLE,
+                                pyatspi.ROLE_TREE]
+
+        if role in alwaysFocusModeRoles:
+            return True
+
+        focusModeRoles = [pyatspi.ROLE_EMBEDDED,
                           pyatspi.ROLE_LIST_ITEM,
-                          pyatspi.ROLE_MENU,
-                          pyatspi.ROLE_MENU_ITEM,
-                          pyatspi.ROLE_CHECK_MENU_ITEM,
-                          pyatspi.ROLE_RADIO_MENU_ITEM,
-                          pyatspi.ROLE_PAGE_TAB,
-                          pyatspi.ROLE_PASSWORD_TEXT,
-                          pyatspi.ROLE_PROGRESS_BAR,
-                          pyatspi.ROLE_SLIDER,
-                          pyatspi.ROLE_SPIN_BUTTON,
-                          pyatspi.ROLE_TOOL_BAR,
                           pyatspi.ROLE_TABLE_CELL,
-                          pyatspi.ROLE_TABLE,
-                          pyatspi.ROLE_TREE_ITEM,
-                          pyatspi.ROLE_TREE_TABLE,
-                          pyatspi.ROLE_TREE]
+                          pyatspi.ROLE_TABLE]
 
         if role in focusModeRoles \
            and not self.isTextBlockElement(obj) \
