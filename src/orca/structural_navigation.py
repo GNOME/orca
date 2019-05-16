@@ -2847,7 +2847,7 @@ class StructuralNavigation:
                     debug.println(debug.LEVEL_INFO, msg)
 
             self.lastTableCell = [0, 0]
-            self._presentObject(cell, 0)
+            self._presentObject(cell, 0, includeContext=False)
             [cell, characterOffset] = self._getCaretPosition(cell)
             self._setCaretPosition(cell, characterOffset)
         else:
