@@ -1957,7 +1957,7 @@ class Utilities:
 
         return pyatspi.findAncestor(obj, inSelectedMenu) is not None
 
-    def isStaticTextLeaf(self, obj):
+    def isStaticTextLeaf(self, obj, checkSiblings=True):
         return False
 
     def getOnScreenObjects(self, root, extents=None):

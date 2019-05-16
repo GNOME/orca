@@ -163,7 +163,7 @@ class Script(web.Script):
     def onCaretMoved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
-        if self.utilities.isStaticTextLeaf(event.source):
+        if self.utilities.isStaticTextLeaf(event.source, False):
             msg = "CHROMIUM: Ignoring event from static-text leaf"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -193,7 +193,7 @@ class Script(web.Script):
     def onChildrenChanged(self, event):
         """Callback for object:children-changed accessibility events."""
 
-        if self.utilities.isStaticTextLeaf(event.any_data):
+        if self.utilities.isStaticTextLeaf(event.any_data, False):
             msg = "CHROMIUM: Ignoring because child is static text leaf"
             debug.println(debug.LEVEL_INFO, msg, True)
             return
@@ -378,7 +378,7 @@ class Script(web.Script):
     def onTextSelectionChanged(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
-        if self.utilities.isStaticTextLeaf(event.source):
+        if self.utilities.isStaticTextLeaf(event.source, False):
             msg = "CHROMIUM: Ignoring event from static-text leaf"
             debug.println(debug.LEVEL_INFO, msg, True)
             return

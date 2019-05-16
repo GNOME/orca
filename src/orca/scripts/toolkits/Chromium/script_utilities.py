@@ -51,7 +51,7 @@ class Utilities(web.Utilities):
         self._isStaticTextLeaf = {}
         self._isPseudoElement = {}
 
-    def isStaticTextLeaf(self, obj):
+    def isStaticTextLeaf(self, obj, checkSiblings=True):
         if not (obj and self.inDocumentContent(obj)):
             return super().isStaticTextLeaf(obj)
 
@@ -70,13 +70,13 @@ class Utilities(web.Utilities):
                 msg = "CHROMIUM: %s is direct child of document so ignore leaf finding" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 rv = False
-            else:
+            elif checkSiblings:
                 i = obj.getIndexInParent()
-                if i > 0 and not self.isStaticTextLeaf(obj.parent[i - 1]):
+                if i > 0 and not self.isStaticTextLeaf(obj.parent[i - 1], False):
                     msg = "CHROMIUM: previous sibling of %s is not leaf so ignore leaf finding" % obj
                     debug.println(debug.LEVEL_INFO, msg, True)
                     rv = False
-                elif i + 1 < obj.parent.childCount and not self.isStaticTextLeaf(obj.parent[i + 1]):
+                elif i + 1 < obj.parent.childCount and not self.isStaticTextLeaf(obj.parent[i + 1], False):
                     msg = "CHROMIUM: next sibling of %s is not leaf so ignore leaf finding" % obj
                     debug.println(debug.LEVEL_INFO, msg, True)
                     rv = False
