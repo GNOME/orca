@@ -65,10 +65,21 @@ class Utilities(web.Utilities):
             msg = "CHROMIUM: %s believed to be static text leaf" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
 
-        if self.isDocument(obj.parent):
-            msg = "CHROMIUM: %s is direct child of document so ignore leaf finding" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            rv = False
+        if rv and obj.parent:
+            if self.isDocument(obj.parent):
+                msg = "CHROMIUM: %s is direct child of document so ignore leaf finding" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                rv = False
+            else:
+                i = obj.getIndexInParent()
+                if i > 0 and not self.isStaticTextLeaf(obj.parent[i - 1]):
+                    msg = "CHROMIUM: previous sibling of %s is not leaf so ignore leaf finding" % obj
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    rv = False
+                elif i + 1 < obj.parent.childCount and not self.isStaticTextLeaf(obj.parent[i + 1]):
+                    msg = "CHROMIUM: next sibling of %s is not leaf so ignore leaf finding" % obj
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    rv = False
 
         self._isStaticTextLeaf[hash(obj)] = rv
         return rv
