@@ -3186,7 +3186,7 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if role not in [pyatspi.ROLE_SECTION, pyatspi.ROLE_STATIC]:
+        if role not in [pyatspi.ROLE_SECTION, pyatspi.ROLE_STATIC, pyatspi.ROLE_TABLE_ROW]:
             rv = False
         elif state.contains(pyatspi.STATE_FOCUSABLE) or state.contains(pyatspi.STATE_FOCUSED):
             rv = False
