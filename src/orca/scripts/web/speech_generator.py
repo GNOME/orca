@@ -390,12 +390,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return result
 
         ancestorRoles = [pyatspi.ROLE_HEADING, pyatspi.ROLE_LINK]
-        if index == total - 1 \
-           and (role == pyatspi.ROLE_IMAGE or self._script.utilities.queryNonEmptyText(obj)):
-            speakRoles = lambda x: x and x.getRole() in ancestorRoles
-            ancestor = pyatspi.findAncestor(obj, speakRoles)
-            if ancestor and ancestor.getRole() != role:
-                result.extend(self._generateRoleName(ancestor))
+        speakRoles = lambda x: x and x.getRole() in ancestorRoles
+        ancestor = pyatspi.findAncestor(obj, speakRoles)
+        if ancestor and ancestor.getRole() != role and (index == total - 1 or obj.name == ancestor.name):
+            result.extend(self._generateRoleName(ancestor))
 
         return result
 
