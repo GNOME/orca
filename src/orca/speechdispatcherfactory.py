@@ -349,8 +349,8 @@ class SpeechServer(speechserver.SpeechServer):
         # string offsets
         # Note: we need to do this before disturbing the text offsets
         # Note2: we assume that text mangling below leave U+E000 untouched
-        marks_offsets = []
-        marked_text = ""
+        marks_offsets = [0]
+        marked_text = "\ue000"
 
         for i in range(len(text)):
             c = text[i]
@@ -366,6 +366,8 @@ class SpeechServer(speechserver.SpeechServer):
                 # Word separation, add a mark
                 marks_offsets.append(i + 1)
                 marked_text += '\ue000'
+
+        marks_offsets.append(len(text))
 
         text = marked_text
 
@@ -396,7 +398,7 @@ class SpeechServer(speechserver.SpeechServer):
                     msg = "%uth U+E000 does not have corresponding index" % i
                     debug.println(debug.LEVEL_WARNING, msg, True)
                 else:
-                    ssml += '<mark name="%u"/>' % marks_offsets[i]
+                    ssml += '<mark name="%u:%u"/>' % (marks_offsets[i], marks_offsets[i+1])
                 i += 1
             # Disable for now, until speech dispatcher properly parses them (version 0.8.9 or later)
             #elif c == '"':
@@ -435,13 +437,21 @@ class SpeechServer(speechserver.SpeechServer):
                 t = self._CALLBACK_TYPE_MAP[callbackType]
                 if t == speechserver.SayAllContext.PROGRESS:
                     if index_mark:
-                        context.currentOffset = context.startOffset + int(index_mark)
-                        msg = "SPEECH DISPATCHER: Got mark %d / %d-%d" % (context.currentOffset, context.startOffset, context.endOffset)
-                        debug.println(debug.LEVEL_INFO, msg, True)
+                        index = index_mark.split(':')
+                        if len(index) >= 2:
+                            start, end = index[0:2]
+                            context.currentOffset = context.startOffset + int(start)
+                            context.nextOffset = context.startOffset + int(end)
+                            msg = "SPEECH DISPATCHER: Got mark %d:%d / %d-%d" % \
+                                (context.currentOffset, context.nextOffset, \
+                                 context.startOffset, context.endOffset)
+                            debug.println(debug.LEVEL_INFO, msg, True)
                     else:
                         context.currentOffset = context.startOffset
+                        context.nextOffset = None
                 elif t == speechserver.SayAllContext.COMPLETED:
                     context.currentOffset = context.endOffset
+                    context.nextOffset = None
                 GLib.idle_add(orca_callback, context, t)
                 if t == speechserver.SayAllContext.COMPLETED:
                     GLib.idle_add(self._say_all, iterator, orca_callback)
