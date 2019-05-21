@@ -554,10 +554,14 @@ class Script(default.Script):
         self._sayAllContexts = []
 
     def __sayAllProgressCallback(self, context, progressType):
+        obj = context.obj
+
         if progressType == speechserver.SayAllContext.PROGRESS:
+            if context.nextOffset != None:
+                eventsynthesizer.notifyReadingPosition(obj, \
+                    context.currentOffset, context.nextOffset)
             return
 
-        obj = context.obj
         orca.setLocusOfFocus(None, obj, notifyScript=False)
 
         offset = context.currentOffset
@@ -574,6 +578,7 @@ class Script(default.Script):
 
             self._inSayAll = False
             self._sayAllContexts = []
+            eventsynthesizer.notifyReadingPosition(obj, offset, offset)
             if not self._lastCommandWasStructNav:
                 text.setCaretOffset(offset)
             return
@@ -592,6 +597,7 @@ class Script(default.Script):
             if [l for l in links if l.startIndex <= offset <= l.endIndex]:
                 return
 
+        eventsynthesizer.notifyReadingPosition(obj, offset, offset)
         text.setCaretOffset(offset)
 
     def getTextLineAtCaret(self, obj, offset=None, startOffset=None, endOffset=None):
