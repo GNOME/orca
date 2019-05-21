@@ -2311,10 +2311,11 @@ class Utilities(script_utilities.Utilities):
             if rv is not None:
                 return rv
 
+            displayedText = string.strip() or obj.name
             rv = True
-            if ((self.isTextBlockElement(obj) or self.isLink(obj)) and not string.strip()) \
+            if ((self.isTextBlockElement(obj) or self.isLink(obj)) and not displayedText) \
                or self.isEmptyAnchor(obj) \
-               or (self.hasNoSize(obj) and not string.strip()) \
+               or (self.hasNoSize(obj) and not displayedText) \
                or self.isHidden(obj) \
                or self.isOffScreenLabel(obj) \
                or self.isUselessImage(obj) \
