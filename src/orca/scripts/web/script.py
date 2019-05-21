@@ -718,6 +718,8 @@ class Script(default.Script):
             super().__sayAllProgressCallback(context, progressType)
             return
 
+        text = context.obj.queryText()
+
         if progressType == speechserver.SayAllContext.INTERRUPTED:
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
                 self._sayAllIsInterrupted = True
@@ -727,6 +729,8 @@ class Script(default.Script):
                 elif lastKey == "Up" and self._rewindSayAll(context):
                     return
                 elif not self._lastCommandWasStructNav:
+                    eventsynthesizer.notifyReadingPosition(text, \
+                        context.currentOffset, context.currentOffset)
                     self.utilities.setCaretPosition(context.obj, context.currentOffset)
                     self.updateBraille(context.obj)
 
@@ -736,6 +740,8 @@ class Script(default.Script):
             return
 
         orca.setLocusOfFocus(None, context.obj, notifyScript=False)
+        eventsynthesizer.notifyReadingPosition(text, \
+            context.currentOffset, context.nextOffset)
         self.utilities.setCaretContext(context.obj, context.currentOffset)
 
     def inFocusMode(self):

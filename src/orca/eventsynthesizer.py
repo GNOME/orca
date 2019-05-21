@@ -244,3 +244,9 @@ def scrollToRightEdge(obj):
         return
 
     _scrollToLocation(obj, pyatspi.SCROLL_RIGHT_EDGE)
+
+def notifyReadingPosition(obj, startOffset, endOffset):
+    try:
+        obj.notifyReadingPosition(startOffset, endOffset)
+    except:
+        return
