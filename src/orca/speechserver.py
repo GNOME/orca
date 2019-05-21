@@ -81,6 +81,7 @@ class SayAllContext:
         self.utterance     = utterance
         self.startOffset   = startOffset
         self.currentOffset = startOffset
+        self.nextOffset    = startOffset
         self.endOffset     = endOffset
 
 
