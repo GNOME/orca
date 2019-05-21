@@ -82,8 +82,9 @@ class SayAllContext:
         self.obj           = obj
         self.utterance     = utterance
         self.startOffset   = startOffset
-        self.currentOffset = startOffset
         self.endOffset     = endOffset
+        self.currentOffset = startOffset
+        self.currentEndOffset = None
 
 
 class SpeechServer(object):
