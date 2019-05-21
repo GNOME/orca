@@ -530,7 +530,7 @@ class Utilities:
             return name
 
         try:
-            text = obj.queryText()
+            text = self.queryNonEmptyText(obj)
             displayedText = text.getText(0, text.characterCount)
         except:
             pass
