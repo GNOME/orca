@@ -738,6 +738,8 @@ class Script(default.Script):
                 elif lastKey == "Up" and self._rewindSayAll(context):
                     return
                 elif not self._lastCommandWasStructNav:
+                    eventsynthesizer.notifyReadingPosition(context.obj, \
+                        context.currentOffset, context.currentOffset)
                     self.utilities.setCaretPosition(context.obj, context.currentOffset)
                     self.updateBraille(context.obj)
 
@@ -747,6 +749,9 @@ class Script(default.Script):
             return
 
         orca.setLocusOfFocus(None, context.obj, notifyScript=False)
+        if context.nextOffset != None:
+            eventsynthesizer.notifyReadingPosition(context.obj, \
+                context.currentOffset, context.nextOffset)
         self.utilities.setCaretContext(context.obj, context.currentOffset)
 
     def inFocusMode(self):
