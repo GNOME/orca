@@ -463,3 +463,9 @@ def grabFocusOn(obj):
         return False
 
     return component.grabFocus()
+
+def notifyReadingPosition(obj, startOffset, endOffset):
+    try:
+        obj.emit("region-changed", startOffset, endOffset)
+    except:
+        return

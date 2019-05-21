@@ -3027,6 +3027,9 @@ class Script(script.Script):
             return
 
         if progressType == speechserver.SayAllContext.PROGRESS:
+            if context.currentEndOffset != None:
+                eventsynthesizer.notifyReadingPosition(context.obj, \
+                    context.currentOffset, context.currentEndOffset)
             return
         elif progressType == speechserver.SayAllContext.INTERRUPTED:
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
@@ -3039,9 +3042,13 @@ class Script(script.Script):
 
             self._inSayAll = False
             self._sayAllContexts = []
+            eventsynthesizer.notifyReadingPosition(context.obj, \
+                context.currentOffset, context.currentOffset)
             text.setCaretOffset(context.currentOffset)
         elif progressType == speechserver.SayAllContext.COMPLETED:
             orca.setLocusOfFocus(None, context.obj, notifyScript=False)
+            eventsynthesizer.notifyReadingPosition(context.obj, \
+                context.currentOffset, context.currentOffset)
             text.setCaretOffset(context.currentOffset)
 
         # If there is a selection, clear it. See bug #489504 for more details.
