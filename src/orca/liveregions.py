@@ -403,6 +403,13 @@ class LiveRegionManager:
         attrs = self._getAttrDictionary(obj)
         return 'container-live' in attrs
 
+    def _findContainer(self, obj):
+        isContainer = lambda x: self._getAttrDictionary(x).get('atomic')
+        if isContainer(obj):
+            return obj
+
+        return pyatspi.findAncestor(obj, isContainer)
+
     def _getMessage(self, event):
         """Gets the message associated with a given live event."""
         attrs = self._getAttrDictionary(event.source)
@@ -422,9 +429,8 @@ class LiveRegionManager:
             if attrs.get('container-atomic') != 'true':
                 content = event.any_data
             else:
-                text = self._script.utilities.queryNonEmptyText(event.source)
-                if text:
-                    content = text.getText(0, -1)
+                container = self._findContainer(event.source)
+                content = self._script.utilities.expandEOCs(container)
 
         if not content:
             return None
