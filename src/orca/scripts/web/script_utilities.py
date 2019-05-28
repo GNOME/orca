@@ -2311,7 +2311,7 @@ class Utilities(script_utilities.Utilities):
             if rv is not None:
                 return rv
 
-            displayedText = string.strip() or obj.name
+            displayedText = string or obj.name
             rv = True
             if ((self.isTextBlockElement(obj) or self.isLink(obj)) and not displayedText) \
                or self.isEmptyAnchor(obj) \
