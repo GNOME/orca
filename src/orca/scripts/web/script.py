@@ -1628,6 +1628,13 @@ class Script(default.Script):
         debug.println(debug.LEVEL_INFO, msg, True)
 
         if self.utilities.isZombie(obj):
+            if self.utilities.isSameObject(obj, event.any_data, comparePaths=True, ignoreNames=True):
+                msg = "WEB: Event handled by updating locusOfFocus and context"
+                debug.println(debug.LEVEL_INFO, msg, True)
+                orca.setLocusOfFocus(event, event.any_data, False)
+                self.utilities.setCaretContext(event.any_data, offset)
+                return True
+
             obj, offset = self.utilities.getCaretContext(getZombieReplicant=True)
             if not obj:
                 if self._inFocusMode:
