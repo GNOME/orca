@@ -1859,11 +1859,6 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if event.source.getRole() == pyatspi.ROLE_FRAME:
-            msg = "WEB: Flusing messages from live region manager"
-            debug.println(debug.LEVEL_INFO, msg, True)
-            self.liveRegionManager.flushMessages()
-
         return True
 
     def onSelectedChanged(self, event):
