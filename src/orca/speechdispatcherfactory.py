@@ -360,9 +360,9 @@ class SpeechServer(speechserver.SpeechServer):
                 continue
             marked_text += c
 
-            if (c == ' ' or c == '\u00a0') \
+            if (c == ' ' or c == '\u00a0' or c == '\n') \
                and i < len(text) - 1 \
-               and text[i + 1] != ' ' and text[i + 1] != '\u00a0':
+               and text[i + 1] != ' ' and text[i + 1] != '\u00a0' and text[i + 1] != '\n':
                 # Word separation, add a mark
                 marks_offsets.append(i + 1)
                 marked_text += '\ue000'
