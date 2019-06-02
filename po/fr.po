@@ -12386,6 +12386,10 @@ msgstr "Dé_bit :"
 msgid "_Person:"
 msgstr "_Personne :"
 
+#: ../src/orca/orca-setup.ui.h:74
+msgid "_Language:"
+msgstr "_Langue :"
+
 #: ../src/orca/orca-setup.ui.h:75
 msgid "Speech synthesi_zer:"
 msgstr "S_ynthétiseur vocal :"

@@ -221,24 +221,28 @@ class SpeechServer(speechserver.SpeechServer):
         if acss_family is None:
             acss_family = {}
 
-        familyLocale = acss_family.get(speechserver.VoiceFamily.LOCALE)
-        if not familyLocale:
+        language = acss_family.get(speechserver.VoiceFamily.LANG)
+        dialect = acss_family.get(speechserver.VoiceFamily.DIALECT)
+
+        if not language:
             import locale
             familyLocale, encoding = locale.getdefaultlocale()
 
-        language, dialect = '', ''
-        if familyLocale:
-            localeValues = familyLocale.split('_')
-            language = localeValues[0]
-            if len(localeValues) == 2:
-                dialect = localeValues[1]
+            language, dialect = '', ''
+            if familyLocale:
+                localeValues = familyLocale.split('_')
+                language = localeValues[0]
+                if len(localeValues) == 2:
+                    dialect = localeValues[1]
 
         return language, dialect
 
     def _set_family(self, acss_family):
         lang, dialect = self._get_language_and_dialect(acss_family)
-        if len(lang) == 2:
-            self._send_command(self._client.set_language, lang)
+        self._send_command(self._client.set_language, lang)
+        if dialect:
+            # Try to set precise dialect
+            self._send_command(self._client.set_language, lang + '-' + dialect)
 
         try:
             # This command is not available with older SD versions.
@@ -500,11 +504,11 @@ class SpeechServer(speechserver.SpeechServer):
         from locale import getlocale, LC_MESSAGES
         locale = getlocale(LC_MESSAGES)[0]
         if locale is None or locale == 'C':
-            lang = None
-            dialect = None
+            locale_language = None
         else:
-            lang, dialect = locale.split('_')
-        voices = ((self._default_voice_name, lang, None),)
+            locale_lang, locale_dialect = locale.split('_')
+            locale_language = locale_lang + '-' + locale_dialect
+        voices = ()
         try:
             # This command is not available with older SD versions.
             list_synthesis_voices = self._client.list_synthesis_voices
@@ -515,12 +519,33 @@ class SpeechServer(speechserver.SpeechServer):
                 voices += self._send_command(list_synthesis_voices)
             except:
                 pass
-        families = [speechserver.VoiceFamily({ \
+
+        default_lang = ""
+        if locale_language:
+            # Check whether how it appears in the server list
+            for name, lang, variant in voices:
+                if lang == locale_language:
+                    default_lang = locale_language
+                    break
+            if not default_lang:
+                for name, lang, variant in voices:
+                    if lang == locale_lang:
+                        default_lang = locale_lang
+            if not default_lang:
+                default_lang = locale_language
+
+        voices = ((self._default_voice_name, default_lang, None),) + voices
+
+        families = []
+        for name, lang, variant in voices:
+
+            families.append(speechserver.VoiceFamily({ \
               speechserver.VoiceFamily.NAME: name,
               #speechserver.VoiceFamily.GENDER: speechserver.VoiceFamily.MALE,
-              speechserver.VoiceFamily.DIALECT: dialect,
-              speechserver.VoiceFamily.LOCALE: lang})
-                    for name, lang, dialect in voices]
+              speechserver.VoiceFamily.LANG: lang.partition("-")[0],
+              speechserver.VoiceFamily.DIALECT: lang.partition("-")[2],
+              speechserver.VoiceFamily.VARIANT: variant}))
+
         return families
 
     def speak(self, text=None, acss=None, interrupt=True):
