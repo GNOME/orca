@@ -993,7 +993,10 @@ def addLine(line):
 def getShowingLine():
     """Returns the Line that is currently being painted on the display.
     """
-    return _lines[viewport[1]]
+    if len(_lines) > 0:
+        return _lines[viewport[1]]
+    else:
+        return Line()
 
 def setFocus(region, panToFocus=True, getLinkMask=True):
     """Specififes the region with focus.  This region will be positioned
