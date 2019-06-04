@@ -127,6 +127,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.speechFamiliesChoice = None
         self.speechFamiliesChoices = None
         self.speechFamiliesModel = None
+        self.speechLanguagesChoice = None
+        self.speechLanguagesChoices = None
+        self.speechLanguagesModel = None
+        self.speechFamilies = []
         self.speechServersChoice = None
         self.speechServersChoices = None
         self.speechServersModel = None
@@ -142,6 +146,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.savedRate = None
         self._isInitialSetup = False
         self.selectedFamilyChoices = {}
+        self.selectedLanguageChoices = {}
         self.profilesCombo = None
         self.profilesComboModel = None
         self.startingProfileCombo = None
@@ -338,6 +343,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         self._initComboBox(self.get_widget("speechSystems"))
         self.speechServersModel  = \
                         self._initComboBox(self.get_widget("speechServers"))
+        self.speechLanguagesModel = \
+                        self._initComboBox(self.get_widget("speechLanguages"))
         self.speechFamiliesModel = \
                         self._initComboBox(self.get_widget("speechFamilies"))
         self._initSpeechState()
@@ -446,7 +453,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         return familyName
 
-    def _setFamilyNameForVoiceType(self, voiceType, name, language, dialect):
+    def _setFamilyNameForVoiceType(self, voiceType, name, language, dialect, variant):
         """Sets the name of the voice family for the given voice type.
 
         Arguments:
@@ -461,15 +468,16 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                                                False)
         if family:
             family[speechserver.VoiceFamily.NAME] = name
-            family[speechserver.VoiceFamily.LOCALE] = language
+            family[speechserver.VoiceFamily.LANG] = language
             family[speechserver.VoiceFamily.DIALECT] = dialect
+            family[speechserver.VoiceFamily.VARIANT] = variant
         else:
             voiceACSS = self._getACSSForVoiceType(voiceType)
             voiceACSS[acss.ACSS.FAMILY] = {}
             voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.NAME] = name
-            voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.LOCALE] = \
-                                                                     language
+            voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.LANG] = language
             voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.DIALECT] = dialect
+            voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.VARIANT] = variant
 
         #voiceACSS = self._getACSSForVoiceType(voiceType)
         #settings.voices[voiceType] = voiceACSS
@@ -581,67 +589,211 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         to the given family name.
 
         Arguments:
-        - families: the list of available voice families.
         - familyName: the family name to use to set the active combo box item.
         """
 
-        if len(self.speechFamiliesChoices) == 0:
+        if len(self.speechFamilies) == 0:
             return
 
-        valueSet = False
-        i = 0
-        for family in self.speechFamiliesChoices:
+        languageSet = False
+        familySet = False
+        for family in self.speechFamilies:
             name = family[speechserver.VoiceFamily.NAME]
             if name == familyName:
-                self.get_widget("speechFamilies").set_active(i)
-                self.speechFamiliesChoice = self.speechFamiliesChoices[i]
-                valueSet = True
-                break
-            i += 1
+                lang = family[speechserver.VoiceFamily.LANG]
+                dialect = family[speechserver.VoiceFamily.DIALECT]
 
-        if not valueSet:
+                if dialect:
+                    language = lang + '-' + dialect
+                else:
+                    language = lang
+
+                i = 0
+                for languageChoice in self.speechLanguagesChoices:
+                    if languageChoice == language:
+                        self.get_widget("speechLanguages").set_active(i)
+                        self.speechLanguagesChoice = self.speechLanguagesChoices[i]
+                        languageSet = True
+
+                        self._setupFamilies()
+
+                        i = 0
+                        for familyChoice in self.speechFamiliesChoices:
+                            name = familyChoice[speechserver.VoiceFamily.NAME]
+                            if name == familyName:
+                                self.get_widget("speechFamilies").set_active(i)
+                                self.speechFamiliesChoice = self.speechFamiliesChoices[i]
+                                familySet = True
+                                break
+                            i += 1
+
+                        break
+
+                    i += 1
+
+                break
+
+        if not languageSet:
+            debug.println(debug.LEVEL_FINEST,
+                          "Could not find speech language match for %s" \
+                          % familyName)
+            self.get_widget("speechLanguages").set_active(0)
+            self.speechLanguagesChoice = self.speechLanguagesChoices[0]
+
+        if languageSet:
+            self.selectedLanguageChoices[self.speechServersChoice] = i
+
+        if not familySet:
             debug.println(debug.LEVEL_FINEST,
                           "Could not find speech family match for %s" \
                           % familyName)
             self.get_widget("speechFamilies").set_active(0)
             self.speechFamiliesChoice = self.speechFamiliesChoices[0]
 
-        if valueSet:
-            self.selectedFamilyChoices[self.speechServersChoice] = i
+        if familySet:
+            self.selectedFamilyChoices[self.speechServersChoice,
+                    self.speechLanguagesChoice] = i
 
     def _setupFamilies(self):
-        """Gets the list of voice families for the current speech server.
-        If there are families, get the information associated with
-        each voice family and add an entry for it to the families
+        """Gets the list of voice variants for the current speech server and
+        current language.
+        If there are variants, get the information associated with
+        each voice variant and add an entry for it to the variants
         GtkComboBox list.
         """
 
         self.speechFamiliesModel.clear()
-        families = self.speechServersChoice.getVoiceFamilies()
-        self.speechFamiliesChoices = []
-        if len(families) == 0:
-            debug.println(debug.LEVEL_SEVERE, "Speech not available.")
-            debug.printStack(debug.LEVEL_FINEST)
-            self.speechFamiliesChoice = None
-            return
+
+        currentLanguage = self.speechLanguagesChoice
 
         i = 0
-        for family in families:
-            name = family[speechserver.VoiceFamily.NAME] \
-                   + " (%s)" % family[speechserver.VoiceFamily.LOCALE]
+        self.speechFamiliesChoices = []
+        for family in self.speechFamilies:
+            lang = family[speechserver.VoiceFamily.LANG]
+            dialect = family[speechserver.VoiceFamily.DIALECT]
+
+            if dialect:
+                language = lang + '-' + dialect
+            else:
+                language = lang
+
+            if language != currentLanguage:
+                continue
+
+            name = family[speechserver.VoiceFamily.NAME]
             self.speechFamiliesChoices.append(family)
             self.speechFamiliesModel.append((i, name))
             i += 1
+
+        if i == 0:
+            debug.println(debug.LEVEL_SEVERE, "No speech family was available for %s." % str(currentLanguage))
+            debug.printStack(debug.LEVEL_FINEST)
+            self.speechFamiliesChoice = None
+            return
 
         # If user manually selected a family for the current speech server
         # this choice it's restored. In other case the first family
         # (usually the default one) is selected
         #
         selectedIndex = 0
-        if self.speechServersChoice in self.selectedFamilyChoices:
-            selectedIndex = self.selectedFamilyChoices[self.speechServersChoice]
+        if (self.speechServersChoice, self.speechLanguagesChoice) \
+                in self.selectedFamilyChoices:
+            selectedIndex = self.selectedFamilyChoices[self.speechServersChoice,
+                    self.speechLanguagesChoice]
 
         self.get_widget("speechFamilies").set_active(selectedIndex)
+
+    def _setSpeechLanguagesChoice(self, languageName):
+        """Sets the active item in the languages ("Language:") combo box
+        to the given language name.
+
+        Arguments:
+        - languageName: the language name to use to set the active combo box item.
+        """
+
+        print("setSpeechLanguagesChoice")
+
+        if len(self.speechLanguagesChoices) == 0:
+            return
+
+        valueSet = False
+        i = 0
+        for language in self.speechLanguagesChoices:
+            if language == languageName:
+                self.get_widget("speechLanguages").set_active(i)
+                self.speechLanguagesChoice = self.speechLanguagesChoices[i]
+                valueSet = True
+                break
+            i += 1
+
+        if not valueSet:
+            debug.println(debug.LEVEL_FINEST,
+                          "Could not find speech language match for %s" \
+                          % languageName)
+            self.get_widget("speechLanguages").set_active(0)
+            self.speechLanguagesChoice = self.speechLanguagesChoices[0]
+
+        if valueSet:
+            self.selectedLanguageChoices[self.speechServersChoice] = i
+
+        self._setupFamilies()
+
+    def _setupVoices(self):
+        """Gets the list of voices for the current speech server.
+        If there are families, get the information associated with
+        each voice family and add an entry for it to the families
+        GtkComboBox list.
+        """
+
+        self.speechLanguagesModel.clear()
+
+        self.speechFamilies = self.speechServersChoice.getVoiceFamilies()
+
+        self.speechLanguagesChoices = []
+
+        if len(self.speechFamilies) == 0:
+            debug.println(debug.LEVEL_SEVERE, "No speech voice was available.")
+            debug.printStack(debug.LEVEL_FINEST)
+            self.speechLanguagesChoice = None
+            return
+
+        done = {}
+        i = 0
+        for family in self.speechFamilies:
+            lang = family[speechserver.VoiceFamily.LANG]
+            dialect = family[speechserver.VoiceFamily.DIALECT]
+            if (lang,dialect) in done:
+                continue
+            done[lang,dialect] = True
+
+            if dialect:
+                language = lang + '-' + dialect
+            else:
+                language = lang
+
+            # TODO: get translated language name from CLDR or such
+            msg = language
+            if msg == "":
+                # Unsupported locale
+                msg = "default language"
+
+            self.speechLanguagesChoices.append(language)
+            self.speechLanguagesModel.append((i, msg))
+            i += 1
+
+        # If user manually selected a language for the current speech server
+        # this choice it's restored. In other case the first language
+        # (usually the default one) is selected
+        #
+        selectedIndex = 0
+        if self.speechServersChoice in self.selectedLanguageChoices:
+            selectedIndex = self.selectedLanguageChoices[self.speechServersChoice]
+
+        self.get_widget("speechLanguages").set_active(selectedIndex)
+        if self.initializingSpeech:
+            self.speechLanguagesChoice = self.speechLanguagesChoices[selectedIndex]
+
+        self._setupFamilies()
 
         # The family name will be selected as part of selecting the
         # voice type.  Whenever the families change, we'll reset the
@@ -693,7 +845,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.get_widget("speechServers").set_active(0)
             self.speechServersChoice = self.speechServersChoices[0]
 
-        self._setupFamilies()
+        self._setupVoices()
 
     def _setupSpeechServers(self):
         """Gets the list of speech servers for the current speech factory.
@@ -709,6 +861,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             debug.println(debug.LEVEL_SEVERE, "Speech not available.")
             debug.printStack(debug.LEVEL_FINEST)
             self.speechServersChoice = None
+            self.speechLanguagesChoices = []
+            self.speechLanguagesChoice = None
             self.speechFamiliesChoices = []
             self.speechFamiliesChoice = None
             return
@@ -786,6 +940,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.speechSystemsChoice = None
             self.speechServersChoices = []
             self.speechServersChoice = None
+            self.speechLanguagesChoices = []
+            self.speechLanguagesChoice = None
             self.speechFamiliesChoices = []
             self.speechFamiliesChoice = None
             return
@@ -824,7 +980,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # *Choices = the Orca/speech python objects
         # *Choice  = a value from *Choices
         #
-        # Where * = speechSystems, speechServers, speechFamilies
+        # Where * = speechSystems, speechServers, speechLanguages, speechFamilies
         #
         factories = speech.getSpeechServerFactories()
         if len(factories) == 0 or not self.prefsDict.get('enableSpeech', True):
@@ -832,6 +988,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.speechSystemsChoice = None
             self.speechServersChoices = []
             self.speechServersChoice = None
+            self.speechLanguagesChoices = []
+            self.speechLanguagesChoice = None
             self.speechFamiliesChoices = []
             self.speechFamiliesChoice = None
             return
@@ -843,6 +1001,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.speechSystemsChoice = None
             self.speechServersChoices = []
             self.speechServersChoice = None
+            self.speechLanguagesChoices = []
+            self.speechLanguagesChoice = None
             self.speechFamiliesChoices = []
             self.speechFamiliesChoice = None
             return
@@ -2155,6 +2315,43 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         except:
             pass
 
+        self._setupVoices()
+
+    def speechLanguagesChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the languages
+           GtkComboBox widget. The user has selected a different voice
+           language. Save the new voice language name based on the new choice.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        if self.initializingSpeech:
+            return
+
+        selectedIndex = widget.get_active()
+        try:
+            self.speechLanguagesChoice = self.speechLanguagesChoices[selectedIndex]
+            if (self.speechServersChoice, self.speechLanguagesChoice) in \
+                    self.selectedFamilyChoices:
+                i = self.selectedFamilyChoices[self.speechServersChoice, \
+                        self.speechLanguagesChoice]
+                family = self.speechFamiliesChoices[i]
+                name = family[speechserver.VoiceFamily.NAME]
+                language = family[speechserver.VoiceFamily.LANG]
+                dialect = family[speechserver.VoiceFamily.DIALECT]
+                variant = family[speechserver.VoiceFamily.VARIANT]
+                voiceType = self.get_widget("voiceTypesCombo").get_active()
+                self._setFamilyNameForVoiceType(voiceType, name, language, dialect, variant)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+
+        # Remember the last family manually selected by the user for the
+        # current speech server.
+        #
+        if not selectedIndex == -1:
+            self.selectedLanguageChoices[self.speechServersChoice] = selectedIndex
+
         self._setupFamilies()
 
     def speechFamiliesChanged(self, widget):
@@ -2173,10 +2370,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         try:
             family = self.speechFamiliesChoices[selectedIndex]
             name = family[speechserver.VoiceFamily.NAME]
-            language = family[speechserver.VoiceFamily.LOCALE]
+            language = family[speechserver.VoiceFamily.LANG]
             dialect = family[speechserver.VoiceFamily.DIALECT]
+            variant = family[speechserver.VoiceFamily.VARIANT]
             voiceType = self.get_widget("voiceTypesCombo").get_active()
-            self._setFamilyNameForVoiceType(voiceType, name, language, dialect)
+            self._setFamilyNameForVoiceType(voiceType, name, language, dialect, variant)
         except:
             debug.printException(debug.LEVEL_SEVERE)
 
@@ -2184,7 +2382,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # current speech server.
         #
         if not selectedIndex == -1:
-            self.selectedFamilyChoices[self.speechServersChoice] = selectedIndex
+            self.selectedFamilyChoices[self.speechServersChoice, \
+                    self.speechLanguagesChoice] = selectedIndex
 
     def voiceTypesChanged(self, widget):
         """Signal handler for the "changed" signal for the voiceTypes
