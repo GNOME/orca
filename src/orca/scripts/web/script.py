@@ -1970,6 +1970,12 @@ class Script(default.Script):
             return True
 
         obj, offset = self.utilities.getCaretContext(getZombieReplicant=False)
+        if obj and obj != event.source \
+           and not pyatspi.findAncestor(obj, lambda x: x == event.source):
+            msg = "WEB: Ignoring event because it isn't %s or its ancestor" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
         if self.utilities.isZombie(obj):
             if self.utilities.isLink(obj):
                 msg = "WEB: Focused link deleted. Taking no further action."
