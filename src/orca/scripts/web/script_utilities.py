@@ -2396,6 +2396,35 @@ class Utilities(script_utilities.Utilities):
         colindex = attrs.get('colindex', colindex)
         return rowindex, colindex
 
+    def labelForCellCoordinates(self, obj):
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            attrs = {}
+
+        # The ARIA feature is still in the process of being discussed.
+        collabel = attrs.get('colindextext', attrs.get('coltext'))
+        rowlabel = attrs.get('rowindextext', attrs.get('rowtext'))
+        if collabel is not None and rowlabel is not None:
+            return '%s%s' % (collabel, rowlabel)
+
+        isRow = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_ROW
+        row = pyatspi.findAncestor(obj, isRow)
+        if not row:
+            return ''
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in row.getAttributes()])
+        except:
+            attrs = {}
+
+        collabel = attrs.get('colindextext', attrs.get('coltext', collabel))
+        rowlabel = attrs.get('rowindextext', attrs.get('rowtext', rowlabel))
+        if collabel is not None and rowlabel is not None:
+            return '%s%s' % (collabel, rowlabel)
+
+        return ''
+
     def coordinatesForCell(self, obj):
         rowindex, colindex = self._rowAndColumnIndices(obj)
         if rowindex is not None and colindex is not None:

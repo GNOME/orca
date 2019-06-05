@@ -503,6 +503,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return result
 
         if _settingsManager.getSetting('speakCellCoordinates'):
+            label = self._script.utilities.labelForCellCoordinates(obj)
+            if label:
+                result.append(label)
+                result.extend(self.voice(speech_generator.SYSTEM))
+                return result
+
             row, col = self._script.utilities.coordinatesForCell(obj)
             if self._script.utilities.cellRowChanged(obj):
                 result.append(messages.TABLE_ROW % (row + 1))
