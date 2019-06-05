@@ -870,12 +870,11 @@ class Generator:
         if self._script.utilities.isLayoutOnly(obj):
             return []
 
-        try:
-            table = obj.queryTable()
-        except:
+        rows, cols = self._script.utilities.rowAndColumnCount(obj)
+        if rows < 0 or cols < 0:
             return []
 
-        return [messages.tableSize(table.nRows, table.nColumns)]       
+        return [messages.tableSize(rows, cols)]
 
     def _generateTableCellRow(self, obj, **args):
         """Orca has a feature to automatically read an entire row of a table

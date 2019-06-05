@@ -2369,6 +2369,52 @@ class Utilities(script_utilities.Utilities):
         self._isGridDescendant[hash(obj)] = rv
         return rv
 
+    def _rowAndColumnIndices(self, obj):
+        rowindex = colindex = None
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            attrs = {}
+
+        rowindex = attrs.get('rowindex')
+        colindex = attrs.get('colindex')
+        if rowindex is not None and colindex is not None:
+            return rowindex, colindex
+
+        isRow = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_ROW
+        row = pyatspi.findAncestor(obj, isRow)
+        if not row:
+            return rowindex, colindex
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in row.getAttributes()])
+        except:
+            attrs = {}
+
+        rowindex = attrs.get('rowindex', rowindex)
+        colindex = attrs.get('colindex', colindex)
+        return rowindex, colindex
+
+    def coordinatesForCell(self, obj):
+        rowindex, colindex = self._rowAndColumnIndices(obj)
+        if rowindex is not None and colindex is not None:
+            return int(rowindex) - 1, int(colindex) - 1
+
+        return super().coordinatesForCell(obj)
+
+    def rowAndColumnCount(self, obj):
+        rows, cols = super().rowAndColumnCount(obj)
+
+        try:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            attrs = {}
+
+        rows = attrs.get('rowcount', rows)
+        cols = attrs.get('colcount', cols)
+        return int(rows), int(cols)
+
     def shouldReadFullRow(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return super().shouldReadFullRow(obj)
