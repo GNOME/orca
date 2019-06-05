@@ -1196,7 +1196,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, 0)
             utterances = self.speechGenerator.generateContents(contents)
-        elif self.utilities.lastInputEventWasPageNav():
+        elif self.utilities.lastInputEventWasPageNav() and not self.utilities.getTable(newFocus):
             msg = "WEB: New focus %s was scrolled to. Generating line contents." % newFocus
             debug.println(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(newFocus, caretOffset)
@@ -1465,7 +1465,8 @@ class Script(default.Script):
             return True
 
         if self.utilities.lastInputEventWasPageNav() \
-           and not self.utilities.isLink(event.source):
+           and not self.utilities.isLink(event.source) \
+           and not event.source.getRole() == pyatspi.ROLE_COMBO_BOX:
             msg = "WEB: Event handled: Caret moved due to scrolling"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(obj, offset)
