@@ -497,6 +497,22 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result.extend(self.voice(speech_generator.SYSTEM))
         return result
 
+    def _generateRealTableCell(self, obj, **args):
+        result = super()._generateRealTableCell(obj, **args)
+        if not self._script.inFocusMode():
+            return result
+
+        if _settingsManager.getSetting('speakCellCoordinates'):
+            row, col = self._script.utilities.coordinatesForCell(obj)
+            if self._script.utilities.cellRowChanged(obj):
+                result.append(messages.TABLE_ROW % (row + 1))
+                result.extend(self.voice(speech_generator.SYSTEM))
+            if self._script.utilities.cellColumnChanged(obj):
+                result.append(messages.TABLE_COLUMN % (col + 1))
+                result.extend(self.voice(speech_generator.SYSTEM))
+
+        return result
+
     def _generateTableCellRow(self, obj, **args):
         if not self._script.inFocusMode():
             return super()._generateTableCellRow(obj, **args)
