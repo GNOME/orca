@@ -89,7 +89,11 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                 result.append(messages.IMAGE_MAP_LINK)
 
         elif role not in doNotDisplay:
-            result = super()._generateRoleName(obj, **args)
+            label = self._script.utilities.labelForCellCoordinates(obj)
+            if label:
+                result.append(label)
+            else:
+                result = super()._generateRoleName(obj, **args)
 
         index = args.get('index', 0)
         total = args.get('total', 1)
