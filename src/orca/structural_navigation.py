@@ -1302,6 +1302,10 @@ class StructuralNavigation:
         if not text and obj.getRole() == pyatspi.ROLE_LIST:
             children = [x for x in obj if x.getRole() == pyatspi.ROLE_LIST_ITEM]
             text = " ".join(list(map(self._getText, children)))
+        if obj.getRole() == pyatspi.ROLE_LIST_ITEM:
+            marker = self._script.utilities.getListItemMarkerText(obj)
+            if text and marker and not text.startswith(marker):
+                text = "%s %s" % (marker.strip(), text)
 
         return text
 
