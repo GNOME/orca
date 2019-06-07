@@ -4057,6 +4057,11 @@ class Utilities(script_utilities.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
             return None, -1
 
+        if self.isListItemMarker(child):
+            msg = "WEB: First caret context for %s, %i is %s, %i" % (obj, offset, obj, offset + 1)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return obj, offset + 1
+
         return self.findFirstCaretContext(child, 0)
 
     def findNextCaretInOrder(self, obj=None, offset=-1):
