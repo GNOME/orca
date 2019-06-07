@@ -407,7 +407,8 @@ class Utilities(script_utilities.Utilities):
         if self._script.useFocusMode(obj) != self._script.inFocusMode():
             self._script.togglePresentationMode(None)
 
-        obj.clearCache()
+        if obj:
+            obj.clearCache()
 
         # TODO - JD: This is private.
         self._script._saveFocusedObjectInfo(obj)
