@@ -73,7 +73,8 @@ class Utilities(web.Utilities):
                 rv = False
             elif checkSiblings:
                 i = obj.getIndexInParent()
-                if i > 0 and not self.isStaticTextLeaf(obj.parent[i - 1], False):
+                if i > 0 and not self.isStaticTextLeaf(obj.parent[i - 1], False) \
+                   and not self.isListItemMarker(obj.parent[0]):
                     msg = "CHROMIUM: previous sibling of %s is not leaf so ignore leaf finding" % obj
                     debug.println(debug.LEVEL_INFO, msg, True)
                     rv = False
