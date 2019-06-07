@@ -1960,6 +1960,9 @@ class Utilities:
     def isStaticTextLeaf(self, obj, checkSiblings=True):
         return False
 
+    def isListItemMarker(self, obj):
+        return False
+
     def getOnScreenObjects(self, root, extents=None):
         if not self.isOnScreen(root, extents):
             return []

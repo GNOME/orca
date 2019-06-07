@@ -3819,6 +3819,10 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: Static text leaf cannot have caret context %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
+        if self.isListItemMarker(obj):
+            msg = "WEB: List item marker cannot have caret context %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
 
         return True
 
