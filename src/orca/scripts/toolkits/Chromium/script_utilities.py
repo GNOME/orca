@@ -59,8 +59,7 @@ class Utilities(web.Utilities):
         if rv is not None:
             return rv
 
-        rv = obj.getRole() in [pyatspi.ROLE_TEXT, pyatspi.ROLE_STATIC] \
-             and self._getTag(obj) in (None, "br")
+        rv = obj.getRole() == pyatspi.ROLE_TEXT and self._getTag(obj) in (None, "br")
         if rv:
             msg = "CHROMIUM: %s believed to be static text leaf" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
