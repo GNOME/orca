@@ -45,11 +45,13 @@ class Utilities(web.Utilities):
         super().__init__(script)
         self._isStaticTextLeaf = {}
         self._isPseudoElement = {}
+        self._isListItemMarker = {}
 
     def clearCachedObjects(self):
         super().clearCachedObjects()
         self._isStaticTextLeaf = {}
         self._isPseudoElement = {}
+        self._isListItemMarker = {}
 
     def isStaticTextLeaf(self, obj, checkSiblings=True):
         if not (obj and self.inDocumentContent(obj)):
@@ -97,6 +99,21 @@ class Utilities(web.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
 
         self._isPseudoElement[hash(obj)] = rv
+        return rv
+
+    def isListItemMarker(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._isListItemMarker.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = obj.getRole() == pyatspi.ROLE_STATIC and not self._getTag(obj) \
+            and obj.parent.getRole() == pyatspi.ROLE_LIST_ITEM \
+            and obj.getIndexInParent() == 0
+
+        self._isListItemMarker[hash(obj)] = rv
         return rv
 
     def selectedChildCount(self, obj):

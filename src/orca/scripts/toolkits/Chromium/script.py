@@ -383,6 +383,11 @@ class Script(web.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
+        if self.utilities.isListItemMarker(event.source):
+            msg = "CHROMIUM: Ignoring event from list item marker"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if super().onTextSelectionChanged(event):
             return
 
