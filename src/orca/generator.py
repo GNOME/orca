@@ -1001,6 +1001,17 @@ class Generator:
 
         return [displayedText]
 
+    def _generateListItemMarker(self, obj, **args):
+        startOffset = args.get('startOffset', 0)
+        if not (0 <= startOffset <= 1):
+            return []
+
+        listItemMarker = self._script.utilities.getListItemMarkerText(obj)
+        if listItemMarker:
+            return [listItemMarker]
+
+        return []
+
     #####################################################################
     #                                                                   #
     # Tree interface information                                        #

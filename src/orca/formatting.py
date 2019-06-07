@@ -283,8 +283,8 @@ formatting = {
             },
         pyatspi.ROLE_LIST_ITEM: {
             'focused': 'expandableState',
-            'unfocused': '(labelOrName or (displayedText + allTextSelection)) + pause + expandableState + pause + positionInList + pause + listBoxItemWidgets',
-            'basicWhereAmI': 'label + roleName + pause + (name or displayedText) + pause + positionInList + pause + expandableState + (nodeLevel or nestingLevel) + pause'
+            'unfocused': '(labelOrName or (listItemMarker + displayedText + allTextSelection)) + pause + expandableState + pause + positionInList + pause + listBoxItemWidgets',
+            'basicWhereAmI': 'label + roleName + pause + (name or (listItemMarker + displayedText)) + pause + positionInList + pause + expandableState + (nodeLevel or nestingLevel) + pause'
             },
         pyatspi.ROLE_MATH: {
             'unfocused': 'math',
@@ -646,12 +646,12 @@ formatting = {
                                      asString(label) and (len(asString(label)) + 1) or 0)]'
         },
         pyatspi.ROLE_LIST_ITEM: {
-            'focused':   '((substring and ' + BRAILLE_TEXT + ')\
+            'focused':   '((substring and ([Region(asString(listItemMarker))] + ' + BRAILLE_TEXT + '))\
                           or ([Component(obj,\
                                      asString(label + displayedText + expandableState + roleName + availability) + asString(accelerator))]\
                           + (nestingLevel and [Region(" " + asString(nestingLevel))])\
                           + (listBoxItemWidgets and ([Region(" ")] + listBoxItemWidgets))))',
-            'unfocused': '((substring and ' + BRAILLE_TEXT + ')\
+            'unfocused': '((substring and ([Region(asString(listItemMarker))] + ' + BRAILLE_TEXT + '))\
                           or ([Component(obj, asString(labelOrName + expandableState))]\
                               + (nestingLevel and [Region(" " + asString(nestingLevel))])\
                               + (listBoxItemWidgets and ([Region(" ")] + listBoxItemWidgets))))',

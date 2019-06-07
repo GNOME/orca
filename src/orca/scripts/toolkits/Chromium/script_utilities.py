@@ -117,6 +117,16 @@ class Utilities(web.Utilities):
         self._isListItemMarker[hash(obj)] = rv
         return rv
 
+    def getListItemMarkerText(self, obj):
+        if obj.getRole() != pyatspi.ROLE_LIST_ITEM:
+            return ""
+
+        listItemMarker = pyatspi.findDescendant(obj, self.isListItemMarker)
+        if listItemMarker:
+            return listItemMarker.name
+
+        return ""
+
     def selectedChildCount(self, obj):
         count = super().selectedChildCount(obj)
         if count or "Selection" in pyatspi.listInterfaces(obj):
