@@ -1532,7 +1532,8 @@ class Script(default.Script):
         if not _settingsManager.getSetting('caretNavigationEnabled') \
            or self._inFocusMode or isEditable:
             self.utilities.setCaretContext(event.source, event.detail1)
-            orca.setLocusOfFocus(event, event.source, False)
+            notify = event.source.getState().contains(pyatspi.STATE_FOCUSED)
+            orca.setLocusOfFocus(event, event.source, notify)
             msg = "WEB: Setting locusOfFocus, context to: %s, %i" % \
                   (event.source, event.detail1)
             debug.println(debug.LEVEL_INFO, msg, True)
