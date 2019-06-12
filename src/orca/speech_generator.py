@@ -1275,6 +1275,13 @@ class SpeechGenerator(generator.Generator):
 
         return result
 
+    def _generateNestingLevel(self, obj, **args):
+        result = super()._generateNestingLevel(obj, **args)
+        if result:
+            result.extend(self.voice(SYSTEM))
+
+        return result
+
     #####################################################################
     #                                                                   #
     # Tree interface information                                        #
