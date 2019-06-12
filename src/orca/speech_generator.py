@@ -1268,6 +1268,13 @@ class SpeechGenerator(generator.Generator):
         result.extend(self.voice(SYSTEM))
         return result
 
+    def _generateListItemMarker(self, obj, **args):
+        result = super()._generateListItemMarker(obj, **args)
+        if result:
+            result.extend(self.voice(DEFAULT))
+
+        return result
+
     #####################################################################
     #                                                                   #
     # Tree interface information                                        #
