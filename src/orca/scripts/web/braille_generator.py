@@ -142,6 +142,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.preferDescriptionOverName(obj):
             return [obj.description]
 
+        if not self._script.utilities.hasValidName(obj):
+            return []
+
         return super()._generateName(obj, **args)
 
     def _generateExpandedEOCs(self, obj, **args):

@@ -3250,6 +3250,21 @@ class Utilities(script_utilities.Utilities):
         self._isUselessImage[hash(obj)] = rv
         return rv
 
+    def hasValidName(self, obj):
+        if not obj.name:
+            return False
+
+        if len(obj.name.split()) > 1:
+            return True
+
+        parsed = urllib.parse.parse_qs(obj.name)
+        if len(parsed) > 2:
+            msg = "WEB: name of %s is suspected query string" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return True
+
     def isUselessEmptyElement(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -3273,9 +3288,10 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif state.contains(pyatspi.STATE_EDITABLE):
             rv = False
-        elif obj.name or obj.description or obj.childCount:
+        elif self.hasValidName(obj) or obj.description or obj.childCount:
             rv = False
-        elif "Text" in interfaces and obj.queryText().characterCount:
+        elif "Text" in interfaces and obj.queryText().characterCount \
+             and obj.queryText().getText(0, -1) != obj.name:
             rv = False
         elif "Action" in interfaces and self._getActionNames(obj):
             rv = False
