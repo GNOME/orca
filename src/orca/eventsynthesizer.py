@@ -35,6 +35,11 @@ try:
 except:
     _canScrollTo = False
 
+try:
+    _canScrollSubstringTo = pyatspi.Text.scrollSubstringTo is not None
+except:
+    _canScrollSubstringTo = False
+
 def _generateMouseEvent(x, y, event):
     """Synthesize a mouse event at a specific screen coordinate."""
 
@@ -245,8 +250,55 @@ def scrollToRightEdge(obj):
 
     _scrollToLocation(obj, pyatspi.SCROLL_RIGHT_EDGE)
 
+def scrollSubstringToPoint(text, start, end, x, y):
+    """Attemps to scroll a substring of text obj to the specified point."""
+
+    if not _canScrollSubstringTo:
+        msg = "INFO: Installed version of AT-SPI2 doesn't support substring scrolling."
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return
+
+    try:
+        text.scrollSubstringToPoint(start, end, pyatspi.WINDOW_COORDS, x, y)
+    except:
+        msg = "ERROR: Exception scrolling %s substring %i,%i to %i,%i." % (text, start, end, x, y)
+        debug.println(debug.LEVEL_INFO, msg, True)
+    else:
+        msg = "INFO: Attemped to scroll %s substring %i,%i to %i,%i" % (text, start, end, x, y)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+    debug.println(debug.LEVEL_INFO, msg, True)
+
+def _scrollSubstringToLocation(text, start, end, location):
+    """Attemps to scroll a substring of text obj to the specified location."""
+
+    if not _canScrollSubstringTo:
+        msg = "INFO: Installed version of AT-SPI2 doesn't support substring scrolling."
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return
+
+    try:
+        ret = text.scrollSubstringTo(start, end, location)
+    except:
+        msg = "ERROR: Exception scrolling %s substring %i,%i to %s." % (text, start, end, location)
+        debug.println(debug.LEVEL_INFO, msg, True)
+    else:
+        msg = "INFO: Attemped to scroll %s substring %i,%i to %s" % (text, start, end, location)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+    debug.println(debug.LEVEL_INFO, msg, True)
+
+def scrollSubstringIntoView(obj, startOffset, endOffset):
+    if not _canScrollSubstringTo:
+        msg = "INFO: Installed version of AT-SPI2 doesn't support substring scrolling."
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return
+
+    _scrollSubstringToLocation(obj, startOffset, endOffset, pyatspi.SCROLL_ANYWHERE)
+
 def notifyReadingPosition(obj, startOffset, endOffset):
     try:
+        scrollSubstringIntoView(obj, startOffset, endOffset)
         obj.notifyReadingPosition(startOffset, endOffset)
     except:
         return
