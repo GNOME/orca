@@ -254,13 +254,6 @@ class Utilities(web.Utilities):
         if not obj or self.inDocumentContent(obj):
             return False
 
-        # If we clear the cache, other objects (like the listbox parent as well as the
-        # selected list item) then claim to have role of redundant-object. Re-test after
-        # we get children-changed events.
-        if obj.getRole() == pyatspi.ROLE_REDUNDANT_OBJECT:
-            msg = "CHROMIUM: WARNING: Suspected bogus role on %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-
         popupFor = lambda r: r.getRelationType() == pyatspi.RELATION_POPUP_FOR
         relations = list(filter(popupFor, obj.getRelationSet()))
         if not relations:
