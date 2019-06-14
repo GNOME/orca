@@ -46,12 +46,14 @@ class Utilities(web.Utilities):
         self._isStaticTextLeaf = {}
         self._isPseudoElement = {}
         self._isListItemMarker = {}
+        self._topLevelObject = {}
 
     def clearCachedObjects(self):
         super().clearCachedObjects()
         self._isStaticTextLeaf = {}
         self._isPseudoElement = {}
         self._isListItemMarker = {}
+        self._topLevelObject = {}
 
     def isStaticTextLeaf(self, obj, checkSiblings=True):
         if not (obj and self.inDocumentContent(obj)):
@@ -250,17 +252,65 @@ class Utilities(web.Utilities):
         debug.println(debug.LEVEL_INFO, msg, True)
         return menu
 
+    def topLevelObject(self, obj):
+        if not obj:
+            return None
+
+        result = super().topLevelObject(obj)
+        if result and result.getRole() in self._topLevelRoles():
+            return result
+
+        cached = self._topLevelObject.get(hash(obj))
+        if cached is not None:
+            return cached
+
+        msg = "CHROMIUM: WARNING: Top level object for %s is %s" % (obj, result)
+        debug.println(debug.LEVEL_INFO, msg, True)
+
+        # The only (known) object giving us a broken ancestry is the omnibox popup.
+        roles = [pyatspi.ROLE_LIST_ITEM, pyatspi.ROLE_LIST_BOX]
+        if not (obj and obj.getRole() in roles):
+            return result
+
+        listbox = obj
+        if obj.getRole() == pyatspi.ROLE_LIST_ITEM:
+            listbox = listbox.parent
+
+        # The listbox sometimes claims to be a redundant object rather than a listbox.
+        # Clearing the AT-SPI2 cache seems to be the trigger.
+        if not (listbox and listbox.getRole() in roles):
+            if listbox.getRole() == pyatspi.ROLE_REDUNDANT_OBJECT:
+                msg = "CHROMIUM: WARNING: Suspected bogus role on listbox %s" % listbox
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                return result
+
+        autocomplete = self.autocompleteForPopup(listbox)
+        if autocomplete:
+            result = self.topLevelObject(autocomplete)
+            msg = "CHROMIUM: Top level object for %s is %s" % (autocomplete, result)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        self._topLevelObject[hash(obj)] = result
+        return result
+
+    def autocompleteForPopup(self, obj):
+        popupFor = lambda r: r.getRelationType() == pyatspi.RELATION_POPUP_FOR
+        relations = list(filter(popupFor, obj.getRelationSet()))
+        if not relations:
+            return None
+
+        target = relations[0].getTarget(0)
+        if target and target.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
+            return target
+
+        return None
+
     def isBrowserAutocompletePopup(self, obj):
         if not obj or self.inDocumentContent(obj):
             return False
 
-        popupFor = lambda r: r.getRelationType() == pyatspi.RELATION_POPUP_FOR
-        relations = list(filter(popupFor, obj.getRelationSet()))
-        if not relations:
-            return False
-
-        target = relations[0].getTarget(0)
-        return target and target.getRole() == pyatspi.ROLE_AUTOCOMPLETE
+        return self.autocompleteForPopup(obj) is not None
 
     def isRedundantAutocompleteEvent(self, event):
         if event.source.getRole() != pyatspi.ROLE_AUTOCOMPLETE:
