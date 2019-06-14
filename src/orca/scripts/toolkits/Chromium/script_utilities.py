@@ -322,3 +322,13 @@ class Utilities(web.Utilities):
                 return True
 
         return False
+
+    def setCaretPosition(self, obj, offset, documentFrame=None):
+        super().setCaretPosition(obj, offset, documentFrame)
+
+        isLink = lambda x: x and x.getRole() == pyatspi.ROLE_LINK
+        link = pyatspi.utils.findAncestor(obj, isLink)
+        if link:
+            msg = "CHROMIUM: HACK: Grabbing focus on %s's ancestor %s" % (obj, link)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self.grabFocus(link)
