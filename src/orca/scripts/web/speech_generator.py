@@ -117,6 +117,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return []
 
     def _generateDescription(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateDescription(obj, **args)
+
         if self._script.utilities.isZombie(obj):
             return []
 
@@ -158,12 +161,15 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return []
 
     def _generateLabelOrName(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateLabelOrName(obj, **args)
+
         if self._script.utilities.isTextBlockElement(obj) \
            and not self._script.utilities.isLandmark(obj) \
            and not self._script.utilities.isDPub(obj):
             return []
 
-        if self._script.utilities.inDocumentContent(obj) and obj.name:
+        if obj.name:
             result = [obj.name]
             result.extend(self.voice(speech_generator.DEFAULT))
             return result
@@ -171,6 +177,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateLabelOrName(obj, **args)
 
     def _generateName(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateName(obj, **args)
+
         if self._script.utilities.isTextBlockElement(obj) \
            and not self._script.utilities.isLandmark(obj) \
            and not self._script.utilities.isDPub(obj):
@@ -193,7 +202,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and not self._script.utilities.hasExplicitName(obj):
             return []
 
-        if self._script.utilities.inDocumentContent(obj) and obj.name:
+        if obj.name:
             if self._script.utilities.preferDescriptionOverName(obj):
                 result = [obj.description]
             else:
@@ -204,6 +213,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generateName(obj, **args)
 
     def _generateLabel(self, obj, **args):
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generateLabel(obj, **args)
+
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
@@ -466,10 +478,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and not _settingsManager.getSetting('enablePositionSpeaking'):
             return []
 
-        # TODO - JD: We cannot do this for XUL (or whatever Firefox is
-        # using in its non-webcontent dialogs)
-        #if not self._script.utilities.inDocumentContent(obj):
-        #    return super()._generatePositionInList(obj, **args)
+        if not self._script.utilities.inDocumentContent(obj):
+            return super()._generatePositionInList(obj, **args)
+
         menuRoles = [pyatspi.ROLE_MENU_ITEM,
                      pyatspi.ROLE_TEAROFF_MENU_ITEM,
                      pyatspi.ROLE_CHECK_MENU_ITEM,
