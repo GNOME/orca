@@ -45,7 +45,7 @@ class Utilities(script_utilities.Utilities):
                 return []
 
             isSelected = lambda x: x and x.getState().contains(pyatspi.STATE_SELECTED)
-            children = pyatspi.findAllDescendants(obj, isSelected)
+            children = self.findAllDescendants(obj, isSelected)
         else:
             children = []
             for x in range(selection.nSelectedChildren):

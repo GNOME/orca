@@ -343,7 +343,8 @@ class LiveRegionManager:
             # look through all the objects on the page and set/add to
             # politeness overrides.  This only adds live regions with good
             # markup.
-            matches = pyatspi.findAllDescendants(docframe, self.matchLiveRegion)
+            matches = self._script.utilities.findAllDescendants(
+                docframe, self.matchLiveRegion)
             for match in matches:
                 objectid = self._getObjectId(match)
                 self._politenessOverrides[(uri, objectid)] = LIVE_OFF

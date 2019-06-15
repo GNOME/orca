@@ -350,7 +350,7 @@ class Utilities(script_utilities.Utilities):
             return None
 
         isParagraph = lambda x: x and x.getRole() == pyatspi.ROLE_PARAGRAPH
-        allParagraphs = pyatspi.findAllDescendants(toolbar, isParagraph)
+        allParagraphs = self.findAllDescendants(toolbar, isParagraph)
         if len(allParagraphs) == 1:
             self._script.inputLineForCell = allParagraphs[0]
 
@@ -539,12 +539,12 @@ class Utilities(script_utilities.Utilities):
             return None, None
 
         hasRole = lambda x: x and x.getRole() == pyatspi.ROLE_SPLIT_PANE
-        panes = pyatspi.findAllDescendants(parent, hasRole)
+        panes = self.findAllDescendants(parent, hasRole)
         if not panes:
             return None, None
 
         slidePane = taskPane = None
-        if pyatspi.findAllDescendants(panes[0], self.isDocument):
+        if self.findAllDescendants(panes[0], self.isDocument):
             slidePane = panes[0]
             if len(panes) == 2:
                 taskPane = panes[1]

@@ -340,7 +340,7 @@ class BrailleGenerator(generator.Generator):
         isWidget = lambda x: x and x.getRole() in widgetRoles
         result = []
         if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
-            widgets = pyatspi.findAllDescendants(obj, isWidget)
+            widgets = self._script.utilities.findAllDescendants(obj, isWidget)
             for widget in widgets:
                 result.extend(self.generate(widget, includeContext=False))
                 result.append(braille.Region(" "))

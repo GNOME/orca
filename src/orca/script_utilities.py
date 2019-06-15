@@ -485,7 +485,7 @@ class Utilities:
 
         textObjects = []
         for detail in details:
-            textObjects.extend(pyatspi.findAllDescendants(detail, self.queryNonEmptyText))
+            textObjects.extend(self.findAllDescendants(detail, self.queryNonEmptyText))
 
         return textObjects
 
@@ -3629,22 +3629,14 @@ class Utilities:
         role = obj.getRole()
         if role == pyatspi.ROLE_MENU and not children:
             pred = lambda x: x and x.getState().contains(pyatspi.STATE_SELECTED)
-            try:
-                children = pyatspi.findAllDescendants(obj, pred)
-            except:
-                msg = "ERROR: Exception calling findAllDescendants on %s" % obj
-                debug.println(debug.LEVEL_INFO, msg, True)
+            children = self.findAllDescendants(obj, pred)
 
         if role == pyatspi.ROLE_COMBO_BOX \
            and children and children[0].getRole() == pyatspi.ROLE_MENU:
             children = self.selectedChildren(children[0])
             if not children and obj.name:
                 pred = lambda x: x and x.name == obj.name
-                try:
-                    children = pyatspi.findAllDescendants(obj, pred)
-                except:
-                    msg = "ERROR: Exception calling findAllDescendants on %s" % obj
-                    debug.println(debug.LEVEL_INFO, msg, True)
+                children = self.findAllDescendants(obj, pred)
 
         return children
 
