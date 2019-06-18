@@ -315,14 +315,6 @@ class Script(web.Script):
         if super().onSelectedChanged(event):
             return
 
-        # HACK: Remove this -- or more likely move this -- when we start getting
-        # selection-changed events from the omnibox popup.
-        if event.source.getRole() == pyatspi.ROLE_LIST_ITEM \
-           and self.utilities.isBrowserAutocompletePopup(event.source.parent):
-            msg = "CHROMIUM: NO SELECTION EVENT HACK: Setting locusOfFocus to %s" % event.source
-            debug.println(debug.LEVEL_INFO, msg, True)
-            orca.setLocusOfFocus(event, event.source)
-
         msg = "CHROMIUM: Passing along event to default script"
         debug.println(debug.LEVEL_INFO, msg, True)
         default.Script.onSelectedChanged(self, event)
