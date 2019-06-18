@@ -1,3 +1,88 @@
+3.33.3 - 18 June 2019
+
+Web:
+
+ * Improve presentation of Google Sheets when native accessibility
+   support is being used rather than live-region-based support
+
+ * Add support for in-process ARIA feature for alternative text for
+   cell indices
+
+ * Fix bug in live region support causing some information to not be
+   presented
+
+ * Improve presentation of off-screen content (so that it isn't
+   spoken as if each word is on its own line)
+
+ * Ensure we present newly-focused widget when current widget gets
+   destroyed
+
+ * Fix presentation of description-term and description-value roles
+
+ * Fix bug causing basic context information to be missing during
+   structural navigation
+
+ * Improve presentation of Dojo color-chooser buttons
+
+ * Speak the landmark type before the landmark name/content rather
+   than after
+
+ * Don't treat two landmarks as being on the same line
+
+ * Fix issue resulting in some items being skipped during SayAll
+
+ * Ensure we don't filter out links with author-provided names
+
+ * Improve likelihood that we'll speak link role for descendant text
+
+ * Improve behavior of non-interactive web cells with click handlers
+
+ * Ensure we present the newly-focused element after dialog is dismissed
+
+ * Explicitly clear text selection when controlling navigation
+
+ * Work around another issue in Gecko's broken text implementation
+
+ * Ongoing work on Chromium script. Please note: ATK support in Chromium
+   needs much work. Until that work has been done, Orca will not be able
+   to provide access to Chromium. The current support is very much a work
+   in progress and not yet ready for end-user testing.
+
+Mouse Review:
+
+ * Fix bug causing us to present the wrong document when multiple
+   documents are open
+
+General:
+
+ * Fix several issues related to presentation of combo boxes
+
+ * Separate out voice variants in GUI
+
+ * Fix braille traceback when there are no lines to display
+
+ * Add marks at end of line for speech
+
+ * Fix several "chattiness" issues
+
+ * Improve performance searching for objects in accessibility tree
+
+ * Improve flat review of table rows
+
+ * Ignore window deactivate events if the event is not from the active
+   window
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    el            Greek                 Efstathios Iosifidis
+    es            Spanish               Daniel Mustieles
+    eu            Basque                Asier Sarasua Garmendia
+    hu            Hungarian             Balázs Úr, Attila Hammer
+    id            Indonesian            Kukuh Syafaat
+    nl            Dutch                 Nathan Follens
+
+=========
+
 3.33.1 - 18 April 2019
 
 Web:
