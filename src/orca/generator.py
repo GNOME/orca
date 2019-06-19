@@ -1006,6 +1006,10 @@ class Generator:
         if not (0 <= startOffset <= 1):
             return []
 
+        endOffset = args.get('endOffset')
+        if endOffset is not None and endOffset == startOffset:
+            return []
+
         listItemMarker = self._script.utilities.getListItemMarkerText(obj)
         if listItemMarker:
             return [listItemMarker]
