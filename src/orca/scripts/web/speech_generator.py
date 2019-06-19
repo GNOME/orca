@@ -185,7 +185,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and not self._script.utilities.isDPub(obj):
             return []
 
-        if not self._script.utilities.hasValidName(obj):
+        if obj.name and not self._script.utilities.hasValidName(obj):
             return []
 
         if obj.parent and obj.name and obj.name == obj.parent.name \
