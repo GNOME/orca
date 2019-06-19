@@ -841,6 +841,10 @@ class Script(default.Script):
             return
 
         obj, offset = self.utilities.getCaretContext(documentFrame=None)
+        text = self.utilities.queryNonEmptyText(obj)
+        if text and offset == text.characterCount:
+            offset -= 1
+
         wordContents = self.utilities.getWordContentsAtOffset(obj, offset)
         textObj, startOffset, endOffset, word = wordContents[0]
         self.speakMisspelledIndicator(textObj, startOffset)
