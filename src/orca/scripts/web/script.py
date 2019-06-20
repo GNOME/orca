@@ -1669,6 +1669,13 @@ class Script(default.Script):
             msg = "WEB: Presenting event.any_data"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.presentObject(event.any_data)
+
+            focused = self.utilities.focusedObject(event.any_data)
+            if focused:
+                notify = self.utilities.queryNonEmptyText(focused) is None
+                msg = "WEB: Setting locusOfFocus to %s" % focused
+                debug.println(debug.LEVEL_INFO, msg)
+                orca.setLocusOfFocus(event, focused, notify)
             return True
 
         if childRole == pyatspi.ROLE_DIALOG:
