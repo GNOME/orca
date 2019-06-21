@@ -941,10 +941,11 @@ class Utilities(script_utilities.Utilities):
             if not characterCount:
                 rv = None
 
-        if self._treatObjectAsWhole(obj):
+        if self.isCellWithNameFromHeader(obj):
+            pass
+        elif self._treatObjectAsWhole(obj) and obj.name:
             rv = None
-
-        if not self.isLiveRegion(obj):
+        elif not self.isLiveRegion(obj):
             doNotQuery = [pyatspi.ROLE_TABLE_ROW]
             role = obj.getRole()
             if rv and role in doNotQuery:
@@ -2397,6 +2398,21 @@ class Utilities(script_utilities.Utilities):
         colindex = attrs.get('colindex', colindex)
         return rowindex, colindex
 
+    def isCellWithNameFromHeader(self, obj):
+        role = obj.getRole()
+        if role != pyatspi.ROLE_TABLE_CELL:
+            return False
+
+        header = self.columnHeaderForCell(obj)
+        if header and header.name and header.name == obj.name:
+            return True
+
+        header = self.rowHeaderForCell(obj)
+        if header and header.name and header.name == obj.name:
+            return True
+
+        return False
+
     def labelForCellCoordinates(self, obj):
         try:
             attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
@@ -2549,8 +2565,9 @@ class Utilities(script_utilities.Utilities):
 
         try:
             role = obj.getRole()
+            state = obj.getState()
         except:
-            msg = "ERROR: Exception getting role for %s" % obj
+            msg = "ERROR: Exception getting role and state for %s" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -2566,7 +2583,7 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif self.isFigure(obj):
             rv = False
-        elif role == pyatspi.ROLE_TABLE_ROW:
+        elif role == pyatspi.ROLE_TABLE_ROW and not state.contains(pyatspi.STATE_EXPANDABLE):
             rv = not self.hasExplicitName(obj)
         else:
             rv = super().isLayoutOnly(obj)
