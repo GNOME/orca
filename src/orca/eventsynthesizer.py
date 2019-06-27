@@ -27,7 +27,12 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2018 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
 import pyatspi
+
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+
 from . import debug
 
 try:
@@ -35,12 +40,28 @@ try:
 except:
     _canScrollTo = False
 
+def _getMouseCoordinates():
+    """Returns the current mouse coordinates."""
+
+    rootWindow = Gtk.Window().get_screen().get_root_window()
+    window, x, y, modifiers = rootWindow.get_pointer()
+    msg = "EVENT SYNTHESIZER: Mouse coordinates: %d,%d" % (x, y)
+    debug.println(debug.LEVEL_INFO, msg, True)
+    return x, y
+
 def _generateMouseEvent(x, y, event):
     """Synthesize a mouse event at a specific screen coordinate."""
+
+    oldX, oldY = _getMouseCoordinates()
 
     msg = "EVENT SYNTHESIZER: Generating %s mouse event at %d,%d" % (event, x, y)
     debug.println(debug.LEVEL_INFO, msg, True)
     pyatspi.Registry.generateMouseEvent(x, y, event)
+
+    newX, newY = _getMouseCoordinates()
+    if oldX == newX and oldY == newY and (oldX, oldY) != (x, y):
+        msg = "EVENT SYNTHESIZER: Mouse event possible failure. Pointer didn't move"
+        debug.println(debug.LEVEL_INFO, msg, True)
 
 def _mouseEventOnCharacter(obj, event):
     """Performs the specified mouse event on the current character in obj."""
