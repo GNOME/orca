@@ -62,6 +62,9 @@ def _generateMouseEvent(x, y, event):
     if oldX == newX and oldY == newY and (oldX, oldY) != (x, y):
         msg = "EVENT SYNTHESIZER: Mouse event possible failure. Pointer didn't move"
         debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+
+    return True
 
 def _mouseEventOnCharacter(obj, event):
     """Performs the specified mouse event on the current character in obj."""
@@ -70,7 +73,7 @@ def _mouseEventOnCharacter(obj, event):
     extents = text.getCharacterExtents(text.caretOffset, pyatspi.DESKTOP_COORDS)
     x = max(extents[0], extents[0] + (extents[2] / 2) - 1)
     y = extents[1] + extents[3] / 2
-    _generateMouseEvent(x, y, event)
+    return _generateMouseEvent(x, y, event)
 
 def _mouseEventOnObject(obj, event):
     """Performs the specified mouse event on obj."""
@@ -78,82 +81,82 @@ def _mouseEventOnObject(obj, event):
     extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
     x = extents.x + extents.width/2
     y = extents.y + extents.height/2
-    _generateMouseEvent(x, y, event)
+    return _generateMouseEvent(x, y, event)
 
 def routeToCharacter(obj):
     """Routes the pointer to the current character in obj."""
 
-    _mouseEventOnCharacter(obj, "abs")
+    return _mouseEventOnCharacter(obj, "abs")
 
 def routeToObject(obj):
     """Moves the mouse pointer to the center of obj."""
 
-    _mouseEventOnObject(obj, "abs")
+    return _mouseEventOnObject(obj, "abs")
 
 def routeToPoint(x, y):
     """Routes the pointer to the specified coordinates."""
 
-    _generateMouseEvent(x, y, "abs")
+    return _generateMouseEvent(x, y, "abs")
 
 def clickCharacter(obj, button=1):
     """Single click on the current character in obj using the specified button."""
 
-    _mouseEventOnCharacter(obj, "b%dc" % button)
+    return _mouseEventOnCharacter(obj, "b%dc" % button)
 
 def clickObject(obj, button=1):
     """Single click on obj using the specified button."""
 
-    _mouseEventOnObject(obj, "b%dc" % button)
+    return _mouseEventOnObject(obj, "b%dc" % button)
 
 def clickPoint(x, y, button=1):
     """Single click on the given point using the specified button."""
 
-    _generateMouseEvent(x, y, "b%dc" % button)
+    return _generateMouseEvent(x, y, "b%dc" % button)
 
 def doubleClickCharacter(obj, button=1):
     """Double click on the current character in obj using the specified button."""
 
-    _mouseEventOnCharacter(obj, "b%dd" % button)
+    return _mouseEventOnCharacter(obj, "b%dd" % button)
 
 def doubleClickObject(obj, button=1):
     """Double click on obj using the specified button."""
 
-    _mouseEventOnObject(obj, "b%dd" % button)
+    return _mouseEventOnObject(obj, "b%dd" % button)
 
 def doubleClickPoint(x, y, button=1):
     """Double click on the given point using the specified button."""
 
-    _generateMouseEvent(x, y, "b%dd" % button)
+    return _generateMouseEvent(x, y, "b%dd" % button)
 
 def pressAtCharacter(obj, button=1):
     """Performs a press on the current character in obj using the specified button."""
 
-    _mouseEventOnCharacter(obj, "b%dp" % button)
+    return _mouseEventOnCharacter(obj, "b%dp" % button)
 
 def pressAtObject(obj, button=1):
     """Performs a press on obj using the specified button."""
 
-    _mouseEventOnObject(obj, "b%dp" % button)
+    return _mouseEventOnObject(obj, "b%dp" % button)
 
 def pressAtPoint(x, y, button=1):
     """Performs a press on the given point using the specified button."""
 
-    _generateMouseEvent(x, y, "b%dp" % button)
+    return _generateMouseEvent(x, y, "b%dp" % button)
 
 def releaseAtCharacter(obj, button=1):
     """Performs a release on the current character in obj using the specified button."""
 
-    _mouseEventOnCharacter(obj, "b%dr" % button)
+    return _mouseEventOnCharacter(obj, "b%dr" % button)
 
 def releaseAtObject(obj, button=1):
     """Performs a release on obj using the specified button."""
 
-    _mouseEventOnObject(obj, "b%dr" % button)
+    return _mouseEventOnObject(obj, "b%dr" % button)
 
 def releaseAtPoint(x, y, button=1):
     """Performs a release on the given point using the specified button."""
 
-    _generateMouseEvent(x, y, "b%dr" % button)
+    return _generateMouseEvent(x, y, "b%dr" % button)
 
 def scrollToPoint(obj, x, y):
     """Attemps to scroll obj to the specified point."""
