@@ -943,10 +943,13 @@ class Context:
         """Performs a mouse click on the current accessible."""
 
         x, y = self._getClickPoint()
-        if x < 0 or y < 0:
-            return False
+        if x >= 0 and y >= 0 and eventsynthesizer.clickPoint(x, y, button):
+            return True
 
-        return eventsynthesizer.clickPoint(x, y, button)
+        if eventsynthesizer.clickObject(self.getCurrentAccessible()):
+            return True
+
+        return False
 
     def _getCurrentZone(self):
         if not (self.lines and 0 <= self.lineIndex < len(self.lines)):
