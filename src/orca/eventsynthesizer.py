@@ -69,8 +69,14 @@ def _generateMouseEvent(x, y, event):
 def _mouseEventOnCharacter(obj, event):
     """Performs the specified mouse event on the current character in obj."""
 
-    text = obj.queryText()
-    extents = text.getCharacterExtents(text.caretOffset, pyatspi.DESKTOP_COORDS)
+    try:
+        text = obj.queryText()
+        extents = text.getCharacterExtents(text.caretOffset, pyatspi.DESKTOP_COORDS)
+    except:
+        msg = "ERROR: Exception getting character extents for %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+
     x = max(extents[0], extents[0] + (extents[2] / 2) - 1)
     y = extents[1] + extents[3] / 2
     return _generateMouseEvent(x, y, event)
@@ -78,7 +84,13 @@ def _mouseEventOnCharacter(obj, event):
 def _mouseEventOnObject(obj, event):
     """Performs the specified mouse event on obj."""
 
-    extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+    try:
+        extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+    except:
+        msg = "ERROR: Exception getting extents for %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+
     x = extents.x + extents.width/2
     y = extents.y + extents.height/2
     return _generateMouseEvent(x, y, event)
