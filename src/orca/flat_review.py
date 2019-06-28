@@ -937,8 +937,7 @@ class Context:
         if x < 0 or y < 0:
             return False
 
-        eventsynthesizer.routeToPoint(x, y)
-        return True
+        return eventsynthesizer.routeToPoint(x, y)
 
     def clickCurrent(self, button=1):
         """Performs a mouse click on the current accessible."""
@@ -947,8 +946,7 @@ class Context:
         if x < 0 or y < 0:
             return False
 
-        eventsynthesizer.clickPoint(x, y, button)
-        return True
+        return eventsynthesizer.clickPoint(x, y, button)
 
     def _getCurrentZone(self):
         if not (self.lines and 0 <= self.lineIndex < len(self.lines)):
