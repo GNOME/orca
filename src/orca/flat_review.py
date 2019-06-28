@@ -946,7 +946,7 @@ class Context:
         if x >= 0 and y >= 0 and eventsynthesizer.clickPoint(x, y, button):
             return True
 
-        if eventsynthesizer.clickObject(self.getCurrentAccessible()):
+        if eventsynthesizer.clickObject(self.getCurrentAccessible(), button):
             return True
 
         return False
