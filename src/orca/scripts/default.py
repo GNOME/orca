@@ -1305,8 +1305,17 @@ class Script(script.Script):
         """Performs a left mouse button click on the current item."""
 
         if self.flatReviewContext:
-            self.flatReviewContext.clickCurrent(1)
-            return True
+            if self.flatReviewContext.clickCurrent(1):
+                return True
+
+            obj = self.flatReviewContext.getCurrentAccessible()
+            if eventsynthesizer.clickActionOn(obj):
+                return True
+            if eventsynthesizer.pressActionOn(obj):
+                return True
+            if eventsynthesizer.activateActionOn(obj):
+                return True
+            return False
 
         if self.utilities.queryNonEmptyText(orca_state.locusOfFocus):
             if eventsynthesizer.clickCharacter(orca_state.locusOfFocus, 1):

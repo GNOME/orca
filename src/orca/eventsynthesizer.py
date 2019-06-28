@@ -280,3 +280,31 @@ def scrollToRightEdge(obj):
         return
 
     _scrollToLocation(obj, pyatspi.SCROLL_RIGHT_EDGE)
+
+def _performNamedAction(obj, name):
+    try:
+        action = obj.queryAction()
+    except NotImplementedError:
+        msg = "ERROR: Action interface not implemented for %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+
+    for i in range(action.nActions):
+        if action.getName(i).lower() == name.lower():
+            rv = action.doAction(i)
+            msg = "EVENT SYNTHESIZER: %s on %s result: %s" % (name, obj, rv)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return rv
+
+    msg = "INFO: %s not an available action for %s" % (name, obj)
+    debug.println(debug.LEVEL_INFO, msg, True)
+    return False
+
+def activateActionOn(obj):
+    return _performNamedAction(obj, "activate")
+
+def clickActionOn(obj):
+    return _performNamedAction(obj, "click")
+
+def pressActionOn(obj):
+    return _performNamedAction(obj, "press")
