@@ -1313,7 +1313,7 @@ class Script(script.Script):
                 return True
             if eventsynthesizer.pressActionOn(obj):
                 return True
-            if eventsynthesizer.activateActionOn(obj):
+            if eventsynthesizer.grabFocusOn(obj):
                 return True
             return False
 

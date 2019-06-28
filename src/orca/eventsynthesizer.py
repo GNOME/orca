@@ -308,3 +308,13 @@ def clickActionOn(obj):
 
 def pressActionOn(obj):
     return _performNamedAction(obj, "press")
+
+def grabFocusOn(obj):
+    try:
+        component = obj.queryComponent()
+    except:
+        msg = "ERROR: Exception querying component of %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+
+    return component.grabFocus()
