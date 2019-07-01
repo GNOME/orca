@@ -54,6 +54,16 @@ class SpeechGenerator(web.SpeechGenerator):
 
         return super()._generateNewAncestors(obj, **args)
 
+    def _generateListBoxItemWidgets(self, obj, **args):
+        # The the list which descends from a combobox should be a menu, and its children
+        # menuitems. We can remove this once that change is made in Chromium.
+        if pyatspi.findAncestor(obj, lambda x: x and x.getRole() == pyatspi.ROLE_COMBO_BOX):
+            msg = "CHROMIUM: Not generating listbox item widgets for combobox child %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return []
+
+        return super()._generateListBoxItemWidgets(obj, **args)
+
     def generateSpeech(self, obj, **args):
         if self._script.utilities.inDocumentContent(obj):
             return super().generateSpeech(obj, **args)
