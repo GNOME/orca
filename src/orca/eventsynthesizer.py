@@ -170,36 +170,6 @@ def releaseAtPoint(x, y, button=1):
 
     return _generateMouseEvent(x, y, "b%dr" % button)
 
-def scrollToPoint(obj, x, y, startOffset=None, endOffset=None):
-    """Attemps to scroll obj to the specified point."""
-
-    if not _canScrollTo:
-        msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return
-
-    try:
-        component = obj.queryComponent()
-    except:
-        msg = "ERROR: Exception querying component of %s" % obj
-        debug.println(debug.LEVEL_INFO, msg, True)
-        return
-
-    before = component.getExtents(pyatspi.WINDOW_COORDS)
-    try:
-        component.scrollToPoint(pyatspi.WINDOW_COORDS, x, y)
-    except:
-        msg = "ERROR: Exception scrolling %s to %i,%i." % (obj, x, y)
-        debug.println(debug.LEVEL_INFO, msg, True)
-    else:
-        msg = "INFO: Attemped to scroll %s to %i,%i" % (obj, x, y)
-        debug.println(debug.LEVEL_INFO, msg, True)
-
-    after = component.getExtents(pyatspi.WINDOW_COORDS)
-    msg = "EVENT SYNTHESIZER: Before scroll: %i,%i. After scroll: %i,%i." % \
-          (before[0], before[1], after[0], after[1])
-    debug.println(debug.LEVEL_INFO, msg, True)
-
 def _scrollSubstringToLocation(obj, location, startOffset, endOffset):
     """Attemps to scroll the given substring to the specified location."""
 
