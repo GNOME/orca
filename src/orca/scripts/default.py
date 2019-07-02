@@ -3539,7 +3539,6 @@ class Script(script.Script):
         #
         done = False
         while not done:
-            eventsynthesizer.scrollIntoView(obj)
             speech.speak(self.speechGenerator.generateContext(obj, priorObj=priorObj))
 
             lastEndOffset = -1
@@ -3591,6 +3590,7 @@ class Script(script.Script):
                 context = speechserver.SayAllContext(
                     obj, lineString, startOffset, endOffset)
                 self._sayAllContexts.append(context)
+                eventsynthesizer.scrollIntoView(obj, startOffset, endOffset)
                 yield [context, voice]
 
             moreLines = False

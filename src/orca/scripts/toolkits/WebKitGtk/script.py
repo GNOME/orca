@@ -33,6 +33,7 @@ import pyatspi.utils as utils
 import orca.scripts.default as default
 import orca.cmdnames as cmdnames
 import orca.debug as debug
+import orca.eventsynthesizer as eventsynthesizer
 import orca.guilabels as guilabels
 import orca.input_event as input_event
 import orca.messages as messages
@@ -544,6 +545,7 @@ class Script(default.Script):
             for (string, start, end, voice) in textSegments:
                 context = speechserver.SayAllContext(textObj, string, start, end)
                 self._sayAllContexts.append(context)
+                eventsynthesizer.scrollIntoView(obj, start, end)
                 yield [context, voice]
 
             offset = 0

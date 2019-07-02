@@ -599,7 +599,6 @@ class Script(default.Script):
                 if self.utilities.isLabellingContents(obj):
                     continue
 
-                eventsynthesizer.scrollIntoView(obj)
                 utterances = self.speechGenerator.generateContents(
                     [content], eliminatePauses=True, priorObj=priorObj)
                 priorObj = obj
@@ -612,6 +611,7 @@ class Script(default.Script):
                     context = speechserver.SayAllContext(
                         obj, element, startOffset, endOffset)
                     self._sayAllContexts.append(context)
+                    eventsynthesizer.scrollIntoView(obj, startOffset, endOffset)
                     yield [context, voices[i]]
 
             lastObj, lastOffset = contents[-1][0], contents[-1][2]
