@@ -170,7 +170,7 @@ def releaseAtPoint(x, y, button=1):
 
     return _generateMouseEvent(x, y, "b%dr" % button)
 
-def scrollToPoint(obj, x, y):
+def scrollToPoint(obj, x, y, startOffset=None, endOffset=None):
     """Attemps to scroll obj to the specified point."""
 
     if not _canScrollTo:
@@ -200,8 +200,50 @@ def scrollToPoint(obj, x, y):
           (before[0], before[1], after[0], after[1])
     debug.println(debug.LEVEL_INFO, msg, True)
 
-def _scrollToLocation(obj, location):
+def _scrollSubstringToLocation(obj, location, startOffset, endOffset):
+    """Attemps to scroll the given substring to the specified location."""
+
+    if startOffset is None or endOffset is None:
+        return False
+
+    try:
+        text = obj.queryText()
+        result = text.scrollSubstringTo(startOffset, endOffset, location)
+    except NotImplementedError:
+        msg = "ERROR: Text interface not implemented for %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+    except:
+        msg = "ERROR: Exception scrolling %s (%i,%i) to %s." % \
+            (obj, startOffset, endOffset, location)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+
+    msg = "EVENT SYNTHESIZER: scrolled %s (%i,%i) to %s: %s" % \
+        (obj, startOffset, endOffset, location, result)
+    debug.println(debug.LEVEL_INFO, msg, True)
+    return result
+
+def _scrollObjectToLocation(obj, location):
     """Attemps to scroll obj to the specified location."""
+
+    try:
+        result = obj.queryComponent().scrollTo(location)
+    except NotImplementedError:
+        msg = "ERROR: Component interface not implemented for %s" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+    except:
+        msg = "ERROR: Exception scrolling %s to %s." % (obj, location)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return False
+
+    msg = "EVENT SYNTHESIZER: scrolled %s to %s: %s" % (obj, location, result)
+    debug.println(debug.LEVEL_INFO, msg, True)
+    return result
+
+def _scrollToLocation(obj, location, startOffset=None, endOffset=None):
+    """Attemps to scroll to the specified location."""
 
     try:
         component = obj.queryComponent()
@@ -211,75 +253,70 @@ def _scrollToLocation(obj, location):
         return
 
     before = component.getExtents(pyatspi.WINDOW_COORDS)
-    try:
-        component.scrollTo(location)
-    except:
-        msg = "ERROR: Exception scrolling %s to %s." % (obj, location)
-        debug.println(debug.LEVEL_INFO, msg, True)
-    else:
-        msg = "INFO: Attemped to scroll %s to %s" % (obj, location)
-        debug.println(debug.LEVEL_INFO, msg, True)
+
+    if not _scrollSubstringToLocation(obj, location, startOffset, endOffset):
+        _scrollObjectToLocation(obj, location)
 
     after = component.getExtents(pyatspi.WINDOW_COORDS)
     msg = "EVENT SYNTHESIZER: Before scroll: %i,%i. After scroll: %i,%i." % \
           (before[0], before[1], after[0], after[1])
     debug.println(debug.LEVEL_INFO, msg, True)
 
-def scrollIntoView(obj):
+def scrollIntoView(obj, startOffset=None, endOffset=None):
     if not _canScrollTo:
         msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    _scrollToLocation(obj, pyatspi.SCROLL_ANYWHERE)
+    _scrollToLocation(obj, pyatspi.SCROLL_ANYWHERE, startOffset, endOffset)
 
-def scrollToTopEdge(obj):
+def scrollToTopEdge(obj, startOffset=None, endOffset=None):
     if not _canScrollTo:
         msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    _scrollToLocation(obj, pyatspi.SCROLL_TOP_EDGE)
+    _scrollToLocation(obj, pyatspi.SCROLL_TOP_EDGE, startOffset, endOffset)
 
-def scrollToTopLeft(obj):
+def scrollToTopLeft(obj, startOffset=None, endOffset=None):
     if not _canScrollTo:
         msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    _scrollToLocation(obj, pyatspi.SCROLL_TOP_LEFT)
+    _scrollToLocation(obj, pyatspi.SCROLL_TOP_LEFT, startOffset, endOffset)
 
-def scrollToLeftEdge(obj):
+def scrollToLeftEdge(obj, startOffset=None, endOffset=None):
     if not _canScrollTo:
         msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    _scrollToLocation(obj, pyatspi.SCROLL_LEFT_EDGE)
+    _scrollToLocation(obj, pyatspi.SCROLL_LEFT_EDGE, startOffset, endOffset)
 
-def scrollToBottomEdge(obj):
+def scrollToBottomEdge(obj, startOffset=None, endOffset=None):
     if not _canScrollTo:
         msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    _scrollToLocation(obj, pyatspi.SCROLL_BOTTOM_EDGE)
+    _scrollToLocation(obj, pyatspi.SCROLL_BOTTOM_EDGE, startOffset, endOffset)
 
-def scrollToBottomRight(obj):
+def scrollToBottomRight(obj, startOffset=None, endOffset=None):
     if not _canScrollTo:
         msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    _scrollToLocation(obj, pyatspi.SCROLL_BOTTOM_RIGHT)
+    _scrollToLocation(obj, pyatspi.SCROLL_BOTTOM_RIGHT, startOffset, endOffset)
 
-def scrollToRightEdge(obj):
+def scrollToRightEdge(obj, startOffset=None, endOffset=None):
     if not _canScrollTo:
         msg = "INFO: Installed version of AT-SPI2 doesn't support scrolling."
         debug.println(debug.LEVEL_INFO, msg, True)
         return
 
-    _scrollToLocation(obj, pyatspi.SCROLL_RIGHT_EDGE)
+    _scrollToLocation(obj, pyatspi.SCROLL_RIGHT_EDGE, startOffset, endOffset)
 
 def _performNamedAction(obj, name):
     try:
