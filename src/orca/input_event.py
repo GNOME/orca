@@ -724,7 +724,7 @@ class KeyboardEvent(InputEvent):
             modifier = 1 << pyatspi.MODIFIER_SHIFT
         else:
             msg = "Unknown locking key %s" % self.event_string
-            debug.println(debug.LEVEL_WARNING, msg, False)
+            debug.println(debug.LEVEL_WARNING, msg, True)
             return
         debug.println(debug.LEVEL_INFO, "Scheduling capslock", True)
         GLib.timeout_add(1, lock_mod(self.modifiers, modifier))
