@@ -2842,7 +2842,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         modifierKeys =  ['Alt_L', 'Alt_R', 'Control_L', 'Control_R',
                          'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R',
-                         'Num_Lock', 'Caps_Lock']
+                         'Num_Lock', 'Caps_Lock', 'Shift_Lock']
         if eventString in modifierKeys:
             return False
 
@@ -2943,6 +2943,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if mods & (1 << pyatspi.MODIFIER_SHIFTLOCK) \
            and mods & keybindings.ORCA_MODIFIER_MASK:
             mods ^= (1 << pyatspi.MODIFIER_SHIFTLOCK)
+        try:
+            shiftmask = (1 << pyatspi.MODIFIER_SHIFT)
+        except:
+            shiftmask = 0
+        if mods & shiftmask \
+           and mods & keybindings.ORCA_MODIFIER_MASK:
+            mods ^= (1 << pyatspi.MODIFIER_SHIFT)
 
         treeModel.set(myiter,
                       modMask, str(keybindings.defaultModifierMask),

@@ -131,6 +131,10 @@ def getModifierNames(mods):
     """Gets the modifier names of a numeric modifier mask as a human
     consumable string.
     """
+    try:
+        shiftmask = 1 << pyatspi.MODIFIER_SHIFT
+    except:
+        shiftmask = 0
 
     text = ""
     if mods & ORCA_MODIFIER_MASK:
@@ -147,6 +151,12 @@ def getModifierNames(mods):
         # "caps lock" modifier.
         #
         text += _("Caps_Lock") + "+"
+    elif mods & shiftmask:
+        # Translators: this is presented in a GUI to represent the
+        # "shift lock" modifier. There is no reason to make it different from
+        # the translation for "Caps_Lock"
+        #
+        text += _("Shift_Lock") + "+"
     #if mods & (1 << pyatspi.MODIFIER_NUMLOCK):
     #    text += _("Num_Lock") + "+"
     if mods & 128:

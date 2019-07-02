@@ -250,32 +250,51 @@ def _setCapsLockAsOrcaModifier(enable):
     """Enable or disable use of the caps lock key as an Orca modifier key."""
     interpretCapsLineProg = re.compile(
         r'^\s*interpret\s+Caps[_+]Lock[_+]AnyOfOrNone\s*\(all\)\s*{\s*$', re.I)
-    capsModLineProg = re.compile(
-        r'^\s*action\s*=\s*NoAction\s*\(\s*\)\s*;\s*$', re.I)
     normalCapsLineProg = re.compile(
         r'^\s*action\s*=\s*LockMods\s*\(\s*modifiers\s*=\s*Lock\s*\)\s*;\s*$', re.I)
+    interpretShiftLineProg = re.compile(
+        r'^\s*interpret\s+Shift[_+]Lock[_+]AnyOf\s*\(\s*Shift\s*\+\s*Lock\s*\)\s*{\s*$', re.I)
+    normalShiftLineProg = re.compile(
+        r'^\s*action\s*=\s*LockMods\s*\(\s*modifiers\s*=\s*Shift\s*\)\s*;\s*$', re.I)
+    disabledModLineProg = re.compile(
+        r'^\s*action\s*=\s*NoAction\s*\(\s*\)\s*;\s*$', re.I)
     normalCapsLine = '        action= LockMods(modifiers=Lock);'
-    capsModLine =    '        action= NoAction();'
+    normalShiftLine = '        action= LockMods(modifiers=Shift);'
+    disabledModLine = '        action= NoAction();'
     lines = _originalXmodmap.decode('UTF-8').split('\n')
     foundCapsInterpretSection = False
+    foundShiftInterpretSection = False
+    modified = False
     for i, line in enumerate(lines):
-        if not foundCapsInterpretSection:
+        if not foundCapsInterpretSection and not foundShiftInterpretSection:
             if interpretCapsLineProg.match(line):
                 foundCapsInterpretSection = True
-        else:
+            elif interpretShiftLineProg.match(line):
+                foundShiftInterpretSection = True
+        elif foundCapsInterpretSection:
             if enable:
                 if normalCapsLineProg.match(line):
-                    lines[i] = capsModLine
-                    _setXmodmap(bytes('\n'.join(lines), 'UTF-8'))
-                    return
+                    lines[i] = disabledModLine
+                    modified = True
             else:
-                if capsModLineProg.match(line):
+                if disabledModLineProg.match(line):
                     lines[i] = normalCapsLine
-                    _setXmodmap(bytes('\n'.join(lines), 'UTF-8'))
-                    return
+                    modified = True
             if line.find('}'):
-                # Failed to find the line we need to change
-                return
+                foundCapsInterpretSection = False
+        else: # foundShiftInterpretSection
+            if enable:
+                if normalShiftLineProg.match(line):
+                    lines[i] = disabledModLine
+                    modified = True
+            else:
+                if disabledModLineProg.match(line):
+                    lines[i] = normalShiftLine
+                    modified = True
+            if line.find('}'):
+                foundShiftInterpretSection = False
+    if modified:
+        _setXmodmap(bytes('\n'.join(lines), 'UTF-8'))
 
 def _createOrcaXmodmap():
     """Makes an Orca-specific Xmodmap so that the keys behave as we
@@ -285,7 +304,8 @@ def _createOrcaXmodmap():
     global _capsLockCleared
 
     cmd = []
-    if "Caps_Lock" in settings.orcaModifierKeys:
+    if "Caps_Lock" in settings.orcaModifierKeys \
+       or "Shift_Lock" in settings.orcaModifierKeys:
         _setCapsLockAsOrcaModifier(True)
         _capsLockCleared = True
     elif _capsLockCleared:
