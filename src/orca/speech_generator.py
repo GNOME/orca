@@ -998,18 +998,19 @@ class SpeechGenerator(generator.Generator):
 
     def _generateDisplayedText(self, obj, **args):
         result = self._generateSubstring(obj, **args)
-        if result:
+        if result and result[0]:
             return result
 
         acss = self.voice(DEFAULT)
         result = generator.Generator._generateDisplayedText(self, obj, **args)
-        if result:
-            string = result[0].strip()
-            if len(string) == 1 and self._script.utilities.isMath(obj):
-                charname = chnames.getCharacterName(string, preferMath=True)
-                if charname != string:
-                    result[0] = charname
+        if not (result and result[0]):
+            return []
 
+        string = result[0].strip()
+        if len(string) == 1 and self._script.utilities.isMath(obj):
+            charname = chnames.getCharacterName(string, preferMath=True)
+            if charname != string:
+                result[0] = charname
             result.extend(acss)
 
         return result
