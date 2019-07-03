@@ -984,16 +984,19 @@ class SpeechGenerator(generator.Generator):
         """
 
         result = self._generateSubstring(obj, **args)
-        if result:
+        if result and result[0]:
             return result
 
         acss = self.voice(DEFAULT)
         result = generator.Generator._generateCurrentLineText(self, obj, **args)
-        if result:
-            if result == ['\n'] and _settingsManager.getSetting('speakBlankLines') \
-               and not self._script.inSayAll() and args.get('total', 1) == 1:
-                result = [messages.BLANK]
-            result.extend(acss)
+        if not (result and result[0]):
+            return []
+
+        if result == ['\n'] and _settingsManager.getSetting('speakBlankLines') \
+           and not self._script.inSayAll() and args.get('total', 1) == 1:
+            result = [messages.BLANK]
+
+        result.extend(acss)
         return result
 
     def _generateDisplayedText(self, obj, **args):
