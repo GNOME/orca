@@ -2754,6 +2754,18 @@ class Utilities(script_utilities.Utilities):
         self._labelTargets[hash(obj)] = rv
         return rv
 
+    def isLinkAncestorOfImageInContents(self, link, contents):
+        if not self.isLink(link):
+            return False
+
+        for obj, start, end, string in contents:
+            if obj.getRole() != pyatspi.ROLE_IMAGE:
+                continue
+            if pyatspi.findAncestor(obj, lambda x: x == link):
+                return True
+
+        return False
+
     def isInferredLabelForContents(self, content, contents):
         obj, start, end, string = content
         objs = list(filter(self.shouldInferLabelFor, [x[0] for x in contents]))

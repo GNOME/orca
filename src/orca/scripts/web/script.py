@@ -599,6 +599,9 @@ class Script(default.Script):
                 if self.utilities.isLabellingContents(obj):
                     continue
 
+                if self.utilities.isLinkAncestorOfImageInContents(obj, contents):
+                    continue
+
                 utterances = self.speechGenerator.generateContents(
                     [content], eliminatePauses=True, priorObj=priorObj)
                 priorObj = obj
