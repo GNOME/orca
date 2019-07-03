@@ -65,7 +65,7 @@ class ACSS(dict):
         props = props or {}
         if props:
             for k in props:
-                if k in ACSS.settings:
+                if k == 'established' or k in ACSS.settings:
                     # Do a 'deep copy' of the family.  Otherwise,
                     # the new ACSS shares the actual data with the
                     # props passed in.  This can cause unexpected
