@@ -188,13 +188,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if obj.name and not self._script.utilities.hasValidName(obj):
             return []
 
+        role = args.get('role', obj.getRole())
+
         if obj.parent and obj.name and obj.name == obj.parent.name \
-           and obj != orca_state.locusOfFocus and not self._script.inSayAll():
+           and obj != orca_state.locusOfFocus and role != pyatspi.ROLE_IMAGE:
             return []
 
         # TODO - JD: Once the formatting strings are vastly cleaned up
         # or simply removed, hacks like this won't be needed.
-        role = args.get('role', obj.getRole())
         if role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_SPIN_BUTTON]:
             return super()._generateName(obj, **args)
 
