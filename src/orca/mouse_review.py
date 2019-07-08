@@ -478,7 +478,7 @@ class MouseReviewer:
         x, y, width, height = self._currentMouseOver.getBoundingBox()
         if y <= pY <= y + height:
             boundary = pyatspi.TEXT_BOUNDARY_WORD_START
-        elif x <= pX <= x + width:
+        elif obj == self._currentMouseOver.getObject():
             boundary = pyatspi.TEXT_BOUNDARY_LINE_START
 
         new = _ItemContext(pX, pY, obj, boundary, window, script)
