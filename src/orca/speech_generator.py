@@ -212,6 +212,9 @@ class SpeechGenerator(generator.Generator):
         if not _settingsManager.getSetting('speakDescription'):
             return []
 
+        if args.get('inMouseReview') and not _settingsManager.getSetting('presentToolTips'):
+            return []
+
         priorObj = args.get('priorObj')
         if priorObj and priorObj.getRole() == pyatspi.ROLE_TOOL_TIP:
             return []
