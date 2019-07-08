@@ -1255,6 +1255,13 @@ class Utilities:
 
         return False
 
+    def getCellRoles(self):
+        return [pyatspi.ROLE_TABLE_CELL,
+                pyatspi.ROLE_TABLE_COLUMN_HEADER,
+                pyatspi.ROLE_TABLE_ROW_HEADER,
+                pyatspi.ROLE_COLUMN_HEADER,
+                pyatspi.ROLE_ROW_HEADER]
+
     def isTextDocumentCell(self, obj):
         if not obj:
             return False
@@ -1266,12 +1273,7 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        cellRoles = [pyatspi.ROLE_TABLE_CELL,
-                     pyatspi.ROLE_TABLE_COLUMN_HEADER,
-                     pyatspi.ROLE_TABLE_ROW_HEADER,
-                     pyatspi.ROLE_COLUMN_HEADER,
-                     pyatspi.ROLE_ROW_HEADER]
-        if not role in cellRoles:
+        if not role in self.getCellRoles():
             return False
 
         return pyatspi.findAncestor(obj, self.isTextDocumentTable)
@@ -1287,12 +1289,7 @@ class Utilities:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        cellRoles = [pyatspi.ROLE_TABLE_CELL,
-                     pyatspi.ROLE_TABLE_COLUMN_HEADER,
-                     pyatspi.ROLE_TABLE_ROW_HEADER,
-                     pyatspi.ROLE_COLUMN_HEADER,
-                     pyatspi.ROLE_ROW_HEADER]
-        if not role in cellRoles:
+        if not role in self.getCellRoles():
             return False
 
         return pyatspi.findAncestor(obj, self.isSpreadSheetTable)

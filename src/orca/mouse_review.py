@@ -422,6 +422,11 @@ class MouseReviewer:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
+        if obj and obj.getRole() in script.utilities.getCellRoles() \
+           and script.utilities.shouldReadFullRow(obj):
+            isRow = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_ROW
+            obj = pyatspi.findAncestor(obj, isRow) or obj
+
         new = _ItemContext(pX, pY, obj, window, script)
         new.present(self._currentMouseOver)
         self._currentMouseOver = new
