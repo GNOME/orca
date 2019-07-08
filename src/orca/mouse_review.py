@@ -422,6 +422,11 @@ class MouseReviewer:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return
 
+        if document and obj and document != script.utilities.getContainingDocument(obj):
+            msg = "MOUSE REVIEW: %s is not in active document %s" % (obj, document)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return
+
         if obj and obj.getRole() in script.utilities.getCellRoles() \
            and script.utilities.shouldReadFullRow(obj):
             isRow = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_ROW
