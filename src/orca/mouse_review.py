@@ -82,7 +82,14 @@ class _StringContext:
     def present(self):
         """Presents this context to the user."""
 
-        if not (self._script and self._string):
+        if not self._script:
+            msg = "MOUSE REVIEW: Not presenting due to lack of script"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if not self._string:
+            msg = "MOUSE REVIEW: Not presenting due to lack of string"
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         voice = self._script.speechGenerator.voice(string=self._string)
@@ -195,6 +202,8 @@ class _ItemContext:
         """Presents this context to the user."""
 
         if self == prior or self._treatAsDuplicate(prior):
+            msg = "MOUSE REVIEW: Not presenting due to no change"
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         interrupt = self._obj and self._obj != prior._obj \
