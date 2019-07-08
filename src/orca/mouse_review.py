@@ -442,8 +442,8 @@ class MouseReviewer:
             obj = pyatspi.findAncestor(obj, isRow) or obj
 
         new = _ItemContext(pX, pY, obj, window, script)
-        new.present(self._currentMouseOver)
-        self._currentMouseOver = new
+        if new.present(self._currentMouseOver):
+            self._currentMouseOver = new
 
     def _listener(self, event):
         """Generic listener, mainly to output debugging info."""
