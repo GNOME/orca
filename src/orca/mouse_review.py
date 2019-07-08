@@ -416,6 +416,12 @@ class MouseReviewer:
         debug.println(debug.LEVEL_INFO, msg, True)
 
         script = _scriptManager.getScript(window.getApplication(), obj)
+        if menu and obj and not pyatspi.findAncestor(obj, isMenu):
+            if script.utilities.intersectingRegion(obj, menu) != (0, 0, 0, 0):
+                msg = "MOUSE REVIEW: %s believed to be under %s" % (obj, menu)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return
+
         new = _ItemContext(pX, pY, obj, window, script)
         new.present(self._currentMouseOver)
         self._currentMouseOver = new
