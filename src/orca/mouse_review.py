@@ -71,6 +71,9 @@ class _StringContext:
         self._string = string
         self._start = start
         self._end = end
+        self._boundingBox = 0, 0, 0, 0
+        if script:
+            self._boundingBox = script.utilities.getTextBoundingBox(obj, start, end)
 
     def __eq__(self, other):
         return other is not None \
@@ -78,6 +81,11 @@ class _StringContext:
             and self._string == other._string \
             and self._start == other._start \
             and self._end == other._end
+
+    def getBoundingBox(self):
+        """Returns the bounding box associated with this context's range."""
+
+        return self._boundingBox
 
     def present(self):
         """Presents this context to the user."""
@@ -102,13 +110,14 @@ class _StringContext:
 class _ItemContext:
     """Holds all the information of the item at a specified point."""
 
-    def __init__(self, x=0, y=0, obj=None, frame=None, script=None):
+    def __init__(self, x=0, y=0, obj=None, boundary=None, frame=None, script=None):
         """Initialize the _ItemContext.
 
         Arguments:
         - x: The X coordinate
         - y: The Y coordinate
         - obj: The accessible object of interest at that coordinate
+        - boundary: The accessible-text boundary type
         - frame: The containing accessible object (often a top-level window)
         - script: The script associated with the accessible object
         """
@@ -116,10 +125,14 @@ class _ItemContext:
         self._x = x
         self._y = y
         self._obj = obj
+        self._boundary = boundary
         self._frame = frame
         self._script = script
         self._string = self._getStringContext()
         self._time = time.time()
+        self._boundingBox = 0, 0, 0, 0
+        if script:
+            self._boundingBox = script.utilities.getBoundingBox(obj)
 
     def __eq__(self, other):
         return other is not None \
@@ -165,14 +178,18 @@ class _ItemContext:
             return _StringContext(self._obj, self._script)
 
         state = self._obj.getState()
-        if not state.contains(pyatspi.STATE_SELECTABLE):
+        if self._boundary is not None:
+            boundary = self._boundary
+        elif not state.contains(pyatspi.STATE_SELECTABLE):
             boundary = pyatspi.TEXT_BOUNDARY_WORD_START
         else:
             boundary = pyatspi.TEXT_BOUNDARY_LINE_START
 
         string, start, end = self._script.utilities.textAtPoint(
             self._obj, self._x, self._y, boundary=boundary)
-        if not string and self._script.utilities.isTextArea(self._obj):
+        if string:
+            string = self._script.utilities.expandEOCs(self._obj, start, end)
+        elif not string and self._script.utilities.isTextArea(self._obj):
             string = self._script.speechGenerator.getRoleName(self._obj)
 
         return _StringContext(self._obj, self._script, string, start, end)
@@ -192,6 +209,15 @@ class _ItemContext:
         """Returns the accessible object associated with this context."""
 
         return self._obj
+
+    def getBoundingBox(self):
+        """Returns the bounding box associated with this context."""
+
+        x, y, width, height = self._string.getBoundingBox()
+        if not (width and height):
+            return self._boundingBox
+
+        return x, y, width, height
 
     def getTime(self):
         """Returns the time associated with this context."""
@@ -448,7 +474,14 @@ class MouseReviewer:
             debug.println(debug.LEVEL_INFO, msg, True)
             return
 
-        new = _ItemContext(pX, pY, obj, window, script)
+        boundary = None
+        x, y, width, height = self._currentMouseOver.getBoundingBox()
+        if y <= pY <= y + height:
+            boundary = pyatspi.TEXT_BOUNDARY_WORD_START
+        elif x <= pX <= x + width:
+            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+
+        new = _ItemContext(pX, pY, obj, boundary, window, script)
         if new.present(self._currentMouseOver):
             self._currentMouseOver = new
 

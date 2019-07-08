@@ -2291,6 +2291,16 @@ class Utilities:
 
         return rv
 
+    def getTextBoundingBox(self, obj, start, end):
+        try:
+            extents = obj.queryText().getRangeExtents(start, end, pyatspi.DESKTOP_COORDS)
+        except:
+            msg = "ERROR: Exception getting range extents of %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return -1, -1, 0, 0
+
+        return extents
+
     def getBoundingBox(self, obj):
         try:
             extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
