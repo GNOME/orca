@@ -82,6 +82,33 @@ class _StringContext:
             and self._start == other._start \
             and self._end == other._end
 
+    def isSubstringOf(self, other):
+        """Returns True if this is a substring of other."""
+
+        if other is None:
+            return False
+
+        if not (self._obj and other._obj):
+            return False
+
+        thisBox = self.getBoundingBox()
+        if thisBox == (0, 0, 0, 0):
+            return False
+
+        otherBox = other.getBoundingBox()
+        if otherBox == (0, 0, 0, 0):
+            return False
+
+        if self._script.utilities.intersection(thisBox, otherBox) != thisBox:
+            return False
+
+        if not (self._string and self._string in other._string):
+            return False
+
+        msg = "MOUSE REVIEW: '%s' is substring of '%s'" % (self._string, other._string)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return True
+
     def getBoundingBox(self):
         """Returns the bounding box associated with this context's range."""
 
@@ -142,9 +169,19 @@ class _ItemContext:
 
     def _treatAsDuplicate(self, prior):
         if self._obj != prior._obj or self._frame != prior._frame:
+            msg = "MOUSE REVIEW: Not a duplicate: different objects"
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if self._time - prior._time > 0.1:
+        if not self._isSubstringOf(prior):
+            msg = "MOUSE REVIEW: Not a duplicate: not a substring of"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        interval = self._time - prior._time
+        if interval > 0.5:
+            msg = "MOUSE REVIEW: Not a duplicate: was %.2fs ago" % interval
+            debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         msg = "MOUSE REVIEW: Treating as duplicate"
@@ -196,6 +233,11 @@ class _ItemContext:
                  pyatspi.ROLE_WINDOW]
         isContainer = lambda x: x and x.getRole() in roles
         return pyatspi.findAncestor(self._obj, isContainer)
+
+    def _isSubstringOf(self, other):
+        """Returns True if this is a substring of other."""
+
+        return self._string.isSubstringOf(other._string)
 
     def getObject(self):
         """Returns the accessible object associated with this context."""
