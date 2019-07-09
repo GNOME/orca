@@ -99,6 +99,14 @@ class _StringContext:
         if otherBox == (0, 0, 0, 0):
             return False
 
+        # We get various and sundry results for the bounding box if the implementor
+        # included newline characters as part of the word or line at offset. Try to
+        # detect this and adjust the bounding boxes before getting the intersection.
+        if thisBox[3] != otherBox[3] and self._obj == other._obj:
+            thisNewLineCount = self._string.count("\n")
+            if thisNewLineCount and thisBox[3] / thisNewLineCount == otherBox[3]:
+                thisBox = *thisBox[0:3], otherBox[3]
+
         if self._script.utilities.intersection(thisBox, otherBox) != thisBox:
             return False
 
