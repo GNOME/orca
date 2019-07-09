@@ -114,6 +114,11 @@ class _StringContext:
 
         return self._boundingBox
 
+    def getString(self):
+        """Returns the string associated with this context."""
+
+        return self._string
+
     def present(self):
         """Presents this context to the user."""
 
@@ -243,6 +248,11 @@ class _ItemContext:
             return self._boundingBox
 
         return x, y, width, height
+
+    def getString(self):
+        """Returns the string associated with this context."""
+
+        return self._string.getString()
 
     def getTime(self):
         """Returns the time associated with this context."""
@@ -501,7 +511,7 @@ class MouseReviewer:
 
         boundary = None
         x, y, width, height = self._currentMouseOver.getBoundingBox()
-        if y <= pY <= y + height:
+        if y <= pY <= y + height and self._currentMouseOver.getString():
             boundary = pyatspi.TEXT_BOUNDARY_WORD_START
         elif obj == self._currentMouseOver.getObject():
             boundary = pyatspi.TEXT_BOUNDARY_LINE_START
