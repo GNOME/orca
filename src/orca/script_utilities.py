@@ -4123,7 +4123,7 @@ class Utilities:
             return "", 0, 0
 
         extents = text.getRangeExtents(start, end, coordType)
-        if not self.containsRegion(extents, (x, y, 1, 1)):
+        if not self.containsRegion(extents, (x, y, 1, 1)) and string != "\n":
             return "", 0, 0
 
         return string, start, end
