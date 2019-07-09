@@ -4126,6 +4126,16 @@ class Utilities:
         if not self.containsRegion(extents, (x, y, 1, 1)) and string != "\n":
             return "", 0, 0
 
+        if not string.endswith("\n") or string == "\n":
+            return string, start, end
+
+        if boundary == pyatspi.TEXT_BOUNDARY_CHAR:
+            return string, start, end
+
+        char = self.textAtPoint(obj, x, y, coordType, pyatspi.TEXT_BOUNDARY_CHAR)
+        if char[0] == "\n" and char[2] - char[1] == 1:
+            return char
+
         return string, start, end
 
     def visibleRows(self, obj, boundingbox):
