@@ -177,16 +177,8 @@ class _ItemContext:
         if self._treatAsSingleObject():
             return _StringContext(self._obj, self._script)
 
-        state = self._obj.getState()
-        if self._boundary is not None:
-            boundary = self._boundary
-        elif not state.contains(pyatspi.STATE_SELECTABLE):
-            boundary = pyatspi.TEXT_BOUNDARY_WORD_START
-        else:
-            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
-
         string, start, end = self._script.utilities.textAtPoint(
-            self._obj, self._x, self._y, boundary=boundary)
+            self._obj, self._x, self._y, boundary=self._boundary)
         if string:
             string = self._script.utilities.expandEOCs(self._obj, start, end)
         elif not string and self._script.utilities.isTextArea(self._obj):
@@ -479,6 +471,8 @@ class MouseReviewer:
         if y <= pY <= y + height:
             boundary = pyatspi.TEXT_BOUNDARY_WORD_START
         elif obj == self._currentMouseOver.getObject():
+            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+        elif obj and obj.getState().contains(pyatspi.STATE_SELECTABLE):
             boundary = pyatspi.TEXT_BOUNDARY_LINE_START
 
         new = _ItemContext(pX, pY, obj, boundary, window, script)
