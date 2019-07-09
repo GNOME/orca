@@ -193,6 +193,9 @@ class _ItemContext:
         if "Text" not in interfaces:
             return True
 
+        if not self._obj.queryText().characterCount:
+            return True
+
         return False
 
     def _getStringContext(self):
@@ -208,8 +211,6 @@ class _ItemContext:
             self._obj, self._x, self._y, boundary=self._boundary)
         if string:
             string = self._script.utilities.expandEOCs(self._obj, start, end)
-        elif not string and self._script.utilities.isTextArea(self._obj):
-            string = self._script.speechGenerator.getRoleName(self._obj)
 
         return _StringContext(self._obj, self._script, string, start, end)
 
