@@ -239,7 +239,7 @@ class _ItemContext:
         """Returns the bounding box associated with this context."""
 
         x, y, width, height = self._string.getBoundingBox()
-        if not (width and height):
+        if not (width or height):
             return self._boundingBox
 
         return x, y, width, height
