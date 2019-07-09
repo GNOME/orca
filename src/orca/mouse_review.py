@@ -178,7 +178,7 @@ class _ItemContext:
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not self._isSubstringOf(prior):
+        if self.getString() and prior.getString() and not self._isSubstringOf(prior):
             msg = "MOUSE REVIEW: Not a duplicate: not a substring of"
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
