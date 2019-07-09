@@ -102,7 +102,7 @@ class _StringContext:
         if self._script.utilities.intersection(thisBox, otherBox) != thisBox:
             return False
 
-        if not (self._string and self._string in other._string):
+        if not (self._string and self._string.strip() in other._string):
             return False
 
         msg = "MOUSE REVIEW: '%s' is substring of '%s'" % (self._string, other._string)
