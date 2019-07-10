@@ -239,6 +239,9 @@ class Utilities(script_utilities.Utilities):
         return pyatspi.findAncestor(obj, self.isDocument)
 
     def _getDocumentsEmbeddedBy(self, frame):
+        if not frame:
+            return []
+
         isEmbeds = lambda r: r.getRelationType() == pyatspi.RELATION_EMBEDS
         relations = list(filter(isEmbeds, frame.getRelationSet()))
         if not relations:
