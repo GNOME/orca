@@ -986,6 +986,9 @@ class SpeechGenerator(generator.Generator):
         array if this is not a text object.]]]
         """
 
+        if args.get('inMouseReview'):
+            return []
+
         result = self._generateSubstring(obj, **args)
         if result and result[0]:
             return result
