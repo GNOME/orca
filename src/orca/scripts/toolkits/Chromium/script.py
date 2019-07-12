@@ -98,6 +98,7 @@ class Script(web.Script):
                               pyatspi.ROLE_LIST_BOX,
                               pyatspi.ROLE_MENU,
                               pyatspi.ROLE_REDUNDANT_OBJECT,
+                              pyatspi.ROLE_SECTION,
                               pyatspi.ROLE_TABLE,
                               pyatspi.ROLE_TREE,
                               pyatspi.ROLE_TREE_TABLE,
