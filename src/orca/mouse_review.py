@@ -287,7 +287,8 @@ class _ItemContext:
         if self._obj and self._obj != prior._obj:
             priorObj = prior._obj or self._getContainer()
             self._script.presentObject(self._obj, priorObj=priorObj, inMouseReview=True)
-            return True
+            if not self._script.utilities.isEditableTextArea(self._obj):
+                return True
 
         if self._string != prior._string and self._string.present():
             return True
