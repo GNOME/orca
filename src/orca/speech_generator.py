@@ -986,7 +986,7 @@ class SpeechGenerator(generator.Generator):
         array if this is not a text object.]]]
         """
 
-        if args.get('inMouseReview'):
+        if args.get('inMouseReview') and obj.getState().contains(pyatspi.STATE_EDITABLE):
             return []
 
         result = self._generateSubstring(obj, **args)
