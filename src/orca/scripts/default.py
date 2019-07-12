@@ -2372,11 +2372,10 @@ class Script(script.Script):
         if not mouseEvent.pressed:
             return
 
-        window = self.utilities.activeWindow()
-        windowChanged = orca_state.activeWindow != window
+        windowChanged = orca_state.activeWindow != mouseEvent.window
         if windowChanged:
-            orca_state.activeWindow = window
-            orca.setLocusOfFocus(None, window, False)
+            orca_state.activeWindow = mouseEvent.window
+            orca.setLocusOfFocus(None, mouseEvent.window, False)
 
         self.presentationInterrupt()
         obj = mouseEvent.obj
