@@ -1429,7 +1429,7 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(event.source, event.detail1)
             notify = not self.utilities.isEntryDescendant(event.source)
-            orca.setLocusOfFocus(event, event.source, notify)
+            orca.setLocusOfFocus(event, event.source, notify, True)
             if orca_state.locusOfFocus == event.source:
                 self.updateBraille(event.source)
             return True
