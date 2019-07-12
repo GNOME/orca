@@ -784,7 +784,7 @@ class MouseButtonEvent(InputEvent):
         self.pressed = event.type.endswith('p')
         self.button = event.type[len("mouse:button:"):-1]
         self._script = orca_state.activeScript
-        self.window = None
+        self.window = orca_state.activeWindow
         self.obj = None
 
         if self.pressed:
@@ -793,7 +793,9 @@ class MouseButtonEvent(InputEvent):
         if not self._script:
             return
 
-        self.window = self._script.utilities.activeWindow()
+        if not self._script.utilities.canBeActiveWindow(self.window):
+            self.window = self._script.utilities.activeWindow()
+
         if not self.window:
             return
 
