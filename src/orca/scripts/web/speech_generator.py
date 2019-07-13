@@ -170,7 +170,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         if obj.name:
-            result = [obj.name]
+            name = obj.name
+            if not self._script.utilities.hasExplicitName(obj):
+                name = name.strip()
+            result = [name]
             result.extend(self.voice(speech_generator.DEFAULT))
             return result
 
