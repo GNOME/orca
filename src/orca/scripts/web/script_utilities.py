@@ -3686,22 +3686,6 @@ class Utilities(script_utilities.Utilities):
         self._isContentEditableWithEmbeddedObjects[hash(obj)] = rv
         return rv
 
-    @staticmethod
-    def getHyperlinkRange(obj):
-        try:
-            hyperlink = obj.queryHyperlink()
-            start, end = hyperlink.startIndex, hyperlink.endIndex
-        except NotImplementedError:
-            msg = "WEB: %s does not implement the hyperlink interface" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return -1, -1
-        except:
-            msg = "WEB: Exception getting hyperlink indices for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return -1, -1
-
-        return start, end
-
     def characterOffsetInParent(self, obj):
         start, end, length = self._rangeInParentWithLength(obj)
         return start

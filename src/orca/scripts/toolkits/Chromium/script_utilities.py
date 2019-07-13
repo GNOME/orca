@@ -32,6 +32,7 @@ __copyright__ = "Copyright (c) 2018 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
+import re
 import time
 
 from orca import debug
@@ -332,3 +333,25 @@ class Utilities(web.Utilities):
             msg = "CHROMIUM: HACK: Grabbing focus on %s's ancestor %s" % (obj, link)
             debug.println(debug.LEVEL_INFO, msg, True)
             self.grabFocus(link)
+
+    def getHyperlinkRange(self, obj):
+        """Returns the text range in parent associated with obj."""
+
+        start, end = super().getHyperlinkRange(obj)
+        if (start, end) != (-1, -1):
+            return start, end
+
+        if not (obj.parent and "Text" in pyatspi.listInterfaces(obj.parent)):
+            return start, end
+
+        # At the present time, Chromium is only implementing the hyperlink interface
+        # for actual links. We need that fixed. This hack may or may not be reliable.
+        parentText = obj.parent.queryText().getText(0, -1)
+        eocs = [x.span() for x in re.finditer("\ufffc", parentText)]
+        index = obj.getIndexInParent()
+        if 0 <= index < len(eocs):
+            start, end = eocs[index]
+            msg = "CHROMIUM: HACK: Hyperlink range of %s is (%i,%i)" % (obj, start, end)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        return start, end

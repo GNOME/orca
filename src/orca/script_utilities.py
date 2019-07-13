@@ -3602,17 +3602,22 @@ class Utilities:
 
         return root, offset
 
-    @staticmethod
-    def getHyperlinkRange(obj):
-        """Returns the start and end indices associated with the embedded
-        object, obj."""
+    def getHyperlinkRange(self, obj):
+        """Returns the text range in parent associated with obj."""
 
         try:
             hyperlink = obj.queryHyperlink()
+            start, end = hyperlink.startIndex, hyperlink.endIndex
         except NotImplementedError:
-            return 0, 0
+            msg = "INFO: %s does not implement the hyperlink interface" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return -1, -1
+        except:
+            msg = "INFO: Exception getting hyperlink indices for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return -1, -1
 
-        return hyperlink.startIndex, hyperlink.endIndex
+        return start, end
 
     def selectedChildren(self, obj):
         try:
