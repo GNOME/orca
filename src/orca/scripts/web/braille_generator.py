@@ -111,7 +111,10 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             return []
 
         if self._script.utilities.inDocumentContent(obj) and obj.name:
-            return [obj.name]
+            name = obj.name
+            if not self._script.utilities.hasExplicitName(obj):
+                name = name.strip()
+            return [name]
 
         return super()._generateLabelOrName(obj, **args)
 
@@ -145,7 +148,11 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if obj.name and not self._script.utilities.hasValidName(obj):
             return []
 
-        return super()._generateName(obj, **args)
+        result = super()._generateName(obj, **args)
+        if result and result[0] and not self._script.utilities.hasExplicitName(obj):
+            result[0] = result[0].strip()
+
+        return result
 
     def _generateExpandedEOCs(self, obj, **args):
         """Returns the expanded embedded object characters for an object."""

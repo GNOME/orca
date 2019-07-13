@@ -207,7 +207,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if self._script.utilities.preferDescriptionOverName(obj):
                 result = [obj.description]
             else:
-                result = [obj.name]
+                name = obj.name
+                if not self._script.utilities.hasExplicitName(obj):
+                    name = name.strip()
+                result = [name]
+
             result.extend(self.voice(speech_generator.DEFAULT))
             return result
 
