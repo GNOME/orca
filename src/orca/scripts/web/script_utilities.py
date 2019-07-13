@@ -108,6 +108,7 @@ class Utilities(script_utilities.Utilities):
         self._tag = {}
         self._xmlRoles = {}
         self._treatAsDiv = {}
+        self._nodeLevel = {}
         self._posinset = {}
         self._setsize = {}
         self._currentObjectContents = None
@@ -184,6 +185,7 @@ class Utilities(script_utilities.Utilities):
         self._tag = {}
         self._xmlRoles = {}
         self._treatAsDiv = {}
+        self._nodeLevel = {}
         self._posinset = {}
         self._setsize = {}
         self._paths = {}
@@ -514,6 +516,27 @@ class Utilities(script_utilities.Utilities):
 
         rv = attrs.get('roledescription', '')
         self._roleDescription[hash(obj)] = rv
+        return rv
+
+    def nodeLevel(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return super().nodeLevel(obj)
+
+        rv = self._nodeLevel.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        rv = -1
+        if not (self.inMenu(obj) or obj.getRole() == pyatspi.ROLE_HEADING):
+            try:
+                attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+            except:
+                attrs = {}
+
+            # ARIA levels are 1-based; non-web content is 0-based. Be consistent.
+            rv = int(attrs.get('level', 0)) -1
+
+        self._nodeLevel[hash(obj)] = rv
         return rv
 
     def getPositionInSet(self, obj):

@@ -72,26 +72,6 @@ class Utilities(web.Utilities):
 
         return True
 
-    def nodeLevel(self, obj):
-        """Determines the level of at which this object is at by using
-        the object attribute 'level'.  To be consistent with the default
-        nodeLevel() this value is 0-based (Gecko return is 1-based) """
-
-        if obj is None or self.isDead(obj) or obj.getRole() == pyatspi.ROLE_HEADING \
-           or (obj.parent and obj.parent.getRole() == pyatspi.ROLE_MENU):
-            return -1
-
-        try:
-            attrs = obj.getAttributes()
-        except:
-            msg = "GECKO: Exception getting attributes for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return -1
-        for attr in attrs:
-            if attr.startswith("level:"):
-                return int(attr[6:]) - 1
-        return -1
-
     def isLayoutOnly(self, obj):
         if super().isLayoutOnly(obj):
             return True
