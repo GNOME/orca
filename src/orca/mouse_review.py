@@ -488,7 +488,10 @@ class MouseReviewer:
                 debug.println(debug.LEVEL_INFO, msg, True)
                 menu = None
 
-        document = script.utilities.activeDocument()
+        document = None
+        if script.utilities.inDocumentContent():
+            document = script.utilities.activeDocument()
+
         obj = script.utilities.descendantAtPoint(menu, pX, pY) \
             or script.utilities.descendantAtPoint(document, pX, pY) \
             or script.utilities.descendantAtPoint(window, pX, pY)
