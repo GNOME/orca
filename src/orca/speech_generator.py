@@ -837,6 +837,9 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
+        if args.get('inMouseReview'):
+            return []
+
         if not obj:
             return []
 
