@@ -619,8 +619,13 @@ class Script(default.Script):
 
             lastObj, lastOffset = contents[-1][0], contents[-1][2]
             obj, characterOffset = self.utilities.findNextCaretInOrder(lastObj, lastOffset - 1)
-            if (obj, characterOffset) == (lastObj, lastOffset):
+            if obj == lastObj and characterOffset <= lastOffset:
                 obj, characterOffset = self.utilities.findNextCaretInOrder(lastObj, lastOffset)
+            if obj == lastObj and characterOffset <= lastOffset:
+                msg = "WEB: Cycle within object detected in textLines. Last: %s, %i Next: %s, %i" \
+                    % (lastObj, lastOffset, obj, characterOffset)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                break
 
             done = obj is None
 
