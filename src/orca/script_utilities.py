@@ -4055,6 +4055,9 @@ class Utilities:
         if not root:
             return None
 
+        if not self.isShowingAndVisible(root):
+            return None
+
         if coordType is None:
             coordType = pyatspi.DESKTOP_COORDS
 
