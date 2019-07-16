@@ -478,7 +478,9 @@ class MouseReviewer:
             return
 
         isMenu = lambda x: x and x.getRole() == pyatspi.ROLE_MENU
-        if isMenu(orca_state.locusOfFocus):
+        if script.utilities.isDead(orca_state.locusOfFocus):
+            menu = None
+        elif isMenu(orca_state.locusOfFocus):
             menu = orca_state.locusOfFocus
         else:
             try:
