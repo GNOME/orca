@@ -6,6 +6,7 @@ from gi.repository import GLib
 
 from . import cmdnames
 from . import chnames
+from . import debug
 from . import keybindings
 from . import messages
 from . import input_event
@@ -225,6 +226,7 @@ class LiveRegionManager:
         """
 
         if len(self.msg_queue) > 0:
+            debug.println(debug.eventDebugLevel, "\nvvvvv PRESENT LIVE REGION MESSAGE vvvvv")
             self.msg_queue.purgeByKeepAlive()
             politeness, timestamp, message, obj = self.msg_queue.dequeue()
             # Form output message.  No need to repeat labels and content.
@@ -245,6 +247,10 @@ class LiveRegionManager:
         # We still want to maintain our queue if we are not monitoring
         if not self.monitoring:
             self.msg_queue.purgeByKeepAlive()
+
+        msg = 'LIVE REGIONS: messages in queue: %i' % len(self.msg_queue)
+        debug.println(debug.LEVEL_INFO, msg, True)
+        debug.println(debug.eventDebugLevel, "^^^^^ PRESENT LIVE REGION MESSAGE ^^^^^\n")
 
         # See you again soon, stay in event loop if we still have messages.
         return len(self.msg_queue) > 0
