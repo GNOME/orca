@@ -60,11 +60,18 @@ class Utilities(web.Utilities):
         if not (obj and self.inDocumentContent(obj)):
             return super().isStaticTextLeaf(obj)
 
+        if obj.childCount:
+            return False
+
+        if self.isListItemMarker(obj):
+            return False
+
         rv = self._isStaticTextLeaf.get(hash(obj))
         if rv is not None:
             return rv
 
-        rv = obj.getRole() == pyatspi.ROLE_TEXT and self._getTag(obj) in (None, "br")
+        roles = [pyatspi.ROLE_STATIC, pyatspi.ROLE_TEXT]
+        rv = obj.getRole() in roles and self._getTag(obj) in (None, "br")
         if rv:
             msg = "CHROMIUM: %s believed to be static text leaf" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
