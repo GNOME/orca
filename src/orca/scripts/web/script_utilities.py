@@ -27,6 +27,7 @@ __license__   = "LGPL"
 
 import pyatspi
 import re
+import time
 import urllib
 
 from orca import debug
@@ -86,6 +87,7 @@ class Utilities(script_utilities.Utilities):
         self._isInlineListDescendant = {}
         self._isLandmark = {}
         self._isLiveRegion = {}
+        self._mostRecentLiveRegionEvent = {}
         self._isLink = {}
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
@@ -164,6 +166,7 @@ class Utilities(script_utilities.Utilities):
         self._isInlineListDescendant = {}
         self._isLandmark = {}
         self._isLiveRegion = {}
+        self._mostRecentLiveRegionEvent = {}
         self._isLink = {}
         self._isNonNavigablePopup = {}
         self._isNonEntryTextWidget = {}
@@ -4285,6 +4288,7 @@ class Utilities(script_utilities.Utilities):
                 return False
 
         self._lastQueuedLiveRegionEvent = event
+        self._mostRecentLiveRegionEvent[hash(event.source)] = (event.type, time.time())
         return True
 
     def getPageObjectCount(self, obj):
