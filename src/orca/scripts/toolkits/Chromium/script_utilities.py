@@ -349,7 +349,7 @@ class Utilities(web.Utilities):
         # the text changes appear to be.
         if isinstance(event.any_data, pyatspi.Accessible):
             pEvent, pTime = self._mostRecentLiveRegionEvent.get(hash(event.any_data), ("", 0))
-            if pEvent.startwith("object-text-changed:insert") and time.time() - pTime < 0.5:
+            if pEvent.startswith("object-text-changed:insert") and time.time() - pTime < 0.5:
                 msg = "CHROMIUM: Event is believed to be redundant live region notification"
                 debug.println(debug.LEVEL_INFO, msg, True)
                 return False
