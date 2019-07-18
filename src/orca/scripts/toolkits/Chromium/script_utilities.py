@@ -346,12 +346,11 @@ class Utilities(web.Utilities):
         # followed by children-changed events to tell us that the object whose text
         # changed is now being added to the accessibility tree. Furthermore the
         # additions are not always coming to us in presentational order, whereas
-        # the text changes appear to be.
-        if isinstance(event.any_data, pyatspi.Accessible):
-            pEvent, pTime = self._mostRecentLiveRegionEvent.get(hash(event.any_data), ("", 0))
-            if pEvent.startswith("object-text-changed:insert") and time.time() - pTime < 0.5:
-                msg = "CHROMIUM: Event is believed to be redundant live region notification"
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return False
+        # the text changes appear to be. Since testing thus far suggests we can rely
+        # upon the text insertions, ignore the children-changed events.
+        if event.type.startswith("object:children-changed:add"):
+            msg = "CHROMIUM: Event is believed to be redundant live region notification"
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
 
         return super().handleAsLiveRegion(event)
