@@ -1179,7 +1179,7 @@ class Script(default.Script):
             return False
 
         caretOffset = 0
-        if not oldFocus or self.utilities.inFindToolbar(oldFocus) \
+        if self.utilities.inFindToolbar(oldFocus) \
            or (self.utilities.isDocument(newFocus) and oldFocus == orca_state.activeWindow):
             contextObj, contextOffset = self.utilities.getCaretContext()
             if contextObj and not self.utilities.isZombie(contextObj):
