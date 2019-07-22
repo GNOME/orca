@@ -973,7 +973,7 @@ class Utilities(script_utilities.Utilities):
         elif self._treatObjectAsWhole(obj) and obj.name:
             rv = None
         elif not self.isLiveRegion(obj):
-            doNotQuery = [pyatspi.ROLE_TABLE_ROW]
+            doNotQuery = [pyatspi.ROLE_TABLE_ROW, pyatspi.ROLE_LIST_BOX]
             role = obj.getRole()
             if rv and role in doNotQuery:
                 rv = None
