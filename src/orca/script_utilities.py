@@ -2728,7 +2728,7 @@ class Utilities:
             return True
         if attributes.get("text-spelling") == "misspelled":
             return True
-        if attributes.get("underline") == "error":
+        if attributes.get("underline") in ["error", "spelling"]:
             return True
 
         return False
