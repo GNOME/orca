@@ -69,7 +69,7 @@ class MatchCriteria:
                  matchObjAttrs = None,
                  roles = [],
                  matchRoles = None,
-                 interfaces = "",
+                 interfaces = [],
                  matchInterfaces = None,
                  invert = False,
                  applyPredicate = False):
@@ -3260,10 +3260,16 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        # TODO - JD: At the moment, matching via interface crashes Orca.
-        # Until that's addressed, we'll just use the predicate approach.
-        # See https://bugzilla.gnome.org/show_bug.cgi?id=734805.
+        interfaces = ["action"]
+        interfaceMatch = collection.MATCH_ANY
+        state = [pyatspi.STATE_FOCUSABLE]
+        stateMatch = collection.MATCH_NONE
+
         return MatchCriteria(collection,
+                             states=state,
+                             matchStates=stateMatch,
+                             interfaces=interfaces,
+                             matchInterfaces=interfaceMatch,
                              applyPredicate=True)
 
     def _clickablePredicate(self, obj, arg=None):
