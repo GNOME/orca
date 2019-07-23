@@ -1816,6 +1816,10 @@ class Utilities(script_utilities.Utilities):
         if role in alwaysFocusModeRoles:
             return True
 
+        if role in [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_TABLE] \
+           and self.isLayoutOnly(self.getTable(obj)):
+            return False
+
         focusModeRoles = [pyatspi.ROLE_EMBEDDED,
                           pyatspi.ROLE_LIST_ITEM,
                           pyatspi.ROLE_TABLE_CELL,
