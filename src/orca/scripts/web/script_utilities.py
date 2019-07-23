@@ -406,9 +406,16 @@ class Utilities(script_utilities.Utilities):
         if grabFocus:
             self.grabFocus(obj)
 
-        text = self.queryNonEmptyText(obj)
-        if text:
-            text.setCaretOffset(offset)
+        # Don't use queryNonEmptyText() because we need to try to force-update focus.
+        if "Text" in pyatspi.listInterfaces(obj):
+            try:
+                obj.queryText().setCaretOffset(offset)
+            except:
+                msg = "WEB: Exception setting caret to %i in %s" % (offset, obj)
+                debug.println(debug.LEVEL_INFO, msg, True)
+            else:
+                msg = "WEB: Caret set to %i in %s" % (offset, obj)
+                debug.println(debug.LEVEL_INFO, msg, True)
 
         if self._script.useFocusMode(obj) != self._script.inFocusMode():
             self._script.togglePresentationMode(None)
