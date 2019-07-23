@@ -354,3 +354,36 @@ class Utilities(web.Utilities):
             return False
 
         return super().handleAsLiveRegion(event)
+
+    def getFindResultsCount(self, root):
+        if not root:
+            return ""
+
+        isMatch = lambda x: x and x.getRole() == pyatspi.ROLE_STATUS_BAR \
+                  and len(re.findall("\d+", x.name)) == 2
+        statusBars = self.findAllDescendants(root, isMatch)
+        if len(statusBars) == 1:
+            return statusBars[0].name
+
+        return ""
+
+    def inFindToolbar(self, obj=None):
+        if not obj:
+            obj = orca_state.locusOfFocus
+
+        if not obj or self.inDocumentContent(obj):
+            return False
+
+        if obj.getRole() not in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PUSH_BUTTON]:
+            return False
+
+        isDialog = lambda x: x and x.getRole() == pyatspi.ROLE_DIALOG
+        if not pyatspi.findAncestor(obj, isDialog):
+            return False
+
+        result = self.getFindResultsCount(obj.parent)
+        if result:
+            msg = "CHROMIUM: %s believed to be find-in-page widget (%s)" % (obj, result)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        return bool(result)
