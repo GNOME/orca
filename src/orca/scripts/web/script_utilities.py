@@ -72,6 +72,7 @@ class Utilities(script_utilities.Utilities):
         self._isOffScreenLabel = {}
         self._isOffScreenLink = {}
         self._isOffScreenTextBlockElement = {}
+        self._elementLinesAreSingleChars= {}
         self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
@@ -150,6 +151,7 @@ class Utilities(script_utilities.Utilities):
         self._isOffScreenLabel = {}
         self._isOffScreenLink = {}
         self._isOffScreenTextBlockElement = {}
+        self._elementLinesAreSingleChars= {}
         self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
@@ -1258,6 +1260,16 @@ class Utilities(script_utilities.Utilities):
             # Because user agents will give us this text word at a time.
             if self.isOffScreenTextBlockElement(obj) and self.queryNonEmptyText(obj):
                 msg = "WEB: Returning all text as contents for %s (is off-screen)" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                boundary = None
+
+            if self.elementLinesAreSingleChars(obj):
+                if obj.name:
+                    msg = "WEB: Returning name as contents for %s (single-char lines)" % obj
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    return [[obj, 0, len(obj.name), obj.name]]
+
+                msg = "WEB: Returning all text as contents for %s (single-char lines)" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 boundary = None
 
@@ -2677,6 +2689,35 @@ class Utilities(script_utilities.Utilities):
                 rv = True
 
         self._isOffScreenLink[hash(obj)] = rv
+        return rv
+
+    def elementLinesAreSingleChars(self, obj):
+        if not (obj and self.inDocumentContent(obj)):
+            return False
+
+        rv = self._elementLinesAreSingleChars.get(hash(obj))
+        if rv is not None:
+            return rv
+
+        text = self.queryNonEmptyText(obj)
+        if not text:
+            return False
+
+        try:
+            nChars = text.characterCount
+        except:
+            return False
+
+        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+        for i in range(nChars):
+            string, start, end = text.getTextAtOffset(i, boundary)
+            if len(string) > 1:
+                rv = False
+                break
+        else:
+            rv = True
+
+        self._elementLinesAreSingleChars[hash(obj)] = rv
         return rv
 
     def isOffScreenLabel(self, obj):
