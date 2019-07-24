@@ -19,7 +19,9 @@ AM_INIT_AUTOMAKE([1.11 tar-ustar no-dist-gzip dist-xz])
 AM_MAINTAINER_MODE([enable])
 
 dnl Gettext stuff
+# FIXME: Remove AM_GNU_GETTEXT_VERSION once autoreconf supports REQUIRE_VERSION
 AM_GNU_GETTEXT_VERSION([0.19.8])
+AM_GNU_GETTEXT_REQUIRE_VERSION([0.19.8])
 AM_GNU_GETTEXT([external])
 
 GETTEXT_PACKAGE=AC_PACKAGE_TARNAME
