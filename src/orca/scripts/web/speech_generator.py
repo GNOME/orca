@@ -79,6 +79,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                              pyatspi.ROLE_LIST_ITEM,
                              pyatspi.ROLE_TEXT]
 
+        if self._script.utilities.isEditableDescendantOfComboBox(obj):
+            args['skipRoles'].append(pyatspi.ROLE_COMBO_BOX)
+
         result.extend(super()._generateAncestors(obj, **args))
 
         return result
