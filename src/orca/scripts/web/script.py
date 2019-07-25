@@ -725,7 +725,7 @@ class Script(default.Script):
         return True
 
     def __sayAllProgressCallback(self, context, progressType):
-        if not self.utilities.inDocumentContent() or self._inFocusMode:
+        if not self.utilities.inDocumentContent():
             super().__sayAllProgressCallback(context, progressType)
             return
 
