@@ -131,9 +131,9 @@ class Utilities(web.Utilities):
         if obj.getRole() != pyatspi.ROLE_LIST_ITEM:
             return ""
 
-        listItemMarker = pyatspi.findDescendant(obj, self.isListItemMarker)
-        if listItemMarker:
-            return listItemMarker.name
+        for child in obj:
+            if self.isListItemMarkerInSimpleItem(child):
+                return child.name.strip()
 
         return ""
 
