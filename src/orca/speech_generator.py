@@ -1287,7 +1287,8 @@ class SpeechGenerator(generator.Generator):
 
     def _generateListItemMarker(self, obj, **args):
         result = super()._generateListItemMarker(obj, **args)
-        if result:
+        if result and result[0]:
+            result[0] = result[0].strip()
             result.extend(self.voice(DEFAULT))
 
         return result

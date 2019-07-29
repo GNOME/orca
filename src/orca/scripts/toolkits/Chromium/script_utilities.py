@@ -133,7 +133,7 @@ class Utilities(web.Utilities):
 
         for child in obj:
             if self.isListItemMarkerInSimpleItem(child):
-                return child.name.strip()
+                return child.name
 
         return ""
 
