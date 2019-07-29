@@ -2708,14 +2708,27 @@ class Utilities(script_utilities.Utilities):
         except:
             return False
 
-        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
-        for i in range(nChars):
-            string, start, end = text.getTextAtOffset(i, boundary)
-            if len(string) > 1:
-                rv = False
-                break
-        else:
-            rv = True
+        if not nChars:
+            return False
+
+        try:
+            obj.clearCache()
+            state = obj.getState()
+        except:
+            msg = "ERROR: Exception getting state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        # Note: We cannot check for the editable-text interface, because Gecko
+        # seems to be exposing that for non-editable things. Thanks Gecko.
+        rv = not state.contains(pyatspi.STATE_EDITABLE)
+        if rv:
+            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+            for i in range(nChars):
+                string, start, end = text.getTextAtOffset(i, boundary)
+                if len(string) > 1:
+                    rv = False
+                    break
 
         self._elementLinesAreSingleChars[hash(obj)] = rv
         return rv
