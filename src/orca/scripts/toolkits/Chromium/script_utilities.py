@@ -370,3 +370,19 @@ class Utilities(web.Utilities):
             debug.println(debug.LEVEL_INFO, msg, True)
 
         return bool(result)
+
+    def isHidden(self, obj):
+        if not super().isHidden(obj):
+            return False
+
+        try:
+            role = obj.getRole()
+        except:
+            msg = "CHROMIUM: Exception getting role for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if role == pyatspi.ROLE_MENU and self._getTag(obj.parent) == 'select':
+            return False
+
+        return True
