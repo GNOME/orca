@@ -56,7 +56,7 @@ class Utilities(web.Utilities):
         self._isListItemMarker = {}
         self._topLevelObject = {}
 
-    def isStaticTextLeaf(self, obj, checkSiblings=True):
+    def isStaticTextLeaf(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return super().isStaticTextLeaf(obj)
 
@@ -75,23 +75,6 @@ class Utilities(web.Utilities):
         if rv:
             msg = "CHROMIUM: %s believed to be static text leaf" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
-
-        if rv and obj.parent:
-            if self.isDocument(obj.parent):
-                msg = "CHROMIUM: %s is direct child of document so ignore leaf finding" % obj
-                debug.println(debug.LEVEL_INFO, msg, True)
-                rv = False
-            elif checkSiblings:
-                i = obj.getIndexInParent()
-                if i > 0 and not self.isStaticTextLeaf(obj.parent[i - 1], False) \
-                   and not self.isListItemMarker(obj.parent[0]):
-                    msg = "CHROMIUM: previous sibling of %s is not leaf so ignore leaf finding" % obj
-                    debug.println(debug.LEVEL_INFO, msg, True)
-                    rv = False
-                elif i + 1 < obj.parent.childCount and not self.isStaticTextLeaf(obj.parent[i + 1], False):
-                    msg = "CHROMIUM: next sibling of %s is not leaf so ignore leaf finding" % obj
-                    debug.println(debug.LEVEL_INFO, msg, True)
-                    rv = False
 
         self._isStaticTextLeaf[hash(obj)] = rv
         return rv
