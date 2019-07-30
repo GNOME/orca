@@ -357,6 +357,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 doNotSpeak.append(obj.getRole())
             if total > 1:
                 doNotSpeak.append(pyatspi.ROLE_ROW_HEADER)
+            if self._script.utilities.isMenuInCollapsedSelectElement(obj):
+                doNotSpeak.append(pyatspi.ROLE_MENU)
 
         if obj.getState().contains(pyatspi.STATE_EDITABLE):
             lastKey, mods = self._script.utilities.lastKeyAndModifiers()

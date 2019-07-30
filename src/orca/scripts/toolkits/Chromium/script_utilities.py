@@ -174,6 +174,26 @@ class Utilities(web.Utilities):
 
         return not self.selectedChildCount(obj)
 
+    def isMenuInCollapsedSelectElement(self, obj):
+        try:
+            role = obj.getRole()
+        except:
+            msg = "CHROMIUM: Exception getting role for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role != pyatspi.ROLE_MENU or self._getTag(obj.parent) != 'select':
+            return False
+
+        try:
+            parentState = obj.parent.getState()
+        except:
+            msg = "CHROMIUM: Exception getting state for %s" % obj.parent
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return not parentState.contains(pyatspi.STATE_EXPANDED)
+
     def treatAsMenu(self, obj):
         if not obj:
             return False
@@ -375,14 +395,7 @@ class Utilities(web.Utilities):
         if not super().isHidden(obj):
             return False
 
-        try:
-            role = obj.getRole()
-        except:
-            msg = "CHROMIUM: Exception getting role for %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if role == pyatspi.ROLE_MENU and self._getTag(obj.parent) == 'select':
+        if self.isMenuInCollapsedSelectElement(obj):
             return False
 
         return True
