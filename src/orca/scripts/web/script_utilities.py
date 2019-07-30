@@ -2923,7 +2923,7 @@ class Utilities(script_utilities.Utilities):
         rv = False
         if obj.getRole() == pyatspi.ROLE_LINK \
            and not obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
-           and not 'Action' in pyatspi.listInterfaces(obj):
+           and not 'jump' in self._getActionNames(obj):
             rv = True
 
         self._isAnchor[hash(obj)] = rv
@@ -2957,7 +2957,7 @@ class Utilities(script_utilities.Utilities):
     def _getActionNames(self, obj):
         try:
             action = obj.queryAction()
-            names = [action.getName(i) for i in range(action.nActions)]
+            names = [action.getName(i).lower() for i in range(action.nActions)]
         except NotImplementedError:
             return []
         except:
