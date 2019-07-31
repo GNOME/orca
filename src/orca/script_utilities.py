@@ -4029,6 +4029,9 @@ class Utilities:
 
         return obj.getRole() not in roles
 
+    def treatAsEntry(self, obj):
+        return False
+
     def _treatAsLeafNode(self, obj):
         if not obj or self.isDead(obj):
             return False

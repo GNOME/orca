@@ -180,3 +180,35 @@ class Utilities(web.Utilities):
         # We apparently having missing events from Gecko requiring
         # we update the cache. This is not performant. :(
         return super().canBeActiveWindow(window, True)
+
+    def treatAsEntry(self, obj):
+        if not obj or self.inDocumentContent(obj):
+            return super().treatAsEntry(obj)
+
+        # Firefox seems to have turned its accessible location widget into a
+        # childless editable combobox.
+
+        try:
+            role = obj.getRole()
+            state = obj.getState()
+            childCount = obj.childCount
+        except:
+            msg = "GECKO: Exception getting role, state, and child count for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if role != pyatspi.ROLE_COMBO_BOX:
+            return False
+
+        if not state.contains(pyatspi.STATE_FOCUSED):
+            return False
+
+        if childCount:
+            return False
+
+        if not "EditableText" in pyatspi.listInterfaces(obj):
+            return False
+
+        msg = "GECKO: Treating %s as entry" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return True
