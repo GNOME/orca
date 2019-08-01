@@ -667,6 +667,11 @@ class Script(default.Script):
         contents = self.utilities.getLineContentsAtOffset(obj, offset)
         self.speakContents(contents)
         self.updateBraille(obj)
+
+        resultsCount = self.utilities.getFindResultsCount()
+        if resultsCount:
+            self.presentMessage(resultsCount)
+
         self._madeFindAnnouncement = True
 
     def sayAll(self, inputEvent, obj=None, offset=None):

@@ -724,6 +724,9 @@ class Utilities:
 
         return toolbar is not None
 
+    def getFindResultsCount(self, root=None):
+        return ""
+
     def isAnchor(self, obj):
         return False
 

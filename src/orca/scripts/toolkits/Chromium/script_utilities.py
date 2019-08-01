@@ -48,6 +48,7 @@ class Utilities(web.Utilities):
         self._isPseudoElement = {}
         self._isListItemMarker = {}
         self._topLevelObject = {}
+        self._findDialog = None
 
     def clearCachedObjects(self):
         super().clearCachedObjects()
@@ -55,6 +56,7 @@ class Utilities(web.Utilities):
         self._isPseudoElement = {}
         self._isListItemMarker = {}
         self._topLevelObject = {}
+        self._findDialog = None
 
     def isStaticTextLeaf(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -363,7 +365,8 @@ class Utilities(web.Utilities):
 
         return super().handleAsLiveRegion(event)
 
-    def getFindResultsCount(self, root):
+    def getFindResultsCount(self, root=None):
+        root = root or self._findDialog
         if not root:
             return ""
 
@@ -373,6 +376,7 @@ class Utilities(web.Utilities):
             return ""
 
         bar = statusBars[0]
+        bar.clearCache()
         if len(re.findall("\d+", bar.name)) == 2:
             return bar.name
 
@@ -382,6 +386,9 @@ class Utilities(web.Utilities):
         if not obj or self.inDocumentContent(obj):
             return False
 
+        if obj == self._findDialog:
+            return True
+
         if obj.getRole() != pyatspi.ROLE_DIALOG:
             return False
 
@@ -389,6 +396,7 @@ class Utilities(web.Utilities):
         if result:
             msg = "CHROMIUM: %s believed to be find-in-page dialog (%s)" % (obj, result)
             debug.println(debug.LEVEL_INFO, msg, True)
+            self._findDialog = obj
             return True
 
         # When there are no results due to the absence of a search term, the status
@@ -415,6 +423,7 @@ class Utilities(web.Utilities):
 
         msg = "CHROMIUM: %s believed to be find-in-page dialog (accessibility tree)" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
+        self._findDialog = obj
         return True
 
     def inFindToolbar(self, obj=None):
