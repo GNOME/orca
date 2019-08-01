@@ -1359,13 +1359,13 @@ class Script(default.Script):
 
         state = obj.getState()
         if self.utilities.isLink(obj) and state.contains(pyatspi.STATE_FOCUSED):
-            msg = "WEB: Setting locus of focus to focused link %s" % obj
+            msg = "WEB: Setting locus of focus to focused link %s. No SayAll." % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, obj)
             return True
 
         if offset > 0:
-            msg = "WEB: Setting locus of focus to context obj %s" % obj
+            msg = "WEB: Setting locus of focus to context obj %s. No SayAll" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             orca.setLocusOfFocus(event, obj)
             return True
@@ -1383,11 +1383,7 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, obj, False)
 
         self.updateBraille(obj)
-        if state.contains(pyatspi.STATE_FOCUSABLE) and not self.utilities.isDocument(obj):
-            msg = "WEB: Not doing SayAll due to focusable context obj %s" % obj
-            debug.println(debug.LEVEL_INFO, msg, True)
-            speech.speak(self.speechGenerator.generateSpeech(obj))
-        elif self.utilities.documentFragment(event.source):
+        if self.utilities.documentFragment(event.source):
             msg = "WEB: Not doing SayAll due to page fragment"
             debug.println(debug.LEVEL_INFO, msg, True)
         elif not _settingsManager.getSetting('sayAllOnLoad'):
