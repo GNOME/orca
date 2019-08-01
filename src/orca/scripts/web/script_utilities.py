@@ -119,6 +119,7 @@ class Utilities(script_utilities.Utilities):
         self._currentWordContents = None
         self._currentCharacterContents = None
         self._lastQueuedLiveRegionEvent = None
+        self._findContainer = None
 
         self._validChildRoles = {pyatspi.ROLE_LIST: [pyatspi.ROLE_LIST_ITEM]}
 
@@ -196,6 +197,7 @@ class Utilities(script_utilities.Utilities):
         self._cleanupContexts()
         self._priorContexts = {}
         self._lastQueuedLiveRegionEvent = None
+        self._findContainer = None
 
     def clearContentCache(self):
         self._currentObjectContents = None
@@ -637,14 +639,14 @@ class Utilities(script_utilities.Utilities):
         self._xmlRoles[hash(obj)] = rv
         return rv
 
-    def inFindToolbar(self, obj=None):
+    def inFindContainer(self, obj=None):
         if not obj:
             obj = orca_state.locusOfFocus
 
         if self.inDocumentContent(obj):
             return False
 
-        return super().inFindToolbar(obj)
+        return super().inFindContainer(obj)
 
     def isEmpty(self, obj):
         if not self.isTextBlockElement(obj):

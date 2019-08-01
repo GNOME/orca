@@ -1184,7 +1184,7 @@ class Script(default.Script):
             return False
 
         caretOffset = 0
-        if self.utilities.inFindToolbar(oldFocus) \
+        if self.utilities.inFindContainer(oldFocus) \
            or (self.utilities.isDocument(newFocus) and oldFocus == orca_state.activeWindow):
             contextObj, contextOffset = self.utilities.getCaretContext()
             if contextObj and not self.utilities.isZombie(contextObj):
@@ -1440,7 +1440,7 @@ class Script(default.Script):
                 self.updateBraille(event.source)
             return True
 
-        if self.utilities.inFindToolbar():
+        if self.utilities.inFindContainer():
             msg = "WEB: Event handled: Presenting find results"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.presentFindResults(event.source, event.detail1)
@@ -1799,7 +1799,7 @@ class Script(default.Script):
 
             obj, offset = self.utilities.searchForCaretContext(event.source)
             if obj:
-                notify = self.utilities.inFindToolbar(orca_state.locusOfFocus) \
+                notify = self.utilities.inFindContainer(orca_state.locusOfFocus) \
                     or self.utilities.isFocusModeWidget(obj)
                 msg = "WEB: Updating focus and context to %s, %i" % (obj, offset)
                 debug.println(debug.LEVEL_INFO, msg, True)

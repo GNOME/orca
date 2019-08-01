@@ -701,13 +701,7 @@ class Utilities:
 
         return True
 
-    def inFindToolbar(self, obj=None):
-        """Returns True if the given object is in the Find toolbar.
-
-        Arguments:
-        - obj: an accessible object
-        """
-
+    def inFindContainer(self, obj=None):
         if not obj:
             obj = orca_state.locusOfFocus
 

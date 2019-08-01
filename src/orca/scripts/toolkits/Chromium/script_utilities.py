@@ -48,7 +48,6 @@ class Utilities(web.Utilities):
         self._isPseudoElement = {}
         self._isListItemMarker = {}
         self._topLevelObject = {}
-        self._findDialog = None
 
     def clearCachedObjects(self):
         super().clearCachedObjects()
@@ -56,7 +55,6 @@ class Utilities(web.Utilities):
         self._isPseudoElement = {}
         self._isListItemMarker = {}
         self._topLevelObject = {}
-        self._findDialog = None
 
     def isStaticTextLeaf(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -271,7 +269,7 @@ class Utilities(web.Utilities):
 
         result = super().topLevelObject(obj)
         if result and result.getRole() in self._topLevelRoles():
-            if not self.isFindDialog(result):
+            if not self.isFindContainer(result):
                 return result
             else:
                 msg = "CHROMIUM: Top level object for %s is %s" % (obj, result.parent)
@@ -366,7 +364,7 @@ class Utilities(web.Utilities):
         return super().handleAsLiveRegion(event)
 
     def getFindResultsCount(self, root=None):
-        root = root or self._findDialog
+        root = root or self._findContainer
         if not root:
             return ""
 
@@ -382,11 +380,11 @@ class Utilities(web.Utilities):
 
         return ""
 
-    def isFindDialog(self, obj):
+    def isFindContainer(self, obj):
         if not obj or self.inDocumentContent(obj):
             return False
 
-        if obj == self._findDialog:
+        if obj == self._findContainer:
             return True
 
         if obj.getRole() != pyatspi.ROLE_DIALOG:
@@ -396,7 +394,7 @@ class Utilities(web.Utilities):
         if result:
             msg = "CHROMIUM: %s believed to be find-in-page dialog (%s)" % (obj, result)
             debug.println(debug.LEVEL_INFO, msg, True)
-            self._findDialog = obj
+            self._findContainer = obj
             return True
 
         # When there are no results due to the absence of a search term, the status
@@ -423,10 +421,10 @@ class Utilities(web.Utilities):
 
         msg = "CHROMIUM: %s believed to be find-in-page dialog (accessibility tree)" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
-        self._findDialog = obj
+        self._findContainer = obj
         return True
 
-    def inFindToolbar(self, obj=None):
+    def inFindContainer(self, obj=None):
         if not obj:
             obj = orca_state.locusOfFocus
 
@@ -437,7 +435,7 @@ class Utilities(web.Utilities):
             return False
 
         isDialog = lambda x: x and x.getRole() == pyatspi.ROLE_DIALOG
-        result = self.isFindDialog(pyatspi.findAncestor(obj, isDialog))
+        result = self.isFindContainer(pyatspi.findAncestor(obj, isDialog))
         if result:
             msg = "CHROMIUM: %s believed to be find-in-page widget" % obj
             debug.println(debug.LEVEL_INFO, msg, True)

@@ -1823,7 +1823,7 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
-        if self._script.utilities.inFindToolbar():
+        if self._script.utilities.inFindContainer():
             return []
 
         priorObj = args.get('priorObj')
@@ -1881,7 +1881,7 @@ class SpeechGenerator(generator.Generator):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
-        if self._script.utilities.inFindToolbar():
+        if self._script.utilities.inFindContainer():
             return []
 
         priorObj = args.get('priorObj')
