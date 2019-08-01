@@ -366,9 +366,24 @@ class Utilities(web.Utilities):
                   and len(re.findall("\d+", x.name)) == 2
         statusBars = self.findAllDescendants(root, isMatch)
         if len(statusBars) == 1:
+            statusBars[0].clearCache()
             return statusBars[0].name
 
         return ""
+
+    def isFindDialog(self, obj):
+        if not obj or self.inDocumentContent(obj):
+            return False
+
+        if obj.getRole() != pyatspi.ROLE_DIALOG:
+            return False
+
+        result = self.getFindResultsCount(obj)
+        if result:
+            msg = "CHROMIUM: %s believed to be find-in-page dialog (%s)" % (obj, result)
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        return bool(result)
 
     def inFindToolbar(self, obj=None):
         if not obj:
@@ -381,15 +396,12 @@ class Utilities(web.Utilities):
             return False
 
         isDialog = lambda x: x and x.getRole() == pyatspi.ROLE_DIALOG
-        if not pyatspi.findAncestor(obj, isDialog):
-            return False
-
-        result = self.getFindResultsCount(obj.parent)
+        result = self.isFindDialog(pyatspi.findAncestor(obj, isDialog))
         if result:
-            msg = "CHROMIUM: %s believed to be find-in-page widget (%s)" % (obj, result)
+            msg = "CHROMIUM: %s believed to be find-in-page widget" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
 
-        return bool(result)
+        return result
 
     def isHidden(self, obj):
         if not super().isHidden(obj):
