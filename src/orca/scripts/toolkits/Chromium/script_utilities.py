@@ -392,7 +392,7 @@ class Utilities(web.Utilities):
 
         result = self.getFindResultsCount(obj)
         if result:
-            msg = "CHROMIUM: %s believed to be find-in-page dialog (%s)" % (obj, result)
+            msg = "CHROMIUM: %s believed to be find-in-page container (%s)" % (obj, result)
             debug.println(debug.LEVEL_INFO, msg, True)
             self._findContainer = obj
             return True
@@ -405,21 +405,21 @@ class Utilities(web.Utilities):
 
         isEntry = lambda x: x.getRole() == pyatspi.ROLE_ENTRY
         if len(self.findAllDescendants(obj, isEntry)) != 1:
-            msg = "CHROMIUM: %s not believed to be find-in-page dialog (entry count)" % obj
+            msg = "CHROMIUM: %s not believed to be find-in-page container (entry count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
             return False
 
         isButton = lambda x: x.getRole() == pyatspi.ROLE_PUSH_BUTTON
         if len(self.findAllDescendants(obj, isButton)) != 3:
-            msg = "CHROMIUM: %s not believed to be find-in-page dialog (button count)" % obj
+            msg = "CHROMIUM: %s not believed to be find-in-page container (button count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
 
         isSeparator = lambda x: x.getRole() == pyatspi.ROLE_SEPARATOR
         if len(self.findAllDescendants(obj, isSeparator)) != 1:
-            msg = "CHROMIUM: %s not believed to be find-in-page dialog (separator count)" % obj
+            msg = "CHROMIUM: %s not believed to be find-in-page container (separator count)" % obj
             debug.println(debug.LEVEL_INFO, msg, True)
 
-        msg = "CHROMIUM: %s believed to be find-in-page dialog (accessibility tree)" % obj
+        msg = "CHROMIUM: %s believed to be find-in-page container (accessibility tree)" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         self._findContainer = obj
         return True

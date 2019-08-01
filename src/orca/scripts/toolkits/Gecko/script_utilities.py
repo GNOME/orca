@@ -31,6 +31,7 @@ __copyright__ = "Copyright (c) 2010 Joanmarie Diggs." \
 __license__   = "LGPL"
 
 import pyatspi
+import re
 
 from orca import debug
 from orca import orca_state
@@ -212,3 +213,109 @@ class Utilities(web.Utilities):
         msg = "GECKO: Treating %s as entry" % obj
         debug.println(debug.LEVEL_INFO, msg, True)
         return True
+
+    def _isQuickFind(self, obj):
+        if not obj or self.inDocumentContent(obj):
+            return False
+
+        if obj == self._findContainer:
+            return True
+
+        if obj.getRole() != pyatspi.ROLE_TOOL_BAR:
+            return False
+
+        # TODO: This would be far easier if Gecko gave us an object attribute to look for....
+
+        isEntry = lambda x: x.getRole() == pyatspi.ROLE_ENTRY
+        if len(self.findAllDescendants(obj, isEntry)) != 1:
+            msg = "GECKO: %s not believed to be quick-find container (entry count)" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        isButton = lambda x: x.getRole() == pyatspi.ROLE_PUSH_BUTTON
+        if len(self.findAllDescendants(obj, isButton)) != 1:
+            msg = "GECKO: %s not believed to be quick-find container (button count)" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        msg = "GECKO: %s believed to be quick-find container (accessibility tree)" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        self._findContainer = obj
+        return True
+
+    def isFindContainer(self, obj):
+        if not obj or self.inDocumentContent(obj):
+            return False
+
+        if obj == self._findContainer:
+            return True
+
+        if obj.getRole() != pyatspi.ROLE_TOOL_BAR:
+            return False
+
+        result = self.getFindResultsCount(obj)
+        if result:
+            msg = "GECKO: %s believed to be find-in-page container (%s)" % (obj, result)
+            debug.println(debug.LEVEL_INFO, msg, True)
+            self._findContainer = obj
+            return True
+
+        # TODO: This would be far easier if Gecko gave us an object attribute to look for....
+
+        isEntry = lambda x: x.getRole() == pyatspi.ROLE_ENTRY
+        if len(self.findAllDescendants(obj, isEntry)) != 1:
+            msg = "GECKO: %s not believed to be find-in-page container (entry count)" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        isButton = lambda x: x.getRole() == pyatspi.ROLE_PUSH_BUTTON
+        if len(self.findAllDescendants(obj, isButton)) < 5:
+            msg = "GECKO: %s not believed to be find-in-page container (button count)" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        msg = "GECKO: %s believed to be find-in-page container (accessibility tree)" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        self._findContainer = obj
+        return True
+
+    def inFindContainer(self, obj=None):
+        if not obj:
+            obj = orca_state.locusOfFocus
+
+        if not obj or self.inDocumentContent(obj):
+            return False
+
+        if obj.getRole() not in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PUSH_BUTTON]:
+            return False
+
+        isToolbar = lambda x: x and x.getRole() == pyatspi.ROLE_TOOL_BAR
+        toolbar = pyatspi.findAncestor(obj, isToolbar)
+        result = self.isFindContainer(toolbar)
+        if result:
+            msg = "GECKO: %s believed to be find-in-page widget (toolbar)" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if self._isQuickFind(toolbar):
+            msg = "GECKO: %s believed to be find-in-page widget (quick find)" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return False
+
+    def getFindResultsCount(self, root=None):
+        root = root or self._findContainer
+        if not root:
+            return ""
+
+        isMatch = lambda x: x and x.getRole() == pyatspi.ROLE_LABEL \
+            and len(re.findall("\d+", x.name)) == 2
+
+        labels = self.findAllDescendants(root, isMatch)
+        if len(labels) != 1:
+            return ""
+
+        label = labels[0]
+        label.clearCache()
+        return label.name
