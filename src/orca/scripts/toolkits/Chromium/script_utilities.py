@@ -367,12 +367,14 @@ class Utilities(web.Utilities):
         if not root:
             return ""
 
-        isMatch = lambda x: x and x.getRole() == pyatspi.ROLE_STATUS_BAR \
-                  and len(re.findall("\d+", x.name)) == 2
+        isMatch = lambda x: x and x.getRole() == pyatspi.ROLE_STATUS_BAR
         statusBars = self.findAllDescendants(root, isMatch)
-        if len(statusBars) == 1:
-            statusBars[0].clearCache()
-            return statusBars[0].name
+        if len(statusBars) != 1:
+            return ""
+
+        bar = statusBars[0]
+        if len(re.findall("\d+", bar.name)) == 2:
+            return bar.name
 
         return ""
 
