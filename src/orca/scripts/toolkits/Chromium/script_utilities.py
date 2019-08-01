@@ -387,8 +387,33 @@ class Utilities(web.Utilities):
         if result:
             msg = "CHROMIUM: %s believed to be find-in-page dialog (%s)" % (obj, result)
             debug.println(debug.LEVEL_INFO, msg, True)
+            return True
 
-        return bool(result)
+        # When there are no results due to the absence of a search term, the status
+        # bar lacks a name. When there are no results due to lack of match, the name
+        # of the status bar is "No results" (presumably localized). Therefore fall
+        # back on the widgets. TODO: This would be far easier if Chromium gave us an
+        # object attribute we could look for....
+
+        isEntry = lambda x: x.getRole() == pyatspi.ROLE_ENTRY
+        if len(self.findAllDescendants(obj, isEntry)) != 1:
+            msg = "CHROMIUM: %s not believed to be find-in-page dialog (entry count)" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        isButton = lambda x: x.getRole() == pyatspi.ROLE_PUSH_BUTTON
+        if len(self.findAllDescendants(obj, isButton)) != 3:
+            msg = "CHROMIUM: %s not believed to be find-in-page dialog (button count)" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        isSeparator = lambda x: x.getRole() == pyatspi.ROLE_SEPARATOR
+        if len(self.findAllDescendants(obj, isSeparator)) != 1:
+            msg = "CHROMIUM: %s not believed to be find-in-page dialog (separator count)" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+
+        msg = "CHROMIUM: %s believed to be find-in-page dialog (accessibility tree)" % obj
+        debug.println(debug.LEVEL_INFO, msg, True)
+        return True
 
     def inFindToolbar(self, obj=None):
         if not obj:
