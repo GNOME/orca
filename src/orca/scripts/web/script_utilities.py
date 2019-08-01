@@ -4375,7 +4375,7 @@ class Utilities(script_utilities.Utilities):
                   'unvisitedLinks': 0}
 
         docframe = self.documentFrame(obj)
-        msg = "WEB: Could not get document frame for %s" % obj
+        msg = "WEB: Document frame for %s is %s" % (obj, docframe)
         debug.println(debug.LEVEL_INFO, msg, True)
 
         col = docframe.queryCollection()
