@@ -269,7 +269,12 @@ class Utilities(web.Utilities):
 
         result = super().topLevelObject(obj)
         if result and result.getRole() in self._topLevelRoles():
-            return result
+            if not self.isFindDialog(result):
+                return result
+            else:
+                msg = "CHROMIUM: Top level object for %s is %s" % (obj, result.parent)
+                debug.println(debug.LEVEL_INFO, msg, True)
+                return result.parent
 
         cached = self._topLevelObject.get(hash(obj))
         if cached is not None:
