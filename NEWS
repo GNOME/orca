@@ -1,3 +1,75 @@
+3.33.90 - 2 August 2019
+
+Web:
+
+ * Try to include results count during find in page searches
+
+ * Fix bugs preventing SayAll on page load from working
+
+ * Fix bug in braille presentation of new Firefox location input
+
+ * Work around another instance of CSSed text being exposed as one char
+   per line
+
+ * Improve presentation of treegrids
+
+ * Reduce chattiness with editable comboboxes and with auto-focused
+   descendants
+
+ * Never treat layout-only-table cells as focus-mode widgets
+
+ * Make finding clickables more performant
+
+ * Ensure we present final word in element when navigating by word
+
+ * Present caret-moved events from mouse clicks even if element hasn't
+   changed
+
+ * Ongoing work on Chromium script. Please note: ATK support in Chromium
+   needs much work. Until that work has been done, Orca will not be able
+   to provide access to Chromium. The current support is very much a work
+   in progress and not yet ready for end-user testing.
+
+Mouse Review:
+
+ * Improve overall presentation of units of text under the pointer
+
+ * Improve logic filtering out irrelevant mouse movements during review
+
+ * Apply non-mousereview cell/row presentation preferences for a
+   more consistent experience
+
+ * Don't present description for mouse review if tooltip presentation
+   is off
+
+General:
+
+ * Add support for Shift Lock
+
+ * Add initial support for AtspiText's scrollSubstringTo
+
+ * Add fall backs for click-at-point failures
+
+ * Also check for "underline:spelling" as indication of spelling error
+
+ * Improve response time for mouse input events
+
+ * Allow building with gettext ≥ 0.20
+
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es            Spanish               Daniel Mustieles
+    hu            Hungarian             Attila Hammer
+    id            Indonesian            Kukuh Syafaat
+    pt_BR         Brazilian Portuguese  Rafael Fontenelle
+    ro            Romanian              Florentina Mușat
+    ru            Russian               Stas Solovey
+    sl            Slovenian             Matej Urbančič
+    sv            Swedish               Anders Jonsson
+
+=========
+
 3.33.3 - 18 June 2019
 
 Web:
