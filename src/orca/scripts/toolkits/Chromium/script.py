@@ -51,14 +51,6 @@ class Script(web.Script):
 
         self.presentIfInactive = False
 
-        # Normally we don't cache the name, because we cannot count on apps and
-        # tookits emitting name-changed events (needed by AT-SPI2 to update the
-        # name so that we don't have stale values). However, if we don't cache
-        # the name, we wind up with dead accessibles in (at least) the search bar
-        # popup. For now, cache the name to get things working and clear the cache
-        # for objects we plan to present. http://crbug.com/896706
-        app.setCacheMask(pyatspi.cache.DEFAULT ^ pyatspi.cache.CHILDREN)
-
     def getBrailleGenerator(self):
         """Returns the braille generator for this script."""
 
@@ -84,30 +76,6 @@ class Script(web.Script):
 
     def locusOfFocusChanged(self, event, oldFocus, newFocus):
         """Handles changes of focus of interest to the script."""
-
-        # Normally we don't cache the name, because we cannot count on apps and
-        # tookits emitting name-changed events (needed by AT-SPI2 to update the
-        # name so that we don't have stale values). However, if we don't cache
-        # the name, we wind up with dead accessibles in (at least) the search bar
-        # popup. For now, cache the name to get things working and clear the cache
-        # for objects we plan to present. Mind you, clearing the cache on objects
-        # with many descendants can cause AT-SPI2 to become non-responsive so try
-        # to guess what NOT to clear the cache for. http://crbug.com/896706
-        doNotClearCacheFor = [pyatspi.ROLE_DIALOG,
-                              pyatspi.ROLE_FRAME,
-                              pyatspi.ROLE_LIST_BOX,
-                              pyatspi.ROLE_MENU,
-                              pyatspi.ROLE_REDUNDANT_OBJECT,
-                              pyatspi.ROLE_SECTION,
-                              pyatspi.ROLE_TABLE,
-                              pyatspi.ROLE_TREE,
-                              pyatspi.ROLE_TREE_TABLE,
-                              pyatspi.ROLE_UNKNOWN,
-                              pyatspi.ROLE_WINDOW]
-        if newFocus.getRole() not in doNotClearCacheFor:
-            msg = "CHROMIUM: CANNOT CACHE NAME HACK: Clearing cache for %s" % newFocus
-            debug.println(debug.LEVEL_INFO, msg, True)
-            newFocus.clearCache()
 
         if super().locusOfFocusChanged(event, oldFocus, newFocus):
             return
@@ -393,16 +361,6 @@ class Script(web.Script):
 
         if not self.utilities.canBeActiveWindow(event.source):
             return
-
-        if not event.source.name:
-            orca_state.activeWindow = event.source
-        else:
-            oldName = event.source.name
-            event.source.clearCache()
-            newName = event.source.name
-            if oldName != newName:
-                msg = "CHROMIUM: NO NAME CHANGE HACK: (name should be: '%s')" % newName
-                debug.println(debug.LEVEL_INFO, msg, True)
 
         # If this is a frame for a popup menu, we don't want to treat
         # it like a proper window:activate event because it's not as
