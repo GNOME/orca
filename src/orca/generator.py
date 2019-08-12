@@ -1374,6 +1374,8 @@ class Generator:
                     return object_properties.ROLE_SUBTITLE
 
         if self._script.utilities.isLandmark(obj):
+            if self._script.utilities.isLandmarkWithoutType(obj):
+                return ''
             if self._script.utilities.isLandmarkBanner(obj):
                 return object_properties.ROLE_LANDMARK_BANNER
             if self._script.utilities.isLandmarkComplementary(obj):

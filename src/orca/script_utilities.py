@@ -887,6 +887,9 @@ class Utilities:
     def isLandmark(self, obj):
         return False
 
+    def isLandmarkWithoutType(self, obj):
+        return False
+
     def isLandmarkBanner(self, obj):
         return False
 

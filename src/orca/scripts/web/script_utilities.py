@@ -3240,6 +3240,10 @@ class Utilities(script_utilities.Utilities):
         self._isLandmark[hash(obj)] = rv
         return rv
 
+    def isLandmarkWithoutType(self, obj):
+        roles = self._getXMLRoles(obj)
+        return not roles
+
     def isLandmarkBanner(self, obj):
         return 'banner' in self._getXMLRoles(obj)
 
