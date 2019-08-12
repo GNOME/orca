@@ -265,7 +265,7 @@ class Script(web.Script):
         if super().onShowingChanged(event):
             return
 
-        if event.detail1 and self.utilities.isTopLevelChromeAlert(event.source):
+        if event.detail1 and self.utilities.isTopLevelBrowserUIAlert(event.source):
             msg = "GECKO: Event handled: Presenting event source"
             debug.println(debug.LEVEL_INFO, msg, True)
             self.presentObject(event.source)

@@ -1591,8 +1591,8 @@ class Script(default.Script):
     def onChildrenChanged(self, event):
         """Callback for object:children-changed accessibility events."""
 
-        if self.utilities.eventIsChromeNoise(event):
-            msg = "WEB: Ignoring event believed to be chrome noise"
+        if self.utilities.eventIsBrowserUINoise(event):
+            msg = "WEB: Ignoring event believed to be browser UI noise"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -1877,8 +1877,8 @@ class Script(default.Script):
     def onNameChanged(self, event):
         """Callback for object:property-change:accessible-name events."""
 
-        if self.utilities.eventIsChromeNoise(event):
-            msg = "WEB: Ignoring event believed to be chrome noise"
+        if self.utilities.eventIsBrowserUINoise(event):
+            msg = "WEB: Ignoring event believed to be browser UI noise"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -1887,13 +1887,13 @@ class Script(default.Script):
     def onSelectedChanged(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
-        if self.utilities.eventIsChromeAutocompleteNoise(event):
-            msg = "WEB: Ignoring event believed to be chrome autocomplete noise"
+        if self.utilities.eventIsBrowserUIAutocompleteNoise(event):
+            msg = "WEB: Ignoring event believed to be browser UI autocomplete noise"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.eventIsChromePageSwitchNoise(event):
-            msg = "WEB: Event believed to be chrome page switch"
+        if self.utilities.eventIsBrowserUIPageSwitch(event):
+            msg = "WEB: Event believed to be browser UI page switch"
             debug.println(debug.LEVEL_INFO, msg, True)
             if event.detail1:
                 self.presentObject(event.source, priorObj=orca_state.locusOfFocus)
@@ -1914,13 +1914,13 @@ class Script(default.Script):
     def onSelectionChanged(self, event):
         """Callback for object:selection-changed accessibility events."""
 
-        if self.utilities.eventIsChromeAutocompleteNoise(event):
-            msg = "WEB: Ignoring event believed to be chrome autocomplete noise"
+        if self.utilities.eventIsBrowserUIAutocompleteNoise(event):
+            msg = "WEB: Ignoring event believed to be browser UI autocomplete noise"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.eventIsChromePageSwitchNoise(event):
-            msg = "WEB: Ignoring event believed to be chrome page switch noise"
+        if self.utilities.eventIsBrowserUIPageSwitch(event):
+            msg = "WEB: Ignoring event believed to be browser UI page switch"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -1967,8 +1967,8 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.eventIsChromeNoise(event):
-            msg = "WEB: Ignoring event believed to be chrome noise"
+        if self.utilities.eventIsBrowserUINoise(event):
+            msg = "WEB: Ignoring event believed to be browser UI noise"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2045,8 +2045,8 @@ class Script(default.Script):
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.eventIsChromeNoise(event):
-            msg = "WEB: Ignoring event believed to be chrome noise"
+        if self.utilities.eventIsBrowserUINoise(event):
+            msg = "WEB: Ignoring event believed to be browser UI noise"
             debug.println(debug.LEVEL_INFO, msg, True)
             return True
 

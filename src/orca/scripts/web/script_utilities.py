@@ -2937,7 +2937,7 @@ class Utilities(script_utilities.Utilities):
 
         return self.queryNonEmptyText(obj) is None
 
-    def isChromeAlert(self, obj):
+    def isBrowserUIAlert(self, obj):
         if not (obj and obj.getRole() == pyatspi.ROLE_ALERT):
             return False
 
@@ -2946,8 +2946,8 @@ class Utilities(script_utilities.Utilities):
 
         return True
 
-    def isTopLevelChromeAlert(self, obj):
-        if not self.isChromeAlert(obj):
+    def isTopLevelBrowserUIAlert(self, obj):
+        if not self.isBrowserUIAlert(obj):
             return False
 
         parent = obj.parent
@@ -3607,7 +3607,7 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def eventIsChromeNoise(self, event):
+    def eventIsBrowserUINoise(self, event):
         if self.inDocumentContent(event.source):
             return False
 
@@ -3647,7 +3647,7 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def eventIsChromeAutocompleteNoise(self, event):
+    def eventIsBrowserUIAutocompleteNoise(self, event):
         if self.inDocumentContent(event.source):
             return False
 
@@ -3679,7 +3679,7 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def eventIsChromePageSwitchNoise(self, event):
+    def eventIsBrowserUIPageSwitch(self, event):
         selection = ["object:selection-changed", "object:state-changed:selected"]
         if not event.type in selection:
             return False
