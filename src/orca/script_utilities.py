@@ -881,6 +881,9 @@ class Utilities:
     def isFigure(self, obj):
         return False
 
+    def supportsLandmarkRole(self):
+        return False
+
     def isLandmark(self, obj):
         return False
 

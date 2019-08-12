@@ -4386,8 +4386,11 @@ class Utilities(script_utilities.Utilities):
                  pyatspi.ROLE_LINK,
                  pyatspi.ROLE_TABLE,
                  pyatspi.ROLE_FORM,
-                 pyatspi.ROLE_SECTION, # We can nuke this when Firefox correcly maps landmarks
                  pyatspi.ROLE_LANDMARK]
+
+        if not self.supportsLandmarkRole():
+            roles.append(pyatspi.ROLE_SECTION)
+
         rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
                                    "", col.MATCH_NONE,
                                    roles, col.MATCH_ANY,

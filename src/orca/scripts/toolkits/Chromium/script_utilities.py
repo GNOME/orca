@@ -450,3 +450,6 @@ class Utilities(web.Utilities):
             return False
 
         return True
+
+    def supportsLandmarkRole(self):
+        return True

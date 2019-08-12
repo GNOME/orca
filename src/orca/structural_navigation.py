@@ -2234,6 +2234,9 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
+        if self._script.utilities.supportsLandmarkRole():
+            return MatchCriteria(collection, roles=[pyatspi.ROLE_LANDMARK])
+
         # NOTE: there is a limitation in the AT-SPI Collections interface
         # when it comes to an attribute whose value can be a list.  For
         # example, the xml-roles attribute can be a space-separate list
@@ -2273,7 +2276,6 @@ class StructuralNavigation:
         """
 
         if obj:
-            landmark = obj
             [obj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(obj, characterOffset)
             self._presentLine(obj, characterOffset)
