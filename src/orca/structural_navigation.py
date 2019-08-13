@@ -1682,7 +1682,7 @@ class StructuralNavigation:
             return False
 
         role = obj.getRole()
-        if role not in self.OBJECT_ROLES:
+        if role not in self.OBJECT_ROLES + self.CONTAINER_ROLES:
             return False
 
         if role in [pyatspi.ROLE_ARTICLE, pyatspi.ROLE_HEADING]:
