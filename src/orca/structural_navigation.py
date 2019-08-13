@@ -586,7 +586,6 @@ class StructuralNavigation:
                   pyatspi.ROLE_RADIO_BUTTON,
                   pyatspi.ROLE_COMBO_BOX,
                   pyatspi.ROLE_DOCUMENT_FRAME, # rich text editing
-                  pyatspi.ROLE_LIST,
                   pyatspi.ROLE_LIST_BOX,
                   pyatspi.ROLE_ENTRY,
                   pyatspi.ROLE_PASSWORD_TEXT,
