@@ -2568,8 +2568,12 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        role = [pyatspi.ROLE_PARAGRAPH]
-        return MatchCriteria(collection, roles=role, applyPredicate=True)
+        # Treat headings as paragraphs so that the user doesn't miss context when
+        # the topic of the paragraph changes. Besides, a heading is paragraphy.
+
+        role = [pyatspi.ROLE_PARAGRAPH, pyatspi.ROLE_HEADING]
+        roleMatch = collection.MATCH_ANY
+        return MatchCriteria(collection, roles=role, matchRoles=roleMatch, applyPredicate=True)
 
     def _paragraphPredicate(self, obj, arg=None):
         """The predicate to be used for verifying that the object
@@ -2581,8 +2585,15 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
+        if not obj:
+            return False
+
+        role = obj.getRole()
+        if role == pyatspi.ROLE_HEADING:
+            return True
+
         isMatch = False
-        if obj and obj.getRole() == pyatspi.ROLE_PARAGRAPH:
+        if role == pyatspi.ROLE_PARAGRAPH:
             try:
                 text = obj.queryText()
                 # We're choosing 3 characters as the minimum because some
