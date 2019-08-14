@@ -70,9 +70,8 @@ class Utilities(script_utilities.Utilities):
         self._isFocusableWithMathChild = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
-        self._isOffScreenLink = {}
-        self._isOffScreenTextBlockElement = {}
         self._elementLinesAreSingleChars= {}
+        self._elementLinesAreSingleWords= {}
         self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
@@ -150,9 +149,8 @@ class Utilities(script_utilities.Utilities):
         self._isFocusableWithMathChild = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
-        self._isOffScreenLink = {}
-        self._isOffScreenTextBlockElement = {}
         self._elementLinesAreSingleChars= {}
+        self._elementLinesAreSingleWords= {}
         self._hasExplicitName = {}
         self._hasNoSize = {}
         self._hasLongDesc = {}
@@ -1253,18 +1251,6 @@ class Utilities(script_utilities.Utilities):
                     math = self.getMathAncestor(obj)
                 return [[math, 0, 1, '']]
 
-            # Because user agents will give us this text word at a time.
-            if self.isOffScreenLink(obj) and self.queryNonEmptyText(obj) and obj.name:
-                msg = "WEB: Returning name as contents for %s (is off-screen)" % obj
-                debug.println(debug.LEVEL_INFO, msg, True)
-                return [[obj, 0, len(obj.name), obj.name]]
-
-            # Because user agents will give us this text word at a time.
-            if self.isOffScreenTextBlockElement(obj) and self.queryNonEmptyText(obj):
-                msg = "WEB: Returning all text as contents for %s (is off-screen)" % obj
-                debug.println(debug.LEVEL_INFO, msg, True)
-                boundary = None
-
             if self.elementLinesAreSingleChars(obj):
                 if obj.name:
                     msg = "WEB: Returning name as contents for %s (single-char lines)" % obj
@@ -1272,6 +1258,16 @@ class Utilities(script_utilities.Utilities):
                     return [[obj, 0, len(obj.name), obj.name]]
 
                 msg = "WEB: Returning all text as contents for %s (single-char lines)" % obj
+                debug.println(debug.LEVEL_INFO, msg, True)
+                boundary = None
+
+            if self.elementLinesAreSingleWords(obj):
+                if obj.name:
+                    msg = "WEB: Returning name as contents for %s (single-word lines)" % obj
+                    debug.println(debug.LEVEL_INFO, msg, True)
+                    return [[obj, 0, len(obj.name), obj.name]]
+
+                msg = "WEB: Returning all text as contents for %s (single-word lines)" % obj
                 debug.println(debug.LEVEL_INFO, msg, True)
                 boundary = None
 
@@ -1564,7 +1560,7 @@ class Utilities(script_utilities.Utilities):
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
         objects = self._getContentsForObj(obj, offset, boundary)
-        if not layoutMode or self.isOffScreenLink(obj):
+        if not layoutMode:
             if useCache:
                 self._currentLineContents = objects
             return objects
@@ -2650,50 +2646,49 @@ class Utilities(script_utilities.Utilities):
         self._isLayoutOnly[hash(obj)] = rv
         return rv
 
-    def isOffScreenTextBlockElement(self, obj):
+    def elementLinesAreSingleWords(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
 
-        rv = self._isOffScreenTextBlockElement.get(hash(obj))
+        rv = self._elementLinesAreSingleWords.get(hash(obj))
         if rv is not None:
             return rv
 
-        rv = False
-        if self.isTextBlockElement(obj):
-            x, y, width, height = self.getExtents(obj, 0, -1)
-            if (x < 0 and x + width < 0) or (y < 0 and y + height < 0):
-                msg = "WEB: %s is off-screen text block (%i, %i)(%i x %i)" % (obj, x, y, width, height)
-                debug.println(debug.LEVEL_INFO, msg, True)
-                rv = True
-            elif width == 1 or height == 1:
-                msg = "WEB: %s is off-screen text block (%i x %i)" % (obj, width, height)
-                debug.println(debug.LEVEL_INFO, msg, True)
-                rv = True
-
-        self._isOffScreenTextBlockElement[hash(obj)] = rv
-        return rv
-
-    def isOffScreenLink(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
+        text = self.queryNonEmptyText(obj)
+        if not text:
             return False
 
-        rv = self._isOffScreenLink.get(hash(obj))
-        if rv is not None:
-            return rv
+        try:
+            nChars = text.characterCount
+        except:
+            return False
 
-        rv = False
-        if self.isLink(obj):
-            x, y, width, height = self.getExtents(obj, 0, -1)
-            if (x < 0 and x + width < 0) or (y < 0 and y + height < 0):
-                msg = "WEB: %s is off-screen link (%i, %i)(%i x %i)" % (obj, x, y, width, height)
-                debug.println(debug.LEVEL_INFO, msg, True)
-                rv = True
-            elif width == 1 or height == 1:
-                msg = "WEB: %s is off-screen link (%i x %i)" % (obj, width, height)
-                debug.println(debug.LEVEL_INFO, msg, True)
-                rv = True
+        if not nChars:
+            return False
 
-        self._isOffScreenLink[hash(obj)] = rv
+        try:
+            obj.clearCache()
+            state = obj.getState()
+        except:
+            msg = "ERROR: Exception getting state for %s" % obj
+            debug.println(debug.LEVEL_INFO, msg, True)
+            return False
+
+        # Note: We cannot check for the editable-text interface, because Gecko
+        # seems to be exposing that for non-editable things. Thanks Gecko.
+        rv = not state.contains(pyatspi.STATE_EDITABLE) \
+            and len(text.getText(0, -1).split()) > 1
+        if rv:
+            boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+            i = 0
+            while i < nChars:
+                string, start, end = text.getTextAtOffset(i, boundary)
+                if len(string.split()) > 1:
+                    rv = False
+                    break
+                i = max(i+1, end)
+
+        self._elementLinesAreSingleWords[hash(obj)] = rv
         return rv
 
     def elementLinesAreSingleChars(self, obj):
