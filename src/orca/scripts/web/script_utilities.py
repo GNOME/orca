@@ -2661,8 +2661,8 @@ class Utilities(script_utilities.Utilities):
         rv = False
         if self.isTextBlockElement(obj):
             x, y, width, height = self.getExtents(obj, 0, -1)
-            if x < 0 or y < 0:
-                msg = "WEB: %s is off-screen text block (%i, %i)" % (obj, x, y)
+            if (x < 0 and x + width < 0) or (y < 0 and y + height < 0):
+                msg = "WEB: %s is off-screen text block (%i, %i)(%i x %i)" % (obj, x, y, width, height)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 rv = True
             elif width == 1 or height == 1:
@@ -2684,8 +2684,8 @@ class Utilities(script_utilities.Utilities):
         rv = False
         if self.isLink(obj):
             x, y, width, height = self.getExtents(obj, 0, -1)
-            if x < 0 or y < 0:
-                msg = "WEB: %s is off-screen link (%i, %i)" % (obj, x, y)
+            if (x < 0 and x + width < 0) or (y < 0 and y + height < 0):
+                msg = "WEB: %s is off-screen link (%i, %i)(%i x %i)" % (obj, x, y, width, height)
                 debug.println(debug.LEVEL_INFO, msg, True)
                 rv = True
             elif width == 1 or height == 1:
