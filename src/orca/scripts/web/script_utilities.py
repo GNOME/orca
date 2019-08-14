@@ -3361,7 +3361,8 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = True
-        if obj.getRole() not in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_CANVAS]:
+        if obj.getRole() not in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_CANVAS] \
+           and self._getTag(obj) != 'svg':
             rv = False
         if rv and (obj.name or obj.description or obj.childCount):
             rv = False
