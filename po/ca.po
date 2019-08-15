@@ -624,7 +624,7 @@ msgstr "línia nova"
 #.
 #: ../src/orca/chnames.py:49 ../src/orca/keynames.py:130
 msgid "tab"
-msgstr "pestanya"
+msgstr "tabulador"
 
 #. Translators: this is the spoken word for the character '!' (U+0021)
 #.
